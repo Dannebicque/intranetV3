@@ -10,25 +10,27 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\TwigTemplateRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\TwigTemplateRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: TwigTemplateRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class TwigTemplate extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $name;
 
-    /**
-     * @ORM\Column(type="text")
-     */
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $source;
+
+    public function __construct(string $name, string $source)
+    {
+        $this->name = $name;
+        $this->source = $source;
+    }
 
     public function getName(): ?string
     {
@@ -52,11 +54,5 @@ class TwigTemplate extends BaseEntity
         $this->source = $source;
 
         return $this;
-    }
-
-    public function __construct(string $name, string $source)
-    {
-        $this->name = $name;
-        $this->source = $source;
     }
 }

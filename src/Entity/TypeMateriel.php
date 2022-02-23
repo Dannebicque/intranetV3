@@ -10,31 +10,27 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\TypeMaterielRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\TypeMaterielRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: TypeMaterielRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class TypeMateriel extends BaseEntity
 {
     use LifeCycleTrait;
-
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
+    #[ORM\Column(type: Types::STRING, length: 100)]
     private ?string $libelle;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Departement", inversedBy="typeMateriels")
-     */
+    #[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'typeMateriels')]
     private Departement $departement;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Materiel", mappedBy="typeMateriel")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Materiel>
      */
+    #[ORM\OneToMany(mappedBy: 'typeMateriel', targetEntity: Materiel::class)]
     private Collection $materiels;
 
     public function __construct(Departement $departement)
@@ -60,7 +56,7 @@ class TypeMateriel extends BaseEntity
         return $this->departement;
     }
 
-    public function setDepartement(Departement $departement): self
+    public function setDepartement(?Departement $departement): self
     {
         $this->departement = $departement;
 

@@ -10,70 +10,57 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\MessageRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\MessageRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: MessageRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Message extends BaseEntity
 {
     use LifeCycleTrait;
 
     public const ETAT_MESSAGE_DRAFT = 'D';
     public const ETAT_MESSAGE_ENVOYE = 'E';
-
     public const MESSAGE_TYPE_ETUDIANT = 'e';
     public const MESSAGE_TYPE_SEMESTRE = 's';
     public const MESSAGE_TYPE_GROUPE = 'g';
     public const MESSAGE_TYPE_PERMANENT = 'p';
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private ?string $sujet;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $sujet = null;
+
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $message = null;
+
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private ?bool $important = null;
+
+    #[ORM\ManyToOne(targetEntity: Personnel::class, fetch: 'EAGER', inversedBy: 'messages')]
+    private ?Personnel $expediteur = null;
 
     /**
-     * @ORM\Column(type="text")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\MessageDestinataire>
      */
-    private ?string $message;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private ?bool $important;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="messages", fetch="EAGER")
-     */
-    private ?Personnel $expediteur;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\MessageDestinataire", mappedBy="message")
-     */
+    #[ORM\OneToMany(mappedBy: 'message', targetEntity: MessageDestinataire::class)]
     private Collection $messageDestinataires;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\MessagePieceJointe", mappedBy="message", fetch="EAGER")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\MessagePieceJointe>
      */
+    #[ORM\OneToMany(mappedBy: 'message', targetEntity: MessagePieceJointe::class, fetch: 'EAGER')]
     private Collection $messagePieceJointes;
 
-    /**
-     * @ORM\Column(type="string", length=1)
-     */
+    #[ORM\Column(type: Types::STRING, length: 1)]
     private string $etat = self::ETAT_MESSAGE_DRAFT;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private ?string $typeDestinataires;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $typeDestinataires = null;
 
-    /**
-     * @ORM\Column(type="string", length=1)
-     */
-    private ?string $type;
+    #[ORM\Column(type: Types::STRING, length: 1)]
+    private ?string $type = null;
 
     public function __construct()
     {

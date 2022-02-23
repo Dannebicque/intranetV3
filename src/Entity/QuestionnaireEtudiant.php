@@ -10,51 +10,44 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\QuestionnaireEtudiantRepository;
 use Carbon\CarbonInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\QuestionnaireEtudiantRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: QuestionnaireEtudiantRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class QuestionnaireEtudiant extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="quizzEtudiants")
-     */
-    private ?Etudiant $etudiant;
+    #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'quizzEtudiants')]
+    private ?Etudiant $etudiant = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="QuestionnaireQualite")
-     */
-    private ?QuestionnaireQualite $questionnaireQualite;
+    #[ORM\ManyToOne(targetEntity: QuestionnaireQualite::class)]
+    private ?QuestionnaireQualite $questionnaireQualite = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\QuestionnaireQuizz")
-     */
-    private ?QuestionnaireQuizz $questionnaireQuizz;
+    #[ORM\ManyToOne(targetEntity: QuestionnaireQuizz::class)]
+    private ?QuestionnaireQuizz $questionnaireQuizz = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $termine = false;
 
     /**
-     * @ORM\OneToMany(targetEntity="QuestionnaireEtudiantReponse", mappedBy="questionnaireEtudiant",
-     *                                                             cascade={"persist", "remove"})
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\QuestionnaireEtudiantReponse>
      */
+    #[ORM\OneToMany(mappedBy: 'questionnaireEtudiant', targetEntity: QuestionnaireEtudiantReponse::class, cascade: [
+        'persist',
+        'remove',
+    ])]
     private Collection $questionnaireEtudiantReponses;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private ?CarbonInterface $dateTermine;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateTermine = null;
 
-    public function __construct(Etudiant $etudiant, $questionnaire, $typeQuestionnaire)
+    public function __construct(Etudiant $etudiant, QuestionnaireQuizz | QuestionnaireQualite $questionnaire, ?string $typeQuestionnaire)
     {
         $this->setEtudiant($etudiant);
         switch ($typeQuestionnaire) {

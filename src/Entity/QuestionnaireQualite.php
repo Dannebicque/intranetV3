@@ -10,28 +10,28 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\QuestionnaireQualiteRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\QuestionnaireQualiteRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: QuestionnaireQualiteRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class QuestionnaireQualite extends Questionnaire
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="qualiteQuestionnaires")
-     */
+    #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'qualiteQuestionnaires')]
     private Semestre $semestre;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\QuestionnaireQuestionnaireSection", mappedBy="questionnaireQualite",
-     *                                                                             cascade={"persist", "remove"})
-     * @ORM\OrderBy({"ordre" = "ASC"})
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\QuestionnaireQuestionnaireSection>
      */
+    #[ORM\OneToMany(mappedBy: 'questionnaireQualite', targetEntity: QuestionnaireQuestionnaireSection::class, cascade: [
+        'persist',
+        'remove',
+    ])]
+    #[ORM\OrderBy(value: ['ordre' => 'ASC'])]
     private Collection $sections;
 
     public function __construct()
@@ -45,7 +45,7 @@ class QuestionnaireQualite extends Questionnaire
         return $this->semestre;
     }
 
-    public function setSemestre(Semestre $semestre): self
+    public function setSemestre(?Semestre $semestre): self
     {
         $this->semestre = $semestre;
 
@@ -85,6 +85,6 @@ class QuestionnaireQualite extends Questionnaire
 
     public function getDiplome(): ?string
     {
-        return $this->semestre?->getAnnee()?->getDiplome()?->getDisplayCourt();
+        return $this->semestre->getAnnee()?->getDiplome()?->getDisplayCourt();
     }
 }

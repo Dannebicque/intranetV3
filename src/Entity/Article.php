@@ -11,69 +11,49 @@ namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\TypeDestinataireTrait;
+use App\Repository\ArticleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\ArticleRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: ArticleRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Article extends BaseEntity
 {
     use LifeCycleTrait;
     use TypeDestinataireTrait;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"article_administration"})
-     */
-    private ?string $titre;
+    #[Groups(groups: ['article_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $titre = null;
 
-    /**
-     * @ORM\Column(type="text")
-     * @Groups({"article_administration"})
-     */
-    private ?string $texte;
+    #[Groups(groups: ['article_administration'])]
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $texte = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private ?string $slug;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $slug = null;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Semestre", inversedBy="articles")
-     * @MaxDepth(2)
-     * @Groups({"article_administration"})
-     */
+    #[MaxDepth(2)]
+    #[Groups(groups: ['article_administration'])]
+    #[ORM\ManyToMany(targetEntity: Semestre::class, inversedBy: 'articles')]
     private Collection $semestres;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
-     * @MaxDepth(2)
-     * @Groups({"article_administration"})
-     */
-    private ?Personnel $personnel;
+    #[Groups(groups: ['article_administration'])]
+    #[ORM\ManyToOne(targetEntity: ArticleCategorie::class, inversedBy: 'articles')]
+    private ?ArticleCategorie $categorie = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\ArticleCategorie", inversedBy="articles")
-     * @Groups({"article_administration"})
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ArticleLike>
      */
-    private ?ArticleCategorie $categorie;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ArticleLike", mappedBy="article")
-     */
+    #[ORM\OneToMany(mappedBy: 'article', targetEntity: ArticleLike::class)]
     private Collection $articleLikes;
 
-    /**
-     * Article constructor.
-     */
-    public function __construct(?Personnel $personnel)
+    public function __construct(private ?Personnel $personnel)
     {
-        $this->personnel = $personnel;
         $this->semestres = new ArrayCollection();
         $this->articleLikes = new ArrayCollection();
     }
@@ -131,7 +111,6 @@ class Article extends BaseEntity
             $texte .= $PointSuspension;
         }
         // ---------------------
-
 
         // On renvoie le résumé du texte correctement formaté.
         return $texte;
@@ -217,6 +196,4 @@ class Article extends BaseEntity
 
         return $this;
     }
-
-
 }

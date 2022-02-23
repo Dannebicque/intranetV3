@@ -11,55 +11,43 @@ namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\MatiereTrait;
+use App\Repository\CahierTexteRepository;
 use Carbon\CarbonInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\CahierTexteRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: CahierTexteRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class CahierTexte extends BaseEntity
 {
     use LifeCycleTrait;
     use MatiereTrait;
 
-    /**
-     * @ORM\Column(type="string", length=150)
-     * @Groups({"carnet_personnel"})
-     */
-    private ?string $libelle;
+    #[Groups(groups: ['carnet_personnel'])]
+    #[ORM\Column(type: Types::STRING, length: 150)]
+    private ?string $libelle = null;
 
-    /**
-     * @ORM\Column(type="text")
-     * @Groups({"carnet_personnel"})
-     */
-    private ?string $description;
+    #[Groups(groups: ['carnet_personnel'])]
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $description = null;
 
-    /**
-     * @ORM\Column(type="datetime")
-     * @Groups({"carnet_personnel"})
-     */
-    private ?CarbonInterface $dateRetour;
+    #[Groups(groups: ['carnet_personnel'])]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?CarbonInterface $dateRetour = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="cahierTextes")
-     * @Groups({"carnet_personnel"})
-     */
-    private ?Personnel $personnel;
+    #[Groups(groups: ['carnet_personnel'])]
+    #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'cahierTextes')]
+    private ?Personnel $personnel = null;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Fichier", inversedBy="cahierTextes")
-     */
+    #[ORM\ManyToMany(targetEntity: Fichier::class, inversedBy: 'cahierTextes')]
     private Collection $fichiers;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="cahierTextes")
-     * @Groups({"carnet_personnel"})
-     */
-    private ?Semestre $semestre;
+    #[Groups(groups: ['carnet_personnel'])]
+    #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'cahierTextes')]
+    private ?Semestre $semestre = null;
 
     public function __construct()
     {

@@ -10,87 +10,73 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\AnneeRepository;
 use App\Utils\Tools;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\AnneeRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: AnneeRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Annee extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\Column(type="string", length=20)
-     */
-    private ?string $codeEtape;
+    #[ORM\Column(type: Types::STRING, length: 20)]
+    private ?string $codeEtape = null;
 
-    /**
-     * @ORM\Column(type="string", length=10)
-     */
-    private ?string $codeVersion;
+    #[ORM\Column(type: Types::STRING, length: 10)]
+    private ?string $codeVersion = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"annee"})
-     */
-    private ?string $libelle;
+    #[Groups(groups: ['annee'])]
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $libelle = null;
 
-    /**
-     * @ORM\Column(name="ordre", type="integer")
-     */
+    #[ORM\Column(name: 'ordre', type: Types::INTEGER)]
     private int $ordre = 1;
 
-    /**
-     * @ORM\Column(type="string", length=150, nullable=true)
-     * @Groups({"annee"})
-     */
-    private ?string $libelleLong;
+    #[Groups(groups: ['annee'])]
+    #[ORM\Column(type: Types::STRING, length: 150, nullable: true)]
+    private ?string $libelleLong = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $optAlternance = false;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Diplome", inversedBy="annees")
-     */
-    private ?Diplome $diplome;
+    #[ORM\ManyToOne(targetEntity: Diplome::class, inversedBy: 'annees')]
+    private ?Diplome $diplome = null;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Semestre", mappedBy="annee")
-     * @ORM\OrderBy({"ordreLmd"="ASC"})
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Semestre>
      */
+    #[ORM\OneToMany(mappedBy: 'annee', targetEntity: Semestre::class)]
+    #[ORM\OrderBy(value: ['ordreLmd' => 'ASC'])]
     private Collection $semestres;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $actif = true;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Alternance", mappedBy="annee")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Alternance>
      */
+    #[ORM\OneToMany(mappedBy: 'annee', targetEntity: Alternance::class)]
     private Collection $alternances;
 
-    /**
-     * @ORM\Column(type="string", length=30)
-     */
-    private ?string $couleur;
+    #[ORM\Column(type: Types::STRING, length: 30)]
+    private ?string $couleur = null;
 
     /**
-     * @ORM\OneToMany(targetEntity=ApcNiveau::class, mappedBy="annee")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcNiveau>
      */
+    #[ORM\OneToMany(mappedBy: 'annee', targetEntity: ApcNiveau::class)]
     private Collection $apcNiveaux;
 
     /**
-     * @ORM\OneToMany(targetEntity=AlternancePlanning::class, mappedBy="annee")
+     * @var \Doctrine\Common\Collections\Collection<\App\Entity\AlternancePlanning>
      */
-    private $alternancePlannings;
+    #[ORM\OneToMany(mappedBy: 'annee', targetEntity: AlternancePlanning::class)]
+    private Collection $alternancePlannings;
 
     public function __construct()
     {
@@ -105,7 +91,7 @@ class Annee extends BaseEntity
         return $this->libelle;
     }
 
-    public function setLibelle($libelle): void
+    public function setLibelle(?string $libelle): void
     {
         $this->libelle = $libelle;
     }
@@ -130,31 +116,9 @@ class Annee extends BaseEntity
         $this->libelleLong = $libelleLong;
     }
 
-    public function isOptAlternance(): bool
-    {
-        return $this->optAlternance;
-    }
-
-    public function setOptAlternance(bool $optAlternance): void
-    {
-        $this->optAlternance = $optAlternance;
-    }
-
     public function update(string $name, mixed $value): void
     {
         Tools::updateFields($name, $value, $this);
-    }
-
-    public function getDiplome(): ?Diplome
-    {
-        return $this->diplome;
-    }
-
-    public function setDiplome(?Diplome $diplome): self
-    {
-        $this->diplome = $diplome;
-
-        return $this;
     }
 
     /**
@@ -240,6 +204,18 @@ class Annee extends BaseEntity
         return 0;
     }
 
+    public function getDiplome(): ?Diplome
+    {
+        return $this->diplome;
+    }
+
+    public function setDiplome(?Diplome $diplome): self
+    {
+        $this->diplome = $diplome;
+
+        return $this;
+    }
+
     public function getCouleur(): ?string
     {
         return $this->couleur;
@@ -255,6 +231,16 @@ class Annee extends BaseEntity
     public function getOptAlternance(): ?bool
     {
         return $this->optAlternance;
+    }
+
+    public function isOptAlternance(): bool
+    {
+        return $this->optAlternance;
+    }
+
+    public function setOptAlternance(bool $optAlternance): void
+    {
+        $this->optAlternance = $optAlternance;
     }
 
     /**
@@ -293,7 +279,7 @@ class Annee extends BaseEntity
         return $this->codeEtape;
     }
 
-    public function setCodeEtape($codeEtape): void
+    public function setCodeEtape(?string $codeEtape): void
     {
         $this->codeEtape = $codeEtape;
     }
@@ -303,7 +289,7 @@ class Annee extends BaseEntity
         return $this->codeVersion;
     }
 
-    public function setCodeVersion($codeVersion): void
+    public function setCodeVersion(?string $codeVersion): void
     {
         $this->codeVersion = $codeVersion;
     }
@@ -328,11 +314,9 @@ class Annee extends BaseEntity
 
     public function removeAlternancePlanning(AlternancePlanning $alternancePlanning): self
     {
-        if ($this->alternancePlannings->removeElement($alternancePlanning)) {
-            // set the owning side to null (unless already changed)
-            if ($alternancePlanning->getAnnee() === $this) {
-                $alternancePlanning->setAnnee(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->alternancePlannings->removeElement($alternancePlanning) && $alternancePlanning->getAnnee() === $this) {
+            $alternancePlanning->setAnnee(null);
         }
 
         return $this;

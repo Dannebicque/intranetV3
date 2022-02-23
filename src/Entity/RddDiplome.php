@@ -12,85 +12,56 @@ namespace App\Entity;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\RddDiplomeRepository;
 use Carbon\CarbonInterface;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=RddDiplomeRepository::class)
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: RddDiplomeRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class RddDiplome extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\Column(type="string", length=10)
-     */
-    private ?string $numEtudiant;
+    #[ORM\Column(type: Types::STRING, length: 10)]
+    private ?string $numEtudiant = null;
 
-    /**
-     * @ORM\Column(type="string", length=15)
-     */
-    private ?string $ine;
+    #[ORM\Column(type: Types::STRING, length: 15)]
+    private ?string $ine = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private ?string $mailperso;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $mailperso = null;
 
-    /**
-     * @ORM\Column(type="string", length=20)
-     */
-    private ?string $diplome;
+    #[ORM\Column(type: Types::STRING, length: 20)]
+    private ?string $diplome = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private ?string $libelleDiplome;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $libelleDiplome = null;
 
-    /**
-     * @ORM\Column(type="date")
-     */
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?CarbonInterface $dateNaissance = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $confirme = false;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $enqueteAFaire = false;
 
-    /**
-     * @ORM\Column(type="string", length=30, nullable=true)
-     */
-    private ?string $codeEtape;
+    #[ORM\Column(type: Types::STRING, length: 30, nullable: true)]
+    private ?string $codeEtape = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private ?string $adresse;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $adresse = null;
 
-    /**
-     * @ORM\Column(type="string", length=5)
-     */
-    private ?string $codePostal;
+    #[ORM\Column(type: Types::STRING, length: 5)]
+    private ?string $codePostal = null;
 
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
-    private ?string $ville;
+    #[ORM\Column(type: Types::STRING, length: 100)]
+    private ?string $ville = null;
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private ?string $pays;
+    #[ORM\Column(type: Types::STRING, length: 50)]
+    private ?string $pays = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private ?string $adresseComplement;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $adresseComplement = null;
 
     public function getNumEtudiant(): ?string
     {

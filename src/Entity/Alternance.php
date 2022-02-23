@@ -10,17 +10,17 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\AlternanceRepository;
 use Carbon\CarbonInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\AlternanceRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: AlternanceRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Alternance extends BaseEntity
 {
     use LifeCycleTrait;
@@ -32,80 +32,54 @@ class Alternance extends BaseEntity
     public const ALTERNANCE_ETAT_VALIDE = 'valide';
     public const ALTERNANCE_ETAT_SANS = 'sans';
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Entreprise", cascade={"persist", "remove"})
-     * @Groups({"alternance_administration"})
-     */
-    private ?Entreprise $entreprise;
+    #[Groups(groups: ['alternance_administration'])]
+    #[ORM\OneToOne(targetEntity: Entreprise::class, cascade: ['persist', 'remove'])]
+    private ?Entreprise $entreprise = null;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Contact", cascade={"persist", "remove"})
-     * @MaxDepth(2)
-     * @Groups({"alternance_administration"})
-     */
-    private ?Contact $tuteur;
+    #[MaxDepth(2)]
+    #[Groups(groups: ['alternance_administration'])]
+    #[ORM\OneToOne(targetEntity: Contact::class, cascade: ['persist', 'remove'])]
+    private ?Contact $tuteur = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="alternances")
-     * @MaxDepth(2)
-     * @Groups({"alternance_administration"})
-     */
-    private ?Etudiant $etudiant;
+    #[MaxDepth(2)]
+    #[Groups(groups: ['alternance_administration'])]
+    #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'alternances')]
+    private ?Etudiant $etudiant = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="alternances")
-     * @MaxDepth(2)
-     * @Groups({"alternance_administration"})
-     */
-    private ?Personnel $tuteurUniversitaire;
+    #[MaxDepth(2)]
+    #[Groups(groups: ['alternance_administration'])]
+    #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'alternances')]
+    private ?Personnel $tuteurUniversitaire = null;
 
-    /**
-     * @ORM\Column(type="string", length=20)
-     * @Groups({"alternance_administration"})
-     */
+    #[Groups(groups: ['alternance_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 20)]
     private ?string $typeContrat;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Annee", inversedBy="alternances")
-     */
-    private ?Annee $annee;
+    #[ORM\ManyToOne(targetEntity: Annee::class, inversedBy: 'alternances')]
+    private ?Annee $annee = null;
 
-    /**
-     * @ORM\Column(type="string", length=10)
-     */
-    private ?string $etat;
+    #[ORM\Column(type: Types::STRING, length: 10)]
+    private ?string $etat = null;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     * @Groups({"alternance_administration"})
-     */
-    private ?CarbonInterface $dateDebut;
+    #[Groups(groups: ['alternance_administration'])]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateDebut = null;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     * @Groups({"alternance_administration"})
-     */
-    private ?CarbonInterface $dateFin;
+    #[Groups(groups: ['alternance_administration'])]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateFin = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\AlternanceFicheSuivi", mappedBy="alternance")
-     */
+    #[ORM\OneToMany(mappedBy: 'alternance', targetEntity: AlternanceFicheSuivi::class)]
     private Collection $alternanceFicheSuivis;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire")
-     */
-    private ?AnneeUniversitaire $anneeUniversitaire;
+    #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class)]
+    private ?AnneeUniversitaire $anneeUniversitaire = null;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Adresse", inversedBy="alternance", cascade={"persist", "remove"})
-     */
-    private ?Adresse $adresseAlternance;
+    #[ORM\OneToOne(inversedBy: 'alternance', targetEntity: Adresse::class, cascade: ['persist', 'remove'])]
+    private ?Adresse $adresseAlternance = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private ?string $sujet;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $sujet = null;
 
     public function __construct()
     {

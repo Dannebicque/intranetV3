@@ -9,6 +9,7 @@
 
 namespace App\Entity\Traits;
 
+use Carbon\CarbonInterface;
 use DateTime;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
@@ -16,20 +17,19 @@ use Doctrine\ORM\Mapping as ORM;
 trait SoftDeletableTrait
 {
     /**
-     * @var DateTime|null
-     *
-     * @ORM\Column(type="datetime", nullable=true)
+     * @var CarbonInterface|null
      */
-    private $deletedAt;
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private ?CarbonInterface $deletedAt = null;
 
-    public function getDeletedAt(): ?DateTime
+    public function getDeletedAt(): ?CarbonInterface
     {
         return $this->deletedAt;
     }
 
     public function isDeleted(): bool
     {
-        return $this->deletedAt instanceof DateTimeInterface;
+        return $this->deletedAt instanceof CarbonInterface;
     }
 
     public function recover(): void

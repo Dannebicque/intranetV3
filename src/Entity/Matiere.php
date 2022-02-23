@@ -10,102 +10,72 @@
 namespace App\Entity;
 
 use App\Interfaces\MatiereEntityInterface;
+use App\Repository\MatiereRepository;
 use App\Utils\Tools;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\MatiereRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: MatiereRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Matiere extends AbstractMatiere implements MatiereEntityInterface
 {
     public const SOURCE = 'matiere';
 
-    /**
-     * @ORM\Column(type="boolean")
-     * @Groups({"matiere_administration"})
-     */
+    #[Groups(groups: ['matiere_administration'])]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $pac = false;
 
-    /**
-     * @ORM\Column(type="float")
-     * @Groups({"matiere_administration"})
-     */
+    #[Groups(groups: ['matiere_administration'])]
+    #[ORM\Column(type: Types::FLOAT)]
     private float $coefficient = 1;
 
-    /**
-     * @ORM\Column(type="float")
-     * @Groups({"matiere_administration"})
-     */
+    #[Groups(groups: ['matiere_administration'])]
+    #[ORM\Column(type: Types::FLOAT)]
     private float $nbEcts = 1;
 
-    /**
-     * @ORM\Column(type="text",nullable=true)
-     */
-    private ?string $objectifsModule;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $objectifsModule = null;
 
-    /**
-     * @ORM\Column(type="text",nullable=true)
-     */
-    private ?string $competencesVisees;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $competencesVisees = null;
 
-    /**
-     *
-     * @ORM\Column(type="text",nullable=true)
-     */
-    private ?string $contenu;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $contenu = null;
 
-    /**
-     * @ORM\Column(type="text",nullable=true)
-     */
-    private ?string $preRequis;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $preRequis = null;
 
-    /**
-     * @ORM\Column(type="text",nullable=true)
-     */
-    private ?string $modalites;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $modalites = null;
 
-    /**
-     * @ORM\Column(type="text",nullable=true)
-     */
-    private ?string $prolongements;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $prolongements = null;
 
-    /**
-     * @ORM\Column(type="text",nullable=true)
-     */
-    private ?string $motsCles;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $motsCles = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Ue", inversedBy="matieres", fetch="EAGER")
-     */
+    #[ORM\ManyToOne(targetEntity: Ue::class, fetch: 'EAGER', inversedBy: 'matieres')]
     private ?Ue $ue = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Ppn", inversedBy="matieres")
-     */
-    private ?Ppn $ppn;
+    #[ORM\ManyToOne(targetEntity: Ppn::class, inversedBy: 'matieres')]
+    private ?Ppn $ppn = null;
+
+    #[ORM\ManyToOne(targetEntity: Parcour::class, inversedBy: 'matieres')]
+    private ?Parcour $parcours = null;
+
+    #[ORM\ManyToOne(targetEntity: Matiere::class, inversedBy: 'matiereEnfants')]
+    private ?Matiere $matiereParent = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Parcour", inversedBy="matieres")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Matiere>
      */
-    private ?Parcour $parcours;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Matiere", inversedBy="matiereEnfants")
-     */
-    private ?Matiere $matiereParent;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Matiere", mappedBy="matiereParent")
-     */
+    #[ORM\OneToMany(mappedBy: 'matiereParent', targetEntity: Matiere::class)]
     private Collection $matiereEnfants;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=CovidAttestationEtudiant::class, mappedBy="matieres")
-     */
+    #[ORM\ManyToMany(targetEntity: CovidAttestationEtudiant::class, mappedBy: 'matieres')]
     private Collection $covidAttestationEtudiants;
 
     public function __construct()
@@ -115,6 +85,11 @@ class Matiere extends AbstractMatiere implements MatiereEntityInterface
     }
 
     public function isPac(): bool
+    {
+        return $this->pac;
+    }
+
+    public function getPac(): bool
     {
         return $this->pac;
     }
@@ -310,11 +285,6 @@ class Matiere extends AbstractMatiere implements MatiereEntityInterface
         return $t;
     }
 
-    public function getPac(): bool
-    {
-        return $this->pac;
-    }
-
     /**
      * @return Collection|Matiere[]
      */
@@ -379,7 +349,6 @@ class Matiere extends AbstractMatiere implements MatiereEntityInterface
         return $this->getCodeMatiere();
     }
 
-
     public function getCoefficient(): float
     {
         return $this->coefficient;
@@ -390,12 +359,11 @@ class Matiere extends AbstractMatiere implements MatiereEntityInterface
         $this->coefficient = Tools::convertToFloat($coefficient);
     }
 
-    public function update($name, $value): bool
+    public function update(string $name, mixed $value): bool
     {
-        $method = 'set' . $name;
+        $method = 'set'.$name;
         if (method_exists($this, $method)) {
             $this->$method(Tools::convertToFloat($value));
-
             return true;
         }
 

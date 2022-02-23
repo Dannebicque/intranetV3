@@ -11,6 +11,8 @@ namespace App\Entity;
 
 use App\Entity\Traits\ApogeeTrait;
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\DiplomeRepository;
+use Doctrine\DBAL\Types\Types;
 use function chr;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -18,155 +20,118 @@ use Doctrine\ORM\Mapping as ORM;
 use function ord;
 use Serializable;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\DiplomeRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: DiplomeRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Diplome extends BaseEntity implements Serializable
 {
     use ApogeeTrait;
     use LifeCycleTrait;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private ?string $libelle;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $libelle = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
-     */
-    private ?Personnel $responsableDiplome;
+    #[ORM\ManyToOne(targetEntity: Personnel::class)]
+    private ?Personnel $responsableDiplome = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
-     */
-    private ?Personnel $assistantDiplome;
+    #[ORM\ManyToOne(targetEntity: Personnel::class)]
+    private ?Personnel $assistantDiplome = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\TypeDiplome", inversedBy="diplomes")
-     */
-    private ?TypeDiplome $typeDiplome;
+    #[ORM\ManyToOne(targetEntity: TypeDiplome::class, inversedBy: 'diplomes')]
+    private ?TypeDiplome $typeDiplome = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private int $optNbJoursSaisie = 15;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private bool $optDilpomeDecale = false; //existance du diplôme en décalé
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private bool $optDilpomeDecale = false;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $optSupprAbsence = false;
 
-    /**
-     * @ORM\Column(type="string", length=10)
-     */
+    #[ORM\Column(type: Types::STRING, length: 10)]
     private string $optMethodeCalcul = Constantes::METHODE_CALCUL_MOY_MODULE;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $optAnonymat = false;
 
-    /**
-     * @ORM\Column( type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $optCommentairesReleve = false;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $optEspacePersoVisible = true;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private int $volumeHoraire = 0;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private int $codeCelcatDepartement = 0;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Hrs", mappedBy="diplome")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Hrs>
      */
+    #[ORM\OneToMany(mappedBy: 'diplome', targetEntity: Hrs::class)]
     private Collection $hrs;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Ppn", mappedBy="diplome")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Ppn>
      */
+    #[ORM\OneToMany(mappedBy: 'diplome', targetEntity: Ppn::class)]
     private Collection $ppns;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Departement", inversedBy="diplomes")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Annee>
      */
-    private ?Departement $departement;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Annee", mappedBy="diplome")
-     * @ORM\OrderBy({"libelle"="ASC"})
-     */
+    #[ORM\OneToMany(mappedBy: 'diplome', targetEntity: Annee::class)]
+    #[ORM\OrderBy(value: ['libelle' => 'ASC'])]
     private Collection $annees;
 
-    /**
-     * @ORM\Column(type="string", length=40)
-     */
-    private ?string $sigle;
+    #[ORM\Column(type: Types::STRING, length: 40)]
+    private ?string $sigle = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $actif = true;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire", inversedBy="diplomes")
-     */
-    private ?AnneeUniversitaire $anneeUniversitaire;
+    #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class, inversedBy: 'diplomes')]
+    private ?AnneeUniversitaire $anneeUniversitaire = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private int $optSemainesVisibles = 2;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $optCertifieQualite = false;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
-     */
-    private ?Personnel $optResponsableQualite;
+    #[ORM\ManyToOne(targetEntity: Personnel::class)]
+    private ?Personnel $optResponsableQualite = null;
 
     /**
-     * @ORM\OneToMany(targetEntity=ApcCompetence::class, mappedBy="diplome")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcCompetence>
      */
+    #[ORM\OneToMany(mappedBy: 'diplome', targetEntity: ApcCompetence::class)]
     private Collection $apcComptences;
 
     /**
-     * @ORM\OneToMany(targetEntity=CovidAttestationPersonnel::class, mappedBy="diplome")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\CovidAttestationPersonnel>
      */
+    #[ORM\OneToMany(mappedBy: 'diplome', targetEntity: CovidAttestationPersonnel::class)]
     private Collection $covidAttestationPersonnels;
 
     /**
-     * @ORM\OneToMany(targetEntity=CovidAttestationEtudiant::class, mappedBy="diplome")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\CovidAttestationEtudiant>
      */
+    #[ORM\OneToMany(mappedBy: 'diplome', targetEntity: CovidAttestationEtudiant::class)]
     private Collection $covidAttestationEtudiants;
 
     /**
-     * @ORM\OneToMany(targetEntity=ApcParcours::class, mappedBy="diplome")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcParcours>
      */
+    #[ORM\OneToMany(mappedBy: 'diplome', targetEntity: ApcParcours::class)]
     private Collection $apcParcours;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private ?bool $optUpdateCelcat = false;
+
+    #[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'diplomes')]
+    private ?Departement $departement;
 
     public function __construct(Departement $departement)
     {
@@ -183,29 +148,29 @@ class Diplome extends BaseEntity implements Serializable
     public function getDisplay(): ?string
     {
         if (null !== $this->getTypeDiplome()) {
-            return $this->getTypeDiplome()->getSigle() . ' ' . $this->libelle;
+            return $this->getTypeDiplome()->getSigle().' '.$this->libelle;
         }
 
         return $this->libelle;
+    }
+
+    public function getTypeDiplome(): ?TypeDiplome
+    {
+        return $this->typeDiplome;
+    }
+
+    public function setTypeDiplome(?TypeDiplome $typeDiplome): void
+    {
+        $this->typeDiplome = $typeDiplome;
     }
 
     public function getDisplayCourt(): ?string
     {
         if (null !== $this->getTypeDiplome()) {
-            return $this->getTypeDiplome()->getSigle() . ' ' . $this->sigle;
+            return $this->getTypeDiplome()->getSigle().' '.$this->sigle;
         }
 
         return $this->sigle;
-    }
-
-    public function getLibelle(): ?string
-    {
-        return $this->libelle;
-    }
-
-    public function setLibelle($libelle): void
-    {
-        $this->libelle = $libelle;
     }
 
     /**
@@ -234,19 +199,6 @@ class Diplome extends BaseEntity implements Serializable
         $this->assistantDiplome = $assistantDiplome;
     }
 
-    /**
-     * @return TypeDiplome
-     */
-    public function getTypeDiplome(): ?TypeDiplome
-    {
-        return $this->typeDiplome;
-    }
-
-    public function setTypeDiplome($typeDiplome): void
-    {
-        $this->typeDiplome = $typeDiplome;
-    }
-
     public function getOptNbJoursSaisie(): int
     {
         return $this->optNbJoursSaisie;
@@ -262,19 +214,14 @@ class Diplome extends BaseEntity implements Serializable
         return $this->optDilpomeDecale;
     }
 
+    public function getOptDilpomeDecale(): ?bool
+    {
+        return $this->optDilpomeDecale;
+    }
+
     public function setOptDilpomeDecale(bool $optDilpomeDecale): void
     {
         $this->optDilpomeDecale = $optDilpomeDecale;
-    }
-
-    public function isOptSupprAbsence(): bool
-    {
-        return $this->optSupprAbsence;
-    }
-
-    public function setOptSupprAbsence(bool $optSupprAbsence): void
-    {
-        $this->optSupprAbsence = $optSupprAbsence;
     }
 
     public function getOptMethodeCalcul(): string
@@ -292,6 +239,11 @@ class Diplome extends BaseEntity implements Serializable
         return $this->optAnonymat;
     }
 
+    public function getOptAnonymat(): ?bool
+    {
+        return $this->optAnonymat;
+    }
+
     public function setOptAnonymat(bool $optAnonymat): void
     {
         $this->optAnonymat = $optAnonymat;
@@ -302,12 +254,22 @@ class Diplome extends BaseEntity implements Serializable
         return $this->optCommentairesReleve;
     }
 
+    public function getOptCommentairesReleve(): ?bool
+    {
+        return $this->optCommentairesReleve;
+    }
+
     public function setOptCommentairesReleve(bool $optCommentairesReleve): void
     {
         $this->optCommentairesReleve = $optCommentairesReleve;
     }
 
     public function isOptEspacePersoVisible(): bool
+    {
+        return $this->optEspacePersoVisible;
+    }
+
+    public function getOptEspacePersoVisible(): ?bool
     {
         return $this->optEspacePersoVisible;
     }
@@ -399,10 +361,10 @@ class Diplome extends BaseEntity implements Serializable
         return $this;
     }
 
-    public function update($name, $value): bool
+    public function update(string $name, mixed $value): bool
     {
         $name[0] = chr(ord($name[0]) - 32);
-        $method = 'set' . $name;
+        $method = 'set'.$name;
         if (method_exists($this, $method)) {
             $this->$method($value);
 
@@ -422,14 +384,6 @@ class Diplome extends BaseEntity implements Serializable
         $this->departement = $departement;
 
         return $this;
-    }
-
-    /**
-     * @return Collection|Annee[]
-     */
-    public function getAnnees(): Collection
-    {
-        return $this->annees;
     }
 
     public function addAnnee(Annee $annee): self
@@ -511,10 +465,20 @@ class Diplome extends BaseEntity implements Serializable
     public function getLibelleLong(): string
     {
         if (null !== $this->getTypeDiplome()) {
-            return $this->getTypeDiplome()->getSigle() . ' ' . $this->getLibelle();
+            return $this->getTypeDiplome()->getSigle().' '.$this->getLibelle();
         }
 
         return $this->getLibelle();
+    }
+
+    public function getLibelle(): ?string
+    {
+        return $this->libelle;
+    }
+
+    public function setLibelle(string $libelle): void
+    {
+        $this->libelle = $libelle;
     }
 
     public function getSemestres(): array
@@ -529,9 +493,12 @@ class Diplome extends BaseEntity implements Serializable
         return $semestres;
     }
 
-    public function getOptDilpomeDecale(): ?bool
+    /**
+     * @return Collection|Annee[]
+     */
+    public function getAnnees(): Collection
     {
-        return $this->optDilpomeDecale;
+        return $this->annees;
     }
 
     public function getOptSupprAbsence(): ?bool
@@ -539,19 +506,14 @@ class Diplome extends BaseEntity implements Serializable
         return $this->optSupprAbsence;
     }
 
-    public function getOptAnonymat(): ?bool
+    public function isOptSupprAbsence(): bool
     {
-        return $this->optAnonymat;
+        return $this->optSupprAbsence;
     }
 
-    public function getOptCommentairesReleve(): ?bool
+    public function setOptSupprAbsence(bool $optSupprAbsence): void
     {
-        return $this->optCommentairesReleve;
-    }
-
-    public function getOptEspacePersoVisible(): ?bool
-    {
-        return $this->optEspacePersoVisible;
+        $this->optSupprAbsence = $optSupprAbsence;
     }
 
     public function getOptCertifieQualite(): ?bool

@@ -10,56 +10,46 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\EntrepriseRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\EntrepriseRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: EntrepriseRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Entreprise extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\Column(type="string", length=30, nullable=true)
-     * @Assert\Length(
-     *      min = 0,
-     *      max = 30,
-     *      maxMessage = "Maximum {{ limit }} caractères"
-     * )
-     */
-    private ?string $siret;
+    #[Assert\Length(min: 0, max: 30, maxMessage: 'Maximum {{ limit }} caractères')]
+    #[ORM\Column(type: Types::STRING, length: 30, nullable: true)]
+    private ?string $siret = null;
+
+    #[Groups(groups: ['stage_entreprise_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $raisonSociale = null;
+
+    #[Groups(groups: ['stage_entreprise_administration'])]
+    #[ORM\OneToOne(targetEntity: Adresse::class, cascade: ['persist', 'remove'], fetch: 'EAGER')]
+    private ?Adresse $adresse = null;
+
+    #[Groups(groups: ['stage_entreprise_administration'])]
+    #[ORM\OneToOne(targetEntity: Contact::class, cascade: ['persist', 'remove'])]
+    private ?Contact $responsable = null;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({ "stage_entreprise_administration"})
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\StageEtudiant>
      */
-    private ?string $raisonSociale;
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Adresse", cascade={"persist", "remove"}, fetch="EAGER")
-     * @Groups({ "stage_entreprise_administration"})
-     */
-    private ?Adresse $adresse;
-
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Contact", cascade={"persist", "remove"})
-     * @Groups({"stage_entreprise_administration"})
-     */
-    private ?Contact $responsable;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\StageEtudiant", mappedBy="entreprise")
-     */
+    #[ORM\OneToMany(mappedBy: 'entreprise', targetEntity: StageEtudiant::class)]
     private Collection $stageEtudiants;
 
     /**
-     * @ORM\OneToMany(targetEntity=ProjetEtudiant::class, mappedBy="organisme")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ProjetEtudiant>
      */
+    #[ORM\OneToMany(mappedBy: 'organisme', targetEntity: ProjetEtudiant::class)]
     private Collection $projetEtudiants;
 
     public function __construct()

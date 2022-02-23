@@ -10,46 +10,42 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\PpnRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\PpnRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: PpnRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Ppn extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private string $libelle;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private int $annee;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Matiere", mappedBy="ppn")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Matiere>
      */
-    private Collection $matieres; //todo: a revoir???
+    #[ORM\OneToMany(mappedBy: 'ppn', targetEntity: Matiere::class)]
+    private Collection $matieres;
+
+    #[ORM\ManyToOne(targetEntity: Diplome::class, inversedBy: 'ppns')]
+    private ?Diplome $diplome = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Diplome", inversedBy="ppns")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Semestre>
      */
-    private ?Diplome $diplome;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Semestre", mappedBy="ppnActif")
-     */
+    #[ORM\OneToMany(mappedBy: 'ppnActif', targetEntity: Semestre::class)]
     private Collection $semestres;
 
     public function __construct()
     {
-        $this->annee = (int)date('Y');
+        $this->annee = (int) date('Y');
         $this->matieres = new ArrayCollection();
         $this->semestres = new ArrayCollection();
     }

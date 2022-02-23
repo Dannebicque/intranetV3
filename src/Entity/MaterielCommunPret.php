@@ -11,32 +11,23 @@ namespace App\Entity;
 
 use App\Repository\MaterielCommunPretRepository;
 use Carbon\CarbonInterface;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=MaterielCommunPretRepository::class)
- */
+#[ORM\Entity(repositoryClass: MaterielCommunPretRepository::class)]
 class MaterielCommunPret extends BaseEntity
 {
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private ?CarbonInterface $dateEmprunt;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?CarbonInterface $dateEmprunt = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Personnel::class, inversedBy="materielCommunPrets")
-     */
-    private ?Personnel $personnel;
+    #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'materielCommunPrets')]
+    private ?Personnel $personnel = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=MaterielCommun::class, inversedBy="materielCommunPrets")
-     */
-    private ?MaterielCommun $materielCommun;
+    #[ORM\ManyToOne(targetEntity: MaterielCommun::class, inversedBy: 'materielCommunPrets')]
+    private ?MaterielCommun $materielCommun = null;
 
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
-    private ?string $creneau;
+    #[ORM\Column(type: Types::STRING, length: 100)]
+    private ?string $creneau = null;
 
     public function getDateEmprunt(): ?CarbonInterface
     {

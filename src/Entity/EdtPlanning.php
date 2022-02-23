@@ -10,110 +10,58 @@
 namespace App\Entity;
 
 use App\Entity\Traits\MatiereTrait;
+use App\Repository\EdtPlanningRepository;
 use Carbon\CarbonInterface;
 use function chr;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\EdtPlanningRepository")
- */
+#[ORM\Entity(repositoryClass: EdtPlanningRepository::class)]
 class EdtPlanning extends BaseEntity
 {
     use MatiereTrait;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private ?int $jour;
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $jour = null;
 
-    /**
-     * @ORM\Column(type="string", length=30)
-     */
-    private ?string $salle;
+    #[ORM\Column(type: Types::STRING, length: 30)]
+    private ?string $salle = null;
 
-    /**
-     * @ORM\Column(type="string", length=20)
-     */
-    private ?string $ordre = "0";
+    #[ORM\Column(type: Types::STRING, length: 20)]
+    private ?string $ordre = '0';
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private ?int $debut;
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $debut = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private ?int $fin;
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $fin = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private ?int $semaine; //semaine réelle...
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $semaine = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private ?bool $evaluation = false;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Semestre")
-     */
-    private ?Semestre $semestre;
+    #[ORM\ManyToOne(targetEntity: Semestre::class)]
+    private ?Semestre $semestre = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
-     */
-    private ?Personnel $intervenant;
+    #[ORM\ManyToOne(targetEntity: Personnel::class)]
+    private ?Personnel $intervenant = null;
 
-    /**
-     * @ORM\Column(type="string", length=150, nullable=true)
-     */
-    private ?string $texte;
+    #[ORM\Column(type: Types::STRING, length: 150, nullable: true)]
+    private ?string $texte = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private ?int $groupe;
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $groupe = null;
 
-    /**
-     * @ORM\Column(type="string", length=10)
-     */
-    private ?string $type;
+    #[ORM\Column(type: Types::STRING, length: 10)]
+    private ?string $type = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private ?string $commentaire;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $commentaire = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private ?CarbonInterface $date;
-
-    public function getJour(): ?int
-    {
-        return $this->jour;
-    }
-
-    public function setJour(int $jour): self
-    {
-        $this->jour = $jour;
-
-        return $this;
-    }
-
-    public function getSalle(): ?string
-    {
-        return $this->salle;
-    }
-
-    public function setSalle(string $salle): self
-    {
-        $this->salle = $salle;
-
-        return $this;
-    }
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $date = null;
 
     public function getOrdre(): ?string
     {
@@ -127,11 +75,6 @@ class EdtPlanning extends BaseEntity
         return $this;
     }
 
-    public function getDebut(): ?int
-    {
-        return $this->debut;
-    }
-
     public function getDebutTexte(): ?string
     {
         return Constantes::TAB_HEURES[$this->debut];
@@ -140,25 +83,6 @@ class EdtPlanning extends BaseEntity
     public function getFinTexte(): ?string
     {
         return Constantes::TAB_HEURES[$this->fin];
-    }
-
-    public function setDebut(int $debut): self
-    {
-        $this->debut = $debut;
-
-        return $this;
-    }
-
-    public function getFin(): ?int
-    {
-        return $this->fin;
-    }
-
-    public function setFin(int $fin): self
-    {
-        $this->fin = $fin;
-
-        return $this;
     }
 
     public function getSemaine(): ?int
@@ -197,54 +121,6 @@ class EdtPlanning extends BaseEntity
         return $this;
     }
 
-    public function getIntervenant(): ?Personnel
-    {
-        return $this->intervenant;
-    }
-
-    public function setIntervenant(?Personnel $intervenant): self
-    {
-        $this->intervenant = $intervenant;
-
-        return $this;
-    }
-
-    public function getTexte(): ?string
-    {
-        return $this->texte;
-    }
-
-    public function setTexte(?string $texte): self
-    {
-        $this->texte = $texte;
-
-        return $this;
-    }
-
-    public function getGroupe(): ?int
-    {
-        return $this->groupe;
-    }
-
-    public function setGroupe(int $groupe): self
-    {
-        $this->groupe = $groupe;
-
-        return $this;
-    }
-
-    public function getType(): ?string
-    {
-        return $this->type;
-    }
-
-    public function setType(string $type): self
-    {
-        $this->type = $type;
-
-        return $this;
-    }
-
     public function getDisplayGroupe(): ?string
     {
         switch ($this->type) {
@@ -255,10 +131,10 @@ class EdtPlanning extends BaseEntity
             case 'td':
                 $tab = ['', 'AB', '', 'CD', '', 'EF', '', 'GH'];
 
-            return 'TD ' . $tab[$this->groupe];
+                return 'TD '.$tab[$this->groupe];
             case 'TP':
             case 'tp':
-            return 'TP ' . chr($this->groupe + 64);
+                return 'TP '.chr($this->groupe + 64);
             default:
                 return '';
         }
@@ -267,10 +143,22 @@ class EdtPlanning extends BaseEntity
     public function getIntervenantEdt(): string
     {
         if (null !== $this->getIntervenant()) {
-            return $this->getIntervenant()->getPrenom()[0] . '. ' . $this->getIntervenant()->getNom();
+            return $this->getIntervenant()->getPrenom()[0].'. '.$this->getIntervenant()->getNom();
         }
 
         return '*';
+    }
+
+    public function getIntervenant(): ?Personnel
+    {
+        return $this->intervenant;
+    }
+
+    public function setIntervenant(?Personnel $intervenant): self
+    {
+        $this->intervenant = $intervenant;
+
+        return $this;
     }
 
     public function getDureeTexte(): string
@@ -301,7 +189,7 @@ class EdtPlanning extends BaseEntity
         return $td[$d];
     }
 
-    public function getDureeInt(): float|int
+    public function getDureeInt(): float | int
     {
         $d = $this->fin - $this->debut;
         $td = [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5];
@@ -326,6 +214,13 @@ class EdtPlanning extends BaseEntity
         return $this->date;
     }
 
+    public function setDate(?CarbonInterface $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
     public function getJson(): array
     {
         return [
@@ -340,13 +235,90 @@ class EdtPlanning extends BaseEntity
             'personnelId' => $this->getIntervenant()?->getId(),
             'groupe' => $this->getGroupe(),
             'groupeId' => $this->getGroupe(),
-            'typeIdMatiere' => $this->getTypeMatiere() . '_' . $this->getIdMatiere(),
+            'typeIdMatiere' => $this->getTypeMatiere().'_'.$this->getIdMatiere(),
         ];
     }
 
-    public function setDate(?CarbonInterface $date): self
+    public function getJour(): ?int
     {
-        $this->date = $date;
+        return $this->jour;
+    }
+
+    public function setJour(int $jour): self
+    {
+        $this->jour = $jour;
+
+        return $this;
+    }
+
+    public function getDebut(): ?int
+    {
+        return $this->debut;
+    }
+
+    public function setDebut(int $debut): self
+    {
+        $this->debut = $debut;
+
+        return $this;
+    }
+
+    public function getFin(): ?int
+    {
+        return $this->fin;
+    }
+
+    public function setFin(int $fin): self
+    {
+        $this->fin = $fin;
+
+        return $this;
+    }
+
+    public function getSalle(): ?string
+    {
+        return $this->salle;
+    }
+
+    public function setSalle(string $salle): self
+    {
+        $this->salle = $salle;
+
+        return $this;
+    }
+
+    public function getType(): ?string
+    {
+        return $this->type;
+    }
+
+    public function setType(string $type): self
+    {
+        $this->type = $type;
+
+        return $this;
+    }
+
+    public function getTexte(): ?string
+    {
+        return $this->texte;
+    }
+
+    public function setTexte(?string $texte): self
+    {
+        $this->texte = $texte;
+
+        return $this;
+    }
+
+    public function getGroupe(): ?int
+    {
+        return $this->groupe;
+    }
+
+    public function setGroupe(int $groupe): self
+    {
+        $this->groupe = $groupe;
 
         return $this;
     }

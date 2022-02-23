@@ -10,79 +10,61 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\AdresseRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\AdresseRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: AdresseRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Adresse extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"adresse"})
-     */
+    #[Groups(groups: ['adresse'])]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $adresse1 = '';
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"adresse"})
-     */
+    #[Groups(groups: ['adresse'])]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $adresse2 = '';
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"adresse"})
-     */
+    #[Groups(groups: ['adresse'])]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $adresse3 = '';
 
-    /**
-     * @ORM\Column(type="string", length=10, nullable=true)
-     * @Groups({"adresse"})
-     */
+    #[Groups(groups: ['adresse'])]
+    #[ORM\Column(type: Types::STRING, length: 10, nullable: true)]
     private ?string $codePostal = '';
 
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     * @Groups({"adresse"})
-     */
+    #[Groups(groups: ['adresse'])]
+    #[ORM\Column(type: Types::STRING, length: 100, nullable: true)]
     private ?string $ville = '';
 
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     * @Groups({"adresse"})
-     */
+    #[Groups(groups: ['adresse'])]
+    #[ORM\Column(type: Types::STRING, length: 100, nullable: true)]
     private ?string $pays = 'France';
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Alternance", mappedBy="adresseAlternance", cascade={"persist", "remove"})
-     */
-    private ?Alternance $alternance;
-
-    /**
-     * Adresse constructor.
-     */
-    public function __construct()
-    {
-    }
+    #[ORM\OneToOne(mappedBy: 'adresseAlternance', targetEntity: Alternance::class, cascade: [
+        'persist',
+        'remove',
+    ])]
+    private ?Alternance $alternance = null;
 
     public function getDisplay(): ?string
     {
         if ('' !== $this->getAdresse1() && '' !== $this->getCodePostal() && '' !== $this->getVille()) {
             $html = $this->getAdresse1();
             if ('' !== $this->getAdresse2()) {
-                $html .= ' <br />' . $this->getAdresse2();
+                $html .= ' <br />'.$this->getAdresse2();
             }
 
             if ('' !== $this->getAdresse3()) {
-                $html .= ' <br />' . $this->getAdresse3();
+                $html .= ' <br />'.$this->getAdresse3();
             }
 
-            $html .= ' <br />' . $this->getCodePostal() . ' ' . $this->getVille();
-            $html .= ' <br />' . $this->getPays();
+            $html .= ' <br />'.$this->getCodePostal().' '.$this->getVille();
+            $html .= ' <br />'.$this->getPays();
         } else {
             $html = '';
         }
@@ -98,30 +80,6 @@ class Adresse extends BaseEntity
     public function setAdresse1(?string $adresse1 = ''): self
     {
         $this->adresse1 = $adresse1;
-
-        return $this;
-    }
-
-    public function getAdresse2(): ?string
-    {
-        return trim($this->adresse2);
-    }
-
-    public function setAdresse2(?string $adresse2 = ''): self
-    {
-        $this->adresse2 = $adresse2;
-
-        return $this;
-    }
-
-    public function getAdresse3(): ?string
-    {
-        return trim($this->adresse3);
-    }
-
-    public function setAdresse3(?string $adresse3 = ''): self
-    {
-        $this->adresse3 = $adresse3;
 
         return $this;
     }
@@ -146,6 +104,30 @@ class Adresse extends BaseEntity
     public function setVille(?string $ville = ''): self
     {
         $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getAdresse2(): ?string
+    {
+        return trim($this->adresse2);
+    }
+
+    public function setAdresse2(?string $adresse2 = ''): self
+    {
+        $this->adresse2 = $adresse2;
+
+        return $this;
+    }
+
+    public function getAdresse3(): ?string
+    {
+        return trim($this->adresse3);
+    }
+
+    public function setAdresse3(?string $adresse3 = ''): self
+    {
+        $this->adresse3 = $adresse3;
 
         return $this;
     }

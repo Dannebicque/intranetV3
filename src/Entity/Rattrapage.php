@@ -12,16 +12,17 @@ namespace App\Entity;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\MatiereTrait;
 use App\Entity\Traits\UuidTrait;
+use App\Repository\RattrapageRepository;
 use Carbon\CarbonInterface;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\RattrapageRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: RattrapageRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Rattrapage extends BaseEntity
 {
     use UuidTrait;
@@ -37,73 +38,64 @@ class Rattrapage extends BaseEntity
         self::DEMANDE_REFUSEE => 'demande refusée',
     ];
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="rattrapages")
-     * @Groups({"rattrapage_administration"})
-     */
-    private ?Etudiant $etudiant;
+    #[Groups(groups: ['rattrapage_administration'])]
+    #[ORM\ManyToOne(targetEntity: Personnel::class)]
+    private ?Personnel $personnel = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
-     * @Groups({"rattrapage_administration"})
-     */
-    private ?Personnel $personnel;
-
-    /**
-     * @ORM\Column(type="date")
-     * @Groups({"rattrapage_administration"})
-     */
+    #[Groups(groups: ['rattrapage_administration'])]
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?CarbonInterface $dateEval = null;
 
-    /**
-     * @ORM\Column(type="time", nullable=true)
-     * @Groups({"rattrapage_administration"})
-     */
-    private ?CarbonInterface $heureEval;
+    #[Groups(groups: ['rattrapage_administration'])]
+    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $heureEval = null;
 
-    /**
-     * @ORM\Column(type="string", length=20, nullable=true)
-     * @Groups({"rattrapage_administration"})
-     */
-    private ?string $duree;
+    #[Groups(groups: ['rattrapage_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 20, nullable: true)]
+    private ?string $duree = null;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     * @Groups({"rattrapage_administration"})
-     */
-    private ?CarbonInterface $dateRattrapage;
+    #[Groups(groups: ['rattrapage_administration'])]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateRattrapage = null;
 
-    /**
-     * @ORM\Column(type="time", nullable=true)
-     * @Groups({"rattrapage_administration"})
-     */
-    private ?CarbonInterface $heureRattrapage;
+    #[Groups(groups: ['rattrapage_administration'])]
+    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $heureRattrapage = null;
 
-    /**
-     * @ORM\Column(type="string", length=10, nullable=true)
-     * @Groups({"rattrapage_administration"})
-     */
-    private ?string $salle;
+    #[Groups(groups: ['rattrapage_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 10, nullable: true)]
+    private ?string $salle = null;
 
-    /**
-     * @ORM\Column(type="string", length=1)
-     */
+    #[ORM\Column(type: Types::STRING, length: 1)]
     private string $etatDemande;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire")
-     */
+    #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class)]
     private ?AnneeUniversitaire $anneeUniversitaire;
 
-    /**
-     * @Groups({"rattrapage_administration"})
-     */
-    private ?string $libelleMatiere;
+    #[Groups(groups: ['rattrapage_administration'])]
+    private ?string $libelleMatiere = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Semestre::class, inversedBy="rattrapages")
-     */
-    private ?Semestre $semestre;
+    #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'rattrapages')]
+    private ?Semestre $semestre = null;
+
+    #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'rattrapages')]
+    #[Groups(groups: ['rattrapage_administration'])]
+    private ?Etudiant $etudiant;
+
+    public function __construct(?Etudiant $etudiant)
+    {
+        $this->etudiant = $etudiant;
+        $this->setUuid(Uuid::uuid4());
+        $this->etatDemande = self::DEMANDE_FAITE;
+        $this->anneeUniversitaire = $etudiant?->getAnneeUniversitaire();
+    }
+
+    public function setUuid(UuidInterface $uuid): self
+    {
+        $this->uuid = $uuid;
+
+        return $this;
+    }
 
     public function getLibelleMatiere(): ?string
     {
@@ -115,25 +107,12 @@ class Rattrapage extends BaseEntity
         $this->libelleMatiere = $libelleMatiere;
     }
 
-    public function __construct(Etudiant $etudiant)
-    {
-        $this->setUuid(Uuid::uuid4());
-        $this->etudiant = $etudiant;
-        $this->etatDemande = self::DEMANDE_FAITE;
-        $this->anneeUniversitaire = $etudiant->getAnneeUniversitaire();
-    }
-
     public function __clone()
     {
         $this->setUuid(Uuid::uuid4());
     }
 
-    public function getEtudiant(): ?Etudiant
-    {
-        return $this->etudiant;
-    }
-
-    public function setEtudiant(Etudiant $etudiant): self
+    public function setEtudiant(?Etudiant $etudiant): self
     {
         $this->etudiant = $etudiant;
 
@@ -148,30 +127,6 @@ class Rattrapage extends BaseEntity
     public function setPersonnel(?Personnel $personnel): self
     {
         $this->personnel = $personnel;
-
-        return $this;
-    }
-
-    public function getDateEval(): ?CarbonInterface
-    {
-        return $this->dateEval;
-    }
-
-    public function setDateEval(CarbonInterface $dateEval): self
-    {
-        $this->dateEval = $dateEval;
-
-        return $this;
-    }
-
-    public function getHeureEval(): ?CarbonInterface
-    {
-        return $this->heureEval;
-    }
-
-    public function setHeureEval(?CarbonInterface $heureEval): self
-    {
-        $this->heureEval = $heureEval;
 
         return $this;
     }
@@ -238,7 +193,7 @@ class Rattrapage extends BaseEntity
 
     public function getUuidString(): string
     {
-        return (string)$this->getUuid();
+        return (string) $this->getUuid();
     }
 
     public function getAnneeUniversitaire(): ?AnneeUniversitaire
@@ -253,33 +208,53 @@ class Rattrapage extends BaseEntity
         return $this;
     }
 
-    public function setUuid($uuid): self
-    {
-        $this->uuid = $uuid;
-
-        return $this;
-    }
-
-    /**
-     * @Groups({"rattrapage_administration"})
-     */
+    #[Groups(groups: ['rattrapage_administration'])]
     public function getEtatDemandeLong(): ?string
     {
         return self::ETATLONG[$this->etatDemande] ?? '-erreur code-';
     }
 
-    public function groupes(): Collection|array|null
+    public function groupes(): Collection | array | null
     {
         return $this->getEtudiant()?->getGroupes();
+    }
+
+    public function getEtudiant(): ?Etudiant
+    {
+        return $this->etudiant;
     }
 
     public function absenceJustifiee(): ?string
     {
         if (null !== $this->getDateEval() && null !== $this->getHeureEval()) {
-            return $this->getEtudiant()?->getId() . '_' . $this->getDateEval()->format('Ymd') . '_' . $this->getHeureEval()->format('Hi');
+            return $this->getEtudiant()?->getId().'_'.$this->getDateEval()->format('Ymd').'_'.$this->getHeureEval()->format('Hi');
         }
 
         return null;
+    }
+
+    public function getDateEval(): ?CarbonInterface
+    {
+        return $this->dateEval;
+    }
+
+    public function setDateEval(CarbonInterface $dateEval): self
+    {
+        $this->dateEval = $dateEval;
+
+        return $this;
+    }
+
+    public function getHeureEval(): ?CarbonInterface
+    {
+        return $this->heureEval;
+    }
+
+    public function setHeureEval(?CarbonInterface $heureEval): self
+    {
+        $this->heureEval = $heureEval;
+
+        return $this;
     }
 
     public function getSemestre(): ?Semestre

@@ -11,67 +11,50 @@ namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\MatiereTrait;
+use App\Repository\PrevisionnelRepository;
 use App\Utils\Tools;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\PrevisionnelRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: PrevisionnelRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Previsionnel extends BaseEntity
 {
     use LifeCycleTrait;
     use MatiereTrait;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="previsionnels", fetch="EAGER" )
-     */
-    private ?Personnel $personnel;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private ?int $annee;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $referent = false;
 
-    /**
-     * @ORM\Column(type="float")
-     */
+    #[ORM\Column(type: Types::FLOAT)]
     private ?float $nbHCm = 0;
 
-    /**
-     * @ORM\Column(type="float")
-     */
+    #[ORM\Column(type: Types::FLOAT)]
     private ?float $nbHTd = 0;
 
-    /**
-     * @ORM\Column(type="float")
-     */
+    #[ORM\Column(type: Types::FLOAT)]
     private ?float $nbHTp = 0;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private int $nbGrCm = 0;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private int $nbGrTd = 0;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private int $nbGrTp = 0;
 
-    public function __construct(int $annee, ?Personnel $personnel = null)
+    #[ORM\Column(type: Types::INTEGER)]
+    private int $annee;
+
+    #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'previsionnels')]
+    private ?Personnel $personnel;
+
+    public function __construct(int $annee, Personnel $personnel = null)
     {
-        $this->personnel = $personnel;
         $this->annee = $annee;
+        $this->personnel = $personnel;
     }
 
     public function getPersonnel(): ?Personnel

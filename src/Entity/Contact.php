@@ -10,63 +10,47 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\ContactRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\ContactRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: ContactRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Contact extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\Column(type="string", length=50, nullable=true)
-     * @Groups({"alternance_administration", "stage_entreprise_administration"})
-     */
-    private ?string $nom;
+    #[Groups(groups: ['alternance_administration', 'stage_entreprise_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
+    private ?string $nom = null;
 
-    /**
-     * @ORM\Column(type="string", length=50, nullable=true)
-     * @Groups({"alternance_administration", "stage_entreprise_administration"})
-     */
-    private ?string $prenom;
+    #[Groups(groups: ['alternance_administration', 'stage_entreprise_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
+    private ?string $prenom = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"alternance_administration", "stage_entreprise_administration"})
-     */
-    private ?string $fonction;
+    #[Groups(groups: ['alternance_administration', 'stage_entreprise_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $fonction = null;
 
-    /**
-     * @ORM\Column(type="string", length=25, nullable=true)
-     * @Groups({"alternance_administration", "stage_entreprise_administration"})
-     */
-    private ?string $telephone;
+    #[Groups(groups: ['alternance_administration', 'stage_entreprise_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 25, nullable: true)]
+    private ?string $telephone = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"alternance_administration", "stage_entreprise_administration"})
-     */
-    private ?string $email;
+    #[Groups(groups: ['alternance_administration', 'stage_entreprise_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $email = null;
 
-    /**
-     * @ORM\Column(type="string", length=25, nullable=true)
-     * @Groups({"alternance_administration"})
-     */
-    private ?string $portable;
+    #[Groups(groups: ['alternance_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 25, nullable: true)]
+    private ?string $portable = null;
 
-    /**
-     * @ORM\Column(type="string", length=3)
-     * @Groups({"alternance_administration"})
-     */
+    #[Groups(groups: ['alternance_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 3)]
     private ?string $civilite;
 
-    /**
-     * @ORM\Column(type="string", length=25, nullable=true)
-     */
-    private ?string $fax;
+    #[ORM\Column(type: Types::STRING, length: 25, nullable: true)]
+    private ?string $fax = null;
 
     public function __construct()
     {
@@ -147,7 +131,7 @@ class Contact extends BaseEntity
 
     public function getDisplay(): string
     {
-        return $this->civilite . ' ' . ucfirst($this->getPrenom()) . ' ' . mb_strtoupper($this->getNom());
+        return $this->civilite.' '.ucfirst($this->getPrenom()).' '.mb_strtoupper($this->getNom());
     }
 
     public function getPrenom(): ?string

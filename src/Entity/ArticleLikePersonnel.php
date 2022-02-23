@@ -9,17 +9,14 @@
 
 namespace App\Entity;
 
+use App\Repository\ArticleLikePersonnelRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\ArticleLikePersonnelRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: ArticleLikePersonnelRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class ArticleLikePersonnel extends ArticleLike
 {
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="articlesLike")
-     */
+    #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'articlesLike')]
     private Personnel $personnel;
 
     public function __construct(Personnel $personnel, Article $article)
@@ -33,7 +30,7 @@ class ArticleLikePersonnel extends ArticleLike
         return $this->personnel;
     }
 
-    public function setPersonnel(Personnel $personnel): self
+    public function setPersonnel(?Personnel $personnel): self
     {
         $this->personnel = $personnel;
 

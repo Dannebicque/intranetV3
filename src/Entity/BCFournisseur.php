@@ -12,26 +12,22 @@ namespace App\Entity;
 use App\Repository\BCFournisseurRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=BCFournisseurRepository::class)
- */
+#[ORM\Entity(repositoryClass: BCFournisseurRepository::class)]
 class BCFournisseur extends BaseEntity
 {
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
-    private ?string $libelle;
+    #[ORM\Column(type: Types::STRING, length: 100)]
+    private ?string $libelle = null;
+
+    #[ORM\Column(type: Types::STRING, length: 10)]
+    private ?string $numero = null;
 
     /**
-     * @ORM\Column(type="string", length=10)
+     * @var \Doctrine\Common\Collections\ArrayCollection
      */
-    private ?string $numero;
-
-    /**
-     * @ORM\OneToMany(targetEntity=BCDemande::class, mappedBy="fournisseur")
-     */
+    #[ORM\OneToMany(mappedBy: 'fournisseur', targetEntity: BCDemande::class)]
     private ArrayCollection $bCDemandes;
 
     public function __construct()

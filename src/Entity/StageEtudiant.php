@@ -11,19 +11,19 @@ namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
+use App\Repository\StageEtudiantRepository;
 use App\Utils\Tools;
 use Carbon\CarbonInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\StageEtudiantRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: StageEtudiantRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class StageEtudiant extends BaseEntity
 {
     use UuidTrait;
@@ -40,7 +40,6 @@ class StageEtudiant extends BaseEntity
     public const ETAT_STAGE_ERASMUS = 'ETAT_STAGE_ERASMUS';
     public const ETAT_STAGE_ETRANGER = 'ETAT_STAGE_ETRANGER';
     public const ETAT_STAGE_APPRENTISSAGE = 'ETAT_STAGE_APPRENTISSAGE';
-
     public const PERIODE_GRATIFICATION_HEURE = 'H';
     public const PERIODE_GRATIFICATION_JOUR = 'J';
     public const PERIODE_GRATIFICATION_MOIS = 'M';
@@ -55,162 +54,113 @@ class StageEtudiant extends BaseEntity
         self::ETAT_STAGE_CONVENTION_RECUE,
     ];
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\StagePeriode", inversedBy="stageEtudiants")
-     */
+    #[ORM\ManyToOne(targetEntity: StagePeriode::class, inversedBy: 'stageEtudiants')]
     private ?StagePeriode $stagePeriode;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="stageEtudiants")
-     * @Groups({"stage_periode_gestion"})
-     */
+    #[Groups(['stage_periode_gestion'])]
+    #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'stageEtudiants')]
     private ?Etudiant $etudiant;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Contact", cascade={"persist", "remove"})
-     * @Groups({"stage_entreprise_administration", "stage_entreprise"})
-     */
+    #[Groups(['stage_periode_gestion', 'stage_entreprise'])]
+    #[ORM\OneToOne(targetEntity: Contact::class, cascade: ['persist', 'remove'])]
     private ?Contact $tuteur;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"stage_entreprise_administration", "stage_entreprise"})
-     */
+    #[Groups(['stage_periode_gestion', 'stage_entreprise'])]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $serviceStageEntreprise = '';
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @Groups({"stage_entreprise"})
-     */
+    #[Groups(['stage_entreprise'])]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $sujetStage = '';
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateDepotFormulaire;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateValidation;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateConventionEnvoyee;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateConventionRecu;
 
-    /**
-     * @ORM\Column(type="string", length=30)
-     */
+    #[ORM\Column(type: Types::STRING, length: 30)]
     private string $etatStage = 'ETAT_STAGE_AUTORISE';
 
-    /**
-     * @ORM\Column(type="date")
-     * @Groups({"stage_entreprise_administration", "stage_entreprise", "stage_periode_gestion"})
-     */
+    #[Groups(['stage_entreprise_administration', 'stage_entreprise', 'stage_periode_gestion'])]
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?CarbonInterface $dateDebutStage = null;
 
-    /**
-     * @ORM\Column(type="date")
-     * @Groups({"stage_entreprise_administration", "stage_entreprise", "stage_periode_gestion"})
-     */
+    #[Groups(['stage_entreprise_administration', 'stage_entreprise', 'stage_periode_gestion'])]
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?CarbonInterface $dateFinStage = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $activites;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $amenagementStage;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private bool $gratification = false;
 
-    /**
-     * @ORM\Column(type="float")
-     *
-     * @Assert\Type("float")
-     */
+    #[ORM\Column(type: Types::FLOAT)]
     private ?float $gratificationMontant;
 
-    /**
-     * @ORM\Column(type="string", length=1)
-     */
-    private string $gratificationPeriode = 'H';
+    #[ORM\Column(type: Types::STRING, length: 1)]
+    private string $gratificationPeriode = self::PERIODE_GRATIFICATION_HEURE;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $avantages;
 
-    /**
-     * @ORM\Column(type="float")
-     */
+    #[ORM\Column(type: Types::FLOAT)]
     private float $dureeHebdomadaire = 35;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private int $dureeJoursStage = 0;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="stageEtudiants")
-     * @Groups({"stage_periode_gestion"})
-     */
+    #[Groups(['stage_periode_gestion'])]
+    #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'stageEtudiants')]
     private ?Personnel $tuteurUniversitaire;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Entreprise", inversedBy="stageEtudiants", cascade={"persist", "remove"}, fetch="EAGER")
-     * @Groups({"stage_entreprise_administration", "stage_periode_gestion"})
-     */
+    #[Groups(['stage_entreprise_administration', 'stage_periode_gestion'])]
+    #[ORM\ManyToOne(targetEntity: Entreprise::class, cascade: ['persist', 'remove'], fetch: 'EAGER', inversedBy: 'stageEtudiants')]
     private ?Entreprise $entreprise;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateAutorise;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateImprime;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Adresse", cascade={"persist", "remove"})
-     */
+    #[ORM\OneToOne(targetEntity: Adresse::class, cascade: ['persist', 'remove'])]
     private ?Adresse $adresseStage;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $periodesInterruptions;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $commentaireDureeHebdomadaire;
 
     /**
-     * @ORM\OneToMany(targetEntity=StageAvenant::class, mappedBy="stageEtudiant")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\StageAvenant>
      */
+    #[ORM\OneToMany(mappedBy: 'stageEtudiant', targetEntity: StageAvenant::class)]
     private Collection $stageAvenants;
 
     public function __construct(?float $gratificationMontant)
     {
         $this->setUuid(Uuid::uuid4());
-
         $this->setGratificationMontant($gratificationMontant);
         $this->stageAvenants = new ArrayCollection();
+    }
+
+    public function setUuid(UuidInterface $uuid): self
+    {
+        $this->uuid = $uuid;
+
+        return $this;
     }
 
     public function __clone()
@@ -334,30 +284,6 @@ class StageEtudiant extends BaseEntity
     public function setEtatStage(string $etatStage): self
     {
         $this->etatStage = $etatStage;
-
-        return $this;
-    }
-
-    public function getDateDebutStage(): ?CarbonInterface
-    {
-        return $this->dateDebutStage;
-    }
-
-    public function setDateDebutStage(CarbonInterface $dateDebutStage): self
-    {
-        $this->dateDebutStage = $dateDebutStage;
-
-        return $this;
-    }
-
-    public function getDateFinStage(): ?CarbonInterface
-    {
-        return $this->dateFinStage;
-    }
-
-    public function setDateFinStage(CarbonInterface $dateFinStage): self
-    {
-        $this->dateFinStage = $dateFinStage;
 
         return $this;
     }
@@ -542,21 +468,38 @@ class StageEtudiant extends BaseEntity
         return $this;
     }
 
-    public function setUuid($uuid): self
-    {
-        $this->uuid = $uuid;
-
-        return $this;
-    }
-
     public function dateDebutStageFr(): string
     {
         return null !== $this->getDateDebutStage() ? $this->getDateDebutStage()->format('d/m/Y') : '-';
     }
 
+    public function getDateDebutStage(): ?CarbonInterface
+    {
+        return $this->dateDebutStage;
+    }
+
+    public function setDateDebutStage(CarbonInterface $dateDebutStage): self
+    {
+        $this->dateDebutStage = $dateDebutStage;
+
+        return $this;
+    }
+
     public function dateFinStageFr(): string
     {
         return null !== $this->getDateFinStage() ? $this->getDateFinStage()->format('d/m/Y') : '-';
+    }
+
+    public function getDateFinStage(): ?CarbonInterface
+    {
+        return $this->dateFinStage;
+    }
+
+    public function setDateFinStage(CarbonInterface $dateFinStage): self
+    {
+        $this->dateFinStage = $dateFinStage;
+
+        return $this;
     }
 
     /**

@@ -10,25 +10,25 @@
 namespace App\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
 trait UuidTrait
 {
-    /**
-     * @ORM\Column(type="uuid_binary")
-     */
-    private $uuid;
+    #[ORM\Column(type: 'uuid_binary')]
+    private UuidInterface $uuid;
 
     public function getUuidString(): string
     {
-        return (string)$this->getUuid();
+        return (string) $this->getUuid();
     }
 
-    public function getUuid()
+    public function getUuid(): UuidInterface
     {
         return $this->uuid;
     }
 
-    public function setUuid($uuid): void
+    public function setUuid(UuidInterface $uuid): void
     {
         $this->uuid = $uuid;
     }

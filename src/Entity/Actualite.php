@@ -10,40 +10,28 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\ActualiteRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\Serializer\Annotation\MaxDepth;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\ActualiteRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: ActualiteRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Actualite extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\Column(type="string", length=150)
-     * @Groups({"actualite_administration"})
-     */
-    private ?string $titre;
+    #[Groups(groups: ['actualite_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 150)]
+    private ?string $titre = null;
 
-    /**
-     * @ORM\Column(type="text")
-     * @Groups({"actualite_administration"})
-     */
-    private ?string $texte;
+    #[Groups(groups: ['actualite_administration'])]
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $texte = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Departement", inversedBy="actualites")
-     * @MaxDepth(2)
-     * @Groups({"actualite_administration"})
-     */
-    private Departement $departement;
+    #[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'actualites')]
+    private ?Departement $departement;
 
-    /**
-     * Actualite constructor.
-     */
     public function __construct(Departement $departement)
     {
         $this->departement = $departement;
@@ -78,7 +66,7 @@ class Actualite extends BaseEntity
         return $this->departement;
     }
 
-    public function setDepartement(Departement $departement): self
+    public function setDepartement(?Departement $departement): self
     {
         $this->departement = $departement;
 

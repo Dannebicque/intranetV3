@@ -12,230 +12,201 @@ namespace App\Entity;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
 use App\Interfaces\UtilisateurInterface;
+use App\Repository\EtudiantRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
-use JsonException;
 use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\EtudiantRepository")
  * @Vich\Uploadable
- * @ORM\HasLifecycleCallbacks()
  */
+#[ORM\Entity(repositoryClass: EtudiantRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Etudiant extends Utilisateur implements UtilisateurInterface
 {
     use LifeCycleTrait;
     use UuidTrait;
 
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
     private mixed $id;
 
-    /**
-     *
-     * @ORM\Column(type="string", length=50)
-     */
+    #[ORM\Column(type: Types::STRING, length: 50)]
     private ?string $photoName = 'noimage.png';
 
     /**
      * @Vich\UploadableField(mapping="etudiant", fileNameProperty="photoName")
-     * @
      */
-    private $photoFile;
+    private ?File $photoFile;
+
+    #[Groups(groups: ['etudiants_administration'])]
+    #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'etudiants')]
+    private ?Semestre $semestre = null;
 
     /**
-     *
-     * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="etudiants")
-     * @Groups({"etudiants_administration"})
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Note>
      */
-    private ?Semestre $semestre;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Note", mappedBy="etudiant")
-     */
+    #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: Note::class)]
     private Collection $notes;
 
-    /**
-     * @ORM\Column(type="string", length=20)
-     * @Groups({"etudiants_administration"})
-     */
-    private ?string $numEtudiant;
+    #[Groups(groups: ['etudiants_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 20)]
+    private ?string $numEtudiant = null;
 
-    /**
-     * @ORM\Column(type="string", length=20, nullable=true)
-     */
-    private ?string $numIne;
+    #[ORM\Column(type: Types::STRING, length: 20, nullable: true)]
+    private ?string $numIne = null;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
     private ?int $anneeBac;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Absence", mappedBy="etudiant")
-     * @ORM\OrderBy({"dateHeure" = "desc"})
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Absence>
      */
+    #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: Absence::class)]
+    #[ORM\OrderBy(value: ['dateHeure' => 'desc'])]
     private Collection $absences;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Adresse", cascade={"persist", "remove"})
-     */
-    private ?Adresse $adresseParentale;
+    #[ORM\OneToOne(targetEntity: Adresse::class, cascade: ['persist', 'remove'])]
+    private ?Adresse $adresseParentale = null;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Rattrapage", mappedBy="etudiant")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Rattrapage>
      */
+    #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: Rattrapage::class)]
     private Collection $rattrapages;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Favori", mappedBy="etudiantDemandeur")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Favori>
      */
+    #[ORM\OneToMany(mappedBy: 'etudiantDemandeur', targetEntity: Favori::class)]
     private Collection $etudiantDemande;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Favori", mappedBy="etudiantDemande")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Favori>
      */
+    #[ORM\OneToMany(mappedBy: 'etudiantDemande', targetEntity: Favori::class)]
     private Collection $etudiantDemandeur;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Scolarite", mappedBy="etudiant")
-     * @ORM\OrderBy({"ordre" = "ASC"})
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Scolarite>
      */
+    #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: Scolarite::class)]
+    #[ORM\OrderBy(value: ['ordre' => 'ASC'])]
     private Collection $scolarites;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Notification", mappedBy="etudiant")
-     * @ORM\OrderBy({"created":"desc"})
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Notification>
      */
+    #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: Notification::class)]
+    #[ORM\OrderBy(value: ['created' => 'desc'])]
     private Collection $notifications;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $boursier = false;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $demandeurEmploi = false;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Groupe", inversedBy="etudiants", fetch="LAZY")
-     */
+    #[ORM\ManyToMany(targetEntity: Groupe::class, inversedBy: 'etudiants')]
     private Collection $groupes;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\MessageDestinataireEtudiant", mappedBy="etudiant")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\MessageDestinataireEtudiant>
      */
+    #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: MessageDestinataireEtudiant::class)]
     private Collection $messageDestinataireEtudiants;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\AbsenceJustificatif", mappedBy="etudiant")
+     * @var \Doctrine\Common\Collections\Collection<int,\App\Entity\AbsenceJustificatif>
      */
+    #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: AbsenceJustificatif::class)]
     private Collection $absenceJustificatifs;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\StageEtudiant", mappedBy="etudiant")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\StageEtudiant>
      */
+    #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: StageEtudiant::class)]
     private Collection $stageEtudiants;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Alternance", mappedBy="etudiant")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Alternance>
      */
+    #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: Alternance::class)]
     private Collection $alternances;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $deleted = false;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private ?string $amenagementsParticuliers;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $amenagementsParticuliers = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private ?int $promotion;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Bac")
-     */
-    private ?Bac $bac;
+    #[ORM\ManyToOne(targetEntity: Bac::class)]
+    private ?Bac $bac = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private ?string $intituleSecuriteSociale;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $intituleSecuriteSociale = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private ?string $adresseSecuriteSociale;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $adresseSecuriteSociale = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private int $anneeSortie = 0;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\EmpruntEtudiant", mappedBy="etudiant")
-     * @ORM\OrderBy({"created":"DESC"})
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\EmpruntEtudiant>
      */
+    #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: EmpruntEtudiant::class)]
+    #[ORM\OrderBy(value: ['created' => 'DESC'])]
     private Collection $emprunts;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ArticleLikeEtudiant", mappedBy="etudiant")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ArticleLikeEtudiant>
      */
+    #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: ArticleLikeEtudiant::class)]
     private Collection $articlesLike;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Departement", inversedBy="etudiants")
-     */
-    private ?Departement $departement;
+    #[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'etudiants')]
+    private ?Departement $departement = null;
 
     /**
-     * @ORM\OneToMany(targetEntity="QuestionnaireEtudiant", mappedBy="etudiant")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\QuestionnaireEtudiant>
      */
+    #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: QuestionnaireEtudiant::class)]
     private Collection $quizzEtudiants;
 
-    /**
-     * @ORM\Column(type="string", length=50, nullable=true)
-     */
-    private ?string $loginSpecifique;
+    #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
+    private ?string $loginSpecifique = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $formationContinue = false;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\DocumentFavoriEtudiant", mappedBy="etudiant")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\DocumentFavoriEtudiant>
      */
+    #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: DocumentFavoriEtudiant::class)]
     private Collection $documentsFavoris;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=ProjetEtudiant::class, mappedBy="etudiants")
-     */
+    #[ORM\ManyToMany(targetEntity: ProjetEtudiant::class, mappedBy: 'etudiants')]
     private Collection $projetEtudiants;
 
     /**
-     * @ORM\OneToMany(targetEntity=Commentaire::class, mappedBy="etudiant")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Commentaire>
      */
+    #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: Commentaire::class)]
     private Collection $commentaires;
 
     /**
-     * Etudiant constructor.
-     *
      * @throws Exception
      */
     public function __construct()
@@ -257,13 +228,20 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         $this->articlesLike = new ArrayCollection();
         $this->documentsFavoris = new ArrayCollection();
 
-        $this->promotion = (int)date('Y');
-        $this->anneeBac = (int)date('Y');
+        $this->promotion = (int) date('Y');
+        $this->anneeBac = (int) date('Y');
         $this->typeUser = 'ETU';
         $this->emprunts = new ArrayCollection();
         $this->quizzEtudiants = new ArrayCollection();
         $this->projetEtudiants = new ArrayCollection();
         $this->commentaires = new ArrayCollection();
+    }
+
+    public function setUuid(UuidInterface $uuid): self
+    {
+        $this->uuid = $uuid;
+
+        return $this;
     }
 
     public function __clone()
@@ -274,17 +252,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-
-    public function getSemestre(): ?Semestre
-    {
-        return $this->semestre;
-    }
-
-    public function setSemestre(?Semestre $semestre): void
-    {
-        $this->semestre = $semestre;
     }
 
     /**
@@ -755,6 +722,16 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return null;
     }
 
+    public function getSemestre(): ?Semestre
+    {
+        return $this->semestre;
+    }
+
+    public function setSemestre(?Semestre $semestre): void
+    {
+        $this->semestre = $semestre;
+    }
+
     public function getAnnee(): ?Annee
     {
         if (null !== $this->getSemestre() && null !== $this->getSemestre()->getAnnee()) {
@@ -893,6 +870,9 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this;
     }
 
+    /**
+     * @throws \JsonException
+     */
     public function updateFromApogee(?array $dataApogee): void
     {
         $this->setRoles(['ROLE_ETUDIANT']);
@@ -903,7 +883,7 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         }
     }
 
-    public function updateFromLdap($ldap): void
+    public function updateFromLdap(array $ldap): void
     {
         $this->setMailUniv($ldap['mail']);
         $this->setUsername($ldap['login']);
@@ -917,7 +897,7 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this->emprunts;
     }
 
-    public function addEmprunt(Emprunt $emprunt): self
+    public function addEmprunt(EmpruntEtudiant $emprunt): self
     {
         if (!$this->emprunts->contains($emprunt)) {
             $this->emprunts[] = $emprunt;
@@ -927,7 +907,7 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this;
     }
 
-    public function removeEmprunt(Emprunt $emprunt): self
+    public function removeEmprunt(EmpruntEtudiant $emprunt): self
     {
         //Todo: revoir la partie emprunt
         if ($this->emprunts->contains($emprunt)) {
@@ -972,13 +952,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this;
     }
 
-    public function setUuid($uuid): self
-    {
-        $this->uuid = $uuid;
-
-        return $this;
-    }
-
     /**
      * @return Collection|ArticleLikeEtudiant[]
      */
@@ -1010,16 +983,16 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this;
     }
 
+    public function getDepartement(): ?Departement
+    {
+        return $this->departement;
+    }
+
     public function setDepartement(?Departement $departement): self
     {
         $this->departement = $departement;
 
         return $this;
-    }
-
-    public function getDepartement(): ?Departement
-    {
-        return $this->departement;
     }
 
     /**

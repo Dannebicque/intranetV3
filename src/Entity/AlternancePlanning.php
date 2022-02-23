@@ -2,34 +2,25 @@
 
 namespace App\Entity;
 
-use App\Repository\PlanningAlternanceRepository;
+use App\Repository\AlternancePlanningRepository;
+use Carbon\CarbonInterface;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=AlternancePlanningRepository::class)
- */
+#[ORM\Entity(repositoryClass: AlternancePlanningRepository::class)]
 class AlternancePlanning extends BaseEntity
 {
+    #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class, inversedBy: 'planningAlternances')]
+    private ?AnneeUniversitaire $anneeUniversitaire = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=AnneeUniversitaire::class, inversedBy="planningAlternances")
-     */
-    private $anneeUniversitaire;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?CarbonInterface $date = null;
 
-    /**
-     * @ORM\Column(type="date")
-     */
-    private $date;
+    #[ORM\Column(type: Types::STRING, length: 10)]
+    private ?string $etat = null;
 
-    /**
-     * @ORM\Column(type="string", length=10)
-     */
-    private $etat;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Annee::class, inversedBy="alternancePlannings")
-     */
-    private $annee;
+    #[ORM\ManyToOne(targetEntity: Annee::class, inversedBy: 'alternancePlannings')]
+    private ?Annee $annee = null;
 
     public function getAnneeUniversitaire(): ?AnneeUniversitaire
     {
@@ -43,12 +34,12 @@ class AlternancePlanning extends BaseEntity
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDate(): ?CarbonInterface
     {
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDate(?CarbonInterface $date): self
     {
         $this->date = $date;
 
@@ -60,7 +51,7 @@ class AlternancePlanning extends BaseEntity
         return $this->etat;
     }
 
-    public function setEtat(string $etat): self
+    public function setEtat(?string $etat): self
     {
         $this->etat = $etat;
 

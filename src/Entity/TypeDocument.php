@@ -10,39 +10,32 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\TypeDocumentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\TypeDocumentRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: TypeDocumentRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class TypeDocument extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     *
-     * @ORM\Column(type="string", length=75)
-     * @Groups({"typedocument_administration","document_administration"})
-     */
+    #[Groups(['typedocument_administration', 'document_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 75)]
     private ?string $libelle;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Departement", inversedBy="typeDocuments")
-     */
+    #[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'typeDocuments')]
     private ?Departement $departement;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Document", mappedBy="typeDocument")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Document>
      */
+    #[ORM\OneToMany(mappedBy: 'typeDocument', targetEntity: Document::class)]
     private Collection $documents;
 
-    /**
-     * TypeDocument constructor.
-     */
     public function __construct(Departement $departement)
     {
         $this->setDepartement($departement);

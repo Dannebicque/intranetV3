@@ -11,25 +11,20 @@ namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\ApcComposanteEssentielleRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=ApcComposanteEssentielleRepository::class)
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: ApcComposanteEssentielleRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class ApcComposanteEssentielle extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private ?string $libelle;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=ApcCompetence::class, inversedBy="apcComposanteEssentielles")
-     */
+    #[ORM\ManyToOne(targetEntity: ApcCompetence::class, inversedBy: 'apcComposanteEssentielles')]
     private ?ApcCompetence $competence;
+
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $libelle = null;
 
     public function __construct(?ApcCompetence $competence = null)
     {

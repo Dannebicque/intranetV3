@@ -10,61 +10,50 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\MaterielRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\MaterielRepository")
  * @Vich\Uploadable
  */
+#[ORM\Entity(repositoryClass: MaterielRepository::class)]
 class Materiel extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\TypeMateriel", inversedBy="materiels")
-     */
-    private ?TypeMateriel $typeMateriel;
+    #[ORM\ManyToOne(targetEntity: TypeMateriel::class, inversedBy: 'materiels')]
+    private ?TypeMateriel $typeMateriel = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private ?string $libelle;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $libelle = null;
 
-    /**
-     * @ORM\Column(type="text")
-     */
-    private ?string $description;
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $description = null;
 
-    /**
-     *
-     * @ORM\Column(type="string", length=50, nullable=true)
-     */
+    #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
     private ?string $photoName = 'noimage.png';
 
     /**
-     *
      * @Vich\UploadableField(mapping="materiel", fileNameProperty="photoName")
      */
-    private $photoFile;
+    private ?File $photoFile;
 
-    /**
-     * @ORM\Column(type="string", length=50, nullable=true)
-     */
-    private ?string $codebarre;
+    #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
+    private ?string $codebarre = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private ?bool $empruntable = true;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\EmpruntMateriel", mappedBy="materiel")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\EmpruntMateriel>
      */
+    #[ORM\OneToMany(mappedBy: 'materiel', targetEntity: EmpruntMateriel::class)]
     private Collection $empruntMateriels;
 
     public function __construct()
@@ -108,6 +97,11 @@ class Materiel extends BaseEntity
         return $this;
     }
 
+    public function getPhotoFile(): ?File
+    {
+        return $this->photoFile;
+    }
+
     /**
      * @throws Exception
      */
@@ -120,11 +114,6 @@ class Materiel extends BaseEntity
             // otherwise the event listeners won't be called and the file is lost
             $this->setUpdatedValue();
         }
-    }
-
-    public function getPhotoFile(): ?File
-    {
-        return $this->photoFile;
     }
 
     public function getPhotoName(): ?string

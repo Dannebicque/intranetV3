@@ -10,34 +10,26 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\QuestionnaireSectionQuestionRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\QuestionnaireSectionQuestionRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: QuestionnaireSectionQuestionRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class QuestionnaireSectionQuestion extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="QuestionnaireSection", inversedBy="qualiteSectionQuestions")
-     */
-    private ?QuestionnaireSection $section;
+    #[ORM\ManyToOne(targetEntity: QuestionnaireSection::class, inversedBy: 'qualiteSectionQuestions')]
+    private ?QuestionnaireSection $section = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="QuestionnaireQuestion", inversedBy="qualiteSectionQuestions")
-     */
-    private ?QuestionnaireQuestion $question;
+    #[ORM\ManyToOne(targetEntity: QuestionnaireQuestion::class, inversedBy: 'qualiteSectionQuestions')]
+    private ?QuestionnaireQuestion $question = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private ?int $ordre;
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $ordre = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $enabled = true;
 
     public function getSection(): ?QuestionnaireSection

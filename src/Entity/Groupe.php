@@ -9,72 +9,58 @@
 
 namespace App\Entity;
 
+use App\Repository\GroupeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\GroupeRepository")
- */
+#[ORM\Entity(repositoryClass: GroupeRepository::class)]
 class Groupe extends BaseEntity
 {
-    /**
-     * @ORM\Column(type="string", length=50)
-     * @Groups({"groupe_administration"})
-     */
-    private ?string $libelle;
+    #[Groups(groups: ['groupe_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 50)]
+    private ?string $libelle = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\TypeGroupe", inversedBy="groupes")
-     * @Groups({"groupe_administration"})
-     */
-    private ?TypeGroupe $typeGroupe;
+    #[Groups(groups: ['groupe_administration'])]
+    #[ORM\ManyToOne(targetEntity: TypeGroupe::class, inversedBy: 'groupes')]
+    private ?TypeGroupe $typeGroupe = null;
 
-    /**
-     * @ORM\Column(type="string", length=50, nullable=true)
-     * @Groups({"groupe_administration"})
-     */
+    #[Groups(groups: ['groupe_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
     private ?string $codeApogee = '';
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Groupe", inversedBy="enfants")
-     * @Groups({"groupe_administration"})
-     */
-    private ?Groupe $parent;
+    #[Groups(groups: ['groupe_administration'])]
+    #[ORM\ManyToOne(targetEntity: Groupe::class, inversedBy: 'enfants')]
+    private ?Groupe $parent = null;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Etudiant", mappedBy="groupes")
-     * @ORM\OrderBy({"nom"="asc", "prenom"="asc"})
-     */
+    #[ORM\ManyToMany(targetEntity: Etudiant::class, mappedBy: 'groupes')]
+    #[ORM\OrderBy(value: ['nom' => 'asc', 'prenom' => 'asc'])]
     private Collection $etudiants;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Groupe", mappedBy="parent", cascade={"remove"})
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Groupe>
      */
+    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Groupe::class, cascade: ['remove'])]
     private Collection $enfants;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @Groups({"groupe_administration"})
-     */
-    private ?int $ordre;
+    #[Groups(groups: ['groupe_administration'])]
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $ordre = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Parcour", inversedBy="groupes")
-     * @Groups({"groupe_administration"})
-     */
-    private ?Parcour $parcours;
+    #[Groups(groups: ['groupe_administration'])]
+    #[ORM\ManyToOne(targetEntity: Parcour::class, inversedBy: 'groupes')]
+    private ?Parcour $parcours = null;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=CovidAttestationEtudiant::class, mappedBy="groupes")
-     */
+    #[ORM\ManyToMany(targetEntity: CovidAttestationEtudiant::class, mappedBy: 'groupes')]
     private Collection $covidAttestationEtudiants;
 
     /**
-     * @ORM\OneToMany(targetEntity=AbsenceEtatAppel::class, mappedBy="groupe")
+     * @var \Doctrine\Common\Collections\Collection<\App\Entity\AbsenceEtatAppel>
      */
-    private $absenceEtatAppels;
+    #[ORM\OneToMany(mappedBy: 'groupe', targetEntity: AbsenceEtatAppel::class)]
+    private Collection $absenceEtatAppels;
 
     public function __construct()
     {
@@ -84,36 +70,12 @@ class Groupe extends BaseEntity
         $this->absenceEtatAppels = new ArrayCollection();
     }
 
-    public function getLibelle(): ?string
-    {
-        return $this->libelle;
-    }
-
-    public function setLibelle(string $libelle): self
-    {
-        $this->libelle = $libelle;
-
-        return $this;
-    }
-
-    public function getTypeGroupe(): ?TypeGroupe
-    {
-        return $this->typeGroupe;
-    }
-
-    public function setTypeGroupe(?TypeGroupe $typeGroupe): self
-    {
-        $this->typeGroupe = $typeGroupe;
-
-        return $this;
-    }
-
     public function getCodeApogee(): ?string
     {
         return $this->codeApogee;
     }
 
-    public function setCodeApogee(string $codeApogee): self
+    public function setCodeApogee(?string $codeApogee): self
     {
         $this->codeApogee = $codeApogee;
 
@@ -156,18 +118,6 @@ class Groupe extends BaseEntity
         return $this->enfants;
     }
 
-    public function getParent(): ?self
-    {
-        return $this->parent;
-    }
-
-    public function setParent(self $parent): self
-    {
-        $this->parent = $parent;
-
-        return $this;
-    }
-
     public function addGroupe(self $groupe): self
     {
         if (!$this->enfants->contains($groupe)) {
@@ -187,6 +137,18 @@ class Groupe extends BaseEntity
                 $groupe->setParent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getParent(): ?self
+    {
+        return $this->parent;
+    }
+
+    public function setParent(?self $parent): self
+    {
+        $this->parent = $parent;
 
         return $this;
     }
@@ -269,16 +231,40 @@ class Groupe extends BaseEntity
     public function getDisplaySemestre(): string
     {
         if (null !== $this->getTypeGroupe() && null !== $this->getTypeGroupe()->getSemestre()) {
-            return $this->getTypeGroupe()->getSemestre()->display() . ' | ' . $this->getLibelle();
+            return $this->getTypeGroupe()->getSemestre()->display().' | '.$this->getLibelle();
         }
 
         return '-Err Semestre-';
     }
 
+    public function getTypeGroupe(): ?TypeGroupe
+    {
+        return $this->typeGroupe;
+    }
+
+    public function setTypeGroupe(?TypeGroupe $typeGroupe): self
+    {
+        $this->typeGroupe = $typeGroupe;
+
+        return $this;
+    }
+
+    public function getLibelle(): ?string
+    {
+        return $this->libelle;
+    }
+
+    public function setLibelle(string $libelle): self
+    {
+        $this->libelle = $libelle;
+
+        return $this;
+    }
+
     public function getDisplay(): string
     {
         if (null !== $this->getTypeGroupe()) {
-            return $this->getTypeGroupe()->getLibelle() . ' ' . $this->getLibelle();
+            return $this->getTypeGroupe()->getLibelle().' '.$this->getLibelle();
         }
 
         return '-Err Semestre-';

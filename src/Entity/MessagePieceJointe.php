@@ -9,27 +9,21 @@
 
 namespace App\Entity;
 
+use App\Repository\MessagePieceJointeRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\MessagePieceJointeRepository")
- */
+#[ORM\Entity(repositoryClass: MessagePieceJointeRepository::class)]
 class MessagePieceJointe extends BaseEntity
 {
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Message", inversedBy="messagePieceJointes")
-     */
-    private ?Message $message;
+    #[ORM\ManyToOne(targetEntity: Message::class, inversedBy: 'messagePieceJointes')]
+    private ?Message $message = null;
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
-    private ?string $fichier;
+    #[ORM\Column(type: Types::STRING, length: 50)]
+    private ?string $fichier = null;
 
-    /**
-     * @ORM\Column(type="string", length=5)
-     */
-    private ?string $extension;
+    #[ORM\Column(type: Types::STRING, length: 5)]
+    private ?string $extension = null;
 
     public function getMessage(): ?Message
     {

@@ -14,46 +14,42 @@ use App\Interfaces\MatiereEntityInterface;
 use App\Repository\ApcRessourceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=ApcRessourceRepository::class)
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: ApcRessourceRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
 {
     use LifeCycleTrait;
 
     public const SOURCE = 'ressource';
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Semestre::class, inversedBy="apcRessources", fetch="EAGER")
-     */
-    private ?Semestre $semestre;
+    #[ORM\ManyToOne(targetEntity: Semestre::class, fetch: 'EAGER', inversedBy: 'apcRessources')]
+    private ?Semestre $semestre = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $preRequis = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $motsCles = null;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcRessourceCompetence>
      */
-    private ?string $preRequis;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private ?string $motsCles;
-
-    /**
-     * @ORM\OneToMany(targetEntity=ApcRessourceCompetence::class, mappedBy="ressource", cascade={"persist","remove"})
-     */
+    #[ORM\OneToMany(mappedBy: 'ressource', targetEntity: ApcRessourceCompetence::class, cascade: ['persist', 'remove'])]
     private Collection $apcRessourceCompetences;
 
     /**
-     * @ORM\OneToMany(targetEntity=ApcRessourceApprentissageCritique::class, mappedBy="ressource")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcRessourceApprentissageCritique>
      */
+    #[ORM\OneToMany(mappedBy: 'ressource', targetEntity: ApcRessourceApprentissageCritique::class, cascade: ['persist', 'remove'])]
     private Collection $apcRessourceApprentissageCritiques;
 
     /**
-     * @ORM\OneToMany(targetEntity=ApcSaeRessource::class, mappedBy="ressource")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcSaeRessource>
      */
+    #[ORM\OneToMany(mappedBy: 'ressource', targetEntity: ApcSaeRessource::class, cascade: ['persist', 'remove'])]
     private Collection $apcSaeRessources;
 
     public function __construct()
@@ -61,18 +57,6 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
         $this->apcRessourceCompetences = new ArrayCollection();
         $this->apcRessourceApprentissageCritiques = new ArrayCollection();
         $this->apcSaeRessources = new ArrayCollection();
-    }
-
-    public function getSemestre(): ?Semestre
-    {
-        return $this->semestre;
-    }
-
-    public function setSemestre(?Semestre $semestre): self
-    {
-        $this->semestre = $semestre;
-
-        return $this;
     }
 
     public function getPreRequis(): ?string
@@ -99,24 +83,6 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
         return $this;
     }
 
-    /**
-     * @return Collection|ApcRessourceCompetence[]
-     */
-    public function getApcRessourceCompetences(): Collection
-    {
-        return $this->apcRessourceCompetences;
-    }
-
-    public function addApcRessourceCompetence(ApcRessourceCompetence $apcRessourceCompetence): self
-    {
-        if (!$this->apcRessourceCompetences->contains($apcRessourceCompetence)) {
-            $this->apcRessourceCompetences[] = $apcRessourceCompetence;
-            $apcRessourceCompetence->setRessource($this);
-        }
-
-        return $this;
-    }
-
     public function removeApcRessourceCompetence(ApcRessourceCompetence $apcRessourceCompetence): self
     {
         // set the owning side to null (unless already changed)
@@ -135,8 +101,9 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
         return $this->apcRessourceApprentissageCritiques;
     }
 
-    public function addApcRessourceApprentissageCritique(ApcRessourceApprentissageCritique $apcRessourceApprentissageCritique): self
-    {
+    public function addApcRessourceApprentissageCritique(
+        ApcRessourceApprentissageCritique $apcRessourceApprentissageCritique
+    ): self {
         if (!$this->apcRessourceApprentissageCritiques->contains($apcRessourceApprentissageCritique)) {
             $this->apcRessourceApprentissageCritiques[] = $apcRessourceApprentissageCritique;
             $apcRessourceApprentissageCritique->setRessource($this);
@@ -145,8 +112,9 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
         return $this;
     }
 
-    public function removeApcRessourceApprentissageCritique(ApcRessourceApprentissageCritique $apcRessourceApprentissageCritique): self
-    {
+    public function removeApcRessourceApprentissageCritique(
+        ApcRessourceApprentissageCritique $apcRessourceApprentissageCritique
+    ): self {
         // set the owning side to null (unless already changed)
         if ($this->apcRessourceApprentissageCritiques->removeElement($apcRessourceApprentissageCritique) && $apcRessourceApprentissageCritique->getRessource() === $this) {
             $apcRessourceApprentissageCritique->setRessource(null);
@@ -192,6 +160,18 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
         return null;
     }
 
+    public function getSemestre(): ?Semestre
+    {
+        return $this->semestre;
+    }
+
+    public function setSemestre(?Semestre $semestre): self
+    {
+        $this->semestre = $semestre;
+
+        return $this;
+    }
+
     /**
      * @return Collection|ApcCompetence[]
      */
@@ -207,12 +187,30 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
     }
 
     /**
+     * @return Collection|ApcRessourceCompetence[]
+     */
+    public function getApcRessourceCompetences(): Collection
+    {
+        return $this->apcRessourceCompetences;
+    }
+
+    /**
      * @return $this
      */
     public function addCompetence(ApcCompetence $competence): self
     {
         $apcRessourceCompetence = new ApcRessourceCompetence($this, $competence);
         $this->addApcRessourceCompetence($apcRessourceCompetence);
+
+        return $this;
+    }
+
+    public function addApcRessourceCompetence(ApcRessourceCompetence $apcRessourceCompetence): self
+    {
+        if (!$this->apcRessourceCompetences->contains($apcRessourceCompetence)) {
+            $this->apcRessourceCompetences[] = $apcRessourceCompetence;
+            $apcRessourceCompetence->setRessource($this);
+        }
 
         return $this;
     }

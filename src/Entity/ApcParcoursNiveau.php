@@ -13,23 +13,17 @@ use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\ApcParcoursNiveauRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=ApcParcoursNiveauRepository::class)
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: ApcParcoursNiveauRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class ApcParcoursNiveau extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=ApcNiveau::class, inversedBy="apcParcoursNiveaux")
-     */
-    private ?ApcNiveau $niveau;
+    #[ORM\ManyToOne(targetEntity: ApcNiveau::class, inversedBy: 'apcParcoursNiveaux')]
+    private ?ApcNiveau $niveau = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=ApcParcours::class, inversedBy="apcParcoursNiveaux")
-     */
-    private ?ApcParcours $parcours;
+    #[ORM\ManyToOne(targetEntity: ApcParcours::class, inversedBy: 'apcParcoursNiveaux')]
+    private ?ApcParcours $parcours = null;
 
     public function getNiveau(): ?ApcNiveau
     {

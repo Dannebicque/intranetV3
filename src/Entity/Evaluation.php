@@ -13,111 +13,88 @@ use App\Classes\DataUserSession;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\MatiereTrait;
 use App\Entity\Traits\UuidTrait;
+use App\Repository\EvaluationRepository;
 use App\Utils\Tools;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use function in_array;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\EvaluationRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: EvaluationRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Evaluation extends BaseEntity
 {
     use UuidTrait;
     use LifeCycleTrait;
     use MatiereTrait;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="evaluationsAuteur")
-     */
-    private ?Personnel $personnelAuteur;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Personnel", inversedBy="evaluationsAutorise")
-     */
+    #[ORM\ManyToMany(targetEntity: Personnel::class, inversedBy: 'evaluationsAutorise')]
     private Collection $personnelAutorise;
 
-    /**
-     * @ORM\Column(type="date")
-     */
-    private ?CarbonInterface $dateEvaluation = null;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?CarbonInterface $dateEvaluation;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $visible = false;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $modifiable = false;
 
-    /**
-     * @ORM\Column(type="float")
-     * @Assert\NotBlank
-     * @Assert\Positive()
-     */
+    #[Assert\NotBlank]
+    #[Assert\Positive]
+    #[ORM\Column(type: Types::FLOAT)]
     private ?float $coefficient = 1;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $commentaire = '';
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Note", mappedBy="evaluation")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Note>
      */
+    #[ORM\OneToMany(mappedBy: 'evaluation', targetEntity: Note::class)]
     private Collection $notes;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Evaluation", inversedBy="enfants")
-     */
-    private ?Evaluation $parent;
+    #[ORM\ManyToOne(targetEntity: Evaluation::class, inversedBy: 'enfants')]
+    private ?Evaluation $parent = null;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Evaluation", mappedBy="parent")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Evaluation>
      */
+    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Evaluation::class)]
     private Collection $enfants;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\TypeGroupe")
-     */
-    private ?TypeGroupe $typeGroupe;
+    #[ORM\ManyToOne(targetEntity: TypeGroupe::class)]
+    private ?TypeGroupe $typeGroupe = null;
 
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    private ?string $libelle;
+    #[ORM\Column(type: Types::STRING, length: 100, nullable: true)]
+    private ?string $libelle = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire", inversedBy="evaluations")
-     */
+    #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class, inversedBy: 'evaluations')]
     private ?AnneeUniversitaire $anneeUniversitaire;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Semestre::class, inversedBy="evaluations")
-     */
-    private ?Semestre $semestre;
+    #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'evaluations')]
+    private ?Semestre $semestre = null;
+
+    #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'evaluationsAuteur')]
+    private ?Personnel $personnelAuteur;
 
     /**
-     * Evaluation constructor.
      *
      * @throws Exception
      */
-    public function __construct(Personnel $personnel, \App\DTO\Matiere $mat)
+    public function __construct(?Personnel $personnelAuteur, \App\DTO\Matiere $mat)
     {
         $this->setUuid(Uuid::uuid4());
 
+        $this->personnelAuteur = $personnelAuteur;
         $this->idMatiere = $mat->id;
         $this->typeMatiere = $mat->typeMatiere;
-        $this->personnelAuteur = $personnel;
 
         if (null !== $mat->semestre) {
             $this->anneeUniversitaire = $mat->semestre->getAnneeUniversitaire();
@@ -137,24 +114,11 @@ class Evaluation extends BaseEntity
         $this->setUuid(Uuid::uuid4());
     }
 
-    public function getPersonnelAuteur(): ?Personnel
-    {
-        return $this->personnelAuteur;
-    }
-
     public function setPersonnelAuteur(?Personnel $personnelAuteur): self
     {
         $this->personnelAuteur = $personnelAuteur;
 
         return $this;
-    }
-
-    /**
-     * @return Collection|Personnel[]
-     */
-    public function getPersonnelAutorise(): Collection
-    {
-        return $this->personnelAutorise;
     }
 
     public function addPersonnelAutorise(Personnel $personnelAutorise): self
@@ -323,7 +287,7 @@ class Evaluation extends BaseEntity
 
     public function getUuidString(): string
     {
-        return (string)$this->getUuid();
+        return (string) $this->getUuid();
     }
 
     public function getLibelle(): ?string
@@ -350,8 +314,9 @@ class Evaluation extends BaseEntity
         return $this;
     }
 
-    public function getAutorise($personnelId, DataUserSession $datauser): bool
+    public function getAutorise(int $personnelId, DataUserSession $datauser): bool
     {
+        $personnels = [];
         if ($datauser->isGoodDepartement('ROLE_CDD') || $datauser->isGoodDepartement('ROLE_DDE') || $datauser->isGoodDepartement('ROLE_ASS') || $datauser->isGoodDepartement('ROLE_RP') || $datauser->isGoodDepartement('ROLE_NOTES')) {
             return true;
         }
@@ -362,6 +327,19 @@ class Evaluation extends BaseEntity
         }
 
         return in_array($personnelId, $personnels, true);
+    }
+
+    public function getPersonnelAuteur(): ?Personnel
+    {
+        return $this->personnelAuteur;
+    }
+
+    /**
+     * @return Collection|Personnel[]
+     */
+    public function getPersonnelAutorise(): Collection
+    {
+        return $this->personnelAutorise;
     }
 
     public function getSemestre(): ?Semestre

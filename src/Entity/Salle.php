@@ -10,15 +10,15 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\SalleRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\SalleRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: SalleRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Salle extends BaseEntity
 {
     use LifeCycleTrait;
@@ -28,33 +28,26 @@ class Salle extends BaseEntity
     public const SALLE_AMPHI = 'amphi';
     public const SALLE_INFORMATIQUE = 'info';
 
-    /**
-     * @ORM\Column(type="string", length=30)
-     * @Groups({"salle_administration"})
-     */
-    private ?string $libelle;
+    #[Groups(groups: ['salle_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 30)]
+    private ?string $libelle = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @Groups({"salle_administration"})
-     */
+    #[Groups(groups: ['salle_administration'])]
+    #[ORM\Column(type: Types::INTEGER)]
     private int $capacite = 0;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"salle_administration"})
-     */
-    private ?string $type;
+    #[Groups(groups: ['salle_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $type = null;
+
+    #[Groups(groups: ['salle_administration'])]
+    #[ORM\ManyToOne(targetEntity: Site::class, inversedBy: 'salles')]
+    private ?Site $site = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Site", inversedBy="salles")
-     * @Groups({"salle_administration"})
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\SalleExamen>
      */
-    private ?Site $site;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\SalleExamen", mappedBy="salle")
-     */
+    #[ORM\OneToMany(mappedBy: 'salle', targetEntity: SalleExamen::class)]
     private Collection $salleExamens;
 
     public function __construct()

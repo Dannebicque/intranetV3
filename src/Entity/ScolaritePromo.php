@@ -9,70 +9,47 @@
 
 namespace App\Entity;
 
+use App\Repository\ScolaritePromoRepository;
 use Carbon\CarbonInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\ScolaritePromoRepository")
- */
+#[ORM\Entity(repositoryClass: ScolaritePromoRepository::class)]
 class ScolaritePromo extends BaseEntity
 {
-    //todo: ajouter horodatage ?
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="scolaritePromos")
-     */
-    private ?Semestre $semestre;
+    #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'scolaritePromos')]
+    private ?Semestre $semestre = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire", inversedBy="scolaritePromos")
-     */
-    private ?AnneeUniversitaire $anneeUniversitaire;
+    #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class, inversedBy: 'scolaritePromos')]
+    private ?AnneeUniversitaire $anneeUniversitaire = null;
 
-    /**
-     * @ORM\Column(type="float")
-     */
+    #[ORM\Column(type: Types::FLOAT)]
     private float $min = -0.01;
 
-    /**
-     * @ORM\Column(type="float")
-     */
+    #[ORM\Column(type: Types::FLOAT)]
     private float $max = -0.01;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private int $nbEtudiants = 0;
 
-    /**
-     * @ORM\Column(type="float")
-     */
+    #[ORM\Column(type: Types::FLOAT)]
     private float $moyenne = -0.01;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Scolarite::class, mappedBy="scolaritePromo")
-     */
+    #[ORM\OneToMany(mappedBy: 'scolaritePromo', targetEntity: Scolarite::class)]
     private Collection $scolarites;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private ?CarbonInterface $datePublication;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $datePublication = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $publie = false;
 
-    /**
-     * @ORM\Column(type="array")
-     */
+    #[ORM\Column(type: Types::ARRAY)]
     private array $moyenneUes = [];
 
-    /**
-     * @ORM\Column(type="array")
-     */
+    #[ORM\Column(type: Types::ARRAY)]
     private array $moyenneMatieres = [];
 
     public function __construct()

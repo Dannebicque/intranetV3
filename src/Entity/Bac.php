@@ -10,13 +10,13 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\BacRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\BacRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: BacRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Bac extends BaseEntity
 {
     use LifeCycleTrait;
@@ -26,36 +26,27 @@ class Bac extends BaseEntity
     public const SERIE_BAC_PRO = 'p';
     public const SERIE_BAC_ETRANGER = 'e';
     public const SERIE_BAC_AUTRE = 'a';
-
     public const TAB_TYPE_BAC = [
         self::SERIE_BAC_GENERAL => self::SERIE_BAC_GENERAL,
         self::SERIE_BAC_TECHNO => self::SERIE_BAC_TECHNO,
         self::SERIE_BAC_PRO => self::SERIE_BAC_PRO,
         self::SERIE_BAC_ETRANGER => self::SERIE_BAC_ETRANGER,
-        self::SERIE_BAC_AUTRE => self::SERIE_BAC_AUTRE
+        self::SERIE_BAC_AUTRE => self::SERIE_BAC_AUTRE,
     ];
 
-    /**
-     * @ORM\Column(type="string", length=30)
-     * @Groups({"bac_administration"})
-     */
-    private ?string $libelle;
+    #[Groups(groups: ['bac_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 30)]
+    private ?string $libelle = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"bac_administration"})
-     */
-    private ?string $libelleLong;
+    #[Groups(groups: ['bac_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $libelleLong = null;
 
-    /**
-     * @ORM\Column(type="string", length=10, nullable=true)
-     */
-    private ?string $codeApogee;
+    #[ORM\Column(type: Types::STRING, length: 10, nullable: true)]
+    private ?string $codeApogee = null;
 
-    /**
-     * @ORM\Column(type="string", length=1, nullable=true)
-     */
-    private ?string $typeBac;
+    #[ORM\Column(type: Types::STRING, length: 1, nullable: true)]
+    private ?string $typeBac = null;
 
     public function getLibelle(): ?string
     {

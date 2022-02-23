@@ -10,49 +10,45 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\ParcourRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\ParcourRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: ParcourRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Parcour extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"groupe_administration"})
-     */
-    private ?string $libelle;
+    #[Groups(groups: ['groupe_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $libelle = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Matiere", mappedBy="parcours")
-     */
-    private Collection $matieres;//todo: ne fonctionne plus...
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="parcours")
-     */
+    #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'parcours')]
     private Semestre $semestre;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Matiere>
      */
-    private ?string $codeElement;
+    #[ORM\OneToMany(mappedBy: 'parcours', targetEntity: Matiere::class)]
+    private Collection $matieres;
+
+    #[ORM\Column(type: Types::STRING, length: 20)]
+    private ?string $codeElement = null;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Groupe", mappedBy="parcours")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Groupe>
      */
+    #[ORM\OneToMany(mappedBy: 'parcours', targetEntity: Groupe::class)]
     private Collection $groupes;
 
     public function __construct(Semestre $semestre)
     {
-        $this->matieres = new ArrayCollection();
         $this->semestre = $semestre;
+        $this->matieres = new ArrayCollection();
         $this->groupes = new ArrayCollection();
     }
 
@@ -104,7 +100,7 @@ class Parcour extends BaseEntity
         return $this->semestre;
     }
 
-    public function setSemestre(Semestre $semestre): self
+    public function setSemestre(?Semestre $semestre): self
     {
         $this->semestre = $semestre;
 
@@ -113,7 +109,7 @@ class Parcour extends BaseEntity
 
     public function getDiplome(): ?Diplome
     {
-        if (null !== $this->semestre && null !== $this->semestre->getAnnee() && null !== $this->semestre->getAnnee()->getDiplome()) {
+        if (null !== $this->semestre->getAnnee() && null !== $this->semestre->getAnnee()->getDiplome()) {
             return $this->semestre->getAnnee()->getDiplome();
         }
 

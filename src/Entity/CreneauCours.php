@@ -9,52 +9,43 @@
 
 namespace App\Entity;
 
+use App\Repository\CreneauCoursRepository;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Deprecated;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\CreneauCoursRepository")
- */
+#[ORM\Entity(repositoryClass: CreneauCoursRepository::class)]
+#[Deprecated(reason: "N'est pas utilisé... a supprimer")]
 class CreneauCours
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $id = null;
+
+    #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class, inversedBy: 'creneauCours')]
+    private ?AnneeUniversitaire $anneeUniversitaire = null;
+
+    #[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'creneauCours')]
+    private ?Departement $departement = null;
+
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $jour = null;
+
+    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    private ?DateTimeInterface $debut = null;
+
+    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    private ?DateTimeInterface $fin = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire", inversedBy="creneauCours")
+     * @var \Doctrine\Common\Collections\Collection<\App\Entity\CreneauBloque>
      */
-    private $anneeUniversitaire;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Departement", inversedBy="creneauCours")
-     */
-    private $departement;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $jour;
-
-    /**
-     * @ORM\Column(type="time")
-     */
-    private $debut;
-
-    /**
-     * @ORM\Column(type="time")
-     */
-    private $fin;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\CreneauBloque", mappedBy="creneau")
-     */
-    private $creneauBloques;
+    #[ORM\OneToMany(mappedBy: 'creneau', targetEntity: CreneauBloque::class)]
+    private Collection $creneauBloques;
 
     public function __construct()
     {
@@ -86,18 +77,6 @@ class CreneauCours
     public function setDepartement(?Departement $departement): self
     {
         $this->departement = $departement;
-
-        return $this;
-    }
-
-    public function getJour(): ?int
-    {
-        return $this->jour;
-    }
-
-    public function setJour(int $jour): self
-    {
-        $this->jour = $jour;
 
         return $this;
     }
@@ -157,8 +136,8 @@ class CreneauCours
         return $this;
     }
 
-    public function getJourLong()
-    {
+    public function getJourLong(): string
+    { //todo: Carbon?
         $tabJour = [
             1 => 'Lundi',
             2 => 'Mardi',
@@ -170,5 +149,17 @@ class CreneauCours
         ];
 
         return $tabJour[$this->getJour()];
+    }
+
+    public function getJour(): ?int
+    {
+        return $this->jour;
+    }
+
+    public function setJour(int $jour): self
+    {
+        $this->jour = $jour;
+
+        return $this;
     }
 }

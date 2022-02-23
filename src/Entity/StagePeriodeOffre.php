@@ -10,8 +10,10 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\StagePeriodeOffreRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Symfony\Component\HttpFoundation\File\File;
@@ -19,59 +21,41 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\StagePeriodeOffreRepository")
  * @Vich\Uploadable
- * @ORM\HasLifecycleCallbacks()
  */
+#[ORM\Entity(repositoryClass: StagePeriodeOffreRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class StagePeriodeOffre extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\StagePeriode", inversedBy="stagePeriodeOffres")
-     */
+    #[ORM\ManyToMany(targetEntity: StagePeriode::class, inversedBy: 'stagePeriodeOffres')]
     private Collection $stagePeriodes;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"stage_offre_administration"})
-     */
+    #[Groups(['stage_offre_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $libelle;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"stage_offre_administration"})
-     */
+    #[Groups(['stage_offre_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $entreprise;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"stage_offre_administration"})
-     */
+    #[Groups(['stage_offre_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $ville;
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
+    #[ORM\Column(type: Types::STRING, length: 50)]
     private ?string $documentName = '';
 
     /**
      * @Vich\UploadableField(mapping="offreStage", fileNameProperty="documentName")
      */
-    private $documentFile;
+    private ?File $documentFile;
 
     public function __construct(StagePeriode $stagePeriode)
     {
         $this->stagePeriodes = new ArrayCollection();
         $this->addStagePeriode($stagePeriode);
-    }
-
-    /**
-     * @return Collection|StagePeriode[]
-     */
-    public function getStagePeriodes(): Collection
-    {
-        return $this->stagePeriodes;
     }
 
     public function addStagePeriode(StagePeriode $stagePeriode): self
@@ -81,6 +65,14 @@ class StagePeriodeOffre extends BaseEntity
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection|StagePeriode[]
+     */
+    public function getStagePeriodes(): Collection
+    {
+        return $this->stagePeriodes;
     }
 
     public function removeStagePeriode(StagePeriode $stagePeriode): self
@@ -128,6 +120,11 @@ class StagePeriodeOffre extends BaseEntity
         return $this;
     }
 
+    public function getDocumentFile(): ?File
+    {
+        return $this->documentFile;
+    }
+
     /**
      * @throws Exception
      */
@@ -140,11 +137,6 @@ class StagePeriodeOffre extends BaseEntity
             // otherwise the event listeners won't be called and the file is lost
             $this->setUpdatedValue();
         }
-    }
-
-    public function getDocumentFile(): ?File
-    {
-        return $this->documentFile;
     }
 
     /**

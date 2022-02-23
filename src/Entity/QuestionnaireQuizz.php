@@ -10,21 +10,21 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\QuestionnaireQuizzRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\QuestionnaireQuizzRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: QuestionnaireQuizzRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class QuestionnaireQuizz extends Questionnaire
 {
     use LifeCycleTrait;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\QuestionnaireQuestionnaireSection", mappedBy="questionnaireQuizz")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\QuestionnaireQuestionnaireSection>
      */
+    #[ORM\OneToMany(mappedBy: 'questionnaireQuizz', targetEntity: QuestionnaireQuestionnaireSection::class)]
     private Collection $sections;
 
     public function __construct()

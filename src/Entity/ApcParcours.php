@@ -14,40 +14,32 @@ use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\ApcParcoursRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=ApcParcoursRepository::class)
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: ApcParcoursRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class ApcParcours extends BaseEntity
 {
     use LifeCycleTrait;
     use ApogeeTrait;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private ?string $libelle;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $libelle = null;
+
+    #[ORM\Column(type: Types::STRING, length: 10)]
+    private ?string $code = null;
 
     /**
-     * @ORM\Column(type="string", length=10)
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcParcoursNiveau>
      */
-    private ?string $code;
-
-    /**
-     * @ORM\OneToMany(targetEntity=ApcParcoursNiveau::class, mappedBy="parcours")
-     */
+    #[ORM\OneToMany(mappedBy: 'parcours', targetEntity: ApcParcoursNiveau::class)]
     private Collection $apcParcoursNiveaux;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Diplome::class, inversedBy="apcParcours")
-     */
-    private ?Diplome $diplome;
+    #[ORM\ManyToOne(targetEntity: Diplome::class, inversedBy: 'apcParcours')]
+    private ?Diplome $diplome = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $actif = true;
 
     public function __construct(Diplome $diplome)

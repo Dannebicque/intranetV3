@@ -14,19 +14,23 @@ use App\Entity\Traits\UuidTrait;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="Emprunt")
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap( {"emprunt" = "Emprunt", "personnel" = "EmpruntPersonnel",  "etudiant" = "EmpruntEtudiant"} )
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity]
+#[ORM\Table(name: 'Emprunt')]
+#[ORM\InheritanceType(value: 'SINGLE_TABLE')]
+#[ORM\DiscriminatorColumn(name: 'type', type: 'string')]
+#[ORM\DiscriminatorMap(value: [
+    'emprunt' => Emprunt::class,
+    'personnel' => EmpruntPersonnel::class,
+    'etudiant' => EmpruntEtudiant::class,
+])]
+#[ORM\HasLifecycleCallbacks]
 abstract class Emprunt extends BaseEntity
 {
     use UuidTrait;
@@ -37,67 +41,56 @@ abstract class Emprunt extends BaseEntity
     public const SORTIE = 'SORTIE';
     public const REFUS = 'REFUS';
     public const REVENU = 'REVENU';
-
     public const ETATS = [
         self::DEMANDE => 'Demandes A valider',
         self::ACCEPTE => 'Demandes acceptées',
-        self::SORTIE  => 'Matériel sorti',
+        self::SORTIE => 'Matériel sorti',
     ];
 
-    /**
-     * @ORM\Column(type="datetime")
-     * @Groups({"emprunts_administration"})
-     */
-    private $dateDebut;
-    /**
-     * @ORM\Column(type="datetime")
-     * @Groups({"emprunts_administration"})
-     */
-    private $dateFin;
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"emprunts_administration"})
-     */
-    private $motif;
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $description;
-    /**
-     * @ORM\Column(type="string", length=20)
-     * @Groups({"emprunts_administration"})
-     */
-    private $telephone;
-    /**
-     * @ORM\Column(type="string", length=10)
-     * @Groups({"emprunts_administration"})
-     */
-    private $etat;
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"emprunts_administration"})
-     */
-    private $dateSortie;
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     * @Groups({"emprunts_administration"})
-     */
-    private $dateRetour;
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\EmpruntMateriel", mappedBy="emprunt", cascade={"remove"})
-     */
-    private $empruntMateriels;
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $dateValidation;
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Departement", inversedBy="emprunts")
-     */
-    private $departement;
+    #[Groups(groups: ['emprunts_administration'])]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?DateTimeInterface $dateDebut = null;
+
+    #[Groups(groups: ['emprunts_administration'])]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?DateTimeInterface $dateFin = null;
+
+    #[Groups(groups: ['emprunts_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $motif = null;
+
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $description = null;
+
+    #[Groups(groups: ['emprunts_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 20)]
+    private ?string $telephone = null;
+
+    #[Groups(groups: ['emprunts_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 10)]
+    private ?string $etat = null;
+
+    #[Groups(groups: ['emprunts_administration'])]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?DateTimeInterface $dateSortie = null;
+
+    #[Groups(groups: ['emprunts_administration'])]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?DateTimeInterface $dateRetour = null;
 
     /**
-     * Emprunt constructor.
+     * @var \Doctrine\Common\Collections\Collection<\App\Entity\EmpruntMateriel>
+     */
+    #[ORM\OneToMany(mappedBy: 'emprunt', targetEntity: EmpruntMateriel::class, cascade: ['remove'])]
+    private Collection $empruntMateriels;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?DateTimeInterface $dateValidation = null;
+
+    #[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'emprunts')]
+    private ?Departement $departement = null;
+
+    /**
      *
      * @throws Exception
      */
@@ -106,6 +99,13 @@ abstract class Emprunt extends BaseEntity
         $this->setUuid(Uuid::uuid4());
         $this->empruntMateriels = new ArrayCollection();
         $this->setEtat(self::DEMANDE);
+    }
+
+    public function setUuid(UuidInterface $uuid): self
+    {
+        $this->uuid = $uuid;
+
+        return $this;
     }
 
     public function __clone()
@@ -252,7 +252,7 @@ abstract class Emprunt extends BaseEntity
         return $this;
     }
 
-    public function getResponsable()
+    public function getResponsable(): ?Personnel
     {
         if (null !== $this->getDepartement()) {
             return $this->getDepartement()->getRespMateriel();
@@ -269,13 +269,6 @@ abstract class Emprunt extends BaseEntity
     public function setDepartement(?Departement $departement): self
     {
         $this->departement = $departement;
-
-        return $this;
-    }
-
-    public function setUuid($uuid): self
-    {
-        $this->uuid = $uuid;
 
         return $this;
     }

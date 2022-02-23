@@ -10,69 +10,49 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\UeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\UeRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: UeRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Ue extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private string $libelle;
 
-    /**
-     *
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private int $numeroUe = 1;
 
-    /**
-     *
-     * @ORM\Column(type="float")
-     */
+    #[ORM\Column(type: Types::FLOAT)]
     private float $coefficient = 1;
 
-    /**
-     *
-     * @ORM\Column(type="float")
-     */
+    #[ORM\Column(type: Types::FLOAT)]
     private float $nbEcts = 1;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Matiere", mappedBy="ue")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Matiere>
      */
+    #[ORM\OneToMany(mappedBy: 'ue', targetEntity: Matiere::class)]
     private Collection $matieres;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="ues")
-     */
+    #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'ues')]
     private ?Semestre $semestre;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $actif = true;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $bonification = false;
 
-    /**
-     * @ORM\Column(type="string", length=15)
-     */
+    #[ORM\Column(type: Types::STRING, length: 15)]
     private string $codeElement;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=ApcCompetence::class, inversedBy="ue")
-     */
+    #[ORM\ManyToOne(targetEntity: ApcCompetence::class, inversedBy: 'ue')]
     private ?ApcCompetence $apcCompetence;
 
     /**
@@ -82,26 +62,6 @@ class Ue extends BaseEntity
     {
         $this->matieres = new ArrayCollection();
         $this->semestre = $semestre;
-    }
-
-    public function getLibelle(): ?string
-    {
-        return $this->libelle;
-    }
-
-    public function setLibelle($libelle): void
-    {
-        $this->libelle = $libelle;
-    }
-
-    public function getNumeroUe(): int
-    {
-        return $this->numeroUe;
-    }
-
-    public function setNumeroUe(int $numeroUe): void
-    {
-        $this->numeroUe = $numeroUe;
     }
 
     public function getCoefficient(): float
@@ -191,6 +151,26 @@ class Ue extends BaseEntity
     public function getDisplay(): string
     {
         return 'UE '.$this->getNumeroUe().' | '.$this->getLibelle();
+    }
+
+    public function getNumeroUe(): int
+    {
+        return $this->numeroUe;
+    }
+
+    public function setNumeroUe(int $numeroUe): void
+    {
+        $this->numeroUe = $numeroUe;
+    }
+
+    public function getLibelle(): ?string
+    {
+        return $this->libelle;
+    }
+
+    public function setLibelle(?string $libelle): void
+    {
+        $this->libelle = $libelle;
     }
 
     public function getBonification(): ?bool

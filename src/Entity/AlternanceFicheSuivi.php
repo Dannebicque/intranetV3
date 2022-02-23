@@ -10,78 +10,68 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\AlternanceFicheSuiviRepository;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\AlternanceFicheSuiviRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: AlternanceFicheSuiviRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class AlternanceFicheSuivi extends BaseEntity
 {
     use LifeCycleTrait;
 
-    protected static array $tabTexte = [1 => 'Faible', 2 => 'Bonne', 3 => 'Très Bonne', 4 => 'Excellente', 0 => 'Non applicable'];
-    protected static array $tabTexteM = [1 => 'Faible', 2 => 'Bon', 3 => 'Très Bon', 4 => 'Excellent', 0 => 'Non applicable'];
-
     public const VISITE_PHYSIQUE = 'v';
     public const VISITE_TELEPHONIQUE = 't';
+    protected static array $tabTexte = [
+        0 => 'Non applicable',
+        1 => 'Faible',
+        2 => 'Bonne',
+        3 => 'Très Bonne',
+        4 => 'Excellente',
+    ];
 
-    /**
-     * @ORM\Column(type="string", length=1)
-     */
+    protected static array $tabTexteM = [
+        0 => 'Non applicable',
+        1 => 'Faible',
+        2 => 'Bon',
+        3 => 'Très Bon',
+        4 => 'Excellent',
+    ];
+
+    #[ORM\Column(type: Types::STRING, length: 1)]
     private string $methode = self::VISITE_PHYSIQUE;
 
-    /**
-     * @ORM\Column(type="text")
-     */
-    private ?string $commentaire;
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $commentaire = null;
 
-    /**
-     * @ORM\Column(type="text")
-     */
-    private ?string $missions;
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $missions = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private ?int $integration;
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $integration = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private ?int $initiative;
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $initiative = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private ?int $adaptation;
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $adaptation = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private ?int $performance;
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $performance = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private ?int $delais;
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $delais = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private ?int $comportement;
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $comportement = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Alternance", inversedBy="alternanceFicheSuivis")
-     */
-    private ?Alternance $alternance;
+    #[ORM\ManyToOne(targetEntity: Alternance::class, inversedBy: 'alternanceFicheSuivis')]
+    private ?Alternance $alternance = null;
 
-    /**
-     * @ORM\Column(type="date")
-     */
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?CarbonInterface $date = null;
 
     /**

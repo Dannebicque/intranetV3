@@ -9,15 +9,20 @@
 
 namespace App\Entity;
 
+use App\Components\Questionnaire\TypeQuestion\TypeEchelle;
+use App\Components\Questionnaire\TypeQuestion\TypeLibre;
+use App\Components\Questionnaire\TypeQuestion\TypeOuiNon;
+use App\Components\Questionnaire\TypeQuestion\TypeQcm;
+use App\Components\Questionnaire\TypeQuestion\TypeQcu;
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\QuestionnaireQuestionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\QuestionnaireQuestionRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: QuestionnaireQuestionRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class QuestionnaireQuestion extends BaseEntity
 {
     use LifeCycleTrait;
@@ -28,7 +33,6 @@ class QuestionnaireQuestion extends BaseEntity
     public const QUESTION_TYPE_YESNO = 'yesno';
     public const QUESTION_TYPE_ECHELLE = 'echelle';
     public const QUESTION_TYPE_LIBRE = 'libre';
-
     public const LISTE_TYPE_QUESTION = [
         self::QUESTION_TYPE_ECHELLE => self::QUESTION_TYPE_ECHELLE,
         self::QUESTION_TYPE_LIBRE => self::QUESTION_TYPE_LIBRE,
@@ -37,77 +41,63 @@ class QuestionnaireQuestion extends BaseEntity
         self::QUESTION_TYPE_YESNO => self::QUESTION_TYPE_YESNO,
     ];
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private ?string $libelle;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $libelle = null;
+
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $help = null;
+
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $type = null;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\QuestionnaireReponse>
      */
-    private ?string $help;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private ?string $type;
-
-    /**
-     * @ORM\OneToMany(targetEntity="QuestionnaireReponse", mappedBy="question", cascade={"persist", "remove"},
-     *                                                        fetch="EAGER")
-     * @ORM\OrderBy({"ordre"="ASC"})
-     */
+    #[ORM\OneToMany(mappedBy: 'question', targetEntity: QuestionnaireReponse::class, cascade: [
+        'persist',
+        'remove',
+    ], fetch: 'EAGER')]
+    #[ORM\OrderBy(value: ['ordre' => 'ASC'])]
     private Collection $quizzReponses;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="quizzQuestions")
-     */
-    private ?Personnel $auteur;
+    #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'quizzQuestions')]
+    private ?Personnel $auteur = null;
 
     /**
-     * @ORM\OneToMany(targetEntity="QuestionnaireSectionQuestion", mappedBy="question")
+     * @var \Doctrine\Common\Collections\Collection<int,\App\Entity\QuestionnaireSectionQuestion>
      */
+    #[ORM\OneToMany(mappedBy: 'question', targetEntity: QuestionnaireSectionQuestion::class)]
     private Collection $qualiteSectionQuestions;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="QuestionnaireQuestion", inversedBy="questionsEnfants")
-     */
-    private ?QuestionnaireQuestion $questionParent;
+    #[ORM\ManyToOne(targetEntity: QuestionnaireQuestion::class, inversedBy: 'questionsEnfants')]
+    private ?QuestionnaireQuestion $questionParent = null;
 
     /**
-     * @ORM\OneToMany(targetEntity="QuestionnaireQuestion", mappedBy="questionParent")
+     * @var \Doctrine\Common\Collections\Collection<int,\App\Entity\QuestionnaireQuestion>
      */
+    #[ORM\OneToMany(mappedBy: 'questionParent', targetEntity: QuestionnaireQuestion::class)]
     private Collection $questionsEnfants;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $obligatoire = true;
 
-    /**
-     * @ORM\Column(type="string", length=30)
-     */
+    #[ORM\Column(type: Types::STRING, length: 30)]
     private string $alignement = 'HORIZONTAL_CENTER';
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $parametre = '[]';
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private ?int $maxChoix = 1;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $configuration = '[]';
 
     /**
-     * @ORM\ManyToMany(targetEntity=QuestionnaireQuestionTag::class, mappedBy="question", cascade={"persist"})
+     * @var \Doctrine\Common\Collections\Collection<\App\Entity\QuestionnaireQuestionTag>
      */
-    private $questionnaireQuestionTags;
+    #[ORM\ManyToMany(targetEntity: QuestionnaireQuestionTag::class, mappedBy: 'question', cascade: ['persist'])]
+    private Collection $questionnaireQuestionTags;
 
     public function __construct(Personnel $personnel)
     {
@@ -235,18 +225,6 @@ class QuestionnaireQuestion extends BaseEntity
         return $this;
     }
 
-    public function getQuestionParent(): ?self
-    {
-        return $this->questionParent;
-    }
-
-    public function setQuestionParent(?self $questionParent): self
-    {
-        $this->questionParent = $questionParent;
-
-        return $this;
-    }
-
     /**
      * @return Collection|self[]
      */
@@ -278,6 +256,18 @@ class QuestionnaireQuestion extends BaseEntity
         return $this;
     }
 
+    public function getQuestionParent(): ?self
+    {
+        return $this->questionParent;
+    }
+
+    public function setQuestionParent(?self $questionParent): self
+    {
+        $this->questionParent = $questionParent;
+
+        return $this;
+    }
+
     public function getObligatoire(): ?bool
     {
         return $this->obligatoire;
@@ -290,7 +280,7 @@ class QuestionnaireQuestion extends BaseEntity
         return $this;
     }
 
-    public function getCle($config = ''): string
+    public function getCle(?string $config = ''): string
     {
         if (!('' !== $config && null !== $config)) {
             return 'quizz_question_reponses_q'.$this->getId();
@@ -314,7 +304,7 @@ class QuestionnaireQuestion extends BaseEntity
     public function getParametre(): ?array
     {
         if (null !== $this->parametre) {
-            return json_decode($this->parametre, true);
+            return json_decode($this->parametre, true, 512, JSON_THROW_ON_ERROR);
         }
 
         return [];
@@ -322,20 +312,20 @@ class QuestionnaireQuestion extends BaseEntity
 
     public function setParametre(?array $parametre): self
     {
-        $this->parametre = json_encode($parametre);
+        $this->parametre = json_encode($parametre, JSON_THROW_ON_ERROR);
 
         return $this;
     }
 
     /** @deprecated */
-    public function getTypeQuestion()
+    public function getTypeQuestion(): string
     {
         $t = [
-            self::QUESTION_TYPE_QCU => 'App\Components\Questionnaire\TypeQuestion\TypeQcu',
-            self::QUESTION_TYPE_QCM => 'App\Components\Questionnaire\TypeQuestion\TypeQcm',
-            self::QUESTION_TYPE_YESNO => 'App\Components\Questionnaire\TypeQuestion\TypeOuiNon',
-            self::QUESTION_TYPE_ECHELLE => 'App\Components\Questionnaire\TypeQuestion\TypeEchelle',
-            self::QUESTION_TYPE_LIBRE => 'App\Components\Questionnaire\TypeQuestion\TypeLibre',
+            self::QUESTION_TYPE_QCU => TypeQcu::class,
+            self::QUESTION_TYPE_QCM => TypeQcm::class,
+            self::QUESTION_TYPE_YESNO => TypeOuiNon::class,
+            self::QUESTION_TYPE_ECHELLE => TypeEchelle::class,
+            self::QUESTION_TYPE_LIBRE => TypeLibre::class,
         ];
 
         return $t[$this->type];
@@ -356,7 +346,7 @@ class QuestionnaireQuestion extends BaseEntity
     public function getConfiguration(): ?array
     {
         if (null !== $this->configuration && '' !== $this->configuration) {
-            return json_decode($this->configuration, true);
+            return json_decode($this->configuration, true, 512, JSON_THROW_ON_ERROR);
         }
 
         return [];
@@ -364,7 +354,7 @@ class QuestionnaireQuestion extends BaseEntity
 
     public function setConfiguration(?array $configuration): self
     {
-        $this->configuration = json_encode($configuration);
+        $this->configuration = json_encode($configuration, JSON_THROW_ON_ERROR);
 
         return $this;
     }

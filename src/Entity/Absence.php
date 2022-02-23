@@ -12,18 +12,19 @@ namespace App\Entity;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\MatiereTrait;
 use App\Entity\Traits\UuidTrait;
+use App\Repository\AbsenceRepository;
 use Carbon\CarbonInterface;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 use Serializable;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\AbsenceRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: AbsenceRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Absence extends BaseEntity implements Serializable
 {
     use UuidTrait;
@@ -35,57 +36,40 @@ class Absence extends BaseEntity implements Serializable
         self::ABSENCE_INJUSTIFIEE => 'danger',
         self::ABSENCE_EN_ATTENTE => 'warning',
     ];
-
     public const ABSENCE_JUSTIFIE = 'justifie';
     public const ABSENCE_INJUSTIFIEE = 'injustifie';
     public const ABSENCE_EN_ATTENTE = '-';
 
-    /**
-     * @ORM\Column(name="dateHeure", type="datetime")
-     * @Groups({"absences_administration"})
-     */
-    private ?CarbonInterface $dateHeure;
+    #[Groups(groups: ['absences_administration'])]
+    #[ORM\Column(name: 'dateHeure', type: Types::DATETIME_MUTABLE)]
+    private ?CarbonInterface $dateHeure = null;
 
-    /**
-     * @ORM\Column(name="duree", type="time")
-     * @Groups({"absences_administration"})
-     */
-    private ?CarbonInterface $duree;
+    #[Groups(groups: ['absences_administration'])]
+    #[ORM\Column(name: 'duree', type: Types::TIME_MUTABLE)]
+    private ?CarbonInterface $duree = null;
 
-    /**
-     * @ORM\Column(name="justifie", type="boolean")
-     * @Groups({"absences_administration"})
-     */
+    #[Groups(groups: ['absences_administration'])]
+    #[ORM\Column(name: 'justifie', type: Types::BOOLEAN)]
     private bool $justifie = false;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
-     * @MaxDepth(2)
-     * @Groups({"absences_administration"})
-     */
+    #[MaxDepth(2)]
+    #[Groups(groups: ['absences_administration'])]
+    #[ORM\ManyToOne(targetEntity: Personnel::class)]
     private Personnel $personnel;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="absences")
-     * @MaxDepth(2)
-     * @Groups({"absences_administration"})
-     */
+    #[MaxDepth(2)]
+    #[Groups(groups: ['absences_administration'])]
+    #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'absences')]
     private Etudiant $etudiant;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private ?CarbonInterface $dateJustifie;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateJustifie = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire")
-     */
-    private ?AnneeUniversitaire $anneeUniversitaire;
+    #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class)]
+    private ?AnneeUniversitaire $anneeUniversitaire = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Semestre::class, inversedBy="absences")
-     */
-    private ?Semestre $semestre;
+    #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'absences')]
+    private ?Semestre $semestre = null;
 
     /**
      * Absence constructor.
@@ -95,6 +79,13 @@ class Absence extends BaseEntity implements Serializable
     public function __construct()
     {
         $this->setUuid(Uuid::uuid4());
+    }
+
+    public function setUuid(UuidInterface $uuid): self
+    {
+        $this->uuid = $uuid;
+
+        return $this;
     }
 
     public static function getIconStatus(string $status): string
@@ -109,16 +100,6 @@ class Absence extends BaseEntity implements Serializable
         $this->setUuid(Uuid::uuid4());
     }
 
-    public function getDateHeure(): ?CarbonInterface
-    {
-        return $this->dateHeure;
-    }
-
-    public function setDateHeure(CarbonInterface $dateHeure): void
-    {
-        $this->dateHeure = $dateHeure;
-    }
-
     public function getDuree(): ?CarbonInterface
     {
         return $this->duree;
@@ -129,32 +110,12 @@ class Absence extends BaseEntity implements Serializable
         $this->duree = $duree;
     }
 
-    public function isJustifie(): bool
-    {
-        return $this->justifie;
-    }
-
-    public function setJustifie(bool $justifie): void
-    {
-        $this->justifie = $justifie;
-    }
-
-    public function getPersonnel(): ?Personnel
-    {
-        return $this->personnel;
-    }
-
-    public function setPersonnel($personnel): void
-    {
-        $this->personnel = $personnel;
-    }
-
     public function getEtudiant(): ?Etudiant
     {
         return $this->etudiant;
     }
 
-    public function setEtudiant($etudiant): void
+    public function setEtudiant(?Etudiant $etudiant): void
     {
         $this->etudiant = $etudiant;
     }
@@ -185,6 +146,26 @@ class Absence extends BaseEntity implements Serializable
         ];
     }
 
+    public function getDateHeure(): ?CarbonInterface
+    {
+        return $this->dateHeure;
+    }
+
+    public function setDateHeure(CarbonInterface $dateHeure): void
+    {
+        $this->dateHeure = $dateHeure;
+    }
+
+    public function getPersonnel(): ?Personnel
+    {
+        return $this->personnel;
+    }
+
+    public function setPersonnel(?Personnel $personnel): void
+    {
+        $this->personnel = $personnel;
+    }
+
     public function getAnneeUniversitaire(): ?AnneeUniversitaire
     {
         return $this->anneeUniversitaire;
@@ -197,30 +178,31 @@ class Absence extends BaseEntity implements Serializable
         return $this;
     }
 
-    public function setUuid($uuid): self
-    {
-        $this->uuid = $uuid;
-
-        return $this;
-    }
-
     public function getJustifie(): ?bool
     {
         return $this->justifie;
     }
 
-    /**
-     * {@inheritDoc}
-     */
-    public function serialize()
+    public function isJustifie(): bool
+    {
+        return $this->justifie;
+    }
+
+    public function setJustifie(bool $justifie): void
+    {
+        $this->justifie = $justifie;
+    }
+
+    public function serialize(): string | null
     {
         //todo: a ajouter ou retirer ?
+        return null;
     }
 
     /**
      * {@inheritDoc}
      */
-    public function unserialize($data)
+    public function unserialize($data): void
     {
         //todo: a ajouter ou retirer ?
     }

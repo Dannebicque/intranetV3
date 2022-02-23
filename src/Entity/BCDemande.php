@@ -15,18 +15,18 @@ use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=BCDemandeRepository::class)
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: BCDemandeRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class BCDemande extends BaseEntity
 {
+    use LifeCycleTrait;
+
     public const BC_PRESTATION_FOURNITURE = 'fourniture';
     public const BC_PRESTATION_SERVICE = 'service';
     public const BC_PRESTATION_TRAVAUX = 'travaux';
-
     public const BC_TABS_PRESTATIONS = [
         self::BC_PRESTATION_FOURNITURE => self::BC_PRESTATION_FOURNITURE,
         self::BC_PRESTATION_SERVICE => self::BC_PRESTATION_SERVICE,
@@ -36,7 +36,6 @@ class BCDemande extends BaseEntity
     public const BC_AVIS_DIRECTION_FAVORABLE = 'favorable';
     public const BC_AVIS_DIRECTION_DEFAVORABLE = 'defavorable';
     public const BC_AVIS_DIRECTION_COMPLEMENT = 'complement';
-
     public const BC_TABS_AVIS = [
         self::BC_AVIS_DIRECTION_FAVORABLE => self::BC_AVIS_DIRECTION_FAVORABLE,
         self::BC_AVIS_DIRECTION_DEFAVORABLE => self::BC_AVIS_DIRECTION_DEFAVORABLE,
@@ -46,128 +45,82 @@ class BCDemande extends BaseEntity
     public const BC_SERVICE_SIA = 'sia';
     public const BC_SERVICE_SG = 'sg';
     public const BC_SERVICE_IUT = 'iut';
-
     public const BC_TABS_SERVICES = [
         self::BC_SERVICE_SIA => self::BC_SERVICE_SIA,
         self::BC_SERVICE_SG => self::BC_SERVICE_SG,
         self::BC_SERVICE_IUT => self::BC_SERVICE_IUT,
     ];
 
-    use LifeCycleTrait;
+    #[ORM\Column(type: Types::STRING, length: 100, nullable: true)]
+    private ?string $service = null;
 
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    private ?string $service;
+    #[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'bCDemandes')]
+    private ?Departement $departement = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Departement::class, inversedBy="bCDemandes")
-     */
-    private ?Departement $departement;
+    #[ORM\Column(type: Types::STRING, length: 20)]
+    private ?string $prestation = null;
 
-    /**
-     * @ORM\Column(type="string", length=20)
-     */
-    private ?string $prestation;
+    #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'bcDemandesResponsable')]
+    private ?Personnel $responsable = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Personnel::class, inversedBy="bcDemandesResponsable")
-     */
-    private ?Personnel $responsable;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $objet = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private ?string $objet;
+    #[ORM\Column(type: Types::FLOAT, nullable: true)]
+    private ?float $montantTTC = null;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    private ?float $montantTTC;
+    #[ORM\Column(type: Types::FLOAT, nullable: true)]
+    private ?float $montantHT = null;
 
-    /**
-     * @ORM\Column(type="float", nullable=true)
-     */
-    private ?float $montantHT;
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $description = null;
 
-    /**
-     * @ORM\Column(type="text")
-     */
-    private ?string $description;
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?CarbonInterface $dateDemandeInitiale;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private ?CarbonInterface $dateValidationResponsable;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateValidationResponsable = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private ?CarbonInterface $dateValidationDirection;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateValidationDirection = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private ?CarbonInterface $dateVerificationCompta;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateVerificationCompta = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private ?CarbonInterface $dateValidationCSA;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateValidationCSA = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private ?CarbonInterface $dateClotureServiceFaitCSA;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateClotureServiceFaitCSA = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private ?CarbonInterface $dateLivraisonEstimee;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateLivraisonEstimee = null;
 
-    /**
-     * @ORM\Column(type="string", length=20, nullable=true)
-     */
+    #[ORM\Column(type: Types::STRING, length: 20, nullable: true)]
     private ?string $avisDirection = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private ?string $texteInfoComplementaire;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $texteInfoComplementaire = null;
+
+    #[ORM\ManyToOne(targetEntity: BCFournisseur::class, inversedBy: 'bCDemandes')]
+    private ?BCFournisseur $fournisseur = null;
+
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private ?bool $commandeMarche = null;
+
+    #[ORM\Column(type: Types::STRING, length: 20)]
+    private ?string $numeroBC = null;
+
+    #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'bcDemandeSignataireCompta')]
+    private ?Personnel $signataireCompta = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity=BCFournisseur::class, inversedBy="bCDemandes")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\BCServiceFait>
      */
-    private ?BCFournisseur $fournisseur;
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private ?bool $commandeMarche;
-
-    /**
-     * @ORM\Column(type="string", length=20)
-     */
-    private ?string $numeroBC;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Personnel::class, inversedBy="bcDemandeSignataireCompta")
-     */
-    private ?Personnel $signataireCompta;
-
-    /**
-     * @ORM\OneToMany(targetEntity=BCServiceFait::class, mappedBy="bCDemande")
-     */
+    #[ORM\OneToMany(mappedBy: 'bCDemande', targetEntity: BCServiceFait::class)]
     private Collection $migos;
 
-    /**
-     * @ORM\Column(type="string", length=30)
-     */
+    #[ORM\Column(type: Types::STRING, length: 30)]
     private ?string $etatProcess = 'demande_initiale';
 
     public function __construct()
@@ -175,7 +128,6 @@ class BCDemande extends BaseEntity
         $this->migos = new ArrayCollection();
         $this->dateDemandeInitiale = Carbon::now();
     }
-
 
     public function getService(): ?string
     {
@@ -462,7 +414,7 @@ class BCDemande extends BaseEntity
         return $this->etatProcess;
     }
 
-    public function setEtatProcess(string $etatProcess, $context = [])
+    public function setEtatProcess(string $etatProcess, array $context = []): void
     {
         $this->etatProcess = $etatProcess;
     }

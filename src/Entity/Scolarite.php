@@ -11,89 +11,61 @@ namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
+use App\Repository\ScolariteRepository;
 use App\Utils\Tools;
-use function array_key_exists;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
+use function array_key_exists;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\ScolariteRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: ScolariteRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Scolarite extends BaseEntity
 {
     use UuidTrait;
     use LifeCycleTrait;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private ?int $ordre;
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $ordre = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Semestre")
-     */
-    private ?Semestre $semestre;
+    #[ORM\ManyToOne(targetEntity: Semestre::class)]
+    private ?Semestre $semestre = null;
 
-    /**
-     * @ORM\Column(type="string", length=10)
-     */
-    private string $decision = 'E.C';
+    #[ORM\Column(type: Types::STRING, length: 10)]
+    private string $decision = Constantes::SEMESTRE_EN_COURS;
 
-    /**
-     * @ORM\Column(type="string", length=10, nullable=true)
-     */
-    private ?string $proposition;
+    #[ORM\Column(type: Types::STRING, length: 10, nullable: true)]
+    private ?string $proposition = null;
 
-    /**
-     * @ORM\Column(type="float")
-     */
+    #[ORM\Column(type: Types::FLOAT)]
     private ?float $moyenne = 0;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="scolarites")
-     */
-    private ?Etudiant $etudiant;
+    #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'scolarites')]
+    private ?Etudiant $etudiant = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private int $nbAbsences = 0;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private ?string $commentaire;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $commentaire = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire", inversedBy="scolarites")
-     */
-    private ?AnneeUniversitaire $anneeUniversitaire;
+    #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class, inversedBy: 'scolarites')]
+    private ?AnneeUniversitaire $anneeUniversitaire = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $diffuse = false;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=ScolaritePromo::class, inversedBy="scolarites")
-     */
-    private ?ScolaritePromo $scolaritePromo;
+    #[ORM\ManyToOne(targetEntity: ScolaritePromo::class, inversedBy: 'scolarites')]
+    private ?ScolaritePromo $scolaritePromo = null;
 
-    /**
-     * @ORM\Column(type="array", nullable=true)
-     */
-    private array $moyennesMatieres = []; //sauvegarder moyenne et rang
-    // idMatiere => ['moyenne' => ..., 'rang' => ...],
+    #[ORM\Column(type: Types::ARRAY, nullable: true)]
+    private array $moyennesMatieres = [];
 
-    /**
-     * @ORM\Column(type="array", nullable=true)
-     */
+    #[ORM\Column(type: Types::ARRAY, nullable: true)]
     private array $moyennesUes = [];
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private int $rang = -1;
     // idUe => ['moyenne' => ..., 'rang' => ...],
 
@@ -106,6 +78,13 @@ class Scolarite extends BaseEntity
         $this->setEtudiant($etudiant);
         $this->setSemestre($semestre);
         $this->setAnneeUniversitaire($anneeUniversitaire);
+    }
+
+    public function setUuid(UuidInterface $uuid): self
+    {
+        $this->uuid = $uuid;
+
+        return $this;
     }
 
     public function __clone()
@@ -221,13 +200,6 @@ class Scolarite extends BaseEntity
         return $this;
     }
 
-    public function setUuid($uuid): self
-    {
-        $this->uuid = $uuid;
-
-        return $this;
-    }
-
     public function getDiffuse(): ?bool
     {
         return $this->diffuse;
@@ -276,11 +248,6 @@ class Scolarite extends BaseEntity
         return $this;
     }
 
-    public function getMoyennesUesById($ue): ?array
-    {
-        return array_key_exists($ue, $this->moyennesUes) ? $this->moyennesUes[$ue] : [];
-    }
-
     public function getRang(): ?int
     {
         return $this->rang;
@@ -293,20 +260,7 @@ class Scolarite extends BaseEntity
         return $this;
     }
 
-    public function getStyle($note): string
-    {
-        if ($note < 8) {
-            return 'badge bg-danger';
-        }
-
-        if ($note < 10) {
-            return 'badge bg-warning';
-        }
-
-        return 'notenormale';
-    }
-
-    public function getMoyennesUeSousComm($idUe): array
+    public function getMoyennesUeSousComm(int $idUe): array
     {
         $ue = $this->getMoyennesUesById($idUe);
         if ([] !== $ue) {
@@ -320,5 +274,23 @@ class Scolarite extends BaseEntity
             'style' => 'notenormale',
             'moyenne' => -0.01,
         ];
+    }
+
+    public function getMoyennesUesById(int $ue): ?array
+    {
+        return array_key_exists($ue, $this->moyennesUes) ? $this->moyennesUes[$ue] : [];
+    }
+
+    public function getStyle(float $note): string
+    {
+        if ($note < 8) {
+            return 'badge bg-danger';
+        }
+
+        if ($note < 10) {
+            return 'badge bg-warning';
+        }
+
+        return 'notenormale';
     }
 }

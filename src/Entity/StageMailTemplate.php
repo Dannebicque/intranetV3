@@ -9,11 +9,11 @@
 
 namespace App\Entity;
 
+use App\Repository\StageMailTemplateRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\StageMailTemplateRepository")
- */
+#[ORM\Entity(repositoryClass: StageMailTemplateRepository::class)]
 class StageMailTemplate extends BaseEntity
 {
     public const CHAMPS_PUBLIPOSTAGE = [
@@ -25,38 +25,30 @@ class StageMailTemplate extends BaseEntity
         '{{civilite_court_responsable}}' => '{{stageEtudiant.entreprise.responsable.civilite}}',
         '{{civilite_responsable}}' => '{{stageEtudiant.entreprise.responsable.civiliteLong}}',
         '{{prenom_reponsable}}' => '{{stageEtudiant.entreprise.responsable.prenom}}',
-        '{{nom_responsable}}'            => '{{stageEtudiant.entreprise.responsable.nom}}',
-        '{{civilite_court_tuteur}}'      => '{{stageEtudiant.tuteur.civilite}}',
-        '{{civilite_tuteur}}'            => '{{stageEtudiant.tuteur.civiliteLong}}',
-        '{{prenom_tuteur}}'              => '{{stageEtudiant.tuteur.prenom}}',
-        '{{nom_tuteur}}'                 => '{{stageEtudiant.tuteur.nom}}',
+        '{{nom_responsable}}' => '{{stageEtudiant.entreprise.responsable.nom}}',
+        '{{civilite_court_tuteur}}' => '{{stageEtudiant.tuteur.civilite}}',
+        '{{civilite_tuteur}}' => '{{stageEtudiant.tuteur.civiliteLong}}',
+        '{{prenom_tuteur}}' => '{{stageEtudiant.tuteur.prenom}}',
+        '{{nom_tuteur}}' => '{{stageEtudiant.tuteur.nom}}',
         '{{civilite_court_tuteur_univ}}' => '{{stageEtudiant.tuteurUniversitaire.civilite}}',
-        '{{civilite_tuteur_univ}}'       => '{{stageEtudiant.tuteurUniversitaire.civiliteLong}}',
-        '{{prenom_tuteur_univ}}'         => '{{stageEtudiant.tuteurUniversitaire.prenom}}',
-        '{{nom_tuteur_univ}}'            => '{{stageEtudiant.tuteurUniversitaire.nom}}',
-        '{{date_debut_stage}}'           => '{{stageEtudiant.dateDebutStageFr}}',
-        '{{date_fin_stage}}'             => '{{stageEtudiant.dateDebutStageFr}}',
-        '{{nom_periode_stage}}'          => '{{stageEtudiant.stagePeriode.libelle}}',
+        '{{civilite_tuteur_univ}}' => '{{stageEtudiant.tuteurUniversitaire.civiliteLong}}',
+        '{{prenom_tuteur_univ}}' => '{{stageEtudiant.tuteurUniversitaire.prenom}}',
+        '{{nom_tuteur_univ}}' => '{{stageEtudiant.tuteurUniversitaire.nom}}',
+        '{{date_debut_stage}}' => '{{stageEtudiant.dateDebutStageFr}}',
+        '{{date_fin_stage}}' => '{{stageEtudiant.dateDebutStageFr}}',
+        '{{nom_periode_stage}}' => '{{stageEtudiant.stagePeriode.libelle}}',
     ];
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\StagePeriode", inversedBy="stageMailTemplates")
-     */
+    #[ORM\ManyToOne(targetEntity: StagePeriode::class, inversedBy: 'stageMailTemplates')]
     private ?StagePeriode $stagePeriode;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $subject;
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
+    #[ORM\Column(type: Types::STRING, length: 50)]
     private ?string $event;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\TwigTemplate", cascade={"persist", "remove"})
-     */
+    #[ORM\OneToOne(targetEntity: TwigTemplate::class, cascade: ['persist', 'remove'])]
     private ?TwigTemplate $twigTemplate;
 
     public function getStagePeriode(): ?StagePeriode

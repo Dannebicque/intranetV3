@@ -11,26 +11,20 @@ namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\BCCentreFinancierRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=BCCentreFinancierRepository::class)
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: BCCentreFinancierRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class BCCentreFinancier extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
-    private ?string $libelle;
+    #[ORM\Column(type: Types::STRING, length: 100)]
+    private ?string $libelle = null;
 
-    /**
-     * @ORM\Column(type="string", length=15)
-     */
-    private ?string $code;
-
+    #[ORM\Column(type: Types::STRING, length: 15)]
+    private ?string $code = null;
 
     public function getLibelle(): ?string
     {

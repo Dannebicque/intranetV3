@@ -10,35 +10,27 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\StagePeriodeSoutenanceRepository;
 use Carbon\CarbonInterface;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\StagePeriodeSoutenanceRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: StagePeriodeSoutenanceRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class StagePeriodeSoutenance extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\StagePeriode", inversedBy="stagePeriodeSoutenances")
-     */
+    #[ORM\ManyToOne(targetEntity: StagePeriode::class, inversedBy: 'stagePeriodeSoutenances')]
     private ?StagePeriode $stagePeriode;
 
-    /**
-     * @ORM\Column(type="date")
-     */
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?CarbonInterface $dateDebut = null;
 
-    /**
-     * @ORM\Column(type="date")
-     */
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?CarbonInterface $dateFin = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateRenduRapport;
 
     public function getStagePeriode(): ?StagePeriode

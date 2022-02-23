@@ -14,72 +14,36 @@ use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\MatiereTrait;
 use App\Repository\AbsenceEtatAppelRepository;
 use Carbon\CarbonInterface;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=AbsenceEtatAppelRepository::class)
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: AbsenceEtatAppelRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class AbsenceEtatAppel extends BaseEntity
 {
     use LifeCycleTrait;
     use MatiereTrait;
+
     public const SAISIE_SANS_ABSENT = 'pas-absent';
     public const SAISIE_AVEC_ABSENT = 'des-absent';
 
-    /**
-     * @ORM\Column(type="date")
-     */
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?CarbonInterface $date = null;
 
-    /**
-     * @ORM\Column(type="time")
-     */
-    private ?CarbonInterface $heure;
+    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    private ?CarbonInterface $heure = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Personnel::class, inversedBy="absenceEtatAppels")
-     */
-    private ?Personnel $personnel;
+    #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'absenceEtatAppels')]
+    private ?Personnel $personnel = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Groupe::class, inversedBy="absenceEtatAppels")
-     */
-    private ?Groupe $groupe;
+    #[ORM\ManyToOne(targetEntity: Groupe::class, inversedBy: 'absenceEtatAppels')]
+    private ?Groupe $groupe = null;
 
-    /**
-     * @ORM\Column(type="string", length=10)
-     */
-    private ?string $typeSaisie;
+    #[ORM\Column(type: Types::STRING, length: 10)]
+    private ?string $typeSaisie = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Semestre::class, inversedBy="absenceEtatAppels")
-     */
-    private ?Semestre $semestre;
-
-    public function getDate(): ?CarbonInterface
-    {
-        return $this->date;
-    }
-
-    public function setDate(CarbonInterface $date): self
-    {
-        $this->date = $date;
-
-        return $this;
-    }
-
-    public function getHeure(): ?CarbonInterface
-    {
-        return $this->heure;
-    }
-
-    public function setHeure(CarbonInterface $heure): self
-    {
-        $this->heure = $heure;
-
-        return $this;
-    }
+    #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'absenceEtatAppels')]
+    private ?Semestre $semestre = null;
 
     public function getPersonnel(): ?Personnel
     {
@@ -89,18 +53,6 @@ class AbsenceEtatAppel extends BaseEntity
     public function setPersonnel(?Personnel $personnel): self
     {
         $this->personnel = $personnel;
-
-        return $this;
-    }
-
-    public function getGroupe(): ?Groupe
-    {
-        return $this->groupe;
-    }
-
-    public function setGroupe(?Groupe $groupe): self
-    {
-        $this->groupe = $groupe;
 
         return $this;
     }
@@ -134,7 +86,43 @@ class AbsenceEtatAppel extends BaseEntity
         return $this->getDate()?->format('dmY').'_'.$this->getTypeIdMatiere().'_'.$this->getHeure().'_'.$this->getGroupe()?->getId();
     }
 
-    public function setEvent(EvenementEdt $event, $typeSaisie): AbsenceEtatAppel
+    public function getDate(): ?CarbonInterface
+    {
+        return $this->date;
+    }
+
+    public function setDate(CarbonInterface $date): self
+    {
+        $this->date = $date;
+
+        return $this;
+    }
+
+    public function getHeure(): ?CarbonInterface
+    {
+        return $this->heure;
+    }
+
+    public function setHeure(CarbonInterface $heure): self
+    {
+        $this->heure = $heure;
+
+        return $this;
+    }
+
+    public function getGroupe(): ?Groupe
+    {
+        return $this->groupe;
+    }
+
+    public function setGroupe(?Groupe $groupe): self
+    {
+        $this->groupe = $groupe;
+
+        return $this;
+    }
+
+    public function setEvent(EvenementEdt $event, string $typeSaisie): AbsenceEtatAppel
     {
         $this->setDate($event->dateObjet);
         $this->setIdMatiere($event->getIdMatiere());

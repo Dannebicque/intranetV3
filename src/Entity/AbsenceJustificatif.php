@@ -11,11 +11,15 @@ namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
+use App\Repository\AbsenceJustificatifRepository;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 use Serializable;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -23,10 +27,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\AbsenceJustificatifRepository")
  * @Vich\Uploadable
- * @ORM\HasLifecycleCallbacks()
  */
+#[ORM\Entity(repositoryClass: AbsenceJustificatifRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class AbsenceJustificatif extends BaseEntity implements Serializable
 {
     use UuidTrait;
@@ -35,73 +39,57 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
     public const ACCEPTE = 'A';
     public const REFUSE = 'R';
     public const DEPOSE = 'D';
-
     public const ETATLONG = [
         self::ACCEPTE => 'Accepté, absences justifiées',
         self::DEPOSE => 'Déposé, en attente de validation',
         self::REFUSE => 'Refusé',
     ];
+
     public const TAB_ETAT = [
         'label.absence_justficatif.'.self::ACCEPTE => self::ACCEPTE,
         'label.absence_justficatif.'.self::DEPOSE => self::DEPOSE,
         'label.absence_justficatif.'.self::REFUSE => self::REFUSE,
     ];
 
-    /**
-     * @ORM\Column(type="datetime")
-     * @Groups({"justificatif_administration"})
-     */
+    #[Groups(groups: ['justificatif_administration'])]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?CarbonInterface $dateHeureDebut = null;
 
-    /**
-     * @ORM\Column(type="datetime")
-     * @Groups({"justificatif_administration"})
-     */
+    #[Groups(groups: ['justificatif_administration'])]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?CarbonInterface $dateHeureFin = null;
 
-    /**
-     * @ORM\Column(type="text")
-     * @Groups({"justificatif_administration"})
-     * @Assert\NotBlank(message="label.absence_justificatif.justificatif.not_blank")
-     */
+    #[Groups(groups: ['justificatif_administration'])]
+    #[Assert\NotBlank(message: 'label.absence_justificatif.justificatif.not_blank')]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $motif = '';
 
-    /**
-     * @ORM\Column(type="string", length=1)
-     * @Groups({"justificatif_administration"})
-     */
-    private string $etat ;
+    #[Groups(groups: ['justificatif_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 1)]
+    private string $etat;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="absenceJustificatifs", fetch="EAGER")
-     * @Groups({"justificatif_administration"})
-     */
-    private ?Etudiant $etudiant;
+    #[Groups(groups: ['justificatif_administration'])]
+    #[ORM\ManyToOne(targetEntity: Etudiant::class, fetch: 'EAGER', inversedBy: 'absenceJustificatifs')]
+    private ?Etudiant $etudiant = null;
 
-    /**
-     * @ORM\Column(type="string", length=50, nullable=true)
-     */
+    #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
     private ?string $fichierName = '';
 
     /**
      * @Vich\UploadableField(mapping="justificatif", fileNameProperty="fichierName")
      */
-    private $fichierFile;
+    private ?File $fichierFile;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire")
-     */
-    private ?AnneeUniversitaire $anneeUniversitaire;
+    #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class)]
+    private ?AnneeUniversitaire $anneeUniversitaire = null;
 
-    private ?CarbonInterface $dateDebut= null;
-    private ?CarbonInterface $heureDebut= null;
-    private ?CarbonInterface $dateFin= null;
-    private ?CarbonInterface $heureFin= null;
+    private ?CarbonInterface $dateDebut;
+    private ?CarbonInterface $heureDebut;
+    private ?CarbonInterface $dateFin;
+    private ?CarbonInterface $heureFin;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Semestre::class, inversedBy="absenceJustificatifs")
-     */
-    private ?Semestre $semestre;
+    #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'absenceJustificatifs')]
+    private ?Semestre $semestre = null;
 
     /**
      * AbsenceJustificatif constructor.
@@ -118,33 +106,16 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         $this->setUuid(Uuid::uuid4());
     }
 
+    public function setUuid(UuidInterface $uuid): self
+    {
+        $this->uuid = $uuid;
+
+        return $this;
+    }
+
     public function __clone()
     {
         $this->setUuid(Uuid::uuid4());
-    }
-
-    public function getDateHeureDebut(): ?CarbonInterface
-    {
-        return $this->dateHeureDebut;
-    }
-
-    public function setDateHeureDebut(?CarbonInterface $dateHeureDebut): self
-    {
-        $this->dateHeureDebut = $dateHeureDebut;
-
-        return $this;
-    }
-
-    public function getDateHeureFin(): ?CarbonInterface
-    {
-        return $this->dateHeureFin;
-    }
-
-    public function setDateHeureFin(?CarbonInterface $dateHeureFin): self
-    {
-        $this->dateHeureFin = $dateHeureFin;
-
-        return $this;
     }
 
     public function getMotif(): ?string
@@ -171,16 +142,9 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         return $this;
     }
 
-    public function getEtudiant(): ?Etudiant
+    public function getFichierFile(): ?File
     {
-        return $this->etudiant;
-    }
-
-    public function setEtudiant(?Etudiant $etudiant): self
-    {
-        $this->etudiant = $etudiant;
-
-        return $this;
+        return $this->fichierFile;
     }
 
     /**
@@ -195,11 +159,6 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         }
     }
 
-    public function getFichierFile(): ?File
-    {
-        return $this->fichierFile;
-    }
-
     public function getFichierName(): ?string
     {
         return $this->fichierName;
@@ -210,9 +169,7 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         $this->fichierName = $fichierName;
     }
 
-    /**
-     * @Groups({"justificatif_administration"})
-     */
+    #[Groups(groups: ['justificatif_administration'])]
     public function getEtatLong(): string
     {
         return self::ETATLONG[$this->etat];
@@ -230,13 +187,6 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         return $this;
     }
 
-    public function setUuid($uuid): self
-    {
-        $this->uuid = $uuid;
-
-        return $this;
-    }
-
     public function etatLong(): string
     {
         return self::ETATLONG[$this->etat];
@@ -247,49 +197,9 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         return serialize($this->getId());
     }
 
-    public function unserialize($data)
+    public function unserialize($data): void
     {
         $this->uuid = unserialize($data, ['allowed_classes' => false]);
-    }
-
-    public function getDateDebut(): CarbonInterface | null
-    {
-        return $this->dateDebut;
-    }
-
-    public function getHeureDebut(): CarbonInterface | null
-    {
-        return $this->heureDebut;
-    }
-
-    public function getDateFin(): CarbonInterface | null
-    {
-        return $this->dateFin;
-    }
-
-    public function getHeureFin(): CarbonInterface | null
-    {
-        return $this->heureFin;
-    }
-
-    public function setDateDebut($dateDebut): void
-    {
-        $this->dateDebut = $dateDebut;
-    }
-
-    public function setHeureDebut($heureDebut): void
-    {
-        $this->heureDebut = Carbon::instance($heureDebut);
-    }
-
-    public function setDateFin($dateFin): void
-    {
-        $this->dateFin = $dateFin;
-    }
-
-    public function setHeureFin($heureFin): void
-    {
-        $this->heureFin = Carbon::instance($heureFin);
     }
 
     public function prepareData(): void
@@ -300,14 +210,77 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         $this->setHeureFin($this->getDateHeureFin());
     }
 
+    public function getDateHeureDebut(): ?CarbonInterface
+    {
+        return $this->dateHeureDebut;
+    }
+
+    public function setDateHeureDebut(?CarbonInterface $dateHeureDebut): self
+    {
+        $this->dateHeureDebut = $dateHeureDebut;
+
+        return $this;
+    }
+
+    public function getDateHeureFin(): ?CarbonInterface
+    {
+        return $this->dateHeureFin;
+    }
+
+    public function setDateHeureFin(?CarbonInterface $dateHeureFin): self
+    {
+        $this->dateHeureFin = $dateHeureFin;
+
+        return $this;
+    }
+
     public function transformeData(): void
     {
+        $this->setDateHeureDebut(Carbon::createFromFormat('Y-m-d H:i',
+            $this->getDateDebut()?->format('Y-m-d').' '.$this->getHeureDebut()?->format('H:i')));
 
-            $this->setDateHeureDebut(Carbon::createFromFormat('Y-m-d H:i',$this->getDateDebut()?->format('Y-m-d').' '.$this->getHeureDebut()?->format('H:i')));
+        $this->setDateHeureFin(Carbon::createFromFormat('Y-m-d H:i',
+            $this->getDateFin()?->format('Y-m-d').' '.$this->getHeureFin()?->format('H:i')));
+    }
 
-            $this->setDateHeureFin(Carbon::createFromFormat('Y-m-d H:i',
-                $this->getDateFin()?->format('Y-m-d').' '.$this->getHeureFin()?->format('H:i')));
+    public function getDateDebut(): CarbonInterface | null
+    {
+        return $this->dateDebut;
+    }
 
+    public function setDateDebut(?CarbonInterface $dateDebut): void
+    {
+        $this->dateDebut = $dateDebut;
+    }
+
+    public function getHeureDebut(): CarbonInterface | null
+    {
+        return $this->heureDebut;
+    }
+
+    public function setHeureDebut(mixed $heureDebut): void
+    {
+        $this->heureDebut = Carbon::instance($heureDebut);
+    }
+
+    public function getDateFin(): CarbonInterface | null
+    {
+        return $this->dateFin;
+    }
+
+    public function setDateFin(?CarbonInterface $dateFin): void
+    {
+        $this->dateFin = $dateFin;
+    }
+
+    public function getHeureFin(): CarbonInterface | null
+    {
+        return $this->heureFin;
+    }
+
+    public function setHeureFin(mixed $heureFin): void
+    {
+        $this->heureFin = Carbon::instance($heureFin);
     }
 
     public function getPeriodeAbsence(): array
@@ -318,13 +291,25 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         ];
     }
 
-    public function getEtudiantGroupes()
+    public function getEtudiantGroupes(): Collection|array|null
     {
         if (null !== $this->getEtudiant()) {
             return $this->getEtudiant()->getGroupes();
         }
 
         return null;
+    }
+
+    public function getEtudiant(): ?Etudiant
+    {
+        return $this->etudiant;
+    }
+
+    public function setEtudiant(?Etudiant $etudiant): self
+    {
+        $this->etudiant = $etudiant;
+
+        return $this;
     }
 
     public function getSemestre(): ?Semestre

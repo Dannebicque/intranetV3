@@ -10,44 +10,40 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\SiteRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\SiteRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: SiteRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Site extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"sites_administration"})
-     */
+    #[Groups(['sites_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $libelle;
 
-    /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Adresse", cascade={"persist", "remove"})
-     * @Groups({"sites_administration"})
-     */
+    #[Groups(['sites_administration'])]
+    #[ORM\OneToOne(targetEntity: Adresse::class, cascade: ['persist', 'remove'])]
     private ?Adresse $adresse;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Ufr", mappedBy="sites")
-     */
+    #[ORM\ManyToMany(targetEntity: Ufr::class, mappedBy: 'sites')]
     private Collection $ufrs;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Salle", mappedBy="site")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Salle>
      */
+    #[ORM\OneToMany(mappedBy: 'site', targetEntity: Salle::class)]
     private Collection $salles;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Ufr", mappedBy="sitePrincipal")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Ufr>
      */
+    #[ORM\OneToMany(mappedBy: 'sitePrincipal', targetEntity: Ufr::class)]
     private Collection $ufrPrincipales;
 
     public function __construct()
@@ -62,7 +58,7 @@ class Site extends BaseEntity
         return $this->libelle;
     }
 
-    public function setLibelle($libelle): void
+    public function setLibelle(?string $libelle): void
     {
         $this->libelle = $libelle;
     }

@@ -12,80 +12,53 @@ namespace App\Entity;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\StageAvenantRepository;
 use Carbon\CarbonInterface;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=StageAvenantRepository::class)
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: StageAvenantRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class StageAvenant extends BaseEntity
 {
     use LifeCycleTrait;
-
     public const CAS1 = 1;
     public const CAS2 = 2;
     public const CAS3 = 3;
     public const CAS4 = 4;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=StageEtudiant::class, inversedBy="stageAvenants")
-     */
+    #[ORM\ManyToOne(targetEntity: StageEtudiant::class, inversedBy: 'stageAvenants')]
     private ?StageEtudiant $stageEtudiant;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private ?int $cas = 0;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?CarbonInterface $nouvelleDateFin;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
     private ?int $nouvelleDureeJour;
 
-    /**
-     * @ORM\OneToOne(targetEntity=Adresse::class, cascade={"persist", "remove"})
-     */
+    #[ORM\OneToOne(targetEntity: Adresse::class, cascade: ['persist', 'remove'])]
     private ?Adresse $nouvelleAdresse;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateDebutSuspension;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateFinSuspension;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateRepriseStage;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateInterruption;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateDebutAbsence;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateFinAbsence;
 
-    /**
-     * StageAvenant constructor.
-     */
-    public function __construct($stageEtudiant)
+    public function __construct(StageEtudiant $stageEtudiant)
     {
         $this->stageEtudiant = $stageEtudiant;
     }

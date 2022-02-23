@@ -10,79 +10,58 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\TypeHrsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\TypeHrsRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: TypeHrsRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class TypeHrs extends BaseEntity
 {
     use LifeCycleTrait;
-
     public const TYPE_HRS_HRS = 'HRS';
     public const TYPE_HRS_PCA = 'PCA';
     public const TYPE_HRS_PRP = 'PRP';
     public const TYPE_HRS_SUIVI = 'Suivi';
     public const TYPE_HRS_AUTRE = 'Autre';
-
     public const TAB_TYPE_HRS = [
-        'choice.' . self::TYPE_HRS_HRS => self::TYPE_HRS_HRS,
-        'choice.' . self::TYPE_HRS_PCA => self::TYPE_HRS_PCA,
-        'choice.' . self::TYPE_HRS_PRP => self::TYPE_HRS_PRP,
-        'choice.' . self::TYPE_HRS_SUIVI => self::TYPE_HRS_SUIVI,
-        'choice.' . self::TYPE_HRS_AUTRE => self::TYPE_HRS_AUTRE,
+        'choice.'.self::TYPE_HRS_HRS => self::TYPE_HRS_HRS,
+        'choice.'.self::TYPE_HRS_PCA => self::TYPE_HRS_PCA,
+        'choice.'.self::TYPE_HRS_PRP => self::TYPE_HRS_PRP,
+        'choice.'.self::TYPE_HRS_SUIVI => self::TYPE_HRS_SUIVI,
+        'choice.'.self::TYPE_HRS_AUTRE => self::TYPE_HRS_AUTRE,
     ];
 
     //STAGE, PRP, PCA, HRS
 
-    /**
-     * @ORM\Column(type="string", length=100)
-     * @Groups({"type_hrs_administration"})
-     */
+    #[Groups(['type_hrs_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 100)]
     private ?string $libelle;
 
-    /**
-     * @ORM\Column(type="string", length=20)
-     * @Groups({"type_hrs_administration"})
-     */
+    #[Groups(['type_hrs_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 20)]
     private ?string $type;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Hrs", mappedBy="typeHrs")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Hrs>
      */
+    #[ORM\OneToMany(mappedBy: 'typeHrs', targetEntity: Hrs::class)]
     private Collection $hrs;
 
-    /**
-     * @ORM\Column(type="boolean")
-     * @Groups({"type_hrs_administration"})
-     */
+    #[Groups(['type_hrs_administration'])]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $incluService = false;
 
-    /**
-     * @ORM\Column(type="float")
-     * @Groups({"type_hrs_administration"})
-     */
+    #[Groups(['type_hrs_administration'])]
+    #[ORM\Column(type: Types::FLOAT)]
     private float $maximum = 96;
 
     public function __construct()
     {
         $this->hrs = new ArrayCollection();
-    }
-
-    public function getLibelle(): ?string
-    {
-        return $this->libelle;
-    }
-
-    public function setLibelle(string $libelle): self
-    {
-        $this->libelle = $libelle;
-
-        return $this;
     }
 
     /**
@@ -145,7 +124,7 @@ class TypeHrs extends BaseEntity
         return $this->type;
     }
 
-    public function setType($type): void
+    public function setType(?string $type): void
     {
         $this->type = $type;
     }
@@ -153,5 +132,17 @@ class TypeHrs extends BaseEntity
     public function __toString(): string
     {
         return $this->getLibelle();
+    }
+
+    public function getLibelle(): ?string
+    {
+        return $this->libelle;
+    }
+
+    public function setLibelle(string $libelle): self
+    {
+        $this->libelle = $libelle;
+
+        return $this;
     }
 }

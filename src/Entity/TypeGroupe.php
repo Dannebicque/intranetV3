@@ -10,82 +10,49 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\TypeGroupeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\TypeGroupeRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: TypeGroupeRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class TypeGroupe extends BaseEntity
 {
     use LifeCycleTrait;
-
     public const TYPE_GROUPE_CM = 'CM';
     public const TYPE_GROUPE_TD = 'TD';
     public const TYPE_GROUPE_TP = 'TP';
-
     public const TYPES = [self::TYPE_GROUPE_CM, self::TYPE_GROUPE_TD, self::TYPE_GROUPE_TP, self::TYPE_GROUPE_LV];
     public const TYPE_GROUPE_LV = 'LV';
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="typeGroupes")
-     * @Groups({"type_groupe_administration"})
-     */
+    #[Groups(['type_groupe_administration'])]
+    #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'typeGroupes')]
     private Semestre $semestre;
 
-    /**
-     * @ORM\Column(type="string", length=100)
-     * @Groups({"type_groupe_administration"})
-     */
+    #[Groups(['type_groupe_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 100)]
     private ?string $libelle;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Groupe", mappedBy="typeGroupe", fetch="EAGER", orphanRemoval=true)
-     * @ORM\OrderBy({"ordre" = "ASC"})
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Groupe>
      */
+    #[ORM\OneToMany(mappedBy: 'typeGroupe', targetEntity: Groupe::class, fetch: 'EAGER', orphanRemoval: true)]
+    #[ORM\OrderBy(value: ['ordre' => 'ASC'])]
     private Collection $groupes;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $defaut = false;
 
-    /**
-     * @ORM\Column(type="string", length=2)
-     */
+    #[ORM\Column(type: Types::STRING, length: 2)]
     private ?string $type;
 
     public function __construct(Semestre $semestre)
     {
         $this->semestre = $semestre;
         $this->groupes = new ArrayCollection();
-    }
-
-    public function getSemestre(): ?Semestre
-    {
-        return $this->semestre;
-    }
-
-    public function setSemestre(Semestre $semestre): self
-    {
-        $this->semestre = $semestre;
-
-        return $this;
-    }
-
-    public function getLibelle(): ?string
-    {
-        return $this->libelle;
-    }
-
-    public function setLibelle(string $libelle): self
-    {
-        $this->libelle = $libelle;
-
-        return $this;
     }
 
     /**
@@ -119,6 +86,27 @@ class TypeGroupe extends BaseEntity
         return $this;
     }
 
+    public function getArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'libelle' => $this->getLibelle(),
+            'defaut' => $this->getDefaut(),
+        ];
+    }
+
+    public function getLibelle(): ?string
+    {
+        return $this->libelle;
+    }
+
+    public function setLibelle(string $libelle): self
+    {
+        $this->libelle = $libelle;
+
+        return $this;
+    }
+
     public function getDefaut(): ?bool
     {
         return $this->defaut;
@@ -131,28 +119,9 @@ class TypeGroupe extends BaseEntity
         return $this;
     }
 
-    public function getArray(): array
-    {
-        return [
-            'id' => $this->getId(),
-            'libelle' => $this->getLibelle(),
-            'defaut' => $this->getDefaut(),
-        ];
-    }
-
     public function isTD(): bool
     {
         return self::TYPE_GROUPE_TD === mb_strtoupper($this->getType());
-    }
-
-    public function isTP(): bool
-    {
-        return self::TYPE_GROUPE_TP === mb_strtoupper($this->getType());
-    }
-
-    public function isCM(): bool
-    {
-        return self::TYPE_GROUPE_CM === mb_strtoupper($this->getType());
     }
 
     public function getType(): ?string
@@ -167,8 +136,30 @@ class TypeGroupe extends BaseEntity
         return $this;
     }
 
+    public function isTP(): bool
+    {
+        return self::TYPE_GROUPE_TP === mb_strtoupper($this->getType());
+    }
+
+    public function isCM(): bool
+    {
+        return self::TYPE_GROUPE_CM === mb_strtoupper($this->getType());
+    }
+
     public function getDisplay(): string
     {
-        return null !== $this->getSemestre() ? $this->getSemestre()->getLibelle() . ' | ' . $this->getLibelle() : $this->getLibelle();
+        return null !== $this->getSemestre() ? $this->getSemestre()->getLibelle().' | '.$this->getLibelle() : $this->getLibelle();
+    }
+
+    public function getSemestre(): ?Semestre
+    {
+        return $this->semestre;
+    }
+
+    public function setSemestre(?Semestre $semestre): self
+    {
+        $this->semestre = $semestre;
+
+        return $this;
     }
 }

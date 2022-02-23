@@ -10,51 +10,39 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\SalleExamenRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\SalleExamenRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: SalleExamenRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class SalleExamen extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Salle", inversedBy="salleExamens")
-     * @Groups({"salle_examen_administration"})
-     */
-    private ?Salle $salle;
+    #[Groups(groups: ['salle_examen_administration'])]
+    #[ORM\ManyToOne(targetEntity: Salle::class, inversedBy: 'salleExamens')]
+    private ?Salle $salle = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Departement", inversedBy="salleExamens")
-     */
-    private Departement $departement;
+    #[Groups(groups: ['salle_examen_administration'])]
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $nbColonnes = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @Groups({"salle_examen_administration"})
-     */
-    private ?int $nbColonnes;
+    #[Groups(groups: ['salle_examen_administration'])]
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $nbRangs = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @Groups({"salle_examen_administration"})
-     */
-    private ?int $nbRangs;
+    #[Groups(groups: ['salle_examen_administration'])]
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $capacite = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @Groups({"salle_examen_administration"})
-     */
-    private ?int $capacite;
+    #[Groups(groups: ['salle_examen_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $placesInterdites = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"salle_examen_administration"})
-     */
-    private ?string $placesInterdites;
+    #[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'salleExamens')]
+    private ?Departement $departement;
 
     public function __construct(Departement $departement)
     {
@@ -78,7 +66,7 @@ class SalleExamen extends BaseEntity
         return $this->departement;
     }
 
-    public function setDepartement(Departement $departement): self
+    public function setDepartement(?Departement $departement): self
     {
         $this->departement = $departement;
 

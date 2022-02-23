@@ -12,22 +12,20 @@ namespace App\Entity;
 use App\Repository\QuestionnaireQuestionTagRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=QuestionnaireQuestionTagRepository::class)
- */
+#[ORM\Entity(repositoryClass: QuestionnaireQuestionTagRepository::class)]
 class QuestionnaireQuestionTag extends BaseEntity
 {
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
-    private ?string $libelle;
+    #[ORM\Column(type: Types::STRING, length: 100)]
+    private ?string $libelle = null;
 
     /**
-     * @ORM\ManyToMany(targetEntity=QuestionnaireQuestion::class, inversedBy="questionnaireQuestionTags")
+     * @var \Doctrine\Common\Collections\Collection<\App\Entity\QuestionnaireQuestion>
      */
-    private $question;
+    #[ORM\ManyToMany(targetEntity: QuestionnaireQuestion::class, inversedBy: 'questionnaireQuestionTags')]
+    private Collection $question;
 
     public function __construct()
     {

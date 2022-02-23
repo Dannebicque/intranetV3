@@ -13,48 +13,41 @@ use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\MaterielCommunRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity(repositoryClass=MaterielCommunRepository::class)
  * @Vich\Uploadable
  */
+#[ORM\Entity(repositoryClass: MaterielCommunRepository::class)]
 class MaterielCommun extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\Column(type="string", length=150)
-     */
-    private ?string $designation;
+    #[ORM\Column(type: Types::STRING, length: 150)]
+    private ?string $designation = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private ?string $description;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Personnel::class, inversedBy="materielCommuns")
-     */
-    private ?Personnel $contact;
+    #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'materielCommuns')]
+    private ?Personnel $contact = null;
 
-    /**
-     * @ORM\Column(type="string", length=50, nullable=true)
-     */
+    #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
     private ?string $photoName = 'noimage.png';
 
     /**
-     *
      * @Vich\UploadableField(mapping="materiel_commun", fileNameProperty="photoName")
      */
-    private $photoFile;
+    private ?File $photoFile;
 
     /**
-     * @ORM\OneToMany(targetEntity=MaterielCommunPret::class, mappedBy="materielCommun")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\MaterielCommunPret>
      */
+    #[ORM\OneToMany(mappedBy: 'materielCommun', targetEntity: MaterielCommunPret::class)]
     private Collection $materielCommunPrets;
 
     public function __construct()

@@ -11,196 +11,193 @@ namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
+use App\Repository\DepartementRepository;
+use Ramsey\Uuid\UuidInterface;
+use function chr;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
+use function ord;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
-use function chr;
-use function ord;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\DepartementRepository")
- * @ORM\HasLifecycleCallbacks()
  * @Vich\Uploadable
  */
+#[ORM\Entity(repositoryClass: DepartementRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Departement extends BaseEntity
 {
     use UuidTrait;
     use LifeCycleTrait;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"actualite_administration"})
-     */
-    private ?string $libelle;
+    #[Groups(groups: ['actualite_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $libelle = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Ufr", inversedBy="departements")
-     */
-    private ?Ufr $ufr;
+    #[ORM\ManyToOne(targetEntity: Ufr::class, inversedBy: 'departements')]
+    private ?Ufr $ufr = null;
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
+    #[ORM\Column(type: Types::STRING, length: 50)]
     private ?string $logoName = '';
 
     /**
      * @Vich\UploadableField(mapping="logo", fileNameProperty="logoName")
      */
-    private $logoFile;
+    private ?File $logoFile;
+
+    #[ORM\Column(type: Types::STRING, length: 16, nullable: true)]
+    private ?string $telContact = null;
+
+    #[ORM\Column(name: 'fax', type: Types::STRING, length: 16, nullable: true)]
+    private ?string $fax = null;
+
+    #[ORM\Column(name: 'couleur', type: Types::STRING, length: 16, nullable: true)]
+    private ?string $couleur = null;
+
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $siteWeb = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description = null;
 
     /**
-     * @ORM\Column(type="string", length=16, nullable=true)
-     */
-    private ?string $telContact;
-    /**
-     * @ORM\Column(name="fax", type="string", length=16, nullable=true)
-     */
-    private ?string $fax;
-    /**
-     * @ORM\Column(name="couleur", type="string", length=16, nullable=true)
-     */
-    private ?string $couleur;
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private ?string $siteWeb;
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private ?string $description;
-    /**
-     * @ORM\Column(type="boolean")
      * @deprecated
      */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $optUpdateCelcat = false;
-    /**
-     * @ORM\Column(type="boolean")
-     */
+
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $optAgence = false;
-    /**
-     * @ORM\Column(type="boolean")
-     */
+
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $optMateriel = false;
-    /**
-     * @ORM\Column(type="boolean")
-     */
+
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $optEdt = true;
-    /**
-     * @ORM\Column(type="boolean")
-     */
+
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $optStage = true;
-    /**
-     * @ORM\Column(type="boolean")
-     */
+
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $optSynthese = true;
-    /**
-     * @ORM\Column(type="boolean")
-     */
+
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $optMessagerie = true;
 
+    #[ORM\ManyToOne(targetEntity: Personnel::class)]
+    private ?Personnel $respri = null;
+
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
-     */
-    private ?Personnel $respri;
-    /**
-     * @ORM\Column(type="integer")
      * @deprecated
      */
+    #[ORM\Column(type: Types::INTEGER)]
     private int $optAnneePrevisionnel;
+
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\TypeDocument", mappedBy="departement")
-     * @MaxDepth(1)
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\TypeDocument>
      */
+    #[MaxDepth(1)]
+    #[ORM\OneToMany(mappedBy: 'departement', targetEntity: TypeDocument::class)]
     private Collection $typeDocuments;
+
     /**
-     * @ORM\OneToMany(targetEntity="PersonnelDepartement", mappedBy="departement")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\PersonnelDepartement>
      */
+    #[ORM\OneToMany(mappedBy: 'departement', targetEntity: PersonnelDepartement::class)]
     private Collection $personnelDepartements;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Actualite", mappedBy="departement")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Actualite>
      */
+    #[ORM\OneToMany(mappedBy: 'departement', targetEntity: Actualite::class)]
     private Collection $actualites;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Diplome", mappedBy="departement")
-     * @ORM\OrderBy({"libelle"="ASC"})
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Diplome>
      */
+    #[ORM\OneToMany(mappedBy: 'departement', targetEntity: Diplome::class)]
+    #[ORM\OrderBy(value: ['libelle' => 'ASC'])]
     private Collection $diplomes;
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\SalleExamen", mappedBy="departement")
-     */
-    private Collection $salleExamens;
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Hrs", mappedBy="departement")
-     */
-    private Collection $hrs;
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\TypeMateriel", mappedBy="departement")
-     */
-    private Collection $typeMateriels;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\SalleExamen>
      */
+    #[ORM\OneToMany(mappedBy: 'departement', targetEntity: SalleExamen::class)]
+    private Collection $salleExamens;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Hrs>
+     */
+    #[ORM\OneToMany(mappedBy: 'departement', targetEntity: Hrs::class)]
+    private Collection $hrs;
+
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\TypeMateriel>
+     */
+    #[ORM\OneToMany(mappedBy: 'departement', targetEntity: TypeMateriel::class)]
+    private Collection $typeMateriels;
+
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $actif = true;
-    /**
-     * @ORM\Column(type="boolean")
-     */
+
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $preparationAnnee = false;
+
+    #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class, inversedBy: 'departements')]
+    private ?AnneeUniversitaire $anneeUniversitairePrepare = null;
+
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire", inversedBy="departements")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\CreneauCours>
      */
-    private ?AnneeUniversitaire $anneeUniversitairePrepare;
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\CreneauCours", mappedBy="departement")
-     */
+    #[ORM\OneToMany(mappedBy: 'departement', targetEntity: CreneauCours::class)]
     private Collection $creneauCours;
+
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ArticleCategorie", mappedBy="departement")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ArticleCategorie>
      */
+    #[ORM\OneToMany(mappedBy: 'departement', targetEntity: ArticleCategorie::class)]
     private Collection $articleCategories;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Emprunt", mappedBy="departement")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Emprunt>
      */
+    #[ORM\OneToMany(mappedBy: 'departement', targetEntity: Emprunt::class)]
     private Collection $emprunts;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="departements")
-     */
-    private ?Personnel $respMateriel;
+    #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'departements')]
+    private ?Personnel $respMateriel = null;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Etudiant", mappedBy="departement")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Etudiant>
      */
+    #[ORM\OneToMany(mappedBy: 'departement', targetEntity: Etudiant::class)]
     private Collection $etudiants;
-
     /**
-     * @ORM\OneToMany(targetEntity=BCDemande::class, mappedBy="departement")
+     * @var \Doctrine\Common\Collections\Collection<\App\Entity\BCDemande>
      */
-    private $bCDemandes;
+    #[ORM\OneToMany(mappedBy: 'departement', targetEntity: BCDemande::class)]
+    private Collection $bCDemandes;
 
     /**
-     * @ORM\OneToMany(targetEntity=Borne::class, mappedBy="departement")
+     * @var \Doctrine\Common\Collections\Collection<\App\Entity\Borne>
      */
-    private $bornes;
+    #[ORM\OneToMany(mappedBy: 'departement', targetEntity: Borne::class)]
+    private Collection $bornes;
 
     /**
-     * Departement constructor.
      *
      * @throws Exception
      */
     public function __construct()
     {
         $this->setUuid(Uuid::uuid4());
-        $this->optAnneePrevisionnel = (int)date('Y');
+        $this->optAnneePrevisionnel = (int) date('Y');
         $this->typeDocuments = new ArrayCollection();
         $this->personnelDepartements = new ArrayCollection();
         $this->actualites = new ArrayCollection();
@@ -216,6 +213,13 @@ class Departement extends BaseEntity
         $this->bornes = new ArrayCollection();
     }
 
+    public function setUuid(UuidInterface $uuid): self
+    {
+        $this->uuid = $uuid;
+
+        return $this;
+    }
+
     public function __clone()
     {
         $this->setUuid(Uuid::uuid4());
@@ -229,7 +233,7 @@ class Departement extends BaseEntity
         return $this->ufr;
     }
 
-    public function setUfr(Ufr $ufr): void
+    public function setUfr(?Ufr $ufr): void
     {
         $this->ufr = $ufr;
     }
@@ -242,7 +246,7 @@ class Departement extends BaseEntity
         return $this->libelle;
     }
 
-    public function setLibelle($libelle): void
+    public function setLibelle(?string $libelle): void
     {
         $this->libelle = $libelle;
     }
@@ -297,24 +301,12 @@ class Departement extends BaseEntity
         $this->description = $description;
     }
 
-    /**
-     * @return bool
-     * @deprecated
-     */
-    public function isOptUpdateCelcat(): bool
-    {
-        return $this->optUpdateCelcat;
-    }
-
-    /**
-     * @deprecated
-     */
-    public function setOptUpdateCelcat(bool $optUpdateCelcat): void
-    {
-        $this->optUpdateCelcat = $optUpdateCelcat;
-    }
-
     public function isOptAgence(): bool
+    {
+        return $this->optAgence;
+    }
+
+    public function getOptAgence(): ?bool
     {
         return $this->optAgence;
     }
@@ -329,6 +321,11 @@ class Departement extends BaseEntity
         return $this->optMateriel;
     }
 
+    public function getOptMateriel(): ?bool
+    {
+        return $this->optMateriel;
+    }
+
     public function setOptMateriel(bool $optMateriel): void
     {
         $this->optMateriel = $optMateriel;
@@ -339,32 +336,22 @@ class Departement extends BaseEntity
         return $this->optEdt;
     }
 
+    public function getOptEdt(): ?bool
+    {
+        return $this->optEdt;
+    }
+
     public function setOptEdt(bool $optEdt): void
     {
         $this->optEdt = $optEdt;
     }
 
-    public function isOptStage(): bool
-    {
-        return $this->optStage;
-    }
-
-    public function setOptStage(bool $optStage): void
-    {
-        $this->optStage = $optStage;
-    }
-
-    public function isOptSynthese(): bool
-    {
-        return $this->optSynthese;
-    }
-
-    public function setOptSynthese(bool $optSynthese): void
-    {
-        $this->optSynthese = $optSynthese;
-    }
-
     public function isOptMessagerie(): bool
+    {
+        return $this->optMessagerie;
+    }
+
+    public function getOptMessagerie(): ?bool
     {
         return $this->optMessagerie;
     }
@@ -379,7 +366,7 @@ class Departement extends BaseEntity
         return $this->respri;
     }
 
-    public function setRespri($respri): void
+    public function setRespri(?Personnel $respri): void
     {
         $this->respri = $respri;
     }
@@ -521,7 +508,7 @@ class Departement extends BaseEntity
     public function update(string $name, mixed $value): void
     {
         $name[0] = chr(ord($name[0]) - 32);
-        $method = 'set' . $name;
+        $method = 'set'.$name;
         if (method_exists($this, $method)) {
             $this->$method($value);
         }
@@ -792,31 +779,25 @@ class Departement extends BaseEntity
         return $this;
     }
 
-    public function setUuid($uuid): self
-    {
-        $this->uuid = $uuid;
-
-        return $this;
-    }
-
     public function getOptUpdateCelcat(): ?bool
     {
         return $this->optUpdateCelcat;
     }
 
-    public function getOptAgence(): ?bool
+    /**
+     * @deprecated
+     */
+    public function isOptUpdateCelcat(): bool
     {
-        return $this->optAgence;
+        return $this->optUpdateCelcat;
     }
 
-    public function getOptMateriel(): ?bool
+    /**
+     * @deprecated
+     */
+    public function setOptUpdateCelcat(bool $optUpdateCelcat): void
     {
-        return $this->optMateriel;
-    }
-
-    public function getOptEdt(): ?bool
-    {
-        return $this->optEdt;
+        $this->optUpdateCelcat = $optUpdateCelcat;
     }
 
     public function getOptStage(): ?bool
@@ -824,14 +805,29 @@ class Departement extends BaseEntity
         return $this->optStage;
     }
 
+    public function isOptStage(): bool
+    {
+        return $this->optStage;
+    }
+
+    public function setOptStage(bool $optStage): void
+    {
+        $this->optStage = $optStage;
+    }
+
     public function getOptSynthese(): ?bool
     {
         return $this->optSynthese;
     }
 
-    public function getOptMessagerie(): ?bool
+    public function isOptSynthese(): bool
     {
-        return $this->optMessagerie;
+        return $this->optSynthese;
+    }
+
+    public function setOptSynthese(bool $optSynthese): void
+    {
+        $this->optSynthese = $optSynthese;
     }
 
     /**
@@ -865,7 +861,7 @@ class Departement extends BaseEntity
         return $this;
     }
 
-    public function libelleInitiales(): array|string|null
+    public function libelleInitiales(): array | string | null
     {
         return str_replace(' ', '<br>', $this->libelle);
     }

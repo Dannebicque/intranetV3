@@ -10,115 +10,74 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\CelcatEventsRepository;
 use Carbon\CarbonInterface;
 use DateTimeInterface;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\CelcatEventsRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: CelcatEventsRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class CelcatEvent extends BaseEntity
 {
     use LifeCycleTrait;
 
-    //todo: calculer la date réelle (comme pour EdtPlanning, Calculer le semestre).
-    //todo: refactor les noms des deux entités EDTIntranet, EDTCelcat
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $eventId = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private ?int $eventId;
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $jour = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private ?int $jour;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?CarbonInterface $debut = null;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private ?CarbonInterface $debut;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?CarbonInterface $fin = null;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private ?CarbonInterface $fin;
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $semaineFormation = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private ?int $semaineFormation;
+    #[ORM\Column(type: Types::STRING, length: 20)]
+    private ?string $type = null;
 
-    /**
-     * @ORM\Column(type="string", length=20)
-     */
-    private ?string $type;
+    #[ORM\Column(type: Types::STRING, length: 20)]
+    private ?string $codeModule = null;
 
-    /**
-     * @ORM\Column(type="string", length=20)
-     */
-    private ?string $codeModule;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $libModule = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private ?string $libModule;
+    #[ORM\Column(type: Types::STRING, length: 20)]
+    private ?string $codePersonnel = null;
 
-    /**
-     * @ORM\Column(type="string", length=20)
-     */
-    private ?string $codePersonnel;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $libPersonnel = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private ?string $libPersonnel;
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $departementId = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private ?int $departementId;
+    #[ORM\Column(type: Types::STRING, length: 20)]
+    private ?string $codeSalle = null;
 
-    /**
-     * @ORM\Column(type="string", length=20)
-     */
-    private ?string $codeSalle;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $libSalle = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private ?string $libSalle;
+    #[ORM\Column(type: Types::STRING, length: 30)]
+    private ?string $codeGroupe = null;
 
-    /**
-     * @ORM\Column(type="string", length=30)
-     */
-    private ?string $codeGroupe;
+    #[ORM\Column(type: Types::STRING, length: 30)]
+    private ?string $libGroupe = null;
 
-    /**
-     * @ORM\Column(type="string", length=30)
-     */
-    private ?string $libGroupe;
+    #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class)]
+    private ?AnneeUniversitaire $anneeUniversitaire = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire")
-     */
-    private ?AnneeUniversitaire $anneeUniversitaire;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    private ?CarbonInterface $updateEvent = null;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private ?CarbonInterface $updateEvent;
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?DateTimeInterface $dateCours = null;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
-    private $dateCours;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Semestre::class, inversedBy="celcatEvents")
-     */
-    private $semestre;
+    #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'celcatEvents')]
+    private ?Semestre $semestre = null;
 
     public function getEventId(): ?int
     {
@@ -204,18 +163,6 @@ class CelcatEvent extends BaseEntity
         return $this;
     }
 
-    public function getLibModule(): ?string
-    {
-        return $this->libModule;
-    }
-
-    public function setLibModule(string $libModule): self
-    {
-        $this->libModule = $libModule;
-
-        return $this;
-    }
-
     public function getCodePersonnel(): ?string
     {
         return $this->codePersonnel;
@@ -288,18 +235,6 @@ class CelcatEvent extends BaseEntity
         return $this;
     }
 
-    public function getLibGroupe(): ?string
-    {
-        return $this->libGroupe;
-    }
-
-    public function setLibGroupe(string $libGroupe): self
-    {
-        $this->libGroupe = $libGroupe;
-
-        return $this;
-    }
-
     public function getAnneeUniversitaire(): ?AnneeUniversitaire
     {
         return $this->anneeUniversitaire;
@@ -326,7 +261,31 @@ class CelcatEvent extends BaseEntity
 
     public function getDisplayIcal(): string
     {
-        return $this->getLibModule() . ' ' . $this->getLibGroupe();
+        return $this->getLibModule().' '.$this->getLibGroupe();
+    }
+
+    public function getLibModule(): ?string
+    {
+        return $this->libModule;
+    }
+
+    public function setLibModule(string $libModule): self
+    {
+        $this->libModule = $libModule;
+
+        return $this;
+    }
+
+    public function getLibGroupe(): ?string
+    {
+        return $this->libGroupe;
+    }
+
+    public function setLibGroupe(string $libGroupe): self
+    {
+        $this->libGroupe = $libGroupe;
+
+        return $this;
     }
 
     public function getDateCours(): ?DateTimeInterface

@@ -15,57 +15,43 @@ use App\Repository\ProjetPeriodeRepository;
 use Carbon\CarbonInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 
-/**
- * @ORM\Entity(repositoryClass=ProjetPeriodeRepository::class)
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: ProjetPeriodeRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class ProjetPeriode extends BaseEntity
 {
     use UuidTrait;
     use LifeCycleTrait;
 
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
-    private ?string $libelle;
+    #[ORM\Column(type: Types::STRING, length: 100)]
+    private ?string $libelle = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Semestre::class, inversedBy="projetPeriodes")
-     */
-    private ?Semestre $semestre;
+    #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'projetPeriodes')]
+    private ?Semestre $semestre = null;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Personnel::class, inversedBy="projetPeriodes")
-     */
+    #[ORM\ManyToMany(targetEntity: Personnel::class, inversedBy: 'projetPeriodes')]
     private Collection $responsables;
 
-    /**
-     * @ORM\Column(type="date")
-     */
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?CarbonInterface $dateDebut = null;
 
-    /**
-     * @ORM\Column(type="date")
-     */
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?CarbonInterface $dateFin = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=AnneeUniversitaire::class, inversedBy="projetPeriodes")
-     */
-    private ?AnneeUniversitaire $anneeUniversitaire;
+    #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class, inversedBy: 'projetPeriodes')]
+    private ?AnneeUniversitaire $anneeUniversitaire = null;
 
     /**
-     * @ORM\OneToMany(targetEntity=ProjetEtudiant::class, mappedBy="projetPeriode")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ProjetEtudiant>
      */
+    #[ORM\OneToMany(mappedBy: 'projetPeriode', targetEntity: ProjetEtudiant::class)]
     private Collection $projetEtudiants;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private ?string $texteLibre;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $texteLibre = null;
 
     public function __construct()
     {

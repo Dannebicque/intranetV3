@@ -10,35 +10,27 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\ModificationNoteRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\ModificationNoteRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: ModificationNoteRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class ModificationNote extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Note", inversedBy="modificationNotes")
-     */
-    private ?Note $note;
+    #[ORM\ManyToOne(targetEntity: Note::class, inversedBy: 'modificationNotes')]
+    private ?Note $note = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="modificationNotes")
-     */
-    private ?Personnel $personnel;
+    #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'modificationNotes')]
+    private ?Personnel $personnel = null;
 
-    /**
-     * @ORM\Column(type="float")
-     */
-    private ?float $ancienneNote;
+    #[ORM\Column(type: Types::FLOAT)]
+    private ?float $ancienneNote = null;
 
-    /**
-     * @ORM\Column(type="float")
-     */
-    private ?float $nouvelleNote;
+    #[ORM\Column(type: Types::FLOAT)]
+    private ?float $nouvelleNote = null;
 
     public function getNote(): ?Note
     {

@@ -13,30 +13,25 @@ use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\ApcRessourceApprentissageCritiqueRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=ApcRessourceApprentissageCritiqueRepository::class)
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: ApcRessourceApprentissageCritiqueRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class ApcRessourceApprentissageCritique extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=ApcRessource::class, inversedBy="apcRessourceApprentissageCritiques")
-     */
+    #[ORM\ManyToOne(targetEntity: ApcRessource::class, inversedBy: 'apcRessourceApprentissageCritiques')]
     private ?ApcRessource $ressource;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=ApcApprentissageCritique::class, inversedBy="apcRessourceApprentissageCritiques")
-     */
+    #[ORM\ManyToOne(targetEntity: ApcApprentissageCritique::class, inversedBy: 'apcRessourceApprentissageCritiques')]
     private ?ApcApprentissageCritique $apprentissageCritique;
 
-    public function __construct(ApcRessource $ressource, ApcApprentissageCritique $apprentissageCritique)
-    {
+    public function __construct(
+        ?ApcRessource $ressource,
+        ?ApcApprentissageCritique $apprentissageCritique
+    ) {
         $this->ressource = $ressource;
         $this->apprentissageCritique = $apprentissageCritique;
     }
-
 
     public function getRessource(): ?ApcRessource
     {

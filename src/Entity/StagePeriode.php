@@ -11,156 +11,125 @@ namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
+use App\Repository\StagePeriodeRepository;
 use Carbon\CarbonInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 use Serializable;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\StagePeriodeRepository")
  * @Vich\Uploadable
- * @ORM\HasLifecycleCallbacks()
  */
+#[ORM\Entity(repositoryClass: StagePeriodeRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class StagePeriode extends BaseEntity implements Serializable
 {
     use UuidTrait;
     use LifeCycleTrait;
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
+    #[ORM\Column(type: Types::STRING, length: 50)]
     private ?string $documentName = '';
 
     /**
      * @Vich\UploadableField(mapping="ficheRenseignement", fileNameProperty="documentName")
      */
-    private $documentFile;
+    private ?File $documentFile;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @Groups({"stage_periode_administration"})
-     */
+    #[Groups(['stage_periode_administration'])]
+    #[ORM\Column(type: Types::INTEGER)]
     private int $numeroPeriode = 1;
 
-    /**
-     * @ORM\Column(type="string", length=100)
-     * @Groups({"stage_periode_administration"})
-     */
+    #[Groups(['stage_periode_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 100)]
     private string $libelle = 'stage';
 
-    /**
-     * @ORM\Column(type="integer")
-     * @Groups({"stage_periode_administration"})
-     */
+    #[Groups(['stage_periode_administration'])]
+    #[ORM\Column(type: 'integer')]
     private int $nbSemaines = 10;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @Groups({"stage_periode_administration"})
-     */
+    #[Groups(['stage_periode_administration'])]
+    #[ORM\Column(type: Types::INTEGER)]
     private int $nbJours = 40;
 
-    /**
-     * @ORM\Column(type="date")
-     * @Groups({"stage_periode_administration"})
-     */
+    #[Groups(['stage_periode_administration'])]
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?CarbonInterface $dateDebut = null;
 
-    /**
-     * @ORM\Column(type="date")
-     * @Groups({"stage_periode_administration"})
-     */
+    #[Groups(['stage_periode_administration'])]
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?CarbonInterface $dateFin = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $competencesVisees;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $modaliteEvaluation;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $modaliteEvaluationPedagogique;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $modaliteEncadrement;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private ?string $documentRendre;
-    /**
-     * @ORM\Column(type="float")
-     * @Groups({"stage_periode_administration"})
-     */
+
+    #[Groups(['stage_periode_administration'])]
+    #[ORM\Column(type: 'float')]
     private float $nbEcts = 12;
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="stagePeriodes")
-     */
+
+    #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'stagePeriodes')]
     private ?Semestre $semestre;
-    /**
-     * @ORM\Column(type="boolean")
-     */
+
+    #[ORM\Column(type: 'boolean')]
     private bool $datesFlexibles = false;
-    /**
-     * @ORM\Column(type="boolean")
-     */
+
+    #[ORM\Column(type: 'boolean')]
     private bool $copieAssistant = true;
 
     /**
-     * @ORM\OneToMany(targetEntity="StagePeriodeInterruption", mappedBy="stagePeriode", cascade={"persist", "remove"})
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\StagePeriodeInterruption>
      */
+    #[ORM\OneToMany(mappedBy: 'stagePeriode', targetEntity: StagePeriodeInterruption::class, cascade: ['persist', 'remove'])]
     private Collection $stagePeriodeInterruptions;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\StagePeriodeSoutenance", mappedBy="stagePeriode", cascade={"persist",
-     *                                                                  "remove"})
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\StagePeriodeSoutenance>
      */
+    #[ORM\OneToMany(mappedBy: 'stagePeriode', targetEntity: StagePeriodeSoutenance::class, cascade: ['persist', 'remove'])]
     private Collection $stagePeriodeSoutenances;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Personnel", inversedBy="stagePeriodes")
-     * @Groups({"stage_periode_administration"})
-     */
+    #[Groups(['stage_periode_administration'])]
+    #[ORM\ManyToMany(targetEntity: Personnel::class, inversedBy: 'stagePeriodes')]
     private Collection $responsables;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $texteLibre;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\StagePeriodeOffre", mappedBy="stagePeriodes")
-     */
+    #[ORM\ManyToMany(targetEntity: StagePeriodeOffre::class, mappedBy: 'stagePeriodes')]
     private Collection $stagePeriodeOffres;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\StageEtudiant", mappedBy="stagePeriode", cascade={"persist", "remove"})
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\StageEtudiant>
      */
+    #[ORM\OneToMany(mappedBy: 'stagePeriode', targetEntity: StageEtudiant::class, cascade: ['persist', 'remove'], fetch: 'EAGER')]
     private Collection $stageEtudiants;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\StageMailTemplate", mappedBy="stagePeriode", cascade={"persist",
-     *                                                             "remove"})
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\StageMailTemplate>
      */
+    #[ORM\OneToMany(mappedBy: 'stagePeriode', targetEntity: StageMailTemplate::class, cascade: ['persist', 'remove'])]
     private Collection $stageMailTemplates;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire", inversedBy="stagePeriodes")
-     */
+    #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class, inversedBy: 'stagePeriodes')]
     private ?AnneeUniversitaire $anneeUniversitaire;
 
     public function __construct()
@@ -172,6 +141,13 @@ class StagePeriode extends BaseEntity implements Serializable
         $this->stagePeriodeOffres = new ArrayCollection();
         $this->stageEtudiants = new ArrayCollection();
         $this->stageMailTemplates = new ArrayCollection();
+    }
+
+    public function setUuid(UuidInterface $uuid): self
+    {
+        $this->uuid = $uuid;
+
+        return $this;
     }
 
     public function __clone()
@@ -319,18 +295,6 @@ class StagePeriode extends BaseEntity implements Serializable
     public function setNbEcts(float $nbEcts): self
     {
         $this->nbEcts = $nbEcts;
-
-        return $this;
-    }
-
-    public function getSemestre(): ?Semestre
-    {
-        return $this->semestre;
-    }
-
-    public function setSemestre(?Semestre $semestre): self
-    {
-        $this->semestre = $semestre;
 
         return $this;
     }
@@ -590,6 +554,18 @@ class StagePeriode extends BaseEntity implements Serializable
         return null;
     }
 
+    public function getSemestre(): ?Semestre
+    {
+        return $this->semestre;
+    }
+
+    public function setSemestre(?Semestre $semestre): self
+    {
+        $this->semestre = $semestre;
+
+        return $this;
+    }
+
     public function getAnneeUniversitaire(): ?AnneeUniversitaire
     {
         return $this->anneeUniversitaire;
@@ -598,13 +574,6 @@ class StagePeriode extends BaseEntity implements Serializable
     public function setAnneeUniversitaire(?AnneeUniversitaire $anneeUniversitaire): self
     {
         $this->anneeUniversitaire = $anneeUniversitaire;
-
-        return $this;
-    }
-
-    public function setUuid($uuid): self
-    {
-        $this->uuid = $uuid;
 
         return $this;
     }

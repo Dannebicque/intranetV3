@@ -11,21 +11,20 @@ namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="DocumentFavori")
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="type", type="string")
- * @ORM\DiscriminatorMap( {"documentFavori" = "DocumentFavori", "personnel" = "DocumentFavoriPersonnel",  "etudiant" =
- *                        "DocumentFavoriEtudiant"} )
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity]
+#[ORM\Table(name: 'DocumentFavori')]
+#[ORM\InheritanceType(value: 'SINGLE_TABLE')]
+#[ORM\DiscriminatorColumn(name: 'type', type: 'string')]
+#[ORM\DiscriminatorMap(value: [
+    'documentFavori' => DocumentFavori::class,
+    'personnel' => DocumentFavoriPersonnel::class,
+    'etudiant' => DocumentFavoriEtudiant::class,
+])]
+#[ORM\HasLifecycleCallbacks]
 abstract class DocumentFavori extends BaseEntity
 {
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Document", inversedBy="documentsFavoris")
-     */
-    private ?Document $document;
+    #[ORM\ManyToOne(targetEntity: Document::class, inversedBy: 'documentsFavoris')]
+    private ?Document $document = null;
 
     public function getDocument(): ?Document
     {

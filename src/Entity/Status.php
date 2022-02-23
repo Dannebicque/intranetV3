@@ -10,48 +10,32 @@
 namespace App\Entity;
 
 use App\Repository\StatusRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=StatusRepository::class)
- */
+#[ORM\Entity(repositoryClass: StatusRepository::class)]
 class Status extends BaseEntity
 {
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
+    #[ORM\Column(type: Types::STRING, length: 50)]
     private ?string $libelle;
 
-    /**
-     * @ORM\Column(type="string", length=10)
-     */
+    #[ORM\Column(type: Types::STRING, length: 10)]
     private ?string $sigle;
 
-    /**
-     * @ORM\Column(type="float")
-     */
+    #[ORM\Column(type: Types::FLOAT)]
     private float $serviceStatus = 192;
 
-    /**
-     * @ORM\Column(type="float")
-     */
+    #[ORM\Column(type: Types::FLOAT)]
     private ?float $tauxTd = 1;
 
-    /**
-     * @ORM\Column(type="float")
-     */
+    #[ORM\Column(type: Types::FLOAT)]
     private ?float $tauxTp = 1;
 
-    /**
-     * @ORM\Column(type="float")
-     */
+    #[ORM\Column(type: Types::FLOAT)]
     private ?float $tauxTdHC = 1;
 
-    /**
-     * @ORM\Column(type="float")
-     */
+    #[ORM\Column(type: Types::FLOAT)]
     private ?float $tauxTpHC = 0.66;
-
 
     public function getLibelle(): ?string
     {

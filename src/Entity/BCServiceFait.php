@@ -12,79 +12,52 @@ namespace App\Entity;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\BCServiceFaitRepository;
 use Carbon\CarbonInterface;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=BCServiceFaitRepository::class)
- */
+#[ORM\Entity(repositoryClass: BCServiceFaitRepository::class)]
 class BCServiceFait extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Personnel::class, inversedBy="bcServiceFaitReceptionniste")
-     */
-    private ?Personnel $receptionnisteMigo;
+    #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'bcServiceFaitReceptionniste')]
+    private ?Personnel $receptionnisteMigo = null;
 
-    /**
-     * @ORM\Column(type="string", length=100, nullable=true)
-     */
-    private ?string $qualiteReceptionniste;
+    #[ORM\Column(type: Types::STRING, length: 100, nullable: true)]
+    private ?string $qualiteReceptionniste = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private ?bool $receptionComplete;
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private ?bool $receptionComplete = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private ?bool $prestationComplete;
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private ?bool $prestationComplete = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private ?bool $receptionPartielle;
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private ?bool $receptionPartielle = null;
 
-    /**
-     * @ORM\Column(type="float")
-     */
-    private ?float $montantTTCrecu;
+    #[ORM\Column(type: Types::FLOAT)]
+    private ?float $montantTTCrecu = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private ?string $descriptionRecue;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $descriptionRecue = null;
 
-    /**
-     * @ORM\Column(type="string", length=20)
-     */
-    private ?string $numeroMigo;
+    #[ORM\Column(type: Types::STRING, length: 20)]
+    private ?string $numeroMigo = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private ?bool $bonLivraisonSifac;
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private ?bool $bonLivraisonSifac = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private ?CarbonInterface $dateReceptionLivraison;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateReceptionLivraison = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private ?CarbonInterface $dateSignatureResponsable;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateSignatureResponsable = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Personnel::class, inversedBy="bcServiceFaitResponsableSignataire")
-     */
-    private ?Personnel $responsableSignataire;
+    #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'bcServiceFaitResponsableSignataire')]
+    private ?Personnel $responsableSignataire = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=BCDemande::class, inversedBy="migos")
-     */
-    private ?BCDemande $bCDemande;
+    #[ORM\ManyToOne(targetEntity: BCDemande::class, inversedBy: 'migos')]
+    private ?BCDemande $bCDemande = null;
 
     public function getReceptionnisteMigo(): ?Personnel
     {

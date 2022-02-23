@@ -9,19 +9,22 @@
 
 namespace App\Entity;
 
+use App\Repository\MessageDestinataireRepository;
 use Carbon\CarbonInterface;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * MessageDestinataire.
- *
- * @ORM\Table()
- * @ORM\Entity(repositoryClass="App\Repository\MessageDestinataireRepository")
- * @ORM\InheritanceType("SINGLE_TABLE")
- * @ORM\DiscriminatorColumn(name="typeDestinataire", type="string")
- * @ORM\DiscriminatorMap( {"personnel" = "MessageDestinatairePersonnel",
- *                         "etudiant" = "MessageDestinataireEtudiant"} )
  */
+#[ORM\Table]
+#[ORM\Entity(repositoryClass: MessageDestinataireRepository::class)]
+#[ORM\InheritanceType(value: 'SINGLE_TABLE')]
+#[ORM\DiscriminatorColumn(name: 'typeDestinataire', type: 'string')]
+#[ORM\DiscriminatorMap(value: [
+    'personnel' => MessageDestinatairePersonnel::class,
+    'etudiant' => MessageDestinataireEtudiant::class,
+])]
 abstract class MessageDestinataire extends BaseEntity
 {
     public const UNREAD = 'U';
@@ -29,24 +32,16 @@ abstract class MessageDestinataire extends BaseEntity
     public const STARRED = 'S';
     public const DELETED = 'D';
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private ?CarbonInterface $dateLu;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateLu = null;
 
-    /**
-     * @ORM\Column(type="string", length=1)
-     */
+    #[ORM\Column(type: Types::STRING, length: 1)]
     private string $etat = self::UNREAD;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Message", inversedBy="messageDestinataires", fetch="EAGER")
-     */
-    private ?Message $message;
+    #[ORM\ManyToOne(targetEntity: Message::class, fetch: 'EAGER', inversedBy: 'messageDestinataires')]
+    private ?Message $message = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $starred = false;
 
     public function getDateLu(): ?CarbonInterface

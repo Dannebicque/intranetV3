@@ -11,13 +11,13 @@ namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
+use App\Repository\NotificationRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\NotificationRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: NotificationRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Notification extends BaseEntity
 {
     use UuidTrait;
@@ -25,7 +25,6 @@ class Notification extends BaseEntity
 
     public const ETUDIANT = 'e';
     public const PERSONNEL = 'p';
-
     public const TABICONE = [
         'carnet.added' => 'fas fa-bookmark',
         'absence.removed' => 'fas fa-bookmark',
@@ -46,6 +45,7 @@ class Notification extends BaseEntity
         'decision.justificatif.acceptee' => 'fas fa-check',
         'decision.justificatif.refuse' => 'fas fa-ban',
     ];
+
     public const TABCOLOR = [
         'carnet.added' => 'info',
         'absence.removed' => 'success',
@@ -67,35 +67,23 @@ class Notification extends BaseEntity
         'decision.justificatif.refuse' => 'danger',
     ];
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="notifications")
-     */
-    private ?Etudiant $etudiant;
+    #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'notifications')]
+    private ?Etudiant $etudiant = null;
 
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
-    private ?string $type;
+    #[ORM\Column(type: Types::STRING, length: 100)]
+    private ?string $type = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private ?string $url;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $url = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $lu = false;
 
-    /**
-     * @ORM\Column(type="string", length=1)
-     */
-    private ?string $typeUser;
+    #[ORM\Column(type: Types::STRING, length: 1)]
+    private ?string $typeUser = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="notifications")
-     */
-    private ?Personnel $personnel;
+    #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'notifications')]
+    private ?Personnel $personnel = null;
 
     public function __construct()
     {

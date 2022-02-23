@@ -13,19 +13,13 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait ApogeeTrait
 {
-    /**
-     * @ORM\Column(type="string", length=20, nullable=true)
-     */
-    private ?string $codeDiplome; //code etape ou code diplome
+    #[ORM\Column(type: 'string', length: 20, nullable: true)]
+    private ?string $codeDiplome;
 
-    /**
-     * @ORM\Column(type="string", length=10, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 10, nullable: true)]
     private ?string $codeVersion;
 
-    /**
-     * @ORM\Column(type="string", length=10, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 10, nullable: true)]
     private ?string $codeDepartement;
 
     public function getCodeDiplome(): ?string
@@ -33,7 +27,7 @@ trait ApogeeTrait
         return $this->codeDiplome;
     }
 
-    public function setCodeDiplome($codeDiplome): void
+    public function setCodeDiplome(?string $codeDiplome): void
     {
         $this->codeDiplome = $codeDiplome;
     }
@@ -43,7 +37,7 @@ trait ApogeeTrait
         return $this->codeVersion;
     }
 
-    public function setCodeVersion($codeVersion): void
+    public function setCodeVersion(?string $codeVersion): void
     {
         $this->codeVersion = $codeVersion;
     }
@@ -53,7 +47,7 @@ trait ApogeeTrait
         return $this->codeDepartement;
     }
 
-    public function setCodeDepartement($codeDepartement): void
+    public function setCodeDepartement(?string $codeDepartement): void
     {
         $this->codeDepartement = $codeDepartement;
     }

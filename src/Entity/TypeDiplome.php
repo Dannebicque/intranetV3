@@ -10,61 +10,46 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\TypeDiplomeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\TypeDiplomeRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: TypeDiplomeRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class TypeDiplome extends BaseEntity
 {
     use LifeCycleTrait;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Diplome", mappedBy="typeDiplome")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Diplome>
      */
+    #[ORM\OneToMany(mappedBy: 'typeDiplome', targetEntity: Diplome::class)]
     private Collection $diplomes;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"type_diplome_administration"})
-     */
+    #[Groups(['type_diplome_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $libelle;
 
-    /**
-     *
-     * @ORM\Column(type="string", length=20)
-     * @Groups({"type_diplome_administration"})
-     */
+    #[Groups(['type_diplome_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 20)]
     private ?string $sigle;
 
-    /**
-     *
-     * @ORM\Column(type="integer")
-     * @Groups({"type_diplome_administration"})
-     */
+    #[Groups(['type_diplome_administration'])]
+    #[ORM\Column(type: Types::INTEGER)]
     private int $nbSemestres = 2;
 
-    /**
-     *
-     * @ORM\Column(type="integer")
-     * @Groups({"type_diplome_administration"})
-     */
+    #[Groups(['type_diplome_administration'])]
+    #[ORM\Column(type: Types::INTEGER)]
     private int $niveauEntree = 0;
 
-    /**
-     *
-     * @ORM\Column(type="integer")
-     * @Groups({"type_diplome_administration"})
-     */
+    #[Groups(['type_diplome_administration'])]
+    #[ORM\Column(type: Types::INTEGER)]
     private int $niveauSortie = 3;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $apc = false;
 
     public function __construct()
@@ -77,7 +62,7 @@ class TypeDiplome extends BaseEntity
         return $this->libelle;
     }
 
-    public function setLibelle($libelle): void
+    public function setLibelle(?string $libelle): void
     {
         $this->libelle = $libelle;
     }

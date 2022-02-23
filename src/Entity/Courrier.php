@@ -10,20 +10,18 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\CourrierRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\CourrierRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: CourrierRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Courrier extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\Column(type="text")
-     */
-    private ?string $texte;
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $texte = null;
 
     public function getTexte(): ?string
     {

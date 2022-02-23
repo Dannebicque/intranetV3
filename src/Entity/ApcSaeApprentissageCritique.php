@@ -13,27 +13,22 @@ use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\ApcSaeApprentissageCritiqueRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=ApcSaeApprentissageCritiqueRepository::class)
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: ApcSaeApprentissageCritiqueRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class ApcSaeApprentissageCritique extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=ApcSae::class, inversedBy="apcSaeApprentissageCritiques")
-     */
+    #[ORM\ManyToOne(targetEntity: ApcSae::class, inversedBy: 'apcSaeApprentissageCritiques')]
     private ?ApcSae $sae;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=ApcApprentissageCritique::class, inversedBy="apcSaeApprentissageCritiques")
-     */
+    #[ORM\ManyToOne(targetEntity: ApcApprentissageCritique::class, inversedBy: 'apcSaeApprentissageCritiques')]
     private ?ApcApprentissageCritique $apprentissageCritique;
 
-
-    public function __construct(ApcSae $sae, ApcApprentissageCritique $apprentissageCritique)
-    {
+    public function __construct(
+        ?ApcSae $sae,
+        ?ApcApprentissageCritique $apprentissageCritique
+    ) {
         $this->sae = $sae;
         $this->apprentissageCritique = $apprentissageCritique;
     }

@@ -10,46 +10,39 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\CalendrierRepository;
 use Carbon\CarbonImmutable;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\CalendrierRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: CalendrierRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Calendrier extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @Groups({"celcat_administration"})
-     */
-    private ?int $semaineFormation;
+    #[Groups(groups: ['celcat_administration'])]
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $semaineFormation = null;
+
+    #[Groups(groups: ['celcat_administration'])]
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $semaineReelle = null;
+
+    #[Groups(groups: ['celcat_administration'])]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    private ?CarbonImmutable $dateLundi = null;
+
+    #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class, inversedBy: 'calendriers')]
+    private ?AnneeUniversitaire $anneeUniversitaire = null;
 
     /**
-     * @ORM\Column(type="integer")
-     * @Groups({"celcat_administration"})
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\CreneauBloque>
      */
-    private ?int $semaineReelle;
-
-    /**
-     * @ORM\Column(type="datetime_immutable")
-     * @Groups({"celcat_administration"})
-     */
-    private ?CarbonImmutable $dateLundi;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\AnneeUniversitaire", inversedBy="calendriers")
-     */
-    private ?AnneeUniversitaire $anneeUniversitaire;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\CreneauBloque", mappedBy="semaine")
-     */
+    #[ORM\OneToMany(mappedBy: 'semaine', targetEntity: CreneauBloque::class)]
     private Collection $creneauBloques;
 
     public function __construct()

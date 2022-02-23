@@ -10,155 +10,67 @@
 namespace App\Entity;
 
 use App\Utils\Tools;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * Class AbstractMatiere.
- *
- * @ORM\MappedSuperclass
  */
+#[ORM\MappedSuperclass]
 abstract class AbstractMatiere extends BaseEntity
 {
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"matiere"})
-     */
+    #[Groups(groups: ['matiere'])]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private string $libelle;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private ?string $description;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description = null;
 
-    /**
-     * @ORM\Column(type="float")
-     * @Groups({"matiere_administration"})
-     */
+    #[Groups(groups: ['matiere_administration'])]
+    #[ORM\Column(type: Types::FLOAT)]
     private float $cmPpn = 0;
 
-    /**
-     * @ORM\Column(type="float")
-     * @Groups({"matiere_administration"})
-     */
+    #[Groups(groups: ['matiere_administration'])]
+    #[ORM\Column(type: Types::FLOAT)]
     private float $tdPpn = 0;
 
-    /**
-     * @ORM\Column(type="float")
-     * @Groups({"matiere_administration"})
-     */
+    #[Groups(groups: ['matiere_administration'])]
+    #[ORM\Column(type: Types::FLOAT)]
     private float $tpPpn = 0;
 
-    /**
-     * @ORM\Column(type="float")
-     * @Groups({"matiere_administration"})
-     */
+    #[Groups(groups: ['matiere_administration'])]
+    #[ORM\Column(type: Types::FLOAT)]
     private float $cmFormation = 0;
 
-    /**
-     * @ORM\Column(type="float")
-     * @Groups({"matiere_administration"})
-     */
+    #[Groups(groups: ['matiere_administration'])]
+    #[ORM\Column(type: Types::FLOAT)]
     private float $tdFormation = 0;
 
-    /**
-     * @ORM\Column(type="float")
-     * @Groups({"matiere_administration"})
-     */
+    #[Groups(groups: ['matiere_administration'])]
+    #[ORM\Column(type: Types::FLOAT)]
     private float $tpFormation = 0;
 
-    /**
-     * @ORM\Column(type="text",nullable=true)
-     */
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $commentaire = '';
 
-    /**
-     * @ORM\Column(type="string", length=20)
-     * @Groups({"matiere"})
-     */
-    private ?string $codeMatiere;
+    #[Groups(groups: ['matiere'])]
+    #[ORM\Column(type: Types::STRING, length: 20)]
+    private ?string $codeMatiere = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     * @Groups({"matiere_administration"})
-     */
+    #[Groups(groups: ['matiere_administration'])]
+    #[ORM\Column(type: Types::INTEGER)]
     private int $nbNotes = 2;
 
-    /**
-     * @ORM\Column(type="string", length=20)
-     */
-    private ?string $codeElement;
+    #[ORM\Column(type: Types::STRING, length: 20)]
+    private ?string $codeElement = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     * @Groups({"matiere_administration"})
-     */
+    #[Groups(groups: ['matiere_administration'])]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $suspendu = false;
 
-    /**
-     * @ORM\Column(type="string", length=25, nullable=true)
-     */
-    private ?string $libelleCourt;
-
-    public function getCmPpn(): float
-    {
-        return $this->cmPpn;
-    }
-
-    public function setCmPpn(mixed $cmPpn): void
-    {
-        $this->cmPpn = Tools::convertToFloat($cmPpn);
-    }
-
-    public function getTdPpn(): float
-    {
-        return $this->tdPpn;
-    }
-
-    public function setTdPpn(mixed $tdPpn): void
-    {
-        $this->tdPpn = Tools::convertToFloat($tdPpn);
-    }
-
-    public function getTpPpn(): float
-    {
-        return $this->tpPpn;
-    }
-
-    public function setTpPpn(mixed $tpPpn): void
-    {
-        $this->tpPpn = Tools::convertToFloat($tpPpn);
-    }
-
-    public function getCmFormation(): float
-    {
-        return $this->cmFormation;
-    }
-
-    public function setCmFormation(mixed $cmFormation): void
-    {
-        $this->cmFormation = Tools::convertToFloat($cmFormation);
-    }
-
-    public function getTdFormation(): float
-    {
-        return $this->tdFormation;
-    }
-
-    public function setTdFormation(mixed $tdFormation): void
-    {
-        $this->tdFormation = Tools::convertToFloat($tdFormation);
-    }
-
-    public function getTpFormation(): float
-    {
-        return $this->tpFormation;
-    }
-
-    public function setTpFormation(mixed $tpFormation): void
-    {
-        $this->tpFormation = Tools::convertToFloat($tpFormation);
-    }
+    #[ORM\Column(type: Types::STRING, length: 25, nullable: true)]
+    private ?string $libelleCourt = null;
 
     /**
      * @return string
@@ -197,7 +109,7 @@ abstract class AbstractMatiere extends BaseEntity
 
     public function getDisplay(): string
     {
-        return $this->getCodeMatiere() . ' | ' . $this->getLibelle();
+        return $this->getCodeMatiere().' | '.$this->getLibelle();
     }
 
     public function getCodeMatiere(): ?string
@@ -215,7 +127,7 @@ abstract class AbstractMatiere extends BaseEntity
         return $this->libelle;
     }
 
-    public function setLibelle($libelle): void
+    public function setLibelle(?string $libelle): void
     {
         $this->libelle = $libelle;
     }
@@ -256,7 +168,7 @@ abstract class AbstractMatiere extends BaseEntity
         return $this;
     }
 
-    public function initTabJson()
+    public function initTabJson(): array
     {
         $t = [];
         $t['id'] = $this->getId();
@@ -272,5 +184,65 @@ abstract class AbstractMatiere extends BaseEntity
         $t['ptutPpn'] = null;
 
         return $t;
+    }
+
+    public function getCmFormation(): float
+    {
+        return $this->cmFormation;
+    }
+
+    public function setCmFormation(mixed $cmFormation): void
+    {
+        $this->cmFormation = Tools::convertToFloat($cmFormation);
+    }
+
+    public function getTdFormation(): float
+    {
+        return $this->tdFormation;
+    }
+
+    public function setTdFormation(mixed $tdFormation): void
+    {
+        $this->tdFormation = Tools::convertToFloat($tdFormation);
+    }
+
+    public function getTpFormation(): float
+    {
+        return $this->tpFormation;
+    }
+
+    public function setTpFormation(mixed $tpFormation): void
+    {
+        $this->tpFormation = Tools::convertToFloat($tpFormation);
+    }
+
+    public function getCmPpn(): float
+    {
+        return $this->cmPpn;
+    }
+
+    public function setCmPpn(mixed $cmPpn): void
+    {
+        $this->cmPpn = Tools::convertToFloat($cmPpn);
+    }
+
+    public function getTdPpn(): float
+    {
+        return $this->tdPpn;
+    }
+
+    public function setTdPpn(mixed $tdPpn): void
+    {
+        $this->tdPpn = Tools::convertToFloat($tdPpn);
+    }
+
+    public function getTpPpn(): float
+    {
+        return $this->tpPpn;
+    }
+
+    public function setTpPpn(mixed $tpPpn): void
+    {
+        $this->tpPpn = Tools::convertToFloat($tpPpn);
     }
 }

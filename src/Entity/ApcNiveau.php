@@ -13,12 +13,11 @@ use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\ApcNiveauRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=ApcNiveauRepository::class)
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: ApcNiveauRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class ApcNiveau extends BaseEntity
 {
     use LifeCycleTrait;
@@ -27,34 +26,28 @@ class ApcNiveau extends BaseEntity
     public const NIVEAU_2 = 'Intermédiaire';
     public const NIVEAU_3 = 'Compétent';
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private ?string $libelle;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $libelle = null;
+
+    #[ORM\ManyToOne(targetEntity: ApcCompetence::class, inversedBy: 'apcNiveaux')]
+    private ?ApcCompetence $competence = null;
+
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $ordre = null;
+
+    #[ORM\ManyToOne(targetEntity: Annee::class, inversedBy: 'apcNiveaux')]
+    private ?Annee $annee = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity=ApcCompetence::class, inversedBy="apcNiveaux")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcApprentissageCritique>
      */
-    private ?ApcCompetence $competence;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private ?int $ordre;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Annee::class, inversedBy="apcNiveaux")
-     */
-    private ?Annee $annee;
-
-    /**
-     * @ORM\OneToMany(targetEntity=ApcApprentissageCritique::class, mappedBy="niveau", cascade={"persist","remove"})
-     */
+    #[ORM\OneToMany(mappedBy: 'niveau', targetEntity: ApcApprentissageCritique::class, cascade: ['persist', 'remove'])]
     private Collection $apcApprentissageCritiques;
 
     /**
-     * @ORM\OneToMany(targetEntity=ApcParcoursNiveau::class, mappedBy="niveau")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcParcoursNiveau>
      */
+    #[ORM\OneToMany(mappedBy: 'niveau', targetEntity: ApcParcoursNiveau::class)]
     private Collection $apcParcoursNiveaux;
 
     public function __construct(ApcCompetence $competence = null)
@@ -72,18 +65,6 @@ class ApcNiveau extends BaseEntity
     public function setLibelle(string $libelle): self
     {
         $this->libelle = $libelle;
-
-        return $this;
-    }
-
-    public function getCompetence(): ?ApcCompetence
-    {
-        return $this->competence;
-    }
-
-    public function setCompetence(?ApcCompetence $competence): self
-    {
-        $this->competence = $competence;
 
         return $this;
     }
@@ -177,8 +158,21 @@ class ApcNiveau extends BaseEntity
             1 => self::NIVEAU_1,
             2 => self::NIVEAU_2,
             3 => self::NIVEAU_3,
+            default => null,
         };
 
-        return $this->getCompetence()->getNomCourt().' - Niveau '.$niv.'('.$this->ordre.')';
+        return $this->getCompetence()?->getNomCourt().' - Niveau '.$niv.'('.$this->ordre.')';
+    }
+
+    public function getCompetence(): ?ApcCompetence
+    {
+        return $this->competence;
+    }
+
+    public function setCompetence(?ApcCompetence $competence): self
+    {
+        $this->competence = $competence;
+
+        return $this;
     }
 }

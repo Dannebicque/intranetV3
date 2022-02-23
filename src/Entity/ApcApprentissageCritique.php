@@ -13,44 +13,36 @@ use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\ApcApprentissageCritiqueRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=ApcApprentissageCritiqueRepository::class)
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: ApcApprentissageCritiqueRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class ApcApprentissageCritique extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private ?string $libelle;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $libelle = null;
+
+    #[ORM\Column(type: Types::STRING, length: 20)]
+    private ?string $code = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity=ApcNiveau::class, inversedBy="apcApprentissageCritiques")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcRessourceApprentissageCritique>
      */
-    private ?ApcNiveau $niveau;
-
-    /**
-     * @ORM\Column(type="string", length=20)
-     */
-    private ?string $code;
-
-    /**
-     * @ORM\OneToMany(targetEntity=ApcRessourceApprentissageCritique::class, mappedBy="apprentissageCritique")
-     */
+    #[ORM\OneToMany(mappedBy: 'apprentissageCritique', targetEntity: ApcRessourceApprentissageCritique::class)]
     private Collection $apcRessourceApprentissageCritiques;
 
     /**
-     * @ORM\OneToMany(targetEntity=ApcSaeApprentissageCritique::class, mappedBy="apprentissageCritique")
+     * @var \Doctrine\Common\Collections\Collection<int,\App\Entity\ApcSaeApprentissageCritique>
      */
+    #[ORM\OneToMany(mappedBy: 'apprentissageCritique', targetEntity: ApcSaeApprentissageCritique::class)]
     private Collection $apcSaeApprentissageCritiques;
 
-    /**
-     * ApcApprentissageCritique constructor.
-     */
+    #[ORM\ManyToOne(targetEntity: ApcNiveau::class, inversedBy: 'apcApprentissageCritiques')]
+    private ?ApcNiveau $niveau;
+
     public function __construct(?ApcNiveau $niveau = null)
     {
         $this->niveau = $niveau;
@@ -68,11 +60,6 @@ class ApcApprentissageCritique extends BaseEntity
         $this->libelle = $libelle;
 
         return $this;
-    }
-
-    public function getNiveau(): ?ApcNiveau
-    {
-        return $this->niveau;
     }
 
     public function setNiveau(?ApcNiveau $niveau): self
@@ -159,5 +146,10 @@ class ApcApprentissageCritique extends BaseEntity
         }
 
         return null;
+    }
+
+    public function getNiveau(): ?ApcNiveau
+    {
+        return $this->niveau;
     }
 }

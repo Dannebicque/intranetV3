@@ -10,65 +10,53 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\HrsRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\HrsRepository")
- */
+#[ORM\Entity(repositoryClass: HrsRepository::class)]
 class Hrs extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\Column(type="float")
-     * @Groups({"hrs_administration"})
-     */
-    private ?float $nbHeuresTd;
+    #[Groups(groups: ['hrs_administration'])]
+    #[ORM\Column(type: Types::FLOAT)]
+    private ?float $nbHeuresTd = null;
 
-    /**
-     * @ORM\Column(type="string", length=150)
-     * @Groups({"hrs_administration"})
-     */
-    private ?string $libelle;
+    #[Groups(groups: ['hrs_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 150)]
+    private ?string $libelle = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Semestre", inversedBy="hrs")
-     * @Groups({"hrs_administration"})
-     */
+    #[Groups(groups: ['hrs_administration'])]
+    #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'hrs')]
     private ?Semestre $semestre = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Diplome", inversedBy="hrs")
-     */
+    #[ORM\ManyToOne(targetEntity: Diplome::class, inversedBy: 'hrs')]
     private ?Diplome $diplome = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="hrs")
-     * @Groups({"hrs_administration"})
-     */
-    private ?Personnel $personnel;
+    #[Groups(groups: ['hrs_administration'])]
+    #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'hrs')]
+    private ?Personnel $personnel = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\TypeHrs", inversedBy="hrs")
-     * @Groups({"hrs_administration"})
-     */
-    private ?TypeHrs $typeHrs;
+    #[Groups(groups: ['hrs_administration'])]
+    #[ORM\ManyToOne(targetEntity: TypeHrs::class, inversedBy: 'hrs')]
+    private ?TypeHrs $typeHrs = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private int $annee;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Departement", inversedBy="hrs")
-     */
+    #[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'hrs')]
     private ?Departement $departement;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private ?string $commentaire;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $commentaire = null;
+
+    public function __construct(Departement $departement)
+    {
+        $this->annee = $departement->getOptAnneePrevisionnel();
+        $this->departement = $departement;
+    }
 
     public function getNbHeuresTd(): ?float
     {
@@ -78,30 +66,6 @@ class Hrs extends BaseEntity
     public function setNbHeuresTd(float $nbHeuresTd): self
     {
         $this->nbHeuresTd = $nbHeuresTd;
-
-        return $this;
-    }
-
-    public function getSemestre(): ?Semestre
-    {
-        return $this->semestre;
-    }
-
-    public function setSemestre(?Semestre $semestre): self
-    {
-        $this->semestre = $semestre;
-
-        return $this;
-    }
-
-    public function getDiplome(): ?Diplome
-    {
-        return $this->diplome;
-    }
-
-    public function setDiplome(?Diplome $diplome): self
-    {
-        $this->diplome = $diplome;
 
         return $this;
     }
@@ -135,7 +99,7 @@ class Hrs extends BaseEntity
         return $this->libelle;
     }
 
-    public function setLibelle($libelle): void
+    public function setLibelle(?string $libelle): void
     {
         $this->libelle = $libelle;
     }
@@ -150,12 +114,6 @@ class Hrs extends BaseEntity
         $this->annee = $annee;
 
         return $this;
-    }
-
-    public function __construct(Departement $departement)
-    {
-        $this->annee = $departement->getOptAnneePrevisionnel();
-        $this->departement = $departement;
     }
 
     public function getDepartement(): ?Departement
@@ -182,17 +140,40 @@ class Hrs extends BaseEntity
         return $this;
     }
 
-    public function semestreOrDiplome()
+    public function semestreOrDiplome(): ?string
     {
-        if ($this->getDiplome() !== null && $this->getSemestre() === null) {
+        if (null !== $this->getDiplome() && null === $this->getSemestre()) {
             return $this->getDiplome()->getDisplay();
         }
 
-        if ($this->getDiplome() === null && $this->getSemestre() !== null) {
+        if (null === $this->getDiplome() && null !== $this->getSemestre()) {
             return $this->getSemestre()->getLibelle();
         }
 
         return '-err-';
+    }
 
+    public function getDiplome(): ?Diplome
+    {
+        return $this->diplome;
+    }
+
+    public function setDiplome(?Diplome $diplome): self
+    {
+        $this->diplome = $diplome;
+
+        return $this;
+    }
+
+    public function getSemestre(): ?Semestre
+    {
+        return $this->semestre;
+    }
+
+    public function setSemestre(?Semestre $semestre): self
+    {
+        $this->semestre = $semestre;
+
+        return $this;
     }
 }

@@ -10,20 +10,17 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\MessageDestinataireEtudiantRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\MessageDestinataireEtudiantRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: MessageDestinataireEtudiantRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class MessageDestinataireEtudiant extends MessageDestinataire
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="messageDestinataireEtudiants")
-     */
-    private ?Etudiant $etudiant;
+    #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'messageDestinataireEtudiants')]
+    private ?Etudiant $etudiant = null;
 
     public function getEtudiant(): ?Etudiant
     {

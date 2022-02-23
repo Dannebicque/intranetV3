@@ -19,279 +19,175 @@ use Doctrine\ORM\Mapping as ORM;
 use Stringable;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\SemestreRepository")
- * @ORM\HasLifecycleCallbacks()
- */
-class Semestre extends BaseEntity
+#[ORM\Entity(repositoryClass: SemestreRepository::class)]
+#[ORM\HasLifecycleCallbacks]
+class Semestre extends BaseEntity implements Stringable
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"article_administration", "date_administration", "semestre",
-     *                                    "etudiants_administration","document_administration"})
-     */
-    private ?string $libelle;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[Groups(groups: ['article_administration', 'date_administration', 'semestre', 'etudiants_administration', 'document_administration'])]
+    private ?string $libelle = null;
 
     /**
      * @deprecated
      */
-    private ?string $couleur = '';
+    #[ORM\Column(type: Types::STRING, length: 20, nullable: true)]
+    private ?string $couleur = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private int $ordreAnnee; //dans l'année
+    #[ORM\Column(type: Types::INTEGER)]
+    private int $ordreAnnee = 1;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private int $ordreLmd; //dans le LMD
+    #[ORM\Column(type: Types::INTEGER)]
+    private int $ordreLmd = 1;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $actif = false;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Semestre")
-     */
-    private ?Semestre $precedent;
+    #[ORM\ManyToOne(targetEntity: Semestre::class)]
+    private ?Semestre $precedent = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Semestre")
-     */
-    private ?Semestre $suivant;
+    #[ORM\ManyToOne(targetEntity: Semestre::class)]
+    private ?Semestre $suivant = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Semestre")
-     */
-    private ?Semestre $decale; //semestre equivalent en décalé
+    #[ORM\ManyToOne(targetEntity: Semestre::class)]
+    private ?Semestre $decale = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private int $nbGroupesCm = 1;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private int $nbGroupesTd = 1;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private int $nbGroupesTP = 2;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Etudiant", mappedBy="semestre")
-     * @ORM\OrderBy({"nom" = "ASC", "prenom" = "ASC"})
-     */
+    #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: Etudiant::class)]
+    #[ORM\OrderBy(value: ['nom' => 'ASC', 'prenom' => 'ASC'])]
     private Collection $etudiants;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $optMailReleve = false;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $optMailModificationNote = false;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
-     */
+    #[ORM\ManyToOne(targetEntity: Personnel::class)]
     private ?Personnel $optDestMailReleve = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
-     */
+    #[ORM\ManyToOne(targetEntity: Personnel::class)]
     private ?Personnel $optDestMailModifNote = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $optEvaluationVisible = true;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $optEvaluationModifiable = true;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $optPenaliteAbsence = true;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $optMailAbsenceResp = false;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
-     */
+    #[ORM\ManyToOne(targetEntity: Personnel::class)]
     private ?Personnel $optDestMailAbsenceResp = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $optMailAbsenceEtudiant = false;
 
-    /**
-     * @ORM\Column(type="float")
-     */
+    #[ORM\Column(type: Types::FLOAT)]
     private float $optPointPenaliteAbsence = 0.5;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Article", mappedBy="semestres")
-     */
+    #[ORM\ManyToMany(targetEntity: Article::class, mappedBy: 'semestres')]
     private Collection $articles;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Document", mappedBy="semestres")
-     */
+    #[ORM\ManyToMany(targetEntity: Document::class, mappedBy: 'semestres')]
     private Collection $documents;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Date", mappedBy="semestres")
-     */
+    #[ORM\ManyToMany(targetEntity: Date::class, mappedBy: 'semestres')]
     private Collection $dates;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Hrs", mappedBy="semestre")
-     */
+    #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: Hrs::class)]
     private Collection $hrs;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Parcour", mappedBy="semestre")
-     */
+    #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: Parcour::class)]
     private Collection $parcours;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Borne", mappedBy="semestres")
-     */
+    #[ORM\ManyToMany(targetEntity: Borne::class, mappedBy: 'semestres')]
     private Collection $bornes;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\CahierTexte", mappedBy="semestre")
-     */
+    #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: CahierTexte::class)]
     private Collection $cahierTextes;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Ue", mappedBy="semestre")
-     * @ORM\OrderBy({"numeroUe" = "ASC"})
-     */
+    #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: Ue::class)]
+    #[ORM\OrderBy(value: ['numeroUe' => 'ASC'])]
     private Collection $ues;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\TypeGroupe", mappedBy="semestre")
-     * @ORM\OrderBy({"libelle" = "ASC"})
-     */
+    #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: TypeGroupe::class)]
+    #[ORM\OrderBy(value: ['libelle' => 'ASC'])]
     private Collection $typeGroupes;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private ?int $moisDebut = 9;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Annee", inversedBy="semestres", fetch="EAGER")
-     * @Groups({"semestre"})
-     */
-    private ?Annee $annee;
+    #[ORM\ManyToOne(targetEntity: Annee::class, fetch: 'EAGER', inversedBy: 'semestres')]
+    #[Groups(groups: ['semestre'])]
+    private ?Annee $annee = null;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\StagePeriode", mappedBy="semestre")
-     */
+    #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: StagePeriode::class)]
     private Collection $stagePeriodes;
 
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ScolaritePromo", mappedBy="semestre")
-     */
+    #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: ScolaritePromo::class)]
     private Collection $scolaritePromos;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Ppn", inversedBy="semestres")
-     */
-    private ?Ppn $ppnActif;
+    #[ORM\ManyToOne(targetEntity: Ppn::class, inversedBy: 'semestres')]
+    private ?Ppn $ppnActif = null;
 
-    /**
-     * @ORM\Column(type="string", length=20)
-     */
-    private ?string $codeElement;
+    #[ORM\Column(type: Types::STRING, length: 20)]
+    private ?string $codeElement = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $optEvaluationPreInitialisee = false;
 
-    /**
-     * @ORM\OneToMany(targetEntity="QuestionnaireQualite", mappedBy="semestre")
-     */
+    #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: QuestionnaireQualite::class)]
     private Collection $qualiteQuestionnaires;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private int $optNbJoursSaisieAbsence = 10;
 
-    /**
-     * @ORM\OneToMany(targetEntity=ProjetPeriode::class, mappedBy="semestre")
-     */
+    #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: ProjetPeriode::class)]
     private Collection $projetPeriodes;
 
-    /**
-     * @ORM\OneToMany(targetEntity=ApcRessource::class, mappedBy="semestre")
-     */
+    #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: ApcRessource::class)]
     private Collection $apcRessources;
 
-    /**
-     * @ORM\OneToMany(targetEntity=ApcSae::class, mappedBy="semestre")
-     */
+    #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: ApcSae::class)]
     private Collection $apcSaes;
 
-    /**
-     * @ORM\OneToMany(targetEntity=AbsenceEtatAppel::class, mappedBy="semestre")
-     */
+    #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: AbsenceEtatAppel::class)]
     private Collection $absenceEtatAppels;
 
-    /**
-     * @ORM\OneToMany(targetEntity=CelcatEvent::class, mappedBy="semestre")
-     */
+    #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: CelcatEvent::class)]
     private Collection $celcatEvents;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Evaluation::class, mappedBy="semestre")
-     */
+    #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: Evaluation::class)]
     private Collection $evaluations;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Rattrapage::class, mappedBy="semestre")
-     */
+    #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: Rattrapage::class)]
     private Collection $rattrapages;
 
-    /**
-     * @ORM\OneToMany(targetEntity=AbsenceJustificatif::class, mappedBy="semestre")
-     */
+    #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: AbsenceJustificatif::class)]
     private Collection $absenceJustificatifs;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Absence::class, mappedBy="semestre")
-     */
+    #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: Absence::class)]
     private Collection $absences;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private ?bool $optMailAssistanteJustificatifAbsence = false;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $optBilanSemestre = false;
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private ?bool  $optBilanSemestre = false;
 
     public function __construct()
     {
@@ -301,6 +197,7 @@ class Semestre extends BaseEntity
         $this->absenceJustificatifs = new ArrayCollection();
         $this->absences = new ArrayCollection();
     }
+
     private function init(): void
     {
         $this->articles = new ArrayCollection();
@@ -322,174 +219,217 @@ class Semestre extends BaseEntity
         $this->absenceEtatAppels = new ArrayCollection();
         $this->celcatEvents = new ArrayCollection();
     }
+
     public function __clone()
     {
         $this->init();
     }
+
     public function getCouleur(): ?string
     {
         return $this->couleur;
     }
+
     public function setCouleur(string $couleur): void
     {
         $this->couleur = $couleur;
     }
+
     public function getOrdreAnnee(): ?int
     {
         return $this->ordreAnnee;
     }
+
     public function setOrdreAnnee(int $ordreAnnee = 1): void
     {
         $this->ordreAnnee = $ordreAnnee;
     }
+
     public function getOrdreLmd(): ?int
     {
         return $this->ordreLmd;
     }
+
     public function setOrdreLmd(int $ordreLmd): void
     {
         $this->ordreLmd = $ordreLmd;
     }
+
     public function getPrecedent(): ?self
     {
         return $this->precedent;
     }
+
     public function setPrecedent(?self $precedent): void
     {
         $this->precedent = $precedent;
     }
+
     public function getSuivant(): ?self
     {
         return $this->suivant;
     }
+
     public function setSuivant(?self $suivant): void
     {
         $this->suivant = $suivant;
     }
+
     public function getDecale(): ?self
     {
         return $this->decale;
     }
+
     public function setDecale(?self $decale): void
     {
         $this->decale = $decale;
     }
+
     public function getNbGroupesTd(): int
     {
         return $this->nbGroupesTd;
     }
+
     public function setNbGroupesTd(int $nbGroupesTd): void
     {
         $this->nbGroupesTd = $nbGroupesTd;
     }
+
     public function getNbGroupesTP(): int
     {
         return $this->nbGroupesTP;
     }
+
     public function setNbGroupesTP(int $nbGroupesTP): void
     {
         $this->nbGroupesTP = $nbGroupesTP;
     }
+
     public function isOptMailReleve(): bool
     {
         return $this->optMailReleve;
     }
+
     public function getOptMailReleve(): ?bool
     {
         return $this->optMailReleve;
     }
+
     public function setOptMailReleve(bool $optMailReleve): void
     {
         $this->optMailReleve = $optMailReleve;
     }
+
     public function getOptDestMailReleve(): ?Personnel
     {
         return $this->optDestMailReleve;
     }
+
     public function setOptDestMailReleve(?Personnel $optDestMailReleve): void
     {
         $this->optDestMailReleve = $optDestMailReleve;
     }
+
     public function getOptDestMailModifNote(): ?Personnel
     {
         return $this->optDestMailModifNote;
     }
+
     public function setOptDestMailModifNote(?Personnel $optDestMailModifNote): void
     {
         $this->optDestMailModifNote = $optDestMailModifNote;
     }
+
     public function isOptEvaluationVisible(): bool
     {
         return $this->optEvaluationVisible;
     }
+
     public function getOptEvaluationVisible(): ?bool
     {
         return $this->optEvaluationVisible;
     }
+
     public function setOptEvaluationVisible(bool $optEvaluationVisible): void
     {
         $this->optEvaluationVisible = $optEvaluationVisible;
     }
+
     public function isOptEvaluationModifiable(): bool
     {
         return $this->optEvaluationModifiable;
     }
+
     public function getOptEvaluationModifiable(): ?bool
     {
         return $this->optEvaluationModifiable;
     }
+
     public function setOptEvaluationModifiable(bool $optEvaluationModifiable): void
     {
         $this->optEvaluationModifiable = $optEvaluationModifiable;
     }
+
     public function isOptPenaliteAbsence(): bool
     {
         return $this->optPenaliteAbsence;
     }
+
     public function getOptPenaliteAbsence(): ?bool
     {
         return $this->optPenaliteAbsence;
     }
+
     public function setOptPenaliteAbsence(bool $optPenaliteAbsence): void
     {
         $this->optPenaliteAbsence = $optPenaliteAbsence;
     }
+
     public function getOptDestMailAbsenceResp(): ?Personnel
     {
         return $this->optDestMailAbsenceResp;
     }
+
     public function setOptDestMailAbsenceResp(?Personnel $optDestMailAbsenceResp): void
     {
         $this->optDestMailAbsenceResp = $optDestMailAbsenceResp;
     }
+
     public function isOptMailAbsenceEtudiant(): bool
     {
         return $this->optMailAbsenceEtudiant;
     }
+
     public function getOptMailAbsenceEtudiant(): ?bool
     {
         return $this->optMailAbsenceEtudiant;
     }
+
     public function setOptMailAbsenceEtudiant(bool $optMailAbsenceEtudiant): void
     {
         $this->optMailAbsenceEtudiant = $optMailAbsenceEtudiant;
     }
+
     public function getOptPointPenaliteAbsence(): float
     {
         return $this->optPointPenaliteAbsence;
     }
+
     public function setOptPointPenaliteAbsence(float $optPointPenaliteAbsence): void
     {
         $this->optPointPenaliteAbsence = $optPointPenaliteAbsence;
     }
+
     public function getEtudiants(): ArrayCollection | Collection
     {
         return $this->etudiants;
     }
-    public function setEtudiants($etudiants): void
+
+    public function setEtudiants(ArrayCollection | Collection $etudiants): void
     {
         $this->etudiants = $etudiants;
     }
+
     public function display(): string
     {
         if (null !== $this->getAnnee()) {
@@ -498,14 +438,17 @@ class Semestre extends BaseEntity
 
         return $this->libelle;
     }
+
     public function getAnnee(): ?Annee
     {
         return $this->annee;
     }
-    public function setAnnee(Annee $annee): void
+
+    public function setAnnee(?Annee $annee): void
     {
         $this->annee = $annee;
     }
+
     public function displayAvecTypeDiplome(): string
     {
         if (null !== $this->getAnnee() && null !== $this->getAnnee()->getDiplome() && null !== $this->getAnnee()->getDiplome()->getTypeDiplome()) {
@@ -514,6 +457,7 @@ class Semestre extends BaseEntity
 
         return $this->libelle;
     }
+
     /**
      * @return Collection|Article[]
      */
@@ -521,6 +465,7 @@ class Semestre extends BaseEntity
     {
         return $this->articles;
     }
+
     public function addArticle(Article $article): self
     {
         if (!$this->articles->contains($article)) {
@@ -530,6 +475,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     public function removeArticle(Article $article): self
     {
         if ($this->articles->contains($article)) {
@@ -539,6 +485,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     /**
      * @return Collection|Document[]
      */
@@ -546,6 +493,7 @@ class Semestre extends BaseEntity
     {
         return $this->documents;
     }
+
     public function addDocument(Document $document): self
     {
         if (!$this->documents->contains($document)) {
@@ -555,6 +503,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     public function removeDocument(Document $document): self
     {
         if ($this->documents->contains($document)) {
@@ -564,6 +513,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     /**
      * @return Collection|Date[]
      */
@@ -571,6 +521,7 @@ class Semestre extends BaseEntity
     {
         return $this->dates;
     }
+
     public function addDate(Date $date): self
     {
         if (!$this->dates->contains($date)) {
@@ -580,6 +531,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     public function removeDate(Date $date): self
     {
         if ($this->dates->contains($date)) {
@@ -589,6 +541,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     /**
      * @return Collection|Hrs[]
      */
@@ -596,6 +549,7 @@ class Semestre extends BaseEntity
     {
         return $this->hrs;
     }
+
     public function addHrs(Hrs $hrs): self
     {
         if (!$this->hrs->contains($hrs)) {
@@ -605,6 +559,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     public function removeHrs(Hrs $hrs): self
     {
         if ($this->hrs->contains($hrs)) {
@@ -617,6 +572,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     /**
      * @return Collection|Parcour[]
      */
@@ -624,6 +580,7 @@ class Semestre extends BaseEntity
     {
         return $this->parcours;
     }
+
     public function addParcour(Parcour $option): self
     {
         if (!$this->parcours->contains($option)) {
@@ -633,6 +590,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     public function removeParcour(Parcour $option): self
     {
         if ($this->parcours->contains($option)) {
@@ -645,6 +603,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     /**
      * @return Collection|Borne[]
      */
@@ -652,6 +611,7 @@ class Semestre extends BaseEntity
     {
         return $this->bornes;
     }
+
     public function addBorne(Borne $borne): self
     {
         if (!$this->bornes->contains($borne)) {
@@ -661,6 +621,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     public function removeBorne(Borne $borne): self
     {
         if ($this->bornes->contains($borne)) {
@@ -670,10 +631,12 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     public function update(?string $name, mixed $value): void
     {
         Tools::updateFields($name, $value, $this);
     }
+
     /**
      * @return Collection|CahierTexte[]
      */
@@ -681,6 +644,7 @@ class Semestre extends BaseEntity
     {
         return $this->cahierTextes;
     }
+
     public function addCahierTexte(CahierTexte $cahierTexte): self
     {
         if (!$this->cahierTextes->contains($cahierTexte)) {
@@ -690,6 +654,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     public function removeCahierTexte(CahierTexte $cahierTexte): self
     {
         if ($this->cahierTextes->contains($cahierTexte)) {
@@ -702,10 +667,12 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     public function getUes(): Collection
     {
         return $this->ues;
     }
+
     public function addUe(Ue $ue): self
     {
         if (!$this->ues->contains($ue)) {
@@ -715,6 +682,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     public function removeUe(Ue $ue): self
     {
         if ($this->ues->contains($ue)) {
@@ -727,6 +695,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     /**
      * @return Collection|TypeGroupe[]
      */
@@ -734,6 +703,7 @@ class Semestre extends BaseEntity
     {
         return $this->typeGroupes;
     }
+
     public function addTypeGroupe(TypeGroupe $typeGroupe): self
     {
         if (!$this->typeGroupes->contains($typeGroupe)) {
@@ -743,6 +713,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     public function removeTypeGroupe(TypeGroupe $typeGroupe): self
     {
         if ($this->typeGroupes->contains($typeGroupe)) {
@@ -755,16 +726,19 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     public function getMoisDebut(): ?int
     {
         return $this->moisDebut;
     }
+
     public function setMoisDebut(int $moisDebut): self
     {
         $this->moisDebut = $moisDebut;
 
         return $this;
     }
+
     /**
      * @return Collection|StagePeriode[]
      */
@@ -772,6 +746,7 @@ class Semestre extends BaseEntity
     {
         return $this->stagePeriodes;
     }
+
     public function addStagePeriode(StagePeriode $stagePeriode): self
     {
         if (!$this->stagePeriodes->contains($stagePeriode)) {
@@ -781,6 +756,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     public function removeStagePeriode(StagePeriode $stagePeriode): self
     {
         if ($this->stagePeriodes->contains($stagePeriode)) {
@@ -793,6 +769,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     public function getAnneeUniversitaire(): ?AnneeUniversitaire
     {
         if (null !== $this->getDiplome() && null !== $this->getDiplome()->getAnneeUniversitaire()) {
@@ -801,6 +778,7 @@ class Semestre extends BaseEntity
 
         return null;
     }
+
     public function getDiplome(): ?Diplome
     {
         if (null !== $this->getAnnee() && null !== $this->getAnnee()->getDiplome()) {
@@ -809,6 +787,7 @@ class Semestre extends BaseEntity
 
         return null;
     }
+
     /**
      * @return Collection|ScolaritePromo[]
      */
@@ -816,6 +795,7 @@ class Semestre extends BaseEntity
     {
         return $this->scolaritePromos;
     }
+
     public function addScolaritePromo(ScolaritePromo $scolaritePromo): self
     {
         if (!$this->scolaritePromos->contains($scolaritePromo)) {
@@ -825,6 +805,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     public function removeScolaritePromo(ScolaritePromo $scolaritePromo): self
     {
         if ($this->scolaritePromos->contains($scolaritePromo)) {
@@ -837,16 +818,19 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     public function getPpnActif(): ?Ppn
     {
         return $this->ppnActif;
     }
+
     public function setPpnActif(?Ppn $ppnActif): self
     {
         $this->ppnActif = $ppnActif;
 
         return $this;
     }
+
     public function getNbgroupeTpEdt(): int
     {
         if (0 === $this->nbGroupesTP % 2) {
@@ -855,52 +839,64 @@ class Semestre extends BaseEntity
 
         return $this->nbGroupesTP + 1;
     }
+
     public function getActif(): ?bool
     {
         return $this->actif;
     }
+
     public function isActif(): bool
     {
         return $this->actif;
     }
+
     public function setActif(bool $actif): void
     {
         $this->actif = $actif;
     }
+
     public function getNbGroupesCm(): ?int
     {
         return $this->nbGroupesCm;
     }
+
     public function setNbGroupesCm(int $nbGroupesCm): self
     {
         $this->nbGroupesCm = $nbGroupesCm;
 
         return $this;
     }
+
     public function getOptMailModificationNote(): ?bool
     {
         return $this->optMailModificationNote;
     }
+
     public function isOptMailModificationNote(): bool
     {
         return $this->optMailModificationNote;
     }
+
     public function setOptMailModificationNote(bool $optMailModificationNote): void
     {
         $this->optMailModificationNote = $optMailModificationNote;
     }
+
     public function getOptMailAbsenceResp(): ?bool
     {
         return $this->optMailAbsenceResp;
     }
+
     public function isOptMailAbsenceResp(): bool
     {
         return $this->optMailAbsenceResp;
     }
+
     public function setOptMailAbsenceResp(bool $optMailAbsenceResp): void
     {
         $this->optMailAbsenceResp = $optMailAbsenceResp;
     }
+
     public function addEtudiant(Etudiant $etudiant): self
     {
         if (!$this->etudiants->contains($etudiant)) {
@@ -910,6 +906,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     public function removeEtudiant(Etudiant $etudiant): self
     {
         if ($this->etudiants->contains($etudiant)) {
@@ -922,6 +919,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     public function addHr(Hrs $hr): self
     {
         if (!$this->hrs->contains($hr)) {
@@ -931,6 +929,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     public function removeHr(Hrs $hr): self
     {
         if ($this->hrs->contains($hr)) {
@@ -943,26 +942,31 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     public function getCodeElement(): ?string
     {
         return $this->codeElement;
     }
+
     public function setCodeElement(string $codeElement): self
     {
         $this->codeElement = $codeElement;
 
         return $this;
     }
+
     public function getOptEvaluationPreInitialisee(): ?bool
     {
         return $this->optEvaluationPreInitialisee;
     }
+
     public function setOptEvaluationPreInitialisee(bool $optEvaluationPreInitialisee): self
     {
         $this->optEvaluationPreInitialisee = $optEvaluationPreInitialisee;
 
         return $this;
     }
+
     /**
      * @return Collection|QuestionnaireQualite[]
      */
@@ -970,6 +974,7 @@ class Semestre extends BaseEntity
     {
         return $this->qualiteQuestionnaires;
     }
+
     public function addQualiteQuestionnaire(QuestionnaireQualite $qualiteQuestionnaire): self
     {
         if (!$this->qualiteQuestionnaires->contains($qualiteQuestionnaire)) {
@@ -979,6 +984,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     public function removeQualiteQuestionnaire(QuestionnaireQualite $qualiteQuestionnaire): self
     {
         if ($this->qualiteQuestionnaires->contains($qualiteQuestionnaire)) {
@@ -991,16 +997,19 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     public function getOptNbJoursSaisieAbsence(): ?int
     {
         return $this->optNbJoursSaisieAbsence;
     }
+
     public function setOptNbJoursSaisieAbsence(int $optNbJoursSaisieAbsence): self
     {
         $this->optNbJoursSaisieAbsence = $optNbJoursSaisieAbsence;
 
         return $this;
     }
+
     /**
      * @return Collection|ProjetPeriode[]
      */
@@ -1008,6 +1017,7 @@ class Semestre extends BaseEntity
     {
         return $this->projetPeriodes;
     }
+
     public function addProjetPeriode(ProjetPeriode $projetPeriode): self
     {
         if (!$this->projetPeriodes->contains($projetPeriode)) {
@@ -1017,6 +1027,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     public function removeProjetPeriode(ProjetPeriode $projetPeriode): self
     {
         if ($this->projetPeriodes->contains($projetPeriode)) {
@@ -1029,6 +1040,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     /**
      * @return Collection|ApcRessource[]
      */
@@ -1036,6 +1048,7 @@ class Semestre extends BaseEntity
     {
         return $this->apcRessources;
     }
+
     public function addApcRessource(ApcRessource $apcRessource): self
     {
         if (!$this->apcRessources->contains($apcRessource)) {
@@ -1045,6 +1058,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     public function removeApcRessource(ApcRessource $apcRessource): self
     {
         // set the owning side to null (unless already changed)
@@ -1054,6 +1068,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     /**
      * @return Collection|ApcSae[]
      */
@@ -1061,6 +1076,7 @@ class Semestre extends BaseEntity
     {
         return $this->apcSaes;
     }
+
     public function addApcSae(ApcSae $apcSae): self
     {
         if (!$this->apcSaes->contains($apcSae)) {
@@ -1070,6 +1086,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     public function removeApcSae(ApcSae $apcSae): self
     {
         // set the owning side to null (unless already changed)
@@ -1079,6 +1096,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     /**
      * @return Collection|AbsenceEtatAppel[]
      */
@@ -1086,6 +1104,7 @@ class Semestre extends BaseEntity
     {
         return $this->absenceEtatAppels;
     }
+
     public function addAbsenceEtatAppel(AbsenceEtatAppel $absenceEtatAppel): self
     {
         if (!$this->absenceEtatAppels->contains($absenceEtatAppel)) {
@@ -1095,6 +1114,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     public function removeAbsenceEtatAppel(AbsenceEtatAppel $absenceEtatAppel): self
     {
         // set the owning side to null (unless already changed)
@@ -1104,6 +1124,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     /**
      * @return Collection|CelcatEvent[]
      */
@@ -1111,6 +1132,7 @@ class Semestre extends BaseEntity
     {
         return $this->celcatEvents;
     }
+
     public function addCelcatEvent(CelcatEvent $celcatEvent): self
     {
         if (!$this->celcatEvents->contains($celcatEvent)) {
@@ -1120,6 +1142,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     public function removeCelcatEvent(CelcatEvent $celcatEvent): self
     {
         // set the owning side to null (unless already changed)
@@ -1129,6 +1152,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     /**
      * @return Collection|Evaluation[]
      */
@@ -1136,6 +1160,7 @@ class Semestre extends BaseEntity
     {
         return $this->evaluations;
     }
+
     public function addEvaluation(Evaluation $evaluation): self
     {
         if (!$this->evaluations->contains($evaluation)) {
@@ -1145,6 +1170,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     public function removeEvaluation(Evaluation $evaluation): self
     {
         // set the owning side to null (unless already changed)
@@ -1154,6 +1180,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     /**
      * @return Collection|Rattrapage[]
      */
@@ -1161,6 +1188,7 @@ class Semestre extends BaseEntity
     {
         return $this->rattrapages;
     }
+
     public function addRattrapage(Rattrapage $rattrapage): self
     {
         if (!$this->rattrapages->contains($rattrapage)) {
@@ -1170,6 +1198,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     public function removeRattrapage(Rattrapage $rattrapage): self
     {
         // set the owning side to null (unless already changed)
@@ -1179,6 +1208,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     /**
      * @return Collection|AbsenceJustificatif[]
      */
@@ -1186,6 +1216,7 @@ class Semestre extends BaseEntity
     {
         return $this->absenceJustificatifs;
     }
+
     public function addAbsenceJustificatif(AbsenceJustificatif $absenceJustificatif): self
     {
         if (!$this->absenceJustificatifs->contains($absenceJustificatif)) {
@@ -1195,6 +1226,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     public function removeAbsenceJustificatif(AbsenceJustificatif $absenceJustificatif): self
     {
         // set the owning side to null (unless already changed)
@@ -1204,6 +1236,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     /**
      * @return Collection|Absence[]
      */
@@ -1211,6 +1244,7 @@ class Semestre extends BaseEntity
     {
         return $this->absences;
     }
+
     public function addAbsence(Absence $absence): self
     {
         if (!$this->absences->contains($absence)) {
@@ -1220,6 +1254,7 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     public function removeAbsence(Absence $absence): self
     {
         // set the owning side to null (unless already changed)
@@ -1229,22 +1264,27 @@ class Semestre extends BaseEntity
 
         return $this;
     }
+
     public function __toString(): string
     {
         return $this->getLibelle();
     }
+
     public function getLibelle(): ?string
     {
         return $this->libelle;
     }
-    public function setLibelle($libelle): void
+
+    public function setLibelle(?string $libelle): void
     {
         $this->libelle = $libelle;
     }
+
     public function getOptMailAssistanteJustificatifAbsence(): ?bool
     {
         return $this->optMailAssistanteJustificatifAbsence;
     }
+
     public function setOptMailAssistanteJustificatifAbsence(bool $optMailAssistanteJustificatifAbsence): self
     {
         $this->optMailAssistanteJustificatifAbsence = $optMailAssistanteJustificatifAbsence;
@@ -1263,6 +1303,4 @@ class Semestre extends BaseEntity
 
         return $this;
     }
-
-
 }

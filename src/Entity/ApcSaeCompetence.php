@@ -11,40 +11,29 @@ namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\ApcSaeCompetenceRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=ApcSaeCompetenceRepository::class)
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: ApcSaeCompetenceRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class ApcSaeCompetence extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=ApcSae::class, inversedBy="apcSaeCompetences")
-     */
-    private ?ApcSae $sae;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=ApcCompetence::class, inversedBy="apcSaeCompetences")
-     */
-    private ?ApcCompetence $competence;
-
-    /**
-     * @ORM\Column(type="float")
-     */
+    #[ORM\Column(type: Types::FLOAT)]
     private float $coefficient = 0;
 
-    /**
-     * ApcSaeCompetence constructor.
-     */
-    public function __construct(ApcSae $sae, ApcCompetence $competence)
+    #[ORM\ManyToOne(targetEntity: ApcSae::class, inversedBy: 'apcSaeCompetences')]
+    private ?ApcSae $sae;
+
+    #[ORM\ManyToOne(targetEntity: ApcCompetence::class, inversedBy: 'apcSaeCompetences')]
+    private ?ApcCompetence $competence;
+
+    public function __construct(?ApcSae $sae, ?ApcCompetence $competence)
     {
         $this->sae = $sae;
         $this->competence = $competence;
     }
-
 
     public function getSae(): ?ApcSae
     {

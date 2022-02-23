@@ -9,48 +9,55 @@
 
 namespace App\Entity;
 
+use App\Repository\PersonnelDepartementRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\PersonnelDepartementRepository")
- */
+#[ORM\Entity(repositoryClass: PersonnelDepartementRepository::class)]
 class PersonnelDepartement extends BaseEntity
 {
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="personnelDepartements", fetch="EAGER")
-     * @ORM\OrderBy({"nom" = "asc", "prenom" = "asc"})
-     */
-    private Personnel $personnel;
-
-    /**
-     * @ORM\ManyToOne(targetEntity="Departement", inversedBy="personnelDepartements", fetch="EAGER")
-     */
-    private Departement $departement;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: Types::INTEGER)]
     private int $annee;
 
-    /**
-     * @ORM\Column(type="string", length=250)
-     */
+    #[ORM\Column(type: Types::STRING, length: 250)]
     private ?string $roles = '';
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $defaut = false;
 
-    /**
-     * PersonnelDepartement constructor.
-     */
+    #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'personnelDepartements')]
+    private Personnel $personnel;
+
+    #[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'personnelDepartements')]
+    private Departement $departement;
+
     public function __construct(Personnel $personnel, Departement $departement)
     {
-        $this->departement = $departement;
         $this->personnel = $personnel;
+        $this->departement = $departement;
         $this->addRole('ROLE_PERMANENT');
-        $this->annee = (int)date('Y');
+        $this->annee = (int) date('Y');
+    }
+
+    public function addRole(string $role): self
+    {
+        $roles = $this->getRoles();
+        $roles[] = $role;
+        $this->roles = json_encode($roles, JSON_THROW_ON_ERROR);
+
+        return $this;
+    }
+
+    public function getRoles(): ?array
+    {
+        return json_decode($this->roles); //, false, 512, JSON_THROW_ON_ERROR);
+    }
+
+    public function setRoles(string $roles): self
+    {
+        $this->roles = $roles;
+
+        return $this;
     }
 
     public function getPersonnel(): ?Personnel
@@ -58,7 +65,7 @@ class PersonnelDepartement extends BaseEntity
         return $this->personnel;
     }
 
-    public function setPersonnel(Personnel $personnel): self
+    public function setPersonnel(?Personnel $personnel): self
     {
         $this->personnel = $personnel;
 
@@ -70,7 +77,7 @@ class PersonnelDepartement extends BaseEntity
         return $this->departement;
     }
 
-    public function setDepartement(Departement $departement): self
+    public function setDepartement(?Departement $departement): self
     {
         $this->departement = $departement;
 
@@ -89,20 +96,9 @@ class PersonnelDepartement extends BaseEntity
         return $this;
     }
 
-    public function getRoles(): ?array
-    {
-        return json_decode($this->roles);
-    }
-
-    public function addRole(string $role): self
-    {
-        $roles = $this->getRoles();
-        $roles[] = $role;
-        $this->roles = json_encode($roles);
-
-        return $this;
-    }
-
+    /**
+     * @throws \JsonException
+     */
     public function clearRole(): self
     {
         $this->roles = json_encode([], JSON_THROW_ON_ERROR);
@@ -116,7 +112,7 @@ class PersonnelDepartement extends BaseEntity
         $key = array_search($role, $roles, true);
         unset($roles[$key]);
         $roles = array_values($roles);
-        $this->roles = json_encode($roles);
+        $this->roles = json_encode($roles, JSON_THROW_ON_ERROR);
 
         return $this;
     }
@@ -129,13 +125,6 @@ class PersonnelDepartement extends BaseEntity
     public function setDefaut(bool $defaut): self
     {
         $this->defaut = $defaut;
-
-        return $this;
-    }
-
-    public function setRoles(string $roles): self
-    {
-        $this->roles = $roles;
 
         return $this;
     }

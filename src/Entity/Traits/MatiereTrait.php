@@ -11,17 +11,12 @@ namespace App\Entity\Traits;
 
 use Doctrine\ORM\Mapping as ORM;
 
-
 trait MatiereTrait
 {
-    /**
-     * @ORM\Column(type="string", length=15, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 15, nullable: true)]
     private ?string $typeMatiere;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: 'integer')]
     private int $idMatiere = 0;
 
     public function getTypeMatiere(): ?string
@@ -48,8 +43,8 @@ trait MatiereTrait
         return $this;
     }
 
-    public function getTypeIdMatiere()
+    public function getTypeIdMatiere(): string
     {
-        return $this->typeMatiere . '_' . $this->idMatiere;
+        return $this->typeMatiere.'_'.$this->idMatiere;
     }
 }

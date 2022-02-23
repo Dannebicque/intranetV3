@@ -13,9 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait ConfigTrait
 {
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
+    #[ORM\Column(type: 'text', nullable: true)]
     private ?string $config = null;
 
     public function getConfig(): ?array

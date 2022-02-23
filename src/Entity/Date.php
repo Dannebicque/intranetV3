@@ -11,16 +11,16 @@ namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\TypeDestinataireTrait;
+use App\Repository\DateRepository;
 use Carbon\CarbonInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\DateRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: DateRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Date extends BaseEntity
 {
     use LifeCycleTrait;
@@ -34,7 +34,6 @@ class Date extends BaseEntity
     public const TYPE_REUNION = 'type.reunion';
     public const TYPE_RENTREE = 'type.rentree';
     public const TYPE_VACANCES = 'type.vacances';
-
     public const COULEUR_BADGE = [
         self::TYPE_STAGE => 'bg-primary',
         self::TYPE_SOUTENANCE => 'bg-danger',
@@ -46,82 +45,55 @@ class Date extends BaseEntity
         self::TYPE_VACANCES => 'bg-info',
     ];
 
-    /** @deprecated */
-    public const QUI_ETUDIANT = 'E';
-    /** @deprecated */
-    public const QUI_PERSONNEL = 'P';
+    #[Groups(groups: ['date_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $libelle = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"date_administration"})
-     */
-    private ?string $libelle;
+    #[Groups(groups: ['date_administration'])]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $texte = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @Groups({"date_administration"})
-     */
-    private ?string $texte;
-
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     * @Groups({"date_administration"})
-     */
+    #[Groups(groups: ['date_administration'])]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateDebut = null;
 
-    /**
-     * @ORM\Column(type="time", nullable=true)
-     * @Groups({"date_administration"})
-     */
-    private ?CarbonInterface $heureDebut;
+    #[Groups(groups: ['date_administration'])]
+    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $heureDebut = null;
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     * @Groups({"date_administration"})
-     */
+    #[Groups(groups: ['date_administration'])]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateFin = null;
 
-    /**
-     * @ORM\Column(type="time", nullable=true)
-     * @Groups({"date_administration"})
-     */
-    private ?CarbonInterface $heureFin;
+    #[Groups(groups: ['date_administration'])]
+    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $heureFin = null;
 
-    /**
-     * @ORM\Column(name="lieu", type="string", length=150)
-     * @Groups({"date_administration"})
-     */
-    private ?string $lieu;
+    #[Groups(groups: ['date_administration'])]
+    #[ORM\Column(name: 'lieu', type: Types::STRING, length: 150)]
+    private ?string $lieu = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     * @Groups({"date_administration"})
-     */
+    #[Groups(groups: ['date_administration'])]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $allday = false;
 
     /**
-     * @ORM\Column(type="string", length=1)
-     * @Groups({"date_administration"})
      * @deprecated
      */
+    #[Groups(groups: ['date_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 1)]
     private string $qui = '-';
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Departement")
-     */
+    #[ORM\ManyToOne(targetEntity: Departement::class)]
     private Departement $departement;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Semestre", inversedBy="dates")
-     * @Groups({"date_administration"})
-     */
+    #[Groups(groups: ['date_administration'])]
+    #[ORM\ManyToMany(targetEntity: Semestre::class, inversedBy: 'dates')]
     private Collection $semestres;
 
-    /**
-     * @ORM\Column(type="string", length=30)
-     * @Groups({"date_administration"})
-     */
-    private ?string $type;
+    #[Groups(groups: ['date_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 30)]
+    private ?string $type = null;
 
     public function __construct()
     {
@@ -220,6 +192,11 @@ class Date extends BaseEntity
         return $this->allday;
     }
 
+    public function getAllday(): ?bool
+    {
+        return $this->allday;
+    }
+
     public function setAllday(bool $allday): void
     {
         $this->allday = $allday;
@@ -285,13 +262,8 @@ class Date extends BaseEntity
         return $this;
     }
 
-    public function getCouleurBadge()
+    public function getCouleurBadge(): string
     {
         return self::COULEUR_BADGE[$this->type];
-    }
-
-    public function getAllday(): ?bool
-    {
-        return $this->allday;
     }
 }

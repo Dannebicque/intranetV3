@@ -15,61 +15,51 @@ use App\Repository\ApcSaeRepository;
 use App\Utils\Tools;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=ApcSaeRepository::class)
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: ApcSaeRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class ApcSae extends AbstractMatiere implements MatiereEntityInterface
 {
     use LifeCycleTrait;
 
     public const SOURCE = 'sae';
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Semestre::class, inversedBy="apcSaes", fetch="EAGER")
-     */
-    private ?Semestre $semestre;
+    #[ORM\ManyToOne(targetEntity: Semestre::class, fetch: 'EAGER', inversedBy: 'apcSaes')]
+    private ?Semestre $semestre = null;
 
-    /**
-     * @ORM\Column(type="float")
-     */
+    #[ORM\Column(type: Types::FLOAT)]
     private float $projetPpn = 0;
 
-    /**
-     * @ORM\Column(type="float")
-     */
+    #[ORM\Column(type: Types::FLOAT)]
     private float $projetFormation = 0;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private ?string $livrables;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $livrables = null;
 
     /**
-     * @ORM\OneToMany(targetEntity=ApcSaeCompetence::class, mappedBy="sae", cascade={"persist","remove"})
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcSaeCompetence>
      */
+    #[ORM\OneToMany(mappedBy: 'sae', targetEntity: ApcSaeCompetence::class, cascade: ['persist', 'remove'])]
     private Collection $apcSaeCompetences;
 
     /**
-     * @ORM\OneToMany(targetEntity=ApcSaeRessource::class, mappedBy="sae", cascade={"persist","remove"})
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcSaeRessource>
      */
+    #[ORM\OneToMany(mappedBy: 'sae', targetEntity: ApcSaeRessource::class, cascade: ['persist', 'remove'])]
     private Collection $apcSaeRessources;
 
     /**
-     * @ORM\OneToMany(targetEntity=ApcSaeApprentissageCritique::class, mappedBy="sae")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcSaeApprentissageCritique>
      */
+    #[ORM\OneToMany(mappedBy: 'sae', targetEntity: ApcSaeApprentissageCritique::class, cascade: ['persist', 'remove'])]
     private Collection $apcSaeApprentissageCritiques;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private ?string $exemples;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $exemples = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $bonification = false;
 
     public function __construct()
@@ -77,18 +67,6 @@ class ApcSae extends AbstractMatiere implements MatiereEntityInterface
         $this->apcSaeCompetences = new ArrayCollection();
         $this->apcSaeRessources = new ArrayCollection();
         $this->apcSaeApprentissageCritiques = new ArrayCollection();
-    }
-
-    public function getSemestre(): ?Semestre
-    {
-        return $this->semestre;
-    }
-
-    public function setSemestre(?Semestre $semestre): self
-    {
-        $this->semestre = $semestre;
-
-        return $this;
     }
 
     public function getLivrables(): ?string
@@ -99,24 +77,6 @@ class ApcSae extends AbstractMatiere implements MatiereEntityInterface
     public function setLivrables(?string $livrables): self
     {
         $this->livrables = $livrables;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|ApcSaeCompetence[]
-     */
-    public function getApcSaeCompetences(): Collection
-    {
-        return $this->apcSaeCompetences;
-    }
-
-    public function addApcSaeCompetence(ApcSaeCompetence $apcSaeCompetence): self
-    {
-        if (!$this->apcSaeCompetences->contains($apcSaeCompetence)) {
-            $this->apcSaeCompetences[] = $apcSaeCompetence;
-            $apcSaeCompetence->setSae($this);
-        }
 
         return $this;
     }
@@ -168,6 +128,18 @@ class ApcSae extends AbstractMatiere implements MatiereEntityInterface
         return null;
     }
 
+    public function getSemestre(): ?Semestre
+    {
+        return $this->semestre;
+    }
+
+    public function setSemestre(?Semestre $semestre): self
+    {
+        $this->semestre = $semestre;
+
+        return $this;
+    }
+
     /**
      * @return Collection|ApcCompetence[]
      */
@@ -183,12 +155,30 @@ class ApcSae extends AbstractMatiere implements MatiereEntityInterface
     }
 
     /**
+     * @return Collection|ApcSaeCompetence[]
+     */
+    public function getApcSaeCompetences(): Collection
+    {
+        return $this->apcSaeCompetences;
+    }
+
+    /**
      * @return $this
      */
     public function addCompetence(ApcCompetence $competence): self
     {
         $apcSaeCompetence = new ApcSaeCompetence($this, $competence);
         $this->addApcSaeCompetence($apcSaeCompetence);
+
+        return $this;
+    }
+
+    public function addApcSaeCompetence(ApcSaeCompetence $apcSaeCompetence): self
+    {
+        if (!$this->apcSaeCompetences->contains($apcSaeCompetence)) {
+            $this->apcSaeCompetences[] = $apcSaeCompetence;
+            $apcSaeCompetence->setSae($this);
+        }
 
         return $this;
     }
@@ -252,19 +242,8 @@ class ApcSae extends AbstractMatiere implements MatiereEntityInterface
         $t = $this->initTabJson();
         $t['ptutFormation'] = $this->getProjetFormation();
         $t['ptutPpn'] = $this->getProjetPpn();
+
         return $t;
-    }
-
-    public function getProjetPpn(): ?float
-    {
-        return $this->projetPpn;
-    }
-
-    public function setProjetPpn(mixed $projetPpn): self
-    {
-        $this->projetPpn = Tools::convertToFloat($projetPpn);
-
-        return $this;
     }
 
     public function getProjetFormation(): ?float
@@ -275,6 +254,18 @@ class ApcSae extends AbstractMatiere implements MatiereEntityInterface
     public function setProjetFormation(mixed $projetFormation): self
     {
         $this->projetFormation = Tools::convertToFloat($projetFormation);
+
+        return $this;
+    }
+
+    public function getProjetPpn(): ?float
+    {
+        return $this->projetPpn;
+    }
+
+    public function setProjetPpn(mixed $projetPpn): self
+    {
+        $this->projetPpn = Tools::convertToFloat($projetPpn);
 
         return $this;
     }

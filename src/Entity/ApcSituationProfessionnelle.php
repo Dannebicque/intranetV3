@@ -11,25 +11,20 @@ namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\ApcSituationProfessionnelleRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=ApcSituationProfessionnelleRepository::class)
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: ApcSituationProfessionnelleRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class ApcSituationProfessionnelle extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\Column(type="text")
-     */
-    private ?string $libelle;
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $libelle = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=ApcCompetence::class, inversedBy="apcSituationProfessionnelles")
-     */
-    private ?ApcCompetence $competence;
+    #[ORM\ManyToOne(targetEntity: ApcCompetence::class, inversedBy: 'apcSituationProfessionnelles')]
+    private ?ApcCompetence $competence = null;
 
     public function getLibelle(): ?string
     {

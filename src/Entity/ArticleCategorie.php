@@ -9,31 +9,28 @@
 
 namespace App\Entity;
 
+use App\Repository\ArticleCategorieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\ArticleCategorieRepository")
- */
+#[ORM\Entity(repositoryClass: ArticleCategorieRepository::class)]
 class ArticleCategorie extends BaseEntity
 {
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"article_administration"})
-     */
-    private ?string $libelle;
+    #[Groups(groups: ['article_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $libelle = null;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Article", mappedBy="categorie")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Article>
      */
+    #[ORM\OneToMany(mappedBy: 'categorie', targetEntity: Article::class)]
     private Collection $articles;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Departement", inversedBy="articleCategories")
-     */
-    private ?Departement $departement;
+    #[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'articleCategories')]
+    private ?Departement $departement = null;
 
     public function __construct()
     {

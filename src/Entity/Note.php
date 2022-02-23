@@ -11,60 +11,57 @@ namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
+use App\Repository\NoteRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\NoteRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: NoteRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Note extends BaseEntity
 {
     use UuidTrait;
     use LifeCycleTrait;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Evaluation", inversedBy="notes", fetch="EAGER")
-     */
-    private ?Evaluation $evaluation;
+    #[ORM\ManyToOne(targetEntity: Evaluation::class, fetch: 'EAGER', inversedBy: 'notes')]
+    private ?Evaluation $evaluation = null;
+
+    #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'notes')]
+    private ?Etudiant $etudiant = null;
+
+    #[ORM\Column(type: Types::FLOAT)]
+    private ?float $note = null;
+
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $commentaire = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="notes")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ModificationNote>
      */
-    private ?Etudiant $etudiant;
-
-    /**
-     * @ORM\Column(type="float")
-     */
-    private ?float $note;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private ?string $commentaire;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ModificationNote", mappedBy="note")
-     */
+    #[ORM\OneToMany(mappedBy: 'note', targetEntity: ModificationNote::class)]
     private Collection $modificationNotes;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $absenceJustifie = false;
 
     /**
-     * Note constructor.
-     *
      * @throws Exception
      */
     public function __construct()
     {
         $this->setUuid(Uuid::uuid4());
         $this->modificationNotes = new ArrayCollection();
+    }
+
+    public function setUuid(UuidInterface $uuid): self
+    {
+        $this->uuid = $uuid;
+
+        return $this;
     }
 
     public function __clone()
@@ -159,13 +156,6 @@ class Note extends BaseEntity
     public function setAbsenceJustifie(bool $absenceJustifie): self
     {
         $this->absenceJustifie = $absenceJustifie;
-
-        return $this;
-    }
-
-    public function setUuid($uuid): self
-    {
-        $this->uuid = $uuid;
 
         return $this;
     }

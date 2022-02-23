@@ -11,16 +11,16 @@ namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\CovidAttestationEtudiantRepository;
-use DateTime;
+use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=CovidAttestationEtudiantRepository::class)
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: CovidAttestationEtudiantRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class CovidAttestationEtudiant extends BaseEntity
 {
     use LifeCycleTrait;
@@ -29,60 +29,44 @@ class CovidAttestationEtudiant extends BaseEntity
     public const APRESMIDI = 'PM';
     public const TOUTELAJOURNEE = 'AL';
 
-    /**
-     * @ORM\Column(type="string", length=10, nullable=true)
-     */
-    private $motif;
+    #[ORM\Column(type: Types::STRING, length: 10, nullable: true)]
+    private ?string $motif = null;
+
+    #[ORM\ManyToOne(targetEntity: Diplome::class, inversedBy: 'covidAttestationEtudiants')]
+    private ?Diplome $diplome = null;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Diplome::class, inversedBy="covidAttestationEtudiants")
+     * @var \Doctrine\Common\Collections\Collection<\App\Entity\Matiere>
      */
-    private $diplome;
+    #[ORM\ManyToMany(targetEntity: Matiere::class, inversedBy: 'covidAttestationEtudiants')]
+    private Collection $matieres;
+
+    #[ORM\Column(type: Types::STRING, length: 150, nullable: true)]
+    private ?string $salles = null;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Matiere::class, inversedBy="covidAttestationEtudiants")
+     * @var \Doctrine\Common\Collections\Collection<\App\Entity\Groupe>
      */
-    private $matieres;
+    #[ORM\ManyToMany(targetEntity: Groupe::class, inversedBy: 'covidAttestationEtudiants')]
+    private Collection $groupes;
 
-    /**
-     * @ORM\Column(type="string", length=150, nullable=true)
-     */
-    private $salles;
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?DateTimeInterface $datePresence = null;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Groupe::class, inversedBy="covidAttestationEtudiants")
-     */
-    private $groupes;
+    #[ORM\Column(type: Types::STRING, length: 2)]
+    private string $heure = 'AL';
 
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
-    private $datePresence;
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private bool $convocationEnvoyee = false;
 
-    /**
-     * @ORM\Column(type="string", length=2)
-     */
-    private $heure = 'AL';
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateEnvoi = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $convocationEnvoyee = false;
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateDebut = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $dateEnvoi;
-
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
-    private $dateDebut;
-
-    /**
-     * @ORM\Column(type="date", nullable=true)
-     */
-    private $dateFin;
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateFin = null;
 
     public function __construct()
     {
@@ -202,7 +186,7 @@ class CovidAttestationEtudiant extends BaseEntity
         return $this;
     }
 
-    public function heureLong()
+    public function heureLong(): string
     {
         return match ($this->heure) {
             self::MATIN => 'Matin',
@@ -224,12 +208,12 @@ class CovidAttestationEtudiant extends BaseEntity
         return $this;
     }
 
-    public function getDateEnvoi(): ?DateTimeInterface
+    public function getDateEnvoi(): ?CarbonInterface
     {
         return $this->dateEnvoi;
     }
 
-    public function setDateEnvoi(?DateTimeInterface $dateEnvoi): self
+    public function setDateEnvoi(?CarbonInterface $dateEnvoi): self
     {
         $this->dateEnvoi = $dateEnvoi;
 
@@ -240,7 +224,7 @@ class CovidAttestationEtudiant extends BaseEntity
     {
         $this->convocationEnvoyee = false;
         $this->dateEnvoi = null;
-        $this->setCreated(new DateTime());
+        $this->setCreated(Carbon::now());
     }
 
     public function serialize(): string
@@ -251,24 +235,24 @@ class CovidAttestationEtudiant extends BaseEntity
         ]);
     }
 
-    public function getDateDebut(): ?DateTimeInterface
+    public function getDateDebut(): ?CarbonInterface
     {
         return $this->dateDebut;
     }
 
-    public function setDateDebut(?DateTimeInterface $dateDebut): self
+    public function setDateDebut(?CarbonInterface $dateDebut): self
     {
         $this->dateDebut = $dateDebut;
 
         return $this;
     }
 
-    public function getDateFin(): ?DateTimeInterface
+    public function getDateFin(): ?CarbonInterface
     {
         return $this->dateFin;
     }
 
-    public function setDateFin(?DateTimeInterface $dateFin): self
+    public function setDateFin(?CarbonInterface $dateFin): self
     {
         $this->dateFin = $dateFin;
 

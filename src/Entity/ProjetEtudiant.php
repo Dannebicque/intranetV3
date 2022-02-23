@@ -16,13 +16,12 @@ use Carbon\CarbonInterface;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 
-/**
- * @ORM\Entity(repositoryClass=ProjetEtudiantRepository::class)
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: ProjetEtudiantRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class ProjetEtudiant extends BaseEntity
 {
     use UuidTrait;
@@ -36,70 +35,44 @@ class ProjetEtudiant extends BaseEntity
     public const DUREE_HEURE = 'h';
     public const DUREE_JOUR = 'j';
 
-    /**
-     * @ORM\ManyToOne(targetEntity=ProjetPeriode::class, inversedBy="projetEtudiants")
-     */
-    private ?ProjetPeriode $projetPeriode;
+    #[ORM\ManyToOne(targetEntity: ProjetPeriode::class, inversedBy: 'projetEtudiants')]
+    private ?ProjetPeriode $projetPeriode = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Entreprise::class, inversedBy="projetEtudiants", cascade={"persist", "remove"})
-     */
-    private ?Entreprise $organisme;
+    #[ORM\ManyToOne(targetEntity: Entreprise::class, cascade: ['persist', 'remove'], inversedBy: 'projetEtudiants')]
+    private ?Entreprise $organisme = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $tempComplet = true;
 
-    /**
-     * @ORM\Column(type="float")
-     */
+    #[ORM\Column(type: Types::FLOAT)]
     private float $duree = 8;
 
-    /**
-     * @ORM\Column(type="string", length=10)
-     */
+    #[ORM\Column(type: Types::STRING, length: 10)]
     private string $uniteDuree = self::DUREE_HEURE;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private ?string $sujet;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $sujet = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private ?string $activitesConfiees;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $activitesConfiees = null;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=Etudiant::class, inversedBy="projetEtudiants")
-     */
+    #[ORM\ManyToMany(targetEntity: Etudiant::class, inversedBy: 'projetEtudiants')]
     private Collection $etudiants;
 
-    /**
-     * @ORM\Column(type="string", length=30)
-     */
+    #[ORM\Column(type: Types::STRING, length: 30)]
     private string $etatProjet = self::ETAT_PROJET_ATTENTE;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private ?CarbonInterface $dateAutorise;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateAutorise = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private ?CarbonInterface $dateDepose;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateDepose = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private ?CarbonInterface $dateValidation;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateValidation = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private ?CarbonInterface $dateImprime;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateImprime = null;
 
     public function __construct()
     {
@@ -263,19 +236,19 @@ class ProjetEtudiant extends BaseEntity
         return $this->dateValidation;
     }
 
-    public function setDateValidation(?DateTimeInterface $dateValidation): self
+    public function setDateValidation(?CarbonInterface $dateValidation): self
     {
         $this->dateValidation = $dateValidation;
 
         return $this;
     }
 
-    public function getDateImprime(): ?DateTimeInterface
+    public function getDateImprime(): ?CarbonInterface
     {
         return $this->dateImprime;
     }
 
-    public function setDateImprime(?DateTimeInterface $dateImprime): self
+    public function setDateImprime(?CarbonInterface $dateImprime): self
     {
         $this->dateImprime = $dateImprime;
 

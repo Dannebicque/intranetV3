@@ -11,42 +11,32 @@ namespace App\Entity;
 
 use App\Entity\Traits\ConfigTrait;
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\QuestionnaireQuestionnaireSectionRepository;
+use Doctrine\DBAL\Types\Types;
 use function array_key_exists;
 use function count;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\QuestionnaireQuestionnaireSectionRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: QuestionnaireQuestionnaireSectionRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class QuestionnaireQuestionnaireSection extends BaseEntity
 {
     use LifeCycleTrait;
     use ConfigTrait;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\QuestionnaireQualite", inversedBy="sections")
-     */
-    private ?QuestionnaireQualite $questionnaireQualite;
+    #[ORM\ManyToOne(targetEntity: QuestionnaireQualite::class, inversedBy: 'sections')]
+    private ?QuestionnaireQualite $questionnaireQualite = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\QuestionnaireQuizz", inversedBy="sections")
-     */
-    private ?QuestionnaireQuizz $questionnaireQuizz;
+    #[ORM\ManyToOne(targetEntity: QuestionnaireQuizz::class, inversedBy: 'sections')]
+    private ?QuestionnaireQuizz $questionnaireQuizz = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="QuestionnaireSection", inversedBy="qualiteQuestionnaireSections")
-     */
-    private ?QuestionnaireSection $section;
+    #[ORM\ManyToOne(targetEntity: QuestionnaireSection::class, inversedBy: 'qualiteQuestionnaireSections')]
+    private ?QuestionnaireSection $section = null;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private ?int $ordre;
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $ordre = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $enabled = true;
 
     public function getSection(): ?QuestionnaireSection
@@ -54,7 +44,7 @@ class QuestionnaireQuestionnaireSection extends BaseEntity
         return $this->section;
     }
 
-    public function setSection(QuestionnaireSection $section): self
+    public function setSection(?QuestionnaireSection $section): self
     {
         $this->section = $section;
 
@@ -107,27 +97,5 @@ class QuestionnaireQuestionnaireSection extends BaseEntity
         $this->questionnaireQuizz = $questionnaireQuizz;
 
         return $this;
-    }
-
-    public function previs($onglet = 0): array
-    {
-        $t = explode('-', $this->getConfig());
-        if (2 === count($t)) {
-            if (0 === $onglet) {
-                return explode(',', $t[1]);
-            }
-            $pre = explode(',', $t[1]);
-            $tPre = [];
-            for ($i = 0; $i < 3; ++$i) {
-                $key = (int) $onglet * 3 - (3 - $i);
-                if (array_key_exists($key, $pre)) {
-                    $tPre[] = $pre[$key];
-                }
-            }
-
-            return $tPre;
-        }
-
-        return [];
     }
 }

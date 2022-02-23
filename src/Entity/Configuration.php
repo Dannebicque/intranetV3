@@ -10,32 +10,26 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\ConfigurationRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\ConfigurationRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: ConfigurationRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Configuration extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     * @Groups({"configuration_administration"})
-     */
-    private ?string $cle;
+    #[Groups(groups: ['configuration_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 50)]
+    private ?string $cle = null;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"configuration_administration"})
-     */
-    private ?string $valeur;
+    #[Groups(groups: ['configuration_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $valeur = null;
 
-    /**
-     * @ORM\Column(type="string", length=1)
-     */
+    #[ORM\Column(type: Types::STRING, length: 1)]
     private string $type = 'T';
 
     public function getCle(): ?string
@@ -55,8 +49,9 @@ class Configuration extends BaseEntity
         return $this->valeur;
     }
 
-    public function setValeur(string $valeur): self
+    public function setValeur(mixed $valeur): self
     {
+        //todo: gérer un cast selon le type??
         $this->valeur = $valeur;
 
         return $this;

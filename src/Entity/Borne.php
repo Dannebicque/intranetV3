@@ -10,17 +10,17 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\BorneRepository;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\BorneRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: BorneRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Borne extends BaseEntity
 {
     use LifeCycleTrait;
@@ -36,60 +36,43 @@ class Borne extends BaseEntity
         'fas fa-exclamation-circle' => 'fas fa-exclamation-circle',
         'fas fa-question-circle' => 'fas fa-question-circle',
     ];
+
     public const COULEURS = ['Rouge' => '#FF0000', 'Vert' => '#00FF00', 'Bleu' => '#0000FF'];
 
-    /**
-     * @ORM\Column(type="string", length=40)
-     * @Groups({"bornes_administration"})
-     */
-    private ?string $icone;
+    #[Groups(groups: ['bornes_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 40)]
+    private ?string $icone = null;
 
-    /**
-     * @ORM\Column(type="string", length=20)
-     * @Groups({"bornes_administration"})
-     */
-    private ?string $couleur;
+    #[Groups(groups: ['bornes_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 20)]
+    private ?string $couleur = null;
 
-    /**
-     * @ORM\Column(type="text")
-     * @Groups({"bornes_administration"})
-     */
-    private ?string $message;
+    #[Groups(groups: ['bornes_administration'])]
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $message = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Groups({"bornes_administration"})
-     */
-    private ?string $url;
+    #[Groups(groups: ['bornes_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $url = null;
 
-    /**
-     * @ORM\Column(type="datetime")
-     * @Groups({"bornes_administration"})
-     */
+    #[Groups(groups: ['bornes_administration'])]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?CarbonInterface $dateDebutPublication;
 
-    /**
-     * @ORM\Column(type="datetime")
-     * @Groups({"bornes_administration"})
-     */
+    #[Groups(groups: ['bornes_administration'])]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?CarbonInterface $dateFinPublication;
 
-    /**
-     * @ORM\Column(type="boolean")
-     * @Groups({"bornes_administration"})
-     */
+    #[Groups(groups: ['bornes_administration'])]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private ?bool $visible = true;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Semestre", inversedBy="bornes")
-     * @Groups({"bornes_administration"})
-     */
+    #[Groups(groups: ['bornes_administration'])]
+    #[ORM\ManyToMany(targetEntity: Semestre::class, inversedBy: 'bornes')]
     private Collection $semestres;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Departement::class, inversedBy="bornes")
-     */
-    private ?Departement $departement;
+    #[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'bornes')]
+    private ?Departement $departement = null;
 
     public function __construct()
     {

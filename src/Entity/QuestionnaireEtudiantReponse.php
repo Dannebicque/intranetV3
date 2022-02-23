@@ -10,36 +10,28 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
-use Doctrine\ORM\Mapping as ORM;
+use App\Repository\QuestionnaireEtudiantReponseRepository;
 use function count;
+use Doctrine\DBAL\Types\Types;
+use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\QuestionnaireEtudiantReponseRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: QuestionnaireEtudiantReponseRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class QuestionnaireEtudiantReponse extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private ?string $valeur;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $valeur = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private ?string $cleReponse;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $cleReponse = null;
 
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
-    private ?string $cleQuestion;
+    #[ORM\Column(type: Types::STRING, length: 100)]
+    private ?string $cleQuestion = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="QuestionnaireEtudiant", inversedBy="questionnaireEtudiantReponses")
-     */
-    private ?QuestionnaireEtudiant $questionnaireEtudiant;
+    #[ORM\ManyToOne(targetEntity: QuestionnaireEtudiant::class, inversedBy: 'questionnaireEtudiantReponses')]
+    private ?QuestionnaireEtudiant $questionnaireEtudiant = null;
 
     public function __construct(QuestionnaireEtudiant $quizzEtudiant)
     {

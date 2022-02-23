@@ -11,69 +11,51 @@ namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\CovidAttestationPersonnelRepository;
-use function array_key_exists;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use function array_key_exists;
 
-/**
- * @ORM\Entity(repositoryClass=CovidAttestationPersonnelRepository::class)
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: CovidAttestationPersonnelRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class CovidAttestationPersonnel extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\Column(type="string", length=150)
-     */
-    private ?string $moyenDeplacement;
+    #[ORM\Column(type: Types::STRING, length: 150)]
+    private ?string $moyenDeplacement = null;
+
+    #[ORM\Column(type: Types::STRING, length: 20)]
+    private ?string $motif = null;
+
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true)]
+    private ?bool $validationDepartement = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?DateTimeInterface $dateValidationDepartement = null;
+
+    #[ORM\Column(type: Types::BOOLEAN, nullable: true)]
+    private bool $validationDirection;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?DateTimeInterface $dateValidationDirection = null;
+
+    #[ORM\ManyToOne(targetEntity: Diplome::class, inversedBy: 'covidAttestationPersonnels')]
+    private ?Diplome $diplome = null;
 
     /**
-     * @ORM\Column(type="string", length=20)
+     * @var \Doctrine\Common\Collections\Collection<\App\Entity\CovidCreneauPresence>
      */
-    private ?string $motif;
+    #[ORM\OneToMany(mappedBy: 'attestation', targetEntity: CovidCreneauPresence::class, cascade: ['persist', 'remove'])]
+    private Collection $covidCreneauPresences;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private ?bool $validationDepartement;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $motifRefus = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $dateValidationDepartement;
-
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     */
-    private $validationDirection;
-
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private $dateValidationDirection;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Personnel::class, inversedBy="covidAttestationPersonnels", fetch="EAGER")
-     */
-    private $personnel;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Diplome::class, inversedBy="covidAttestationPersonnels")
-     */
-    private $diplome;
-
-    /**
-     * @ORM\OneToMany(targetEntity=CovidCreneauPresence::class, mappedBy="attestation", cascade={"persist","remove"})
-     */
-    private $covidCreneauPresences;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private ?string $motifRefus;
+    #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'covidAttestationPersonnels')]
+    private Personnel $personnel;
 
     public function __construct(Personnel $personnel)
     {
@@ -128,10 +110,6 @@ class CovidAttestationPersonnel extends BaseEntity
 
     public function getValidationDirectionDisplay(): ?string
     {
-        if (null === $this->validationDirection) {
-            return 'en.attente';
-        }
-
         return true === $this->validationDirection ? 'Yes' : 'No';
     }
 
@@ -236,7 +214,7 @@ class CovidAttestationPersonnel extends BaseEntity
         return $this;
     }
 
-    public function getMotifLong()
+    public function getMotifLong(): string
     {
         $tab = [
             'motif1' => 'Assurer TP / devoirs sur tables',
@@ -259,7 +237,7 @@ class CovidAttestationPersonnel extends BaseEntity
         return $this;
     }
 
-    public function moyenLong()
+    public function moyenLong(): string
     {
         $tab = [
             'velo' => 'Vélo',

@@ -9,19 +9,16 @@
 
 namespace App\Entity;
 
+use App\Repository\EmpruntPersonnelRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\EmpruntPersonnelRepository")
- */
+#[ORM\Entity(repositoryClass: EmpruntPersonnelRepository::class)]
 class EmpruntPersonnel extends Emprunt
 {
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel", inversedBy="emprunts")
-     * @Groups({"emprunts_administration"})
-     */
-    private $personnel;
+    #[Groups(groups: ['emprunts_administration'])]
+    #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'emprunts')]
+    private ?Personnel $personnel = null;
 
     public function getPersonnel(): ?Personnel
     {

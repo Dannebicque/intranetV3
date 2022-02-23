@@ -11,14 +11,14 @@ namespace App\Entity;
 
 use App\Entity\Traits\ConfigTrait;
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\QuestionnaireSectionRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\QuestionnaireSectionRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: QuestionnaireSectionRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class QuestionnaireSection extends BaseEntity
 {
     use LifeCycleTrait;
@@ -27,39 +27,31 @@ class QuestionnaireSection extends BaseEntity
     public const DETAIL = 'DETAIL';
     public const GROUPE = 'GROUPE';
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private ?string $titre;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $titre = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $textExplicatif = null;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\QuestionnaireSectionQuestion>
      */
-    private ?string $textExplicatif;
+    #[ORM\OneToMany(mappedBy: 'section', targetEntity: QuestionnaireSectionQuestion::class, cascade: ['persist', 'remove'])]
+    #[ORM\OrderBy(value: ['ordre' => 'ASC'])]
+    private Collection $qualiteSectionQuestions;
 
+    //todo: éventuellement faire une vraie requete ? pour éviter de multiplier les requetes
     /**
-     * @ORM\OneToMany(targetEntity="QuestionnaireSectionQuestion", mappedBy="section",
-     *                                                             cascade={"persist", "remove"})
-     * @ORM\OrderBy({"ordre"="ASC"})
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\QuestionnaireQuestionnaireSection>
      */
-    private Collection $qualiteSectionQuestions;//todo: éventuellement faire une vraie requete ? pour éviter de multiplier les requetes
-
-    /**
-     * @ORM\OneToMany(targetEntity="QuestionnaireQuestionnaireSection", mappedBy="section")
-     */
+    #[ORM\OneToMany(mappedBy: 'section', targetEntity: QuestionnaireQuestionnaireSection::class)]
     private Collection $qualiteQuestionnaireSections;
 
-
-
-    /**
-     * @ORM\Column(type="string", length=10, nullable=true)
-     */
+    #[ORM\Column(type: Types::STRING, length: 10, nullable: true)]
     private string $typeCalcul;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private ?string $typeSection;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $typeSection = null;
 
     public function __construct()
     {

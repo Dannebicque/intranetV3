@@ -11,25 +11,20 @@ namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\CommentaireRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=CommentaireRepository::class)
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: CommentaireRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Commentaire extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=Etudiant::class, inversedBy="commentaires")
-     */
-    private Etudiant $etudiant;
+    #[ORM\Column(type: Types::TEXT)]
+    private ?string $texte = null;
 
-    /**
-     * @ORM\Column(type="text")
-     */
-    private ?string $texte;
+    #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'commentaires')]
+    private ?Etudiant $etudiant;
 
     public function __construct(Etudiant $etudiant)
     {
@@ -41,7 +36,7 @@ class Commentaire extends BaseEntity
         return $this->etudiant;
     }
 
-    public function setEtudiant(Etudiant $etudiant): self
+    public function setEtudiant(?Etudiant $etudiant): self
     {
         $this->etudiant = $etudiant;
 

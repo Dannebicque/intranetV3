@@ -9,28 +9,22 @@
 
 namespace App\Entity;
 
+use App\Repository\FichierRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\FichierRepository")
- */
+#[ORM\Entity(repositoryClass: FichierRepository::class)]
 class Fichier extends BaseEntity
 {
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private ?string $libelle;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $libelle = null;
 
-    /**
-     * @ORM\Column(type="float")
-     */
-    private ?float $taille;
+    #[ORM\Column(type: Types::FLOAT)]
+    private ?float $taille = null;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\CahierTexte", mappedBy="fichiers")
-     */
+    #[ORM\ManyToMany(targetEntity: CahierTexte::class, mappedBy: 'fichiers')]
     private Collection $cahierTextes;
 
     public function __construct()

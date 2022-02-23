@@ -12,39 +12,28 @@ namespace App\Entity;
 use App\Repository\CovidCreneauPresenceRepository;
 use Carbon\Carbon;
 use DateTimeInterface;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=CovidCreneauPresenceRepository::class)
- */
+#[ORM\Entity(repositoryClass: CovidCreneauPresenceRepository::class)]
 class CovidCreneauPresence
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $id = null;
 
-    /**
-     * @ORM\Column(type="date")
-     */
-    private $date;
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    private ?DateTimeInterface $date;
 
-    /**
-     * @ORM\Column(type="time")
-     */
-    private $heureArrivee;
+    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    private ?DateTimeInterface $heureArrivee;
 
-    /**
-     * @ORM\Column(type="time")
-     */
-    private $heureDepart;
+    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    private ?DateTimeInterface $heureDepart;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=CovidAttestationPersonnel::class, inversedBy="covidCreneauPresences")
-     */
-    private $attestation;
+    #[ORM\ManyToOne(targetEntity: CovidAttestationPersonnel::class, inversedBy: 'covidCreneauPresences')]
+    private ?CovidAttestationPersonnel $attestation = null;
 
     public function __construct()
     {
@@ -107,8 +96,8 @@ class CovidCreneauPresence
         return $this;
     }
 
-    public function display()
+    public function display(): string
     {
-        return $this->date->format('d/m/Y') . ' de ' . $this->heureArrivee->format('H:i') . ' à ' . $this->heureDepart->format('H:i');
+        return $this->date->format('d/m/Y').' de '.$this->heureArrivee->format('H:i').' à '.$this->heureDepart->format('H:i');
     }
 }

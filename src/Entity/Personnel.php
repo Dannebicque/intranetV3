@@ -11,19 +11,22 @@ namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Interfaces\UtilisateurInterface;
+use App\Repository\PersonnelRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JsonException;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\PersonnelRepository")
  * @Vich\Uploadable
- * @ORM\HasLifecycleCallbacks()
  */
+#[ORM\Entity(repositoryClass: PersonnelRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Personnel extends Utilisateur implements UtilisateurInterface
 {
     use LifeCycleTrait;
@@ -40,252 +43,230 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     public const ADMINISTRATIF = 'ADM';
     public const TECHNICIEN = 'TEC';
 
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: Types::STRING, length: 15)]
+    #[Groups(['personnel:read'])]
+    protected ?string $statut = null;
+
+    #[ORM\Column(type: Types::STRING, length: 10, nullable: true)]
+    protected ?string $posteInterne = null;
+
+    #[ORM\Column(type: Types::STRING, length: 20, nullable: true)]
+    protected ?string $telBureau = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    protected ?string $responsabilites = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    protected ?string $domaines = null;
+
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    protected ?string $entreprise = null;
+
+    #[ORM\Column(type: Types::STRING, length: 20, nullable: true)]
+    protected ?string $bureau1 = null;
+
+    #[ORM\Column(type: Types::STRING, length: 20, nullable: true)]
+    protected ?string $bureau2 = null;
+
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
+    protected ?string $numeroHarpege = null;
+
+    #[ORM\Column(type: Types::STRING, length: 10, nullable: true)]
+    protected ?string $initiales = null;
+
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
     private mixed $id;
 
-    /**
-     * @ORM\Column(type="string", length=15)
-     */
-    protected ?string $statut;
-
-    /**
-     * @ORM\Column(type="string", length=10,nullable=true)
-     */
-    protected ?string $posteInterne;
-
-    /**
-     * @ORM\Column(type="string", length=20,nullable=true)
-     */
-    protected ?string $telBureau;
-
-    /**
-     * @ORM\Column(type="text",nullable=true)
-     */
-    protected ?string $responsabilites;
-
-    /**
-     * @ORM\Column(type="text",nullable=true)
-     */
-    protected ?string $domaines;
-
-    /**
-     * @ORM\Column(type="string", length=255,nullable=true)
-     */
-    protected ?string $entreprise;
-
-    /**
-     * @ORM\Column(type="string", length=20,nullable=true)
-     */
-    protected ?string $bureau1;
-
-    /**
-     * @ORM\Column(type="string", length=20,nullable=true)
-     */
-    protected ?string $bureau2;
-
-    /**
-     * @ORM\Column(type="integer",nullable=true)
-     */
-    protected ?string $numeroHarpege;
-
-    /**
-     * @ORM\Column(type="string",length=10,nullable=true)
-     */
-    protected ?string $initiales;
-
-    /**
-     * @ORM\Column(type="string", length=50, nullable=true)
-     */
+    #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
     private ?string $cvName = '';
 
     /**
      * @Vich\UploadableField(mapping="cv", fileNameProperty="cvName")
      */
-    private $cvFile;
+    private ?File $cvFile = null;
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
+    #[ORM\Column(type: Types::STRING, length: 50)]
     private ?string $photoName = 'noimage.png';
 
     /**
      * @Vich\UploadableField(mapping="personnel", fileNameProperty="photoName")
      */
-    private $photoFile;
+    private ?File $photoFile = null;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Hrs", mappedBy="personnel")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Hrs>
      */
+    #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: Hrs::class)]
     private Collection $hrs;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Previsionnel", mappedBy="personnel")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Previsionnel>
      */
+    #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: Previsionnel::class)]
     private Collection $previsionnels;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Evaluation", mappedBy="personnelAuteur")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Evaluation>
      */
+    #[ORM\OneToMany(mappedBy: 'personnelAuteur', targetEntity: Evaluation::class)]
     private Collection $evaluationsAuteur;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Evaluation", mappedBy="personnelAutorise")
-     */
+    #[ORM\ManyToMany(targetEntity: Evaluation::class, mappedBy: 'personnelAutorise')]
     private Collection $evaluationsAutorise;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ModificationNote", mappedBy="personnel")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ModificationNote>
      */
+    #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: ModificationNote::class)]
     private Collection $modificationNotes;
 
     /**
-     * @ORM\OneToMany(targetEntity="PersonnelDepartement", mappedBy="personnel")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\PersonnelDepartement>
      */
+    #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: PersonnelDepartement::class)]
     private Collection $personnelDepartements;
 
-    /**
-     * @ORM\Column(type="float")
-     */
+    #[ORM\Column(type: Types::FLOAT)]
     private float $nbHeuresService = 192;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\CahierTexte", mappedBy="personnel")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\CahierTexte>
      */
+    #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: CahierTexte::class)]
     private Collection $cahierTextes;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Notification", mappedBy="personnel")
-     * @ORM\OrderBy({"created" = "DESC"})
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Notification>
      */
+    #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: Notification::class)]
+    #[ORM\OrderBy(value: ['created' => 'DESC'])]
     private Collection $notifications;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Message", mappedBy="expediteur")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Message>
      */
+    #[ORM\OneToMany(mappedBy: 'expediteur', targetEntity: Message::class)]
     private Collection $messages;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\MessageDestinatairePersonnel", mappedBy="personnel")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\MessageDestinatairePersonnel>
      */
+    #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: MessageDestinatairePersonnel::class)]
     private Collection $messageDestinatairePersonnels;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\StagePeriode", mappedBy="responsables")
-     */
+    #[ORM\ManyToMany(targetEntity: StagePeriode::class, mappedBy: 'responsables')]
     private Collection $stagePeriodes;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\StageEtudiant", mappedBy="tuteurUniversitaire")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\StageEtudiant>
      */
+    #[ORM\OneToMany(mappedBy: 'tuteurUniversitaire', targetEntity: StageEtudiant::class)]
     private Collection $stageEtudiants;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Alternance", mappedBy="tuteurUniversitaire")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Alternance>
      */
+    #[ORM\OneToMany(mappedBy: 'tuteurUniversitaire', targetEntity: Alternance::class)]
     private Collection $alternances;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $deleted = false;
 
-    /**
-     * @ORM\Column(type="string", length=20, nullable=true)
-     */
-    private ?string $couleur;
+    #[ORM\Column(type: Types::STRING, length: 20, nullable: true)]
+    private ?string $couleur = null;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\EmpruntPersonnel", mappedBy="personnel")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\EmpruntPersonnel>
      */
+    #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: EmpruntPersonnel::class)]
     private Collection $emprunts;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Departement", mappedBy="respMateriel")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Departement>
      */
+    #[ORM\OneToMany(mappedBy: 'respMateriel', targetEntity: Departement::class)]
     private Collection $departements;
 
     /**
-     * @ORM\OneToMany(targetEntity="QuestionnaireQuestion", mappedBy="auteur")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\QuestionnaireQuestion>
      */
+    #[ORM\OneToMany(mappedBy: 'auteur', targetEntity: QuestionnaireQuestion::class)]
     private Collection $quizzQuestions;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ArticleLikePersonnel", mappedBy="personnel")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ArticleLikePersonnel>
      */
+    #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: ArticleLikePersonnel::class)]
     private Collection $articlesLike;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\DocumentFavoriPersonnel", mappedBy="personnel")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\DocumentFavoriPersonnel>
      */
+    #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: DocumentFavoriPersonnel::class)]
     private Collection $documentsFavoris;
 
-    /**
-     * @ORM\ManyToMany(targetEntity=ProjetPeriode::class, mappedBy="responsables")
-     */
+    #[ORM\ManyToMany(targetEntity: ProjetPeriode::class, mappedBy: 'responsables')]
     private Collection $projetPeriodes;
 
     /**
-     * @ORM\OneToMany(targetEntity=MaterielCommun::class, mappedBy="contact")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\MaterielCommun>
      */
+    #[ORM\OneToMany(mappedBy: 'contact', targetEntity: MaterielCommun::class)]
     private Collection $materielCommuns;
 
     /**
-     * @ORM\OneToMany(targetEntity=MaterielCommunPret::class, mappedBy="personnel")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\MaterielCommunPret>
      */
+    #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: MaterielCommunPret::class)]
     private Collection $materielCommunPrets;
 
-    /**
-     * @ORM\Column(type="string", length=50, nullable=true)
-     */
-    private ?string $signatureElectronique;
+    #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
+    private ?string $signatureElectronique = null;
 
     /**
-     * @ORM\OneToMany(targetEntity=CovidAttestationPersonnel::class, mappedBy="personnel")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\CovidAttestationPersonnel>
      */
+    #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: CovidAttestationPersonnel::class)]
     private Collection $covidAttestationPersonnels;
 
     /**
-     * @ORM\OneToMany(targetEntity=AbsenceEtatAppel::class, mappedBy="personnel")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\AbsenceEtatAppel>
      */
+    #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: AbsenceEtatAppel::class)]
     private Collection $absenceEtatAppels;
 
-    /**
-     * @ORM\ManyToOne(targetEntity=AnneeUniversitaire::class, inversedBy="personnels")
-     */
-    private ?AnneeUniversitaire $anneeUniversitaire;
+    #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class, inversedBy: 'personnels')]
+    private ?AnneeUniversitaire $anneeUniversitaire = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $configuration = null;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @var \Doctrine\Common\Collections\Collection<\App\Entity\BCDemande>
      */
-    private $configuration;
+    #[ORM\OneToMany(mappedBy: 'responsable', targetEntity: BCDemande::class)]
+    private Collection $bcDemandesResponsable;
 
     /**
-     * @ORM\OneToMany(targetEntity=BCDemande::class, mappedBy="responsable")
+     * @var \Doctrine\Common\Collections\Collection<\App\Entity\BCDemande>
      */
-    private $bcDemandesResponsable;
+    #[ORM\OneToMany(mappedBy: 'signataireCompta', targetEntity: BCDemande::class)]
+    private Collection $bcDemandeSignataireCompta;
+    /**
+     * @var \Doctrine\Common\Collections\Collection<\App\Entity\BCServiceFait>
+     */
+    #[ORM\OneToMany(mappedBy: 'receptionnisteMigo', targetEntity: BCServiceFait::class)]
+    private Collection $bcServiceFaitReceptionniste;
 
     /**
-     * @ORM\OneToMany(targetEntity=BCDemande::class, mappedBy="signataireCompta")
+     * @var \Doctrine\Common\Collections\Collection<\App\Entity\BCServiceFait>
      */
-    private $bcDemandeSignataireCompta;
+    #[ORM\OneToMany(mappedBy: 'responsableSignataire', targetEntity: BCServiceFait::class)]
+    private Collection $bcServiceFaitResponsableSignataire;
 
     /**
-     * @ORM\OneToMany(targetEntity=BCServiceFait::class, mappedBy="receptionnisteMigo")
-     */
-    private $bcServiceFaitReceptionniste;
-
-    /**
-     * @ORM\OneToMany(targetEntity=BCServiceFait::class, mappedBy="responsableSignataire")
-     */
-    private $bcServiceFaitResponsableSignataire;
-
-    /**
-     * Personnel constructor.
-     *
      * @throws JsonException
      */
     public function __construct()
@@ -321,17 +302,17 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         $this->bcServiceFaitResponsableSignataire = new ArrayCollection();
     }
 
-    public function getId()
+    public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getStatut()
+    public function getStatut(): ?string
     {
         return $this->statut;
     }
 
-    public function setStatut($statut): void
+    public function setStatut(?string $statut): void
     {
         if (self::VACATAIRE === $statut) {
             $this->setTypeUser(self::VACATAIRE);
@@ -342,94 +323,99 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         $this->statut = $statut;
     }
 
-    public function getPosteInterne()
+    public function getPosteInterne(): ?string
     {
         return $this->posteInterne;
     }
 
-    public function setPosteInterne($posteInterne): void
+    public function setPosteInterne(?string $posteInterne): void
     {
         $this->posteInterne = $posteInterne;
     }
 
-    public function getTelBureau()
+    public function getTelBureau(): ?string
     {
         return $this->telBureau;
     }
 
-    public function setTelBureau($telBureau): void
+    public function setTelBureau(?string $telBureau): void
     {
         $this->telBureau = $telBureau;
     }
 
-    public function getResponsabilites()
+    public function getResponsabilites(): ?string
     {
         return $this->responsabilites;
     }
 
-    public function setResponsabilites($responsabilites): void
+    public function setResponsabilites(?string $responsabilites): void
     {
         $this->responsabilites = $responsabilites;
     }
 
-    public function getDomaines()
+    public function getDomaines(): ?string
     {
         return $this->domaines;
     }
 
-    public function setDomaines($domaines): void
+    public function setDomaines(?string $domaines): void
     {
         $this->domaines = $domaines;
     }
 
-    public function getEntreprise()
+    public function getEntreprise(): ?string
     {
         return $this->entreprise;
     }
 
-    public function setEntreprise($entreprise): void
+    public function setEntreprise(?string $entreprise): void
     {
         $this->entreprise = $entreprise;
     }
 
-    public function getBureau1()
+    public function getBureau1(): ?string
     {
         return $this->bureau1;
     }
 
-    public function setBureau1($bureau1): void
+    public function setBureau1(?string $bureau1): void
     {
         $this->bureau1 = $bureau1;
     }
 
-    public function getBureau2()
+    public function getBureau2(): ?string
     {
         return $this->bureau2;
     }
 
-    public function setBureau2($bureau2): void
+    public function setBureau2(?string $bureau2): void
     {
         $this->bureau2 = $bureau2;
     }
 
-    public function getNumeroHarpege()
+    public function getNumeroHarpege(): ?string
     {
         return $this->numeroHarpege;
     }
 
-    public function setNumeroHarpege($numeroHarpege): void
+    public function setNumeroHarpege(?string $numeroHarpege): void
     {
         $this->numeroHarpege = $numeroHarpege;
     }
 
-    public function getInitiales()
+    public function getInitiales(): ?string
     {
         return $this->initiales;
     }
 
-    public function setInitiales($initiales): void
+    public function setInitiales(?string $initiales): void
     {
         $this->initiales = $initiales;
+    }
+
+    public function getCvFile(): ?File
+    {
+        return $this->cvFile;
     }
 
     /**
@@ -448,11 +434,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
             // otherwise the event listeners won't be called and the file is lost
             $this->setUpdatedValue();
         }
-    }
-
-    public function getCvFile(): ?File
-    {
-        return $this->cvFile;
     }
 
     public function getCvName(): ?string
@@ -1324,12 +1305,12 @@ class Personnel extends Utilisateur implements UtilisateurInterface
 
     public function getConfiguration(): array
     {
-        return null !== $this->configuration ? json_decode($this->configuration, true) : [];
+        return null !== $this->configuration ? json_decode($this->configuration, true, 512, JSON_THROW_ON_ERROR) : [];
     }
 
     public function setConfiguration(array $configuration = []): self
     {
-        $this->configuration = json_encode($configuration);
+        $this->configuration = json_encode($configuration, JSON_THROW_ON_ERROR);
 
         return $this;
     }

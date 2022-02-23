@@ -18,14 +18,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 trait LifeCycleTrait
 {
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private ?CarbonInterface $created;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private ?CarbonInterface $updated = null;
 
     public function getCreated(): ?CarbonInterface
@@ -50,25 +46,17 @@ trait LifeCycleTrait
 
     public function setUpdatedValue(): void
     {
-        if ($this->updated === null) {
-            $this->updated = Carbon::now();
-        } else {
-            $this->updated = $this->updated->addSecond();
-        }
+        $this->updated = Carbon::now();
     }
 
-    /**
-     * @ORM\PrePersist()
-     * @ORM\PreUpdate()
-     */
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
     public function setUpdatedEntity(): void
     {
         $this->updated = Carbon::now();
     }
 
-    /**
-     * @ORM\PrePersist()
-     */
+    #[ORM\PrePersist]
     public function setCreatedValue(): void
     {
         $this->created = Carbon::now();

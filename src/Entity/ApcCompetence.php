@@ -13,65 +13,67 @@ use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\ApcComptenceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=ApcComptenceRepository::class)
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: ApcComptenceRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class ApcCompetence extends BaseEntity
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private ?string $libelle;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $libelle = null;
+
+    #[ORM\Column(type: Types::STRING, length: 50)]
+    private ?string $nomCourt = null;
+
+    #[ORM\Column(type: Types::STRING, length: 20)]
+    private ?string $couleur = null;
+
+    #[ORM\ManyToOne(targetEntity: Diplome::class, inversedBy: 'apcComptences')]
+    private ?Diplome $diplome = null;
 
     /**
-     * @ORM\Column(type="string", length=50)
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcComposanteEssentielle>
      */
-    private ?string $nomCourt;
-
-    /**
-     * @ORM\Column(type="string", length=20)
-     */
-    private ?string $couleur;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Diplome::class, inversedBy="apcComptences")
-     */
-    private ?Diplome $diplome;
-
-    /**
-     * @ORM\OneToMany(targetEntity=ApcComposanteEssentielle::class, mappedBy="competence", cascade={"persist","remove"})
-     */
+    #[ORM\OneToMany(mappedBy: 'competence', targetEntity: ApcComposanteEssentielle::class, cascade: [
+        'persist',
+        'remove',
+    ])]
     private Collection $apcComposanteEssentielles;
 
     /**
-     * @ORM\OneToMany(targetEntity=ApcNiveau::class, mappedBy="competence", cascade={"persist","remove"})
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcNiveau>
      */
+    #[ORM\OneToMany(mappedBy: 'competence', targetEntity: ApcNiveau::class, cascade: ['persist', 'remove'])]
     private Collection $apcNiveaux;
 
     /**
-     * @ORM\OneToMany(targetEntity=ApcRessourceCompetence::class, mappedBy="competence")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcRessourceCompetence>
      */
+    #[ORM\OneToMany(mappedBy: 'competence', targetEntity: ApcRessourceCompetence::class)]
     private Collection $apcRessourceCompetences;
 
     /**
-     * @ORM\OneToMany(targetEntity=ApcSaeCompetence::class, mappedBy="competence")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcSaeCompetence>
      */
+    #[ORM\OneToMany(mappedBy: 'competence', targetEntity: ApcSaeCompetence::class)]
     private Collection $apcSaeCompetences;
 
     /**
-     * @ORM\OneToMany(targetEntity=ApcSituationProfessionnelle::class, mappedBy="competence",
-     *                                                                 cascade={"persist","remove"})
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcSituationProfessionnelle>
      */
+    #[ORM\OneToMany(mappedBy: 'competence', targetEntity: ApcSituationProfessionnelle::class, cascade: [
+        'persist',
+        'remove',
+    ])]
     private Collection $apcSituationProfessionnelles;
 
     /**
-     * @ORM\OneToMany(targetEntity=Ue::class, mappedBy="apcCompetence")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Ue>
      */
+    #[ORM\OneToMany(mappedBy: 'apcCompetence', targetEntity: Ue::class)]
     private Collection $ue;
 
     public function __construct(Diplome $diplome)

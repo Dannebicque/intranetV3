@@ -10,44 +10,37 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\UfrRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\UfrRepository")
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\Entity(repositoryClass: UfrRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Ufr extends BaseEntity
 {
     use LifeCycleTrait;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Departement", mappedBy="ufr")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Departement>
      */
+    #[ORM\OneToMany(mappedBy: 'ufr', targetEntity: Departement::class)]
     private Collection $departements;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     * @Groups({"ufr_administration"})
-     */
+    #[Groups(['ufr_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $libelle;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Site", inversedBy="ufrs")
-     */
+    #[ORM\ManyToMany(targetEntity: Site::class, inversedBy: 'ufrs')]
     private Collection $sites;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Personnel")
-     * @Groups({"ufr_administration"})
-     */
+    #[Groups(['ufr_administration'])]
+    #[ORM\ManyToOne(targetEntity: Personnel::class)]
     private ?Personnel $responsable;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Site", inversedBy="ufrPrincipales")
-     */
+    #[ORM\ManyToOne(targetEntity: Site::class, inversedBy: 'ufrPrincipales')]
     private ?Site $sitePrincipal;
 
     public function __construct()
@@ -61,7 +54,7 @@ class Ufr extends BaseEntity
         return $this->libelle;
     }
 
-    public function setLibelle($libelle): void
+    public function setLibelle(?string $libelle): void
     {
         $this->libelle = $libelle;
     }

@@ -9,28 +9,23 @@
 
 namespace App\Entity;
 
+use App\Repository\EmpruntEtudiantRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Exception;
-use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\EmpruntEtudiantRepository")
- */
+#[ORM\Entity(repositoryClass: EmpruntEtudiantRepository::class)]
 class EmpruntEtudiant extends Emprunt
 {
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="emprunts")
-     * @Groups({"emprunts_administration"})
-     */
+    #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'emprunts')]
     private ?Etudiant $etudiant;
 
     /**
-     * EmpruntEtudiant constructor.
+     *
+     * @throws \Exception
      */
     public function __construct(?Etudiant $etudiant)
     {
-        parent::__construct();
         $this->etudiant = $etudiant;
+        parent::__construct();
     }
 
     public function getEtudiant(): ?Etudiant

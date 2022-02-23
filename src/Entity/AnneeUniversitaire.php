@@ -10,100 +10,104 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\AnneeUniversitaireRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Stringable;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\AnneeUniversitaireRepository")
- * @ORM\HasLifecycleCallbacks()
- */
-class AnneeUniversitaire extends BaseEntity
+#[ORM\Entity(repositoryClass: AnneeUniversitaireRepository::class)]
+#[ORM\HasLifecycleCallbacks]
+class AnneeUniversitaire extends BaseEntity implements Stringable
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\Column(type="string", length=30)
-     * @Groups({"annee_universitaire"})
-     */
-    private ?string $libelle;
+    #[Groups(groups: ['annee_universitaire'])]
+    #[ORM\Column(type: Types::STRING, length: 30)]
+    private ?string $libelle = null;
+
+    #[Groups(groups: ['annee_universitaire'])]
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $annee = null;
+
+    #[Groups(groups: ['annee_universitaire'])]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $commentaire = null;
 
     /**
-     * @ORM\Column(type="integer")
-     * @Groups({"annee_universitaire"})
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Departement>
      */
-    private ?int $annee;
-
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @Groups({"annee_universitaire"})
-     */
-    private ?string $commentaire;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Departement", mappedBy="anneeUniversitairePrepare")
-     */
+    #[ORM\OneToMany(mappedBy: 'anneeUniversitairePrepare', targetEntity: Departement::class)]
     private Collection $departements;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Calendrier", mappedBy="anneeUniversitaire")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Calendrier>
      */
+    #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: Calendrier::class)]
     private Collection $calendriers;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\CreneauCours", mappedBy="anneeUniversitaire")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\CreneauCours>
      */
+    #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: CreneauCours::class)]
     private Collection $creneauCours;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Scolarite", mappedBy="anneeUniversitaire")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Scolarite>
      */
+    #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: Scolarite::class)]
     private Collection $scolarites;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ScolaritePromo", mappedBy="anneeUniversitaire")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ScolaritePromo>
      */
+    #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: ScolaritePromo::class)]
     private Collection $scolaritePromos;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Diplome", mappedBy="anneeUniversitaire")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Diplome>
      */
+    #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: Diplome::class)]
     private Collection $diplomes;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\StagePeriode", mappedBy="anneeUniversitaire")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\StagePeriode>
      */
+    #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: StagePeriode::class)]
     private Collection $stagePeriodes;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Evaluation", mappedBy="anneeUniversitaire")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Evaluation>
      */
+    #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: Evaluation::class)]
     private Collection $evaluations;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $active = false;
 
     /**
-     * @ORM\OneToMany(targetEntity=ProjetPeriode::class, mappedBy="anneeUniversitaire")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ProjetPeriode>
      */
+    #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: ProjetPeriode::class)]
     private Collection $projetPeriodes;
 
     /**
-     * @ORM\OneToMany(targetEntity=Personnel::class, mappedBy="anneeUniversitaire")
+     * @var \Doctrine\Common\Collections\Collection<\App\Entity\Personnel>
      */
-    private $personnels;
+    #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: Personnel::class)]
+    private Collection $personnels;
 
     /**
-     * @ORM\OneToMany(targetEntity=AlternancePlanning::class, mappedBy="anneeUniversitaire")
+     * @var \Doctrine\Common\Collections\Collection<\App\Entity\AlternancePlanning>
      */
-    private $planningAlternances;
+    #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: AlternancePlanning::class)]
+    private Collection $planningAlternances;
 
     public function __construct()
     {
-        $this->setAnnee(date('Y'));
+        $this->setAnnee((int) date('Y'));
         $this->departements = new ArrayCollection();
         $this->calendriers = new ArrayCollection();
         $this->creneauCours = new ArrayCollection();
@@ -125,18 +129,6 @@ class AnneeUniversitaire extends BaseEntity
     public function setLibelle(string $libelle): self
     {
         $this->libelle = $libelle;
-
-        return $this;
-    }
-
-    public function getAnnee(): ?int
-    {
-        return $this->annee;
-    }
-
-    public function setAnnee(int $annee): self
-    {
-        $this->annee = $annee;
 
         return $this;
     }
@@ -343,7 +335,19 @@ class AnneeUniversitaire extends BaseEntity
     {
         $s = $this->getAnnee() + 1;
 
-        return $this->getAnnee() . ' | ' . $s;
+        return $this->getAnnee().' | '.$s;
+    }
+
+    public function getAnnee(): ?int
+    {
+        return $this->annee;
+    }
+
+    public function setAnnee(int $annee): self
+    {
+        $this->annee = $annee;
+
+        return $this;
     }
 
     /**
@@ -420,9 +424,9 @@ class AnneeUniversitaire extends BaseEntity
         return $this;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
-        return (string)$this->getAnnee();
+        return (string) $this->getAnnee();
     }
 
     /**
@@ -504,11 +508,9 @@ class AnneeUniversitaire extends BaseEntity
 
     public function removeAlternancePlanning(AlternancePlanning $planningAlternance): self
     {
-        if ($this->planningAlternances->removeElement($planningAlternance)) {
-            // set the owning side to null (unless already changed)
-            if ($planningAlternance->getAnneeUniversitaire() === $this) {
-                $planningAlternance->setAnneeUniversitaire(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->planningAlternances->removeElement($planningAlternance) && $planningAlternance->getAnneeUniversitaire() === $this) {
+            $planningAlternance->setAnneeUniversitaire(null);
         }
 
         return $this;

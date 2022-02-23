@@ -9,28 +9,22 @@
 
 namespace App\Entity;
 
+use App\Repository\FavoriRepository;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\FavoriRepository")
- */
+#[ORM\Entity(repositoryClass: FavoriRepository::class)]
 class Favori extends BaseEntity
 {
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="etudiantDemande")
-     */
-    private ?Etudiant $etudiantDemandeur;
+    #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'etudiantDemande')]
+    private ?Etudiant $etudiantDemandeur = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="etudiantDemandeur")
-     */
-    private ?Etudiant $etudiantDemande;
+    #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'etudiantDemandeur')]
+    private ?Etudiant $etudiantDemande = null;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?CarbonInterface $dateAjout;
 
     public function __construct(Etudiant $etudiantDemandeur, Etudiant $etudiantDemande)

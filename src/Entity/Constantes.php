@@ -43,7 +43,7 @@ class Constantes
     public const FLASHBAG_SUCCESS = 'success';
     public const FLASHBAG_INFO = 'info';
     public const FLASHBAG_NOTICE = 'warning';
-    public const FLASHBAG_ERROR = 'danger';
+    public const FLASHBAG_ERROR = 'error';
     public const DUREE_COURS = 1.5;
 
     public const TYPEDOCUMENT_EMARGEMENT = 'emargement';

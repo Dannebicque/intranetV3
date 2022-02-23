@@ -10,27 +10,19 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Repository\DocumentFavoriEtudiantRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\DocumentFavoriEtudiantRepository")
- * @ORM\HasLifecycleCallbacks()
- *
- */
+#[ORM\Entity(repositoryClass: DocumentFavoriEtudiantRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class DocumentFavoriEtudiant extends DocumentFavori
 {
     use LifeCycleTrait;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Etudiant", inversedBy="documentsFavoris")
-     */
+    #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'documentsFavoris')]
     private ?Etudiant $etudiant;
 
-    /**
-     * EmpruntEtudiant constructor.
-     *
-     */
-    public function __construct(Etudiant $etudiant, Document $document)
+    public function __construct(?Etudiant $etudiant, Document $document)
     {
         $this->etudiant = $etudiant;
         $this->setDocument($document);

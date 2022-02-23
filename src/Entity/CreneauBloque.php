@@ -9,51 +9,40 @@
 
 namespace App\Entity;
 
+use App\Repository\CreneauBloqueRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Deprecated;
 
-/**
- * @ORM\Entity(repositoryClass="App\Repository\CreneauBloqueRepository")
- */
+#[ORM\Entity(repositoryClass: CreneauBloqueRepository::class)]
+#[Deprecated(reason: "N'est pas utilisé... a supprimer")]
 class CreneauBloque
 {
     //tous les créneaux bloqués, hors vacances, récupérés depuis Date ?
-
     public const TAB_VACANCES = 'va';
     public const TAB_FERIE = 'fe';
     public const TAB_OBLIGATOIRE = 'ob';
     public const TAB_AUTRE = 'au';
 
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
-    private $id;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
+    private ?int $id = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\CreneauCours", inversedBy="creneauBloques")
-     */
-    private $creneau;
+    #[ORM\ManyToOne(targetEntity: CreneauCours::class, inversedBy: 'creneauBloques')]
+    private ?CreneauCours $creneau = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Calendrier", inversedBy="creneauBloques")
-     */
-    private $semaine;
+    #[ORM\ManyToOne(targetEntity: Calendrier::class, inversedBy: 'creneauBloques')]
+    private ?Calendrier $semaine = null;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $texte;
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    private ?string $texte = null;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $obligatoire = true;
+    #[ORM\Column(type: Types::BOOLEAN)]
+    private bool $obligatoire = true;
 
-    /**
-     * @ORM\Column(type="string", length=2)
-     */
-    private $type;
+    #[ORM\Column(type: Types::STRING, length: 2)]
+    private ?string $type = null;
 
     public function getId(): ?int
     {

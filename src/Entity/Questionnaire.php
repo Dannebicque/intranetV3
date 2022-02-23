@@ -12,51 +12,36 @@ namespace App\Entity;
 use App\Entity\Traits\UuidTrait;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 
-/**
- * @ORM\MappedSuperclass
- * @ORM\HasLifecycleCallbacks()
- */
+#[ORM\MappedSuperclass]
+#[ORM\HasLifecycleCallbacks]
 abstract class Questionnaire extends BaseEntity
 {
     use UuidTrait;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private ?string $libelle;
+    #[ORM\Column(type: Types::STRING, length: 255)]
+    private ?string $libelle = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private ?CarbonInterface $dateOuverture;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateOuverture = null;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
-    private ?CarbonInterface $dateFermeture;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateFermeture = null;
 
-    /**
-     * @ORM\Column(type="string", length=150)
-     */
-    private ?string $titre;
+    #[ORM\Column(type: Types::STRING, length: 150)]
+    private ?string $titre = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private ?string $texteExplication;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $texteExplication = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private ?string $texteDebut;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $texteDebut = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     */
-    private ?string $textFin;
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $textFin = null;
 
     public function __construct()
     {
@@ -76,30 +61,6 @@ abstract class Questionnaire extends BaseEntity
     public function setLibelle(string $libelle): self
     {
         $this->libelle = $libelle;
-
-        return $this;
-    }
-
-    public function getDateOuverture(): ?CarbonInterface
-    {
-        return $this->dateOuverture;
-    }
-
-    public function setDateOuverture(?CarbonInterface $dateOuverture): self
-    {
-        $this->dateOuverture = $dateOuverture;
-
-        return $this;
-    }
-
-    public function getDateFermeture(): ?CarbonInterface
-    {
-        return $this->dateFermeture;
-    }
-
-    public function setDateFermeture(?CarbonInterface $dateFermeture): self
-    {
-        $this->dateFermeture = $dateFermeture;
 
         return $this;
     }
@@ -157,5 +118,29 @@ abstract class Questionnaire extends BaseEntity
         $today = Carbon::now();
 
         return $today >= $this->getDateOuverture() && $today <= $this->getDateFermeture();
+    }
+
+    public function getDateOuverture(): ?CarbonInterface
+    {
+        return $this->dateOuverture;
+    }
+
+    public function setDateOuverture(?CarbonInterface $dateOuverture): self
+    {
+        $this->dateOuverture = $dateOuverture;
+
+        return $this;
+    }
+
+    public function getDateFermeture(): ?CarbonInterface
+    {
+        return $this->dateFermeture;
+    }
+
+    public function setDateFermeture(?CarbonInterface $dateFermeture): self
+    {
+        $this->dateFermeture = $dateFermeture;
+
+        return $this;
     }
 }

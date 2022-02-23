@@ -9,21 +9,18 @@
 
 namespace App\Entity;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
-/**
- * @ORM\MappedSuperclass
- */
+#[ORM\MappedSuperclass]
 abstract class BaseEntity
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     * @Groups({"acutalite_administration"})
-     */
-    private ?int $id;
+    #[Groups(groups: ['acutalite_administration'])]
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
+    protected ?int $id = null;
 
     public function getId(): ?int
     {
@@ -32,7 +29,7 @@ abstract class BaseEntity
 
     public function updateData(string $name, mixed $value): void
     {
-        $field = 'set' . ucfirst($name);
+        $field = 'set'.ucfirst($name);
         if (method_exists($this, $field)) {
             $this->$field($value);
         }

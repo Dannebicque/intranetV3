@@ -12,28 +12,31 @@ namespace App\Entity;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\TypeDestinataireTrait;
 use App\Entity\Traits\UuidTrait;
+use App\Repository\DocumentRepository;
+use Carbon\Carbon;
 use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\HttpFoundation\File\File;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\DocumentRepository")
  * @Vich\Uploadable
- * @ORM\HasLifecycleCallbacks()
  */
+#[ORM\Entity(repositoryClass: DocumentRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Document extends BaseEntity
 {
     use UuidTrait;
     use LifeCycleTrait;
     use TypeDestinataireTrait;
-
 
     public const TYPE_DOCUMENT = [
         'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'Prés. PPT',
@@ -46,63 +49,43 @@ class Document extends BaseEntity
         'application/vnd.oasis.opendocument.text' => 'Doc. ODT',
     ];
 
-    /**
-     * @ORM\Column(type="float")
-     */
-    private ?float $taille;
+    #[ORM\Column(type: Types::FLOAT)]
+    private ?float $taille = null;
 
-    /**
-     * @ORM\Column(type="string", length=100)
-     */
-    private ?string $typeFichier;
+    #[ORM\Column(type: Types::STRING, length: 100)]
+    private ?string $typeFichier = null;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\TypeDocument", inversedBy="documents")
-     * @Groups({"document_administration"})
-     */
-    private ?TypeDocument $typeDocument;
+    #[Groups(groups: ['document_administration'])]
+    #[ORM\ManyToOne(targetEntity: TypeDocument::class, inversedBy: 'documents')]
+    private ?TypeDocument $typeDocument = null;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     * @Groups({"document_administration"})
-     */
-    private ?string $description;
+    #[Groups(groups: ['document_administration'])]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description = null;
 
-    /**
-     * @ORM\Column(type="string", length=100)
-     * @Groups({"document_administration"})
-     * @Assert\Length(
-     *      min = 5,
-     *      max = 100,
-     *      minMessage = "Le titre du document doit contenir au minimum {{ limit }} caractères",
-     *      maxMessage = "Le titre du document doit contenir au maximum {{ limit }} caractères",
-     *      allowEmptyString = false
-     * )
-     */
-    private ?string $libelle;
+    #[Groups(groups: ['document_administration'])]
+    #[Assert\Length(min: 5, max: 100, minMessage: 'Le titre du document doit contenir au minimum {{ limit }} caractères', maxMessage: 'Le titre du document doit contenir au maximum {{ limit }} caractères')]
+    #[ORM\Column(type: Types::STRING, length: 100)]
+    private ?string $libelle = null;
 
-    /**
-     * @ORM\Column(type="string", length=50)
-     */
+    #[ORM\Column(type: Types::STRING, length: 50)]
     private ?string $documentName = '';
 
     /**
      * @Vich\UploadableField(mapping="documentFile", fileNameProperty="documentName", size="taille",
      *                                               mimeType="typeFichier")
      */
-    private $documentFile;
+    private ?File $documentFile;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Semestre", inversedBy="documents")
-     * @Groups({"document_administration"})
-     */
+    #[Groups(groups: ['document_administration'])]
+    #[ORM\ManyToMany(targetEntity: Semestre::class, inversedBy: 'documents')]
     private Collection $semestres;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\DocumentFavori", mappedBy="document")
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\DocumentFavori>
      */
+    #[ORM\OneToMany(mappedBy: 'document', targetEntity: DocumentFavori::class)]
     private Collection $documentsFavoris;
-
 
     /**
      * Document constructor.
@@ -111,6 +94,7 @@ class Document extends BaseEntity
      */
     public function __construct()
     {
+        $this->documentsFavoris = new ArrayCollection();
         $this->setUuid(Uuid::uuid4());
         $this->semestres = new ArrayCollection();
     }
@@ -118,7 +102,7 @@ class Document extends BaseEntity
     public function __clone()
     {
         $this->setUuid(Uuid::uuid4());
-        $this->setCreated(new DateTime('now'));
+        $this->setCreated(Carbon::now());
     }
 
     public function getTaille(): ?float
@@ -150,7 +134,7 @@ class Document extends BaseEntity
         return $this->typeDocument;
     }
 
-    public function setTypeDocument(TypeDocument $typeDocument): self
+    public function setTypeDocument(?TypeDocument $typeDocument): self
     {
         $this->typeDocument = $typeDocument;
 
@@ -181,20 +165,19 @@ class Document extends BaseEntity
         return $this;
     }
 
+    public function getDocumentFile(): ?File
+    {
+        return $this->documentFile;
+    }
+
     public function setDocumentFile(?File $documentFile = null): void
     {
         $this->documentFile = $documentFile;
-
         if (null !== $documentFile) {
             // It is required that at least one field changes if you are using doctrine
             // otherwise the event listeners won't be called and the file is lost
             $this->setUpdatedValue();
         }
-    }
-
-    public function getDocumentFile(): ?File
-    {
-        return $this->documentFile;
     }
 
     public function getDocumentName(): ?string
