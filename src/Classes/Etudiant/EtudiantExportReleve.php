@@ -93,6 +93,11 @@ class EtudiantExportReleve
         return $this->etudiantNotes->getNotesParSemestresEtAnneeUniversitaire($matieres, $anneeUniversitaire);
     }
 
+    /**
+     * @throws \Twig\Error\SyntaxError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\LoaderError
+     */
     public function exportReleveDefinitif(Scolarite $scolarite): PdfResponse
     {
         return $this->myPdf::generePdf('pdf/releveDefinitif.html.twig', [
@@ -101,6 +106,11 @@ class EtudiantExportReleve
             $scolarite->getEtudiant()?->getDepartement()?->getLibelle());
     }
 
+    /**
+     * @throws \Twig\Error\SyntaxError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\LoaderError
+     */
     public function exportAllReleveProvisoire(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): string
     {
         $this->myEvaluations->getEvaluationsSemestre($semestre, $anneeUniversitaire);

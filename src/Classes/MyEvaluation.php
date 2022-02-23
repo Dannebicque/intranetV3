@@ -25,6 +25,8 @@ use App\Entity\Semestre;
 use App\Exception\MatiereNotFoundException;
 use App\Repository\EtudiantRepository;
 use App\Utils\Tools;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use function array_key_exists;
 use function chr;
 use function count;
@@ -127,7 +129,7 @@ class MyEvaluation
         return $this;
     }
 
-    private function ecartType($donnees): float | int
+    private function ecartType(array $donnees): float | int
     {
         //0 - Nombre d’éléments dans le tableau
         $population = count($donnees);
@@ -230,7 +232,7 @@ class MyEvaluation
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function exportReleve($_format, $groupes, Departement $departement)
+    public function exportReleve(string $_format, array $groupes, Departement $departement): StreamedResponse|PdfResponse|null
     {
         $notes = $this->getNotesTableau();
         $matiere = $this->typeMatiereManager->getMatiereFromSelect($this->evaluation->getTypeIdMatiere());
@@ -296,7 +298,7 @@ class MyEvaluation
     /**
      * @throws Exception
      */
-    private function insertNotes(Evaluation $evaluation, $data, Semestre $semestre): bool
+    private function insertNotes(Evaluation $evaluation, array $data, Semestre $semestre): bool
     {
         $evaluation->setVisible(false); //on masque l'évaluation le temps de l'import et de la vérification
         $notes = [];

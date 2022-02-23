@@ -120,9 +120,14 @@ class MyExportPresence
         );
     }
 
+    /**
+     * @throws \Twig\Error\SyntaxError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\LoaderError
+     */
     public function genereAttestationPdf(
         CovidAttestationPersonnel $covidAttestationPersonnel,
-        $sortie
+        string $sortie
     ): string | PdfResponse {
         if ('force' === $sortie) {
             return $this->myPdf::generePdf(
@@ -225,7 +230,7 @@ class MyExportPresence
         set_time_limit(30);
     }
 
-    public function genereFichierEtudiant(array $presences)
+    public function genereFichierEtudiant(array $presences): StreamedResponse
     {
         $this->myExcelWriter->createSheet('stage');
         $tEnTete = [

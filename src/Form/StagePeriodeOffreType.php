@@ -22,9 +22,8 @@ use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class StagePeriodeOffreType extends AbstractType
 {
-    /** @var Departement */
-    private $departement;
-    private $annee;
+    private Departement $departement;
+    private int $annee;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

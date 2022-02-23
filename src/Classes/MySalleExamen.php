@@ -20,6 +20,7 @@ use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
 use App\Entity\SalleExamen;
+use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
@@ -29,48 +30,32 @@ use App\Repository\TypeGroupeRepository;
 use function chr;
 use function count;
 use Doctrine\Common\Collections\Collection;
-use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
+use function in_array;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
-use function in_array;
 
 class MySalleExamen
 {
-    protected TypeMatiereManager $typeMatiereManager;
-    protected TypeGroupeRepository $typeGroupeRepository;
-    protected PersonnelRepository $personnelRepository;
-    protected SalleExamenRepository $salleExamenRepository;
-    protected GroupeRepository $groupeRepository;
 
-    protected EtudiantRepository $etudiantRepository;
 
     protected ?SalleExamen $salle;
     protected ?TypeGroupe $typeGroupe;
     protected ?Matiere $matiere;
-
-    private MyPDF $myPdf;
-    private $requestgroupes;
+    private array $requestgroupes;
 
     /**
      * MySalleExamen constructor.
      */
     public function __construct(
-        TypeMatiereManager $typeMatiereManager,
-        TypeGroupeRepository $typeGroupeRepository,
-        PersonnelRepository $personnelRepository,
-        SalleExamenRepository $salleExamenRepository,
-        GroupeRepository $groupeRepository,
-        EtudiantRepository $etudiantRepository,
-        MyPDF $myPdf
+        private TypeMatiereManager $typeMatiereManager,
+        private TypeGroupeRepository $typeGroupeRepository,
+        private PersonnelRepository $personnelRepository,
+        private SalleExamenRepository $salleExamenRepository,
+        private GroupeRepository $groupeRepository,
+        private EtudiantRepository $etudiantRepository,
+        private MyPDF $myPdf
     ) {
-        $this->typeMatiereManager = $typeMatiereManager;
-        $this->typeGroupeRepository = $typeGroupeRepository;
-        $this->personnelRepository = $personnelRepository;
-        $this->salleExamenRepository = $salleExamenRepository;
-        $this->groupeRepository = $groupeRepository;
-        $this->etudiantRepository = $etudiantRepository;
-        $this->myPdf = $myPdf;
     }
 
     /**
@@ -79,10 +64,10 @@ class MySalleExamen
      * @throws SyntaxError
      */
     public function genereDocument(
-        $requestdateeval,
-        $requestmatiere,
-        $requestenseignant1,
-        $requestenseignant2,
+        string $requestdateeval,
+        string $requestmatiere,
+        int | string $requestenseignant1,
+        int | string$requestenseignant2,
         Departement $departement
     ) {
         $this->matiere = $this->typeMatiereManager->getMatiereFromSelect($requestmatiere);
@@ -94,7 +79,7 @@ class MySalleExamen
             /** @var Groupe $gr */
             foreach ($groupes as $gr) {
                 foreach ($this->requestgroupes as $dgr) {
-                    if ($gr->getId() === (int)$dgr) {
+                    if ($gr->getId() === (int) $dgr) {
                         $grdetail[] = $gr;
                         foreach ($gr->getEtudiants() as $etu) {
                             $etudiants[] = $etu;
@@ -121,14 +106,16 @@ class MySalleExamen
                 'ens1' => '' !== $requestenseignant1 ? $this->personnelRepository->find($requestenseignant1) : null,
                 'ens2' => '' !== $requestenseignant2 ? $this->personnelRepository->find($requestenseignant2) : null,
                 'groupes' => $grdetail,
-                'depreuve' => (string)$requestdateeval,
+                'depreuve' => $requestdateeval,
             ];
 
             return $this->myPdf::generePdf('pdf/placement.html.twig', $data, 'placement', $departement->getLibelle());
         }
+
+        return null; //todo: afficher un lessage de salle trop petite ?
     }
 
-    private function groupeDefaut($semestre): bool|Collection|array
+    private function groupeDefaut(Semestre $semestre): bool | Collection | array
     {
         $typegroupe = $this->typeGroupeRepository->findBySemestre($semestre);
 
@@ -153,9 +140,9 @@ class MySalleExamen
         for ($i = 0; $i < $nbCol; ++$i) {
             for ($j = 0; $j < $nbRang; ++$j) {
                 if ($j + 1 < 10) {
-                    $place = chr(65 + $i) . '0' . ($j + 1);
+                    $place = chr(65 + $i).'0'.($j + 1);
                 } else {
-                    $place = chr(65 + $i) . ($j + 1);
+                    $place = chr(65 + $i).($j + 1);
                 }
 
                 if (!in_array($place, $tabinterdit, true)) {
@@ -190,7 +177,7 @@ class MySalleExamen
         return $pl;
     }
 
-    public function calculCapacite($salle, $typeGroupe, $requestgroupes)
+    public function calculCapacite(int | string $salle, int | string $typeGroupe, array $requestgroupes): bool
     {
         $this->requestgroupes = $requestgroupes;
         $this->salle = $this->salleExamenRepository->find($salle);
@@ -200,7 +187,7 @@ class MySalleExamen
         /** @var Groupe $gr */
         foreach ($groupes as $gr) {
             foreach ($this->requestgroupes as $dgr) {
-                if ($gr->getId() === (int)$dgr) {
+                if ($gr->getId() === (int) $dgr) {
                     foreach ($gr->getEtudiants() as $etu) {
                         ++$nbEtu;
                     }

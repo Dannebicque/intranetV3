@@ -40,14 +40,14 @@ class MatiereSaeAdapter extends AbstractMatiereAdapter implements MatiereAdapter
             $m->apc = true;
             $m->bonification = $matiere->getBonification();
 
-
-            foreach ($matiere->getCompetences() as $competence) {
+            foreach ($matiere->getApcSaeCompetences() as $competence) {
                 $ue = new Ue();
-                $ue->ue_id = $competence->getId();
-                $ue->ue_display = $competence->getNomCourt();
-                //$ue->ue_coefficient = $competence->getE();
-                $ue->ue_numero = (int) $competence->getCouleur()[1];
-                $ue->ue_couleur = $competence->getCouleur();
+                $ue->ue_id = $competence->getCompetence()->getId();
+                $ue->ue_apc_id = $competence->getId();
+                $ue->ue_display = $competence->getCompetence()->getNomCourt();
+                $ue->ue_coefficient = $competence->getCoefficient();
+                $ue->ue_numero = (int) $competence->getCompetence()->getCouleur()[1];
+                $ue->ue_couleur = $competence->getCompetence()->getCouleur();
                 $m->tab_ues[] = $ue;
             }
         }

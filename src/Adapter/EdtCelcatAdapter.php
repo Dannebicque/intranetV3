@@ -32,7 +32,7 @@ class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
         $evt = new EvenementEdt();
         $evt->source = EdtManager::EDT_CELCAT;
         $evt->id = $event->getId();
-        $evt->jour = (string)($event->getJour() + 1);
+        $evt->jour = (string) ($event->getJour() + 1);
         $evt->heureDebut = $event->getDebut();
         $evt->heureFin = $event->getFin();
         $evt->matiere = $event->getLibModule();
@@ -44,7 +44,6 @@ class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
 
         $evt->gridStart = $event->getDebut()?->format('Hi');
         $evt->gridEnd = $event->getFin()?->format('Hi');
-
 
         return $evt;
     }

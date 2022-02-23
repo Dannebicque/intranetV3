@@ -44,12 +44,12 @@ class TypeGroupeRepository extends ServiceEntityRepository
             ->orderBy('t.libelle');
     }
 
-    public function findBySemestre(Semestre $semestre)
+    public function findBySemestre(Semestre $semestre): array
     {
         return $this->findBySemestreBuilder($semestre)->getQuery()->getResult();
     }
 
-    public function findByDepartement(Departement $departement)
+    public function findByDepartement(Departement $departement): array
     {
         return $this->createQueryBuilder('t')
             ->innerJoin(Semestre::class, 's', 'WITH', 't.semestre = s.id')
@@ -61,7 +61,7 @@ class TypeGroupeRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByDepartementSemestresActifs(Departement $departement)
+    public function findByDepartementSemestresActifs(Departement $departement): array
     {
         return $this->createQueryBuilder('t')
             ->innerJoin(Semestre::class, 's', 'WITH', 't.semestre = s.id')

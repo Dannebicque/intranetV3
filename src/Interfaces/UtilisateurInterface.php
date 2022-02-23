@@ -11,11 +11,11 @@ namespace App\Interfaces;
 
 interface UtilisateurInterface
 {
-    public function getId();
+    public function getId(): ?int;
 
-    public function getMails();
+    public function getMails(): array;
 
-    public function getTypeUser();
+    public function getTypeUser(): ?string;
 
     public function setPassword(string $password): void;
 }

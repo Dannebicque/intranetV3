@@ -68,7 +68,7 @@ class EtudiantSousCommissionApc
         }
     }
 
-    public function nbAbsences()
+    public function nbAbsences(): int
     {
         $nbAbsences = 0;
         foreach ($this->moyenneMatieres as $moyenneMatiere) {
@@ -78,7 +78,7 @@ class EtudiantSousCommissionApc
         return $nbAbsences;
     }
 
-    public function getNbSemestres()
+    public function getNbSemestres(): int
     {
         return count($this->scolarite);
     }
@@ -98,8 +98,9 @@ class EtudiantSousCommissionApc
         }
     }
 
-    public function calculMoyenneUes(array $matieres, $ressources, $saes): void
+    public function calculMoyenneUes(array $matieres, array $ressources, array $saes): void
     {
+        $tabs = [];
         foreach ($matieres as $matiere) {
             if (true === $matiere->bonification) {
                 $this->bonification += $this->moyenneMatieres[$matiere->getTypeIdMatiere()]->getBonification();
@@ -139,7 +140,6 @@ class EtudiantSousCommissionApc
                         } else {
                             $ue->matieres[$matiere->codeElement]['coefficient'] = 0;
                         }
-
 
                         $ue->ueAAnnuler = false;
                         $ue->matieres[$matiere->codeElement]['moyenne'] = $tabs['matieres'][$matiere->codeElement]['moyenne'] * $ue->matieres[$matiere->codeElement]['coefficient'];

@@ -17,6 +17,7 @@ use App\DTO\EvenementEdt;
 use App\Entity\Constantes;
 use App\Entity\EdtPlanning;
 use App\Entity\Personnel;
+use App\Interfaces\UtilisateurInterface;
 use App\Repository\EdtPlanningRepository;
 
 class ServiceRealiseIntranet implements ServiceRealiseInterface
@@ -40,7 +41,7 @@ class ServiceRealiseIntranet implements ServiceRealiseInterface
         return $tabEvent;
     }
 
-    public function getServiceRealiseParPersonnelMatiere(Personnel $personnel, int $idMatiere, string $type): array
+    public function getServiceRealiseParPersonnelMatiere(UtilisateurInterface $personnel, int $idMatiere, string $type): array
     {
         $events = $this->edtPlanningRepository->findBy([
             'intervenant' => $personnel->getId(),
@@ -56,7 +57,7 @@ class ServiceRealiseIntranet implements ServiceRealiseInterface
         return $tabEvent;
     }
 
-    public function getServiceRealiserParEnseignant(Personnel $personnel): array
+    public function getServiceRealiserParEnseignant(UtilisateurInterface $personnel): array
     {
         $events = $this->edtPlanningRepository->findBy(['intervenant' => $personnel->getId()],
             ['semaine' => 'ASC', 'jour' => 'ASC', 'debut' => 'ASC']);

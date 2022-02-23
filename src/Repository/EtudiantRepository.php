@@ -14,7 +14,7 @@ use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
-use App\Entity\StagePeriode;
+use Carbon\CarbonInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
@@ -37,7 +37,7 @@ class EtudiantRepository extends ServiceEntityRepository
         parent::__construct($registry, Etudiant::class);
     }
 
-    public function getData($getId): array
+    public function getData(int | string $getId): array
     {
         $etudiants = $this->findBySemestre($getId);
         $tab = [];
@@ -57,8 +57,8 @@ class EtudiantRepository extends ServiceEntityRepository
     }
 
     public function getByDepartement(
-        $departement,
-        $data,
+        Departement $departement,
+        array $data,
         int $page = 0,
         ?int $max = null,
         bool $getResult = true
@@ -95,7 +95,7 @@ class EtudiantRepository extends ServiceEntityRepository
             $qb
                 ->andWhere('u.nom like :query')
                 ->orWhere('u.prenom like :query')
-                ->setParameter('query', '%' . $query . '%');
+                ->setParameter('query', '%'.$query.'%');
         }
 
         if ($max) {
@@ -109,7 +109,7 @@ class EtudiantRepository extends ServiceEntityRepository
         return $getResult ? $preparedQuery->getResult() : $preparedQuery;
     }
 
-    public function findBySemestreBuilder($semestre): QueryBuilder
+    public function findBySemestreBuilder(Semestre $semestre): QueryBuilder
     {
         return $this->createQueryBuilder('e')
             ->where('e.semestre = :semestre')
@@ -119,7 +119,7 @@ class EtudiantRepository extends ServiceEntityRepository
             ->addOrderBy('e.prenom', 'ASC');
     }
 
-    public function findBySemestre($semestre): array
+    public function findBySemestre(Semestre $semestre): array
     {
         return $this->findBySemestreBuilder($semestre)
             ->getQuery()
@@ -129,7 +129,7 @@ class EtudiantRepository extends ServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function findOneBySlug($slug)
+    public function findOneBySlug(string $slug): ?Etudiant
     {
         return $this->createQueryBuilder('e')
             ->where('e.slug = :slug')
@@ -138,7 +138,7 @@ class EtudiantRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function search($needle, Departement $departement): array
+    public function search(string $needle, Departement $departement): array
     {
         $query = $this->searchObject($needle, $departement);
 
@@ -160,7 +160,7 @@ class EtudiantRepository extends ServiceEntityRepository
             $tt['avatarInitiales'] = $etudiant->getAvatarInitiales();
             $gr = '';
             foreach ($etudiant->getGroupes() as $groupe) {
-                $gr .= $groupe->getLibelle() . ', ';
+                $gr .= $groupe->getLibelle().', ';
             }
             $tt['groupes'] = mb_substr($gr, 0, -2);
             $t[] = $tt;
@@ -169,12 +169,12 @@ class EtudiantRepository extends ServiceEntityRepository
         return $t;
     }
 
-    public function findByAnnee(Annee $annee)
+    public function findByAnnee(Annee $annee): array
     {
         $query = $this->createQueryBuilder('e');
         $i = 1;
         foreach ($annee->getSemestres() as $semestre) {
-            $query->orWhere('e.semestre = ?' . $i)
+            $query->orWhere('e.semestre = ?'.$i)
                 ->setParameter($i, $semestre->getId());
             ++$i;
         }
@@ -185,7 +185,7 @@ class EtudiantRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function searchObject($needle, Departement $departement)
+    public function searchObject(string $needle, Departement $departement): array
     {
         return $this->createQueryBuilder('p')
             ->where('p.nom LIKE :needle')
@@ -195,7 +195,7 @@ class EtudiantRepository extends ServiceEntityRepository
             ->orWhere('p.numEtudiant LIKE :needle')
             ->orWhere('p.numIne LIKE :needle')
             ->andWhere('p.departement = :departement')
-            ->setParameter('needle', '%' . $needle . '%')
+            ->setParameter('needle', '%'.$needle.'%')
             ->setParameter('departement', $departement->getId())
             ->orderBy('p.nom', 'ASC')
             ->orderBy('p.prenom', 'ASC')
@@ -203,7 +203,7 @@ class EtudiantRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function searchScolarite($needle)
+    public function searchScolarite(string $needle): array
     {
         return $this->createQueryBuilder('p')
             ->where('p.nom LIKE :needle')
@@ -212,7 +212,7 @@ class EtudiantRepository extends ServiceEntityRepository
             ->orWhere('p.mailUniv LIKE :needle')
             ->orWhere('p.numEtudiant LIKE :needle')
             ->orWhere('p.numIne LIKE :needle')
-            ->setParameter('needle', '%' . $needle . '%')
+            ->setParameter('needle', '%'.$needle.'%')
             ->orderBy('p.nom', 'ASC')
             ->orderBy('p.prenom', 'ASC')
             ->getQuery()
@@ -222,7 +222,7 @@ class EtudiantRepository extends ServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function findByCode($code)
+    public function findByCode(string $code): ?Etudiant
     {
         return $this->createQueryBuilder('p')
             ->where('MD5(p.slug) = :code')
@@ -260,7 +260,7 @@ class EtudiantRepository extends ServiceEntityRepository
         return $t;
     }
 
-    public function findEtudiantEnFormation()
+    public function findEtudiantEnFormation(): array
     {
         return $this->createQueryBuilder('e')
             ->where('e.anneeSortie = 0')
@@ -299,7 +299,7 @@ class EtudiantRepository extends ServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function identificationRdd($login, $date)
+    public function identificationRdd(string $login, CarbonInterface $date): array
     {
         return $this->createQueryBuilder('p')
             ->select('p.numEtudiant')

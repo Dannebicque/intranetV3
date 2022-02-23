@@ -20,7 +20,7 @@ class ApcSaeApprentissageCritiqueRepository extends ServiceEntityRepository
         parent::__construct($registry, ApcSaeApprentissageCritique::class);
     }
 
-    public function findArrayIdAc($sae): array
+    public function findArrayIdAc(int $sae): array
     {
         $query = $this->createQueryBuilder('a')
             ->where('a.sae = :sae')

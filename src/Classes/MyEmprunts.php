@@ -21,6 +21,7 @@ use App\Event\EmpruntEvent;
 use App\Repository\EmpruntRepository;
 use App\Repository\MaterielRepository;
 use App\Utils\Tools;
+use function array_key_exists;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,7 +29,6 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
-use function array_key_exists;
 
 class MyEmprunts
 {
@@ -65,9 +65,9 @@ class MyEmprunts
         $this->statistiques = [
             Emprunt::DEMANDE => 0,
             Emprunt::ACCEPTE => 0,
-            Emprunt::SORTIE  => 0,
-            Emprunt::REFUS   => 0,
-            Emprunt::REVENU  => 0,
+            Emprunt::SORTIE => 0,
+            Emprunt::REFUS => 0,
+            Emprunt::REVENU => 0,
         ];
     }
 
@@ -163,7 +163,7 @@ class MyEmprunts
             if (6 === date('N', $d)) {
                 $d2 = mktime(0, 0, 0, date('m'), date('d') + $j + 1, date('Y'));
                 $this->jours[$i]['jour'] = 'WE';
-                $this->jours[$i]['texte'] = date('d/m/Y', $d) . '-' . date('d/m/Y', $d2);
+                $this->jours[$i]['texte'] = date('d/m/Y', $d).'-'.date('d/m/Y', $d2);
                 $this->jours[$i]['date'] = date('Y-m-d', $d);
                 $this->jours[$i]['objDate'] = $d;
                 $this->jours[$i]['i'] = $i;
@@ -171,7 +171,7 @@ class MyEmprunts
             } elseif (7 === date('N', $d)) {
                 $d2 = mktime(0, 0, 0, date('m'), date('d') + $j - 1, date('Y'));
                 $this->jours[$i]['jour'] = 'WE';
-                $this->jours[$i]['texte'] = date('d/m/Y', $d2) . '-' . date('d/m/Y', $d);
+                $this->jours[$i]['texte'] = date('d/m/Y', $d2).'-'.date('d/m/Y', $d);
                 $this->jours[$i]['date'] = date('Y-m-d', $d);
                 $this->jours[$i]['objDate'] = $d;
                 $this->jours[$i]['i'] = $i;
@@ -200,14 +200,17 @@ class MyEmprunts
         $this->myPDF::generePdf('pdf/ficheEmprunt.html.twig', [
             'emprunt' => $emprunt,
         ],
-            'pret-' . $nom,
+            'pret-'.$nom,
             null !== $emprunt->getDepartement() ? $emprunt->getDepartement()->getLibelle() : 'departement');
     }
 
+    /**
+     * @throws \Exception
+     */
     public function empruntDemande(
         Request $request,
         Etudiant $etudiant
-    ) {
+    ): EmpruntEtudiant {
         $pret = new EmpruntEtudiant($etudiant);
 
         $pret->setMotif($request->request->get('listemotif'));

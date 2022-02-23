@@ -47,14 +47,14 @@ class GroupeRepository extends ServiceEntityRepository
             ->setParameter('departement', $departement->getId());
     }
 
-    public function findByDepartement(Departement $departement)
+    public function findByDepartement(Departement $departement): array
     {
         return $this->findByDepartementBuilder($departement)
             ->getQuery()
             ->getResult();
     }
 
-    public function findBySemestre(Semestre $semestre)
+    public function findBySemestre(Semestre $semestre): array
     {
         return $this->findBySemestreBuilder($semestre)
             ->getQuery()
@@ -74,7 +74,7 @@ class GroupeRepository extends ServiceEntityRepository
     public function findAllGroupes(Semestre $semestre): array
     {
         $groupes = [];
-        $gtp = $this->getGroupesTP($semestre->getId());
+        $gtp = $this->getGroupesTP($semestre);
 
         $i = 1;
         /** @var Groupe $g */
@@ -90,7 +90,7 @@ class GroupeRepository extends ServiceEntityRepository
         return $groupes;
     }
 
-    public function getGroupesTP($semestre): array
+    public function getGroupesTP(Semestre $semestre): array
     {
         return $this->createQueryBuilder('g')
             ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')
@@ -102,7 +102,7 @@ class GroupeRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getGroupesTD($semestre): array
+    public function getGroupesTD(Semestre $semestre): array
     {
         return $this->createQueryBuilder('g')
             ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')
@@ -130,8 +130,8 @@ class GroupeRepository extends ServiceEntityRepository
     public function findGroupeSemestreEdt(Semestre $semestre): array
     {
         $groupes = [];
-        $gtp = $this->getGroupesTP($semestre->getId());
-        $gtd = $this->getGroupesTD($semestre->getId());
+        $gtp = $this->getGroupesTP($semestre);
+        $gtd = $this->getGroupesTD($semestre);
 
         $i = 1;
         $groupes[0]['id'] = 'CM-1';
@@ -155,7 +155,7 @@ class GroupeRepository extends ServiceEntityRepository
         return $groupes;
     }
 
-    public function findByTypeGroupe(?TypeGroupe $typegroupe)
+    public function findByTypeGroupe(?TypeGroupe $typegroupe): array
     {
         return $this->createQueryBuilder('g')
             ->where('g.typeGroupe = :typeGroupe')
@@ -177,7 +177,7 @@ class GroupeRepository extends ServiceEntityRepository
             ->setParameter('departement', $departement->getId());
     }
 
-    public function findByDepartementSemestreActif(Departement $departement)
+    public function findByDepartementSemestreActif(Departement $departement): array
     {
         return $this->findByDepartementSemestreActifBuilder($departement)
             ->getQuery()

@@ -31,7 +31,7 @@ class QuestionnaireQualiteRepository extends ServiceEntityRepository
         parent::__construct($registry, QuestionnaireQualite::class);
     }
 
-    public function findByDiplome(Diplome $diplome)
+    public function findByDiplome(Diplome $diplome): array
     {
         return $this->createQueryBuilder('q')
             ->innerJoin(Semestre::class, 's', 'with', 's.id=q.semestre')
@@ -43,7 +43,7 @@ class QuestionnaireQualiteRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findInDate(DateTime $date)
+    public function findInDate(DateTime $date): array
     {
         return $this->createQueryBuilder('q')
             ->innerJoin(Semestre::class, 's', 'with', 's.id=q.semestre')

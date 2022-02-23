@@ -24,7 +24,7 @@ use Symfony\Component\Serializer\Serializer;
 
 class MySerializer
 {
-    public function serialize($data, $groups): string
+    public function serialize(array $data, array | string $groups): string
     {
         //pour prendre en compte les annotations groups et maxdepth
         $classMetaDataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
@@ -33,7 +33,7 @@ class MySerializer
         $normalizer = new ObjectNormalizer($classMetaDataFactory);
 
         $serializer = new Serializer([
-            new DateTimeNormalizer(),
+            new DateTimeNormalizer(['datetime_format' => 'd/m/Y H:i']),
             new DataUriNormalizer(),
             $normalizer,
         ], [$encoder]);

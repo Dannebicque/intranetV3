@@ -42,10 +42,9 @@ class MyMaterielCommunReservation
     }
 
     /**
-     *
      * @throws Exception
      */
-    public function addReservation($materiel, $dateEmprunt, $creneau, Personnel $personnel): bool
+    public function addReservation(int | string $materiel, mixed $dateEmprunt, string $creneau, Personnel $personnel): bool
     {
         $mat = $this->materielCommunRepository->find(trim($materiel));
 
@@ -68,7 +67,7 @@ class MyMaterielCommunReservation
         return false;
     }
 
-    public function supprReservation(int $id): bool
+    public function supprReservation(int | string $id): bool
     {
         $pret = $this->materielCommunPretRepository->find(trim($id));
         if (null !== $pret) {

@@ -33,14 +33,14 @@ class AnneeRepository extends ServiceEntityRepository
         parent::__construct($registry, Annee::class);
     }
 
-    public function findByDiplomeBuilder($diplome): QueryBuilder
+    public function findByDiplomeBuilder(Diplome $diplome): QueryBuilder
     {
         return $this->createQueryBuilder('a')
             ->where('a.diplome = :diplome')
-            ->setParameter('diplome', $diplome);
+            ->setParameter('diplome', $diplome->getId());
     }
 
-    public function findByDepartement(Departement $departement)
+    public function findByDepartement(Departement $departement): array
     {
         return $this->createQueryBuilder('a')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')

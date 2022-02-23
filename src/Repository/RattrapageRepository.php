@@ -37,7 +37,7 @@ class RattrapageRepository extends ServiceEntityRepository
         parent::__construct($registry, Rattrapage::class);
     }
 
-    public function findBySemestre(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
+    public function findBySemestre(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): array
     {
         return $this->createQueryBuilder('r')
             ->innerJoin(Etudiant::class, 'e', 'WITH', 'r.etudiant = e.id')
@@ -51,7 +51,7 @@ class RattrapageRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByEtudiant(Etudiant $etudiant)
+    public function findByEtudiant(Etudiant $etudiant): array
     {
         return $this->createQueryBuilder('r')
             ->where('r.etudiant = :etudiant')
@@ -66,7 +66,7 @@ class RattrapageRepository extends ServiceEntityRepository
      * @throws NonUniqueResultException
      * @throws NoResultException
      */
-    public function findBySemestreCount(Semestre $semestre, ?int $annee = 0)
+    public function findBySemestreCount(Semestre $semestre, ?int $annee = 0): ?int
     {
         if (0 === $annee) {
             $annee = null !== $semestre->getAnneeUniversitaire() ? $semestre->getAnneeUniversitaire()->getAnnee() : (int) date('Y');
@@ -86,7 +86,7 @@ class RattrapageRepository extends ServiceEntityRepository
     public function findValidByDiplome(
         Diplome $diplome,
         ?AnneeUniversitaire $anneeUniversitaire
-    ) {
+    ): array {
         $annee = null === $anneeUniversitaire ? date('Y') : $anneeUniversitaire->getAnnee();
 
         return $this->createQueryBuilder('r')
@@ -107,7 +107,7 @@ class RattrapageRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByAnnee(Annee $annee)
+    public function findByAnnee(Annee $annee): array
     {
         return $this->createQueryBuilder('r')
             ->innerJoin(Etudiant::class, 'e', 'WITH', 'r.etudiant = e.id')
@@ -120,7 +120,7 @@ class RattrapageRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByMatiere(int $matiere, string $type, ?AnneeUniversitaire $annee = null)
+    public function findByMatiere(int $matiere, string $type, ?AnneeUniversitaire $annee = null): array
     {
         $query = $this->createQueryBuilder('e')
             ->where('e.idMatiere = :matiere')

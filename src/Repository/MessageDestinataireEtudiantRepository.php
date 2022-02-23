@@ -33,7 +33,7 @@ class MessageDestinataireEtudiantRepository extends ServiceEntityRepository
         parent::__construct($registry, MessageDestinataireEtudiant::class);
     }
 
-    public function findLast(Etudiant $user, $nbMessage = 0, $filtre = '', $page = 0)
+    public function findLast(Etudiant $user, int $nbMessage = 0, string $filtre = '', int $page = 0): array
     {
         $query = $this->createQueryBuilder('m')
             ->innerJoin(Message::class, 'mes', 'WITH', 'mes.id = m.message')
@@ -89,7 +89,7 @@ class MessageDestinataireEtudiantRepository extends ServiceEntityRepository
      * @throws NonUniqueResultException
      * @throws NoResultException
      */
-    public function getNbUnread(Etudiant $user)
+    public function getNbUnread(Etudiant $user): ?int
     {
         return $this->createQueryBuilder('m')
             ->select('count(m.id)')

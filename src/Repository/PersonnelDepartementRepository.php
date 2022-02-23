@@ -33,7 +33,7 @@ class PersonnelDepartementRepository extends ServiceEntityRepository
         parent::__construct($registry, PersonnelDepartement::class);
     }
 
-    public function findByPersonnel($user)
+    public function findByPersonnel(Personnel $user): array
     {
         return $this->createQueryBuilder('f')
             ->innerJoin(Personnel::class, 'p', 'WITH', 'f.personnel = p.id')
@@ -45,7 +45,7 @@ class PersonnelDepartementRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByPersonnelDepartement(Personnel $personnel, Departement $departement)
+    public function findByPersonnelDepartement(Personnel $personnel, Departement $departement): array
     {
         return $this->createQueryBuilder('f')
             ->where('f.personnel = :personnel')
@@ -56,7 +56,7 @@ class PersonnelDepartementRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findDroitsByPersonnelDepartement(Personnel $personnel, Departement $departement)
+    public function findDroitsByPersonnelDepartement(Personnel $personnel, Departement $departement): array
     {
         return $this->createQueryBuilder('f')
             ->select('f.roles')
@@ -82,7 +82,7 @@ class PersonnelDepartementRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function getPersonnelByDepartements(Departement $departement)
+    public function getPersonnelByDepartements(Departement $departement): array
     {
         return $this->createQueryBuilder('f')
             ->innerJoin(Personnel::class, 'p', 'WITH', 'f.personnel = p.id')
@@ -94,7 +94,7 @@ class PersonnelDepartementRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function search($needle, Departement $departement): array
+    public function search(string $needle, Departement $departement): array
     {
         $query = $this->createQueryBuilder('d')
             ->innerJoin(Personnel::class, 'p', 'WITH', 'd.personnel = p.id')

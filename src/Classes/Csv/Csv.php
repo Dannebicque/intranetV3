@@ -33,7 +33,7 @@ class Csv
 {
     public const DELIMITER = ';';
 
-    private $file;
+    private string $file;
     private string$filename;
 
     public function export(string $filename, array $data, array $groups): void

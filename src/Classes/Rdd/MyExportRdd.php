@@ -16,10 +16,10 @@ namespace App\Classes\Rdd;
 use App\Classes\Excel\MyExcelWriter;
 use App\Entity\Etudiant;
 use App\Entity\RddDiplome;
+use function array_key_exists;
 use Carbon\Carbon;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\StreamedResponse;
-use function array_key_exists;
 
 class MyExportRdd
 {
@@ -123,13 +123,13 @@ class MyExportRdd
         $date = Carbon::now();
 
         return new StreamedResponse(
-            static function() use ($writer) {
+            static function () use ($writer) {
                 $writer->save('php://output');
             },
             200,
             [
-                'Content-Type'        => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition' => 'attachment;filename="rdd' . $date->format('d-m-Y') . '.xlsx"',
+                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Content-Disposition' => 'attachment;filename="rdd'.$date->format('d-m-Y').'.xlsx"',
             ]
         );
     }

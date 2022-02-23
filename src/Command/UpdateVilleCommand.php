@@ -15,9 +15,9 @@ namespace App\Command;
 
 use App\Repository\CodeInseeRepository;
 use App\Repository\EtudiantRepository;
-use Symfony\Component\Console\Attribute\AsCommand;
 use function array_key_exists;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -73,7 +73,7 @@ class UpdateVilleCommand extends Command
         }
         $this->entityManager->flush();
 
-        $io->success(sprintf('%d Villes mises à jour.', ['%d' => $i]));
+        $io->success(sprintf('%d Villes mises à jour.', $i));
 
         return 0;
     }

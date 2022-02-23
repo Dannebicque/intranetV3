@@ -26,12 +26,12 @@ abstract class CsvWrite
     public const FORMAT_STRING = 'string';
     public const ECHAPPEMENT = '"';
 
-    public static function writeField($value, string $key = ''): string
+    public static function writeField(mixed $value, string $key = ''): string
     {
         $field = $key;
 
         if (is_string($value)) {
-            $field .= self::ECHAPPEMENT . $value . self::ECHAPPEMENT;
+            $field .= self::ECHAPPEMENT.$value.self::ECHAPPEMENT;
         } elseif (is_object($value)) {
             if (self::FORMAT_DATETIME === get_class($value)) {
                 $field .= $value->format('d-m-Y');

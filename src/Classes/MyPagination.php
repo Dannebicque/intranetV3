@@ -14,23 +14,22 @@
 namespace App\Classes;
 
 use App\Entity\Constantes;
+use function count;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Routing\RouterInterface;
-use function count;
 
 /**
  * Class MyPagination.
  */
 class MyPagination
 {
-    /** @var RouterInterface */
-    private $router;
+    private RouterInterface $router;
 
-    private $nbMaxResult;
-    private $data;
-    private $page;
-    private $nbPages;
-    private $link;
+    private int $nbMaxResult;
+    private array $data;
+    private int $page;
+    private int $nbPages;
+    private array $link;
 
     /**
      * MyPagination constructor.
@@ -40,7 +39,7 @@ class MyPagination
         $this->router = $router;
     }
 
-    public function calculPagination(QueryBuilder $queryBuilder, $link, int $page = 1): void
+    public function calculPagination(QueryBuilder $queryBuilder, array $link, int $page = 1): void
     {
         $this->page = $page;
         $this->link = $link;
@@ -56,22 +55,22 @@ class MyPagination
         $this->nbPages = ceil($this->nbMaxResult / Constantes::NB_RESULTS_PER_PAGE);
     }
 
-    public function getNbPages()
+    public function getNbPages(): int
     {
         return $this->nbPages;
     }
 
-    public function getCurrentPage()
+    public function getCurrentPage(): int
     {
         return $this->page;
     }
 
-    public function getData()
+    public function getData(): array
     {
         return $this->data;
     }
 
-    public function getNbMaxResult()
+    public function getNbMaxResult(): int
     {
         return $this->nbMaxResult;
     }

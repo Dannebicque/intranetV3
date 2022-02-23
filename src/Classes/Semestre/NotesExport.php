@@ -19,9 +19,9 @@ use App\Entity\AnneeUniversitaire;
 use App\Entity\Semestre;
 use App\Repository\EvaluationRepository;
 use App\Repository\NoteRepository;
+use function array_key_exists;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\StreamedResponse;
-use function array_key_exists;
 
 class NotesExport
 {
@@ -49,9 +49,9 @@ class NotesExport
      * @return StreamedResponse
      * @return StreamedResponse
      */
-    public function exportXlsToutesLesNotes(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
+    public function exportXlsToutesLesNotes(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): StreamedResponse
     {
-        $this->myExcel->createSheet('semestre ' . $semestre->getLibelle());
+        $this->myExcel->createSheet('semestre '.$semestre->getLibelle());
         $matieres = $this->typeMatiereManager->findBySemestreArray($semestre);
         //todo: filtrer si option faite ou pas
         $etudiants = $semestre->getEtudiants();
@@ -116,13 +116,13 @@ class NotesExport
         $writer = new Xlsx($this->myExcel->getSpreadsheet());
 
         return new StreamedResponse(
-            static function() use ($writer) {
+            static function () use ($writer) {
                 $writer->save('php://output');
             },
             200,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition' => 'attachment;filename="Export des notes du semestre ' . $semestre->getLibelle() . '.xlsx"',
+                'Content-Disposition' => 'attachment;filename="Export des notes du semestre '.$semestre->getLibelle().'.xlsx"',
             ]
         );
     }

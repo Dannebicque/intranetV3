@@ -9,6 +9,7 @@
 
 namespace App\Form;
 
+use App\Entity\Diplome;
 use App\Entity\Parcour;
 use App\Entity\Semestre;
 use App\Repository\SemestreRepository;
@@ -20,7 +21,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ParcourType extends AbstractType
 {
-    protected $diplome;
+    protected Diplome $diplome;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

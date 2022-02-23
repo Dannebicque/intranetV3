@@ -58,10 +58,9 @@ class MailerFromDatabase extends BaseMailer
     }
 
     /**
-     *
      * @throws TransportExceptionInterface
      */
-    public function sendMessage(array $to, $subject, array $options = []): void
+    public function sendMessage(array $to, string $subject, array $options = []): void
     {
         $this->baseSendMessage($this->mail, $to, $subject, $options);
     }

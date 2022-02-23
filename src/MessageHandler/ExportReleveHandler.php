@@ -47,7 +47,13 @@ class ExportReleveHandler implements MessageHandlerInterface
         $this->configuration = $configuration;
     }
 
-    public function __invoke(ExportReleve $exportReleve)
+    /**
+     * @throws \Twig\Error\SyntaxError
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\LoaderError
+     */
+    public function __invoke(ExportReleve $exportReleve): void
     {
         $semestre = $this->semestreRepository->find($exportReleve->getSemestre());
         $anneeUniversitaire = $this->anneeUniversitaireRepository->find($exportReleve->getAnneeUniversitaire());

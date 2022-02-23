@@ -59,7 +59,7 @@ class MyEnqueteDiplome
         }
     }
 
-    public function export()
+    public function export(): StreamedResponse
     {
         $tReponses = $this->questionnaireReponseRepository->findByQuizzArray($this->questionnaire);
         $this->myExcelWriter->createSheet('enquete');
@@ -258,7 +258,7 @@ class MyEnqueteDiplome
     /**
      * @return \App\Entity\QuestionnaireEtudiant[]|int|mixed|string
      */
-    public function getReponses()
+    public function getReponses(): mixed
     {
         return $this->reponses;
     }

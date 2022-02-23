@@ -12,45 +12,30 @@ namespace App\Classes\Previsionnel;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyUpload;
 use App\Entity\Diplome;
-use App\Entity\Personnel;
 use App\Entity\Previsionnel;
 use App\Repository\PersonnelRepository;
 use App\Utils\Tools;
-use Doctrine\ORM\EntityManagerInterface;
 use function array_key_exists;
+use Doctrine\ORM\EntityManagerInterface;
 
 /**
  * Class PrevisionnelImport.
  */
 class PrevisionnelImport
 {
-    private PrevisionnelManager $previsionnelManager;
-
-    private EntityManagerInterface $entityManager;
-    private PersonnelRepository $personnelRepository;
-
-    private MyUpload $myUpload;
-    private TypeMatiereManager $typeMatiereManager;
-
     public function __construct(
-        TypeMatiereManager $typeMatiereManager,
-        PrevisionnelManager $previsionnelManager,
-        EntityManagerInterface $entityManager,
-        PersonnelRepository $personnelRepository,
-        MyUpload $myUpload
+        private TypeMatiereManager $typeMatiereManager,
+        private PrevisionnelManager $previsionnelManager,
+        private EntityManagerInterface $entityManager,
+        private PersonnelRepository $personnelRepository,
+        private MyUpload $myUpload
     ) {
-        $this->typeMatiereManager = $typeMatiereManager;
-        $this->entityManager = $entityManager;
-        $this->previsionnelManager = $previsionnelManager;
-        $this->personnelRepository = $personnelRepository;
-        $this->myUpload = $myUpload;
     }
 
     /**
-     *
      * @throws \Exception
      */
-    public function importCsv($data): bool
+    public function importCsv(array $data): bool
     {
         $file = $this->myUpload->upload($data['fichier'], 'temp');
 
@@ -84,7 +69,6 @@ class PrevisionnelImport
                         $pr->setIdMatiere($matieres[$ligne[2]]->id);
                         $pr->setTypeMatiere($matieres[$ligne[2]]->typeMatiere);
                         $this->entityManager->persist($pr);
-
                     }
                 }
                 $this->entityManager->flush();
@@ -102,7 +86,7 @@ class PrevisionnelImport
         return false;
     }
 
-    private function supprPrevisionnel(Diplome $diplome, $annee): void
+    private function supprPrevisionnel(Diplome $diplome, int $annee): void
     {
         $pr = $this->previsionnelManager->findByDiplomeToDelete($diplome, $annee);
 

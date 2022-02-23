@@ -42,10 +42,9 @@ class MailerFromTwig extends BaseMailer
         $this->mail = new TemplatedEmail();
     }
 
-
     public function setTemplate(?string $template, ?array $data): void
     {
-        if (false === mb_strpos($template, 'html')) {
+        if (!str_contains($template, 'html')) {
             $this->mail->textTemplate($template)
                 ->context($data);
         } else {
@@ -55,10 +54,9 @@ class MailerFromTwig extends BaseMailer
     }
 
     /**
-     *
      * @throws TransportExceptionInterface
      */
-    public function sendMessage(array $to, $subject, array $options = []): void
+    public function sendMessage(array $to, string $subject, array $options = []): void
     {
         $this->baseSendMessage($this->mail, $to, $subject, $options);
     }

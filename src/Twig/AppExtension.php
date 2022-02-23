@@ -65,7 +65,7 @@ class AppExtension extends AbstractExtension
         return number_format($note, $nbdecimales);
     }
 
-    public function formatDifference($valeur): string
+    public function formatDifference(int | float $valeur): string
     {
         if (0 !== $valeur) {
             return '<span class="badge bg-warning">'.$valeur.'</span>';
@@ -92,12 +92,12 @@ class AppExtension extends AbstractExtension
         };
     }
 
-    public function age($dateNaissance): string
+    public function age(CarbonInterface $dateNaissance): string
     {
         return (string) Carbon::instance($dateNaissance)->age;
     }
 
-    public function bg($value): string
+    public function bg(?bool $value): string
     {
         if (null === $value) {
             return 'bg-pale-warning';
@@ -149,12 +149,12 @@ class AppExtension extends AbstractExtension
         return mb_strtoupper($texte);
     }
 
-    public function convertHeureEdt($duree): string
+    public function convertHeureEdt(?string $duree): string
     {
         return Constantes::TAB_HEURES[$duree];
     }
 
-    public function dateDuJourLong($locale): string
+    public function dateDuJourLong(?string $locale): string
     {
         return Carbon::now()->locale($locale)->isoFormat('dddd Do MMMM YYYY');
     }
@@ -169,7 +169,7 @@ class AppExtension extends AbstractExtension
         return $this->config->get($name);
     }
 
-    public function mychr($var): string
+    public function mychr(int $var): string
     {
         return chr($var);
     }

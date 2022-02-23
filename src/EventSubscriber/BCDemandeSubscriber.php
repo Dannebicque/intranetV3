@@ -14,7 +14,6 @@ use Symfony\Component\Workflow\Event\Event;
 
 class BCDemandeSubscriber implements EventSubscriberInterface
 {
-
     public function __construct()
     {
     }
@@ -26,8 +25,7 @@ class BCDemandeSubscriber implements EventSubscriberInterface
         ];
     }
 
-    public function onAttenteValidationResponsable(Event $event)
+    public function onAttenteValidationResponsable(Event $event): void
     {
-
     }
 }

@@ -32,7 +32,7 @@ class ApcApprentissageCritiqueRepository extends ServiceEntityRepository
         parent::__construct($registry, ApcApprentissageCritique::class);
     }
 
-    public function findByDiplome(Diplome $diplome)
+    public function findByDiplome(Diplome $diplome): array
     {
         return $this->findByDiplomeBuilder($diplome)
             ->getQuery()
@@ -50,8 +50,8 @@ class ApcApprentissageCritiqueRepository extends ServiceEntityRepository
 
     public function findBySemestreAndCompetences(
         Annee $annee,
-        $idCompetences
-    ) {
+        array $idCompetences
+    ): array {
         $query = $this->createQueryBuilder('a')
             ->innerJoin(ApcNiveau::class, 'n', 'WITH', 'a.niveau = n.id')
             ->where('n.annee = :annee')

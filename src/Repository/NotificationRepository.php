@@ -11,6 +11,7 @@ namespace App\Repository;
 
 use App\Entity\Notification;
 use App\Entity\Personnel;
+use App\Interfaces\UtilisateurInterface;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -39,7 +40,7 @@ class NotificationRepository extends ServiceEntityRepository
     /**
      * @throws Exception
      */
-    public function deleteOldNotification()
+    public function deleteOldNotification(): mixed
     {
         return $this->getDeleteOldNotification()->delete()->getQuery()->execute();
     }
@@ -54,7 +55,7 @@ class NotificationRepository extends ServiceEntityRepository
             ->setParameter('date', new DateTime(-self::DAYS_BEFORE_REMOVE.'days'));
     }
 
-    public function findNonLuByUser($user)
+    public function findNonLuByUser(UtilisateurInterface $user): array
     {
         $query = $this->createQueryBuilder('n')
             ->where('n.lu = false');
@@ -69,7 +70,7 @@ class NotificationRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
-    public function findByUser($user)
+    public function findByUser(UtilisateurInterface $user): array
     {
         $query = $this->createQueryBuilder('n');
 

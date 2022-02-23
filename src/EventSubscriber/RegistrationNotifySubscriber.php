@@ -43,12 +43,12 @@ class RegistrationNotifySubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            NoteEvent::ADDED            => 'onNoteAdded',
-            AbsenceEvent::ADDED         => 'onAbsenceAdded',
-            AbsenceEvent::REMOVED       => 'onAbsenceRemoved',
-            AbsenceEvent::JUSTIFIED     => 'onAbsenceJustified',
-            CarnetEvent::ADDED          => 'onCarnetAdded',
-            RattrapageEvent::DECISION   => 'onDecisionRattrapge',
+            NoteEvent::ADDED => 'onNoteAdded',
+            AbsenceEvent::ADDED => 'onAbsenceAdded',
+            AbsenceEvent::REMOVED => 'onAbsenceRemoved',
+            AbsenceEvent::JUSTIFIED => 'onAbsenceJustified',
+            CarnetEvent::ADDED => 'onCarnetAdded',
+            RattrapageEvent::DECISION => 'onDecisionRattrapge',
             JustificatifEvent::DECISION => 'onDecisionJustficatif',
         ];
     }
@@ -151,7 +151,7 @@ class RegistrationNotifySubscriber implements EventSubscriberInterface
         $this->onAbsence($event->getAbsence(), AbsenceEvent::JUSTIFIED);
     }
 
-    private function onAbsence(Absence $absence, $etat): void
+    private function onAbsence(Absence $absence, string $etat): void
     {
         $notif = new Notification();
         $notif->setEtudiant($absence->getEtudiant());

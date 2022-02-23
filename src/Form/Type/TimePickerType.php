@@ -96,7 +96,7 @@ class TimePickerType extends AbstractType
     /**
      * @throws \Exception
      */
-    private function toDate($value, string $outputFormat = 'H:i'): ?string
+    private function toDate(mixed $value, string $outputFormat = 'H:i'): ?string
     {
         if (is_string($value)) {
             $value = new DateTime($value);

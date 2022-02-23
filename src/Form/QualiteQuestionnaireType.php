@@ -11,7 +11,7 @@ namespace App\Form;
 
 use App\Entity\QuestionnaireQualite;
 use App\Entity\Semestre;
-use App\Form\Type\CarbonDateTimeType;
+use App\Form\Type\DatePickerType;
 use App\Form\Type\EntityCompleteType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
@@ -34,10 +34,10 @@ class QualiteQuestionnaireType extends AbstractType
             ->add('titre', TextType::class, ['label' => 'titre', 'help' => 'help.titre.enquete'])
             ->add('texteExplication', TextareaType::class,
                 ['label' => 'texteExplication', 'help' => 'help.texteExplication.enquete'])
-            ->add('dateOuverture', CarbonDateTimeType::class,
-                ['label' => 'dateOuverture', 'help' => 'help.dateOuverture.enquete'])
-            ->add('dateFermeture', CarbonDateTimeType::class,
-                ['label' => 'dateFermeture', 'help' => 'help.dateFermeture.enquete']);
+            ->add('dateOuverture', DatePickerType::class,
+                ['label' => 'dateOuverture', 'help' => 'help.dateOuverture.enquete', 'enable_time' => true])
+            ->add('dateFermeture', DatePickerType::class,
+                ['label' => 'dateFermeture', 'help' => 'help.dateFermeture.enquete', 'enable_time' => true]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

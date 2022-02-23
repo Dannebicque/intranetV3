@@ -32,7 +32,7 @@ class ApcParcoursNiveauRepository extends ServiceEntityRepository
     /**
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function findParcoursNiveau(ApcParcours $parcours, ApcNiveau $niveau)
+    public function findParcoursNiveau(ApcParcours $parcours, ApcNiveau $niveau): ?ApcParcoursNiveau
     {
         return $this->createQueryBuilder('p')
             ->where('p.niveau = :niveau')

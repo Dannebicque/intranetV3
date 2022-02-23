@@ -82,7 +82,7 @@ class StageSubscriber implements EventSubscriberInterface
         $this->addNotification($event, StageEvent::CHGT_ETAT_STAGE_AUTORISE);
     }
 
-    private function addNotification(StageEvent $event, $codeEvent): void
+    private function addNotification(StageEvent $event, string $codeEvent): void
     {
         $stageEtudiant = $event->getStageEtudiant();
         if (null !== $stageEtudiant->getEtudiant()) {
@@ -162,7 +162,7 @@ class StageSubscriber implements EventSubscriberInterface
         $this->sendMail($event, StageEvent::CHGT_ETAT_STAGE_VALIDE);
     }
 
-    public function onConventionStageEnvoyee(StageEvent $event)
+    public function onConventionStageEnvoyee(StageEvent $event): void
     {
         $stageEtudiant = $event->getStageEtudiant();
         $assistante = $stageEtudiant->getStagePeriode()?->getSemestre()?->getDiplome()?->getAssistantDiplome();
@@ -217,7 +217,7 @@ class StageSubscriber implements EventSubscriberInterface
      * @throws SyntaxError
      * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      */
-    public function sendMail(StageEvent $event, $codeEvent): void
+    public function sendMail(StageEvent $event, string $codeEvent): void
     {
         $stageEtudiant = $event->getStageEtudiant();
 
@@ -262,7 +262,7 @@ class StageSubscriber implements EventSubscriberInterface
 
         if (null !== $mailTemplate && $mailTemplate->getTwigTemplate()) {
             //mail responsables
-            $this->myMailer->setTemplateFromDatabase($mailTemplate->getTwigTemplate()->getName(),
+            $this->myMailer->setTemplateFromDatabase($mailTemplate->getTwigTemplate(),
                 ['stageEtudiant' => $stageEtudiant],
                 $destinataires,
                 $mailTemplate->getSubject(),
@@ -271,7 +271,7 @@ class StageSubscriber implements EventSubscriberInterface
 
             //copie à l'assistante
             if (null !== $stageEtudiant->getStagePeriode() && $stageEtudiant->getStagePeriode()->getCopieAssistant() && null !== $stageEtudiant->getStagePeriode()->getMailAssistant()) {
-                $this->myMailer->setTemplateFromDatabase($mailTemplate->getTwigTemplate()->getName(),
+                $this->myMailer->setTemplateFromDatabase($mailTemplate->getTwigTemplate(),
                     ['stageEtudiant' => $stageEtudiant],
                     $stageEtudiant->getStagePeriode()->getMailAssistant(),
                     $mailTemplate->getSubject(),

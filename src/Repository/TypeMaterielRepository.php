@@ -29,7 +29,7 @@ class TypeMaterielRepository extends ServiceEntityRepository
         parent::__construct($registry, TypeMateriel::class);
     }
 
-    public function findByDepartement(Departement $departement)
+    public function findByDepartement(Departement $departement): array
     {
         return $this->findByDepartementBuider($departement)
             ->getQuery()

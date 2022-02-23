@@ -99,7 +99,7 @@ class DatePickerType extends AbstractType
     /**
      * @throws \Exception
      */
-    private function toDate($value, string $outputFormat = 'Y-m-d'): ?string
+    private function toDate(mixed $value, string $outputFormat = 'Y-m-d'): ?string
     {
         if (is_string($value)) {
             $value = new DateTime($value);

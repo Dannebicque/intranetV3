@@ -25,31 +25,22 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class MyProjetEtudiant
 {
-    protected EntityManagerInterface $entityManger;
-
-    protected EventDispatcherInterface $eventDispatcher;
-
-    protected ProjetEtudiantRepository $projetEtudiantRepository;
-
-    protected ProjetEtudiant $stageEtudiant;
+      protected ProjetEtudiant $stageEtudiant;
 
     /**
      * MyProjetEtudiant constructor.
      */
     public function __construct(
-        EntityManagerInterface $entityManger,
-        EventDispatcherInterface $eventDispatcher,
-        ProjetEtudiantRepository $projetEtudiantRepository
+        private EntityManagerInterface $entityManger,
+        private EventDispatcherInterface $eventDispatcher,
+        private ProjetEtudiantRepository $projetEtudiantRepository
     ) {
-        $this->eventDispatcher = $eventDispatcher;
-        $this->entityManger = $entityManger;
-        $this->projetEtudiantRepository = $projetEtudiantRepository;
     }
 
     /**
      * @throws NonUniqueResultException
      */
-    public function changeEtat(ProjetPeriode $projetPeriode, Etudiant $etudiant, $etat): void
+    public function changeEtat(ProjetPeriode $projetPeriode, Etudiant $etudiant, string $etat): void
     {
         $this->stageEtudiant = $this->checkProjetEtudiantExist($projetPeriode, $etudiant);
 
@@ -89,11 +80,9 @@ class MyProjetEtudiant
     }
 
     /**
-     * @return ProjetEtudiant|mixed
-     *
      * @throws NonUniqueResultException
      */
-    private function checkProjetEtudiantExist(ProjetPeriode $projetPeriode, Etudiant $etudiant)
+    private function checkProjetEtudiantExist(ProjetPeriode $projetPeriode, Etudiant $etudiant): ProjetEtudiant
     {
         $result = $this->projetEtudiantRepository->findExist($projetPeriode, $etudiant);
 

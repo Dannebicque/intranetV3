@@ -11,6 +11,7 @@ namespace App\DTO;
 
 use App\Entity\Constantes;
 use App\Entity\Note;
+use Doctrine\Common\Collections\Collection;
 
 class MoyenneMatiere
 {
@@ -26,14 +27,14 @@ class MoyenneMatiere
     private float $penalite;
     public bool $matiereAAnnuler = false;
 
-    public function __construct(Matiere $matiere, float $penalite, $groupes)
+    public function __construct(Matiere $matiere, float $penalite, Collection $groupes)
     {
         $this->matiere = $matiere;
         $this->penalite = $penalite;
         $this->isOption($groupes);
     }
 
-    public function isOption($groupes): bool
+    public function isOption(Collection $groupes): bool
     {
         if (null === $this->matiere->getParcours()) {
             $this->optionFaite = true;
@@ -78,7 +79,7 @@ class MoyenneMatiere
         return $this->style($this->getMoyenne());
     }
 
-    private function style($note): string
+    private function style(float $note): string
     {
         if ($note < 0) {
             return Constantes::PAS_OPTION;

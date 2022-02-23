@@ -28,16 +28,15 @@ class MyAdresse
         $this->entityManager = $entityManager;
     }
 
-    public function update(Adresse $adresse, $name, $value): bool
+    public function update(Adresse $adresse, string $name, mixed $value): bool
     {
-        $method = 'set' . $name;
+        $method = 'set'.$name;
         if (method_exists($adresse, $method)) {
             $adresse->$method($value);
             $this->entityManager->flush();
 
             return true;
         }
-
 
         return false;
     }

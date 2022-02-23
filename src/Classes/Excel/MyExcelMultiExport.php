@@ -14,6 +14,7 @@
 namespace App\Classes\Excel;
 
 use App\Classes\MyAbsences;
+use App\Classes\MyExport;
 use App\Classes\MySerializer;
 use App\DTO\Matiere;
 use App\Entity\Absence;
@@ -21,45 +22,37 @@ use App\Entity\Etudiant;
 use App\Entity\Evaluation;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
+use function array_key_exists;
+use function count;
 use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
 use PhpOffice\PhpSpreadsheet\Writer\Csv;
 use PhpOffice\PhpSpreadsheet\Writer\Pdf\Dompdf;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\StreamedResponse;
-use function array_key_exists;
-use function count;
-use function is_array;
 
 /**
  * Class MyExcelMultiExport.
  */
 class MyExcelMultiExport
 {
-    private MySerializer $serializer;
-
-    private MyExcelWriter $myExcelWriter;
-
     public function __construct(
-        MySerializer $mySerializer,
-        MyExcelWriter $myExcelWriter
+        private MyExcelWriter $myExcelWriter
     ) {
-        $this->serializer = $mySerializer;
-        $this->myExcelWriter = $myExcelWriter;
     }
 
-    public function saveXlsx($name): StreamedResponse
+    public function saveXlsx(string $name): StreamedResponse
     {
         $this->pageSetup($name);
         $writer = new Xlsx($this->myExcelWriter->getSpreadsheet());
 
         return new StreamedResponse(
-            static function() use ($writer) {
+            static function () use ($writer) {
                 $writer->save('php://output');
             },
             200,
             [
-                'Content-Type'        => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition' => 'attachment;filename="' . $name . '.xlsx"',
+                'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+                'Content-Disposition' => 'attachment;filename="'.$name.'.xlsx"',
             ]
         );
     }
@@ -78,7 +71,7 @@ class MyExcelMultiExport
         $this->myExcelWriter->getSpreadsheet()->getActiveSheet()->getHeaderFooter()
             ->setOddHeader('&C&HDocument généré depuis l\'Intranet !');
         $this->myExcelWriter->getSpreadsheet()->getActiveSheet()->getHeaderFooter()
-            ->setOddFooter('&L&B' . $this->myExcelWriter->getSpreadsheet()->getProperties()->getTitle() . '&RPage &P of &N');
+            ->setOddFooter('&L&B'.$this->myExcelWriter->getSpreadsheet()->getProperties()->getTitle().'&RPage &P of &N');
     }
 
     public function saveCsv(string $name): StreamedResponse
@@ -87,13 +80,13 @@ class MyExcelMultiExport
         $writer = new Csv($this->myExcelWriter->getSpreadsheet());
 
         return new StreamedResponse(
-            static function() use ($writer) {
+            static function () use ($writer) {
                 $writer->save('php://output');
             },
             200,
             [
-                'Content-Type'        => 'application/csv',
-                'Content-Disposition' => 'attachment;filename="' . $name . '.csv"',
+                'Content-Type' => 'application/csv',
+                'Content-Disposition' => 'attachment;filename="'.$name.'.csv"',
             ]
         );
     }
@@ -105,94 +98,37 @@ class MyExcelMultiExport
         $writer = new Dompdf($this->myExcelWriter->getSpreadsheet());
 
         return new StreamedResponse(
-            static function() use ($writer) {
+            static function () use ($writer) {
                 $writer->save('php://output');
             },
             200,
             [
-                'Content-Type'        => 'application/pdf',
-                'Content-Disposition' => 'attachment;filename="' . $name . '.pdf"',
+                'Content-Type' => 'application/pdf',
+                'Content-Disposition' => 'attachment;filename="'.$name.'.pdf"',
             ]
         );
     }
 
-    public function genereExcelFromSerialization(array $data, array $modele, array $colonne): void
+    public function genereExcelFromArray(array $data): self
     {
         $this->myExcelWriter->createSheet('onglet 1');
-        //serialize les data
-        $dataJson = $this->serializer->serialize($data, $modele);
-
-        $tabData = json_decode($dataJson, true);
-        //header
         $i = 1;
         $ligne = 1;
-        foreach ($colonne as $value) {
-            if (is_array($value)) {
-                foreach ($value as $col) {
-                    if (is_array($col)) {
-                        foreach ($col as $col2) {
-                            if (is_array($col2)) {
-                                foreach ($col2 as $col3) {
-                                    $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(
-                                        $i,
-                                        $ligne,
-                                        $col3
-                                    );
-                                    ++$i;
-                                }
-                            } else {
-                                $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(
-                                    $i,
-                                    $ligne,
-                                    $col2
-                                );
-                                ++$i;
-                            }
-                        }
-                    } else {
-                        $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(
-                            $i,
-                            $ligne,
-                            $col
-                        );
-                        ++$i;
-                    }
-                }
-            } else {
-                $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow($i, $ligne, $value);
+        foreach ($data as $row) {
+            foreach ($row as $value) {
+                $this->myExcelWriter->writeCellXY($i, $ligne, $value);
                 ++$i;
             }
-        }
-        $i = 1;
-        ++$ligne;
-        foreach ($tabData as $row) {
-            foreach ($colonne as $key => $value) {
-                if ((!is_array($value) && array_key_exists($value,
-                            $row)) || (is_array($value) && array_key_exists($key,
-                            $row))) {
-                    if (is_array($value)) {
-                        foreach ($value as $k => $col) {
-                            if (is_array($row[$key])) {
-                                $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow($i, $ligne,
-                                    $row[$key][$col]);
-                            } else {
-                                $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow($i, $ligne,
-                                    '-');
-                            }
-                            ++$i;
-                        }
-                    } else {
-                        $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow($i, $ligne, $row[$value]);
-                        ++$i;
-                    }
-                } else {
-                    ++$i;
-                }
-            }
-
-            $i = 1;
             ++$ligne;
+            $i = 1;
         }
+        $nbCol = count($data[1]);
+        for ($j = 1; $j <= $nbCol; ++$j) {
+            $this->myExcelWriter->getColumnAutoSize($j);
+            $this->myExcelWriter->setCellEnteteStyle($j, 1);
+        }
+
+        return $this;
     }
 
     public function genereExcelAbsence(MyAbsences $myAbsences): void
@@ -263,13 +199,13 @@ class MyExcelMultiExport
         }
     }
 
-    public function genereReleveExcel(Evaluation $evaluation, $groupes, $notes, Matiere $matiere): void
+    public function genereReleveExcel(Evaluation $evaluation, array $groupes, array $notes, Matiere $matiere): void
     {
         /** @var Groupe $groupe */
         foreach ($groupes as $groupe) {
             $this->myExcelWriter->createSheet($groupe->getLibelle());
             //todo: modifier en-tete pour ajouter les infos de l'évaluation. modele PDF. Sauf si CSV?
-            if (true === $matiere->semestre->getAnnee()->getDiplome()->isOptAnonymat()) {
+            if (true === $matiere->semestre->getAnnee()?->getDiplome()?->isOptAnonymat()) {
                 $this->myExcelWriter->writeHeader(['num_etudiant', 'note', 'remise copie', 'commentaire']);
             } else {
                 $this->myExcelWriter->writeHeader([
@@ -288,7 +224,7 @@ class MyExcelMultiExport
             foreach ($groupe->getEtudiants() as $etudiant) {
                 $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNumEtudiant());
                 ++$colonne;
-                if (false === $matiere->semestre->getAnnee()->getDiplome()->isOptAnonymat()) {
+                if (false === $matiere->semestre->getAnnee()?->getDiplome()?->isOptAnonymat()) {
                     $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNom());
                     ++$colonne;
                     $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getPrenom());
@@ -312,7 +248,7 @@ class MyExcelMultiExport
         }
     }
 
-    public function genereReleveAbsencesMatiereExcel($absences): void
+    public function genereReleveAbsencesMatiereExcel(array $absences): void
     {
         $this->myExcelWriter->createSheet('Absences');
 
@@ -339,19 +275,19 @@ class MyExcelMultiExport
             ++$colonne;
             $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getPrenom());
             ++$colonne;
-            $this->myExcelWriter->writeCellXY($colonne, $ligne, $absence->getDateHeure()->format('d/m/Y'));
+            $this->myExcelWriter->writeCellXY($colonne, $ligne, $absence->getDateHeure()?->format('d/m/Y'));
             ++$colonne;
-            $this->myExcelWriter->writeCellXY($colonne, $ligne, $absence->getDateHeure()->format('H:i'));
+            $this->myExcelWriter->writeCellXY($colonne, $ligne, $absence->getDateHeure()?->format('H:i'));
             ++$colonne;
-            $this->myExcelWriter->writeCellXY($colonne, $ligne, $absence->getPersonnel()->getDisplayPr());
+            $this->myExcelWriter->writeCellXY($colonne, $ligne, $absence->getPersonnel()?->getDisplayPr());
             ++$colonne;
-            $this->myExcelWriter->writeCellXY($colonne, $ligne, 1 === $absence->getJustifie() ? 'Oui' : 'Non');
+            $this->myExcelWriter->writeCellXY($colonne, $ligne, true === $absence->getJustifie() ? 'Oui' : 'Non');
             $colonne = 1;
             ++$ligne;
         }
     }
 
-    public function genereExcelJustificatifsAbsences(mixed $justificatifs)
+    public function genereExcelJustificatifsAbsences(mixed $justificatifs): void
     {
         $this->myExcelWriter->createSheet('absences');
         $this->myExcelWriter->writeHeader([
@@ -364,7 +300,7 @@ class MyExcelMultiExport
             'heure fin',
             'motif',
             'etat justificatif',
-            'date depot'
+            'date depot',
         ]);
         $ligne = 2;
         $colonne = 1;
@@ -421,4 +357,6 @@ class MyExcelMultiExport
             $colonne = 1;
         }
     }
+
+
 }

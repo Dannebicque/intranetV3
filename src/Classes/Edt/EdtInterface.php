@@ -21,5 +21,7 @@ interface EdtInterface
 {
     public function getPlanningSemestre(Semestre $semestre): EvenementEdtCollection;
 
-    public function find($event): EvenementEdt;
+    public function find(int $event): EvenementEdt;
+    public function recupereEdtJourBorne(Semestre $semestre, array $matieres, int $jourSemaine, int $semaineFormation): EvenementEdtCollection;
+
 }

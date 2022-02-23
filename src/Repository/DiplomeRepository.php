@@ -47,14 +47,14 @@ class DiplomeRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByDepartement(Departement $departement)
+    public function findByDepartement(Departement $departement): array
     {
-        return $this->findByDepartementBuilder($departement->getId())
+        return $this->findByDepartementBuilder($departement)
             ->getQuery()
             ->getResult();
     }
 
-    public function findByDepartementBuilder($departement): QueryBuilder
+    public function findByDepartementBuilder(Departement $departement): QueryBuilder
     {
         return $this->createQueryBuilder('d')
             ->where('d.departement = :departement')
@@ -62,7 +62,7 @@ class DiplomeRepository extends ServiceEntityRepository
             ->orderBy('d.libelle');
     }
 
-    public function findActifs()
+    public function findActifs(): array
     {
         return $this->createQueryBuilder('d')
             ->join(TypeDiplome::class, 't', 'WITH', 'd.typeDiplome = t.id')
@@ -74,7 +74,7 @@ class DiplomeRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findAllWithCelcat()
+    public function findAllWithCelcat(): array
     {
         return $this->createQueryBuilder('d')
             ->where('d.optUpdateCelcat = 1')

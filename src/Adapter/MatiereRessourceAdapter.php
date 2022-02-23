@@ -12,8 +12,6 @@ namespace App\Adapter;
 use App\DTO\Matiere;
 use App\DTO\MatiereCollection;
 use App\DTO\Ue;
-use App\Entity\ApcRessource;
-use App\Entity\ApcSae;
 
 class MatiereRessourceAdapter extends AbstractMatiereAdapter implements MatiereAdapterInterface
 {
@@ -36,13 +34,14 @@ class MatiereRessourceAdapter extends AbstractMatiereAdapter implements MatiereA
             $m->id = $matiere->getId();
             $m->semestre = $matiere->getSemestre();
 
-            foreach ($matiere->getCompetences() as $competence) {
+            foreach ($matiere->getApcRessourceCompetences() as $competence) {
                 $ue = new Ue();
-                $ue->ue_id = $competence->getId();
-                $ue->ue_display = $competence->getNomCourt();
-                //$ue->ue_coefficient = $competence->getE();
-                $ue->ue_numero = (int)$competence->getCouleur()[1];
-                $ue->ue_couleur = $competence->getCouleur();
+                $ue->ue_id = $competence->getCompetence()->getId();
+                $ue->ue_apc_id = $competence->getId();
+                $ue->ue_display = $competence->getCompetence()->getNomCourt();
+                $ue->ue_coefficient = $competence->getCoefficient();
+                $ue->ue_numero = (int) $competence->getCompetence()->getCouleur()[1];
+                $ue->ue_couleur = $competence->getCompetence()->getCouleur();
                 $m->tab_ues[] = $ue;
             }
         }

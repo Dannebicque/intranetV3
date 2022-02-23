@@ -15,9 +15,6 @@ use Symfony\Component\Mime\Address;
 
 class Configuration
 {
-    /**
-     * @var string[]
-     */
     private array $settings = [];
 
     private ConfigurationRepository $configurationRepository;
@@ -27,7 +24,7 @@ class Configuration
         $this->configurationRepository = $configurationRepository;
     }
 
-    public function get($name): string
+    public function get(string $name): string
     {
         if (0 === count($this->settings)) {
             $this->getAllSettings();
@@ -45,8 +42,8 @@ class Configuration
         }
     }
 
-    public function getExpediteurIntranet()
+    public function getExpediteurIntranet(): Address
     {
-        return new Address($this->get('MAIL_FROM'), 'Intranet ' . $this->get('NOM_IUT'));
+        return new Address($this->get('MAIL_FROM'), 'Intranet '.$this->get('NOM_IUT'));
     }
 }

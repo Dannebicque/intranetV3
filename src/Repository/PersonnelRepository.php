@@ -36,7 +36,7 @@ class PersonnelRepository extends ServiceEntityRepository
         parent::__construct($registry, Personnel::class);
     }
 
-    public function findByType($type, $departement, $filtreAdm = 'commun')
+    public function findByType(string $type, Departement $departement, string $filtreAdm = 'commun'): array
     {
         $query = $this->createQueryBuilder('p')
             ->innerJoin(PersonnelDepartement::class, 'f', 'WITH', 'f.personnel = p.id')
@@ -62,7 +62,7 @@ class PersonnelRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function search($needle): array
+    public function search(string $needle): array
     {
         $query = $this->createQueryBuilder('p')
             ->where('p.nom LIKE :needle')
@@ -100,7 +100,7 @@ class PersonnelRepository extends ServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function findOneBySlug($slug)
+    public function findOneBySlug(string $slug): ?Personnel
     {
         return $this->createQueryBuilder('p')
             ->where('p.slug = :slug')
@@ -109,14 +109,14 @@ class PersonnelRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function findByDepartement($departement)
+    public function findByDepartement(Departement $departement): array
     {
         return $this->findByDepartementBuilder($departement)
             ->getQuery()
             ->getResult();
     }
 
-    public function findByDepartementBuilder($departement): QueryBuilder
+    public function findByDepartementBuilder(Departement $departement): QueryBuilder
     {
         return $this->createQueryBuilder('p')
             ->innerJoin(PersonnelDepartement::class, 'f', 'WITH', 'f.personnel = p.id')
@@ -172,7 +172,7 @@ class PersonnelRepository extends ServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function findByCode($code)
+    public function findByCode(string $code): ?Personnel
     {
         return $this->createQueryBuilder('p')
             ->where('MD5(p.slug) = :code')

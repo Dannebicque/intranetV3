@@ -22,31 +22,20 @@ use Twig\Error\SyntaxError;
 
 class MyStructure
 {
-    /** @var Departement */
-    protected $departement;
+    protected Departement $departement;
 
-    /** @var MyPDF */
-    protected $myPdf;
-
-    /** @var MyExcelWriter */
-    protected $myExcel;
-
-    /**
-     * MyStructure constructor.
-     */
-    public function __construct(MyPDF $myPdf, MyExcelWriter $myExcel)
+    public function __construct(
+        private MyPDF $myPdf,
+        private MyExcelWriter $myExcel)
     {
-        $this->myPdf = $myPdf;
-        $this->myExcel = $myExcel;
     }
 
     /**
-     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function export(Departement $departement, $_format): void
+    public function export(Departement $departement, string $_format): void
     {
         $this->departement = $departement;
 

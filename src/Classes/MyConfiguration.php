@@ -63,7 +63,7 @@ class MyConfiguration
         $this->entityManager = $entityManager;
     }
 
-    public function updateOption($type, $id, $name, $value): bool
+    public function updateOption(string $type, int | string $id, string $name, mixed $value): bool
     {
         return match ($type) {
             'departement' => $this->updateDepartement($id, $name, $value),
@@ -72,10 +72,9 @@ class MyConfiguration
             'semestre' => $this->updateSemestre($id, $name, $value),
             default => false,
         };
-
     }
 
-    private function updateDepartement($id, $name, $value): bool
+    private function updateDepartement(int | string $id, string $name, mixed $value): bool
     {
         $departement = $this->departementRepository->find($id);
         if ($departement) {
@@ -89,7 +88,7 @@ class MyConfiguration
         return false;
     }
 
-    private function transformeValue($value): Personnel|bool|string|AnneeUniversitaire|null
+    private function transformeValue(mixed $value): Personnel | bool | string | AnneeUniversitaire | null
     {
         if ('false' === $value) {
             return false;
@@ -114,7 +113,7 @@ class MyConfiguration
         return $value;
     }
 
-    private function updateDiplome($id, $name, $value): bool
+    private function updateDiplome(int | string $id, string $name, mixed $value): bool
     {
         $diplome = $this->diplomeRepository->find($id);
         if ($diplome) {
@@ -127,7 +126,7 @@ class MyConfiguration
         return false;
     }
 
-    private function updateAnnee($id, $name, $value): bool
+    private function updateAnnee(int | string $id, string $name, mixed $value): bool
     {
         $annee = $this->anneeRepository->find($id);
         if ($annee) {
@@ -140,7 +139,7 @@ class MyConfiguration
         return false;
     }
 
-    private function updateSemestre($id, $name, $value): bool
+    private function updateSemestre(int | string $id, string $name, mixed $value): bool
     {
         $semestre = $this->semestreRepository->find($id);
         if ($semestre) {

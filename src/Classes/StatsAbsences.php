@@ -21,37 +21,30 @@ use Exception;
 class StatsAbsences
 {
     /**
-     *
      * @throws Exception
      */
-    public function calculStatistiquesAbsencesEtudiant($absences)
+    public function calculStatistiquesAbsencesEtudiant(array $absences): StatisquesAbsences
     {
         $statisquesAbsences = new StatisquesAbsences();
-        $prec = Carbon::createMidnightDate(2000,01,01);
+        $prec = Carbon::createMidnightDate(2000, 01, 01);
         /** @var Absence $absence */
         foreach ($absences as $absence) {
             ++$statisquesAbsences->nbCoursManques;
-            if ($absence->getDateHeure() !== null) {
+            if (null !== $absence->getDateHeure()) {
                 if ($absence->getDateHeure()->format('Y-m-d') !== $prec->format('Y-m-d')) {
                     ++$statisquesAbsences->nbDemiJournee;
-                } else {
-                    if ((int)$prec->format('H') < 13 && (int)$absence->getDateHeure()->format('H') >= 13) {
-                        ++$statisquesAbsences->nbDemiJournee;
-                    }
+                } elseif ((int) $prec->format('H') < 13 && (int) $absence->getDateHeure()->format('H') >= 13) {
+                    ++$statisquesAbsences->nbDemiJournee;
                 }
                 $prec = $absence->getDateHeure();
             }
-
 
             if (null !== $absence->getDuree()) {
                 $statisquesAbsences->addDuree($absence->getDuree());
             }
             $statisquesAbsences->incJustifieOrNotJutifie($absence->isJustifie());
-
-
         }
 
         return $statisquesAbsences;
-
     }
 }

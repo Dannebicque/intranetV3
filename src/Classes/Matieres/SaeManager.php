@@ -36,7 +36,7 @@ class SaeManager extends AbstractMatiereManager implements MatiereInterface
         $this->saeAdapter = $saeAdapter;
     }
 
-    public function find($id): ?Matiere
+    public function find(int | string $id): ?Matiere
     {
         $matiere = $this->apcSaeRepository->find($id);
 
@@ -71,9 +71,9 @@ class SaeManager extends AbstractMatiereManager implements MatiereInterface
         return $this->saeAdapter->single($matiere);
     }
 
-    public function update($name, $value, ApcSae $apcSae): bool
+    public function update(string $name, mixed $value, ApcSae $apcSae): bool
     {
-        $method = 'set' . $name;
+        $method = 'set'.$name;
         if (method_exists($apcSae, $method)) {
             $apcSae->$method(Tools::convertToFloat($value));
             $this->entityManager->flush();

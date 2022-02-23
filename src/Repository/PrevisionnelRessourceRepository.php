@@ -29,7 +29,7 @@ class PrevisionnelRessourceRepository extends PrevisionnelRepository
         Personnel $personnel,
         Departement $departement,
         int $annee = 0
-    ) {
+    ): array {
         return $this->getPrevisionnelPersonnelAnneeDepartement($personnel, $annee, $departement);
     }
 
@@ -37,7 +37,7 @@ class PrevisionnelRessourceRepository extends PrevisionnelRepository
         Personnel $personnel,
         int $annee = 0,
         ?Departement $departement = null
-    ) {
+    ): array {
         $query = $this->createQueryBuilder('p')
             ->innerJoin(ApcRessource::class, 'm', 'WITH', 'p.idMatiere = m.id')
             ->innerJoin(Personnel::class, 'pers', 'WITH', 'p.personnel = pers.id')
@@ -68,7 +68,7 @@ class PrevisionnelRessourceRepository extends PrevisionnelRepository
             ->getResult();
     }
 
-    public function findByDepartement(Departement $departement, int $annee = 0)
+    public function findByDepartement(Departement $departement, int $annee = 0): array
     {
         $query = $this->createQueryBuilder('p')
             ->innerJoin(ApcRessource::class, 'm', 'WITH', 'p.idMatiere = m.id')
@@ -92,7 +92,7 @@ class PrevisionnelRessourceRepository extends PrevisionnelRepository
             ->getResult();
     }
 
-    public function findPrevisionnelMatiere($matiere, $annee)
+    public function findPrevisionnelMatiere(int $matiere, int $annee): array
     {
         return $this->createQueryBuilder('p')
             ->leftJoin(Personnel::class, 'pers', 'WITH', 'p.personnel = pers.id')
@@ -111,7 +111,7 @@ class PrevisionnelRessourceRepository extends PrevisionnelRepository
             ->getResult();
     }
 
-    public function findPrevisionnelSemestre(Semestre $semestre, $annee)
+    public function findPrevisionnelSemestre(Semestre $semestre, int $annee): array
     {
         return $this->createQueryBuilder('p')
             ->leftJoin(Personnel::class, 'pers', 'WITH', 'p.personnel = pers.id')
@@ -128,7 +128,7 @@ class PrevisionnelRessourceRepository extends PrevisionnelRepository
             ->getResult();
     }
 
-    public function findPrevisionnelMatierePersonnelAnnee($matiere, $personnel, $annee)
+    public function findPrevisionnelMatierePersonnelAnnee(int $matiere, Personnel $personnel, int $annee): array
     {
         return $this->createQueryBuilder('p')
             ->leftJoin(Personnel::class, 'pers', 'WITH', 'p.personnel = pers.id')
@@ -149,7 +149,7 @@ class PrevisionnelRessourceRepository extends PrevisionnelRepository
             ->getResult();
     }
 
-    public function findByDiplome(Diplome $diplome, $annee = 0)
+    public function findByDiplome(Diplome $diplome, int $annee = 0): array
     {
         $query = $this->createQueryBuilder('p')
             ->innerJoin(ApcRessource::class, 'm', 'WITH', 'p.idMatiere = m.id')
@@ -175,7 +175,7 @@ class PrevisionnelRessourceRepository extends PrevisionnelRepository
             ->getResult();
     }
 
-    public function findByDiplomeToDelete(Diplome $diplome, int $annee = 0)
+    public function findByDiplomeToDelete(Diplome $diplome, int $annee = 0): array
     {
         $query = $this->createQueryBuilder('p')
             ->innerJoin(ApcRessource::class, 'm', 'WITH', 'p.idMatiere = m.id')

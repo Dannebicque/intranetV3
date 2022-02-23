@@ -9,6 +9,7 @@
 
 namespace App\Form;
 
+use App\Entity\Departement;
 use App\Entity\Ppn;
 use App\Repository\PpnRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -22,7 +23,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class PpnImportType extends AbstractType
 {
-    private $departement;
+    private Departement $departement;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

@@ -33,7 +33,7 @@ class ProjetEtudiantRepository extends ServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function findExist(ProjetPeriode $projetPeriode, Etudiant $etudiant)
+    public function findExist(ProjetPeriode $projetPeriode, Etudiant $etudiant): ?ProjetEtudiant
     {
         return $this->createQueryBuilder('s')
             ->innerJoin('s.etudiants', 'e')

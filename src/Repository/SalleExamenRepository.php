@@ -9,6 +9,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Departement;
 use App\Entity\SalleExamen;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -27,7 +28,7 @@ class SalleExamenRepository extends ServiceEntityRepository
         parent::__construct($registry, SalleExamen::class);
     }
 
-    public function findByDepartement($departement, $nbResult = 0): array
+    public function findByDepartement(Departement $departement, int $nbResult = 0): array
     {
         $q = $this->createQueryBuilder('a')
             ->andWhere('a.departement = :departement')

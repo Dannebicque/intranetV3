@@ -54,7 +54,7 @@ class Matiere
 
     public bool $suspendu = false;
     public ?Semestre $semestre;
-    public $parcours;
+    public ?Parcour $parcours;
 
     public function getUeId(): ?int
     {

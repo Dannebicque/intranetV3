@@ -28,9 +28,9 @@ class MyContact
         $this->entityManager = $entityManager;
     }
 
-    public function update(Contact $contact, $name, $value): bool
+    public function update(Contact $contact, string $name, mixed $value): bool
     {
-        $method = 'set' . $name;
+        $method = 'set'.$name;
         if (method_exists($contact, $method)) {
             $contact->$method($value);
             $this->entityManager->flush();

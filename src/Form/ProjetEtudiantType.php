@@ -11,6 +11,7 @@ namespace App\Form;
 
 use App\Entity\Etudiant;
 use App\Entity\ProjetEtudiant;
+use App\Entity\Semestre;
 use App\Form\Type\YesNoType;
 use App\Repository\EtudiantRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -23,7 +24,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProjetEtudiantType extends AbstractType
 {
-    private $semestre;
+    private Semestre $semestre;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

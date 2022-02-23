@@ -9,16 +9,15 @@
 
 namespace App\Classes\Matieres;
 
-
 use App\DTO\Matiere;
 use App\DTO\MatiereCollection;
 use App\Entity\Semestre;
 
 interface MatiereInterface
 {
-    public function findFromSelect($data); //champ select structuré avec typeMatiere_idmatiere
+    public function findFromSelect(string $data): ?Matiere; //champ select structuré avec typeMatiere_idmatiere
 
-    public function find($id): ?Matiere; //récupère depuis un ID
+    public function find(int | string $id): ?Matiere; //récupère depuis un ID
 
     public function findBySemestre(Semestre $semestre): MatiereCollection;
 }

@@ -11,11 +11,11 @@ namespace App\Classes;
 
 class NotesTri
 {
-    public function tri($notes, $matieres)
+    public function tri(array $notes, array $matieres): array
     {
         $t = [];
         foreach ($notes as $note) {
-            $t[$matieres[$note->getEvaluation()->getTypeIdMatiere()]->codeMatiere . '_' . $note->getId()] = $note;
+            $t[$matieres[$note->getEvaluation()->getTypeIdMatiere()]->codeMatiere.'_'.$note->getId()] = $note;
         }
 
         ksort($t);

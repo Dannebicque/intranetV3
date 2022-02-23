@@ -198,7 +198,7 @@ class EtudiantSousCommission
         return 'badge bg-danger';
     }
 
-    public function nbAbsences()
+    public function nbAbsences(): int
     {
         $nbAbsences = 0;
         foreach ($this->moyenneMatieres as $moyenneMatiere) {
@@ -208,7 +208,7 @@ class EtudiantSousCommission
         return $nbAbsences;
     }
 
-    public function getNbSemestres()
+    public function getNbSemestres(): int
     {
         return count($this->scolarite);
     }

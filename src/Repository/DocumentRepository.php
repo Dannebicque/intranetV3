@@ -33,7 +33,7 @@ class DocumentRepository extends ServiceEntityRepository
         parent::__construct($registry, Document::class);
     }
 
-    public function findByTypeDocument($type, bool $isEtudiant = true)
+    public function findByTypeDocument(int $type, bool $isEtudiant = true): array
     {
         $query = $this->createQueryBuilder('d')
             ->where('d.typeDocument = :type')
@@ -49,7 +49,7 @@ class DocumentRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByDepartement(Departement $departement)
+    public function findByDepartement(Departement $departement): array
     {
         return $this->createQueryBuilder('d')
             ->innerJoin(TypeDocument::class, 't', 'WITH', 'd.typeDocument = t.id')

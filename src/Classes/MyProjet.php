@@ -18,36 +18,28 @@ use App\Entity\ProjetEtudiant;
 use App\Entity\ProjetPeriode;
 use App\Repository\EtudiantRepository;
 use App\Repository\ProjetEtudiantRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use function array_key_exists;
+use Doctrine\ORM\EntityManagerInterface;
 
 class MyProjet
 {
-    protected EntityManagerInterface $entityManger;
 
-    protected ProjetEtudiantRepository $projetEtudiantRepository;
-
-    protected EtudiantRepository $etudiantRepository;
-
-    protected $dataEtudiants = [];
+    protected array$dataEtudiants = [];
 
     /**
      * MyStage constructor.
      */
     public function __construct(
-        EntityManagerInterface $entityManger,
-        ProjetEtudiantRepository $projetEtudiantRepository,
-        EtudiantRepository $etudiantRepository
+        private EntityManagerInterface $entityManger,
+        private ProjetEtudiantRepository $projetEtudiantRepository,
+        private EtudiantRepository $etudiantRepository
     ) {
-        $this->entityManger = $entityManger;
-        $this->projetEtudiantRepository = $projetEtudiantRepository;
-        $this->etudiantRepository = $etudiantRepository;
     }
 
     public function getDataPeriode(ProjetPeriode $projetPeriode, ?int $anneeUniversitaire = 0): self
     {
         if (0 === $anneeUniversitaire) {
-            $anneeUniversitaire = null !== $projetPeriode->getAnneeUniversitaire() ? $projetPeriode->getAnneeUniversitaire()->getAnnee() : (int)date('Y');
+            $anneeUniversitaire = null !== $projetPeriode->getAnneeUniversitaire() ? $projetPeriode->getAnneeUniversitaire()->getAnnee() : (int) date('Y');
         }
 
         $etudiants = $this->etudiantRepository->findBySemestre($projetPeriode->getSemestre());

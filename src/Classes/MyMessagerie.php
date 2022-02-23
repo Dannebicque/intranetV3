@@ -7,7 +7,6 @@
  * @lastUpdate 29/06/2021 17:48
  */
 
-
 namespace App\Classes;
 
 use App\Entity\Departement;
@@ -21,12 +20,11 @@ use App\Interfaces\UtilisateurInterface;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
-use Doctrine\Common\Collections\Collection;
+use function count;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
-use function count;
 
 class MyMessagerie
 {
@@ -45,7 +43,7 @@ class MyMessagerie
     private Personnel $expediteur;
 
     /** @var Etudiant[] */
-    private  $etudiants = [];
+    private array $etudiants = [];
 
     private GroupeRepository $groupeRepository;
 
@@ -55,7 +53,7 @@ class MyMessagerie
 
     private string $typeDestinataires = '';
     private string $type;
-    private $id;
+    private int $id;
     private array $pjs = [];
 
     /**
@@ -78,10 +76,9 @@ class MyMessagerie
     }
 
     /**
-     *
      * @throws TransportExceptionInterface
      */
-    public function sendToPersonnels($destinataires, Departement $departement): void
+    public function sendToPersonnels(array $destinataires, Departement $departement): void
     {
         //mail réel + notification (utiliser le busMessage ?
         //sauvegarde en BDD
@@ -95,13 +92,13 @@ class MyMessagerie
                 foreach ($temp as $dest) {
                     $listeDestinataires[] = $dest;
                 }
-                $this->typeDestinataires .= Personnel::PERMANENT . ', ';
+                $this->typeDestinataires .= Personnel::PERMANENT.', ';
             } elseif (Personnel::VACATAIRE === $destinataire) {
                 $temp = $this->personnelRepository->findByType(Personnel::VACATAIRE, $departement);
                 foreach ($temp as $dest) {
                     $listeDestinataires[] = $dest;
                 }
-                $this->typeDestinataires .= Personnel::VACATAIRE . ', ';
+                $this->typeDestinataires .= Personnel::VACATAIRE.', ';
             } else {
                 $listeDestinataires[] = $this->personnelRepository->find($destinataire);
             }
@@ -142,7 +139,7 @@ class MyMessagerie
         $this->entityManager->flush();
     }
 
-    public function setMessage($sujet, $message, $expediteur, $pjs = null): void
+    public function setMessage(string $sujet, string $message, string $expediteur, array $pjs = []): void
     {
         //pour définir les éléments du message, commun à tous les destinataires
         $this->sujet = $sujet;
@@ -165,14 +162,14 @@ class MyMessagerie
     {
         //envoi de la synthèse à l'auteur
         $email = (new TemplatedEmail())
-            ->subject('Votre message : ' . $this->sujet)
+            ->subject('Votre message : '.$this->sujet)
             ->from($this->configuration->getExpediteurIntranet())
             ->to($this->expediteur->getMailuniv())
             ->htmlTemplate('mails/messageSynthese.html.twig')
             ->context([
-                'message'    => $this->message,
+                'message' => $this->message,
                 'expediteur' => $this->expediteur,
-                'nb'         => $this->nbMessagesEnvoyes,
+                'nb' => $this->nbMessagesEnvoyes,
                 'nbetudiant' => $this->nbEtudiants,
             ]);
 
@@ -180,10 +177,9 @@ class MyMessagerie
     }
 
     /**
-     *
      * @throws TransportExceptionInterface
      */
-    public function sendToDestinataires($destinataires, $typeDestinataire, Departement $departement = null): void
+    public function sendToDestinataires(array $destinataires, string $typeDestinataire, Departement $departement = null): void
     {
         $this->type = $typeDestinataire;
         $this->nbMessagesEnvoyes = 0;
@@ -196,14 +192,14 @@ class MyMessagerie
                 break;
             case Message::MESSAGE_TYPE_SEMESTRE:
                 foreach ($destinataires as $destinataire) {
-                    $this->typeDestinataires .= $destinataire . ', ';
+                    $this->typeDestinataires .= $destinataire.', ';
                     $this->getEtudiantsSemestre($destinataire);
                     $this->sendToEtudiants();
                 }
                 break;
             case Message::MESSAGE_TYPE_GROUPE:
                 foreach ($destinataires as $destinataire) {
-                    $this->typeDestinataires .= $destinataire . ', ';
+                    $this->typeDestinataires .= $destinataire.', ';
                     $this->getEtudiantsGroupe($destinataire);
                     $this->sendToEtudiants();
                 }
@@ -215,7 +211,7 @@ class MyMessagerie
         }
     }
 
-    private function saveMessageDatabase($etat = Message::ETAT_MESSAGE_DRAFT): Message
+    private function saveMessageDatabase(string $etat = Message::ETAT_MESSAGE_DRAFT): Message
     {
         $mess = new Message();
         $mess->setMessage($this->message);
@@ -244,7 +240,7 @@ class MyMessagerie
         return $mess;
     }
 
-    private function saveDestinataireEtudiantDatabase(Message $message, $etudiant): void
+    private function saveDestinataireEtudiantDatabase(Message $message, Etudiant $etudiant): void
     {
         $dest = new MessageDestinataireEtudiant();
         $dest->setMessage($message);
@@ -252,7 +248,7 @@ class MyMessagerie
         $this->entityManager->persist($dest);
     }
 
-    private function saveDestinatairePersonnelDatabase(Message $message, $personnel): void
+    private function saveDestinatairePersonnelDatabase(Message $message, Personnel $personnel): void
     {
         $dest = new MessageDestinatairePersonnel();
         $dest->setMessage($message);
@@ -260,13 +256,13 @@ class MyMessagerie
         $this->entityManager->persist($dest);
     }
 
-    private function getEtudiantsSemestre($codeSemestre): void
+    private function getEtudiantsSemestre(string $codeSemestre): void
     {
         //récupére tous les étudiants d'un semestre
         $this->etudiants = $this->etudiantRepository->findBySemestre($codeSemestre);
     }
 
-    private function getEtudiantsGroupe($codeGroupe): void
+    private function getEtudiantsGroupe(int | string $codeGroupe): void
     {
         //récupère tous les étudiants d'un ensemble de groupe
         $groupe = $this->groupeRepository->find($codeGroupe);
@@ -286,7 +282,7 @@ class MyMessagerie
         }
     }
 
-    public function saveDraft($sujet, $message, Personnel $expediteur, $copie, $destinataires, $typeDestinataire)
+    public function saveDraft(string $sujet, string $message, Personnel $expediteur, ?array $destinataires = [], ?string $typeDestinataire = null, ?string $copie= null): void
     {
         //todo: a refaire
         $this->sujet = $sujet;
@@ -297,17 +293,17 @@ class MyMessagerie
         $this->saveMessageDatabase();
     }
 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function addPj($file)
+    public function addPj($file): void
     {
         $this->pjs[] = $file;
     }
 
-    public function sendMessage(UtilisateurInterface $destinataire)
+    public function sendMessage(UtilisateurInterface $destinataire): TemplatedEmail
     {
         $message = (new TemplatedEmail())
             ->subject($this->sujet)

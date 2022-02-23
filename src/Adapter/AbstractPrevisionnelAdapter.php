@@ -13,7 +13,6 @@ use App\DTO\Previsionnel;
 
 class AbstractPrevisionnelAdapter
 {
-    /** @param array<int, mixed> $previ */
     public function single(array $previ): Previsionnel
     {
         $p = new Previsionnel();
@@ -31,8 +30,8 @@ class AbstractPrevisionnelAdapter
         $p->matiere_code = $previ['codeMatiere'];
         $p->matiere_code_element = $previ['matiere_code_element'];
         $p->personnel_id = $previ['id_personnel'] ?? 0;
-        $p->personnel_nom = mb_strtoupper($previ['nom']) ?? '-';
-        $p->personnel_prenom = ucwords(mb_strtolower($previ['prenom'])) ?? '-';
+        $p->personnel_nom = $previ['nom'] !== '' ? mb_strtoupper($previ['nom']) : '-';
+        $p->personnel_prenom = $previ['prenom'] !== '' ? ucwords(mb_strtolower($previ['prenom'])) : '-';
         $p->personnel_numeroHarpege = $previ['numeroHarpege'] ?? 0;
         $p->personnel_mail = $previ['mailUniv'] ?? '-';
         $p->nbHeuresService = $previ['nbHeuresService'] ?? 0;

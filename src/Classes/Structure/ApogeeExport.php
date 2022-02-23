@@ -24,30 +24,30 @@ class ApogeeExport
         $this->myExcelWriter = $myExcelWriter;
     }
 
-    public function setDiplome(Diplome $diplome)
+    public function setDiplome(Diplome $diplome): void
     {
         $this->diplome = $diplome;
     }
 
-    public function export(string $nomFichier)
+    public function export(string $nomFichier): StreamedResponse
     {
         $this->genereFichierApogee();
 
         $writer = new Xlsx($this->myExcelWriter->getSpreadsheet());
 
         return new StreamedResponse(
-            static function() use ($writer) {
+            static function () use ($writer) {
                 $writer->save('php://output');
             },
             200,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition' => 'attachment;filename="' . $nomFichier . '"',
+                'Content-Disposition' => 'attachment;filename="'.$nomFichier.'"',
             ]
         );
     }
 
-    private function genereFichierApogee()
+    private function genereFichierApogee(): void
     {
         /** @var \App\Entity\Semestre $semestre */
         foreach ($this->diplome->getSemestres() as $semestre) {
@@ -75,7 +75,7 @@ class ApogeeExport
             ]);
 
             $this->myExcelWriter->writeCellName('A5',
-                $this->diplome->getCodeDiplome() . ' ' . $this->diplome->getCodeVersion());
+                $this->diplome->getCodeDiplome().' '.$this->diplome->getCodeVersion());
 
             $this->myExcelWriter->writeCellXY(1, 6, 'Code étape', [
                 'color' => 'bb1e10',
@@ -85,7 +85,7 @@ class ApogeeExport
             ]);
 
             $this->myExcelWriter->writeCellName('A7',
-                $semestre->getAnnee()->getCodeEtape() . ' ' . $semestre->getAnnee()->getCodeVersion());
+                $semestre->getAnnee()->getCodeEtape().' '.$semestre->getAnnee()->getCodeVersion());
 
             $this->myExcelWriter->writeCellXY(1, 9, 'Niveau 1', [
                 'color' => 'bb1e10',
@@ -149,7 +149,7 @@ class ApogeeExport
                 $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(3, $ligne, $ressource->getLibelleCourt());
                 $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(4, $ligne, $ressource->getCodeElement());
                 $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(5, $ligne,
-                    'M' === $ressource->getCodeElement()[5] ? 'Mutualisée' : 'UE ' . $ressource->getCodeElement()[5]);
+                    'M' === $ressource->getCodeElement()[5] ? 'Mutualisée' : 'UE '.$ressource->getCodeElement()[5]);
                 ++$ligne;
             }
 
@@ -167,7 +167,7 @@ class ApogeeExport
                 $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(3, $ligne, $sae->getLibelleCourt());
                 $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(4, $ligne, $sae->getCodeElement());
                 $this->myExcelWriter->getSheet()->setCellValueByColumnAndRow(5, $ligne,
-                    'M' === $sae->getCodeElement()[5] ? 'Mutualisée' : 'UE ' . $sae->getCodeElement()[5]);
+                    'M' === $sae->getCodeElement()[5] ? 'Mutualisée' : 'UE '.$sae->getCodeElement()[5]);
                 ++$ligne;
             }
             $this->myExcelWriter->getColumnsAutoSize('A', 'I');

@@ -32,7 +32,7 @@ class MessageDestinatairePersonnelRepository extends ServiceEntityRepository
         parent::__construct($registry, MessageDestinatairePersonnel::class);
     }
 
-    public function findLast(Personnel $user, $nbMessage = 0, $filtre = '', $page = 0)
+    public function findLast(Personnel $user, int $nbMessage = 0, string $filtre = '', int $page = 0): array
     {
         $query = $this->createQueryBuilder('m')
             ->innerJoin(Message::class, 'mes', 'WITH', 'mes.id = m.message')
@@ -87,7 +87,7 @@ class MessageDestinatairePersonnelRepository extends ServiceEntityRepository
      * @throws NonUniqueResultException
      * @throws NoResultException
      */
-    public function getNbUnread(Personnel $user)
+    public function getNbUnread(Personnel $user): ?int
     {
         return $this->createQueryBuilder('m')
             ->select('count(m.id)')

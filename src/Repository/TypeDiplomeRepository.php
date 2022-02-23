@@ -9,8 +9,10 @@
 
 namespace App\Repository;
 
+use _PHPStan_70b6e53dc\Symfony\Component\Console\Color;
 use App\Entity\TypeDiplome;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -30,13 +32,13 @@ class TypeDiplomeRepository extends ServiceEntityRepository
         parent::__construct($registry, TypeDiplome::class);
     }
 
-    public function findAllBuilder()
+    public function findAllBuilder(): QueryBuilder
     {
         return $this->createQueryBuilder('t')
             ->orderBy('t.libelle', 'ASC');
     }
 
-    public function findAll()
+    public function findAll(): array
     {
         return $this->findAllBuilder()
             ->getQuery()

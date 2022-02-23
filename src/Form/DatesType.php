@@ -10,6 +10,7 @@
 namespace App\Form;
 
 use App\Entity\Date;
+use App\Entity\Departement;
 use App\Entity\Semestre;
 use App\Form\Type\DateRangeType;
 use App\Form\Type\TypeDestinataireType;
@@ -31,7 +32,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class DatesType extends AbstractType
 {
-    private $departement;
+    private Departement $departement;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

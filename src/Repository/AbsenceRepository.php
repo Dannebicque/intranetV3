@@ -36,7 +36,7 @@ class AbsenceRepository extends ServiceEntityRepository
         parent::__construct($registry, Absence::class);
     }
 
-    public function getByMatiereArray($matiere, AnneeUniversitaire $anneeUniversitaire): array
+    public function getByMatiereArray(Matiere $matiere, AnneeUniversitaire $anneeUniversitaire): array
     {
         $absences = $this->getByMatiere($matiere, $anneeUniversitaire);
 
@@ -60,7 +60,7 @@ class AbsenceRepository extends ServiceEntityRepository
         return $tab;
     }
 
-    public function getByMatiere(Matiere $matiere, ?AnneeUniversitaire $anneeUniversitaire = null)
+    public function getByMatiere(Matiere $matiere, ?AnneeUniversitaire $anneeUniversitaire = null): array
     {
         $query = $this->createQueryBuilder('m')
             ->where('m.idMatiere = :matiere')
@@ -107,7 +107,7 @@ class AbsenceRepository extends ServiceEntityRepository
         return $trattrapages;
     }
 
-    public function getBySemestre(Semestre $semestre, AnneeUniversitaire $anneeCourante)
+    public function getBySemestre(Semestre $semestre, AnneeUniversitaire $anneeCourante): array
     {
         return $this->createQueryBuilder('a')
             ->where('a.semestre = :semestre')
@@ -119,12 +119,11 @@ class AbsenceRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    //todo: utiliser le semestre de Absence ? plutot que matière
     public function getByEtudiantAndSemestre(
-        $matieres,
+        array $matieres,
         Etudiant $etudiant,
         AnneeUniversitaire $anneeUniversitaire
-    ) {
+    ): array {
         if (0 === count($matieres)) {
             return [];
         }
@@ -147,7 +146,7 @@ class AbsenceRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getAJustifier(AbsenceJustificatif $justificatif)
+    public function getAJustifier(AbsenceJustificatif $justificatif): ?array
     {
         if (null === $justificatif->getEtudiant()) {
             return null;
@@ -165,7 +164,7 @@ class AbsenceRepository extends ServiceEntityRepository
                 ->getResult();
     }
 
-    public function findByMatiere(int $matiere, string $type, ?AnneeUniversitaire $annee = null)
+    public function findByMatiere(int $matiere, string $type, ?AnneeUniversitaire $annee = null): array
     {
         $query = $this->createQueryBuilder('e')
             ->where('e.idMatiere = :matiere')

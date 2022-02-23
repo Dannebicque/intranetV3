@@ -18,7 +18,7 @@ class PrevisionnelSaeAdapter extends AbstractPrevisionnelAdapter implements Prev
     public function collection(array $previsionnels): PrevisionnelCollection
     {
         $collection = new PrevisionnelCollection();
-        /** @var \App\Entity\Previsionnel $previ */
+
         foreach ($previsionnels as $previ) {
             $collection->add($this->single($previ));
         }

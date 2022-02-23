@@ -20,7 +20,7 @@ class PrevisionnelSaeRepository extends PrevisionnelRepository
 {
     public const TYPE = 'sae';
 
-    public function findPrevisionnelEnseignantComplet(Personnel $personnel, $annee): array
+    public function findPrevisionnelEnseignantComplet(Personnel $personnel, int $annee): array
     {
         return $this->getPrevisionnelPersonnelAnneeDepartement($personnel, $annee);
     }
@@ -28,8 +28,8 @@ class PrevisionnelSaeRepository extends PrevisionnelRepository
     public function findPrevisionnelEnseignantDepartementAnnee(
         Personnel $personnel,
         Departement $departement,
-        $annee = 0
-    ) {
+        int $annee = 0
+    ): array {
         return $this->getPrevisionnelPersonnelAnneeDepartement($personnel, $annee, $departement);
     }
 
@@ -37,7 +37,7 @@ class PrevisionnelSaeRepository extends PrevisionnelRepository
         Personnel $personnel,
         int $annee = 0,
         ?Departement $departement = null
-    ) {
+    ): array {
         $query = $this->createQueryBuilder('p')
             ->innerJoin(Personnel::class, 'pers', 'WITH', 'p.personnel = pers.id')
             ->innerJoin(ApcSae::class, 'm', 'WITH', 'p.idMatiere = m.id')
@@ -68,7 +68,7 @@ class PrevisionnelSaeRepository extends PrevisionnelRepository
             ->getResult();
     }
 
-    public function findByDepartement(Departement $departement, int $annee = 0)
+    public function findByDepartement(Departement $departement, int $annee = 0): array
     {
         $query = $this->createQueryBuilder('p')
             ->leftJoin(Personnel::class, 'pers', 'WITH', 'p.personnel = pers.id')
@@ -92,7 +92,7 @@ class PrevisionnelSaeRepository extends PrevisionnelRepository
             ->getResult();
     }
 
-    public function findPrevisionnelMatiere($matiere, $annee)
+    public function findPrevisionnelMatiere(int $matiere, int $annee): array
     {
         return $this->createQueryBuilder('p')
             ->leftJoin(Personnel::class, 'pers', 'WITH', 'p.personnel = pers.id')
@@ -111,7 +111,7 @@ class PrevisionnelSaeRepository extends PrevisionnelRepository
             ->getResult();
     }
 
-    public function findPrevisionnelSemestre(Semestre $semestre, $annee)
+    public function findPrevisionnelSemestre(Semestre $semestre, int $annee): array
     {
         return $this->createQueryBuilder('p')
             ->leftJoin(Personnel::class, 'pers', 'WITH', 'p.personnel = pers.id')
@@ -128,7 +128,7 @@ class PrevisionnelSaeRepository extends PrevisionnelRepository
             ->getResult();
     }
 
-    public function findPrevisionnelMatierePersonnelAnnee($matiere, $personnel, $annee)
+    public function findPrevisionnelMatierePersonnelAnnee(int $matiere, Personnel $personnel, int $annee): array
     {
         return $this->createQueryBuilder('p')
             ->leftJoin(Personnel::class, 'pers', 'WITH', 'p.personnel = pers.id')
@@ -149,7 +149,7 @@ class PrevisionnelSaeRepository extends PrevisionnelRepository
             ->getResult();
     }
 
-    public function findByDiplome(Diplome $diplome, $annee = 0)
+    public function findByDiplome(Diplome $diplome, int $annee = 0): array
     {
         $query = $this->createQueryBuilder('p')
             //todo: devrait être leftJoin
@@ -176,7 +176,7 @@ class PrevisionnelSaeRepository extends PrevisionnelRepository
             ->getResult();
     }
 
-    public function findByDiplomeToDelete(Diplome $diplome, $annee = 0)
+    public function findByDiplomeToDelete(Diplome $diplome, int $annee = 0): array
     {
         $query = $this->createQueryBuilder('p')
             ->innerJoin(ApcSae::class, 'm', 'WITH', 'p.idMatiere = m.id')

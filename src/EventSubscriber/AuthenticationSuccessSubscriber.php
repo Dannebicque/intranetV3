@@ -30,9 +30,8 @@ class AuthenticationSuccessSubscriber implements EventSubscriberInterface
         $this->session = $session;
     }
 
-    public function onSecurityAuthenticationSuccess(AuthenticationEvent $event)
+    public function onSecurityAuthenticationSuccess(AuthenticationEvent $event): RedirectResponse
     {
-
         $target = $this->getTargetPath($this->session->getSession(), $event->getAuthenticationToken()->getFirewallName());
         $user = $event->getAuthenticationToken()->getUser();
         if ($user instanceof Etudiant) {

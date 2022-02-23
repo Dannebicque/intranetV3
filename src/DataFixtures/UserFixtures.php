@@ -25,6 +25,9 @@ class UserFixtures extends Fixture
         $this->encoder = $encoder;
     }
 
+    /**
+     * @throws \JsonException
+     */
     public function load(ObjectManager $manager): void
     {
         $user3 = new Personnel();
@@ -41,6 +44,7 @@ class UserFixtures extends Fixture
         $user3->setPhotoName('noimage.png');
         $user3->setCreated(Carbon::now());
         $user3->setUpdatedValue();
+        $user3->setAnneeUniversitaire($this->getReference(AnneeUniversitaireFixture::ANNEE_UNIVERSITAIRE_REFERENCE));
         $manager->persist($user3);
 
         $user2 = new Personnel();

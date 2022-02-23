@@ -9,7 +9,6 @@
 
 namespace App\Classes\Hrs;
 
-
 use App\Entity\Departement;
 use App\Entity\Personnel;
 use App\Repository\HrsRepository;
@@ -27,16 +26,16 @@ class HrsManager
         Personnel $personnel,
         Departement $departement,
         int $annee
-    ) {
+    ): array {
         return $this->hrsRepository->getPersonnelDepartementAnnee($personnel, $departement, $annee);
     }
 
-    public function getPersonnelAnnee(Personnel $personnel, ?int $annee)
+    public function getPersonnelAnnee(Personnel $personnel, ?int $annee): array
     {
         return $this->hrsRepository->getPersonnelAnnee($personnel, $annee);
     }
 
-    public function getHrsDepartementAnnee(Departement $departement, ?int $annee)
+    public function getHrsDepartementAnnee(Departement $departement, ?int $annee): array
     {
         return $this->hrsRepository->findByDepartement($departement, $annee);
     }

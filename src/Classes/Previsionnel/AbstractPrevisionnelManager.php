@@ -11,5 +11,4 @@ namespace App\Classes\Previsionnel;
 
 abstract class AbstractPrevisionnelManager
 {
-
 }

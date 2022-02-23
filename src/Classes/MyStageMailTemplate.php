@@ -22,24 +22,16 @@ use Doctrine\ORM\NonUniqueResultException;
 
 class MyStageMailTemplate
 {
-    protected StageMailTemplateRepository $stageMailTemplateRepository;
-    protected EntityManagerInterface $entityManager;
-
-    /**
-     * MyStageMailTemplate constructor.
-     */
     public function __construct(
-        StageMailTemplateRepository $stageMailTemplateRepository,
-        EntityManagerInterface $entityManager
+        private StageMailTemplateRepository $stageMailTemplateRepository,
+        private EntityManagerInterface $entityManager
     ) {
-        $this->stageMailTemplateRepository = $stageMailTemplateRepository;
-        $this->entityManager = $entityManager;
     }
 
     /**
      * @throws NonUniqueResultException
      */
-    public function updateTemplate($code, $sujet, $message, StagePeriode $stagePeriode): void
+    public function updateTemplate(string $code, string $sujet, string $message, StagePeriode $stagePeriode): void
     {
         //todo: update du mail généré $this->>load(template) avec Environnment
         //rechercher si le modèle existe
@@ -71,7 +63,7 @@ class MyStageMailTemplate
         $this->entityManager->flush();
     }
 
-    private function transformeFromEditeur($message)
+    private function transformeFromEditeur(string $message): string
     {
         return str_replace(array_keys(StageMailTemplate::CHAMPS_PUBLIPOSTAGE),
             array_values(StageMailTemplate::CHAMPS_PUBLIPOSTAGE), $message);

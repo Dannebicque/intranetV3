@@ -33,7 +33,7 @@ class AlternanceRepository extends ServiceEntityRepository
         parent::__construct($registry, Alternance::class);
     }
 
-    public function getByPersonnelAndAnneeUniversitaire(Personnel $personnel, AnneeUniversitaire $anneeUniversitaire)
+    public function getByPersonnelAndAnneeUniversitaire(Personnel $personnel, AnneeUniversitaire $anneeUniversitaire): array
     {
         return $this->createQueryBuilder('a')
             ->where('a.anneeUniversitaire = :annee')
@@ -47,7 +47,7 @@ class AlternanceRepository extends ServiceEntityRepository
     public function getHistoriqueByPersonnelAndAnneeUniversitaire(
         Personnel $personnel,
         AnneeUniversitaire $anneeUniversitaire
-    ) {
+    ): array {
         return $this->createQueryBuilder('a')
             ->where('a.anneeUniversitaire != :annee')
             ->andWhere('a.tuteurUniversitaire = :personnel')
@@ -57,7 +57,7 @@ class AlternanceRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getByEtudiantAndAnneeUniversitaire(Etudiant $etudiant, AnneeUniversitaire $anneeUniversitaire)
+    public function getByEtudiantAndAnneeUniversitaire(Etudiant $etudiant, AnneeUniversitaire $anneeUniversitaire): array
     {
         return $this->createQueryBuilder('a')
             ->where('a.anneeUniversitaire = :annee')
@@ -71,7 +71,7 @@ class AlternanceRepository extends ServiceEntityRepository
     public function getHistoriqueByEtudantAndAnneeUniversitaire(
         Etudiant $etudiant,
         AnneeUniversitaire $anneeUniversitaire
-    ) {
+    ): array {
         return $this->createQueryBuilder('a')
             ->where('a.anneeUniversitaire != :annee')
             ->andWhere('a.tuteurUniversitaire = :etudiant')
@@ -81,7 +81,7 @@ class AlternanceRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getByAnneeAndAnneeUniversitaire(Annee $annee, AnneeUniversitaire $anneeUniversitaire)
+    public function getByAnneeAndAnneeUniversitaire(Annee $annee, AnneeUniversitaire $anneeUniversitaire): array
     {
         return $this->createQueryBuilder('a')
             ->innerJoin(Etudiant::class, 'e', 'WITH', 'a.etudiant = e.id')
@@ -112,7 +112,7 @@ class AlternanceRepository extends ServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function getOneByEtudiantAndAnneeUniversitaire(Etudiant $etudiant, AnneeUniversitaire $anneeUniversitaire)
+    public function getOneByEtudiantAndAnneeUniversitaire(Etudiant $etudiant, AnneeUniversitaire $anneeUniversitaire): ?Alternance
     {
         return $this->createQueryBuilder('a')
             ->where('a.anneeUniversitaire = :annee')

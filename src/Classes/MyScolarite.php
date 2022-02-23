@@ -16,37 +16,26 @@ use App\Repository\EtudiantRepository;
 use App\Repository\SemestreRepository;
 use App\Repository\UeRepository;
 use App\Utils\Tools;
-use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use function array_key_exists;
 use function count;
+use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 
 class MyScolarite
 {
-    public MyUpload $myUpload;
-    public EntityManagerInterface $entityManager;
-    public SemestreRepository $semestreRepository;
-    public UeRepository $ueRepository;
-    public EtudiantRepository $etudiantRepository;
-
     public function __construct(
-        MyUpload $myUpload,
-        EntityManagerInterface $entityManager,
-         SemestreRepository $semestreRepository,
-         UeRepository $ueRepository,
-         EtudiantRepository $etudiantRepository
+        private MyUpload $myUpload,
+        private EntityManagerInterface $entityManager,
+        private  SemestreRepository $semestreRepository,
+        private  UeRepository $ueRepository,
+        private  EtudiantRepository $etudiantRepository
     ) {
-        $this->myUpload = $myUpload;
-        $this->entityManager = $entityManager;
-        $this->semestreRepository = $semestreRepository;
-        $this->ueRepository = $ueRepository;
-        $this->etudiantRepository = $etudiantRepository;
     }
 
     /**
      * @throws Exception
      */
-    public function importCsv($data, Departement $departement, AnneeUniversitaire $anneeUniversitaire): bool
+    public function importCsv(array $data, Departement $departement, AnneeUniversitaire $anneeUniversitaire): bool
     {
         $file = $this->myUpload->upload($data, 'temp');
 

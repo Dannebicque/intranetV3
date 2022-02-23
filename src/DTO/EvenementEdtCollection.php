@@ -14,7 +14,7 @@ class EvenementEdtCollection
     /** @var \App\DTO\EvenementEdt[] */
     public array $evenements = [];
 
-    public function add(EvenementEdt $event)
+    public function add(EvenementEdt $event): void
     {
         $this->evenements[] = $event;
     }

@@ -9,6 +9,7 @@
 
 namespace App\Form;
 
+use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Ppn;
 use App\Repository\DiplomeRepository;
@@ -24,7 +25,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class PpnType extends AbstractType
 {
-    protected $departement;
+    protected Departement $departement;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

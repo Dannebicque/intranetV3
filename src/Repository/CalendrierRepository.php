@@ -28,7 +28,7 @@ class CalendrierRepository extends ServiceEntityRepository
         parent::__construct($registry, Calendrier::class);
     }
 
-    public function findByAnneeUniversitaire(AnneeUniversitaire $anneeUniversitaire)
+    public function findByAnneeUniversitaire(AnneeUniversitaire $anneeUniversitaire): array
     {
         return $this->createQueryBuilder('c')
             ->where('c.anneeUniversitaire = :annee')

@@ -16,27 +16,23 @@ class StatitiquesBac
     public int $nbReorientation = 0;
     public int $nbRedoublement = 0;
 
-    public function __construct()
+    public function getPourcentageValide(int $effectif): float
     {
+        return 0 !== $effectif ? $this->nbValide / $effectif * 100 : 0.0;
     }
 
-    public function getPourcentageValide($effectif)
+    public function getPourcentageNonValide(int $effectif): float
     {
-        return 0 !== $effectif ? $this->nbValide / $effectif * 100 : 0;
+        return 0 !== $effectif ? $this->nbNonvalide / $effectif * 100 : 0.0;
     }
 
-    public function getPourcentageNonValide($effectif)
+    public function getPourcentageReorientation(int $effectif): float
     {
-        return 0 !== $effectif ? $this->nbNonvalide / $effectif * 100 : 0;
+        return 0 !== $effectif ? $this->nbReorientation / $effectif * 100 : 0.0;
     }
 
-    public function getPourcentageReorientation($effectif)
+    public function getPourcentageRedoublement(int $effectif): float
     {
-        return 0 !== $effectif ? $this->nbReorientation / $effectif * 100 : 0;
-    }
-
-    public function getPourcentageRedoublement($effectif)
-    {
-        return 0 !== $effectif ? $this->nbRedoublement / $effectif * 100 : 0;
+        return 0 !== $effectif ? $this->nbRedoublement / $effectif * 100 : 0.0;
     }
 }

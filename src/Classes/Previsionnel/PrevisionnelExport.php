@@ -11,8 +11,8 @@ namespace App\Classes\Previsionnel;
 
 use App\Classes\Excel\MyExcelWriter;
 use App\DTO\Matiere;
-use App\Utils\Tools;
 use App\Entity\Departement;
+use App\Utils\Tools;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -57,62 +57,37 @@ class PrevisionnelExport
         $writer = new Xlsx($this->myExcelWriter->getSpreadsheet());
 
         return new StreamedResponse(
-            static function() use ($writer) {
+            static function () use ($writer) {
                 $writer->save('php://output');
             },
             200,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition' => 'attachment;filename="export-omega' . $departement->getLibelle() . '.xlsx"',
+                'Content-Disposition' => 'attachment;filename="export-omega'.$departement->getLibelle().'.xlsx"',
             ]
         );
     }
 
     private function ecritPrevisionnel(
-        $previsionnels
+        array $previsionnels
     ): void {
         /** @var \App\DTO\Previsionnel $previ */
         foreach ($previsionnels as $previ) {
             $colonne = 1;
-            if (null !== $previ->matiere_id) {
-                if ($previ->semestre_id !== null && $previ->annee_id !== null) {
-                    //CODE VET
-                    $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
-                        $previ->annee_code_etape);
-                    ++$colonne;
-                    //LIBELLE VET
-                    $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
-                        $previ->annee_libelle_long);
-                } else {
-                    $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
-                        'ERR');
-                    ++$colonne;
-                    //LIBELLE VET
-                    $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
-                        'ERR');
-                }
-                ++$colonne;
-                //CODE ELEMENT*
-                $this->myExcelWriter->writeCellXY($colonne, $this->ligne, $previ->matiere_code_element);
-                ++$colonne;
-                //LIBELLE ELEMENT
-                $this->myExcelWriter->writeCellXY($colonne, $this->ligne, $previ->matiere_libelle);
-                ++$colonne;
-            } else {
-                $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
-                    'ERR');
-                ++$colonne;
-                //LIBELLE VET
-                $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
-                    'ERR');
-                ++$colonne;
-                //CODE ELEMENT*
-                $this->myExcelWriter->writeCellXY($colonne, 'ERR');
-                ++$colonne;
-                //LIBELLE ELEMENT
-                $this->myExcelWriter->writeCellXY($colonne, 'ERR');
-                ++$colonne;
-            }
+            //CODE VET
+            $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
+                $previ->annee_code_etape);
+            ++$colonne;
+            //LIBELLE VET
+            $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
+                $previ->annee_libelle_long);
+            ++$colonne;
+            //CODE ELEMENT*
+            $this->myExcelWriter->writeCellXY($colonne, $this->ligne, $previ->matiere_code_element);
+            ++$colonne;
+            //LIBELLE ELEMENT
+            $this->myExcelWriter->writeCellXY($colonne, $this->ligne, $previ->matiere_libelle);
+            ++$colonne;
 
             if (null !== $previ->personnel_id) {
                 //CODE HARPEGE*
@@ -121,7 +96,7 @@ class PrevisionnelExport
                 ++$colonne;
                 //NOM PRENOM
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
-                    mb_strtoupper(Tools::supprimeAccent($previ->personnel_nom)) . ' ' . mb_strtoupper(Tools::supprimeAccent($previ->personnel_prenom)));
+                    mb_strtoupper(Tools::supprimeAccent($previ->personnel_nom)).' '.mb_strtoupper(Tools::supprimeAccent($previ->personnel_prenom)));
             } else {
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne, 'ERR-XXX');
                 ++$colonne;
@@ -180,7 +155,7 @@ class PrevisionnelExport
             //LIBELLE ELEMENT
             if (null !== $previ->getTypeHrs()) {
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
-                    $previ->getTypeHrs()->getLibelle() . ' ' . $previ->getLibelle());
+                    $previ->getTypeHrs()->getLibelle().' '.$previ->getLibelle());
             } else {
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
                     'ERR');
@@ -194,7 +169,7 @@ class PrevisionnelExport
                 ++$colonne;
                 //NOM PRENOM
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
-                    mb_strtoupper(Tools::supprimeAccent($previ->getPersonnel()->getNom())) . ' ' . mb_strtoupper(Tools::supprimeAccent($previ->getPersonnel()->getPrenom())));
+                    mb_strtoupper(Tools::supprimeAccent($previ->getPersonnel()->getNom())).' '.mb_strtoupper(Tools::supprimeAccent($previ->getPersonnel()->getPrenom())));
             } else {
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne, 'ERR-XXX');
                 ++$colonne;
@@ -223,7 +198,7 @@ class PrevisionnelExport
         }
     }
 
-    public function export(?Departement $getDepartement, $annee, Matiere $matiere, $_format): void
+    public function export(?Departement $getDepartement, int $annee, Matiere $matiere, string $_format): void
     {
         //todo: a faire.
     }

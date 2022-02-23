@@ -37,6 +37,9 @@ class MaterielCommunReservationSubscriber implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     */
     public function onMaterielCommunReservationAdded(MaterielCommunReservationEvent $event): void
     {
         $reservation = $event->getReservationMaterielCommun();
@@ -54,6 +57,9 @@ class MaterielCommunReservationSubscriber implements EventSubscriberInterface
         }
     }
 
+    /**
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     */
     public function onMaterielCommunReservationRemoved(MaterielCommunReservationEvent $event): void
     {
         $reservation = $event->getReservationMaterielCommun();

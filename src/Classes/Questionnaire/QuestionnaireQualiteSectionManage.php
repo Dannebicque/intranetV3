@@ -35,7 +35,7 @@ class QuestionnaireQualiteSectionManage
         string $action,
         int $idSection,
         QuestionnaireQualite $questionnaireQualite
-    ) {
+    ): void {
         if ('add' === $action) {
             $questionnaireSection = $this->questionnaireSectionRepository->find($idSection);
         } else {

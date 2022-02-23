@@ -44,7 +44,7 @@ class EtudiantUpdate
         $this->etudiantGroupes = $etudiantGroupes;
     }
 
-    public function update(Etudiant $etudiant, $field, $value): bool
+    public function update(Etudiant $etudiant, string $field, mixed $value): bool
     {
         switch ($field) {
             case 'semestre':

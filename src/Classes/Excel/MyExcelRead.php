@@ -17,6 +17,7 @@ use PhpOffice\PhpSpreadsheet\Cell\Cell;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Reader\Exception;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 /**
@@ -24,9 +25,8 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
  */
 class MyExcelRead
 {
-    protected $response;
 
-    protected $phpExcelObject;
+    protected Spreadsheet $phpExcelObject;
     protected Worksheet $sheet;
 
     protected int $line = 1;
@@ -40,7 +40,6 @@ class MyExcelRead
     }
 
     /**
-     *
      * @throws Exception
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
@@ -57,14 +56,14 @@ class MyExcelRead
     /**
      * Lecture séquentielle du fichier. Retourne false si ligne vide.
      */
-    public function readNewLine()
+    public function readNewLine(): array | bool
     {
         if (-1 === $this->nbColumns) {
             //on analyse le nombre de colonne
             $this->countColumns();
         }
 
-        if ('' !== $this->sheet->getCellByColumnAndRow(0, $this->line)) {
+        if ('' !== $this->sheet->getCellByColumnAndRow(0, $this->line)->getValue()) {
             $t = [];
             for ($col = 0; $col < $this->nbColumns; ++$col) {
                 $t[$col] = $this->sheet->getCellByColumnAndRow($col, $this->line);
@@ -82,7 +81,7 @@ class MyExcelRead
         $fin = true;
         $i = 1;
         while (true === $fin) {
-            if ('' === $this->sheet->getCellByColumnAndRow($i, 1)) {
+            if ('' === $this->sheet->getCellByColumnAndRow($i, 1)->getValue()) {
                 $fin = false;
                 $this->nbColumns = $i;
             }
@@ -95,14 +94,13 @@ class MyExcelRead
         return $this->sheet->getCellByColumnAndRow($col, $lig);
     }
 
-    public function writeCellColLigne($col, $lig, $valeur): void
+    public function writeCellColLigne(int $col, int $lig, string $valeur): void
     {
-        $cell = Coordinate::stringFromColumnIndex($col) . $lig;
+        $cell = Coordinate::stringFromColumnIndex($col).$lig;
         $this->sheet->setCellValue($cell, $valeur);
     }
 
     /**
-     *
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      */
     public function sauvegarde(string $filename): void

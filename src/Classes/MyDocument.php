@@ -18,10 +18,11 @@ use App\Entity\DocumentFavoriEtudiant;
 use App\Entity\DocumentFavoriPersonnel;
 use App\Entity\Etudiant;
 use App\Entity\Personnel;
+use App\Interfaces\UtilisateurInterface;
 use App\Repository\DocumentFavoriEtudiantRepository;
 use App\Repository\DocumentFavoriPersonnelRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use function count;
+use Doctrine\ORM\EntityManagerInterface;
 
 class MyDocument
 {
@@ -48,12 +49,12 @@ class MyDocument
         $this->document = $document;
     }
 
-    public function addOrRemoveFavori($getConnectedUser): string
+    public function addOrRemoveFavori(UtilisateurInterface $getConnectedUser): string
     {
         $etat = '';
         if ($getConnectedUser instanceof Personnel) {
             $r = $this->documentFavoriPersonnelRepository->findFavori($getConnectedUser, $this->document);
-            if (null === $r || 0 === count($r)) {
+            if (0 === count($r)) {
                 //add
                 $n = new DocumentFavoriPersonnel($getConnectedUser, $this->document);
                 $this->entityManager->persist($n);
@@ -65,7 +66,7 @@ class MyDocument
             }
         } elseif ($getConnectedUser instanceof Etudiant) {
             $r = $this->documentFavoriEtudiantRepository->findFavori($getConnectedUser, $this->document);
-            if (null === $r || 0 === count($r)) {
+            if (0 === count($r)) {
                 //add
                 $n = new DocumentFavoriEtudiant($getConnectedUser, $this->document);
                 $this->entityManager->persist($n);
@@ -88,7 +89,7 @@ class MyDocument
         }
     }
 
-    public function mesDocumentsFavoris($getConnectedUser): array
+    public function mesDocumentsFavoris(UtilisateurInterface $getConnectedUser): array
     {
         $r = null;
         if ($getConnectedUser instanceof Personnel) {
@@ -97,7 +98,7 @@ class MyDocument
             $r = $this->documentFavoriEtudiantRepository->findAllUserFavoris($getConnectedUser);
         }
 
-        if ($r !== null) {
+        if (null !== $r) {
             $tabDocuments = [];
             foreach ($r as $document) {
                 $tabDocuments[] = $document->getDocument();
@@ -109,7 +110,7 @@ class MyDocument
         return [];
     }
 
-    public function idMesDocumentsFavoris($getConnectedUser): array
+    public function idMesDocumentsFavoris(UtilisateurInterface $getConnectedUser): array
     {
         $r = null;
 
@@ -119,7 +120,7 @@ class MyDocument
             $r = $this->documentFavoriEtudiantRepository->findAllUserFavoris($getConnectedUser);
         }
 
-        if ($r !== null) {
+        if (null !== $r) {
             $tabDocuments = [];
             foreach ($r as $document) {
                 $tabDocuments[] = $document->getDocument()->getId();

@@ -31,7 +31,7 @@ class CahierTexteRepository extends ServiceEntityRepository
         parent::__construct($registry, CahierTexte::class);
     }
 
-    public function findByPersonnel($getId)
+    public function findByPersonnel(int $getId): array
     {
         return $this->createQueryBuilder('c')
             ->where('c.personnel = :personnel')
@@ -41,7 +41,7 @@ class CahierTexteRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findBySemestre(Semestre $semestre)
+    public function findBySemestre(Semestre $semestre): array
     {
         return $this->createQueryBuilder('c')
             ->where('c.semestre = :semestre')

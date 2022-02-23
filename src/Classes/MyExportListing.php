@@ -23,6 +23,8 @@ use App\Entity\Personnel;
 use App\Entity\TypeGroupe;
 use App\Repository\GroupeRepository;
 use App\Repository\TypeGroupeRepository;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
+use function count;
 use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use PhpOffice\PhpSpreadsheet\Writer\Csv;
@@ -32,7 +34,6 @@ use Symfony\Component\HttpKernel\KernelInterface;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
-use function count;
 
 class MyExportListing
 {
@@ -42,18 +43,18 @@ class MyExportListing
 
     protected GroupeRepository $groupeRepository;
 
-    protected $groupes;
-    private $name = '';
+    protected array $groupes;
+    private string $name = '';
     private int $ligne = 1;
 
     private int $colonne = 1;
 
-    private $exportTypeDocument;
-    private $exportChamps;
-    private $matiere;
+    private string $exportTypeDocument;
+    private array $exportChamps;
+    private ?Matiere $matiere;
 
     private DataUserSession $dataUserSession;
-    private $base;
+    private string $base;
 
     private TypeGroupe $typeGroupe;
 
@@ -80,7 +81,7 @@ class MyExportListing
         $this->dataUserSession = $dataUserSession;
         $this->myExcelWriter = $myExcelWriter;
         $this->myPdf = $myPdf;
-        $this->base = $kernel->getProjectDir() . '/';
+        $this->base = $kernel->getProjectDir().'/';
     }
 
     /**
@@ -90,13 +91,13 @@ class MyExportListing
      * @throws SyntaxError
      */
     public function genereFichier(
-        $exportTypeDocument,
-        $exportFormat,
-        $exportChamps,
-        $exportFiltre,
+        string $exportTypeDocument,
+        string $exportFormat,
+        array $exportChamps,
+        mixed $exportFiltre,
         ?Matiere $matiere = null,
         ?Personnel $personnel = null
-    ) {
+    ): StreamedResponse|PdfResponse|null {
         $this->exportTypeDocument = $exportTypeDocument;
         $this->exportChamps = $exportChamps;
         $this->matiere = $matiere;
@@ -121,7 +122,6 @@ class MyExportListing
             Constantes::FORMAT_PDF => $this->exportPdf(),
             default => null,
         };
-
     }
 
     private function prepareColonnes(): void
@@ -137,18 +137,18 @@ class MyExportListing
 
         switch ($this->exportTypeDocument) {
             case Constantes::TYPEDOCUMENT_LISTE:
-                $this->name = 'listing-' . $semestre;
+                $this->name = 'listing-'.$semestre;
                 break;
             case Constantes::TYPEDOCUMENT_EMARGEMENT:
-                $this->name = 'emargement-' . $semestre;
-                $this->titre = 'FEUILLE D\'EMARGEMENT - Semestre ' . $semestre;
+                $this->name = 'emargement-'.$semestre;
+                $this->titre = 'FEUILLE D\'EMARGEMENT - Semestre '.$semestre;
                 for ($i = 0; $i < 5; ++$i) {
                     $this->colonnesEnTete[] = '';
                 }
                 break;
             case Constantes::TYPEDOCUMENT_EVALUATION:
-                $this->titre = 'FEUILLE D\'EVALUATION - Semestre ' . $semestre;
-                $this->name = 'evaluation-' . $semestre;
+                $this->titre = 'FEUILLE D\'EVALUATION - Semestre '.$semestre;
+                $this->name = 'evaluation-'.$semestre;
                 $this->colonnesEnTete[] = 'Place';
                 $this->colonnesEnTete[] = 'Présence';
                 $this->colonnesEnTete[] = 'Note';
@@ -157,7 +157,7 @@ class MyExportListing
         }
     }
 
-    private function exportCsv($separateur): StreamedResponse
+    private function exportCsv(string $separateur = ';'): StreamedResponse
     {
         $this->myExcelWriter->createSheet('export');
         if (count($this->colonnesEnTete) > 1) {
@@ -188,13 +188,13 @@ class MyExportListing
         $writer->setDelimiter($separateur);
 
         return new StreamedResponse(
-            static function() use ($writer) {
+            static function () use ($writer) {
                 $writer->save('php://output');
             },
             200,
             [
                 'Content-Type' => 'application/csv',
-                'Content-Disposition' => 'attachment;filename="' . $this->name . '.csv"',
+                'Content-Disposition' => 'attachment;filename="'.$this->name.'.csv"',
             ]
         );
     }
@@ -220,7 +220,7 @@ class MyExportListing
 
             $this->myExcelWriter->writeCellName('A16', $id);
 
-            $this->myExcelWriter->borderCells('A17:J' . $this->ligne);
+            $this->myExcelWriter->borderCells('A17:J'.$this->ligne);
 
             $this->myExcelWriter->getColumnAutoSize('A');
             $this->myExcelWriter->getColumnAutoSize('B');
@@ -239,41 +239,40 @@ class MyExportListing
         $writer = new Xlsx($this->myExcelWriter->getSpreadsheet());
 
         return new StreamedResponse(
-            static function() use ($writer) {
+            static function () use ($writer) {
                 $writer->save('php://output');
             },
             200,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition' => 'attachment;filename="' . $this->name . '.xlsx"',
+                'Content-Disposition' => 'attachment;filename="'.$this->name.'.xlsx"',
             ]
         );
     }
 
-    public function exportExcelAbsence($absences, $matieres, $nom): StreamedResponse
+    public function exportExcelAbsence(array $absences, array $matieres, string $nom): StreamedResponse
     {
         $this->myExcelWriter->createSheet('Absences');
-        $this->myExcelWriter->writeCellName('A1','date Heure');
-        $this->myExcelWriter->writeCellName('B1','duree');
-        $this->myExcelWriter->writeCellName('C1','Num Etudiant');
-        $this->myExcelWriter->writeCellName('D1','Nom');
-        $this->myExcelWriter->writeCellName('E1','Prénom');
-        $this->myExcelWriter->writeCellName('F1','Justifié?');
-        $this->myExcelWriter->writeCellName('G1','Code');
-        $this->myExcelWriter->writeCellName('H1','Matière (SAE/Ressource/Matière)');
-        $this->myExcelWriter->writeCellName('I1','Nom Enseignant');
-        $this->myExcelWriter->writeCellName('J1','Prénom Enseignant');
+        $this->myExcelWriter->writeCellName('A1', 'date Heure');
+        $this->myExcelWriter->writeCellName('B1', 'duree');
+        $this->myExcelWriter->writeCellName('C1', 'Num Etudiant');
+        $this->myExcelWriter->writeCellName('D1', 'Nom');
+        $this->myExcelWriter->writeCellName('E1', 'Prénom');
+        $this->myExcelWriter->writeCellName('F1', 'Justifié?');
+        $this->myExcelWriter->writeCellName('G1', 'Code');
+        $this->myExcelWriter->writeCellName('H1', 'Matière (SAE/Ressource/Matière)');
+        $this->myExcelWriter->writeCellName('I1', 'Nom Enseignant');
+        $this->myExcelWriter->writeCellName('J1', 'Prénom Enseignant');
         $ligne = 2;
 
         /** @var \App\Entity\Absence $absence */
         foreach ($absences as $absence) {
-
-            $this->myExcelWriter->writeCellXY(1, $ligne,$absence->getDateHeure()?->format('d/m/Y H:i'));
-            $this->myExcelWriter->writeCellXY(2, $ligne,$absence->getDuree()?->format('H:i'));
-            $this->myExcelWriter->writeCellXY(3, $ligne,$absence->getEtudiant()?->getNumEtudiant());
-            $this->myExcelWriter->writeCellXY(4, $ligne,$absence->getEtudiant()?->getNom());
-            $this->myExcelWriter->writeCellXY(5, $ligne,$absence->getEtudiant()?->getPrenom());
-            $this->myExcelWriter->writeCellXY(6, $ligne,$absence->getJustifie() === true ? 'Oui' : 'Non');
+            $this->myExcelWriter->writeCellXY(1, $ligne, $absence->getDateHeure()?->format('d/m/Y H:i'));
+            $this->myExcelWriter->writeCellXY(2, $ligne, $absence->getDuree()?->format('H:i'));
+            $this->myExcelWriter->writeCellXY(3, $ligne, $absence->getEtudiant()?->getNumEtudiant());
+            $this->myExcelWriter->writeCellXY(4, $ligne, $absence->getEtudiant()?->getNom());
+            $this->myExcelWriter->writeCellXY(5, $ligne, $absence->getEtudiant()?->getPrenom());
+            $this->myExcelWriter->writeCellXY(6, $ligne, true === $absence->getJustifie() ? 'Oui' : 'Non');
             if (array_key_exists($absence->getTypeIdMatiere(), $matieres)) {
                 $this->myExcelWriter->writeCellXY(7, $ligne, $matieres[$absence->getTypeIdMatiere()]->codeMatiere);
                 $this->myExcelWriter->writeCellXY(8, $ligne, $matieres[$absence->getTypeIdMatiere()]->libelle);
@@ -282,11 +281,10 @@ class MyExportListing
                 $this->myExcelWriter->writeCellXY(8, $ligne, 'matière non trouvée');
             }
 
-            $this->myExcelWriter->writeCellXY(9, $ligne,$absence->getPersonnel()?->getNom());
-            $this->myExcelWriter->writeCellXY(10, $ligne,$absence->getPersonnel()?->getPrenom());
+            $this->myExcelWriter->writeCellXY(9, $ligne, $absence->getPersonnel()?->getNom());
+            $this->myExcelWriter->writeCellXY(10, $ligne, $absence->getPersonnel()?->getPrenom());
 
-          $ligne++;
-
+            ++$ligne;
         }
 
         $this->myExcelWriter->getColumnAutoSize('A');
@@ -300,17 +298,16 @@ class MyExportListing
         $writer = new Xlsx($this->myExcelWriter->getSpreadsheet());
 
         return new StreamedResponse(
-            static function() use ($writer) {
+            static function () use ($writer) {
                 $writer->save('php://output');
             },
             200,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition' => 'attachment;filename="' . $nom . '.xlsx"',
+                'Content-Disposition' => 'attachment;filename="'.$nom.'.xlsx"',
             ]
         );
     }
-
 
     /**
      * @throws Exception
@@ -320,18 +317,18 @@ class MyExportListing
         //gérer les infos par le diplôme
         $anneeU = $groupe->getTypeGroupe()->getSemestre()->getAnneeUniversitaire()->displayAnneeUniversitaire();
 
-        $this->myExcelWriter->writeCellName('J1', 'Année Universitaire - ' . $anneeU,
+        $this->myExcelWriter->writeCellName('J1', 'Année Universitaire - '.$anneeU,
             ['style' => 'HORIZONTAL_RIGHT']);
         $this->myExcelWriter->writeCellName('J4',
-            'IUT de Troyes - ' . $this->dataUserSession->getDepartement()->getLibelle(),
+            'IUT de Troyes - '.$this->dataUserSession->getDepartement()->getLibelle(),
             ['style' => 'HORIZONTAL_RIGHT']);
         $this->myExcelWriter->writeCellName('J3', $this->titre, ['style' => 'HORIZONTAL_RIGHT']);
 
-        $base = $this->base . 'public/upload/';
+        $base = $this->base.'public/upload/';
         $objDrawing = new Drawing();
         $objDrawing->setName('Logo Departement');
         $objDrawing->setDescription('Logo Departement');
-        $objDrawing->setPath($base . 'logo/' . $this->dataUserSession->getDepartement()->getLogoName());
+        $objDrawing->setPath($base.'logo/'.$this->dataUserSession->getDepartement()->getLogoName());
         $objDrawing->setHeight(120);
         $objDrawing->setCoordinates('A1');
         $objDrawing->setWorksheet($this->myExcelWriter->getSheet());
@@ -341,7 +338,7 @@ class MyExportListing
                 if (null !== $this->matiere) {
                     $this->myExcelWriter->writeCellName(
                         'A10',
-                        'MATIERE ENSEIGNEE :' . $this->matiere->display
+                        'MATIERE ENSEIGNEE :'.$this->matiere->display
                     );
                 } else {
                     $this->myExcelWriter->writeCellName(
@@ -353,7 +350,7 @@ class MyExportListing
                 if (null !== $this->personnel) {
                     $this->myExcelWriter->writeCellName(
                         'A8',
-                        'NOM DE L\'ENSEIGNANT :' . $this->personnel->getDisplayPr()
+                        'NOM DE L\'ENSEIGNANT :'.$this->personnel->getDisplayPr()
                     );
                 } else {
                     $this->myExcelWriter->writeCellName(
@@ -364,7 +361,7 @@ class MyExportListing
 
                 $this->myExcelWriter->writeCellName(
                     'J5',
-                    'Période du 1er ' . Constantes::TAB_MOIS[date('n')] . ' au ' . date('t') . ' ' . Constantes::TAB_MOIS[date('n')] . ' ' . date('Y'),
+                    'Période du 1er '.Constantes::TAB_MOIS[date('n')].' au '.date('t').' '.Constantes::TAB_MOIS[date('n')].' '.date('Y'),
                     ['style' => 'HORIZONTAL_RIGHT']
                 );
                 $this->myExcelWriter->writeCellName(
@@ -438,7 +435,7 @@ class MyExportListing
                 $this->myExcelWriter->mergeCells('A10:C10');
 
                 $this->myExcelWriter->mergeCells('B14:C14');
-                $this->myExcelWriter->writeCellName('B14', 'Groupe ' . $groupe->getLibelle(),
+                $this->myExcelWriter->writeCellName('B14', 'Groupe '.$groupe->getLibelle(),
                     ['style' => ['HORIZONTAL_RIGHT']]);
                 $this->ligne = 17;
                 break;
@@ -458,8 +455,8 @@ class MyExportListing
 
     private function setMiseEnPage(): void
     {
-        $this->myExcelWriter->getSheet()->getHeaderFooter()->setOddHeader('&C&H' . $this->titre);
-        $this->myExcelWriter->getSheet()->getHeaderFooter()->setOddFooter('&L&BDépartement | ' . $this->name . ' | Généré depuis l\'intranet le ' . date('d/m/Y') . '&RPage &P sur &N');
+        $this->myExcelWriter->getSheet()->getHeaderFooter()->setOddHeader('&C&H'.$this->titre);
+        $this->myExcelWriter->getSheet()->getHeaderFooter()->setOddFooter('&L&BDépartement | '.$this->name.' | Généré depuis l\'intranet le '.date('d/m/Y').'&RPage &P sur &N');
         $this->myExcelWriter->getSheet()->getPageSetup()->setFitToPage(true);
     }
 
@@ -468,7 +465,7 @@ class MyExportListing
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    private function exportPdf()
+    private function exportPdf(): PdfResponse
     {
         return $this->myPdf::generePdf('pdf/listing.html.twig',
             [
@@ -477,7 +474,7 @@ class MyExportListing
                 'personnel' => $this->personnel,
                 'groupes' => $this->groupes,
             ],
-            $this->name . '.pdf',
+            $this->name.'.pdf',
             $this->dataUserSession->getDepartement()->getLibelle());
     }
 

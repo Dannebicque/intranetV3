@@ -17,6 +17,7 @@ use App\Classes\LDAP\MyLdap;
 use App\Entity\Adresse;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
+use App\Repository\BacRepository;
 use App\Utils\Tools;
 use function array_key_exists;
 use function count;
@@ -25,23 +26,21 @@ use function is_array;
 
 class EtudiantImport
 {
-    private MyLdap $myLdap;
-    private EntityManagerInterface $entity;
+    private array $tBac;
 
-    /**
-     * EtudiantImport constructor.
-     */
-    public function __construct(MyLdap $myLdap, EntityManagerInterface $entity)
+    public function __construct(
+        BacRepository $bacRepository,
+        private MyLdap $myLdap,
+        private EntityManagerInterface $entity)
     {
-        $this->myLdap = $myLdap;
-        $this->entity = $entity;
+       $this->tBac = $bacRepository->getApogeeArray();
     }
 
     public function createEtudiant(?Semestre $semestre, array $dataApogee): ?Etudiant
     {
         $etudiant = new Etudiant();
         $etudiant->setSemestre($semestre);
-        $etudiant->setDepartement($semestre->getDiplome()->getDepartement());
+        $etudiant->setDepartement($semestre?->getDiplome()?->getDepartement());
         $etudiant->updateFromApogee($dataApogee['etudiant']);
         $etudiant->setPhotoName($etudiant->getNumEtudiant().'.jpg');
         $update = $this->updateLdap($etudiant);
@@ -74,7 +73,7 @@ class EtudiantImport
         return false;
     }
 
-    private function saveAdresse($dataApogee, Etudiant $etudiant): void
+    private function saveAdresse(array $dataApogee, Etudiant $etudiant): void
     {
         $adresse = new Adresse();
         $adresse->updateFromApogee($dataApogee['adresse']);
@@ -101,8 +100,6 @@ class EtudiantImport
             return $etudiant;
         }
 
-        $this->entity->clear($etudiant);
-
         return null;
     }
 
@@ -119,7 +116,7 @@ class EtudiantImport
                 /*On lit la ligne courante*/
                 $ligne = fgetcsv($handle, 1024, ';');
                 if (array_key_exists($ligne[10], $tabSemestres)) {
-                    $this->createEtudiantFromCsv($tabSemestres[$ligne[10]], $ligne);
+                    $this->createEtudiantFromCsv($ligne, $tabSemestres[$ligne[10]]);
                 }
             }
             $this->entity->flush();
@@ -128,6 +125,9 @@ class EtudiantImport
         }
     }
 
+    /**
+     * @throws \Exception
+     */
     private function createEtudiantFromCsv(bool | array $ligne, Semestre $semestre): void
     {
         //todo: importer les bacs... Revoir cette partie.
@@ -149,8 +149,7 @@ class EtudiantImport
         $etudiant->setPromotion($ligne[5]);
 
         $etudiant->setAnneeBac($ligne[6]);
-        //todo: corriger
-        $etudiant->setBac(true === array_key_exists($ligne[7], $tBac) ? $tBac[$ligne[7]] : null);
+        $etudiant->setBac(true === array_key_exists($ligne[7], $this->tBac) ? $this->tBac[$ligne[7]] : null);
         $etudiant->setCivilite('M' === $ligne[8] ? 'M.' : 'Mme'); //M ou F
 
         $etudiant->setTel1($ligne[9]);

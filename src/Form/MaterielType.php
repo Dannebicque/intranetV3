@@ -9,6 +9,7 @@
 
 namespace App\Form;
 
+use App\Entity\Departement;
 use App\Entity\Materiel;
 use App\Entity\TypeMateriel;
 use App\Form\Type\YesNoType;
@@ -22,7 +23,7 @@ use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class MaterielType extends AbstractType
 {
-    protected $departement;
+    protected Departement $departement;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

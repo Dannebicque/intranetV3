@@ -29,7 +29,7 @@ class DocumentFavoriEtudiantRepository extends ServiceEntityRepository
         parent::__construct($registry, DocumentFavoriEtudiant::class);
     }
 
-    public function findFavori(Etudiant $etudiant, Document $document)
+    public function findFavori(Etudiant $etudiant, Document $document): array
     {
         return $this->createQueryBuilder('a')
             ->where('a.etudiant = :etudiant')
@@ -40,7 +40,7 @@ class DocumentFavoriEtudiantRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findAllUserFavoris(Etudiant $etudiant)
+    public function findAllUserFavoris(Etudiant $etudiant): array
     {
         return $this->createQueryBuilder('a')
             ->where('a.etudiant = :etudiant')

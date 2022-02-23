@@ -59,7 +59,7 @@ class EtudiantScolarite
         $this->semestre = $etudiant->getSemestre();
     }
 
-    public function changeEtat($etat): void
+    public function changeEtat(string $etat): void
     {
         switch ($etat) {
             case Constantes::SEMESTRE_REORIENTE:
@@ -93,13 +93,13 @@ class EtudiantScolarite
     private function finFormation(): void
     {
         $this->etudiant->setSemestre(null);
-        $this->etudiant->setAnneeSortie(date('Y'));
+        $this->etudiant->setAnneeSortie((int) date('Y'));
         $this->etudiantsGroupes->setEtudiant($this->etudiant);
         $this->etudiantsGroupes->suppressionGroupes();
     }
 
     public function updateScolarite(
-        $etat
+        string $etat
     ): void {
         if (null !== $this->semestre) {
             $scolarite = $this->scolariteRepository->findOneBy([
@@ -119,7 +119,7 @@ class EtudiantScolarite
         }
     }
 
-    private function getDecisionFromEtat($etat): string
+    private function getDecisionFromEtat(string $etat): string
     {
         if (Constantes::SCOLARITE_DIPLOME === $etat) {
             return Constantes::SEMESTRE_VALIDE;

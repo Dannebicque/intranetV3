@@ -38,7 +38,10 @@ class DepartementFixtures extends Fixture implements DependentFixtureInterface
         $this->encoder = $encoder;
     }
 
-    public function load(ObjectManager $manager)
+    /**
+     * @throws \JsonException
+     */
+    public function load(ObjectManager $manager): void
     {
         $departement = new Departement();
         $departement->setLibelle('MMI');
@@ -88,7 +91,6 @@ class DepartementFixtures extends Fixture implements DependentFixtureInterface
         $semestre = new Semestre();
         $semestre->setCouleur('red');
         $semestre->setLibelle('S1');
-        $semestre->setOrdreAnnee(1);
         $semestre->setAnnee($annee);
         $semestre->setActif(true);
         $semestre->setCodeElement('TS123S1');

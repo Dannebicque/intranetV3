@@ -55,29 +55,29 @@ class EvenementEdt
     public ?string $codeelement = '';
     public ?int $ordreGroupe = 1;
 
-    public function getDisplay()
+    public function getDisplay(): void
     {
         //générer un affichage
     }
 
-    public function getMatiere()
+    public function getMatiere(): ?string
     {
         return $this->matiere;
     }
 
-    public function getClassCss()
+    public function getClassCss(): string
     {
         return strtolower($this->type_cours).'_'.$this->couleur;
     }
 
-    public function getIdMatiere()
+    public function getIdMatiere(): int
     {
         $t = explode('_', $this->typeIdMatiere);
 
-        return $t[1];
+        return (int) $t[1];
     }
 
-    public function getTypeMatiere()
+    public function getTypeMatiere(): string
     {
         $t = explode('_', $this->typeIdMatiere);
 

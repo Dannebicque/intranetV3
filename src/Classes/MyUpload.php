@@ -14,28 +14,29 @@
 namespace App\Classes;
 
 use App\Exception\ExtensionInterditeException;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpKernel\KernelInterface;
+use function count;
 use Exception;
+use function in_array;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use ZipArchive;
-use function count;
-use function in_array;
 
 class MyUpload
 {
     private ?string $dir;
 
-    public function __construct(ParameterBagInterface $parameterBag)
+    public function __construct(
+        KernelInterface $kernel)
     {
-        $this->dir = $parameterBag->get('kernel.project_dir') . '/public/upload/';
+        $this->dir = $kernel->getProjectDir().'/public/upload/';
     }
 
     /**
      * @throws Exception
      */
-    public function upload($fichier, string $destination, array $extensions = []): ?string
+    public function upload(?UploadedFile $fichier, string $destination = 'temp/', array $extensions = []): ?string
     {
-        //todo: quel type est $fichier
-
         $extension = $this->getExtension($fichier);
         $dir = $this->valideDir($destination);
 
@@ -53,7 +54,7 @@ class MyUpload
         return null;
     }
 
-    private function valideDir($dir)
+    private function valideDir(string $dir): string
     {
         if ('/' === $dir[0]) {
             $dir = mb_substr($dir, 1, mb_strlen($dir));
@@ -66,9 +67,8 @@ class MyUpload
         return $dir;
     }
 
-    public function getExtension($fichier): string
+    public function getExtension(UploadedFile $fichier): string
     {
-        //todo: quel type est $fichier
         return $fichier->getClientOriginalExtension();
     }
 
@@ -86,10 +86,10 @@ class MyUpload
                 if ('jpg' === $t[1] || 'jpeg' === $t[1]) {
                     $f = explode('_', $fichier);
                     $name = $f[count($f) - 1];
-                    if (true === file_exists($newdir . $name)) {
-                        unlink($newdir . $name);
+                    if (true === file_exists($newdir.$name)) {
+                        unlink($newdir.$name);
                     }
-                    rename($vidage, $newdir . $name);
+                    rename($vidage, $newdir.$name);
                 } else {
                     unlink($vidage); //suppression du fichier
                 }
@@ -98,7 +98,7 @@ class MyUpload
         closedir($dossier);
     }
 
-    public function extractZip(string $fichier, $dest): bool
+    public function extractZip(string $fichier, string $dest): bool
     {
         chmod($fichier, 0777);
         $filezip = realpath($fichier);

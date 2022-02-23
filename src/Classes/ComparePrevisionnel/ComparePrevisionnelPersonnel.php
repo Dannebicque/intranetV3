@@ -9,6 +9,7 @@
 
 namespace App\Classes\ComparePrevisionnel;
 
+use App\Classes\Edt\AbstractEdt;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\Previsionnel\PrevisionnelManager;
 use App\Entity\Departement;
@@ -37,11 +38,11 @@ class ComparePrevisionnelPersonnel extends ComparePrevisionnel
         $this->personnelRepository = $personnelRepository;
     }
 
-    public function compareEdtPreviPersonnels(Departement $departement, $annee, $source): array
+    public function compareEdtPreviPersonnels(Departement $departement, int $annee, string $source): array
     {
         $this->personnels = $this->personnelRepository->findByDepartement($departement);
         $previsionnels = $this->previsionnelManager->findByDepartement($departement, $annee);
-        if ('intranet' === $source) {
+        if (AbstractEdt::SOURCE_EDT_INTRANET === $source) {
             $planning = $this->edtPlanningRepository->findByDepartement($departement);
         } else {
             $planning = []; //todo: récupérer d'une autre source... et récupérer aussi du manager pour fusionner les deux ? Peut être pas indispensable ici
@@ -122,7 +123,7 @@ class ComparePrevisionnelPersonnel extends ComparePrevisionnel
         return $t;
     }
 
-    public function getPersonnels()
+    public function getPersonnels(): mixed
     {
         return $this->personnels;
     }

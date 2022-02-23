@@ -15,7 +15,7 @@ use function array_key_exists;
 
 class ApogeeEtudiant extends Apogee
 {
-    public function getEtudiant($etudiant, Annee $annee)
+    public function getEtudiant(string $etudiant, Annee $annee)
     {
         $this->connect();
         $stid = $this->conn->prepare(

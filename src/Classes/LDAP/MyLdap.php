@@ -18,7 +18,7 @@ use Symfony\Component\Ldap\Ldap;
 
 class MyLdap
 {
-    private $ds;
+    private Ldap $ds;
 
     private ParameterBagInterface $parameterBag;
 
@@ -34,11 +34,11 @@ class MyLdap
         $this->ds->bind($this->parameterBag->get('LDAP_LOGIN'), $this->parameterBag->get('LDAP_PASSWORD'));
     }
 
-    public function getInfoEtudiant($numetudiant)
+    public function getInfoEtudiant(string $numetudiant): ?array
     {
         $this->connect();
 
-        $query = $this->ds->query($this->parameterBag->get('LDAP_BASE_DN'), '(supannetuid=' . $numetudiant . ')',
+        $query = $this->ds->query($this->parameterBag->get('LDAP_BASE_DN'), '(supannetuid='.$numetudiant.')',
             ['filter' => ['uid', 'mail']]);
         $results = $query->execute()->toArray();
 
@@ -52,11 +52,11 @@ class MyLdap
         return null;
     }
 
-    public function getInfoPersonnel($numeroHarpege)
+    public function getInfoPersonnel(string $numeroHarpege): ?array
     {
         $this->connect();
 
-        $query = $this->ds->query($this->parameterBag->get('LDAP_BASE_DN'), '(supannEmpId=' . $numeroHarpege . ')',
+        $query = $this->ds->query($this->parameterBag->get('LDAP_BASE_DN'), '(supannEmpId='.$numeroHarpege.')',
             ['filter' => ['uid', 'mail', 'sn', 'givenName', 'dateNaissance']]);
         $results = $query->execute()->toArray();
 

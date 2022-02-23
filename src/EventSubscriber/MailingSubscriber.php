@@ -100,11 +100,14 @@ class MailingSubscriber implements EventSubscriberInterface
         }
     }
 
+    /**
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     */
     public function onMailAddedJustificatif(JustificatifEvent $event): void
     {
         $absence = $event->getAbsenceJustificatif();
 
-        if (null !== $absence && null !== $absence->getSemestre() && true === $absence->getSemestre()->getOptMailAssistanteJustificatifAbsence()) {
+        if (null !== $absence->getSemestre() && true === $absence->getSemestre()->getOptMailAssistanteJustificatifAbsence()) {
             $diplome = $absence->getSemestre()->getDiplome();
             if (null !== $diplome && null !== $diplome->getAssistantDiplome()) {
                 $this->myMailer->initEmail();
@@ -176,6 +179,9 @@ class MailingSubscriber implements EventSubscriberInterface
         }
     }
 
+    /**
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     */
     public function onMailAbsenceRemoved(AbsenceEvent $event): void
     {
         $absence = $event->getAbsence();
@@ -226,6 +232,9 @@ class MailingSubscriber implements EventSubscriberInterface
         }
     }
 
+    /**
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     */
     public function onMailNewTranscriptResponsable(EvaluationEvent $event): void
     {
         $evaluation = $event->getEvaluation();

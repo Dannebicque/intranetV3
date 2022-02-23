@@ -36,7 +36,7 @@ class RessourceManager extends AbstractMatiereManager implements MatiereInterfac
         $this->ressourceAdapter = $ressourceAdapter;
     }
 
-    public function find($id): ?Matiere
+    public function find(int | string $id): ?Matiere
     {
         $matiere = $this->apcRessourceRepository->find($id);
 
@@ -71,9 +71,9 @@ class RessourceManager extends AbstractMatiereManager implements MatiereInterfac
         return $this->ressourceAdapter->single($matiere);
     }
 
-    public function update($name, $value, ApcRessource $apcRessource): bool
+    public function update(string $name, mixed $value, ApcRessource $apcRessource): bool
     {
-        $method = 'set' . $name;
+        $method = 'set'.$name;
         if (method_exists($apcRessource, $method)) {
             $apcRessource->$method(Tools::convertToFloat($value));
             $this->entityManager->flush();

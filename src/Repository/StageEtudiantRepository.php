@@ -38,7 +38,7 @@ class StageEtudiantRepository extends ServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function findExist(StagePeriode $stagePeriode, Etudiant $etudiant)
+    public function findExist(StagePeriode $stagePeriode, Etudiant $etudiant): ?StageEtudiant
     {
         return $this->createQueryBuilder('s')
             ->where('s.etudiant = :etudiant')
@@ -49,7 +49,7 @@ class StageEtudiantRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function findByPersonnelAnnee(Personnel $personnel, AnneeUniversitaire $anneeUniversitaire)
+    public function findByPersonnelAnnee(Personnel $personnel, AnneeUniversitaire $anneeUniversitaire): array
     {
         return $this->createQueryBuilder('s')
             ->innerJoin(StagePeriode::class, 'p', 'WITH', 's.stagePeriode = p.id')
@@ -61,7 +61,7 @@ class StageEtudiantRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByPersonnelHistorique(Personnel $personnel, AnneeUniversitaire $anneeUniversitaire)
+    public function findByPersonnelHistorique(Personnel $personnel, AnneeUniversitaire $anneeUniversitaire): array
     {
         return $this->createQueryBuilder('s')
             ->innerJoin(StagePeriode::class, 'p', 'WITH', 's.stagePeriode = p.id')
@@ -73,7 +73,7 @@ class StageEtudiantRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByEtudiantAnnee(Etudiant $etudiant, AnneeUniversitaire $anneeUniversitaire)
+    public function findByEtudiantAnnee(Etudiant $etudiant, AnneeUniversitaire $anneeUniversitaire): array
     {
         return $this->createQueryBuilder('s')
             ->innerJoin(StagePeriode::class, 'p', 'WITH', 's.stagePeriode = p.id')
@@ -85,7 +85,7 @@ class StageEtudiantRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByEtudiantHistorique(Etudiant $etudiant, AnneeUniversitaire $anneeUniversitaire)
+    public function findByEtudiantHistorique(Etudiant $etudiant, AnneeUniversitaire $anneeUniversitaire): array
     {
         return $this->createQueryBuilder('s')
             ->innerJoin(StagePeriode::class, 'p', 'WITH', 's.stagePeriode = p.id')
@@ -97,7 +97,7 @@ class StageEtudiantRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findEntreprisesByPeriode(StagePeriode $stagePeriode)
+    public function findEntreprisesByPeriode(StagePeriode $stagePeriode): array
     {
         return $this->createQueryBuilder('s')
             ->innerJoin(Entreprise::class, 'e', 'WITH', 's.entreprise = e.id')

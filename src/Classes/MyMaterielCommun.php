@@ -19,18 +19,14 @@ use App\Repository\MaterielCommunRepository;
 
 class MyMaterielCommun
 {
-    private MaterielCommunRepository $materielCommunRepository;
-    private MaterielCommunPretRepository $materielCommunPretRepository;
+
 
     /**
      * MyMaterielCommun constructor.
      */
     public function __construct(
-        MaterielCommunRepository $materielCommunRepository,
-        MaterielCommunPretRepository $materielCommunPretRepository
+        private MaterielCommunPretRepository $materielCommunPretRepository
     ) {
-        $this->materielCommunRepository = $materielCommunRepository;
-        $this->materielCommunPretRepository = $materielCommunPretRepository;
     }
 
     public function getJours(): array
@@ -40,8 +36,8 @@ class MyMaterielCommun
         $j = -2;
 
         for ($i = 0; $i < $nbjouremprunt; ++$i) {
-            $d = mktime(0, 0, 0, date('m'), date('d') + $j, date('Y'));
-            $jour = date('N', $d);
+            $d = mktime(0, 0, 0, date('m'), (int) date('d') + $j, (int) date('Y'));
+            $jour = (int) date('N', $d);
             if (6 !== $jour && 7 !== $jour) {
                 $jours[$i]['jour'] = Constantes::TAB_JOURS[date('N', $d)];
                 $jours[$i]['texte'] = date('d/m/Y', $d);

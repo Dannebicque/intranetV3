@@ -31,7 +31,7 @@ class StagePeriodeOffreRepository extends ServiceEntityRepository
         parent::__construct($registry, StagePeriodeOffre::class);
     }
 
-    public function findOffreDepartement(Departement $departement)
+    public function findOffreDepartement(Departement $departement): array
     {
         return $this->createQueryBuilder('o')
             ->join('o.stagePeriodes', 'p')

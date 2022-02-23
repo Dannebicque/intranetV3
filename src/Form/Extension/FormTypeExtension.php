@@ -48,7 +48,7 @@ class FormTypeExtension extends AbstractTypeExtension
         $view->vars['input_suffix'] = $options['input_suffix'];
     }
 
-    protected function setView(FormView $view, FormInterface $form, string $attributeName, $defaultValue): void
+    protected function setView(FormView $view, FormInterface $form, string $attributeName, ?string $defaultValue): void
     {
         if ($form->getConfig()->hasAttribute($attributeName)) { // if attribute is defined -> set it to view
             $view->vars[$attributeName] = $form->getConfig()->getAttribute($attributeName);

@@ -9,16 +9,18 @@
 
 namespace App\Classes\Matieres;
 
+use App\DTO\Matiere;
+
 abstract class AbstractMatiereManager
 {
-    public function findFromSelect($data)
+    public function findFromSelect(string $data): ?Matiere
     {
         $id = $this->getIdFromString($data);
 
         return null !== $id ? $this->find($id) : null;
     }
 
-    public function getIdFromString($data)
+    public function getIdFromString(string $data): ?string
     {
         $d = explode('_', $data);
         if (2 === count($d)) {
@@ -28,7 +30,7 @@ abstract class AbstractMatiereManager
         return null;
     }
 
-    public function find($id)
+    public function find(int | string $id): ?Matiere
     {
         return null;
     }

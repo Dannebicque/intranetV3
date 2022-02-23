@@ -10,6 +10,8 @@
 namespace App\Command;
 
 use App\Classes\Apogee\GenereCodeApogee;
+use App\Repository\ApcRessourceRepository;
+use App\Repository\ApcSaeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -24,14 +26,14 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class GenereCodeApogeeCommand extends Command
 {
-    protected EntityManagerInterface $entityManager;
-
     /**
      * GenereCodeApogeeCommand constructor.
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(
+        protected EntityManagerInterface $entityManager,
+        protected ApcRessourceRepository $apcRessourceRepository,
+        protected ApcSaeRepository $apcSaeRepository)
     {
-        $this->entityManager = $entityManager;
 
         parent::__construct();
     }
@@ -49,7 +51,7 @@ class GenereCodeApogeeCommand extends Command
         $arg1 = $input->getArgument('departement');
 
         if ($arg1) {
-            $maquette = new GenereCodeApogee($this->entityManager);
+            $maquette = new GenereCodeApogee($this->entityManager, $this->apcRessourceRepository, $this->apcSaeRepository);
 
             if (false === $maquette->checkDiplome($arg1)) {
                 $io->error('Le diplôme n\'existe pas');

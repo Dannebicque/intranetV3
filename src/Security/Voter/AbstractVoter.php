@@ -10,7 +10,6 @@
 namespace App\Security\Voter;
 
 use App\Entity\Departement;
-use App\Entity\Diplome;
 use App\Entity\Personnel;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -68,7 +67,7 @@ class AbstractVoter
             if (!is_string($this->user) && $this->user instanceof Personnel) {
                 $this->departementRoles = [];
                 foreach ($this->user->getPersonnelDepartements() as $rf) {
-                    if (!array_key_exists($rf->getDepartement()->getId(), $this->departementRoles)) {
+                    if (null !== $rf->getDepartement() && !array_key_exists($rf->getDepartement()->getId(), $this->departementRoles)) {
                         $this->departementRoles[$rf->getDepartement()->getId()] = [];
                     }
                     if (null !== $rf->getDepartement()) {
@@ -110,16 +109,14 @@ class AbstractVoter
         return $this->session->getSession()->get('departement')->equals($departement->getUuid());
     }
 
-    public function isResponsableDepartement(Departement $departement)
+    public function isResponsableDepartement(Departement $departement): bool
     {
         if (!array_key_exists($departement->getId(), $this->departementRoles)) {
             throw new AccessDeniedException('Vous n\'avez pas accès à ce département');
         }
 
-        if (in_array('ROLE_CDD', $this->departementRoles[$departement->getId()]) || in_array('ROLE_ASS', $this->departementRoles[$departement->getId()]) || in_array('ROLE_DDE', $this->departementRoles[$departement->getId()])) {
-            return true;
-        }
-
-        return false;
+        return in_array('ROLE_CDD', $this->departementRoles[$departement->getId()], true) || in_array('ROLE_ASS',
+                $this->departementRoles[$departement->getId()], true) || in_array('ROLE_DDE',
+                $this->departementRoles[$departement->getId()], true);
     }
 }

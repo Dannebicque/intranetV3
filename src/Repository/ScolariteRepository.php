@@ -38,7 +38,7 @@ class ScolariteRepository extends ServiceEntityRepository
         parent::__construct($registry, Scolarite::class);
     }
 
-    public function findEtudiantsDepartement($annee, Departement $departement)
+    public function findEtudiantsDepartement(int $annee, Departement $departement): array
     {
         return $this->createQueryBuilder('p')
             ->innerJoin(Etudiant::class, 'e', 'WITH', 'p.etudiant = e.id')
@@ -56,7 +56,7 @@ class ScolariteRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByEtudiant(Etudiant $etudiant)
+    public function findByEtudiant(Etudiant $etudiant): array
     {
         return $this->createQueryBuilder('s')
             ->where('s.etudiant = :etudiant')
@@ -66,7 +66,7 @@ class ScolariteRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByEtudiantDepartement(Etudiant $etudiant, Departement $departement)
+    public function findByEtudiantDepartement(Etudiant $etudiant, Departement $departement): array
     {
         return $this->createQueryBuilder('p')
             ->innerJoin(Etudiant::class, 'e', 'WITH', 'p.etudiant = e.id')
@@ -85,12 +85,11 @@ class ScolariteRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return int|mixed|string
      *
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function findOrdreMax(Etudiant $etudiant)
+    public function findOrdreMax(Etudiant $etudiant): ?int
     {
         return $this->createQueryBuilder('p')
             ->select('MAX(p.ordre) as max')

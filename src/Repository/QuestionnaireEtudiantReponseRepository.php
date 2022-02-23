@@ -36,7 +36,7 @@ class QuestionnaireEtudiantReponseRepository extends ServiceEntityRepository
     public function findExistQuestion(
         string $cle,
         QuestionnaireEtudiant $quizzEtudiant
-    ) {
+    ): ?QuestionnaireEtudiantReponse {
         return $this->createQueryBuilder('q')
             ->where('q.cleQuestion = :cle')
             ->andWhere('q.questionnaireEtudiant = :questionnaireEtudiant')

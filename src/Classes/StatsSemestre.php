@@ -14,6 +14,7 @@
 namespace App\Classes;
 
 use App\DTO\StatistiquesSemestre;
+use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use App\Entity\Utilisateur;
@@ -22,7 +23,7 @@ use function count;
 
 class StatsSemestre
 {
-    public function calculStatistiquesSemestre(Semestre $semestre, $bacs): StatistiquesSemestre
+    public function calculStatistiquesSemestre(Semestre $semestre, array $bacs): StatistiquesSemestre
     {
         $stats = new StatistiquesSemestre();
         $stats->effectif = count($semestre->getEtudiants());
@@ -34,9 +35,9 @@ class StatsSemestre
         /** @var Etudiant $etudiant */
         foreach ($semestre->getEtudiants() as $etudiant) {
             //Homme/femme
-            if (Utilisateur::HOMME === $etudiant->getCivilite()) {
+            if (Constantes::CIVILITE_HOMME === $etudiant->getCivilite()) {
                 ++$stats->hommes;
-            } elseif (Utilisateur::FEMME === $etudiant->getCivilite()) {
+            } elseif (Constantes::CIVILITE_FEMME === $etudiant->getCivilite()) {
                 ++$stats->femmes;
             }
 

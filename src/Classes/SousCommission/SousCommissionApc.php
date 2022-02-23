@@ -86,12 +86,12 @@ class SousCommissionApc extends AbstractSousCommission implements SousCommission
         return $tStats;
     }
 
-    public function getSousCommissionEtudiant($idEtudiant): ?EtudiantSousCommissionApc
+    public function getSousCommissionEtudiant(int $idEtudiant): ?EtudiantSousCommissionApc
     {
         return $this->sousCommissionEtudiant[$idEtudiant];
     }
 
-    public function getBySemestreAnneeUniversitaire(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
+    public function getBySemestreAnneeUniversitaire(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): ?ScolaritePromo
     {
         return $this->entityManager->getRepository(ScolaritePromo::class)->findOneBy([
             'semestre' => $semestre->getId(),

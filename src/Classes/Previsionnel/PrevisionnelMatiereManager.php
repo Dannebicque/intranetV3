@@ -9,7 +9,6 @@
 
 namespace App\Classes\Previsionnel;
 
-
 use App\Adapter\PrevisionnelMatiereAdapter;
 use App\DTO\PrevisionnelCollection;
 use App\Entity\Departement;
@@ -50,7 +49,7 @@ class PrevisionnelMatiereManager extends AbstractPrevisionnelManager implements 
         return $this->previsionnelMatiereAdapter->collection($data);
     }
 
-    public function findPrevisionnelMatiere($matiere, $anneePrevisionnel): PrevisionnelCollection
+    public function findPrevisionnelMatiere(string | int $matiere, int $anneePrevisionnel): PrevisionnelCollection
     {
         $data = $this->previsionnelRepository->findPrevisionnelMatiere($matiere, $anneePrevisionnel);
 
@@ -58,9 +57,9 @@ class PrevisionnelMatiereManager extends AbstractPrevisionnelManager implements 
     }
 
     public function findPrevisionnelMatierePersonnelAnnee(
-        $matiere,
-        $personnel,
-        $anneePrevisionnel
+        string | int $matiere,
+        Personnel $personnel,
+        int $anneePrevisionnel
     ): PrevisionnelCollection {
         $data = $this->previsionnelRepository->findPrevisionnelMatierePersonnelAnnee($matiere, $personnel,
             $anneePrevisionnel);
@@ -68,28 +67,28 @@ class PrevisionnelMatiereManager extends AbstractPrevisionnelManager implements 
         return $this->previsionnelMatiereAdapter->collection($data);
     }
 
-    public function getPrevisionnelSemestre(Semestre $semestre, $annee = 0): PrevisionnelCollection
+    public function getPrevisionnelSemestre(Semestre $semestre, int $annee = 0): PrevisionnelCollection
     {
         $data = $this->previsionnelRepository->findPrevisionnelSemestre($semestre, $annee);
 
         return $this->previsionnelMatiereAdapter->collection($data);
     }
 
-    public function findByDepartement(Departement $departement, $annee = 0): PrevisionnelCollection
+    public function findByDepartement(Departement $departement, int $annee = 0): PrevisionnelCollection
     {
         $data = $this->previsionnelRepository->findByDepartement($departement, $annee);
 
         return $this->previsionnelMatiereAdapter->collection($data);
     }
 
-    public function findByDiplome(Diplome $diplome, $annee = 0): PrevisionnelCollection
+    public function findByDiplome(Diplome $diplome, int $annee = 0): PrevisionnelCollection
     {
         $data = $this->previsionnelRepository->findByDiplome($diplome, $annee);
 
         return $this->previsionnelMatiereAdapter->collection($data);
     }
 
-    public function findByDiplomeToDelete(Diplome $diplome, $annee = 0)
+    public function findByDiplomeToDelete(Diplome $diplome, int $annee = 0): array
     {
         return $this->previsionnelRepository->findByDiplomeToDelete($diplome, $annee);
     }

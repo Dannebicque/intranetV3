@@ -47,7 +47,7 @@ class QualiteRelanceEvent extends Event
         return $this->etudiants;
     }
 
-    public function setEtudiants($etudiants)
+    public function setEtudiants(array $etudiants): void
     {
         $this->etudiants = $etudiants;
     }

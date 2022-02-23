@@ -17,15 +17,8 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class AbsenceEtatAppel
 {
-    private AbsenceEtatAppelRepository $absenceEtatAppelRepository;
-    private EntityManagerInterface $entityManager;
-
-    public function __construct(
-        AbsenceEtatAppelRepository $absenceEtatAppelRepository,
-        EntityManagerInterface $entityManager
-    ) {
-        $this->absenceEtatAppelRepository = $absenceEtatAppelRepository;
-        $this->entityManager = $entityManager;
+    public function __construct(private AbsenceEtatAppelRepository $absenceEtatAppelRepository, private EntityManagerInterface $entityManager)
+    {
     }
 
     /**

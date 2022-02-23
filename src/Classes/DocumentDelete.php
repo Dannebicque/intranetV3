@@ -45,7 +45,7 @@ class DocumentDelete
         foreach ($docs as $doc) {
             $this->entityManager->remove($doc);
         }
-        $file = $this->kernel->getProjectDir() . '/public/upload/documents/' . $document->getDocumentName();
+        $file = $this->kernel->getProjectDir().'/public/upload/documents/'.$document->getDocumentName();
         if (file_exists($file) && !is_dir($file)) {
             unlink($file);
         }
@@ -54,5 +54,4 @@ class DocumentDelete
 
         return true;
     }
-
 }

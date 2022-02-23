@@ -9,6 +9,8 @@
 
 namespace App\Classes\Previsionnel;
 
+use App\DTO\Previsionnel;
+use App\DTO\PrevisionnelCollection;
 use App\Entity\Constantes;
 use App\Entity\Personnel;
 
@@ -103,11 +105,10 @@ class PrevisionnelSynthese
             $this->totalTp += $pr->getTotalHTp();
         }
 
-
         return $this;
     }
 
-    public function getSyntheseMatiere($previsionnel): PrevisionnelSynthese
+    public function getSyntheseMatiere(PrevisionnelCollection $previsionnel): PrevisionnelSynthese
     {
         foreach ($previsionnel->previsionnels as $pr) {
             $this->totalCm += $pr->getTotalHCm();
@@ -122,7 +123,7 @@ class PrevisionnelSynthese
         return $this;
     }
 
-    public function getSyntheseSemestre($previsionnel): PrevisionnelSynthese
+    public function getSyntheseSemestre(PrevisionnelCollection $previsionnel): PrevisionnelSynthese
     {
         foreach ($previsionnel as $pr) {
             $this->totalCm += $pr->getTotalHCm();

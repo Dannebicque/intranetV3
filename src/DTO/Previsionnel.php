@@ -14,7 +14,7 @@ use App\Entity\Constantes;
 class Previsionnel
 {
     public int $id;
-    public int $personnel_id;
+    public ?int $personnel_id;
     public int $matiere_id;
     public string $type_matiere;
     public float $nbHCm;
@@ -28,9 +28,9 @@ class Previsionnel
     public string $matiere_libelle;
     public ?string $matiere_code = '';
     public ?string $matiere_code_element = '';
-    public string $personnel_nom;
-    public string $personnel_prenom;
-    public int $personnel_numeroHarpege;
+    public string $personnel_nom = '';
+    public string $personnel_prenom = '';
+    public string $personnel_numeroHarpege;
     public string $personnel_mail;
     public float $nbHeuresService;
     public int $semestre_id;

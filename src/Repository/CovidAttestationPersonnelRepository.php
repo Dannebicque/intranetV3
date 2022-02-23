@@ -29,7 +29,7 @@ class CovidAttestationPersonnelRepository extends ServiceEntityRepository
         parent::__construct($registry, CovidAttestationPersonnel::class);
     }
 
-    public function findByPersonnel(Personnel $personnel)
+    public function findByPersonnel(Personnel $personnel): array
     {
         return $this->createQueryBuilder('p')
             ->where('p.personnel = :personnel')
@@ -39,7 +39,7 @@ class CovidAttestationPersonnelRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByDepartement(Departement $departement)
+    public function findByDepartement(Departement $departement): array
     {
         return $this->createQueryBuilder('p')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'p.diplome=d.id')

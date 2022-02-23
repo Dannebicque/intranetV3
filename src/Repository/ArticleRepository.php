@@ -14,7 +14,6 @@ use App\Entity\ArticleCategorie;
 use App\Entity\Constantes;
 use App\Entity\Departement;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -35,34 +34,21 @@ class ArticleRepository extends ServiceEntityRepository
         parent::__construct($registry, Article::class);
     }
 
-    public function findByTypeDepartement($type, $departement)
+    public function findByTypeDepartement(int $type, Departement $departement): array
     {
         return $this->findByTypeDepartementBuilder($type, $departement)
             ->getQuery()
             ->getResult();
     }
 
-    /**
-     * @throws NonUniqueResultException
-     */
-    public function findOneBySlug($slug)
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.slug = :slug')
-            ->setParameter('slug', $slug)
-            ->getQuery()
-            ->getOneOrNullResult()
-            ;
-    }
-
-    public function findByTypeDepartementBuilder($type, $departement, bool $isEtudiant = true): QueryBuilder
+    public function findByTypeDepartementBuilder(int $type, Departement $departement, bool $isEtudiant = true): QueryBuilder
     {
         $query = $this->createQueryBuilder('a')
             ->innerJoin(ArticleCategorie::class, 'c', 'WITH', 'c.id = a.categorie')
             ->where('c.id = :idType')
             ->andWhere('c.departement = :departement')
             ->setParameter('idType', $type)
-            ->setParameter('departement', $departement)
+            ->setParameter('departement', $departement->getId())
             ->orderBy('a.updated', 'DESC');
 
         if (true === $isEtudiant) {

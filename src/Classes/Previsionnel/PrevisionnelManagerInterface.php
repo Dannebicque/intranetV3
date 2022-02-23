@@ -24,7 +24,7 @@ interface PrevisionnelManagerInterface
         int $annee = 0
     ): PrevisionnelCollection;
 
-    public function findPrevisionnelMatiere($matiere, $anneePrevisionnel): PrevisionnelCollection;
+    public function findPrevisionnelMatiere(string | int $matiere, int $anneePrevisionnel): PrevisionnelCollection;
 
-    public function getPrevisionnelSemestre(Semestre $semestre, $annee = 0): PrevisionnelCollection;
+    public function getPrevisionnelSemestre(Semestre $semestre, int $annee = 0): PrevisionnelCollection;
 }

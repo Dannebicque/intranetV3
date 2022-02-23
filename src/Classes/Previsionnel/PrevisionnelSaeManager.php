@@ -49,7 +49,7 @@ class PrevisionnelSaeManager extends AbstractPrevisionnelManager implements Prev
         return $this->previsionnelSaeAdapter->collection($previs);
     }
 
-    public function findPrevisionnelMatiere($matiere, $anneePrevisionnel): PrevisionnelCollection
+    public function findPrevisionnelMatiere(string | int $matiere, int $anneePrevisionnel): PrevisionnelCollection
     {
         $data = $this->previsionnelRepository->findPrevisionnelMatiere($matiere, $anneePrevisionnel);
 
@@ -57,9 +57,9 @@ class PrevisionnelSaeManager extends AbstractPrevisionnelManager implements Prev
     }
 
     public function findPrevisionnelMatierePersonnelAnnee(
-        $matiere,
-        $personnel,
-        $anneePrevisionnel
+        string | int $matiere,
+        Personnel $personnel,
+        int $anneePrevisionnel
     ): PrevisionnelCollection {
         $data = $this->previsionnelRepository->findPrevisionnelMatierePersonnelAnnee($matiere, $personnel,
             $anneePrevisionnel);
@@ -67,28 +67,28 @@ class PrevisionnelSaeManager extends AbstractPrevisionnelManager implements Prev
         return $this->previsionnelSaeAdapter->collection($data);
     }
 
-    public function getPrevisionnelSemestre(Semestre $semestre, $annee = 0): PrevisionnelCollection
+    public function getPrevisionnelSemestre(Semestre $semestre, int $annee = 0): PrevisionnelCollection
     {
         $data = $this->previsionnelRepository->findPrevisionnelSemestre($semestre, $annee);
 
         return $this->previsionnelSaeAdapter->collection($data);
     }
 
-    public function findByDepartement(Departement $departement, $annee = 0): PrevisionnelCollection
+    public function findByDepartement(Departement $departement, int $annee = 0): PrevisionnelCollection
     {
         $data = $this->previsionnelRepository->findByDepartement($departement, $annee);
 
         return $this->previsionnelSaeAdapter->collection($data);
     }
 
-    public function findByDiplome(Diplome $diplome, $annee = 0): PrevisionnelCollection
+    public function findByDiplome(Diplome $diplome, int $annee = 0): PrevisionnelCollection
     {
         $data = $this->previsionnelRepository->findByDiplome($diplome, $annee);
 
         return $this->previsionnelSaeAdapter->collection($data);
     }
 
-    public function findByDiplomeToDelete(Diplome $diplome, $annee = 0)
+    public function findByDiplomeToDelete(Diplome $diplome, int $annee = 0): array
     {
         return $this->previsionnelRepository->findByDiplomeToDelete($diplome, $annee);
     }

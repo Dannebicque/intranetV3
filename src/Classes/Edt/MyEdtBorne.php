@@ -31,7 +31,7 @@ class MyEdtBorne
 
     private EdtManager $edtManager;
     private SemestreRepository $semestreRepository;
-    private EdtPlanningRepository $edtPlanningRepository;//todo: passer par EvenementCollection pour gérer tous les cas??
+    private EdtPlanningRepository $edtPlanningRepository; //todo: passer par EvenementCollection pour gérer tous les cas??
 
     /**
      * MyEdtBorne constructor.
@@ -52,9 +52,9 @@ class MyEdtBorne
 
     public function init(): void
     {
-        $this->data['semaine'] = date('W');
-        $this->data['njour'] = date('d');
-        $this->data['jsem'] = date('N');
+        $this->data['semaine'] = (int) date('W');
+        $this->data['njour'] = (int) date('d');
+        $this->data['jsem'] = (int) date('N');
     }
 
     public function getData(): array
@@ -71,39 +71,39 @@ class MyEdtBorne
     ): void {
         $semaine = $this->calendrierRepository->findOneBy([
             'semaineReelle' => $this->data['semaine'],
-            'anneeUniversitaire' => $anneeUniversitaire->getId()
+            'anneeUniversitaire' => $anneeUniversitaire->getId(),
         ]);
 
         $this->data['semestre1'] = $semestre1;
         $this->data['semestre2'] = $semestre2;
         if (null !== $semaine) {
-
             $this->data['p1']['planning'] = $this->edtPlanningRepository->recupereEDTBornes($semaine->getSemaineFormation(),
                 $semestre1, $this->data['jsem'], $typeMatiereManager->findBySemestreArray($semestre1));
             $this->data['p2']['planning'] = $this->edtPlanningRepository->recupereEDTBornes($semaine->getSemaineFormation(),
                 $semestre2, $this->data['jsem'], $typeMatiereManager->findBySemestreArray($semestre2));
 
-
             $this->data['p1']['groupes'] = $this->groupeRepository->findAllGroupes($semestre1);
             $this->data['p2']['groupes'] = $this->groupeRepository->findAllGroupes($semestre2);
             $this->data['jours'] = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
-            $this->data['j1'] = $this->data['jours'][$this->data['jsem']] . ' ' . date('d/m/Y',
-                    mktime(12, 30, 00, date('n'), $this->data['njour'], date('Y')));
+            $this->data['j1'] = $this->data['jours'][$this->data['jsem']].' '.date('d/m/Y',
+                    mktime(12, 30, 00, (int) date('n'), (int) $this->data['njour'], (int) date('Y')));
         }
     }
 
-
-    public function getAffichageBorneJourSemestre(mixed $intSemestre, TypeMatiereManager $typeMatiereManager)
+    /**
+     * @throws \App\Exception\SemestreNotFoundException
+     */
+    public function getAffichageBorneJourSemestre(mixed $intSemestre, TypeMatiereManager $typeMatiereManager): array
     {
         $semestre = $this->semestreRepository->find($intSemestre);
 
-        if ($semestre === null) {
+        if (null === $semestre) {
             throw new SemestreNotFoundException();
         }
 
         $semaine = $this->calendrierRepository->findOneBy([
             'semaineReelle' => $this->data['semaine'],
-            'anneeUniversitaire' => $semestre->getAnneeUniversitaire()?->getId()
+            'anneeUniversitaire' => $semestre->getAnneeUniversitaire()?->getId(),
         ]);
 
         $this->data['semestre'] = $semestre;
@@ -117,8 +117,8 @@ class MyEdtBorne
             $this->data['planning'] = $tab;
             $this->data['p1']['groupes'] = $this->groupeRepository->findAllGroupes($semestre);
             $this->data['jours'] = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
-            $this->data['j1'] = $this->data['jours'][$this->data['jsem']] . ' ' . date('d/m/Y',
-                    mktime(12, 30, 00, date('n'), $this->data['njour'], date('Y')));
+            $this->data['j1'] = $this->data['jours'][$this->data['jsem']].' '.date('d/m/Y',
+                    mktime(12, 30, 00, (int) date('n'), (int) $this->data['njour'], (int) date('Y')));
         }
 
         return $this->data;

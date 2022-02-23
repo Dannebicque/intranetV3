@@ -86,36 +86,34 @@ class ComparePrevisonnelMatiere extends ComparePrevisionnel
             if (0 !== $pl->getIdMatiere() &&
                 null !== $pl->getIntervenant() &&
                 array_key_exists($ligne, $t)) {
-
                 $col = $pl->getIntervenant()->getId();
-                if (array_key_exists($ligne, $t)) {
-                    if (!array_key_exists($col, $t[$ligne])) {
-                        $t[$ligne][$col]['personnel_id'] = $pl->getIntervenant()->getId();
-                        $t[$ligne][$col]['personnel_prenom'] = $pl->getIntervenant()->getPrenom();
-                        $t[$ligne][$col]['personnel_nom'] = $pl->getIntervenant()->getNom();
-                        $t[$ligne][$col]['nbCMPrevi'] = 0;
-                        $t[$ligne][$col]['nbTDPrevi'] = 0;
-                        $t[$ligne][$col]['nbTPPrevi'] = 0;
-                        $t[$ligne][$col]['nbCMEDT'] = 0;
-                        $t[$ligne][$col]['nbTDEDT'] = 0;
-                        $t[$ligne][$col]['nbTPEDT'] = 0;
-                    }
-
-                    switch ($pl->getType()) {
-                        case 'cm':
-                        case 'CM':
-                            $t[$ligne][$col]['nbCMEDT'] += $pl->getDureeInt();
-                            break;
-                        case 'td':
-                        case 'TD':
-                            $t[$ligne][$col]['nbTDEDT'] += $pl->getDureeInt();
-                            break;
-                        case 'tp':
-                        case 'TP':
-                            $t[$ligne][$col]['nbTPEDT'] += $pl->getDureeInt();
-                            break;
-                    }
+                if (!array_key_exists($col, $t[$ligne])) {
+                    $t[$ligne][$col]['personnel_id'] = $pl->getIntervenant()->getId();
+                    $t[$ligne][$col]['personnel_prenom'] = $pl->getIntervenant()->getPrenom();
+                    $t[$ligne][$col]['personnel_nom'] = $pl->getIntervenant()->getNom();
+                    $t[$ligne][$col]['nbCMPrevi'] = 0;
+                    $t[$ligne][$col]['nbTDPrevi'] = 0;
+                    $t[$ligne][$col]['nbTPPrevi'] = 0;
+                    $t[$ligne][$col]['nbCMEDT'] = 0;
+                    $t[$ligne][$col]['nbTDEDT'] = 0;
+                    $t[$ligne][$col]['nbTPEDT'] = 0;
                 }
+
+                switch ($pl->getType()) {
+                    case 'cm':
+                    case 'CM':
+                        $t[$ligne][$col]['nbCMEDT'] += $pl->getDureeInt();
+                        break;
+                    case 'td':
+                    case 'TD':
+                        $t[$ligne][$col]['nbTDEDT'] += $pl->getDureeInt();
+                        break;
+                    case 'tp':
+                    case 'TP':
+                        $t[$ligne][$col]['nbTPEDT'] += $pl->getDureeInt();
+                        break;
+                }
+
             }
         }
 

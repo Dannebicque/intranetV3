@@ -29,20 +29,16 @@ use function array_key_exists;
 
 class MyEdtCelcat extends BaseEdt
 {
-    protected CelcatEventsRepository $celcatEventsRepository;
-    private ?Annee $annee;
-    private GroupeRepository $groupeRepository;
+    private ?Annee $annee = null;
 
     private array $matieres;
 
     public function __construct(
         CalendrierRepository $celcatCalendrierRepository,
-        CelcatEventsRepository $celcatEventsRepository,
-        GroupeRepository $groupeRepository
+        protected CelcatEventsRepository $celcatEventsRepository,
+        private GroupeRepository $groupeRepository
     ) {
         parent::__construct($celcatCalendrierRepository);
-        $this->celcatEventsRepository = $celcatEventsRepository;
-        $this->groupeRepository = $groupeRepository;
     }
 
     public function initPersonnel(
@@ -66,7 +62,7 @@ class MyEdtCelcat extends BaseEdt
         int $semaine = 0,
         array $matieres = []
     ): self {
-        $this->matieres = $matieres;//todo: vériifer que pas vide
+        $this->matieres = $matieres; //todo: vériifer que pas vide
         $this->user = $etudiant;
         $this->init($anneeUniversitaire, 'etudiant', $etudiant->getId(), $semaine);
         $this->calculEdt();
@@ -81,33 +77,31 @@ class MyEdtCelcat extends BaseEdt
 
     public function calculEdt(): bool
     {
-        if ('' !== $this->semaineFormationIUT) {
-            switch ($this->filtre) {
-                case Constantes::FILTRE_EDT_PROMO:
-                    $this->groupes = $this->groupeRepository->findAllGroupes($this->semestre);
-                    $pl = $this->celcatEventsRepository->findEdtSemestre($this->semestre, $this->semaineFormationIUT);
-                    $this->planning = $this->transformePromo($pl);
-                    break;
-                case Constantes::FILTRE_EDT_PROF:
-                    $pl = $this->celcatEventsRepository->findEdtProf($this->user->getNumeroHarpege(),
-                        $this->semaineFormationIUT);
+        switch ($this->filtre) {
+            case Constantes::FILTRE_EDT_PROMO:
+                $this->groupes = $this->groupeRepository->findAllGroupes($this->semestre);
+                $pl = $this->celcatEventsRepository->findEdtSemestre($this->semestre, $this->semaineFormationIUT);
+                $this->planning = $this->transformePromo($pl);
+                break;
+            case Constantes::FILTRE_EDT_PROF:
+                $pl = $this->celcatEventsRepository->findEdtProf($this->user->getNumeroHarpege(),
+                    $this->semaineFormationIUT);
+                $this->planning = $this->transformeIndividuel($pl);
+                break;
+            case Constantes::FILTRE_EDT_ETUDIANT:
+                $pl = $this->celcatEventsRepository->findEdtEtu($this->user, $this->semaineFormationIUT);
+                if (null !== $pl) {
                     $this->planning = $this->transformeIndividuel($pl);
-                    break;
-                case Constantes::FILTRE_EDT_ETUDIANT:
-                    $pl = $this->celcatEventsRepository->findEdtEtu($this->user, $this->semaineFormationIUT);
-                    if (null !== $pl) {
-                        $this->planning = $this->transformeIndividuel($pl);
-                    } else {
-                        return false;
-                    }
-                    break;
-            }
+                } else {
+                    return false;
+                }
+                break;
         }
 
         return false;
     }
 
-    public function transformePromo($pl): array
+    public function transformePromo(array $pl): array
     {
         $gr = [];
         $groupes = $this->groupeRepository->getGroupesTP($this->semestre->getId());
@@ -145,7 +139,7 @@ class MyEdtCelcat extends BaseEdt
                     }
                 }
 
-                $tab[$jour][$dbtEdt][$groupe]['texte'] = $p->getLibModule() . '<br />' . $p->getLibSalle() . '<br />' . $p->getLibPersonnel() . ' |  ' . $p->getType() . ' |  ' . $p->getLibGroupe();
+                $tab[$jour][$dbtEdt][$groupe]['texte'] = $p->getLibModule().'<br />'.$p->getLibSalle().'<br />'.$p->getLibPersonnel().' |  '.$p->getType().' |  '.$p->getLibGroupe();
             }
         }
 
@@ -213,9 +207,7 @@ class MyEdtCelcat extends BaseEdt
     private function getTypeIdMatiere(CelcatEvent $p)
     {
         if (array_key_exists($p->getCodeModule(), $this->matieres)) {
-            $matiere = $this->matieres[$p->getCodeModule()];
-
-            return $matiere->getTypeIdMatiere();
+            return $this->matieres[$p->getCodeModule()]->getTypeIdMatiere();
         }
 
         return null;

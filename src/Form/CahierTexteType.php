@@ -12,7 +12,7 @@ namespace App\Form;
 use App\Entity\CahierTexte;
 use App\Entity\Departement;
 use App\Entity\Semestre;
-use App\Form\Type\CarbonDateTimeType;
+use App\Form\Type\DatePickerType;
 use App\Repository\SemestreRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -39,7 +39,7 @@ class CahierTexteType extends AbstractType
             ->add('description', TextareaType::class, [
                 'label' => 'description',
             ])
-            ->add('dateRetour', CarbonDateTimeType::class, [
+            ->add('dateRetour', DatePickerType::class, [
                 'label' => 'dateRetour',
             ])
             ->add('semestre', EntityType::class, [

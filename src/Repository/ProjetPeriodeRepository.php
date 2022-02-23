@@ -33,7 +33,7 @@ class ProjetPeriodeRepository extends ServiceEntityRepository
         parent::__construct($registry, ProjetPeriode::class);
     }
 
-    public function findByDepartement(Departement $departement)
+    public function findByDepartement(Departement $departement): array
     {
         $query = $this->createQueryBuilder('p')
             ->innerJoin(Semestre::class, 's', 'WITH', 'p.semestre = s.id')
@@ -47,7 +47,7 @@ class ProjetPeriodeRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
-    public function findByDiplome(Diplome $diplome, AnneeUniversitaire $anneeUniversitaire)
+    public function findByDiplome(Diplome $diplome, AnneeUniversitaire $anneeUniversitaire): array
     {
         return $this->findByDiplomeBuilder($diplome, $anneeUniversitaire)->getQuery()
             ->getResult();
@@ -66,7 +66,7 @@ class ProjetPeriodeRepository extends ServiceEntityRepository
             ->addOrderBy('p.libelle', 'ASC');
     }
 
-    public function findBySemestre(Semestre $semestre)
+    public function findBySemestre(Semestre $semestre): array
     {
         return $this->createQueryBuilder('p')
             ->where('p.semestre = :semestre')

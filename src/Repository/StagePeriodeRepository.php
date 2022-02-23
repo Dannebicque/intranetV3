@@ -33,7 +33,7 @@ class StagePeriodeRepository extends ServiceEntityRepository
         parent::__construct($registry, StagePeriode::class);
     }
 
-    public function findByDiplome(Diplome $diplome, AnneeUniversitaire $anneeUniversitaire)
+    public function findByDiplome(Diplome $diplome, AnneeUniversitaire $anneeUniversitaire): array
     {
         return $this->findByDiplomeBuilder($diplome, $anneeUniversitaire)->getQuery()
             ->getResult();
@@ -52,7 +52,7 @@ class StagePeriodeRepository extends ServiceEntityRepository
             ->addOrderBy('p.numeroPeriode', 'ASC');
     }
 
-    public function findStageEtudiant(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
+    public function findStageEtudiant(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): array
     {
         //trouver les périodes de stage sur ce semestre et le suivant
         $query = $this->createQueryBuilder('s')
@@ -72,7 +72,7 @@ class StagePeriodeRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
-    public function findByDepartement(Departement $departement)
+    public function findByDepartement(Departement $departement): array
     {
         $query = $this->createQueryBuilder('p')
             ->innerJoin(Semestre::class, 's', 'WITH', 'p.semestre = s.id')
@@ -86,7 +86,7 @@ class StagePeriodeRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
-    public function findByDepartementBuilder(Departement $departement, $annee): QueryBuilder
+    public function findByDepartementBuilder(Departement $departement, int $annee): QueryBuilder
     {
         $query = $this->createQueryBuilder('p')
             ->innerJoin(Semestre::class, 's', 'WITH', 'p.semestre = s.id')

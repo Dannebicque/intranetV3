@@ -58,12 +58,12 @@ class DateRepository extends ServiceEntityRepository
         return $query;
     }
 
-    public function findByDepartement(Departement $departement, int $nbResult = 0, bool $isEtudiant = true)
+    public function findByDepartement(Departement $departement, int $nbResult = 0, bool $isEtudiant = true): array
     {
         return $this->findByDepartementBuilder($departement, $nbResult, $isEtudiant)->getQuery()->getResult();
     }
 
-    public function findByDepartementArray(Departement $departement, $nbResult = 0)
+    public function findByDepartementArray(Departement $departement, int $nbResult = 0): array
     {
         return $this->findByDepartementBuilder($departement,
             $nbResult)->getQuery()->getResult(AbstractQuery::HYDRATE_ARRAY);
@@ -72,7 +72,7 @@ class DateRepository extends ServiceEntityRepository
     /**
      * @throws Exception
      */
-    public function findByDepartementPlanning($departement, $annee, bool $isEtudiant = true): array
+    public function findByDepartementPlanning(Departement $departement, int $annee, bool $isEtudiant = true): array
     {
         $datedebut = new DateTime($annee.'-09-01');
         $annee2 = $annee + 1;
@@ -115,7 +115,7 @@ class DateRepository extends ServiceEntityRepository
         return $tab;
     }
 
-    public function findByDateForEtudiant(Etudiant $etudiant, int $nbResult)
+    public function findByDateForEtudiant(Etudiant $etudiant, int $nbResult = 0): array
     {
         $query = $this->createQueryBuilder('d')
             ->leftJoin('d.semestres', 's')
@@ -131,7 +131,7 @@ class DateRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
-    public function findByDateForPersonnel(Departement $departement, int $nbResult)
+    public function findByDateForPersonnel(Departement $departement, int $nbResult = 0): array
     {
         $query = $this->createQueryBuilder('d')
             ->where('d.departement = :departement')

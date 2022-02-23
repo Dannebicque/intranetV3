@@ -31,7 +31,7 @@ class Scolarite
         }
     }
 
-    private function getStyle($decision): string
+    private function getStyle(string $decision): string
     {
         return match ($decision) {
             Constantes::SEMESTRE_VALIDE => 'badge bg-success',
@@ -41,7 +41,7 @@ class Scolarite
         };
     }
 
-    public function getStyleNote($note): string
+    public function getStyleNote(float $note): string
     {
         if ($note < 10) {
             return 'badge bg-danger';

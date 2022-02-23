@@ -15,11 +15,10 @@ use App\DTO\PrevisionnelCollection;
 
 class PrevisionnelRessourceAdapter extends AbstractPrevisionnelAdapter implements PrevisionnelAdapterInterface
 {
-
     public function collection(array $previsionnels): PrevisionnelCollection
     {
         $collection = new PrevisionnelCollection();
-        /** @var \App\Entity\Previsionnel $previ */
+
         foreach ($previsionnels as $previ) {
             $collection->add($this->single($previ));
         }

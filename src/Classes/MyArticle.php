@@ -18,11 +18,12 @@ use App\Entity\ArticleLikeEtudiant;
 use App\Entity\ArticleLikePersonnel;
 use App\Entity\Etudiant;
 use App\Entity\Personnel;
+use App\Interfaces\UtilisateurInterface;
 use App\Repository\ArticleLikeEtudiantRepository;
 use App\Repository\ArticleLikePersonnelRepository;
 use App\Repository\ArticleRepository;
-use Doctrine\ORM\EntityManagerInterface;
 use function count;
+use Doctrine\ORM\EntityManagerInterface;
 
 class MyArticle
 {
@@ -58,11 +59,11 @@ class MyArticle
         return $this;
     }
 
-    public function saveLike($getConnectedUser): void
+    public function saveLike(UtilisateurInterface $getConnectedUser): void
     {
         if ($getConnectedUser instanceof Personnel) {
             $r = $this->articleLikePersonnelRepository->findLike($getConnectedUser, $this->article);
-            if (null === $r || 0 === count($r)) {
+            if (0 === count($r)) {
                 //add
                 $n = new ArticleLikePersonnel($getConnectedUser, $this->article);
                 $this->entityManager->persist($n);
@@ -72,7 +73,7 @@ class MyArticle
             }
         } elseif ($getConnectedUser instanceof Etudiant) {
             $r = $this->articleLikeEtudiantRepository->findLike($getConnectedUser, $this->article);
-            if (null === $r || 0 === count($r)) {
+            if (0 === count($r)) {
                 //add
                 $n = new ArticleLikeEtudiant($getConnectedUser, $this->article);
                 $this->entityManager->persist($n);
@@ -84,7 +85,7 @@ class MyArticle
         $this->entityManager->flush();
     }
 
-    private function remove($r): void
+    private function remove(array $r): void
     {
         foreach ($r as $t) {
             $this->entityManager->remove($t);

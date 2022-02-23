@@ -29,7 +29,7 @@ class GenereGroupes
         $this->entityManager = $entityManager;
     }
 
-    public function genereGroupesSemestre(Semestre $semestre, $format)
+    public function genereGroupesSemestre(Semestre $semestre, string $format): void
     {
         $this->semestre = $semestre;
         $this->format = $format;
@@ -47,10 +47,14 @@ class GenereGroupes
             $tps[] = $this->genereTp($tds, $i);
         }
 
+        foreach ($tps as $tp) {
+            $this->entityManager->persist($tp);
+        }
+
         $this->entityManager->flush();
     }
 
-    private function genereTypeGroupes()
+    private function genereTypeGroupes(): void
     {
         $this->tgCm = new TypeGroupe($this->semestre);
         $this->tgCm->setLibelle('CM');
@@ -69,49 +73,48 @@ class GenereGroupes
         $this->entityManager->persist($this->tgTp);
     }
 
-    private function genereCm()
+    private function genereCm(): Groupe
     {
         $cm = new Groupe();
         $cm->setTypeGroupe($this->tgCm);
-        $cm->setLibelle('CM ' . $this->semestre->getLibelle());
+        $cm->setLibelle('CM '.$this->semestre->getLibelle());
         $cm->setOrdre(1);
-        $cm->setCodeApogee($this->semestre->getCodeElement() . 'CM');
+        $cm->setCodeApogee($this->semestre->getCodeElement().'CM');
         $this->entityManager->persist($cm);
 
         return $cm;
     }
 
-    private function genereTd(Groupe $cm, int $ordre)
+    private function genereTd(Groupe $cm, int $ordre): Groupe
     {
         $td = new Groupe();
         $td->setTypeGroupe($this->tgTd);
         $td->setLibelle($this->genereLibelle('TD ', $ordre));
         $td->setOrdre($ordre);
-        $td->setCodeApogee($this->semestre->getCodeElement() . 'TD0' . $ordre);
+        $td->setCodeApogee($this->semestre->getCodeElement().'TD0'.$ordre);
         $td->setParent($cm);
         $this->entityManager->persist($td);
 
         return $td;
     }
 
-    private function genereTp(array $td, int $ordre)
+    private function genereTp(array $td, int $ordre): Groupe
     {
-        $idTd = $ordre - floor($ordre / 2);
-
+        $idTd = (int) ($ordre - floor($ordre / 2));
 
         $libelle = $this->genereCodeTp($idTd, $ordre);
         $tp = new Groupe();
         $tp->setTypeGroupe($this->tgTp);
-        $tp->setLibelle('TP' . $libelle);
+        $tp->setLibelle('TP'.$libelle);
         $tp->setOrdre($ordre);
-        $tp->setCodeApogee($this->semestre->getCodeElement() . 'TP' . $libelle);
+        $tp->setCodeApogee($this->semestre->getCodeElement().'TP'.$libelle);
         $tp->setParent($td[$idTd - 1]);
         $this->entityManager->persist($tp);
 
-        return $td;
+        return $tp;
     }
 
-    private function genereCodeTp(int $idTd, int $ordre)
+    private function genereCodeTp(int $idTd, int $ordre): string
     {
         if (0 === $ordre % 2) {
             $ordreTp = 2;
@@ -119,10 +122,10 @@ class GenereGroupes
             $ordreTp = 1;
         }
 
-        if ($this->format === 'alpha') {
+        if ('alpha' === $this->format) {
             return chr($ordre + 64);
         }
 
-        return $idTd . $ordreTp;
+        return $idTd.$ordreTp;
     }
 }

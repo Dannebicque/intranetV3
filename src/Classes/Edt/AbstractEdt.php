@@ -9,7 +9,6 @@
 
 namespace App\Classes\Edt;
 
-
 use App\Classes\Matieres\TypeMatiereManager;
 
 abstract class AbstractEdt
@@ -17,12 +16,12 @@ abstract class AbstractEdt
     public const SOURCE_EDT_INTRANET = 'intranet';
     public const SOURCE_EDT_CELCAT = 'celcat';
 
-    private TypeMatiereManager $typeMatiereManager;
+    protected TypeMatiereManager $typeMatiereManager;
 
     /**
      * @required
      */
-    public function setTypeMatiereManager(TypeMatiereManager $typeMatiereManager)
+    public function setTypeMatiereManager(TypeMatiereManager $typeMatiereManager): void
     {
         $this->typeMatiereManager = $typeMatiereManager;
     }

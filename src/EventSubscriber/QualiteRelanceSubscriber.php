@@ -37,52 +37,56 @@ class QualiteRelanceSubscriber implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     */
     public function onSendRelance(QualiteRelanceEvent $event): void
     {
         $etudiant = $event->getEtudiant();
         $questionnaire = $event->getQuestionnaireQualite();
-        if ($etudiant !== null && $questionnaire !== null) {
-            $titre = 'Evaluation semestre ' . $questionnaire->getSemestre()->getLibelle() . ', ' . $etudiant->getDiplome()->getDisplay();
+        if (null !== $etudiant) {
+            $titre = 'Evaluation semestre '.$questionnaire->getSemestre()->getLibelle().', '.$etudiant->getDiplome()->getDisplay();
             $rp = $etudiant->getSemestre()->getDiplome()->getResponsableDiplome();
             $this->mailer->initEmail();
             $this->mailer->setTemplate('mails/qualite/relance.html.twig', [
                 'etudiant' => $etudiant,
                 'questionnaire' => $questionnaire,
-                'titre' => $titre
+                'titre' => $titre,
             ]);
 
-            $this->mailer->sendMessage($etudiant->getMails(), 'URGENT - RAPPEL : ' . $titre,
+            $this->mailer->sendMessage($etudiant->getMails(), 'URGENT - RAPPEL : '.$titre,
                 ['replyTo' => [$rp?->getMailUniv()]]);
         }
     }
 
+    /**
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     */
     public function onSendSynthese(QualiteRelanceEvent $event): void
     {
         $etudiants = $event->getEtudiants();
         $questionnaire = $event->getQuestionnaireQualite();
-        if (count($etudiants) !== 0 && $questionnaire !== null) {
+        if (0 !== count($etudiants)) {
             $titre = '';
             $mails = [];
-            if ($questionnaire->getSemestre() !== null && $questionnaire->getSemestre()->getDiplome() !== null) {
-                if ($questionnaire->getSemestre()->getDiplome()->getResponsableDiplome() !== null) {
-
+            if (null !== $questionnaire->getSemestre() && null !== $questionnaire->getSemestre()->getDiplome()) {
+                if (null !== $questionnaire->getSemestre()->getDiplome()->getResponsableDiplome()) {
                     $mails[] = $questionnaire->getSemestre()->getDiplome()->getResponsableDiplome()->getMailUniv();
-                    $titre = 'Evaluation semestre ' . $questionnaire->getSemestre()->getLibelle() . ', ' . $questionnaire->getSemestre()->getDiplome()->getDisplay();
+                    $titre = 'Evaluation semestre '.$questionnaire->getSemestre()->getLibelle().', '.$questionnaire->getSemestre()->getDiplome()->getDisplay();
                 }
-                if ($questionnaire->getSemestre()->getDiplome()->getOptResponsableQualite() !== null) {
+                if (null !== $questionnaire->getSemestre()->getDiplome()->getOptResponsableQualite()) {
                     $mails[] = $questionnaire->getSemestre()->getDiplome()->getOptResponsableQualite()->getMailUniv();
                 }
             }
-
 
             $this->mailer->initEmail();
             $this->mailer->setTemplate('mails/qualite/synthese.html.twig', [
                 'etudiants' => $etudiants,
                 'questionnaire' => $questionnaire,
-                'titre' => $titre
+                'titre' => $titre,
             ]);
 
-            $this->mailer->sendMessage($mails, 'Synthèse : Relance ' . $titre);
+            $this->mailer->sendMessage($mails, 'Synthèse : Relance '.$titre);
         }
     }
 }

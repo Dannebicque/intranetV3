@@ -43,7 +43,7 @@ class EdtIntranetAdapter extends AbstractEdtAdapter implements EdtAdapterInterfa
 
         $evt->salle = $event->getSalle();
         $evt->personnel = $event->getIntervenant()?->getDisplay();
-        $evt->ordreGroupe = (int)$event->getGroupe();
+        $evt->ordreGroupe = (int) $event->getGroupe();
         $evt->groupe = $event->getDisplayGroupe();
         $evt->typeIdMatiere = $event->getTypeIdMatiere();
         if (array_key_exists($evt->typeIdMatiere, $this->matieres)) {

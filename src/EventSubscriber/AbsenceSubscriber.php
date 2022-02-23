@@ -46,7 +46,7 @@ class AbsenceSubscriber implements EventSubscriberInterface
     {
         return [
             JustificatifEvent::DECISION_JUSTIFICATIF_ACCEPTEE => 'onJustificatifAccepte',
-            AbsenceEvent::ADDED                               => 'onVerificationJustificatif',
+            AbsenceEvent::ADDED => 'onVerificationJustificatif',
         ];
     }
 

@@ -9,12 +9,14 @@
 
 namespace App\Classes\Previsionnel;
 
+use App\DTO\PrevisionnelCollection;
 use App\Entity\Annee;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Personnel;
 use App\Entity\Previsionnel;
 use App\Entity\Semestre;
+use App\Interfaces\UtilisateurInterface;
 use App\Utils\Tools;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -22,22 +24,19 @@ class PrevisionnelManager
 {
     protected array $managers;
 
-    private EntityManagerInterface $entityManager;
-
     public function __construct(
-        EntityManagerInterface $entityManager,
+        private EntityManagerInterface $entityManager,
         PrevisionnelSaeManager $previsionnelSae,
         PrevisionnelRessourceManager $previsionnelRessource,
         PrevisionnelMatiereManager $previsionnelMatiere
     ) {
-        $this->entityManager = $entityManager;
         $this->managers[PrevisionnelSaeManager::TYPE] = $previsionnelSae;
         $this->managers[PrevisionnelRessourceManager::TYPE] = $previsionnelRessource;
         $this->managers[PrevisionnelMatiereManager::TYPE] = $previsionnelMatiere;
     }
 
     public function getPrevisionnelPersonnelDepartementAnnee(
-        Personnel $personnel,
+        UtilisateurInterface $personnel,
         Departement $departement,
         int $annee = 0
     ): array {
@@ -50,7 +49,7 @@ class PrevisionnelManager
         return array_merge(...$t);
     }
 
-    public function getPrevisionnelEnseignantAnnee(Personnel $personnel, int $annee = 0): array
+    public function getPrevisionnelEnseignantAnnee(UtilisateurInterface $personnel, int $annee = 0): array
     {
         $t = [];
         foreach ($this->managers as $manager) {
@@ -61,17 +60,17 @@ class PrevisionnelManager
         return array_merge(...$t);
     }
 
-    private function getManager($type)
+    private function getManager(string $type): mixed
     {
         return $this->managers[$type];
     }
 
-    public function getPrevisionnelMatiere(int $matiere, $type, int $annee)
+    public function getPrevisionnelMatiere(int $matiere, string $type, int $annee): PrevisionnelCollection
     {
         return $this->getManager($type)->findPrevisionnelMatiere($matiere, $annee);
     }
 
-    public function getPrevisionnelMatierePersonnel(Personnel $personnel, int $matiere, string $type, int $annee)
+    public function getPrevisionnelMatierePersonnel(UtilisateurInterface $personnel, int $matiere, string $type, int $annee): PrevisionnelCollection
     {
         return $this->getManager($type)->findPrevisionnelMatierePersonnelAnnee($matiere, $personnel, $annee);
     }
@@ -107,13 +106,13 @@ class PrevisionnelManager
         foreach ($previsionnels as $p) {
             $tPrevisionnel[$p->id]['matiere'] = $p->matiere_libelle;
             $tPrevisionnel[$p->id]['libelle'] = $p->matiere_libelle;
-            $tPrevisionnel[$p->id]['personnel'] = $p->personnel_prenom . ' ' . $p->personnel_nom;
+            $tPrevisionnel[$p->id]['personnel'] = $p->personnel_prenom.' '.$p->personnel_nom;
         }
 
         return $tPrevisionnel;
     }
 
-    public function findByDepartement(Departement $departement, $annee): array
+    public function findByDepartement(Departement $departement, int $annee): array
     {
         $t = [];
         foreach ($this->managers as $manager) {
@@ -124,7 +123,7 @@ class PrevisionnelManager
         return array_merge(...$t);
     }
 
-    public function findByDiplome(Diplome $diplome, $annee): array
+    public function findByDiplome(Diplome $diplome, int $annee): array
     {
         $t = [];
         foreach ($this->managers as $manager) {
@@ -135,7 +134,7 @@ class PrevisionnelManager
         return array_merge(...$t);
     }
 
-    public function findByDiplomeToDelete(Diplome $diplome, $annee): array
+    public function findByDiplomeToDelete(Diplome $diplome, int $annee): array
     {
         $t = [];
         foreach ($this->managers as $manager) {
@@ -145,7 +144,7 @@ class PrevisionnelManager
         return array_merge(...$t);
     }
 
-    public function update(Previsionnel $previ, $name, $value): bool
+    public function update(Previsionnel $previ, string  $name, mixed $value): bool
     {
         if ('personnel' === $name) {
             if ('' === $value) {
@@ -164,7 +163,7 @@ class PrevisionnelManager
 
             return false;
         }
-        $method = 'set' . $name;
+        $method = 'set'.$name;
         if (method_exists($previ, $method)) {
             $previ->$method(Tools::convertToFloat($value));
             $this->entityManager->flush();
@@ -177,10 +176,10 @@ class PrevisionnelManager
 
     public function dupliqueAnnee(
         Departement $departement,
-        $anneeDepart,
-        $annee_destination,
-        $annee_concerver,
-        $personnels
+        int $anneeDepart,
+        int $annee_destination,
+        string $annee_concerver,
+        array $personnels
     ): void {
         //on efface, sauf si la case est cochée.
         if ('true' !== $annee_concerver) {
@@ -209,7 +208,7 @@ class PrevisionnelManager
         $this->entityManager->flush();
     }
 
-    public function supprimeAnnee(Departement $departement, $annee_destination): void
+    public function supprimeAnnee(Departement $departement, int $annee_destination): void
     {
         $previsionnels = $this->getPrevisionnelDepartement($departement, $annee_destination);
         foreach ($previsionnels as $previsionnel) {

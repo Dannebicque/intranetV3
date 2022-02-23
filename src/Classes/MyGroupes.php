@@ -17,54 +17,42 @@ use App\Classes\Apogee\ApogeeGroupe;
 use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
-use App\Entity\Parcour;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use App\Exception\SemestreNotFoundException;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
+use App\Repository\ParcourRepository;
+use App\Repository\SemestreRepository;
 use App\Repository\TypeGroupeRepository;
 use function array_key_exists;
 use function count;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use function is_array;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class MyGroupes
 {
-    protected EntityManagerInterface $entityManager;
-
     protected ?TypeGroupe $groupedefaut = null;
 
     // type de groupes  pour un semestre
-    protected $typeGroupes;
-
-    protected TypeGroupeRepository $typeGroupeRepository;
-
-    protected GroupeRepository $groupeRepository;
+    protected array $typeGroupes;
 
     // groupes d'un type de groupe pour un semestre
-    protected $groupes;
-
-    protected EtudiantRepository $etudiantRepository;
-    private MyUpload $myUpload;
-    private ApogeeGroupe $apogeeGroupe;
+    protected array $groupes;
 
     public function __construct(
-        EntityManagerInterface $entityManager,
-        TypeGroupeRepository $typeGroupeRepository,
-        GroupeRepository $groupeRepository,
-        MyUpload $myUpload,
-        ApogeeGroupe $apogeeGroupe,
-        EtudiantRepository $etudiantRepository
+        private EntityManagerInterface $entityManager,
+        private ParcourRepository $parcourRepository,
+        private SemestreRepository $semestreRepository,
+        private TypeGroupeRepository $typeGroupeRepository,
+        private GroupeRepository $groupeRepository,
+        private MyUpload $myUpload,
+        private ApogeeGroupe $apogeeGroupe,
+        private EtudiantRepository $etudiantRepository
     ) {
         $this->groupedefaut = null;
-        $this->entityManager = $entityManager;
-        $this->typeGroupeRepository = $typeGroupeRepository;
-        $this->groupeRepository = $groupeRepository;
-        $this->etudiantRepository = $etudiantRepository;
-        $this->myUpload = $myUpload;
-        $this->apogeeGroupe = $apogeeGroupe;
     }
 
     /**
@@ -102,12 +90,12 @@ class MyGroupes
         return $this->groupedefaut;
     }
 
-    public function getGroupes()
+    public function getGroupes(): array
     {
         return $this->groupes;
     }
 
-    public function getTypeGroupes()
+    public function getTypeGroupes(): array
     {
         return $this->typeGroupes;
     }
@@ -177,11 +165,11 @@ class MyGroupes
     /**
      * @throws Exception
      */
-    public function importCsv($fichier, Departement $departement): bool
+    public function importCsv(?UploadedFile $fichier, Departement $departement): bool
     {
-        $semestres = $this->entityManager->getRepository(Semestre::class)->tableauSemestresApogee($departement);
-        $parcours = $this->entityManager->getRepository(Parcour::class)->tableauParcourApogee($departement);
-        $typeGroupes = $this->entityManager->getRepository(TypeGroupe::class)->tableauDepartementSemestre($departement);
+        $semestres = $this->semestreRepository->tableauSemestresApogee($departement);
+        $parcours = $this->parcourRepository->tableauParcourApogee($departement);
+        $typeGroupes = $this->typeGroupeRepository->tableauDepartementSemestre($departement);
 
         $file = $this->myUpload->upload($fichier, 'temp');
 
@@ -205,7 +193,7 @@ class MyGroupes
                         $tg->setType($ligne[6]);
                         $this->entityManager->persist($tg);
                         $this->entityManager->flush();
-                        $typeGroupes = $this->entityManager->getRepository(TypeGroupe::class)->tableauDepartementSemestre($departement);
+                        $typeGroupes = $this->typeGroupeRepository->tableauDepartementSemestre($departement);
                     }
 
                     $groupe = new Groupe();
@@ -235,10 +223,10 @@ class MyGroupes
     /**
      * @throws Exception
      */
-    public function importGroupeEtudiantCsv($fichier, Semestre $semestre): bool
+    public function importGroupeEtudiantCsv(?UploadedFile $fichier, Semestre $semestre): bool
     {
-        $groupes = $this->entityManager->getRepository(Groupe::class)->findBySemestreArray($semestre);
-        $etudiants = $this->entityManager->getRepository(Etudiant::class)->findBySemestreArray($semestre);
+        $groupes = $this->groupeRepository->findBySemestreArray($semestre);
+        $etudiants = $this->etudiantRepository->findBySemestreArray($semestre);
         foreach ($etudiants as $etudiant) {
             foreach ($etudiant->getGroupes() as $groupe) {
                 $etudiant->removeGroupe($groupe);
@@ -275,7 +263,7 @@ class MyGroupes
         return false;
     }
 
-    public function update(Groupe $groupe, string $name, $value): bool
+    public function update(Groupe $groupe, string $name, mixed $value): bool
     {
         $method = 'set'.$name;
         if (method_exists($groupe, $method)) {

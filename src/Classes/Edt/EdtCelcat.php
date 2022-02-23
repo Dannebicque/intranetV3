@@ -31,10 +31,19 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
         return new EvenementEdtCollection();
     }
 
-    public function find($event): EvenementEdt
+    public function find(int $event): EvenementEdt
     {
         $evt = $this->celcatEventsRepository->find($event);
 
         return $this->edtCelcatAdapter->single($evt);
+    }
+
+    public function recupereEdtJourBorne(
+        Semestre $semestre,
+        array $matieres,
+        int $jourSemaine,
+        int $semaineFormation
+    ): EvenementEdtCollection {
+        // TODO: Implement recupereEdtJourBorne() method.
     }
 }

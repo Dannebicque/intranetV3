@@ -21,24 +21,16 @@ use App\Repository\EdtPlanningRepository;
 
 class MyEdtCompare
 {
-    private EdtPlanningRepository $edtPlanningRepository;
-
     /**
      * @var \App\Entity\EdtPlanning[]
      */
     private array $planning;
 
-    private PrevisionnelManager $previsionnelManager;
-
     /**
      * MyEdtCompare constructor.
      */
-    public function __construct(
-        EdtPlanningRepository $edtPlanningRepository,
-        PrevisionnelManager $previsionnelManager
-    ) {
-        $this->edtPlanningRepository = $edtPlanningRepository;
-        $this->previsionnelManager = $previsionnelManager;
+    public function __construct(private EdtPlanningRepository $edtPlanningRepository, private PrevisionnelManager $previsionnelManager)
+    {
     }
 
     public function realise(Matiere $matiere, Personnel $personnel, int $anneePrevi): array
@@ -96,9 +88,6 @@ class MyEdtCompare
         return $t;
     }
 
-    /**
-     * @return Previsionnel[]
-     */
     public function getPlanning(): array
     {
         return $this->planning;

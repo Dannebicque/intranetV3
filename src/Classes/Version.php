@@ -24,7 +24,7 @@ class Version
 
     public function version(): string
     {
-        $filename = $this->dir . '/package.json';
+        $filename = $this->dir.'/package.json';
         $composerData = json_decode(file_get_contents($filename), true);
         $version = $composerData['version'];
         $this->bugsnag->setAppVersion($version);

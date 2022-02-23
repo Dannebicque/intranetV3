@@ -19,6 +19,7 @@ use App\Entity\Semestre;
 use App\Repository\AbsenceRepository;
 use App\Repository\EtudiantRepository;
 use Exception;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * Class MyAbsences.
@@ -68,7 +69,7 @@ class MyAbsences
         return $this->etudiants;
     }
 
-    public function getAbsencesMatiere(\App\DTO\Matiere $matiere, AnneeUniversitaire $anneeCourante)
+    public function getAbsencesMatiere(\App\DTO\Matiere $matiere, AnneeUniversitaire $anneeCourante): array
     {
         return $this->absenceRepository->getByMatiere($matiere, $anneeCourante);
     }
@@ -78,7 +79,7 @@ class MyAbsences
      */
     public function getAbsencesSemestre(array $matieres, Semestre $semestre): void
     {
-        $this->etudiants = $this->etudiantRepository->findBySemestre($semestre->getId());
+        $this->etudiants = $this->etudiantRepository->findBySemestre($semestre);
 
         /** @var Etudiant $etudiant */
         foreach ($this->etudiants as $etudiant) {
@@ -91,12 +92,12 @@ class MyAbsences
     }
 
     public function export(
-        Matiere $matiere,
+        \App\DTO\Matiere $matiere,
         AnneeUniversitaire $anneeUniversitaire,
-        $_format
-    ) {
+        string $_format
+    ): bool | StreamedResponse {
         $absences = $this->getAbsencesMatiere($matiere, $anneeUniversitaire);
-        $name = 'absences-' . $matiere->getCodeMatiere();
+        $name = 'absences-'.$matiere->codeMatiere;
         switch ($_format) {
             case Constantes::FORMAT_PDF:
                 $this->myExcelMultiExport->genereReleveAbsencesMatiereExcel(

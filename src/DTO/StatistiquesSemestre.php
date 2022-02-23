@@ -21,21 +21,21 @@ class StatistiquesSemestre
 
     public function hommePourcentage(): float
     {
-        return 0 !== $this->effectif ? $this->hommes / ($this->effectif) * 100 : 0;
+        return 0 !== $this->effectif ? $this->hommes / ($this->effectif) * 100 : 0.0;
     }
 
     public function femmePourcentage(): float
     {
-        return 0 !== $this->effectif ? $this->femmes / ($this->effectif) * 100 : 0;
+        return 0 !== $this->effectif ? $this->femmes / ($this->effectif) * 100 : 0.0;
     }
 
-    public function addBac($idBac)
+    public function addBac(int $idBac): void
     {
         $this->repartitionBacEffectif[$idBac] = 0;
         $this->repartitionBacPourcentage[$idBac] = 0;
     }
 
-    public function calculPourcentageRepartitionBac()
+    public function calculPourcentageRepartitionBac(): void
     {
         if ($this->effectif > 0) {
             foreach ($this->repartitionBacEffectif as $key => $value) {
@@ -44,7 +44,7 @@ class StatistiquesSemestre
         }
     }
 
-    public function calculPourcentageRepartitionGeographique()
+    public function calculPourcentageRepartitionGeographique(): void
     {
         if ($this->effectif > 0) {
             foreach ($this->repartitionGeographiqueEffectif as $key => $value) {

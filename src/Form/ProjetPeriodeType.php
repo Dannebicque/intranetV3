@@ -10,6 +10,7 @@
 namespace App\Form;
 
 use App\Entity\AnneeUniversitaire;
+use App\Entity\Departement;
 use App\Entity\Personnel;
 use App\Entity\ProjetPeriode;
 use App\Entity\Semestre;
@@ -25,7 +26,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProjetPeriodeType extends AbstractType
 {
-    private $departement;
+    private Departement $departement;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

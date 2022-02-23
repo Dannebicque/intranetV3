@@ -32,10 +32,7 @@ class HrsRepository extends ServiceEntityRepository
         parent::__construct($registry, Hrs::class);
     }
 
-    /**
-     * @return int|mixed|string
-     */
-    public function getPersonnelAnnee(Personnel $personnel, int $annee = 0)
+    public function getPersonnelAnnee(Personnel $personnel, int $annee = 0): array
     {
         $query = $this->createQueryBuilder('h')
             ->where('h.personnel = :user')
@@ -52,7 +49,10 @@ class HrsRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getPersonnelDepartementAnnee($personnel, $departement, $annee)
+    public function getPersonnelDepartementAnnee(
+        Personnel $personnel,
+        Departement $departement,
+        int $annee): array
     {
         //todo: gérer le département pour le filtre
 
@@ -67,7 +67,7 @@ class HrsRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByDepartement(Departement $departement, $annee)
+    public function findByDepartement(Departement $departement, int $annee): array
     {
         return $this->createQueryBuilder('h')
             ->where('h.departement = :departement')

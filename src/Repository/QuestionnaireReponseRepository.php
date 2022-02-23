@@ -55,7 +55,7 @@ WHERE questionnaire_questionnaire_section.questionnaire_quizz_id = 1
         return $this->arrayReponse($query);
     }
 
-    private function arrayReponse($reponses): array
+    private function arrayReponse(array $reponses): array
     {
         $t = [];
         foreach ($reponses as $reponse) {

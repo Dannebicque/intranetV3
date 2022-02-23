@@ -34,7 +34,7 @@ class SemestreRepository extends ServiceEntityRepository
         parent::__construct($registry, Semestre::class);
     }
 
-    public function findByDepartementBuilder($departement): QueryBuilder
+    public function findByDepartementBuilder(Departement $departement): QueryBuilder
     {
         return $this->createQueryBuilder('s')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
@@ -46,7 +46,7 @@ class SemestreRepository extends ServiceEntityRepository
             ->addOrderBy('s.libelle', 'ASC');
     }
 
-    public function findByDepartementActif($departement)
+    public function findByDepartementActif(Departement $departement): array
     {
         return $this->createQueryBuilder('s')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
@@ -58,7 +58,7 @@ class SemestreRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByDiplomeBuilder($diplome): QueryBuilder
+    public function findByDiplomeBuilder(Diplome $diplome): QueryBuilder
     {
         return $this->createQueryBuilder('s')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
@@ -67,14 +67,14 @@ class SemestreRepository extends ServiceEntityRepository
             ->orderBy('s.ordreLmd', 'ASC');
     }
 
-    public function findByDiplome($diplome)
+    public function findByDiplome(Diplome $diplome): array
     {
         return $this->findByDiplomeBuilder($diplome)->getQuery()->getResult();
     }
 
-    public function findByDepartement(Departement $departement)
+    public function findByDepartement(Departement $departement): array
     {
-        return $this->findByDepartementBuilder($departement->getId())->getQuery()->getResult();
+        return $this->findByDepartementBuilder($departement)->getQuery()->getResult();
     }
 
     public function tableauSemestres(Departement $departement): array
@@ -83,7 +83,7 @@ class SemestreRepository extends ServiceEntityRepository
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id=s.annee')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id=a.diplome')
             ->where('d.departement = :departement')
-            ->andWhere('a.actif = true')
+            ->andWhere('a.actif = 1')
             ->setParameter('departement', $departement->getId())
             ->orderBy('s.libelle')
             ->getQuery()
@@ -121,7 +121,7 @@ class SemestreRepository extends ServiceEntityRepository
     /**
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function findOneByDiplomeEtNumero(Diplome $diplome, string $numero, string $ordreAnnee)
+    public function findOneByDiplomeEtNumero(Diplome $diplome, string $numero, string $ordreAnnee): array
     {
         return $this->createQueryBuilder('s')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')

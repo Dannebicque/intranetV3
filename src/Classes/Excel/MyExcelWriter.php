@@ -70,7 +70,7 @@ class MyExcelWriter
         //todo: a fusionner avec le header de writeSpecialHeader dans MyExportListing
     }
 
-    public function writeHeader($array, int $col = 1, int $row = 1, bool $translate = true): void
+    public function writeHeader(array $array, int $col = 1, int $row = 1, bool $translate = true): void
     {
         foreach ($array as $value) {
             if (!empty($value) && '#' !== $value && true === $translate) {
@@ -82,13 +82,12 @@ class MyExcelWriter
         }
     }
 
-    public function writeCellXY(int $col, int $row, ?string $value = '', array $options = []): void
+    public function writeCellXY(int $col, int $row, mixed $value = '', array $options = []): void
     {
         $this->sheet->setCellValueByColumnAndRow($col, $row, $value);
         //traiter les options
         //style n'est pas un tableau
-        if (is_array($options) && $this->sheet->getCellByColumnAndRow($col,
-                $row)) {
+        if (is_array($options)) {
             foreach ($options as $key => $valeur) {
                 switch ($key) {
                     case 'style':
@@ -157,7 +156,7 @@ class MyExcelWriter
         }
     }
 
-    public function writeCellName($adresse, $value, array $options = []): void
+    public function writeCellName(string $adresse, string $value, array $options = []): void
     {
         $this->sheet->setCellValue($adresse, $value);
 
@@ -180,7 +179,7 @@ class MyExcelWriter
         }
     }
 
-    public function colorCellRange($col, $lig, $couleur): void
+    public function colorCellRange(int $col, int $lig, string $couleur): void
     {
         $cell = Coordinate::stringFromColumnIndex($col).$lig;
         $this->colorCells($cell, $couleur);
@@ -189,7 +188,7 @@ class MyExcelWriter
     /**
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    public function setCellEnteteStyle($col, $lig): void
+    public function setCellEnteteStyle(int $col, int $lig): void
     {
         $this->colorCellRange($col, $lig, 'ffC4C6C6');
         $this->sheet->getStyle(Coordinate::stringFromColumnIndex($col).$lig)->getFont()->setBold(true);
@@ -197,14 +196,14 @@ class MyExcelWriter
         $this->sheet->getStyle(Coordinate::stringFromColumnIndex($col).$lig)->getBorders()->getAllBorders()->setBorderStyle(Border::BORDER_THIN);
     }
 
-    public function colorCells($cells, $couleur): void
+    public function colorCells(string $cells, string $couleur): void
     {
         $this->sheet->getStyle($cells)->getFill()
             ->setFillType(Fill::FILL_SOLID)
             ->getStartColor()->setARGB($couleur);
     }
 
-    public function borderCellsRange($col1, $lig1, $col2, $lig2): void
+    public function borderCellsRange(int $col1, int $lig1, int $col2, int $lig2): void
     {
         $cell1 = Coordinate::stringFromColumnIndex($col1).$lig1;
         $cell2 = Coordinate::stringFromColumnIndex($col2).$lig2;
@@ -214,7 +213,7 @@ class MyExcelWriter
     /**
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    public function borderCells($cells): void
+    public function borderCells(string $cells): void
     {
         $this->sheet->getStyle($cells)->getBorders()->getAllBorders()->setBorderStyle(Border::BORDER_THIN);
     }
@@ -229,7 +228,7 @@ class MyExcelWriter
         $this->sheet->getColumnDimension($col)->setWidth($taille);
     }
 
-    public function getColumnAutoSize($col): void
+    public function getColumnAutoSize(int | string $col): void
     {
         if (is_numeric($col)) {
             $col = Coordinate::stringFromColumnIndex($col);
@@ -238,7 +237,7 @@ class MyExcelWriter
         $this->sheet->getColumnDimension($col)->setAutoSize(true);
     }
 
-    public function mergeCellsCaR($col1, $lig1, $col2, $lig2): void
+    public function mergeCellsCaR(int $col1, int $lig1, int $col2, int $lig2): void
     {
         $cell1 = Coordinate::stringFromColumnIndex($col1).$lig1;
         $cell2 = Coordinate::stringFromColumnIndex($col2).$lig2;
@@ -248,12 +247,12 @@ class MyExcelWriter
     /**
      * @throws \PhpOffice\PhpSpreadsheet\Exception
      */
-    public function mergeCells($cells): void
+    public function mergeCells(string $cells): void
     {
         $this->sheet->mergeCells($cells);
     }
 
-    public function borderBottomCellsRange($col1, $lig1, $col2, $lig2, array $array): void
+    public function borderBottomCellsRange(int $col1, int $lig1, int $col2, int $lig2, array $array): void
     {
         $color = $array['color'];
         if (str_starts_with($color, '#')) {

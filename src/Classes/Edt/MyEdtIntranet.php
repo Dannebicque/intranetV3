@@ -34,15 +34,6 @@ use Symfony\Component\HttpFoundation\Request;
 
 class MyEdtIntranet extends BaseEdt
 {
-    protected EdtPlanningRepository $edtPlanningRepository;
-
-    private SemestreRepository $semestreRepository;
-
-    private GroupeRepository $groupeRepository;
-
-    private TypeMatiereManager $typeMatiereManager;
-    private PersonnelRepository $personnelRepository;
-    private EntityManagerInterface $entityManager;
     private array $tab = [];
     private array $matieres = [];
 
@@ -51,20 +42,14 @@ class MyEdtIntranet extends BaseEdt
      */
     public function __construct(
         CalendrierRepository $celcatCalendrierRepository,
-        EdtPlanningRepository $edtPlanningRepository,
-        SemestreRepository $semestreRepository,
-        GroupeRepository $groupeRepository,
-        TypeMatiereManager $typeMatiereManager,
-        PersonnelRepository $personnelRepository,
-        EntityManagerInterface $entityManager
+        protected EdtPlanningRepository $edtPlanningRepository,
+        private SemestreRepository $semestreRepository,
+        private GroupeRepository $groupeRepository,
+        private TypeMatiereManager $typeMatiereManager,
+        private PersonnelRepository $personnelRepository,
+        private EntityManagerInterface $entityManager
     ) {
         parent::__construct($celcatCalendrierRepository);
-        $this->edtPlanningRepository = $edtPlanningRepository;
-        $this->semestreRepository = $semestreRepository;
-        $this->groupeRepository = $groupeRepository;
-        $this->typeMatiereManager = $typeMatiereManager;
-        $this->personnelRepository = $personnelRepository;
-        $this->entityManager = $entityManager;
     }
 
     public function initPersonnel(
@@ -96,51 +81,49 @@ class MyEdtIntranet extends BaseEdt
 
     public function calculEdt(): bool
     {
-        if ('' !== $this->semaineFormationIUT) {
-            switch ($this->filtre) {
-                case Constantes::FILTRE_EDT_PROMO:
-                    $this->semestre = $this->semestreRepository->find($this->valeur);
-                    $this->groupes = $this->groupeRepository->findAllGroupes($this->semestre);
-                    $pl = $this->edtPlanningRepository->findEdtSemestre($this->semestre, $this->semaineFormationIUT);
-                    $this->planning = $this->transformePromo($pl);
-                    break;
-                case Constantes::FILTRE_EDT_PROF:
-                    $pl = $this->edtPlanningRepository->findEdtProf($this->valeur, $this->semaineFormationIUT);
-                    $this->planning = $this->transformeIndividuel($pl);
-                    break;
-                case Constantes::FILTRE_EDT_ETUDIANT:
-                    $this->groupes();
-                    $pl = $this->edtPlanningRepository->findEdtEtu($this->user, $this->semaineFormationIUT);
-                    if (null !== $pl) {
-                        $this->planning = $this->transformeEtudiant($pl);
-                        $this->semestre = $this->user->getSemestre();
-                    } else {
-                        return false;
-                    }
-                    break;
-                case Constantes::FILTRE_EDT_MODULE:
-                    $this->module = $this->typeMatiereManager->getMatiereFromSelect($this->valeur);
-                    $this->semestre = $this->module->semestre;
-                    $this->groupes = $this->groupeRepository->findAllGroupes($this->semestre);
+        switch ($this->filtre) {
+            case Constantes::FILTRE_EDT_PROMO:
+                $this->semestre = $this->semestreRepository->find($this->valeur);
+                $this->groupes = $this->groupeRepository->findAllGroupes($this->semestre);
+                $pl = $this->edtPlanningRepository->findEdtSemestre($this->semestre, $this->semaineFormationIUT);
+                $this->planning = $this->transformePromo($pl);
+                break;
+            case Constantes::FILTRE_EDT_PROF:
+                $pl = $this->edtPlanningRepository->findEdtProf($this->valeur, $this->semaineFormationIUT);
+                $this->planning = $this->transformeIndividuel($pl);
+                break;
+            case Constantes::FILTRE_EDT_ETUDIANT:
+                $this->groupes();
+                $pl = $this->edtPlanningRepository->findEdtEtu($this->user, $this->semaineFormationIUT);
+                if (null !== $pl) {
+                    $this->planning = $this->transformeEtudiant($pl);
+                    $this->semestre = $this->user->getSemestre();
+                } else {
+                    return false;
+                }
+                break;
+            case Constantes::FILTRE_EDT_MODULE:
+                $this->module = $this->typeMatiereManager->getMatiereFromSelect($this->valeur);
+                $this->semestre = $this->module->semestre;
+                $this->groupes = $this->groupeRepository->findAllGroupes($this->semestre);
 
-                    $pl = $this->edtPlanningRepository->findEdtModule($this->module->id, $this->module->typeMatiere,
-                        $this->semaineFormationIUT);
-                    $this->planning = $this->transformeModule($pl);
-                    break;
-                case Constantes::FILTRE_EDT_SALLE:
-                    $pl = $this->edtPlanningRepository->findEdtSalle($this->valeur, $this->semaineFormationIUT);
-                    $this->salle = $this->valeur;
-                    $this->planning = $this->transformeSalle($pl);
-                    break;
+                $pl = $this->edtPlanningRepository->findEdtModule($this->module->id, $this->module->typeMatiere,
+                    $this->semaineFormationIUT);
+                $this->planning = $this->transformeModule($pl);
+                break;
+            case Constantes::FILTRE_EDT_SALLE:
+                $pl = $this->edtPlanningRepository->findEdtSalle($this->valeur, $this->semaineFormationIUT);
+                $this->salle = $this->valeur;
+                $this->planning = $this->transformeSalle($pl);
+                break;
 
-                case Constantes::FILTRE_EDT_JOUR:
-                    $pl = $this->edtPlanningRepository->findEdtJour($this->valeur,
-                        $this->semaineFormationIUT);
+            case Constantes::FILTRE_EDT_JOUR:
+                $pl = $this->edtPlanningRepository->findEdtJour($this->valeur,
+                    $this->semaineFormationIUT);
 
-                    $this->jour = $this->valeur;
-                    $this->planning = $this->transformeJour($pl);
-                    break;
-            }
+                $this->jour = $this->valeur;
+                $this->planning = $this->transformeJour($pl);
+                break;
         }
 
         return false;
@@ -156,7 +139,7 @@ class MyEdtIntranet extends BaseEdt
     ): self {
         if ('' === $valeur) {
             $semestres = $this->semestreRepository->findByDepartementActif($departement);
-            if (count($semestres) > 0) {
+            if ((is_countable($semestres) ? count($semestres) : 0) > 0) {
                 $valeur = $semestres[0]->getId();
             }
             //erreur
@@ -217,7 +200,6 @@ class MyEdtIntranet extends BaseEdt
         return $evt;
     }
 
-
     private function transformeEtudiant($pl): array
     {
         $this->tab = [];
@@ -240,7 +222,7 @@ class MyEdtIntranet extends BaseEdt
                 $this->tab[$p->getJour()][$dbtEdt]['fin'] = $p->getFin();
 
                 $this->tab[$p->getJour()][$dbtEdt]['texte'] = $this->isEvaluation($p,
-                        'long') . '<br />' . $p->getSalle() . ' | ' . $p->getDisplayGroupe() . ' <br /> ' . $p->getIntervenantEdt();
+                        'long').'<br />'.$p->getSalle().' | '.$p->getDisplayGroupe().' <br /> '.$p->getIntervenantEdt();
 
                 $this->tab[$p->getJour()][$dbtEdt]['couleur'] = $this->getCouleur($p);
                 $this->tab[$p->getJour()][$dbtEdt]['id'] = $p->getId();
@@ -271,7 +253,6 @@ class MyEdtIntranet extends BaseEdt
                 case 'CM':
                 case 'cm':
                     $tab[$p->getJour()][$debut][$p->getGroupe()]['largeur'] = $this->semestre->getNbgroupeTPEDT();
-                    $taille = 0;
                     break;
                 case 'TP':
                 case 'tp':
@@ -301,7 +282,7 @@ class MyEdtIntranet extends BaseEdt
                 $inter = mb_substr($p->getIntervenant()->getNom(), 0, $taille);
             }
 
-            $tab[$p->getJour()][$debut][$p->getGroupe()]['texte'] = $this->isEvaluation($p) . '<br />' . $p->getSalle() . '<br />' . $inter . '<br />' . $p->getDisplayGroupe();
+            $tab[$p->getJour()][$debut][$p->getGroupe()]['texte'] = $this->isEvaluation($p).'<br />'.$p->getSalle().'<br />'.$inter.'<br />'.$p->getDisplayGroupe();
             $tab[$p->getJour()][$debut][$p->getGroupe()]['commentaire'] = $this->hasCommentaire($p);
         }
 
@@ -311,7 +292,7 @@ class MyEdtIntranet extends BaseEdt
     private function getCouleur(EdtPlanning $p): ?string
     {
         return match (mb_strtolower($p->getType())) {
-            'cm', 'td', 'tp' => mb_strtolower($p->getType()) . '_' . $p->getSemestre()->getAnnee()->getCouleur(),
+            'cm', 'td', 'tp' => mb_strtolower($p->getType()).'_'.$p->getSemestre()->getAnnee()->getCouleur(),
             default => 'CCCCCC',
         };
     }
@@ -330,16 +311,16 @@ class MyEdtIntranet extends BaseEdt
             $matiere = $this->typeMatiereManager->getMatiere($p->getIdMatiere(), $p->getTypeMatiere());
             if (null !== $matiere) {
                 if ('short' === $type) {
-                    return $p->getEvaluation() ? '** ' . $matiere->codeMatiere . ' **' : $matiere->codeMatiere;
+                    return $p->getEvaluation() ? '** '.$matiere->codeMatiere.' **' : $matiere->codeMatiere;
                 }
 
-                return $p->getEvaluation() ? '** ' . $matiere->libelle . ' (' . $matiere->codeMatiere . ') **' : $matiere->libelle . ' (' . $matiere->codeMatiere . ')';
+                return $p->getEvaluation() ? '** '.$matiere->libelle.' ('.$matiere->codeMatiere.') **' : $matiere->libelle.' ('.$matiere->codeMatiere.')';
             }
 
             return 'err...';
         }
 
-        return $p->getEvaluation() ? '** ' . $p->getTexte() . ' **' : $p->getTexte();
+        return $p->getEvaluation() ? '** '.$p->getTexte().' **' : $p->getTexte();
     }
 
     private function hasCommentaire(EdtPlanning $p): bool
@@ -397,7 +378,6 @@ class MyEdtIntranet extends BaseEdt
                 case 'CM':
                 case 'cm':
                     $tab[$p->getJour()][$debut][$p->getGroupe()]['largeur'] = $this->semestre->getNbgroupeTpEdt();
-                    $taille = 0;
                     break;
                 case 'TP':
                 case 'tp':
@@ -427,7 +407,7 @@ class MyEdtIntranet extends BaseEdt
                 $inter = mb_substr($p->getIntervenant()->getNom(), 0, $taille);
             }
 
-            $tab[$p->getJour()][$debut][$p->getGroupe()]['texte'] = $this->isEvaluation($p) . '<br />' . $p->getSalle() . '<br />' . $inter . '<br />' . $p->getDisplayGroupe();
+            $tab[$p->getJour()][$debut][$p->getGroupe()]['texte'] = $this->isEvaluation($p).'<br />'.$p->getSalle().'<br />'.$inter.'<br />'.$p->getDisplayGroupe();
             $tab[$p->getJour()][$debut][$p->getGroupe()]['commentaire'] = $this->hasCommentaire($p);
         }
 
@@ -447,10 +427,10 @@ class MyEdtIntranet extends BaseEdt
                 $tab[$p->getJour()][$i]['texte'] = 'xx';
             }
 
-            $tab[$p->getJour()][$debut]['texte'] = $this->isEvaluation($p) . '<br />' . $p->getSemestre()->getAnnee()->getLibelle() . ' <br /> ' . $p->getDisplayGroupe();
+            $tab[$p->getJour()][$debut]['texte'] = $this->isEvaluation($p).'<br />'.$p->getSemestre()->getAnnee()->getLibelle().' <br /> '.$p->getDisplayGroupe();
 
             if (null !== $p->getIntervenant()) {
-                $tab[$p->getJour()][$debut]['texte'] .= ' <br /> ' . $p->getIntervenant()->getNom();
+                $tab[$p->getJour()][$debut]['texte'] .= ' <br /> '.$p->getIntervenant()->getNom();
             }
 
             $tab[$p->getJour()][$debut]['couleur'] = $this->getCouleur($p);
@@ -477,7 +457,6 @@ class MyEdtIntranet extends BaseEdt
             switch ($p->getType()) {
                 case TypeGroupe::TYPE_GROUPE_CM:
                     $tab[$p->getSemestre()->getId()][$debut][$p->getGroupe()]['largeur'] = $p->getSemestre()->getNbgroupeTpEdt();
-                    $taille = 0;
                     break;
                 case TypeGroupe::TYPE_GROUPE_TP:
                     $tab[$p->getSemestre()->getId()][$debut][$p->getGroupe()]['largeur'] = 1;
@@ -505,7 +484,7 @@ class MyEdtIntranet extends BaseEdt
                 $inter = mb_substr($p->getIntervenant()->getNom(), 0, $taille);
             }
 
-            $tab[$p->getSemestre()->getId()][$debut][$p->getGroupe()]['texte'] = $this->isEvaluation($p) . '<br />' . $p->getSalle() . '<br />' . $inter . '<br />' . $p->getDisplayGroupe();
+            $tab[$p->getSemestre()->getId()][$debut][$p->getGroupe()]['texte'] = $this->isEvaluation($p).'<br />'.$p->getSalle().'<br />'.$inter.'<br />'.$p->getDisplayGroupe();
             $tab[$p->getSemestre()->getId()][$debut][$p->getGroupe()]['commentaire'] = $this->hasCommentaire($p);
         }
 
@@ -524,7 +503,7 @@ class MyEdtIntranet extends BaseEdt
                 $t['enseignant'] = '';
             }
 
-            $t['horaires'] = Constantes::TAB_HEURES[$pl->getDebut()] . ' - ' . Constantes::TAB_HEURES[$pl->getFin()];
+            $t['horaires'] = Constantes::TAB_HEURES[$pl->getDebut()].' - '.Constantes::TAB_HEURES[$pl->getFin()];
             $t['commentaire'] = $pl->getCommentaire();
             $t['salle'] = $pl->getSalle();
 
@@ -535,7 +514,7 @@ class MyEdtIntranet extends BaseEdt
                     break;
                 case TypeGroupe::TYPE_GROUPE_TD:
                     $t['type'] = 'Travaux Dirigés';
-                    $t['groupes'] = chr($pl->getGroupe() + 64) . chr($pl->getGroupe() + 65);
+                    $t['groupes'] = chr($pl->getGroupe() + 64).chr($pl->getGroupe() + 65);
                     break;
                 case TypeGroupe::TYPE_GROUPE_TP:
                     $t['type'] = 'Travaux Pratiques';
@@ -568,6 +547,9 @@ class MyEdtIntranet extends BaseEdt
         return $this;
     }
 
+    /**
+     * @throws \App\Exception\MatiereNotFoundException
+     */
     public function addCours(Request $request, AnneeUniversitaire $anneeUniversitaire): EdtPlanning
     {
         $pl = new EdtPlanning();
@@ -578,16 +560,22 @@ class MyEdtIntranet extends BaseEdt
         return $this->updatePl($request, $pl, $anneeUniversitaire);
     }
 
-    public function updateCours(Request $request, EdtPlanning $plann, AnneeUniversitaire $anneeUniversitaire)
+    /**
+     * @throws \App\Exception\MatiereNotFoundException
+     */
+    public function updateCours(Request $request, EdtPlanning $plann, AnneeUniversitaire $anneeUniversitaire): EdtPlanning
     {
         return $this->updatePl($request, $plann, $anneeUniversitaire);
     }
 
+    /**
+     * @throws \App\Exception\MatiereNotFoundException
+     */
     private function updatePl(
         $request,
         EdtPlanning $plann,
         AnneeUniversitaire $anneeUniversitaire
-    ) {
+    ): EdtPlanning {
         $this->calendrier = $this->calendrierRepository->findOneBy([
             'semaineFormation' => $plann->getSemaine(),
             'anneeUniversitaire' => $anneeUniversitaire->getId(),
@@ -639,27 +627,28 @@ class MyEdtIntranet extends BaseEdt
         return $plann;
     }
 
-    private function valideFormat(EdtPlanning $p, $idDebut)
+    private function valideFormat(EdtPlanning $p, $idDebut): void
     {
         $casedebut = $p->getDebut();
         $casefin = $p->getFin();
+        $jour = $p->getJour();
         $duree = $casefin - $casedebut;
-        $this->tab[$p->getJour()][$idDebut]['debut'] = $casedebut;
-        $this->tab[$p->getJour()][$idDebut]['format'] = 'aie';
+        $this->tab[$jour][$idDebut]['debut'] = $casedebut;
+        $this->tab[$jour][$idDebut]['format'] = 'aie';
 
         //regarde si le format entre dans une case ou dépasse. retourne 'ok' ou 'nok'
         if (array_key_exists($casedebut, Constantes::TAB_CRENEAUX) && 0 === ($duree % 3)) {
-            $this->tab[$p->getJour()][$idDebut]['format'] = 'ok';
+            $this->tab[$jour][$idDebut]['format'] = 'ok';
 
             if (0 === $duree % 3) {
                 for ($i = 1; $i < $duree / 3; ++$i) {
-                    $this->tab[$p->getJour()][$this->convertEdt($casedebut + ($i * 3))] = $this->tab[$p->getJour()][$idDebut];
+                    $this->tab[$jour][$this->convertEdt($casedebut + ($i * 3))] = $this->tab[$jour][$idDebut];
                 }
             }
         } else {
-            $this->tab[$p->getJour()][$idDebut]['debut'] = $p->getDebut();
-            $this->tab[$p->getJour()][$idDebut]['format'] = 'nok';
-            $this->tab[$p->getJour()][$idDebut]['fin'] = $casefin;
+            $this->tab[$jour][$idDebut]['debut'] = $p->getDebut();
+            $this->tab[$jour][$idDebut]['format'] = 'nok';
+            $this->tab[$jour][$idDebut]['fin'] = $casefin;
         }
     }
 }

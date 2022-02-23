@@ -44,20 +44,23 @@ class EmpruntSubscriber implements EventSubscriberInterface
         ];
     }
 
+    /**
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     */
     public function sendMail(EmpruntEvent $event, $codeEvent): void
     {
         $emprunt = $event->getEmprunt();
 
         //mail par défaut
         $this->myMailer->initEmail();
-        $this->myMailer->setTemplate('mails/emprunt_' . $codeEvent . '.txt.twig',
+        $this->myMailer->setTemplate('mails/emprunt_'.$codeEvent.'.txt.twig',
             ['emprunt' => $emprunt]);
         $this->myMailer->sendMessage($emprunt->getEtudiant()->getMails(), $codeEvent);
 
         //copie au RP lors du dépôt par l'étudiant
         if (EmpruntEvent::CHGT_ETAT_EMPRUNT_DEMANDE === $codeEvent && null !== $emprunt->getResponsable()) {
             $this->myMailer->initEmail();
-            $this->myMailer->setTemplate('mails/emprunt_' . $codeEvent . '_copie.txt.twig',
+            $this->myMailer->setTemplate('mails/emprunt_'.$codeEvent.'_copie.txt.twig',
                 ['emprunt' => $emprunt]);
 
             $this->myMailer->sendMessage($emprunt->getResponsable()->getMailUniv(), 'Formulaire de stage complété');

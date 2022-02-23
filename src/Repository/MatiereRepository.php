@@ -36,7 +36,7 @@ class MatiereRepository extends ServiceEntityRepository
         parent::__construct($registry, Matiere::class);
     }
 
-    public function findBySemestre(Semestre $semestre)
+    public function findBySemestre(Semestre $semestre): array
     {
         return $this->findBySemestreBuilder($semestre)
             ->getQuery()
@@ -69,7 +69,7 @@ class MatiereRepository extends ServiceEntityRepository
             ->addOrderBy('m.codeMatiere', 'ASC');
     }
 
-    public function findByDepartement(Departement $departement)
+    public function findByDepartement(Departement $departement): array
     {
         return $this->findByDepartementBuilder($departement)->getQuery()->getResult();
     }
@@ -95,7 +95,7 @@ class MatiereRepository extends ServiceEntityRepository
         return $t;
     }
 
-    public function findByDiplome(Diplome $diplome)
+    public function findByDiplome(Diplome $diplome): array
     {
         return $this->createQueryBuilder('m')
             ->innerJoin(Ue::class, 'u', 'WITH', 'u.id = m.ue')

@@ -17,14 +17,14 @@ use Symfony\Component\Security\Core\Security;
 //https://backbeat.tech/blog/logged-out-ajax-requests-in-symfony-applications
 class LoggedOutAjaxListener
 {
-    private $security;
+    private Security $security;
 
     public function __construct(Security $security)
     {
         $this->security = $security;
     }
 
-    public function onKernelException(ExceptionEvent $event)
+    public function onKernelException(ExceptionEvent $event): void
     {
         $request = $event->getRequest();
         if (($request->getAcceptableContentTypes()[0] ?? '') !== 'application/json') {

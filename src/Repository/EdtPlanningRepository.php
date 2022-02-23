@@ -15,9 +15,9 @@ use App\Entity\Etudiant;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
+use function array_key_exists;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use function array_key_exists;
 
 /**
  * @method EdtPlanning|null find($id, $lockMode = null, $lockVersion = null)
@@ -55,12 +55,12 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findEdtSemestre($semestre, int $semaine): array
+    public function findEdtSemestre(Semestre $semestre, int $semaine): array
     {
         return $this->createQueryBuilder('p')
             ->where('p.semaine = :semaine')
             ->andWhere('p.semestre = :semestre')
-            ->setParameters(['semaine' => $semaine, 'semestre' => $semestre])
+            ->setParameters(['semaine' => $semaine, 'semestre' => $semestre->getid()])
             ->orderBy('p.jour', 'ASC')
             ->addOrderBy('p.debut', 'ASC')
             ->addOrderBy('p.groupe', 'ASC')
@@ -121,7 +121,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
         }
     }
 
-    public function findEdtSalleJour($semaine, $jour): array
+    public function findEdtSalleJour(int $semaine, int $jour): array
     {
         return $this->createQueryBuilder('p')
             ->where('p.semaine = :semaine')
@@ -308,7 +308,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getByPersonnelArray(Personnel $user, Departement $departement, $tabMatieresDepartement): array
+    public function getByPersonnelArray(Personnel $user, Departement $departement, array $tabMatieresDepartement): array
     {
         $query = $this->createQueryBuilder('p')
             ->andWhere('p.intervenant = :idprof')
@@ -320,8 +320,8 @@ class EdtPlanningRepository extends ServiceEntityRepository
 
         foreach ($departement->getDiplomes() as $diplome) {
             foreach ($diplome->getSemestres() as $semestre) {
-                if ($semestre->isActif() === true) {
-                    $ors[] = '(' . $query->expr()->orx('p.semestre = ' . $query->expr()->literal($semestre->getId())) . ')';
+                if (true === $semestre->isActif()) {
+                    $ors[] = '('.$query->expr()->orx('p.semestre = '.$query->expr()->literal($semestre->getId())).')';
                 }
             }
         }
@@ -343,7 +343,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
             $pl['fin'] = $event->getFin();
             $pl['commentaire'] = $event->getCommentaire();
             if (null !== $matiere) {
-                $pl['ical'] = $matiere->libelle . ' (' . $matiere->codeMatiere . ') ' . $event->getDisplayGroupe();
+                $pl['ical'] = $matiere->libelle.' ('.$matiere->codeMatiere.') '.$event->getDisplayGroupe();
             } else {
                 $pl['ical'] = '';
             }
@@ -354,14 +354,14 @@ class EdtPlanningRepository extends ServiceEntityRepository
         return $t;
     }
 
-    public function getByEtudiantArray($user, $semaine, $tabMatieresSemestre): array
+    public function getByEtudiantArray(Etudiant $user, int $semaine, array $tabMatieresSemestre): array
     {
         $query = $this->findEdtEtu($user, $semaine);
 
         return $this->transformeArray($query, $tabMatieresSemestre);
     }
 
-    private function transformeArray($data, $tabMatieresSemestre): array
+    private function transformeArray(array $data, array $tabMatieresSemestre): array
     {
         /** todo: passer par le DTO*/
         $t = [];
@@ -377,7 +377,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
                 $pl['fin'] = $event->getFin();
                 $pl['commentaire'] = '';
                 if (null !== $matiere) {
-                    $pl['ical'] = $matiere->libelle . ' (' . $matiere->codeMatiere . ') ' . $event->getDisplayGroupe();
+                    $pl['ical'] = $matiere->libelle.' ('.$matiere->codeMatiere.') '.$event->getDisplayGroupe();
                 } else {
                     $pl['ical'] = $event->getTexte();
                 }
@@ -390,14 +390,14 @@ class EdtPlanningRepository extends ServiceEntityRepository
         return $t;
     }
 
-    public function findByDepartement(Departement $departement)
+    public function findByDepartement(Departement $departement): array
     {
         $quer = $this->createQueryBuilder('p');
         $i = 0;
         foreach ($departement->getDiplomes() as $diplome) {
             foreach ($diplome->getSemestres() as $semestre) {
-                $quer = $quer->orWhere('p.semestre = :anne' . $i)
-                    ->setParameter('anne' . $i, $semestre->getId());
+                $quer = $quer->orWhere('p.semestre = :anne'.$i)
+                    ->setParameter('anne'.$i, $semestre->getId());
                 ++$i;
             }
         }
@@ -405,7 +405,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
         return $quer->getQuery()->getResult();
     }
 
-    public function findAllEdtSemestre(Semestre $semestre)
+    public function findAllEdtSemestre(Semestre $semestre): array
     {
         //todo: ajouter année universitaire
         return $this->createQueryBuilder('p')

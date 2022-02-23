@@ -9,6 +9,7 @@
 
 namespace App\Repository;
 
+use App\Entity\AnneeUniversitaire;
 use App\Entity\CreneauCours;
 use App\Entity\Departement;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -28,7 +29,7 @@ class CreneauCoursRepository extends ServiceEntityRepository
         parent::__construct($registry, CreneauCours::class);
     }
 
-    public function findByAnneeDepartement(Departement $departement, $anneeUniversitaire)
+    public function findByAnneeDepartement(Departement $departement, AnneeUniversitaire $anneeUniversitaire): array
     {
         return $this->createQueryBuilder('c')
             ->where('c.anneeUniversitaire = :annee')

@@ -20,34 +20,25 @@ class EdtManager
     public const EDT_INTRANET = 'intranet';
 
     private array $tabSources = [];
-    private EdtIntranet $edtIntranet;
-    private EdtCelcat $edtCelcat;
-    private EdtAde $edtAde;
 
-    public function __construct(EdtIntranet $edtIntranet, EdtCelcat $edtCelcat, EdtAde $edtAde)
+    public function __construct(private EdtIntranet $edtIntranet, private EdtCelcat $edtCelcat, private EdtAde $edtAde)
     {
-        $this->edtIntranet = $edtIntranet;
-        $this->edtCelcat = $edtCelcat;
-        $this->edtAde = $edtAde;
-
         $this->tabSources[self::EDT_CELCAT] = $edtCelcat;
         $this->tabSources[self::EDT_ADE] = $edtAde;
         $this->tabSources[self::EDT_INTRANET] = $edtIntranet;
     }
 
-    public function getPlanningSemestre(Semestre $semestre, array $matieres = [])
+    public function getPlanningSemestre(Semestre $semestre, array $matieres = []): ?EvenementEdtCollection
     {
-        switch ($this->getSourceEdt($semestre)) {
-            case self::EDT_CELCAT:
-                return $this->edtCelcat->getPlanningSemestre($semestre);
-            case self::EDT_INTRANET:
-                return $this->edtIntranet->getPlanningSemestre($semestre, $matieres);
-            case self::EDT_ADE:
-                return $this->edtAde->getPlanningSemestre($semestre);
-        }
+        return match ($this->getSourceEdt($semestre)) {
+            self::EDT_CELCAT => $this->edtCelcat->getPlanningSemestre($semestre),
+            self::EDT_INTRANET => $this->edtIntranet->getPlanningSemestre($semestre, $matieres),
+            self::EDT_ADE => $this->edtAde->getPlanningSemestre($semestre),
+            default => null,
+        };
     }
 
-    private function getSourceEdt($objet)
+    private function getSourceEdt(mixed $objet): string
     {
         if (true === $objet->getDiplome()?->getDepartement()?->getOptUpdateCelcat()) {
             return self::EDT_CELCAT;
@@ -58,11 +49,7 @@ class EdtManager
 
     public function getManager(string $source): ?EdtInterface
     {
-        if (array_key_exists($source, $this->tabSources)) {
-            return $this->tabSources[$source];
-        }
-
-        return null;
+        return $this->tabSources[$source] ?? null;
     }
 
     public function recupereEDTBornes(
@@ -80,12 +67,12 @@ class EdtManager
         return $this->getManager($this->getSourceFromString($idEvent))?->find($this->getIdFromString($idEvent));
     }
 
-    private function getSourceFromString(string $idEvent)
+    private function getSourceFromString(string $idEvent): string
     {
         return explode('_', $idEvent)[0];
     }
 
-    private function getIdFromString(string $idEvent)
+    private function getIdFromString(string $idEvent): string
     {
         return explode('_', $idEvent)[1];
     }

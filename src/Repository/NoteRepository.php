@@ -34,7 +34,7 @@ class NoteRepository extends ServiceEntityRepository
         parent::__construct($registry, Note::class);
     }
 
-    public function findBySemestre(array $matieres, AnneeUniversitaire $annee)
+    public function findBySemestre(array $matieres, AnneeUniversitaire $annee): ?array
     {
         if (count($matieres) <= 0) {
             return null;
@@ -55,7 +55,7 @@ class NoteRepository extends ServiceEntityRepository
         Etudiant $etudiant,
         ?array $matieres,
         AnneeUniversitaire $annee
-    ) {
+    ): ?array {
         if (count($matieres) <= 0) {
             return null;
         }
@@ -73,7 +73,7 @@ class NoteRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByEtudiantSemestreArray(array $matieres, AnneeUniversitaire $annee, $etudiants): array
+    public function findByEtudiantSemestreArray(array $matieres, AnneeUniversitaire $annee, array $etudiants): array
     {
         $notes = $this->findBySemestre($matieres, $annee);
 
@@ -95,7 +95,7 @@ class NoteRepository extends ServiceEntityRepository
         return $t;
     }
 
-    public function findBySemestreNoteAvecAbsence(array $matieres, AnneeUniversitaire $annee)
+    public function findBySemestreNoteAvecAbsence(array $matieres, AnneeUniversitaire $annee): ?array
     {
         if (count($matieres) <= 0) {
             return null;
@@ -115,7 +115,7 @@ class NoteRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findBySemestreErreur(array $matieres, AnneeUniversitaire $annee)
+    public function findBySemestreErreur(array $matieres, AnneeUniversitaire $annee): ?array
     {
         if (count($matieres) <= 0) {
             return null;

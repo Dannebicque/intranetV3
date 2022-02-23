@@ -10,6 +10,7 @@
 namespace App\Form;
 
 use App\Entity\CovidAttestationPersonnel;
+use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Repository\DiplomeRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -21,7 +22,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class CovidAttestationPersonnelType extends AbstractType
 {
-    protected $departement;
+    protected Departement $departement;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

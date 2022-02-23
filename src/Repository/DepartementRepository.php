@@ -40,7 +40,7 @@ class DepartementRepository extends ServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function findDepartementEtudiant(Etudiant $etudiant)
+    public function findDepartementEtudiant(Etudiant $etudiant): ?Departement
     {
         return $this->createQueryBuilder('f')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'd.departement = f.id')
@@ -53,7 +53,7 @@ class DepartementRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function findDepartementPersonnelDefaut(Personnel $personnel)
+    public function findDepartementPersonnelDefaut(Personnel $personnel): array
     {
         return $this->createQueryBuilder('f')
             ->innerJoin(PersonnelDepartement::class, 'p', 'WITH', 'p.departement = f.id')
@@ -65,7 +65,7 @@ class DepartementRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findDepartementPersonnel(Personnel $personnel)
+    public function findDepartementPersonnel(Personnel $personnel): array
     {
         return $this->createQueryBuilder('f')
             ->innerJoin(PersonnelDepartement::class, 'p', 'WITH', 'p.departement = f.id')
@@ -75,7 +75,7 @@ class DepartementRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findActifs()
+    public function findActifs(): array
     {
         return $this->createQueryBuilder('d')
             ->where('d.actif = 1')

@@ -28,14 +28,15 @@ use App\Repository\DepartementRepository;
 use App\Repository\DiplomeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
-use Symfony\Component\HttpFoundation\RequestStack;
 use function count;
 use Doctrine\ORM\NonUniqueResultException;
 use function in_array;
 use Symfony\Component\EventDispatcher\GenericEvent;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Security;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -61,21 +62,7 @@ class DataUserSession
 
     protected ?Departement $departement = null;
 
-    protected TokenStorageInterface $user;
-
-    protected SemestreRepository $semestreRepository;
-
-    protected AnneeRepository $anneeRepository;
-
     protected AnneeUniversitaireRepository $anneeUniversitaireRepository;
-
-    protected DiplomeRepository $diplomeRepository;
-
-    protected PersonnelRepository $personnelRepository;
-
-    protected DepartementRepository $departementRepository;
-
-    protected Security $security;
 
     private array $semestresActifs;
 
@@ -92,24 +79,16 @@ class DataUserSession
      * @throws NonUniqueResultException
      */
     public function __construct(
-        SemestreRepository $semestreRepository,
-        AnneeRepository $anneeRepository,
-        DiplomeRepository $diplomeRepository,
-        PersonnelRepository $personnelRepository,
-        DepartementRepository $departementRepository,
-        TokenStorageInterface $user,
-        Security $security,
+        protected SemestreRepository $semestreRepository,
+        protected AnneeRepository $anneeRepository,
+        protected DiplomeRepository $diplomeRepository,
+        protected PersonnelRepository $personnelRepository,
+        protected DepartementRepository $departementRepository,
+        protected TokenStorageInterface $user,
+        protected Security $security,
         EventDispatcherInterface $eventDispatcher,
         RequestStack $requestStack
     ) {
-        $this->semestreRepository = $semestreRepository;
-        $this->anneeRepository = $anneeRepository;
-        $this->diplomeRepository = $diplomeRepository;
-        $this->personnelRepository = $personnelRepository;
-        $this->departementRepository = $departementRepository;
-
-        $this->user = $user;
-        $this->security = $security;
         if ($this->getUser() instanceof Etudiant) {
             $this->type_user = 'e';
             $this->departement = $this->departementRepository->findDepartementEtudiant($this->getUser());
@@ -137,7 +116,7 @@ class DataUserSession
         }
     }
 
-    public function getUser()
+    public function getUser(): ?UserInterface
     {
         if (null !== $this->user->getToken()) {
             return $this->user->getToken()->getUser();
@@ -181,10 +160,14 @@ class DataUserSession
     /**
      * @return Semestre[]
      */
-    public function semestresByDiplome($diplome): array
+    public function semestresByDiplome(int $idDiplome): array
     {
-        //todo: utilisé ?
-        return $this->semestreRepository->findByDiplome($diplome);
+        $diplome = $this->diplomeRepository->find($idDiplome);
+        if (null !== $diplome) {
+            return $this->semestreRepository->findByDiplome($diplome);
+        }
+
+        return [];
     }
 
     /**
@@ -192,7 +175,7 @@ class DataUserSession
      */
     public function getPersonnels(): array
     {
-        return $this->personnelRepository->findByDepartement($this->departement->getId());
+        return $this->personnelRepository->findByDepartement($this->departement);
     }
 
     /**
@@ -217,7 +200,7 @@ class DataUserSession
         return 0;
     }
 
-    public function isGoodDepartement($role): bool
+    public function isGoodDepartement(string $role): bool
     {
         if (null !== $this->getUser() && !($this->getUser() instanceof Etudiant)) {
             /** @var PersonnelDepartement $rf */
@@ -259,7 +242,7 @@ class DataUserSession
     public function getDepartementMultiple(): bool
     {
         if (null !== $this->getUser()) {
-            return count($this->getUser()->getPersonnelDepartements()) > 1;
+            return (is_countable($this->getUser()->getPersonnelDepartements()) ? count($this->getUser()->getPersonnelDepartements()) : 0) > 1;
         }
 
         return false;
@@ -275,7 +258,7 @@ class DataUserSession
         if (null !== $this->getAnneeUniversitaire()) {
             $fin = $this->getAnneeUniversitaire()->getAnnee() + 1;
 
-            return $this->getAnneeUniversitaire()->getAnnee() . ' | ' . $fin;
+            return $this->getAnneeUniversitaire()->getAnnee().' | '.$fin;
         }
 
         return '- err année universitaire -';

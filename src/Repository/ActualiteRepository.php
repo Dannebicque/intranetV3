@@ -34,7 +34,7 @@ class ActualiteRepository extends ServiceEntityRepository
     /**
      * @return Actualite[]
      */
-    public function getByDepartement(Departement $departement, int $nbResult = 0): mixed
+    public function getByDepartement(Departement $departement, int $nbResult = 0): array
     {
         $q = $this->createQueryBuilder('a')
             ->andWhere('a.departement = :departement')

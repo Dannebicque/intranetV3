@@ -59,14 +59,14 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
         return $evtCollection;
     }
 
-    public function find($event): EvenementEdt
+    public function find(int $event): EvenementEdt
     {
         $evt = $this->edtPlanningRepository->find($event);
 
         return $this->edtIntranetAdapter->single($evt);
     }
 
-    public function recupereEdtJourBorne($semestre, $matieres, $jourSemaine, $semaineFormation)
+    public function recupereEdtJourBorne(Semestre $semestre, array $matieres, int $jourSemaine, int $semaineFormation): EvenementEdtCollection
     {
         $evts = $this->edtPlanningRepository->recupereEdtBorne($semaineFormation, $semestre, $jourSemaine);
 

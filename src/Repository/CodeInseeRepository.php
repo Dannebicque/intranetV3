@@ -27,7 +27,7 @@ class CodeInseeRepository extends ServiceEntityRepository
         parent::__construct($registry, CodeInsee::class);
     }
 
-    public function findVilles()
+    public function findVilles(): array
     {
         return $this->createQueryBuilder('c')
             ->select('c.codeInsee, c.ville')

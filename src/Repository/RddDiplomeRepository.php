@@ -31,12 +31,10 @@ class RddDiplomeRepository extends ServiceEntityRepository
     }
 
     /**
-     * @return int|mixed|string
-     *
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function countComplet()
+    public function countComplet(): ?int
     {
         return $this->createQueryBuilder('p')
             ->where('p.confirme = true')
@@ -45,7 +43,7 @@ class RddDiplomeRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
-    public function getEtudiantAvecQuestionnaire()
+    public function getEtudiantAvecQuestionnaire(): array
     {
         return $this->createQueryBuilder('r')
             ->join(Etudiant::class, 'e', 'WITH', 'r.numEtudiant = e.numEtudiant')

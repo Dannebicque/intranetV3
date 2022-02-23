@@ -32,7 +32,7 @@ class StageMailTemplateRepository extends ServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function findEventPeriode($codeEvent, StagePeriode $stagePeriode): ?StageMailTemplate
+    public function findEventPeriode(string $codeEvent, StagePeriode $stagePeriode): ?StageMailTemplate
     {
         return $this->createQueryBuilder('s')
             ->where('s.stagePeriode = :stagePeriode')
@@ -43,7 +43,7 @@ class StageMailTemplateRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function findByStagePeriode(StagePeriode $stagePeriode)
+    public function findByStagePeriode(StagePeriode $stagePeriode): array
     {
         return $this->createQueryBuilder('s')
             ->where('s.stagePeriode = :stagePeriode')

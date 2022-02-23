@@ -29,7 +29,7 @@ class ArticleLikePersonnelRepository extends ServiceEntityRepository
         parent::__construct($registry, ArticleLikePersonnel::class);
     }
 
-    public function findLike(Personnel $personnel, Article $article)
+    public function findLike(Personnel $personnel, Article $article): array
     {
         return $this->createQueryBuilder('a')
             ->where('a.personnel = :personnel')

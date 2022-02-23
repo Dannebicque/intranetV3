@@ -26,6 +26,7 @@ use App\Entity\ApcSituationProfessionnelle;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
 use Doctrine\ORM\EntityManagerInterface;
+use SimpleXMLElement;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
 class DiplomeImport
@@ -39,7 +40,7 @@ class DiplomeImport
         $this->entityManager = $entityManager;
     }
 
-    public function import(Diplome $diplome, string $fichier, $type)
+    public function import(Diplome $diplome, string $fichier, $type): void
     {
         $this->fichier = $fichier;
         $this->diplome = $diplome;
@@ -57,7 +58,7 @@ class DiplomeImport
         }
     }
 
-    private function importCompetence()
+    private function importCompetence(): void
     {
         $xml = $this->openXmlFile();
         $tCompetences = [];
@@ -121,7 +122,7 @@ class DiplomeImport
         $this->entityManager->flush();
     }
 
-    private function openXmlFile()
+    private function openXmlFile(): SimpleXMLElement | bool
     {
         if (file_exists($this->fichier)) {
             return simplexml_load_string(file_get_contents($this->fichier));
@@ -130,7 +131,7 @@ class DiplomeImport
         throw new FileNotFoundException();
     }
 
-    private function importFormation()
+    private function importFormation(): void
     {
         $xml = $this->openXmlFile();
         $tAcs = $this->entityManager->getRepository(ApcApprentissageCritique::class)->findOneByDiplomeArray($this->diplome);
@@ -146,7 +147,7 @@ class DiplomeImport
                     $ar->setSemestre($semestre);
                     $ar->setLibelle($ressource->titre);
                     $ar->setCodeMatiere((string) $ressource['code']);
-                    $ar->setCodeElement($this->diplome->getSigle(). $ressource['code']);
+                    $ar->setCodeElement($this->diplome->getSigle().$ressource['code']);
                     $ar->setTdPpn((float) $ressource['heuresCMTD']);
                     $ar->setTpPpn((float) $ressource['heuresTP']);
                     $ar->setDescription((string) $ressource->description);
@@ -173,7 +174,7 @@ class DiplomeImport
                     $ar->setSemestre($semestre);
                     $ar->setLibelle($sae->titre);
                     $ar->setCodeMatiere((string) $sae['code']);
-                    $ar->setCodeElement($this->diplome->getSigle().(string) $sae['code']);
+                    $ar->setCodeElement($this->diplome->getSigle().$sae['code']);
                     $ar->setTdPpn((float) $sae['heuresCMTD']);
                     $ar->setTpPpn((float) $sae['heuresTP']);
                     $ar->setProjetPpn((float) $sae['heuresProjet']);

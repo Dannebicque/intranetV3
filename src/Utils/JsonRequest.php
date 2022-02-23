@@ -26,6 +26,9 @@ abstract class JsonRequest
         return $parametersAsArray;
     }
 
+    /**
+     * @throws \JsonException
+     */
     public static function getValueFromRequest(Request $request, string $value): mixed
     {
         $parametersAsArray = self::getFromRequest($request);

@@ -29,7 +29,7 @@ class ApcSaeCompetenceRepository extends ServiceEntityRepository
         parent::__construct($registry, ApcSaeCompetence::class);
     }
 
-    public function findfBySemestre(Semestre $semestre)
+    public function findfBySemestre(Semestre $semestre): array
     {
         return $this->createQueryBuilder('a')
             ->innerJoin(ApcSae::class, 'r', 'WITH', 'a.sae = r.id')

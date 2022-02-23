@@ -38,7 +38,7 @@ class QuestionnaireEtudiantRepository extends ServiceEntityRepository
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function compteReponse(QuestionnaireQualite $qualiteQuestionnaire)
+    public function compteReponse(QuestionnaireQualite $qualiteQuestionnaire): ?QuestionnaireEtudiant
     {
         $qb = $this->createQueryBuilder('prov');
 
@@ -94,7 +94,7 @@ class QuestionnaireEtudiantRepository extends ServiceEntityRepository
         return $t;
     }
 
-    public function findByQuestionnaire(QuestionnaireQuizz $questionnaire)
+    public function findByQuestionnaire(QuestionnaireQuizz $questionnaire): array
     {
         return $this->createQueryBuilder('q')
             ->where('q.questionnaireQuizz = :questionnaire')
@@ -103,7 +103,7 @@ class QuestionnaireEtudiantRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByQuestionnaireQualite(QuestionnaireQualite $questionnaire)
+    public function findByQuestionnaireQualite(QuestionnaireQualite $questionnaire): array
     {
         return $this->createQueryBuilder('q')
             ->where('q.questionnaireQualite = :questionnaire')

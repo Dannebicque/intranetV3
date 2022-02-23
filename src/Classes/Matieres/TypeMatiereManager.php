@@ -32,14 +32,14 @@ class TypeMatiereManager
         $this->managers[ApcRessource::SOURCE] = $ressourceManager;
     }
 
-    public function getLibelleMatiere($value): string
+    public function getLibelleMatiere(string $value): string
     {
         $mat = $this->getMatiereFromSelect($value);
 
         return null !== $mat ? $mat->display : 'err';
     }
 
-    public function getMatiereFromSelect($data): ?\App\DTO\Matiere
+    public function getMatiereFromSelect(string $data): ?\App\DTO\Matiere
     {
         $d = explode('_', $data);
 
@@ -50,12 +50,12 @@ class TypeMatiereManager
         return null;
     }
 
-    public function typeDeMatiere($type)
+    public function typeDeMatiere(string $type): SaeManager | RessourceManager | MatiereManager
     {
         return $this->managers[$type];
     }
 
-    public function getMatiere($id, $type): ?\App\DTO\Matiere
+    public function getMatiere(int | string $id, string $type): ?\App\DTO\Matiere
     {
         return $this->typeDeMatiere($type)->find($id);
     }
@@ -180,7 +180,7 @@ class TypeMatiereManager
         return $t;
     }
 
-    public function tableauMatieresSemestreCodeApogee(Semestre $semestre)
+    public function tableauMatieresSemestreCodeApogee(Semestre $semestre): array
     {
         $matieres = $this->findBySemestre($semestre);
         $t = [];
@@ -191,18 +191,17 @@ class TypeMatiereManager
         return $t;
     }
 
-    public function findByCodeApogeeOrId(?EvenementEdt $planning)
+    public function findByCodeApogeeOrId(?EvenementEdt $planning): ?\App\DTO\Matiere
     {
-        if ($planning === null) {
+        if (null === $planning) {
             return null;
         }
 
-        switch ($planning->source) {
-            case EdtManager::EDT_CELCAT:
-                return $this->findByCodeApogee($planning->codeelement);
-            case EdtManager::EDT_INTRANET:
-                return $this->getMatiereFromSelect($planning->typeIdMatiere);
+        return match ($planning->source) {
+            EdtManager::EDT_CELCAT => $this->findByCodeApogee($planning->codeelement),
+            EdtManager::EDT_INTRANET => $this->getMatiereFromSelect($planning->typeIdMatiere),
+            default => null,
+        };
 
-        }
     }
 }

@@ -32,7 +32,6 @@ class MyIcal
     public function __construct()
     {
         //todo: a tester si les données viennent de Celcat ?
-        $this->tabheure = [];
         $this->filevt = 'BEGIN:VCALENDAR'.chr(13).chr(10);
         $this->filevt .= 'VERSION:2.0'.chr(13).chr(10);
         $this->filevt .= 'CALSCALE:GREGORIAN'.chr(13).chr(10);
@@ -115,7 +114,7 @@ class MyIcal
         $this->dtstart = 'DTSTART:'.$this->calculHeureEte($timestamp);
     }
 
-    public function calculHeureEte(int $timestamp)
+    public function calculHeureEte(int $timestamp): string
     {
         $annee_courante = strftime('%Y', $timestamp);
         $mois_courant = strftime('%m', $timestamp);
@@ -124,7 +123,7 @@ class MyIcal
         $num_dernier_dimanche = [];
 
         if (($mois_courant > 10) || ($mois_courant < 3)) {
-            $decalage_horaire = 1 * 3600;
+            $decalage_horaire = 3600;
         } elseif (($mois_courant > 3) && ($mois_courant < 10)) {
             $decalage_horaire = 2 * 3600;
         } elseif (3 === (int) $mois_courant) {
@@ -134,14 +133,14 @@ class MyIcal
             if ($jour_courant >= $num_dernier_dimanche[$annee_courante][$mois_courant]) {
                 $decalage_horaire = 2 * 3600;
             } else {
-                $decalage_horaire = 1 * 3600;
+                $decalage_horaire = 3600;
             }
         } elseif (10 === (int) $mois_courant) {
             $num_dernier_dimanche[$annee_courante][$mois_courant] = $this->getDernierDimancheDuMois2($mois_courant,
                     $annee_courante);
 
             if ($jour_courant >= $num_dernier_dimanche[$annee_courante][$mois_courant]) {
-                $decalage_horaire = 1 * 3600;
+                $decalage_horaire = 3600;
             } else {
                 $decalage_horaire = 2 * 3600;
             }

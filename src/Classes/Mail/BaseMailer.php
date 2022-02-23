@@ -14,12 +14,14 @@
 namespace App\Classes\Mail;
 
 use App\Classes\Configuration;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mime\Email;
+use function array_key_exists;
+use function count;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use function array_key_exists;
-use function count;
 
 class BaseMailer
 {
@@ -41,10 +43,9 @@ class BaseMailer
     }
 
     /**
-     *
      * @throws TransportExceptionInterface
      */
-    public function baseSendMessage($mail, array $to, string $subject, array $options = []): void
+    public function baseSendMessage(Email | TemplatedEmail $mail, array $to, string $subject, array $options = []): void
     {
         $mail->from($this->getFrom($options))
             ->subject($this->translator->trans($subject));
@@ -70,7 +71,7 @@ class BaseMailer
         return $this->configuration->getExpediteurIntranet();
     }
 
-    private function getReplyTo(array $options, &$mail): void
+    private function getReplyTo(array $options, Email | TemplatedEmail $mail): void
     {
         if (array_key_exists('replyTo', $options) && '' !== $options['replyTo']) {
             if (is_array($options['replyTo'])) {
@@ -85,7 +86,7 @@ class BaseMailer
         }
     }
 
-    private function checkTo(&$mail, array $mails): void
+    private function checkTo(Email | TemplatedEmail $mail, array $mails): void
     {
         foreach ($mails as $m) {
             if (null !== $m && '' !== trim($m)) {
@@ -94,7 +95,7 @@ class BaseMailer
         }
     }
 
-    private function checkCc(&$mail, array $options): void
+    private function checkCc(Email | TemplatedEmail $mail, array $options): void
     {
         if (array_key_exists('cc', $options) && count($options['cc']) > 0) {
             foreach ($options['cc'] as $cc) {
@@ -103,7 +104,7 @@ class BaseMailer
         }
     }
 
-    public function baseAttachFile(&$mail, string $file): void
+    public function baseAttachFile(Email | TemplatedEmail $mail, string $file): void
     {
         $mail->attachFromPath($file);
     }

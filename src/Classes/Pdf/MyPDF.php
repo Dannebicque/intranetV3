@@ -13,6 +13,7 @@
 
 namespace App\Classes\Pdf;
 
+use App\Entity\Departement;
 use Carbon\Carbon;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Knp\Snappy\Pdf;
@@ -41,7 +42,7 @@ class MyPDF
         $date = Carbon::now();
 
         self::setFooter([
-            'footer-left' => escapeshellarg("Document généré depuis l'intranet le " . $date->format('d/m/Y H:i') . "."),
+            'footer-left' => escapeshellarg("Document généré depuis l'intranet le ".$date->format('d/m/Y H:i').'.'),
             'footer-right' => '[page] / [topage]',
             'footer-center' => '',
         ]);
@@ -58,7 +59,7 @@ class MyPDF
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public static function generePdf($template, $data, $name, $departement = null): PdfResponse
+    public static function generePdf(string $template, array $data, string $name, ?string $departement = null): PdfResponse
     {
         return self::genereOutputPdf($template, $data, $name, $departement);
     }
@@ -73,11 +74,11 @@ class MyPDF
         array $data,
         string $name,
         string $dir,
-        string $departement = null
+        ?string $departement = null
     ): void {
         $output = self::genereOutputPdf($template, $data, $name, $departement);
 
-        file_put_contents($dir . $name . '.pdf', $output);
+        file_put_contents($dir.$name.'.pdf', $output);
     }
 
     /**
@@ -85,8 +86,9 @@ class MyPDF
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    private static function genereOutputPdf($template, $data, $name, $departement = null): PdfResponse
+    private static function genereOutputPdf(string $template, array $data, string $name, string $departement = null): PdfResponse
     {
+        //todo: est-ce que le département est encore nécessaire sur l'export ???
         $html = self::$templating->render($template, $data);
 
         if ('.pdf' !== mb_substr($name, -4)) {
@@ -99,14 +101,19 @@ class MyPDF
         );
     }
 
-    public static function setFooter(array $data = [])
+    public static function setFooter(array $data = []): void
     {
         foreach ($data as $key => $d) {
             self::addOptions($key, $d);
         }
     }
 
-    public static function setFooterHtml(string $template, array $data = [])
+    /**
+     * @throws \Twig\Error\SyntaxError
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\LoaderError
+     */
+    public static function setFooterHtml(string $template, array $data = []): void
     {
         self::addOptions('footer-html', self::$templating->render($template, $data));
     }

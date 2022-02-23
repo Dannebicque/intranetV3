@@ -9,8 +9,9 @@
 
 namespace App\DTO;
 
+use Carbon\Carbon;
+use Carbon\CarbonInterface;
 use DateInterval;
-use DateTime;
 use Exception;
 
 class StatisquesAbsences
@@ -19,25 +20,25 @@ class StatisquesAbsences
     public int $nbNonJustifie = 0;
     public int $nbDemiJournee = 0;
     public int $nbJustifie = 0;
-    public DateTime $totalDuree;
+    public CarbonInterface $totalDuree;
 
     /**
      * StatisquesAbsences constructor.
      */
     public function __construct()
     {
-        $this->totalDuree = new DateTime('00:00');
+        $this->totalDuree = Carbon::createFromTime();
     }
 
     /**
      * @throws Exception
      */
-    public function addDuree(DateTime $duree): void
+    public function addDuree(CarbonInterface $duree): void
     {
         $this->totalDuree->add(new DateInterval('PT'.$duree->format('G').'H'.$duree->format('i').'M'));
     }
 
-    public function incJustifieOrNotJutifie(bool $isJustifie)
+    public function incJustifieOrNotJutifie(bool $isJustifie): void
     {
         $isJustifie ? $this->nbJustifie++ : $this->nbNonJustifie++;
     }

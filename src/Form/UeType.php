@@ -10,6 +10,7 @@
 namespace App\Form;
 
 use App\Entity\ApcCompetence;
+use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use App\Form\Type\YesNoType;
@@ -28,7 +29,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class UeType extends AbstractType
 {
-    protected $diplome;
+    protected ?Diplome $diplome;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

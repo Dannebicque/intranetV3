@@ -20,32 +20,25 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 class ExportPdfEdtHandler implements MessageHandlerInterface
 {
-    private PersonnelRepository $personnelRepository;
-    private MailerInterface $mailer;
-
-    private MyEdtExport $myEdtExport;
-
-    private DepartementRepository $departementRepository;
-
-    private Configuration $configuration;
 
     /**
      * ExportReleveHandler constructor.
      */
     public function __construct(
-        Configuration $configuration,
-        MyEdtExport $myEdtExport,
-        DepartementRepository $departementRepository,
-        MailerInterface $mailer,
-        PersonnelRepository $personnelRepository
+        private Configuration $configuration,
+        private MyEdtExport $myEdtExport,
+        private DepartementRepository $departementRepository,
+        private MailerInterface $mailer,
+        private PersonnelRepository $personnelRepository
     ) {
-        $this->myEdtExport = $myEdtExport;
-        $this->personnelRepository = $personnelRepository;
-        $this->departementRepository = $departementRepository;
-        $this->mailer = $mailer;
-        $this->configuration = $configuration;
     }
 
+    /**
+     * @throws \Twig\Error\SyntaxError
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\LoaderError
+     */
     public function __invoke(ExportPdfEdt $exportPdfEdt)
     {
         $departement = $this->departementRepository->find($exportPdfEdt->getDepartement());

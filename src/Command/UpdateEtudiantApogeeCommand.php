@@ -48,12 +48,15 @@ class UpdateEtudiantApogeeCommand extends Command
         parent::__construct();
     }
 
-    protected function configure()
+    protected function configure(): void
     {
         $this
             ->addArgument('annee', InputArgument::REQUIRED, 'Code Etape annee');
     }
 
+    /**
+     * @throws \Exception
+     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $codeAnnee = $input->getArgument('annee');

@@ -7,7 +7,6 @@
  * @lastUpdate 29/06/2021 17:48
  */
 
-
 namespace App\Classes;
 
 use App\Entity\Departement;
@@ -15,39 +14,27 @@ use App\Entity\Matiere;
 use App\Repository\ParcourRepository;
 use App\Repository\PpnRepository;
 use App\Repository\UeRepository;
+use function array_key_exists;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use function array_key_exists;
 
 class MyPpn
 {
-    public MyUpload $myUpload;
-    public EntityManagerInterface $entityManager;
-    private UeRepository $ueRepository;
-    private ParcourRepository $parcourRepository;
-    private PpnRepository $ppnRepository;
 
 
     public function __construct(
-        MyUpload $myUpload,
-        EntityManagerInterface $entityManager,
-        UeRepository $ueRepository,
-        PpnRepository $ppnRepository,
-        ParcourRepository $parcourRepository
+        private MyUpload $myUpload,
+        private EntityManagerInterface $entityManager,
+        private UeRepository $ueRepository,
+        private PpnRepository $ppnRepository,
+        private ParcourRepository $parcourRepository
     ) {
-        $this->myUpload = $myUpload;
-        $this->entityManager = $entityManager;
-        $this->ueRepository = $ueRepository;
-        $this->ppnRepository = $ppnRepository;
-        $this->parcourRepository = $parcourRepository;
     }
 
-
     /**
-     *
      * @throws Exception
      */
-    public function importCsv($data, Departement $departement): bool
+    public function importCsv(array $data, Departement $departement): bool
     {
         $ppn = $this->ppnRepository->find($data['ppn']);
         if (null !== $ppn) {

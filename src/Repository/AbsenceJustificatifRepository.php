@@ -33,7 +33,7 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
         parent::__construct($registry, AbsenceJustificatif::class);
     }
 
-    public function findBySemestre(Semestre $semestre)
+    public function findBySemestre(Semestre $semestre): array
     {
         return $this->createQueryBuilder('j')
             ->where('j.semestre = :semestre')
@@ -50,7 +50,7 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Doctrine\ORM\NoResultException
      */
-    public function findBySemestreCount(Semestre $semestre, ?int $annee = 0)
+    public function findBySemestreCount(Semestre $semestre, ?int $annee = 0): ?int
     {
         if (0 === $annee) {
             $annee = null !== $semestre->getAnneeUniversitaire() ? $semestre->getAnneeUniversitaire()->getAnnee() : (int) date('Y');
@@ -86,7 +86,7 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
         return count($query) >= 1;
     }
 
-    public function findByEtudiant(Etudiant $etudiant)
+    public function findByEtudiant(Etudiant $etudiant): array
     {
         return $this->createQueryBuilder('j')
             ->innerJoin(Etudiant::class, 'e', 'WITH', 'j.etudiant = e.id')
@@ -99,7 +99,7 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByAnnee(Annee $annee)
+    public function findByAnnee(Annee $annee): array
     {
         return $this->createQueryBuilder('j')
             ->innerJoin(Etudiant::class, 'e', 'WITH', 'j.etudiant = e.id')

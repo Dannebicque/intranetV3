@@ -9,7 +9,6 @@
 
 namespace App\Adapter;
 
-
 use App\DTO\Previsionnel;
 use App\DTO\PrevisionnelCollection;
 

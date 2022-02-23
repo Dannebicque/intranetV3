@@ -31,13 +31,12 @@ class ApcSaeRepository extends ServiceEntityRepository
         parent::__construct($registry, ApcSae::class);
     }
 
-    public function findByDiplome(Diplome $diplome)
+    public function findByDiplome(Diplome $diplome): array
     {
         return $this->createQueryBuilder('r')
             ->innerJoin(Semestre::class, 's', 'WITH', 's.id = r.semestre')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->where('a.diplome = :diplome')
-            //->andWhere('s.ppn_actif = m.ppn')
             ->setParameter('diplome', $diplome->getId())
             ->orderBy('s.ordreLmd', 'ASC')
             ->addOrderBy('r.codeMatiere', 'ASC')
@@ -46,13 +45,12 @@ class ApcSaeRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findBySemestre(Semestre $semestre)
+    public function findBySemestre(Semestre $semestre): array
     {
         return $this->createQueryBuilder('r')
             ->leftJoin('r.apcSaeCompetences', 'apcSaeCompetences')
             ->addSelect('apcSaeCompetences')
             ->where('r.semestre = :semestre')
-            //->andWhere('s.ppn_actif = m.ppn')
             ->setParameter('semestre', $semestre->getId())
             ->orderBy('r.codeMatiere', 'ASC')
             ->addOrderBy('r.libelle', 'ASC')
@@ -60,7 +58,7 @@ class ApcSaeRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function search(?string $search, Diplome $diplome)
+    public function search(?string $search, Diplome $diplome): array
     {
         return $this->createQueryBuilder('a')
             ->innerJoin(Semestre::class, 's', 'WITH', 'a.semestre=s.id')
@@ -76,7 +74,7 @@ class ApcSaeRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByDepartement(Departement $departement)
+    public function findByDepartement(Departement $departement): array
     {
         return $this->createQueryBuilder('r')
             ->innerJoin(Semestre::class, 's', 'WITH', 's.id = r.semestre')
@@ -85,7 +83,6 @@ class ApcSaeRepository extends ServiceEntityRepository
             ->leftJoin('r.apcSaeCompetences', 'apcSaeCompetences')
             ->addSelect('apcSaeCompetences')
             ->where('d.departement = :departement')
-            //->andWhere('s.ppn_actif = m.ppn')
             ->setParameter('departement', $departement->getId())
             ->orderBy('r.codeMatiere', 'ASC')
             ->addOrderBy('r.libelle', 'ASC')

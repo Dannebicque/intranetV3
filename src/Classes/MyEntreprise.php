@@ -28,16 +28,15 @@ class MyEntreprise
         $this->entityManager = $entityManager;
     }
 
-    public function update(Entreprise $entreprise, $name, $value): bool
+    public function update(Entreprise $entreprise, string $name, mixed $value): bool
     {
-        $method = 'set' . $name;
+        $method = 'set'.$name;
         if (method_exists($entreprise, $method)) {
             $entreprise->$method($value);
             $this->entityManager->flush();
 
             return true;
         }
-
 
         return false;
     }

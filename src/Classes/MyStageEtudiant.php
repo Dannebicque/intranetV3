@@ -23,31 +23,24 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class MyStageEtudiant
 {
-    protected EntityManagerInterface $entityManager;
-    protected EventDispatcherInterface $eventDispatcher;
-    protected StageEtudiantRepository $stageEtudiantRepository;
+
     protected StageEtudiant $stageEtudiant;
-    private Configuration $configuration;
 
     /**
      * MyStageEtudiant constructor.
      */
     public function __construct(
-        Configuration $configuration,
-        EntityManagerInterface $entityManager,
-        EventDispatcherInterface $eventDispatcher,
-        StageEtudiantRepository $stageEtudiantRepository
+        private Configuration $configuration,
+        private EntityManagerInterface $entityManager,
+        private EventDispatcherInterface $eventDispatcher,
+        private StageEtudiantRepository $stageEtudiantRepository
     ) {
-        $this->eventDispatcher = $eventDispatcher;
-        $this->entityManager = $entityManager;
-        $this->configuration = $configuration;
-        $this->stageEtudiantRepository = $stageEtudiantRepository;
     }
 
     /**
      * @throws NonUniqueResultException
      */
-    public function changeEtat(StagePeriode $stagePeriode, Etudiant $etudiant, $etat): void
+    public function changeEtat(StagePeriode $stagePeriode, Etudiant $etudiant, string $etat): void
     {
         $this->stageEtudiant = $this->checkStageEtudiantExist($stagePeriode, $etudiant);
 
@@ -114,12 +107,11 @@ class MyStageEtudiant
     }
 
     /**
-     * @return StageEtudiant|mixed
      *
      * @throws NonUniqueResultException
      * @throws Exception
      */
-    private function checkStageEtudiantExist(StagePeriode $stagePeriode, Etudiant $etudiant)
+    private function checkStageEtudiantExist(StagePeriode $stagePeriode, Etudiant $etudiant): StageEtudiant
     {
         $result = $this->stageEtudiantRepository->findExist($stagePeriode, $etudiant);
 

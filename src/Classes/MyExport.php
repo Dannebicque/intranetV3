@@ -14,6 +14,7 @@
 namespace App\Classes;
 
 use App\Classes\Excel\MyExcelMultiExport;
+use App\Classes\Pdf\MyPDF;
 use App\Entity\Semestre;
 use App\Exception\SemestreNotFoundException;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,11 +22,15 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class MyExport
 {
-    protected MyExcelMultiExport $excel;
+    public const ONLY_DATE = 'date';
+    public const ONLY_HEURE = 'heure';
+    private array $options = [];
 
-    public function __construct(MyExcelMultiExport $excel)
-    {
-        $this->excel = $excel;
+    public function __construct(
+        private MyPDF $myPDF,
+        private MySerializer $serializer,
+        private MyExcelMultiExport $excel
+    ) {
     }
 
     public function getExcel(): MyExcelMultiExport
@@ -33,19 +38,95 @@ class MyExport
         return $this->excel;
     }
 
-    public function genereFichierGenerique($format, $data, $nomFichier, array $groups, array $colonne): ?Response
+    public function convertDataFromSerializationToArray(array $data, array $modele, array $colonne): array
     {
-        $this->excel->genereExcelFromSerialization($data, $groups, $colonne);
+        $dataArray = [];
+        //serialize les data
+        $dataJson = $this->serializer->serialize($data, $modele);
+        $tabData = json_decode($dataJson, true);
+        //header
+        $i = 1;
+        $ligne = 1;
+        foreach ($colonne as $value) {
+            if (is_array($value)) {
+                foreach ($value as $col) {
+                    if (is_array($col)) {
+                        foreach ($col as $col2) {
+                            if (is_array($col2)) {
+                                foreach ($col2 as $col3) {
+                                    $dataArray[$ligne][$i] = $col3;
+
+                                    ++$i;
+                                }
+                            } else {
+                                $dataArray[$ligne][$i] = $col2;
+                                ++$i;
+                            }
+                        }
+                    } else {
+                        $dataArray[$ligne][$i] = $col;
+                        ++$i;
+                    }
+                }
+            } else {
+                $dataArray[$ligne][$i] = $value;
+                ++$i;
+            }
+        }
+        $i = 1;
+        ++$ligne;
+        //data
+        foreach ($tabData as $row) {
+            foreach ($colonne as $key => $value) {
+                if ((!is_array($value) && array_key_exists($value,
+                            $row)) || (is_array($value) && array_key_exists($key,
+                            $row))) {
+                    if (is_array($value)) {
+                        foreach ($value as $col) {
+                            if (is_array($row[$key])) {
+                                $dataArray[$ligne][$i] = $this->transformValue($row[$key][$col], $key);
+                            } else {
+                                $dataArray[$ligne][$i] = '-';
+                            }
+                            ++$i;
+                        }
+                    } else {
+                        $dataArray[$ligne][$i] = $this->transformValue($row[$value], $colonne[$key]);
+                        ++$i;
+                    }
+                } else {
+                    $dataArray[$ligne][$i] = '-';
+                    ++$i;
+                }
+            }
+
+            $i = 1;
+            ++$ligne;
+        }
+
+        return $dataArray;
+    }
+
+    public function genereFichierGenerique(
+       string $format,
+       array $data,
+       string $nomFichier,
+        array $groups,
+        array $colonne,
+        array $options = []
+    ): ?Response {
+        $this->options = $options;
+        $dataArray = $this->convertDataFromSerializationToArray($data, $groups, $colonne);
 
         return match ($format) {
-            'csv' => $this->excel->saveCsv($nomFichier),
-            'pdf' => $this->excel->savePdf($nomFichier),
-            'xlsx' => $this->excel->saveXlsx($nomFichier),
+            'csv' => $this->excel->genereExcelFromArray($dataArray)->saveCsv($nomFichier),
+            'pdf' => $this->myPDF::generePdf('pdf/pdfExport.html.twig', ['data' => $dataArray], $nomFichier),
+            'xlsx' => $this->excel->genereExcelFromArray($dataArray)->saveXlsx($nomFichier),
             default => null,
         };
     }
 
-    public function genereFichierAbsence($format, $myAbsences, $nomFichier): ?Response
+    public function genereFichierAbsence(string $format, MyAbsences $myAbsences, string $nomFichier): ?Response
     {
         $this->excel->genereExcelAbsence($myAbsences);
 
@@ -55,7 +136,6 @@ class MyExport
             'xlsx' => $this->excel->saveXlsx($nomFichier),
             default => false,
         };
-
     }
 
     /**
@@ -72,9 +152,28 @@ class MyExport
         return $this->excel->saveXlsx('modele-import-note-'.$semestre->getLibelle());
     }
 
-    public function genereFichierJustificatifAbsence(mixed $justificatifs, string $nomFichier)
+    public function genereFichierJustificatifAbsence(mixed $justificatifs, string $nomFichier): StreamedResponse
     {
         $this->excel->genereExcelJustificatifsAbsences($justificatifs);
+
         return $this->excel->saveXlsx($nomFichier);
+    }
+
+    private function transformValue(?string $value, string $key): ?string
+    {
+        if (array_key_exists($key, $this->options)) {
+            switch ($this->options[$key]) {
+                case self::ONLY_DATE:
+                    $t = explode(' ', $value);
+
+                    return $t[0];
+                case self::ONLY_HEURE:
+                    $t = explode(' ', $value);
+
+                    return 2 === count($t) ? $t[1] : 'err';
+            }
+        }
+
+        return $value;
     }
 }

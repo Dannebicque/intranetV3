@@ -14,7 +14,7 @@ class PrevisionnelCollection
     /** @var \App\DTO\Previsionnel[] */
     public array $previsionnels = [];
 
-    public function add($previsionnel)
+    public function add(Previsionnel $previsionnel): void
     {
         $this->previsionnels[] = $previsionnel;
     }
@@ -27,8 +27,8 @@ class PrevisionnelCollection
         return $this->previsionnels;
     }
 
-    public function toArray()
+    public function toArray(): array
     {
-        return (array) $this->previsionnels;
+        return $this->previsionnels;
     }
 }

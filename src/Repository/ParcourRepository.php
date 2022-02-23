@@ -43,7 +43,7 @@ class ParcourRepository extends ServiceEntityRepository
             ->orderBy('u.libelle', 'ASC');
     }
 
-    public function findBySemestre(Semestre $semestre)
+    public function findBySemestre(Semestre $semestre): array
     {
         return $this->findBySemestreBuilder($semestre)->getQuery()->getResult();
     }

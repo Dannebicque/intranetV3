@@ -10,15 +10,15 @@
 namespace App\Classes;
 
 use App\Entity\Adresse;
-use App\Entity\Bac;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use App\Repository\BacRepository;
 use App\Utils\Tools;
-use Doctrine\ORM\EntityManagerInterface;
-use Exception;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use function array_key_exists;
 use function count;
+use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use function is_array;
 
 class MyEtudiants
@@ -40,10 +40,9 @@ class MyEtudiants
     }
 
     /**
-     *
      * @throws Exception
      */
-    public function importListeCsv($fichier, ?Semestre $semestre): bool
+    public function importListeCsv(?UploadedFile $fichier, ?Semestre $semestre): bool
     {
         $bacs = $this->bacRepository->getApogeeArray();
         if (null !== $semestre) {

@@ -34,7 +34,7 @@ class MatiereDelete
         $this->entityManager = $entityManager;
     }
 
-    public function delete(Matiere $matiere)
+    public function delete(Matiere $matiere): bool
     {
         $evaluations = $this->evaluationRepository->findByMatiere($matiere->getId(), Matiere::SOURCE);
         $absences = $this->absenceRepository->findByMatiere($matiere->getId(), Matiere::SOURCE);

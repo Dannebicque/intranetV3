@@ -11,27 +11,27 @@ namespace App\Interfaces;
 
 interface MatiereEntityInterface
 {
-    public function getLibelle();
+    public function getLibelle(): ?string;
 
-    public function getDisplay();
+    public function getDisplay(): ?string;
 
-    public function getCodeMatiere();
+    public function getCodeMatiere(): ?string;
 
-    public function getCodeElement();
+    public function getCodeElement(): ?string;
 
-    public function getCmPpn();
+    public function getCmPpn(): ?float;
 
-    public function getTdPpn();
+    public function getTdPpn(): ?float;
 
-    public function getTpPpn();
+    public function getTpPpn(): ?float;
 
-    public function getNbNotes();
+    public function getNbNotes(): ?int;
 
-    public function getCmFormation();
+    public function getCmFormation(): ?float;
 
-    public function getTdFormation();
+    public function getTdFormation(): ?float;
 
-    public function getTpFormation();
+    public function getTpFormation(): ?float;
 
-    public function isSuspendu();
+    public function isSuspendu(): bool;
 }

@@ -53,11 +53,14 @@ class ProjetSubscriber implements EventSubscriberInterface
         $this->addNotification($event, ProjetEvent::CHGT_ETAT_PROJET_AUTORISE);
     }
 
-    public function sendMail(ProjetEvent $event, $codeEvent): void
+    /**
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     */
+    public function sendMail(ProjetEvent $event, ?string $codeEvent): void
     {
         $projetEtudiant = $event->getProjetEtudiant();
         $destinataires = [];
-        foreach ($projetEtudiant->getProjetPeriode()->getResponsables() as $destinataire) {
+        foreach ($projetEtudiant->getProjetPeriode()?->getResponsables() as $destinataire) {
             $destinataires[] = $destinataire->getMailUniv();
         }
         //table avec les templates des mails et le sujet, a récupérer en fonction du codeEvent et de la période.
@@ -68,20 +71,20 @@ class ProjetSubscriber implements EventSubscriberInterface
             $mailsEtudiants[] = $etudiant->getMailPerso();
         }
 
-        $this->myMailer->setTemplate('mails/projets/projet_' . $codeEvent . '.txt.twig',
+        $this->myMailer->setTemplate('mails/projets/projet_'.$codeEvent.'.txt.twig',
             ['projetEtudiant' => $projetEtudiant],
             $mailsEtudiants,
             $codeEvent,
             ['replayTo' => $destinataires]);
 
-        $this->myMailer->setTemplate('mails/projets/projet_assistant_' . $codeEvent . '.txt.twig',
+        $this->myMailer->setTemplate('mails/projets/projet_assistant_'.$codeEvent.'.txt.twig',
             ['projetEtudiant' => $projetEtudiant],
             $destinataires,
-            'copie ' . $codeEvent,
+            'copie '.$codeEvent,
             ['replayTo' => $destinataires]);
     }
 
-    private function addNotification(ProjetEvent $event, $codeEvent): void
+    private function addNotification(ProjetEvent $event, string $codeEvent): void
     {
         $projetEtudiant = $event->getProjetEtudiant();
         foreach ($projetEtudiant->getEtudiants() as $etudiant) {

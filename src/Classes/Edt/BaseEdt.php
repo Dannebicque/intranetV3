@@ -26,35 +26,27 @@ abstract class BaseEdt
 {
     protected array $tabJour = [];
 
-    protected $semaines;
+    protected array $semaines;
 
-    protected $semaine;
+    protected int $semaine;
 
-    protected ?Calendrier $calendrier;
+    protected ?Calendrier $calendrier = null;
 
-    protected $semaineFormation;
+    protected ?int $semaineFormationIUT = null;
 
-    protected CalendrierRepository $calendrierRepository;
-
-    protected ?int $semaineFormationIUT;
-
-    protected ?CarbonImmutable $semaineFormationLundi;
-    protected ?string $filtre;
-    protected $valeur;
+    protected ?CarbonImmutable $semaineFormationLundi = null;
+    protected ?string $filtre = null;
+    protected mixed $valeur;
     protected array $total = [];
 
     protected ?Semestre $semestre;
-    protected Personnel|Etudiant $user;
-    protected ?Matiere $module;
+    protected Personnel | Etudiant $user;
+    protected ?Matiere $module = null;
 
-    protected $groupes;
-
-    protected $jour;
-    protected $salle;
+    protected int $jour;
+    protected string $salle;
     protected int $groupetd = 0;
     protected int $groupetp = 0;
-
-    protected $planning;
 
     private AnneeUniversitaire $anneeUniversitaire;
 
@@ -62,13 +54,12 @@ abstract class BaseEdt
      * MyEdt constructor.
      */
     public function __construct(
-        CalendrierRepository $calendrierRepository
+        protected CalendrierRepository $calendrierRepository
     ) {
-        $this->calendrierRepository = $calendrierRepository;
         $this->semestre = null;
     }
 
-    public function getSemaineFormation()
+    public function getSemaineFormation(): ?int
     {
         return $this->semaineFormationIUT;
     }
@@ -83,7 +74,7 @@ abstract class BaseEdt
         return $this->tabJour;
     }
 
-    protected function init(AnneeUniversitaire $anneeUniversitaire, $filtre = '', $valeur = '', $semaine = 0): self
+    protected function init(AnneeUniversitaire $anneeUniversitaire, string $filtre = '', string $valeur = '', int $semaine = 0): self
     {
         $dateDuJour = Carbon::now();
         $this->anneeUniversitaire = $anneeUniversitaire;
@@ -142,7 +133,7 @@ abstract class BaseEdt
 
         if ('' === $filtre) {
             $this->filtre = Constantes::FILTRE_EDT_PROMO;
-            //récupérer promo par défaut !
+        //récupérer promo par défaut !
         } else {
             $this->filtre = $filtre;
         }
@@ -166,24 +157,19 @@ abstract class BaseEdt
         $this->tabJour['vendredi'] = $this->semaineFormationLundi->addDays(4);
     }
 
-    public function getFiltre()
+    public function getFiltre(): ?string
     {
         return $this->filtre;
     }
 
-    public function getValeur()
+    public function getValeur(): string
     {
         return $this->valeur;
     }
 
-    public function getPlanning()
-    {
-        return $this->planning;
-    }
-
     public function getSemainePrecedente(): int
     {
-        $s = (int)$this->semaine - 1;
+        $s = $this->semaine - 1;
 
         if (0 === $s) {
             return CarbonInterface::WEEKS_PER_YEAR;
@@ -217,19 +203,14 @@ abstract class BaseEdt
         return $this->module;
     }
 
-    public function getJour()
+    public function getJour(): int
     {
         return $this->jour;
     }
 
-    public function getSalle()
+    public function getSalle(): string
     {
         return $this->salle;
-    }
-
-    public function getGroupes()
-    {
-        return $this->groupes;
     }
 
     protected function calculSemaines(): array
@@ -245,7 +226,7 @@ abstract class BaseEdt
             $t[$i]['semaineIUT'] = $s->getSemaineFormation();
             $t[$i]['debut'] = $s->getDatelundi();
             $date1 = strtotime($t[$i]['debut']->format('Y-m-d'));
-            $fin = date('d-m-Y', mktime(12, 30, 00, date('n', $date1), date('j', $date1) + 7, date('Y', $date1)));
+            $fin = date('d-m-Y', mktime(12, 30, 00, date('n', $date1), ((int) date('j', $date1)) + 7, ((int) date('Y', $date1))));
             $t[$i]['fin'] = $fin;
             ++$i;
         }
@@ -253,12 +234,12 @@ abstract class BaseEdt
         return $t;
     }
 
-    public function getSemaines()
+    public function getSemaines(): array
     {
         return $this->semaines;
     }
 
-    protected function convertEdt($nb): ?int
+    protected function convertEdt(int $nb): ?int
     {
         return match ($nb) {
             1, 2, 3 => 1,
@@ -272,8 +253,8 @@ abstract class BaseEdt
         };
     }
 
-    protected function convertToDate($jour)
+    protected function convertToDate(int $jour): CarbonImmutable
     {
-        return $this->calendrier->getDateLundi()->addDays($jour - 1);
+        return $this->calendrier->getDateLundi()?->addDays($jour - 1);
     }
 }

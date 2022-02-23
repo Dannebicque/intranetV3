@@ -72,7 +72,7 @@ class EtudiantNotes
     /**
      * @throws Exception
      */
-    public function addNote(Evaluation $evaluation, $data, Personnel $personnel): bool
+    public function addNote(Evaluation $evaluation, array $data, Personnel $personnel): bool
     {
         //on cherche si deja une note de présente
         $note = $this->noteRepository->findBy([

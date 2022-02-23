@@ -9,6 +9,7 @@
 
 namespace App\Form;
 
+use App\Entity\Diplome;
 use App\Entity\Matiere;
 use App\Entity\Parcour;
 use App\Entity\Ppn;
@@ -36,7 +37,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class MatiereType extends AbstractType
 {
-    protected $diplome;
+    protected Diplome $diplome;
 
     private SemestreRepository $semestreRepository;
 

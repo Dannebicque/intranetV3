@@ -31,7 +31,7 @@ class QuestionnaireQuestionnaireSectionRepository extends ServiceEntityRepositor
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Doctrine\ORM\NoResultException
      */
-    public function findMaxOrdreSection(?int $getId)
+    public function findMaxOrdreSection(?int $getId): ?int
     {
         $qb = $this->createQueryBuilder('q');
         $qb->select('MAX(q.ordre) as max');

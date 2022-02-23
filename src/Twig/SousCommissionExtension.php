@@ -20,10 +20,10 @@ class SousCommissionExtension extends AbstractExtension
         ];
     }
 
-    public function styleAbsences($nbAbsences): string
+    public function styleAbsences(int $nbAbsences): string
     {
         if ($nbAbsences < 5) {
-            return $nbAbsences;
+            return '<span class="badge bg-info">'.$nbAbsences.'</span>';
         }
 
         if ($nbAbsences < 10) {
@@ -33,7 +33,7 @@ class SousCommissionExtension extends AbstractExtension
         return '<span class="badge bg-danger">'.$nbAbsences.'</span>';
     }
 
-    public function styleMoyenne($value): string
+    public function styleMoyenne(mixed $value): string
     {
         $value = Tools::convertToFloat($value);
 
@@ -48,7 +48,7 @@ class SousCommissionExtension extends AbstractExtension
         return '<span class="badge bg-success">'.number_format($value, 3).'</span>';
     }
 
-    public function styleMatiere($value): string
+    public function styleMatiere(mixed $value): string
     {
         $value = Tools::convertToFloat($value);
         if ($value < 10) {
@@ -58,7 +58,7 @@ class SousCommissionExtension extends AbstractExtension
         return '<span class="badge bg-success">'.number_format($value, 2).'</span>';
     }
 
-    public function styleBonification($value): string
+    public function styleBonification(mixed $value): string
     {
         $value = Tools::convertToFloat($value);
 
@@ -69,7 +69,7 @@ class SousCommissionExtension extends AbstractExtension
         return '<span class="badge bg-primary">'.number_format($value, 2).'</span>';
     }
 
-    public function styleDecision($value): string
+    public function styleDecision(?string $value): string
     {
         if (null === $value) {
             return '-';

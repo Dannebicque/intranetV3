@@ -32,14 +32,14 @@ class TypeDocumentRepository extends ServiceEntityRepository
         parent::__construct($registry, TypeDocument::class);
     }
 
-    public function findByDepartement(Departement $departement)
+    public function findByDepartement(Departement $departement): array
     {
-        return $this->findByDepartementBuilder($departement->getId())
+        return $this->findByDepartementBuilder($departement)
             ->getQuery()
             ->getResult();
     }
 
-    public function findByDepartementBuilder($departement): QueryBuilder
+    public function findByDepartementBuilder(Departement $departement): QueryBuilder
     {
         return $this->createQueryBuilder('t')
             ->where('t.departement = :departement')

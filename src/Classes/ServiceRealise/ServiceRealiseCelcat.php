@@ -16,6 +16,7 @@ namespace App\Classes\ServiceRealise;
 use App\DTO\EvenementEdt;
 use App\Entity\CelcatEvent;
 use App\Entity\Personnel;
+use App\Interfaces\UtilisateurInterface;
 use App\Repository\CelcatEventsRepository;
 
 class ServiceRealiseCelcat implements ServiceRealiseInterface
@@ -69,8 +70,9 @@ class ServiceRealiseCelcat implements ServiceRealiseInterface
         return $ev;
     }
 
-    public function getServiceRealiseParPersonnelMatiere(Personnel $personnel, int $idMatiere, string $type): array
+    public function getServiceRealiseParPersonnelMatiere(UtilisateurInterface $personnel, int $idMatiere, string $type): array
     {
         // TODO: Implement getServiceRealiseParPersonnelMatiere() method.
+        return [];
     }
 }

@@ -29,11 +29,11 @@ class MatiereManager extends AbstractMatiereManager implements MatiereInterface
         $this->matiereAdapter = $matiereAdapter;
     }
 
-    public function find($id): ?Matiere
+    public function find(int | string $id): ?Matiere
     {
         $matiere = $this->matiereRepository->find($id);
 
-        return $matiere !== null ? $this->matiereAdapter->single($matiere) : null;
+        return null !== $matiere ? $this->matiereAdapter->single($matiere) : null;
     }
 
     public function findBySemestre(Semestre $semestre): MatiereCollection

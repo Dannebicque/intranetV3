@@ -31,7 +31,7 @@ class CovidAttestationEtudiantRepository extends ServiceEntityRepository
         parent::__construct($registry, CovidAttestationEtudiant::class);
     }
 
-    public function findByDepartement(Departement $departement)
+    public function findByDepartement(Departement $departement): array
     {
         return $this->createQueryBuilder('p')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'p.diplome=d.id')
@@ -47,7 +47,7 @@ class CovidAttestationEtudiantRepository extends ServiceEntityRepository
         return $this->findBy([], ['created' => 'DESC']);
     }
 
-    public function findNext(Etudiant $etudiant)
+    public function findNext(Etudiant $etudiant): array
     {
         return $this->createQueryBuilder('a')
             ->innerJoin('a.groupes', 'c')//récupération de la jointure dans la table dédiée

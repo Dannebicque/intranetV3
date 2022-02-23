@@ -29,7 +29,7 @@ class MaterielRepository extends ServiceEntityRepository
         parent::__construct($registry, Materiel::class);
     }
 
-    public function findByDepartement(Departement $departement)
+    public function findByDepartement(Departement $departement): array
     {
         return $this->createQueryBuilder('m')
             ->innerJoin(TypeMateriel::class, 't', 'WITH', 'm.typeMateriel = t.id')

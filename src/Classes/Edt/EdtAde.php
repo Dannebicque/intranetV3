@@ -9,7 +9,6 @@
 
 namespace App\Classes\Edt;
 
-
 use App\DTO\EvenementEdt;
 use App\DTO\EvenementEdtCollection;
 use App\Entity\Semestre;
@@ -21,8 +20,17 @@ class EdtAde extends AbstractEdt implements EdtInterface
         return new EvenementEdtCollection();
     }
 
-    public function find($event): EvenementEdt
+    public function find(int $event): EvenementEdt
     {
         return new EvenementEdt();
+    }
+
+    public function recupereEdtJourBorne(
+        Semestre $semestre,
+        array $matieres,
+        int $jourSemaine,
+        int $semaineFormation
+    ): EvenementEdtCollection {
+        // TODO: Implement recupereEdtJourBorne() method.
     }
 }

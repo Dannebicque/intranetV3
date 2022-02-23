@@ -23,7 +23,7 @@ class MoyenneUe
     /**
      * MoyenneUe constructor.
      */
-    public function __construct(Ue $ue, $penalite)
+    public function __construct(Ue $ue, float $penalite)
     {
         $this->ue = $ue;
         $this->penalite = $penalite;
@@ -43,7 +43,7 @@ class MoyenneUe
         return $this->style($this->getMoyenne());
     }
 
-    private function style($note): string
+    private function style(float $note): string
     {
         if ($note <= 8) {
             return 'badge bg-danger';
@@ -56,7 +56,7 @@ class MoyenneUe
         return '';
     }
 
-    public function getMoyenne()
+    public function getMoyenne(): float | int
     {
         return $this->totalCoefficient > 0 ? $this->totalMatiere / $this->totalCoefficient : -0.01;
     }
@@ -66,7 +66,7 @@ class MoyenneUe
         return $this->style($this->getMoyennePenalisee());
     }
 
-    public function getMoyennePenalisee()
+    public function getMoyennePenalisee(): float | int
     {
         return $this->totalCoefficient > 0 ? $this->totalMatierePenalisee / $this->totalCoefficient : -0.01;
     }

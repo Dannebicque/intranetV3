@@ -31,9 +31,9 @@ class SousCommissionTravail
     public array $etudiants;
 
     public ScolaritePromo $ssComm;
-    private $tEtudiants;
-    private $tMatieres;
-    private $tUes;
+    private array $tEtudiants;
+    private array $tMatieres;
+    private array $tUes;
 
     /**
      * SousCommissionTravail constructor.
@@ -66,17 +66,17 @@ class SousCommissionTravail
         }
     }
 
-    public function etudiant($id)
+    public function etudiant(int $id): ?\App\Entity\Scolarite
     {
         return $this->tEtudiants[$id] ?? null;
     }
 
-    public function ue($etudiant, $ue)
+    public function ue(int $etudiant, int $ue): ?array
     {
         return $this->tUes[$etudiant][$ue] ?? null;
     }
 
-    public function matiere($etudiant, $matiere)
+    public function matiere(int $etudiant, string $matiere): ?array
     {
         return $this->tMatieres[$etudiant][$matiere] ?? null;
     }
@@ -86,13 +86,13 @@ class SousCommissionTravail
         return $this->ssComm;
     }
 
-    public function recupereScolarite($etudiant): array
+    public function recupereScolarite(Etudiant $etudiant): array
     {
         $tScolarite = [];
         //on ne récupère la scolarité que par rapport au diplôme en cours
         foreach ($etudiant->getScolarites() as $scolarite) {
-            if ($scolarite->getSemestre()->getDiplome() === $etudiant->getDiplome()) {
-                $tScolarite[$scolarite->getSemestre()->getOrdreLmd()] = new Scolarite($scolarite);
+            if ($scolarite->getSemestre()?->getDiplome() === $etudiant->getDiplome()) {
+                $tScolarite[$scolarite->getSemestre()?->getOrdreLmd()] = new Scolarite($scolarite);
             }
         }
 

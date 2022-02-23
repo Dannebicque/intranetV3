@@ -86,17 +86,12 @@ class SousCommission extends AbstractSousCommission implements SousCommissionInt
         return $tabUes;
     }
 
-    public function getMatieres(): array
-    {
-        return $this->matieres;
-    }
-
-    public function getSousCommissionEtudiant($idEtudiant): ?EtudiantSousCommission
+    public function getSousCommissionEtudiant(int $idEtudiant): ?EtudiantSousCommission
     {
         return $this->sousCommissionEtudiant[$idEtudiant];
     }
 
-    public function updateScolarite(Scolarite $scolarite, $type, $field, $value): void
+    public function updateScolarite(Scolarite $scolarite, string $type, string $field, mixed $value): void
     {
         switch ($type) {
             case 'semestre':
@@ -112,7 +107,7 @@ class SousCommission extends AbstractSousCommission implements SousCommissionInt
         $this->entityManager->flush();
     }
 
-    private function updateScolariteSemestre(Scolarite $scolarite, $field, $value): void
+    private function updateScolariteSemestre(Scolarite $scolarite, string $field, mixed $value): void
     {
         switch ($field) {
             case 'decision':
@@ -127,7 +122,7 @@ class SousCommission extends AbstractSousCommission implements SousCommissionInt
         }
     }
 
-    private function updateScolariteUe(Scolarite $scolarite, $field, $value): void
+    private function updateScolariteUe(Scolarite $scolarite, string $field, mixed $value): void
     {
         [$code, $idUe] = explode('_', $field);
 
@@ -145,7 +140,7 @@ class SousCommission extends AbstractSousCommission implements SousCommissionInt
 
     }
 
-    private function updateScolariteMatiere(Scolarite $scolarite, $field, $value): void
+    private function updateScolariteMatiere(Scolarite $scolarite, string $field, mixed $value): void
     {
         [$code, $idMatiere] = explode('_', $field);
         $scolarite->getMoyennesMatieres()[$idMatiere]['moyenne'] = match ($code) {
@@ -153,7 +148,7 @@ class SousCommission extends AbstractSousCommission implements SousCommissionInt
         };
     }
 
-    public function getBySemestreAnneeUniversitaire(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire)
+    public function getBySemestreAnneeUniversitaire(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): ?ScolaritePromo
     {
         return $this->entityManager->getRepository(ScolaritePromo::class)->findOneBy([
             'semestre' => $semestre->getId(),
