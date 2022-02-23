@@ -23,19 +23,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class EtudiantController.
- *
- * @Route("/administration/etudiant/semestre")
  */
+#[Route(path: '/administration/etudiant/semestre')]
 class EtudiantSemestreController extends BaseController
 {
-    /**
-     * @Route("/parcours/{semestre}", name="administration_etudiant_parcours_semestre_index",
-     *                                requirements={"semestre"="\d+"})
-     */
+    #[Route(path: '/parcours/{semestre}', name: 'administration_etudiant_parcours_semestre_index', requirements: ['semestre' => '\d+'])]
     public function parcoursSemestre(EtudiantRepository $etudiantRepository, Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
-
         $etudiants = $etudiantRepository->findBySemestre($semestre);
 
         return $this->render('administration/etudiant/parcours.html.twig', [
@@ -44,13 +39,9 @@ class EtudiantSemestreController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/add/{semestre}", name="administration_etudiant_semestre_add", requirements={"semestre"="\d+"})
-     */
-    public function addEtudiant(
-        AnneeUniversitaireRepository $anneeUniversitaireRepository,
-        Semestre $semestre = null
-    ): Response {
+    #[Route(path: '/add/{semestre}', name: 'administration_etudiant_semestre_add', requirements: ['semestre' => '\d+'])]
+    public function addEtudiant(AnneeUniversitaireRepository $anneeUniversitaireRepository, Semestre $semestre = null): Response
+    {
         if (null === $semestre) {
             $semestre = $this->dataUserSession->getSemestres()[0];
         }
@@ -62,10 +53,7 @@ class EtudiantSemestreController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/import/photo/{semestre}", name="administration_etudiant_import_photo",
-     *                                    requirements={"semestre"="\d+"}, methods={"GET"})
-     */
+    #[Route(path: '/import/photo/{semestre}', name: 'administration_etudiant_import_photo', requirements: ['semestre' => '\d+'], methods: ['GET'])]
     public function importPhoto(Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
@@ -76,19 +64,15 @@ class EtudiantSemestreController extends BaseController
     }
 
     /**
-     * @Route("/import/photo/zip/{semestre}", name="administration_etudiant_import_photo_zip",
-     *                                        requirements={"semestre"="\d+"}, methods={"GET|POST"})
-     *
      * @throws \Exception
      */
+    #[Route(path: '/import/photo/zip/{semestre}', name: 'administration_etudiant_import_photo_zip', requirements: ['semestre' => '\d+'], methods: ['GET|POST'])]
     public function importPhotoZip(MyUpload $myUpload, Request $request, Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
-
         $file = $request->files->get('fichierimport');
         $fichier = $myUpload->upload($file, 'temp/');
         $extract = $myUpload->extractZip($fichier, 'ph/');
-
         if (false === $extract) {
             $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Impossible d\'accéder à l\'archive.');
 
@@ -102,21 +86,17 @@ class EtudiantSemestreController extends BaseController
     }
 
     /**
-     * @Route("/{semestre}", name="administration_etudiant_semestre_index", requirements={"semestre"="\d+"})
+     * @throws \JsonException
      */
-    public function semestre(
-        Request $request,
-        Semestre $semestre
-    ): Response {
+    #[Route(path: '/{semestre}', name: 'administration_etudiant_semestre_index', requirements: ['semestre' => '\d+'])]
+    public function semestre(Request $request, Semestre $semestre): Response
+    {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
-
         $table = $this->createTable(EtudiantSemestreTableType::class, [
             'semestre' => $semestre,
             'departement' => $this->getDepartement(),
         ]);
-
         $table->handleRequest($request);
-
         if ($table->isCallback()) {
             return $table->getCallbackResponse();
         }
@@ -127,29 +107,16 @@ class EtudiantSemestreController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/export/{semestre}.{_format}",
-     *     name="administration_etudiant_semestre_export",
-     *     methods="GET",
-     *     requirements={
-     *     "semestre"="\d+",
-     *     "_format"="csv|xlsx|pdf"
-     * })
-     */
-    public function exportEtudiantsSemestre(
-        MyExport $myExport,
-        EtudiantRepository $etudiantRepository,
-        Semestre $semestre,
-        $_format
-    ): Response {
+    #[Route(path: '/export/{semestre}.{_format}', name: 'administration_etudiant_semestre_export', requirements: ['semestre' => '\d+', '_format' => 'csv|xlsx|pdf'], methods: 'GET')]
+    public function exportEtudiantsSemestre(MyExport $myExport, EtudiantRepository $etudiantRepository, Semestre $semestre, $_format): Response
+    {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
-
         $etudiants = $etudiantRepository->findBySemestre($semestre);
 
         return $myExport->genereFichierGenerique(
             $_format,
             $etudiants,
-            'etudiants_' . $semestre->getLibelle(),
+            'etudiants_'.$semestre->getLibelle(),
             ['etudiants_administration', 'utilisateur', 'adresse'],
             [
                 'nom',
@@ -160,7 +127,7 @@ class EtudiantSemestreController extends BaseController
                 'mailUniv',
                 'adresse' => ['adresse1', 'adresse2', 'codePostal', 'ville', 'pays'],
                 'tel1',
-                'tel2'
+                'tel2',
             ]
         );
     }

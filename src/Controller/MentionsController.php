@@ -15,23 +15,18 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class MentionsController.
- *
- * @Route("/mentions-legales")
  */
+#[Route(path: '/mentions-legales')]
 class MentionsController extends AbstractController
 {
-    /**
-     * @Route("/", name="mentions_index")
-     */
+    #[Route(path: '/', name: 'mentions_index')]
     public function index(): Response
     {
         return $this->render('mentions/index.html.twig', [
         ]);
     }
 
-    /**
-     * @Route("/about", name="mentions_about")
-     */
+    #[Route(path: '/about', name: 'mentions_about')]
     public function about(): Response
     {
         return $this->render('mentions/about.html.twig', [

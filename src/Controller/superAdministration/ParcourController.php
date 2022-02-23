@@ -18,14 +18,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/administratif/structure/parcours")
- */
+#[Route(path: '/administratif/structure/parcours')]
 class ParcourController extends BaseController
 {
-    /**
-     * @Route("/new/{semestre}", name="sa_parcour_new", methods="GET|POST")
-     */
+    #[Route(path: '/new/{semestre}', name: 'sa_parcour_new', methods: 'GET|POST')]
     public function create(Request $request, Semestre $semestre): Response
     {
         if (null !== $semestre->getAnnee()) {
@@ -49,24 +45,20 @@ class ParcourController extends BaseController
 
             return $this->render('structure/parcour/new.html.twig', [
                 'parcour' => $parcour,
-                'form'    => $form->createView(),
+                'form' => $form->createView(),
             ]);
         }
 
         return $this->redirectToRoute('erreur_666');
     }
 
-    /**
-     * @Route("/{id}", name="sa_parcour_show", methods="GET")
-     */
+    #[Route(path: '/{id}', name: 'sa_parcour_show', methods: 'GET')]
     public function show(Parcour $parcour): Response
     {
         return $this->render('structure/parcour/show.html.twig', ['parcour' => $parcour]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="sa_parcour_edit", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/edit', name: 'sa_parcour_edit', methods: 'GET|POST')]
     public function edit(Request $request, Parcour $parcour): Response
     {
         if (null !== $parcour->getDiplome()) {
@@ -86,21 +78,18 @@ class ParcourController extends BaseController
 
             return $this->render('structure/parcour/edit.html.twig', [
                 'parcour' => $parcour,
-                'form'    => $form->createView(),
+                'form' => $form->createView(),
             ]);
         }
 
         return $this->redirectToRoute('erreur_666');
     }
 
-    /**
-     * @Route("/{id}/duplicate", name="sa_parcour_duplicate", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/duplicate', name: 'sa_parcour_duplicate', methods: 'GET|POST')]
     public function duplicate(Parcour $parcour): Response
     {
         $newParcour = clone $parcour;
-        $newParcour->setLibelle($newParcour->getLibelle() . ' copie');
-
+        $newParcour->setLibelle($newParcour->getLibelle().' copie');
         $this->entityManager->persist($newParcour);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'parcour.duplicate.success.flash');
@@ -108,9 +97,7 @@ class ParcourController extends BaseController
         return $this->redirectToRoute('sa_parcour_edit', ['id' => $newParcour->getId()]);
     }
 
-    /**
-     * @Route("/{id}", name="sa_parcour_delete", methods="DELETE")
-     */
+    #[Route(path: '/{id}', name: 'sa_parcour_delete', methods: 'DELETE')]
     public function delete(Parcour $id): void
     {
     }

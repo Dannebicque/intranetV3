@@ -21,25 +21,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/administratif/emploi-du-temps/calendrier")
- */
+#[Route(path: '/administratif/emploi-du-temps/calendrier')]
 class CelcatCalendrierController extends BaseController
 {
-    /**
-     * @Route("/", name="sa_celcat_calendrier_index", methods="GET")
-     */
+    #[Route(path: '/', name: 'sa_celcat_calendrier_index', methods: 'GET')]
     public function index(CalendrierRepository $celcatCalendrierRepository): Response
     {
         return $this->render('super-administration/celcat_calendrier/index.html.twig',
             ['celcat_calendriers' => $celcatCalendrierRepository->findAll()]);
     }
 
-    /**
-     * @Route("/export.{_format}", name="sa_celcat_calendrier_export", methods="GET",
-     *                             requirements={"_format"="csv|xlsx|pdf"})
-     *
-     */
+    #[Route(path: '/export.{_format}', name: 'sa_celcat_calendrier_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
     public function export(MyExport $myExport, CalendrierRepository $celcatCalendrierRepository, $_format): Response
     {
         $articles = $celcatCalendrierRepository->findAll();
@@ -53,15 +45,12 @@ class CelcatCalendrierController extends BaseController
         );
     }
 
-    /**
-     * @Route("/new", name="sa_celcat_calendrier_new", methods="GET|POST")
-     */
+    #[Route(path: '/new', name: 'sa_celcat_calendrier_new', methods: 'GET|POST')]
     public function create(Request $request): Response
     {
         $celcatCalendrier = new Calendrier();
         $form = $this->createForm(CelcatCalendrierType::class, $celcatCalendrier);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($celcatCalendrier);
             $this->entityManager->flush();
@@ -72,20 +61,16 @@ class CelcatCalendrierController extends BaseController
 
         return $this->render('super-administration/celcat_calendrier/new.html.twig', [
             'celcat_calendrier' => $celcatCalendrier,
-            'form'              => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/new/year", name="sa_celcat_calendrier_new_year", methods="GET|POST")
-     *
      * @throws \Exception
      */
-    public function createNewYear(
-        MyCelcat $myCelcat,
-        Request $request,
-        AnneeUniversitaireRepository $anneeUniversitaireRepository
-    ): Response {
+    #[Route(path: '/new/year', name: 'sa_celcat_calendrier_new_year', methods: 'GET|POST')]
+    public function createNewYear(MyCelcat $myCelcat, Request $request, AnneeUniversitaireRepository $anneeUniversitaireRepository): Response
+    {
         if ($request->isMethod('POST')) {
             $annee = $anneeUniversitaireRepository->find($request->request->get('annee_universitaire'));
             if ($annee) {
@@ -102,23 +87,18 @@ class CelcatCalendrierController extends BaseController
             ['annees' => $anneeUniversitaireRepository->findAll()]);
     }
 
-    /**
-     * @Route("/{id}", name="sa_celcat_calendrier_show", methods="GET")
-     */
+    #[Route(path: '/{id}', name: 'sa_celcat_calendrier_show', methods: 'GET')]
     public function show(Calendrier $celcatCalendrier): Response
     {
         return $this->render('super-administration/celcat_calendrier/show.html.twig',
             ['celcat_calendrier' => $celcatCalendrier]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="sa_celcat_calendrier_edit", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/edit', name: 'sa_celcat_calendrier_edit', methods: 'GET|POST')]
     public function edit(Request $request, Calendrier $celcatCalendrier): Response
     {
         $form = $this->createForm(CelcatCalendrierType::class, $celcatCalendrier);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'celcat_calendrier.edit.success.flash');
@@ -128,17 +108,15 @@ class CelcatCalendrierController extends BaseController
 
         return $this->render('super-administration/celcat_calendrier/edit.html.twig', [
             'celcat_calendrier' => $celcatCalendrier,
-            'form'              => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="sa_celcat_calendrier_delete", methods="DELETE")
-     */
+    #[Route(path: '/{id}', name: 'sa_celcat_calendrier_delete', methods: 'DELETE')]
     public function delete(Request $request, Calendrier $celcatCalendrier): Response
     {
         $id = $celcatCalendrier->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $this->entityManager->remove($celcatCalendrier);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'celcat_calendrier.delete.success.flash');
@@ -150,13 +128,10 @@ class CelcatCalendrierController extends BaseController
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * @Route("/{id}/duplicate", name="sa_celcat_calendrier_duplicate", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/duplicate', name: 'sa_celcat_calendrier_duplicate', methods: 'GET|POST')]
     public function duplicate(Calendrier $celcatCalendrier): Response
     {
         $newCelcatCalendrier = clone $celcatCalendrier;
-
         $this->entityManager->persist($newCelcatCalendrier);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'celcat_calendrier.duplicate.success.flash');

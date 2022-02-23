@@ -33,7 +33,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ApcReferentielFormationController extends BaseController
 {
     #[Route(path: '/grille/{diplome}', name: 'apc_referentiel_formation_grille', methods: 'GET')]
-    public function grille(Diplome $diplome)
+    public function grille(Diplome $diplome): Response
     {
         return $this->render('apc/referentiel-formation/grille.html.twig',
             [
@@ -47,7 +47,7 @@ class ApcReferentielFormationController extends BaseController
         ApcSaeRepository $apcSaeRepository,
         ApcRessourceRepository $apcRessourceRepository,
         Semestre $semestre
-    ) {
+    ): Response {
         $saes = $apcSaeRepository->findBySemestre($semestre);
         $ressources = $apcRessourceRepository->findBySemestre($semestre);
 

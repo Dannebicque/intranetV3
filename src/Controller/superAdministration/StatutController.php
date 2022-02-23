@@ -39,9 +39,8 @@ class StatutController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($status);
-            $entityManager->flush();
+            $this->entityManager->persist($status);
+            $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'status.new.success.flash');
 
             return $this->redirectToRoute('sa_statuts_index');
@@ -71,7 +70,7 @@ class StatutController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'status.edit.success.flash');
 
             return $this->redirectToRoute('sa_statuts_index');
@@ -102,7 +101,7 @@ class StatutController extends BaseController
         Status $statut
     ): Response {
         $id = $statut->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
 //            if (0 === count($statut->getHrs())) {
             $this->entityManager->remove($statut);
             $this->entityManager->flush();

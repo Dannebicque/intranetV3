@@ -85,7 +85,7 @@ class BCCentreFinancierController extends BaseController
     public function delete(Request $request, BCCentreFinancier $bCCentreFinancier): Response
     {
         $id = $bCCentreFinancier->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $this->entityManager->remove($bCCentreFinancier);
             $this->entityManager->flush();
             $this->addFlashBag(

@@ -24,25 +24,18 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 /**
  * Class AgendaController.
- *
- * @Route("/api/personnel")
  */
+#[Route(path: '/api/personnel')]
 class PersonnelApiController extends BaseController
 {
-    protected PersonnelRepository $personnelRepository;
-
     /**
      * EtudiantApiController constructor.
      */
-    public function __construct(PersonnelRepository $personnelRepository)
+    public function __construct(protected PersonnelRepository $personnelRepository)
     {
-        $this->personnelRepository = $personnelRepository;
     }
 
-    /**
-     * @Route("/enseignants/{type}", name="api_enseignants_type", options={"expose":true})
-     *
-     */
+    #[Route(path: '/enseignants/{type}', name: 'api_enseignants_type', options: ['expose' => true])]
     public function getEnseignantsByType($type): Response
     {
         $personnels = $this->personnelRepository->findByType(
@@ -50,7 +43,6 @@ class PersonnelApiController extends BaseController
             $this->dataUserSession->getDepartementId()
         );
         $pers = [];
-
         /** @var Personnel $p */
         foreach ($personnels as $p) {
             if (null !== $p) {
@@ -70,16 +62,13 @@ class PersonnelApiController extends BaseController
         return new JsonResponse($pers);
     }
 
-    /**
-     * @Route("/enseignants", name="api_enseignants_departement", options={"expose":true})
-     */
+    #[Route(path: '/enseignants', name: 'api_enseignants_departement', options: ['expose' => true])]
     public function getEnseignantsByDepartement(): Response
     {
         $personnels = $this->personnelRepository->findByDepartement(
             $this->dataUserSession->getDepartementId()
         );
         $pers = [];
-
         /** @var Personnel $p */
         foreach ($personnels as $p) {
             $t = [];
@@ -94,18 +83,13 @@ class PersonnelApiController extends BaseController
     }
 
     /**
-     *
-     * @Route("/personnel/recherche/{needle}", name="api_personnel_recherche", options={"expose":true})
-     *
      * @throws InvalidArgumentException
      */
-    public function searchPersonnel(
-        SerializerInterface $serialize,
-        $needle
-    ): Response {
+    #[Route(path: '/personnel/recherche/{needle}', name: 'api_personnel_recherche', options: ['expose' => true])]
+    public function searchPersonnel(SerializerInterface $serialize, $needle): Response
+    {
         $result = $this->personnelRepository->search($needle);
         $pers = [];
-
         foreach ($result as $p) {
             $pers[] = $p;
         }
@@ -114,23 +98,17 @@ class PersonnelApiController extends BaseController
     }
 
     /**
-     *
      * @throws NonUniqueResultException
-     * @Route("/personnel/departement/add/{slug}/{departement}", name="api_personnel_add_to_departement",
-     *                                                           options={"expose":true})
      */
-    public function addPersonnelToDepartement(
-        PersonnelDepartementRepository $personnelDepartementRepository,
-        $slug,
-        ?Departement $departement = null
-    ): Response {
+    #[Route(path: '/personnel/departement/add/{slug}/{departement}', name: 'api_personnel_add_to_departement', options: ['expose' => true])]
+    public function addPersonnelToDepartement(PersonnelDepartementRepository $personnelDepartementRepository, $slug, ?Departement $departement = null): Response
+    {
         $personnel = $this->personnelRepository->findOneBySlug($slug);
-        $departement = $departement ?? $this->dataUserSession->getDepartement();
-
+        $departement ??= $this->dataUserSession->getDepartement();
         if (null !== $personnel && null !== $departement) {
             $existe = $personnelDepartementRepository->findOneBy([
                 'departement' => $departement->getId(),
-                'personnel'   => $personnel->getId(),
+                'personnel' => $personnel->getId(),
             ]);
             if (null === $existe) {
                 $pf = new PersonnelDepartement($personnel, $departement);

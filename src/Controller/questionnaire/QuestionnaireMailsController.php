@@ -16,9 +16,9 @@ use App\Entity\Etudiant;
 use App\Entity\QuestionnaireQualite;
 use App\Repository\EtudiantRepository;
 use App\Repository\QuestionnaireEtudiantRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -26,14 +26,14 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class QuestionnaireMailsController extends BaseController
 {
-    #[Route("/questionnaire/relance/{questionnaire}", name:"administratif_enquete_relance")]
+    #[Route('/questionnaire/relance/{questionnaire}', name: 'administratif_enquete_relance')]
     public function relance(
         Request $request,
         EnqueteRelance $enqueteRelance,
         EtudiantRepository $etudiantRepository,
         QuestionnaireEtudiantRepository $quizzEtudiantRepository,
         QuestionnaireQualite $questionnaire
-    ) {
+    ): RedirectResponse {
         $reponses = $quizzEtudiantRepository->findByQuestionnaireQualite($questionnaire);
         $etudiants = $etudiantRepository->findBySemestre($questionnaire->getSemestre());
 
@@ -43,12 +43,13 @@ class QuestionnaireMailsController extends BaseController
         return new RedirectResponse($request->headers->get('referer'));
     }
 
-    #[Route("/questionnaire/relance/{questionnaire}/{etudiant}", name:"enquete_relance_individuelle", options:['expose' => true])]
+    #[Route('/questionnaire/relance/{questionnaire}/{etudiant}', name: 'enquete_relance_individuelle', options: ['expose' => true])]
     public function relanceIndividuelle(
         EnqueteRelance $enqueteRelance,
-        QuestionnaireQualite $questionnaire, Etudiant $etudiant)
+        QuestionnaireQualite $questionnaire, Etudiant $etudiant): JsonResponse
     {
         $enqueteRelance->envoyerRelanceIndividuelle($questionnaire, $etudiant);
-       return $this->json(true);
+
+        return $this->json(true);
     }
 }

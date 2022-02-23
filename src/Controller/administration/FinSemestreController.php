@@ -24,22 +24,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class FinSemestreController.
- *
- * @Route("/administration/fin-semestre")
  */
+#[Route(path: '/administration/fin-semestre')]
 class FinSemestreController extends BaseController
 {
-    /**
-     * @Route("/{semestre}", name="administration_fin_semestre_index", requirements={"semestre":"\d+"})
-     */
-    public function index(
-        DepartementRepository $departementRepository,
-        EtudiantRepository $etudiantRepository,
-        ScolariteRepository $scolariteRepository,
-        Semestre $semestre
-    ): Response {
+    #[Route(path: '/{semestre}', name: 'administration_fin_semestre_index', requirements: ['semestre' => '\d+'])]
+    public function index(DepartementRepository $departementRepository, EtudiantRepository $etudiantRepository, ScolariteRepository $scolariteRepository, Semestre $semestre): Response
+    {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
-
         $etudiants = $etudiantRepository->findBySemestre($semestre);
         $scolarites = $scolariteRepository->findBySemestreArray($semestre,
             $this->dataUserSession->getAnneeUniversitaire());
@@ -52,24 +44,14 @@ class FinSemestreController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/confirme/{semestre}", name="administration_fin_semestre_confirme")
-     */
-    public function confirme(
-        EtudiantScolarite $etudiantScolarite,
-        EtudiantRepository $etudiantRepository,
-        Request $request,
-        SemestreRepository $semestreRepository,
-        Semestre $semestre
-    ): Response
+    #[Route(path: '/confirme/{semestre}', name: 'administration_fin_semestre_confirme')]
+    public function confirme(EtudiantScolarite $etudiantScolarite, EtudiantRepository $etudiantRepository, Request $request, SemestreRepository $semestreRepository, Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
-
         $etudiants = $etudiantRepository->findBySemestre($semestre->getId());
-
         /** @var Etudiant $e */
         foreach ($etudiants as $e) {
-            $valeur = $request->request->get('etu_' . $e->getId());
+            $valeur = $request->request->get('etu_'.$e->getId());
             $etudiantScolarite->setEtudiant($e);
             $etudiantScolarite->setSemestre($semestre);
             $etudiantScolarite->setAnneeUniversitaire($this->dataUserSession->getAnneeUniversitaire());
@@ -95,9 +77,7 @@ class FinSemestreController extends BaseController
                 $this->entityManager->persist($e);
             }
         }
-
         $this->entityManager->flush();
-
         $this->addFlashBag('success', 'changement.semestre.effectue');
 
         return $this->redirect($this->generateUrl('administration_semestre_index', ['semestre' => $semestre->getId()]));

@@ -18,20 +18,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/apc/composante/essentielle")
- */
+#[Route(path: '/apc/composante/essentielle')]
 class ApcComposanteEssentielleController extends BaseController
 {
-    /**
-     * @Route("/{competence}/new", name="administration_apc_composante_essentielle_new", methods={"GET","POST"})
-     */
+    #[Route(path: '/{competence}/new', name: 'administration_apc_composante_essentielle_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ApcCompetence $competence): Response
     {
         $apcComposanteEssentielle = new ApcComposanteEssentielle($competence);
         $form = $this->createForm(ApcComposanteEssentielleType::class, $apcComposanteEssentielle);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($apcComposanteEssentielle);
             $this->entityManager->flush();
@@ -42,19 +37,16 @@ class ApcComposanteEssentielleController extends BaseController
 
         return $this->render('apc/apc_composante_essentielle/new.html.twig', [
             'apc_composante_essentielle' => $apcComposanteEssentielle,
-            'form'                       => $form->createView(),
-            'competence'                 => $competence,
+            'form' => $form->createView(),
+            'competence' => $competence,
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="administration_apc_composante_essentielle_edit", methods={"GET","POST"})
-     */
+    #[Route(path: '/{id}/edit', name: 'administration_apc_composante_essentielle_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, ApcComposanteEssentielle $apcComposanteEssentielle): Response
     {
         $form = $this->createForm(ApcComposanteEssentielleType::class, $apcComposanteEssentielle);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.composanteEssentielle.edit.success.flash');
@@ -64,16 +56,14 @@ class ApcComposanteEssentielleController extends BaseController
 
         return $this->render('apc/apc_composante_essentielle/edit.html.twig', [
             'apc_composante_essentielle' => $apcComposanteEssentielle,
-            'form'                       => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="administration_apc_composante_essentielle_delete", methods={"DELETE"})
-     */
+    #[Route(path: '/{id}', name: 'administration_apc_composante_essentielle_delete', methods: ['DELETE'])]
     public function delete(Request $request, ApcComposanteEssentielle $apcComposanteEssentielle): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $apcComposanteEssentielle->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$apcComposanteEssentielle->getId(), $request->request->get('_token'))) {
             $this->entityManager->remove($apcComposanteEssentielle);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.composanteEssentielle.delete.success.flash');

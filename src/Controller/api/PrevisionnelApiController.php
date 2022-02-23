@@ -17,21 +17,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class MatiereApiController.
- *
- * @Route("/api/previsionnel")
  */
+#[Route(path: '/api/previsionnel')]
 class PrevisionnelApiController extends BaseController
 {
     /**
-     * @Route("/matiere/{matiere}/{type}", name="api_previsionnel_matiere", options={"expose":true})
-     *
      * @return JsonResponse
      */
-    public function previsionnelMatiereAjax(
-        PrevisionnelManager $previsionnelManager,
-        int $matiere,
-        string $type
-    ): Response {
+    #[Route(path: '/matiere/{matiere}/{type}', name: 'api_previsionnel_matiere', options: ['expose' => true])]
+    public function previsionnelMatiereAjax(PrevisionnelManager $previsionnelManager, int $matiere, string $type): Response
+    {
         $previsionnel = $previsionnelManager->getPrevisionnelMatiere(
             $matiere,
             $type,

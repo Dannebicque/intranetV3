@@ -72,7 +72,7 @@ class BlocNotesAbsencesController extends BaseController
     {
         return $this->render('bloc_notes_absences/mcc.html.twig', [
             'matieres' => $typeMatiereManager->findBySemestre($this->getEtudiantSemestre()),
-            'apc' => $this->getUser()?->getSemestre()?->getDiplome()?->getTypeDiplome()?->getApc()
+            'apc' => $this->getUser()?->getSemestre()?->getDiplome()?->getTypeDiplome()?->getApc(),
         ]);
     }
 }

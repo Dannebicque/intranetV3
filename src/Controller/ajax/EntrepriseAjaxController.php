@@ -21,19 +21,16 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class AbsenceApiController.
  *
- * @Route("/ajax/entreprise")
  * @IsGranted("ROLE_PERMANENT")
  */
+#[Route(path: '/ajax/entreprise')]
 class EntrepriseAjaxController extends BaseController
 {
-    /**
-     * @Route("/edit/{id}", name="entreprise_ajax_edit", options={"expose":true})
-     */
+    #[Route(path: '/edit/{id}', name: 'entreprise_ajax_edit', options: ['expose' => true])]
     public function edit(MyEntreprise $myEntreprise, Request $request, Entreprise $entreprise): JsonResponse
     {
         $name = $request->request->get('field');
         $value = $request->request->get('value');
-
         $update = $myEntreprise->update($entreprise, $name, $value);
 
         return $update ? new JsonResponse('', Response::HTTP_OK) : new JsonResponse('erreur',

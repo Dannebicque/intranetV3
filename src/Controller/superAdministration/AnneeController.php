@@ -21,18 +21,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/administratif/structure/annee")
- */
+#[Route(path: '/administratif/structure/annee')]
 class AnneeController extends BaseController
 {
-    /**
-     * @Route("/nouveau/{diplome}", name="sa_annee_new",
-     *                                    methods="GET|POST")
-     *
-     * @return RedirectResponse|Response
-     */
-    public function create(Request $request, Diplome $diplome)
+    #[Route(path: '/nouveau/{diplome}', name: 'sa_annee_new', methods: 'GET|POST')]
+    public function create(Request $request, Diplome $diplome): RedirectResponse | Response
     {
         if (null !== $diplome->getDepartement()) {
             $annee = new Annee();
@@ -64,17 +57,13 @@ class AnneeController extends BaseController
         return $this->redirectToRoute('erreur_666');
     }
 
-    /**
-     * @Route("/{id}", name="sa_annee_show", methods="GET")
-     */
+    #[Route(path: '/{id}', name: 'sa_annee_show', methods: 'GET')]
     public function show(Annee $annee): Response
     {
         return $this->render('structure/annee/show.html.twig', ['annee' => $annee]);
     }
 
-    /**
-     * @Route("/{id}/modifier", name="sa_annee_edit", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/modifier', name: 'sa_annee_edit', methods: 'GET|POST')]
     public function edit(Request $request, Annee $annee): Response
     {
         if (null !== $annee->getDiplome() && null !== $annee->getDiplome()->getDepartement()) {
@@ -109,14 +98,11 @@ class AnneeController extends BaseController
         return $this->redirectToRoute('erreur_666');
     }
 
-    /**
-     * @Route("/{id}/duplicate", name="sa_annee_duplicate", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/duplicate', name: 'sa_annee_duplicate', methods: 'GET|POST')]
     public function duplicate(Annee $annee): Response
     {
         $newAnnee = clone $annee;
-        $newAnnee->setLibelle($newAnnee->getLibelle() . ' copie');
-
+        $newAnnee->setLibelle($newAnnee->getLibelle().' copie');
         $this->entityManager->persist($newAnnee);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'annee.duplicate.success.flash');
@@ -124,13 +110,11 @@ class AnneeController extends BaseController
         return $this->redirectToRoute('sa_annee_edit', ['id' => $newAnnee->getId()]);
     }
 
-    /**
-     * @Route("/{id}", name="sa_annee_delete", methods="DELETE")
-     */
+    #[Route(path: '/{id}', name: 'sa_annee_delete', methods: 'DELETE')]
     public function delete(Request $request, Annee $annee): Response
     {
         $id = $annee->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             if (0 === count($annee->getSemestres())) {
                 $this->entityManager->remove($annee);
                 $this->entityManager->flush();
@@ -146,21 +130,20 @@ class AnneeController extends BaseController
 
             return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'annee.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**
-     * @Route("/activate/{annee}/{etat}", methods={"GET"}, name="sa_annee_activate")
      * @IsGranted("ROLE_SUPER_ADMIN")
      */
+    #[Route(path: '/activate/{annee}/{etat}', name: 'sa_annee_activate', methods: ['GET'])]
     public function activate(Annee $annee, bool $etat): RedirectResponse
     {
         $annee->setActif($etat);
         $this->entityManager->flush();
-        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'annee.activate.' . $etat . '.flash');
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'annee.activate.'.$etat.'.flash');
 
         return $this->redirectToRoute('super_admin_homepage');
     }

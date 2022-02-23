@@ -10,12 +10,13 @@
 namespace App\Controller\appPersonnel;
 
 use App\Classes\MyAlternanceFicheSuivi;
+use App\Controller\BaseController;
 use App\Entity\Alternance;
 use App\Entity\AlternanceFicheSuivi;
+use App\Entity\Constantes;
 use App\Form\AlternanceFicheSuiviType;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,14 +24,11 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-
-#[Route("/application/personnel/alternance/fiche-suivi")]
+#[Route('/application/personnel/alternance/fiche-suivi')]
 #[IsGranted('ROLE_PERMANENT')]
-class AlternanceFicheSuiviController extends AbstractController
+class AlternanceFicheSuiviController extends BaseController
 {
-    /**
-     * @Route("/{alternance}", name="application_personnel_alternance_fiche_suivi_alternance", methods={"GET"})
-     */
+    #[Route(path: '/{alternance}', name: 'application_personnel_alternance_fiche_suivi_alternance', methods: ['GET'])]
     public function index(Alternance $alternance): Response
     {
         return $this->render('appPersonnel/alternance_fiche_suivi/index.html.twig', [
@@ -40,35 +38,33 @@ class AlternanceFicheSuiviController extends AbstractController
     }
 
     /**
-     * @Route("/{alternance}/new", name="application_personnel_alternance_fiche_suivi_new", methods={"GET","POST"})
-     *
      * @throws Exception
      */
+    #[Route(path: '/{alternance}/new', name: 'application_personnel_alternance_fiche_suivi_new', methods: ['GET', 'POST'])]
     public function new(Request $request, Alternance $alternance): Response
     {
         $alternanceFicheSuivi = new AlternanceFicheSuivi($alternance);
         $form = $this->createForm(AlternanceFicheSuiviType::class, $alternanceFicheSuivi);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($alternanceFicheSuivi);
-            $entityManager->flush();
-
+            $this->entityManager->persist($alternanceFicheSuivi);
+            $this->entityManager->flush();
+            $this->addFlashBag(
+                Constantes::FLASHBAG_SUCCESS,
+                'alternance.edit.success.fiche_suivi'
+            );
             return $this->redirectToRoute('application_personnel_alternance_fiche_suivi_show',
                 ['id' => $alternanceFicheSuivi->getId()]);
         }
 
         return $this->render('appPersonnel/alternance_fiche_suivi/new.html.twig', [
             'alternance_fiche_suivi' => $alternanceFicheSuivi,
-            'form'                   => $form->createView(),
-            'alternance'             => $alternance,
+            'form' => $form->createView(),
+            'alternance' => $alternance,
         ]);
     }
 
-    /**
-     * @Route("/{id}/details", name="application_personnel_alternance_fiche_suivi_show", methods={"GET"})
-     */
+    #[Route(path: '/{id}/details', name: 'application_personnel_alternance_fiche_suivi_show', methods: ['GET'])]
     public function show(AlternanceFicheSuivi $alternanceFicheSuivi): Response
     {
         return $this->render('appPersonnel/alternance_fiche_suivi/show.html.twig', [
@@ -77,54 +73,56 @@ class AlternanceFicheSuiviController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/imprimer", name="application_personnel_alternance_fiche_suivi_print", methods={"GET"})
-     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function print(
-        MyAlternanceFicheSuivi $myAlternanceFicheSuivi,
-        AlternanceFicheSuivi $alternanceFicheSuivi
-    ): Response {
+    #[Route(path: '/{id}/imprimer', name: 'application_personnel_alternance_fiche_suivi_print', methods: ['GET'])]
+    public function print(MyAlternanceFicheSuivi $myAlternanceFicheSuivi, AlternanceFicheSuivi $alternanceFicheSuivi): Response
+    {
         return $myAlternanceFicheSuivi->print($alternanceFicheSuivi);
     }
 
-    /**
-     * @Route("/{id}/edit", name="application_personnel_alternance_fiche_suivi_edit", methods={"GET","POST"})
-     */
+    #[Route(path: '/{id}/edit', name: 'application_personnel_alternance_fiche_suivi_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, AlternanceFicheSuivi $alternanceFicheSuivi): Response
     {
         $form = $this->createForm(AlternanceFicheSuiviType::class, $alternanceFicheSuivi);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
+            $this->entityManager->flush();
+            $this->addFlashBag(
+                Constantes::FLASHBAG_SUCCESS,
+                'alternance.edit.success.fiche_suivi'
+            );
             return $this->redirectToRoute('application_personnel_alternance_fiche_suivi_show',
                 ['id' => $alternanceFicheSuivi->getId()]);
         }
 
         return $this->render('appPersonnel/alternance_fiche_suivi/edit.html.twig', [
             'alternance_fiche_suivi' => $alternanceFicheSuivi,
-            'form'                   => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="application_personnel_alternance_fiche_suivi_delete", methods={"DELETE"})
-     */
+    #[Route(path: '/{id}', name: 'application_personnel_alternance_fiche_suivi_delete', methods: ['DELETE'])]
     public function delete(Request $request, AlternanceFicheSuivi $alternanceFicheSuivi): Response
     {
         $alternance = $alternanceFicheSuivi->getAlternance();
-
-        if ($this->isCsrfTokenValid('delete' . $alternanceFicheSuivi->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($alternanceFicheSuivi);
-            $entityManager->flush();
+        if ($this->isCsrfTokenValid('delete'.$alternanceFicheSuivi->getId(), $request->request->get('_token'))) {
+            $this->entityManager->remove($alternanceFicheSuivi);
+            $this->entityManager->flush();
+            $this->addFlashBag(
+                Constantes::FLASHBAG_SUCCESS,
+                'alternance.delete.success.fiche_suivi'
+            );
         }
 
-        return $this->redirectToRoute('application_personnel_alternance_fiche_suivi_alternance',
-            ['alternance' => $alternance->getId()]);
+        if (null !== $alternance) {
+            return $this->redirectToRoute('application_personnel_alternance_fiche_suivi_alternance',
+                ['alternance' => $alternance->getId()]);
+        }
+
+        return $this->redirectToRoute('administration_index');
+
     }
 }

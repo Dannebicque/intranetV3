@@ -24,14 +24,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class CommissionAbsenceController.
- *
- * @Route("/administration/etudiant/groupe")
  */
+#[Route(path: '/administration/etudiant/groupe')]
 class EtudiantGroupeController extends BaseController
 {
-    /**
-     * @Route("/semestre/{semestre}", name="administration_etudiant_groupe_semestre_index")
-     */
+    #[Route(path: '/semestre/{semestre}', name: 'administration_etudiant_groupe_semestre_index')]
     public function index(Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
@@ -41,17 +38,10 @@ class EtudiantGroupeController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/affecte/{typeGroupe}", name="administration_etudiant_groupe_affecte", options={"expose":true})
-     */
-    public function affecte(
-        GroupeRepository $groupeRepository,
-        EtudiantRepository $etudiantRepository,
-        TypeGroupe $typeGroupe
-    ): Response
+    #[Route(path: '/affecte/{typeGroupe}', name: 'administration_etudiant_groupe_affecte', options: ['expose' => true])]
+    public function affecte(GroupeRepository $groupeRepository, EtudiantRepository $etudiantRepository, TypeGroupe $typeGroupe): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $typeGroupe->getSemestre());
-
         $etudiants = $etudiantRepository->findBySemestre($typeGroupe->getSemestre());
         $groupes = $groupeRepository->findByTypeGroupe($typeGroupe);
 
@@ -62,28 +52,21 @@ class EtudiantGroupeController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/synchro/apogee/{semestre}", name="administration_etudiant_groupe_synchro_apogee")
-     */
+    #[Route(path: '/synchro/apogee/{semestre}', name: 'administration_etudiant_groupe_synchro_apogee')]
     public function synchroApogee(MyGroupes $myGroupes, Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
-
         $myGroupes->updateFromApogee($semestre);
-
         $this->addFlashBag('success', 'groupes.synchronises');
 
         return $this->redirectToRoute('administration_etudiant_groupe_semestre_index',
             ['semestre' => $semestre->getId()]);
     }
 
-    /**
-     * @Route("/synchro/parent/{semestre}", name="administration_etudiant_groupe_synchro_parent")
-     */
+    #[Route(path: '/synchro/parent/{semestre}', name: 'administration_etudiant_groupe_synchro_parent')]
     public function synchroParent(MyGroupes $myGroupes, Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
-
         $myGroupes->updateParent($semestre);
         $this->addFlashBag('success', 'groupes.parents.synchronises');
 
@@ -91,19 +74,12 @@ class EtudiantGroupeController extends BaseController
             ['semestre' => $semestre->getId()]);
     }
 
-    /**
-     * @Route("/change", name="administration_etudiant_groupe_change", options={"expose":true})
-     */
-    public function change(
-        Request $request,
-        EtudiantRepository $etudiantRepository,
-        GroupeRepository $groupeRepository
-    ): Response {
+    #[Route(path: '/change', name: 'administration_etudiant_groupe_change', options: ['expose' => true])]
+    public function change(Request $request, EtudiantRepository $etudiantRepository, GroupeRepository $groupeRepository): Response
+    {
         $cle = $request->request->get('id');
-
         $t = explode('-', $cle);
         $id = explode('_', $t[0]);
-
         //récupére l'étudiant
         $etu = $etudiantRepository->find($id[1]);
         if (null !== $etu) {
@@ -133,14 +109,11 @@ class EtudiantGroupeController extends BaseController
         return new Response('false', Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * @Route("/{id}/{etudiant}", name="administration_etudiant_groupe_delete", methods="DELETE")
-     */
+    #[Route(path: '/{id}/{etudiant}', name: 'administration_etudiant_groupe_delete', methods: 'DELETE')]
     public function delete(Request $request, Groupe $groupe, Etudiant $etudiant): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $etudiant->getSemestre());
-
-        if ($this->isCsrfTokenValid('delete' . $groupe->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$groupe->getId(), $request->request->get('_token'))) {
             $id = $groupe->getId();
             $etudiant->removeGroupe($groupe);
             $groupe->removeEtudiant($etudiant);
@@ -149,7 +122,6 @@ class EtudiantGroupeController extends BaseController
 
             return $this->json($id, Response::HTTP_OK);
         }
-
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'etudiant_groupe.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);

@@ -10,11 +10,9 @@
 namespace App\Controller\appEtudiant;
 
 use App\Classes\Mail\MailerFromTwig;
-use App\Classes\Previsionnel\PrevisionnelManager;
 use App\Components\Questionnaire\Adapter\QuestionnaireQualiteAdapter;
 use App\Components\Questionnaire\Adapter\ReponsesEtudiantAdapter;
 use App\Components\Questionnaire\Adapter\SectionQualiteEntityAdapter;
-use App\Components\Questionnaire\Adapter\SectionQuizzEntityAdapter;
 use App\Components\Questionnaire\DTO\AbstractQuestionnaire;
 use App\Components\Questionnaire\DTO\ReponsesEtudiant;
 use App\Components\Questionnaire\Questionnaire;
@@ -31,18 +29,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class QualiteController.
- *
- * @Route("/application/etudiant/qualite")
  */
+#[Route(path: '/application/etudiant/qualite')]
 class QualiteController extends BaseController
 {
-    /**
-     * @Route("/", name="application_etudiant_qualite_index")
-     */
-    public function index(
-        QuestionnaireEtudiantRepository $questionnaireEtudiantRepository,
-        QuestionnaireQualiteRepository $qualiteQuestionnaireRepository
-    ): Response {
+    #[Route(path: '/', name: 'application_etudiant_qualite_index')]
+    public function index(QuestionnaireEtudiantRepository $questionnaireEtudiantRepository, QuestionnaireQualiteRepository $qualiteQuestionnaireRepository): Response
+    {
         if (null !== $this->dataUserSession->getUser()) {
             $questionnaires = $qualiteQuestionnaireRepository->findByDiplome($this->dataUserSession->getUser()->getDiplome());
 
@@ -58,16 +51,12 @@ class QualiteController extends BaseController
     }
 
     /**
-     * @Route("/complet/{uuid}", name="app_etudiant_qualite_questionnaire_complete")
-     *
      * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
      * @ParamConverter("qualiteQuestionnaire", options={"mapping": {"uuid": "uuid"}})
      */
-    public function complet(
-        QuestionnaireEtudiantRepository $quizzEtudiantRepository,
-        MailerFromTwig $myMailer,
-        QuestionnaireQualite $qualiteQuestionnaire
-    ): Response {
+    #[Route(path: '/complet/{uuid}', name: 'app_etudiant_qualite_questionnaire_complete')]
+    public function complet(QuestionnaireEtudiantRepository $quizzEtudiantRepository, MailerFromTwig $myMailer, QuestionnaireQualite $qualiteQuestionnaire): Response
+    {
         $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
             'questionnaireQualite' => $qualiteQuestionnaire->getId(),
             'etudiant' => $this->getUser()->getId(),
@@ -82,13 +71,13 @@ class QualiteController extends BaseController
                 $myMailer->setTemplate('mails/qualite-complete-etudiant.html.twig',
                     ['questionnaire' => $qualiteQuestionnaire, 'etudiant' => $this->getUser()]);
                 $myMailer->sendMessage($this->getUser()->getMails(),
-                    'Accusé réception questionnaire ' . $qualiteQuestionnaire->getLibelle());
+                    'Accusé réception questionnaire '.$qualiteQuestionnaire->getLibelle());
 
                 $myMailer->initEmail();
                 $myMailer->setTemplate('mails/qualite-complete-responsable.html.twig',
                     ['questionnaire' => $qualiteQuestionnaire, 'etudiant' => $this->getUser()]);
                 $myMailer->sendMessage($this->getUser()->getDiplome()->getOptResponsableQualite()->getMails(),
-                    'Accusé réception questionnaire ' . $qualiteQuestionnaire->getLibelle());
+                    'Accusé réception questionnaire '.$qualiteQuestionnaire->getLibelle());
 
                 return $this->redirectToRoute('application_index', ['onglet' => 'qualite']);
             }
@@ -97,16 +86,11 @@ class QualiteController extends BaseController
         return $this->redirectToRoute('erreur_666');
     }
 
-    /**
-     * @Route("/{questionnaireQualite}", name="app_etudiant_qualite_questionnaire")
-     */
-    public function questionnaire(
-        ReponsesEtudiantAdapter $reponsesEtudiantAdapter,
-        Request $request,
-        Questionnaire $questionnaire,
-        QuestionnaireQualite $questionnaireQualite
-    ): Response {
-        $reponses = new ReponsesEtudiant();//todo: créer dans Questionnaire selon le type de questionnaire...
+    #[Route(path: '/{questionnaireQualite}', name: 'app_etudiant_qualite_questionnaire')]
+    public function questionnaire(ReponsesEtudiantAdapter $reponsesEtudiantAdapter, Request $request, Questionnaire $questionnaire, QuestionnaireQualite $questionnaireQualite): Response
+    {
+        $reponses = new ReponsesEtudiant();
+        //todo: créer dans Questionnaire selon le type de questionnaire...
         $questionnaire->createQuestionnaire(QuestionnaireQualite::class,
             (new QuestionnaireQualiteAdapter($questionnaireQualite))->getQuestionnaire(),
             [
@@ -118,15 +102,16 @@ class QualiteController extends BaseController
             ]);
         $questionnaire->AddSpecialSection(AbstractSection::INTRODUCTION);
         foreach ($questionnaireQualite->getSections() as $section) {
-            $sect = (new SectionQualiteEntityAdapter($section))->getSection();//todo: tester si la section est visible
+            $sect = (new SectionQualiteEntityAdapter($section))->getSection(); //todo: tester si la section est visible
             $questionnaire->addSection($sect);
-            $reponses->merge($reponsesEtudiantAdapter->getReponsesEtudiant($sect, $this->getUser()->getId()));//todo: on pourrait faire que sur la section concernée ?
+            $reponses->merge($reponsesEtudiantAdapter->getReponsesEtudiant($sect, $this->getUser()->getId())); //todo: on pourrait faire que sur la section concernée ?
         }
-        $questionnaire->setIdEtudiant($this->getUser()->getId());//todo: passer l'étudiant aux réponses
+        $questionnaire->setIdEtudiant($this->getUser()->getId());
+        //todo: passer l'étudiant aux réponses
         $questionnaire->AddSpecialSection(AbstractSection::END);
-
         if ($questionnaire->handleRequest($request)) {
             $questionnaire->setQuestionsForSection($reponses);
+
             return $questionnaire->wizardPage();
         }
 

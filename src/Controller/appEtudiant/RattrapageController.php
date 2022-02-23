@@ -15,47 +15,33 @@ use App\Entity\Rattrapage;
 use App\Form\RattrapageType;
 use App\Repository\RattrapageRepository;
 use App\Utils\ToolsMatiere;
-use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/application/etudiant/rattrapage")
- * Class RattrapageController
- * @IsGranted("ROLE_ETUDIANT")
- */
+#[IsGranted('ROLE_ETUDIANT')]
+#[Route(path: '/application/etudiant/rattrapage')]
 class RattrapageController extends BaseController
 {
-    /**
-     * @Route("/", name="application_etudiant_rattrapage_index")
-     *
-     * @return RedirectResponse|Response
-     * @throws Exception
-     *
-     */
-    public function index(
-        TypeMatiereManager $typeMatiereManager,
-        RattrapageRepository $rattrapageRepository,
-        Request $request
-    ) {
+    #[Route(path: '/', name: 'application_etudiant_rattrapage_index')]
+    public function index(TypeMatiereManager $typeMatiereManager, RattrapageRepository $rattrapageRepository, Request $request): RedirectResponse | Response
+    {
         $rattrapage = new Rattrapage($this->getUser());
         $form = $this->createForm(
             RattrapageType::class,
             $rattrapage,
             [
                 'semestre' => $this->getUser()->getSemestre(),
-                'locale'   => $request->getLocale(),
-                'attr'     => [
+                'locale' => $request->getLocale(),
+                'attr' => [
                     'data-provide' => 'validation',
                 ],
-                'action'   => $this->generateUrl('application_etudiant_rattrapage_index'),
+                'action' => $this->generateUrl('application_etudiant_rattrapage_index'),
             ]
         );
         $form->handleRequest($request);
-
         if ($form->isSubmitted()) {
             $rattrapage->setAnneeUniversitaire($this->getAnneeUniversitaire());
             $rattrapage->setSemestre($this->getEtudiantSemestre());

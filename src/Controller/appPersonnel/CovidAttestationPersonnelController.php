@@ -21,17 +21,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
 
-#[Route("/covid/attestation/personnel", name: "application_personnel_")]
+#[Route('/covid/attestation/personnel', name: 'application_personnel_')]
 #[IsGranted('ROLE_PERMANENT')]
 class CovidAttestationPersonnelController extends BaseController
 {
-    /**
-     * @Route("/", name="covid_attestation_personnel_index", methods={"GET"})
-     */
+    #[Route(path: '/', name: 'covid_attestation_personnel_index', methods: ['GET'])]
     public function index(CovidAttestationPersonnelRepository $covidAttestationPersonnelRepository): Response
     {
         return $this->render('appPersonnel/covid_attestation_personnel/index.html.twig', [
@@ -39,9 +34,7 @@ class CovidAttestationPersonnelController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/new", name="covid_attestation_personnel_new", methods={"GET","POST"})
-     */
+    #[Route(path: '/new', name: 'covid_attestation_personnel_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EventDispatcherInterface $eventDispatcher): Response
     {
         $covidAttestationPersonnel = new CovidAttestationPersonnel($this->getUser());
@@ -53,7 +46,6 @@ class CovidAttestationPersonnelController extends BaseController
                 ],
             ]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($covidAttestationPersonnel);
             $this->entityManager->flush();
@@ -66,13 +58,11 @@ class CovidAttestationPersonnelController extends BaseController
 
         return $this->render('appPersonnel/covid_attestation_personnel/new.html.twig', [
             'covid_attestation_personnel' => $covidAttestationPersonnel,
-            'form'                        => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="covid_attestation_personnel_show", methods={"GET"})
-     */
+    #[Route(path: '/{id}', name: 'covid_attestation_personnel_show', methods: ['GET'])]
     public function show(CovidAttestationPersonnel $covidAttestationPersonnel): Response
     {
         if ($covidAttestationPersonnel->getPersonnel()->getId() === $this->getUser()->getId()) {
@@ -84,13 +74,9 @@ class CovidAttestationPersonnelController extends BaseController
         return $this->redirectToRoute('erreur_666');
     }
 
-    /**
-     * @Route("/{id}/pdf", name="covid_attestation_personnel_pdf", methods={"GET"})
-     */
-    public function pdf(
-        MyExportPresence $myExportPresence,
-        CovidAttestationPersonnel $covidAttestationPersonnel
-    ): Response {
+    #[Route(path: '/{id}/pdf', name: 'covid_attestation_personnel_pdf', methods: ['GET'])]
+    public function pdf(MyExportPresence $myExportPresence, CovidAttestationPersonnel $covidAttestationPersonnel): Response
+    {
         if ($covidAttestationPersonnel->getPersonnel()->getId() === $this->getUser()->getId()) {
             return $myExportPresence->genereAttestationPdf($covidAttestationPersonnel, 'force');
         }
@@ -98,14 +84,9 @@ class CovidAttestationPersonnelController extends BaseController
         return $this->redirectToRoute('erreur_666');
     }
 
-    /**
-     * @Route("/{id}/edit", name="covid_attestation_personnel_edit", methods={"GET","POST"})
-     */
-    public function edit(
-        Request $request,
-        EventDispatcherInterface $eventDispatcher,
-        CovidAttestationPersonnel $covidAttestationPersonnel
-    ): Response {
+    #[Route(path: '/{id}/edit', name: 'covid_attestation_personnel_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, EventDispatcherInterface $eventDispatcher, CovidAttestationPersonnel $covidAttestationPersonnel): Response
+    {
         if ($covidAttestationPersonnel->getPersonnel()->getId() === $this->getUser()->getId()) {
             $form = $this->createForm(CovidAttestationPersonnelType::class, $covidAttestationPersonnel, [
                 'departement' => $this->getDepartement(),
@@ -128,20 +109,18 @@ class CovidAttestationPersonnelController extends BaseController
 
             return $this->render('appPersonnel/covid_attestation_personnel/edit.html.twig', [
                 'covid_attestation_personnel' => $covidAttestationPersonnel,
-                'form'                        => $form->createView(),
+                'form' => $form->createView(),
             ]);
         }
 
         return $this->redirectToRoute('erreur_666');
     }
 
-    /**
-     * @Route("/{id}", name="covid_attestation_personnel_delete", methods="DELETE")
-     */
+    #[Route(path: '/{id}', name: 'covid_attestation_personnel_delete', methods: 'DELETE')]
     public function delete(Request $request, CovidAttestationPersonnel $covidAttestationPersonnel): Response
     {
         $id = $covidAttestationPersonnel->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $this->entityManager->remove($covidAttestationPersonnel);
             $this->entityManager->flush();
             $this->addFlashBag(
@@ -151,15 +130,12 @@ class CovidAttestationPersonnelController extends BaseController
 
             return $this->json($id, Response::HTTP_OK);
         }
-
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'covid_attestation_personnel.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * @Route("/{id}/duplicate", name="covid_attestation_personnel_duplicate", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/duplicate', name: 'covid_attestation_personnel_duplicate', methods: 'GET|POST')]
     public function duplicate(CovidAttestationPersonnel $covidAttestationPersonnel): Response
     {
         if ($covidAttestationPersonnel->getPersonnel()->getId() === $this->getUser()->getId()) {

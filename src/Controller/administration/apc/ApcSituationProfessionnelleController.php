@@ -12,30 +12,28 @@ namespace App\Controller\administration\apc;
 use App\Controller\BaseController;
 use App\Entity\ApcCompetence;
 use App\Entity\ApcSituationProfessionnelle;
+use App\Entity\Constantes;
 use App\Form\ApcSituationProfessionnelleType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/apc/situation/professionnelle")
- */
+#[Route(path: '/apc/situation/professionnelle')]
 class ApcSituationProfessionnelleController extends BaseController
 {
-    /**
-     * @Route("/new/{competence}", name="administration_apc_situation_professionnelle_new", methods={"GET","POST"})
-     */
+    #[Route(path: '/new/{competence}', name: 'administration_apc_situation_professionnelle_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ApcCompetence $competence): Response
     {
         $apcSituationProfessionnelle = new ApcSituationProfessionnelle();
         $form = $this->createForm(ApcSituationProfessionnelleType::class, $apcSituationProfessionnelle);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($apcSituationProfessionnelle);
-            $entityManager->flush();
-
+            $this->entityManager->persist($apcSituationProfessionnelle);
+            $this->entityManager->flush();
+            $this->addFlashBag(
+                Constantes::FLASHBAG_SUCCESS,
+                'apc.edit.success.situation.professionnelle'
+            );
             return $this->redirectToRoute('administration_apc_competence_show',
                 ['id' => $competence->getId()]);
         }
@@ -46,17 +44,17 @@ class ApcSituationProfessionnelleController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="administration_apc_situation_professionnelle_edit", methods={"GET","POST"})
-     */
+    #[Route(path: '/{id}/edit', name: 'administration_apc_situation_professionnelle_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, ApcSituationProfessionnelle $apcSituationProfessionnelle): Response
     {
         $form = $this->createForm(ApcSituationProfessionnelleType::class, $apcSituationProfessionnelle);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
+            $this->entityManager->flush();
+            $this->addFlashBag(
+                Constantes::FLASHBAG_SUCCESS,
+                'apc.edit.success.situation.professionnelle'
+            );
             return $this->redirectToRoute('administration_apc_competence_show',
                 ['id' => $apcSituationProfessionnelle->getCompetence()->getId()]);
         }
@@ -67,15 +65,16 @@ class ApcSituationProfessionnelleController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="apc_situation_professionnelle_delete", methods={"DELETE"})
-     */
+    #[Route(path: '/{id}', name: 'apc_situation_professionnelle_delete', methods: ['DELETE'])]
     public function delete(Request $request, ApcSituationProfessionnelle $apcSituationProfessionnelle): Response
     {
         if ($this->isCsrfTokenValid('delete'.$apcSituationProfessionnelle->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($apcSituationProfessionnelle);
-            $entityManager->flush();
+            $this->entityManager->remove($apcSituationProfessionnelle);
+            $this->entityManager->flush();
+            $this->addFlashBag(
+                Constantes::FLASHBAG_SUCCESS,
+                'apc.delete.success.situation.professionnelle'
+            );
         }
 
         return $this->redirectToRoute('apc_situation_professionnelle_index');

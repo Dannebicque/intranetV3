@@ -19,14 +19,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class ConfigurationController.
- *
- * @Route("/administration/configuration")
  */
+#[Route(path: '/administration/configuration')]
 class ConfigurationController extends BaseController
 {
-    /**
-     * @Route("/configuration", name="administration_configuration")
-     */
+    #[Route(path: '/configuration', name: 'administration_configuration')]
     public function index(AnneeUniversitaireRepository $anneeUniversitaireRepository): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
@@ -37,19 +34,16 @@ class ConfigurationController extends BaseController
     }
 
     /**
-     * @Route("/configuration/change", name="administration_configuration_change_option", options={"expose":true})
-     *
      * @throws InvalidArgumentException
      */
+    #[Route(path: '/configuration/change', name: 'administration_configuration_change_option', options: ['expose' => true])]
     public function changeOption(MyConfiguration $myConfiguration, Request $request): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
-
         $type = $request->request->get('type');
         $id = $request->request->get('id');
         $name = $request->request->get('name');
         $value = $request->request->get('value');
-
         if ($myConfiguration->updateOption($type, $id, $name, $value)) {
             return new Response('', Response::HTTP_OK);
         }

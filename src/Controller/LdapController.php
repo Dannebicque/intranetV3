@@ -16,14 +16,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class ActualiteController.
- *
- * @Route("/ldap")
  */
+#[Route(path: '/ldap')]
 class LdapController extends BaseController
 {
-    /**
-     * @Route("/search-ldap", name="ldap_search", options={"expose"=true})
-     */
+    #[Route(path: '/search-ldap', name: 'ldap_search', options: ['expose' => true])]
     public function searchLdap(MyLdap $myLdap, Request $request): Response
     {
         $numero = $request->request->get('numero');

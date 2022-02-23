@@ -23,28 +23,21 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class MatiereApiController.
- *
- * @Route("/api/matiere")
  */
+#[Route(path: '/api/matiere')]
 class MatiereApiController extends BaseController
 {
-    protected TypeMatiereManager $typeMatiereManager;
-
     /**
      * MatiereApiController constructor.
      */
-    public function __construct(TypeMatiereManager $typeMatiereManager)
+    public function __construct(protected TypeMatiereManager $typeMatiereManager)
     {
-        $this->typeMatiereManager = $typeMatiereManager;
     }
 
-    /**
-     * @Route("/semestre/{semestre}", name="api_matieres_semestre", options={"expose":true})
-     */
+    #[Route(path: '/semestre/{semestre}', name: 'api_matieres_semestre', options: ['expose' => true])]
     public function matieresSemestreAjax(Semestre $semestre): JsonResponse
     {
         $matieres = $this->typeMatiereManager->findBySemestre($semestre);
-
         $tmatieres = [];
         foreach ($matieres as $m) {
             $t = [];
@@ -58,9 +51,7 @@ class MatiereApiController extends BaseController
         return new JsonResponse($tmatieres);
     }
 
-    /**
-     * @Route("/{matiere}", name="api_matiere", options={"expose":true})
-     */
+    #[Route(path: '/{matiere}', name: 'api_matiere', options: ['expose' => true])]
     public function matiereAjax(string $matiere): JsonResponse
     {
         $mat = $this->typeMatiereManager->getMatiereFromSelect($matiere);
@@ -68,9 +59,7 @@ class MatiereApiController extends BaseController
         return new JsonResponse($mat ? $mat->getJson() : false);
     }
 
-    /**
-     * @Route("/document/export/personnalise/{semestre}", name="api_export_document_personnalise", options={"expose":true})
-     */
+    #[Route(path: '/document/export/personnalise/{semestre}', name: 'api_export_document_personnalise', options: ['expose' => true])]
     public function exportDocumentPersonnalise(Semestre $semestre): Response
     {
         return $this->render('api/matiere/document/export.html.twig', [
@@ -78,9 +67,7 @@ class MatiereApiController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/document/export/{matiere}/{typeMatiere}", name="api_export_document_matiere", options={"expose":true})
-     */
+    #[Route(path: '/document/export/{matiere}/{typeMatiere}', name: 'api_export_document_matiere', options: ['expose' => true])]
     public function exportDocument(int $matiere, string $typeMatiere): Response
     {
         $mat = $this->typeMatiereManager->getMatiere($matiere, $typeMatiere);
@@ -91,18 +78,12 @@ class MatiereApiController extends BaseController
         ]);
     }
 
-
-
     /**
      * Returns a JSON string with the neighborhoods of the City with the providen id.
-     *
-     * @Route("/ues/listbysemestre", name="api_liste_ue_by_semestre", options={"expose":true})
      */
-    public function listUesOfSemestre(
-        Request $request,
-        UeRepository $ueRepository,
-        SemestreRepository $semestreRepository
-    ): JsonResponse {
+    #[Route(path: '/ues/listbysemestre', name: 'api_liste_ue_by_semestre', options: ['expose' => true])]
+    public function listUesOfSemestre(Request $request, UeRepository $ueRepository, SemestreRepository $semestreRepository): JsonResponse
+    {
         $semestre = $semestreRepository->find($request->request->get('semestreid'));
         if (null !== $semestre) {
             // Search the neighborhoods that belongs to the city with the given id as GET parameter "cityid"
@@ -129,14 +110,10 @@ class MatiereApiController extends BaseController
 
     /**
      * Returns a JSON string with the neighborhoods of the City with the providen id.
-     *
-     * @Route("/parcours/listbysemestre", name="api_liste_parcour_by_semestre", options={"expose":true})
      */
-    public function listParcoursOfSemestre(
-        Request $request,
-        ParcourRepository $parcourRepository,
-        SemestreRepository $semestreRepository
-    ): JsonResponse {
+    #[Route(path: '/parcours/listbysemestre', name: 'api_liste_parcour_by_semestre', options: ['expose' => true])]
+    public function listParcoursOfSemestre(Request $request, ParcourRepository $parcourRepository, SemestreRepository $semestreRepository): JsonResponse
+    {
         $semestre = $semestreRepository->find($request->request->get('semestreid'));
         if (null !== $semestre) {
             // Search the neighborhoods that belongs to the city with the given id as GET parameter "cityid"

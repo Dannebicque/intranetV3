@@ -21,24 +21,16 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ToolBarController extends AbstractController
 {
-    private NotificationRepository $notificationRepository;
-    private MessageDestinataireEtudiantRepository $messageDestinataireEtudiantRepository;
-    private AnneeUniversitaireRepository $anneeUniversitaireRepository;
-    private MessageDestinatairePersonnelRepository $messageDestinatairePersonnelRepository;
-    private MessageDestinatairePersonnelRepository|MessageDestinataireEtudiantRepository $messagesRepository;
+    private MessageDestinatairePersonnelRepository | MessageDestinataireEtudiantRepository $messagesRepository;
 
-    public function __construct(
-        NotificationRepository $notificationRepository,
-        AnneeUniversitaireRepository $anneeUniversitaireRepository,
-        MessageDestinataireEtudiantRepository $messageDestinataireEtudiantRepository,
-        MessageDestinatairePersonnelRepository $messageDestinatairePersonnelRepository
-    ) {
-        $this->anneeUniversitaireRepository = $anneeUniversitaireRepository;
-        $this->notificationRepository = $notificationRepository;
-        $this->messageDestinataireEtudiantRepository = $messageDestinataireEtudiantRepository;
-        $this->messageDestinatairePersonnelRepository = $messageDestinatairePersonnelRepository;
+    public function __construct(private NotificationRepository $notificationRepository, private AnneeUniversitaireRepository $anneeUniversitaireRepository, private MessageDestinataireEtudiantRepository $messageDestinataireEtudiantRepository, private MessageDestinatairePersonnelRepository $messageDestinatairePersonnelRepository)
+    {
     }
 
+    /**
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws \Doctrine\ORM\NoResultException
+     */
     public function messages(): Response
     {
         if ($this->getUser() instanceof Etudiant) {

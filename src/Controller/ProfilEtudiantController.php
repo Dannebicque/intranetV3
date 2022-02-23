@@ -242,6 +242,7 @@ class ProfilEtudiantController extends BaseController
 
     /**
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
+     * @throws \JsonException
      */
     #[Route(path: '/profil/{slug}/ajout-commentaire', name: 'profil_etudiant_ajout_commentaire', options: ['expose' => true])]
     public function ajoutCommentaire(Request $request, Etudiant $etudiant): Response

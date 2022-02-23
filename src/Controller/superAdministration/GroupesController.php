@@ -21,26 +21,19 @@ use App\Entity\TypeGroupe;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\SemestreRepository;
+use function array_key_exists;
+use function count;
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use function array_key_exists;
-use function count;
 
-/**
- * @Route("/administratif/groupes")
- */
+#[Route(path: '/administratif/groupes')]
 class GroupesController extends BaseController
 {
-    /**
-     * @Route("/{departement}/{semestre}", name="sa_groupes_departement_index")
-     */
-    public function index(
-        SemestreRepository $semestreRepository,
-        Departement $departement,
-        Semestre $semestre = null
-    ): Response {
+    #[Route(path: '/{departement}/{semestre}', name: 'sa_groupes_departement_index')]
+    public function index(SemestreRepository $semestreRepository, Departement $departement, Semestre $semestre = null): Response
+    {
         return $this->render('super-administration/groupes/index.html.twig', [
             'departement' => $departement,
             'semestres' => $semestreRepository->findByDepartement($departement),
@@ -48,14 +41,9 @@ class GroupesController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/synchronise/departement/{departement}", name="sa_groupes_departement_synchro_all")
-     */
-    public function synchroApogeeAll(
-        ApogeeGroupe $apogeeGroupe,
-        SemestreRepository $semestreRepository,
-        Departement $departement
-    ): Response {
+    #[Route(path: '/synchronise/departement/{departement}', name: 'sa_groupes_departement_synchro_all')]
+    public function synchroApogeeAll(ApogeeGroupe $apogeeGroupe, SemestreRepository $semestreRepository, Departement $departement): Response
+    {
         $semestres = $semestreRepository->findByDepartement($departement);
         /** @var Semestre $semestre */
         foreach ($semestres as $semestre) {
@@ -66,7 +54,7 @@ class GroupesController extends BaseController
         return $this->redirectToRoute('sa_groupes_departement_index', ['departement' => $departement->getId()]);
     }
 
-    private function insertGroupes(Semestre $semestre, ApogeeGroupe $apogeeGroupe)
+    private function insertGroupes(Semestre $semestre, ApogeeGroupe $apogeeGroupe): void
     {
         //$treeGroupes = $apogeeGroupe->getHierarchieGroupesSemestre($semestre);
 
@@ -97,34 +85,19 @@ class GroupesController extends BaseController
         $this->entityManager->flush();
     }
 
-    /**
-     * @Route("/synchronise/semestre/{semestre}", name="sa_groupes_departement_synchro_semestre")
-     */
-    public function synchroApogeeSemestre(
-        ApogeeGroupe $apogeeGroupe,
-        GroupeRepository $groupeRepository,
-        Semestre $semestre
-    ): Response
+    #[Route(path: '/synchronise/semestre/{semestre}', name: 'sa_groupes_departement_synchro_semestre')]
+    public function synchroApogeeSemestre(ApogeeGroupe $apogeeGroupe, GroupeRepository $groupeRepository, Semestre $semestre): Response
     {
         //supprimer les groupes du semestre
-
         //calcluler l'aroborescence
-
         $this->insertGroupes($semestre, $apogeeGroupe);
 
         return $this->redirectToRoute('sa_groupes_departement_index', ['semestre' => $semestre->getId()]);
     }
 
-    /**
-     * @Route("/synchronise/etudiant/semestre/{semestre}", name="sa_groupes_etudiant_synchro_semestre")
-     */
-    public
-    function synchroApogeeEtudiantSemestre(
-        ApogeeGroupe $apogeeGroupe,
-        EtudiantRepository $etudiantRepository,
-        GroupeRepository $groupeRepository,
-        Semestre $semestre
-    ): Response {
+    #[Route(path: '/synchronise/etudiant/semestre/{semestre}', name: 'sa_groupes_etudiant_synchro_semestre')]
+    public function synchroApogeeEtudiantSemestre(ApogeeGroupe $apogeeGroupe, EtudiantRepository $etudiantRepository, GroupeRepository $groupeRepository, Semestre $semestre): Response
+    {
         //suppression des groupes d'origine.
         $tEtudiants = [];
         $etudiants = $etudiantRepository->findEtudiantEnFormation();
@@ -135,7 +108,6 @@ class GroupesController extends BaseController
                 $etudiant->removeGroupe($groupe);
             }
         }
-
         $groupes = $groupeRepository->findBySemestre($semestre);
         $tGroupes = [];
         /** @var Groupe $groupe */
@@ -144,7 +116,6 @@ class GroupesController extends BaseController
         }
         //récupération des groupes
         $groupes = $apogeeGroupe->getEtudiantsGroupesSemestre($semestre);
-
         while ($groupe = $groupes->fetch()) {
             if (array_key_exists($groupe['COD_ETU'], $tEtudiants) && array_key_exists($groupe['COD_EXT_GPE'],
                     $tGroupes)) {
@@ -161,15 +132,11 @@ class GroupesController extends BaseController
     }
 
     /**
-     * @Route("/import/{departement}", name="sa_groupes_import")
-     *
      * @throws Exception
      */
-    public function import(
-        MyGroupes $myGroupes,
-        Request $request,
-        Departement $departement
-    ): Response {
+    #[Route(path: '/import/{departement}', name: 'sa_groupes_import')]
+    public function import(MyGroupes $myGroupes, Request $request, Departement $departement): Response
+    {
         if ($request->isMethod('POST')) {
             $myGroupes->importCsv($request->files->get('fichier'), $departement);
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'groupes.import.success.flash');
@@ -184,15 +151,11 @@ class GroupesController extends BaseController
     }
 
     /**
-     * @Route("/import-etudiant/{semestre}", name="sa_groupes_etudiant_import_semestre")
-     *
      * @throws Exception
      */
-    public function importEtudiant(
-        MyGroupes $myGroupes,
-        Request $request,
-        Semestre $semestre
-    ): Response {
+    #[Route(path: '/import-etudiant/{semestre}', name: 'sa_groupes_etudiant_import_semestre')]
+    public function importEtudiant(MyGroupes $myGroupes, Request $request, Semestre $semestre): Response
+    {
         if ($request->isMethod('POST')) {
             $myGroupes->importGroupeEtudiantCsv($request->files->get('fichier'), $semestre);
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'groupes.etudiants.import.success.flash');

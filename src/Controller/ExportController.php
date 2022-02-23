@@ -22,14 +22,11 @@ use Twig\Error\SyntaxError;
 
 /**
  * Class ExportController.
- *
- * @Route("/export")
  */
+#[Route(path: '/export')]
 class ExportController extends AbstractController
 {
     /**
-     * @Route("/listing", name="export_listing")
-     *
      * @return StreamedResponse|null
      *
      * @throws RuntimeError
@@ -37,16 +34,16 @@ class ExportController extends AbstractController
      * @throws Exception
      * @throws LoaderError
      */
-    public function listing(TypeMatiereManager $typeMatiereManager, MyExportListing $myExport, Request $request)
+    #[Route(path: '/listing', name: 'export_listing')]
+    public function listing(TypeMatiereManager $typeMatiereManager, MyExportListing $myExport, Request $request): ?StreamedResponse
     {
         $matiere = $request->request->get('matiere');
         $typeMatiere = $request->request->get('typeMatiere');
-        if (0 !== (int)$matiere) {
+        if (0 !== (int) $matiere) {
             $mat = $typeMatiereManager->getMatiere($matiere, $typeMatiere);
         } else {
             $mat = null;
         }
-
         $exportTypeDocument = $request->request->get('exportTypeDocument');
         $exportChamps = $request->request->get('exportChamps');
         $exportFormat = $request->request->get('exportFormat');

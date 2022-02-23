@@ -23,42 +23,35 @@ use Twig\Error\SyntaxError;
 
 /**
  * Class EmpruntsController.
- *
- * @Route("/administration/emprunts")
  */
+#[Route(path: '/administration/emprunts')]
 class EmpruntsController extends BaseController
 {
-    /**
-     * @Route("/", name="administration_emprunts_index")
-     */
+    #[Route(path: '/', name: 'administration_emprunts_index')]
     public function index(MyEmprunts $myEmprunts): Response
     {
         $myEmprunts->listeEmprunts($this->dataUserSession->getDepartement());
 
         return $this->render('administration/emprunts/index.html.twig', [
-            'emprunts'     => $myEmprunts->getEmprunts(),
-            'types'        => Emprunt::ETATS,
+            'emprunts' => $myEmprunts->getEmprunts(),
+            'types' => Emprunt::ETATS,
             'statistiques' => $myEmprunts->getStatistiques(),
         ]);
     }
 
-    /**
-     * @Route("/historique", name="administration_emprunt_historique")
-     */
+    #[Route(path: '/historique', name: 'administration_emprunt_historique')]
     public function historique(MyEmprunts $myEmprunts): Response
     {
         $myEmprunts->listeEmprunts($this->dataUserSession->getDepartement());
 
         return $this->render('administration/emprunts/historique.html.twig', [
-            'emprunts'     => $myEmprunts->getEmprunts(),
-            'types'        => Emprunt::ETATS,
+            'emprunts' => $myEmprunts->getEmprunts(),
+            'types' => Emprunt::ETATS,
             'statistiques' => $myEmprunts->getStatistiques(),
         ]);
     }
 
-    /**
-     * @Route("/detail/{emprunt}", name="administration_emprunt_show")
-     */
+    #[Route(path: '/detail/{emprunt}', name: 'administration_emprunt_show')]
     public function show(Emprunt $emprunt): Response
     {
         return $this->render('administration/emprunts/show.html.twig', [
@@ -67,20 +60,17 @@ class EmpruntsController extends BaseController
     }
 
     /**
-     * @Route("/fiche/{emprunt}", name="administration_emprunt_imprimer_fiche")
-     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
+    #[Route(path: '/fiche/{emprunt}', name: 'administration_emprunt_imprimer_fiche')]
     public function imprimerFiche(MyEmprunts $myEmprunts, Emprunt $emprunt): void
     {
         $myEmprunts->genereFiche($emprunt);
     }
 
-    /**
-     * @Route("/change-etat/{emprunt}/{etat}", name="administration_emprunt_change_etat")
-     */
+    #[Route(path: '/change-etat/{emprunt}/{etat}', name: 'administration_emprunt_change_etat')]
     public function changeEtat(MyEmprunts $myEmprunts, Emprunt $emprunt, string $etat): Response
     {
         $myEmprunts->changeEtat($emprunt, $etat);
@@ -88,11 +78,7 @@ class EmpruntsController extends BaseController
         return $this->redirectToRoute('administration_emprunts_index');
     }
 
-    /**
-     * @Route("/export.{_format}", name="administration_emprunts_export", methods="GET",
-     *                             requirements={"_format"="csv|xlsx|pdf"})
-     *
-     */
+    #[Route(path: '/export.{_format}', name: 'administration_emprunts_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
     public function export(MyExport $myExport, MyEmprunts $myEmprunts, $_format): Response
     {
         $myEmprunts->listeEmprunts($this->dataUserSession->getDepartement());
@@ -110,19 +96,17 @@ class EmpruntsController extends BaseController
                 'etat',
                 'dateSortie',
                 'dateRetour',
-                'etudiant'  => ['nom', 'prenom'],
+                'etudiant' => ['nom', 'prenom'],
                 'personnel' => ['nom', 'prenom'],
             ]
         );
     }
 
-    /**
-     * @Route("/{emprunt}", name="administration_emprunt_delete", methods="DELETE")
-     */
+    #[Route(path: '/{emprunt}', name: 'administration_emprunt_delete', methods: 'DELETE')]
     public function delete(Request $request, Emprunt $emprunt): Response
     {
         $id = $emprunt->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $this->entityManager->remove($emprunt);
             $this->entityManager->flush();
             $this->addFlashBag(
@@ -132,7 +116,6 @@ class EmpruntsController extends BaseController
 
             return $this->json($id, Response::HTTP_OK);
         }
-
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'emprunt.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);

@@ -20,32 +20,28 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class StagePeriodeGestionController.
- *
- * @Route("/administration/projet/periode/gestion")
  */
+#[Route(path: '/administration/projet/periode/gestion')]
 class ProjetPeriodeGestionController extends BaseController
 {
     /**
-     * @Route("/{uuid}/export.{_format}", name="administration_projet_periode_gestion_export", methods="GET",
-     *                             requirements={"_format"="csv|xlsx|pdf"})
      * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
-     *
      */
+    #[Route(path: '/{uuid}/export.{_format}', name: 'administration_projet_periode_gestion_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
     public function export(MyExport $myExport, ProjetPeriode $projetPeriode, $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestre());
-
         $projetEtudiants = $projetPeriode->getProjetEtudiants();
 
         return $myExport->genereFichierGenerique(
             $_format,
             $projetEtudiants,
-            'periode_stage_' . $projetPeriode->getLibelle(),
+            'periode_stage_'.$projetPeriode->getLibelle(),
             ['projet_periode_gestion', 'utilisateur', 'projet_entreprise_administration', 'adresse'],
             [
                 'etudiant' => ['nom', 'prenom'],
-                'entreprise'          => ['raisonSociale'],
-                'tuteur'              => ['nom', 'prenom', 'fonction', 'telephone', 'email'],
+                'entreprise' => ['raisonSociale'],
+                'tuteur' => ['nom', 'prenom', 'fonction', 'telephone', 'email'],
                 'tuteurUniversitaire' => ['nom', 'prenom'],
                 'dateDebutStage',
                 'dateFinStage',
@@ -54,17 +50,12 @@ class ProjetPeriodeGestionController extends BaseController
     }
 
     /**
-     * @Route("/{uuid}", name="administration_projet_periode_gestion")
      * @ParamConverter("projetPeriode", options={"mapping": {"uuid": "uuid"}})
      */
-    public function periode(
-        ProjetPeriodeRepository $projetPeriodeRepository,
-        MyProjet $myProjet,
-        ProjetPeriode $projetPeriode
-    ): Response
+    #[Route(path: '/{uuid}', name: 'administration_projet_periode_gestion')]
+    public function periode(ProjetPeriodeRepository $projetPeriodeRepository, MyProjet $myProjet, ProjetPeriode $projetPeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestre());
-
         $periodes = [];
         foreach ($this->dataUserSession->getDiplomes() as $diplome) {
             $pers = $projetPeriodeRepository->findByDiplome($diplome, $diplome->getAnneeUniversitaire());
@@ -75,8 +66,8 @@ class ProjetPeriodeGestionController extends BaseController
 
         return $this->render('administration/projet/projet_periode_gestion/index.html.twig', [
             'projetPeriode' => $projetPeriode,
-            'periodes'      => $periodes,
-            'myProjet'      => $myProjet->getDataPeriode($projetPeriode),
+            'periodes' => $periodes,
+            'myProjet' => $myProjet->getDataPeriode($projetPeriode),
         ]);
     }
 }

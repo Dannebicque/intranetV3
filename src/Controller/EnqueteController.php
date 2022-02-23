@@ -14,15 +14,12 @@ use App\Entity\QuestionnaireQuizz;
 use App\Repository\QuestionnaireEtudiantRepository;
 use Carbon\Carbon;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class EnqueteController extends AbstractController
+class EnqueteController extends BaseController
 {
-    /**
-     * @Route("/embed_enquete/{questionnaireQuizz}/{etudiant}", name="embed_enquete")
-     */
+    #[Route(path: '/embed_enquete/{questionnaireQuizz}/{etudiant}', name: 'embed_enquete')]
     public function enquete(QuestionnaireQuizz $questionnaireQuizz, Etudiant $etudiant): Response
     {
         return $this->render('enquete/_enquete.html.twig', [
@@ -34,14 +31,11 @@ class EnqueteController extends AbstractController
     }
 
     /**
-     * @Route("/rdd/enquete/complet/{uuid}/{etudiant}", name="enquete_questionnaire_complete")
      * @ParamConverter("questionnaireQuizz", options={"mapping": {"uuid": "uuid"}})
      */
-    public function complet(
-        QuestionnaireEtudiantRepository $quizzEtudiantRepository,
-        QuestionnaireQuizz $questionnaireQuizz,
-        Etudiant $etudiant
-    ): Response {
+    #[Route(path: '/rdd/enquete/complet/{uuid}/{etudiant}', name: 'enquete_questionnaire_complete')]
+    public function complet(QuestionnaireEtudiantRepository $quizzEtudiantRepository, QuestionnaireQuizz $questionnaireQuizz, Etudiant $etudiant): Response
+    {
         $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
             'questionnaireQuizz' => $questionnaireQuizz->getId(),
             'etudiant' => $etudiant->getId(),
@@ -49,7 +43,7 @@ class EnqueteController extends AbstractController
         if (null !== $quizzEtudiant) {
             $quizzEtudiant->setDateTermine(Carbon::now());
             $quizzEtudiant->setTermine(true);
-            $this->getDoctrine()->getManager()->flush();
+            $this->entityManager->flush();
 
             return $this->render('rdd/fin.html.twig');
         }

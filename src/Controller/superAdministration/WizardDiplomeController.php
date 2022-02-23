@@ -14,14 +14,10 @@ use App\Entity\Departement;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/administratif/structure/diplome-wizard")
- */
+#[Route(path: '/administratif/structure/diplome-wizard')]
 class WizardDiplomeController extends BaseController
 {
-    /**
-     * @Route("/new/{departement}", name="sa_diplome_new_wizard_index", methods="GET|POST")
-     */
+    #[Route(path: '/new/{departement}', name: 'sa_diplome_new_wizard_index', methods: 'GET|POST')]
     public function create(Departement $departement): Response
     {
         return $this->render('structure/diplome-wizard/index.html.twig', [

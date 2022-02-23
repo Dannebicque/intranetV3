@@ -24,24 +24,19 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/administratif/structure/matiere")
- */
+#[Route(path: '/administratif/structure/matiere')]
 class MatiereController extends BaseController
 {
-    /**
-     * @Route("/", name="sa_matiere_index", methods="GET")
-     */
+    #[Route(path: '/', name: 'sa_matiere_index', methods: 'GET')]
     public function index(): Response
     {
         return $this->render('administration/matiere/index.html.twig');
     }
 
     /**
-     * @Route("/import/{departement}", name="sa_matiere_import")
-     *
      * @throws Exception
      */
+    #[Route(path: '/import/{departement}', name: 'sa_matiere_import')]
     public function import(MyPpn $myPpn, Request $request, Departement $departement): Response
     {
         $form = $this->createForm(
@@ -54,9 +49,7 @@ class MatiereController extends BaseController
                 ],
             ]
         );
-
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $myPpn->importCsv($form->getData(), $departement);
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'ppn.import.success.flash');
@@ -66,14 +59,12 @@ class MatiereController extends BaseController
         return $this->render('administration/matiere/import.html.twig',
             [
                 'departement' => $departement,
-                'form'        => $form->createView(),
+                'form' => $form->createView(),
             ]
         );
     }
 
-    /**
-     * @Route("/new/{ue}", name="sa_matiere_new", methods="GET|POST")
-     */
+    #[Route(path: '/new/{ue}', name: 'sa_matiere_new', methods: 'GET|POST')]
     public function create(Request $request, Ue $ue): Response
     {
         $matiere = new Matiere();
@@ -85,7 +76,6 @@ class MatiereController extends BaseController
             ],
         ]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($matiere);
             $this->entityManager->flush();
@@ -97,21 +87,17 @@ class MatiereController extends BaseController
 
         return $this->render('structure/matiere/new.html.twig', [
             'matiere' => $matiere,
-            'form'    => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="sa_matiere_show", methods="GET")
-     */
+    #[Route(path: '/{id}', name: 'sa_matiere_show', methods: 'GET')]
     public function show(Matiere $matiere): Response
     {
         return $this->render('administration/matiere/show.html.twig', ['matiere' => $matiere]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="sa_matiere_edit", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/edit', name: 'sa_matiere_edit', methods: 'GET|POST')]
     public function edit(Request $request, Matiere $matiere): Response
     {
         $form = $this->createForm(MatiereType::class, $matiere, [
@@ -121,7 +107,6 @@ class MatiereController extends BaseController
             ],
         ]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'matiere.edit.success.flash');
@@ -132,17 +117,14 @@ class MatiereController extends BaseController
 
         return $this->render('structure/matiere/edit.html.twig', [
             'matiere' => $matiere,
-            'form'    => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/{id}/duplicate", name="sa_matiere_duplicate", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/duplicate', name: 'sa_matiere_duplicate', methods: 'GET|POST')]
     public function duplicate(Matiere $matiere): Response
     {
         $newMatiere = clone $matiere;
-
         $this->entityManager->persist($newMatiere);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'matiere.duplicate.success.flash');
@@ -150,23 +132,21 @@ class MatiereController extends BaseController
         return $this->redirectToRoute('sa_matiere_edit', ['id' => $newMatiere->getId()]);
     }
 
-    /**
-     * @Route("/{id}", name="sa_matiere_delete", methods="DELETE")
-     */
+    #[Route(path: '/{id}', name: 'sa_matiere_delete', methods: 'DELETE')]
     public function delete(): void
     {
         //todo: delete
     }
 
     /**
-     * @Route("/activate/{matiere}/{etat}", methods={"GET"}, name="sa_matiere_activate")
      * @IsGranted("ROLE_SUPER_ADMIN")
      */
+    #[Route(path: '/activate/{matiere}/{etat}', name: 'sa_matiere_activate', methods: ['GET'])]
     public function activate(Matiere $matiere, bool $etat): RedirectResponse
     {
         $matiere->setSuspendu($etat);
         $this->entityManager->flush();
-        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'matiere.activate.' . $etat . '.flash');
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'matiere.activate.'.$etat.'.flash');
 
         return $this->redirectToRoute('super_admin_homepage');
     }

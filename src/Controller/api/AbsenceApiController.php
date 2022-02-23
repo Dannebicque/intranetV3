@@ -16,15 +16,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class AbsenceApiController.
- *
- * @Route("/api/absence")
  */
+#[Route(path: '/api/absence')]
 class AbsenceApiController extends BaseController
 {
-    /**
-     * @Route("/liste/etudiant/{typegroupe}", name="api_absence_liste_etudiant", requirements={"typegroupe"="\d+"},
-     *                                        options={"expose":true})
-     */
+    #[Route(path: '/liste/etudiant/{typegroupe}', name: 'api_absence_liste_etudiant', requirements: ['typegroupe' => '\d+'], options: ['expose' => true])]
     public function listeEtudiant(TypeGroupe $typegroupe): Response
     {
         return $this->render('api/absence/listeEtudiant.html.twig', [

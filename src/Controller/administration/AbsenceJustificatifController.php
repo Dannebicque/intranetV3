@@ -27,6 +27,9 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 #[Route('/administration/absence/justificatif')]
 class AbsenceJustificatifController extends BaseController
 {
+    /**
+     * @throws \JsonException
+     */
     #[Route('/semestre/{semestre}', name: 'administration_absences_justificatif_semestre_liste')]
     public function justificatif(
         Request $request,
@@ -51,7 +54,7 @@ class AbsenceJustificatifController extends BaseController
         ]);
     }
 
-    #[Route('/semestre/{semestre}/ajout', name: "administration_absence_justificatif_new")]
+    #[Route('/semestre/{semestre}/ajout', name: 'administration_absence_justificatif_new')]
     public function depot(Request $request, EventDispatcherInterface $eventDispatcher, Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
@@ -95,7 +98,7 @@ class AbsenceJustificatifController extends BaseController
         $justificatifs = $absenceJustificatifRepository->findBySemestre(
             $semestre);
 
-        return $myExport->genereFichierJustificatifAbsence($justificatifs, 'justificatifs_absences_' . $semestre->getLibelle());
+        return $myExport->genereFichierJustificatifAbsence($justificatifs, 'justificatifs_absences_'.$semestre->getLibelle());
 
 //        return $myExport->genereFichierGenerique(
 //            $_format,
@@ -108,7 +111,7 @@ class AbsenceJustificatifController extends BaseController
 
     #[Route('/supprimer-annee/{semestre}', name: 'administration_absence_justificatif_delete_all', methods: [
         'DELETE',
-        'POST'
+        'POST',
     ])]
     public function deleteAllAnnee(
         AbsenceJustificatifRepository $absenceJustificatifRepository,
@@ -139,7 +142,7 @@ class AbsenceJustificatifController extends BaseController
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $absenceJustificatif->getEtudiant()?->getSemestre());
 
         $id = $absenceJustificatif->getUuidString();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $event = new JustificatifEvent($absenceJustificatif);
             $eventDispatcher->dispatch($event, JustificatifEvent::DELETED);
             $this->entityManager->remove($absenceJustificatif);
@@ -153,9 +156,9 @@ class AbsenceJustificatifController extends BaseController
     }
 
     /**
-     * @Route("/show/{uuid}", name="administration_absence_justificatif_details")
      * @ParamConverter("absenceJustificatif", options={"mapping": {"uuid": "uuid"}})
      */
+    #[Route(path: '/show/{uuid}', name: 'administration_absence_justificatif_details')]
     public function details(AbsenceJustificatif $absenceJustificatif): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $absenceJustificatif->getEtudiant()?->getSemestre());
@@ -166,17 +169,12 @@ class AbsenceJustificatifController extends BaseController
     }
 
     /**
-     * @Route("/change-etat/{uuid}/{etat}", name="administration_absence_justificatif_change_etat", methods="GET",
-     *                                    requirements={"etat"="A|R|D"}, options={"expose":true})
      * @ParamConverter("absenceJustificatif", options={"mapping": {"uuid": "uuid"}})
      */
-    public function accepte(
-        EventDispatcherInterface $eventDispatcher,
-        AbsenceJustificatif $absenceJustificatif,
-        $etat
-    ): Response {
+    #[Route(path: '/change-etat/{uuid}/{etat}', name: 'administration_absence_justificatif_change_etat', requirements: ['etat' => 'A|R|D'], options: ['expose' => true], methods: 'GET')]
+    public function accepte(EventDispatcherInterface $eventDispatcher, AbsenceJustificatif $absenceJustificatif, $etat): Response
+    {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $absenceJustificatif->getEtudiant()?->getSemestre());
-
         $absenceJustificatif->setEtat($etat);
         $this->entityManager->flush();
         $this->gereEtat($etat, $absenceJustificatif, $eventDispatcher);

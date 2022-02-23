@@ -17,18 +17,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class StatistiqueController.
- *
- * @Route("/administration/statistique")
  */
+#[Route(path: '/administration/statistique')]
 class StatistiqueController extends BaseController
 {
-    /**
-     * @Route("/", name="administration_statistique_index")
-     */
+    #[Route(path: '/', name: 'administration_statistique_index')]
     public function index(BacRepository $bacRepository, StatsSemestre $statsSemestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
-
         $bacs = $bacRepository->findAll();
         $tabSemestres = [];
         foreach ($this->dataUserSession->getSemestres() as $semestre) {

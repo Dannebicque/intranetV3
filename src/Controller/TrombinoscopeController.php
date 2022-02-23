@@ -29,31 +29,27 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-#[Route("/trombinoscope")]
+#[Route('/trombinoscope')]
 class TrombinoscopeController extends BaseController
 {
-    #[Route("/", name:"trombinoscope_index")]
+    #[Route('/', name: 'trombinoscope_index')]
     public function index(): Response
     {
         $this->breadcrumbHelper->addItem('trombinoscope', 'trombinoscope_index');
+
         return $this->render('trombinoscope/index.html.twig', [
         ]);
     }
 
     /**
-     * @Route("/etudiant/export/{typeGroupe<\d+>}.{_format}", name="trombinoscope_etudiant_export", methods="GET",
-     *                                                   requirements={"_format"="csv|xlsx|pdf"})
-     *
      * @throws Exception
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function trombiEtudiantExport(
-        MyExportListing $myExportListing,
-        TypeGroupe $typeGroupe,
-        $_format
-    ) {
+    #[Route(path: '/etudiant/export/{typeGroupe<\d+>}.{_format}', name: 'trombinoscope_etudiant_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
+    public function trombiEtudiantExport(MyExportListing $myExportListing, TypeGroupe $typeGroupe, $_format)
+    {
         return $myExportListing->genereFichier(
             Constantes::TYPEDOCUMENT_EMARGEMENT,
             $_format,
@@ -63,20 +59,14 @@ class TrombinoscopeController extends BaseController
     }
 
     /**
-     * @Route("/etudiant/export-groupe/{groupe<\d+>}.{_format}", name="trombinoscope_etudiant_export_groupe",
-     *                                                           methods="GET",
-     *                                                           requirements={"_format"="csv|xlsx|pdf"})
-     *
      * @throws Exception
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function trombiEtudiantExportGroupe(
-        MyExportListing $myExportListing,
-        Groupe $groupe,
-        $_format
-    ) {
+    #[Route(path: '/etudiant/export-groupe/{groupe<\d+>}.{_format}', name: 'trombinoscope_etudiant_export_groupe', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
+    public function trombiEtudiantExportGroupe(MyExportListing $myExportListing, Groupe $groupe, $_format)
+    {
         return $myExportListing->genereFichier(
             Constantes::TYPEDOCUMENT_EMARGEMENT,
             $_format,
@@ -86,40 +76,31 @@ class TrombinoscopeController extends BaseController
     }
 
     /**
-     * @Route("/etudiant/export-image/{typeGroupe<\d+>}.pdf", name="trombinoscope_etudiant_image", methods="GET")
-     *
      * @throws SyntaxError
      * @throws LoaderError
      * @throws RuntimeError
      */
-    public function trombiEtudiantExportImage(
-        MyPDF $myPDF,
-        TypeGroupe $typeGroupe
-    ): PdfResponse {
+    #[Route(path: '/etudiant/export-image/{typeGroupe<\d+>}.pdf', name: 'trombinoscope_etudiant_image', methods: 'GET')]
+    public function trombiEtudiantExportImage(MyPDF $myPDF, TypeGroupe $typeGroupe): PdfResponse
+    {
         return $myPDF::generePdf('pdf/trombinoscope.html.twig',
             [
                 'typeGroupe' => $typeGroupe,
                 'groupes' => $typeGroupe->getGroupes(),
                 'semestre' => $typeGroupe->getSemestre(),
             ],
-            null !== $typeGroupe->getSemestre() ? 'trombinoscope-' . $typeGroupe->getSemestre()->getLibelle() : '',
+            null !== $typeGroupe->getSemestre() ? 'trombinoscope-'.$typeGroupe->getSemestre()->getLibelle() : '',
             null !== $this->getDepartement() ? $this->getDepartement()->getLibelle() : ''
         );
     }
 
     /**
-     * @Route("/etudiant/{semestre<\d+>}", name="trombinoscope_etudiant_semestre", options={"expose":true})
-     * @Route("/etudiant/{semestre<\d+>}/{typegroupe<\d+>}", name="trombinoscope_etudiant_semestre_type_groupe",
-     *                                                       options={"expose":true})
-     *
      * @ParamConverter("typegroupe", options={"id" = "typegroupe"})
      */
-    public function trombiEtudiantSemestre(
-        EtudiantRepository $etudiantRepository,
-        GroupeRepository $groupeRepository,
-        Semestre $semestre,
-        ?TypeGroupe $typegroupe = null
-    ): Response {
+    #[Route(path: '/etudiant/{semestre<\d+>}', name: 'trombinoscope_etudiant_semestre', options: ['expose' => true])]
+    #[Route(path: '/etudiant/{semestre<\d+>}/{typegroupe<\d+>}', name: 'trombinoscope_etudiant_semestre_type_groupe', options: ['expose' => true])]
+    public function trombiEtudiantSemestre(EtudiantRepository $etudiantRepository, GroupeRepository $groupeRepository, Semestre $semestre, ?TypeGroupe $typegroupe = null): Response
+    {
         $groupes = null;
         if (null !== $typegroupe) {
             $groupes = $groupeRepository->findByTypeGroupe($typegroupe);
@@ -131,8 +112,7 @@ class TrombinoscopeController extends BaseController
                 }
             }
         }
-
-        if ($typegroupe !== null) {
+        if (null !== $typegroupe) {
             $etudiants = $groupeRepository->getEtudiantsByGroupes($typegroupe);
         } else {
             $etudiants = [];
@@ -147,14 +127,9 @@ class TrombinoscopeController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/personnel/{type}", name="trombinoscope_personnel", options={"expose":true})
-     */
-    public function trombiPersonnel(
-        Configuration $configuration,
-        PersonnelRepository $personnelRepository,
-        $type
-    ): Response {
+    #[Route(path: '/personnel/{type}', name: 'trombinoscope_personnel', options: ['expose' => true])]
+    public function trombiPersonnel(Configuration $configuration, PersonnelRepository $personnelRepository, $type): Response
+    {
         $personnels = $personnelRepository->findByType(
             $type,
             $this->dataUserSession->getDepartementId(),
@@ -167,22 +142,15 @@ class TrombinoscopeController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{type}.{_format}", name="trombinoscope_personnel_export", methods="GET",
-     *                             requirements={"_format"="csv|xlsx|pdf"})
-     */
-    public function trombiPersonnelExport(
-        MyExport $myExport,
-        PersonnelRepository $personnelRepository,
-        $type,
-        $_format
-    ): Response {
+    #[Route(path: '/{type}.{_format}', name: 'trombinoscope_personnel_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
+    public function trombiPersonnelExport(MyExport $myExport, PersonnelRepository $personnelRepository, $type, $_format): Response
+    {
         $personnels = $personnelRepository->findByType($type, $this->dataUserSession->getDepartement());
 
         return $myExport->genereFichierGenerique(
             $_format,
             $personnels,
-            'listing_' . $type,
+            'listing_'.$type,
             ['utilisateur'],
             ['nom', 'prenom']
         );

@@ -108,6 +108,7 @@ class QuestionnaireController extends AbstractController
      *                                                                 options={"expose"=true})
      *
      * @throws NonUniqueResultException
+     * @throws \JsonException
      */
     public function sauvegardeReponse(
         EtudiantRepository $etudiantRepository,
@@ -154,7 +155,7 @@ class QuestionnaireController extends AbstractController
 
             $t = explode('_', $cleReponse);
             $question = $quizzQuestionRepository->find(mb_substr($t[3], 1, mb_strlen($t[0])));
-            if (0 === mb_strpos($t[4], 'c')) {
+            if (str_starts_with($t[4], 'c')) {
                 $reponse = $quizzReponseRepository->find($t[5]);
             } else {
                 $reponse = $quizzReponseRepository->find($t[4]);
@@ -212,6 +213,8 @@ class QuestionnaireController extends AbstractController
      *                                             options={"expose"=true})
      *
      * @throws NonUniqueResultException
+     * @throws \JsonException
+     * @throws \JsonException
      */
     public function sauvegardeReponseTxt(
         EtudiantRepository $etudiantRepository,
@@ -270,24 +273,24 @@ class QuestionnaireController extends AbstractController
                 $this->entityManager->flush();
 
                 return $this->json(true, Response::HTTP_OK);
-            } else {
-                $question = $quizzQuestionRepository->find(mb_substr($t[3], 1, mb_strlen($t[0])));
-                $exist = $quizzEtudiantReponseRepository->findExistQuestion($cleQuestion, $quizzEtudiant);
+            }
 
-                if (null !== $question) {
-                    if (null === $exist) {
-                        $qr = new QuestionnaireEtudiantReponse($quizzEtudiant);
-                        $qr->setCleQuestion($cleQuestion);
-                        $qr->setCleReponse(null);
-                        $qr->setValeur($donnees['value']);
-                        $this->entityManager->persist($qr);
-                    } else {
-                        $exist->setValeur($donnees['value']);
-                    }
-                    $this->entityManager->flush();
+            $question = $quizzQuestionRepository->find(mb_substr($t[3], 1, mb_strlen($t[0])));
+            $exist = $quizzEtudiantReponseRepository->findExistQuestion($cleQuestion, $quizzEtudiant);
 
-                    return $this->json(true, Response::HTTP_OK);
+            if (null !== $question) {
+                if (null === $exist) {
+                    $qr = new QuestionnaireEtudiantReponse($quizzEtudiant);
+                    $qr->setCleQuestion($cleQuestion);
+                    $qr->setCleReponse(null);
+                    $qr->setValeur($donnees['value']);
+                    $this->entityManager->persist($qr);
+                } else {
+                    $exist->setValeur($donnees['value']);
                 }
+                $this->entityManager->flush();
+
+                return $this->json(true, Response::HTTP_OK);
             }
 
             return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);

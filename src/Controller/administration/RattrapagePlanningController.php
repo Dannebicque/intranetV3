@@ -23,19 +23,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class RattrapageController.
- *
- * @Route("/administration/rattrapage/planning")
  */
+#[Route(path: '/administration/rattrapage/planning')]
 class RattrapagePlanningController extends BaseController
 {
-    /**
-     * @Route("/{diplome}", name="administration_rattrapage_planning_index")
-     */
-    public function index(
-        TypeMatiereManager $typeMatiereManager,
-        RattrapageRepository $rattrapageRepository,
-        Diplome $diplome
-    ): Response {
+    #[Route(path: '/{diplome}', name: 'administration_rattrapage_planning_index')]
+    public function index(TypeMatiereManager $typeMatiereManager, RattrapageRepository $rattrapageRepository, Diplome $diplome): Response
+    {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $diplome);
 
         return $this->render('administration/rattrapagePlanning/index.html.twig', [
@@ -50,25 +44,16 @@ class RattrapagePlanningController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{diplome}/export.{_format}", name="administration_rattrapage_planning_export", methods="GET",
-     *                             requirements={"_format"="csv|xlsx|pdf"})
-     */
-    public function export(
-        MyExport $myExport,
-        RattrapageRepository $rattrapageRepository,
-        Diplome $diplome,
-        string $_format
-    ): Response
+    #[Route(path: '/{diplome}/export.{_format}', name: 'administration_rattrapage_planning_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
+    public function export(MyExport $myExport, RattrapageRepository $rattrapageRepository, Diplome $diplome, string $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $diplome);
-
         $rattrapages = $rattrapageRepository->findValidByDiplome($diplome, $diplome->getAnneeUniversitaire());
 
         return $myExport->genereFichierGenerique(
             $_format,
             $rattrapages,
-            'rattrapages_' . $diplome->getLibelle(),
+            'rattrapages_'.$diplome->getLibelle(),
             ['rattrapage_administration', 'utilisateur', 'matiere'],
             [
                 'etudiant' => ['nom', 'prenom'],
@@ -86,16 +71,14 @@ class RattrapagePlanningController extends BaseController
     }
 
     /**
-     * @Route("/change/{uuid}/{type}", name="administration_rattrapage_planning_change", methods="POST",
-     *                                    requirements={"type"="date|heure|salle"}, options={"expose":true})
      * @ParamConverter("rattrapage", options={"mapping": {"uuid": "uuid"}})
      *
      * @throws \Exception
      */
+    #[Route(path: '/change/{uuid}/{type}', name: 'administration_rattrapage_planning_change', requirements: ['type' => 'date|heure|salle'], options: ['expose' => true], methods: 'POST')]
     public function change(Request $request, Rattrapage $rattrapage, $type): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $rattrapage->getEtudiant()?->getSemestre());
-
         $data = $request->request->get('data');
         switch ($type) {
             case 'date':
@@ -116,24 +99,14 @@ class RattrapagePlanningController extends BaseController
     }
 
     /**
-     * @Route("/update_global/{type}/{diplome}", name="administration_rattrapage_update_global", methods="POST",
-     *                                    requirements={"type"="salle|heure|date"}, options={"expose":true})
-     *
      * @throws \Exception
      */
-    public function updateGlobal(
-        Request $request,
-        RattrapageRepository $rattrapageRepository,
-        $type,
-        Diplome $diplome
-    ): Response
+    #[Route(path: '/update_global/{type}/{diplome}', name: 'administration_rattrapage_update_global', requirements: ['type' => 'salle|heure|date'], options: ['expose' => true], methods: 'POST')]
+    public function updateGlobal(Request $request, RattrapageRepository $rattrapageRepository, $type, Diplome $diplome): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $diplome);
-
         $valeur = $request->request->get('valeur');
-
         $rattrapages = $rattrapageRepository->findValidByDiplome($diplome, $diplome->getAnneeUniversitaire());
-
         /** @var Rattrapage $rattrapage */
         foreach ($rattrapages as $rattrapage) {
             switch ($type) {

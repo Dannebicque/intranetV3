@@ -22,14 +22,16 @@ use Symfony\Component\Workflow\WorkflowInterface;
 #[Route('/administration/bon-commande', name: 'administration_bc_demande_')]
 class BCDemandeController extends BaseController
 {
+    /**
+     * @throws \JsonException
+     */
     #[Route('/', name: 'index', options: ['expose' => true], methods: ['GET', 'POST'])]
     public function index(Request $request): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
-
         $table = $this->createTable(BCDemandeDepartementType::class, [
-            'departement' => $this->getDepartement()
+            'departement' => $this->getDepartement(),
         ]);
 
         $table->handleRequest($request);
@@ -39,7 +41,7 @@ class BCDemandeController extends BaseController
         }
 
         return $this->render('administration/bc_demande/index.html.twig', [
-            'table' => $table
+            'table' => $table,
         ]);
     }
 
@@ -47,7 +49,6 @@ class BCDemandeController extends BaseController
     public function new(WorkflowInterface $bonCommandeStateMachine, Request $request): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
-
 
         $bCDemande = new BCDemande();
         $bCDemande->setDepartement($this->getDepartement());
@@ -76,7 +77,6 @@ class BCDemandeController extends BaseController
     public function show(BCDemande $bCDemande): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $bCDemande->getDepartement());
-
 
         return $this->render('administration/bc_demande/show.html.twig', [
             'bc_demande' => $bCDemande,
@@ -125,7 +125,7 @@ class BCDemandeController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $bCDemande->getDepartement());
 
-        if ($this->isCsrfTokenValid('delete' . $bCDemande->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$bCDemande->getId(), $request->request->get('_token'))) {
             $this->entityManager->remove($bCDemande);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'bcdemande.delete.success.flash');

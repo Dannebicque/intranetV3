@@ -29,21 +29,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/administratif/apogee")
- */
+#[Route(path: '/administratif/apogee')]
 class ApogeeController extends BaseController
 {
     private array $etudiants;
-
     /**
-     * @Route("/", methods={"GET"}, name="sa_apogee_index")
      * @IsGranted("ROLE_SUPER_ADMIN")
      */
-    public function index(
-        SemestreRepository $semestreRepository,
-        AnneeUniversitaireRepository $anneeUniversitaireRepository
-    ): Response {
+    #[Route(path: '/', name: 'sa_apogee_index', methods: ['GET'])]
+    public function index(SemestreRepository $semestreRepository, AnneeUniversitaireRepository $anneeUniversitaireRepository): Response
+    {
         return $this->render('super-administration/apogee/index.html.twig', [
             'semestres' => $semestreRepository->findAll(),
             'anneeUniversitaires' => $anneeUniversitaireRepository->findAll(),
@@ -51,21 +46,13 @@ class ApogeeController extends BaseController
     }
 
     /**
-     * @Route("/import/diplome/{type}", methods={"POST"}, name="sa_apogee_maj")
      * @IsGranted("ROLE_SUPER_ADMIN")
      *
      * @throws Exception
      */
-    public function importMaj(
-        ApogeeEtudiant $apogeeEtudiant,
-        EtudiantImport $etudiantImport,
-        Request $request,
-        SemestreRepository $semestreRepository,
-        EtudiantRepository $etudiantRepository,
-        AnneeUniversitaireRepository $anneeUniversitaireRepository,
-        BacRepository $bacRepository,
-        $type
-    ): Response {
+    #[Route(path: '/import/diplome/{type}', name: 'sa_apogee_maj', methods: ['POST'])]
+    public function importMaj(ApogeeEtudiant $apogeeEtudiant, EtudiantImport $etudiantImport, Request $request, SemestreRepository $semestreRepository, EtudiantRepository $etudiantRepository, AnneeUniversitaireRepository $anneeUniversitaireRepository, BacRepository $bacRepository, $type): Response
+    {
         $semestre = $semestreRepository->find($request->request->get('semestreforce'));
         $anneeUniversitaire = $anneeUniversitaireRepository->find($request->request->get('anneeuniversitaire'));
         if ($semestre && $anneeUniversitaire) {
@@ -74,7 +61,7 @@ class ApogeeController extends BaseController
             //pour chaque étudiant, s'il existe, on update, sinon on ajoute (et si type=force).
             $stid = $apogeeEtudiant->getEtudiantsAnnee($semestre->getAnnee());
             while ($row = $stid->fetch()) {
-                if ((int)$row['DAA_ETB'] === $semestre->getAnneeUniversitaire()->getAnnee()) {
+                if ((int) $row['DAA_ETB'] === $semestre->getAnneeUniversitaire()->getAnnee()) {
                     //if ((int)Tools::convertDateToObject($row['DAT_MOD_IND'])->format('Y') === $semestre->getAnneeUniversitaire()->getAnnee()) {
                     $dataApogee = $apogeeEtudiant->transformeApogeeToArray($row, $bacRepository->getApogeeArray());
                     $numEtudiant = $dataApogee['etudiant']['setNumEtudiant'];
@@ -106,26 +93,19 @@ class ApogeeController extends BaseController
     }
 
     /**
-     * @Route("/import/etudiant", methods={"POST"}, name="sa_apogee_import_etudiant")
      * @IsGranted("ROLE_SUPER_ADMIN")
      *
      * @throws Exception
      */
-    public function importEtudiant(
-        EtudiantImport $etudiantImport,
-        ApogeeEtudiant $apogeeEtudiant,
-        Request $request,
-        EtudiantRepository $etudiantRepository,
-        SemestreRepository $semestreRepository,
-        BacRepository $bacRepository
-    ): Response {
+    #[Route(path: '/import/etudiant', name: 'sa_apogee_import_etudiant', methods: ['POST'])]
+    public function importEtudiant(EtudiantImport $etudiantImport, ApogeeEtudiant $apogeeEtudiant, Request $request, EtudiantRepository $etudiantRepository, SemestreRepository $semestreRepository, BacRepository $bacRepository): Response
+    {
         $listeetudiants = explode(';', $request->request->get('listeetudiants'));
         $semestre = $semestreRepository->find($request->request->get('semestreforce'));
-
         $this->etudiants = [];
         foreach ($listeetudiants as $numEtu) {
-            $numEtu = (int)trim($numEtu);
-            if (is_int($numEtu)) {
+            $numEtu = (int) trim($numEtu);
+            if (0 !== $numEtu) {
                 $stid = $apogeeEtudiant->getEtudiant($numEtu, $semestre->getAnnee());
                 while ($row = $stid->fetch()) {
                     //requete pour récupérer les datas de l'étudiant et ajouter à la BDD.
@@ -154,31 +134,27 @@ class ApogeeController extends BaseController
     }
 
     /**
-     * @Route("/import/structure/annee/{annee}", methods={"GET"}, name="sa_annee_synchronise_apogee")
      * @IsGranted("ROLE_SUPER_ADMIN")
      *
      * @throws Exception
      */
-    public function synchronisationApogeeAnnee(
-        ApogeeMaquette $apogeeMaquette,
-        ApogeeImport $apogeeImport,
-        Annee $annee
-    ): Response {
+    #[Route(path: '/import/structure/annee/{annee}', name: 'sa_annee_synchronise_apogee', methods: ['GET'])]
+    public function synchronisationApogeeAnnee(ApogeeMaquette $apogeeMaquette, ApogeeImport $apogeeImport, Annee $annee): Response
+    {
         //création d'un PN
         $pn = new Ppn();
         $pn->setDiplome($annee->getDiplome());
         if (4 === $annee->getDiplome()->getTypeDiplome()) {
-            $pn->setLibelle('PN B.U.T. ' . $annee->getDiplome()->getSigle());
+            $pn->setLibelle('PN B.U.T. '.$annee->getDiplome()->getSigle());
             $pn->setAnnee(2021);
         } else {
-            $pn->setLibelle('PPN DUT ' . $annee->getDiplome()->getSigle());
+            $pn->setLibelle('PPN DUT '.$annee->getDiplome()->getSigle());
             $pn->setAnnee(2013);
         }
         $this->entityManager->persist($pn);
-
+        $t = [];
         if (true === $annee->getDiplome()?->getTypeDiplome()?->getApc()) {
             //BUT
-            $t = [];
             $elementsAnnee = $apogeeImport->getElementsFromAnnee($annee);
             while ($elpAnnee = $elementsAnnee->fetch()) {
                 //echo $elpAnnee['COD_ELP'].'<br>';
@@ -188,7 +164,7 @@ class ApogeeController extends BaseController
 
                     while ($elpSemestre = $elementsSemestre->fetch()) {
                         //print_r($elpSemestre);echo '<br>';
-                        echo $elpSemestre['LIC_ELP'] . '<br>';
+                        echo $elpSemestre['LIC_ELP'].'<br>';
                         if (!array_key_exists($elpSemestre['COD_ELP'], $t)) {
                             //création
                             $data = $apogeeMaquette->createElement($elpSemestre, $semestre);
@@ -217,7 +193,6 @@ class ApogeeController extends BaseController
             }
         } else {
             //DUT
-            $t = [];
             $semestres = $apogeeImport->getElementsFromAnneeDut($annee);
             while ($semestre = $semestres->fetch()) {
                 $objSemestre = $apogeeMaquette->createSemestreDut($semestre, $annee, $pn);
@@ -238,7 +213,6 @@ class ApogeeController extends BaseController
             }
             $this->entityManager->flush();
         }
-
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'synchro.maquette.apogee.ok');
 
         return $this->redirectToRoute('sa_structure_index',
@@ -246,28 +220,24 @@ class ApogeeController extends BaseController
     }
 
     /**
-     * @Route("/import/structure/semestre/{semestre}", methods={"GET"}, name="sa_semestre_synchronise_apogee")
      * @IsGranted("ROLE_SUPER_ADMIN")
      *
      * @throws Exception
      */
-    public function synchronisationApogeeSemestre(
-        ApogeeMaquette $apogeeMaquette,
-        ApogeeImport $apogeeImport,
-        Semestre $semestre
-    ): Response {
+    #[Route(path: '/import/structure/semestre/{semestre}', name: 'sa_semestre_synchronise_apogee', methods: ['GET'])]
+    public function synchronisationApogeeSemestre(ApogeeMaquette $apogeeMaquette, ApogeeImport $apogeeImport, Semestre $semestre): Response
+    {
         //création d'un PN
         $pn = $semestre->getPpnActif();
-
+        $t = [];
         if (true === $semestre->getDiplome()?->getTypeDiplome()?->getApc()) {
             //BUT
-            $t = [];
 
             $elementsSemestre = $apogeeImport->getElementsFromSemestre($semestre->getCodeElement());
 
             while ($elpSemestre = $elementsSemestre->fetch()) {
                 //print_r($elpSemestre);echo '<br>';
-                echo $elpSemestre['LIC_ELP'] . '<br>';
+                echo $elpSemestre['LIC_ELP'].'<br>';
                 if (!array_key_exists($elpSemestre['COD_ELP'], $t)) {
                     //création
                     $data = $apogeeMaquette->createElement($elpSemestre, $semestre);
@@ -281,10 +251,8 @@ class ApogeeController extends BaseController
                 }
             }
 
-            $this->entityManager->flush();
         } else {
             //DUT
-            $t = [];
 
             $ues = $apogeeImport->getUesFromSemestreDut($semestre);
             while ($ue = $ues->fetch()) {
@@ -300,9 +268,8 @@ class ApogeeController extends BaseController
                     }
                 }
             }
-            $this->entityManager->flush();
         }
-
+        $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'synchro.maquette.apogee.ok');
 
         return $this->redirectToRoute('sa_structure_index',
@@ -310,20 +277,15 @@ class ApogeeController extends BaseController
     }
 
     /**
-     * @Route("/import/structure/ue/{ue}", methods={"GET"}, name="sa_ue_synchronise_apogee")
      * @IsGranted("ROLE_SUPER_ADMIN")
      *
      * @throws Exception
      */
-    public function synchronisationApogeeUe(
-        ApogeeMaquette $apogeeMaquette,
-        ApogeeImport $apogeeImport,
-        Ue $ue
-    ): Response {
+    #[Route(path: '/import/structure/ue/{ue}', name: 'sa_ue_synchronise_apogee', methods: ['GET'])]
+    public function synchronisationApogeeUe(ApogeeMaquette $apogeeMaquette, ApogeeImport $apogeeImport, Ue $ue): Response
+    {
         //création d'un PN
-
         $pn = $ue->getSemestre()?->getPpnActif();
-
         if (true === $ue->getDiplome()?->getTypeDiplome()?->getApc()) {
             //BUT
             //todo: a définir.
@@ -343,7 +305,6 @@ class ApogeeController extends BaseController
             }
             $this->entityManager->flush();
         }
-
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'synchro.maquette.apogee.ok');
 
         return $this->redirectToRoute('sa_structure_index',

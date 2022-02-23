@@ -23,32 +23,29 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class RhController.
- *
- * @Route("/administratif/ressources-humaines")
  */
+#[Route(path: '/administratif/ressources-humaines')]
 class RhController extends BaseController
 {
     /**
-     * @Route("/", name="sa_rh_index")
+     * @throws \JsonException
      */
+    #[Route(path: '/', name: 'sa_rh_index')]
     public function index(Request $request): Response
     {
         $table = $this->createTable(PersonnelTableType::class, [
-
         ]);
         $table->handleRequest($request);
-
         if ($table->isCallback()) {
             return $table->getCallbackResponse();
         }
+
         return $this->render('super-administration/rh/index.html.twig', [
             'table' => $table,
         ]);
     }
 
-    /**
-     * @Route("/show/{id}", name="sa_rh_personnel_show", options={"expose"=true})
-     */
+    #[Route(path: '/show/{id}', name: 'sa_rh_personnel_show', options: ['expose' => true])]
     public function show(Personnel $personnel): Response
     {
         return $this->render('super-administration/rh/show.html.twig', [
@@ -56,22 +53,20 @@ class RhController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/import", name="sa_rh_import_personnel")
-     */
+    #[Route(path: '/import', name: 'sa_rh_import_personnel')]
     public function import(Request $request): Response
     {
         //Todo: si fonctionne à faire en ajax?
         if ('POST' === $request->getMethod()) {
             $username = $request->request->get('username');
             $ldap = Ldap::create('ext_ldap', [
-                'host'       => 'ldap.univ-reims.fr',
+                'host' => 'ldap.univ-reims.fr',
                 'encryption' => 'ssl',
             ]);
             $ldap->bind('uid=app-intranet-iut,ou=account,ou=app,dc=univ-reims,dc=fr', 'heXzHr7p7MKuccQ2UqKu');
             //supannEmpId ou uid
             $query = $ldap->query('ou=people,dc=univ-reims,dc=fr',
-                '(|(supannEmpId=' . $username . ')(uid=' . $username . ')(mail=' . $username . ')(sn=' . $username . '))');
+                '(|(supannEmpId='.$username.')(uid='.$username.')(mail='.$username.')(sn='.$username.'))');
             $results = $query->execute();
 
             return $this->render('super-administration/rh/liste-result.html.twig', [
@@ -82,9 +77,7 @@ class RhController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="sa_rh_personnel_edit", methods="GET|POST", options={"expose":true})
-     */
+    #[Route(path: '/{id}/edit', name: 'sa_rh_personnel_edit', options: ['expose' => true], methods: 'GET|POST')]
     public function edit(Request $request, Personnel $personnel): Response
     {
         $form = $this->createForm(PersonnelType::class, $personnel, [
@@ -93,7 +86,6 @@ class RhController extends BaseController
             ],
         ]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'personnel.edit.success.flash');
@@ -103,15 +95,14 @@ class RhController extends BaseController
 
         return $this->render('super-administration/rh/edit.html.twig', [
             'personnel' => $personnel,
-            'form'      => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/create", name="sa_rh_add_personnel", methods="GET|POST")
-     *
      * @throws JsonException
      */
+    #[Route(path: '/create', name: 'sa_rh_add_personnel', methods: 'GET|POST')]
     public function create(Request $request): Response
     {
         $personnel = new Personnel();
@@ -121,7 +112,6 @@ class RhController extends BaseController
             ],
         ]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $personnel->setRoles(['ROLE_PERMANENT']);
             $this->entityManager->persist($personnel);
@@ -133,20 +123,15 @@ class RhController extends BaseController
 
         return $this->render('super-administration/rh/new.html.twig', [
             'personnel' => $personnel,
-            'form'      => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="sa_rh_delete_personnel", methods="DELETE", options={"expose"=true})
-     */
-    public function delete(
-        PersonnelDepartementRepository $personnelDepartementRepository,
-        Request $request,
-        Personnel $personnel
-    ): Response {
+    #[Route(path: '/{id}', name: 'sa_rh_delete_personnel', options: ['expose' => true], methods: 'DELETE')]
+    public function delete(PersonnelDepartementRepository $personnelDepartementRepository, Request $request, Personnel $personnel): Response
+    {
         $id = $personnel->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             //retirer le personnel des départements
             $departements = $personnelDepartementRepository->findByPersonnel($personnel);
             foreach ($departements as $departement) {

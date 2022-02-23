@@ -19,25 +19,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/administration/type-materiel")
- */
+#[Route(path: '/administration/type-materiel')]
 class TypeMaterielController extends BaseController
 {
-    /**
-     * @Route("/", name="administration_type_materiel_index", methods="GET")
-     */
+    #[Route(path: '/', name: 'administration_type_materiel_index', methods: 'GET')]
     public function index(TypeMaterielRepository $typeMaterielRepository): Response
     {
         return $this->render('administration/type_materiel/index.html.twig',
             ['type_materiels' => $typeMaterielRepository->findByDepartement($this->dataUserSession->getDepartement())]);
     }
 
-    /**
-     * @Route("/export.{_format}", name="administration_type_materiel_export", methods="GET",
-     *                             requirements={"_format"="csv|xlsx|pdf"})
-     *
-     */
+    #[Route(path: '/export.{_format}', name: 'administration_type_materiel_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
     public function export(MyExport $myExport, TypeMaterielRepository $type_materielRepository, $_format): Response
     {
         $type_materiels = $type_materielRepository->findByDepartement($this->dataUserSession->getDepartement());
@@ -51,9 +43,7 @@ class TypeMaterielController extends BaseController
         );
     }
 
-    /**
-     * @Route("/new", name="administration_type_materiel_new", methods="GET|POST")
-     */
+    #[Route(path: '/new', name: 'administration_type_materiel_new', methods: 'GET|POST')]
     public function create(Request $request): Response
     {
         $typeMateriel = new TypeMateriel($this->dataUserSession->getDepartement());
@@ -63,7 +53,6 @@ class TypeMaterielController extends BaseController
             ],
         ]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($typeMateriel);
             $this->entityManager->flush();
@@ -74,21 +63,17 @@ class TypeMaterielController extends BaseController
 
         return $this->render('administration/type_materiel/new.html.twig', [
             'type_materiel' => $typeMateriel,
-            'form'          => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="administration_type_materiel_show", methods="GET")
-     */
+    #[Route(path: '/{id}', name: 'administration_type_materiel_show', methods: 'GET')]
     public function show(TypeMateriel $typeMateriel): Response
     {
         return $this->render('administration/type_materiel/show.html.twig', ['type_materiel' => $typeMateriel]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="administration_type_materiel_edit", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/edit', name: 'administration_type_materiel_edit', methods: 'GET|POST')]
     public function edit(Request $request, TypeMateriel $typeMateriel): Response
     {
         $form = $this->createForm(TypeMaterielType::class, $typeMateriel, [
@@ -97,7 +82,6 @@ class TypeMaterielController extends BaseController
             ],
         ]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'type_materiel.edit.success.flash');
@@ -110,17 +94,15 @@ class TypeMaterielController extends BaseController
 
         return $this->render('administration/type_materiel/edit.html.twig', [
             'type_materiel' => $typeMateriel,
-            'form'          => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="administration_type_materiel_delete", methods="DELETE")
-     */
+    #[Route(path: '/{id}', name: 'administration_type_materiel_delete', methods: 'DELETE')]
     public function delete(Request $request, TypeMateriel $type_materiel): Response
     {
         $id = $type_materiel->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $this->entityManager->remove($type_materiel);
             $this->entityManager->flush();
             $this->addFlashBag(
@@ -130,19 +112,15 @@ class TypeMaterielController extends BaseController
 
             return $this->json($id, Response::HTTP_OK);
         }
-
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'type_materiel.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * @Route("/{id}/duplicate", name="administration_type_materiel_duplicate", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/duplicate', name: 'administration_type_materiel_duplicate', methods: 'GET|POST')]
     public function duplicate(TypeMateriel $type_materiel): Response
     {
         $newTypeMateriel = clone $type_materiel;
-
         $this->entityManager->persist($newTypeMateriel);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'type_materiel.duplicate.success.flash');

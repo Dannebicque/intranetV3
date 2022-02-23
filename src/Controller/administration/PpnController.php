@@ -21,14 +21,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/administration/programme-pedagogique")
- */
+#[Route(path: '/administration/programme-pedagogique')]
 class PpnController extends BaseController
 {
-    /**
-     * @Route("/", name="administration_ppn_index", methods="GET")
-     */
+    #[Route(path: '/', name: 'administration_ppn_index', methods: 'GET')]
     public function index(PpnRepository $ppnRepository): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
@@ -36,10 +32,7 @@ class PpnController extends BaseController
         return $this->render('administration/ppn/index.html.twig', ['ppns' => $ppnRepository->findAll()]);
     }
 
-    /**
-     * @Route("/export.{_format}", name="administration_ppn_export", methods="GET",
-     *                             requirements={"_format"="csv|xlsx|pdf"})
-     */
+    #[Route(path: '/export.{_format}', name: 'administration_ppn_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
     public function export(): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
@@ -48,17 +41,14 @@ class PpnController extends BaseController
     }
 
     /**
-     * @Route("/copie", name="administration_ppn_copie_integrale", methods="POST")
-     *
      * @throws Exception
      */
+    #[Route(path: '/copie', name: 'administration_ppn_copie_integrale', methods: 'POST')]
     public function copieIntegrale(PpnRepository $ppnRepository, Request $request): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
-
         $ppnOrigine = $ppnRepository->find($request->request->get('ppn_origine'));
         $ppnDest = $ppnRepository->find($request->request->get('ppn_dest'));
-
         if (null !== $ppnDest && null !== $ppnOrigine) {
             //effacer contenu PPN de destination
             foreach ($ppnDest->getMatieres() as $matiere) {
@@ -80,17 +70,13 @@ class PpnController extends BaseController
 
             return $this->redirectToRoute('administration_ppn_index');
         }
-
         throw new RuntimeException('Pas de PPN trouvé');
     }
 
-    /**
-     * @Route("/new/{diplome}", name="administration_ppn_new", methods="GET|POST")
-     */
+    #[Route(path: '/new/{diplome}', name: 'administration_ppn_new', methods: 'GET|POST')]
     public function create(Request $request, Diplome $diplome = null): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $diplome);
-
         $ppn = new Ppn();
         $ppn->setDiplome($diplome);
         $form = $this->createForm(PpnType::class, $ppn, [
@@ -100,7 +86,6 @@ class PpnController extends BaseController
             ],
         ]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($ppn);
             $this->entityManager->flush();
@@ -115,9 +100,7 @@ class PpnController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="administration_ppn_show", methods="GET")
-     */
+    #[Route(path: '/{id}', name: 'administration_ppn_show', methods: 'GET')]
     public function show(Ppn $ppn): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $ppn->getDiplome());
@@ -125,13 +108,10 @@ class PpnController extends BaseController
         return $this->render('structure/ppn/show.html.twig', ['ppn' => $ppn]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="administration_ppn_edit", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/edit', name: 'administration_ppn_edit', methods: 'GET|POST')]
     public function edit(Request $request, Ppn $ppn): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $ppn->getDiplome());
-
         $form = $this->createForm(PpnType::class, $ppn, [
             'departement' => $this->dataUserSession->getDepartement(),
             'attr' => [
@@ -139,7 +119,6 @@ class PpnController extends BaseController
             ],
         ]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'ppn.edit.success.flash');
@@ -154,13 +133,10 @@ class PpnController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="administration_ppn_delete", methods="DELETE")
-     */
+    #[Route(path: '/{id}', name: 'administration_ppn_delete', methods: 'DELETE')]
     public function delete(Request $request, Ppn $ppn): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $ppn->getDiplome());
-
         //suppression uniquement si vide.
         //feature: gérer une suppression plus complete en super-admin
         $id = $ppn->getId();
@@ -171,21 +147,16 @@ class PpnController extends BaseController
 
             return $this->json($id, Response::HTTP_OK);
         }
-
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'ppn.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * @Route("/{id}/duplicate", name="administration_ppn_duplicate", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/duplicate', name: 'administration_ppn_duplicate', methods: 'GET|POST')]
     public function duplicate(Ppn $ppn): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $ppn->getDiplome());
-
         $newPpn = clone $ppn;
-
         $this->entityManager->persist($newPpn);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'ppn.duplicate.success.flash');

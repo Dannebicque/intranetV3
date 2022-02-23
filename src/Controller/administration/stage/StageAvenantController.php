@@ -23,14 +23,10 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-/**
- * @Route("/administration/stage/avenant")
- */
+#[Route(path: '/administration/stage/avenant')]
 class StageAvenantController extends BaseController
 {
-    /**
-     * @Route("/{stageEtudiant}", name="administration_stage_avenant_index", methods={"GET"})
-     */
+    #[Route(path: '/{stageEtudiant}', name: 'administration_stage_avenant_index', methods: ['GET'])]
     public function index(StageEtudiant $stageEtudiant): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stageEtudiant->getStagePeriode()?->getSemestre());
@@ -43,12 +39,11 @@ class StageAvenantController extends BaseController
     }
 
     /**
-     * @Route("/avenant/pdf/{id}", name="administration_stage_avenant_pdf", methods="GET")
-     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
+    #[Route(path: '/avenant/pdf/{id}', name: 'administration_stage_avenant_pdf', methods: 'GET')]
     public function avenantPdf(MyPDF $myPDF, StageAvenant $stageAvenant): PdfResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE',
@@ -59,22 +54,18 @@ class StageAvenantController extends BaseController
                 'stage_avenant' => $stageAvenant,
                 'proposition' => $stageAvenant->getStageEtudiant(),
             ],
-            'avenant-' . $stageAvenant->getStageEtudiant()->getEtudiant()->getNom(),
+            'avenant-'.$stageAvenant->getStageEtudiant()->getEtudiant()->getNom(),
             $this->dataUserSession->getDepartement()
         );
     }
 
-    /**
-     * @Route("/new/{stageEtudiant}", name="administration_stage_avenant_new", methods={"GET","POST"})
-     */
+    #[Route(path: '/new/{stageEtudiant}', name: 'administration_stage_avenant_new', methods: ['GET', 'POST'])]
     public function new(Request $request, StageEtudiant $stageEtudiant): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stageEtudiant->getStagePeriode()?->getSemestre());
-
         $stageAvenant = new StageAvenant($stageEtudiant);
         $form = $this->createForm(StageAvenantType::class, $stageAvenant);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $cas = $request->request->get('stage_avenant_cas');
             $stageAvenant->setCas($cas);
@@ -88,13 +79,11 @@ class StageAvenantController extends BaseController
         return $this->render('administration/stage/stage_avenant/new.html.twig', [
             'stage_avenant' => $stageAvenant,
             'stageEtudiant' => $stageEtudiant,
-            'form'          => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/voir/{id}", name="administration_stage_avenant_show", methods={"GET"})
-     */
+    #[Route(path: '/voir/{id}', name: 'administration_stage_avenant_show', methods: ['GET'])]
     public function show(StageAvenant $stageAvenant): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE',
@@ -106,17 +95,13 @@ class StageAvenantController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="administration_stage_avenant_edit", methods={"GET","POST"})
-     */
+    #[Route(path: '/{id}/edit', name: 'administration_stage_avenant_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, StageAvenant $stageAvenant): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE',
             $stageAvenant->getStageEtudiant()?->getStagePeriode()?->getSemestre());
-
         $form = $this->createForm(StageAvenantType::class, $stageAvenant);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $cas = $request->request->get('stage_avenant_cas');
             $stageAvenant->setCas($cas);
@@ -129,36 +114,29 @@ class StageAvenantController extends BaseController
         return $this->render('administration/stage/stage_avenant/edit.html.twig', [
             'stage_avenant' => $stageAvenant,
             'stageEtudiant' => $stageAvenant->getStageEtudiant(),
-            'form'          => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="administration_stage_avenant_delete", methods={"DELETE"})
-     */
+    #[Route(path: '/{id}', name: 'administration_stage_avenant_delete', methods: ['DELETE'])]
     public function delete(Request $request, StageAvenant $stageAvenant): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE',
             $stageAvenant->getStageEtudiant()?->getStagePeriode()?->getSemestre());
-
         $id = $stageAvenant->getStageEtudiant()->getId();
-        if ($this->isCsrfTokenValid('delete' . $stageAvenant->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($stageAvenant);
-            $entityManager->flush();
+        if ($this->isCsrfTokenValid('delete'.$stageAvenant->getId(), $request->request->get('_token'))) {
+            $this->entityManager->remove($stageAvenant);
+            $this->entityManager->flush();
         }
 
         return $this->redirectToRoute('administration_stage_avenant_index', ['stageEtudiant' => $id]);
     }
 
-    /**
-     * @Route("/{id}/duplicate", name="administration_stage_avenant_duplicate", methods="GET")
-     */
+    #[Route(path: '/{id}/duplicate', name: 'administration_stage_avenant_duplicate', methods: 'GET')]
     public function duplicate(StageAvenant $stageAvenant): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE',
             $stageAvenant->getStageEtudiant()?->getStagePeriode()?->getSemestre());
-
         $newstageAvenant = clone $stageAvenant;
         $this->entityManager->persist($newstageAvenant);
         $this->entityManager->flush();

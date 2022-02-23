@@ -19,28 +19,20 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class CohorteController.
- *
- * @Route("/administration/cohorte")
  */
+#[Route(path: '/administration/cohorte')]
 class CohorteController extends BaseController
 {
-    /**
-     * @Route("/{annee}", name="administration_cohorte_index")
-     */
-    public function index(
-        AnneeUniversitaireRepository $anneeUniversitaireRepository,
-        ScolariteRepository $scolariteRepository,
-        int $annee = 0
-    ): Response {
+    #[Route(path: '/{annee}', name: 'administration_cohorte_index')]
+    public function index(AnneeUniversitaireRepository $anneeUniversitaireRepository, ScolariteRepository $scolariteRepository, int $annee = 0): Response
+    {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
-
         if (0 === $annee) {
-            $annee = date('Y') - 1;
+            $annee = (int) date('Y') - 1;
         }
         //on ne récupère la cohorte que de la departement.
         $parcours = $scolariteRepository->findEtudiantsDepartement($annee, $this->dataUserSession->getDepartement());
         $etudiants = [];
-
         /** @var Scolarite $parcour */
         foreach ($parcours as $parcour) {
             if (null !== $parcour->getEtudiant() && !array_key_exists($parcour->getEtudiant()->getId(), $etudiants)) {
@@ -56,9 +48,7 @@ class CohorteController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/export.{_format}", name="administration_cohorte_export", requirements={"_format"="csv|xlsx|pdf"})
-     */
+    #[Route(path: '/export.{_format}', name: 'administration_cohorte_export', requirements: ['_format' => 'csv|xlsx|pdf'])]
     public function export(): void
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());

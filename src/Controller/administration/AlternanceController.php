@@ -26,23 +26,14 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/administration/alternance")
- */
+#[Route(path: '/administration/alternance')]
 class AlternanceController extends BaseController
 {
-    /**
-     * @Route("/init/all/{annee}", name="administration_alternance_init_all")
-     */
-    public function initAll(
-        EtudiantRepository $etudiantRepository,
-        AlternanceRepository $alternanceRepository,
-        Annee $annee
-    ): RedirectResponse {
+    #[Route(path: '/init/all/{annee}', name: 'administration_alternance_init_all')]
+    public function initAll(EtudiantRepository $etudiantRepository, AlternanceRepository $alternanceRepository, Annee $annee): RedirectResponse
+    {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $annee);
-
         $etudiants = $etudiantRepository->findByAnnee($annee);
-
         /** @var Etudiant $etudiant */
         foreach ($etudiants as $etudiant) {
             $exist = $alternanceRepository->findBy([
@@ -59,53 +50,36 @@ class AlternanceController extends BaseController
                 $this->entityManager->persist($alternance);
             }
         }
-
         $this->entityManager->flush();
-
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'alternance.init.all.success.flash');
 
         return $this->redirectToRoute('administration_alternance_index', ['annee' => $annee->getId()]);
     }
 
-    /**
-     * @Route("/init/{annee}/{action}/{etudiant}", name="administration_alternance_init")
-     */
+    #[Route(path: '/init/{annee}/{action}/{etudiant}', name: 'administration_alternance_init')]
     public function init(Etudiant $etudiant, $action, Annee $annee): RedirectResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $annee);
-
         $alternance = new Alternance();
         $alternance->setEtudiant($etudiant);
         $alternance->setAnneeUniversitaire($annee->getDiplome()?->getAnneeUniversitaire());
         $alternance->setAnnee($annee);
-
         if ('init-false' === $action) {
             $alternance->setEtat(Alternance::ALTERNANCE_ETAT_SANS);
         } else {
             $alternance->setEtat(Alternance::ALTERNANCE_ETAT_INITIALISE);
         }
-
         $this->entityManager->persist($alternance);
         $this->entityManager->flush();
-
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'alternance.init.one.success.flash');
 
         return $this->redirectToRoute('administration_alternance_index', ['annee' => $annee->getId()]);
     }
 
-    /**
-     * @Route("/export/{annee}.{_format}", name="administration_alternance_export", methods="GET",
-     *                                     requirements={"_format"="csv|xlsx|pdf"})
-     */
-    public function export(
-        MyExport $myExport,
-        AlternanceRepository $alternanceRepository,
-        Annee $annee,
-        $_format
-    ): Response
+    #[Route(path: '/export/{annee}.{_format}', name: 'administration_alternance_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
+    public function export(MyExport $myExport, AlternanceRepository $alternanceRepository, Annee $annee, $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $annee);
-
         $actualites = $alternanceRepository->getByAnneeAndAnneeUniversitaire($annee,
             $annee->getDiplome()?->getAnneeUniversitaire());
 
@@ -126,9 +100,7 @@ class AlternanceController extends BaseController
         );
     }
 
-    /**
-     * @Route("/details/{id}", name="administration_alternance_show", methods="GET")
-     */
+    #[Route(path: '/details/{id}', name: 'administration_alternance_show', methods: 'GET')]
     public function show(Alternance $alternance): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $alternance->getAnnee());
@@ -136,17 +108,13 @@ class AlternanceController extends BaseController
         return $this->render('administration/alternance/show.html.twig', ['alternance' => $alternance]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="administration_alternance_edit", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/edit', name: 'administration_alternance_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Alternance $alternance): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $alternance->getAnnee());
-
         $form = $this->createForm(AlternanceType::class, $alternance,
             ['departement' => $this->dataUserSession->getDepartement()]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'alternance.edit.success.flash');
@@ -160,17 +128,10 @@ class AlternanceController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{annee}", name="administration_alternance_index", methods="GET", requirements={"annee"="\d+"})
-     */
-    public function index(
-        EtudiantRepository $etudiantRepository,
-        AlternanceRepository $alternanceRepository,
-        Annee $annee
-    ): Response
+    #[Route(path: '/{annee}', name: 'administration_alternance_index', requirements: ['annee' => '\d+'], methods: 'GET')]
+    public function index(EtudiantRepository $etudiantRepository, AlternanceRepository $alternanceRepository, Annee $annee): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $annee);
-
         $etudiants = $etudiantRepository->findByAnnee($annee);
 
         return $this->render('administration/alternance/index.html.twig',
@@ -182,15 +143,12 @@ class AlternanceController extends BaseController
             ]);
     }
 
-    /**
-     * @Route("/{id}", name="administration_alternance_delete", methods="DELETE")
-     */
+    #[Route(path: '/{id}', name: 'administration_alternance_delete', methods: 'DELETE')]
     public function delete(Request $request, Alternance $alternance): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $alternance->getAnnee());
-
         $id = $alternance->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $this->entityManager->remove($alternance);
             $this->entityManager->flush();
             $this->addFlashBag(
@@ -200,19 +158,15 @@ class AlternanceController extends BaseController
 
             return $this->json($id, Response::HTTP_OK);
         }
-
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'alternance.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * @Route("/update/tuteur-universitaire/{alternance}/{personnel}", name="administration_alternance_update_tuteur_universitaire", options={"expose":true})
-     */
+    #[Route(path: '/update/tuteur-universitaire/{alternance}/{personnel}', name: 'administration_alternance_update_tuteur_universitaire', options: ['expose' => true])]
     public function updateTuteurUniversitaire(Alternance $alternance, Personnel $personnel): JsonResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $alternance->getAnnee());
-
         $alternance->setTuteurUniversitaire($personnel);
         $this->entityManager->persist($alternance);
         $this->entityManager->flush();

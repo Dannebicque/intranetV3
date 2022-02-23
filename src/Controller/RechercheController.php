@@ -17,20 +17,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class RechercheController.
- *
- * @Route("/recherche")
  */
+#[Route(path: '/recherche')]
 class RechercheController extends BaseController
 {
-    /**
-     * @Route("/", name="recherche", options={"expose":true}, methods={"GET"})
-     *
-     */
-    public function index(
-        Request $request,
-        EtudiantRepository $etudiantRepository,
-        PersonnelDepartementRepository $personnelRepository,
-    ): Response {
+    #[Route(path: '/', name: 'recherche', options: ['expose' => true], methods: ['GET'])]
+    public function index(Request $request, EtudiantRepository $etudiantRepository, PersonnelDepartementRepository $personnelRepository): Response
+    {
         $keyword = $request->query->get('q');
         $etudiants = $etudiantRepository->search($keyword, $this->getDepartement());
         $personnels = $personnelRepository->search($keyword, $this->getDepartement());
@@ -38,7 +31,7 @@ class RechercheController extends BaseController
         return $this->render('recherche/_reponses.html.twig', [
             'etudiants' => $etudiants,
             'personnels' => $personnels,
-            'q' => $keyword
+            'q' => $keyword,
         ]);
     }
 }

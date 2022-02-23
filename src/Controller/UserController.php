@@ -24,14 +24,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class UserController.
- *
- * @Route("/utilisateur")
  */
+#[Route(path: '/utilisateur')]
 class UserController extends BaseController
 {
-    /**
-     * @Route("/mon-profil/{onglet}", name="user_mon_profil")
-     */
+    #[Route(path: '/mon-profil/{onglet}', name: 'user_mon_profil')]
     public function monProfil(string $onglet = 'scolarite'): Response
     {
         return $this->render('user/profil.html.twig', [
@@ -42,17 +39,11 @@ class UserController extends BaseController
     }
 
     /**
-     * @Route("/{type}/{slug}/{onglet}", name="user_profil", options={"expose": true})
-     *
      * @throws NonUniqueResultException
      */
-    public function index(
-        EtudiantRepository $etudiantRepository,
-        PersonnelRepository $personnelRepository,
-        string $type,
-        string $slug,
-        string $onglet = 'scolarite'
-    ): RedirectResponse|Response {
+    #[Route(path: '/{type}/{slug}/{onglet}', name: 'user_profil', options: ['expose' => true])]
+    public function index(EtudiantRepository $etudiantRepository, PersonnelRepository $personnelRepository, string $type, string $slug, string $onglet = 'scolarite'): RedirectResponse | Response
+    {
         if ('personnel' === $type) {
             $user = $personnelRepository->findOneBySlug($slug);
             if (null !== $user) {
@@ -63,7 +54,6 @@ class UserController extends BaseController
                 ]);
             }
         }
-
         if ('etudiant' === $type) {
             $user = $etudiantRepository->findOneBySlug($slug);
             if (null !== $user) {
@@ -78,9 +68,7 @@ class UserController extends BaseController
         return $this->redirectToRoute('erreur_404');
     }
 
-    /**
-     * @Route("/settings", name="user_settings")
-     */
+    #[Route(path: '/settings', name: 'user_settings')]
     public function settings(Request $request): Response
     {
         $user = $this->getUser();

@@ -14,20 +14,16 @@ use App\Entity\Constantes;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Form\DiplomeType;
+use function count;
 use Symfony\Component\Form\Exception\LogicException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use function count;
 
-/**
- * @Route("/administration/structure/diplome")
- */
+#[Route(path: '/administration/structure/diplome')]
 class DiplomeController extends BaseController
 {
-    /**
-     * @Route("/new/{departement}", name="administration_diplome_new", methods="GET|POST")
-     */
+    #[Route(path: '/new/{departement}', name: 'administration_diplome_new', methods: 'GET|POST')]
     public function create(Request $request, Departement $departement): Response
     {
         $diplome = new Diplome($departement);
@@ -38,7 +34,6 @@ class DiplomeController extends BaseController
             ],
         ]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($diplome);
             $this->entityManager->flush();
@@ -48,23 +43,20 @@ class DiplomeController extends BaseController
         }
 
         return $this->render('structure/diplome/new.html.twig', [
-            'form'    => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="administration_diplome_show", methods="GET")
-     */
+    #[Route(path: '/{id}', name: 'administration_diplome_show', methods: 'GET')]
     public function show(Diplome $diplome): Response
     {
         return $this->render('structure/diplome/show.html.twig', ['diplome' => $diplome]);
     }
 
     /**
-     * @Route("/{id}/edit", name="administration_diplome_edit", methods="GET|POST")
-     *
      * @throws LogicException
      */
+    #[Route(path: '/{id}/edit', name: 'administration_diplome_edit', methods: 'GET|POST')]
     public function edit(Request $request, Diplome $diplome): Response
     {
         $form = $this->createForm(DiplomeType::class, $diplome, [
@@ -73,7 +65,6 @@ class DiplomeController extends BaseController
             ],
         ]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'diplome.edit.success.flash');
@@ -83,17 +74,14 @@ class DiplomeController extends BaseController
 
         return $this->render('structure/diplome/edit.html.twig', [
             'diplome' => $diplome,
-            'form'    => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/{id}/duplicate", name="administration_diplome_duplicate", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/duplicate', name: 'administration_diplome_duplicate', methods: 'GET|POST')]
     public function duplicate(Diplome $diplome): Response
     {
         $newDiplome = clone $diplome;
-
         $this->entityManager->persist($newDiplome);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'diplome.duplicate.success.flash');
@@ -101,13 +89,11 @@ class DiplomeController extends BaseController
         return $this->redirectToRoute('administration_diplome_edit', ['id' => $newDiplome->getId()]);
     }
 
-    /**
-     * @Route("/{id}", name="administration_diplome_delete", methods="DELETE")
-     */
+    #[Route(path: '/{id}', name: 'administration_diplome_delete', methods: 'DELETE')]
     public function delete(Request $request, Diplome $diplome): Response
     {
         $id = $diplome->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token')) &&
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token')) &&
             0 === count($diplome->getAnnees()) &&
             0 === count($diplome->getSemestres()) &&
             0 === count($diplome->getPpns()) &&
@@ -122,7 +108,6 @@ class DiplomeController extends BaseController
 
             return $this->json($id, Response::HTTP_OK);
         }
-
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'diplome.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);

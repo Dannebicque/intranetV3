@@ -20,21 +20,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/apc/competence")
- */
+#[Route(path: '/apc/competence')]
 class ApcCompetenceController extends BaseController
 {
-    /**
-     * @Route("/{diplome}/export.{_format}", name="administration_apc_competence_export", methods="GET",
-     *                             requirements={"_format"="csv|xlsx|pdf"})
-     */
-    public function export(
-        MyExport $myExport,
-        ApcComptenceRepository $apcComptenceRepository,
-        Diplome $diplome,
-        $_format
-    ): Response {
+    #[Route(path: '/{diplome}/export.{_format}', name: 'administration_apc_competence_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
+    public function export(MyExport $myExport, ApcComptenceRepository $apcComptenceRepository, Diplome $diplome, $_format): Response
+    {
         $actualites = $apcComptenceRepository->findByDiplome($diplome);
 
         return $myExport->genereFichierGenerique(
@@ -46,15 +37,12 @@ class ApcCompetenceController extends BaseController
         );
     }
 
-    /**
-     * @Route("/{diplome}/new", name="administration_apc_competence_new", methods={"GET","POST"})
-     */
+    #[Route(path: '/{diplome}/new', name: 'administration_apc_competence_new', methods: ['GET', 'POST'])]
     public function new(Request $request, Diplome $diplome): Response
     {
         $apcComptence = new ApcCompetence($diplome);
         $form = $this->createForm(ApcCompetenceType::class, $apcComptence);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($apcComptence);
             $this->entityManager->flush();
@@ -70,9 +58,7 @@ class ApcCompetenceController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}/detail", name="administration_apc_competence_show", methods={"GET"})
-     */
+    #[Route(path: '/{id}/detail', name: 'administration_apc_competence_show', methods: ['GET'])]
     public function show(ApcCompetence $apcCompetence): Response
     {
         return $this->render('apc/apc_competence/show.html.twig', [
@@ -80,14 +66,11 @@ class ApcCompetenceController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="administration_apc_competence_edit", methods={"GET","POST"})
-     */
+    #[Route(path: '/{id}/edit', name: 'administration_apc_competence_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, ApcCompetence $apcCompetence): Response
     {
         $form = $this->createForm(ApcCompetenceType::class, $apcCompetence);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.competence.edit.success.flash');
@@ -102,34 +85,30 @@ class ApcCompetenceController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="administration_apc_competence_delete", methods={"DELETE"})
-     */
+    #[Route(path: '/{id}', name: 'administration_apc_competence_delete', methods: ['DELETE'])]
     public function delete(Request $request, ApcCompetence $apcCompetence): Response
     {
         $diplome = $apcCompetence->getDiplome();
-
-        if ($this->isCsrfTokenValid('delete' . $apcCompetence->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$apcCompetence->getId(), $request->request->get('_token'))) {
             $this->entityManager->remove($apcCompetence);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.competence.delete.success.flash');
         }
-
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'apc.competence.delete.error.flash');
 
-        return $this->redirectToRoute('administration_apc_referentiel_index',
-            [
-                'diplome' => $diplome->getId(),
-            ]);
+        if (null !== $diplome) {
+            return $this->redirectToRoute('administration_apc_referentiel_index',
+                [
+                    'diplome' => $diplome->getId(),
+                ]);
+        }
+        return $this->redirectToRoute('administration_index');
     }
 
-    /**
-     * @Route("/{id}/duplicate", name="administration_apc_competence_duplicate", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/duplicate', name: 'administration_apc_competence_duplicate', methods: 'GET|POST')]
     public function duplicate(ApcCompetence $apcCompetence): Response
     {
         $newApcCompetence = clone $apcCompetence;
-
         $this->entityManager->persist($newApcCompetence);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.competence.duplicate.success.flash');

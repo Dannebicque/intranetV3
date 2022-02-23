@@ -12,15 +12,15 @@ namespace App\Controller;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyEvaluations;
 use App\Entity\Evaluation;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
 
 /**
  * Class ActualiteController.
- *
- * @Route("/graphiques")
  */
+#[Route(path: '/graphiques')]
 class GraphiqueController extends BaseController
 {
     public function evaluation(
@@ -29,7 +29,7 @@ class GraphiqueController extends BaseController
         ChartBuilderInterface $chartBuilder,
         Evaluation $evaluation,
         $repartition = null
-    ) {
+    ): Response {
         $matiere = $typeMatiereManager->getMatiere($evaluation->getIdMatiere(), $evaluation->getTypeMatiere());
         if (null !== $matiere && null === $repartition) {
             $myEvaluations->setMatiere($matiere);

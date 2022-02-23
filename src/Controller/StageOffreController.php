@@ -15,14 +15,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class StageOffreController.
- *
- * @Route("/application/stage/offres")
  */
+#[Route(path: '/application/stage/offres')]
 class StageOffreController extends BaseController
 {
-    /**
-     * @Route("/", name="stage_offre_stage_index")
-     */
+    #[Route(path: '/', name: 'stage_offre_stage_index')]
     public function index(StagePeriodeOffreRepository $stagePeriodeOffreRepository): Response
     {
         return $this->render('stage_offre/index.html.twig', [

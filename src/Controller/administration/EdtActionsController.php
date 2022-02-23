@@ -23,46 +23,33 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class EdtController.
- *
- * @Route("/administration/emploi-du-temps/Actions")
  */
+#[Route(path: '/administration/emploi-du-temps/Actions')]
 class EdtActionsController extends BaseController
 {
     /**
-     * @Route("/uploadsemaine", name="administration_edt_action_upload")
-     *
      * @return RedirectResponse
      *
      * @throws Exception
      */
-    public function uploadSemaine(
-        Request $request,
-        MyEdtImport $myEdtImport
-    ): ?RedirectResponse {
+    #[Route(path: '/uploadsemaine', name: 'administration_edt_action_upload')]
+    public function uploadSemaine(Request $request, MyEdtImport $myEdtImport): ?RedirectResponse
+    {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_EDT', $this->getDepartement());
         //récupérer le fichier
         $myEdtImport->init($request->files->get('fichieredt'), $this->dataUserSession)->traite();
-
         /* fin necessaire ? */
         $s = $myEdtImport->getCalendrier();
-
         if ($s) {
             return $this->redirectToRoute('administration_edt_index',
                 ['semaine' => $s->getSemaineReelle(), 'valeur' => $myEdtImport->getSemestre(), 'filtre' => 'promo']);
         }
-
         //pas de semaine trouvée
         return $this->redirectToRoute('administration_edt_index');
     }
 
-    /**
-     * @Route("/ajout", name="administration_edt_add_cours", methods={"POST"})
-     */
-    public function addCours(
-        Request $request,
-        EdtPlanningRepository $edtPlanningRepository,
-        MyEdtIntranet $myEdt
-    ): RedirectResponse
+    #[Route(path: '/ajout', name: 'administration_edt_add_cours', methods: ['POST'])]
+    public function addCours(Request $request, EdtPlanningRepository $edtPlanningRepository, MyEdtIntranet $myEdt): RedirectResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_EDT', $this->getDepartement());
         $pl = null;
@@ -82,9 +69,7 @@ class EdtActionsController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/get-event/{id}", name="administration_edt_get_event", options={"expose"=true})
-     */
+    #[Route(path: '/get-event/{id}', name: 'administration_edt_get_event', options: ['expose' => true])]
     public function getEvent(EdtPlanning $edtPlanning): JsonResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_EDT', $edtPlanning->getSemestre());
@@ -92,13 +77,10 @@ class EdtActionsController extends BaseController
         return $this->json($edtPlanning->getJson(), Response::HTTP_OK);
     }
 
-    /**
-     * @Route("/delete/{id}", name="administration_edt_delete", options={"expose"=true})
-     */
+    #[Route(path: '/delete/{id}', name: 'administration_edt_delete', options: ['expose' => true])]
     public function delete(Request $request, EdtPlanning $edtPlanning): JsonResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_EDT', $edtPlanning->getSemestre());
-
         $this->entityManager->remove($edtPlanning);
         $this->entityManager->flush();
 

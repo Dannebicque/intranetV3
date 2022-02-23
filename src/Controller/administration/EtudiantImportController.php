@@ -21,6 +21,9 @@ class EtudiantImportController extends BaseController
 {
     //todo: a finaliser ou inutile ?
 
+    /**
+     * @throws \Exception
+     */
     #[Route('/liste_csv', name: 'administration_etudiant_import_liste_csv')]
     public function listeCsv(
         Request $request,
@@ -33,5 +36,6 @@ class EtudiantImportController extends BaseController
         $fichier = $myUpload->upload($request->files->get('fichierimportcsv'), 'temp');
         $etudiantImport->importFomCsv($fichier);
 
+        return $this->redirectToRoute('administration_etudiant_import_liste_csv'); //page de synthèse ? ou nouvel import ?
     }
 }

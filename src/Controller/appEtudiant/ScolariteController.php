@@ -16,18 +16,15 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class ScolariteController.
- *
- * @Route("/application/etudiant/scolarite")
  */
+#[Route(path: '/application/etudiant/scolarite')]
 class ScolariteController extends BaseController
 {
-    /**
-     * @Route("/details/{id}", name="app_etudiant_scolarite_detail")
-     */
+    #[Route(path: '/details/{id}', name: 'app_etudiant_scolarite_detail')]
     public function details(Scolarite $scolarite): Response
     {
         return $this->render('appEtudiant/scolarite/detail.html.twig', [
-            'etudiant'  => $scolarite->getEtudiant(),
+            'etudiant' => $scolarite->getEtudiant(),
             'scolarite' => $scolarite,
         ]);
     }

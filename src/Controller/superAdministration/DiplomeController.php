@@ -15,6 +15,7 @@ use App\Entity\Constantes;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Form\DiplomeType;
+use function count;
 use Exception;
 use RuntimeException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -23,16 +24,11 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use function count;
 
-/**
- * @Route("/administratif/structure/diplome")
- */
+#[Route(path: '/administratif/structure/diplome')]
 class DiplomeController extends BaseController
 {
-    /**
-     * @Route("/new/{departement}", name="sa_diplome_new", methods="GET|POST")
-     */
+    #[Route(path: '/new/{departement}', name: 'sa_diplome_new', methods: 'GET|POST')]
     public function create(Request $request, Departement $departement): Response
     {
         $diplome = new Diplome($departement);
@@ -42,7 +38,6 @@ class DiplomeController extends BaseController
             ],
         ]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($diplome);
             $this->entityManager->flush();
@@ -58,44 +53,34 @@ class DiplomeController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/export-referentiel/{id}", name="sa_diplome_export_referentiel", methods="GET")
-     */
+    #[Route(path: '/export-referentiel/{id}', name: 'sa_diplome_export_referentiel', methods: 'GET')]
     public function exportReferentiel(DiplomeExport $diplomeExport, Diplome $diplome): Response
     {
         return $diplomeExport->exportRefentiel($diplome);
     }
 
-    /**
-     * @Route("/export-maquette-apogee/{id}", name="sa_diplome_export_maquette_apogee", methods="GET")
-     */
+    #[Route(path: '/export-maquette-apogee/{id}', name: 'sa_diplome_export_maquette_apogee', methods: 'GET')]
     public function exportMaquetteApogee(DiplomeExport $diplomeExport, Diplome $diplome): Response
     {
         return $diplomeExport->exportMaquetteApogee($diplome);
     }
 
-    /**
-     * @Route("/export-programme/{id}", name="sa_diplome_export_programme", methods="GET")
-     */
+    #[Route(path: '/export-programme/{id}', name: 'sa_diplome_export_programme', methods: 'GET')]
     public function exportProgramme(DiplomeExport $diplomeExport, Diplome $diplome): Response
     {
         return $diplomeExport->exportProgramme($diplome);
     }
 
-    /**
-     * @Route("/{id}", name="sa_diplome_show", methods="GET")
-     */
+    #[Route(path: '/{id}', name: 'sa_diplome_show', methods: 'GET')]
     public function show(Diplome $diplome): Response
     {
         return $this->render('structure/diplome/show.html.twig', ['diplome' => $diplome]);
     }
 
-
     /**
-     * @Route("/{id}/edit", name="sa_diplome_edit", methods="GET|POST")
-     *
      * @throws Exception
      */
+    #[Route(path: '/{id}/edit', name: 'sa_diplome_edit', methods: 'GET|POST')]
     public function edit(Request $request, Diplome $diplome): Response
     {
         if (null !== $diplome->getDepartement()) {
@@ -116,23 +101,20 @@ class DiplomeController extends BaseController
 
             return $this->render('structure/diplome/edit.html.twig', [
                 'diplome' => $diplome,
-                'form'    => $form->createView(),
+                'form' => $form->createView(),
             ]);
         }
-
         throw new RuntimeException('Le diplôme n\'est pas attaché à un département');
     }
 
     /**
-     * @Route("/{id}/edit-ajax", name="sa_diplome_edit_ajax", methods="POST", options={"expose":true})
-     *
      * @throws Exception
      */
+    #[Route(path: '/{id}/edit-ajax', name: 'sa_diplome_edit_ajax', options: ['expose' => true], methods: 'POST')]
     public function editAjax(Request $request, Diplome $diplome): Response
     {
         $name = $request->request->get('field');
         $value = $request->request->get('value');
-
         $update = $diplome->update($name, $value);
         $this->entityManager->flush();
 
@@ -140,14 +122,11 @@ class DiplomeController extends BaseController
             Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * @Route("/{id}/duplicate", name="sa_diplome_duplicate", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/duplicate', name: 'sa_diplome_duplicate', methods: 'GET|POST')]
     public function duplicate(Diplome $diplome): Response
     {
         $newDiplome = clone $diplome;
-        $newDiplome->setLibelle($newDiplome->getLibelle() . ' copie');
-
+        $newDiplome->setLibelle($newDiplome->getLibelle().' copie');
         $this->entityManager->persist($newDiplome);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'diplome.duplicate.success.flash');
@@ -155,13 +134,11 @@ class DiplomeController extends BaseController
         return $this->redirectToRoute('sa_diplome_edit', ['id' => $newDiplome->getId()]);
     }
 
-    /**
-     * @Route("/{id}", name="sa_diplome_delete", methods="DELETE")
-     */
+    #[Route(path: '/{id}', name: 'sa_diplome_delete', methods: 'DELETE')]
     public function delete(Request $request, Diplome $diplome): Response
     {
         $id = $diplome->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             if (0 === count($diplome->getAnnees())) {
                 $this->entityManager->remove($diplome);
                 $this->entityManager->flush();
@@ -177,21 +154,20 @@ class DiplomeController extends BaseController
 
             return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'diplome.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**
-     * @Route("/activate/{diplome}/{etat}", methods={"GET"}, name="sa_diplome_activate")
      * @IsGranted("ROLE_SUPER_ADMIN")
      */
+    #[Route(path: '/activate/{diplome}/{etat}', name: 'sa_diplome_activate', methods: ['GET'])]
     public function activate(Diplome $diplome, bool $etat): RedirectResponse
     {
         $diplome->setActif($etat);
         $this->entityManager->flush();
-        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'diplome.activate.' . $etat . '.flash');
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'diplome.activate.'.$etat.'.flash');
 
         return $this->redirectToRoute('super_admin_homepage');
     }

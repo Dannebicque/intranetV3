@@ -22,26 +22,15 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class EdtRealiseController.
- *
- * @Route("/administration/emploi-du-temps/realise")
  */
+#[Route(path: '/administration/emploi-du-temps/realise')]
 class EdtRealiseController extends BaseController
 {
-    protected EdtPlanningRepository $edtPlanningRepository;
-
-    protected CalendrierRepository $calendrierRepository;
-
-    public function __construct(
-        EdtPlanningRepository $edtPlanningRepository,
-        CalendrierRepository $calendrierRepository
-    ) {
-        $this->edtPlanningRepository = $edtPlanningRepository;
-        $this->calendrierRepository = $calendrierRepository;
+    public function __construct(protected EdtPlanningRepository $edtPlanningRepository, protected CalendrierRepository $calendrierRepository)
+    {
     }
 
-    /**
-     * @Route("", name="administration_edt_service_realise", methods={"GET"})
-     */
+    #[Route(path: '', name: 'administration_edt_service_realise', methods: ['GET'])]
     public function index(TypeMatiereManager $typeMatiereManager, PersonnelRepository $personnelRepository): Response
     {
         $personnels = $personnelRepository->findByDepartement($this->dataUserSession->getDepartement());
@@ -53,21 +42,15 @@ class EdtRealiseController extends BaseController
     }
 
     /**
-     * @Route("/service-realise/{matiere}/{personnel}", name="administration_edt_service_realise_affiche",
-     *                                                             options={"expose"=true}, methods={"POST","GET"})
+     * @throws \App\Exception\MatiereNotFoundException
      */
-    public function serviceRealisePersonnelMatiere(
-        TypeMatiereManager $typeMatiereManager,
-        MyEdtCompare $myEdtCompare,
-        $matiere,
-        Personnel $personnel
-    ): Response {
+    #[Route(path: '/service-realise/{matiere}/{personnel}', name: 'administration_edt_service_realise_affiche', options: ['expose' => true], methods: ['POST', 'GET'])]
+    public function serviceRealisePersonnelMatiere(TypeMatiereManager $typeMatiereManager, MyEdtCompare $myEdtCompare, $matiere, Personnel $personnel): Response
+    {
         $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
-
         if (null === $mat) {
             throw new MatiereNotFoundException();
         }
-
         $t = $myEdtCompare->realise($mat, $personnel, $this->dataUserSession->getAnneePrevisionnel());
 
         return $this->render('administration/edtRealise/_detailPersonnelMatiere.html.twig', [

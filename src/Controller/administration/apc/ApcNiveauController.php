@@ -20,31 +20,23 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/apc/niveau")
- */
+#[Route(path: '/apc/niveau')]
 class ApcNiveauController extends BaseController
 {
-    /**
-     * @Route("/{diplome}/synchro-niveau-annee", name="administration_apc_niveau_annee_synchro", methods="GET")
-     */
-    public function synchroNiveauAnnee(
-        ApcNiveauRepository $apcNiveauRepository,
-        Diplome $diplome,
-    ): Response {
+    #[Route(path: '/{diplome}/synchro-niveau-annee', name: 'administration_apc_niveau_annee_synchro', methods: 'GET')]
+    public function synchroNiveauAnnee(ApcNiveauRepository $apcNiveauRepository, Diplome $diplome): Response
+    {
         $annees = $diplome->getAnnees();
         $t = [];
         foreach ($annees as $annee) {
             $t[$annee->getOrdre()] = $annee;
         }
-
         $niveaux = $apcNiveauRepository->findByDiplome($diplome);
         foreach ($niveaux as $niveau) {
             if (array_key_exists($niveau->getOrdre(), $t)) {
                 $niveau->setAnnee($t[$niveau->getOrdre()]);
             }
         }
-
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Synchronisation effectuée');
 
@@ -53,15 +45,12 @@ class ApcNiveauController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{competence}/new", name="administration_apc_niveau_new", methods={"GET","POST"})
-     */
+    #[Route(path: '/{competence}/new', name: 'administration_apc_niveau_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ApcCompetence $competence): Response
     {
         $apcNiveau = new ApcNiveau($competence);
         $form = $this->createForm(ApcNiveauType::class, $apcNiveau);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($apcNiveau);
             $this->entityManager->flush();
@@ -77,14 +66,11 @@ class ApcNiveauController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="administration_apc_niveau_edit", methods={"GET","POST"})
-     */
+    #[Route(path: '/{id}/edit', name: 'administration_apc_niveau_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, ApcNiveau $apcNiveau): Response
     {
         $form = $this->createForm(ApcNiveauType::class, $apcNiveau);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.niveau.edit.success.flash');
@@ -99,14 +85,11 @@ class ApcNiveauController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="administration_apc_niveau_delete", methods={"DELETE"})
-     */
+    #[Route(path: '/{id}', name: 'administration_apc_niveau_delete', methods: ['DELETE'])]
     public function delete(Request $request, ApcNiveau $apcNiveau): Response
     {
         $competence = $apcNiveau->getCompetence();
-
-        if ($this->isCsrfTokenValid('delete' . $apcNiveau->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$apcNiveau->getId(), $request->request->get('_token'))) {
             $this->entityManager->remove($apcNiveau);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.niveau.delete.success.flash');

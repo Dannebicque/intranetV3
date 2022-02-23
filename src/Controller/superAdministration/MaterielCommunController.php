@@ -19,14 +19,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/administratif/materiel/commun")
- */
+#[Route(path: '/administratif/materiel/commun')]
 class MaterielCommunController extends BaseController
 {
-    /**
-     * @Route("/", name="sa_materiel_commun_index", methods={"GET"})
-     */
+    #[Route(path: '/', name: 'sa_materiel_commun_index', methods: ['GET'])]
     public function index(MaterielCommunRepository $materielCommunRepository): Response
     {
         return $this->render('super-administration/materiel_commun/index.html.twig', [
@@ -34,11 +30,7 @@ class MaterielCommunController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/export.{_format}", name="sa_materiel_commun_export", methods="GET",
-     *                             requirements={"_format"="csv|xlsx|pdf"})
-     *
-     */
+    #[Route(path: '/export.{_format}', name: 'sa_materiel_commun_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
     public function export(MyExport $myExport, MaterielCommunRepository $materielCommunRepository, $_format): Response
     {
         $materielsCommuns = $materielCommunRepository->findAll();
@@ -52,15 +44,12 @@ class MaterielCommunController extends BaseController
         );
     }
 
-    /**
-     * @Route("/new", name="sa_materiel_commun_new", methods={"GET","POST"})
-     */
+    #[Route(path: '/new', name: 'sa_materiel_commun_new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
     {
         $materielCommun = new MaterielCommun();
         $form = $this->createForm(MaterielCommunType::class, $materielCommun);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($materielCommun);
             $this->entityManager->flush();
@@ -71,13 +60,11 @@ class MaterielCommunController extends BaseController
 
         return $this->render('super-administration/materiel_commun/new.html.twig', [
             'materiel_commun' => $materielCommun,
-            'form'            => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="sa_materiel_commun_show", methods={"GET"})
-     */
+    #[Route(path: '/{id}', name: 'sa_materiel_commun_show', methods: ['GET'])]
     public function show(MaterielCommun $materielCommun): Response
     {
         return $this->render('super-administration/materiel_commun/show.html.twig', [
@@ -85,14 +72,11 @@ class MaterielCommunController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="sa_materiel_commun_edit", methods={"GET","POST"})
-     */
+    #[Route(path: '/{id}/edit', name: 'sa_materiel_commun_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, MaterielCommun $materielCommun): Response
     {
         $form = $this->createForm(MaterielCommunType::class, $materielCommun);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'materiel_commun.edit.success.flash');
@@ -102,17 +86,14 @@ class MaterielCommunController extends BaseController
 
         return $this->render('super-administration/materiel_commun/edit.html.twig', [
             'materiel_commun' => $materielCommun,
-            'form'            => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/{id}/duplicate", name="sa_materiel_commun_duplicate", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/duplicate', name: 'sa_materiel_commun_duplicate', methods: 'GET|POST')]
     public function duplicate(MaterielCommun $materielCommun): Response
     {
         $newMaterielCommun = clone $materielCommun;
-
         $this->entityManager->persist($newMaterielCommun);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'materiel_commun.duplicate.success.flash');
@@ -120,13 +101,11 @@ class MaterielCommunController extends BaseController
         return $this->redirectToRoute('sa_materiel_commun_edit', ['id' => $newMaterielCommun->getId()]);
     }
 
-    /**
-     * @Route("/{id}", name="sa_materiel_commun_delete", methods="DELETE")
-     */
+    #[Route(path: '/{id}', name: 'sa_materiel_commun_delete', methods: 'DELETE')]
     public function delete(Request $request, MaterielCommun $materielCommun): Response
     {
         $id = $materielCommun->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $this->entityManager->remove($materielCommun);
             $this->entityManager->flush();
 

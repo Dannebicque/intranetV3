@@ -21,10 +21,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route("/administration/bornes")]
+#[Route('/administration/bornes')]
 class BorneController extends BaseController
 {
-    #[Route("/", name: "administration_borne_index", methods: ['GET', 'POST'])]
+    /**
+     * @throws \JsonException
+     */
+    #[Route('/', name: 'administration_borne_index', methods: ['GET', 'POST'])]
     public function index(Request $request): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
@@ -43,14 +46,10 @@ class BorneController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/export.{_format}", name="administration_borne_export", methods="GET",
-     *                             requirements={"_format"="csv|xlsx|pdf"})
-     */
+    #[Route(path: '/export.{_format}', name: 'administration_borne_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
     public function export(MyExport $myExport, BorneRepository $borneRepository, $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
-
         $bornes = $borneRepository->findByDepartement($this->dataUserSession->getDepartement(), 0);
 
         return $myExport->genereFichierGenerique(
@@ -62,13 +61,10 @@ class BorneController extends BaseController
         );
     }
 
-    /**
-     * @Route("/{id}/duplicate", name="administration_borne_duplicate", methods="GET")
-     */
+    #[Route(path: '/{id}/duplicate', name: 'administration_borne_duplicate', methods: 'GET')]
     public function duplicate(Borne $borne): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $borne->getSemestres()[0]);
-
         $newBorne = clone $borne;
         $this->entityManager->persist($newBorne);
         $this->entityManager->flush();
@@ -77,9 +73,7 @@ class BorneController extends BaseController
         return $this->redirectToRoute('administration_borne_edit', ['id' => $newBorne->getId()]);
     }
 
-    /**
-     * @Route("/new", name="administration_borne_new", methods="GET|POST")
-     */
+    #[Route(path: '/new', name: 'administration_borne_new', methods: 'GET|POST')]
     public function create(Request $request): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
@@ -95,7 +89,6 @@ class BorneController extends BaseController
             ]
         );
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($borne);
             $this->entityManager->flush();
@@ -110,18 +103,15 @@ class BorneController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="administration_borne_show", methods="GET")
-     */
+    #[Route(path: '/{id}', name: 'administration_borne_show', methods: 'GET')]
     public function show(Borne $borne): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $borne->getSemestres()[0]);
+
         return $this->render('administration/borne/show.html.twig', ['borne' => $borne]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="administration_borne_edit", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/edit', name: 'administration_borne_edit', methods: 'GET|POST')]
     public function edit(Request $request, Borne $borne): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $borne->getSemestres()[0]);
@@ -136,7 +126,6 @@ class BorneController extends BaseController
             ]
         );
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'borne.edit.success.flash');
@@ -153,14 +142,12 @@ class BorneController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="administration_borne_delete", methods="DELETE|POST")
-     */
+    #[Route(path: '/{id}', name: 'administration_borne_delete', methods: 'DELETE|POST')]
     public function delete(Request $request, Borne $borne): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $borne->getSemestres()[0]);
         $id = $borne->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $this->entityManager->remove($borne);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'borne.delete.success.flash');
@@ -172,9 +159,7 @@ class BorneController extends BaseController
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * @Route("/visibilite/{id}", name="administration_borne_visibilite", options={"expose"=true})
-     */
+    #[Route(path: '/visibilite/{id}', name: 'administration_borne_visibilite', options: ['expose' => true])]
     public function visibilite(Borne $borne): JsonResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $borne->getSemestres()[0]);

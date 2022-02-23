@@ -12,34 +12,29 @@ namespace App\Controller\administration\structure;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Departement;
+use function count;
 use Symfony\Component\Form\Exception\LogicException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use function count;
 
-/**
- * @Route("/administration/structure/departement")
- */
+#[Route(path: '/administration/structure/departement')]
 class DepartementController extends BaseController
 {
-    /**
-     * @Route("/{id}", name="administration_departement_show", methods="GET")
-     */
+    #[Route(path: '/{id}', name: 'administration_departement_show', methods: 'GET')]
     public function show(Departement $departement): Response
     {
         return $this->render('structure/departement/show.html.twig', ['departement' => $departement]);
     }
 
     /**
-     * @Route("/{id}/edit", name="administration_departement_edit", methods="GET|POST")
-     *
      * @throws LogicException
      */
+    #[Route(path: '/{id}/edit', name: 'administration_departement_edit', methods: 'GET|POST')]
     public function delete(Request $request, Departement $departement): Response
     {
         $id = $departement->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token')) &&
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token')) &&
             0 === count($departement->getDiplomes()) &&
             0 === count($departement->getHrs()) &&
             0 === count($departement->getEtudiants()) &&
@@ -57,7 +52,6 @@ class DepartementController extends BaseController
 
             return $this->json($id, Response::HTTP_OK);
         }
-
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'departement.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);

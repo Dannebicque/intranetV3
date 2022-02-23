@@ -9,10 +9,7 @@
 
 namespace App\Controller;
 
-use App\Repository\ActualiteRepository;
-use App\Repository\DateRepository;
 use App\Repository\DepartementRepository;
-use App\Repository\TypeGroupeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

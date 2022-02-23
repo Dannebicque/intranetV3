@@ -13,7 +13,6 @@ use App\Classes\MyDocument;
 use App\Entity\Document;
 use App\Repository\DocumentRepository;
 use App\Repository\TypeDocumentRepository;
-use App\Utils\JsonRequest;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,7 +34,7 @@ class DocumentController extends BaseController
 
         return $this->render('document/_typedocument.html.twig', [
             'typedocuments' => $typeDocuments,
-            'nbDocumentsFavoris' => count($this->getUser()->getDocumentsFavoris()),
+            'nbDocumentsFavoris' => is_countable($this->getUser()->getDocumentsFavoris()) ? count($this->getUser()->getDocumentsFavoris()) : 0,
         ]);
     }
 

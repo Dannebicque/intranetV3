@@ -12,8 +12,7 @@ namespace App\Controller\administration;
 use App\Classes\Configuration;
 use App\Classes\Matieres\MatiereDelete;
 use App\Classes\Matieres\TypeMatiereManager;
-use App\Components\Exporter\ExporterManager;
-use App\Components\Exporter\SourceIterator\DtoSourceIterator;
+use App\Components\DeprecatedExporter\SourceIterator\DtoSourceIterator;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Diplome;
@@ -51,10 +50,8 @@ class MatiereController extends BaseController
         ApcRessourceRepository $apcRessourceRepository,
         ApcSaeRepository $apcSaeRepository,
         Diplome $diplome
-    ): Response
-    {
+    ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $diplome);
-
 
         //feature: A optimiser pour pas dépendre des repository??
         if (null !== $diplome->getTypeDiplome() && true === $diplome->getTypeDiplome()->getApc()) {
@@ -77,18 +74,16 @@ class MatiereController extends BaseController
         options: ['expose' => true],
         methods: ['GET'])]
     public function export(
-        ExporterManager $exporter,
         TypeMatiereManager $typeMatiereManager,
         Diplome $diplome,
         $_format
-    ): Response
-    {
+    ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $diplome);
 
         $matieres = $typeMatiereManager->findByDiplome($diplome);
-        $datas = new DtoSourceIterator($matieres, \App\DTO\Matiere::class, $matieres);
-
-        return $exporter->export($datas, $_format, 'matieres');
+//        $datas = new DtoSourceIterator($matieres, \App\DTO\Matiere::class, $matieres);
+//
+//        return $exporter->export($datas, $_format, 'matieres');
     }
 
 //    public function export(
@@ -125,7 +120,7 @@ class MatiereController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $diplome);
 
-        if (true === (bool)($configuration->get('MODIFICATION_PPN'))) {
+        if (true === (bool) ($configuration->get('MODIFICATION_PPN'))) {
             $matiere = new Matiere();
             $form = $this->createForm(MatiereType::class, $matiere, [
                 'diplome' => $diplome,
@@ -164,8 +159,7 @@ class MatiereController extends BaseController
     public function ajaxEdit(
         Request $request,
         Matiere $matiere
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $matiere->getSemestre());
 
         $name = $request->request->get('field');
@@ -182,8 +176,7 @@ class MatiereController extends BaseController
     public function changeParcours(
         Matiere $matiere,
         ?Parcour $parcours = null
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $matiere->getSemestre());
 
         $matiere->setParcours($parcours);
@@ -196,8 +189,7 @@ class MatiereController extends BaseController
     public function changeUe(
         Matiere $matiere,
         ?Ue $ue = null
-    ): JsonResponse
-    {
+    ): JsonResponse {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $matiere->getSemestre());
 
         $matiere->setUe($ue);
@@ -206,13 +198,12 @@ class MatiereController extends BaseController
         return new JsonResponse('', Response::HTTP_OK);
     }
 
-
     #[Route('/{id}/edit', name: 'administration_matiere_edit', methods: ['GET', 'POST'])]
     public function edit(Configuration $configuration, Request $request, Matiere $matiere): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $matiere->getSemestre());
 
-        if (true === (bool)($configuration->get('MODIFICATION_PPN'))) {
+        if (true === (bool) ($configuration->get('MODIFICATION_PPN'))) {
             $form = $this->createForm(MatiereType::class, $matiere, [
                 'diplome' => $matiere->getSemestre()->getAnnee()->getDiplome(),
                 'attr' => [
@@ -243,7 +234,7 @@ class MatiereController extends BaseController
     public function duplicate(Configuration $configuration, Matiere $matiere): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $matiere->getSemestre());
-        if (true === (bool)($configuration->get('MODIFICATION_PPN'))) {
+        if (true === (bool) ($configuration->get('MODIFICATION_PPN'))) {
             $newMatiere = clone $matiere;
 
             $this->entityManager->persist($newMatiere);
@@ -261,12 +252,11 @@ class MatiereController extends BaseController
         MatiereDelete $matiereDelete,
         Request $request,
         Matiere $matiere
-    )
-    {
+    ): JsonResponse {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $matiere->getSemestre());
 
         $id = $matiere->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $rep = $matiereDelete->delete($matiere);
 
             if (true === $rep) {

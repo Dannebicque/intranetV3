@@ -23,14 +23,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class InformationController.
- *
- * @Route("/information")
  */
+#[Route(path: '/information')]
 class InformationController extends BaseController
 {
-    /**
-     * @Route("", name="informations_index")
-     */
+    #[Route(path: '', name: 'informations_index')]
     public function index(): Response
     {
         return $this->render('information/index.html.twig', [
@@ -38,24 +35,16 @@ class InformationController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/categorie/{categorie}/{page}", name="information_categorie", options={"expose":true})
-     */
-    public function categorie(
-        MyPagination $myPagination,
-        ArticleRepository $articleRepository,
-        ArticleCategorie $categorie,
-        int $page = 1
-    ): Response {
+    #[Route(path: '/categorie/{categorie}/{page}', name: 'information_categorie', options: ['expose' => true])]
+    public function categorie(MyPagination $myPagination, ArticleRepository $articleRepository, ArticleCategorie $categorie, int $page = 1): Response
+    {
         $articles = $articleRepository->findByTypeDepartementBuilder($categorie->getId(),
             $this->getDepartement(), $this->isEtudiant());
-
         $myPagination->calculPagination(
             $articles,
             ['path' => 'information_categorie', 'args' => ['categorie' => $categorie->getId()]],
             $page
         );
-
         $mesArticles = [];
         foreach ($this->getUser()->getArticlesLike() as $like) {
             if (null !== $like->getArticle()) {
@@ -70,9 +59,9 @@ class InformationController extends BaseController
     }
 
     /**
-     * @Route("/show/{slug}", name="information_read_more")
      * @ParamConverter("article", options={"mapping": {"slug": "slug"}})
      */
+    #[Route(path: '/show/{slug}', name: 'information_read_more')]
     public function show(Article $article): Response
     {
         $like = false;
@@ -90,9 +79,9 @@ class InformationController extends BaseController
     }
 
     /**
-     * @Route("/like/{slug}", name="information_like", options={"expose":true})
      * @ParamConverter("article", options={"mapping": {"slug": "slug"}})
      */
+    #[Route(path: '/like/{slug}', name: 'information_like', options: ['expose' => true])]
     public function like(MyArticle $myArticle, Article $article): JsonResponse
     {
         $myArticle->setArticle($article)->saveLike($this->getUser());

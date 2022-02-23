@@ -23,6 +23,9 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/administration/actualites', name: 'administration_actualite_')]
 class ActualiteController extends BaseController
 {
+    /**
+     * @throws \JsonException
+     */
     #[Route('/', name: 'index', options: ['expose' => true], methods: ['GET', 'POST'])]
     public function index(
         Request $request
@@ -133,7 +136,7 @@ class ActualiteController extends BaseController
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $actualite->getDepartement());
 
         $id = $actualite->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $this->entityManager->remove($actualite);
             $this->entityManager->flush();
             $this->addFlashBag(

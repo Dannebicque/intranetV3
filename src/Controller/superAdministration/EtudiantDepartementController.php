@@ -19,29 +19,24 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class PersonnelDepartementController.
- *
- * @Route("/administratif/departement/etudiant")
  */
+#[Route(path: '/administratif/departement/etudiant')]
 class EtudiantDepartementController extends BaseController
 {
-    /**
-     * @Route("/{departement}", name="sa_etudiant_departement_index")
-     */
+    #[Route(path: '/{departement}', name: 'sa_etudiant_departement_index')]
     public function index(Departement $departement): Response
     {
         return $this->render('super-administration/etudiant_departement/index.html.twig', [
-            'etudiants'   => $departement->getEtudiants(),
+            'etudiants' => $departement->getEtudiants(),
             'departement' => $departement,
         ]);
     }
 
-    /**
-     * @Route("/remove/{id}", name="sa_etudiant_remove", methods="DELETE")
-     */
+    #[Route(path: '/remove/{id}', name: 'sa_etudiant_remove', methods: 'DELETE')]
     public function delete(Request $request, Etudiant $etudiant): Response
     {
         $id = $etudiant->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $etudiant->setDeleted(true);
             $this->entityManager->flush();
             $this->addFlashBag(
@@ -51,7 +46,6 @@ class EtudiantDepartementController extends BaseController
 
             return $this->json($id, Response::HTTP_OK);
         }
-
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'etudiant_departement.remove.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);

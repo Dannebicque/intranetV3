@@ -17,14 +17,12 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class QuizzController.
  *
- * @Route("/application/personnel/quizz")
  * @IsGranted("ROLE_PERMANENT")
  */
+#[Route(path: '/application/personnel/quizz')]
 class QuizzController extends BaseController
 {
-    /**
-     * @Route("/", name="application_personnel_quizz_index")
-     */
+    #[Route(path: '/', name: 'application_personnel_quizz_index')]
     public function index(): Response
     {
         return $this->render('appPersonnel/quizz/index.html.twig');

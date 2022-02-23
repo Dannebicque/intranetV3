@@ -21,24 +21,19 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/administration/alternance/fiche/suivi")
- */
+#[Route(path: '/administration/alternance/fiche/suivi')]
 class AlternanceFicheSuiviController extends BaseController
 {
     /**
-     * @Route("/new/{alternance}", name="administration_alternance_fiche_suivi_new", methods={"GET","POST"})
-     *
      * @throws Exception
      */
+    #[Route(path: '/new/{alternance}', name: 'administration_alternance_fiche_suivi_new', methods: ['GET', 'POST'])]
     public function new(Request $request, Alternance $alternance): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $alternance->getAnnee());
-
         $alternanceFicheSuivi = new AlternanceFicheSuivi($alternance);
         $form = $this->createForm(AlternanceFicheSuiviType::class, $alternanceFicheSuivi);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($alternanceFicheSuivi);
             $this->entityManager->flush();
@@ -49,30 +44,24 @@ class AlternanceFicheSuiviController extends BaseController
 
         return $this->render('administration/alternance_fiche_suivi/new.html.twig', [
             'alternance_fiche_suivi' => $alternanceFicheSuivi,
-            'form'                   => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
     /**
-     * @Route("/imprimer/{id}", name="administration_alternance_fiche_suivi_export", methods={"GET"})
-     *
      * @throws \Twig\Error\LoaderError
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function print(
-        MyAlternanceFicheSuivi $myAlternanceFicheSuivi,
-        AlternanceFicheSuivi $alternanceFicheSuivi
-    ): PdfResponse
+    #[Route(path: '/imprimer/{id}', name: 'administration_alternance_fiche_suivi_export', methods: ['GET'])]
+    public function print(MyAlternanceFicheSuivi $myAlternanceFicheSuivi, AlternanceFicheSuivi $alternanceFicheSuivi): PdfResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $alternanceFicheSuivi->getAlternance()?->getAnnee());
 
         return $myAlternanceFicheSuivi->print($alternanceFicheSuivi);
     }
 
-    /**
-     * @Route("/{id}", name="administration_alternance_fiche_suivi_show", methods={"GET"})
-     */
+    #[Route(path: '/{id}', name: 'administration_alternance_fiche_suivi_show', methods: ['GET'])]
     public function show(AlternanceFicheSuivi $alternanceFicheSuivi): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $alternanceFicheSuivi->getAlternance()?->getAnnee());
@@ -82,16 +71,12 @@ class AlternanceFicheSuiviController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="administration_alternance_fiche_suivi_edit", methods={"GET","POST"})
-     */
+    #[Route(path: '/{id}/edit', name: 'administration_alternance_fiche_suivi_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, AlternanceFicheSuivi $alternanceFicheSuivi): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $alternanceFicheSuivi->getAlternance()?->getAnnee());
-
         $form = $this->createForm(AlternanceFicheSuiviType::class, $alternanceFicheSuivi);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'fiche_suivi.edit.success.flash');
@@ -107,23 +92,18 @@ class AlternanceFicheSuiviController extends BaseController
 
         return $this->render('administration/alternance_fiche_suivi/edit.html.twig', [
             'alternance_fiche_suivi' => $alternanceFicheSuivi,
-            'form'                   => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="administration_alternance_fiche_suivi_delete", methods={"DELETE"})
-     */
+    #[Route(path: '/{id}', name: 'administration_alternance_fiche_suivi_delete', methods: ['DELETE'])]
     public function delete(Request $request, AlternanceFicheSuivi $alternanceFicheSuivi): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $alternanceFicheSuivi->getAlternance()?->getAnnee());
-
         $alternance = $alternanceFicheSuivi->getAlternance();
-
-        if ($this->isCsrfTokenValid('delete' . $alternanceFicheSuivi->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($alternanceFicheSuivi);
-            $entityManager->flush();
+        if ($this->isCsrfTokenValid('delete'.$alternanceFicheSuivi->getId(), $request->request->get('_token'))) {
+            $this->entityManager->remove($alternanceFicheSuivi);
+            $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'fiche_suivi.delete.success.flash');
         }
         if (null !== $alternance) {

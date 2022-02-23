@@ -17,15 +17,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class StagePeriodeSoutenanceController.
- *
- * @Route("/administration/stage/periode/soutenance")
  */
+#[Route(path: '/administration/stage/periode/soutenance')]
 class StagePeriodeSoutenanceController extends BaseController
 {
     /**
-     * @Route("/{uuid}", name="administration_stage_periode_soutenance_index")
      * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
      */
+    #[Route(path: '/{uuid}', name: 'administration_stage_periode_soutenance_index')]
     public function index(StagePeriode $stagePeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());

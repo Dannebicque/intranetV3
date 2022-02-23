@@ -20,14 +20,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/administration/categorie-documents")
- */
+#[Route(path: '/administration/categorie-documents')]
 class TypeDocumentController extends BaseController
 {
-    /**
-     * @Route("/", name="administration_type_document_index", methods="GET")
-     */
+    #[Route(path: '/', name: 'administration_type_document_index', methods: 'GET')]
     public function index(TypeDocumentRepository $typeDocumentRepository): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
@@ -38,14 +34,10 @@ class TypeDocumentController extends BaseController
         );
     }
 
-    /**
-     * @Route("/export.{_format}", name="administration_type_document_export", methods="GET",
-     *                             requirements={"_format":"pdf|csv|xlsx"})
-     */
+    #[Route(path: '/export.{_format}', name: 'administration_type_document_export', requirements: ['_format' => 'pdf|csv|xlsx'], methods: 'GET')]
     public function export(MyExport $myExport, TypeDocumentRepository $typeDocumentRepository, $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
-
         $typesDocuments = $typeDocumentRepository->findByDepartement($this->getDepartement());
 
         return $myExport->genereFichierGenerique(
@@ -60,13 +52,10 @@ class TypeDocumentController extends BaseController
         );
     }
 
-    /**
-     * @Route("/new", name="administration_type_document_new", methods="GET|POST")
-     */
+    #[Route(path: '/new', name: 'administration_type_document_new', methods: 'GET|POST')]
     public function create(Request $request): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
-
         $typeDocument = new TypeDocument($this->dataUserSession->getDepartement());
         $form = $this->createForm(TypeDocumentType::class, $typeDocument, [
             'attr' => [
@@ -74,7 +63,6 @@ class TypeDocumentController extends BaseController
             ],
         ]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($typeDocument);
             $this->entityManager->flush();
@@ -89,9 +77,7 @@ class TypeDocumentController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="administration_type_document_show", methods="GET")
-     */
+    #[Route(path: '/{id}', name: 'administration_type_document_show', methods: 'GET')]
     public function show(TypeDocument $typeDocument): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $typeDocument->getDepartement());
@@ -99,21 +85,16 @@ class TypeDocumentController extends BaseController
         return $this->render('administration/type_document/show.html.twig', ['type_document' => $typeDocument]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="administration_type_document_edit", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/edit', name: 'administration_type_document_edit', methods: 'GET|POST')]
     public function edit(Request $request, TypeDocument $typeDocument): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $typeDocument->getDepartement());
-
-
         $form = $this->createForm(TypeDocumentType::class, $typeDocument, [
             'attr' => [
                 'data-provide' => 'validation',
             ],
         ]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'type_document.edit.success.flash');
@@ -130,19 +111,12 @@ class TypeDocumentController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="administration_type_document_delete", methods="DELETE")
-     */
-    public function delete(
-        DocumentDelete $documentDelete,
-        Request $request,
-        TypeDocument $typeDocument
-    ): Response
+    #[Route(path: '/{id}', name: 'administration_type_document_delete', methods: 'DELETE')]
+    public function delete(DocumentDelete $documentDelete, Request $request, TypeDocument $typeDocument): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $typeDocument->getDepartement());
-
         $id = $typeDocument->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             foreach ($typeDocument->getDocuments() as $document) {
                 $documentDelete->deleteDocument($document);
                 if (true !== $documentDelete) {
@@ -162,15 +136,11 @@ class TypeDocumentController extends BaseController
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * @Route("/{id}/duplicate", name="administration_type_document_duplicate", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/duplicate', name: 'administration_type_document_duplicate', methods: 'GET|POST')]
     public function duplicate(TypeDocument $typeDocument): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $typeDocument->getDepartement());
-
         $newTypeDocument = clone $typeDocument;
-
         $this->entityManager->persist($newTypeDocument);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'type_document.duplicate.success.flash');

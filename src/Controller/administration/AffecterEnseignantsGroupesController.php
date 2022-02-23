@@ -17,19 +17,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class AffecterEnseignantsGroupesController.
- *
- * @Route("/administration/affecter-enseignants-groupes")
  */
+#[Route(path: '/administration/affecter-enseignants-groupes')]
 class AffecterEnseignantsGroupesController extends BaseController
 {
     /**
-     * @Route("/{semestre}", name="administration_affecter_enseignant_groupe_index", methods="GET|POST")
-     *
      * @throws Exception
      */
-    public function index(
-        Semestre $semestre
-    ): Response {
+    #[Route(path: '/{semestre}', name: 'administration_affecter_enseignant_groupe_index', methods: ['GET', 'POST'])]
+    public function index(Semestre $semestre): Response
+    {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
 
         return $this->render('administration/affecterEnseignantsGroupes/index.html.twig', [

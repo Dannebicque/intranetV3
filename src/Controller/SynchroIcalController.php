@@ -20,23 +20,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class EdtController.
- *
- * @Route("/api/synchronisation/ical")
  */
+#[Route(path: '/api/synchronisation/ical')]
 class SynchroIcalController extends AbstractController
 {
     /**
-     * @Route("/intervenant/{code}.{_format}", name="edt_intervenant_synchro_ical")
-     *
-     *
      * @throws NonUniqueResultException
      */
-    public function synchroIntervenantIcal(
-        MyEdtExport $myEdtExport,
-        PersonnelRepository $personnelRepository,
-        $code,
-        $_format
-    ): Response {
+    #[Route(path: '/intervenant/{code}.{_format}', name: 'edt_intervenant_synchro_ical')]
+    public function synchroIntervenantIcal(MyEdtExport $myEdtExport, PersonnelRepository $personnelRepository, $code, $_format): Response
+    {
         //Toutes les semaines
         $personnel = $personnelRepository->findByCode($code);
         if (null !== $personnel) {
@@ -44,8 +37,8 @@ class SynchroIcalController extends AbstractController
             $timestamp = Carbon::now();
 
             return new Response($ical, 200, [
-                'Content-Type'        => 'text/calendar; charset=utf-8',
-                'Content-Disposition' => 'inline; filename="ical' . $timestamp->format('YmdHis') . '.ics"',
+                'Content-Type' => 'text/calendar; charset=utf-8',
+                'Content-Disposition' => 'inline; filename="ical'.$timestamp->format('YmdHis').'.ics"',
             ]);
         }
 
@@ -53,25 +46,19 @@ class SynchroIcalController extends AbstractController
     }
 
     /**
-     * @Route("/etudiant/{code}.{_format}", name="edt_etudiant_synchro_ical")
-     *
-     *
      * @throws NonUniqueResultException
      */
-    public function synchroEtudiantIcal(
-        MyEdtExport $myEdtExport,
-        EtudiantRepository $etudiantRepository,
-        $code,
-        $_format
-    ): Response {
+    #[Route(path: '/etudiant/{code}.{_format}', name: 'edt_etudiant_synchro_ical')]
+    public function synchroEtudiantIcal(MyEdtExport $myEdtExport, EtudiantRepository $etudiantRepository, $code, $_format): Response
+    {
         $etudiant = $etudiantRepository->findByCode($code);
         if (null !== $etudiant) {
             $ical = $myEdtExport->export($etudiant, $_format, 'Etudiant');
             $timestamp = Carbon::now();
 
             return new Response($ical, 200, [
-                'Content-Type'        => 'text/calendar; charset=utf-8',
-                'Content-Disposition' => 'inline; filename="ical' . $timestamp->format('YmdHis') . '.ics"',
+                'Content-Type' => 'text/calendar; charset=utf-8',
+                'Content-Disposition' => 'inline; filename="ical'.$timestamp->format('YmdHis').'.ics"',
             ]);
         }
 

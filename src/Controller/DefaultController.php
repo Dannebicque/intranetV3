@@ -12,7 +12,6 @@ namespace App\Controller;
 use App\Entity\Etudiant;
 use App\Repository\ActualiteRepository;
 use App\Repository\DateRepository;
-use App\Repository\DepartementRepository;
 use App\Repository\TypeGroupeRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

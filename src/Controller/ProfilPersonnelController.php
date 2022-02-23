@@ -37,7 +37,7 @@ class ProfilPersonnelController extends BaseController
     /**
      * @ParamConverter("personnel", options={"mapping": {"slug": "slug"}})
      */
-    #[Route(path: '/profil/{slug}/about', name: 'profil_personnel_about')]
+    #[Route(path: '/profil/{slug}/a-propos', name: 'profil_personnel_about')]
     public function about(Personnel $personnel): Response
     {
         return $this->render('user/composants/_apropos.html.twig', [

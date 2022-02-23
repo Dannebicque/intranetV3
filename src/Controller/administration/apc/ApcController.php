@@ -15,22 +15,18 @@ use App\Entity\Diplome;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/apc/")
- */
+#[Route(path: '/apc/')]
 class ApcController extends BaseController
 {
-    /**
-     * @Route("referentiel/{diplome}", name="administration_apc_referentiel_index", methods={"GET"})
-     */
+    #[Route(path: 'referentiel/{diplome}', name: 'administration_apc_referentiel_index', methods: ['GET'])]
     public function referentiel(ApcStructure $apcStructure, Diplome $diplome): Response
     {
         $tParcours = $apcStructure->parcoursNiveaux($diplome);
 
         return $this->render('apc/referentiel.html.twig', [
-            'diplome'         => $diplome,
-            'competences'     => $diplome->getApcComptences(),
-            'parcours'        => $diplome->getApcParcours(),
+            'diplome' => $diplome,
+            'competences' => $diplome->getApcComptences(),
+            'parcours' => $diplome->getApcParcours(),
             'parcoursNiveaux' => $tParcours,
         ]);
     }

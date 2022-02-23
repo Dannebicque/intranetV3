@@ -24,6 +24,9 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/administratif/questionnaire/qualite', name: 'sadm_questionnaire_qualite_')]
 class QuestionnaireQualiteController extends BaseController
 {
+    /**
+     * @throws \JsonException
+     */
     #[Route('/', name: 'index', options: ['expose' => true], methods: ['GET', 'POST'])]
     public function index(Request $request): Response
     {
@@ -53,9 +56,9 @@ class QuestionnaireQualiteController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($questionnaireQualite);
-            $entityManager->flush();
+            $this->entityManager->persist($questionnaireQualite);
+            $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'questionnaire.add.success.flash');
 
             return $this->redirectToRoute('sadm_questionnaire_qualite_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -67,8 +70,10 @@ class QuestionnaireQualiteController extends BaseController
     }
 
     #[Route('/{id}', name: 'show', methods: ['GET'])]
-    public function show(QuestionnaireSectionRepository $questionnaireSectionRepository, QuestionnaireQualite $questionnaireQualite): Response
-    {
+    public function show(
+        QuestionnaireSectionRepository $questionnaireSectionRepository,
+        QuestionnaireQualite $questionnaireQualite
+    ): Response {
         return $this->render('questionnaire/administration/questionnaire_qualite/show.html.twig', [
             'questionnaire_qualite' => $questionnaireQualite,
             'sections' => $questionnaireSectionRepository->findAll(),
@@ -98,7 +103,8 @@ class QuestionnaireQualiteController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'questionnaire.edit.success.flash');
 
             return $this->redirectToRoute('sadm_questionnaire_qualite_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -119,7 +125,7 @@ class QuestionnaireQualiteController extends BaseController
             $newQuestionnaireQualite->addSection($nSection);
             if (null !== $nSection->getConfig()) {
                 $t = explode('-', $nSection->getConfig());
-                $nSection->setConfig($t[0] . '-');
+                $nSection->setConfig($t[0].'-');
             }
             $nSection->setQuestionnaireQualite($newQuestionnaireQualite);
             $this->entityManager->persist($nSection);
@@ -131,14 +137,13 @@ class QuestionnaireQualiteController extends BaseController
             ['questionnaire' => $newQuestionnaireQualite->getId()]);
     }
 
-
     #[Route('/{id}', name: 'delete', methods: ['POST'])]
     public function delete(Request $request, QuestionnaireQualite $questionnaireQualite): Response
     {
         if ($this->isCsrfTokenValid('delete'.$questionnaireQualite->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($questionnaireQualite);
-            $entityManager->flush();
+            $this->entityManager->remove($questionnaireQualite);
+            $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'questionnaire.delete.success.flash');
         }
 
         return $this->redirectToRoute('sadm_questionnaire_qualite_index', [], Response::HTTP_SEE_OTHER);

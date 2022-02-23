@@ -15,26 +15,24 @@ use App\Entity\Entreprise;
 use App\Entity\StageEtudiant;
 use App\Entity\StagePeriode;
 use App\Repository\StageEtudiantRepository;
+use function array_key_exists;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use function array_key_exists;
 
 /**
  * Class StageEntrepriseController.
- *
- * @Route("/administration/stage/entreprise")
  */
+#[Route(path: '/administration/stage/entreprise')]
 class StageEntrepriseController extends BaseController
 {
     /**
-     * @Route("/{uuid}", name="administration_stage_entreprise_index")
      * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
      */
+    #[Route(path: '/{uuid}', name: 'administration_stage_entreprise_index')]
     public function index(StageEtudiantRepository $stageEtudiantRepository, StagePeriode $stagePeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
-
         $entreprises = $stageEtudiantRepository->findEntreprisesByPeriode($stagePeriode);
         $tEntreprises = [];
         /** @var StageEtudiant $entreprise */
@@ -51,14 +49,12 @@ class StageEntrepriseController extends BaseController
         }
 
         return $this->render('administration/stage/stage_entreprise/index.html.twig', [
-            'entreprises'  => $tEntreprises,
+            'entreprises' => $tEntreprises,
             'stagePeriode' => $stagePeriode,
         ]);
     }
 
-    /**
-     * @Route("/details/{entreprise}", name="administration_stage_entreprise_detail", methods="GET")
-     */
+    #[Route(path: '/details/{entreprise}', name: 'administration_stage_entreprise_detail', methods: 'GET')]
     public function details(Entreprise $entreprise): Response
     {
         return $this->render('administration/stage/stage_entreprise/details.html.twig', [
@@ -67,20 +63,12 @@ class StageEntrepriseController extends BaseController
     }
 
     /**
-     * @Route("/{uuid}/export.{_format}", name="administration_stage_entreprise_export", methods="GET",
-     *                             requirements={"_format"="csv|xlsx|pdf"})
      * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
-     *
      */
-    public function export(
-        StageEtudiantRepository $stageEtudiantRepository,
-        MyExport $myExport,
-        StagePeriode $stagePeriode,
-        $_format
-    ): Response
+    #[Route(path: '/{uuid}/export.{_format}', name: 'administration_stage_entreprise_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
+    public function export(StageEtudiantRepository $stageEtudiantRepository, MyExport $myExport, StagePeriode $stagePeriode, $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
-
         $entreprises = $stageEtudiantRepository->findEntreprisesByPeriode($stagePeriode);
 
         return $myExport->genereFichierGenerique(
@@ -90,10 +78,10 @@ class StageEntrepriseController extends BaseController
             ['stage_entreprise_administration', 'adresse'],
             [
                 'entreprise' => ['raisonSociale', 'responsable' => ['nom', 'prenom', 'fonction', 'telephone', 'email']],
-                'tuteur'     => ['nom', 'prenom', 'fonction', 'telephone', 'email'],
+                'tuteur' => ['nom', 'prenom', 'fonction', 'telephone', 'email'],
                 'serviceStageEntreprise',
                 'type',
-                'personnel'  => ['nom', 'prenom'],
+                'personnel' => ['nom', 'prenom'],
                 'dateDebutStage',
                 'dateFinStage',
             ]

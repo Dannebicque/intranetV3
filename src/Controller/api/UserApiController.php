@@ -14,9 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class UserApiController.
- *
- * @Route("/api/user")
  */
+#[Route(path: '/api/user')]
 class UserApiController extends BaseController
 {
 }

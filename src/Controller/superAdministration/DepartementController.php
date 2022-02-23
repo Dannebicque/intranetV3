@@ -20,16 +20,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/administratif/structure/departement")
- */
+#[Route(path: '/administratif/structure/departement')]
 class DepartementController extends BaseController
 {
     /**
-     * @Route("/new", name="sa_departement_new", methods="GET|POST")
-     *
      * @throws Exception
      */
+    #[Route(path: '/new', name: 'sa_departement_new', methods: 'GET|POST')]
     public function create(Request $request): Response
     {
         $departement = new Departement();
@@ -39,7 +36,6 @@ class DepartementController extends BaseController
             ],
         ]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($departement);
             $this->entityManager->flush();
@@ -50,21 +46,17 @@ class DepartementController extends BaseController
 
         return $this->render('structure/departement/new.html.twig', [
             'departement' => $departement,
-            'form'        => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="sa_departement_show", methods="GET")
-     */
+    #[Route(path: '/{id}', name: 'sa_departement_show', methods: 'GET')]
     public function show(Departement $departement): Response
     {
         return $this->render('structure/departement/show.html.twig', ['departement' => $departement]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="sa_departement_edit", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/edit', name: 'sa_departement_edit', methods: 'GET|POST')]
     public function edit(Request $request, Departement $departement): Response
     {
         $form = $this->createForm(DepartementType::class, $departement, [
@@ -73,7 +65,6 @@ class DepartementController extends BaseController
             ],
         ]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'departement.edit.success.flash');
@@ -83,26 +74,24 @@ class DepartementController extends BaseController
 
         return $this->render('structure/departement/new.html.twig', [
             'departement' => $departement,
-            'form'        => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="sa_departement_delete", methods="DELETE")
-     */
+    #[Route(path: '/{id}', name: 'sa_departement_delete', methods: 'DELETE')]
     public function delete(): void
     {
     }
 
     /**
-     * @Route("/activate/{departement}/{etat}", methods={"GET"}, name="sa_departement_activate")
      * @IsGranted("ROLE_SUPER_ADMIN")
      */
+    #[Route(path: '/activate/{departement}/{etat}', name: 'sa_departement_activate', methods: ['GET'])]
     public function activate(Departement $departement, bool $etat): RedirectResponse
     {
         $departement->setActif($etat);
         $this->entityManager->flush();
-        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'departement.activate.' . $etat . '.flash');
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'departement.activate.'.$etat.'.flash');
 
         return $this->redirectToRoute('super_admin_homepage');
     }

@@ -20,14 +20,11 @@ use Twig\Error\SyntaxError;
 
 /**
  * Class StructureController.
- *
- * @Route("/administration/structure")
  */
+#[Route(path: '/administration/structure')]
 class StructureController extends BaseController
 {
-    /**
-     * @Route("/", name="administration_structure_index")
-     */
+    #[Route(path: '/', name: 'administration_structure_index')]
     public function index(): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
@@ -38,18 +35,14 @@ class StructureController extends BaseController
     }
 
     /**
-     * @Route("/{departement}/export.{_format}", name="administration_structure_export", methods="GET",
-     *                                           requirements={"_format"="xlsx|pdf"})
-     *
-     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
+    #[Route(path: '/{departement}/export.{_format}', name: 'administration_structure_export', requirements: ['_format' => 'xlsx|pdf'], methods: 'GET')]
     public function export(MyStructure $myStructure, Departement $departement, $_format): void
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $departement);
-
         $myStructure->export($departement, $_format);
     }
 }

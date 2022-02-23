@@ -19,23 +19,16 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/administratif/bac")
- */
+#[Route(path: '/administratif/bac')]
 class BacController extends BaseController
 {
-    /**
-     * @Route("/", name="sa_bac_index", methods={"GET"})
-     */
+    #[Route(path: '/', name: 'sa_bac_index', methods: ['GET'])]
     public function index(BacRepository $bacRepository): Response
     {
         return $this->render('super-administration/bac/index.html.twig', ['bacs' => $bacRepository->findAll()]);
     }
 
-    /**
-     * @Route("/export.{_format}", name="sa_bac_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
-     *
-     */
+    #[Route(path: '/export.{_format}', name: 'sa_bac_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
     public function export(MyExport $myExport, BacRepository $bacRepository, $_format): Response
     {
         $bacs = $bacRepository->findAll();
@@ -49,15 +42,12 @@ class BacController extends BaseController
         );
     }
 
-    /**
-     * @Route("/new", name="sa_bac_new", methods={"GET","POST"})
-     */
+    #[Route(path: '/new', name: 'sa_bac_new', methods: ['GET', 'POST'])]
     public function create(Request $request): Response
     {
         $bac = new Bac();
         $form = $this->createForm(BacType::class, $bac);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($bac);
             $this->entityManager->flush();
@@ -67,27 +57,22 @@ class BacController extends BaseController
         }
 
         return $this->render('super-administration/bac/new.html.twig', [
-            'bac'  => $bac,
+            'bac' => $bac,
             'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="sa_bac_show", methods={"GET"})
-     */
+    #[Route(path: '/{id}', name: 'sa_bac_show', methods: ['GET'])]
     public function show(Bac $bac): Response
     {
         return $this->render('super-administration/bac/show.html.twig', ['bac' => $bac]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="sa_bac_edit", methods={"GET","POST"})
-     */
+    #[Route(path: '/{id}/edit', name: 'sa_bac_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Bac $bac): Response
     {
         $form = $this->createForm(BacType::class, $bac);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'bac.edit.success.flash');
@@ -100,18 +85,15 @@ class BacController extends BaseController
         }
 
         return $this->render('super-administration/bac/edit.html.twig', [
-            'bac'  => $bac,
+            'bac' => $bac,
             'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/{id}/duplicate", name="sa_bac_duplicate", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/duplicate', name: 'sa_bac_duplicate', methods: 'GET|POST')]
     public function duplicate(Bac $bac): Response
     {
         $newBac = clone $bac;
-
         $this->entityManager->persist($newBac);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'bac.duplicate.success.flash');
@@ -119,13 +101,11 @@ class BacController extends BaseController
         return $this->redirectToRoute('sa_bac_edit', ['id' => $newBac->getId()]);
     }
 
-    /**
-     * @Route("/{id}", name="sa_bac_delete", methods="DELETE")
-     */
+    #[Route(path: '/{id}', name: 'sa_bac_delete', methods: 'DELETE')]
     public function delete(Request $request, Bac $bac): Response
     {
         $id = $bac->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $this->entityManager->remove($bac);
             $this->entityManager->flush();
 

@@ -19,24 +19,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/administratif/configuration")
- */
+#[Route(path: '/administratif/configuration')]
 class ConfigurationController extends BaseController
 {
-    /**
-     * @Route("/", name="sa_configuration_index", methods="GET")
-     */
+    #[Route(path: '/', name: 'sa_configuration_index', methods: 'GET')]
     public function index(ConfigurationRepository $configurationRepository): Response
     {
         return $this->render('super-administration/configuration/index.html.twig',
             ['configurations' => $configurationRepository->findAll()]);
     }
 
-    /**
-     * @Route("/export/{_format}", name="sa_configuration_export", methods="GET")
-     *
-     */
+    #[Route(path: '/export/{_format}', name: 'sa_configuration_export', methods: 'GET')]
     public function export(MyExport $myExport, ConfigurationRepository $configurationRepository, $_format): Response
     {
         $configurations = $configurationRepository->findAll();
@@ -50,15 +43,12 @@ class ConfigurationController extends BaseController
         );
     }
 
-    /**
-     * @Route("/new", name="sa_configuration_new", methods="GET|POST")
-     */
+    #[Route(path: '/new', name: 'sa_configuration_new', methods: 'GET|POST')]
     public function create(Request $request): Response
     {
         $configuration = new Configuration();
         $form = $this->createForm(ConfigurationType::class, $configuration);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($configuration);
             $this->entityManager->flush();
@@ -69,26 +59,21 @@ class ConfigurationController extends BaseController
 
         return $this->render('super-administration/configuration/new.html.twig', [
             'configuration' => $configuration,
-            'form'          => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="sa_configuration_show", methods="GET")
-     */
+    #[Route(path: '/{id}', name: 'sa_configuration_show', methods: 'GET')]
     public function show(Configuration $configuration): Response
     {
         return $this->render('super-administration/configuration/show.html.twig', ['configuration' => $configuration]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="sa_configuration_edit", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/edit', name: 'sa_configuration_edit', methods: 'GET|POST')]
     public function edit(Request $request, Configuration $configuration): Response
     {
         $form = $this->createForm(ConfigurationType::class, $configuration);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'configuration.edit.success.flash');
@@ -98,17 +83,14 @@ class ConfigurationController extends BaseController
 
         return $this->render('super-administration/configuration/edit.html.twig', [
             'configuration' => $configuration,
-            'form'          => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/{id}/duplicate", name="sa_configuration_duplicate", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/duplicate', name: 'sa_configuration_duplicate', methods: 'GET|POST')]
     public function duplicate(Configuration $configuration): Response
     {
         $newConfiguration = clone $configuration;
-
         $this->entityManager->persist($newConfiguration);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'configuration.duplicate.success.flash');

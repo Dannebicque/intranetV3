@@ -53,8 +53,7 @@ class PrevisionnelController extends BaseController
         int $matiere,
         string $type,
         int $annee = 0
-    ): Response
-    {
+    ): Response {
         if (0 === $annee && null !== $this->dataUserSession->getDepartement()) {
             $annee = $this->dataUserSession->getDepartement()->getOptAnneePrevisionnel();
         }
@@ -79,8 +78,7 @@ class PrevisionnelController extends BaseController
         PrevisionnelSynthese $previsionnelSynthese,
         Semestre $semestre,
         int $annee = 0
-    ): Response
-    {
+    ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
         if (0 === $annee && null !== $this->getDepartement()) {
             $annee = $this->getDepartement()->getOptAnneePrevisionnel();
@@ -104,8 +102,7 @@ class PrevisionnelController extends BaseController
         PrevisionnelSynthese $previsionnelSynthese,
         Personnel $personnel,
         int $annee = 0
-    ): Response
-    {
+    ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
 
         if (0 === $annee && null !== $this->getDepartement()) {
@@ -146,7 +143,7 @@ class PrevisionnelController extends BaseController
         PersonnelRepository $personnelRepository,
         TypeMatiereManager $typeMatiereManager,
         Request $request
-    ): RedirectResponse|Response {
+    ): RedirectResponse | Response {
         //todo: faire une comparaison avec le prévisionnel max... et mettre des alertes.
         if ($request->isMethod('POST')) {
             $matiere = $typeMatiereManager->getMatiereFromSelect($request->request->get('previsionnel_matiere'));
@@ -157,7 +154,7 @@ class PrevisionnelController extends BaseController
             if (null !== $matiere) {
                 $nbLignes = $request->request->get('nbLignes');
                 for ($i = 1; $i <= $nbLignes; ++$i) {
-                    $idPersonnel = $request->request->get('intervenant_' . $i);
+                    $idPersonnel = $request->request->get('intervenant_'.$i);
                     if (isset($idPersonnel)) {
                         $personnel = $personnelRepository->find($idPersonnel);
                     } else {
@@ -165,12 +162,12 @@ class PrevisionnelController extends BaseController
                     }
 
                     $previsionnel = new Previsionnel($annee, $personnel);
-                    $previsionnel->setNbHCm($request->request->get('cm_' . $i));
-                    $previsionnel->setNbHTd($request->request->get('td_' . $i));
-                    $previsionnel->setNbHTp($request->request->get('tp_' . $i));
-                    $previsionnel->setNbGrCm($request->request->get('gr_cm_' . $i));
-                    $previsionnel->setNbGrTd($request->request->get('gr_td_' . $i));
-                    $previsionnel->setNbGrTp($request->request->get('gr_tp_' . $i));
+                    $previsionnel->setNbHCm($request->request->get('cm_'.$i));
+                    $previsionnel->setNbHTd($request->request->get('td_'.$i));
+                    $previsionnel->setNbHTp($request->request->get('tp_'.$i));
+                    $previsionnel->setNbGrCm($request->request->get('gr_cm_'.$i));
+                    $previsionnel->setNbGrTd($request->request->get('gr_td_'.$i));
+                    $previsionnel->setNbGrTp($request->request->get('gr_tp_'.$i));
                     $previsionnel->setIdMatiere($matiere->id);
                     $previsionnel->setTypeMatiere($matiere->typeMatiere);
                     $this->entityManager->persist($previsionnel);
@@ -227,8 +224,7 @@ class PrevisionnelController extends BaseController
         PersonnelRepository $personnelRepository,
         PrevisionnelManager $previsionnelManager,
         Request $request
-    ): Response
-    {
+    ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         $anneeDepart = $request->request->get('annee_depart');
@@ -265,12 +261,11 @@ class PrevisionnelController extends BaseController
     public function delete(
         Request $request,
         Previsionnel $previsionnel
-    ): Response
-    {
+    ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         $id = $previsionnel->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $this->entityManager->remove($previsionnel);
             $this->entityManager->flush();
 

@@ -25,18 +25,13 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class PrevisionnelController.
  *
  * @IsGranted("ROLE_PERMANENT")
- * @Route("/application/personnel/previsionnel")
  */
+#[Route(path: '/application/personnel/previsionnel')]
 class PrevisionnelController extends BaseController
 {
-    /**
-     * @Route("/", name="previsionnel_index")
-     */
-    public function index(
-        PrevisionnelManager $myPrevisionnel,
-        PrevisionnelSynthese $previsionnelSynthese,
-        HrsManager $hrsManager
-    ): Response {
+    #[Route(path: '/', name: 'previsionnel_index')]
+    public function index(PrevisionnelManager $myPrevisionnel, PrevisionnelSynthese $previsionnelSynthese, HrsManager $hrsManager): Response
+    {
         $anneePrevisionnel = $this->dataUserSession->getAnneePrevisionnel();
         $personnel = $this->getUser();
         $departement = $this->getDepartement();
@@ -57,15 +52,10 @@ class PrevisionnelController extends BaseController
     }
 
     /**
-     * @Route("/chronologique", name="previsionnel_chronologique")
-     *
      * @throws \App\Exception\DepartementNotFoundException
      */
-    public function chronologique(
-        TypeMatiereManager $typeMatiereManager,
-        ServiceRealiseIntranet $serviceRealiseIntranet,
-        ServiceRealiseCelcat $serviceRealiseCelcat
-    ): Response
+    #[Route(path: '/chronologique', name: 'previsionnel_chronologique')]
+    public function chronologique(TypeMatiereManager $typeMatiereManager, ServiceRealiseIntranet $serviceRealiseIntranet, ServiceRealiseCelcat $serviceRealiseCelcat): Response
     {
         if (null === $this->getDepartement()) {
             throw new DepartementNotFoundException();
@@ -83,9 +73,7 @@ class PrevisionnelController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/export.{_format}", name="application_personnel_previsionnel_export", methods="GET")
-     */
+    #[Route(path: '/export.{_format}', name: 'application_personnel_previsionnel_export', methods: 'GET')]
     public function export(): Response
     {
         //save en csv

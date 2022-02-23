@@ -22,18 +22,15 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class EdtController.
- *
- * @Route("/administration/emploi-du-temps")
  */
+#[Route(path: '/administration/emploi-du-temps')]
 class EdtController extends BaseController
 {
-    /**
-     * @Route("/{semaine}/{valeur}/{filtre}", name="administration_edt_index", requirements={"semaine" = "\d+"})
-     */
+    #[Route(path: '/{semaine}/{valeur}/{filtre}', name: 'administration_edt_index', requirements: ['semaine' => '\d+'])]
     public function index(int $semaine = 0, string $valeur = '', string $filtre = ''): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_EDT', $this->getDepartement());//todo: a priciser ?
-
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_EDT', $this->getDepartement());
+        //todo: a priciser ?
         return $this->render('administration/edt/index.html.twig', [
             'semaine' => $semaine,
             'valeur' => $valeur,
@@ -41,31 +38,18 @@ class EdtController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/zone/import", name="administration_edt_za_importsemaine", options={"expose"=true})
-     */
+    #[Route(path: '/zone/import', name: 'administration_edt_za_importsemaine', options: ['expose' => true])]
     public function zoneImport(): Response
     {
         return $this->render('administration/edt/blocs/import.html.twig');
     }
 
-    /**
-     * @Route("/ajax-update/{filtre}/{valeur}/{semaine}", name="administration_edt_ajax_update",
-     *                                                    options={"expose"=true})
-     */
-    public function edtIntranet(
-        PersonnelRepository $personnelRepository,
-        TypeMatiereManager $typeMatiereManager,
-        SalleRepository $salleRepository,
-        GroupeRepository $groupeRepository,
-        MyEdtIntranet $myEdt,
-        int $semaine,
-        string $valeur,
-        string $filtre
-    ): Response
+    #[Route(path: '/ajax-update/{filtre}/{valeur}/{semaine}', name: 'administration_edt_ajax_update', options: ['expose' => true])]
+    public function edtIntranet(PersonnelRepository $personnelRepository, TypeMatiereManager $typeMatiereManager, SalleRepository $salleRepository, GroupeRepository $groupeRepository, MyEdtIntranet $myEdt, int $semaine, string $valeur, string $filtre): Response
     {
         $filtre = '' === $filtre ? Constantes::FILTRE_EDT_PROMO : $filtre;
-        $matieres = $typeMatiereManager->findByDepartementArray($this->getDepartement());//todo: codeApogee si depuis Celcat. Trouverune solution, si Edt récupère depuis touues les tables pour la conversion...
+        $matieres = $typeMatiereManager->findByDepartementArray($this->getDepartement());
+        //todo: codeApogee si depuis Celcat. Trouverune solution, si Edt récupère depuis touues les tables pour la conversion...
         $edt = $myEdt->initAdministration($this->getDepartement(), $semaine, $filtre,
             $valeur, $this->getAnneeUniversitaire(), $matieres);
 

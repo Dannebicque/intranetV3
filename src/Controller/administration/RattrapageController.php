@@ -28,6 +28,9 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 #[Route('/administration/rattrapage')]
 class RattrapageController extends BaseController
 {
+    /**
+     * @throws \JsonException
+     */
     #[Route('/semestre/{semestre}', name: 'administration_rattrapage_semestre_index', options: ['expose' => true])]
     public function index(
         TypeMatiereManager $typeMatiereManager,
@@ -39,7 +42,7 @@ class RattrapageController extends BaseController
 
         $table = $this->createTable(RattrapageTableType::class, [
             'semestre' => $semestre,
-            'anneeUniversitaire' => $semestre->getAnneeUniversitaire(),
+            'anneeUniversitaire' => $this->getAnneeUniversitaire(),
             'absences' => $absenceRepository->findBySemestreRattrapage($semestre,
                 $semestre->getAnneeUniversitaire()),
             'matieres' => $typeMatiereManager->findBySemestreArray($semestre),
@@ -56,20 +59,11 @@ class RattrapageController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{semestre}/export.{_format}", name="administration_rattrapage_export", methods="GET",
-     *                             requirements={"_format"="csv|xlsx|pdf"})
-     */
+    #[Route(path: '/{semestre}/export.{_format}', name: 'administration_rattrapage_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
     public function export(
-        TypeMatiereManager $typeMatiereManager,
-        MyExport $myExport,
-        RattrapageRepository $rattrapageRepository,
-        Semestre $semestre,
-        string $_format
-    ): Response
+        TypeMatiereManager $typeMatiereManager, MyExport $myExport, RattrapageRepository $rattrapageRepository, Semestre $semestre, string $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
-
         $rattrapages = $rattrapageRepository->findBySemestre($semestre, $semestre->getAnneeUniversitaire());
         $matieres = $typeMatiereManager->findBySemestreArray($semestre);
         $tab = [];
@@ -84,7 +78,7 @@ class RattrapageController extends BaseController
         return $myExport->genereFichierGenerique(
             $_format,
             $tab,
-            'rattrapages_' . $semestre->getLibelle(),
+            'rattrapages_'.$semestre->getLibelle(),
             ['rattrapage_administration', 'utilisateur', 'matiere'],
             [
                 'etudiant' => ['nom', 'prenom'],
@@ -97,19 +91,21 @@ class RattrapageController extends BaseController
                 'heureRattrapage',
                 'salle',
                 'etatDemandeLong',
+            ],
+            [
+                'dateEval' => MyExport::ONLY_DATE,
+                'heureEval' => MyExport::ONLY_HEURE,
             ]
         );
     }
 
     /**
-     * @Route("/change-etat/{uuid}/{etat}", name="administration_rattrapage_change_etat", methods="GET",
-     *                                     options={"expose":true})
      * @ParamConverter("rattrapage", options={"mapping": {"uuid": "uuid"}})
      */
+    #[Route(path: '/change-etat/{uuid}/{etat}', name: 'administration_rattrapage_change_etat', options: ['expose' => true], methods: 'GET')]
     public function accepte(EventDispatcherInterface $eventDispatcher, Rattrapage $rattrapage, $etat): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $rattrapage->getEtudiant()?->getSemestre());
-
         if (Rattrapage::DEMANDE_ACCEPTEE === $etat || Rattrapage::DEMANDE_REFUSEE === $etat) {
             $rattrapage->setEtatDemande($etat);
             $this->entityManager->flush();
@@ -123,13 +119,10 @@ class RattrapageController extends BaseController
         return new Response('', Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * @Route("/supprimer-annee/{semestre}", name="administration_rattrapage_delete_all", methods="DELETE")
-     */
+    #[Route(path: '/supprimer-annee/{semestre}', name: 'administration_rattrapage_delete_all', methods: 'DELETE')]
     public function deleteAllAnnee(RattrapageRepository $rattrapageRepository, Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
-
         $rattrapages = $rattrapageRepository->findByAnnee($semestre->getAnnee());
         foreach ($rattrapages as $rattrapage) {
             $this->entityManager->remove($rattrapage);
@@ -145,16 +138,14 @@ class RattrapageController extends BaseController
     }
 
     /**
-     * @Route("/{uuid}", name="administration_rattrapage_delete", methods="DELETE", options={"expose"=true})
      * @ParamConverter("rattrapage", options={"mapping": {"uuid": "uuid"}})
      */
+    #[Route(path: '/{uuid}', name: 'administration_rattrapage_delete', options: ['expose' => true], methods: 'DELETE')]
     public function delete(Request $request, Rattrapage $rattrapage): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $rattrapage->getEtudiant()?->getSemestre());
-
-
         $id = $rattrapage->getUuidString();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $this->entityManager->remove($rattrapage);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'rattrapage.delete.success.flash');

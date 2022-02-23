@@ -15,8 +15,10 @@ use App\Components\Table\DTO\Table;
 use App\Components\Table\TableFactory;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
+use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Personnel;
+use App\Entity\Semestre;
 use App\Interfaces\UtilisateurInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -34,6 +36,7 @@ class BaseController extends AbstractController
     protected EntityManagerInterface $entityManager;
     protected TranslatorInterface $translator;
     protected BreadcrumbHelper $breadcrumbHelper;
+    protected TableFactory $tableFactory;
 
     public static function getSubscribedServices(): array
     {
@@ -50,15 +53,19 @@ class BaseController extends AbstractController
 
     protected function createTable(string $type, array $options = []): Table
     {
-        return $this->get(TableFactory::class)->create($type, $options);
+        return $this->tableFactory->create($type, $options);
     }
-
-
 
     #[Required]
     public function setEntityManager(EntityManagerInterface $entityManager): void
     {
         $this->entityManager = $entityManager;
+    }
+
+    #[Required]
+    public function setTableFactory(TableFactory $tableFactory): void
+    {
+        $this->tableFactory = $tableFactory;
     }
 
     #[Required]
@@ -73,37 +80,32 @@ class BaseController extends AbstractController
         $this->breadcrumbHelper = $breadcrumbHelper;
     }
 
-    public function addFlashBag($niveau, $cleTraduction)
+    public function addFlashBag(string $niveau, string $cleTraduction): void
     {
-        //todo: revoir ?? mélange avec toast
         $cle = $this->translator->trans($cleTraduction);
         $titre = $this->translator->trans($niveau);
+
         switch ($niveau) {
             case Constantes::FLASHBAG_INFO:
-                $this->toastInfo($cle, $titre);
-                break;
             case Constantes::FLASHBAG_SUCCESS:
-                $this->toastSuccess($cle, $titre);
-                break;
             case Constantes::FLASHBAG_NOTICE:
-                $this->toastWarning($cle, $titre);
-                break;
             case Constantes::FLASHBAG_ERROR:
-                $this->toastError($cle, $titre);
+                $this->toast($niveau, $cle, $titre);
                 break;
             default:
-                $this->toastError('Clé inexistante', 'Erreur');
+                $this->toast(Constantes::FLASHBAG_ERROR, 'Clé inexistante', 'Erreur');
         }
     }
 
-    public function getUser(): UtilisateurInterface
+    public function getUser(): UtilisateurInterface | Personnel | Etudiant
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = parent::getUser();
 
-        if (! $user instanceof Personnel && ! $user instanceof Etudiant) {
+        if (!$user instanceof Personnel && !$user instanceof Etudiant) {
             throw $this->createAccessDeniedException('Vous n\'êtes pas connecté');
         }
+
         return $user;
     }
 
@@ -117,14 +119,14 @@ class BaseController extends AbstractController
         return $this->dataUserSession->getAnneeUniversitaire();
     }
 
-    public function getEtudiantSemestre()
+    public function getEtudiantSemestre(): ?Semestre
     {
         $this->denyAccessUnlessGranted('ROLE_ETUDIANT');
 
         return null !== $this->getUser() ? $this->getUser()->getSemestre() : null;
     }
 
-    public function getDepartement()
+    public function getDepartement(): ?Departement
     {
         return $this->dataUserSession->getDepartement();
     }
@@ -146,25 +148,5 @@ class BaseController extends AbstractController
             'text' => $text instanceof TranslatableMessage ? $text->trans($this->translator) : $text,
             'title' => $title instanceof TranslatableMessage ? $title->trans($this->translator) : $title,
         ]);
-    }
-
-    protected function toastInfo($text, $title = null): void
-    {
-        $this->toast('info', $text, $title);
-    }
-
-    protected function toastSuccess($text, $title = null): void
-    {
-        $this->toast('success', $text, $title);
-    }
-
-    protected function toastWarning($text, $title = null): void
-    {
-        $this->toast('warning', $text, $title);
-    }
-
-    protected function toastError($text, $title = null): void
-    {
-        $this->toast('error', $text, $title);
     }
 }

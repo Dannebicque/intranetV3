@@ -22,9 +22,8 @@ use Twig\Error\SyntaxError;
 
 /**
  * Class AbsenceController.
- *
- * @Route("/application/etudiant/covid")
  */
+#[Route(path: '/application/etudiant/covid')]
 class CovidController extends BaseController
 {
     public function index(CovidAttestationEtudiantRepository $covidAttestationEtudiantRepository): Response
@@ -35,13 +34,13 @@ class CovidController extends BaseController
     }
 
     /**
-     * @Route("/export/{id}.pdf", name="app_etudiant_covid_attestation_pdf")
      * @ParamConverter("absence", options={"mapping": {"uuid": "uuid"}})
      *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
+    #[Route(path: '/export/{id}.pdf', name: 'app_etudiant_covid_attestation_pdf')]
     public function details(MyExportPresence $myExportPresence, CovidAttestationEtudiant $attestationEtudiant): Response
     {
         //vérifier s'il est autorisé
@@ -53,7 +52,6 @@ class CovidController extends BaseController
                 }
             }
         }
-
         if ($autorise) {
             //exporter le PDF
             $myExportPresence->genereConvocationPdf($attestationEtudiant, $this->getUser());

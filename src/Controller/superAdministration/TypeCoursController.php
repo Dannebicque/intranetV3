@@ -19,24 +19,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/administratif/type-cours")
- */
+#[Route(path: '/administratif/type-cours')]
 class TypeCoursController extends BaseController
 {
-    /**
-     * @Route("/", name="sa_type_cours_index", methods="GET")
-     */
+    #[Route(path: '/', name: 'sa_type_cours_index', methods: 'GET')]
     public function index(TypeCoursRepository $typeCoursRepository): Response
     {
         return $this->render('super-administration/type_cours/index.html.twig',
             ['type_cours' => $typeCoursRepository->findAll()]);
     }
 
-    /**
-     * @Route("/export.{_format}", name="sa_type_cours_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
-     *
-     */
+    #[Route(path: '/export.{_format}', name: 'sa_type_cours_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
     public function export(MyExport $myExport, TypeCoursRepository $typeCoursRepository, $_format): Response
     {
         $typeCours = $typeCoursRepository->findAll();
@@ -50,9 +43,7 @@ class TypeCoursController extends BaseController
         );
     }
 
-    /**
-     * @Route("/new", name="sa_type_cours_new", methods="GET|POST")
-     */
+    #[Route(path: '/new', name: 'sa_type_cours_new', methods: 'GET|POST')]
     public function create(Request $request): Response
     {
         $typeCours = new TypeCours();
@@ -62,7 +53,6 @@ class TypeCoursController extends BaseController
             ],
         ]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($typeCours);
             $this->entityManager->flush();
@@ -73,21 +63,17 @@ class TypeCoursController extends BaseController
 
         return $this->render('super-administration/type_cours/new.html.twig', [
             'type_cr' => $typeCours,
-            'form'    => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="sa_type_cours_show", methods="GET")
-     */
+    #[Route(path: '/{id}', name: 'sa_type_cours_show', methods: 'GET')]
     public function show(TypeCours $typeCours): Response
     {
         return $this->render('super-administration/type_cours/show.html.twig', ['type_cr' => $typeCours]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="sa_type_cours_edit", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/edit', name: 'sa_type_cours_edit', methods: 'GET|POST')]
     public function edit(Request $request, TypeCours $typeCours): Response
     {
         $form = $this->createForm(TypeCoursType::class, $typeCours, [
@@ -96,7 +82,6 @@ class TypeCoursController extends BaseController
             ],
         ]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'type_cours.edit.success.flash');
@@ -110,30 +95,25 @@ class TypeCoursController extends BaseController
 
         return $this->render('super-administration/type_cours/edit.html.twig', [
             'type_cours' => $typeCours,
-            'form'     => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/{id}/duplicate", name="sa_type_cours_duplicate", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/duplicate', name: 'sa_type_cours_duplicate', methods: 'GET|POST')]
     public function duplicate(TypeCours $typeCours): Response
     {
         $newTypeHrs = clone $typeCours;
-
         $this->entityManager->persist($newTypeHrs);
         $this->entityManager->flush();
 
         return $this->redirectToRoute('sa_type_cours_edit', ['id' => $newTypeHrs->getId()]);
     }
 
-    /**
-     * @Route("/{id}", name="sa_type_cours_delete", methods="DELETE")
-     */
+    #[Route(path: '/{id}', name: 'sa_type_cours_delete', methods: 'DELETE')]
     public function delete(Request $request, TypeCours $typeCours): Response
     {
         $id = $typeCours->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
 //            if (0 === count($typeCours->getHrs())) {
 //                $this->entityManager->remove($typeHrs);
 //                $this->entityManager->flush();

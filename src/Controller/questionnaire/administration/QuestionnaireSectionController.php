@@ -25,6 +25,9 @@ use Symfony\Component\Routing\Annotation\Route;
 //#[Route('/administration/questionnaire/section', name: 'adm_questionnaire_section_')]
 class QuestionnaireSectionController extends BaseController
 {
+    /**
+     * @throws \JsonException
+     */
     #[Route('/', name: 'index', options: ['expose' => true], methods: ['GET', 'POST'])]
     public function index(Request $request): Response
     {
@@ -55,7 +58,7 @@ class QuestionnaireSectionController extends BaseController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $questionnaireSection->setConfig([
-                'sectionAdapter' => $request->request->get('questionnaire_section')['sectionAdapter']
+                'sectionAdapter' => $request->request->get('questionnaire_section')['sectionAdapter'],
             ]);
             $this->entityManager->persist($questionnaireSection);
             $this->entityManager->flush();
@@ -79,7 +82,7 @@ class QuestionnaireSectionController extends BaseController
 
         return $this->render('questionnaire/administration/questionnaire_section/show.html.twig', [
             'questionnaire_section' => $questionnaireSection,
-            'questions' => $questions
+            'questions' => $questions,
         ]);
     }
 
@@ -90,12 +93,12 @@ class QuestionnaireSectionController extends BaseController
         QuestionnaireSectionQuestionManage $questionManage,
         QuestionnaireSection $questionnaireSection
     ): Response {
-        $questionManage->updateSection($request->query->get('action'), (int)$request->query->get('question'),
+        $questionManage->updateSection($request->query->get('action'), (int) $request->query->get('question'),
             $questionnaireSection);
 
         return $this->render('questionnaire/administration/questionnaire_section/_tableauQuestion.html.twig', [
             'qualiteSectionQuestions' => $questionnaireSection->getQualiteSectionQuestions(),
-            'questions' => $questionnaireQuestionRepository->findAll()
+            'questions' => $questionnaireQuestionRepository->findAll(),
         ]);
     }
 
@@ -110,8 +113,8 @@ class QuestionnaireSectionController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
-
+            $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'questionnaire.administration.section.edit.success.flash');
             //todo: sadm
             return $this->redirectToRoute('adm_questionnaire_section_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -125,7 +128,7 @@ class QuestionnaireSectionController extends BaseController
     #[Route('/{id}', name: 'delete', methods: ['POST', 'DELETE'])]
     public function delete(Request $request, QuestionnaireSection $questionnaireSection): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $questionnaireSection->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$questionnaireSection->getId(), $request->request->get('_token'))) {
             $id = $questionnaireSection->getId();
             foreach ($questionnaireSection->getQualiteSectionQuestions() as $questionnaire) {
                 $this->entityManager->remove($questionnaire);

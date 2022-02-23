@@ -16,14 +16,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class CommissionAbsenceController.
- *
- * @Route("/administration/commission-absences")
  */
+#[Route(path: '/administration/commission-absences')]
 class CommissionAbsenceController extends BaseController
 {
-    /**
-     * @Route("/semestre/{semestre}", name="administration_commission_absences_semestre_index")
-     */
+    #[Route(path: '/semestre/{semestre}', name: 'administration_commission_absences_semestre_index')]
     public function index(Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
@@ -33,14 +30,10 @@ class CommissionAbsenceController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/semestre/{semestre}/export.{_format}", name="administration_commission_semestre_export",
-     *                                                 requirements={"_format"="csv|xlsx|pdf"})
-     */
+    #[Route(path: '/semestre/{semestre}/export.{_format}', name: 'administration_commission_semestre_export', requirements: ['_format' => 'csv|xlsx|pdf'])]
     public function export(Semestre $semestre): void
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
-
         //todo:  a faire
     }
 }

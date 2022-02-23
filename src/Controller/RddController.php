@@ -11,7 +11,6 @@ namespace App\Controller;
 
 use App\Components\Questionnaire\Adapter\QuestionnaireQuizzAdapter;
 use App\Components\Questionnaire\Adapter\ReponsesEtudiantAdapter;
-use App\Components\Questionnaire\Adapter\SectionQualiteEntityAdapter;
 use App\Components\Questionnaire\Adapter\SectionQuizzEntityAdapter;
 use App\Components\Questionnaire\DTO\AbstractQuestionnaire;
 use App\Components\Questionnaire\DTO\ReponsesEtudiant;
@@ -23,6 +22,7 @@ use App\Repository\EtudiantRepository;
 use App\Repository\QuestionnaireQuizzRepository;
 use App\Repository\RddDiplomeRepository;
 use App\Utils\Tools;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,6 +35,13 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 #[Route('rdd', name: 'rdd_')]
 class RddController extends AbstractController
 {
+    public function __construct(private EntityManagerInterface $entityManager, private MailerInterface $mailer)
+    {
+    }
+
+    /**
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     #[Route('/', name: 'identification')]
     public function identification(
         Request $request,
@@ -63,9 +70,11 @@ class RddController extends AbstractController
         return $this->render('rdd/identification.html.twig', ['erreur' => false]);
     }
 
+    /**
+     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     */
     #[Route('/inscription/{numetudiant}/{diplome}', name: 'inscription')]
     public function inscription(
-        MailerInterface $mailer,
         EtudiantRepository $etudiantRepository,
         RddDiplomeRepository $rddDiplomeRepository,
         Request $request,
@@ -83,8 +92,7 @@ class RddController extends AbstractController
 
                     if ($form->isSubmitted() && $form->isValid()) {
                         $dip->setConfirme(true);
-                        $em = $this->getDoctrine()->getManager();
-                        $em->flush();
+                        $this->entityManager->flush();
 
                         $email = (new TemplatedEmail())
                             ->from(new Address('intranet.iut-troyes@univ-reims.fr'))
@@ -102,7 +110,7 @@ class RddController extends AbstractController
                             ])
                         ;
 
-                        $mailer->send($email);
+                        $this->mailer->send($email);
 
                         return $this->render('rdd/confirm.html.twig', [
                             'etudiant' => $etudiant,
@@ -150,23 +158,24 @@ class RddController extends AbstractController
                 ['mode' => AbstractQuestionnaire::MODE_EDITION,
                     'typeQuestionnaire' => 'quizz',
                     'route' => 'rdd_enquete_diplome',
-                    'params'=> [
+                    'params' => [
                         'numetudiant' => $numetudiant,
                         'diplome' => $diplome,
-                    ]]);
+                    ], ]);
             $questionnaire->setIdEtudiant($etudiant->getId()); //todo: pourrait être plus générique si c'est des questionnaires aux personnels
             $questionnaire->AddSpecialSection(AbstractSection::INTRODUCTION);
 
             foreach ($questionnaireQuizz->getSections() as $section) {
                 $sect = (new SectionQuizzEntityAdapter($section))->getSection();
                 $questionnaire->addSection($sect);
-                $reponses->merge($reponsesEtudiantAdapter->getReponsesEtudiant($sect,$etudiant->getId()));//todo: on pourrait faire que sur la section concernée ?
+                $reponses->merge($reponsesEtudiantAdapter->getReponsesEtudiant($sect, $etudiant->getId())); //todo: on pourrait faire que sur la section concernée ?
             }
 
             $questionnaire->AddSpecialSection(AbstractSection::END);
 
             if ($questionnaire->handleRequest($request)) {
                 $questionnaire->setQuestionsForSection($reponses);
+
                 return $questionnaire->wizardPage();
             }
 

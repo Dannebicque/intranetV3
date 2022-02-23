@@ -29,6 +29,9 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/administration/etudiant')]
 class EtudiantController extends BaseController
 {
+    /**
+     * @throws \JsonException
+     */
     #[Route('/', name: 'administration_etudiant_index', options: ['expose' => true])]
     public function index(Request $request): Response
     {
@@ -125,7 +128,7 @@ class EtudiantController extends BaseController
     /**
      * @ParamConverter("etudiant", options={"mapping": {"uuid": "uuid"}})
      */
-    #[Route(path: '/change-etat/{uuid}/{etat}', name: 'adm_etudiant_change_etat', methods: 'POST', options: ['expose' => true])]
+    #[Route(path: '/change-etat/{uuid}/{etat}', name: 'adm_etudiant_change_etat', options: ['expose' => true], methods: 'POST')]
     public function changeEtat(EtudiantScolarite $etudiantScolarite, Etudiant $etudiant, $etat): JsonResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $etudiant->getSemestre());
@@ -161,6 +164,9 @@ class EtudiantController extends BaseController
         return $this->redirectToRoute('trombinoscope_index');
     }
 
+    /**
+     * @throws \JsonException
+     */
     #[Route('/edit-ajax/{id}', name: 'adm_etudiant_edit_ajax', options: ['expose' => true], methods: ['POST'])]
     public function editAjax(EtudiantUpdate $etudiantUpdate, Request $request, Etudiant $etudiant): JsonResponse
     {

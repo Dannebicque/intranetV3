@@ -21,33 +21,21 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class EdtController.
- *
- * @Route("/administration/emploi-du-temps/compare")
  */
+#[Route(path: '/administration/emploi-du-temps/compare')]
 class EdtCompareController extends BaseController
 {
-    protected EdtPlanningRepository $edtPlanningRepository;
-
-    protected CalendrierRepository $calendrierRepository;
-
     /**
      * EdtRealiseController constructor.
      */
-    public function __construct(
-        EdtPlanningRepository $edtPlanningRepository,
-        CalendrierRepository $calendrierRepository
-    ) {
-        $this->edtPlanningRepository = $edtPlanningRepository;
-        $this->calendrierRepository = $calendrierRepository;
+    public function __construct(protected EdtPlanningRepository $edtPlanningRepository, protected CalendrierRepository $calendrierRepository)
+    {
     }
 
-    /**
-     * @Route("/personnels/{source}", name="administration_edt_compare_personnels", methods={"GET"})
-     */
+    #[Route(path: '/personnels/{source}', name: 'administration_edt_compare_personnels', methods: ['GET'])]
     public function comparePersonnel(ComparePrevisionnelPersonnel $comparePrevisionnelPersonnel, $source): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_EDT', $this->getDepartement());
-
         $comparatif = $comparePrevisionnelPersonnel->compareEdtPreviPersonnels($this->getDepartement(),
             $this->dataUserSession->getAnneePrevisionnel(), $source);
 
@@ -58,13 +46,10 @@ class EdtCompareController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/matieres/{source}", name="administration_edt_compare_matiere", methods={"GET"})
-     */
+    #[Route(path: '/matieres/{source}', name: 'administration_edt_compare_matiere', methods: ['GET'])]
     public function compareMatiereAction(ComparePrevisonnelMatiere $comparePrevisonnelMatiere, $source): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_EDT', $this->getDepartement());
-
         $comparatif = $comparePrevisonnelMatiere->compareEdtPreviMatiere($this->dataUserSession->getDepartement(),
             $this->dataUserSession->getAnneePrevisionnel(), $source);
 
@@ -76,21 +61,18 @@ class EdtCompareController extends BaseController
     }
 
     /**
-     * @Route("/ajax/enseignants/plusinfo/{matiere}", name="administration_edt_compare_plus_info")
+     * @throws \App\Exception\MatiereNotFoundException
      */
+    #[Route(path: '/ajax/enseignants/plusinfo/{matiere}', name: 'administration_edt_compare_plus_info')]
     public function comparePlusInfoAction(TypeMatiereManager $typeMatiereManager, string $matiere): Response
     {
-
         $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
-
         if (null === $mat) {
             throw new MatiereNotFoundException();
         }
-
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_EDT', $mat->semestre);
         //tester si celcat ou intranet
-        $planning = $this->edtPlanningRepository->findBy(['idMatiere' => $mat->id, 'typeMatiere'=> $mat->typeMatiere]);
-
+        $planning = $this->edtPlanningRepository->findBy(['idMatiere' => $mat->id, 'typeMatiere' => $mat->typeMatiere]);
         $calendrier = $this->calendrierRepository->findCalendrierArray();
 
         return $this->render('administration/edtCompare/_plusInfo.html.twig', [
@@ -98,7 +80,5 @@ class EdtCompareController extends BaseController
             'matiere' => $matiere,
             'calendrier' => $calendrier,
         ]);
-
-
     }
 }

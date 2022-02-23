@@ -17,35 +17,32 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class PlanningController.
- *
- * @Route("/agenda")
  */
+#[Route(path: '/agenda')]
 class PlanningController extends BaseController
 {
     /**
-     * @Route("/planning/{annee}", name="planning_index")
-     *
      * @throws Exception
      */
+    #[Route(path: '/planning/{annee}', name: 'planning_index')]
     public function index(DateRepository $dateRepository, int $annee = 0): Response
     {
         if (0 === $annee) {
             if (date('m') < 7) {
-                $annee = (int)date('Y') - 1;
+                $annee = (int) date('Y') - 1;
             } else {
-                $annee = (int)date('Y');
+                $annee = (int) date('Y');
             }
         }
-
         Calendrier::calculPlanning($annee);
 
         return $this->render('planning/index.html.twig', [
             'tabPlanning' => Calendrier::getTabPlanning(),
-            'tabJour'     => ['', 'L', 'M', 'M', 'J', 'V', 'S', 'D'],
-            'tabFerie'    => Calendrier::getTabJoursFeries(),
-            'tabFinMois'  => Calendrier::getTabFinMois(),
-            'annee'       => $annee,
-            'events'      => $dateRepository->findByDepartementPlanning(
+            'tabJour' => ['', 'L', 'M', 'M', 'J', 'V', 'S', 'D'],
+            'tabFerie' => Calendrier::getTabJoursFeries(),
+            'tabFinMois' => Calendrier::getTabFinMois(),
+            'annee' => $annee,
+            'events' => $dateRepository->findByDepartementPlanning(
                 $this->dataUserSession->getDepartementId(),
                 $annee
             ),

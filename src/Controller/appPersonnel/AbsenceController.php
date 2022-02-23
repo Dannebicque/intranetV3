@@ -39,11 +39,8 @@ use Symfony\Component\Routing\Annotation\Route;
 #[IsGranted('ROLE_PERMANENT')]
 class AbsenceController extends BaseController
 {
-    private MyAbsences $myAbsences;
-
-    public function __construct(MyAbsences $myAbsences)
+    public function __construct(private MyAbsences $myAbsences)
     {
-        $this->myAbsences = $myAbsences;
     }
 
     /**
@@ -132,6 +129,9 @@ class AbsenceController extends BaseController
         ]);
     }
 
+    /**
+     * @throws \JsonException
+     */
     #[Route('/ajax/pas-absent/', name: 'application_personnel_absence_ajax_pas_absent', options: ['expose' => true], methods: ['POST'])]
     public function pasAbsentEvent(Request $request, EdtManager $edtManager): JsonResponse
     {
@@ -159,10 +159,9 @@ class AbsenceController extends BaseController
     }
 
     /**
-     * @Route("/{uuid}", name="application_personnel_absence_delete", methods="DELETE")
-     *
      * @ParamConverter("absence", options={"mapping": {"uuid": "uuid"}})
      */
+    #[Route(path: '/{uuid}', name: 'application_personnel_absence_delete', methods: 'DELETE')]
     public function supprimer(EtudiantAbsences $etudiantAbsences, Request $request, Absence $absence): Response
     {
         //todo: tester...
@@ -173,21 +172,14 @@ class AbsenceController extends BaseController
 
             return $this->json($id, Response::HTTP_OK);
         }
-
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'absence.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * @Route("/ajax/absences/{matiere}", name="application_personnel_absence_get_ajax", methods="GET",
-     *                                    options={"expose":true})
-     */
-    public function ajaxGetAbsencesMatiere(
-        TypeMatiereManager $typeMatiereManager,
-        AbsenceRepository $absenceRepository,
-        string $matiere
-    ): JsonResponse {
+    #[Route(path: '/ajax/absences/{matiere}', name: 'application_personnel_absence_get_ajax', options: ['expose' => true], methods: 'GET')]
+    public function ajaxGetAbsencesMatiere(TypeMatiereManager $typeMatiereManager, AbsenceRepository $absenceRepository, string $matiere): JsonResponse
+    {
         $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
         $this->denyAccessUnlessGranted('CAN_ADD_ABSENCE', $mat);
         if (null !== $mat) {
@@ -203,19 +195,11 @@ class AbsenceController extends BaseController
     }
 
     /**
-     * @Route("/ajax/saisie/{matiere}/{etudiant}", name="application_personnel_absence_saisie_ajax", methods="POST",
-     *                                             options={"expose":true})
-     *
      * @throws Exception
      */
-    public function ajaxSaisie(
-        TypeMatiereManager $typeMatiereManager,
-        EtudiantAbsences $etudiantAbsences,
-        AbsenceRepository $absenceRepository,
-        Request $request,
-        string $matiere,
-        Etudiant $etudiant
-    ): JsonResponse | Response {
+    #[Route(path: '/ajax/saisie/{matiere}/{etudiant}', name: 'application_personnel_absence_saisie_ajax', options: ['expose' => true], methods: 'POST')]
+    public function ajaxSaisie(TypeMatiereManager $typeMatiereManager, EtudiantAbsences $etudiantAbsences, AbsenceRepository $absenceRepository, Request $request, string $matiere, Etudiant $etudiant): JsonResponse | Response
+    {
         $dateHeure = Tools::convertDateHeureToObject($request->request->get('date'), $request->request->get('heure'));
         $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
         $this->denyAccessUnlessGranted('CAN_ADD_ABSENCE', $mat);
@@ -225,7 +209,6 @@ class AbsenceController extends BaseController
             'dateHeure' => $dateHeure,
             'anneeUniversitaire' => $etudiant->getSemestre() ? $etudiant->getSemestre()->getAnneeUniversitaire()?->getId() : 0,
         ]);
-
         if (null !== $mat && 'saisie' === $request->get('action') && 0 === count($absence)) {
             if ($this->saisieAutorise($mat->semestre->getOptNbJoursSaisieAbsence(), $dateHeure)) {
                 $etudiantAbsences->setEtudiant($etudiant);
@@ -246,7 +229,6 @@ class AbsenceController extends BaseController
 
             return new response('out', 500);
         }
-
         if (1 === count($absence)) {
             //un tableau, donc une absence ?
             $etudiantAbsences->removeAbsence($absence[0]);

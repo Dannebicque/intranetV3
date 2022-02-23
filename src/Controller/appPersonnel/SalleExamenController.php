@@ -26,35 +26,27 @@ use Twig\Error\SyntaxError;
 /**
  * Class QuizzController.
  *
- * @Route("/application/personnel/salle-examen")
  * @IsGranted("ROLE_PERMANENT")
  */
+#[Route(path: '/application/personnel/salle-examen')]
 class SalleExamenController extends BaseController
 {
-    /**
-     * @Route("/", name="application_personnel_salle_examen_index")
-     */
-    public function index(
-        SemestreRepository $semestreRepository,
-        SalleExamenRepository $salleExamenRepository,
-        PersonnelRepository $personnelRepository
-    ): Response {
+    #[Route(path: '/', name: 'application_personnel_salle_examen_index')]
+    public function index(SemestreRepository $semestreRepository, SalleExamenRepository $salleExamenRepository, PersonnelRepository $personnelRepository): Response
+    {
         return $this->render('appPersonnel/salle_examen/index.html.twig', [
             'semestres' => $semestreRepository->findByDepartementActif($this->getDepartement()),
             'salles' => $salleExamenRepository->findByDepartement($this->getDepartement()),
-            'personnels' => $personnelRepository->findByDepartement($this->getDepartement())
+            'personnels' => $personnelRepository->findByDepartement($this->getDepartement()),
         ]);
     }
 
     /**
-     * @Route("/application/salle-examen/genere/document",
-     *     name="application_personnel_salle_examen_genere_placement",
-     *     methods={"POST"})
      * @throws SyntaxError
      * @throws LoaderError
-     *
      * @throws RuntimeError
      */
+    #[Route(path: '/application/salle-examen/genere/document', name: 'application_personnel_salle_examen_genere_placement', methods: ['POST'])]
     public function generePlacement(MySalleExamen $mySalleExamen, Request $request)
     {
         $capacite = $mySalleExamen->calculCapacite($request->request->get('salle'),
@@ -68,7 +60,6 @@ class SalleExamenController extends BaseController
                 $this->dataUserSession->getDepartement()
             );
         }
-
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Salle trop petite');
 
         return $this->redirectToRoute('application_index', ['onglet' => 'salle_examen']);

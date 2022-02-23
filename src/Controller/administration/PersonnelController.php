@@ -27,6 +27,9 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/administration/personnel', name: 'administration_personnel_')]
 class PersonnelController extends BaseController
 {
+    /**
+     * @throws \JsonException
+     */
     #[Route('/', name: 'index', options: ['expose' => true], methods: ['GET', 'POST'])]
     public function index(Request $request): Response
     {
@@ -54,18 +57,18 @@ class PersonnelController extends BaseController
         requirements: ['_format' => 'csv|xlsx|pdf'],
         options: ['expose' => true],
         methods: 'GET')]
-    public function export(MyExport $myExport, PersonnelRepository $personnelRepository, $type, $_format): Response
+    public function export(MyExport $myExport, PersonnelRepository $personnelRepository, $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
-        $personnels = $personnelRepository->findByType($type, $this->dataUserSession->getDepartement());
+        $personnels = $personnelRepository->findByDepartement($this->dataUserSession->getDepartement());
 
         return $myExport->genereFichierGenerique(
             $_format,
             $personnels,
-            'listing_' . $type,
-            ['utilisateur'],
-            ['nom', 'prenom']
+            'listing_personnels',
+            ['utilisateur', 'personnel:read'],
+            ['civilite', 'nom', 'prenom', 'statut']
         );
     }
 
@@ -184,7 +187,7 @@ class PersonnelController extends BaseController
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         $id = $personnel->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $pf = $personnelDepartementRepository->findByPersonnelDepartement($personnel,
                 $this->getDepartement());
             foreach ($pf as $p) {
@@ -232,7 +235,7 @@ class PersonnelController extends BaseController
         $pf = $personnelDepartementRepository->findByPersonnelDepartement($personnel,
             $this->getDepartement());
 
-        if (1 === count($pf) && in_array($droit, Constantes::ROLE_LISTE, true)) {
+        if (1 === (is_countable($pf) ? count($pf) : 0) && in_array($droit, Constantes::ROLE_LISTE, true)) {
             if (in_array($droit, $pf[0]->getRoles(), true)) {
                 //deja existant on retire
                 $pf[0]->removeRole($droit);
@@ -248,7 +251,7 @@ class PersonnelController extends BaseController
             return $this->json($droit, Response::HTTP_OK);
         }
 
-        if (0 === count($pf) && in_array($droit, Constantes::ROLE_LISTE, true)) {
+        if (0 === (is_countable($pf) ? count($pf) : 0) && in_array($droit, Constantes::ROLE_LISTE, true)) {
             //etrangement pas dans un département, on ajoute.
             $pf = new PersonnelDepartement($personnel, $this->getDepartement());
             $pf->setDepartement($this->getDepartement());

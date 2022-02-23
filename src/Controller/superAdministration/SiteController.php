@@ -15,28 +15,21 @@ use App\Entity\Constantes;
 use App\Entity\Site;
 use App\Form\SiteType;
 use App\Repository\SiteRepository;
+use function count;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use function count;
 
-/**
- * @Route("/administratif/site")
- */
+#[Route(path: '/administratif/site')]
 class SiteController extends BaseController
 {
-    /**
-     * @Route("/", name="sa_site_index", methods="GET")
-     */
+    #[Route(path: '/', name: 'sa_site_index', methods: 'GET')]
     public function index(SiteRepository $siteRepository): Response
     {
         return $this->render('super-administration/site/index.html.twig', ['sites' => $siteRepository->findAll()]);
     }
 
-    /**
-     * @Route("/export.{_format}", name="sa_site_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
-     *
-     */
+    #[Route(path: '/export.{_format}', name: 'sa_site_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
     public function export(MyExport $myExport, SiteRepository $siteRepository, $_format): Response
     {
         $sites = $siteRepository->findAll();
@@ -50,9 +43,7 @@ class SiteController extends BaseController
         );
     }
 
-    /**
-     * @Route("/new", name="sa_site_new", methods="GET|POST")
-     */
+    #[Route(path: '/new', name: 'sa_site_new', methods: 'GET|POST')]
     public function create(Request $request): Response
     {
         $site = new Site();
@@ -62,7 +53,6 @@ class SiteController extends BaseController
             ],
         ]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($site);
             $this->entityManager->flush();
@@ -77,17 +67,13 @@ class SiteController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="sa_site_show", methods="GET")
-     */
+    #[Route(path: '/{id}', name: 'sa_site_show', methods: 'GET')]
     public function show(Site $site): Response
     {
         return $this->render('super-administration/site/show.html.twig', ['site' => $site]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="sa_site_edit", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/edit', name: 'sa_site_edit', methods: 'GET|POST')]
     public function edit(Request $request, Site $site): Response
     {
         $form = $this->createForm(SiteType::class, $site, [
@@ -96,7 +82,6 @@ class SiteController extends BaseController
             ],
         ]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'site.edit.success.flash');
@@ -110,14 +95,11 @@ class SiteController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}/duplicate", name="sa_site_duplicate", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/duplicate', name: 'sa_site_duplicate', methods: 'GET|POST')]
     public function duplicate(Site $site): Response
     {
         $newSite = clone $site;
         $newSite->setAdresse(null);
-
         $this->entityManager->persist($newSite);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'site.duplicate.success.flash');
@@ -125,13 +107,11 @@ class SiteController extends BaseController
         return $this->redirectToRoute('sa_site_edit', ['id' => $newSite->getId()]);
     }
 
-    /**
-     * @Route("/{id}", name="sa_site_delete", methods="DELETE")
-     */
+    #[Route(path: '/{id}', name: 'sa_site_delete', methods: 'DELETE')]
     public function delete(Request $request, Site $site): Response
     {
         $id = $site->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             if (0 === count($site->getUfrs()) && 0 === count($site->getUfrPrincipales())) {
                 $this->entityManager->remove($site);
                 $this->entityManager->flush();

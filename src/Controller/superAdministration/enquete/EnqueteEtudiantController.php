@@ -22,7 +22,7 @@ class EnqueteEtudiantController extends BaseController
     #[Route('/voir-editer/{questionnaire}', name: 'voir_modifier')]
     public function voirEditerQuestionnaireEtudiant(
         QuestionnaireEtudiant $questionnaire
-    ) {
+    ): Response {
         return $this->render('super-administration/enquete/voir_editer.html.twig', [
             'questionnaireEtudiant' => $questionnaire,
             'etudiant' => $questionnaire->getEtudiant(),
@@ -51,7 +51,7 @@ class EnqueteEtudiantController extends BaseController
         QuestionnaireEtudiant $questionnaire
     ): Response {
         $id = $questionnaire->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             //suppression des réponses
             $reponses = $questionnaire->getQuestionnaireEtudiantReponses();
             foreach ($reponses as $reponse) {

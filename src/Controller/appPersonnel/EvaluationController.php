@@ -24,27 +24,18 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-/**
- * Class NotesController.
- *
- * @Route("/application/personnel/evaluation")
- * @IsGranted("ROLE_PERMANENT")
- */
+#[IsGranted('ROLE_PERMANENT')]
+#[Route(path: '/application/personnel/evaluation')]
 class EvaluationController extends BaseController
 {
     /**
-     * @Route("/details/{uuid}", name="application_personnel_evaluation_show",
-     *                                    requirements={"evaluation"="\d+"})
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
      */
-    public function detailsEvaluation(
-        TypeMatiereManager $typeMatiereManager,
-        MyEvaluation $myEvaluation,
-        Evaluation $evaluation
-    ): Response {
+    #[Route(path: '/details/{uuid}', name: 'application_personnel_evaluation_show', requirements: ['evaluation' => '\d+'])]
+    public function detailsEvaluation(TypeMatiereManager $typeMatiereManager, MyEvaluation $myEvaluation, Evaluation $evaluation): Response
+    {
         $matiere = $typeMatiereManager->getMatiere($evaluation->getIdMatiere(), $evaluation->getTypeMatiere());
         $this->denyAccessUnlessGranted('CAN_ADD_NOTE', $matiere);
-
         $notes = $myEvaluation->setEvaluation($evaluation)->getNotesTableau();
 
         return $this->render('appPersonnel/note/saisie_2.html.twig', [
@@ -56,10 +47,9 @@ class EvaluationController extends BaseController
     }
 
     /**
-     * @Route("/visible/{uuid}/{etat}", name="application_personnel_evaluation_visible",
-     *                                    requirements={"evaluation"="\d+"})
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
      */
+    #[Route(path: '/visible/{uuid}/{etat}', name: 'application_personnel_evaluation_visible', requirements: ['evaluation' => '\d+'])]
     public function evaluationVisible(MyEvaluation $myEvaluation, Evaluation $evaluation, $etat): Response
     {
         //todo: tester au niveau évaluation
@@ -75,16 +65,15 @@ class EvaluationController extends BaseController
     }
 
     /**
-     * @Route("/update/{uuid}", name="application_personnel_evaluation_update")
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
      */
+    #[Route(path: '/update/{uuid}', name: 'application_personnel_evaluation_update')]
     public function updateEvaluation(Request $request, Evaluation $evaluation): Response
     {
         //todo: tester au niveau évaluation
         //mise à jour d'un champ d'une évaluation
         $name = $request->request->get('field');
         $value = $request->request->get('value');
-
         $evaluation->updateData($name, $value);
         $this->entityManager->flush();
 
@@ -92,8 +81,6 @@ class EvaluationController extends BaseController
     }
 
     /**
-     * @Route("/export/{uuid}/{type}/{_format}", name="application_personnel_evaluation_export",
-     *                                    requirements={"evaluation"="\d+","_format"="csv|xlsx|pdf"})
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
      *
      * @return Response|StreamedResponse|null
@@ -103,13 +90,9 @@ class EvaluationController extends BaseController
      * @throws RuntimeError
      * @throws \App\Exception\MatiereNotFoundException
      */
-    public function exportEvaluation(
-        GroupeRepository $groupeRepository,
-        MyEvaluation $myEvaluation,
-        Evaluation $evaluation,
-        $type,
-        $_format
-    ) {
+    #[Route(path: '/export/{uuid}/{type}/{_format}', name: 'application_personnel_evaluation_export', requirements: ['evaluation' => '\d+', '_format' => 'csv|xlsx|pdf'])]
+    public function exportEvaluation(GroupeRepository $groupeRepository, MyEvaluation $myEvaluation, Evaluation $evaluation, $type, $_format)
+    {
         //todo: tester au niveau évaluation
         $t = explode('_', $type);
         if ('groupe' === $t[0]) {

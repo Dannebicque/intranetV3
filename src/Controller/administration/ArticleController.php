@@ -26,6 +26,9 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/administration/articles')]
 class ArticleController extends BaseController
 {
+    /**
+     * @throws \JsonException
+     */
     #[Route('/', name: 'administration_article_index', options: ['expose' => true], methods: ['GET', 'POST'])]
     public function index(Request $request): Response
     {
@@ -44,14 +47,10 @@ class ArticleController extends BaseController
             ['table' => $table]);
     }
 
-    /**
-     * @Route("/export.{_format}", name="administration_article_export", methods="GET",
-     *                             requirements={"_format"="csv|xlsx|pdf"})
-     */
+    #[Route(path: '/export.{_format}', name: 'administration_article_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
     public function export(MyExport $myExport, ArticleRepository $articleRepository, $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
-
         $articles = $articleRepository->findByDepartement($this->getDepartement());
 
         return $myExport->genereFichierGenerique(
@@ -63,13 +62,10 @@ class ArticleController extends BaseController
         );
     }
 
-    /**
-     * @Route("/new", name="administration_article_new", methods="GET|POST")
-     */
+    #[Route(path: '/new', name: 'administration_article_new', methods: 'GET|POST')]
     public function create(Request $request): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
-
         $article = new Article($this->getUser());
         $form = $this->createForm(
             ArticleType::class,
@@ -82,7 +78,6 @@ class ArticleController extends BaseController
             ]
         );
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($article);
             $this->entityManager->flush();
@@ -97,9 +92,7 @@ class ArticleController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="administration_article_show", methods="GET")
-     */
+    #[Route(path: '/{id}', name: 'administration_article_show', methods: 'GET')]
     public function show(Article $article): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $article->getCategorie()?->getDepartement());
@@ -107,13 +100,10 @@ class ArticleController extends BaseController
         return $this->render('administration/article/show.html.twig', ['article' => $article]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="administration_article_edit", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/edit', name: 'administration_article_edit', methods: 'GET|POST')]
     public function edit(Request $request, Article $article): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $article->getCategorie()?->getDepartement());
-
         $form = $this->createForm(
             ArticleType::class,
             $article,
@@ -125,7 +115,6 @@ class ArticleController extends BaseController
             ]
         );
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'article.edit.success.flash');
@@ -143,13 +132,10 @@ class ArticleController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="administration_article_delete", methods="DELETE")
-     */
+    #[Route(path: '/{id}', name: 'administration_article_delete', methods: 'DELETE')]
     public function delete(Request $request, Article $article): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $article->getCategorie()?->getDepartement());
-
         $id = $article->getId();
         if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $this->entityManager->remove($article);
@@ -163,15 +149,11 @@ class ArticleController extends BaseController
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * @Route("/{id}/duplicate", name="administration_article_duplicate", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/duplicate', name: 'administration_article_duplicate', methods: 'GET|POST')]
     public function duplicate(Article $article): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $article->getCategorie()?->getDepartement());
-
         $newArticle = clone $article;
-
         $this->entityManager->persist($newArticle);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'article.duplicate.success.flash');
@@ -179,9 +161,7 @@ class ArticleController extends BaseController
         return $this->redirectToRoute('administration_article_edit', ['id' => $newArticle->getId()]);
     }
 
-    /**
-     * @Route("/gestion/categories", name="administration_article_categories", methods="GET|POST")
-     */
+    #[Route(path: '/gestion/categories', name: 'administration_article_categories', methods: 'GET|POST')]
     public function gestionCategorie(): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
@@ -191,20 +171,14 @@ class ArticleController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/gestion/categorie/add", name="administration_article_categorie_add", options={"expose"=true})
-     */
-    public function addCategorie(
-        ArticleCategorieRepository $categorieRepository,
-        Request $request
-    ): JsonResponse {
+    #[Route(path: '/gestion/categorie/add', name: 'administration_article_categorie_add', options: ['expose' => true])]
+    public function addCategorie(ArticleCategorieRepository $categorieRepository, Request $request): JsonResponse
+    {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
-
         $libelle = $request->request->get('libelle');
         $categorie = new ArticleCategorie();
         $categorie->setDepartement($this->dataUserSession->getDepartement());
         $categorie->setLibelle($libelle);
-
         $this->entityManager->persist($categorie);
         $this->entityManager->flush();
 

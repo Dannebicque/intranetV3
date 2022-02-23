@@ -21,6 +21,9 @@ use Symfony\Component\Routing\Annotation\Route;
 #[IsGranted('ROLE_PERMANENT')]
 class AbsenceEtatAppelController extends BaseController
 {
+    /**
+     * @throws \JsonException
+     */
     #[Route('/absence/etat/appel', name: 'app_personnel_absence_etat_appel', options: ['expose' => true])]
     public function enregistre(
         GroupeRepository $groupeRepository,

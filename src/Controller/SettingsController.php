@@ -9,6 +9,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Personnel;
 use App\Repository\AnneeUniversitaireRepository;
 use App\Utils\JsonRequest;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,8 +28,8 @@ class SettingsController extends BaseController
         Request $request
     ): Response {
         $parametersAsArray = JsonRequest::getFromRequest($request);
-
-        if (array_key_exists('annee_universitaire', $parametersAsArray)) {
+        if ($this->getUser() instanceof Personnel &&
+            array_key_exists('annee_universitaire', $parametersAsArray)) {
             $anneeUniversitaire = $anneeUniversitaireRepository->find($parametersAsArray['annee_universitaire']);
             if (null !== $anneeUniversitaire) {
                 $this->getUser()->setAnneeUniversitaire($anneeUniversitaire);
@@ -37,6 +38,7 @@ class SettingsController extends BaseController
                 return $this->json(true);
             }
         }
+
 
         return $this->json(false);
     }

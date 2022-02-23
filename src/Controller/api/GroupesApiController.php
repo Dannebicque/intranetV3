@@ -18,14 +18,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class MatiereApiController.
- *
- * @Route("/api/groupe")
  */
+#[Route(path: '/api/groupe')]
 class GroupesApiController extends BaseController
 {
-    /**
-     * @Route("/type-groupe/{semestre}", name="api_type_groupe_semestre", options={"expose":true})
-     */
+    #[Route(path: '/type-groupe/{semestre}', name: 'api_type_groupe_semestre', options: ['expose' => true])]
     public function typeGroupeSemestreAjax(Semestre $semestre): Response
     {
         $json = [];
@@ -37,9 +34,7 @@ class GroupesApiController extends BaseController
         return $this->json($json);
     }
 
-    /**
-     * @Route("/groupe/{typeGroupe}", name="api_groupe_type_groupe", options={"expose":true})
-     */
+    #[Route(path: '/groupe/{typeGroupe}', name: 'api_groupe_type_groupe', options: ['expose' => true])]
     public function grouepTypeGroupeAjax(TypeGroupe $typeGroupe): Response
     {
         $json = [];

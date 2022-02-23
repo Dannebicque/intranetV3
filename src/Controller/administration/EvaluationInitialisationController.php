@@ -22,28 +22,20 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class EvaluationInitialisationController.
- *
- * @Route("/administration/initialisation-des-evaluations")
  */
+#[Route(path: '/administration/initialisation-des-evaluations')]
 class EvaluationInitialisationController extends BaseController
 {
     /**
-     * @Route("/{semestre}", name="administration_evaluation_initialisation_index", methods="GET|POST")
-     *
      * @throws Exception
      */
-    public function index(
-        Request $request,
-        TypeMatiereManager $typeMatiereManager,
-        EvaluationRepository $evaluationRepository,
-        Semestre $semestre
-    ): Response {
+    #[Route(path: '/{semestre}', name: 'administration_evaluation_initialisation_index', methods: 'GET|POST')]
+    public function index(Request $request, TypeMatiereManager $typeMatiereManager, EvaluationRepository $evaluationRepository, Semestre $semestre): Response
+    {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
-
         $matieres = $typeMatiereManager->findBySemestre($semestre);
         $evaluations = $evaluationRepository->findBySemestre($matieres,
             $this->dataUserSession->getAnneeUniversitaire());
-
         if ('POST' === $request->getMethod()) {
             $tGroupes = [];
             foreach ($semestre->getTypeGroupes() as $tg) {
@@ -59,20 +51,20 @@ class EvaluationInitialisationController extends BaseController
             foreach ($matieres as $matiere) {
                 $nbNotes = $matiere->nbNotes;
                 for ($i = 1; $i <= $nbNotes; ++$i) {
-                    if (!empty($request->request->get('commentaire_' . $matiere->getTypeIdMatiere() . '_' . $i))) {
-                        $nbEnseignant = count($request->request->get('enseignant_' . $matiere->getTypeIdMatiere() . '_' . $i));
+                    if (!empty($request->request->get('commentaire_'.$matiere->getTypeIdMatiere().'_'.$i))) {
+                        $nbEnseignant = null === $request->request->get('enseignant_'.$matiere->getTypeIdMatiere().'_'.$i) ? 0 : count($request->request->get('enseignant_'.$matiere->getTypeIdMatiere().'_'.$i));
                         if ($nbEnseignant > 0) {
-                            $pers = $tPersonnels[$request->request->get('enseignant_' . $matiere->getTypeIdMatiere() . '_' . $i)[0]];
+                            $pers = $tPersonnels[$request->request->get('enseignant_'.$matiere->getTypeIdMatiere().'_'.$i)[0]];
                         } else {
                             $pers = $this->getUser();
                         }
                         $eval = new Evaluation($pers, $matiere);
-                        $eval->setCoefficient($request->request->get('coefficient_' . $matiere->getTypeIdMatiere() . '_' . $i));
-                        $eval->setLibelle($request->request->get('commentaire_' . $matiere->getTypeIdMatiere() . '_' . $i));
-                        $eval->setTypegroupe($tGroupes[$request->request->get('typeGroupe_' . $matiere->getTypeIdMatiere() . '_' . $i)]);
+                        $eval->setCoefficient($request->request->get('coefficient_'.$matiere->getTypeIdMatiere().'_'.$i));
+                        $eval->setLibelle($request->request->get('commentaire_'.$matiere->getTypeIdMatiere().'_'.$i));
+                        $eval->setTypegroupe($tGroupes[$request->request->get('typeGroupe_'.$matiere->getTypeIdMatiere().'_'.$i)]);
 
                         for ($j = 1; $j < $nbEnseignant; ++$j) {
-                            $eval->addPersonnelAutorise($tPersonnels[$request->request->get('enseignant_' . $matiere->getTypeIdMatiere() . '_' . $i)[$j]]);
+                            $eval->addPersonnelAutorise($tPersonnels[$request->request->get('enseignant_'.$matiere->getTypeIdMatiere().'_'.$i)[$j]]);
                         }
                         $this->entityManager->persist($eval);
                     }

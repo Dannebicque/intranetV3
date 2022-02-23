@@ -23,16 +23,15 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class AlternanceController.
  *
- * @Route("/application/etudiant/alternance")
  * @IsGranted("ROLE_ETUDIANT")
  */
+#[Route(path: '/application/etudiant/alternance')]
 class AlternanceController extends BaseController
 {
     /**
-     * @Route("/", name="application_etudiant_alternance_index")
-     *
      * @throws NonUniqueResultException
      */
+    #[Route(path: '/', name: 'application_etudiant_alternance_index')]
     public function index(AlternanceRepository $alternanceRepository): Response
     {
         /** @var Alternance $alternance */
@@ -59,9 +58,7 @@ class AlternanceController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="application_etudiant_alternance_update", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/edit', name: 'application_etudiant_alternance_update', methods: 'GET|POST')]
     public function edit(Request $request, Alternance $alternance): Response
     {
         $form = $this->createForm(
@@ -76,7 +73,6 @@ class AlternanceController extends BaseController
             ]
         );
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $alternance->setEtat(Alternance::ALTERNANCE_ETAT_COMPLETE);
             $this->entityManager->flush();

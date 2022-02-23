@@ -18,44 +18,39 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/apc/apprentissage/critique")
- */
+#[Route(path: '/apc/apprentissage/critique')]
 class ApcApprentissageCritiqueController extends BaseController
 {
-    /**
-     * @Route("/new/{niveau}", name="administration_apc_apprentissage_critique_new", methods={"GET","POST"})
-     */
+    #[Route(path: '/new/{niveau}', name: 'administration_apc_apprentissage_critique_new', methods: ['GET', 'POST'])]
     public function new(Request $request, ApcNiveau $niveau): Response
     {
         $apcApprentissageCritique = new ApcApprentissageCritique($niveau);
         $form = $this->createForm(ApcApprentissageCritiqueType::class, $apcApprentissageCritique);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($apcApprentissageCritique);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.apprentissageCritique.create.success.flash');
+            if (null !== $niveau->getCompetence()) {
+                return $this->redirectToRoute('administration_apc_competence_show',
+                    ['id' => $niveau->getCompetence()->getId()]);
+            }
 
-            return $this->redirectToRoute('administration_apc_competence_show',
-                ['id' => $niveau->getCompetence()->getId()]);
+            return $this->redirectToRoute('administration_apc_referentiel_index');
         }
 
         return $this->render('apc/apc_apprentissage_critique/new.html.twig', [
             'apc_apprentissage_critique' => $apcApprentissageCritique,
-            'form'                       => $form->createView(),
-            'competence'                 => $niveau->getCompetence(),
+            'form' => $form->createView(),
+            'competence' => $niveau->getCompetence(),
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="administration_apc_apprentissage_critique_edit", methods={"GET","POST"})
-     */
+    #[Route(path: '/{id}/edit', name: 'administration_apc_apprentissage_critique_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, ApcApprentissageCritique $apcApprentissageCritique): Response
     {
         $form = $this->createForm(ApcApprentissageCritiqueType::class, $apcApprentissageCritique);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.apprentissageCritique.edit.success.flash');
@@ -65,13 +60,11 @@ class ApcApprentissageCritiqueController extends BaseController
 
         return $this->render('apc/apc_apprentissage_critique/edit.html.twig', [
             'apc_apprentissage_critique' => $apcApprentissageCritique,
-            'form'                       => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="administration_apc_apprentissage_critique_delete", methods={"DELETE"})
-     */
+    #[Route(path: '/{id}', name: 'administration_apc_apprentissage_critique_delete', methods: ['DELETE'])]
     public function delete(Request $request, ApcApprentissageCritique $apcApprentissageCritique): Response
     {
         if ($this->isCsrfTokenValid('delete' . $apcApprentissageCritique->getId(), $request->request->get('_token'))) {

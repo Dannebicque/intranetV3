@@ -21,18 +21,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class NoteController.
- *
- * @Route("/administration/note")
  */
+#[Route(path: '/administration/note')]
 class NoteController extends BaseController
 {
-    /**
-     * @Route("/semestre/{semestre}", name="administration_notes_semestre_index")
-     */
-    public function index(
-        MyEvaluations $myEvaluations,
-        Semestre $semestre
-    ): Response {
+    #[Route(path: '/semestre/{semestre}', name: 'administration_notes_semestre_index')]
+    public function index(MyEvaluations $myEvaluations, Semestre $semestre): Response
+    {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
         $myEvaluations->setSemestre($semestre);
 
@@ -45,16 +40,10 @@ class NoteController extends BaseController
     }
 
     /**
-     * @Route("/all/semestre/{semestre}/export.{_format}", name="administration_all_notes_export", methods="GET",
-     *                             requirements={"_format"="csv|xlsx|pdf"})
-     *
      * @return Response
      */
-    public function exportAllNotes(
-        NotesExport $notesExport,
-        Semestre $semestre,
-        $_format
-    ): ?Response
+    #[Route(path: '/all/semestre/{semestre}/export.{_format}', name: 'administration_all_notes_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
+    public function exportAllNotes(NotesExport $notesExport, Semestre $semestre, $_format): ?Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
 
@@ -65,10 +54,8 @@ class NoteController extends BaseController
         TypeMatiereManager $typeMatiereManager,
         NoteRepository $noteRepository,
         Semestre $semestre
-    )
-    {
+    ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
-
 
         $matieres = $typeMatiereManager->findBySemestre($semestre);
         $notesAvecAbsence = $noteRepository->findBySemestreNoteAvecAbsence($matieres,
@@ -78,22 +65,14 @@ class NoteController extends BaseController
 
         return $this->render('administration/notes/analyse.html.twig', [
             'notesAvecAbsence' => $notesAvecAbsence,
-            'notesIncoherentes' => $notesIncoherentes
+            'notesIncoherentes' => $notesIncoherentes,
         ]);
     }
 
-    /**
-     * @Route("/ajax/{note}/{action}", name="administration_note_corrige_ajax", methods={"POST"},
-     *                                 options={"expose":true})
-     */
-    public function corrigeNote(
-        Note $note,
-        string $action
-    ): Response
+    #[Route(path: '/ajax/{note}/{action}', name: 'administration_note_corrige_ajax', options: ['expose' => true], methods: ['POST'])]
+    public function corrigeNote(Note $note, string $action): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $note->getEtudiant()?->getSemestre());
-
-
+       // $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $note->getEtudiant()?->getSemestre());
         switch ($action) {
             case 'absent':
                 $note->setAbsenceJustifie(true);

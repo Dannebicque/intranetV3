@@ -20,15 +20,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/super-sa/programme-pedagogique")
- */
+#[Route(path: '/super-sa/programme-pedagogique')]
 class PpnController extends BaseController
 {
-    /**
-     * @Route("/export.{_format}", name="sa_ppn_export", methods="GET",
-     *                             requirements={"_format"="csv|xlsx|pdf"})
-     */
+    #[Route(path: '/export.{_format}', name: 'sa_ppn_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
     public function export(): Response
     {
         //save en csv
@@ -36,15 +31,13 @@ class PpnController extends BaseController
     }
 
     /**
-     * @Route("/copie", name="sa_ppn_copie_integrale", methods="POST")
-     *
      * @throws Exception
      */
+    #[Route(path: '/copie', name: 'sa_ppn_copie_integrale', methods: 'POST')]
     public function copieIntegrale(PpnRepository $ppnRepository, Request $request): Response
     {
         $ppnOrigine = $ppnRepository->find($request->request->get('ppn_origine'));
         $ppnDest = $ppnRepository->find($request->request->get('ppn_dest'));
-
         if (null !== $ppnDest && null !== $ppnOrigine) {
             //effacer contenu PPN de destination
             foreach ($ppnDest->getMatieres() as $matiere) {
@@ -68,9 +61,7 @@ class PpnController extends BaseController
         return $this->redirectToRoute('sa_ppn_index');
     }
 
-    /**
-     * @Route("/new/{diplome}", name="sa_ppn_new", methods="GET|POST")
-     */
+    #[Route(path: '/new/{diplome}', name: 'sa_ppn_new', methods: 'GET|POST')]
     public function create(Request $request, Diplome $diplome): Response
     {
         $ppn = new Ppn();
@@ -82,7 +73,6 @@ class PpnController extends BaseController
             ],
         ]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($ppn);
             $this->entityManager->flush();
@@ -92,22 +82,18 @@ class PpnController extends BaseController
         }
 
         return $this->render('structure/ppn/new.html.twig', [
-            'ppn'  => $ppn,
+            'ppn' => $ppn,
             'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="sa_ppn_show", methods="GET")
-     */
+    #[Route(path: '/{id}', name: 'sa_ppn_show', methods: 'GET')]
     public function show(Ppn $ppn): Response
     {
         return $this->render('structure/ppn/show.html.twig', ['ppn' => $ppn]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="sa_ppn_edit", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/edit', name: 'sa_ppn_edit', methods: 'GET|POST')]
     public function edit(Request $request, Ppn $ppn): Response
     {
         $form = $this->createForm(PpnType::class, $ppn, [
@@ -117,7 +103,6 @@ class PpnController extends BaseController
             ],
         ]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'ppn.edit.success.flash');
@@ -126,39 +111,33 @@ class PpnController extends BaseController
         }
 
         return $this->render('structure/ppn/edit.html.twig', [
-            'ppn'  => $ppn,
+            'ppn' => $ppn,
             'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="sa_ppn_delete", methods="DELETE")
-     */
+    #[Route(path: '/{id}', name: 'sa_ppn_delete', methods: 'DELETE')]
     public function delete(Request $request, Ppn $ppn): Response
     {
         //suppression uniquement si vide.
         //feature: gérer une suppression plus complete en super-admin
         $id = $ppn->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $this->entityManager->remove($ppn);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'ppn.delete.success.flash');
 
             return $this->json($id, Response::HTTP_OK);
         }
-
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'ppn.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * @Route("/{id}/duplicate", name="sa_ppn_duplicate", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/duplicate', name: 'sa_ppn_duplicate', methods: 'GET|POST')]
     public function duplicate(Ppn $ppn): Response
     {
         $newPpn = clone $ppn;
-
         $this->entityManager->persist($newPpn);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'ppn.duplicate.success.flash');

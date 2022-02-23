@@ -19,6 +19,7 @@ use App\Repository\EdtPlanningRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
+use function array_key_exists;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -27,29 +28,22 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use ZipArchive;
-use function array_key_exists;
 
 /**
  * Class EdtController.
- *
- * @Route("/administration/emploi-du-temps/export")
  */
+#[Route(path: '/administration/emploi-du-temps/export')]
 class EdtExportController extends BaseController
 {
-    /**
-     * @Route("/voir", name="administration_edt_export_voir", requirements={"source"="intranet|celcat"})
-     */
-    public function voirPdf(
-        MyEdtExport $myEdtExport
-    ): Response {
+    #[Route(path: '/voir', name: 'administration_edt_export_voir', requirements: ['source' => 'intranet|celcat'])]
+    public function voirPdf(MyEdtExport $myEdtExport): Response
+    {
         return $this->render('administration/edtExport/voir.html.twig', [
             'docs' => $myEdtExport->getAllDocs($this->dataUserSession->getDepartement()),
         ]);
     }
 
-    /**
-     * @Route("/{source}", name="administration_edt_export_index", requirements={"source"="intranet|celcat"})
-     */
+    #[Route(path: '/{source}', name: 'administration_edt_export_index', requirements: ['source' => 'intranet|celcat'])]
     public function index($source): Response
     {
         return $this->render('administration/edtExport/index.html.twig', [
@@ -57,15 +51,9 @@ class EdtExportController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/script/{source}", name="administration_edt_export_script", requirements={"source"="intranet|celcat"})
-     */
-    public function exportScript(
-        SemestreRepository $semestreRepository,
-        GroupeRepository $groupeRepository,
-        CalendrierRepository $calendrierRepository,
-        $source
-    ): Response {
+    #[Route(path: '/script/{source}', name: 'administration_edt_export_script', requirements: ['source' => 'intranet|celcat'])]
+    public function exportScript(SemestreRepository $semestreRepository, GroupeRepository $groupeRepository, CalendrierRepository $calendrierRepository, $source): Response
+    {
         $semestres = $semestreRepository->findByDepartementActif($this->getDepartement());
         $groupes = $groupeRepository->findByDepartementSemestreActif($this->getDepartement());
         $semaines = $calendrierRepository->findByAnneeUniversitaire($this->getAnneeUniversitaire());
@@ -77,25 +65,15 @@ class EdtExportController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/script-ajax", name="administration_edt_export_script_ajax")
-     */
-    public function exportScriptAjax(
-        TypeMatiereManager $typeMatiereManager,
-        KernelInterface $kernel,
-        Request $request,
-        GroupeRepository $groupeRepository,
-        CalendrierRepository $calendrierRepository,
-        EdtPlanningRepository $edtPlanningRepository,
-        SemestreRepository $semestreRepository
-    ): Response {
+    #[Route(path: '/script-ajax', name: 'administration_edt_export_script_ajax')]
+    public function exportScriptAjax(TypeMatiereManager $typeMatiereManager, KernelInterface $kernel, Request $request, GroupeRepository $groupeRepository, CalendrierRepository $calendrierRepository, EdtPlanningRepository $edtPlanningRepository, SemestreRepository $semestreRepository): Response
+    {
         $semestre = $semestreRepository->find($request->request->get('semestre'));
         $semaine = $request->request->get('semaine');
         $calendrier = $calendrierRepository->findOneBy([
             'semaineFormation' => $semaine,
             'anneeUniversitaire' => $this->getAnneeUniversitaire()->getId(),
         ]);
-
         $tabMatieres = [
             'S1' => [
                 'TSBZ1M01' => 0,
@@ -156,7 +134,7 @@ class EdtExportController extends BaseController
                 '3TW8D203' => 9,
                 '3TW8X204' => 10,
                 '3TW8X210' => 11,
-                '3TW8X211' => 12
+                '3TW8X211' => 12,
             ],
             'S4' => [
                 '3TW4X101' => 0,
@@ -178,13 +156,11 @@ class EdtExportController extends BaseController
                 '3TW4X211' => 16,
             ],
         ];
-
         $tabType = [
             'CM' => 1,
             'TD' => 4,
             'TP' => 6,
         ];
-
         $tabSalles = [
             'H001',
             'H002',
@@ -215,29 +191,24 @@ class EdtExportController extends BaseController
             'DISLP',
         ];
         $tabSalles = array_flip($tabSalles);
-
         $pl = $edtPlanningRepository->findEdtSemestre($semestre, $semaine);
         $matieres = $typeMatiereManager->findBySemestreArray($semestre);
-
         $code = [];
         $codeGroupe = [];
-
         foreach ($semestre->getTypeGroupes() as $tg) {
             $code[$tg->getType()] = [];
             $groupes = $groupeRepository->findBy(['typeGroupe' => $tg->getId()], ['ordre' => 'ASC']);
             foreach ($groupes as $groupe) {
-                $code[mb_strtoupper($tg->getType())][$groupe->getOrdre()] = 'call sleep 5' . "\n";
-                $codeGroupe[mb_strtoupper($tg->getType()) . '_' . $groupe->getOrdre()] = $groupe->getLibelle();
+                $code[mb_strtoupper($tg->getType())][$groupe->getOrdre()] = 'call sleep 5'."\n";
+                $codeGroupe[mb_strtoupper($tg->getType()).'_'.$groupe->getOrdre()] = $groupe->getLibelle();
             }
         }
-
         foreach ($pl as $p) {
             if (null !== $p->getIntervenant()) {
                 $codeprof = $p->getIntervenant()->getNumeroHarpege();
             } else {
                 $codeprof = 0;
             }
-
 
             if (
                 0 !== $p->getIdMatiere() &&
@@ -253,50 +224,43 @@ class EdtExportController extends BaseController
 # 7= type de cours (CM=1, TD=4, TP=6)
                  */
                 $codeMatiere = $matieres[$p->getTypeIdMatiere()]->codeElement;
-                $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= 'call  ajouter ' . $p->getJour() . ' ' . Constantes::TAB_HEURES[$p->getDebut()] . ' ' . Constantes::TAB_HEURES[$p->getFin()] . ' ' . $codeprof . ' ' . $tabSalles[$p->getSalle()] . ' ' . $tabMatieres[$semestre->getLibelle()][$codeMatiere] . ' ' . $tabType[mb_strtoupper($p->getType())] . "\n";
+                $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= 'call  ajouter '.$p->getJour().' '.Constantes::TAB_HEURES[$p->getDebut()].' '.Constantes::TAB_HEURES[$p->getFin()].' '.$codeprof.' '.$tabSalles[$p->getSalle()].' '.$tabMatieres[$semestre->getLibelle()][$codeMatiere].' '.$tabType[mb_strtoupper($p->getType())]."\n";
             }
             if (0 !== $p->getIdMatiere() && 'H018' === $p->getSalle()) { // array_key_exists($p->getIntervenant()->getNumeroHarpege(), $tabProf))
                 $codeMatiere = $matieres[$p->getTypeIdMatiere()]->codeElement;
-                $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= 'call  ajouterh018 ' . $p->getJour() . ' ' . Constantes::TAB_HEURES[$p->getDebut()] . ' ' . Constantes::TAB_HEURES[$p->getFin()] . ' ' . $codeprof . ' 0 ' . $tabMatieres[$semestre->getLibelle()][$codeMatiere] . ' ' . $tabType[mb_strtoupper($p->getType())] . "\n";
+                $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= 'call  ajouterh018 '.$p->getJour().' '.Constantes::TAB_HEURES[$p->getDebut()].' '.Constantes::TAB_HEURES[$p->getFin()].' '.$codeprof.' 0 '.$tabMatieres[$semestre->getLibelle()][$codeMatiere].' '.$tabType[mb_strtoupper($p->getType())]."\n";
             }
         }
-
         $codeComplet = '';
-
         $zip = new ZipArchive();
-        $zipName = $kernel->getProjectDir() . '/public/upload/temp/ajouter_S' . $calendrier->getSemaineReelle() . '_' . $semestre->getLibelle() . '.zip';
+        $zipName = $kernel->getProjectDir().'/public/upload/temp/ajouter_S'.$calendrier->getSemaineReelle().'_'.$semestre->getLibelle().'.zip';
         @unlink($zipName);
         $zip->open($zipName, ZipArchive::CREATE);
         $i = 0;
         foreach ($code as $type => $value) {
             foreach ($value as $groupe => $c) {
-                $codeComplet .= 'call groupe ' . $i . "\n";
+                $codeComplet .= 'call groupe '.$i."\n";
 
-                $n = $semestre->getLibelle() . '_S' . $calendrier->getSemaineReelle() . '_' . $type . '_' . $codeGroupe[$type . '_' . $groupe] . '.bat';
+                $n = $semestre->getLibelle().'_S'.$calendrier->getSemaineReelle().'_'.$type.'_'.$codeGroupe[$type.'_'.$groupe].'.bat';
 
                 $zip->addFromString($n, $c);
-                $codeComplet .= 'call ' . $n . " \n";
-                $codeComplet .= 'call fingroupe ' . "\n";
+                $codeComplet .= 'call '.$n." \n";
+                $codeComplet .= 'call fingroupe '."\n";
                 ++$i;
             }
         }
-
-        $zip->addFromString('script' . $calendrier->getSemaineReelle() . '.bat', $codeComplet);
+        $zip->addFromString('script'.$calendrier->getSemaineReelle().'.bat', $codeComplet);
         $zip->close();
-
         $response = new Response(file_get_contents($zipName));
         $response->headers->set('Content-Type', 'application/zip');
         $response->headers->set('Content-Disposition',
-            'attachment;filename="ajouter_S' . $calendrier->getSemaineReelle() . '_' . $semestre->getLibelle() . '.zip"');
+            'attachment;filename="ajouter_S'.$calendrier->getSemaineReelle().'_'.$semestre->getLibelle().'.zip"');
         $response->headers->set('Content-length', filesize($zipName));
 
         return $response;
     }
 
-    /**
-     * @Route("/one/{personnel}/{source}.{_format}", name="administration_edt_export_one",
-     *                                    requirements={"source"="intranet|celcat"})
-     */
+    #[Route(path: '/one/{personnel}/{source}.{_format}', name: 'administration_edt_export_one', requirements: ['source' => 'intranet|celcat'])]
     public function exportOne(MyEdtExport $myEdtExport, Personnel $personnel, $source, $_format): Response
     {
         $myEdtExport->genereOneDocument($source, $_format, $personnel, $this->dataUserSession->getDepartement());
@@ -304,10 +268,7 @@ class EdtExportController extends BaseController
         return $this->redirectToRoute('administration_edt_export_voir');
     }
 
-    /**
-     * @Route("/tous/{source}.{_format}", name="administration_edt_export_all",
-     *                                    requirements={"source"="intranet|celcat"})
-     */
+    #[Route(path: '/tous/{source}.{_format}', name: 'administration_edt_export_all', requirements: ['source' => 'intranet|celcat'])]
     public function exportAll(MyEdtExport $myEdtExport, $source, $_format): Response
     {
         $myEdtExport->genereAllDocument($source, $_format, $this->dataUserSession->getDepartement());
@@ -316,21 +277,14 @@ class EdtExportController extends BaseController
     }
 
     /**
-     * @Route("/profs/{source}.pdf", name="administration_edt_export_profs",
-     *                                    requirements={"source"="intranet|celcat"})
-     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function exportProfs(
-        Request $request,
-        PersonnelRepository $personnelRepository,
-        MyEdtExport $myEdtExport,
-        $source
-    ): Response {
+    #[Route(path: '/profs/{source}.pdf', name: 'administration_edt_export_profs', requirements: ['source' => 'intranet|celcat'])]
+    public function exportProfs(Request $request, PersonnelRepository $personnelRepository, MyEdtExport $myEdtExport, $source): Response
+    {
         $profs = $request->request->get('personnels');
-
         foreach ($profs as $prof) {
             $personnel = $personnelRepository->find($prof);
             if (null !== $personnel) {

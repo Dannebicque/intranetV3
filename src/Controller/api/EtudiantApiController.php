@@ -18,28 +18,21 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class AgendaController.
- *
- * @Route("/api/etudiant")
  */
+#[Route(path: '/api/etudiant')]
 class EtudiantApiController extends BaseController
 {
-    protected EtudiantRepository $etudiantRepository;
-
     /**
      * EtudiantApiController constructor.
      */
-    public function __construct(EtudiantRepository $etudiantRepository)
+    public function __construct(protected EtudiantRepository $etudiantRepository)
     {
-        $this->etudiantRepository = $etudiantRepository;
     }
 
-    /**
-     * @Route("/semestre/{semestre}", name="api_etudiants_semestre", options={"expose":true})
-     */
+    #[Route(path: '/semestre/{semestre}', name: 'api_etudiants_semestre', options: ['expose' => true])]
     public function trombinoscopeEtudiantsAjax(Semestre $semestre): JsonResponse
     {
         $etudiants = $this->etudiantRepository->findBySemestre($semestre->getId());
-
         $etus = [];
         /** @var Etudiant $p */
         foreach ($etudiants as $p) {

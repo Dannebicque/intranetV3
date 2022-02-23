@@ -18,21 +18,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/administratif/diplome-import")
- */
+#[Route(path: '/administratif/diplome-import')]
 class ImportDiplomeController extends BaseController
 {
     /**
-     * @Route("/{id}", name="sa_diplome_import_index")
      * @throws \Exception
      */
-    public function index(
-        MyUpload $myUpload,
-        DiplomeImport $diplomeImport,
-        Request $request,
-        Diplome $diplome
-    ): Response {
+    #[Route(path: '/{id}', name: 'sa_diplome_import_index')]
+    public function index(MyUpload $myUpload, DiplomeImport $diplomeImport, Request $request, Diplome $diplome): Response
+    {
         if ($request->isMethod('POST')) {
             $fichier = $myUpload->upload($request->files->get('fichier'), 'temp/', ['xml']);
             $diplomeImport->import($diplome, $fichier, $request->request->get('typeFichier'));

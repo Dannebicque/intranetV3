@@ -15,28 +15,21 @@ use App\Entity\Constantes;
 use App\Entity\Ufr;
 use App\Form\UfrType;
 use App\Repository\UfrRepository;
+use function count;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use function count;
 
-/**
- * @Route("/administratif/ufr")
- */
+#[Route(path: '/administratif/ufr')]
 class UfrController extends BaseController
 {
-    /**
-     * @Route("/", name="sa_ufr_index", methods="GET")
-     */
+    #[Route(path: '/', name: 'sa_ufr_index', methods: 'GET')]
     public function index(UfrRepository $ufrRepository): Response
     {
         return $this->render('super-administration/ufr/index.html.twig', ['ufrs' => $ufrRepository->findAll()]);
     }
 
-    /**
-     * @Route("/export.{_format}", name="sa_ufr_export", methods="GET", requirements={"_format"="csv|xlsx|pdf"})
-     *
-     */
+    #[Route(path: '/export.{_format}', name: 'sa_ufr_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
     public function export(MyExport $myExport, UfrRepository $ufrRepository, $_format): Response
     {
         $ufrs = $ufrRepository->findAll();
@@ -50,9 +43,7 @@ class UfrController extends BaseController
         );
     }
 
-    /**
-     * @Route("/new", name="sa_ufr_new", methods="GET|POST")
-     */
+    #[Route(path: '/new', name: 'sa_ufr_new', methods: 'GET|POST')]
     public function create(Request $request): Response
     {
         $ufr = new Ufr();
@@ -62,7 +53,6 @@ class UfrController extends BaseController
             ],
         ]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($ufr);
             $this->entityManager->flush();
@@ -72,22 +62,18 @@ class UfrController extends BaseController
         }
 
         return $this->render('super-administration/ufr/new.html.twig', [
-            'ufr'  => $ufr,
+            'ufr' => $ufr,
             'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="sa_ufr_show", methods="GET")
-     */
+    #[Route(path: '/{id}', name: 'sa_ufr_show', methods: 'GET')]
     public function show(Ufr $ufr): Response
     {
         return $this->render('super-administration/ufr/show.html.twig', ['ufr' => $ufr]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="sa_ufr_edit", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/edit', name: 'sa_ufr_edit', methods: 'GET|POST')]
     public function edit(Request $request, Ufr $ufr): Response
     {
         $form = $this->createForm(UfrType::class, $ufr, [
@@ -96,7 +82,6 @@ class UfrController extends BaseController
             ],
         ]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'ufr.edit.success.flash');
@@ -105,18 +90,15 @@ class UfrController extends BaseController
         }
 
         return $this->render('super-administration/ufr/edit.html.twig', [
-            'ufr'  => $ufr,
+            'ufr' => $ufr,
             'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/{id}/duplicate", name="sa_ufr_duplicate", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/duplicate', name: 'sa_ufr_duplicate', methods: 'GET|POST')]
     public function duplicate(Ufr $ufr): Response
     {
         $newUfr = clone $ufr;
-
         $this->entityManager->persist($newUfr);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'ufr.duplicate.success.flash');
@@ -124,13 +106,11 @@ class UfrController extends BaseController
         return $this->redirectToRoute('sa_ufr_edit', ['id' => $newUfr->getId()]);
     }
 
-    /**
-     * @Route("/{id}", name="sa_ufr_delete", methods="DELETE")
-     */
+    #[Route(path: '/{id}', name: 'sa_ufr_delete', methods: 'DELETE')]
     public function delete(Request $request, Ufr $ufr): Response
     {
         $id = $ufr->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             if (0 === count($ufr->getDepartements())) {
                 $this->entityManager->remove($ufr);
                 $this->entityManager->flush();

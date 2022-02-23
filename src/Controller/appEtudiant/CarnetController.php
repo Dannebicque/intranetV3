@@ -20,18 +20,14 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class CarnetController.
  *
- * @Route("/application/etudiant/carnet")
  * @IsGranted("ROLE_ETUDIANT")
  */
+#[Route(path: '/application/etudiant/carnet')]
 class CarnetController extends BaseController
 {
-    /**
-     * @Route("/", name="application_etudiant_carnet_index")
-     */
-    public function index(
-        CahierTexteRepository $cahierTexteRepository,
-        TypeMatiereManager $typeMatiereManager
-    ): Response {
+    #[Route(path: '/', name: 'application_etudiant_carnet_index')]
+    public function index(CahierTexteRepository $cahierTexteRepository, TypeMatiereManager $typeMatiereManager): Response
+    {
         return $this->render('appEtudiant/carnet/index.html.twig', [
             'carnets' => $cahierTexteRepository->findBySemestre($this->getUser()->getSemestre()),
             'personnels' => $this->dataUserSession->getPersonnels(),
@@ -39,9 +35,7 @@ class CarnetController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="application_etudiant_carnet_show")
-     */
+    #[Route(path: '/{id}', name: 'application_etudiant_carnet_show')]
     public function show(CahierTexte $carnet): Response
     {
         return $this->render('appEtudiant/carnet/show.html.twig', [

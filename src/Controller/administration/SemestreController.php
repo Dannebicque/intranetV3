@@ -21,21 +21,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class SemestreController.
- *
- * @Route("/administration/semestre")
  */
+#[Route(path: '/administration/semestre')]
 class SemestreController extends BaseController
 {
-    /**
-     *
-     * @Route("/active/{semestre}/{actif}",
-     *     name="administration_semestre_actif",
-     *     methods={"GET"})
-     */
+    #[Route(path: '/active/{semestre}/{actif}', name: 'administration_semestre_actif', methods: ['GET'])]
     public function activeSemestreAction(Semestre $semestre, bool $actif): RedirectResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
-
         $semestre->setActif($actif);
         $this->entityManager->persist($semestre);
         $this->entityManager->flush();
@@ -44,16 +37,11 @@ class SemestreController extends BaseController
     }
 
     /**
-     * @Route("/{semestre}", name="administration_semestre_index", requirements={"semestre" : "\d+"})
-     *
      * @throws NonUniqueResultException
      * @throws NoResultException
      */
-    public function index(
-        AbsenceJustificatifRepository $absenceJustificatifRepository,
-        RattrapageRepository $rattrapageRepository,
-        Semestre $semestre
-    ): Response
+    #[Route(path: '/{semestre}', name: 'administration_semestre_index', requirements: ['semestre' => '\d+'])]
+    public function index(AbsenceJustificatifRepository $absenceJustificatifRepository, RattrapageRepository $rattrapageRepository, Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
 

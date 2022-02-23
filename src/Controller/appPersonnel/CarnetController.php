@@ -25,14 +25,12 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 /**
  * Class CarnetController.
  *
- * @Route("/application/personnel/carnet")
  * @IsGranted("ROLE_PERMANENT")
  */
+#[Route(path: '/application/personnel/carnet')]
 class CarnetController extends BaseController
 {
-    /**
-     * @Route("/", name="application_personnel_carnet_index", methods="GET")
-     */
+    #[Route(path: '/', name: 'application_personnel_carnet_index', methods: 'GET')]
     public function index(CahierTexteRepository $cahierRepository): Response
     {
         return $this->render(
@@ -41,11 +39,7 @@ class CarnetController extends BaseController
         );
     }
 
-    /**
-     * @Route("/export.{_format}", name="application_personnel_carnet_export", methods="GET",
-     *                             requirements={"_format"="csv|xlsx|pdf"})
-     *
-     */
+    #[Route(path: '/export.{_format}', name: 'application_personnel_carnet_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
     public function export(MyExport $myExport, CahierTexteRepository $cahierTexteRepository, $_format): Response
     {
         $actualites = $cahierTexteRepository->findByPersonnel($this->getUser());
@@ -60,19 +54,15 @@ class CarnetController extends BaseController
                 'description',
                 'dateRetour',
                 'personnel' => ['nom', 'prenom'],
-                'semestre'  => ['libelle'],
-                'matiere'   => ['libelle', 'codeMatiere'],
+                'semestre' => ['libelle'],
+                'matiere' => ['libelle', 'codeMatiere'],
             ]
         );
     }
 
-    /**
-     * @Route("/new", name="application_personnel_carnet_new", methods="GET|POST")
-     */
-    public function create(
-        Request $request,
-        EventDispatcherInterface $eventDispatcher
-    ): Response {
+    #[Route(path: '/new', name: 'application_personnel_carnet_new', methods: 'GET|POST')]
+    public function create(Request $request, EventDispatcherInterface $eventDispatcher): Response
+    {
         $cahierTexte = new CahierTexte();
         $cahierTexte->setPersonnel($this->getUser());
         $form = $this->createForm(
@@ -86,7 +76,6 @@ class CarnetController extends BaseController
             ]
         );
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($cahierTexte);
             $this->entityManager->flush();
@@ -100,21 +89,17 @@ class CarnetController extends BaseController
 
         return $this->render('appPersonnel/carnet/new.html.twig', [
             'cahierTexte' => $cahierTexte,
-            'form'        => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="application_personnel_carnet_show", methods="GET")
-     */
+    #[Route(path: '/{id}', name: 'application_personnel_carnet_show', methods: 'GET')]
     public function show(CahierTexte $cahierTexte): Response
     {
         return $this->render('appPersonnel/carnet/show.html.twig', ['cahierTexte' => $cahierTexte]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="application_personnel_carnet_edit", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/edit', name: 'application_personnel_carnet_edit', methods: 'GET|POST')]
     public function edit(Request $request, CahierTexte $cahierTexte): Response
     {
         $form = $this->createForm(
@@ -128,7 +113,6 @@ class CarnetController extends BaseController
             ]
         );
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
 
@@ -137,17 +121,15 @@ class CarnetController extends BaseController
 
         return $this->render('appPersonnel/carnet/edit.html.twig', [
             'cahierTexte' => $cahierTexte,
-            'form'        => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="application_personnel_carnet_delete", methods="DELETE")
-     */
+    #[Route(path: '/{id}', name: 'application_personnel_carnet_delete', methods: 'DELETE')]
     public function delete(Request $request, CahierTexte $cahierTexte): Response
     {
         $id = $cahierTexte->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $this->entityManager->remove($cahierTexte);
             $this->entityManager->flush();
 
@@ -157,13 +139,10 @@ class CarnetController extends BaseController
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * @Route("/{id}/duplicate", name="application_personnel_carnet_duplicate", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/duplicate', name: 'application_personnel_carnet_duplicate', methods: 'GET|POST')]
     public function duplicate(CahierTexte $cahierTexte): Response
     {
         $newCahierTexte = clone $cahierTexte;
-
         $this->entityManager->persist($newCahierTexte);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'cahier_texte.duplicate.success.flash');

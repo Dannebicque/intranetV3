@@ -18,8 +18,10 @@ use App\Entity\Constantes;
 use App\Entity\Semestre;
 use App\Repository\EdtPlanningRepository;
 use Exception;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Error\LoaderError;
@@ -183,12 +185,12 @@ class EdtController extends BaseController
      * @throws Exception
      */
     #[Route(path: '/etudiant/export/semaine/{semaine}', name: 'edt_etudiant_export_semaine_courante')]
-    public function exportEtudiantSemaine(MyPDF $myPDF, int $semaine = 0): RedirectResponse
+    public function exportEtudiantSemaine(MyPDF $myPDF, int $semaine = 0): RedirectResponse | StreamedResponse | PdfResponse
     {
         if (0 === $semaine) {
-            $semaine = (int)date('W');
+            $semaine = (int) date('W');
         }
-        if ($semaine !== (int)date('W') && $semaine !== ((int)date('W') + 1)) {
+        if ($semaine !== (int) date('W') && $semaine !== ((int) date('W') + 1)) {
             return $this->redirect($this->generateUrl('erreur_666'));
         }
         if (null !== $this->getUser()->getDiplome() && $this->getUser()->getDiplome()->isOptUpdateCelcat()) {

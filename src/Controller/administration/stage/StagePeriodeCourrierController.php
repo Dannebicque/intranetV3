@@ -26,24 +26,23 @@ use Twig\Error\SyntaxError;
 
 /**
  * Class StagePeriodeCourrierController.
- *
- * @Route("/administration/stage/periode/courrier")
  */
+#[Route(path: '/administration/stage/periode/courrier')]
 class StagePeriodeCourrierController extends BaseController
 {
-    private $donnees = [
-        'etudiant'            => [
-            'civilite'  => 'M.',
-            'prenom'    => 'Etudiant',
-            'nom'       => 'De Test',
+    private array $donnees = [
+        'etudiant' => [
+            'civilite' => 'M.',
+            'prenom' => 'Etudiant',
+            'nom' => 'De Test',
             'displayPr' => 'Etudiant De Test',
-            'semestre'  => [
+            'semestre' => [
                 'annee' => [
                     'diplome' => [
                         'typediplome' => [
                             'libelle' => 'DUT',
                         ],
-                        'libelle'     => 'MMI',
+                        'libelle' => 'MMI',
                         'departement' => [
                             'ufr' => [
                                 'sitePrincipal' => [
@@ -57,68 +56,57 @@ class StagePeriodeCourrierController extends BaseController
                 ],
             ],
         ],
-        'entreprise'          => [
+        'entreprise' => [
             'raisonSociale' => 'Fictive Compagnie',
-            'responsable'   => [
-                'civilite'     => 'M.',
+            'responsable' => [
+                'civilite' => 'M.',
                 'civiliteLong' => 'Monsieur',
-                'prenom'       => 'Jacques',
-                'nom'          => 'Paul',
+                'prenom' => 'Jacques',
+                'nom' => 'Paul',
             ],
         ],
-        'tuteur'              => [
+        'tuteur' => [
             'civilite' => 'M.',
-            'prenom'   => 'Pierre',
-            'nom'      => 'Dupond',
+            'prenom' => 'Pierre',
+            'nom' => 'Dupond',
         ],
         'tuteurUniversitaire' => [
             'civilite' => 'M.',
-            'prenom'   => 'John',
-            'nom'      => 'Doe',
+            'prenom' => 'John',
+            'nom' => 'Doe',
         ],
-        'stagePeriode'        => [
-            'libelle'      => 'Période de stage fictive',
+        'stagePeriode' => [
+            'libelle' => 'Période de stage fictive',
             'responsables' => [
                 0 => ['displayPr' => 'Paul Pierre'],
             ],
         ],
-        'dateDebutStageFr'    => '01/01/2020',
-        'dateFinStageFr'      => '31/12/2020',
+        'dateDebutStageFr' => '01/01/2020',
+        'dateFinStageFr' => '31/12/2020',
     ];
 
-    /**
-     * @Route("/apercu-defaut/{mail}", name="administration_stage_periode_courrier_apercu_defaut")
-     *
-     */
+    #[Route(path: '/apercu-defaut/{mail}', name: 'administration_stage_periode_courrier_apercu_defaut')]
     public function apercuDefaut($mail): Response
     {
         return $this->render('administration/stage/stage_periode_courrier/apercuDefaut.html.twig', [
-            'mail'          => $mail,
+            'mail' => $mail,
             'stageEtudiant' => $this->donnees,
         ]);
     }
 
     /**
-     * @Route("/apercu/{stagePeriode}/{mail}", name="administration_stage_periode_courrier_apercu_modele")
-     *
-     *
      * @throws LoaderError
      * @throws NonUniqueResultException
      * @throws SyntaxError
      */
-    public function apercu(
-        Environment $twig,
-        StageMailTemplateRepository $stageMailTemplateRepository,
-        StagePeriode $stagePeriode,
-        $mail
-    ): Response {
+    #[Route(path: '/apercu/{stagePeriode}/{mail}', name: 'administration_stage_periode_courrier_apercu_modele')]
+    public function apercu(Environment $twig, StageMailTemplateRepository $stageMailTemplateRepository, StagePeriode $stagePeriode, $mail): Response
+    {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
-
         $mailTemplate = $stageMailTemplateRepository->findEventPeriode(
             $mail,
             $stagePeriode
         );
-
         if (null !== $mailTemplate && null !== $mailTemplate->getTwigTemplate()) {
             $template = $twig->createTemplate($mailTemplate->getTwigTemplate()->getSource());
             $mail = $template->render(['stageEtudiant' => $this->donnees]);
@@ -134,22 +122,14 @@ class StagePeriodeCourrierController extends BaseController
     }
 
     /**
-     * @Route("/sauvegarde-modele/{uuid}/{mail}", name="administration_stage_periode_courrier_sauvegarde_modele",
-     *                                            options={"expose"=true})
      * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
-     *
      *
      * @throws NonUniqueResultException
      */
-    public function sauvegardeModele(
-        MyStageMailTemplate $myStageMailTemplate,
-        Request $request,
-        StagePeriode $stagePeriode,
-        $mail
-    ): Response
+    #[Route(path: '/sauvegarde-modele/{uuid}/{mail}', name: 'administration_stage_periode_courrier_sauvegarde_modele', options: ['expose' => true])]
+    public function sauvegardeModele(MyStageMailTemplate $myStageMailTemplate, Request $request, StagePeriode $stagePeriode, $mail): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
-
         $myStageMailTemplate->updateTemplate($mail, $request->request->get('sujet'), $request->request->get('message'),
             $stagePeriode);
 
@@ -159,18 +139,10 @@ class StagePeriodeCourrierController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/reset/{id}/{etat}", name="administration_stage_periode_courrier_reset", options={"expose"=true})
-     *
-     */
-    public function reset(
-        StageMailTemplateRepository $stageMailTemplateRepository,
-        StagePeriode $stagePeriode,
-        $etat
-    ): Response
+    #[Route(path: '/reset/{id}/{etat}', name: 'administration_stage_periode_courrier_reset', options: ['expose' => true])]
+    public function reset(StageMailTemplateRepository $stageMailTemplateRepository, StagePeriode $stagePeriode, $etat): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
-
         $mails = $stageMailTemplateRepository->findBy(['stagePeriode' => $stagePeriode->getId(), 'event' => $etat]);
         foreach ($mails as $mail) {
             if (null !== $mail->getTwigTemplate()) {
@@ -184,16 +156,12 @@ class StagePeriodeCourrierController extends BaseController
     }
 
     /**
-     * @Route("/{uuid}", name="administration_stage_periode_courrier_index")
      * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
      */
-    public function index(
-        StageMailTemplateRepository $stageMailTemplateRepository,
-        StagePeriode $stagePeriode
-    ): Response
+    #[Route(path: '/{uuid}', name: 'administration_stage_periode_courrier_index')]
+    public function index(StageMailTemplateRepository $stageMailTemplateRepository, StagePeriode $stagePeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
-
         $courriers = $stageMailTemplateRepository->findByStagePeriodeArray($stagePeriode);
 
         return $this->render('administration/stage/stage_periode_courrier/index.html.twig', [

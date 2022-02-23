@@ -20,21 +20,18 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class PrevisionnelController.
- *
- * @Route("/administratif")
  */
+#[Route(path: '/administratif')]
 class PrevisionnelController extends BaseController
 {
-    /**
-     * @Route("/previsionnel/{annee}", name="sa_previsionnel_index")
-     */
+    #[Route(path: '/previsionnel/{annee}', name: 'sa_previsionnel_index')]
     public function index(PersonnelRepository $personnelRepository, int $annee = 0): Response
     {
         if (0 === $annee) {
-            if (date('m') >= 7 && (int)date('m') <= 12) {
-                $annee = (int)date('Y');
+            if (date('m') >= 7 && (int) date('m') <= 12) {
+                $annee = (int) date('Y');
             } else {
-                $annee = date('Y') - 1;
+                $annee = (int) date('Y') - 1;
             }
         }
 
@@ -44,21 +41,12 @@ class PrevisionnelController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/previsionnel/{personnel}/{annee}", name="sa_previsionnel_personnel", options={"expose":true})
-     */
-    public function personnel(
-        PrevisionnelManager $previsionnelManager,
-        PrevisionnelSynthese $previsionnelSynthese,
-        HrsManager $hrsManager,
-        Personnel $personnel,
-        int $annee = 0
-    ): Response
+    #[Route(path: '/previsionnel/{personnel}/{annee}', name: 'sa_previsionnel_personnel', options: ['expose' => true])]
+    public function personnel(PrevisionnelManager $previsionnelManager, PrevisionnelSynthese $previsionnelSynthese, HrsManager $hrsManager, Personnel $personnel, int $annee = 0): Response
     {
         if (0 === $annee && null !== $this->dataUserSession->getDepartement()) {
             $annee = $this->dataUserSession->getDepartement()->getOptAnneePrevisionnel();
         }
-
         $previsionnels = $previsionnelManager->getPrevisionnelEnseignantAnnee($personnel, $annee);
         $hrs = $hrsManager->getPersonnelAnnee($personnel, $annee);
         $synthse = $previsionnelSynthese->getSynthese($previsionnels, $personnel)

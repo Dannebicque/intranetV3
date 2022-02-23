@@ -30,21 +30,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class UserController.
- *
- * @Route("/utilisateur/ajax")
  */
+#[Route(path: '/utilisateur/ajax')]
 class UserAjaxController extends BaseController
 {
     /**
      * @throws NonUniqueResultException
      * @throws Exception
-     * @Route("/add-favori", name="user_add_favori", options={"expose":true})
      */
-    public function addFavori(
-        FavoriRepository $favoriRepository,
-        EtudiantRepository $etudiantRepository,
-        Request $request
-    ): Response {
+    #[Route(path: '/add-favori', name: 'user_add_favori', options: ['expose' => true])]
+    public function addFavori(FavoriRepository $favoriRepository, EtudiantRepository $etudiantRepository, Request $request): Response
+    {
         $action = $request->request->get('etat');
         $user = $etudiantRepository->findOneBySlug($request->request->get('user'));
         if ($user && 'true' === $action) {
@@ -55,7 +51,6 @@ class UserAjaxController extends BaseController
 
             return new Response('ok', Response::HTTP_OK);
         }
-
         if ($user && 'false' === $action) {
             $fav = $favoriRepository->findBy([
                 'etudiantDemandeur' => $this->getUser()->getId(),
@@ -73,15 +68,11 @@ class UserAjaxController extends BaseController
     }
 
     /**
-     * @Route("/change-defaut/{departement}", name="user_change_departement_defaut", options={"expose":true})
      * @ParamConverter("departement", options={"mapping": {"departement": "uuid"}})
-     *
-     * @return JsonResponse
      */
-    public function changeDepartementDefaut(
-        PersonnelDepartementRepository $personnelDepartementRepository,
-        Departement $departement
-    ): ?JsonResponse {
+    #[Route(path: '/change-defaut/{departement}', name: 'user_change_departement_defaut', options: ['expose' => true])]
+    public function changeDepartementDefaut(PersonnelDepartementRepository $personnelDepartementRepository, Departement $departement): ?JsonResponse
+    {
         if (null !== $this->getUser() && 'permanent' === $this->getUser()->getTypeUser()) {
             $pf = $personnelDepartementRepository->findByPersonnel($this->getUser());
             /** @var PersonnelDepartement $p */
@@ -101,23 +92,16 @@ class UserAjaxController extends BaseController
         return new JsonResponse(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * @Route("/change-password", name="user_change_password", options={"expose":true})
-     *
-     * @return JsonResponse
-     */
-    public function changePassword(
-        UserPasswordHasherInterface $passwordEncoder,
-        Request $request
-    ): ?JsonResponse {
+    #[Route(path: '/change-password', name: 'user_change_password', options: ['expose' => true])]
+    public function changePassword(UserPasswordHasherInterface $passwordEncoder, Request $request): ?JsonResponse
+    {
         if (null !== $this->getUser() && 'permanent' === $this->getUser()->getTypeUser()) {
             $passwd1 = trim($request->request->get('passwd1'));
             $passwd2 = trim($request->request->get('passwd2'));
             $passwdActuel = trim($request->request->get('passwdactuel'));
 
-            if ($passwd1 === $passwd2 && $passwd1 !== '' && $passwordEncoder->isPasswordValid($this->getUser(),
+            if ($passwd1 === $passwd2 && '' !== $passwd1 && $passwordEncoder->isPasswordValid($this->getUser(),
                     $passwdActuel)) {
-
                 $passwordEncode = $passwordEncoder->hashPassword($this->getUser(), $passwd1);
                 $this->getUser()->setPassword($passwordEncode);
                 $this->entityManager->flush();
@@ -129,14 +113,9 @@ class UserAjaxController extends BaseController
         return new JsonResponse(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * @Route("/change-semestre/{etudiant}/{semestre}", name="user_change_semestre", options={"expose":true})
-     */
-    public function changeSemestreEtudiant(
-        SemestreRepository $semestreRepository,
-        Etudiant $etudiant,
-        Semestre $semestre
-    ): ?JsonResponse {
+    #[Route(path: '/change-semestre/{etudiant}/{semestre}', name: 'user_change_semestre', options: ['expose' => true])]
+    public function changeSemestreEtudiant(SemestreRepository $semestreRepository, Etudiant $etudiant, Semestre $semestre): ?JsonResponse
+    {
         $semestre = $semestreRepository->find($semestre);
         if (null !== $semestre) {
             $etudiant->setSemestre($semestre);
@@ -154,25 +133,15 @@ class UserAjaxController extends BaseController
         return new JsonResponse(true, Response::HTTP_OK);
     }
 
-    /**
-     * @Route("/change-departement/{etudiant}/{departement}", name="user_change_departement", options={"expose":true})
-     *
-     *
-     * @return JsonResponse
-     */
-    public function changeDepartementEtudiant(
-        DepartementRepository $departementRepository,
-        Etudiant $etudiant,
-        $departement = null
-    ): ?JsonResponse {
-
+    #[Route(path: '/change-departement/{etudiant}/{departement}', name: 'user_change_departement', options: ['expose' => true])]
+    public function changeDepartementEtudiant(DepartementRepository $departementRepository, Etudiant $etudiant, $departement = null): ?JsonResponse
+    {
         if (null !== $departement) {
             $departement = $departementRepository->find($departement);
             $etudiant->setDepartement($departement);
         } else {
             $etudiant->setDepartement(null);
         }
-
         $etudiant->setSemestre(null);
         //suppression des groupes
         foreach ($etudiant->getGroupes() as $groupe) {
@@ -184,16 +153,9 @@ class UserAjaxController extends BaseController
         return new JsonResponse(true, Response::HTTP_OK);
     }
 
-    /**
-     * @Route("/change-annee-sortie/{etudiant}/{annee}", name="user_change_annee_sortie", options={"expose":true})
-     *
-     *
-     * @return JsonResponse
-     */
-    public function changeAnneeSortie(
-        Etudiant $etudiant,
-        $annee
-    ): ?JsonResponse {
+    #[Route(path: '/change-annee-sortie/{etudiant}/{annee}', name: 'user_change_annee_sortie', options: ['expose' => true])]
+    public function changeAnneeSortie(Etudiant $etudiant, $annee): ?JsonResponse
+    {
         $etudiant->setAnneeSortie($annee);
         if (0 !== $annee) {
             $etudiant->setSemestre(null);

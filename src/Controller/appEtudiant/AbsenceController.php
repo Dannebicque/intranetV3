@@ -18,19 +18,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class AbsenceController.
- *
- * @Route("/application/etudiant/absence")
  */
+#[Route(path: '/application/etudiant/absence')]
 class AbsenceController extends BaseController
 {
     /**
-     * @Route("/details/{uuid}", name="app_etudiant_absence_detail", options={"expose" = true})
      * @ParamConverter("absence", options={"mapping": {"uuid": "uuid"}})
      */
-    public function details(
-        TypeMatiereManager $typeMatiereManager,
-        Absence $absence
-    ): Response {
+    #[Route(path: '/details/{uuid}', name: 'app_etudiant_absence_detail', options: ['expose' => true])]
+    public function details(TypeMatiereManager $typeMatiereManager, Absence $absence): Response
+    {
         return $this->render('appEtudiant/absence/_detail.html.twig', [
             'absence' => $absence,
             'matiere' => $typeMatiereManager->getMatiere($absence->getIdMatiere(), $absence->getTypeMatiere()),

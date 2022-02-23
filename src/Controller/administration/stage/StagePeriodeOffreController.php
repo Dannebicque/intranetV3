@@ -20,15 +20,13 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/administration/stage/offre")
- */
+#[Route(path: '/administration/stage/offre')]
 class StagePeriodeOffreController extends BaseController
 {
     /**
-     * @Route("/{uuid}", name="administration_stage_periode_offre_index", methods="GET")
      * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
      */
+    #[Route(path: '/{uuid}', name: 'administration_stage_periode_offre_index', methods: 'GET')]
     public function index(StagePeriode $stagePeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
@@ -43,20 +41,12 @@ class StagePeriodeOffreController extends BaseController
     }
 
     /**
-     * @Route("/{stagePeriode}/export.{_format}", name="administration_stage_periode_offre_export", methods="GET",
-     *                                            requirements={"_format"="csv|xlsx|pdf"})
-     *
-     *
      * @ParamConverter("stagePeriode", options={"mapping": {"stagePeriode": "uuid"}})
      */
-    public function export(
-        MyExport $myExport,
-        StagePeriode $stagePeriode,
-        $_format
-    ): Response
+    #[Route(path: '/{stagePeriode}/export.{_format}', name: 'administration_stage_periode_offre_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
+    public function export(MyExport $myExport, StagePeriode $stagePeriode, $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
-
         $offres = $stagePeriode->getStagePeriodeOffres();
 
         return $myExport->genereFichierGenerique(
@@ -69,13 +59,12 @@ class StagePeriodeOffreController extends BaseController
     }
 
     /**
-     * @Route("/new/{stagePeriode}", name="administration_stage_periode_offre_new", methods="GET|POST")
      * @ParamConverter("stagePeriode", options={"mapping": {"stagePeriode": "uuid"}})
      */
+    #[Route(path: '/new/{stagePeriode}', name: 'administration_stage_periode_offre_new', methods: 'GET|POST')]
     public function create(Request $request, StagePeriode $stagePeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
-
         $stagePeriodeOffre = new StagePeriodeOffre($stagePeriode);
         $form = $this->createForm(StagePeriodeOffreType::class, $stagePeriodeOffre, [
             'departement' => $this->dataUserSession->getDepartement(),
@@ -85,7 +74,6 @@ class StagePeriodeOffreController extends BaseController
             ],
         ]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($stagePeriodeOffre);
             $this->entityManager->flush();
@@ -97,27 +85,22 @@ class StagePeriodeOffreController extends BaseController
 
         return $this->render('administration/stage/stage_periode_offre/new.html.twig', [
             'stage_periode_offre' => $stagePeriodeOffre,
-            'form'                => $form->createView(),
-            'stagePeriode'        => $stagePeriode,
+            'form' => $form->createView(),
+            'stagePeriode' => $stagePeriode,
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="administration_stage_periode_offre_edit", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/edit', name: 'administration_stage_periode_offre_edit', methods: 'GET|POST')]
     public function edit(Request $request, StagePeriodeOffre $stagePeriodeOffre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $this->getDepartement());
-
         $form = $this->createForm(StagePeriodeOffreType::class, $stagePeriodeOffre, [
             'departement' => $this->dataUserSession->getDepartement(),
             'attr' => [
                 'data-provide' => 'validation',
             ],
         ]);
-
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'stage_periode_offre.edit.success.flash');
@@ -128,17 +111,14 @@ class StagePeriodeOffreController extends BaseController
 
         return $this->render('administration/stage/stage_periode_offre/edit.html.twig', [
             'stage_periode_offre' => $stagePeriodeOffre,
-            'form'                => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/{id}/duplicate", name="administration_stage_periode_offre_duplicate", methods="GET")
-     */
+    #[Route(path: '/{id}/duplicate', name: 'administration_stage_periode_offre_duplicate', methods: 'GET')]
     public function duplicate(StagePeriodeOffre $stagePeriodeOffre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $this->getDepartement());
-
         $newStagePeriodeOffre = clone $stagePeriodeOffre;
         $this->entityManager->persist($newStagePeriodeOffre);
         $this->entityManager->flush();
@@ -149,9 +129,9 @@ class StagePeriodeOffreController extends BaseController
     }
 
     /**
-     * @Route("/{id}/{stagePeriode}", name="administration_stage_periode_offre_show", methods="GET")
      * @ParamConverter("stagePeriode", options={"mapping": {"stagePeriode": "uuid"}})
      */
+    #[Route(path: '/{id}/{stagePeriode}', name: 'administration_stage_periode_offre_show', methods: 'GET')]
     public function show(StagePeriodeOffre $stagePeriodeOffre, StagePeriode $stagePeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
@@ -162,22 +142,18 @@ class StagePeriodeOffreController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="administration_stage_periode_offre_delete", methods="DELETE")
-     */
+    #[Route(path: '/{id}', name: 'administration_stage_periode_offre_delete', methods: 'DELETE')]
     public function delete(Request $request, StagePeriodeOffre $date): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $this->getDepartement());
-
         $id = $date->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $this->entityManager->remove($date);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'stage_periode_offre.delete.success.flash');
 
             return $this->json($id, Response::HTTP_OK);
         }
-
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'stage_periode_offre.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);

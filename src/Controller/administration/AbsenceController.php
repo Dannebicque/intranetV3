@@ -34,6 +34,9 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 #[Route('/administration/absence')]
 class AbsenceController extends BaseController
 {
+    /**
+     * @throws \Exception
+     */
     #[Route('/semestre/etudiant/{etudiant}',
         name: 'administration_absences_liste_absence_etudiant',
         options: ['expose' => true])]
@@ -60,6 +63,9 @@ class AbsenceController extends BaseController
         ]);
     }
 
+    /**
+     * @throws \Exception
+     */
     #[Route('/semestre/{semestre}/liste', name: 'administration_absences_semestre_liste', options: ['expose' => true])]
     public function liste(
         Request $request,
@@ -68,7 +74,7 @@ class AbsenceController extends BaseController
         Semestre $semestre
     ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
-//todo: doit utiliser un dto...
+        //todo: doit utiliser un dto...
 //        $table = $this->createTable(AbsenceListeTableType::class, [
 //            'semestre' => $semestre,
 //            'anneeUniversitaire' => $this->getAnneeUniversitaire(),
@@ -121,9 +127,12 @@ class AbsenceController extends BaseController
 
         $justificatifs = $absenceJustificatifRepository->findBySemestre($semestre);
 
-        return $myExport->genereFichierAbsence($_format, $justificatifs, 'absences_' . $semestre->getLibelle());
+        return $myExport->genereFichierAbsence($_format, $justificatifs, 'absences_'.$semestre->getLibelle());
     }
 
+    /**
+     * @throws \Exception
+     */
     #[Route('/semestre/{semestre}/export.{_format}',
         name: 'administration_absences_semestre_liste_export',
         requirements: ['_format' => 'csv|xlsx|pdf'])]
@@ -139,7 +148,7 @@ class AbsenceController extends BaseController
         $matieres = $typeMatiereManager->findBySemestreArray($semestre);
         $myAbsences->getAbsencesSemestre($matieres, $semestre);
 
-        return $myExport->genereFichierAbsence($_format, $myAbsences, 'absences_' . $semestre->getLibelle());
+        return $myExport->genereFichierAbsence($_format, $myAbsences, 'absences_'.$semestre->getLibelle());
     }
 
     #[Route('/all/semestre/{semestre}/export.{_format}',
@@ -156,7 +165,7 @@ class AbsenceController extends BaseController
         $matieres = $typeMatiereManager->findBySemestreArray($semestre);
         $absences = $absenceRepository->getBySemestre($semestre, $semestre->getAnneeUniversitaire());
 
-        return $myExportListing->exportExcelAbsence($absences, $matieres, 'absences_' . $semestre->getLibelle());
+        return $myExportListing->exportExcelAbsence($absences, $matieres, 'absences_'.$semestre->getLibelle());
 
 //        return $myExport->genereFichierGenerique(
 //            $_format,
@@ -233,7 +242,7 @@ class AbsenceController extends BaseController
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $absence->getEtudiant()?->getSemestre());
 
         $id = $absence->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $this->entityManager->remove($absence);
             $this->entityManager->flush();
             $this->addFlashBag(

@@ -26,6 +26,9 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/administration/qualite')]
 class QualiteController extends BaseController
 {
+    /**
+     * @throws \JsonException
+     */
     #[Route('/', name: 'administration_qualite_index', options: ['expose' => true], methods: ['GET', 'POST'])]
     public function index(Request $request): Response
     {
@@ -46,6 +49,9 @@ class QualiteController extends BaseController
             ]);
     }
 
+    /**
+     * @throws \App\Exception\SemestreNotFoundException
+     */
     #[Route('/{id}/detail', name: 'administration_qualite_show', methods: ['GET'])]
     public function show(
         QuestionnaireEtudiantRepository $quizzEtudiantRepository,
@@ -93,6 +99,7 @@ class QualiteController extends BaseController
 
         if ($questionnaire->handleRequest($request)) {
             $questionnaire->setQuestionsForSection();
+
             return $questionnaire->wizardPage();
         }
 

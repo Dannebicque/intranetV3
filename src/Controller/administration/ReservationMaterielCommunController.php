@@ -20,21 +20,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class AbsenceController.
- *
- * @Route("/administration/materiel-commun/reservation")
  */
+#[Route(path: '/administration/materiel-commun/reservation')]
 class ReservationMaterielCommunController extends BaseController
 {
-    /**
-     * @Route("/", name="administration_reservation_materiel_commun", methods={"GET"})
-     */
-    public function reservation(
-        MaterielCommunRepository $materielCommunRepository,
-        MaterielCommunPretRepository $materielCommunPretRepository,
-        MyMaterielCommun $myMaterielCommun
-    ): Response {
+    #[Route(path: '/', name: 'administration_reservation_materiel_commun', methods: ['GET'])]
+    public function reservation(MaterielCommunRepository $materielCommunRepository, MaterielCommunPretRepository $materielCommunPretRepository, MyMaterielCommun $myMaterielCommun): Response
+    {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
-
         $emprunts = $materielCommunPretRepository->findAll();
         $jr = $myMaterielCommun->getJours();
         $dispomateriel = $myMaterielCommun->obtainDispoMateriel($jr);
@@ -44,38 +37,27 @@ class ReservationMaterielCommunController extends BaseController
             'emprunts' => $emprunts,
             'dispo' => $dispomateriel,
             'jours' => $jr,
-            'creneau'   => ['0800', '0930', '1100', '1400', '1530', '1700'],
+            'creneau' => ['0800', '0930', '1100', '1400', '1530', '1700'],
         ]);
     }
 
     /**
      * @throws \Exception
-     * @Route("/ajax/add", name="administration_reservation_materiel_commun_add", methods={"POST"},
-     *                     options={"expose"=true})
      */
+    #[Route(path: '/ajax/add', name: 'administration_reservation_materiel_commun_add', options: ['expose' => true], methods: ['POST'])]
     public function addReservation(MyMaterielCommunReservation $myReservationMaterielCommun, Request $request): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
-
-
         $t = explode('_', $request->request->get('id'));
         $rep = $myReservationMaterielCommun->addReservation($t[2], $t[0], $t[1], $this->getUser());
 
         return new Response($rep, $rep ? Response::HTTP_OK : Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * @Route("/ajax/suppr", name="administration_reservation_materiel_commun_suppr", methods={"DELETE"},
-     *                       options={"expose"=true})
-     */
-    public function supprReservation(
-        MyMaterielCommunReservation $myReservationMaterielCommun,
-        Request $request
-    ): Response
+    #[Route(path: '/ajax/suppr', name: 'administration_reservation_materiel_commun_suppr', options: ['expose' => true], methods: ['DELETE'])]
+    public function supprReservation(MyMaterielCommunReservation $myReservationMaterielCommun, Request $request): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
-
-
         $id = $request->request->get('id');
         $rep = $myReservationMaterielCommun->supprReservation($id);
 

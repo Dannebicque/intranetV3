@@ -32,24 +32,18 @@ use Twig\Error\SyntaxError;
 
 /**
  * Class EvaluationController.
- *
- * @Route("/administration/evaluation")
  */
+#[Route(path: '/administration/evaluation')]
 class EvaluationController extends BaseController
 {
-   // todo: accès à préciser, car comment lier semestre à évaluation?
+    // todo: accès à préciser, car comment lier semestre à évaluation?
     /**
-     * @Route("/details/{uuid}", name="administration_evaluation_show", methods="GET|POST")
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
      */
-    public function show(
-        TypeMatiereManager $typeMatiereManager,
-        MyEvaluation $myEvaluation,
-        Evaluation $evaluation
-    ): Response
+    #[Route(path: '/details/{uuid}', name: 'administration_evaluation_show', methods: ['GET', 'POST'])]
+    public function show(TypeMatiereManager $typeMatiereManager, MyEvaluation $myEvaluation, Evaluation $evaluation): Response
     {
         //$this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $evaluation->);
-
         $notes = $myEvaluation->setEvaluation($evaluation)->getNotesTableau();
 
         return $this->render('administration/evaluation/show.html.twig', [
@@ -61,7 +55,6 @@ class EvaluationController extends BaseController
     }
 
     /**
-     * @Route("/export/{uuid}.{_format}", name="administration_evaluation_export", methods="GET")
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
      *
      * @throws SyntaxError
@@ -69,11 +62,9 @@ class EvaluationController extends BaseController
      * @throws RuntimeError
      * @throws \App\Exception\MatiereNotFoundException
      */
-    public function exportEvaluation(
-        MyEvaluation $myEvaluation,
-        Evaluation $evaluation,
-        $_format
-    ): StreamedResponse|PdfResponse|null {
+    #[Route(path: '/export/{uuid}.{_format}', name: 'administration_evaluation_export', methods: 'GET')]
+    public function exportEvaluation(MyEvaluation $myEvaluation, Evaluation $evaluation, $_format): StreamedResponse | PdfResponse | null
+    {
         $data = $evaluation->getTypeGroupe()->getGroupes();
 
         return $myEvaluation->setEvaluation($evaluation)->exportReleve($_format, $data,
@@ -81,22 +72,17 @@ class EvaluationController extends BaseController
     }
 
     /**
-     * @Route("/ajouter/{matiere}", name="administration_evaluation_create", methods="GET|POST")
-     *
      * @throws \App\Exception\MatiereNotFoundException
+     * @throws \Exception
      */
-    public function create(
-        TypeMatiereManager $typeMatiereManager,
-        Request $request,
-        string $matiere
-    ): RedirectResponse|Response {
+    #[Route(path: '/ajouter/{matiere}', name: 'administration_evaluation_create', methods: ['GET', 'POST'])]
+    public function create(TypeMatiereManager $typeMatiereManager, Request $request, string $matiere): RedirectResponse | Response
+    {
         $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
-
         if (null === $mat) {
             throw new MatiereNotFoundException();
         }
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $mat->semestre);
-
         $evaluation = new Evaluation($this->getUser(), $mat);
         $form = $this->createForm(
             EvaluationType::class,
@@ -114,7 +100,6 @@ class EvaluationController extends BaseController
             ]
         );
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $evaluation->setAnneeUniversitaire($this->dataUserSession->getAnneeUniversitaire());
             $this->entityManager->persist($evaluation);
@@ -134,21 +119,16 @@ class EvaluationController extends BaseController
     }
 
     /**
-     * @Route("/saisie/etape-2/{uuid}", name="administration_note_saisie_2")
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
+     * @throws \App\Exception\MatiereNotFoundException
      */
-    public function saisieNotes(
-        TypeMatiereManager $typeMatiereManager,
-        MyEvaluation $myEvaluation,
-        Evaluation $evaluation
-    ): Response
+    #[Route(path: '/saisie/etape-2/{uuid}', name: 'administration_note_saisie_2')]
+    public function saisieNotes(TypeMatiereManager $typeMatiereManager, MyEvaluation $myEvaluation, Evaluation $evaluation): Response
     {
         $matiere = $typeMatiereManager->getMatiere($evaluation->getIdMatiere(), $evaluation->getTypeMatiere());
-
         if (null === $matiere) {
             throw new MatiereNotFoundException();
         }
-
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $matiere->semestre);
         $notes = $myEvaluation->setEvaluation($evaluation)->getNotesTableau();
 
@@ -156,73 +136,48 @@ class EvaluationController extends BaseController
             'evaluation' => $evaluation,
             'notes' => $notes,
             'matiere' => $matiere,
-            'autorise' => true
+            'autorise' => true,
         ]);
     }
 
-    /**
-     * @Route("/visibilite/semestre/{semestre}/{etat}", name="administration_evaluation_visibilite_all",
-     *                                                  methods={"GET"})
-     */
-    public function visibiliteAll(
-        TypeMatiereManager $typeMatiereManager,
-        EvaluationRepository $evaluationRepository,
-        $etat,
-        Semestre $semestre
-    ): RedirectResponse
+    #[Route(path: '/visibilite/semestre/{semestre}/{etat}', name: 'administration_evaluation_visibilite_all', methods: ['GET'])]
+    public function visibiliteAll(TypeMatiereManager $typeMatiereManager, EvaluationRepository $evaluationRepository, $etat, Semestre $semestre): RedirectResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
-
         $matieres = $typeMatiereManager->findBySemestreArray($semestre);
         $evals = $evaluationRepository->findBySemestre($matieres, $this->dataUserSession->getAnneeUniversitaire());
-
         /** @var Evaluation $eval */
         foreach ($evals as $eval) {
             $eval->setVisible('visible' === $etat);
             $this->entityManager->persist($eval);
         }
-
         $this->entityManager->flush();
-
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Modification de la visibilité des notes effectuées');
 
         return $this->redirectToRoute('administration_notes_semestre_index', ['semestre' => $semestre->getId()]);
     }
 
-    /**
-     * @Route("/modifiable/semestre/{semestre}/{etat}", name="administration_evaluation_modifiable_all",
-     *                                                  methods={"GET"})
-     */
-    public function modifiableAll(
-        TypeMatiereManager $typeMatiereManager,
-        EvaluationRepository $evaluationRepository,
-        $etat,
-        Semestre $semestre
-    ): RedirectResponse
+    #[Route(path: '/modifiable/semestre/{semestre}/{etat}', name: 'administration_evaluation_modifiable_all', methods: ['GET'])]
+    public function modifiableAll(TypeMatiereManager $typeMatiereManager, EvaluationRepository $evaluationRepository, $etat, Semestre $semestre): RedirectResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
-
         $matieres = $typeMatiereManager->findBySemestreArray($semestre);
         $evals = $evaluationRepository->findBySemestre($matieres, $this->dataUserSession->getAnneeUniversitaire());
-
         /** @var Evaluation $eval */
         foreach ($evals as $eval) {
             $eval->setModifiable('autorise' === $etat);
             $this->entityManager->persist($eval);
         }
-
         $this->entityManager->flush();
-
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Autorisation de modification des notes effectuée');
 
         return $this->redirectToRoute('administration_notes_semestre_index', ['semestre' => $semestre->getId()]);
     }
 
     /**
-     * @Route("/modifiable/{uuid}", name="administration_evaluation_modifiable", methods={"GET"},
-     *                                    options={"expose":true})
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
      */
+    #[Route(path: '/modifiable/{uuid}', name: 'administration_evaluation_modifiable', options: ['expose' => true], methods: ['GET'])]
     public function modifiable(Evaluation $evaluation): Response
     {
         $evaluation->setModifiable(!$evaluation->getModifiable());
@@ -233,10 +188,8 @@ class EvaluationController extends BaseController
 
     /**
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
-     *
-     * @Route("/visibilite/{uuid}", name="administration_evaluation_visibilite", methods={"GET"},
-     *                                    options={"expose":true})
      */
+    #[Route(path: '/visibilite/{uuid}', name: 'administration_evaluation_visibilite', options: ['expose' => true], methods: ['GET'])]
     public function visibilite(Evaluation $evaluation): Response
     {
         $evaluation->setVisible(!$evaluation->getVisible());
@@ -246,14 +199,13 @@ class EvaluationController extends BaseController
     }
 
     /**
-     * @Route("/{uuid}", name="administration_evaluation_delete", methods="DELETE")
-     *
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
      */
+    #[Route(path: '/{uuid}', name: 'administration_evaluation_delete', methods: 'DELETE')]
     public function delete(MyEvaluation $myEvaluation, Request $request, Evaluation $evaluation): Response
     {
         $id = $evaluation->getUuidString();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $myEvaluation->setEvaluation($evaluation)->delete();
 
             return $this->json($id, Response::HTTP_OK);

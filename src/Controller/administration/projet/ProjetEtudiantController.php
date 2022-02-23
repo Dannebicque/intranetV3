@@ -33,18 +33,14 @@ use Twig\Error\SyntaxError;
  */
 class ProjetEtudiantController extends BaseController
 {
-    /**
-     * @Route("/{id}/edit", name="administration_projet_etudiant_edit", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/edit', name: 'administration_projet_etudiant_edit', methods: 'GET|POST')]
     public function edit(Request $request, ProjetEtudiant $projetEtudiant): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetEtudiant->getProjetPeriode()?->getSemestre());
-
         $form = $this->createForm(ProjetEtudiantType::class, $projetEtudiant, [
             'semestre' => $projetEtudiant->getProjetPeriode()->getSemestre(),
         ]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'projet_etudiant.edit.success.flash');
@@ -60,19 +56,16 @@ class ProjetEtudiantController extends BaseController
 
         return $this->render('administration/projet/projet_etudiant/edit.html.twig', [
             'projetEtudiant' => $projetEtudiant,
-            'form'           => $form->createView(),
+            'form' => $form->createView(),
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="administration_projet_etudiant_delete", methods="DELETE")
-     */
+    #[Route(path: '/{id}', name: 'administration_projet_etudiant_delete', methods: 'DELETE')]
     public function delete(Request $request, ProjetEtudiant $projetEtudiant): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetEtudiant->getProjetPeriode()?->getSemestre());
-
         $id = $projetEtudiant->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $this->entityManager->remove($projetEtudiant);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'projet_etudiant.delete.success.flash');
@@ -88,20 +81,13 @@ class ProjetEtudiantController extends BaseController
     }
 
     /**
-     *
      * @throws NonUniqueResultException
-     * @Route("/change-etat/{projetPeriode}/{etudiant}/{etat}", name="administration_projet_etudiant_change_etat")
      * @ParamConverter("projetPeriode", options={"mapping": {"projetPeriode": "uuid"}})
      */
-    public function changeEtat(
-        MyProjetEtudiant $myProjetEtudiant,
-        ProjetPeriode $projetPeriode,
-        Etudiant $etudiant,
-        $etat
-    ): RedirectResponse
+    #[Route(path: '/change-etat/{projetPeriode}/{etudiant}/{etat}', name: 'administration_projet_etudiant_change_etat')]
+    public function changeEtat(MyProjetEtudiant $myProjetEtudiant, ProjetPeriode $projetPeriode, Etudiant $etudiant, $etat): RedirectResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestre());
-
         $myProjetEtudiant->changeEtat($projetPeriode, $etudiant, $etat);
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'projet_etudiant.change_etat.success.flash');
 
@@ -110,12 +96,11 @@ class ProjetEtudiantController extends BaseController
     }
 
     /**
-     * @Route("/convention/pdf/{id}", name="administration_projet_etudiant_convention_pdf", methods="GET")
-     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
+    #[Route(path: '/convention/pdf/{id}', name: 'administration_projet_etudiant_convention_pdf', methods: 'GET')]
     public function conventionPdf(MyPDF $myPDF, ProjetEtudiant $projetEtudiant): PdfResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetEtudiant->getProjetPeriode()?->getSemestre());
@@ -124,7 +109,7 @@ class ProjetEtudiantController extends BaseController
             [
                 'projetEtudiant' => $projetEtudiant,
             ],
-            'Convention-' . $projetEtudiant->getEtudiants()[0]->getNom(),
+            'Convention-'.$projetEtudiant->getEtudiants()[0]->getNom(),
             $this->dataUserSession->getDepartement()
         );
     }

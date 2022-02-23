@@ -26,21 +26,19 @@ use Twig\Error\SyntaxError;
 /**
  * Class EmpruntController.
  *
- * @Route("/application/etudiant/emprunt")
  * @IsGranted("ROLE_ETUDIANT")
  */
+#[Route(path: '/application/etudiant/emprunt')]
 class EmpruntController extends BaseController
 {
-    /**
-     * @Route("/", name="application_etudiant_emprunt_index")
-     */
+    #[Route(path: '/', name: 'application_etudiant_emprunt_index')]
     public function index(MyEmprunts $myEmprunts, MaterielRepository $materielRepository): Response
     {
         if (null !== $this->dataUserSession->getUser()) {
             $myEmprunts->calculGrille();
 
             return $this->render('appEtudiant/emprunt/index.html.twig', [
-                'emprunts'  => $this->dataUserSession->getUser()->getEmprunts(),
+                'emprunts' => $this->dataUserSession->getUser()->getEmprunts(),
                 'myEmprunt' => $myEmprunts,
                 'materiels' => $materielRepository->findByDepartement($this->dataUserSession->getDepartement()),
             ]);
@@ -49,22 +47,18 @@ class EmpruntController extends BaseController
         return $this->redirectToRoute('erreur_666');
     }
 
-    /**
-     * @Route("/valide-demande", name="application_etudiant_emprunt_valide", methods={"POST"})
-     */
-    public function empruntDemandeAction(
-        MyEmprunts $emprunt,
-        Request $request
-    ): Response {
+    #[Route(path: '/valide-demande', name: 'application_etudiant_emprunt_valide', methods: ['POST'])]
+    public function empruntDemandeAction(MyEmprunts $emprunt, Request $request): Response
+    {
         $emprunt->empruntDemande($request, $this->getUser());
 
         return $this->redirectToRoute('application_index', ['onglet' => 'emprunt']);
     }
 
     /**
-     * @Route("/details/{emprunt}", name="application_etudiant_emprunt_detail")
      * @ParamConverter("emprunt", options={"mapping": {"emprunt": "uuid"}})
      */
+    #[Route(path: '/details/{emprunt}', name: 'application_etudiant_emprunt_detail')]
     public function show(Emprunt $emprunt): Response
     {
         return $this->render('appEtudiant/emprunt/show.html.twig', [
@@ -73,33 +67,31 @@ class EmpruntController extends BaseController
     }
 
     /**
-     * @Route("/imprimer/{emprunt}", name="app_etudiant_emprunt_imprimer_fiche")
      * @ParamConverter("emprunt", options={"mapping": {"emprunt": "uuid"}})
      *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
+    #[Route(path: '/imprimer/{emprunt}', name: 'app_etudiant_emprunt_imprimer_fiche')]
     public function imprimerFiche(MyEmprunts $myEmprunts, Emprunt $emprunt): void
     {
         $myEmprunts->genereFiche($emprunt);
     }
 
     /**
-     * @Route("/delete", name="app_etudiant_emprunt_delete", methods={"DELETE"})
-     *
      * @ParamConverter("emprunt", options={"mapping": {"emprunt": "uuid"}})
      */
+    #[Route(path: '/delete', name: 'app_etudiant_emprunt_delete', methods: ['DELETE'])]
     public function delete(MyEmprunts $myEmprunts, Request $request, Emprunt $emprunt): Response
     {
         $id = $emprunt->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $myEmprunts->deleteReservation($emprunt);
             $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'emprunt.delete.error.flash');
 
             return $this->json($id, Response::HTTP_OK);
         }
-
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'emprunt.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);

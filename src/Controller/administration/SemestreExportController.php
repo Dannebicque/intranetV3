@@ -19,6 +19,7 @@ use App\Message\ExportReleve;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -26,22 +27,16 @@ use Twig\Error\SyntaxError;
 
 /**
  * Class SemestreExportController.
- *
- * @Route("/administration/semestre/export")
  */
+#[Route(path: '/administration/semestre/export')]
 class SemestreExportController extends BaseController
 {
-    /**
-     * @Route("/all/{semestre}", name="administration_semestre_export_tous_les_releves_provisoires")
-     */
-    public function exportTousLesRelevesProvisoires(
-        Semestre $semestre
-    ): RedirectResponse {
+    #[Route(path: '/all/{semestre}', name: 'administration_semestre_export_tous_les_releves_provisoires')]
+    public function exportTousLesRelevesProvisoires(MessageBusInterface $messageBus, Semestre $semestre): RedirectResponse
+    {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
-
-        $this->dispatchMessage(new ExportReleve($semestre->getId(),
+        $messageBus->dispatch(new ExportReleve($semestre->getId(),
             $this->dataUserSession->getAnneeUniversitaire()->getId(), $this->getUser()->getId()));
-
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS,
             'La génération des documents est en cours. Vous recevrez un mail pour télécharger les éléments dans quelques minutes.');
 
@@ -51,21 +46,15 @@ class SemestreExportController extends BaseController
     }
 
     /**
-     * @Route("/provisoire/{slug}/{semestre}", name="administration_semestre_export_releve_provisoire")
-     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      */
-    public function exportReleveProvisoire(
-        EtudiantExportReleve $etudiantExportReleve,
-        Etudiant $etudiant,
-        Semestre $semestre = null
-    ): PdfResponse
+    #[Route(path: '/provisoire/{slug}/{semestre}', name: 'administration_semestre_export_releve_provisoire')]
+    public function exportReleveProvisoire(EtudiantExportReleve $etudiantExportReleve, Etudiant $etudiant, Semestre $semestre = null): PdfResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre ?: $etudiant->getSemestre());
-
         $etudiantExportReleve->setEtudiant($etudiant);
 
         return $etudiantExportReleve->exportReleveProvisoire($semestre ?: $etudiant->getSemestre(),
@@ -73,16 +62,14 @@ class SemestreExportController extends BaseController
     }
 
     /**
-     * @Route("/definitif/{slug}/{scolarite}", name="administration_semestre_export_releve_definitif")
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      */
-    public function exportReleveDefinitif(
-        EtudiantExportReleve $etudiantExportReleve,
-        Etudiant $etudiant,
-        Scolarite $scolarite
-    ): PdfResponse {
+    #[Route(path: '/definitif/{slug}/{scolarite}', name: 'administration_semestre_export_releve_definitif')]
+    public function exportReleveDefinitif(EtudiantExportReleve $etudiantExportReleve, Etudiant $etudiant, Scolarite $scolarite): PdfResponse
+    {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $etudiant->getSemestre());
         $etudiantExportReleve->setEtudiant($etudiant);
+
         return $etudiantExportReleve->exportReleveDefinitif($scolarite);
     }
 }

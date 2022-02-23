@@ -26,6 +26,9 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/administration/documents', name: 'administration_document_')]
 class DocumentController extends BaseController
 {
+    /**
+     * @throws \JsonException
+     */
     #[Route('/', name: 'index', options: ['expose' => true], methods: ['GET', 'POST'])]
     public function index(Request $request): Response
     {
@@ -95,9 +98,9 @@ class DocumentController extends BaseController
     }
 
     /**
-     * @Route("/{id}", name="show", methods="GET")
      * @ParamConverter("document", options={"mapping": {"id": "uuid"}})
      */
+    #[Route(path: '/{id}', name: 'show', methods: 'GET')]
     public function show(Document $document): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $document->getSemestres()[0]);
@@ -106,14 +109,12 @@ class DocumentController extends BaseController
     }
 
     /**
-     * @Route("/{id}/edit", name="edit", methods="GET|POST")
      * @ParamConverter("document", options={"mapping": {"id": "uuid"}})
      */
+    #[Route(path: '/{id}/edit', name: 'edit', methods: 'GET|POST')]
     public function edit(Request $request, Document $document): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $document->getSemestres()[0]);
-
-
         $form = $this->createForm(
             DocumentType::class,
             $document,
@@ -125,7 +126,6 @@ class DocumentController extends BaseController
             ]
         );
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'document.edit.success.flash');
@@ -143,22 +143,15 @@ class DocumentController extends BaseController
     }
 
     /**
-     * @Route("/{id}", name="delete", methods="DELETE|POST")
-     *
      * @ParamConverter("document", options={"mapping": {"id": "uuid"}})
      */
-    public function delete(
-        DocumentDelete $documentDelete,
-        Request $request,
-        Document $document
-    ): Response
+    #[Route(path: '/{id}', name: 'delete', methods: 'DELETE|POST')]
+    public function delete(DocumentDelete $documentDelete, Request $request, Document $document): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $document->getSemestres()[0]);
-
         $id = $document->getId();
         $uuid = $document->getUuid();
-
-        if ($this->isCsrfTokenValid('delete' . $uuid, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$uuid, $request->request->get('_token'))) {
             $docDelete = $documentDelete->deleteDocument($document);
             if (true === $docDelete) {
                 $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'document.delete.success.flash');
@@ -172,17 +165,15 @@ class DocumentController extends BaseController
     }
 
     /**
-     * @Route("/{id}/duplicate", name="duplicate", methods="GET|POST")
      * @ParamConverter("document", options={"mapping": {"id": "uuid"}})
      *
      * @throws Exception
      */
+    #[Route(path: '/{id}/duplicate', name: 'duplicate', methods: 'GET|POST')]
     public function duplicate(Document $document): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $document->getSemestres()[0]);
-
         $newDocument = clone $document;
-
         $this->entityManager->persist($newDocument);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'document.duplicate.success.flash');

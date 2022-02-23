@@ -14,20 +14,16 @@ use App\Entity\Constantes;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use App\Form\UeType;
+use function count;
 use Symfony\Component\Form\Exception\LogicException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use function count;
 
-/**
- * @Route("/administration/structure/unite-enseigement")
- */
+#[Route(path: '/administration/structure/unite-enseigement')]
 class UeController extends BaseController
 {
-    /**
-     * @Route("/new/{semestre}", name="administration_ue_new", methods="GET|POST")
-     */
+    #[Route(path: '/new/{semestre}', name: 'administration_ue_new', methods: 'GET|POST')]
     public function create(Request $request, Semestre $semestre): Response
     {
         if (null !== $semestre->getAnnee()) {
@@ -56,19 +52,16 @@ class UeController extends BaseController
         return $this->redirectToRoute('erreur_666');
     }
 
-    /**
-     * @Route("/{id}", name="administration_ue_show", methods="GET")
-     */
+    #[Route(path: '/{id}', name: 'administration_ue_show', methods: 'GET')]
     public function show(Ue $ue): Response
     {
         return $this->render('structure/ue/show.html.twig', ['ue' => $ue]);
     }
 
     /**
-     * @Route("/{id}/edit", name="administration_ue_edit", methods="GET|POST")
-     *
      * @throws LogicException
      */
+    #[Route(path: '/{id}/edit', name: 'administration_ue_edit', methods: 'GET|POST')]
     public function edit(Request $request, Ue $ue): Response
     {
         if (null !== $ue->getDiplome()) {
@@ -88,7 +81,7 @@ class UeController extends BaseController
             }
 
             return $this->render('structure/ue/edit.html.twig', [
-                'ue'   => $ue,
+                'ue' => $ue,
                 'form' => $form->createView(),
             ]);
         }
@@ -96,13 +89,10 @@ class UeController extends BaseController
         return $this->redirectToRoute('erreur_666');
     }
 
-    /**
-     * @Route("/{id}/duplicate", name="administration_ue_duplicate", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/duplicate', name: 'administration_ue_duplicate', methods: 'GET|POST')]
     public function duplicate(Ue $ue): Response
     {
         $newUe = clone $ue;
-
         $this->entityManager->persist($newUe);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'ue.duplicate.success.flash');
@@ -110,13 +100,11 @@ class UeController extends BaseController
         return $this->redirectToRoute('administration_ue_edit', ['id' => $newUe->getId()]);
     }
 
-    /**
-     * @Route("/{id}", name="administration_ue_delete", methods="DELETE")
-     */
+    #[Route(path: '/{id}', name: 'administration_ue_delete', methods: 'DELETE')]
     public function delete(Request $request, Ue $ue): Response
     {
         $id = $ue->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token')) &&
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token')) &&
             0 === count($ue->getMatieres())) {
             $this->entityManager->remove($ue);
             $this->entityManager->flush();
@@ -127,7 +115,6 @@ class UeController extends BaseController
 
             return $this->json($id, Response::HTTP_OK);
         }
-
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'ue.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);

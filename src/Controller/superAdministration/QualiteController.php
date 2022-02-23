@@ -13,14 +13,10 @@ use App\Controller\BaseController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/administratif/qualite")
- */
+#[Route(path: '/administratif/qualite')]
 class QualiteController extends BaseController
 {
-    /**
-     * @Route("/", name="sa_qualite_index", methods="GET")
-     */
+    #[Route(path: '/', name: 'sa_qualite_index', methods: 'GET')]
     public function index(): Response
     {
         return $this->render('super-administration/qualite/index.html.twig');

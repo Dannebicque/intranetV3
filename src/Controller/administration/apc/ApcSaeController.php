@@ -11,7 +11,6 @@ namespace App\Controller\administration\apc;
 
 use App\Classes\Matieres\SaeManager;
 use App\Classes\Pdf\MyPDF;
-use App\Classes\Word\MyWord;
 use App\Controller\BaseController;
 use App\Entity\ApcSae;
 use App\Entity\ApcSaeApprentissageCritique;
@@ -24,28 +23,22 @@ use App\Repository\ApcRessourceRepository;
 use App\Repository\ApcSaeApprentissageCritiqueRepository;
 use App\Repository\ApcSaeRessourceRepository;
 use App\Repository\SemestreRepository;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/administration/apc/sae", name="administration_")
- */
+#[Route(path: '/administration/apc/sae', name: 'administration_')]
 class ApcSaeController extends BaseController
 {
     /**
-     * @Route("/imprime/{id}.docx", name="apc_sae_export_one_word", methods="GET")
+     * @throws \Twig\Error\RuntimeError
+     * @throws \Twig\Error\SyntaxError
+     * @throws \Twig\Error\LoaderError
      */
-    public function exportWordOne(MyWord $myWord, ApcSae $apcSae)
-    {
-        return $myWord->exportSae($apcSae);
-    }
-
-    /**
-     * @Route("/imprime/{id}.pdf", name="apc_sae_export_one", methods="GET")
-     */
-    public function exportOne(MyPDF $myPDF, ApcSae $apcSae)
+    #[Route(path: '/imprime/{id}.pdf', name: 'apc_sae_export_one', methods: 'GET')]
+    public function exportOne(MyPDF $myPDF, ApcSae $apcSae): PdfResponse
     {
         return $myPDF::generePdf(
             'pdf/apc/fiche_sae.html.twig',
@@ -55,54 +48,23 @@ class ApcSaeController extends BaseController
         );
     }
 
-//    /**
-//     * @Route("/export.{_format}", name="administration_apc_sae_export", methods="GET",
-//     *                             requirements={"_format"="csv|xlsx|pdf"})
-//     *
-//     * @param $_format
-//     */
-//    public function export(MyExport $myExport, ApcSaeRepository $apcSaeRepository, $_format): Response
-//    {
-//        $actualites = $apcSaeRepository->getByDiplome($this->getDepartement());
-//
-//        return $myExport->genereFichierGenerique(
-//            $_format,
-//            $actualites,
-//            'actualites',
-//            ['actualite_administration', 'utilisateur'],
-//            ['titre', 'texte', 'departement' => ['libelle']]
-//        );
-//    }
-
-    /**
-     * @Route("/ajax-edit/{id}", name="apc_sae_ajax_edit", methods={"POST"}, options={"expose":true})
-     */
-    public function ajaxEdit(
-        SaeManager $saeManager,
-        Request $request,
-        ApcSae $acpSae
-    ): JsonResponse {
+    #[Route(path: '/ajax-edit/{id}', name: 'apc_sae_ajax_edit', options: ['expose' => true], methods: ['POST'])]
+    public function ajaxEdit(SaeManager $saeManager, Request $request, ApcSae $acpSae): JsonResponse
+    {
         $name = $request->request->get('field');
         $value = $request->request->get('value');
-
         $update = $saeManager->update($name, $value, $acpSae);
 
         return $update ? new JsonResponse('', Response::HTTP_OK) : new JsonResponse('erreur',
             Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * @Route("/ajax-ac", name="apc_sae_ajax_ac", methods={"POST"}, options={"expose":true})
-     */
-    public function ajaxAc(
-        SemestreRepository $semestreRepository,
-        ApcSaeApprentissageCritiqueRepository $apcSaeApprentissageCritiqueRepository,
-        ApcApprentissageCritiqueRepository $apcApprentissageCritiqueRepository,
-        Request $request
-    ): Response {
+    #[Route(path: '/ajax-ac', name: 'apc_sae_ajax_ac', options: ['expose' => true], methods: ['POST'])]
+    public function ajaxAc(SemestreRepository $semestreRepository, ApcSaeApprentissageCritiqueRepository $apcSaeApprentissageCritiqueRepository, ApcApprentissageCritiqueRepository $apcApprentissageCritiqueRepository, Request $request): Response
+    {
         $semestre = $semestreRepository->find($request->request->get('semestre'));
         $competences = $request->request->get('competences');
-        if (null !== $semestre && count($competences) > 0) {
+        if (null !== $semestre && (null === $competences ? 0 : count($competences)) > 0) {
             if (null !== $request->request->get('sae')) {
                 $tabAcSae = $apcSaeApprentissageCritiqueRepository->findArrayIdAc($request->request->get('sae'));
             } else {
@@ -133,15 +95,9 @@ class ApcSaeController extends BaseController
         return $this->json(false);
     }
 
-    /**
-     * @Route("/ajax-ressources", name="apc_ressources_ajax", methods={"POST"}, options={"expose":true})
-     */
-    public function ajaxRessources(
-        SemestreRepository $semestreRepository,
-        ApcSaeRessourceRepository $apcSaeRessourceRepository,
-        ApcRessourceRepository $apcRessourceRepository,
-        Request $request
-    ): Response {
+    #[Route(path: '/ajax-ressources', name: 'apc_ressources_ajax', options: ['expose' => true], methods: ['POST'])]
+    public function ajaxRessources(SemestreRepository $semestreRepository, ApcSaeRessourceRepository $apcSaeRessourceRepository, ApcRessourceRepository $apcRessourceRepository, Request $request): Response
+    {
         $semestre = $semestreRepository->find($request->request->get('semestre'));
         if (null !== $semestre) {
             if (null !== $request->request->get('sae')) {
@@ -169,19 +125,12 @@ class ApcSaeController extends BaseController
         return $this->json(false);
     }
 
-    /**
-     * @Route("/new/{diplome}", name="apc_sae_new", methods={"GET","POST"})
-     */
-    public function new(
-        ApcApprentissageCritiqueRepository $apcApprentissageCritiqueRepository,
-        ApcRessourceRepository $apcRessourceRepository,
-        Request $request,
-        Diplome $diplome
-    ): Response {
+    #[Route(path: '/new/{diplome}', name: 'apc_sae_new', methods: ['GET', 'POST'])]
+    public function new(ApcApprentissageCritiqueRepository $apcApprentissageCritiqueRepository, ApcRessourceRepository $apcRessourceRepository, Request $request, Diplome $diplome): Response
+    {
         $apcSae = new ApcSae();
         $form = $this->createForm(ApcSaeType::class, $apcSae, ['diplome' => $diplome]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($apcSae);
             //sauvegarde des AC
@@ -219,9 +168,7 @@ class ApcSaeController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/voir/{id}", name="apc_sae_show", methods={"GET"})
-     */
+    #[Route(path: '/voir/{id}', name: 'apc_sae_show', methods: ['GET'])]
     public function show(ApcSae $apcSae): Response
     {
         return $this->render('apc/apc_sae/show.html.twig', [
@@ -229,18 +176,11 @@ class ApcSaeController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="apc_sae_edit", methods={"GET","POST"})
-     */
-    public function edit(
-        ApcRessourceRepository $apcRessourceRepository,
-        ApcApprentissageCritiqueRepository $apcApprentissageCritiqueRepository,
-        Request $request,
-        ApcSae $apcSae
-    ): Response {
+    #[Route(path: '/{id}/edit', name: 'apc_sae_edit', methods: ['GET', 'POST'])]
+    public function edit(ApcRessourceRepository $apcRessourceRepository, ApcApprentissageCritiqueRepository $apcApprentissageCritiqueRepository, Request $request, ApcSae $apcSae): Response
+    {
         $form = $this->createForm(ApcSaeType::class, $apcSae, ['diplome' => $apcSae->getDiplome()]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             //on supprimer ceux présent
             foreach ($apcSae->getApcSaeApprentissageCritiques() as $ac) {
@@ -292,13 +232,11 @@ class ApcSaeController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="apc_sae_delete", methods={"DELETE"})
-     */
+    #[Route(path: '/{id}', name: 'apc_sae_delete', methods: ['DELETE'])]
     public function delete(Request $request, ApcSae $apcSae): Response
     {
         $id = $apcSae->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $this->entityManager->remove($apcSae);
             $this->entityManager->flush();
             $this->addFlashBag(
@@ -308,19 +246,15 @@ class ApcSaeController extends BaseController
 
             return $this->json($id, Response::HTTP_OK);
         }
-
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'apc.sae.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * @Route("/{id}/duplicate", name="apc_sae_duplicate", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/duplicate', name: 'apc_sae_duplicate', methods: 'GET|POST')]
     public function duplicate(ApcSae $apcSae): Response
     {
         $newApcSae = clone $apcSae;
-
         $this->entityManager->persist($newApcSae);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.sae.duplicate.success.flash');

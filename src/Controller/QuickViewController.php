@@ -10,14 +10,13 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class QuickViewController extends AbstractController
 {
-    /**
-     * @Route("/quick/view", name="quick_view", options={"expose"=true})
-     */
-    public function index()
+    #[Route(path: '/quick/view', name: 'quick_view', options: ['expose' => true])]
+    public function index(): Response
     {
         return $this->render('quick_view/index.html.twig');
     }

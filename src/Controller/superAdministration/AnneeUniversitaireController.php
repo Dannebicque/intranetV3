@@ -20,14 +20,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/administratif/annee-universitaire")
- */
+#[Route(path: '/administratif/annee-universitaire')]
 class AnneeUniversitaireController extends BaseController
 {
-    /**
-     * @Route("/", name="sa_annee_universitaire_index", methods={"GET"})
-     */
+    #[Route(path: '/', name: 'sa_annee_universitaire_index', methods: ['GET'])]
     public function index(AnneeUniversitaireRepository $anneeUniversitaireRepository): Response
     {
         return $this->render('super-administration/annee_universitaire/index.html.twig', [
@@ -35,14 +31,9 @@ class AnneeUniversitaireController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/annee-active/change/{annee}", name="sa_annee_universitaire_change_active", options={"expose":true})
-     */
-    public function changeOption(
-        AnneeUniversitaireRepository $anneeUniversitaireRepository,
-        Request $request,
-        AnneeUniversitaire $annee
-    ): Response {
+    #[Route(path: '/annee-active/change/{annee}', name: 'sa_annee_universitaire_change_active', options: ['expose' => true])]
+    public function changeOption(AnneeUniversitaireRepository $anneeUniversitaireRepository, Request $request, AnneeUniversitaire $annee): Response
+    {
         $value = $request->request->get('value');
         if ('true' === $value) {
             $annees = $anneeUniversitaireRepository->findAll();
@@ -53,21 +44,14 @@ class AnneeUniversitaireController extends BaseController
         } else {
             $annee->setActive(false);
         }
-
         $this->entityManager->flush();
 
         return new Response('', Response::HTTP_OK);
     }
 
-    /**
-     * @Route("/export.{_format}", name="sa_annee_universitaire_export", methods="GET",
-     *                             requirements={"_format"="csv|xlsx|pdf"})
-     */
-    public function export(
-        MyExport $myExport,
-        AnneeUniversitaireRepository $anneeUniversitaireRepository,
-        $_format
-    ): Response {
+    #[Route(path: '/export.{_format}', name: 'sa_annee_universitaire_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
+    public function export(MyExport $myExport, AnneeUniversitaireRepository $anneeUniversitaireRepository, $_format): Response
+    {
         $annee_universitaires = $anneeUniversitaireRepository->findAll();
 
         return $myExport->genereFichierGenerique(
@@ -79,15 +63,12 @@ class AnneeUniversitaireController extends BaseController
         );
     }
 
-    /**
-     * @Route("/new", name="sa_annee_universitaire_new", methods={"GET","POST"})
-     */
+    #[Route(path: '/new', name: 'sa_annee_universitaire_new', methods: ['GET', 'POST'])]
     public function new(Request $request): Response
     {
         $anneeUniversitaire = new AnneeUniversitaire();
         $form = $this->createForm(AnneeUniversitaireType::class, $anneeUniversitaire);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($anneeUniversitaire);
             $this->entityManager->flush();
@@ -102,9 +83,7 @@ class AnneeUniversitaireController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}", name="sa_annee_universitaire_show", methods={"GET"})
-     */
+    #[Route(path: '/{id}', name: 'sa_annee_universitaire_show', methods: ['GET'])]
     public function show(AnneeUniversitaire $anneeUniversitaire): Response
     {
         return $this->render('super-administration/annee_universitaire/show.html.twig', [
@@ -112,14 +91,11 @@ class AnneeUniversitaireController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="sa_annee_universitaire_edit", methods={"GET","POST"})
-     */
+    #[Route(path: '/{id}/edit', name: 'sa_annee_universitaire_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, AnneeUniversitaire $anneeUniversitaire): Response
     {
         $form = $this->createForm(AnneeUniversitaireType::class, $anneeUniversitaire);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'annee_universitaire.edit.success.flash');
@@ -135,13 +111,10 @@ class AnneeUniversitaireController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}/duplicate", name="sa_annee_universitaire_duplicate", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/duplicate', name: 'sa_annee_universitaire_duplicate', methods: 'GET|POST')]
     public function duplicate(AnneeUniversitaire $annee_universitaire): Response
     {
         $newAnneeUniversitaire = clone $annee_universitaire;
-
         $this->entityManager->persist($newAnneeUniversitaire);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'annee_universitaire.duplicate.success.flash');
@@ -149,13 +122,11 @@ class AnneeUniversitaireController extends BaseController
         return $this->redirectToRoute('sa_annee_universitaire_edit', ['id' => $newAnneeUniversitaire->getId()]);
     }
 
-    /**
-     * @Route("/{id}", name="sa_annee_universitaire_delete", methods="DELETE")
-     */
+    #[Route(path: '/{id}', name: 'sa_annee_universitaire_delete', methods: 'DELETE')]
     public function delete(Request $request, AnneeUniversitaire $annee_universitaire): Response
     {
         $id = $annee_universitaire->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             if (0 === count($annee_universitaire->getDepartements()) &&
                 0 === count($annee_universitaire->getDiplomes()) &&
                 0 === count($annee_universitaire->getScolarites()) &&

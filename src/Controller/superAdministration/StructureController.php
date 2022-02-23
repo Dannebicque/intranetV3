@@ -16,14 +16,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class StructureController.
- *
- * @Route("/administratif/structure")
  */
+#[Route(path: '/administratif/structure')]
 class StructureController extends BaseController
 {
-    /**
-     * @Route("/detail/{departement}", name="sa_structure_index")
-     */
+    #[Route(path: '/detail/{departement}', name: 'sa_structure_index')]
     public function index(Departement $departement): Response
     {
         return $this->render('structure/index.html.twig', [

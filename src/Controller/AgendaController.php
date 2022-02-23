@@ -60,7 +60,7 @@ class AgendaController extends BaseController
     public function index(int $semaine = 0, string $filtre = 'prof', string $valeur = ''): Response
     {
         if (0 === $semaine) {
-            $semaine = (int)date('W');
+            $semaine = (int) date('W');
         }
 
         return $this->render('agenda/index.html.twig', [

@@ -19,17 +19,14 @@ use Doctrine\ORM\NoResultException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/administratif/rdd")
- */
+#[Route(path: '/administratif/rdd')]
 class RddController extends BaseController
 {
     /**
-     * @Route("/", name="sa_rdd_index", methods="GET")
-     *
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
+    #[Route(path: '/', name: 'sa_rdd_index', methods: 'GET')]
     public function index(RddDiplomeRepository $rddDiplomeRepository, EtudiantRepository $etudiantRepository): Response
     {
         $diplomes = $rddDiplomeRepository->findAll();
@@ -38,7 +35,6 @@ class RddController extends BaseController
         foreach ($etudiants as $etudiant) {
             $tEtudiant[$etudiant->getNumEtudiant()] = $etudiant;
         }
-
         $nbComplet = $rddDiplomeRepository->countComplet();
 
         return $this->render('super-administration/scolarite/rdd/index.html.twig',
@@ -50,14 +46,9 @@ class RddController extends BaseController
             ]);
     }
 
-    /**
-     * @Route("/export.{_format}", name="sa_rdd_export", methods="GET")
-     */
-    public function export(
-        MyExportRdd $myExportRdd,
-        RddDiplomeRepository $rddDiplomeRepository,
-        EtudiantRepository $etudiantRepository
-    ): Response {
+    #[Route(path: '/export.{_format}', name: 'sa_rdd_export', methods: 'GET')]
+    public function export(MyExportRdd $myExportRdd, RddDiplomeRepository $rddDiplomeRepository, EtudiantRepository $etudiantRepository): Response
+    {
         $diplomes = $rddDiplomeRepository->findAll();
         $etudiants = $etudiantRepository->findAll();
         $tEtudiant = [];

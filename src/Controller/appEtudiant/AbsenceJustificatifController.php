@@ -22,14 +22,10 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-/**
- * @Route("/application/etudiant/absence/justificatif")
- */
+#[Route(path: '/application/etudiant/absence/justificatif')]
 class AbsenceJustificatifController extends BaseController
 {
-    /**
-     * @Route("/", name="app_etudiant_absence_justificatif_index", methods="GET")
-     */
+    #[Route(path: '/', name: 'app_etudiant_absence_justificatif_index', methods: 'GET')]
     public function index(AbsenceJustificatifRepository $absenceJustificatifRepository): Response
     {
         return $this->render('appEtudiant/absence_justificatif/index.html.twig',
@@ -37,13 +33,10 @@ class AbsenceJustificatifController extends BaseController
     }
 
     /**
-     * @Route("/depot", name="app_etudiant_absence_justificatif_new", methods="GET|POST")
-     *
      * @throws Exception
      */
-    public function depot(
-        EventDispatcherInterface $eventDispatcher,
-        Request $request): Response
+    #[Route(path: '/depot', name: 'app_etudiant_absence_justificatif_new', methods: 'GET|POST')]
+    public function depot(EventDispatcherInterface $eventDispatcher, Request $request): Response
     {
         if (null !== $this->getUser()) {
             $absenceJustificatif = new AbsenceJustificatif();
@@ -76,20 +69,18 @@ class AbsenceJustificatifController extends BaseController
     }
 
     /**
-     * @Route("/{id}/edit", name="app_etudiant_absence_justificatif_edit", methods="GET|POST")
      * @ParamConverter("absenceJustificatif", options={"mapping": {"id": "uuid"}})
      */
+    #[Route(path: '/{id}/edit', name: 'app_etudiant_absence_justificatif_edit', methods: 'GET|POST')]
     public function edit(Request $request, AbsenceJustificatif $absenceJustificatif): Response
     {
         $absenceJustificatif->prepareData();
-
         $form = $this->createForm(AbsenceJustificatifType::class, $absenceJustificatif, [
             'action' => $this->generateUrl('app_etudiant_absence_justificatif_edit', [
                 'id' => $absenceJustificatif->getUuidString(),
             ]),
         ]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $absenceJustificatif->transformeData();
             $this->entityManager->flush();
@@ -106,14 +97,13 @@ class AbsenceJustificatifController extends BaseController
     }
 
     /**
-     * @Route("/{id}", name="app_etudiant_absence_justificatif_delete", methods="DELETE")
-     *
      * @ParamConverter("absenceJustificatif", options={"mapping": {"id": "uuid"}})
      */
+    #[Route(path: '/{id}', name: 'app_etudiant_absence_justificatif_delete', methods: 'DELETE')]
     public function delete(Request $request, AbsenceJustificatif $absenceJustificatif): Response
     {
         $id = $absenceJustificatif->getUuidString();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $this->entityManager->remove($absenceJustificatif);
             $this->entityManager->flush();
             $this->addFlashBag(
@@ -123,7 +113,6 @@ class AbsenceJustificatifController extends BaseController
 
             return $this->json($id, Response::HTTP_OK);
         }
-
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'absence_justificatif.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);

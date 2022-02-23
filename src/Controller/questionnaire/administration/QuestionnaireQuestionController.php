@@ -30,6 +30,9 @@ class QuestionnaireQuestionController extends BaseController
         $this->questionnaireQuestionTagRepository = $questionnaireQuestionTagRepository;
     }
 
+    /**
+     * @throws \JsonException
+     */
     #[Route('/', name: 'index', options: ['expose' => true], methods: ['GET', 'POST'])]
     public function index(Request $request, QuestionnaireRegistry $questionnaireRegistry): Response
     {
@@ -47,6 +50,9 @@ class QuestionnaireQuestionController extends BaseController
         ]);
     }
 
+    /**
+     * @throws \App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException
+     */
     #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
     public function new(Request $request, QuestionnaireRegistry $questionnaireRegistry): Response
     {
@@ -73,6 +79,9 @@ class QuestionnaireQuestionController extends BaseController
         ]);
     }
 
+    /**
+     * @throws \App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException
+     */
     #[Route('/type_question', name: 'type_question', methods: ['GET', 'POST'])]
     public function typeQuestion(Request $request, QuestionnaireRegistry $questionnaireRegistry): Response
     {
@@ -96,6 +105,9 @@ class QuestionnaireQuestionController extends BaseController
         ]);
     }
 
+    /**
+     * @throws \App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException
+     */
     #[Route('/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(
         Request $request,
@@ -150,7 +162,7 @@ class QuestionnaireQuestionController extends BaseController
     public function delete(Request $request, QuestionnaireQuestion $questionnaireQuestion): Response
     {
         $id = $questionnaireQuestion->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             foreach ($questionnaireQuestion->getQuizzReponses() as $quizzReponse) {
                 $this->entityManager->remove($quizzReponse);
             }
@@ -170,7 +182,7 @@ class QuestionnaireQuestionController extends BaseController
     }
 
     //todo:  export
-    private function traitementTags(QuestionnaireQuestion $questionnaireQuestion, string $tags)
+    private function traitementTags(QuestionnaireQuestion $questionnaireQuestion, string $tags): void
     {
         $tabTags = explode(';', $tags);
         foreach ($tabTags as $tag) {

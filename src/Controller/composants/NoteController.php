@@ -29,8 +29,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class NoteController extends BaseController
 {
     /**
-     *
      * @Route("/edit-form-evaluation/{evaluation}/{source}", name="composant_edit_form_evaluation")
+     * @throws \App\Exception\MatiereNotFoundException
      */
     public function editFormEvaluation(
         TypeMatiereManager $typeMatiereManager,
@@ -38,7 +38,6 @@ class NoteController extends BaseController
         Evaluation $evaluation,
         $source
     ): Response {
-
         $matiere = $typeMatiereManager->getMatiere($evaluation->getIdMatiere(), $evaluation->getTypeMatiere());
 
         if (null === $matiere) {

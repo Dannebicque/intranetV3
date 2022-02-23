@@ -21,14 +21,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-
-#[Route("/administration/etudiants/apogee")]
+#[Route('/administration/etudiants/apogee')]
 class ApogeeController extends BaseController
 {
     private array $etudiants;
 
-
-    #[Route("/import/diplome/{type}", name: "administration_apogee_maj", methods: ["GET", "POST"])]
+    /**
+     * @throws \Exception
+     */
+    #[Route('/import/diplome/{type}', name: 'administration_apogee_maj', methods: ['GET', 'POST'])]
     public function importMaj(
         ApogeeEtudiant $apogeeEtudiant,
         EtudiantImport $etudiantImport,
@@ -49,7 +50,6 @@ class ApogeeController extends BaseController
             //pour chaque étudiant, s'il existe, on update, sinon on ajoute (et si type=force).
             $stid = $apogeeEtudiant->getEtudiantsAnnee($semestre->getAnnee());
             while ($row = $stid->fetch()) {
-
                 $dataApogee = $apogeeEtudiant->transformeApogeeToArray($row, $bacRepository->getApogeeArray());
                 $numEtudiant = $dataApogee['etudiant']['setNumEtudiant'];
                 $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $numEtudiant]);
@@ -65,7 +65,6 @@ class ApogeeController extends BaseController
                     $this->etudiants[$numEtudiant]['data'] = $etudiant;
                 }
                 $this->entityManager->flush();
-
             }
 
             $this->addFlashBag('success', 'import.etudiant.apogee.ok');
@@ -79,7 +78,10 @@ class ApogeeController extends BaseController
         return $this->redirectToRoute('administration_etudiant_add');
     }
 
-    #[Route("/import/etudiant", name: "administration_apogee_un_etudiant", methods: ['GET', 'POST'])]
+    /**
+     * @throws \App\Exception\SemestreNotFoundException
+     */
+    #[Route('/import/etudiant', name: 'administration_apogee_un_etudiant', methods: ['GET', 'POST'])]
     public function importEtudiant(
         EtudiantImport $etudiantImport,
         ApogeeEtudiant $apogeeEtudiant,
@@ -87,13 +89,11 @@ class ApogeeController extends BaseController
         EtudiantRepository $etudiantRepository,
         SemestreRepository $semestreRepository,
         BacRepository $bacRepository
-    ): Response
-    {
-
+    ): Response {
         $listeetudiants = explode(';', trim($request->request->get('listeetudiants')));
         $semestre = $semestreRepository->find($request->request->get('semestreforce'));
 
-        if ($semestre === null) {
+        if (null === $semestre) {
             throw new SemestreNotFoundException();
         }
 
@@ -101,8 +101,8 @@ class ApogeeController extends BaseController
 
         $this->etudiants = [];
         foreach ($listeetudiants as $numEtu) {
-            $numEtu = (int)trim($numEtu);
-            if (is_int($numEtu)) {
+            $numEtu = (int) trim($numEtu);
+            if (0 !== $numEtu) {
                 $stid = $apogeeEtudiant->getEtudiant($numEtu, $semestre->getAnnee());
                 while ($row = $stid->fetch()) {
                     //requete pour récupérer les datas de l'étudiant et ajouter à la BDD.

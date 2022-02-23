@@ -18,20 +18,15 @@ use App\Repository\ApcParcoursNiveauRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * @Route("/apc/parcours/niveau", name="administration_")
- */
+#[Route(path: '/apc/parcours/niveau', name: 'administration_')]
 class ApcParcoursNiveauController extends BaseController
 {
     /**
-     * @Route("/ajax/{parcours}/{etat}/{niveau}", name="apc_parcours_niveau_ajax", options={"expose":true})
+     * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function ajax(
-        ApcParcoursNiveauRepository $apcParcoursNiveauRepository,
-        ApcParcours $parcours,
-        $etat,
-        ApcNiveau $niveau
-    ): Response {
+    #[Route(path: '/ajax/{parcours}/{etat}/{niveau}', name: 'apc_parcours_niveau_ajax', options: ['expose' => true])]
+    public function ajax(ApcParcoursNiveauRepository $apcParcoursNiveauRepository, ApcParcours $parcours, $etat, ApcNiveau $niveau): Response
+    {
         if (0 == $etat) {
             //existe et on souhaite retirer
             $pn = $apcParcoursNiveauRepository->findParcoursNiveau($parcours, $niveau);
@@ -45,27 +40,21 @@ class ApcParcoursNiveauController extends BaseController
             $pn->setParcours($parcours);
             $this->entityManager->persist($pn);
         }
-
         $this->entityManager->flush();
 
         return $this->json(true);
     }
 
-    /**
-     * @Route("/configuration/{parcours}", name="apc_parcours_niveau_new", methods={"GET","POST"})
-     */
-    public function new(
-        ApcParcoursNiveauRepository $apcParcoursNiveauRepository,
-        ApcComptenceRepository $apcComptenceRepository,
-        ApcParcours $parcours
-    ): Response {
+    #[Route(path: '/configuration/{parcours}', name: 'apc_parcours_niveau_new', methods: ['GET', 'POST'])]
+    public function new(ApcParcoursNiveauRepository $apcParcoursNiveauRepository, ApcComptenceRepository $apcComptenceRepository, ApcParcours $parcours): Response
+    {
         $competences = $apcComptenceRepository->findByDiplome($parcours->getDiplome());
         $tabNiveaux = $apcParcoursNiveauRepository->findNiveauByParcoursArray($parcours);
 
         return $this->render('apc/apc_parcours_niveau/new.html.twig', [
             'parcours' => $parcours,
             'comptences' => $competences,
-            'tabNiveauxId' => $tabNiveaux
+            'tabNiveauxId' => $tabNiveaux,
         ]);
     }
 }

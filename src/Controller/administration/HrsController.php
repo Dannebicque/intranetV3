@@ -23,22 +23,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class HrsController extends BaseController
 {
     /**
-     * @Route("/{annee}", name="administration_hrs_index", methods="GET|POST", options={"expose":true},
-     *                    requirements={"annee":"\d+"})
+     * @throws \JsonException
      */
+    #[Route(path: '/{annee}', name: 'administration_hrs_index', requirements: ['annee' => '\d+'], options: ['expose' => true], methods: 'GET|POST')]
     public function index(Request $request, ?int $annee = 0): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
-
         if (0 === $annee && null !== $this->getAnneeUniversitaire() && 0 !== $this->getAnneeUniversitaire()->getAnnee()) {
             $annee = $this->getAnneeUniversitaire()->getAnnee();
         }
-
         $table = $this->createTable(HrsTableType::class, [
             'departement' => $this->getDepartement(),
             'annee' => $annee,
         ]);
-
         $hrs = new Hrs($this->getDepartement());
         $form = $this->createForm(HrsType::class, $hrs, [
             'departement' => $this->getDepartement(),
@@ -46,15 +43,11 @@ class HrsController extends BaseController
                 'data-provide' => 'validation',
             ],
         ]);
-
         $table->handleRequest($request);
-
         if ($table->isCallback()) {
             return $table->getCallbackResponse();
         }
-
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($hrs);
             $this->entityManager->flush();
@@ -68,13 +61,11 @@ class HrsController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/{id}/edit", name="administration_hrs_edit", methods="GET|POST")
-     */
+    #[Route(path: '/{id}/edit', name: 'administration_hrs_edit', methods: 'GET|POST')]
     public function edit(Request $request, Hrs $hrs): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $hrs->getDepartement()); //todo: département parfois null??
-
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $hrs->getDepartement());
+        //todo: département parfois null??
         $form = $this->createForm(HrsType::class, $hrs, [
             'departement' => $this->getDepartement(),
             'attr' => [
@@ -82,7 +73,6 @@ class HrsController extends BaseController
             ],
         ]);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'hrs.edit.success.flash');
@@ -98,16 +88,13 @@ class HrsController extends BaseController
         ]);
     }
 
-    /**
-     * @Route("/annee/duplicate", name="administration_hrs_duplicate_annee", methods="POST")
-     */
+    #[Route(path: '/annee/duplicate', name: 'administration_hrs_duplicate_annee', methods: 'POST')]
     public function duplicateAnnee(HrsRepository $hrsRepository, Request $request): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
         $anneeDepart = $request->request->get('annee_depart');
         $annee_destination = $request->request->get('annee_destination');
         $annee_concerver = $request->request->get('annee_concerver');
-
         //on efface, sauf si la case est cochée.
         if ('true' !== $annee_concerver) {
             $hrs = $hrsRepository->findByDepartement($this->getDepartement(), $annee_destination);
@@ -116,9 +103,7 @@ class HrsController extends BaseController
             }
             $this->entityManager->flush();
         }
-
         $hrs = $hrsRepository->findByDepartement($this->getDepartement(), $anneeDepart);
-
         /** @var Hrs $hr */
         foreach ($hrs as $hr) {
             $newHrs = clone $hr;
@@ -126,15 +111,12 @@ class HrsController extends BaseController
             $this->entityManager->persist($newHrs);
         }
         $this->entityManager->flush();
-
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'hrs.duplicate_annee.success.flash');
 
         return $this->redirectToRoute('administration_hrs_index', ['annee' => $annee_destination]);
     }
 
-    /**
-     * @Route("/{id}/duplicate", name="administration_hrs_duplicate", methods="GET")
-     */
+    #[Route(path: '/{id}/duplicate', name: 'administration_hrs_duplicate', methods: 'GET')]
     public function duplicate(Hrs $hrs): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $hrs->getDepartement());
@@ -142,14 +124,11 @@ class HrsController extends BaseController
         $this->entityManager->persist($newHrs);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'hrs.duplicate.success.flash');
-
         //'Copie effectuée avec succès. VOus pouvez modifier le nouvel élément.'
         return $this->redirectToRoute('administration_hrs_edit', ['id' => $newHrs->getId()]);
     }
 
-    /**
-     * @Route("/{id}/details", name="administration_hrs_show", methods="GET")
-     */
+    #[Route(path: '/{id}/details', name: 'administration_hrs_show', methods: 'GET')]
     public function show(Hrs $hrs): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $hrs->getDepartement());
@@ -157,9 +136,7 @@ class HrsController extends BaseController
         return $this->render('administration/hrs/_show.html.twig', ['hrs' => $hrs]);
     }
 
-    /**
-     * @Route("/{id}", name="administration_hrs_delete", methods="DELETE")
-     */
+    #[Route(path: '/{id}', name: 'administration_hrs_delete', methods: 'DELETE')]
     public function delete(Request $request, Hrs $hrs): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $hrs->getDepartement());
@@ -171,19 +148,15 @@ class HrsController extends BaseController
 
             return $this->json($id, Response::HTTP_OK);
         }
-
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'hrs.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * @Route("/supprimer/annee", name="administration_hrs_supprimer_annee", methods="DELETE")
-     */
+    #[Route(path: '/supprimer/annee', name: 'administration_hrs_supprimer_annee', methods: 'DELETE')]
     public function supprimer(Request $request, HrsRepository $hrsRepository): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
-
         if ($this->isCsrfTokenValid('supprimer', $request->request->get('_token'))) {
             $hrs = $hrsRepository->findByDepartement($this->getDepartement(),
                 $request->request->get('annee_supprimer'));
@@ -193,7 +166,6 @@ class HrsController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'hrs.delete.success.flash');
         }
-
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'hrs.delete.error.flash');
 
         return $this->redirectToRoute('administration_hrs_index');

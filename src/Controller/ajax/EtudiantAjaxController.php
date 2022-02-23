@@ -20,15 +20,14 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class AbsenceApiController.
- *
- * @Route("/ajax/etudiant")
  */
+#[Route(path: '/ajax/etudiant')]
 class EtudiantAjaxController extends BaseController
 {
     /**
-     * @Route("/edit/uuid/{uuid}", name="etudiant_ajax_edit_uuid", options={"expose":true})
      * @ParamConverter("etudiant", options={"mapping": {"uuid": "uuid"}})
      */
+    #[Route(path: '/edit/uuid/{uuid}', name: 'etudiant_ajax_edit_uuid', options: ['expose' => true])]
     public function editUuid(EtudiantUpdate $etudiantUpdate, Request $request, Etudiant $etudiant): JsonResponse
     {
         return $this->update($request, $etudiantUpdate, $etudiant);
@@ -45,9 +44,7 @@ class EtudiantAjaxController extends BaseController
             Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * @Route("/edit/{id}", name="etudiant_ajax_edit", options={"expose":true})
-     */
+    #[Route(path: '/edit/{id}', name: 'etudiant_ajax_edit', options: ['expose' => true])]
     public function edit(EtudiantUpdate $etudiantUpdate, Request $request, Etudiant $etudiant): JsonResponse
     {
         return $this->update($request, $etudiantUpdate, $etudiant);
