@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.5.14](https://github.com/Dannebicque/intranetV3/compare/v3.5.13...v3.5.14) (2022-02-26)
+
+
+### Bug Fixes
+
+* [CI] Correctif, amélioration, CI et Code Quality ([8ec667f](https://github.com/Dannebicque/intranetV3/commit/8ec667f9eac71f737179542cd818c0934ead19bc))
+* [Code Quality] Composants Table et Questionnaire ([e319fb7](https://github.com/Dannebicque/intranetV3/commit/e319fb7fe3b6b6a1d229baf01d612345011ecf51))
+* [Code Quality] Controllers (Route, attributs, typos, qualité de code) ([d364a14](https://github.com/Dannebicque/intranetV3/commit/d364a146362082fb540f6e849d0ab0ebc51ad7c2))
+* [Code Quality] Nettoage de code (suppression de Exporter) ([d3c9422](https://github.com/Dannebicque/intranetV3/commit/d3c94228944a05f3c6e51d0b5734d5f804937b42))
+* [Code Quality] Nettoyage de code suppression de Exporter ([1b48b5e](https://github.com/Dannebicque/intranetV3/commit/1b48b5e9976a8551de88744801673e35c8eda2a1))
+* [Code Quality] Qualité de code (PHPStan) ([6eaea75](https://github.com/Dannebicque/intranetV3/commit/6eaea75d36a1b031404c6253636b7b1f943353b9))
+* [Config] Correctifs configuration globale ([12f9200](https://github.com/Dannebicque/intranetV3/commit/12f92002e7970dd0e6dc17c1e7d163c2ba9dce6f))
+* [Configuration] Bug sur l'activation de la synchro celcat par diplôme ([ca133c5](https://github.com/Dannebicque/intranetV3/commit/ca133c5592a2312f2aad9af8593f96d7c0e7e0c2))
+* [CSS] Couleur CM/TD/TP ([cc74c6b](https://github.com/Dannebicque/intranetV3/commit/cc74c6b1340120eda3df00543e8affba098fe1bc))
+* [Entités] Conversion des entits avec Attributs et PHP8 compatible ([527d8e9](https://github.com/Dannebicque/intranetV3/commit/527d8e9ae0324fbfaf38e555ce4420dc81fbfe9a))
+* [Export EDT] Code matière dans l'Export EDT Celcat ([306baeb](https://github.com/Dannebicque/intranetV3/commit/306baebe120342d9f2ef8443db4718639683dd5c))
+* [Infra] Amélioration image docker pour PHP ([073c2f5](https://github.com/Dannebicque/intranetV3/commit/073c2f5af0e4dd9d435429e0845e1bd31616d3fe))
+* [Infra] Suppression BDD infra ([bc0cef5](https://github.com/Dannebicque/intranetV3/commit/bc0cef5f5aa1763b99098cdf5b168dac434a2663))
+* [MCC] N'affiche plus les matières suspendues dans les MCC ([30ef2e7](https://github.com/Dannebicque/intranetV3/commit/30ef2e7764735255dcf391610ed2486d11c4deb7))
+* [PDF] Amélioration du format d'export en PDF ([868e9d2](https://github.com/Dannebicque/intranetV3/commit/868e9d2af47a783b5826aaa325c6e3a8a30eed94))
+* [Profil] Typo ([ee9204f](https://github.com/Dannebicque/intranetV3/commit/ee9204f112cc3feed075b1f2b9dd2145631aeb87))
+* [Scolarite] Profil des étudiants depuis le super Admin ([463964c](https://github.com/Dannebicque/intranetV3/commit/463964c27fdeb5704a646301e0d382fdb736bc51))
+* [Tests] Ajout de quelques tests ([421add4](https://github.com/Dannebicque/intranetV3/commit/421add4ccc0b68fcc201bde303b7355567711384))
+* [Trad] Correctifs traductions ([bb9a55f](https://github.com/Dannebicque/intranetV3/commit/bb9a55f6a15cbfdb7961024c7b0bdd3b479a74b9))
+
 ### [3.5.13](https://github.com/Dannebicque/intranetV3/compare/v3.5.12...v3.5.13) (2022-02-22)
 
 
