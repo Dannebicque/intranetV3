@@ -139,7 +139,7 @@ class MyMessagerie
         $this->entityManager->flush();
     }
 
-    public function setMessage(string $sujet, string $message, string $expediteur, array $pjs = []): void
+    public function setMessage(string $sujet, string $message, Personnel $expediteur, array $pjs = []): void
     {
         //pour définir les éléments du message, commun à tous les destinataires
         $this->sujet = $sujet;
