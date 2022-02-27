@@ -132,7 +132,7 @@ class TrombinoscopeController extends BaseController
     {
         $personnels = $personnelRepository->findByType(
             $type,
-            $this->dataUserSession->getDepartementId(),
+            $this->getDepartement(),
             $configuration->get('AFFICHAGE_TROMBI')
         );
 

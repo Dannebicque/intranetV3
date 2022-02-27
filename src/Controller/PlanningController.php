@@ -43,7 +43,7 @@ class PlanningController extends BaseController
             'tabFinMois' => Calendrier::getTabFinMois(),
             'annee' => $annee,
             'events' => $dateRepository->findByDepartementPlanning(
-                $this->dataUserSession->getDepartementId(),
+                $this->getDepartement(),
                 $annee
             ),
         ]);

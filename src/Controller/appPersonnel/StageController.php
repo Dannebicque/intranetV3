@@ -10,6 +10,7 @@
 namespace App\Controller\appPersonnel;
 
 use App\Classes\MyExport;
+use App\Classes\MySerializer;
 use App\Controller\BaseController;
 use App\Entity\Alternance;
 use App\Entity\StageEtudiant;
@@ -47,7 +48,9 @@ class StageController extends BaseController
     }
 
     #[Route(path: '/stage/export/{periode}.{_format}', name: 'application_personnel_stage_export')]
-    public function exportStage(MyExport $myExport, StageEtudiantRepository $stageEtudiantRepository, $periode, $_format): Response
+    public function exportStage(
+        MySerializer $mySerializer,
+        MyExport $myExport, StageEtudiantRepository $stageEtudiantRepository, $periode, $_format): Response
     {
         if ('courant' === $periode) {
             $stages = $stageEtudiantRepository->findByPersonnelAnnee($this->getUser(),
@@ -57,11 +60,8 @@ class StageController extends BaseController
                 $this->dataUserSession->getAnneeUniversitaire());
         }
 
-        return $myExport->genereFichierGenerique(
-            $_format,
+        $data = $mySerializer->getDataFromSerialization(
             $stages,
-            'stages',
-            ['stage_entreprise', 'adresse'],
             [
                 'entreprise' => ['raisonSociale', 'responsable' => ['nom', 'prenom', 'fonction', 'telephone', 'email']],
                 'tuteur' => ['nom', 'prenom', 'fonction', 'telephone', 'email'],
@@ -71,7 +71,14 @@ class StageController extends BaseController
                 'sujetStage',
                 'dateDebutStage',
                 'dateFinStage',
-            ]
+            ],
+            ['stage_entreprise', 'adresse']
+        );
+
+        return $myExport->genereFichierGeneriqueFromData(
+            $_format,
+            $data,
+            'stages',
         );
     }
 

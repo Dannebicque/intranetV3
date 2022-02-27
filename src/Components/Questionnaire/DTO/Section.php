@@ -31,7 +31,7 @@ class Section
         int $id_questionnaire_section,
         int $ordre,
         ?int $questionnaireId,
-        string $texte_explicatif = '',
+        ?string $texte_explicatif = '',
         array $configGlobale = [],
         array $configQuestionnaire = []
     ) {

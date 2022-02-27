@@ -23,6 +23,7 @@ use App\Entity\Personnel;
 use App\Entity\TypeGroupe;
 use App\Repository\GroupeRepository;
 use App\Repository\TypeGroupeRepository;
+use Doctrine\Common\Collections\Collection;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use function count;
 use PhpOffice\PhpSpreadsheet\Exception;
@@ -43,7 +44,7 @@ class MyExportListing
 
     protected GroupeRepository $groupeRepository;
 
-    protected array $groupes;
+    protected array|Collection $groupes;
     private string $name = '';
     private int $ligne = 1;
 

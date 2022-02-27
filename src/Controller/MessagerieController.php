@@ -177,7 +177,7 @@ class MessagerieController extends BaseController
         return $this->json('message vide', Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    private function getDestinataires(Request $request, ?string $typeDestinataire): ?string
+    private function getDestinataires(Request $request, ?string $typeDestinataire): string | array | null
     {
         return match ($typeDestinataire) {
             's' => $request->request->get('messageToSemestre'),

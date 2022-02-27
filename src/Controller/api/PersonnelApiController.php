@@ -40,7 +40,7 @@ class PersonnelApiController extends BaseController
     {
         $personnels = $this->personnelRepository->findByType(
             $type,
-            $this->dataUserSession->getDepartementId()
+            $this->getDepartement()
         );
         $pers = [];
         /** @var Personnel $p */
@@ -66,7 +66,7 @@ class PersonnelApiController extends BaseController
     public function getEnseignantsByDepartement(): Response
     {
         $personnels = $this->personnelRepository->findByDepartement(
-            $this->dataUserSession->getDepartementId()
+            $this->getDepartement()
         );
         $pers = [];
         /** @var Personnel $p */

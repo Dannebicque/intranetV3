@@ -43,6 +43,7 @@ class AlternanceController extends BaseController
                 AlternanceEtudiantType::class,
                 $alternance,
                 [
+                    'departement' => $this->getDepartement(),
                     'attr' => [
                         'data-provide' => 'validation',
                     ],

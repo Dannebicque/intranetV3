@@ -78,7 +78,7 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
     /**
      * @Vich\UploadableField(mapping="justificatif", fileNameProperty="fichierName")
      */
-    private ?File $fichierFile;
+    private ?File $fichierFile = null;
 
     #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class)]
     private ?AnneeUniversitaire $anneeUniversitaire = null;
