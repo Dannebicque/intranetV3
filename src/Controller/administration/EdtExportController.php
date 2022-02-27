@@ -224,6 +224,9 @@ class EdtExportController extends BaseController
 # 7= type de cours (CM=1, TD=4, TP=6)
                  */
                 $codeMatiere = $matieres[$p->getTypeIdMatiere()]->codeMatiere;
+                if (2 === $semestre->getOrdreLmd()) {
+                    $codeMatiere = 'W'.$codeMatiere;
+                }
                 $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= 'call  ajouter '.$p->getJour().' '.Constantes::TAB_HEURES[$p->getDebut()].' '.Constantes::TAB_HEURES[$p->getFin()].' '.$codeprof.' '.$tabSalles[$p->getSalle()].' '.$codeMatiere.' '.$tabType[mb_strtoupper($p->getType())]."\n";
             }
             if (0 !== $p->getIdMatiere() && 'H018' === $p->getSalle()) { // array_key_exists($p->getIntervenant()->getNumeroHarpege(), $tabProf))
