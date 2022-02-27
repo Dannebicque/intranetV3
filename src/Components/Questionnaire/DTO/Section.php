@@ -19,7 +19,7 @@ class Section
     public int $id_section;
     public int $questionnaire_id;
     public int $id_questionnaire_section;
-    public int $ordre;
+    public int | string $ordre;
     public ?array $configGlobale;
     public ?array $configQuestionnaire;
     public Collection $questions;
@@ -29,7 +29,7 @@ class Section
         string $titre,
         int $id_section,
         int $id_questionnaire_section,
-        int $ordre,
+        int | string $ordre,
         ?int $questionnaireId,
         ?string $texte_explicatif = '',
         array $configGlobale = [],
