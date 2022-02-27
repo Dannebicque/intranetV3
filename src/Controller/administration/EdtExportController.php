@@ -227,7 +227,7 @@ class EdtExportController extends BaseController
                 $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= 'call  ajouter '.$p->getJour().' '.Constantes::TAB_HEURES[$p->getDebut()].' '.Constantes::TAB_HEURES[$p->getFin()].' '.$codeprof.' '.$tabSalles[$p->getSalle()].' '.$codeMatiere.' '.$tabType[mb_strtoupper($p->getType())]."\n";
             }
             if (0 !== $p->getIdMatiere() && 'H018' === $p->getSalle()) { // array_key_exists($p->getIntervenant()->getNumeroHarpege(), $tabProf))
-                $codeMatiere = $matieres[$p->getTypeIdMatiere()]->codeElement;
+                $codeMatiere = $matieres[$p->getTypeIdMatiere()]->codeMatiere;
                 $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= 'call  ajouterh018 '.$p->getJour().' '.Constantes::TAB_HEURES[$p->getDebut()].' '.Constantes::TAB_HEURES[$p->getFin()].' '.$codeprof.' 0 '.$codeMatiere.' '.$tabType[mb_strtoupper($p->getType())]."\n";
             }
         }
