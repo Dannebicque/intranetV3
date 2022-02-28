@@ -38,6 +38,7 @@ class MyExport
         return $this->excel;
     }
 
+    /** @deprecated  */
     public function convertDataFromSerializationToArray(array $data, array $modele, array $colonne): array
     {
         $dataArray = [];
@@ -107,6 +108,7 @@ class MyExport
         return $dataArray;
     }
 
+    /** @deprecated  */
     public function genereFichierGenerique(
        string $format,
        array $data,
@@ -159,6 +161,7 @@ class MyExport
         return $this->excel->saveXlsx($nomFichier);
     }
 
+    /** @deprecated  */
     private function transformValue(?string $value, string $key): ?string
     {
         if (array_key_exists($key, $this->options)) {
@@ -175,5 +178,15 @@ class MyExport
         }
 
         return $value;
+    }
+
+    public function genereFichierGeneriqueFromData($format, $data, string $nomFichier)
+    {
+        return match ($format) {
+            'csv' => $this->excel->genereExcelFromArray($data)->saveCsv($nomFichier),
+            'pdf' => $this->myPDF::generePdf('pdf/pdfExport.html.twig', ['data' => $data], $nomFichier),
+            'xlsx' => $this->excel->genereExcelFromArray($data)->saveXlsx($nomFichier),
+            default => null,
+        };
     }
 }
