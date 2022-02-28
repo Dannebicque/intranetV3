@@ -154,8 +154,7 @@ class StageEtudiantController extends BaseController
             [
                 'proposition' => $stageEtudiant,
             ],
-            'Convention-'.$stageEtudiant->getEtudiant()->getNom(),
-            $this->dataUserSession->getDepartement()
+            'Convention-'.$stageEtudiant->getEtudiant()->getNom()
         );
     }
 

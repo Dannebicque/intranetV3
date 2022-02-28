@@ -59,7 +59,7 @@ class MyPDF
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public static function generePdf(string $template, array $data, string $name, ?string $departement = null): PdfResponse
+    public static function generePdf(string $template, array $data, string $name, ?Departement $departement = null): PdfResponse
     {
         return self::genereOutputPdf($template, $data, $name, $departement);
     }
@@ -74,7 +74,7 @@ class MyPDF
         array $data,
         string $name,
         string $dir,
-        ?string $departement = null
+        ?Departement $departement = null
     ): void {
         $output = self::genereOutputPdf($template, $data, $name, $departement);
 
@@ -86,7 +86,7 @@ class MyPDF
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    private static function genereOutputPdf(string $template, array $data, string $name, string $departement = null): PdfResponse
+    private static function genereOutputPdf(string $template, array $data, string $name, ?Departement $departement = null): PdfResponse
     {
         //todo: est-ce que le département est encore nécessaire sur l'export ???
         $html = self::$templating->render($template, $data);
