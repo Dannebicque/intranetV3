@@ -232,7 +232,7 @@ class MyEvaluation
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function exportReleve(string $_format, array $groupes, Departement $departement): StreamedResponse|PdfResponse|null
+    public function exportReleve(string $_format, Collection $groupes, Departement $departement): StreamedResponse|PdfResponse|null
     {
         $notes = $this->getNotesTableau();
         $matiere = $this->typeMatiereManager->getMatiereFromSelect($this->evaluation->getTypeIdMatiere());
@@ -249,7 +249,7 @@ class MyEvaluation
                     'groupes' => $groupes,
                     'notes' => $notes,
                     'matiere' => $matiere,
-                ], $name, $departement->getLibelle());
+                ], $name);
             case Constantes::FORMAT_EXCEL:
                 $this->myExcelMultiExport->genereReleveExcel(
                     $this->evaluation,
