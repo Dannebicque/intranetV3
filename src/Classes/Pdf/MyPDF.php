@@ -42,7 +42,7 @@ class MyPDF
         $date = Carbon::now();
 
         self::setFooter([
-            'footer-left' => escapeshellarg('Document généré depuis l\'intranet le '.$date->format('d/m/Y H:i').'.'),
+            'footer-left' => "Document généré depuis l'intranet le ".$date->format('d/m/Y H:i').".",
             'footer-right' => '[page] / [topage]',
             'footer-center' => '',
         ]);
