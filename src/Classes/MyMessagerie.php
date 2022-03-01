@@ -21,6 +21,7 @@ use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use function count;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
@@ -43,7 +44,7 @@ class MyMessagerie
     private Personnel $expediteur;
 
     /** @var Etudiant[] */
-    private array $etudiants = [];
+    private array | Collection $etudiants = [];
 
     private GroupeRepository $groupeRepository;
 
@@ -179,7 +180,7 @@ class MyMessagerie
     /**
      * @throws TransportExceptionInterface
      */
-    public function sendToDestinataires(array $destinataires, string $typeDestinataire, Departement $departement = null): void
+    public function sendToDestinataires(array $destinataires, ?string $typeDestinataire, Departement $departement = null): void
     {
         $this->type = $typeDestinataire;
         $this->nbMessagesEnvoyes = 0;
@@ -282,7 +283,7 @@ class MyMessagerie
         }
     }
 
-    public function saveDraft(string $sujet, string $message, Personnel $expediteur, ?array $destinataires = [], ?string $typeDestinataire = null, ?string $copie= null): void
+    public function saveDraft(string $sujet, string $message, Personnel $expediteur, ?array $destinataires = [], ?string $typeDestinataire = null, ?string $copie = null): void
     {
         //todo: a refaire
         $this->sujet = $sujet;
