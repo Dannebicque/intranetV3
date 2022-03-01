@@ -476,7 +476,7 @@ class MyExportListing
                 'groupes' => $this->groupes,
             ],
             $this->name.'.pdf',
-            $this->dataUserSession->getDepartement()->getLibelle());
+            $this->dataUserSession->getDepartement());
     }
 
     private function writeLine(Etudiant $etudiant, Groupe $groupe): void
