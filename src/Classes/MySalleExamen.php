@@ -109,7 +109,7 @@ class MySalleExamen
                 'depreuve' => $requestdateeval,
             ];
 
-            return $this->myPdf::generePdf('pdf/placement.html.twig', $data, 'placement', $departement->getLibelle());
+            return $this->myPdf::generePdf('pdf/placement.html.twig', $data, 'placement');
         }
 
         return null; //todo: afficher un lessage de salle trop petite ?
