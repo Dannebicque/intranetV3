@@ -16,10 +16,12 @@ use App\Entity\MessageDestinataireEtudiant;
 use App\Entity\MessageDestinatairePersonnel;
 use App\Entity\MessagePieceJointe;
 use App\Entity\Personnel;
+use App\Entity\Semestre;
 use App\Interfaces\UtilisateurInterface;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
+use App\Repository\SemestreRepository;
 use function count;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
@@ -29,11 +31,6 @@ use Symfony\Component\Mailer\MailerInterface;
 
 class MyMessagerie
 {
-    private Configuration $configuration;
-    private MailerInterface $myMailer;
-
-    private EntityManagerInterface $entityManager;
-
     private string $sujet;
 
     private string $message;
@@ -46,12 +43,6 @@ class MyMessagerie
     /** @var Etudiant[] */
     private array | Collection $etudiants = [];
 
-    private GroupeRepository $groupeRepository;
-
-    private EtudiantRepository $etudiantRepository;
-
-    private PersonnelRepository $personnelRepository;
-
     private string $typeDestinataires = '';
     private string $type;
     private int $id;
@@ -61,19 +52,14 @@ class MyMessagerie
      * MyMessagerie constructor.
      */
     public function __construct(
-        MailerInterface $mailer,
-        EntityManagerInterface $entityManager,
-        GroupeRepository $groupeRepository,
-        EtudiantRepository $etudiantRepository,
-        PersonnelRepository $personnelRepository,
-        Configuration $configuration
+        private MailerInterface $myMailer,
+        private EntityManagerInterface $entityManager,
+        private GroupeRepository $groupeRepository,
+        private EtudiantRepository $etudiantRepository,
+        private SemestreRepository $semestreRepository,
+        private PersonnelRepository $personnelRepository,
+        private Configuration $configuration
     ) {
-        $this->myMailer = $mailer;
-        $this->entityManager = $entityManager;
-        $this->groupeRepository = $groupeRepository;
-        $this->etudiantRepository = $etudiantRepository;
-        $this->personnelRepository = $personnelRepository;
-        $this->configuration = $configuration;
     }
 
     /**
@@ -259,8 +245,9 @@ class MyMessagerie
 
     private function getEtudiantsSemestre(string $codeSemestre): void
     {
+        $semestre = $this->semestreRepository->find($codeSemestre);
         //récupére tous les étudiants d'un semestre
-        $this->etudiants = $this->etudiantRepository->findBySemestre($codeSemestre);
+        $this->etudiants = $this->etudiantRepository->findBySemestre($semestre);
     }
 
     private function getEtudiantsGroupe(int | string $codeGroupe): void
