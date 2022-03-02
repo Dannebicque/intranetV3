@@ -48,7 +48,7 @@ class FinSemestreController extends BaseController
     public function confirme(EtudiantScolarite $etudiantScolarite, EtudiantRepository $etudiantRepository, Request $request, SemestreRepository $semestreRepository, Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
-        $etudiants = $etudiantRepository->findBySemestre($semestre->getId());
+        $etudiants = $etudiantRepository->findBySemestre($semestre);
         /** @var Etudiant $e */
         foreach ($etudiants as $e) {
             $valeur = $request->request->get('etu_'.$e->getId());
