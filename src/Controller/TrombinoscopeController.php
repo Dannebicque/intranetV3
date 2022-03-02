@@ -89,8 +89,7 @@ class TrombinoscopeController extends BaseController
                 'groupes' => $typeGroupe->getGroupes(),
                 'semestre' => $typeGroupe->getSemestre(),
             ],
-            null !== $typeGroupe->getSemestre() ? 'trombinoscope-'.$typeGroupe->getSemestre()->getLibelle() : '',
-            null !== $this->getDepartement() ? $this->getDepartement()->getLibelle() : ''
+            null !== $typeGroupe->getSemestre() ? 'trombinoscope-'.$typeGroupe->getSemestre()->getLibelle() : ''
         );
     }
 

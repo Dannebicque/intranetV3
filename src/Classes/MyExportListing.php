@@ -475,8 +475,7 @@ class MyExportListing
                 'personnel' => $this->personnel,
                 'groupes' => $this->groupes,
             ],
-            $this->name.'.pdf',
-            $this->dataUserSession->getDepartement());
+            $this->name.'.pdf');
     }
 
     private function writeLine(Etudiant $etudiant, Groupe $groupe): void

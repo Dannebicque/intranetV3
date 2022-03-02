@@ -109,8 +109,7 @@ class ProjetEtudiantController extends BaseController
             [
                 'projetEtudiant' => $projetEtudiant,
             ],
-            'Convention-'.$projetEtudiant->getEtudiants()[0]->getNom(),
-            $this->dataUserSession->getDepartement()
+            'Convention-'.$projetEtudiant->getEtudiants()[0]->getNom()
         );
     }
 }

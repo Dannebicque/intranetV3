@@ -43,8 +43,7 @@ class ApcSaeController extends BaseController
         return $myPDF::generePdf(
             'pdf/apc/fiche_sae.html.twig',
             ['apc_sae' => $apcSae],
-            'sae',
-            $this->getDepartement()
+            'sae'
         );
     }
 

@@ -41,7 +41,6 @@ class MyAlternanceFicheSuivi
     {
         return $this->myPdf::generePdf('pdf/ficheSuiviAlternant.html.twig',
             ['alternance_fiche_suivi' => $alternanceFicheSuivi],
-            'Suivi-en-entreprise-'.$alternanceFicheSuivi->getAlternance()->getEtudiant()->getNom().'-'.$alternanceFicheSuivi->getDate()->format('dmY'),
-            $alternanceFicheSuivi->getAlternance()->getAnnee()->getDiplome()->getDepartement()->getLibelle());
+            'Suivi-en-entreprise-'.$alternanceFicheSuivi->getAlternance()->getEtudiant()->getNom().'-'.$alternanceFicheSuivi->getDate()->format('dmY'));
     }
 }

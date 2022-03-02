@@ -200,8 +200,7 @@ class MyEmprunts
         $this->myPDF::generePdf('pdf/ficheEmprunt.html.twig', [
             'emprunt' => $emprunt,
         ],
-            'pret-'.$nom,
-            null !== $emprunt->getDepartement() ? $emprunt->getDepartement()->getLibelle() : 'departement');
+            'pret-'.$nom);
     }
 
     /**

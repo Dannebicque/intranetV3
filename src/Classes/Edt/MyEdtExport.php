@@ -178,7 +178,7 @@ class MyEdtExport
                     'matieres' => $this->typeMatiereManager->findByDepartementArray($departement),
                 ],
                 $personnel->getId().'_'.$personnel->getInitiales(),
-                $dir, $departement->getLibelle());
+                $dir);
         }
     }
 
@@ -198,8 +198,7 @@ class MyEdtExport
 
         $this->myPDF::addOptions(['orientation' => 'Landscape', 'fontHeightRatio' => 0.8]);
         $this->myPDF::generePdf('pdf/edt/edtSemestre.html.twig',
-            ['edt' => $edt, 'semestre' => $semestre, 'departement' => $departement], $semestre->getLibelle(),
-            $departement->getLibelle());
+            ['edt' => $edt, 'semestre' => $semestre, 'departement' => $departement], $semestre->getLibelle());
     }
 
     public function compressDir(Departement $departement): string

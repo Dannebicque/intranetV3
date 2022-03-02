@@ -43,8 +43,7 @@ class ApcRessourceController extends BaseController
         return $myPDF::generePdf(
             'pdf/apc/fiche_ressource.html.twig',
             ['apc_sae' => $apcRessource],
-            'ressource',
-            $this->getDepartement()
+            'ressource'
         );
     }
 

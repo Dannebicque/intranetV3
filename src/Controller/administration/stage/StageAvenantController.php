@@ -54,8 +54,7 @@ class StageAvenantController extends BaseController
                 'stage_avenant' => $stageAvenant,
                 'proposition' => $stageAvenant->getStageEtudiant(),
             ],
-            'avenant-'.$stageAvenant->getStageEtudiant()->getEtudiant()->getNom(),
-            $this->dataUserSession->getDepartement()
+            'avenant-'.$stageAvenant->getStageEtudiant()->getEtudiant()->getNom()
         );
     }
 

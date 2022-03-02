@@ -81,8 +81,7 @@ class EtudiantExportReleve
             'anneeUniversitaire' => $semestre->getAnneeUniversitaire(),
             'semestre' => $semestre,
             'matieres' => $matieres,
-        ], 'releveNoteProvisoire-'.Tools::slug($this->etudiant->getNom()).'.pdf',
-            $this->etudiant->getDepartement()->getLibelle());
+        ], 'releveNoteProvisoire-'.Tools::slug($this->etudiant->getNom()).'.pdf');
     }
 
     public function getNotesEtudiantSemestre(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): array
@@ -102,8 +101,7 @@ class EtudiantExportReleve
     {
         return $this->myPdf::generePdf('pdf/releveDefinitif.html.twig', [
             'scolarite' => $scolarite,
-        ], 'releveNotedefinitif-'.Tools::slug($scolarite->getEtudiant()?->getNom()).'.pdf',
-            $scolarite->getEtudiant()?->getDepartement()?->getLibelle());
+        ], 'releveNotedefinitif-'.Tools::slug($scolarite->getEtudiant()?->getNom()).'.pdf');
     }
 
     /**

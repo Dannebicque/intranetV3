@@ -194,8 +194,7 @@ class StageEtudiantController extends BaseController
             [
                 'stageEtudiant' => $stageEtudiant,
             ],
-            'courrier-'.$stageEtudiant->getEtudiant()->getNom(),
-            $this->dataUserSession->getDepartement()
+            'courrier-'.$stageEtudiant->getEtudiant()->getNom()
         );
     }
 
@@ -242,8 +241,7 @@ class StageEtudiantController extends BaseController
             [
                 'stageEtudiant' => $stageEtudiant,
             ],
-            'Fiche-Enseignant-stage-'.$stageEtudiant->getEtudiant()->getNom(),
-            $this->dataUserSession->getDepartement()
+            'Fiche-Enseignant-stage-'.$stageEtudiant->getEtudiant()->getNom()
         );
     }
 }
