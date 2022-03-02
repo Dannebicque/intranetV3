@@ -171,8 +171,7 @@ class StageEtudiantController extends BaseController
                 'proposition' => $stageEtudiant,
             ],
             'Convention-'.$stageEtudiant->getEtudiant()->getNom(),
-            $kernel->getProjectDir().'/public/upload/conventions/',
-            $this->dataUserSession->getDepartement()->getLibelle()
+            $kernel->getProjectDir().'/public/upload/conventions/'
         );
 
         $event = new StageEvent($stageEtudiant);
