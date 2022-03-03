@@ -11,6 +11,7 @@ namespace App\Controller;
 
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyExportListing;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,7 +36,7 @@ class ExportController extends AbstractController
      * @throws LoaderError
      */
     #[Route(path: '/listing', name: 'export_listing')]
-    public function listing(TypeMatiereManager $typeMatiereManager, MyExportListing $myExport, Request $request): ?StreamedResponse
+    public function listing(TypeMatiereManager $typeMatiereManager, MyExportListing $myExport, Request $request): null | StreamedResponse | PdfResponse
     {
         $matiere = $request->request->get('matiere');
         $typeMatiere = $request->request->get('typeMatiere');
