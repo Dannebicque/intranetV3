@@ -114,7 +114,6 @@ class EtudiantExportReleve
         $this->myEvaluations->getEvaluationsSemestre($semestre, $anneeUniversitaire);
         $statistiques = $this->myEvaluations->getStatistiques();
         $matieres = $this->typeMatiereManager->findBySemestreArray($semestre);
-        $libelleDepartement = $semestre->getDiplome()?->getDepartement()?->getLibelle();
 
         // Create new Zip Archive.
         $zip = new ZipArchive();
@@ -138,8 +137,7 @@ class EtudiantExportReleve
                     'semestre' => $semestre,
                     'matieres' => $matieres,
                 ], $nomFichier,
-                    $this->dir,
-                    $libelleDepartement);
+                    $this->dir);
                 $file = $this->dir.$nomFichier.'.pdf';
                 $tabFiles[] = $file;
                 $zip->addFile($file,

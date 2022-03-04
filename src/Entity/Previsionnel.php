@@ -134,7 +134,7 @@ class Previsionnel extends BaseEntity
         return $this->nbGrCm;
     }
 
-    public function setNbGrCm(int $nbGrCm = 0): self
+    public function setNbGrCm(?int $nbGrCm = 0): self
     {
         $this->nbGrCm = $nbGrCm;
 
@@ -146,7 +146,7 @@ class Previsionnel extends BaseEntity
         return $this->nbGrTd;
     }
 
-    public function setNbGrTd(int $nbGrTd = 0): self
+    public function setNbGrTd(?int $nbGrTd = 0): self
     {
         $this->nbGrTd = $nbGrTd;
 
@@ -158,7 +158,7 @@ class Previsionnel extends BaseEntity
         return $this->nbGrTp;
     }
 
-    public function setNbGrTp(int $nbGrTp = 0): self
+    public function setNbGrTp(?int $nbGrTp = 0): self
     {
         $this->nbGrTp = $nbGrTp;
 
