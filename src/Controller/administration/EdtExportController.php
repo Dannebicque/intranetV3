@@ -223,7 +223,7 @@ class EdtExportController extends BaseController
 # 6= indice de la matiere (ex:1 premiere matiere de la liste des matieres)
 # 7= type de cours (CM=1, TD=4, TP=6)
                  */
-                $codeMatiere = $matieres[$p->getTypeIdMatiere()]->codeApogee;
+                $codeMatiere = $matieres[$p->getTypeIdMatiere()]->codeElement;
 //                if (2 === $semestre->getOrdreLmd()) {
 //                   // $codeMatiere = 'W'.$codeMatiere;
 //                    $codeMatiere
@@ -231,7 +231,7 @@ class EdtExportController extends BaseController
                 $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= 'call  ajouter '.$p->getJour().' '.Constantes::TAB_HEURES[$p->getDebut()].' '.Constantes::TAB_HEURES[$p->getFin()].' '.$codeprof.' '.$tabSalles[$p->getSalle()].' '.$codeMatiere.' '.$tabType[mb_strtoupper($p->getType())]."\n";
             }
             if (0 !== $p->getIdMatiere() && 'H018' === $p->getSalle()) { // array_key_exists($p->getIntervenant()->getNumeroHarpege(), $tabProf))
-                $codeMatiere = $matieres[$p->getTypeIdMatiere()]->codeApogee;
+                $codeMatiere = $matieres[$p->getTypeIdMatiere()]->codeElement;
                 $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= 'call  ajouterh018 '.$p->getJour().' '.Constantes::TAB_HEURES[$p->getDebut()].' '.Constantes::TAB_HEURES[$p->getFin()].' '.$codeprof.' 0 '.$codeMatiere.' '.$tabType[mb_strtoupper($p->getType())]."\n";
             }
         }
