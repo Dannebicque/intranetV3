@@ -358,7 +358,7 @@ class MyEnquete
                     }
                 }
             }
-            if (TypeEchelle::class === $question->getType()) {
+            if ('echelle' === $question->getConfiguration()['type']) {
                 //si échelle ... tôt de satisfaction
                 $div = ($nbProps * ($nbTotalReponseQuestion - $retire));
                 if ($div !== 0) {
