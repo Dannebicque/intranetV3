@@ -2,6 +2,32 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.5.15](https://github.com/Dannebicque/intranetV3/compare/v3.5.14...v3.5.15) (2022-03-05)
+
+
+### Bug Fixes
+
+* [Absence] Alert si pas d'heure de choisie ([7dbb3b7](https://github.com/Dannebicque/intranetV3/commit/7dbb3b79d442c1efef194529e372554488922a5e))
+* [Absence] Bug de reprise des absences ([2000e5c](https://github.com/Dannebicque/intranetV3/commit/2000e5c3d71060d5e91c6fe32befb082dfb74807))
+* [Change de semestre] Typapage ([3a5fa68](https://github.com/Dannebicque/intranetV3/commit/3a5fa6832deb42a267bddf4b907558643e45322b))
+* [Export] Bug typage ([a107f44](https://github.com/Dannebicque/intranetV3/commit/a107f449a399f5227e2e09e4696b4b1d460ef1f7))
+* [Export] Bug typage ([2e1e542](https://github.com/Dannebicque/intranetV3/commit/2e1e54269c5ee88a1df498964d18d42e81f28a03))
+* [Export] PDF ([cef02df](https://github.com/Dannebicque/intranetV3/commit/cef02df4e8786b9236801b323c9ef53365a6c637))
+* [Export] PDF ([d7c0dc1](https://github.com/Dannebicque/intranetV3/commit/d7c0dc174432d5976bcb8ead5e87b291a3a1754e))
+* [Export] Refonte PDF ([1d4f1c8](https://github.com/Dannebicque/intranetV3/commit/1d4f1c871785302e722afc40972ef0eaf7d3a221))
+* [Export] Typapage ([9f9c4b9](https://github.com/Dannebicque/intranetV3/commit/9f9c4b94ba72d9e300cbacdd53db0ad310015be9))
+* [Messagerie] Bug typage ([5865103](https://github.com/Dannebicque/intranetV3/commit/5865103756f7847180f909f09366cb8960ceaa1d))
+* [Messagerie] Type ([0e79f6b](https://github.com/Dannebicque/intranetV3/commit/0e79f6b48ce6f1da35c76648170971a309a17a30))
+* [PDF] Suppression du départemen et typage ([bb482d0](https://github.com/Dannebicque/intranetV3/commit/bb482d07ed7d48ade724d71fb56fde86aad1aaa4))
+* [PDF] Typapage export PDF ([fe53b05](https://github.com/Dannebicque/intranetV3/commit/fe53b05f7c4c4dee633e21b183cf77d3a2dd0093))
+* [pDF] Typapge ([317fcda](https://github.com/Dannebicque/intranetV3/commit/317fcdaa4f8782974de60427272dfed2be464661))
+* [Typage] Typapage ([ffa8d89](https://github.com/Dannebicque/intranetV3/commit/ffa8d89ad1f3e5d8a7bc5bce9c739e7eab1922e5))
+* [Typages] Correctifs suite typage ([ca7ab88](https://github.com/Dannebicque/intranetV3/commit/ca7ab8826081f0018bf7ab2e4943a013f329de2c))
+* [Typages] Correctifs suite typage ([ea892dd](https://github.com/Dannebicque/intranetV3/commit/ea892ddaba1f3216b62ecd48f544a67a2f7e49ab))
+* [Typages] Correctifs suite typage ([ab4ba24](https://github.com/Dannebicque/intranetV3/commit/ab4ba2401e6bd00494f8e1518bec63dcf1d00925))
+* [Typages] Correctifs suite typage ([c14f8e2](https://github.com/Dannebicque/intranetV3/commit/c14f8e2f91fcc0119d8632918281c48badd4affa))
+* [Typages] Correctifs suite typage ([8681107](https://github.com/Dannebicque/intranetV3/commit/8681107da5be2f80b0e5a218c82d37fda97d1458))
+
 ### [3.5.14](https://github.com/Dannebicque/intranetV3/compare/v3.5.13...v3.5.14) (2022-02-26)
 
 
