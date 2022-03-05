@@ -104,7 +104,7 @@ class MyEdtCelcat extends BaseEdt
     public function transformePromo(array $pl): array
     {
         $gr = [];
-        $groupes = $this->groupeRepository->getGroupesTP($this->semestre->getId());
+        $groupes = $this->groupeRepository->getGroupesTP($this->semestre);
 
         /** @var Groupe $groupe */
         foreach ($groupes as $groupe) {
