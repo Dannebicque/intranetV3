@@ -49,9 +49,11 @@ $(document).on('change', '#absence-heure', function () {
 
 //marquage et enregistrement des absents
 $(document).on('click', '.etudiant', function () {
+  if ($('#absence-heure').val() === '') {
+    alert('Veuillez saisir une heure')
+  } else {
   const $split = $(this).attr('id').split('_')
   if ($(this).hasClass('absent')) {
-
     //supprimer absence
     $(this).removeClass('absent')
     //todo: tester si heure n'est pas vide.
@@ -103,6 +105,7 @@ $(document).on('click', '.etudiant', function () {
         addCallout('Absence enregistrée avec succés !', 'success')
       }
     })
+  }
   }
 })
 
