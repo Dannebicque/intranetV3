@@ -83,7 +83,7 @@ class PrevisionnelManager
             $t[] = $previs->toArray();
         }
 
-        return array_merge(...$t);
+        return array_merge(...$t); //todo: ca retourne un array ? comment retourner une collection ? Add ?
     }
 
     public function getPrevisionnelAnnee(Annee $annee, int $anneeUniversitaire = 0): array
