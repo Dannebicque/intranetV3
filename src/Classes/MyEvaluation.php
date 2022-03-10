@@ -25,8 +25,6 @@ use App\Entity\Semestre;
 use App\Exception\MatiereNotFoundException;
 use App\Repository\EtudiantRepository;
 use App\Utils\Tools;
-use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 use function array_key_exists;
 use function chr;
 use function count;
@@ -34,7 +32,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use function in_array;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * Class MyEvaluation.
@@ -232,7 +232,7 @@ class MyEvaluation
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function exportReleve(string $_format, Collection $groupes, Departement $departement): StreamedResponse|PdfResponse|null
+    public function exportReleve(string $_format, Collection | array $groupes, Departement $departement): StreamedResponse | PdfResponse | null
     {
         $notes = $this->getNotesTableau();
         $matiere = $this->typeMatiereManager->getMatiereFromSelect($this->evaluation->getTypeIdMatiere());
