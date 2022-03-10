@@ -237,7 +237,7 @@ class PrevisionnelController extends BaseController
         }
 
         $previsionnelManager->dupliqueAnnee($this->getDepartement(), $anneeDepart, $annee_destination,
-            $annee_concerver, $tPersonnels);
+             $tPersonnels, $annee_concerver);
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'previsionnel.duplicate_annee.success.flash');
 
         return $this->redirectToRoute('administration_previsionnel_index', ['annee' => $annee_destination]);

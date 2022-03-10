@@ -178,8 +178,8 @@ class PrevisionnelManager
         Departement $departement,
         int $anneeDepart,
         int $annee_destination,
-        string $annee_concerver,
-        array $personnels
+        array $personnels,
+        ?string $annee_concerver = 'false'
     ): void {
         //on efface, sauf si la case est cochée.
         if ('true' !== $annee_concerver) {
