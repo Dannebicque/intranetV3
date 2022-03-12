@@ -39,15 +39,8 @@ class Calendrier extends BaseEntity
     #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class, inversedBy: 'calendriers')]
     private ?AnneeUniversitaire $anneeUniversitaire = null;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\CreneauBloque>
-     */
-    #[ORM\OneToMany(mappedBy: 'semaine', targetEntity: CreneauBloque::class)]
-    private Collection $creneauBloques;
-
     public function __construct()
     {
-        $this->creneauBloques = new ArrayCollection();
     }
 
     public function getSemaineFormation(): ?int
@@ -94,37 +87,6 @@ class Calendrier extends BaseEntity
     public function setAnneeUniversitaire(?AnneeUniversitaire $anneeUniversitaire): self
     {
         $this->anneeUniversitaire = $anneeUniversitaire;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|CreneauBloque[]
-     */
-    public function getCreneauBloques(): Collection
-    {
-        return $this->creneauBloques;
-    }
-
-    public function addCreneauBloque(CreneauBloque $creneauBloque): self
-    {
-        if (!$this->creneauBloques->contains($creneauBloque)) {
-            $this->creneauBloques[] = $creneauBloque;
-            $creneauBloque->setSemaine($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCreneauBloque(CreneauBloque $creneauBloque): self
-    {
-        if ($this->creneauBloques->contains($creneauBloque)) {
-            $this->creneauBloques->removeElement($creneauBloque);
-            // set the owning side to null (unless already changed)
-            if ($creneauBloque->getSemaine() === $this) {
-                $creneauBloque->setSemaine(null);
-            }
-        }
 
         return $this;
     }

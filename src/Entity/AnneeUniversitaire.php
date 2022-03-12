@@ -49,12 +49,6 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
     private Collection $calendriers;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\CreneauCours>
-     */
-    #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: CreneauCours::class)]
-    private Collection $creneauCours;
-
-    /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Scolarite>
      */
     #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: Scolarite::class)]
@@ -110,7 +104,6 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
         $this->setAnnee((int) date('Y'));
         $this->departements = new ArrayCollection();
         $this->calendriers = new ArrayCollection();
-        $this->creneauCours = new ArrayCollection();
         $this->scolarites = new ArrayCollection();
         $this->scolaritePromos = new ArrayCollection();
         $this->diplomes = new ArrayCollection();
@@ -201,37 +194,6 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
             // set the owning side to null (unless already changed)
             if ($calendrier->getAnneeUniversitaire() === $this) {
                 $calendrier->setAnneeUniversitaire(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|CreneauCours[]
-     */
-    public function getCreneauCours(): Collection
-    {
-        return $this->creneauCours;
-    }
-
-    public function addCreneauCour(CreneauCours $creneauCour): self
-    {
-        if (!$this->creneauCours->contains($creneauCour)) {
-            $this->creneauCours[] = $creneauCour;
-            $creneauCour->setAnneeUniversitaire($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCreneauCour(CreneauCours $creneauCour): self
-    {
-        if ($this->creneauCours->contains($creneauCour)) {
-            $this->creneauCours->removeElement($creneauCour);
-            // set the owning side to null (unless already changed)
-            if ($creneauCour->getAnneeUniversitaire() === $this) {
-                $creneauCour->setAnneeUniversitaire(null);
             }
         }
 

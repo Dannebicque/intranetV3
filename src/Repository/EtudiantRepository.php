@@ -37,24 +37,24 @@ class EtudiantRepository extends ServiceEntityRepository
         parent::__construct($registry, Etudiant::class);
     }
 
-    public function getData(int | string $getId): array
-    {
-        $etudiants = $this->findBySemestre($getId);
-        $tab = [];
-        /** @var Etudiant $etudiant */
-        foreach ($etudiants as $etudiant) {
-            $t = [];
-
-            $t['id'] = $etudiant->getId();
-            $t['numetudiant'] = $etudiant->getNumEtudiant();
-            $t['nom'] = $etudiant->getNom();
-            $t['prenom'] = $etudiant->getPrenom();
-            $t['semestre'] = $etudiant->getSemestre() ? $etudiant->getSemestre()->getLibelle() : '-';
-            $tab[] = $t;
-        }
-
-        return $tab;
-    }
+//    public function getData(int | string $getId): array
+//    {
+//        $etudiants = $this->findBySemestre($getId);
+//        $tab = [];
+//        /** @var Etudiant $etudiant */
+//        foreach ($etudiants as $etudiant) {
+//            $t = [];
+//
+//            $t['id'] = $etudiant->getId();
+//            $t['numetudiant'] = $etudiant->getNumEtudiant();
+//            $t['nom'] = $etudiant->getNom();
+//            $t['prenom'] = $etudiant->getPrenom();
+//            $t['semestre'] = $etudiant->getSemestre() ? $etudiant->getSemestre()->getLibelle() : '-';
+//            $tab[] = $t;
+//        }
+//
+//        return $tab;
+//    }
 
     public function getByDepartement(
         Departement $departement,

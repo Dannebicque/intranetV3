@@ -153,12 +153,6 @@ class Departement extends BaseEntity
     private ?AnneeUniversitaire $anneeUniversitairePrepare = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\CreneauCours>
-     */
-    #[ORM\OneToMany(mappedBy: 'departement', targetEntity: CreneauCours::class)]
-    private Collection $creneauCours;
-
-    /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ArticleCategorie>
      */
     #[ORM\OneToMany(mappedBy: 'departement', targetEntity: ArticleCategorie::class)]
@@ -205,7 +199,6 @@ class Departement extends BaseEntity
         $this->salleExamens = new ArrayCollection();
         $this->hrs = new ArrayCollection();
         $this->typeMateriels = new ArrayCollection();
-        $this->creneauCours = new ArrayCollection();
         $this->articleCategories = new ArrayCollection();
         $this->emprunts = new ArrayCollection();
         $this->etudiants = new ArrayCollection();
@@ -670,37 +663,6 @@ class Departement extends BaseEntity
     public function setAnneeUniversitairePrepare(?AnneeUniversitaire $anneeUniversitairePrepare): self
     {
         $this->anneeUniversitairePrepare = $anneeUniversitairePrepare;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|CreneauCours[]
-     */
-    public function getCreneauCours(): Collection
-    {
-        return $this->creneauCours;
-    }
-
-    public function addCreneauCour(CreneauCours $creneauCour): self
-    {
-        if (!$this->creneauCours->contains($creneauCour)) {
-            $this->creneauCours[] = $creneauCour;
-            $creneauCour->setDepartement($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCreneauCour(CreneauCours $creneauCour): self
-    {
-        if ($this->creneauCours->contains($creneauCour)) {
-            $this->creneauCours->removeElement($creneauCour);
-            // set the owning side to null (unless already changed)
-            if ($creneauCour->getDepartement() === $this) {
-                $creneauCour->setDepartement(null);
-            }
-        }
 
         return $this;
     }

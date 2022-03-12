@@ -41,7 +41,6 @@ class DepartementController extends BaseController
             0 === count($departement->getPersonnelDepartements()) &&
             0 === count($departement->getArticleCategories()) &&
             0 === count($departement->getTypeDocuments()) &&
-            0 === count($departement->getCreneauCours()) &&
             0 === count($departement->getActualites())) {
             $this->entityManager->remove($departement);
             $this->entityManager->flush();
