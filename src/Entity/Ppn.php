@@ -43,11 +43,15 @@ class Ppn extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'ppnActif', targetEntity: Semestre::class)]
     private Collection $semestres;
 
+    #[ORM\OneToMany(mappedBy: 'ppn', targetEntity: ApcCompetence::class)]
+    private $apcCompetences;
+
     public function __construct()
     {
         $this->annee = (int) date('Y');
         $this->matieres = new ArrayCollection();
         $this->semestres = new ArrayCollection();
+        $this->apcCompetences = new ArrayCollection();
     }
 
     /**
@@ -141,6 +145,36 @@ class Ppn extends BaseEntity
             // set the owning side to null (unless already changed)
             if ($semestre->getPpnActif() === $this) {
                 $semestre->setPpnActif(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ApcCompetence>
+     */
+    public function getApcCompetences(): Collection
+    {
+        return $this->apcCompetences;
+    }
+
+    public function addApcCompetence(ApcCompetence $apcCompetence): self
+    {
+        if (!$this->apcCompetences->contains($apcCompetence)) {
+            $this->apcCompetences[] = $apcCompetence;
+            $apcCompetence->setPpn($this);
+        }
+
+        return $this;
+    }
+
+    public function removeApcCompetence(ApcCompetence $apcCompetence): self
+    {
+        if ($this->apcCompetences->removeElement($apcCompetence)) {
+            // set the owning side to null (unless already changed)
+            if ($apcCompetence->getPpn() === $this) {
+                $apcCompetence->setPpn(null);
             }
         }
 
