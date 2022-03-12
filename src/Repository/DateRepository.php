@@ -95,7 +95,7 @@ class DateRepository extends ServiceEntityRepository
                 ->setParameter('typeDestinataire', Constantes::TYPE_DESTINATAIRE_ETUDIANT);
         }
 
-        $query->getQuery()
+        $query = $query->getQuery()
             ->getResult();
 
         $tab = [];

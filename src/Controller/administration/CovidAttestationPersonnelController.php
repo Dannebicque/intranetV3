@@ -33,7 +33,7 @@ class CovidAttestationPersonnelController extends BaseController
     }
 
     #[Route(path: '/change-etat/{id}/{etat}', name: 'covid_attestation_personnel_change_etat', methods: ['GET'])]
-    public function changeEtat(EventDispatcherInterface $eventDispatcher, CovidAttestationPersonnel $covidAttestationPersonnel, $etat): Response
+    public function changeEtat(EventDispatcherInterface $eventDispatcher, CovidAttestationPersonnel $covidAttestationPersonnel, string $etat): Response
     {
         $covidAttestationPersonnel->setValidationDepartement(Tools::convertToBool($etat));
         $covidAttestationPersonnel->setDateValidationDepartement(new DateTime());

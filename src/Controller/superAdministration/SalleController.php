@@ -29,7 +29,7 @@ class SalleController extends BaseController
     }
 
     #[Route(path: '/export.{_format}', name: 'sa_salle_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function export(MyExport $myExport, SalleRepository $salleRepository, $_format): Response
+    public function export(MyExport $myExport, SalleRepository $salleRepository, string $_format): Response
     {
         $salles = $salleRepository->findAll();
 

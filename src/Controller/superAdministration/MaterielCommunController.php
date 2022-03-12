@@ -31,7 +31,7 @@ class MaterielCommunController extends BaseController
     }
 
     #[Route(path: '/export.{_format}', name: 'sa_materiel_commun_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function export(MyExport $myExport, MaterielCommunRepository $materielCommunRepository, $_format): Response
+    public function export(MyExport $myExport, MaterielCommunRepository $materielCommunRepository, string $_format): Response
     {
         $materielsCommuns = $materielCommunRepository->findAll();
 

@@ -9,6 +9,8 @@
 
 namespace App\Interfaces;
 
+use App\Entity\AnneeUniversitaire;
+
 interface UtilisateurInterface
 {
     public function getId(): ?int;
@@ -16,6 +18,8 @@ interface UtilisateurInterface
     public function getMails(): array;
 
     public function getTypeUser(): ?string;
+
+    public function getAnneeUniversitaire(): ?AnneeUniversitaire;
 
     public function setPassword(string $password): void;
 }

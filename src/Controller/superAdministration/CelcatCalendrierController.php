@@ -32,7 +32,7 @@ class CelcatCalendrierController extends BaseController
     }
 
     #[Route(path: '/export.{_format}', name: 'sa_celcat_calendrier_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function export(MyExport $myExport, CalendrierRepository $celcatCalendrierRepository, $_format): Response
+    public function export(MyExport $myExport, CalendrierRepository $celcatCalendrierRepository, string $_format): Response
     {
         $articles = $celcatCalendrierRepository->findAll();
 

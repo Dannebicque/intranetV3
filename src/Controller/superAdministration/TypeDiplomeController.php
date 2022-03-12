@@ -31,7 +31,7 @@ class TypeDiplomeController extends BaseController
     }
 
     #[Route(path: '/export.{_format}', name: 'sa_type_diplome_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function export(MyExport $myExport, TypeDiplomeRepository $typeDiplomeRepository, $_format): Response
+    public function export(MyExport $myExport, TypeDiplomeRepository $typeDiplomeRepository, string $_format): Response
     {
         $typeDiplomes = $typeDiplomeRepository->findAll();
 

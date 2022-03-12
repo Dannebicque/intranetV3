@@ -30,7 +30,7 @@ class SiteController extends BaseController
     }
 
     #[Route(path: '/export.{_format}', name: 'sa_site_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function export(MyExport $myExport, SiteRepository $siteRepository, $_format): Response
+    public function export(MyExport $myExport, SiteRepository $siteRepository, string $_format): Response
     {
         $sites = $siteRepository->findAll();
 

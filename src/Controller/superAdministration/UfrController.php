@@ -30,7 +30,7 @@ class UfrController extends BaseController
     }
 
     #[Route(path: '/export.{_format}', name: 'sa_ufr_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function export(MyExport $myExport, UfrRepository $ufrRepository, $_format): Response
+    public function export(MyExport $myExport, UfrRepository $ufrRepository, string $_format): Response
     {
         $ufrs = $ufrRepository->findAll();
 

@@ -30,7 +30,7 @@ class TypeCoursController extends BaseController
     }
 
     #[Route(path: '/export.{_format}', name: 'sa_type_cours_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function export(MyExport $myExport, TypeCoursRepository $typeCoursRepository, $_format): Response
+    public function export(MyExport $myExport, TypeCoursRepository $typeCoursRepository, string $_format): Response
     {
         $typeCours = $typeCoursRepository->findAll();
 

@@ -86,7 +86,7 @@ class Previsionnel extends BaseEntity
         return $this->referent;
     }
 
-    public function setReferent(bool $referent): self
+    public function setReferent(bool $referent = false): self
     {
         $this->referent = $referent;
 

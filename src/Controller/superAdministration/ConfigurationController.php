@@ -30,7 +30,7 @@ class ConfigurationController extends BaseController
     }
 
     #[Route(path: '/export/{_format}', name: 'sa_configuration_export', methods: 'GET')]
-    public function export(MyExport $myExport, ConfigurationRepository $configurationRepository, $_format): Response
+    public function export(MyExport $myExport, ConfigurationRepository $configurationRepository, string $_format): Response
     {
         $configurations = $configurationRepository->findAll();
 
