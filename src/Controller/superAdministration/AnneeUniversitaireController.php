@@ -50,7 +50,7 @@ class AnneeUniversitaireController extends BaseController
     }
 
     #[Route(path: '/export.{_format}', name: 'sa_annee_universitaire_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function export(MyExport $myExport, AnneeUniversitaireRepository $anneeUniversitaireRepository, $_format): Response
+    public function export(MyExport $myExport, AnneeUniversitaireRepository $anneeUniversitaireRepository, string $_format): Response
     {
         $annee_universitaires = $anneeUniversitaireRepository->findAll();
 

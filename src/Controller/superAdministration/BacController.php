@@ -29,7 +29,7 @@ class BacController extends BaseController
     }
 
     #[Route(path: '/export.{_format}', name: 'sa_bac_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function export(MyExport $myExport, BacRepository $bacRepository, $_format): Response
+    public function export(MyExport $myExport, BacRepository $bacRepository, string $_format): Response
     {
         $bacs = $bacRepository->findAll();
 
