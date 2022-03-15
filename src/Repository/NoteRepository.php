@@ -14,6 +14,7 @@ use App\Entity\Etudiant;
 use App\Entity\Evaluation;
 use App\Entity\Note;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -73,7 +74,7 @@ class NoteRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByEtudiantSemestreArray(array $matieres, AnneeUniversitaire $annee, array $etudiants): array
+    public function findByEtudiantSemestreArray(array $matieres, AnneeUniversitaire $annee, array | Collection $etudiants): array
     {
         $notes = $this->findBySemestre($matieres, $annee);
 
