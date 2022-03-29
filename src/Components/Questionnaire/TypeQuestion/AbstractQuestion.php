@@ -47,6 +47,7 @@ abstract class AbstractQuestion
             ->setDefault('mode', AbstractQuestionnaire::MODE_APERCU)
             ->setDefault('type_question', '')
             ->setDefault('parametres', [])
+            ->setDefault('type', [])
             ->setDefault('alignement', [])
             ->setDefault('questionnaire_id', null)
             ->setDefault('typeQuestionnaire', 'qualite')
