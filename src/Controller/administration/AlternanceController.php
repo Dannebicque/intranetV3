@@ -166,7 +166,7 @@ class AlternanceController extends BaseController
     #[Route(path: '/update/tuteur-universitaire/{alternance}/{personnel}', name: 'administration_alternance_update_tuteur_universitaire', options: ['expose' => true])]
     public function updateTuteurUniversitaire(Alternance $alternance, Personnel $personnel): JsonResponse
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $alternance->getAnnee());
+        //todo: a revoir $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $alternance->getAnnee());
         $alternance->setTuteurUniversitaire($personnel);
         $this->entityManager->persist($alternance);
         $this->entityManager->flush();
