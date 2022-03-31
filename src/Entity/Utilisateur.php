@@ -29,74 +29,74 @@ abstract class Utilisateur implements UserInterface, PasswordAuthenticatedUserIn
 {
 
     #[ORM\Column(type: Types::STRING, length: 75)]
-    protected ?string $username;
+    protected ?string $username = null;
 
     #[ORM\Column(type: Types::STRING, nullable: true)]
-    protected ?string $password = '';
+    protected ?string $password = null;
 
     #[ORM\Column(type: Types::STRING, length: 255, unique: true)]
-    protected ?string $slug;
+    protected ?string $slug = null;
 
     #[ORM\Column(type: Types::STRING, length: 75)]
     protected ?string $typeUser;
 
     #[ORM\Column(type: Types::STRING, length: 75)]
     #[Groups(['etudiants_administration', 'utilisateur'])]
-    protected ?string $nom;
+    protected ?string $nom = '';
 
     #[ORM\Column(type: Types::STRING, length: 75)]
     #[Groups(['etudiants_administration', 'utilisateur'])]
-    protected ?string $prenom;
+    protected ?string $prenom = null;
 
     #[ORM\Column(type: Types::STRING, length: 255, unique: true)]
     #[Groups(['etudiants_administration', 'utilisateur'])]
-    protected ?string $mailUniv;
+    protected ?string $mailUniv = null;
 
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
-    protected ?string $siteUniv;
+    protected ?string $siteUniv = null;
 
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
-    protected ?string $mailPerso;
+    protected ?string $mailPerso = null;
 
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
-    protected ?string $sitePerso;
+    protected ?string $sitePerso = null;
 
     #[ORM\Column(name: 'civilite', type: Types::STRING, length: 3, options: ['default' => Constantes::CIVILITE_HOMME])]
     #[Groups(['etudiants_administration', 'personnel:read'])]
     protected string $civilite = Constantes::CIVILITE_HOMME;
 
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    protected ?CarbonInterface $dateNaissance;
+    protected ?CarbonInterface $dateNaissance = null;
 
     #[ORM\Column(type: Types::STRING, length: 20, nullable: true)]
     #[Groups(['etudiants_administration'])]
-    protected ?string $tel1;
+    protected ?string $tel1 = null;
 
     #[ORM\Column(type: Types::STRING, length: 20, nullable: true)]
     #[Groups(['etudiants_administration'])]
-    protected ?string $tel2;
+    protected ?string $tel2 = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    protected ?string $remarque;
+    protected ?string $remarque = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    protected ?string $signature;
+    protected ?string $signature = null;
 
     #[ORM\Column(type: Types::BOOLEAN)]
     protected bool $visible = true;
 
     #[ORM\OneToOne(targetEntity: Adresse::class, cascade: ['persist'])]
     #[Groups(['etudiants_administration'])]
-    private ?Adresse $adresse;
+    private ?Adresse $adresse = null;
 
     #[ORM\Column(type: Types::TEXT)]
     private string $roles = '';
 
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
-    private ?string $resetToken;
+    private ?string $resetToken = null;
 
     #[ORM\Column(type: Types::STRING, length: 150, nullable: true)]
-    private ?string $lieuNaissance;
+    private ?string $lieuNaissance = null;
 
     public function __construct()
     {
