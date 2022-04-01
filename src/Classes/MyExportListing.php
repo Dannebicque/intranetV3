@@ -94,8 +94,8 @@ class MyExportListing
     public function genereFichier(
         string $exportTypeDocument,
         string $exportFormat,
-        array $exportChamps,
-        mixed $exportFiltre,
+        ?array $exportChamps,
+        ?mixed $exportFiltre,
         ?Matiere $matiere = null,
         ?Personnel $personnel = null
     ): StreamedResponse|PdfResponse|null {
