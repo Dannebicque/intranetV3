@@ -72,6 +72,9 @@ abstract class AbstractMatiere extends BaseEntity
     #[ORM\Column(type: Types::STRING, length: 25, nullable: true)]
     private ?string $libelleCourt = null;
 
+    #[ORM\Column(type: 'boolean')]
+    private ?bool $mutualisee = false;
+
     /**
      * @return string
      */
@@ -244,5 +247,17 @@ abstract class AbstractMatiere extends BaseEntity
     public function setTpPpn(mixed $tpPpn): void
     {
         $this->tpPpn = Tools::convertToFloat($tpPpn);
+    }
+
+    public function getMutualisee(): ?bool
+    {
+        return $this->mutualisee;
+    }
+
+    public function setMutualisee(bool $mutualisee): self
+    {
+        $this->mutualisee = $mutualisee;
+
+        return $this;
     }
 }

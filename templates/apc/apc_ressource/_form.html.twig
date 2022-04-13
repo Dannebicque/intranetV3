@@ -32,6 +32,12 @@
     <div class="col-sm-6">
        &nbsp;
     </div>
+    <div class="col-sm-6">
+        {{ form_row(form.mutualisee) }}
+    </div>
+    <div class="col-sm-6">
+        ... choix des autres diplômes ...
+    </div>
     <div class="col-sm-12">
         {{ form_row(form.description) }}
     </div>
@@ -54,7 +60,7 @@
             <small id="apc_sae_competences_help" class="form-text text-muted">Ajoutez les compétences couvertes par
                                                                               la ressources.</small>
         </fieldset>
-
+<br>
         <fieldset class="form-group">
             <legend class="col-form-label required">
                 SAE concernée(s)
@@ -65,5 +71,8 @@
             <small id="apc_sae_ressource_help" class="form-text text-muted">Ajoutez les SAÉ concernées par la ressource
                                                                             .</small>
         </fieldset>
+    </div>
+    <div class="col-sm-12">
+        {{ form_row(form.ressourceParent) }}
     </div>
 </div>

@@ -15,6 +15,7 @@ use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -33,6 +34,13 @@ class ApcSaeRepository extends ServiceEntityRepository
 
     public function findByDiplome(Diplome $diplome): array
     {
+        return $this->findByDiplomeBuilder($diplome)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByDiplomeBuilder(Diplome $diplome): QueryBuilder
+    {
         return $this->createQueryBuilder('r')
             ->innerJoin(Semestre::class, 's', 'WITH', 's.id = r.semestre')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
@@ -41,8 +49,7 @@ class ApcSaeRepository extends ServiceEntityRepository
             ->orderBy('s.ordreLmd', 'ASC')
             ->addOrderBy('r.codeMatiere', 'ASC')
             ->addOrderBy('r.libelle', 'ASC')
-            ->getQuery()
-            ->getResult();
+            ;
     }
 
     public function findBySemestre(Semestre $semestre): array

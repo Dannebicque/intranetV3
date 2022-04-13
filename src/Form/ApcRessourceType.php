@@ -15,6 +15,7 @@ use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Form\Type\YesNoType;
 use App\Repository\ApcComptenceRepository;
+use App\Repository\ApcRessourceRepository;
 use App\Repository\SemestreRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -32,6 +33,14 @@ class ApcRessourceType extends AbstractType
         $this->diplome = $options['diplome'];
 
         $builder
+            ->add('ressourceParent', EntityType::class, ['label' => 'label.ressourceParent', 'help' => 'help.ressourceParent',
+                'class' => ApcRessource::class,
+                'choice_label' => 'display',
+                'query_builder' => function (ApcRessourceRepository $apcRessourceRepository) {
+                    return $apcRessourceRepository->findByDiplomeBuilder($this->diplome);
+                },
+                'required' => false])
+            ->add('mutualisee', YesNoType::class, ['label' => 'label.mutualisee'])
             ->add('codeMatiere', TextType::class, ['label' => 'label.codeRessource'])
             ->add('codeElement', TextType::class, ['label' => 'label.code_element'])
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])

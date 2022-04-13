@@ -32,6 +32,7 @@ class ApcSaeType extends AbstractType
         $this->diplome = $options['diplome'];
 
         $builder
+            ->add('mutualisee', YesNoType::class, ['label' => 'label.mutualisee'])
             ->add('codeElement', TextType::class, ['label' => 'label.code_element'])
             ->add('codeMatiere', TextType::class, ['label' => 'label.codeSae'])
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])

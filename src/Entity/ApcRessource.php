@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Interfaces\MatiereEntityInterface;
 use App\Repository\ApcRessourceRepository;
@@ -19,6 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ApcRessourceRepository::class)]
 #[ORM\HasLifecycleCallbacks]
+#[ApiResource]
 class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
 {
     use LifeCycleTrait;
@@ -52,11 +54,18 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
     #[ORM\OneToMany(mappedBy: 'ressource', targetEntity: ApcSaeRessource::class, cascade: ['persist', 'remove'])]
     private Collection $apcSaeRessources;
 
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'ressourceEnfants')]
+    private ?ApcRessource $ressourceParent;
+
+    #[ORM\OneToMany(mappedBy: 'ressourceParent', targetEntity: self::class)]
+    private Collection $ressourceEnfants;
+
     public function __construct()
     {
         $this->apcRessourceCompetences = new ArrayCollection();
         $this->apcRessourceApprentissageCritiques = new ArrayCollection();
         $this->apcSaeRessources = new ArrayCollection();
+        $this->ressourceEnfants = new ArrayCollection();
     }
 
     public function getPreRequis(): ?string
@@ -243,5 +252,47 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
     public function getJson(): array
     {
         return $this->initTabJson();
+    }
+
+    public function getRessourceParent(): ?self
+    {
+        return $this->ressourceParent;
+    }
+
+    public function setRessourceParent(?self $ressourceParent): self
+    {
+        $this->ressourceParent = $ressourceParent;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getRessourceEnfants(): Collection
+    {
+        return $this->ressourceEnfants;
+    }
+
+    public function addRessourceEnfant(self $apcEnfant): self
+    {
+        if (!$this->ressourceEnfants->contains($apcEnfant)) {
+            $this->ressourceEnfants[] = $apcEnfant;
+            $apcEnfant->setRessourceParent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRessourceEnfant(self $ressourcesEnfant): self
+    {
+        if ($this->ressourceEnfants->removeElement($ressourcesEnfant)) {
+            // set the owning side to null (unless already changed)
+            if ($ressourcesEnfant->getRessourceParent() === $this) {
+                $ressourcesEnfant->setRessourceParent(null);
+            }
+        }
+
+        return $this;
     }
 }

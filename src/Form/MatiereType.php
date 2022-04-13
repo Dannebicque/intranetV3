@@ -9,6 +9,7 @@
 
 namespace App\Form;
 
+use App\Entity\ApcSae;
 use App\Entity\Diplome;
 use App\Entity\Matiere;
 use App\Entity\Parcour;
@@ -16,6 +17,7 @@ use App\Entity\Ppn;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use App\Form\Type\YesNoType;
+use App\Repository\ApcSaeRepository;
 use App\Repository\MatiereRepository;
 use App\Repository\ParcourRepository;
 use App\Repository\PpnRepository;
@@ -66,16 +68,24 @@ class MatiereType extends AbstractType
     {
         $this->diplome = $options['diplome'];
         $builder
+            ->add('saeParent', EntityType::class, ['label' => 'label.saeParent', 'help' => 'help.saeParent',
+                'class' => ApcSae::class,
+                'choice_label' => 'display',
+                'query_builder' => function (ApcSaeRepository $apcSaeRepository) {
+                    return $apcSaeRepository->findByDiplomeBuilder($this->diplome);
+                },
+                'required' => false])
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
             ->add('codeMatiere', TextType::class, ['label' => 'label.code_matiere'])
             ->add('codeElement', TextType::class, ['label' => 'label.code_element'])
             ->add('suspendu', YesNoType::class, [
                 'label' => 'label.suspendu',
             ])
+            ->add('mutualisee', YesNoType::class, ['label' => 'label.mutualisee'])
             ->add('cmPpn', TextType::class, ['label' => 'label.cm_ppn'])
             ->add('tdPpn', TextType::class, ['label' => 'label.td_ppn'])
             ->add('tpPpn', TextType::class, ['label' => 'label.tp_ppn'])
-            ->add('cmFormation', TextType::class, ['label' => 'label.cm_formation'])
+            ->add('cmFormation', TextType::class, ['label' => 'label.cm_formation', 'help' => 'help.mutualisee'])
             ->add('tdFormation', TextType::class, ['label' => 'label.td_formation'])
             ->add('tpFormation', TextType::class, ['label' => 'label.tp_formation'])
             ->add('commentaire', TextareaType::class, ['label' => 'label.commentaire', 'required' => false])

@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Interfaces\MatiereEntityInterface;
 use App\Repository\ApcSaeRepository;
@@ -20,6 +21,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ApcSaeRepository::class)]
 #[ORM\HasLifecycleCallbacks]
+#[ApiResource]
 class ApcSae extends AbstractMatiere implements MatiereEntityInterface
 {
     use LifeCycleTrait;
@@ -62,11 +64,18 @@ class ApcSae extends AbstractMatiere implements MatiereEntityInterface
     #[ORM\Column(type: Types::BOOLEAN)]
     private bool $bonification = false;
 
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'saeEnfants')]
+    private ?ApcSae $saeParent;
+
+    #[ORM\OneToMany(mappedBy: 'saeParent', targetEntity: self::class)]
+    private Collection $saeEnfants;
+
     public function __construct()
     {
         $this->apcSaeCompetences = new ArrayCollection();
         $this->apcSaeRessources = new ArrayCollection();
         $this->apcSaeApprentissageCritiques = new ArrayCollection();
+        $this->saeEnfants = new ArrayCollection();
     }
 
     public function getLivrables(): ?string
@@ -278,6 +287,48 @@ class ApcSae extends AbstractMatiere implements MatiereEntityInterface
     public function setBonification(bool $bonification): self
     {
         $this->bonification = $bonification;
+
+        return $this;
+    }
+
+    public function getSaeParent(): ?self
+    {
+        return $this->saeParent;
+    }
+
+    public function setSaeParent(?self $saeParent): self
+    {
+        $this->saeParent = $saeParent;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getSaeEnfants(): Collection
+    {
+        return $this->saeEnfants;
+    }
+
+    public function addSaeEnfant(self $saeEnfant): self
+    {
+        if (!$this->saeEnfants->contains($saeEnfant)) {
+            $this->saeEnfants[] = $saeEnfant;
+            $saeEnfant->setSaeParent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSaeEnfant(self $saeEnfant): self
+    {
+        if ($this->saeEnfants->removeElement($saeEnfant)) {
+            // set the owning side to null (unless already changed)
+            if ($saeEnfant->getSaeParent() === $this) {
+                $saeEnfant->setSaeParent(null);
+            }
+        }
 
         return $this;
     }
