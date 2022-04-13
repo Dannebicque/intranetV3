@@ -18,6 +18,7 @@ use App\Form\StageEtudiantEtudiantType;
 use App\Repository\StagePeriodeRepository;
 use Carbon\Carbon;
 use Exception;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

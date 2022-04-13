@@ -11,9 +11,11 @@ namespace App\Form;
 
 use App\Entity\StageEtudiant;
 use App\Form\Type\DateRangeType;
+use App\Form\Type\FloatType;
 use App\Form\Type\YesNoType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -56,7 +58,7 @@ class StageEtudiantEtudiantType extends AbstractType
             ->add('activites', TextareaType::class, ['label' => 'label.activites', 'help' => 'help.activites'])
             ->add(
                 'dureeHebdomadaire',
-                TextType::class,
+                FloatType::class,
                 ['label' => 'label.dureeHebdomadaire', 'help' => 'help.dureeHebdomadaire']
             )
             ->add(
@@ -81,7 +83,7 @@ class StageEtudiantEtudiantType extends AbstractType
             ->add('gratification', YesNoType::class, ['label' => 'label.gratification', 'help' => 'help.gratification'])
             ->add(
                 'gratificationMontant',
-                TextType::class,
+                FloatType::class,
                 ['label' => 'label.gratificationMontant', 'help' => 'help.gratificationMontant']
             )
             ->add(
@@ -106,7 +108,7 @@ class StageEtudiantEtudiantType extends AbstractType
                     ['label' => 'label.dateRange.periode.stage.etudiant', 'mapped' => false, 'required' => true])
                 ->add(
                     'dureeJoursStage',
-                    TextType::class,
+                    IntegerType::class,
                     ['label' => 'label.dureeJoursStage', 'help' => 'help.dureeJoursStage']
                 )
                 ->addEventListener(FormEvents::POST_SUBMIT, static function (FormEvent $event) {

@@ -93,7 +93,7 @@ class StageEtudiantType extends AbstractType
                 ['label' => 'dateRange.periode.stage.etudiant', 'mapped' => false, 'required' => true])
             ->add(
                 'dureeJoursStage',
-                TextType::class,
+                IntegerType::class,
                 ['label' => 'dureeJoursStage', 'help' => 'help.dureeJoursStage']
             )
             ->addEventListener(FormEvents::POST_SUBMIT, static function (FormEvent $event) {
