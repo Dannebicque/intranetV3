@@ -21,6 +21,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: StageEtudiantRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -106,6 +107,10 @@ class StageEtudiant extends BaseEntity
     private bool $gratification = false;
 
     #[ORM\Column(type: Types::FLOAT)]
+    #[Assert\Type(
+        type: 'float',
+        message: 'La valeur {{ value }} doit un valeur décimale positive.',
+    )]
     private ?float $gratificationMontant;
 
     #[ORM\Column(type: Types::STRING, length: 1)]
@@ -115,9 +120,17 @@ class StageEtudiant extends BaseEntity
     private ?string $avantages;
 
     #[ORM\Column(type: Types::FLOAT)]
+    #[Assert\Type(
+        type: 'float',
+        message: 'La valeur {{ value }} doit un valeur décimale positive.',
+    )]
     private float $dureeHebdomadaire = 35;
 
     #[ORM\Column(type: Types::INTEGER)]
+    #[Assert\Type(
+        type: 'integer',
+        message: 'La valeur {{ value }} doit être entière et positive.',
+    )]
     private int $dureeJoursStage = 0;
 
     #[Groups(['stage_periode_gestion'])]
