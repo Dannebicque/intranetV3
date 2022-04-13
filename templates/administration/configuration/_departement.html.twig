@@ -1,0 +1,124 @@
+<div class="card">
+    <h4 class="card-title">{{ 'adm.configuration.tab.departement.heading'|trans }}</h4>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="media">
+                    <div class="media-body">
+                        <p><strong>{{ 'table.opt_edt'|trans }}</strong></p>
+                        <p>{{ 'help.opt_edt'|trans }}</p>
+                    </div>
+                    <label class="switch" for="optEdt">
+                        <input type="checkbox" {{ user_data.departement.optEdt ? 'checked': '' }}
+                               class="changeOption"
+                               name="optEdt"
+                               id="optEdt"
+                               data-type="departement"
+                               data-id="{{ user_data.departement.id }}">
+                        <span class="switch-indicator"></span>
+                    </label>
+                </div>
+
+                <div class="media">
+                    <div class="media-body">
+                        <p><strong>{{ 'table.opt_stage'|trans }}</strong></p>
+                        <p>{{ 'help.opt_stage'|trans }}</p>
+                    </div>
+                    <label class="switch" for="optStage">
+                        <input type="checkbox" {{ user_data.departement.optStage ? 'checked': '' }}
+                               class="changeOption"
+                               name="optStage"
+                               id="optStage"
+                               data-type="departement"
+                               data-id="{{ user_data.departement.id }}">
+                        <span class="switch-indicator"></span>
+                    </label>
+                </div>
+
+                <div class="media">
+                    <div class="media-body">
+                        <p><strong>{{ 'table.opt_messagerie'|trans }}</strong></p>
+                        <p>{{ 'help.opt_messagerie'|trans }}</p>
+                    </div>
+                    <label class="switch" for="optMessagerie">
+                        <input type="checkbox" {{ user_data.departement.optMessagerie ? 'checked': '' }}
+                               class="changeOption"
+                               name="optMessagerie"
+                               id="optMessagerie"
+                               data-type="departement"
+                               data-id="{{ user_data.departement.id }}">
+                        <span class="switch-indicator"></span>
+                    </label>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="media">
+                    <div class="media-body">
+                        <p><strong>{{ 'table.opt_agence'|trans }}</strong></p>
+                        <p>{{ 'help.opt_agence'|trans }}</p>
+                    </div>
+                    <label class="switch" for="optAgence">
+                        <input type="checkbox" {{ user_data.departement.optAgence ? 'checked': '' }}
+                               class="changeOption"
+                               name="optAgence"
+                               id="optAgence"
+                               data-type="departement"
+                               data-id="{{ user_data.departement.id }}">
+                        <span class="switch-indicator"></span>
+                    </label>
+                </div>
+
+                <div class="media">
+                    <div class="media-body">
+                        <p><strong>{{ 'table.opt_materiel'|trans }}</strong></p>
+                        <p>{{ 'help.opt_materiel'|trans }}</p>
+                    </div>
+                    <label class="switch" for="optMateriel">
+                        <input type="checkbox" {{ user_data.departement.optMateriel ? 'checked': '' }}
+                               class="changeOption"
+                               name="optMateriel"
+                               id="optMateriel"
+                               data-type="departement"
+                               data-id="{{ user_data.departement.id }}">
+                        <span class="switch-indicator"></span>
+                    </label>
+                </div>
+
+                <div class="media">
+                    <div class="media-body">
+                        <p><strong>{{ 'table.opt_synthese'|trans }}</strong></p>
+                        <p>{{ 'help.opt_synthese'|trans }}</p>
+                    </div>
+                    <label class="switch" for="optSynthese">
+                        <input type="checkbox" {{ user_data.departement.optSynthese ? 'checked': '' }}
+                               class="changeOption"
+                               name="optSynthese"
+                               id="optSynthese"
+                               data-type="departement"
+                               data-id="{{ user_data.departement.id }}">
+                        <span class="switch-indicator"></span>
+                    </label>
+                </div>
+
+                <div class="media">
+                    <div class="media-body">
+                        <p><strong>{{ 'table.respRi'|trans }}</strong></p>
+                        <p>{{ 'help.respRi'|trans }}</p>
+                    </div>
+                    <label class="sr-only" for="respRi">respRi</label>
+                    <select class="form-select col-sm-6 changeOptionSelect"
+                            name="respRi"
+                            id="respRi"
+                            data-type="departement"
+                            data-id="{{ user_data.departement.id }}">
+                        <option value="">{{ 'non.selectione'|trans }} / {{ 'aucun'|trans }}</option>
+                        {% for personnel in user_data.personnels %}
+                            <option value="pers{{ personnel.id }}"
+                                    {% if user_data.departement.respRi != null and user_data.departement.respRi.id == personnel.id %}selected{% endif %}>{{ personnel.display }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
