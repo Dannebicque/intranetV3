@@ -1,0 +1,67 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+    {{ 'sadm.apc.referentiel.import.heading'|trans({ '%diplome%': diplome.libelle})|raw }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('administration_apc_referentiel_index', {diplome:diplome.id}) }}"
+               class="btn btn-primary btn-float"
+               data-bs-toggle="tooltip"
+               data-bs-placement="bottom"
+               title="{{ 'atitle.retour_referentiel'|trans }}"><i class="fas fa-arrow-left"></i><span
+                        class="sr-only">{{ 'atitle.retour_referentiel'|trans }}</span></a>
+            <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="{{ 'atitle.retour_super_administration'|trans }}">
+                <i class="{{ iconDashboard }}"><span class="sr-only">dashboard</span></i>
+            </a>
+
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">Importer un référentiel de compétence pour le diplôme : {{ diplome.libelle }}</h4>
+        <div class="card-body">
+            <div class="alert alert-danger mt-2">
+                <strong>Attention !!</strong>
+                <p>
+                    Si un référentiel est déjà présent sur le PN (Programme National) selectionné, ce
+                    nouveau référentiel sera ajouté.
+                </p>
+            </div>
+            <form class="form" action="{{ path('sa_apc_referentiel_import_import', {diplome:diplome.id}) }}"
+                  method="post" enctype="multipart/form-data">
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label for="ppn">PN associé au référentiel de compétences</label>
+                            <select class="form-select selectpicker" id="ppn" name="ppn">
+                                <option value="">
+                                    Choisir le PN pour lequel importer le référentiel de compétences
+                                </option>
+                                {% for pn in diplome.ppns %}
+                                    <option value="{{ pn.id }}">{{ pn.libelle }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <div class="form-group">
+                            <label for="fichierXML">Fichier XML à importer</label>
+                            <input type="file" class="form-control"
+                                   accept=".xml"
+                                   id="fichierXML"
+                                   name="fichierXML">
+                        </div>
+                    </div>
+
+                </div>
+                    <button class="btn btn-success mt-2">Importer le référentiel de compétences</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
