@@ -36,7 +36,8 @@ class HrsController extends BaseController
             'departement' => $this->getDepartement(),
             'annee' => $annee,
         ]);
-        $hrs = new Hrs($this->getDepartement());
+
+        $hrs = new Hrs($this->getDepartement(), $annee);
         $form = $this->createForm(HrsType::class, $hrs, [
             'departement' => $this->getDepartement(),
             'attr' => [

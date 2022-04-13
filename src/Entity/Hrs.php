@@ -52,9 +52,9 @@ class Hrs extends BaseEntity
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $commentaire = null;
 
-    public function __construct(Departement $departement)
+    public function __construct(Departement $departement, ?int $annee)
     {
-        $this->annee = $departement->getOptAnneePrevisionnel();
+        $this->annee = $annee;
         $this->departement = $departement;
     }
 
