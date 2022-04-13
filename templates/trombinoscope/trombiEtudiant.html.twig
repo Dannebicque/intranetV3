@@ -71,8 +71,10 @@
                                                     </a>
                                                     <div class="flex-grow pl-20">
                                                         <div><i class="fa fa-fw fa-map-marker w-20px"></i>
+                                                            {% if etudiantGroupes[etudiant.id] is defined %}
                                                             {% for grEtu in etudiantGroupes[etudiant.id] %}<span
                                                                     class="badge bg-primary">{{ grEtu }}</span> {% endfor %}
+                                                            {% endif %}
                                                         </div>
                                                         <div>
                                                             <i class="fa fa-fw fa-envelope w-20px"></i>
