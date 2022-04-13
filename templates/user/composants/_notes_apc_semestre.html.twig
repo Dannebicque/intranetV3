@@ -1,0 +1,110 @@
+{% if semestre.optPenaliteAbsence == true %}
+    <div class="alert alert-info mb-2">
+        Les moyennes affichées, sont les moyennes pénalisées par les absences.
+    </div>
+{% endif %}
+<table class="table">
+    <thead>
+    <tr>
+        <th rowspan="2" class="text-center">Ressource/SAÉ</th>
+        <th rowspan="2" class="text-center">Moyenne <br>Ressource/SAE <br>Obtenue</th>
+        <th rowspan="2">&nbsp;</th>
+        <th colspan="{{ ues|length }}" class="text-center">Coefficients</th>
+        <th rowspan="2">&nbsp;</th>
+        <th colspan="{{ ues|length }}" class="text-center">Points / UE</th>
+    </tr>
+    <tr>
+        {% for ue in ues %}
+            <th class="text-center">
+                <abbr title="{{ ue.apcCompetence.nomCourt }} : {{ ue.apcCompetence.libelle }}">
+                    {{ ue.libelle }}
+                </abbr>
+            </th>
+        {% endfor %}
+        {% for ue in ues %}
+            <th class="text-center">
+                <abbr title="{{ ue.apcCompetence.nomCourt }} : {{ ue.apcCompetence.libelle }}">
+                    {{ ue.libelle }}
+                </abbr>
+            </th>
+        {% endfor %}
+    </tr>
+    </thead>
+    <tbody>
+    {% for matiere in matieres|filter(matiere => matiere.bonification == false) %}
+        {% if moyenneSemestre.moyenneMatieres[matiere.typeIdMatiere] is defined %}
+            <tr>
+                <th>{{ matiere.display }}</th>
+                <th class="text-center">
+                    {% if semestre.optPenaliteAbsence == true %}
+                        <a href="#" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                           title="sans pénalité : {{ moyenneSemestre.moyenneMatieres[matiere.typeIdMatiere].moyenne|number_format(2) }}">
+                            {{ moyenneSemestre.moyenneMatieres[matiere.typeIdMatiere].moyennePenalisee|styleMatiere }}</a>
+                    {% else %}
+                        {{ moyenneSemestre.moyenneMatieres[matiere.typeIdMatiere].moyenne|styleMatiere }}
+                    {% endif %}
+                </th>
+                <th>&nbsp;</th>
+                {% for ue in ues %}
+                    <th class="text-center">
+                        {{ moyenneSemestre.moyenneUes[ue.id].matieres[matiere.codeElement].coefficient }}</th>
+                {% endfor %}
+                <th>&nbsp;</th>
+                {% for ue in ues %}
+                    <th class="text-center">
+                        {% if semestre.optPenaliteAbsence == true %}
+                            {{ moyenneSemestre.moyenneUes[ue.id].matieres[matiere.codeElement]
+                            .moyennePenalisee|number_format(2)|styleMatiere }}
+                        {% else %}
+                            {{ moyenneSemestre.moyenneUes[ue.id].matieres[matiere.codeElement]
+                            .moyenne|number_format(2)|styleMatiere }}
+                        {% endif %}
+                    </th>
+                {% endfor %}
+            </tr>
+        {% endif %}
+    {% endfor %}
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="2" class="text-end">Total</td>
+        <td>&nbsp;</td>
+        {% for ue in ues %}
+            <td class="text-center">
+                {{ moyenneSemestre.moyenneUes[ue.id].totalCoefficients }}
+            </td>
+        {% endfor %}
+        <td>&nbsp;</td>
+        {% for ue in ues %}
+            <td class="text-center">
+                {% if semestre.optPenaliteAbsence == true %}
+                    {{ moyenneSemestre.moyenneUes[ue.id].totalMoyennesPenalisee|number_format(2) }}
+                {% else %}
+                    {{ moyenneSemestre.moyenneUes[ue.id].totalMoyennes|number_format(2) }}
+                {% endif %}
+            </td>
+        {% endfor %}
+    </tr>
+    <tr>
+        <td colspan="{{ ues|length * 2 + 4 }}">&nbsp;</td>
+    </tr>
+    <tr>
+        <th>Bonification Pac/Sport/AHE...(ajouté sur chaque UE)</th>
+        <td>&nbsp;</td>
+        <th class="text-center">
+            {{ moyenneSemestre.bonification }}
+        </th>
+        <th colspan="{{ ues|length }}" class="text-end">Moyenne bonifiée sur 20 / UE</th>
+        <td>&nbsp;</td>
+        {% for ue in ues %}
+            <th class="text-center">
+                {% if semestre.optPenaliteAbsence == true %}
+                    {{ moyenneSemestre.moyenneUes[ue.id].moyennePacPenalisee|styleMoyenne }}
+                {% else %}
+                    {{ moyenneSemestre.moyenneUes[ue.id].moyennePac|styleMoyenne }}
+                {% endif %}
+            </th>
+        {% endfor %}
+    </tr>
+    </tfoot>
+</table>

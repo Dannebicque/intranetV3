@@ -42,8 +42,12 @@ class MatiereSaeAdapter extends AbstractMatiereAdapter implements MatiereAdapter
 
             foreach ($matiere->getApcSaeCompetences() as $competence) {
                 $ue = new Ue();
-                $ue->ue_id = $competence->getCompetence()->getId();
-                $ue->ue_apc_id = $competence->getId();
+                foreach ($competence->getCompetence()->getUe() as $ueCompetence) {
+                    if ($ueCompetence->getSemestre()->getId() === $matiere->getSemestre()->getId()) {
+                        $ue->ue_id = $ueCompetence->getId();
+                    }
+                }
+                $ue->ue_apc_id = $competence->getCompetence()->getId();
                 $ue->ue_display = $competence->getCompetence()->getNomCourt();
                 $ue->ue_coefficient = $competence->getCoefficient();
                 $ue->ue_numero = (int) $competence->getCompetence()->getCouleur()[1];

@@ -26,6 +26,7 @@ use App\Repository\DepartementRepository;
 use App\Repository\ScolariteRepository;
 use App\Repository\StageEtudiantRepository;
 use App\Repository\UeRepository;
+use App\Utils\JsonRequest;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
@@ -129,8 +130,51 @@ class ProfilEtudiantController extends BaseController
             ]);
         }
 
-        return $this->render('user/composants/_semestre_vide.html.twig', [
-        ]);
+        return $this->render('user/composants/_semestre_vide.html.twig');
+    }
+
+    /**
+     * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
+     */
+    #[Route(path: '/profil/apc_notes/ancien_semestre', name: 'profil_etudiant_apc_ancien_semestre', options: ['expose' => true])]
+    public function apcNotesAncienSemestre(
+        Request $request,
+        UeRepository $ueRepository,
+        ScolariteRepository $scolariteRepository,
+        ApcRessourceCompetenceRepository $apcRessourceCompetenceRepository,
+        ApcSaeCompetenceRepository $apcSaeCompetenceRepository,
+        TypeMatiereManager $typeMatiereManager,
+        EtudiantAbsences $etudiantAbsences,
+        EtudiantNotes $etudiantNotes): Response
+    {
+        $idScolarite = $request->query->get('scolarite');
+        $scolarite = $scolariteRepository->find($idScolarite);
+
+        if (null !== $scolarite && null !== $scolarite->getEtudiant() && null !== $scolarite->getSemestre()) {
+            $semestre = $scolarite->getSemestre();
+            $ues = $ueRepository->findBySemestre($semestre);
+
+            $etudiant = $scolarite->getEtudiant();
+            $matieres = $typeMatiereManager->findBySemestreArray($semestre);
+            $coefficients = [];
+            foreach ($matieres as $matiere) {
+                $coefficients[$matiere->codeElement] = [];
+                foreach ($matiere->tab_ues as $ue) {
+                    $coefficients[$matiere->codeElement][$ue->ue_id] = $ue->ue_coefficient;
+                }
+            }
+
+
+
+            return $this->render('user/composants/_notes_apc_old_semestre.html.twig', [
+                'etudiant' => $etudiant,
+                'semestre' => $semestre,
+                'matieres' => $matieres,
+                'scolarite' => $scolarite,
+                'coefficients' => $coefficients,
+                'ues' => $ues,
+            ]);
+        }
     }
 
     /**
@@ -138,6 +182,7 @@ class ProfilEtudiantController extends BaseController
      */
     #[Route(path: '/profil/{slug}/apc_notes', name: 'profil_etudiant_apc')]
     public function apcNotes(UeRepository $ueRepository,
+        ScolariteRepository $scolariteRepository,
         ApcRessourceCompetenceRepository $apcRessourceCompetenceRepository,
         ApcSaeCompetenceRepository $apcSaeCompetenceRepository,
         TypeMatiereManager $typeMatiereManager,
@@ -145,6 +190,8 @@ class ProfilEtudiantController extends BaseController
         EtudiantNotes $etudiantNotes,
         Etudiant $etudiant): Response
     {
+        $semestresPrecedents = $scolariteRepository->findByEtudiant($etudiant);
+
         if (null !== $etudiant->getSemestre()) {
             $semestre = $etudiant->getSemestre();
             $ressources = $apcRessourceCompetenceRepository->findBySemestreArray($semestre);
@@ -167,6 +214,7 @@ class ProfilEtudiantController extends BaseController
                 'matieres' => $matieres,
                 'moyenneSemestre' => $etudiantSousCommissionApc,
                 'ues' => $ues,
+                'semestresPrecedents' => $semestresPrecedents,
             ]);
         }
 
@@ -242,6 +290,7 @@ class ProfilEtudiantController extends BaseController
 
     /**
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
+     *
      * @throws \JsonException
      */
     #[Route(path: '/profil/{slug}/ajout-commentaire', name: 'profil_etudiant_ajout_commentaire', options: ['expose' => true])]

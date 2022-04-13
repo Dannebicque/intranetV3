@@ -13,7 +13,7 @@
         ('ROLE_SCOLARITE') or is_granted('ROLE_SUPER_ADMIN'))) or (is_granted('ROLE_ETUDIANT') and user.semestre.optBilanSemestre == true ) %}
         <a class="nav-link changeprofil {% if onglet == 'apc' %}active{% endif %}"
            href="{{ path('profil_etudiant_apc', {slug: user.slug}) }}"
-           id="profil-notes">{{ 'tab.apc_notes'|trans }}</a>
+           id="profil-notes-apc">{{ 'tab.apc_notes'|trans }}</a>
     {% endif %}
     <a class="nav-link changeprofil {% if onglet == 'absences' %}active{% endif %}"
        href="{{ path('profil_etudiant_absences', {slug: user.slug}) }}"

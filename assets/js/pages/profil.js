@@ -4,7 +4,25 @@
 // @project intranetV3
 // @lastUpdate 12/09/2021 09:01
 import {addCallout} from '../util'
-import {get, post} from '../fetch'
+import {get, load, post} from '../fetch'
+
+if(document.getElementById("changeSemestreNotes")) {
+  changeSemestreNotes()
+}
+
+function changeSemestreNotes() {
+  document.getElementById('changeSemestreNotes').addEventListener('change', async (elem) => {
+    const scolarite = elem.target.value
+    if (scolarite !== '') {
+      const element = elem.target
+      document.getElementById('changeSemestreNotesTitre').innerHTML = 'Résultats du semestre ' + element.options[element.selectedIndex].text
+      const response = await fetch(Routing.generate('profil_etudiant_apc_ancien_semestre', {
+        scolarite: scolarite
+      }))
+      document.getElementById('changeSemestreNotesZone').innerHTML = await response.text()
+    }
+  })
+}
 
 $(document).on('change', '#chgt_etudiant_departement', function () {
   $.ajax({
@@ -65,6 +83,9 @@ $(document).on('click', '.changeprofil', function (e) {
 
         })
       })
+    }
+    if ($onglet.attr('id') === 'profil-notes-apc') {
+      changeSemestreNotes()
     }
     if ($onglet.attr('id') === 'profil-notes') {
       // $.get(Routing.generate('profil_etudiant_ajax_notes_graph', {slug: $(graph).data('etudiant')}), function (datasets) {
