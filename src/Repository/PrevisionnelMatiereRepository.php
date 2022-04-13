@@ -29,14 +29,14 @@ class PrevisionnelMatiereRepository extends PrevisionnelRepository
     public function findPrevisionnelEnseignantDepartementAnnee(
         Personnel $personnel,
         Departement $departement,
-        int $annee = 0
+        int $annee
     ): array {
         return $this->getPrevisionnelPersonnelAnneeDepartement($personnel, $annee, $departement);
     }
 
     private function getPrevisionnelPersonnelAnneeDepartement(
         Personnel $personnel,
-        int $annee = 0,
+        int $annee,
         ?Departement $departement = null
     ): array {
         $query = $this->createQueryBuilder('p')
@@ -50,16 +50,10 @@ class PrevisionnelMatiereRepository extends PrevisionnelRepository
             ->andWhere('p.personnel = :personnel')
             ->andWhere('p.typeMatiere = :type')
             ->setParameter('personnel', $personnel->getId())
-            ->setParameter('type', self::TYPE);
+            ->setParameter('type', self::TYPE)
+            ->andWhere('p.annee = :annee')
+            ->setParameter('annee', $annee);
 
-        if (0 !== $annee) {
-            $query->andWhere('p.annee = :annee')
-                ->setParameter('annee', $annee);
-        } elseif (null !== $departement) {
-            $annee = $departement->getOptAnneePrevisionnel();
-            $query->andWhere('p.annee = :annee')
-                ->setParameter('annee', $annee);
-        }
 
         if (null !== $departement) {
             $query->andWhere('d.departement = :departement')
@@ -70,7 +64,7 @@ class PrevisionnelMatiereRepository extends PrevisionnelRepository
             ->getResult();
     }
 
-    public function findByDepartement(Departement $departement, int $annee = 0): array
+    public function findByDepartement(Departement $departement, int $annee): array
     {
         $query = $this->createQueryBuilder('p')
             ->leftJoin(Personnel::class, 'pers', 'WITH', 'p.personnel = pers.id')
@@ -83,12 +77,8 @@ class PrevisionnelMatiereRepository extends PrevisionnelRepository
             ->andWhere('p.typeMatiere = :type')
             ->andWhere('d.departement = :departement')
             ->setParameter('type', self::TYPE)
-            ->setParameter('departement', $departement->getId());
-
-        if (0 === $annee) {
-            $annee = $departement->getOptAnneePrevisionnel();
-        }
-        $query->andWhere('p.annee = :annee')
+            ->setParameter('departement', $departement->getId())
+            ->andWhere('p.annee = :annee')
             ->setParameter('annee', $annee);
 
         return $query->getQuery()
@@ -167,16 +157,9 @@ class PrevisionnelMatiereRepository extends PrevisionnelRepository
             ->andWhere('p.typeMatiere = :type')
             ->andWhere('a.diplome = :diplome')
             ->setParameter('type', self::TYPE)
-            ->setParameter('diplome', $diplome->getId());
-
-        if (0 !== $annee) {
-            $query->andWhere('p.annee = :annee')
-                ->setParameter('annee', $annee);
-        } elseif (null !== $diplome->getDepartement()) {
-            $annee = $diplome->getDepartement()->getOptAnneePrevisionnel();
-            $query->andWhere('p.annee = :annee')
-                ->setParameter('annee', $annee);
-        }
+            ->setParameter('diplome', $diplome->getId())
+            ->andWhere('p.annee = :annee')
+            ->setParameter('annee', $annee);
 
         return $query->getQuery()
             ->getResult();
@@ -192,16 +175,9 @@ class PrevisionnelMatiereRepository extends PrevisionnelRepository
             ->andWhere('p.typeMatiere = :type')
             ->andWhere('a.diplome = :diplome')
             ->setParameter('type', self::TYPE)
-            ->setParameter('diplome', $diplome->getId());
-
-        if (0 !== $annee) {
-            $query->andWhere('p.annee = :annee')
-                ->setParameter('annee', $annee);
-        } elseif (null !== $diplome->getDepartement()) {
-            $annee = $diplome->getDepartement()->getOptAnneePrevisionnel();
-            $query->andWhere('p.annee = :annee')
-                ->setParameter('annee', $annee);
-        }
+            ->setParameter('diplome', $diplome->getId())
+            ->andWhere('p.annee = :annee')
+            ->setParameter('annee', $annee);
 
         return $query->getQuery()
             ->getResult();

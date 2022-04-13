@@ -81,14 +81,14 @@ class PrevisionnelMatiereManager extends AbstractPrevisionnelManager implements 
         return $this->previsionnelMatiereAdapter->collection($data);
     }
 
-    public function findByDiplome(Diplome $diplome, int $annee = 0): PrevisionnelCollection
+    public function findByDiplome(Diplome $diplome, int $annee): PrevisionnelCollection
     {
         $data = $this->previsionnelRepository->findByDiplome($diplome, $annee);
 
         return $this->previsionnelMatiereAdapter->collection($data);
     }
 
-    public function findByDiplomeToDelete(Diplome $diplome, int $annee = 0): array
+    public function findByDiplomeToDelete(Diplome $diplome, int $annee): array
     {
         return $this->previsionnelRepository->findByDiplomeToDelete($diplome, $annee);
     }

@@ -19,6 +19,7 @@ use App\Entity\Constantes;
 use App\Entity\Personnel;
 use App\Entity\Previsionnel;
 use App\Entity\Semestre;
+use App\Exception\AnneeUniversitaireNotFoundException;
 use App\Form\ImportPrevisionnelType;
 use App\Repository\PersonnelRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -31,12 +32,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class PrevisionnelController extends BaseController
 {
     #[Route('/annee/{annee}', name: 'administration_previsionnel_index', options: ['expose' => true])]
-    public function index(TypeMatiereManager $typeMatiereManager, int $annee = 0): Response
+    public function index(TypeMatiereManager $typeMatiereManager, ?int $annee = 0): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
 
-        if (0 === $annee && null !== $this->getDepartement()) {
-            $annee = $this->getDepartement()->getOptAnneePrevisionnel();
+        if (0 === $annee) {
+            if (null === $this->dataUserSession->getAnneePrevisionnel()) {
+                throw new AnneeUniversitaireNotFoundException();
+            }
+            $annee = $this->dataUserSession->getAnneePrevisionnel();
         }
 
         return $this->render('administration/previsionnel/index.html.twig', [
@@ -52,11 +56,15 @@ class PrevisionnelController extends BaseController
         PrevisionnelSynthese $previsionnelSynthese,
         int $matiere,
         string $type,
-        int $annee = 0
+        ?int $annee = 0
     ): Response {
-        if (0 === $annee && null !== $this->dataUserSession->getDepartement()) {
-            $annee = $this->dataUserSession->getDepartement()->getOptAnneePrevisionnel();
+        if (0 === $annee) {
+            if (null === $this->dataUserSession->getAnneePrevisionnel()) {
+                throw new AnneeUniversitaireNotFoundException();
+            }
+            $annee = $this->dataUserSession->getAnneePrevisionnel();
         }
+
         $mat = $typeMatiereManager->getMatiere($matiere, $type);
 
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $mat->semestre);
@@ -77,11 +85,14 @@ class PrevisionnelController extends BaseController
         PrevisionnelManager $previsionnelManager,
         PrevisionnelSynthese $previsionnelSynthese,
         Semestre $semestre,
-        int $annee = 0
+        ?int $annee = 0
     ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
-        if (0 === $annee && null !== $this->getDepartement()) {
-            $annee = $this->getDepartement()->getOptAnneePrevisionnel();
+        if (0 === $annee) {
+            if (null === $this->dataUserSession->getAnneePrevisionnel()) {
+                throw new AnneeUniversitaireNotFoundException();
+            }
+            $annee = $this->dataUserSession->getAnneePrevisionnel();
         }
 
         $previsionnel = $previsionnelManager->getPrevisionnelSemestre($semestre, $annee);
@@ -101,13 +112,17 @@ class PrevisionnelController extends BaseController
         HrsManager $hrsManager,
         PrevisionnelSynthese $previsionnelSynthese,
         Personnel $personnel,
-        int $annee = 0
+        ?int $annee = 0
     ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
 
-        if (0 === $annee && null !== $this->getDepartement()) {
-            $annee = $this->getDepartement()->getOptAnneePrevisionnel();
+        if (0 === $annee) {
+            if (null === $this->dataUserSession->getAnneePrevisionnel()) {
+                throw new AnneeUniversitaireNotFoundException();
+            }
+            $annee = $this->dataUserSession->getAnneePrevisionnel();
         }
+
         $previsionnels = $previsionnelManager->getPrevisionnelPersonnelDepartementAnnee($personnel,
             $this->getDepartement(), $annee);
         $hrs = $hrsManager->getHrsPersonnelDepartementAnnee($personnel, $this->getDepartement(), $annee);

@@ -14,6 +14,10 @@ use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\Previsionnel\PrevisionnelExport;
 use App\Classes\Previsionnel\PrevisionnelManager;
 use App\Controller\BaseController;
+use App\Exception\AnneeUniversitaireNotFoundException;
+use App\Exception\MatiereNotFoundException;
+use App\Exception\SemestreNotFoundException;
+use App\Repository\SemestreRepository;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -24,12 +28,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class PrevisionnelExportController extends BaseController
 {
     #[Route(path: '/omega/{annee}', name: 'administration_previsionnel_export_omega', methods: 'GET')]
-    public function exportOmega(PrevisionnelManager $previsionnelManager, HrsManager $hrsManager, PrevisionnelExport $myPrevisionnel, int $annee): StreamedResponse
+    public function exportOmega(PrevisionnelManager $previsionnelManager, HrsManager $hrsManager, PrevisionnelExport $myPrevisionnel, ?int $annee = 0): StreamedResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
-        if (0 === $annee && null !== $this->getDepartement()) {
-            $annee = $this->getDepartement()->getOptAnneePrevisionnel();
+        if (0 === $annee && null !== $this->dataUserSession->getAnneeUniversitaire()) {
+            $annee = $this->dataUserSession->getAnneePrevisionnel();
+        } else {
+            throw new AnneeUniversitaireNotFoundException();
         }
+
         $previsionnels = $previsionnelManager->getPrevisionnelDepartement(
             $this->getDepartement(), $annee);
         $hrs = $hrsManager->getHrsDepartementAnnee($this->getDepartement(), $annee);
@@ -38,10 +45,34 @@ class PrevisionnelExportController extends BaseController
     }
 
     #[Route(path: '/{annee}/{data}/{type}/{_format}', name: 'administration_previsionnel_export', requirements: ['_format' => 'csv|xlsx|pdf', 'type' => 'personnel|matiere|semestre'], methods: 'GET')]
-    public function export(TypeMatiereManager $typeMatiereManager, PrevisionnelExport $myPrevisionnel, int $annee, string $data, string $type, string $_format): StreamedResponse
+    public function export(
+        SemestreRepository $semestreRepository,
+        PrevisionnelManager $previsionnelManager,
+        TypeMatiereManager $typeMatiereManager, PrevisionnelExport $myPrevisionnel, int $annee, string $data, string $type, string $_format): StreamedResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
-        //todo: dépend du type : Personnel, Matiere, Semestre
-        return $myPrevisionnel->export($this->getDepartement(), $annee, $data, $type);
+        switch ($type) {
+            case 'personnel':
+                $previsionnels = $previsionnelManager->getPrevisionnelDepartement(
+                    $this->getDepartement(), $annee);
+                break;
+            case 'matiere':
+                $matiere = $typeMatiereManager->getMatiereFromSelect($data);
+                if (null === $matiere) {
+                    throw new MatiereNotFoundException();
+                }
+                $previsionnels = $previsionnelManager->getPrevisionnelMatiere($matiere->id, $matiere->typeMatiere, $annee);
+                break;
+            case 'semestre':
+                $semestre = $semestreRepository->find($data);
+                if (null === $semestre) {
+                    throw new SemestreNotFoundException();
+                }
+                $previsionnels = $previsionnelManager->getPrevisionnelSemestre($semestre, $annee);
+
+                break;
+        }
+
+        return $myPrevisionnel->export($this->getDepartement(), $annee, $matiere, $_format, $previsionnels);
     }
 }

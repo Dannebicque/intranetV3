@@ -16,15 +16,15 @@ use App\Entity\Semestre;
 
 interface PrevisionnelManagerInterface
 {
-    public function getPrevisionnelPersonnelAnnee(Personnel $personnel, int $annee = 0): PrevisionnelCollection;
+    public function getPrevisionnelPersonnelAnnee(Personnel $personnel, int $annee): PrevisionnelCollection;
 
     public function getPrevisionnelPersonnelDepartementAnnee(
         Personnel $personnel,
         Departement $departement,
-        int $annee = 0
+        int $annee
     ): PrevisionnelCollection;
 
     public function findPrevisionnelMatiere(string | int $matiere, int $anneePrevisionnel): PrevisionnelCollection;
 
-    public function getPrevisionnelSemestre(Semestre $semestre, int $annee = 0): PrevisionnelCollection;
+    public function getPrevisionnelSemestre(Semestre $semestre, int $annee): PrevisionnelCollection;
 }

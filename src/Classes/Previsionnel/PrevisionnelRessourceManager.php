@@ -31,7 +31,7 @@ class PrevisionnelRessourceManager extends AbstractPrevisionnelManager implement
         $this->previsionnelRessourceAdapter = $previsionnelRessourceAdapter;
     }
 
-    public function getPrevisionnelPersonnelAnnee(Personnel $personnel, int $annee = 0): PrevisionnelCollection
+    public function getPrevisionnelPersonnelAnnee(Personnel $personnel, int $annee): PrevisionnelCollection
     {
         $data = $this->previsionnelRepository->findPrevisionnelEnseignantComplet($personnel, $annee);
 
@@ -41,7 +41,7 @@ class PrevisionnelRessourceManager extends AbstractPrevisionnelManager implement
     public function getPrevisionnelPersonnelDepartementAnnee(
         Personnel $personnel,
         Departement $departement,
-        int $annee = 0
+        int $annee
     ): PrevisionnelCollection {
         $data = $this->previsionnelRepository->findPrevisionnelEnseignantDepartementAnnee($personnel, $departement,
             $annee);
@@ -67,14 +67,14 @@ class PrevisionnelRessourceManager extends AbstractPrevisionnelManager implement
         return $this->previsionnelRessourceAdapter->collection($data);
     }
 
-    public function getPrevisionnelSemestre(Semestre $semestre, int $annee = 0): PrevisionnelCollection
+    public function getPrevisionnelSemestre(Semestre $semestre, int $annee): PrevisionnelCollection
     {
         $data = $this->previsionnelRepository->findPrevisionnelSemestre($semestre, $annee);
 
         return $this->previsionnelRessourceAdapter->collection($data);
     }
 
-    public function findByDepartement(Departement $departement, int $annee = 0): PrevisionnelCollection
+    public function findByDepartement(Departement $departement, int $annee): PrevisionnelCollection
     {
         $data = $this->previsionnelRepository->findByDepartement($departement, $annee);
 
@@ -88,7 +88,7 @@ class PrevisionnelRessourceManager extends AbstractPrevisionnelManager implement
         return $this->previsionnelRessourceAdapter->collection($data);
     }
 
-    public function findByDiplomeToDelete(Diplome $diplome, int $annee = 0): array
+    public function findByDiplomeToDelete(Diplome $diplome, int $annee): array
     {
         return $this->previsionnelRepository->findByDiplomeToDelete($diplome, $annee);
     }
