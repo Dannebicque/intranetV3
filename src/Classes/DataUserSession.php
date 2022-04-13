@@ -188,7 +188,7 @@ class DataUserSession
 
     public function getAnneePrevisionnel(): ?int
     {
-        return $this->departement->getOptAnneePrevisionnel();
+        return $this->getAnneeUniversitaire()->getAnnee();
     }
 
     public function getDepartementId(): int
