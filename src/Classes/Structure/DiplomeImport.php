@@ -24,6 +24,7 @@ use App\Entity\ApcSaeCompetence;
 use App\Entity\ApcSaeRessource;
 use App\Entity\ApcSituationProfessionnelle;
 use App\Entity\Diplome;
+use App\Entity\Ppn;
 use App\Entity\Semestre;
 use Doctrine\ORM\EntityManagerInterface;
 use SimpleXMLElement;
@@ -40,14 +41,14 @@ class DiplomeImport
         $this->entityManager = $entityManager;
     }
 
-    public function import(Diplome $diplome, string $fichier, $type): void
+    public function import(Diplome $diplome, string $fichier, $type, Ppn $ppn): void
     {
         $this->fichier = $fichier;
         $this->diplome = $diplome;
 
         switch ($type) {
             case 'competences':
-                $this->importCompetence();
+                $this->importCompetence($ppn);
                 break;
             case 'formation':
                 $this->importFormation();
@@ -58,16 +59,18 @@ class DiplomeImport
         }
     }
 
-    private function importCompetence(): void
+    private function importCompetence(Ppn $ppn): void
     {
         $xml = $this->openXmlFile();
         $tCompetences = [];
         foreach ($xml->competences->competence as $competence) {
             $comp = new ApcCompetence($this->diplome);
+            $comp->setPpn($ppn);
+            $id = $competence['id'];
             $comp->setCouleur($competence['couleur']);
             $comp->setLibelle($competence['libelle_long']);
-            $comp->setNomCourt($competence['name']);
-            $tCompetences[$comp->getNomCourt()] = [];
+            $comp->setNomCourt($competence['nom_court']);
+            $tCompetences[(string) $id] = [];
 
             $this->entityManager->persist($comp);
 
@@ -81,6 +84,7 @@ class DiplomeImport
             foreach ($competence->composantes_essentielles->composante as $composante) {
                 $compos = new ApcComposanteEssentielle();
                 $compos->setLibelle($composante);
+                //todo: à intégrer ici et dans ORéBUT $compos->setCode();
                 $compos->setCompetence($comp);
                 $this->entityManager->persist($compos);
             }
@@ -91,8 +95,7 @@ class DiplomeImport
                 $niv->setLibelle($niveau['libelle']);
                 $niv->setOrdre((int) $niveau['ordre']);
                 $niv->setCompetence($comp);
-                $tCompetences[$comp->getNomCourt()][$niv->getOrdre()] = $niv;
-
+                $tCompetences[(string) $id][$niv->getOrdre()] = $niv;
                 $this->entityManager->persist($niv);
 
                 foreach ($niveau->acs->ac as $ac) {
@@ -113,7 +116,7 @@ class DiplomeImport
             foreach ($parcour->annee as $annee) {
                 foreach ($annee->competence as $parcNiveau) {
                     $pn = new ApcParcoursNiveau();
-                    $pn->setNiveau($tCompetences[trim((string) $parcNiveau['nom'])][trim((string) $parcNiveau['niveau'])]);
+                    $pn->setNiveau($tCompetences[trim((string) $parcNiveau['id'])][(int) trim($parcNiveau['niveau'])]);
                     $pn->setParcours($parc);
                     $this->entityManager->persist($pn);
                 }
