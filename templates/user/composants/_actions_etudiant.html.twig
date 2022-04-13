@@ -1,5 +1,5 @@
 <div class="card">
-    <h4 class="card-title">{{ 'bloc.actions.etu.heading'|trans }}</h4>
+    <h4 class="card-title">Liste des groupes</h4>
     <div class="card-body">
         <h5>Liste des groupes</h5>
         <table class="table table-striped">
@@ -29,9 +29,12 @@
             {% endfor %}
             </tbody>
         </table>
+    </div>
+</div>
 
-
-        <h5>Semestre et parcours</h5>
+<div class="card">
+    <h4 class="card-title">Semestre et parcours</h4>
+    <div class="card-body">
         <div class="form-group">
             <label for="chgt_etudiant_semestre">Modification du semestre de l'étudiant</label>
             <select class="form-select" name="semestre" id="chgt_etudiant_semestre"
@@ -44,7 +47,7 @@
             </select>
         </div>
 
-        <div class="alert alert-info">
+        <div class="alert alert-info mt-2">
             Vous pouvez transférer un étudiant vers un autre département. Cela le rendra accessible par le
             département de destination qui pourra l'affecter à des groupes.
         </div>
@@ -83,11 +86,24 @@
                                                      démissionnaire">Marquer l'étudiant {{ etudiant.displayPr }} comme
                                                                      démissionnaire</a>
 
-        <div class="alert alert-danger">
+        <div class="alert alert-danger mt-2">
             Si vous marquez l'étudiant comme démissionnaire, il sera retiré des groupes et des semestres, mais
             restera dans la formation pour un éventuel suivi ou statistiques.
         </div>
+    </div>
+</div>
 
-        Changement de groupe / suppression
+<div class="card">
+    <h4 class="card-title">Mise à jour de la photo</h4>
+    <div class="card-body">
+        <form action="" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="photo">Photo de l'étudiant</label>
+                <input type="file" name="photo" id="photo" class="form-control">
+            </div>
+            <div class="d-grid mt-2">
+                <button class="d-block btn btn-primary">Mettre à jour la photo</button>
+            </div>
+        </form>
     </div>
 </div>
