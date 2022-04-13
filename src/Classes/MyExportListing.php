@@ -95,7 +95,7 @@ class MyExportListing
         string $exportTypeDocument,
         string $exportFormat,
         ?array $exportChamps,
-        ?mixed $exportFiltre,
+        mixed $exportFiltre,
         ?Matiere $matiere = null,
         ?Personnel $personnel = null
     ): StreamedResponse|PdfResponse|null {
