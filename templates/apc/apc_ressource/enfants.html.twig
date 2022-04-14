@@ -1,0 +1,73 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    Gestion des ressources enfants de {{ apcRessource.display }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+
+            <a href="{{ path('administration_apc_ressource_delete', {id:  apcRessource.id}) }}"
+               data-csrf="{{ csrf_token('delete' ~  apcRessource.id) }}"
+               class="btn btn-danger btn-sm btn-float supprimer"
+               title="{{ 'atitle.supprimer'|trans }}"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
+                <i class="fas fa-trash"></i>
+                <span class="sr-only">{{ 'atitle.supprimer'|trans }}</span>
+            </a>
+            <a href="{{ path('administration_apc_ressource_show', {id: apcRessource.id}) }}"
+               class="btn btn-info btn-sm btn-float"
+               title="{{ 'atitle.voir'|trans }}"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
+                <i class="fas fa-eye"></i>
+                <span class="sr-only">{{ 'atitle.voir'|trans }}</span>
+            </a>
+            <a href="{{ path('administration_matiere_index', {diplome:apcRessource.semestre.diplome.id}) }}"
+               class="btn btn-primary btn-float"
+               title="{{ 'atitle.retour_liste'|trans }}"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
+                <i class="fas fa-arrow-left"></i>
+                <span class="sr-only">{{ 'atitle.retour_liste'|trans }}</span>
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">Gestion des ressources enfants de {{ apcRessource.display }}</h4>
+        <div class="card-body" {{ stimulus_controller('apc-enfant', {
+            urlListe: path('administration_apc_ressource_liste_enfants', { 'id': apcRessource.id }),
+            urlPost: path('administration_apc_ressource_add_enfant', { 'id': apcRessource.id }),
+            urlDelete: path('administration_apc_ressource_delete_enfant', { 'id': apcRessource.id }),
+        }) }}>
+            <div data-apc-enfant-target="content">
+                {{ include('apc/apc_ressource/_liste_enfants.html.twig') }}
+            </div>
+            <div class="row">
+                <div class="col-md-5">
+                    <select class="form-select" id="ressourceEnfant">
+                        <option value="">Choisir une ressource</option>
+                        {% for ressource in ressources %}
+                            <option value="{{ ressource.id }}">{{ ressource.display }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-5">
+                    <select class="form-select">
+
+                    </select>
+                </div>
+                <div class="col-md-2 d-grid">
+                    <button class="btn btn-primary d-block" data-action="click->apc-enfant#addEnfant">Ajouter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

@@ -12,6 +12,7 @@ namespace App\DTO;
 use App\Entity\Constantes;
 use App\Entity\Parcour;
 use App\Entity\Semestre;
+use Doctrine\Common\Collections\Collection;
 
 class Matiere
 {
@@ -55,6 +56,12 @@ class Matiere
     public bool $suspendu = false;
     public ?Semestre $semestre;
     public ?Parcour $parcours;
+
+    public bool $isParent = false;
+    public bool $isEnfant = false;
+
+    public mixed $parent = null;
+    public ?Collection $enfants;
 
     public function getUeId(): ?int
     {

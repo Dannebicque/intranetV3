@@ -54,18 +54,22 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
     #[ORM\OneToMany(mappedBy: 'ressource', targetEntity: ApcSaeRessource::class, cascade: ['persist', 'remove'])]
     private Collection $apcSaeRessources;
 
-    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'ressourceEnfants')]
-    private ?ApcRessource $ressourceParent;
+    #[ORM\Column(type: 'boolean')]
+    private ?bool $ressourceParent = false;
 
-    #[ORM\OneToMany(mappedBy: 'ressourceParent', targetEntity: self::class)]
-    private Collection $ressourceEnfants;
+    #[ORM\OneToMany(mappedBy: 'apcRessourceParent', targetEntity: ApcRessourceEnfants::class, cascade: ['persist', 'remove'])]
+    private Collection $apcRessourceParentEnfants;
+
+    #[ORM\OneToMany(mappedBy: 'apcRessourceEnfant', targetEntity: ApcRessourceEnfants::class, cascade: ['persist', 'remove'])]
+    private Collection $apcRessourceEnfantEnfants;
 
     public function __construct()
     {
         $this->apcRessourceCompetences = new ArrayCollection();
         $this->apcRessourceApprentissageCritiques = new ArrayCollection();
         $this->apcSaeRessources = new ArrayCollection();
-        $this->ressourceEnfants = new ArrayCollection();
+        $this->apcRessourceParentEnfants = new ArrayCollection();
+        $this->apcRessourceEnfantEnfants = new ArrayCollection();
     }
 
     public function getPreRequis(): ?string
@@ -254,12 +258,12 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
         return $this->initTabJson();
     }
 
-    public function getRessourceParent(): ?self
+    public function getRessourceParent(): ?bool
     {
         return $this->ressourceParent;
     }
 
-    public function setRessourceParent(?self $ressourceParent): self
+    public function setRessourceParent(bool $ressourceParent): self
     {
         $this->ressourceParent = $ressourceParent;
 
@@ -267,32 +271,72 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
     }
 
     /**
-     * @return Collection<int, self>
+     * @return Collection<int, ApcRessourceEnfants>
      */
-    public function getRessourceEnfants(): Collection
+    public function getApcRessourceEnfantEnfants(): Collection
     {
-        return $this->ressourceEnfants;
+        return $this->apcRessourceEnfantEnfants;
     }
 
-    public function addRessourceEnfant(self $apcEnfant): self
+    public function addApcRessourceEnfantEnfant(ApcRessourceEnfants $apcRessourceEnfant): self
     {
-        if (!$this->ressourceEnfants->contains($apcEnfant)) {
-            $this->ressourceEnfants[] = $apcEnfant;
-            $apcEnfant->setRessourceParent($this);
+        if (!$this->apcRessourceEnfantEnfants->contains($apcRessourceEnfant)) {
+            $this->apcRessourceEnfantEnfants[] = $apcRessourceEnfant;
+            $apcRessourceEnfant->setApcRessourceEnfant($this);
         }
 
         return $this;
     }
 
-    public function removeRessourceEnfant(self $ressourcesEnfant): self
+    public function removeApcRessourceEnfantEnfant(ApcRessourceEnfants $apcRessourceEnfant): self
     {
-        if ($this->ressourceEnfants->removeElement($ressourcesEnfant)) {
+        if ($this->apcRessourceEnfantEnfants->removeElement($apcRessourceEnfant)) {
             // set the owning side to null (unless already changed)
-            if ($ressourcesEnfant->getRessourceParent() === $this) {
-                $ressourcesEnfant->setRessourceParent(null);
+            if ($apcRessourceEnfant->getApcRessourceEnfant() === $this) {
+                $apcRessourceEnfant->setApcRessourceEnfant(null);
             }
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, ApcRessourceEnfants>
+     */
+    public function getApcRessourceParentEnfants(): Collection
+    {
+        return $this->apcRessourceParentEnfants;
+    }
+
+    public function addApcRessourceParentEnfant(ApcRessourceEnfants $apcRessourceEnfant): self
+    {
+        if (!$this->apcRessourceParentEnfants->contains($apcRessourceEnfant)) {
+            $this->apcRessourceParentEnfants[] = $apcRessourceEnfant;
+            $apcRessourceEnfant->setApcRessourceParent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeApcRessourceParentEnfant(ApcRessourceEnfants $apcRessourceEnfant): self
+    {
+        if ($this->apcRessourceParentEnfants->removeElement($apcRessourceEnfant)) {
+            // set the owning side to null (unless already changed)
+            if ($apcRessourceEnfant->getApcRessourceParent() === $this) {
+                $apcRessourceEnfant->setApcRessourceParent(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function isEnfant(): bool
+    {
+        return $this->getApcRessourceEnfantEnfants()->count() > 0;
+    }
+
+    public function isParent(): bool
+    {
+        return $this->getRessourceParent();
     }
 }

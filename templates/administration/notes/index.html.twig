@@ -77,7 +77,14 @@
                 <tbody>
                 {% for matiere in matieres %}
                     <tr>
-                        <td>{{ matiere.display }}</td>
+                        <td>{{ matiere.display }}
+                        {% if matiere.isEnfant %}
+                            <br>
+                            <span class="badge bg-info">
+                            Enfant de : {{ matiere.parent.codeMatiere }}
+                            </span>
+                        {% endif %}
+                        </td>
                         <td>{{ matiere.coefficient }}</td>
                         <td>{{ matiere.nbNotes }}</td>
                         <td>
@@ -97,6 +104,14 @@
                             </button>
                         </td>
                         <td>
+                            {% if matiere.isParent %}
+                                <span class="badge bg-warning">
+                                    Matière parente. La saisie se fait dans les ressources enfants :
+                                    {% for enfant in matiere.enfants %}{{ enfant.apcRessourceEnfant.codeMatiere }}{%
+                                        if not loop.last %}, {% endif %}{%
+                                        endfor %}
+                                    </span>
+                                {% else %}
                             {% set nbEval = 0 %}
                             <div class="btn-toolbar">
                                 {% if evaluations[matiere.typeIdMatiere] is defined %}
@@ -152,6 +167,7 @@
                                     {% endfor %}
                                 {% endif %}
                             </div>
+                            {% endif %}
                         </td>
                     </tr>
                 {% endfor %}

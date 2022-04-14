@@ -1,0 +1,21 @@
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Ressource enfant</th>
+        <th></th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for enfant in enfants %}
+        <tr>
+            <td>{{ enfant.apcRessourceEnfant.display }}</td>
+            <td></td>
+            <td><button class="btn btn-danger d-block"
+                        data-enfant="{{ enfant.apcRessourceEnfant.id }}"
+                        data-action="click->apc-enfant#removeEnfant">Supprimer</button></td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+

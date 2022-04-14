@@ -18,7 +18,11 @@
     <tbody>
     {% for ressource in ressources|filter(ressource => ressource.semestre.id == semestre.id) %}
         <tr {% if ressource.suspendu == true %}class="bg-pale-warning"{% endif %}>
-            <td>{{ ressource.codeMatiere }}</td>
+            <td>{{ ressource.codeMatiere }} {% if ressource.isParent %}
+                <span class="badge bg-primary">Res. Parent</span>{% endif %}
+                {% if ressource.isEnfant %}
+                    <span class="badge bg-info">Res. Enfant</span>{% endif %}
+            </td>
             <td>{{ ressource.codeElement }}</td>
             <td>{{ ressource.libelle }}</td>
             <td>
