@@ -152,7 +152,7 @@ class SecurityController extends AbstractController
     /**
      * @ParamConverter("departement", options={"mapping": {"departement": "uuid"}})
      */
-    #[Route(path: '/change-departement/{departement}', name: 'security_change_departement')]
+    #[Route(path: '/change-departement/{departement}', name: 'security_change_departement', options: ['expose' => true])]
     public function changeDepartement(Request $request, RequestStack $session, Departement $departement): Response
     {
         $session->getSession()->set('departement', $departement->getUuidString());

@@ -24,7 +24,7 @@ import Table from '../components/table'
 //import Editable from './editable'
 import SelectComplete from '../components/SelectComplete'
 import SelectChangeWidget from '../components/SelectChangeWidget'
-import {post} from './fetch'
+import {get, post} from './fetch'
 
 export const LANG = document.querySelector('html').getAttribute('lang')
 
@@ -54,6 +54,33 @@ window.addEventListener('load', function () { //le dom est chargé
   elements.forEach(el=>{
     console.log(el);
   })
+
+  //menu changement de département
+  document.getElementById('changeDepartement').addEventListener('click', function (e) {
+   console.log('changement')
+    const zone = document.getElementById('listeChangeDepartement')
+    zone.innerHtml = window.da.loaderStimulus
+    get(Routing.generate('user_get_departements'), {}).then((data) => {
+      let html = ''
+      data.forEach(function (departement) {
+        let isDefault = ''
+        console.log(departement.defaut)
+        if (departement.defaut === true) {
+          isDefault = 'is-default'
+        }
+        html += '<a class="dropdown-item '+ isDefault +' col-4"\n' +
+          'href="' + Routing.generate('security_change_departement',{departement:departement.uuid}) +'">\n' +
+          '<div class="avatar-departement"\n' +
+          'style="background-color: '+ departement.couleur +'">\n' +
+          '<span class="initials">'+departement.libelleInitiales +'</span>\n' +
+          '</div>\n' +
+          '</a>'
+      })
+
+      zone.innerHTML = html
+    })
+  })
+
 
   if (menuDarkTheme !== null) {
     menuDarkTheme.addEventListener('click', function () {

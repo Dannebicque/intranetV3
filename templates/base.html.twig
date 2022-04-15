@@ -219,20 +219,11 @@
 
             {% if (is_granted('ROLE_PERMANENT') and user_data.departementMultiple == true) %}
                 <div class="dropdown d-none d-md-block">
-                <span class="topbar-btn" data-bs-toggle="dropdown">
+                <span class="topbar-btn" data-bs-toggle="dropdown" id="changeDepartement">
                     <i class="fas fa-random"></i>
                 </span>
                     <div class="dropdown-menu dropdown-grid">
-                        <div class="row" style="max-height: 300px; overflow-y: auto">
-                            {% for departement in user_data.user.getPersonnelDepartements %}
-                                <a class="dropdown-item {% if departement.defaut == true %}is-default{% endif %} col-4"
-                                   href="{{ path('security_change_departement',{departement:departement.departement.uuidString}) }}">
-                                    <div class="avatar-departement"
-                                         style="background-color: {{ departement.departement.couleur }}">
-                                        <span class="initials">{{ departement.departement.libelleInitiales|raw }}</span>
-                                    </div>
-                                </a>
-                            {% endfor %}
+                        <div class="row" style="max-height: 300px; overflow-y: auto" id="listeChangeDepartement">
                         </div>
                     </div>
                 </div>

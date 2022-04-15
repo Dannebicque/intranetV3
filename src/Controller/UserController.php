@@ -38,6 +38,23 @@ class UserController extends BaseController
         ]);
     }
 
+    #[Route(path: '/liste-departement', name: 'user_get_departements', options: ['expose' => true])]
+    public function listeDepartements(): Response
+    {
+        $departements = $this->dataUserSession->getUser()->getPersonnelDepartements();
+        $departementsArray = [];
+        foreach ($departements as $departement) {
+            $t['defaut'] = $departement->getDefaut();
+            $d = $departement->getDepartement();
+            $t['uuid'] = $d->getUuidString();
+            $t['couleur'] = $d->getCouleur();
+            $t['libelleInitiales'] = $d->libelleInitiales();
+            $departementsArray[] = $t;
+        }
+
+        return $this->json($departementsArray);
+    }
+
     /**
      * @throws NonUniqueResultException
      */
