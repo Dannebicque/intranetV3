@@ -19,7 +19,7 @@
     <div class="card">
         <h4 class="card-title">{{ 'adm.import_diplome.index.heading'|trans({'%diplome%': diplome.libelle}) }}</h4>
         <div class="card-body">
-            <form enctype="multipart/form-data" method="post">
+            <form enctype="multipart/form-data" method="post" class="form">
                 <div class="form-group">
                     <label for="fichier">Fichier</label>
                     <input type="file" class="form-control" name="fichier" id="fichier">
@@ -42,6 +42,15 @@
                     {# todo: a faire #}
                     Coming Soon...
                 {% endif %}
+                <div class="form-group">
+                    <label for="ppn" class="required">PPN</label>
+                    <select name="ppn" id="ppn" class="form-select">
+                        <option value="">-- Sélectionner un PPN --</option>
+                        {% for p in diplome.ppns %}
+                            <option value="{{ p.id }}">{{ p.libelle }} ({{ p.annee }})</option>
+                        {% endfor %}
+                    </select>
+                </div>
                 <div class="alert alert-danger">
                     L'import d'une nouvelle maquette effacera les données déjà présentes dans la structure du diplome
                     "{{ diplome.libelle }}"

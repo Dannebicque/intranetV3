@@ -51,7 +51,8 @@ class DiplomeImport
                 $this->importCompetence($ppn);
                 break;
             case 'formation':
-                $this->importFormation();
+                $this->deleteFormation($ppn);
+                $this->importFormation($ppn);
                 break;
             case 'ppn':
                 $this->importPpn();
@@ -134,11 +135,11 @@ class DiplomeImport
         throw new FileNotFoundException();
     }
 
-    private function importFormation(): void
+    private function importFormation(Ppn $ppn): void
     {
         $xml = $this->openXmlFile();
-        $tAcs = $this->entityManager->getRepository(ApcApprentissageCritique::class)->findOneByDiplomeArray($this->diplome);
-        $tCompetences = $this->entityManager->getRepository(ApcCompetence::class)->findOneByDiplomeArray($this->diplome);
+        $tAcs = $this->entityManager->getRepository(ApcApprentissageCritique::class)->findOneByDiplomeAndPnArray($this->diplome, $ppn);
+        $tCompetences = $this->entityManager->getRepository(ApcCompetence::class)->findOneByDiplomeAndPnArray($this->diplome, $ppn);
         foreach ($xml->semestre as $sem) {
             $semestre = $this->entityManager->getRepository(Semestre::class)->findOneByDiplomeEtNumero($this->diplome,
                 $sem['numero'], $sem['ordreAnnee']);
@@ -147,7 +148,8 @@ class DiplomeImport
                 $tRessources = [];
                 foreach ($sem->ressources->ressource as $ressource) {
                     $ar = new ApcRessource();
-                    $ar->setSemestre($semestre);
+                    $ar->addSemestre($semestre);
+                    $semestre->addApcSemestresRessource($ar);
                     $ar->setLibelle($ressource->titre);
                     $ar->setCodeMatiere((string) $ressource['code']);
                     $ar->setCodeElement($this->diplome->getSigle().$ressource['code']);
@@ -207,5 +209,45 @@ class DiplomeImport
             }
         }
         $this->entityManager->flush();
+    }
+
+    private function deleteFormation(Ppn $ppn)
+    {
+        $ressources = $this->entityManager->getRepository(ApcRessource::class)->findByPpn($ppn);
+        $saes = $this->entityManager->getRepository(ApcSae::class)->findByPpn($ppn);
+
+        foreach ($ressources as $ressource) {
+            foreach ($ressource->getApcRessourceCompetences() as $ac) {
+                $this->entityManager->remove($ac);
+            }
+
+            foreach ($ressource->getApcRessourceApprentissageCritiques() as $ac) {
+                $this->entityManager->remove($ac);
+            }
+
+            foreach ($ressource->getApcSaeRessources() as $ac) {
+                $this->entityManager->remove($ac);
+            }
+            foreach ($ressource->getApcRessourceParentEnfants() as $ac) {
+                $this->entityManager->remove($ac);
+            }
+            $this->entityManager->remove($ressource);
+        }
+
+        foreach ($saes as $sae) {
+            foreach ($sae->getApcSaeCompetences() as $ac) {
+                $this->entityManager->remove($ac);
+            }
+
+            foreach ($sae->getApcSaeApprentissageCritiques() as $ac) {
+                $this->entityManager->remove($ac);
+            }
+
+            foreach ($sae->getApcSaeRessources() as $ac) {
+                $this->entityManager->remove($ac);
+            }
+
+            $this->entityManager->remove($sae);
+        }
     }
 }

@@ -14,6 +14,7 @@ use App\Entity\ApcApprentissageCritique;
 use App\Entity\ApcCompetence;
 use App\Entity\ApcNiveau;
 use App\Entity\Diplome;
+use App\Entity\Ppn;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -67,14 +68,32 @@ class ApcApprentissageCritiqueRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findOneByDiplomeArray(Diplome $diplome): array
+    public function findOneByDiplomeAndPnArray(Diplome $diplome, Ppn $pn): array
     {
-        $comps = $this->findByDiplome($diplome);
+        $comps = $this->findByDiplomeAndPn($diplome, $pn);
         $t = [];
         foreach ($comps as $c) {
             $t[$c->getCode()] = $c;
         }
 
         return $t;
+    }
+
+    public function findByDiplomeAndPn(Diplome $diplome, Ppn $pn): array
+    {
+        return $this->findByDiplomeAndPnBuilder($diplome, $pn)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByDiplomeAndPnBuilder(Diplome $diplome, Ppn $pn): QueryBuilder
+    {
+        return $this->createQueryBuilder('a')
+            ->innerJoin(ApcNiveau::class, 'n', 'WITH', 'a.niveau = n.id')
+            ->innerJoin(ApcCompetence::class, 'c', 'WITH', 'c.id = n.competence')
+            ->where('c.diplome = :diplome')
+            ->andWhere('c.ppn = :ppn')
+            ->setParameter('diplome', $diplome->getId())
+            ->setParameter('ppn', $pn->getId());
     }
 }

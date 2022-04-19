@@ -121,7 +121,7 @@ class SemestreRepository extends ServiceEntityRepository
     /**
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function findOneByDiplomeEtNumero(Diplome $diplome, string $numero, string $ordreAnnee): array
+    public function findOneByDiplomeEtNumero(Diplome $diplome, string $numero, string $ordreAnnee): ?Semestre
     {
         return $this->createQueryBuilder('s')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')

@@ -11,6 +11,7 @@ namespace App\Repository;
 
 use App\Entity\ApcCompetence;
 use App\Entity\Diplome;
+use App\Entity\Ppn;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -49,9 +50,28 @@ class ApcComptenceRepository extends ServiceEntityRepository
     /**
      * @return ApcCompetence[]
      */
-    public function findOneByDiplomeArray(Diplome $diplome): array
+    public function findByDiplomeAndPn(Diplome $diplome, Ppn $pn): array
     {
-        $comps = $this->findByDiplome($diplome);
+        return $this->findByDiplomeAndPnBuilder($diplome, $pn)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByDiplomeAndPnBuilder(Diplome $diplome, Ppn $pn): QueryBuilder
+    {
+        return $this->createQueryBuilder('c')
+            ->where('c.diplome = :diplome')
+            ->andWhere('c.ppn = :pn')
+            ->setParameter('diplome', $diplome->getId())
+            ->setParameter('pn', $pn->getId());
+    }
+
+    /**
+     * @return ApcCompetence[]
+     */
+    public function findOneByDiplomeAndPnArray(Diplome $diplome, Ppn $pn): array
+    {
+        $comps = $this->findByDiplomeAndPn($diplome, $pn);
         $t = [];
         foreach ($comps as $c) {
             $t[$c->getNomCourt()] = $c;

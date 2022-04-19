@@ -10,9 +10,12 @@
 namespace App\Repository;
 
 use App\Entity\Annee;
+use App\Entity\ApcCompetence;
 use App\Entity\ApcSae;
+use App\Entity\ApcSaeCompetence;
 use App\Entity\Departement;
 use App\Entity\Diplome;
+use App\Entity\Ppn;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -105,5 +108,16 @@ class ApcSaeRepository extends ServiceEntityRepository
         }
 
         return $tab;
+    }
+
+    public function findByPpn(Ppn $ppn): array
+    {
+        return $this->createQueryBuilder('r')
+            ->innerJoin(ApcSaeCompetence::class, 'cs', 'WITH', 'cs.sae = r.id')
+            ->innerJoin(ApcCompetence::class, 'c', 'WITH', 'cs.competence = c.id')
+            ->where('c.ppn = :ppn')
+            ->setParameter('ppn', $ppn->getId())
+            ->getQuery()
+            ->getResult();
     }
 }

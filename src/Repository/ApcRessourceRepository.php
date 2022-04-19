@@ -10,9 +10,12 @@
 namespace App\Repository;
 
 use App\Entity\Annee;
+use App\Entity\ApcCompetence;
 use App\Entity\ApcRessource;
+use App\Entity\ApcRessourceCompetence;
 use App\Entity\Departement;
 use App\Entity\Diplome;
+use App\Entity\Ppn;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -42,7 +45,7 @@ class ApcRessourceRepository extends ServiceEntityRepository
     public function findByDiplomeBuilder(Diplome $diplome): QueryBuilder
     {
         return $this->createQueryBuilder('r')
-            ->innerJoin(Semestre::class, 's', 'WITH', 's.id = r.semestre')
+            ->innerJoin('r.semestres', 's')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->where('a.diplome = :diplome')
             //->andWhere('s.ppn_actif = m.ppn')
@@ -54,7 +57,8 @@ class ApcRessourceRepository extends ServiceEntityRepository
     public function findBySemestre(Semestre $semestre): array
     {
         return $this->createQueryBuilder('r')
-            ->where('r.semestre = :semestre')
+            ->innerJoin('r.semestres', 's')
+            ->where('s.id = :semestre')
             ->leftJoin('r.apcRessourceCompetences', 'apcRessourceCompetences')
             ->addSelect('apcRessourceCompetences')
             //->andWhere('s.ppn_actif = m.ppn')
@@ -68,7 +72,7 @@ class ApcRessourceRepository extends ServiceEntityRepository
     public function search(?string $search, Diplome $diplome): array
     {
         return $this->createQueryBuilder('a')
-            ->innerJoin(Semestre::class, 's', 'WITH', 'a.semestre=s.id')
+            ->innerJoin('r.semestres', 's')
             ->innerJoin(Annee::class, 'an', 'WITH', 's.annee=an.id')
             ->where('a.libelle LIKE :search')
             ->orWhere('a.description LIKE :search')
@@ -84,7 +88,7 @@ class ApcRessourceRepository extends ServiceEntityRepository
     public function findByDepartement(Departement $departement): array
     {
         return $this->createQueryBuilder('r')
-            ->innerJoin(Semestre::class, 's', 'WITH', 's.id = r.semestre')
+            ->innerJoin('r.semestres', 's')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
             ->leftJoin('r.apcRessourceCompetences', 'apcRessourceCompetences')
@@ -106,5 +110,16 @@ class ApcRessourceRepository extends ServiceEntityRepository
         }
 
         return $tab;
+    }
+
+    public function findByPpn(Ppn $ppn): array
+    {
+        return $this->createQueryBuilder('r')
+            ->innerJoin(ApcRessourceCompetence::class, 'cr', 'WITH', 'cr.ressource = r.id')
+            ->innerJoin(ApcCompetence::class, 'c', 'WITH', 'cr.competence = c.id')
+            ->where('c.ppn = :ppn')
+            ->setParameter('ppn', $ppn->getId())
+            ->getQuery()
+            ->getResult();
     }
 }
