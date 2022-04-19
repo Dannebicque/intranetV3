@@ -25,6 +25,7 @@ class StructureController extends BaseController
     {
         return $this->render('structure/index.html.twig', [
             'departement' => $departement,
+            'diplomeSelect' => null,
         ]);
     }
 }

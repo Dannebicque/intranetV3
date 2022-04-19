@@ -31,6 +31,7 @@ class StructureController extends BaseController
 
         return $this->render('structure/index.html.twig', [
             'departement' => $this->dataUserSession->getDepartement(),
+            'diplomeSelect' => null,
         ]);
     }
 
