@@ -46,6 +46,7 @@ class ApcRessourceRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('r')
             ->innerJoin('r.semestres', 's')
+            ->addSelect('s')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->where('a.diplome = :diplome')
             //->andWhere('s.ppn_actif = m.ppn')
@@ -58,6 +59,7 @@ class ApcRessourceRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('r')
             ->innerJoin('r.semestres', 's')
+            ->addSelect('s')
             ->where('s.id = :semestre')
             ->leftJoin('r.apcRessourceCompetences', 'apcRessourceCompetences')
             ->addSelect('apcRessourceCompetences')
@@ -73,6 +75,7 @@ class ApcRessourceRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('a')
             ->innerJoin('r.semestres', 's')
+            ->addSelect('s')
             ->innerJoin(Annee::class, 'an', 'WITH', 's.annee=an.id')
             ->where('a.libelle LIKE :search')
             ->orWhere('a.description LIKE :search')
@@ -89,6 +92,7 @@ class ApcRessourceRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('r')
             ->innerJoin('r.semestres', 's')
+            ->addSelect('s')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
             ->leftJoin('r.apcRessourceCompetences', 'apcRessourceCompetences')
