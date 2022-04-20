@@ -56,11 +56,16 @@ class NoteController extends BaseController
                 'personnelDisabled' => true,
                 'autorise' => true,
                 'locale' => $request->getLocale(),
+                'enfant' => $mat->isEnfant,
+                'groupeEnfant' => $mat->groupeEnfant,
             ]
         );
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $evaluation->setAnneeUniversitaire($this->dataUserSession->getAnneeUniversitaire());
+            if ($mat->isEnfant) {
+                $evaluation->setTypeGroupe($mat->groupeEnfant->getTypeGroupe());
+            }
             $this->entityManager->persist($evaluation);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'evaluation.add.success.flash');

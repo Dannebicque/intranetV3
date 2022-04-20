@@ -8,13 +8,14 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: ApcRessourceEnfantsRepository::class)]
 class ApcRessourceEnfants extends BaseEntity
 {
-
-
     #[ORM\ManyToOne(targetEntity: ApcRessource::class, inversedBy: 'apcRessourceParentEnfants')]
     private ?ApcRessource $apcRessourceParent;
 
     #[ORM\ManyToOne(targetEntity: ApcRessource::class, inversedBy: 'apcRessourceEnfantEnfants')]
     private ?ApcRessource $apcRessourceEnfant;
+
+    #[ORM\ManyToOne(targetEntity: Groupe::class, inversedBy: 'apcRessourceEnfants')]
+    private $groupe;
 
 
     public function getApcRessourceParent(): ?ApcRessource
@@ -37,6 +38,18 @@ class ApcRessourceEnfants extends BaseEntity
     public function setApcRessourceEnfant(?ApcRessource $apcRessourceEnfant): self
     {
         $this->apcRessourceEnfant = $apcRessourceEnfant;
+
+        return $this;
+    }
+
+    public function getGroupe(): ?Groupe
+    {
+        return $this->groupe;
+    }
+
+    public function setGroupe(?Groupe $groupe): self
+    {
+        $this->groupe = $groupe;
 
         return $this;
     }

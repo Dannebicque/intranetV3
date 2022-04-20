@@ -39,7 +39,16 @@
 {% endblock %}
 
 {% block content %}
-
+    {% if matiere.isEnfant %}
+        <div class="alert alert-info">
+            Cette ressource/matière est associée à la ressource/matiere {{ matiere.parent.display }} Les notes seront
+            comptabilisées dans cette ressource/matiere.
+            {% if matiere.groupeEnfant != null %}
+                La saisie est limitée au groupe <strong>{{ matiere.groupeEnfant.display }}</strong> Pour saisir
+                d'autres groupes il faut accéder aux autres ressources/matières enfant de {{ matiere.parent.display }}
+            {% endif %}
+        </div>
+    {% endif %}
     {% if matiere.nbNotes > 0 %}
         <div class="tab-content">
             {% for eval in evaluations.evaluations %}
@@ -58,85 +67,85 @@
                                 </div>
                             {% endif %}
                             <div class="overflow-auto">
-                            <table class="table table-striped table-bordered">
-                                <tr>
-                                    <th>{{ 'table.groupe'|trans }}</th>
-                                    {% for groupe in eval.typeGroupe.groupes %}
-                                        <th>{{ groupe.libelle }}</th>
-                                    {% endfor %}
-                                    <th>{{ 'table.promo'|trans }}</th>
-                                </tr>
-                                <tr>
-                                    <th>{{ 'table.minimum'|trans }}</th>
-                                    {% for groupe in eval.typeGroupe.groupes %}
-                                        <td>{{ evaluations.statistiques[eval.id][groupe.id].min|number_format(2) }}</td>
-                                    {% endfor %}
-                                    <td>{{ evaluations.statistiques[eval.id].promo.min|number_format(2) }}</td>
-                                </tr>
-                                <tr>
-                                    <th>{{ 'table.maximum'|trans }}</th>
-                                    {% for groupe in eval.typeGroupe.groupes %}
-                                        <td>{{ evaluations.statistiques[eval.id][groupe.id].max|number_format(2) }}</td>
-                                    {% endfor %}
-                                    <td>{{ evaluations.statistiques[eval.id].promo.max|number_format(2) }}</td>
-                                </tr>
-                                <tr>
-                                    <th>{{ 'table.moyenne'|trans }}</th>
-                                    {% for groupe in eval.typeGroupe.groupes %}
-                                        <td>{{ evaluations.statistiques[eval.id][groupe.id].moyenne|number_format(2) }}</td>
-                                    {% endfor %}
-                                    <td>{{ evaluations.statistiques[eval.id].promo.moyenne|number_format(2) }}</td>
-                                </tr>
-                                <tr>
-                                    <th>{{ 'ecart.type'|trans }}</th>
-                                    {% for groupe in eval.typeGroupe.groupes %}
-                                        <td>{{ evaluations.statistiques[eval.id][groupe.id].ecart_type|number_format(2) }}</td>
-                                    {% endfor %}
-                                    <td>{{ evaluations.statistiques[eval.id].promo.ecart_type|number_format(2) }}</td>
-                                </tr>
-                                <tr>
-                                    <th>{{ 'table.actions'|trans }}</th>
-                                    {% for groupe in eval.typeGroupe.groupes %}
-                                        <td>
+                                <table class="table table-striped table-bordered">
+                                    <tr>
+                                        <th>{{ 'table.groupe'|trans }}</th>
+                                        {% for groupe in eval.typeGroupe.groupes %}
+                                            <th>{{ groupe.libelle }}</th>
+                                        {% endfor %}
+                                        <th>{{ 'table.promo'|trans }}</th>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'table.minimum'|trans }}</th>
+                                        {% for groupe in eval.typeGroupe.groupes %}
+                                            <td>{{ evaluations.statistiques[eval.id][groupe.id].min|number_format(2) }}</td>
+                                        {% endfor %}
+                                        <td>{{ evaluations.statistiques[eval.id].promo.min|number_format(2) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'table.maximum'|trans }}</th>
+                                        {% for groupe in eval.typeGroupe.groupes %}
+                                            <td>{{ evaluations.statistiques[eval.id][groupe.id].max|number_format(2) }}</td>
+                                        {% endfor %}
+                                        <td>{{ evaluations.statistiques[eval.id].promo.max|number_format(2) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'table.moyenne'|trans }}</th>
+                                        {% for groupe in eval.typeGroupe.groupes %}
+                                            <td>{{ evaluations.statistiques[eval.id][groupe.id].moyenne|number_format(2) }}</td>
+                                        {% endfor %}
+                                        <td>{{ evaluations.statistiques[eval.id].promo.moyenne|number_format(2) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'ecart.type'|trans }}</th>
+                                        {% for groupe in eval.typeGroupe.groupes %}
+                                            <td>{{ evaluations.statistiques[eval.id][groupe.id].ecart_type|number_format(2) }}</td>
+                                        {% endfor %}
+                                        <td>{{ evaluations.statistiques[eval.id].promo.ecart_type|number_format(2) }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>{{ 'table.actions'|trans }}</th>
+                                        {% for groupe in eval.typeGroupe.groupes %}
+                                            <td>
 
-                                            <div class="btn-group d-grid d-block mb-2">
+                                                <div class="btn-group d-grid d-block mb-2">
+                                                    <button class="btn btn-primary dropdown-toggle"
+                                                            data-bs-toggle="dropdown">
+                                                        <label><i class="fa fa-file-pdf"></i></label>
+                                                        {{ 'exporter'|trans }}
+                                                    </button>
+                                                    <div class="dropdown-menu">
+                                                        <a class="dropdown-item"
+                                                           href="{{ path('application_personnel_evaluation_export', {uuid:eval.uuidString, _format:'pdf', type:'groupe_'~groupe.id}) }}">{{ 'exporter.pdf'|trans }}</a>
+                                                        <a class="dropdown-item"
+                                                           href="{{ path('application_personnel_evaluation_export', {uuid:eval.uuidString, _format:'xlsx', type:'groupe_'~groupe.id}) }}">{{ 'exporter.xls'|trans }}</a>
+                                                        <a class="dropdown-item"
+                                                           href="{{ path('application_personnel_evaluation_export', {uuid:eval.uuidString, _format:'csv', type:'groupe_'~groupe.id}) }}">{{ 'exporter.csv'|trans }}</a>
+                                                    </div>
+                                                </div>
+                                                <a href="{{ path('application_personnel_evaluation_show', {uuid:eval.uuidString}) }}"
+                                                   class="btn d-grid d-block btn-info">{{ 'voir.modifier'|trans }}</a>
+                                            </td>
+                                        {% endfor %}
+                                        <td>
+                                            <div class="btn-group d-grid d-block mn-2">
                                                 <button class="btn btn-primary dropdown-toggle"
                                                         data-bs-toggle="dropdown">
-                                                    <label><i class="fa fa-file-pdf"></i></label>
+                                                    <label><i class="fas fa-print"></i></label>
                                                     {{ 'exporter'|trans }}
                                                 </button>
                                                 <div class="dropdown-menu">
                                                     <a class="dropdown-item"
-                                                       href="{{ path('application_personnel_evaluation_export', {uuid:eval.uuidString, _format:'pdf', type:'groupe_'~groupe.id}) }}">{{ 'exporter.pdf'|trans }}</a>
+                                                       href="{{ path('application_personnel_evaluation_export', {uuid:eval.uuidString, _format:'pdf', type:'all'}) }}">{{ 'exporter.pdf'|trans }}</a>
                                                     <a class="dropdown-item"
-                                                       href="{{ path('application_personnel_evaluation_export', {uuid:eval.uuidString, _format:'xlsx', type:'groupe_'~groupe.id}) }}">{{ 'exporter.xls'|trans }}</a>
+                                                       href="{{ path('application_personnel_evaluation_export', {uuid:eval.uuidString, _format:'xlsx', type:'all'}) }}">{{ 'exporter.xls'|trans }}</a>
                                                     <a class="dropdown-item"
-                                                       href="{{ path('application_personnel_evaluation_export', {uuid:eval.uuidString, _format:'csv', type:'groupe_'~groupe.id}) }}">{{ 'exporter.csv'|trans }}</a>
+                                                       href="{{ path('application_personnel_evaluation_export', {uuid:eval.uuidString, _format:'csv', type:'all'}) }}">{{ 'exporter.csv'|trans }}</a>
                                                 </div>
                                             </div>
-                                            <a href="{{ path('application_personnel_evaluation_show', {uuid:eval.uuidString}) }}"
-                                               class="btn d-grid d-block btn-info">{{ 'voir.modifier'|trans }}</a>
                                         </td>
-                                    {% endfor %}
-                                    <td>
-                                        <div class="btn-group d-grid d-block mn-2">
-                                            <button class="btn btn-primary dropdown-toggle"
-                                                    data-bs-toggle="dropdown">
-                                                <label><i class="fas fa-print"></i></label>
-                                                {{ 'exporter'|trans }}
-                                            </button>
-                                            <div class="dropdown-menu">
-                                                <a class="dropdown-item"
-                                                   href="{{ path('application_personnel_evaluation_export', {uuid:eval.uuidString, _format:'pdf', type:'all'}) }}">{{ 'exporter.pdf'|trans }}</a>
-                                                <a class="dropdown-item"
-                                                   href="{{ path('application_personnel_evaluation_export', {uuid:eval.uuidString, _format:'xlsx', type:'all'}) }}">{{ 'exporter.xls'|trans }}</a>
-                                                <a class="dropdown-item"
-                                                   href="{{ path('application_personnel_evaluation_export', {uuid:eval.uuidString, _format:'csv', type:'all'}) }}">{{ 'exporter.csv'|trans }}</a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </table>
+                                    </tr>
+                                </table>
                             </div>
                             {{ render_esi(controller(
                                 'App\\Controller\\GraphiqueController::evaluation', {
@@ -159,8 +168,8 @@
                             <h4 class="card-title">{{ 'evaluation'|trans }} N° {{ i+1 }} ({{ 'a.saisir'|trans }})</h4>
                             <div class="card-body">
                                 <div class="d-grid">
-                                <a href="{{ path('application_personnel_note_saisie', {matiere:matiere.typeIdMatiere}) }}"
-                                   class="btn d-block btn-large btn-primary">{{ 'note.saisie'|trans }}</a>
+                                    <a href="{{ path('application_personnel_note_saisie', {matiere:matiere.typeIdMatiere}) }}"
+                                       class="btn d-block btn-large btn-primary">{{ 'note.saisie'|trans }}</a>
                                 </div>
                             </div>
                         </div>

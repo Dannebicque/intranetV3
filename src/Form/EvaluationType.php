@@ -24,6 +24,7 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -97,21 +98,13 @@ class EvaluationType extends AbstractType
                 ])
             ->add('visible', YesNoType::class,
                 ['label' => 'label.evaluation.visible', 'help' => 'help.evaluation.visible'])
-            ->add('matiere', ChoiceType::class, [
-                'choices' => $this->typeMatiereManager->findBySemestreChoiceType($this->semestre),
-                'label' => 'label.evaluation_matiere',
-                'required' => true,
-                'data' => $options['data']->getTypeIdMatiere(),
-                'expanded' => false,
-                'multiple' => false,
-                'mapped' => false,
-                'disabled' => !($matiereDisabled && $autorise),
-            ])
+
             ->add('typeGroupe', EntityType::class, [
+                'data' => true === $options['enfant'] ? (null !== $options['groupeEnfant'] ? $options['groupeEnfant']->getTypeGroupe() : null) : null,
                 'class' => TypeGroupe::class,
                 'label' => 'label.evaluation_type_groupe',
                 'choice_label' => 'libelle',
-                'disabled' => $autorise,
+                'disabled' => $autorise || ($options['enfant'] && $options['groupeEnfant'] !== null),
                 'query_builder' => function (TypeGroupeRepository $typeGroupeRepository) {
                     return $typeGroupeRepository->findBySemestreBuilder($this->semestre);
                 },
@@ -132,8 +125,36 @@ class EvaluationType extends AbstractType
                 'required' => true,
                 'expanded' => true,
                 'multiple' => true,
-            ])//->add('parent')
+            ])
         ;
+
+        if (($matiereDisabled && $autorise)) {
+            $builder->add('matiere', ChoiceType::class, [
+                'choices' => $this->typeMatiereManager->findBySemestreChoiceType($this->semestre),
+                'label' => 'label.evaluation_matiere',
+                'required' => true,
+                'data' => $options['data']->getTypeIdMatiere(),
+                'expanded' => false,
+                'multiple' => false,
+                'mapped' => false,
+            ]);
+        } else {
+            $matiere = $this->typeMatiereManager->getMatiereFromSelect($options['data']->getTypeIdMatiere());
+            $builder->add('matiere', HiddenType::class, [
+                'label' => 'label.evaluation_matiere',
+                'required' => true,
+                'data' => $options['data']->getTypeIdMatiere(),
+                'mapped' => false,
+                'disabled' => true,
+            ]);
+            $builder->add('matiereDisplay', TextType::class, [
+                'label' => 'label.evaluation_matiere',
+                'required' => true,
+                'data' => $matiere->display,
+                'mapped' => false,
+                'disabled' => true,
+            ]);
+        }
 
         if (true === $import) {
             $builder->add('fichier_import', FileType::class, ['mapped' => false]);
@@ -150,6 +171,8 @@ class EvaluationType extends AbstractType
             'matiereDisabled' => null,
             'personnelDisabled' => null,
             'autorise' => null,
+            'enfant' => false,
+            'groupeEnfant' => null,
             'translation_domain' => 'form',
             'locale' => 'fr',
         ]);

@@ -62,12 +62,16 @@ class Groupe extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'groupe', targetEntity: AbsenceEtatAppel::class)]
     private Collection $absenceEtatAppels;
 
+    #[ORM\OneToMany(mappedBy: 'groupe', targetEntity: ApcRessourceEnfants::class)]
+    private $apcRessourceEnfants;
+
     public function __construct()
     {
         $this->etudiants = new ArrayCollection();
         $this->enfants = new ArrayCollection();
         $this->covidAttestationEtudiants = new ArrayCollection();
         $this->absenceEtatAppels = new ArrayCollection();
+        $this->apcRessourceEnfants = new ArrayCollection();
     }
 
     public function getCodeApogee(): ?string
@@ -293,6 +297,36 @@ class Groupe extends BaseEntity
         // set the owning side to null (unless already changed)
         if ($this->absenceEtatAppels->removeElement($absenceEtatAppel) && $absenceEtatAppel->getGroupe() === $this) {
             $absenceEtatAppel->setGroupe(null);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ApcRessourceEnfants>
+     */
+    public function getApcRessourceEnfants(): Collection
+    {
+        return $this->apcRessourceEnfants;
+    }
+
+    public function addApcRessourceEnfant(ApcRessourceEnfants $apcRessourceEnfant): self
+    {
+        if (!$this->apcRessourceEnfants->contains($apcRessourceEnfant)) {
+            $this->apcRessourceEnfants[] = $apcRessourceEnfant;
+            $apcRessourceEnfant->setGroupe($this);
+        }
+
+        return $this;
+    }
+
+    public function removeApcRessourceEnfant(ApcRessourceEnfants $apcRessourceEnfant): self
+    {
+        if ($this->apcRessourceEnfants->removeElement($apcRessourceEnfant)) {
+            // set the owning side to null (unless already changed)
+            if ($apcRessourceEnfant->getGroupe() === $this) {
+                $apcRessourceEnfant->setGroupe(null);
+            }
         }
 
         return $this;

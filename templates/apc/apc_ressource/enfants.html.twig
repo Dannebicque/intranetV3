@@ -38,13 +38,19 @@
 {% endblock %}
 
 {% block content %}
+    <div {{ stimulus_controller('apc-enfant', {
+        urlListe: path('administration_apc_ressource_liste_enfants', { 'id': apcRessource.id }),
+        urlPost: path('administration_apc_ressource_add_enfant', { 'id': apcRessource.id }),
+        urlDelete: path('administration_apc_ressource_delete_enfant', { 'id': apcRessource.id }),
+        urlUpdateGroupe: path('administration_apc_ressource_groupe_enfant', { 'id': apcRessource.id }),
+        urlListeDiplome: path('administration_apc_ressource_liste_diplomes', { 'id': apcRessource.id }),
+        urlPostDiplome: path('administration_apc_ressource_add_diplome', { 'id': apcRessource.id }),
+        urlDeleteDiplome: path('administration_apc_ressource_delete_diplome', { 'id': apcRessource.id }),
+    }) }}>
+    {% if apcRessource.isParent == true %}
     <div class="card">
         <h4 class="card-title">Gestion des ressources enfants de {{ apcRessource.display }}</h4>
-        <div class="card-body" {{ stimulus_controller('apc-enfant', {
-            urlListe: path('administration_apc_ressource_liste_enfants', { 'id': apcRessource.id }),
-            urlPost: path('administration_apc_ressource_add_enfant', { 'id': apcRessource.id }),
-            urlDelete: path('administration_apc_ressource_delete_enfant', { 'id': apcRessource.id }),
-        }) }}>
+        <div class="card-body" >
             <div data-apc-enfant-target="content">
                 {{ include('apc/apc_ressource/_liste_enfants.html.twig') }}
             </div>
@@ -58,8 +64,13 @@
                     </select>
                 </div>
                 <div class="col-md-5">
-                    <select class="form-select">
-
+                    <select class="form-select" id="groupeAdd">
+                        <option value="">Choisir un groupe particulier (laisser vide pour tous les groupes)</option>
+                        {% for groupe in groupes %}
+                            <option value="{{ groupe.id }}">
+                                {{ groupe.display }}
+                            </option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="col-md-2 d-grid">
@@ -67,6 +78,40 @@
                 </div>
             </div>
         </div>
+    </div>
+    {% endif %}
+
+    {% if apcRessource.mutualisee == true %}
+        <div class="card">
+            <h4 class="card-title">
+                Ressource {{ apcRessource.display }} mutualisée. Choix des autres diplôme
+            </h4>
+            <div class="card-body">
+                <div data-apc-enfant-target="contentDiplome">
+                    {{ include('apc/apc_ressource/_liste_diplomes.html.twig') }}
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <select class="form-select" id="semestreAdd">
+                            <option value="">Choisir un semestre</option>
+                            {% for semestre in semestres %}
+                                <option value="{{ semestre.id }}">
+                                    {{ semestre.display }}, {{ semestre.diplome.display }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-md-5">
+
+                    </div>
+                    <div class="col-md-2 d-grid">
+                        <button class="btn btn-primary d-block"
+                                data-action="click->apc-enfant#addDiplome">Ajouter</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
     </div>
 {% endblock %}
 

@@ -10,6 +10,7 @@
 namespace App\DTO;
 
 use App\Entity\Constantes;
+use App\Entity\Groupe;
 use App\Entity\Parcour;
 use App\Entity\Semestre;
 use Doctrine\Common\Collections\Collection;
@@ -41,6 +42,7 @@ class Matiere
     public float $nbEcts = 1;
 
     public bool $bonification = false;
+    public ?Groupe $groupeEnfant = null;
 
     /**  ne-pas-exporter */
     //todo: ce n'est vrai que pour matière (old school...) pour les SAE/Ressources, c'est potentiellement plusieurs UE...

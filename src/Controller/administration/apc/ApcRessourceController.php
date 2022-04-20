@@ -25,6 +25,7 @@ use App\Repository\ApcRessourceEnfantsRepository;
 use App\Repository\ApcRessourceRepository;
 use App\Repository\ApcSaeRepository;
 use App\Repository\ApcSaeRessourceRepository;
+use App\Repository\GroupeRepository;
 use App\Repository\SemestreRepository;
 use App\Utils\JsonRequest;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
@@ -163,7 +164,7 @@ class ApcRessourceController extends BaseController
                 'apc.ressource.new.success.flash'
             );
 
-            if (true === $apcRessource->getRessourceParent()) {
+            if (true === $apcRessource->getRessourceParent() || true === $apcRessource->getMutualisee()) {
                 //si c'est défini comme une ressource parente, on redirige vers la page de gestion des ressources "enfants"
                 return $this->redirectToRoute('administration_apc_ressource_enfants', ['id' => $apcRessource->getId()]);
             }
@@ -188,15 +189,20 @@ class ApcRessourceController extends BaseController
 
     #[Route(path: '/{id}/enfants', name: 'apc_ressource_enfants', methods: ['GET'])]
     public function enfants(
+        GroupeRepository $groupeRepository,
         ApcRessourceEnfantsRepository $apcRessourceEnfantsRepository,
         ApcRessourceRepository $apcRessourceRepository,
         ApcRessource $apcRessource): Response
     {
         $enfants = $apcRessourceEnfantsRepository->findBy(['apcRessourceParent' => $apcRessource->getId()]);
+        $groupes = $groupeRepository->findBySemestre($apcRessource->getSemestre());
         return $this->render('apc/apc_ressource/enfants.html.twig', [
+            'groupes' => $groupes,
             'apcRessource' => $apcRessource,
             'enfants' => $enfants,
-            'ressources' => $apcRessourceRepository->findBySemestre($apcRessource->getSemestre()),
+            'ressources' => $apcRessourceRepository->findBySemestre($apcRessource->getSemestre()),//todo: comment gérer le semestre ?
+            'ressourceSemestres' => $apcRessource->getSemestres(),
+            'semestres' => $this->dataUserSession->getSemestres(),
         ]);
     }
 
@@ -238,10 +244,28 @@ class ApcRessourceController extends BaseController
         if (null !== $apcRessourceEnfant) {
             $this->entityManager->remove($apcRessourceEnfant);
             $this->entityManager->flush();
-            $this->addFlashBag(
-                Constantes::FLASHBAG_SUCCESS,
-                'apc.ressource.enfant.add.success.flash'
-            );
+
+            return $this->json(['success' => true], Response::HTTP_OK);
+        }
+
+        return $this->json(['success' => false], Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    #[Route(path: '/{id}/enfants/groupe', name: 'apc_ressource_groupe_enfant', methods: ['POST'])]
+    public function updateGroupeEnfant(
+        Request $request,
+        GroupeRepository $groupeRepository,
+        ApcRessourceEnfantsRepository $apcRessourceEnfantsRepository,
+        ApcRessource $apcRessource): Response
+    {
+        $id = JsonRequest::getValueFromRequest($request, 'enfant');
+        $idGroupe = JsonRequest::getValueFromRequest($request, 'groupe');
+        $apcRessourceEnfant = $apcRessourceEnfantsRepository->findOneBy(['apcRessourceParent' => $apcRessource->getId(), 'apcRessourceEnfant' => $id]);
+        $groupe = $groupeRepository->find($idGroupe);
+
+        if (null !== $apcRessourceEnfant && null !== $groupe) {
+            $apcRessourceEnfant->setGroupe($groupe);
+            $this->entityManager->flush();
 
             return $this->json(['success' => true], Response::HTTP_OK);
         }
@@ -251,14 +275,75 @@ class ApcRessourceController extends BaseController
 
     #[Route(path: '/{id}/enfants/liste', name: 'apc_ressource_liste_enfants', methods: ['GET'])]
     public function listeEnfants(
+        GroupeRepository $groupeRepository,
         ApcRessourceEnfantsRepository $apcRessourceEnfantsRepository,
         ApcRessource $apcRessource): Response
     {
         $enfants = $apcRessourceEnfantsRepository->findBy(['apcRessourceParent' => $apcRessource->getId()]);
-
+        $groupes = $groupeRepository->findBySemestre($apcRessource->getSemestre());
         return $this->render('apc/apc_ressource/_liste_enfants.html.twig', [
             'apcRessource' => $apcRessource,
             'enfants' => $enfants,
+            'groupes' => $groupes,
+        ]);
+    }
+
+    #[Route(path: '/{id}/diplomes', name: 'apc_ressource_add_diplome', methods: ['POST'])]
+    public function addDiplome(
+        Request $request,
+        SemestreRepository $semestreRepository,
+        ApcRessource $apcRessource): Response
+    {
+        $id = JsonRequest::getValueFromRequest($request, 'diplome');
+        $semestre = $semestreRepository->find($id);
+
+        if (null !== $semestre) {
+            $apcRessource->addSemestre($semestre);
+            $semestre->addApcSemestresRessource($apcRessource);
+            $this->entityManager->flush();
+            $this->addFlashBag(
+                Constantes::FLASHBAG_SUCCESS,
+                'apc.ressource.diplome.add.success.flash'
+            );
+
+            return $this->json(['success' => true], Response::HTTP_OK);
+        }
+
+        return $this->json(['success' => false], Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    #[Route(path: '/{id}/diplomes/delete', name: 'apc_ressource_delete_diplome', methods: ['POST'])]
+    public function deleteDiplome(
+        Request $request,
+        SemestreRepository $semestreRepository,
+        ApcRessource $apcRessource): Response
+    {
+        $id = JsonRequest::getValueFromRequest($request, 'diplome');
+        $semestre = $semestreRepository->find($id);
+
+        if (null !== $semestre) {
+            $apcRessource->removeSemestre($semestre);
+            $semestre->removeApcSemestresRessource($apcRessource);
+            $this->entityManager->flush();
+            $this->addFlashBag(
+                Constantes::FLASHBAG_SUCCESS,
+                'apc.ressource.diplome.remove.success.flash'
+            );
+
+            return $this->json(['success' => true], Response::HTTP_OK);
+        }
+
+        return $this->json(['success' => false], Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    #[Route(path: '/{id}/diplomes/liste', name: 'apc_ressource_liste_diplomes', methods: ['GET'])]
+    public function listeDiplomes(
+        ApcRessourceEnfantsRepository $apcRessourceEnfantsRepository,
+        ApcRessource $apcRessource): Response
+    {
+        return $this->render('apc/apc_ressource/_liste_diplomes.html.twig', [
+            'apcRessource' => $apcRessource,
+            'ressourceSemestres' => $apcRessource->getSemestres(),
         ]);
     }
 
@@ -307,7 +392,7 @@ class ApcRessourceController extends BaseController
                     ['diplome' => $apcRessource->getDiplome()->getId()]);
             }
 
-            if (null !== $request->request->get('btn_update_enfants') && true === $apcRessource->getRessourceParent()) {
+            if (null !== $request->request->get('btn_update_enfants') && (true === $apcRessource->getRessourceParent() || true === $apcRessource->getMutualisee())) {
                 return $this->redirectToRoute('administration_apc_ressource_enfants',
                     ['id' => $apcRessource->getId()]);
             }

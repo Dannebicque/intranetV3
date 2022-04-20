@@ -33,13 +33,7 @@ class ApcRessourceType extends AbstractType
         $this->diplome = $options['diplome'];
 
         $builder
-            ->add('ressourceParent', EntityType::class, ['label' => 'label.ressourceParent', 'help' => 'help.ressourceParent',
-                'class' => ApcRessource::class,
-                'choice_label' => 'display',
-                'query_builder' => function (ApcRessourceRepository $apcRessourceRepository) {
-                    return $apcRessourceRepository->findByDiplomeBuilder($this->diplome);
-                },
-                'required' => false])
+            ->add('ressourceParent', YesNoType::class, ['label' => 'label.ressourceParent', 'help' => 'help.ressourceParent'])
             ->add('mutualisee', YesNoType::class, ['label' => 'label.mutualisee'])
             ->add('codeMatiere', TextType::class, ['label' => 'label.codeRessource'])
             ->add('codeElement', TextType::class, ['label' => 'label.code_element'])

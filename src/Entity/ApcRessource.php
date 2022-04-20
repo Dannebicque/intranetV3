@@ -17,6 +17,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Deprecated;
 
 #[ORM\Entity(repositoryClass: ApcRessourceRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -27,6 +28,7 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
 
     public const SOURCE = 'ressource';
 
+    #[Deprecated(reason: 'Une ressource peut être commune  à plusieurs parcours. Le plus simple serait d\'avoir une gestion manytomany')]
     #[ORM\ManyToOne(targetEntity: Semestre::class, fetch: 'EAGER', inversedBy: 'apcRessources')]
     private ?Semestre $semestre = null;
 
@@ -63,6 +65,9 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
     #[ORM\OneToMany(mappedBy: 'apcRessourceEnfant', targetEntity: ApcRessourceEnfants::class, cascade: ['persist', 'remove'])]
     private Collection $apcRessourceEnfantEnfants;
 
+    #[ORM\ManyToMany(targetEntity: Semestre::class, inversedBy: 'apcSemestresRessources', fetch: 'EXTRA_LAZY')]
+    private Collection $semestres;
+
     public function __construct()
     {
         $this->apcRessourceCompetences = new ArrayCollection();
@@ -70,6 +75,7 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
         $this->apcSaeRessources = new ArrayCollection();
         $this->apcRessourceParentEnfants = new ArrayCollection();
         $this->apcRessourceEnfantEnfants = new ArrayCollection();
+        $this->semestres = new ArrayCollection();
     }
 
     public function getPreRequis(): ?string
@@ -164,6 +170,7 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
         return $this;
     }
 
+    #[Deprecated(reason: 'n\'a plus de sens, si le semestre n\'est plus unique')]
     public function getDiplome(): ?Diplome
     {
         if (null !== $this->getSemestre()) {
@@ -175,9 +182,14 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
 
     public function getSemestre(): ?Semestre
     {
-        return $this->semestre;
+        //todo: provisoire pour ne pas tout casser...
+        if (null !== $this->getSemestres()->first()) {
+            return $this->getSemestres()->first();
+        }
+        return null;
     }
 
+    #[Deprecated(reason: 'Une ressource peut être commune  à plusieurs parcours. Le plus simple serait d\'avoir une gestion manytomany')]
     public function setSemestre(?Semestre $semestre): self
     {
         $this->semestre = $semestre;
@@ -290,11 +302,9 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
 
     public function removeApcRessourceEnfantEnfant(ApcRessourceEnfants $apcRessourceEnfant): self
     {
-        if ($this->apcRessourceEnfantEnfants->removeElement($apcRessourceEnfant)) {
-            // set the owning side to null (unless already changed)
-            if ($apcRessourceEnfant->getApcRessourceEnfant() === $this) {
-                $apcRessourceEnfant->setApcRessourceEnfant(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->apcRessourceEnfantEnfants->removeElement($apcRessourceEnfant) && $apcRessourceEnfant->getApcRessourceEnfant() === $this) {
+            $apcRessourceEnfant->setApcRessourceEnfant(null);
         }
 
         return $this;
@@ -320,11 +330,9 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
 
     public function removeApcRessourceParentEnfant(ApcRessourceEnfants $apcRessourceEnfant): self
     {
-        if ($this->apcRessourceParentEnfants->removeElement($apcRessourceEnfant)) {
-            // set the owning side to null (unless already changed)
-            if ($apcRessourceEnfant->getApcRessourceParent() === $this) {
-                $apcRessourceEnfant->setApcRessourceParent(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->apcRessourceParentEnfants->removeElement($apcRessourceEnfant) && $apcRessourceEnfant->getApcRessourceParent() === $this) {
+            $apcRessourceEnfant->setApcRessourceParent(null);
         }
 
         return $this;
@@ -338,5 +346,38 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
     public function isParent(): bool
     {
         return $this->getRessourceParent();
+    }
+
+    public function groupeEnfant(): ?Groupe
+    {
+        if ($this->isEnfant()) {
+            return $this->getApcRessourceEnfantEnfants()->first()->getGroupe();
+        }
+
+        return null;
+    }
+
+    /**
+     * @return Collection<int, Semestre>
+     */
+    public function getSemestres(): Collection
+    {
+        return $this->semestres;
+    }
+
+    public function addSemestre(Semestre $semestre): self
+    {
+        if (!$this->semestres->contains($semestre)) {
+            $this->semestres[] = $semestre;
+        }
+
+        return $this;
+    }
+
+    public function removeSemestre(Semestre $semestre): self
+    {
+        $this->semestres->removeElement($semestre);
+
+        return $this;
     }
 }

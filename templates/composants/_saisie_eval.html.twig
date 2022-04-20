@@ -6,6 +6,9 @@
 
             {{ form_row(form.libelle) }}
             {{ form_row(form.matiere) }}
+{% if form.matiereDisplay is defined %}
+    {{ form_row(form.matiereDisplay) }}
+{% endif %}
 
             {{ form_row(form.dateEvaluation) }}
             {{ form_row(form.coefficient) }}
