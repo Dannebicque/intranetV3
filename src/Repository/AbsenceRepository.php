@@ -13,9 +13,11 @@ use App\DTO\Matiere;
 use App\Entity\Absence;
 use App\Entity\AbsenceJustificatif;
 use App\Entity\AnneeUniversitaire;
+use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use function array_key_exists;
+use Carbon\Carbon;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -154,14 +156,14 @@ class AbsenceRepository extends ServiceEntityRepository
 
         //recherche toutes les absences sur la période du justificatif
         return $this->createQueryBuilder('a')
-                ->where('a.dateHeure >= :dateDebut')
-                ->andWhere('a.etudiant = :etudiant')
-                ->andWhere('a.dateHeure <= :dateFin')
-                ->setParameter('dateDebut', $justificatif->getDateHeureDebut())
-                ->setParameter('dateFin', $justificatif->getDateHeureFin())
-                ->setParameter('etudiant', $justificatif->getEtudiant()->getId())
-                ->getQuery()
-                ->getResult();
+            ->where('a.dateHeure >= :dateDebut')
+            ->andWhere('a.etudiant = :etudiant')
+            ->andWhere('a.dateHeure <= :dateFin')
+            ->setParameter('dateDebut', $justificatif->getDateHeureDebut())
+            ->setParameter('dateFin', $justificatif->getDateHeureFin())
+            ->setParameter('etudiant', $justificatif->getEtudiant()->getId())
+            ->getQuery()
+            ->getResult();
     }
 
     public function findByMatiere(int $matiere, string $type, ?AnneeUniversitaire $annee = null): array
@@ -180,6 +182,33 @@ class AbsenceRepository extends ServiceEntityRepository
         }
 
         return $query->getQuery()
+            ->getResult();
+    }
+
+    public function getAbsencesTempsReel(Departement $departement)
+    {
+        $dateNow = Carbon::now();
+        $date13h = Carbon::create($dateNow->year, $dateNow->month, $dateNow->day, 13, 00, 00);
+        if ($dateNow->lessThanOrEqualTo($date13h)) {
+            $dateDebut = Carbon::create($dateNow->year, $dateNow->month, $dateNow->day, 8, 00, 00);
+            $dateFin = $date13h;
+        } else {
+            $dateDebut = $date13h;
+            $dateFin = Carbon::create($dateNow->year, $dateNow->month, $dateNow->day, 19, 00, 00);
+        }
+
+        return $this->createQueryBuilder('a')
+            ->innerJoin(Etudiant::class, 'e', 'WITH', 'a.etudiant = e.id')
+            ->where('a.dateHeure >= :dateDebut')
+            ->andWhere('a.dateHeure <= :dateFin')
+            ->andWhere('e.departement = :departement')
+            ->setParameter('dateDebut', $dateDebut)
+            ->setParameter('dateFin', $dateFin)
+            ->setParameter('departement', $departement->getId())
+            ->orderBy('a.semestre', 'ASC')
+            ->addOrderBy('a.dateHeure', 'ASC')
+            ->addOrderBy('e.nom', 'ASC')
+            ->getQuery()
             ->getResult();
     }
 }

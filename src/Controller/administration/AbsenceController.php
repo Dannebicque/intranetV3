@@ -257,4 +257,14 @@ class AbsenceController extends BaseController
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
+
+    public function listeTempsReel(
+        TypeMatiereManager $manager,
+        MyAbsences $myAbsences,
+    ): Response {
+        return $this->render('administration/absences/liste_temps_reel.html.twig', [
+            'absences' => $myAbsences->getAbsencesTempsReel($this->getDepartement()),
+            'matieres' => $manager->findByDepartementArray($this->getDepartement()),
+        ]);
+    }
 }

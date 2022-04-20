@@ -10,6 +10,11 @@
         </header>
 
         <div class="card-body">
+
+                        {{ render_esi(controller(
+                            'App\\Controller\\administration\\AbsenceController::listeTempsReel'
+                        )) }}
+
             <div class="row">
                 {% for semestre in user_data.semestres|filter(semestre => semestre.actif == true) %}
                     <div class="col-2 d-grid d-block mb-2">

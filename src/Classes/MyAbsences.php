@@ -13,6 +13,7 @@ use App\Classes\Etudiant\EtudiantAbsences;
 use App\Classes\Excel\MyExcelMultiExport;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
+use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Matiere;
 use App\Entity\Semestre;
@@ -26,10 +27,6 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
  */
 class MyAbsences
 {
-    private AbsenceRepository $absenceRepository;
-
-    private EtudiantRepository $etudiantRepository;
-
     private array $statistiques = [];
 
     /**
@@ -37,23 +34,16 @@ class MyAbsences
      */
     private array $etudiants;
 
-    private MyExcelMultiExport $myExcelMultiExport;
-
-    private EtudiantAbsences $etudiantAbsences;
 
     /**
      * MyAbsences constructor.
      */
     public function __construct(
-        AbsenceRepository $absenceRepository,
-        EtudiantRepository $etudiantRepository,
-        MyExcelMultiExport $myExcelMultiExport,
-        EtudiantAbsences $etudiantAbsences
+        private AbsenceRepository $absenceRepository,
+        private EtudiantRepository $etudiantRepository,
+        private MyExcelMultiExport $myExcelMultiExport,
+        private EtudiantAbsences $etudiantAbsences
     ) {
-        $this->absenceRepository = $absenceRepository;
-        $this->etudiantRepository = $etudiantRepository;
-        $this->myExcelMultiExport = $myExcelMultiExport;
-        $this->etudiantAbsences = $etudiantAbsences;
     }
 
     public function getStatistiques(): array
@@ -120,5 +110,10 @@ class MyAbsences
         }
 
         return false;
+    }
+
+    public function getAbsencesTempsReel(?Departement $departement): array
+    {
+        return $this->absenceRepository->getAbsencesTempsReel($departement);
     }
 }
