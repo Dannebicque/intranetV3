@@ -31,14 +31,14 @@ use Symfony\Component\Mailer\MailerInterface;
 
 class MyMessagerie
 {
-    private string $sujet;
+    private ?string $sujet;
 
-    private string $message;
+    private ?string $message;
 
     private int $nbMessagesEnvoyes = 0;
     private int $nbEtudiants = 0;
 
-    private Personnel $expediteur;
+    private ?Personnel $expediteur;
 
     /** @var Etudiant[] */
     private array | Collection $etudiants = [];
@@ -270,7 +270,7 @@ class MyMessagerie
         }
     }
 
-    public function saveDraft(string $sujet, string $message, Personnel $expediteur, ?array $destinataires = [], ?string $typeDestinataire = null, ?string $copie = null): void
+    public function saveDraft(?string $sujet, ?string $message, ?Personnel $expediteur, ?array $destinataires = [], ?string $typeDestinataire = null, ?string $copie = null): void
     {
         //todo: a refaire
         $this->sujet = $sujet;
