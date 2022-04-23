@@ -40,13 +40,12 @@ use Symfony\Component\Routing\Annotation\Route;
 #[IsGranted('ROLE_PERMANENT')]
 class AbsenceController extends BaseController
 {
-    public function __construct(private MyAbsences $myAbsences)
+    public function __construct(private readonly MyAbsences $myAbsences)
     {
     }
 
     /**
      * @throws \App\Exception\MatiereNotFoundException
-     * @throws \App\Exception\SemestreNotFoundException
      */
     #[Route('/matiere/{matiere}/{semestre}', name: 'application_personnel_absence_index', methods: ['GET'])]
     public function index(
@@ -61,10 +60,6 @@ class AbsenceController extends BaseController
         }
 
         $this->denyAccessUnlessGranted('CAN_ADD_ABSENCE', ['matiere' => $mat, 'semestre' => $semestre]);
-
-        if (null === $mat->semestre) {
-            throw new SemestreNotFoundException();
-        }
 
         return $this->render('appPersonnel/absence/index.html.twig', [
             'semestre' => $semestre,

@@ -31,7 +31,6 @@ class MatiereRessourceAdapter extends AbstractMatiereAdapter implements MatiereA
         $m = parent::single($matiere);
 
         if (null !== $m) {
-
             $m->apc = true;
             $m->id = $matiere->getId();
 
@@ -39,8 +38,10 @@ class MatiereRessourceAdapter extends AbstractMatiereAdapter implements MatiereA
                 $ue = new Ue();
                 $ue->ue_apc_id = $competence->getCompetence()->getId();
                 foreach ($competence->getCompetence()->getUe() as $ueCompetence) {
-                    if ($ueCompetence->getSemestre()->getId() === $matiere->getSemestre()->getId()) {
-                        $ue->ue_id = $ueCompetence->getId();
+                    foreach ($matiere->getSemestres() as $semestre) {
+                        if ($ueCompetence->getSemestre()->getId() === $semestre->getId()) {
+                            $ue->ue_id = $ueCompetence->getId();
+                        }
                     }
                 }
 
