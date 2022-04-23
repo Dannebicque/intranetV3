@@ -10,6 +10,7 @@
 namespace App\Table;
 
 use App\Components\Table\Adapter\EntityAdapter;
+use App\Components\Table\Column\EntityColumnType;
 use App\Components\Table\Column\PropertyColumnType;
 use App\Components\Table\Column\WidgetColumnType;
 use App\Components\Table\TableBuilder;
@@ -76,14 +77,15 @@ class HrsTableType extends TableType
         $builder->setLoadUrl('administration_hrs_index', ['annee' => $this->annee]);
 
         $builder->addColumn('libelle', PropertyColumnType::class,
-            ['label' => 'table.libelle', 'translation_domain' => 'messages']);
-        $builder->addColumn('type_hrs', PropertyColumnType::class,
-            ['label' => 'table.type_hrs', 'translation_domain' => 'messages']);
+            ['label' => 'table.libelle', 'translation_domain' => 'messages', 'order' => 'ASC']);
+        $builder->addColumn('typeHrs', EntityColumnType::class,
+            ['label' => 'table.type_hrs', 'translation_domain' => 'messages',
+            'display_field' => 'libelle', 'class' => TypeHrs::class, ]);
         $builder->addColumn('personnel', PersonnelColumnType::class,
             ['label' => 'table.personnel', 'translation_domain' => 'messages']);
         $builder->addColumn('semestreOrDiplome', PropertyColumnType::class,
             ['label' => 'table.semestre_ou_diplome', 'translation_domain' => 'messages']);
-        $builder->addColumn('nb_heures_td', PropertyColumnType::class,
+        $builder->addColumn('nbHeuresTd', PropertyColumnType::class,
             ['label' => 'table.nb_heures_td', 'translation_domain' => 'messages']);
         $builder->addColumn('commentaire', PropertyColumnType::class,
             ['label' => 'table.commentaire', 'translation_domain' => 'messages']);
@@ -127,8 +129,7 @@ class HrsTableType extends TableType
                 $qb->where('e.departement = :departement')
                     ->andWhere('e.annee = :annee')
                     ->setParameter('departement', $this->departement->getId())
-                    ->setParameter('annee', $this->annee)
-                    ->orderBy('e.libelle', 'DESC');
+                    ->setParameter('annee', $this->annee);
 
                 if (isset($formData['search'])) {
                     $qb->andWhere('LOWER(e.libelle) LIKE :search');

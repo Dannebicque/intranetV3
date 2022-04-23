@@ -49,15 +49,15 @@ class AbsenceListeTableType extends TableType
         $this->anneeUniversitaire = $options['anneeUniversitaire'];
 
         $builder->addFilter('search', SearchType::class);
-        $builder->addFilter('groupe', EntityType::class, [
-            'class' => Groupe::class,
-            'query_builder' => function(GroupeRepository $groupeRepository) {
-                return $groupeRepository->findBySemestreBuilder($this->semestre);
-            },
-            'choice_label' => 'display',
-            'required' => false,
-            'placeholder' => 'Filtrer par groupe',
-        ]);
+//        $builder->addFilter('groupe', EntityType::class, [
+//            'class' => Groupe::class,
+//            'query_builder' => function(GroupeRepository $groupeRepository) {
+//                return $groupeRepository->findBySemestreBuilder($this->semestre);
+//            },
+//            'choice_label' => 'display',
+//            'required' => false,
+//            'placeholder' => 'Filtrer par groupe',
+//        ]);
 
         $builder->addWidget('export', ExportDropdownType::class, [
             'route' => 'administration_absences_semestre_liste_export',
@@ -65,8 +65,6 @@ class AbsenceListeTableType extends TableType
                 'semestre' => $this->semestre->getId(),
             ],
         ]);
-
-        //todo: doit utiliser un dto...
 
         $builder->addColumn('etudiant', EtudiantColumnType::class,
             ['label' => 'table.etudiant']);

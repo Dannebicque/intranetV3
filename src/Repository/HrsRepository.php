@@ -35,6 +35,10 @@ class HrsRepository extends ServiceEntityRepository
     public function getPersonnelAnnee(Personnel $personnel, int $annee = 0): array
     {
         $query = $this->createQueryBuilder('h')
+            ->join('h.typeHrs', 'tp')
+            ->addSelect('tp')
+            ->leftJoin('h.personnel', 'p')
+            ->addSelect('p')
             ->where('h.personnel = :user')
             ->setParameter('user', $personnel)
             ->orderBy('h.typeHrs', 'ASC')
@@ -57,6 +61,13 @@ class HrsRepository extends ServiceEntityRepository
         //todo: gérer le département pour le filtre
 
         return $this->createQueryBuilder('h')
+            ->join('h.typeHrs', 'tp')
+            ->addSelect('tp')
+            ->leftJoin('h.personnel', 'p')
+            ->addSelect('p')
+            ->leftJoin('h.semestre', 's')
+            ->leftJoin('h.departement', 'd')
+
             ->where('h.personnel = :user')
             ->andWhere('h.annee = :annee')
             ->setParameter('user', $personnel)
@@ -70,6 +81,10 @@ class HrsRepository extends ServiceEntityRepository
     public function findByDepartement(Departement $departement, int $annee): array
     {
         return $this->createQueryBuilder('h')
+            ->join('h.typeHrs', 'tp')
+            ->addSelect('tp')
+            ->leftJoin('h.personnel', 'p')
+            ->addSelect('p')
             ->where('h.departement = :departement')
             ->andWhere('h.annee = :annee')
             ->setParameter('departement', $departement->getId())
