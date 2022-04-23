@@ -12,6 +12,7 @@ namespace App\Components\Table\DependencyInjection;
 use App\Components\Table\Adapter\CallableAdapter;
 use App\Components\Table\Adapter\EntityAdapter;
 use App\Components\Table\Column\BadgeColumnType;
+use App\Components\Table\Column\BadgeSeuilColumnType;
 use App\Components\Table\Column\BooleanColumnType;
 use App\Components\Table\Column\CheckBoxColumnType;
 use App\Components\Table\Column\ColumnType;
@@ -39,6 +40,7 @@ return static function (ContainerConfigurator $configurator): void {
     $services->set(EntityColumnType::class)->tag(TableRegistry::TAG_COLUMN_TYPE);
     $services->set(PropertyColumnType::class)->tag(TableRegistry::TAG_COLUMN_TYPE);
     $services->set(BadgeColumnType::class)->tag(TableRegistry::TAG_COLUMN_TYPE);
+    $services->set(BadgeSeuilColumnType::class)->tag(TableRegistry::TAG_COLUMN_TYPE);
     $services->set(CheckBoxColumnType::class)->tag(TableRegistry::TAG_COLUMN_TYPE);
     $services->set(ColumnType::class)->tag(TableRegistry::TAG_COLUMN_TYPE);
     $services->set(SelectColumnType::class)->tag(TableRegistry::TAG_COLUMN_TYPE);

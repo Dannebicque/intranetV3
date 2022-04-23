@@ -9,6 +9,7 @@
 
 namespace App\Components\Table\Column;
 
+use Carbon\Carbon;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\PropertyAccess\PropertyAccess;
@@ -33,7 +34,7 @@ class PropertyColumnType extends ColumnType
 
     public function renderProperty(mixed $value, array $options): string
     {
-        return (string) $value;
+        return $this->displayValue($value, $options);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -46,8 +47,18 @@ class PropertyColumnType extends ColumnType
             })
             ->setAllowedTypes('property_path', 'string')
             ->setDefault('order', null)
+            ->setDefault('format_datetime', 'd/m/Y')
             ->setDefault('order_by', function (Options $options) {
                 return $options['property_path'];
             });
+    }
+
+    public function displayValue(mixed $value, array $options): string
+    {
+        if ($value instanceof Carbon) {
+            return $value->format($options['format_datetime']);
+        }
+
+        return (string) $value;
     }
 }
