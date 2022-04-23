@@ -23,6 +23,7 @@ use App\Table\ColumnType\StatusBadgeEnumColumnType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use UnitEnum;
 
 class PlanCoursTableType extends TableType
 {
@@ -51,8 +52,8 @@ class PlanCoursTableType extends TableType
         $builder->addFilter('etat_plan_cours', EnumType::class, [
             'class' => PlanCoursEnum::class,
             'required' => false,
-            'choice_label' => static function (\UnitEnum $choice): string {
-                return $choice->value;},
+            'choice_label' => static function (UnitEnum $choice): string {
+                return 'plan_cours.'.$choice->value;},
             'placeholder' => 'Etat du plan de cours',
         ]);
 

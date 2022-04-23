@@ -11,9 +11,9 @@ namespace App\Enums;
 
 enum PlanCoursEnum: string implements BadgeEnumInterface
 {
-    case NONE = 'Aucun';
-    case EN_COURS = 'En cours';
-    case COMPLET = 'Complet';
+    case NONE = 'NONE';
+    case EN_COURS = 'EN_COURS';
+    case COMPLET = 'COMPLET';
 
     public function badge(): string
     {
