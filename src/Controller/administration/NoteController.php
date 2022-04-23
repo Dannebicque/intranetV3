@@ -72,7 +72,7 @@ class NoteController extends BaseController
     #[Route(path: '/ajax/{note}/{action}', name: 'administration_note_corrige_ajax', options: ['expose' => true], methods: ['POST'])]
     public function corrigeNote(Note $note, string $action): Response
     {
-       // $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $note->getEtudiant()?->getSemestre());
+        // $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $note->getEtudiant()?->getSemestre());
         switch ($action) {
             case 'absent':
                 $note->setAbsenceJustifie(true);

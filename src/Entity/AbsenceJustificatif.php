@@ -291,13 +291,9 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         ];
     }
 
-    public function getEtudiantGroupes(): Collection|array|null
+    public function getEtudiantGroupes(): Collection | array | null
     {
-        if (null !== $this->getEtudiant()) {
-            return $this->getEtudiant()->getGroupes();
-        }
-
-        return null;
+        return $this->getEtudiant()?->getGroupes();
     }
 
     public function getEtudiant(): ?Etudiant

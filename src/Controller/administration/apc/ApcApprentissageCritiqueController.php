@@ -67,7 +67,7 @@ class ApcApprentissageCritiqueController extends BaseController
     #[Route(path: '/{id}', name: 'administration_apc_apprentissage_critique_delete', methods: ['DELETE'])]
     public function delete(Request $request, ApcApprentissageCritique $apcApprentissageCritique): Response
     {
-        if ($this->isCsrfTokenValid('delete' . $apcApprentissageCritique->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$apcApprentissageCritique->getId(), $request->request->get('_token'))) {
             $this->entityManager->remove($apcApprentissageCritique);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.apprentissageCritique.delete.success.flash');

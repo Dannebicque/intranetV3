@@ -190,7 +190,7 @@ class MyEdtIntranet extends BaseEdt
             $matiere = $this->matieres[$p->getTypeIdMatiere()];
             if (null !== $matiere && null !== $matiere->semestre) {
                 $evt->matiere = $matiere->display;
-                $annee = $matiere->semestre->getAnnee();//todo: ne pas dépendre de matièere
+                $annee = $matiere->semestre->getAnnee(); //todo: ne pas dépendre de matièere
                 if (null !== $annee) {
                     $evt->couleur = $annee->getCouleur();
                 }
@@ -326,24 +326,6 @@ class MyEdtIntranet extends BaseEdt
     private function hasCommentaire(EdtPlanning $p): bool
     {
         return '' !== $p->getCommentaire() && null !== $p->getCommentaire();
-    }
-
-    private function calculTotal(EdtPlanning $p): void
-    {
-        switch ($p->getType()) {
-            case 'cm':
-            case 'CM':
-                $this->total['CM'] += $p->getDureeInt();
-                break;
-            case 'td':
-            case 'TD':
-                $this->total['TD'] += $p->getDureeInt();
-                break;
-            case 'tp':
-            case 'TP':
-                $this->total['TP'] += $p->getDureeInt();
-                break;
-        }
     }
 
     private function groupes(): void

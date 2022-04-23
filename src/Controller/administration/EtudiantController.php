@@ -159,7 +159,7 @@ class EtudiantController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $etudiant->getSemestre());
         $etudiantScolarite->setEtudiant($etudiant);
-        $etudiantScolarite->changeEtat(Constantes::SUPPRIMER_FORMATION );
+        $etudiantScolarite->changeEtat(Constantes::SUPPRIMER_FORMATION);
 
         return $this->redirectToRoute('trombinoscope_index');
     }

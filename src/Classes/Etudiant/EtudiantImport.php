@@ -33,7 +33,7 @@ class EtudiantImport
         private MyLdap $myLdap,
         private EntityManagerInterface $entity)
     {
-       $this->tBac = $bacRepository->getApogeeArray();
+        $this->tBac = $bacRepository->getApogeeArray();
     }
 
     public function createEtudiant(?Semestre $semestre, array $dataApogee): ?Etudiant

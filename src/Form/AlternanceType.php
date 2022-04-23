@@ -68,7 +68,7 @@ class AlternanceType extends AbstractType
             ->add('adresseAlternance', AdresseType::class,
                 ['label' => 'adresse_lieu_alternance', 'help' => 'help.complete.meme.si.identique'])
             ->addEventListener(FormEvents::POST_SUBMIT, static function (FormEvent $event) {
-                $alternance = $event->getData();
+                $alternance = $event->getData();//todo: vérifier ?
                 $form = $event->getForm();
                 $dateRange = $form->get('dateRange')->getData();
             })

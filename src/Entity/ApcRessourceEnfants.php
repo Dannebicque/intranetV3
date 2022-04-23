@@ -15,7 +15,7 @@ class ApcRessourceEnfants extends BaseEntity
     private ?ApcRessource $apcRessourceEnfant;
 
     #[ORM\ManyToOne(targetEntity: Groupe::class, inversedBy: 'apcRessourceEnfants')]
-    private $groupe;
+    private ?Groupe $groupe;
 
 
     public function getApcRessourceParent(): ?ApcRessource

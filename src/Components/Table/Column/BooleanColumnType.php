@@ -25,9 +25,6 @@ class BooleanColumnType extends PropertyColumnType
         $this->translator = $translator;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function renderProperty(mixed $value, array $options): string
     {
         if ($options['strict_comparison'] && !is_bool($value)) {
@@ -49,9 +46,6 @@ class BooleanColumnType extends PropertyColumnType
         };
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);

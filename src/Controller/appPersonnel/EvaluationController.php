@@ -13,6 +13,7 @@ use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyEvaluation;
 use App\Controller\BaseController;
 use App\Entity\Evaluation;
+use App\Entity\Semestre;
 use App\Repository\GroupeRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;

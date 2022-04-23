@@ -196,11 +196,12 @@ class ApcRessourceController extends BaseController
     {
         $enfants = $apcRessourceEnfantsRepository->findBy(['apcRessourceParent' => $apcRessource->getId()]);
         $groupes = $groupeRepository->findBySemestre($apcRessource->getSemestre());
+
         return $this->render('apc/apc_ressource/enfants.html.twig', [
             'groupes' => $groupes,
             'apcRessource' => $apcRessource,
             'enfants' => $enfants,
-            'ressources' => $apcRessourceRepository->findBySemestre($apcRessource->getSemestre()),//todo: comment gérer le semestre ?
+            'ressources' => $apcRessourceRepository->findBySemestre($apcRessource->getSemestre()), //todo: comment gérer le semestre ?
             'ressourceSemestres' => $apcRessource->getSemestres(),
             'semestres' => $this->dataUserSession->getSemestres(),
         ]);
@@ -281,6 +282,7 @@ class ApcRessourceController extends BaseController
     {
         $enfants = $apcRessourceEnfantsRepository->findBy(['apcRessourceParent' => $apcRessource->getId()]);
         $groupes = $groupeRepository->findBySemestre($apcRessource->getSemestre());
+
         return $this->render('apc/apc_ressource/_liste_enfants.html.twig', [
             'apcRessource' => $apcRessource,
             'enfants' => $enfants,

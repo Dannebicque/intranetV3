@@ -26,9 +26,6 @@ class LinkColumnType extends PropertyColumnType
         $this->router = $router;
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function render(mixed $rowData, array $options): string
     {
         $attr = [];
@@ -77,9 +74,6 @@ class LinkColumnType extends PropertyColumnType
         return sprintf('<a %s>%s</a>', HtmlUtils::to_attr($attr), $text);
     }
 
-    /**
-     * {@inheritdoc}
-     */
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);

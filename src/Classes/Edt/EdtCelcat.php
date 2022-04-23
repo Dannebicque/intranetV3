@@ -45,5 +45,6 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
         int $semaineFormation
     ): EvenementEdtCollection {
         // TODO: Implement recupereEdtJourBorne() method.
+        return new EvenementEdtCollection();
     }
 }

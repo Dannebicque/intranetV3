@@ -92,7 +92,7 @@ class MyExport
                             ++$i;
                         }
                     } else {
-                        $dataArray[$ligne][$i] = $this->transformValue($row[$value], $colonne[$key]);
+                        $dataArray[$ligne][$i] = $this->transformValue($row[$value], $value);
                         ++$i;
                     }
                 } else {

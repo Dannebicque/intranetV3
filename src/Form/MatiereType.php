@@ -74,7 +74,7 @@ class MatiereType extends AbstractType
                 'query_builder' => function (ApcSaeRepository $apcSaeRepository) {
                     return $apcSaeRepository->findByDiplomeBuilder($this->diplome);
                 },
-                'required' => false])
+                'required' => false, ])
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
             ->add('codeMatiere', TextType::class, ['label' => 'label.code_matiere'])
             ->add('codeElement', TextType::class, ['label' => 'label.code_element'])

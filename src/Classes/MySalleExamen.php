@@ -37,8 +37,6 @@ use Twig\Error\SyntaxError;
 
 class MySalleExamen
 {
-
-
     protected ?SalleExamen $salle;
     protected ?TypeGroupe $typeGroupe;
     protected ?Matiere $matiere;
@@ -67,7 +65,7 @@ class MySalleExamen
         string $requestdateeval,
         string $requestmatiere,
         int | string $requestenseignant1,
-        int | string$requestenseignant2,
+        int | string $requestenseignant2,
         Departement $departement
     ) {
         $this->matiere = $this->typeMatiereManager->getMatiereFromSelect($requestmatiere);
@@ -88,7 +86,7 @@ class MySalleExamen
                 }
             }
         } else {
-            $grdetail = $this->groupeDefaut($this->matiere->semestre);//todo: comment récupérer le semestre sans dépendre de matière ? ou justement garder ca et afficher tous les groupes mutualisés
+            $grdetail = $this->groupeDefaut($this->matiere->semestre); //todo: comment récupérer le semestre sans dépendre de matière ? ou justement garder ca et afficher tous les groupes mutualisés
             $this->typeGroupe = $grdetail[0]->getTypeGroupe();
             $etudiants = $this->etudiantRepository->findBySemestre($this->matiere->semestre);
         }
@@ -188,9 +186,7 @@ class MySalleExamen
         foreach ($groupes as $gr) {
             foreach ($this->requestgroupes as $dgr) {
                 if ($gr->getId() === (int) $dgr) {
-                    foreach ($gr->getEtudiants() as $etu) {
-                        ++$nbEtu;
-                    }
+                    $nbEtu += $gr->getEtudiants()->count();
                 }
             }
         }

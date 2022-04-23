@@ -12,7 +12,6 @@ namespace App\Controller\administration;
 use App\Classes\Absences\AbsenceEtatAppel;
 use App\Classes\Edt\EdtManager;
 use App\Classes\Matieres\TypeMatiereManager;
-use App\Components\DeprecatedExporter\SourceIterator\DtoSourceIterator;
 use App\Controller\BaseController;
 use App\Entity\Semestre;
 use App\Table\PlanCoursTableType;
@@ -74,5 +73,6 @@ class AbsenceAppelSuiviController extends BaseController
 //        $datas = new DtoSourceIterator($statsAppel, AbsenceEtatAppel::class);
 //
 //        return $exporterManager->export($datas, $_format, 'dates');
+        return null;
     }
 }

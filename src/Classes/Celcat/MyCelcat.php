@@ -26,7 +26,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class MyCelcat
 {
-    private $conn;
+    private mixed $conn;
 
     private EntityManagerInterface $entityManger;
 

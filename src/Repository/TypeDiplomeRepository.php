@@ -9,7 +9,6 @@
 
 namespace App\Repository;
 
-use _PHPStan_70b6e53dc\Symfony\Component\Console\Color;
 use App\Entity\TypeDiplome;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;

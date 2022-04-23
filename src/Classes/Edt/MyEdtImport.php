@@ -32,48 +32,30 @@ use function ord;
 
 class MyEdtImport
 {
-    private PersonnelRepository $personnelRepository;
-
-    private TypeMatiereManager $typeMatiereManager;
-
-    private SemestreRepository $semestreRepository;
-
-    private EntityManagerInterface $entityManager;
-
     private ?string $nomfile;
 
-    private $semaine;
+    private mixed $semaine;
 
-    private $semestre;
+    private mixed $semestre;
 
     private DataUserSession $dataUserSession;
 
-    private MyUpload $myUpload;
     private Calendrier $calendrier;
 
-    private CalendrierRepository $calendrierRepository;
 
-    private EdtPlanningRepository $edtPlanningRepository;
 
     /**
      * MyEdtImport constructor.
      */
     public function __construct(
-        EdtPlanningRepository $edtPlanningRepository,
-        CalendrierRepository $calendrierRepository,
-        PersonnelRepository $personnelRepository,
-        TypeMatiereManager $typeMatiereManager,
-        SemestreRepository $semestreRepository,
-        EntityManagerInterface $entityManager,
-        MyUpload $myUpload
+        private readonly EdtPlanningRepository $edtPlanningRepository,
+        private readonly CalendrierRepository $calendrierRepository,
+        private readonly PersonnelRepository $personnelRepository,
+        private readonly TypeMatiereManager $typeMatiereManager,
+        private readonly SemestreRepository $semestreRepository,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly MyUpload $myUpload
     ) {
-        $this->edtPlanningRepository = $edtPlanningRepository;
-        $this->calendrierRepository = $calendrierRepository;
-        $this->personnelRepository = $personnelRepository;
-        $this->typeMatiereManager = $typeMatiereManager;
-        $this->semestreRepository = $semestreRepository;
-        $this->entityManager = $entityManager;
-        $this->myUpload = $myUpload;
     }
 
     /**

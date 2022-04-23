@@ -81,7 +81,7 @@ class EtudiantSousCommission
 
         /* @var Ue $ue */
         foreach ($this->moyenneUes as $moyenneUe) {
-            if ($moyenneUe->ue->getBonification() === false) {
+            if (false === $moyenneUe->ue->getBonification()) {
                 $totalUes += $moyenneUe->getMoyenne() * $moyenneUe->ue->getCoefficient();
                 $totalUesPenalise += $moyenneUe->getMoyennePenalisee() * $moyenneUe->ue->getCoefficient();
                 $totcoeff += $moyenneUe->ue->getCoefficient();
@@ -144,7 +144,7 @@ class EtudiantSousCommission
     private function hasPoleFaible(): bool
     {
         foreach ($this->moyenneUes as $moyenneUe) {
-            if ($moyenneUe->ue->getBonification() === true) {
+            if (true === $moyenneUe->ue->getBonification()) {
                 return false; //on ne traite pas les UEs qui ont une bonification
             }
             if ((true === $this->semestre->isOptPenaliteAbsence() && $moyenneUe->getMoyennePenalisee() < Constantes::SEUIL_UE) || (false === $this->semestre->isOptPenaliteAbsence() && $moyenneUe->getMoyenne() < Constantes::SEUIL_UE)) {

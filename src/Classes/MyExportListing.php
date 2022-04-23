@@ -23,9 +23,9 @@ use App\Entity\Personnel;
 use App\Entity\TypeGroupe;
 use App\Repository\GroupeRepository;
 use App\Repository\TypeGroupeRepository;
+use function count;
 use Doctrine\Common\Collections\Collection;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
-use function count;
 use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use PhpOffice\PhpSpreadsheet\Writer\Csv;
@@ -44,7 +44,7 @@ class MyExportListing
 
     protected GroupeRepository $groupeRepository;
 
-    protected array|Collection $groupes;
+    protected array | Collection $groupes;
     private string $name = '';
     private int $ligne = 1;
 
@@ -98,7 +98,7 @@ class MyExportListing
         mixed $exportFiltre,
         ?Matiere $matiere = null,
         ?Personnel $personnel = null
-    ): StreamedResponse|PdfResponse|null {
+    ): StreamedResponse | PdfResponse | null {
         $this->exportTypeDocument = $exportTypeDocument;
         $this->exportChamps = $exportChamps;
         $this->matiere = $matiere;

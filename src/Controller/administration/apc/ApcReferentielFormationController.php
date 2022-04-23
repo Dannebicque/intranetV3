@@ -76,7 +76,7 @@ class ApcReferentielFormationController extends BaseController
                     $obj = new ApcRessourceCompetence($ressource, $competence);
                     $obj->setCoefficient(Tools::convertToFloat($value));
                     $this->entityManager->persist($obj);
-                } else if (Tools::convertToFloat($value) > 0) { //existe et > 0 on met à jour
+                } elseif (Tools::convertToFloat($value) > 0) { //existe et > 0 on met à jour
                     $obj->setCoefficient(Tools::convertToFloat($value));
                 } else { //existe et <=0 on supprime
                     $this->entityManager->remove($obj);
@@ -99,7 +99,7 @@ class ApcReferentielFormationController extends BaseController
                     $obj = new ApcSaeCompetence($sae, $competence);
                     $obj->setCoefficient(Tools::convertToFloat($value));
                     $this->entityManager->persist($obj);
-                } else if (Tools::convertToFloat($value) > 0) {
+                } elseif (Tools::convertToFloat($value) > 0) {
                     $obj->setCoefficient(Tools::convertToFloat($value));
                 } else {
                     $this->entityManager->remove($obj);

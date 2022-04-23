@@ -28,7 +28,7 @@ class DatePickerType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['attr']['autocomplete'] = 'off';
-        $view->vars['attr']['class'] =  ' flatdatepicker';
+        $view->vars['attr']['class'] = ' flatdatepicker';
 
         $jsOptions = [
             'dateFormat' => $options['format'],
@@ -40,7 +40,6 @@ class DatePickerType extends AbstractType
         ];
 
         $view->vars['attr']['data-options'] = json_encode($jsOptions);
-
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

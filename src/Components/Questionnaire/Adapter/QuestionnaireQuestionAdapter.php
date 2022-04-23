@@ -29,6 +29,7 @@ class QuestionnaireQuestionAdapter
 
     /**
      * @throws \App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException
+     * @throws \JsonException
      */
     public function createFromEntity(AbstractSection $abstractSection, QuestionnaireSectionQuestion $question, int $ordre = 1, array $options = [], ?ReponsesEtudiant $reponsesEtudiant = null): self
     {

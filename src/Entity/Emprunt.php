@@ -254,11 +254,8 @@ abstract class Emprunt extends BaseEntity
 
     public function getResponsable(): ?Personnel
     {
-        if (null !== $this->getDepartement()) {
-            return $this->getDepartement()->getRespMateriel();
-        }
+        return $this->getDepartement()?->getRespMateriel();
 
-        return null;
     }
 
     public function getDepartement(): ?Departement

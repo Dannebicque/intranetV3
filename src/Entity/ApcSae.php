@@ -123,11 +123,8 @@ class ApcSae extends AbstractMatiere implements MatiereEntityInterface
 
     public function getDiplome(): ?Diplome
     {
-        if (null !== $this->getSemestre()) {
-            return $this->getSemestre()->getDiplome();
-        }
+        return $this->getSemestre()?->getDiplome();
 
-        return null;
     }
 
     public function getSemestre(): ?Semestre

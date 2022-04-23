@@ -32,8 +32,9 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 class MyEnqueteDiplome
 {
     private ?QuestionnaireQuizz $questionnaire;
-    private $etudiantsReponses;
-    private $reponses;
+    private array $etudiantsReponses;
+    private array $reponses;
+    private array $AllEtudiants;
 
     /**
      * MyEnqueteDiplome constructor.

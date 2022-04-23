@@ -81,8 +81,13 @@ class ProfilEtudiantController extends BaseController
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      */
     #[Route(path: '/profil/{slug}/notes', name: 'profil_etudiant_notes')]
-    public function notes(NotesTri $notesTri, TypeMatiereManager $typeMatiereManager, ChartBuilderInterface $chartBuilder, EtudiantNotes $etudiantNotes, Etudiant $etudiant): Response
-    {
+    public function notes(
+        NotesTri $notesTri,
+        TypeMatiereManager $typeMatiereManager,
+        ChartBuilderInterface $chartBuilder,
+        EtudiantNotes $etudiantNotes,
+        Etudiant $etudiant
+    ): Response {
         if (null !== $etudiant->getSemestre()) {
             $etudiantNotes->setEtudiant($etudiant);
             $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestre());
@@ -140,55 +145,54 @@ class ProfilEtudiantController extends BaseController
         Request $request,
         UeRepository $ueRepository,
         ScolariteRepository $scolariteRepository,
-        ApcRessourceCompetenceRepository $apcRessourceCompetenceRepository,
-        ApcSaeCompetenceRepository $apcSaeCompetenceRepository,
-        TypeMatiereManager $typeMatiereManager,
-        EtudiantAbsences $etudiantAbsences,
-        EtudiantNotes $etudiantNotes): Response
-    {
+        TypeMatiereManager $typeMatiereManager
+    ): Response {
         $idScolarite = $request->query->get('scolarite');
         $scolarite = $scolariteRepository->find($idScolarite);
 
-        if (null !== $scolarite && null !== $scolarite->getEtudiant() && null !== $scolarite->getSemestre()) {
+        if (null !== $scolarite && null !== $scolarite->getEtudiant()) {
             $semestre = $scolarite->getSemestre();
-            $ues = $ueRepository->findBySemestre($semestre);
+            if (null !== $semestre) {
+                $ues = $ueRepository->findBySemestre($semestre);
 
-            $etudiant = $scolarite->getEtudiant();
-            $matieres = $typeMatiereManager->findBySemestreArray($semestre);
-            $coefficients = [];
-            foreach ($matieres as $matiere) {
-                $coefficients[$matiere->codeElement] = [];
-                foreach ($matiere->tab_ues as $ue) {
-                    $coefficients[$matiere->codeElement][$ue->ue_id] = $ue->ue_coefficient;
+                $etudiant = $scolarite->getEtudiant();
+                $matieres = $typeMatiereManager->findBySemestreArray($semestre);
+                $coefficients = [];
+                foreach ($matieres as $matiere) {
+                    $coefficients[$matiere->codeElement] = [];
+                    foreach ($matiere->tab_ues as $ue) {
+                        $coefficients[$matiere->codeElement][$ue->ue_id] = $ue->ue_coefficient;
+                    }
                 }
+
+                return $this->render('user/composants/_notes_apc_old_semestre.html.twig', [
+                    'etudiant' => $etudiant,
+                    'semestre' => $semestre,
+                    'matieres' => $matieres,
+                    'scolarite' => $scolarite,
+                    'coefficients' => $coefficients,
+                    'ues' => $ues,
+                ]);
             }
-
-
-
-            return $this->render('user/composants/_notes_apc_old_semestre.html.twig', [
-                'etudiant' => $etudiant,
-                'semestre' => $semestre,
-                'matieres' => $matieres,
-                'scolarite' => $scolarite,
-                'coefficients' => $coefficients,
-                'ues' => $ues,
-            ]);
         }
+
+        return $this->render('user/composants/_semestre_vide.html.twig');
     }
 
     /**
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      */
     #[Route(path: '/profil/{slug}/apc_notes', name: 'profil_etudiant_apc')]
-    public function apcNotes(UeRepository $ueRepository,
+    public function apcNotes(
+        UeRepository $ueRepository,
         ScolariteRepository $scolariteRepository,
         ApcRessourceCompetenceRepository $apcRessourceCompetenceRepository,
         ApcSaeCompetenceRepository $apcSaeCompetenceRepository,
         TypeMatiereManager $typeMatiereManager,
         EtudiantAbsences $etudiantAbsences,
         EtudiantNotes $etudiantNotes,
-        Etudiant $etudiant): Response
-    {
+        Etudiant $etudiant
+    ): Response {
         $semestresPrecedents = $scolariteRepository->findByEtudiant($etudiant);
 
         if (null !== $etudiant->getSemestre()) {
@@ -200,7 +204,8 @@ class ProfilEtudiantController extends BaseController
             $etudiantSousCommissionApc = new EtudiantSousCommissionApc($etudiant, $semestre, $ues);
             $etudiantNotes->setEtudiant($etudiant);
             $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestre());
-            $etudiantSousCommissionApc->moyenneMatieres = $etudiantNotes->getMoyenneParMatiereParSemestresEtAnneeUniversitaire($matieres, $etudiant->getSemestre(),
+            $etudiantSousCommissionApc->moyenneMatieres = $etudiantNotes->getMoyenneParMatiereParSemestresEtAnneeUniversitaire($matieres,
+                $etudiant->getSemestre(),
                 $this->getAnneeUniversitaire());
             $etudiantAbsences->setEtudiant($etudiant);
             $etudiantAbsences->getPenalitesAbsencesParMatiere($matieres, $this->getAnneeUniversitaire(),
@@ -227,8 +232,12 @@ class ProfilEtudiantController extends BaseController
      * @throws Exception
      */
     #[Route(path: '/profil/{slug}/absences', name: 'profil_etudiant_absences')]
-    public function absences(TypeMatiereManager $typeMatiereManager, EtudiantAbsences $etudiantAbsences, StatsAbsences $statsAbsences, Etudiant $etudiant): Response
-    {
+    public function absences(
+        TypeMatiereManager $typeMatiereManager,
+        EtudiantAbsences $etudiantAbsences,
+        StatsAbsences $statsAbsences,
+        Etudiant $etudiant
+    ): Response {
         if (null !== $etudiant->getSemestre()) {
             Calendrier::calculPlanning($this->dataUserSession->getAnneeUniversitaire()->getAnnee(), 2,
                 Constantes::DUREE_SEMESTRE);
@@ -261,8 +270,11 @@ class ProfilEtudiantController extends BaseController
      * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      */
     #[Route(path: '/profil/{slug}/stages', name: 'profil_etudiant_stages')]
-    public function stages(StageEtudiantRepository $stageEtudiantRepository, AlternanceRepository $alternanceRepository, Etudiant $etudiant): Response
-    {
+    public function stages(
+        StageEtudiantRepository $stageEtudiantRepository,
+        AlternanceRepository $alternanceRepository,
+        Etudiant $etudiant
+    ): Response {
         return $this->render('user/composants/_stages.html.twig', [
             //todo: si l'étudiant n'est plus dans un semestre, garder l'historique uniquemenent. Dans ce cas l'historique ne doit pas dépendre d'une année ?
             'stagesEnCours' => $stageEtudiantRepository->findByEtudiantAnnee($etudiant,

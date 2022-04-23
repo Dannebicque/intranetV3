@@ -192,7 +192,7 @@ class Semestre extends BaseEntity implements Stringable
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: AnneeUniversitaireSemestre::class)]
     private Collection $anneeUniversitaireSemestres;
 
-    #[ORM\ManyToMany(targetEntity: ApcRessource::class, mappedBy: 'semestres',fetch: 'EXTRA_LAZY')]
+    #[ORM\ManyToMany(targetEntity: ApcRessource::class, mappedBy: 'semestres', fetch: 'EXTRA_LAZY')]
     private Collection $apcSemestresRessources;
 
     public function __construct()

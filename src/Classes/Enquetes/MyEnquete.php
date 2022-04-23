@@ -361,7 +361,7 @@ class MyEnquete
             if ('echelle' === $question->getConfiguration()['type'] || TypeEchelle::class === $question->getType()) {
                 //si échelle ... tôt de satisfaction
                 $div = ($nbProps * ($nbTotalReponseQuestion - $retire));
-                if ($div !== 0) {
+                if (0 !== $div) {
                     $total = $satisfaction / ($nbProps * ($nbTotalReponseQuestion - $retire));
                 } else {
                     $total = 0;

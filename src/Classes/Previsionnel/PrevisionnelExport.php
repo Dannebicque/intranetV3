@@ -198,7 +198,7 @@ class PrevisionnelExport
         }
     }
 
-    public function export(?Departement $getDepartement, int $annee, Matiere $matiere, string $_format,array $previsionnels): void
+    public function export(?Departement $getDepartement, int $annee, Matiere $matiere, string $_format,array $previsionnels): StreamedResponse
     {
         //todo: a faire.
     }

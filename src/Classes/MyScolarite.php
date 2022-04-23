@@ -26,9 +26,9 @@ class MyScolarite
     public function __construct(
         private MyUpload $myUpload,
         private EntityManagerInterface $entityManager,
-        private  SemestreRepository $semestreRepository,
-        private  UeRepository $ueRepository,
-        private  EtudiantRepository $etudiantRepository
+        private SemestreRepository $semestreRepository,
+        private UeRepository $ueRepository,
+        private EtudiantRepository $etudiantRepository
     ) {
     }
 

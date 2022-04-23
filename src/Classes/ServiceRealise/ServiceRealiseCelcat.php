@@ -13,24 +13,33 @@
 
 namespace App\Classes\ServiceRealise;
 
+use App\Classes\Matieres\TypeMatiereManager;
 use App\DTO\EvenementEdt;
 use App\Entity\CelcatEvent;
 use App\Entity\Personnel;
+use App\Exception\MatiereNotFoundException;
 use App\Interfaces\UtilisateurInterface;
 use App\Repository\CelcatEventsRepository;
 
 class ServiceRealiseCelcat implements ServiceRealiseInterface
 {
-    private CelcatEventsRepository $celcatEventsRepository;
-
-    public function __construct(CelcatEventsRepository $celcatEventsRepository)
-    {
-        $this->celcatEventsRepository = $celcatEventsRepository;
+    public function __construct(
+        private readonly CelcatEventsRepository $celcatEventsRepository,
+        private readonly TypeMatiereManager $typeMatiereManager
+    ) {
     }
 
+    /**
+     * @throws \App\Exception\MatiereNotFoundException
+     */
     public function getServiceRealiseParMatiere(int $idMatiere, string $type): array
     {
-        $events = $this->celcatEventsRepository->findBy(['codeModule' => $matiere->getCodeElement()],
+        $matiere = $this->typeMatiereManager->getMatiere($idMatiere, $type);
+        if (null === $matiere) {
+            throw new MatiereNotFoundException();
+        }
+
+        $events = $this->celcatEventsRepository->findBy(['codeModule' => $matiere->codeElement],
             ['semaine' => 'ASC', 'jour' => 'ASC', 'debut' => 'ASC']);
         $tabEvent = [];
         foreach ($events as $event) {
@@ -60,9 +69,10 @@ class ServiceRealiseCelcat implements ServiceRealiseInterface
         $ev = new EvenementEdt();
         $ev->groupe = $event->getLibGroupe();
         $ev->jour = $event->getJour();
-        $ev->date = $event->getDate();
-
-        $ev->heure = $event->getDebut();
+//        $ev->date = $event->getDate();
+//
+//        $ev->heure = $event->getDebut();
+        //todo: revoir.
         $ev->matiere = $event->getLibModule();
         $ev->type_cours = $event->getType();
         $ev->personnel = $event->getLibPersonnel();

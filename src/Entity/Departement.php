@@ -12,7 +12,6 @@ namespace App\Entity;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
 use App\Repository\DepartementRepository;
-use Ramsey\Uuid\UuidInterface;
 use function chr;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -21,6 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use function ord;
 use Ramsey\Uuid\Uuid;
+use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
@@ -185,7 +185,6 @@ class Departement extends BaseEntity
     private Collection $bornes;
 
     /**
-     *
      * @throws Exception
      */
     public function __construct()

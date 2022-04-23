@@ -175,7 +175,7 @@ class StageEtudiantController extends BaseController
         );
 
         $event = new StageEvent($stageEtudiant);
-        $eventDispatcher->dispatch($event,StageEvent::CONVENTION_STAGE_ENVOYEE);
+        $eventDispatcher->dispatch($event, StageEvent::CONVENTION_STAGE_ENVOYEE);
 
         return $this->json(true);
     }

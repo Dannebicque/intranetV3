@@ -32,7 +32,7 @@ use ZipArchive;
 
 class MyEdtExport
 {
-    private $calendrier;
+    private array $calendrier;
 
     private string $dir;
 

@@ -32,15 +32,14 @@ class AnneeUniversitaireRepository extends ServiceEntityRepository
         return $this->findBy([], ['annee' => 'DESC']);
     }
 
+    /**
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
     public function findActive(): ?AnneeUniversitaire
     {
-        try {
-            return $this->createQueryBuilder('a')
-                ->where('a.active = 1')
-                ->getQuery()
-                ->getOneOrNullResult();
-        } catch (NonUniqueResultException $e) {
-            return null;
-        }
+        return $this->createQueryBuilder('a')
+            ->where('a.active = 1')
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }

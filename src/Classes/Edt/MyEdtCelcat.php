@@ -32,6 +32,8 @@ class MyEdtCelcat extends BaseEdt
     private ?Annee $annee = null;
 
     private array $matieres;
+    private array $groupes;
+    private array $planning;
 
     public function __construct(
         CalendrierRepository $celcatCalendrierRepository,

@@ -13,7 +13,6 @@ use App\Classes\Matieres\TypeMatiereManager;
 use App\Entity\Personnel;
 use App\Entity\Rattrapage;
 use App\Entity\Semestre;
-use App\Form\Type\CarbonTimeType;
 use App\Form\Type\ChoiceCompleteType;
 use App\Form\Type\DatePickerType;
 use App\Form\Type\EntityCompleteType;

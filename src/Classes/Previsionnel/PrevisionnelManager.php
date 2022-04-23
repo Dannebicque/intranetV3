@@ -121,7 +121,7 @@ class PrevisionnelManager
         foreach ($previsionnels as $p) {
             $tPrevisionnel[$p->id]['matiere'] = $p->matiere_libelle;
             $tPrevisionnel[$p->id]['libelle'] = $p->matiere_libelle;
-            $tPrevisionnel[$p->id]['personnel'] = $p->personnel_prenom . ' ' . $p->personnel_nom;
+            $tPrevisionnel[$p->id]['personnel'] = $p->personnel_prenom.' '.$p->personnel_nom;
         }
 
         return $tPrevisionnel;
@@ -178,7 +178,7 @@ class PrevisionnelManager
 
             return false;
         }
-        $method = 'set' . $name;
+        $method = 'set'.$name;
         if (method_exists($previ, $method)) {
             $previ->$method(Tools::convertToFloat($value));
             $this->entityManager->flush();

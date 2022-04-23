@@ -25,7 +25,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class MyProjetEtudiant
 {
-      protected ProjetEtudiant $stageEtudiant;
+    protected ProjetEtudiant $stageEtudiant;
 
     /**
      * MyProjetEtudiant constructor.

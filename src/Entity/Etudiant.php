@@ -791,11 +791,8 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
 
     public function getAnneeUniversitaire(): ?AnneeUniversitaire
     {
-        if (null !== $this->getSemestre()) {
-            return $this->getSemestre()->getAnneeUniversitaire();
-        }
+        return $this->getSemestre()?->getAnneeUniversitaire();
 
-        return null;
     }
 
     public function getIntituleSecuriteSociale(): ?string

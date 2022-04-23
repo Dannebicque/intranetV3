@@ -15,11 +15,11 @@ use App\Entity\Date;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Etudiant;
-use Doctrine\ORM\QueryBuilder;
 use function array_key_exists;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\AbstractQuery;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 use Exception;
 

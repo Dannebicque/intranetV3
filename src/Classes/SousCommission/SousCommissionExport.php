@@ -443,7 +443,7 @@ class SousCommissionExport
             $this->myExcelWriter->getColumnAutoSize($colonne);
             ++$colonne;
 
-            $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getDatenaissance() !== null ? $etudiant->getDatenaissance()->format('d/m/Y') : 'err');
+            $this->myExcelWriter->writeCellXY($colonne, $ligne, null !== $etudiant->getDatenaissance() ? $etudiant->getDatenaissance()->format('d/m/Y') : 'err');
             $this->myExcelWriter->getColumnAutoSize($colonne);
             ++$colonne;
 
@@ -620,7 +620,7 @@ class SousCommissionExport
         $this->myExcelWriter->createSheet('Grand Jury '.$semestre->getLibelle());
 
         $ligne = 4;
-
+        $nbUe = $ues->count();
         $this->myExcelWriter->mergeCellsCaR(7, 3, 7 + ($nbUe * 2), 3);
         $this->myExcelWriter->writeCellXY(7, 3, 'Semestre '.$semestre->getOrdreLmd());
         $this->myExcelWriter->borderCellsRange(7, 3, 7 + ($nbUe * 2), 3);
@@ -985,15 +985,6 @@ class SousCommissionExport
                 'Content-Disposition' => 'attachment;filename="Export Grand Jury '.$semestre->getLibelle().'.xlsx"',
             ]
         );
-    }
-
-    private function getStyleMoyenneMatiere($moyenne): string
-    {
-        if ($moyenne < 10) {
-            return self::COULEURS['badge bg-warning'];
-        }
-
-        return '';
     }
 
     private function getStyleMoyenneUe($moyenne): string

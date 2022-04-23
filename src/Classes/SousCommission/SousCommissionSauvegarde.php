@@ -106,7 +106,7 @@ class SousCommissionSauvegarde
                         if (array_key_exists($matiere->getTypeIdMatiere(), $scEtudiant->moyenneMatieres)) {
                             if (true === $matiere->bonification) {
                                 $tMatiere[$matiere->getTypeIdMatiere()]['moyenne'] = max(0,
-                                    $scEtudiant->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyenne());//todo: gérer avec une variable de configuration global.
+                                    $scEtudiant->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyenne()); //todo: gérer avec une variable de configuration global.
 //                                $tMatiere[$matiere->getTypeIdMatiere()]['moyenne'] = max(0,
 //                                    ($scEtudiant->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyenne() - 10) / 20);
                             } elseif (true === $scEtudiant->moyenneMatieres[$matiere->getTypeIdMatiere()]->matiereAAnnuler) {

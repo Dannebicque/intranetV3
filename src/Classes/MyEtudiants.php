@@ -14,12 +14,12 @@ use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use App\Repository\BacRepository;
 use App\Utils\Tools;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
 use function array_key_exists;
 use function count;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use function is_array;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class MyEtudiants
 {

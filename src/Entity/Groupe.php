@@ -63,7 +63,7 @@ class Groupe extends BaseEntity
     private Collection $absenceEtatAppels;
 
     #[ORM\OneToMany(mappedBy: 'groupe', targetEntity: ApcRessourceEnfants::class)]
-    private $apcRessourceEnfants;
+    private Collection $apcRessourceEnfants;
 
     public function __construct()
     {

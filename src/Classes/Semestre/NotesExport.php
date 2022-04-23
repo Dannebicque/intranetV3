@@ -45,10 +45,6 @@ class NotesExport
         $this->typeMatiereManager = $typeMatiereManager;
     }
 
-    /**
-     * @return StreamedResponse
-     * @return StreamedResponse
-     */
     public function exportXlsToutesLesNotes(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): StreamedResponse
     {
         $this->myExcel->createSheet('semestre '.$semestre->getLibelle());

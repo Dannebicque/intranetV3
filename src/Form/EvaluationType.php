@@ -100,11 +100,11 @@ class EvaluationType extends AbstractType
                 ['label' => 'label.evaluation.visible', 'help' => 'help.evaluation.visible'])
 
             ->add('typeGroupe', EntityType::class, [
-                'data' => true === $options['enfant'] ? (null !== $options['groupeEnfant'] ? $options['groupeEnfant']->getTypeGroupe() : null) : null,
+                'data' => true === $options['enfant'] ? ($options['groupeEnfant']?->getTypeGroupe()) : null,
                 'class' => TypeGroupe::class,
                 'label' => 'label.evaluation_type_groupe',
                 'choice_label' => 'libelle',
-                'disabled' => $autorise || ($options['enfant'] && $options['groupeEnfant'] !== null),
+                'disabled' => $autorise || ($options['enfant'] && null !== $options['groupeEnfant']),
                 'query_builder' => function (TypeGroupeRepository $typeGroupeRepository) {
                     return $typeGroupeRepository->findBySemestreBuilder($this->semestre);
                 },

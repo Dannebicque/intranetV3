@@ -12,7 +12,6 @@ namespace App\Controller\administration;
 use App\Classes\Configuration;
 use App\Classes\Matieres\MatiereDelete;
 use App\Classes\Matieres\TypeMatiereManager;
-use App\Components\DeprecatedExporter\SourceIterator\DtoSourceIterator;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Diplome;
@@ -77,13 +76,14 @@ class MatiereController extends BaseController
         TypeMatiereManager $typeMatiereManager,
         Diplome $diplome,
         $_format
-    ): Response {
+    ): ?Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $diplome);
 
         $matieres = $typeMatiereManager->findByDiplome($diplome);
 //        $datas = new DtoSourceIterator($matieres, \App\DTO\Matiere::class, $matieres);
 //
 //        return $exporter->export($datas, $_format, 'matieres');
+        return null;
     }
 
 //    public function export(

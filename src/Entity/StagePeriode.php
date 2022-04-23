@@ -585,6 +585,6 @@ class StagePeriode extends BaseEntity implements Serializable
 
     public function unserialize($data): void
     {
-        $this->uuid = unserialize($data);
+        $this->uuid = unserialize($data, [__CLASS__]);
     }
 }

@@ -32,7 +32,7 @@ class ImportDiplomeController extends BaseController
     {
         if ($request->isMethod('POST')) {
             $ppn = $ppnRepository->find($request->request->get('ppn'));
-            if ($ppn !== null) {
+            if (null !== $ppn) {
                 $fichier = $myUpload->upload($request->files->get('fichier'), 'temp/', ['xml']);
                 $diplomeImport->import($diplome, $fichier, $request->request->get('typeFichier'), $ppn);
                 unlink($fichier);

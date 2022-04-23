@@ -133,9 +133,10 @@ class SousComissionController extends BaseController
     public function exporter(SousCommissionExport $sousCommission, Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
-        if ($semestre->getDiplome()->getTypeDiplome()->getApc() === true) {
+        if (true === $semestre->getDiplome()->getTypeDiplome()->getApc()) {
             return $sousCommission->exportApc($semestre, $this->dataUserSession->getAnneeUniversitaire());
         }
+
         return $sousCommission->export($semestre, $this->dataUserSession->getAnneeUniversitaire());
     }
 
@@ -147,7 +148,7 @@ class SousComissionController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $scolaritePromo->getSemestre());
 
-        if ($scolaritePromo->getSemestre()->getDiplome()->getTypeDiplome()->getApc() === true) {
+        if (true === $scolaritePromo->getSemestre()->getDiplome()->getTypeDiplome()->getApc()) {
             return $sousCommissionExport->exportGrandJuryApc($scolaritePromo, $this->dataUserSession->getAnneeUniversitaire());
         }
 

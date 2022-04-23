@@ -54,9 +54,6 @@ class DiplomeImport
                 $this->deleteFormation($ppn);
                 $this->importFormation($ppn);
                 break;
-            case 'ppn':
-                $this->importPpn();
-                break;
         }
     }
 

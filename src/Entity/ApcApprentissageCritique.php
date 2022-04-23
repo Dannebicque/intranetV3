@@ -141,11 +141,8 @@ class ApcApprentissageCritique extends BaseEntity
 
     public function getCompetence(): ?ApcCompetence
     {
-        if (null !== $this->getNiveau()) {
-            return $this->getNiveau()->getCompetence();
-        }
+        return $this->getNiveau()?->getCompetence();
 
-        return null;
     }
 
     public function getNiveau(): ?ApcNiveau

@@ -64,9 +64,9 @@ class ExportPdfEdtHandler implements MessageHandlerInterface
                 // pass variables (name => value) to the template
                     //todo: a finir pour les expors des PDF des EDT sur le principes des notes avec RabbitMq...
                 ->context([
-                    'semestre' => $semestre,
-                    'personnel' => $personnel,
-                    'lien' => $lien,
+//                    'semestre' => $semestre,
+//                    'personnel' => $personnel,
+//                    'lien' => $lien,
                 ]);
 
             $this->mailer->send($mail);
