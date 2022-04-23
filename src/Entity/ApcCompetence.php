@@ -79,7 +79,7 @@ class ApcCompetence extends BaseEntity
     private Collection $ue;
 
     #[ORM\ManyToOne(targetEntity: Ppn::class, inversedBy: 'apcCompetences')]
-    private $ppn;
+    private ?Ppn $ppn;
 
     public function __construct(Diplome $diplome)
     {

@@ -7,8 +7,20 @@
 {% endif %}
 
 {% block header %}
-    {{ 'adm.referentiel.de.competence.heading'|trans({ '%diplome%': diplome.libelle}) }}
+    {{ 'adm.referentiel.de.competence.heading'|trans({ '%diplome%': diplome.libelle})|raw }}
 {% endblock %}
+
+ {% block headerright %}
+     <div>
+         <label for="ppn">Choisir la version du PN</label>
+         <select class="form-select" name="ppn" id="ppn">
+             <option value=""></option>
+             {% for pn in ppns %}
+             <option value="{{ pn.id }}">{{ pn.libelle }} ({{ pn.annee }})</option>
+             {% endfor %}
+         </select>
+     </div>
+ {% endblock %}
 
 {% block headeractions %}
     <div class="header-action">
@@ -26,6 +38,13 @@
 
         <div class="buttons">
             {% if is_granted('ROLE_SUPER_ADMIN') %}
+                <a href="{{ path('sa_apc_referentiel_import_index', {diplome:diplome.id}) }}" class="btn btn-info
+                btn-sm
+                btn-float"
+                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+                   title="{{ 'atitle.import_referentiel_competence'|trans }}">
+                    <i class="fas fa-upload"><span class="sr-only">importer</span></i>
+                </a>
                 <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
                    title="{{ 'atitle.retour_super_administration'|trans }}">
                     <i class="{{ iconDashboard }}"><span class="sr-only">dashboard</span></i>
@@ -44,7 +63,8 @@
         <div class="tab-pane active" id="complet" role="tabpanel">
             <div class="card">
                 <header class="card-header">
-                    <h4 class="card-title">{{ 'adm.referentiel.de.competence.heading'|trans({ '%diplome%': diplome.libelle}) }}</h4>
+                    <h4 class="card-title">{{ 'adm.referentiel.de.competence.heading'|trans({ '%diplome%': diplome
+                        .libelle})|raw }}</h4>
                     <div class="card-header-actions" style="">
                 <span>
                     <a href="{{ path('administration_apc_niveau_annee_synchro', {diplome:diplome.id}) }}" class="btn

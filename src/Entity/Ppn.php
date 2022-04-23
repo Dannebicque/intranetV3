@@ -15,6 +15,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Deprecated;
 
 #[ORM\Entity(repositoryClass: PpnRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -40,11 +41,15 @@ class Ppn extends BaseEntity
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Semestre>
      */
+    #[Deprecated(['reason' => 'La gestion du PPN se fait en lien avec l\'annee universitaire'])]
     #[ORM\OneToMany(mappedBy: 'ppnActif', targetEntity: Semestre::class)]
     private Collection $semestres;
 
     #[ORM\OneToMany(mappedBy: 'ppn', targetEntity: ApcCompetence::class)]
-    private $apcCompetences;
+    private Collection $apcCompetences;
+
+    #[ORM\OneToMany(mappedBy: 'ppn', targetEntity: AnneeUniversitaireSemestre::class)]
+    private Collection $anneeUniversitaireSemestres;
 
     public function __construct()
     {
@@ -52,6 +57,7 @@ class Ppn extends BaseEntity
         $this->matieres = new ArrayCollection();
         $this->semestres = new ArrayCollection();
         $this->apcCompetences = new ArrayCollection();
+        $this->anneeUniversitaireSemestres = new ArrayCollection();
     }
 
     /**
@@ -175,6 +181,36 @@ class Ppn extends BaseEntity
             // set the owning side to null (unless already changed)
             if ($apcCompetence->getPpn() === $this) {
                 $apcCompetence->setPpn(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AnneeUniversitaireSemestre>
+     */
+    public function getAnneeUniversitaireSemestres(): Collection
+    {
+        return $this->anneeUniversitaireSemestres;
+    }
+
+    public function addAnneeUniversitaireSemestre(AnneeUniversitaireSemestre $anneeUniversitaireSemestre): self
+    {
+        if (!$this->anneeUniversitaireSemestres->contains($anneeUniversitaireSemestre)) {
+            $this->anneeUniversitaireSemestres[] = $anneeUniversitaireSemestre;
+            $anneeUniversitaireSemestre->setPpn($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnneeUniversitaireSemestre(AnneeUniversitaireSemestre $anneeUniversitaireSemestre): self
+    {
+        if ($this->anneeUniversitaireSemestres->removeElement($anneeUniversitaireSemestre)) {
+            // set the owning side to null (unless already changed)
+            if ($anneeUniversitaireSemestre->getPpn() === $this) {
+                $anneeUniversitaireSemestre->setPpn(null);
             }
         }
 

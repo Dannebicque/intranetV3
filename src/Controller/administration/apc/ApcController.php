@@ -25,6 +25,7 @@ class ApcController extends BaseController
 
         return $this->render('apc/referentiel.html.twig', [
             'diplome' => $diplome,
+            'ppns' => $diplome->getPpns(),
             'competences' => $diplome->getApcComptences(),
             'parcours' => $diplome->getApcParcours(),
             'parcoursNiveaux' => $tParcours,
