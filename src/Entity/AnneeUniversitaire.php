@@ -15,6 +15,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Deprecated;
 use Stringable;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -39,6 +40,7 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Departement>
      */
+    #[Deprecated]
     #[ORM\OneToMany(mappedBy: 'anneeUniversitairePrepare', targetEntity: Departement::class)]
     private Collection $departements;
 
@@ -99,10 +101,12 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
     #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: AlternancePlanning::class)]
     private Collection $planningAlternances;
 
+    #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: AnneeUniversitaireSemestre::class)]
+    private Collection $anneeUniversitaireSemestres;
+
     public function __construct()
     {
         $this->setAnnee((int) date('Y'));
-        $this->departements = new ArrayCollection();
         $this->calendriers = new ArrayCollection();
         $this->scolarites = new ArrayCollection();
         $this->scolaritePromos = new ArrayCollection();
@@ -112,6 +116,7 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
         $this->projetPeriodes = new ArrayCollection();
         $this->personnels = new ArrayCollection();
         $this->planningAlternances = new ArrayCollection();
+        $this->anneeUniversitaireSemestres = new ArrayCollection();
     }
 
     public function getLibelle(): ?string
@@ -473,6 +478,36 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
         // set the owning side to null (unless already changed)
         if ($this->planningAlternances->removeElement($planningAlternance) && $planningAlternance->getAnneeUniversitaire() === $this) {
             $planningAlternance->setAnneeUniversitaire(null);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AnneeUniversitaireSemestre>
+     */
+    public function getAnneeUniversitaireSemestres(): Collection
+    {
+        return $this->anneeUniversitaireSemestres;
+    }
+
+    public function addAnneeUniversitaireSemestre(AnneeUniversitaireSemestre $anneeUniversitaireSemestre): self
+    {
+        if (!$this->anneeUniversitaireSemestres->contains($anneeUniversitaireSemestre)) {
+            $this->anneeUniversitaireSemestres[] = $anneeUniversitaireSemestre;
+            $anneeUniversitaireSemestre->setAnneeUniversitaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnneeUniversitaireSemestre(AnneeUniversitaireSemestre $anneeUniversitaireSemestre): self
+    {
+        if ($this->anneeUniversitaireSemestres->removeElement($anneeUniversitaireSemestre)) {
+            // set the owning side to null (unless already changed)
+            if ($anneeUniversitaireSemestre->getAnneeUniversitaire() === $this) {
+                $anneeUniversitaireSemestre->setAnneeUniversitaire(null);
+            }
         }
 
         return $this;

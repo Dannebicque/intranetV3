@@ -16,6 +16,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Deprecated;
 use Stringable;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -29,9 +30,7 @@ class Semestre extends BaseEntity implements Stringable
     #[Groups(groups: ['article_administration', 'date_administration', 'semestre', 'etudiants_administration', 'document_administration'])]
     private ?string $libelle = null;
 
-    /**
-     * @deprecated
-     */
+    #[Deprecated("plus utilisé, centralisé avec l'année")]
     #[ORM\Column(type: Types::STRING, length: 20, nullable: true)]
     private ?string $couleur = null;
 
@@ -160,6 +159,7 @@ class Semestre extends BaseEntity implements Stringable
     private Collection $projetPeriodes;
 
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: ApcRessource::class)]
+    #[Deprecated('plus nécessaire, passe par la collection plus bas.')]
     private Collection $apcRessources;
 
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: ApcSae::class)]
@@ -189,6 +189,12 @@ class Semestre extends BaseEntity implements Stringable
     #[ORM\Column(type: Types::BOOLEAN)]
     private ?bool  $optBilanSemestre = false;
 
+    #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: AnneeUniversitaireSemestre::class)]
+    private Collection $anneeUniversitaireSemestres;
+
+    #[ORM\ManyToMany(targetEntity: ApcRessource::class, mappedBy: 'semestres',fetch: 'EXTRA_LAZY')]
+    private Collection $apcSemestresRessources;
+
     public function __construct()
     {
         $this->init();
@@ -196,6 +202,8 @@ class Semestre extends BaseEntity implements Stringable
         $this->rattrapages = new ArrayCollection();
         $this->absenceJustificatifs = new ArrayCollection();
         $this->absences = new ArrayCollection();
+        $this->anneeUniversitaireSemestres = new ArrayCollection();
+        $this->apcSemestresRessources = new ArrayCollection();
     }
 
     private function init(): void
@@ -1044,11 +1052,13 @@ class Semestre extends BaseEntity implements Stringable
     /**
      * @return Collection|ApcRessource[]
      */
+    #[Deprecated('plus nécessaire')]
     public function getApcRessources(): Collection
     {
         return $this->apcRessources;
     }
 
+    #[Deprecated('plus nécessaire')]
     public function addApcRessource(ApcRessource $apcRessource): self
     {
         if (!$this->apcRessources->contains($apcRessource)) {
@@ -1059,6 +1069,7 @@ class Semestre extends BaseEntity implements Stringable
         return $this;
     }
 
+    #[Deprecated('plus nécessaire')]
     public function removeApcRessource(ApcRessource $apcRessource): self
     {
         // set the owning side to null (unless already changed)
@@ -1300,6 +1311,63 @@ class Semestre extends BaseEntity implements Stringable
     public function setOptBilanSemestre(bool $optBilanSemestre): self
     {
         $this->optBilanSemestre = $optBilanSemestre;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AnneeUniversitaireSemestre>
+     */
+    public function getAnneeUniversitaireSemestres(): Collection
+    {
+        return $this->anneeUniversitaireSemestres;
+    }
+
+    public function addAnneeUniversitaireAnnee(AnneeUniversitaireSemestre $anneeUniversitaireSemestre): self
+    {
+        if (!$this->anneeUniversitaireSemestres->contains($anneeUniversitaireSemestre)) {
+            $this->anneeUniversitaireSemestres[] = $anneeUniversitaireSemestre;
+            $anneeUniversitaireSemestre->setSemestre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAnneeUniversitaireSemestre(AnneeUniversitaireSemestre $anneeUniversitaireSemestre): self
+    {
+        if ($this->anneeUniversitaireSemestres->removeElement($anneeUniversitaireSemestre)) {
+            // set the owning side to null (unless already changed)
+            if ($anneeUniversitaireSemestre->getSemestre() === $this) {
+                $anneeUniversitaireSemestre->setSemestre(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ApcRessource>
+     */
+    public function getApcSemestresRessources(): Collection
+    {
+        return $this->apcSemestresRessources;
+    }
+
+    public function addApcSemestresRessource(ApcRessource $apcSemestresRessource): self
+    {
+        if (!$this->apcSemestresRessources->contains($apcSemestresRessource)) {
+            $this->apcSemestresRessources[] = $apcSemestresRessource;
+            $apcSemestresRessource->addSemestre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeApcSemestresRessource(ApcRessource $apcSemestresRessource): self
+    {
+        if ($this->apcSemestresRessources->removeElement($apcSemestresRessource)) {
+            $apcSemestresRessource->removeSemestre($this);
+        }
 
         return $this;
     }
