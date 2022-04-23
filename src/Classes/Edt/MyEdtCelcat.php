@@ -183,7 +183,7 @@ class MyEdtCelcat extends BaseEdt
     {
         if (array_key_exists($p->getCodeModule(), $this->matieres)) {
             $matiere = $this->matieres[$p->getCodeModule()];
-            if (null !== $matiere && null !== $matiere->semestre) {
+            if (null !== $matiere && null !== $matiere->semestre) {//todo: passer le semestre et pas via matiere
                 $annee = $matiere->semestre->getAnnee();
                 if (null !== $annee) {
                     return $annee->getCouleur();

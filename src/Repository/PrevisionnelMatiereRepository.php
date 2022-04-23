@@ -123,6 +123,26 @@ class PrevisionnelMatiereRepository extends PrevisionnelRepository
             ->getResult();
     }
 
+    public function findPrevisionnelPersonnelSemestre(Personnel $personnel, Semestre $semestre, int $annee): array
+    {
+        return $this->createQueryBuilder('p')
+            ->leftJoin(Personnel::class, 'pers', 'WITH', 'p.personnel = pers.id')
+            ->innerJoin(Matiere::class, 'm', 'WITH', 'p.idMatiere = m.id')
+            ->innerJoin(Ue::class, 'u', 'WITH', 'm.ue = u.id')
+            ->select('p.id as id_previsionnel, p.annee, p.referent, p.nbHCm, p.nbHTd, p.nbHTp, p.nbGrCm, p.nbGrTd, p.nbGrTp, m.id as id_matiere, m.libelle, m.codeMatiere, m.codeElement as matiere_code_element, pers.id as id_personnel, pers.nom, pers.prenom, pers.numeroHarpege, pers.mailUniv, pers.nbHeuresService')
+            ->where('p.annee = :annee')
+            ->andWhere('u.semestre = :semestre')
+            ->andWhere('p.typeMatiere = :type')
+            ->andWhere('pers.id = :personnel')
+            ->setParameter('type', self::TYPE)
+            ->setParameter('annee', $annee)
+            ->setParameter('semestre', $semestre->getId())
+            ->setParameter('personnel', $personnel->getId())
+            ->orderBy('m.codeMatiere', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
     public function findPrevisionnelMatierePersonnelAnnee(int $matiere, Personnel $personnel, int $annee): array
     {
         return $this->createQueryBuilder('p')

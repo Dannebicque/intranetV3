@@ -30,7 +30,7 @@
             {% for semestre in semestres %}
                 <li class="nav-item">
                     <a class="nav-link {% if loop.first %} active{% endif %}" data-bs-toggle="tab"
-                       href="#semestre{{ semestre.id }}">{{ semestre.libelle }}</a>
+                       href="#semestre{{ semestre.id }}">{{ semestre.display }}</a>
                 </li>
             {% endfor %}
             {# feature: devrait afficher les semestres dans lesquels ont intervient ? Que faire si année de prévi

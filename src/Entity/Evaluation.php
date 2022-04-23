@@ -85,10 +85,9 @@ class Evaluation extends BaseEntity
     private ?Personnel $personnelAuteur;
 
     /**
-     *
      * @throws Exception
      */
-    public function __construct(?Personnel $personnelAuteur, \App\DTO\Matiere $mat)
+    public function __construct(?Personnel $personnelAuteur, \App\DTO\Matiere $mat, Semestre $semestre)
     {
         $this->setUuid(Uuid::uuid4());
 
@@ -96,11 +95,10 @@ class Evaluation extends BaseEntity
         $this->idMatiere = $mat->id;
         $this->typeMatiere = $mat->typeMatiere;
 
-        if (null !== $mat->semestre) {
-            $this->anneeUniversitaire = $mat->semestre->getAnneeUniversitaire();
-            $this->setModifiable($mat->semestre->isOptEvaluationModifiable());
-            $this->setVisible($mat->semestre->isOptEvaluationVisible());
-        }
+        $this->anneeUniversitaire = $semestre->getAnneeUniversitaire();
+        $this->setModifiable($semestre->isOptEvaluationModifiable());
+        $this->setVisible($semestre->isOptEvaluationVisible());
+        $this->setSemestre($semestre);
 
         $this->dateEvaluation = Carbon::now();
 

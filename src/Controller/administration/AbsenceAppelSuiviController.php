@@ -15,7 +15,7 @@ use App\Classes\Matieres\TypeMatiereManager;
 use App\Components\DeprecatedExporter\SourceIterator\DtoSourceIterator;
 use App\Controller\BaseController;
 use App\Entity\Semestre;
-use App\Table\AppelSuiviTableType;
+use App\Table\PlanCoursTableType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -41,7 +41,7 @@ class AbsenceAppelSuiviController extends BaseController
         $statsAppel = $this->absenceEtatAppel->getBySemestre($semestre);
         $matieres = $typeMatiereManager->findBySemestreArray($semestre);
 
-        $table = $this->createTable(AppelSuiviTableType::class, [
+        $table = $this->createTable(PlanCoursTableType::class, [
             'matieres' => $matieres,
             'statsAppel' => $statsAppel,
             'semestre' => $semestre,

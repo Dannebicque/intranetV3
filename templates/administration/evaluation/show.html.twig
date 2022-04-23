@@ -90,21 +90,24 @@
     {% block fabactions %}
         {{ include('composants/fab-buttons.html.twig', {boutons:[
             {type: 'info',
-                href: path('administration_evaluation_export', {_format:'pdf', uuid: evaluation.uuidString}),
+                href: path('administration_evaluation_export', {_format:'pdf', uuid: evaluation.uuidString, semestre:
+            semestre.id}),
                 title: 'exporter.pdf'|trans,
                 id: 'export_pdf',
                 icone : "fa fa-file-pdf"
             },
             {
                 type:'info',
-                href:path('administration_evaluation_export', {_format:'csv', uuid: evaluation.uuidString}),
+                href:path('administration_evaluation_export', {_format:'csv', uuid: evaluation.uuidString,semestre:
+                semestre.id}),
                 title: 'exporter.csv'|trans,
                 id: 'export_csv',
                 icone: 'fa fa-file-csv'
             },
             {
                 type:'info',
-                href:path('administration_evaluation_export', {_format:'xlsx', uuid: evaluation.uuidString}),
+                href:path('administration_evaluation_export', {_format:'xlsx', uuid: evaluation.uuidString,semestre:
+                semestre.id}),
                 title: 'exporter.xls'|trans,
                 id: 'export_xlsx',
                 icone: 'fa fa-file-excel'

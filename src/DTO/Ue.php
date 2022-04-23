@@ -11,10 +11,10 @@ namespace App\DTO;
 
 class Ue
 {
-    public int $ue_id;
-    public string $ue_display;
-    public float $ue_coefficient;
-    public int $ue_numero;
-    public string $ue_couleur;
+    public int $ue_id = 0;
+    public string $ue_display = '-';
+    public ?float $ue_coefficient = 0;
+    public int $ue_numero = 0;
+    public string $ue_couleur = '';
     public int $ue_apc_id;
 }

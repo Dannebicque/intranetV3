@@ -24,12 +24,16 @@ class BlocNotesAbsencesController extends BaseController
 {
     public function personnel(PrevisionnelManager $myPrevisionnel): Response
     {
-        $previsionnels = $myPrevisionnel->getPrevisionnelPersonnelDepartementAnnee($this->getUser(),
-            $this->dataUserSession->getDepartement(),
-            $this->dataUserSession->getAnneePrevisionnel());
+
+        $previsionnels = [];
+
+        foreach ($this->getDataUserSession()->getSemestresActifs() as $semestre) {
+            $previsionnels[$semestre->getId()] = $myPrevisionnel->getPrevisionnelPersonnelSemestre($this->getUser(),
+                $semestre, $this->dataUserSession->getAnneePrevisionnel());
+        }
 
         return $this->render('bloc_notes_absences/personnel.html.twig', [
-            'previsionnel' => $previsionnels,
+            'previsionnels' => $previsionnels,
         ]);
     }
 

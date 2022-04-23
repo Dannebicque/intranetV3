@@ -76,10 +76,11 @@ class MailingSubscriber implements EventSubscriberInterface
     public function onMailAbsenceAdded(AbsenceEvent $event): void
     {
         $absence = $event->getAbsence();
+        $semestre = $absence->getSemestre();
         $matiere = $this->typeMatiereManager->getMatiere($absence->getIdMatiere(), $absence->getTypeMatiere());
 
-        if (null !== $matiere && null !== $matiere->semestre) {
-            if (null !== $absence->getEtudiant() && true === $matiere->semestre->isOptMailAbsenceEtudiant()) {
+        if (null !== $matiere && null !== $semestre) {
+            if (null !== $absence->getEtudiant() && true === $semestre->isOptMailAbsenceEtudiant()) {
                 $this->myMailer->initEmail();
                 $this->myMailer->setTemplate('mails/absence_added.txt.twig',
                     ['absence' => $absence, 'matiere' => $matiere]);
@@ -88,12 +89,12 @@ class MailingSubscriber implements EventSubscriberInterface
             }
             $this->myMailer->initEmail();
             //envoi en copie au responsable si l'option est activée
-            if ($matiere->semestre->isOptMailAbsenceResp() && null !== $matiere->semestre->getOptDestMailAbsenceResp()) {
+            if ($semestre->isOptMailAbsenceResp() && null !== $semestre->getOptDestMailAbsenceResp()) {
                 $this->myMailer->initEmail();
                 $this->myMailer->setTemplate('mails/absence_added_responsable.txt.twig',
                     ['absence' => $absence, 'matiere' => $matiere]);
                 $this->myMailer->sendMessage(
-                    $matiere->semestre->getOptDestMailAbsenceResp()->getMails(),
+                    $semestre->getOptDestMailAbsenceResp()->getMails(),
                     'Nouvelle absence enregistrée'
                 );
             }
@@ -185,9 +186,10 @@ class MailingSubscriber implements EventSubscriberInterface
     public function onMailAbsenceRemoved(AbsenceEvent $event): void
     {
         $absence = $event->getAbsence();
+        $semestre = $absence->getSemestre();
         $matiere = $this->typeMatiereManager->getMatiere($absence->getIdMatiere(), $absence->getTypeMatiere());
-        if (null !== $matiere && null !== $matiere->semestre) {
-            if (null !== $absence->getEtudiant() && $matiere->semestre->isOptMailAbsenceEtudiant()) {
+        if (null !== $matiere && null !== $semestre) {
+            if (null !== $absence->getEtudiant() && $semestre->isOptMailAbsenceEtudiant()) {
                 $this->myMailer->initEmail();
                 $this->myMailer->setTemplate('mails/absence_removed.txt.twig',
                     ['absence' => $absence, 'matiere' => $matiere]);
@@ -196,12 +198,12 @@ class MailingSubscriber implements EventSubscriberInterface
                     ['replyTo' => [$absence->getPersonnel()?->getMailUniv()]]);
             }
 
-            if ($matiere->semestre->isOptMailAbsenceResp() && null !== $matiere->semestre->getOptDestMailAbsenceResp()) {
+            if ($semestre->isOptMailAbsenceResp() && null !== $semestre->getOptDestMailAbsenceResp()) {
                 $this->myMailer->initEmail();
                 $this->myMailer->setTemplate('mails/absence_removed_responsable.txt.twig',
                     ['absence' => $absence, 'matiere' => $matiere]);
                 $this->myMailer->sendMessage(
-                    $matiere->semestre->getOptDestMailAbsenceResp()->getMails(),
+                    $semestre->getOptDestMailAbsenceResp()->getMails(),
                     'Suppression d\'une absence enregistrée'
                 );
             }
@@ -215,17 +217,19 @@ class MailingSubscriber implements EventSubscriberInterface
     {
         $note = $event->getNote();
 
+
         if (null !== $note->getEvaluation()) {
+            $semestre = $note->getEvaluation()->getSemestre();
             $matiere = $this->typeMatiereManager->getMatiere($note->getEvaluation()->getIdMatiere(),
                 $note->getEvaluation()->getTypeMatiere());
             if (null !== $matiere &&
-                null !== $matiere->semestre &&
-                null !== $matiere->semestre->getOptDestMailModifNote()) {
+                null !== $semestre &&
+                null !== $semestre->getOptDestMailModifNote()) {
                 $this->myMailer->initEmail();
                 $this->myMailer->setTemplate('mails/note_modification.txt.twig',
                     ['note' => $note, 'matiere' => $matiere]);
                 $this->myMailer->sendMessage(
-                    $matiere->semestre->getOptDestMailModifNote()->getMails(),
+                    $semestre->getOptDestMailModifNote()->getMails(),
                     'Modification d\'une note'
                 );
             }
@@ -238,15 +242,16 @@ class MailingSubscriber implements EventSubscriberInterface
     public function onMailNewTranscriptResponsable(EvaluationEvent $event): void
     {
         $evaluation = $event->getEvaluation();
+        $semestre = $evaluation->getSemestre();
         $matiere = $this->typeMatiereManager->getMatiere($evaluation->getIdMatiere(), $evaluation->getTypeMatiere());
         if (null !== $matiere &&
-            null !== $matiere->semestre &&
-            null !== $matiere->semestre->getOptDestMailReleve()) {
+            null !== $semestre &&
+            null !== $semestre->getOptDestMailReleve()) {
             $this->myMailer->initEmail();
             $this->myMailer->setTemplate('mails/new_transcript.txt.twig',
                 ['evaluation' => $evaluation, 'matiere' => $matiere]);
             $this->myMailer->sendMessage(
-                $matiere->semestre->getOptDestMailReleve()->getMails(),
+                $semestre->getOptDestMailReleve()->getMails(),
                 'Nouveau relevé de note saisi'
             );
         }

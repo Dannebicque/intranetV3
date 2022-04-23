@@ -58,7 +58,7 @@ class EvaluationInitialisationController extends BaseController
                         } else {
                             $pers = $this->getUser();
                         }
-                        $eval = new Evaluation($pers, $matiere);
+                        $eval = new Evaluation($pers, $matiere, $semestre);
                         $eval->setCoefficient($request->request->get('coefficient_'.$matiere->getTypeIdMatiere().'_'.$i));
                         $eval->setLibelle($request->request->get('commentaire_'.$matiere->getTypeIdMatiere().'_'.$i));
                         $eval->setTypegroupe($tGroupes[$request->request->get('typeGroupe_'.$matiere->getTypeIdMatiere().'_'.$i)]);

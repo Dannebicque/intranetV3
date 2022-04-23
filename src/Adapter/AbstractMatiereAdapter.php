@@ -34,6 +34,9 @@ abstract class AbstractMatiereAdapter
         $m->tpFormation = $matiere->getTpFormation();
         $m->suspendu = $matiere->isSuspendu();
 
+        $m->mutualisee = $matiere->getMutualisee();
+        $m->objet = $matiere;
+
         return $m;
     }
 }

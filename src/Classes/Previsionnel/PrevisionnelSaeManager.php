@@ -74,6 +74,13 @@ class PrevisionnelSaeManager extends AbstractPrevisionnelManager implements Prev
         return $this->previsionnelSaeAdapter->collection($data);
     }
 
+    public function getPrevisionnelPersonnelSemestre(Personnel $personnel, Semestre $semestre, int $annee): PrevisionnelCollection
+    {
+        $data = $this->previsionnelRepository->findPrevisionnelPersonnelSemestre($personnel, $semestre, $annee);
+
+        return $this->previsionnelSaeAdapter->collection($data);
+    }
+
     public function findByDepartement(Departement $departement, int $annee = 0): PrevisionnelCollection
     {
         $data = $this->previsionnelRepository->findByDepartement($departement, $annee);

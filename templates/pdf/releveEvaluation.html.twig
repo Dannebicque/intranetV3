@@ -9,7 +9,7 @@
                     <img src="{{ settings('BASE_PATH') }}{{ 'logo/'~user_data.departement.logoName }}" alt="logo" height="75px"/>
                 </td>
                 <td style="text-align: center; width:60%"><h1>{{ user_data.departement.libelle }}</h1>
-                    <h2>{{ matiere.semestre.libelle }}</h2>
+                    <h2>{{ semestre.libelle }}</h2>
                     <h2>{{ user_data.displayAnneeUniversitaire }}</h2></td>
                 <td style="text-align: center; width:20%"><img
                             src="{{ settings('BASE_PATH') }}{{ 'logo/' }}{{ settings('LOGO_IUT') }}"
@@ -31,7 +31,7 @@
         <table style="clear:both;width:100%" class="table">
             <thead>
             <tr>
-                {% if matiere.semestre.annee.diplome.optAnonymat == false %}
+                {% if semestre.annee.diplome.optAnonymat == false %}
                     <th style="width: 15%">N°</th>
                     <th style="width: 30%">Nom - Prénom</th>
                     <th style="width: 20%; text-align: center">Note</th>
@@ -48,7 +48,7 @@
                 <tr>
                     <td style="text-align: center; height: 20px">{{ etudiant.numEtudiant }}</td>
 
-                    {% if matiere.semestre.annee.diplome.optAnonymat == false %}
+                    {% if semestre.annee.diplome.optAnonymat == false %}
                         <td>&nbsp; {{ etudiant.display }} </td>
                     {% endif %}
 

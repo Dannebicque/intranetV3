@@ -67,14 +67,14 @@ class MatiereApiController extends BaseController
         ]);
     }
 
-    #[Route(path: '/document/export/{matiere}/{typeMatiere}', name: 'api_export_document_matiere', options: ['expose' => true])]
-    public function exportDocument(int $matiere, string $typeMatiere): Response
+    #[Route(path: '/document/export/{matiere}/{typeMatiere}/{semestre}', name: 'api_export_document_matiere', options: ['expose' => true])]
+    public function exportDocument(int $matiere, string $typeMatiere, Semestre $semestre): Response
     {
         $mat = $this->typeMatiereManager->getMatiere($matiere, $typeMatiere);
 
         return $this->render('api/matiere/document/export.html.twig', [
             'matiere' => $mat,
-            'typeGroupes' => $mat->semestre->getTypeGroupes(),
+            'typeGroupes' => $semestre->getTypeGroupes(),
         ]);
     }
 

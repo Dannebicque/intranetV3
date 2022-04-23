@@ -20,7 +20,8 @@
             </button>
             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                 {% for sem in user_data.semestresActifs %}
-                        <a class="dropdown-item" href="{{ path('agenda_index',{filtre:'promo',valeur:sem.id,semaine:edt.semaine}) }}">{{ sem.libelle }}</a>
+                        <a class="dropdown-item" href="{{ path('agenda_index',{filtre:'promo',valeur:sem.id,
+                            semaine:edt.semaine}) }}">{{ sem.display }}</a>
                     {% endfor %}
                 </div>
             <a class="btn {% if edt.filtre=='prof' %} btn-primary{% else %}btn-secondary{% endif %}"
@@ -30,7 +31,7 @@
         <div class="btn-group hide-on-small">
             {% for sem in user_data.semestresActifs %}
                 <a class="btn {% if filtre == 'promo' and semestre.id==sem.id %}btn-primary{% else %}btn-secondary{% endif %}"
-                   href="{{ path('agenda_index',{filtre:'promo',valeur:sem.id,semaine:edt.semaine}) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Emploi du temps du semestre {{ sem.libelle }}">{{ sem.libelle }}</a>
+                   href="{{ path('agenda_index',{filtre:'promo',valeur:sem.id,semaine:edt.semaine}) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Emploi du temps du semestre {{ sem.libelle }}">{{ sem.display }}</a>
             {% endfor %}
             <a class="btn {% if edt.filtre=='prof' %} btn-primary{% else %}btn-secondary{% endif %}"
                href="{{ path('agenda_index',{filtre:'prof',valeur:user_data.user.id,semaine:edt.semaine}) }}"

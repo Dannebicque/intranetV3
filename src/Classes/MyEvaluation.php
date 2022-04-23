@@ -232,7 +232,7 @@ class MyEvaluation
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function exportReleve(string $_format, Collection | array $groupes, Departement $departement): StreamedResponse | PdfResponse | null
+    public function exportReleve(string $_format, Collection | array $groupes, Semestre $semestre): StreamedResponse | PdfResponse | null
     {
         $notes = $this->getNotesTableau();
         $matiere = $this->typeMatiereManager->getMatiereFromSelect($this->evaluation->getTypeIdMatiere());
@@ -249,13 +249,15 @@ class MyEvaluation
                     'groupes' => $groupes,
                     'notes' => $notes,
                     'matiere' => $matiere,
+                    'semestre' => $semestre,
                 ], $name);
             case Constantes::FORMAT_EXCEL:
                 $this->myExcelMultiExport->genereReleveExcel(
                     $this->evaluation,
                     $groupes,
                     $notes,
-                    $matiere
+                    $matiere,
+                    $semestre
                 );
 
                 return $this->myExcelMultiExport->saveXlsx($name);
@@ -264,7 +266,8 @@ class MyEvaluation
                     $this->evaluation,
                     $groupes,
                     $notes,
-                    $matiere
+                    $matiere,
+                    $semestre
                 );
 
                 return $this->myExcelMultiExport->saveCsv($name);

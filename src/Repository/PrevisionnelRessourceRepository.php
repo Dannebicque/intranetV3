@@ -38,12 +38,11 @@ class PrevisionnelRessourceRepository extends PrevisionnelRepository
         int $annee,
         ?Departement $departement = null
     ): array {
-        //todo: s.id as id_semestre pourrait ne pas marcher si une ressource est sur plusieurs semestre ??
         $query = $this->createQueryBuilder('p')
             ->innerJoin(ApcRessource::class, 'm', 'WITH', 'p.idMatiere = m.id')
             ->innerJoin(Personnel::class, 'pers', 'WITH', 'p.personnel = pers.id')
             ->select('p.id as id_previsionnel, p.annee, p.referent, p.nbHCm, p.nbHTd, p.nbHTp, p.nbGrCm, p.nbGrTd, p.nbGrTp, m.id as id_ressource, m.libelle, m.codeMatiere, m.codeElement as matiere_code_element, pers.id as id_personnel, pers.nom, pers.prenom, pers.numeroHarpege, pers.mailUniv, pers.nbHeuresService, s.id as id_semestre, s.libelle as libelle_semestre, a.id as id_annee, a.libelle as libelle_annee, d.id as id_diplome, d.libelle as libelle_diplome')
-            ->innerJoin('m.semestres', 's')
+            ->leftJoin('m.semestres', 's')
             ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
             ->andWhere('p.personnel = :personnel')
@@ -106,13 +105,33 @@ class PrevisionnelRessourceRepository extends PrevisionnelRepository
         return $this->createQueryBuilder('p')
             ->leftJoin(Personnel::class, 'pers', 'WITH', 'p.personnel = pers.id')
             ->innerJoin(ApcRessource::class, 'm', 'WITH', 'p.idMatiere = m.id')
-            ->innerJoin('m.semestres', 's')
+            ->leftJoin('m.semestres', 's')
             ->select('p.id as id_previsionnel, p.annee, p.referent, p.nbHCm, p.nbHTd, p.nbHTp, p.nbGrCm, p.nbGrTd, p.nbGrTp, m.id as id_ressource, m.libelle, m.codeMatiere, m.codeElement as matiere_code_element, pers.id as id_personnel, pers.nom, pers.prenom, pers.numeroHarpege, pers.mailUniv, pers.nbHeuresService')
             ->where('p.annee = :annee')
             ->andWhere('s.id = :semestre')
             ->andWhere('p.typeMatiere = :type')
             ->setParameter('type', self::TYPE)
             ->setParameter('annee', $annee)
+            ->setParameter('semestre', $semestre->getId())
+            ->orderBy('m.codeMatiere', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findPrevisionnelPersonnelSemestre(Personnel $personnel, Semestre $semestre, int $annee): array
+    {
+        return $this->createQueryBuilder('p')
+            ->leftJoin(Personnel::class, 'pers', 'WITH', 'p.personnel = pers.id')
+            ->innerJoin(ApcRessource::class, 'm', 'WITH', 'p.idMatiere = m.id')
+            ->leftJoin('m.semestres', 's')
+            ->select('p.id as id_previsionnel, p.annee, p.referent, p.nbHCm, p.nbHTd, p.nbHTp, p.nbGrCm, p.nbGrTd, p.nbGrTp, m.id as id_ressource, m.libelle, m.codeMatiere, m.codeElement as matiere_code_element, pers.id as id_personnel, pers.nom, pers.prenom, pers.numeroHarpege, pers.mailUniv, pers.nbHeuresService')
+            ->where('p.annee = :annee')
+            ->andWhere('s.id = :semestre')
+            ->andWhere('pers.id = :personnel')
+            ->andWhere('p.typeMatiere = :type')
+            ->setParameter('type', self::TYPE)
+            ->setParameter('annee', $annee)
+            ->setParameter('personnel', $personnel->getId())
             ->setParameter('semestre', $semestre->getId())
             ->orderBy('m.codeMatiere', 'ASC')
             ->getQuery()

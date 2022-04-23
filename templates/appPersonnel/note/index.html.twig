@@ -116,11 +116,14 @@
                                                     </button>
                                                     <div class="dropdown-menu">
                                                         <a class="dropdown-item"
-                                                           href="{{ path('application_personnel_evaluation_export', {uuid:eval.uuidString, _format:'pdf', type:'groupe_'~groupe.id}) }}">{{ 'exporter.pdf'|trans }}</a>
+                                                           href="{{ path('application_personnel_evaluation_export',
+                                                               {uuid:eval.uuidString, _format:'pdf',
+                                                                   type:'groupe_'~groupe.id, semestre: semestre.id})
+                                                           }}">{{ 'exporter.pdf'|trans }}</a>
                                                         <a class="dropdown-item"
-                                                           href="{{ path('application_personnel_evaluation_export', {uuid:eval.uuidString, _format:'xlsx', type:'groupe_'~groupe.id}) }}">{{ 'exporter.xls'|trans }}</a>
+                                                           href="{{ path('application_personnel_evaluation_export', {uuid:eval.uuidString, _format:'xlsx', type:'groupe_'~groupe.id, semestre: semestre.id}) }}">{{ 'exporter.xls'|trans }}</a>
                                                         <a class="dropdown-item"
-                                                           href="{{ path('application_personnel_evaluation_export', {uuid:eval.uuidString, _format:'csv', type:'groupe_'~groupe.id}) }}">{{ 'exporter.csv'|trans }}</a>
+                                                           href="{{ path('application_personnel_evaluation_export', {uuid:eval.uuidString, _format:'csv', type:'groupe_'~groupe.id, semestre: semestre.id}) }}">{{ 'exporter.csv'|trans }}</a>
                                                     </div>
                                                 </div>
                                                 <a href="{{ path('application_personnel_evaluation_show', {uuid:eval.uuidString}) }}"
@@ -136,11 +139,11 @@
                                                 </button>
                                                 <div class="dropdown-menu">
                                                     <a class="dropdown-item"
-                                                       href="{{ path('application_personnel_evaluation_export', {uuid:eval.uuidString, _format:'pdf', type:'all'}) }}">{{ 'exporter.pdf'|trans }}</a>
+                                                       href="{{ path('application_personnel_evaluation_export', {uuid:eval.uuidString, _format:'pdf', type:'all', semestre: semestre.id}) }}">{{ 'exporter.pdf'|trans }}</a>
                                                     <a class="dropdown-item"
-                                                       href="{{ path('application_personnel_evaluation_export', {uuid:eval.uuidString, _format:'xlsx', type:'all'}) }}">{{ 'exporter.xls'|trans }}</a>
+                                                       href="{{ path('application_personnel_evaluation_export', {uuid:eval.uuidString, _format:'xlsx', type:'all', semestre: semestre.id}) }}">{{ 'exporter.xls'|trans }}</a>
                                                     <a class="dropdown-item"
-                                                       href="{{ path('application_personnel_evaluation_export', {uuid:eval.uuidString, _format:'csv', type:'all'}) }}">{{ 'exporter.csv'|trans }}</a>
+                                                       href="{{ path('application_personnel_evaluation_export', {uuid:eval.uuidString, _format:'csv', type:'all', semestre: semestre.id}) }}">{{ 'exporter.csv'|trans }}</a>
                                                 </div>
                                             </div>
                                         </td>
@@ -168,7 +171,8 @@
                             <h4 class="card-title">{{ 'evaluation'|trans }} N° {{ i+1 }} ({{ 'a.saisir'|trans }})</h4>
                             <div class="card-body">
                                 <div class="d-grid">
-                                    <a href="{{ path('application_personnel_note_saisie', {matiere:matiere.typeIdMatiere}) }}"
+                                    <a href="{{ path('application_personnel_note_saisie', {matiere:matiere
+                                    .typeIdMatiere, semestre: semestre.id}) }}"
                                        class="btn d-block btn-large btn-primary">{{ 'note.saisie'|trans }}</a>
                                 </div>
                             </div>

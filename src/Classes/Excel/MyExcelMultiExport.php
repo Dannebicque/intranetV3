@@ -199,13 +199,13 @@ class MyExcelMultiExport
         }
     }
 
-    public function genereReleveExcel(Evaluation $evaluation, array $groupes, array $notes, Matiere $matiere): void
+    public function genereReleveExcel(Evaluation $evaluation, array $groupes, array $notes, Matiere $matiere, Semestre $semestre): void
     {
         /** @var Groupe $groupe */
         foreach ($groupes as $groupe) {
             $this->myExcelWriter->createSheet($groupe->getLibelle());
-            //todo: modifier en-tete pour ajouter les infos de l'évaluation. modele PDF. Sauf si CSV?
-            if (true === $matiere->semestre->getAnnee()?->getDiplome()?->isOptAnonymat()) {
+            //todo: modifier en-tete pour ajouter les infos de l'évaluation. modele PDF. Sauf si CSV? Evaluation et Matiere inutiles ?
+            if (true === $semestre->getAnnee()?->getDiplome()?->isOptAnonymat()) {
                 $this->myExcelWriter->writeHeader(['num_etudiant', 'note', 'remise copie', 'commentaire']);
             } else {
                 $this->myExcelWriter->writeHeader([
@@ -224,7 +224,7 @@ class MyExcelMultiExport
             foreach ($groupe->getEtudiants() as $etudiant) {
                 $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNumEtudiant());
                 ++$colonne;
-                if (false === $matiere->semestre->getAnnee()?->getDiplome()?->isOptAnonymat()) {
+                if (false === $semestre->getAnnee()?->getDiplome()?->isOptAnonymat()) {
                     $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNom());
                     ++$colonne;
                     $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getPrenom());

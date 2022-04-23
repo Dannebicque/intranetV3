@@ -5,7 +5,8 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-            <a href="{{ path('application_personnel_absence_index',{matiere:matiere.id}) }}" class="btn btn-info btn-sm btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+            <a href="{{ path('application_personnel_absence_index',{semestre: semestre.id, matiere:matiere.id}) }}"
+               class="btn btn-info btn-sm btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
                title="{{ 'atitle.retour_saisie'|trans }}"><i class="fas fa-plus"></i></a>
             <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
                title="{{ 'atitle.retour_dashboard'|trans }}">
@@ -83,13 +84,13 @@
         },
         {
             type:'info',
-            href:path('application_personnel_absence_export', {matiere:matiere.typeIdMatiere,_format:'xlsx'}),
+            href:path('application_personnel_absence_export', {semestre: semestre.id,matiere:matiere.typeIdMatiere,_format:'xlsx'}),
             title: 'exporter.xls'|trans,
             icone: 'fa fa-file-excel'
         },
         {
             type:'info',
-            href:path('application_personnel_absence_index',{matiere:matiere.typeIdMatiere}),
+            href:path('application_personnel_absence_index',{semestre: semestre.id,matiere:matiere.typeIdMatiere}),
             title: 'ajouter'|trans,
             icone: 'fas fa-plus'
         },

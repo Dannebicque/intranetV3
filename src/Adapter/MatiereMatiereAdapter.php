@@ -35,18 +35,17 @@ class MatiereMatiereAdapter extends AbstractMatiereAdapter implements MatiereAda
             $m->commentaire = $matiere->getCommentaire();
             $m->nbEcts = $matiere->getNbEcts();
             $m->bonification = $matiere->getPac();
-//            $m->ue_id = $matiere->getUe() ? $matiere->getUe()->getId() : 0;
-//            $m->ue_display = $matiere->getUe() ? $matiere->getUe()->getDisplay() : '-';
-//            $m->ue_numero = $matiere->getUe()?->getNumeroUe();
-            $m->semestre = $matiere->getUe()?->getSemestre();
             $m->parcours = $matiere->getParcours();
             $m->coefficient = $matiere->getCoefficient();
 
             $ue = new Ue();
-            $ue->ue_id = $matiere->getUe() ? $matiere->getUe()->getId() : 0;
-            $ue->ue_display = $matiere->getUe() ? $matiere->getUe()->getDisplay() : '-';
-            $ue->ue_coefficient = $matiere->getUe()?->getCoefficient();
-            $ue->ue_numero = $matiere->getUe()?->getNumeroUe();
+            if (null !== $matiere->getUe()) {
+                $ue = new Ue();
+                $ue->ue_id = $matiere->getUe()->getId();
+                $ue->ue_display = $matiere->getUe()->getDisplay();
+                $ue->ue_coefficient = $matiere->getUe()->getCoefficient();
+                $ue->ue_numero = $matiere->getUe()->getNumeroUe();
+            }
             $m->tab_ues[] = $ue;
         }
 

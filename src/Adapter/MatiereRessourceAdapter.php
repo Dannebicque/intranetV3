@@ -31,15 +31,9 @@ class MatiereRessourceAdapter extends AbstractMatiereAdapter implements MatiereA
         $m = parent::single($matiere);
 
         if (null !== $m) {
-            $m->isParent = $matiere->isParent();
-            $m->isEnfant = $matiere->isEnfant();
-            $m->groupeEnfant = $matiere->groupeEnfant();
-            $m->parent = true === $matiere->isEnfant() ? $matiere->getApcRessourceEnfantEnfants()[0]->getApcRessourceParent() : null;
-            $m->enfants = true === $matiere->isParent() ? $matiere->getApcRessourceParentEnfants() : null;
 
             $m->apc = true;
             $m->id = $matiere->getId();
-            $m->semestre = $matiere->getSemestre();
 
             foreach ($matiere->getApcRessourceCompetences() as $competence) {
                 $ue = new Ue();

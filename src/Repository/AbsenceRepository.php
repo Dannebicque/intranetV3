@@ -62,7 +62,7 @@ class AbsenceRepository extends ServiceEntityRepository
         return $tab;
     }
 
-    public function getByMatiere(Matiere $matiere, ?AnneeUniversitaire $anneeUniversitaire = null): array
+    public function getByMatiere(Matiere $matiere, ?AnneeUniversitaire $anneeUniversitaire = null, ?Semestre $semestre = null): array
     {
         $query = $this->createQueryBuilder('m')
             ->where('m.idMatiere = :matiere')
@@ -75,6 +75,12 @@ class AbsenceRepository extends ServiceEntityRepository
             $query->innerJoin(AnneeUniversitaire::class, 'a', 'WITH', 'm.anneeUniversitaire = a.id')
                 ->andWhere('a.annee = :annee')
                 ->setParameter('annee', $anneeUniversitaire->getAnnee());
+        }
+
+        if (null !== $semestre) {
+            $query
+                ->andWhere('m.semestre = :semestre')
+                ->setParameter('semestre', $semestre->getId());
         }
 
         return $query->getQuery()
@@ -198,6 +204,7 @@ class AbsenceRepository extends ServiceEntityRepository
         }
 
         return $this->createQueryBuilder('a')
+            ->innerJoin(Semestre::class, 's', 'WITH', 'a.semestre = s.id')
             ->innerJoin(Etudiant::class, 'e', 'WITH', 'a.etudiant = e.id')
             ->where('a.dateHeure >= :dateDebut')
             ->andWhere('a.dateHeure <= :dateFin')
@@ -205,7 +212,7 @@ class AbsenceRepository extends ServiceEntityRepository
             ->setParameter('dateDebut', $dateDebut)
             ->setParameter('dateFin', $dateFin)
             ->setParameter('departement', $departement->getId())
-            ->orderBy('a.semestre', 'ASC')
+            ->orderBy('s.libelle', 'ASC')
             ->addOrderBy('a.dateHeure', 'ASC')
             ->addOrderBy('e.nom', 'ASC')
             ->getQuery()

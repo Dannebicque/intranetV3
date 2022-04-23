@@ -88,7 +88,7 @@ class MySalleExamen
                 }
             }
         } else {
-            $grdetail = $this->groupeDefaut($this->matiere->semestre);
+            $grdetail = $this->groupeDefaut($this->matiere->semestre);//todo: comment récupérer le semestre sans dépendre de matière ? ou justement garder ca et afficher tous les groupes mutualisés
             $this->typeGroupe = $grdetail[0]->getTypeGroupe();
             $etudiants = $this->etudiantRepository->findBySemestre($this->matiere->semestre);
         }

@@ -98,7 +98,10 @@ class TrombinoscopeController extends BaseController
      */
     #[Route(path: '/etudiant/{semestre<\d+>}', name: 'trombinoscope_etudiant_semestre', options: ['expose' => true])]
     #[Route(path: '/etudiant/{semestre<\d+>}/{typegroupe<\d+>}', name: 'trombinoscope_etudiant_semestre_type_groupe', options: ['expose' => true])]
-    public function trombiEtudiantSemestre(EtudiantRepository $etudiantRepository, GroupeRepository $groupeRepository, Semestre $semestre, ?TypeGroupe $typegroupe = null): Response
+    public function trombiEtudiantSemestre(EtudiantRepository $etudiantRepository,
+        GroupeRepository $groupeRepository,
+        Semestre $semestre,
+        ?TypeGroupe $typegroupe = null): Response
     {
         $groupes = null;
         if (null !== $typegroupe) {

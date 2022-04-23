@@ -70,8 +70,12 @@ class PrevisionnelManager
         return $this->getManager($type)->findPrevisionnelMatiere($matiere, $annee);
     }
 
-    public function getPrevisionnelMatierePersonnel(UtilisateurInterface $personnel, int $matiere, string $type, int $annee): PrevisionnelCollection
-    {
+    public function getPrevisionnelMatierePersonnel(
+        UtilisateurInterface $personnel,
+        int $matiere,
+        string $type,
+        int $annee
+    ): PrevisionnelCollection {
         return $this->getManager($type)->findPrevisionnelMatierePersonnelAnnee($matiere, $personnel, $annee);
     }
 
@@ -84,6 +88,17 @@ class PrevisionnelManager
         }
 
         return array_merge(...$t); //todo: ca retourne un array ? comment retourner une collection ? Add ?
+    }
+
+    public function getPrevisionnelPersonnelSemestre(Personnel $personnel, Semestre $semestre, int $annee): array
+    {
+        $t = [];
+        foreach ($this->managers as $manager) {
+            $previs = $manager->getPrevisionnelPersonnelSemestre($personnel, $semestre, $annee);
+            $t[] = $previs->toArray();
+        }
+
+        return array_merge(...$t);
     }
 
     public function getPrevisionnelAnnee(Annee $annee, int $anneeUniversitaire = 0): array
@@ -106,7 +121,7 @@ class PrevisionnelManager
         foreach ($previsionnels as $p) {
             $tPrevisionnel[$p->id]['matiere'] = $p->matiere_libelle;
             $tPrevisionnel[$p->id]['libelle'] = $p->matiere_libelle;
-            $tPrevisionnel[$p->id]['personnel'] = $p->personnel_prenom.' '.$p->personnel_nom;
+            $tPrevisionnel[$p->id]['personnel'] = $p->personnel_prenom . ' ' . $p->personnel_nom;
         }
 
         return $tPrevisionnel;
@@ -144,7 +159,7 @@ class PrevisionnelManager
         return array_merge(...$t);
     }
 
-    public function update(Previsionnel $previ, string  $name, mixed $value): bool
+    public function update(Previsionnel $previ, string $name, mixed $value): bool
     {
         if ('personnel' === $name) {
             if ('' === $value) {
@@ -163,7 +178,7 @@ class PrevisionnelManager
 
             return false;
         }
-        $method = 'set'.$name;
+        $method = 'set' . $name;
         if (method_exists($previ, $method)) {
             $previ->$method(Tools::convertToFloat($value));
             $this->entityManager->flush();

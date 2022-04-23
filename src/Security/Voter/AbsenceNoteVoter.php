@@ -30,7 +30,7 @@ class AbsenceNoteVoter extends Voter
     protected function supports(string $attribute, $subject): bool
     {
         return in_array($attribute, ['CAN_ADD_ABSENCE', 'CAN_ADD_NOTE', 'CAN_EDIT_ABSENCE'])
-            && $subject instanceof Matiere;
+            && is_array($subject);
     }
 
     protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
@@ -43,11 +43,11 @@ class AbsenceNoteVoter extends Voter
         }
         //todo: tester éventuellement des droits supplémentaire, et donc pas besoin de prévisionnel?
 
-        if (!$this->abstractVoter->userInGoodDepartement($subject->semestre?->getDiplome()?->getDepartement())) {
+        if (!$this->abstractVoter->userInGoodDepartement($subject['semestre']->getDiplome()?->getDepartement())) {
             throw new AccessDeniedException('Vous n\'êtes pas dans le département associé à cette matière/ressource/SAÉ');
         }
 
-        if ($this->abstractVoter->isResponsableDepartement($subject->semestre?->getDiplome()?->getDepartement())) {
+        if ($this->abstractVoter->isResponsableDepartement($subject['semestre']->getDiplome()?->getDepartement())) {
             return true;
         }
 
@@ -55,8 +55,8 @@ class AbsenceNoteVoter extends Voter
             case 'CAN_ADD_ABSENCE':
                 //check if previsionnel exist...
                 $previ = $this->previsionnelRepository->findBy([
-                    'typeMatiere' => $subject->typeMatiere,
-                    'idMatiere' => $subject->id,
+                    'typeMatiere' => $subject['matiere']->typeMatiere,
+                    'idMatiere' => $subject['matiere']->id,
                 ]);
                 if (0 === count($previ)) {
                     throw new AccessDeniedException('Vous ne pouvez pas saisir d\'absence dans cette matière/ressource/SAÉ');
@@ -65,8 +65,8 @@ class AbsenceNoteVoter extends Voter
             case 'CAN_ADD_NOTE':
                 //check if previsionnel exist... Vérifier selon l'étape s'il peut agir sur l'évaluation
                 $previ = $this->previsionnelRepository->findBy([
-                    'typeMatiere' => $subject->typeMatiere,
-                    'idMatiere' => $subject->id,
+                    'typeMatiere' => $subject['matiere']->typeMatiere,
+                    'idMatiere' => $subject['matiere']->id,
                 ]);
                 if (0 === count($previ)) {
                     throw new AccessDeniedException('Vous ne pouvez pas saisir d\'évaluation dans cette matière/ressource/SAÉ');

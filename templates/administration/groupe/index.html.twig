@@ -15,7 +15,7 @@
                             (afficheSemestre == null and loop.first) %}active show{% endif %} change-semestre"
                            data-bs-toggle="tab"
                            href="#semestre{{ semestre.id }}" role="tab" data-semestre="{{ semestre.id }}">{{ semestre
-                            .libelle }}
+                            .display }}
                         </a>
                     </li>
                 {% endif %}

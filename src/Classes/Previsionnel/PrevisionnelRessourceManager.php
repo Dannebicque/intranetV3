@@ -16,19 +16,18 @@ use App\Entity\Diplome;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Repository\PrevisionnelRessourceRepository;
+use App\Repository\SemestreRepository;
 
 class PrevisionnelRessourceManager extends AbstractPrevisionnelManager implements PrevisionnelManagerInterface
 {
     public const TYPE = 'ressource';
-    private PrevisionnelRessourceRepository $previsionnelRepository;
-    private PrevisionnelRessourceAdapter $previsionnelRessourceAdapter;
+
 
     public function __construct(
-        PrevisionnelRessourceRepository $previsionnelRepository,
-        PrevisionnelRessourceAdapter $previsionnelRessourceAdapter
+        private PrevisionnelRessourceRepository $previsionnelRepository,
+        private PrevisionnelRessourceAdapter $previsionnelRessourceAdapter
     ) {
-        $this->previsionnelRepository = $previsionnelRepository;
-        $this->previsionnelRessourceAdapter = $previsionnelRessourceAdapter;
+
     }
 
     public function getPrevisionnelPersonnelAnnee(Personnel $personnel, int $annee): PrevisionnelCollection
@@ -70,6 +69,13 @@ class PrevisionnelRessourceManager extends AbstractPrevisionnelManager implement
     public function getPrevisionnelSemestre(Semestre $semestre, int $annee): PrevisionnelCollection
     {
         $data = $this->previsionnelRepository->findPrevisionnelSemestre($semestre, $annee);
+
+        return $this->previsionnelRessourceAdapter->collection($data);
+    }
+
+    public function getPrevisionnelPersonnelSemestre(Personnel $personnel, Semestre $semestre, int $annee): PrevisionnelCollection
+    {
+        $data = $this->previsionnelRepository->findPrevisionnelPersonnelSemestre($personnel, $semestre, $annee);
 
         return $this->previsionnelRessourceAdapter->collection($data);
     }

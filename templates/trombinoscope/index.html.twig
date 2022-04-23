@@ -19,7 +19,7 @@
                     <a class="nav-link {% if loop.first %}active show{% endif %} semestretrombi" data-bs-toggle="tab"
                        href="#" data-sem="{{ semestre.id }}" role="tab"
                        data-action="click->trombinoscope#changementSemestre"
-                    >{{ semestre.libelle }}
+                    >{{ semestre.display }}
                         <small>({{ semestre.etudiants|length }})</small>
                     </a>
                 </li>

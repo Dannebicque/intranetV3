@@ -42,6 +42,8 @@ class Matiere
     public float $nbEcts = 1;
 
     public bool $bonification = false;
+    public bool $mutualisee = false;
+
     public ?Groupe $groupeEnfant = null;
 
     /**  ne-pas-exporter */
@@ -56,14 +58,13 @@ class Matiere
     public array $tab_ues = []; //tableau d'UE/Compétences
 
     public bool $suspendu = false;
-    public ?Semestre $semestre;
+
+    /** @deprecated */
+    public ?Semestre $semestre = null;
+
     public ?Parcour $parcours;
 
-    public bool $isParent = false;
-    public bool $isEnfant = false;
-
-    public mixed $parent = null;
-    public ?Collection $enfants;
+    public mixed $objet;
 
     public function getUeId(): ?int
     {
@@ -142,5 +143,52 @@ class Matiere
     public function getEtuFormation(): float
     {
         return $this->cmFormation + $this->tdFormation + $this->tpFormation;
+    }
+
+    public function isParent(): bool
+    {
+        if (method_exists($this->objet, 'isParent')) {
+            return $this->objet->isParent();
+        }
+
+        return false;
+    }
+
+    public function isEnfant(): bool
+    {
+        if (method_exists($this->objet, 'isEnfant')) {
+            return $this->objet->isEnfant();
+        }
+
+        return false;
+    }
+
+    public function groupeEnfant(): ?Groupe
+    {
+        return $this->objet->groupeEnfant();
+    }
+
+    public function parent(): mixed
+    {
+        return true === $this->isEnfant() ? $this->objet->getApcRessourceEnfantEnfants()[0]->getApcRessourceParent() : null;
+    }
+
+    public function enfants(): ?Collection
+    {
+        return true === $this->isParent() ? $this->objet->getApcRessourceParentEnfants() : null;
+    }
+
+    public function getSemestres(): ?Collection
+    {
+        return $this->objet->getSemestres();
+    }
+
+    public function semestre(): ?Semestre
+    {
+        if (false === $this->mutualisee) {
+            return $this->objet->getSemestre();
+        }
+
+        return null;
     }
 }

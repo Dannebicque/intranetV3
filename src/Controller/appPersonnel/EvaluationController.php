@@ -35,7 +35,7 @@ class EvaluationController extends BaseController
     public function detailsEvaluation(TypeMatiereManager $typeMatiereManager, MyEvaluation $myEvaluation, Evaluation $evaluation): Response
     {
         $matiere = $typeMatiereManager->getMatiere($evaluation->getIdMatiere(), $evaluation->getTypeMatiere());
-        $this->denyAccessUnlessGranted('CAN_ADD_NOTE', $matiere);
+        $this->denyAccessUnlessGranted('CAN_ADD_NOTE', ['matiere' => $matiere, 'semestre' => $evaluation->getSemestre()]);
         $notes = $myEvaluation->setEvaluation($evaluation)->getNotesTableau();
 
         return $this->render('appPersonnel/note/saisie_2.html.twig', [
@@ -90,10 +90,11 @@ class EvaluationController extends BaseController
      * @throws RuntimeError
      * @throws \App\Exception\MatiereNotFoundException
      */
-    #[Route(path: '/export/{uuid}/{type}/{_format}', name: 'application_personnel_evaluation_export', requirements: ['evaluation' => '\d+', '_format' => 'csv|xlsx|pdf'])]
-    public function exportEvaluation(GroupeRepository $groupeRepository, MyEvaluation $myEvaluation, Evaluation $evaluation, $type, $_format)
+    #[Route(path: '/export/{uuid}/{type}-{semestre}.{_format}', name: 'application_personnel_evaluation_export', requirements: ['evaluation' => '\d+', '_format' => 'csv|xlsx|pdf'])]
+    public function exportEvaluation(GroupeRepository $groupeRepository, MyEvaluation $myEvaluation, Evaluation $evaluation, $type, $_format, Semestre $semestre)
     {
         //todo: tester au niveau évaluation
+        //todo: supprimer semestre s'il est dans évaluation ensuite...
         $t = explode('_', $type);
         if ('groupe' === $t[0]) {
             $grp = $groupeRepository->find($t[1]);
@@ -105,6 +106,6 @@ class EvaluationController extends BaseController
         }
 
         return $myEvaluation->setEvaluation($evaluation)->exportReleve($_format, $data,
-            $this->dataUserSession->getDepartement());
+           $semestre);
     }
 }

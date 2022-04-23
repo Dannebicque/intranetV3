@@ -190,7 +190,7 @@ class MyEdtIntranet extends BaseEdt
             $matiere = $this->matieres[$p->getTypeIdMatiere()];
             if (null !== $matiere && null !== $matiere->semestre) {
                 $evt->matiere = $matiere->display;
-                $annee = $matiere->semestre->getAnnee();
+                $annee = $matiere->semestre->getAnnee();//todo: ne pas dépendre de matièere
                 if (null !== $annee) {
                     $evt->couleur = $annee->getCouleur();
                 }

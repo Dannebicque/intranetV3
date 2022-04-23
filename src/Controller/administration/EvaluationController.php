@@ -16,6 +16,7 @@ use App\Entity\Constantes;
 use App\Entity\Evaluation;
 use App\Entity\Semestre;
 use App\Exception\MatiereNotFoundException;
+use App\Exception\SemestreNotFoundException;
 use App\Form\EvaluationType;
 use App\Repository\EvaluationRepository;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
@@ -62,34 +63,40 @@ class EvaluationController extends BaseController
      * @throws RuntimeError
      * @throws \App\Exception\MatiereNotFoundException
      */
-    #[Route(path: '/export/{uuid}.{_format}', name: 'administration_evaluation_export', methods: 'GET')]
-    public function exportEvaluation(MyEvaluation $myEvaluation, Evaluation $evaluation, $_format): StreamedResponse | PdfResponse | null
+    #[Route(path: '/export/{semestre}/{uuid}.{_format}', name: 'administration_evaluation_export', methods: 'GET')]
+    public function exportEvaluation(MyEvaluation $myEvaluation, Evaluation $evaluation, $_format, Semestre $semestre): StreamedResponse | PdfResponse | null
     {
+        //todo: $semestre pourrait être supprimé s'il est dans évaluation
         $data = $evaluation->getTypeGroupe()->getGroupes();
 
         return $myEvaluation->setEvaluation($evaluation)->exportReleve($_format, $data,
-            $this->dataUserSession->getDepartement());
+            $semestre);
     }
 
     /**
      * @throws \App\Exception\MatiereNotFoundException
      * @throws \Exception
      */
-    #[Route(path: '/ajouter/{matiere}', name: 'administration_evaluation_create', methods: ['GET', 'POST'])]
-    public function create(TypeMatiereManager $typeMatiereManager, Request $request, string $matiere): RedirectResponse | Response
+    #[Route(path: '/ajouter/{matiere}/{semestre}', name: 'administration_evaluation_create', methods: ['GET', 'POST'])]
+    public function create(TypeMatiereManager $typeMatiereManager, Request $request, string $matiere, Semestre $semestre): RedirectResponse | Response
     {
         $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
         if (null === $mat) {
             throw new MatiereNotFoundException();
         }
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $mat->semestre);
-        $evaluation = new Evaluation($this->getUser(), $mat);
+
+        if (!$mat->getSemestres()?->contains($semestre)) {
+            throw new SemestreNotFoundException();
+        }
+
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
+        $evaluation = new Evaluation($this->getUser(), $mat, $semestre);
         $form = $this->createForm(
             EvaluationType::class,
             $evaluation,
             [
                 'departement' => $this->dataUserSession->getDepartement(),
-                'semestre' => $mat->semestre,
+                'semestre' => $semestre,
                 'matiereDisabled' => true,
                 'personnelDisabled' => false,
                 'autorise' => true,
@@ -97,15 +104,15 @@ class EvaluationController extends BaseController
                 'attr' => [
                     'data-provide' => 'validation',
                 ],
-                'enfant' => $mat->isEnfant,
-                'groupeEnfant' => $mat->groupeEnfant,
+                'enfant' => $mat->isEnfant(),
+                'groupeEnfant' => $mat->groupeEnfant(),
             ]
         );
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $evaluation->setAnneeUniversitaire($this->dataUserSession->getAnneeUniversitaire());
-            if ($mat->isEnfant) {
-                $evaluation->setTypeGroupe($mat->groupeEnfant->getTypeGroupe());
+            if ($mat->isEnfant()) {
+                $evaluation->setTypeGroupe($mat->groupeEnfant()->getTypeGroupe());
             }
             $this->entityManager->persist($evaluation);
             $this->entityManager->flush();
@@ -134,7 +141,8 @@ class EvaluationController extends BaseController
         if (null === $matiere) {
             throw new MatiereNotFoundException();
         }
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $matiere->semestre);
+
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $evaluation->getSemestre());
         $notes = $myEvaluation->setEvaluation($evaluation)->getNotesTableau();
 
         return $this->render('administration/evaluation/saisie_2.html.twig', [

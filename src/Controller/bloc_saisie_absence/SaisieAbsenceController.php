@@ -53,10 +53,12 @@ class SaisieAbsenceController extends BaseController
             $groupes = null;
         }
 
+        $typeGroupes = $typeGroupeRepository->findBySemestre($semestre);
+
         return $this->render('bloc_saisie_absence/_saisie_absence.html.twig', [
             'matiere' => $matiere,
             'matieres' => $typeMatiereManager->findBySemestre($semestre),
-            'typeGroupes' => $typeGroupeRepository->findBySemestre($semestre),
+            'typeGroupes' => $typeGroupes,
             'event' => $event,
             'groupes' => $groupes,
             'options' => [

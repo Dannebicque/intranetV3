@@ -1,5 +1,6 @@
 {% if evaluation.modifiable == true %}
-    <form action="{{ path('application_personnel_note_import',{evaluation:evaluation.id}) }}" method="post"
+    <form action="{{ path('application_personnel_note_import',{evaluation:evaluation.id, semestre:semestre.id}) }}"
+          method="post"
           enctype="multipart/form-data">
         <div class="form-group">
             <label class="required" for="fichier_import">Fichier à importer</label>
@@ -12,7 +13,7 @@
                                       , la note (<i>note</i>), le commentaire éventuel (<i>commentaire</i>). Les
                                       colonnes doivent être nommées (première ligne) ou
                                       respecter l'odre précédent.
-            <a href="{{ path('application_personnel_note_import_modele',{evaluation:evaluation.id}) }}">
+            <a href="{{ path('application_personnel_note_import_modele',{evaluation:evaluation.id, semestre:semestre.id}) }}">
                 Vous pouvez récupérer le fichier type pour le semestre ici
             </a>
         </div>

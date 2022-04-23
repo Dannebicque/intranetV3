@@ -59,9 +59,9 @@ class MyAbsences
         return $this->etudiants;
     }
 
-    public function getAbsencesMatiere(\App\DTO\Matiere $matiere, AnneeUniversitaire $anneeCourante): array
+    public function getAbsencesMatiere(\App\DTO\Matiere $matiere, AnneeUniversitaire $anneeCourante, ?Semestre $semestre = null): array
     {
-        return $this->absenceRepository->getByMatiere($matiere, $anneeCourante);
+        return $this->absenceRepository->getByMatiere($matiere, $anneeCourante, $semestre);
     }
 
     /**
@@ -84,9 +84,10 @@ class MyAbsences
     public function export(
         \App\DTO\Matiere $matiere,
         AnneeUniversitaire $anneeUniversitaire,
+        Semestre $semestre,
         string $_format
     ): bool | StreamedResponse {
-        $absences = $this->getAbsencesMatiere($matiere, $anneeUniversitaire);
+        $absences = $this->getAbsencesMatiere($matiere, $anneeUniversitaire, $semestre);
         $name = 'absences-'.$matiere->codeMatiere;
         switch ($_format) {
             case Constantes::FORMAT_PDF:
