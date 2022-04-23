@@ -20,14 +20,14 @@ class StatisquesAbsences
     public int $nbNonJustifie = 0;
     public int $nbDemiJournee = 0;
     public int $nbJustifie = 0;
-    public CarbonInterface $totalDuree;
+    public CarbonInterface $dureeCoursManques;
 
     /**
      * StatisquesAbsences constructor.
      */
     public function __construct()
     {
-        $this->totalDuree = Carbon::createFromTime();
+        $this->dureeCoursManques = Carbon::createFromTime();
     }
 
     /**
@@ -35,7 +35,7 @@ class StatisquesAbsences
      */
     public function addDuree(CarbonInterface $duree): void
     {
-        $this->totalDuree->add(new DateInterval('PT'.$duree->format('G').'H'.$duree->format('i').'M'));
+        $this->dureeCoursManques->add(new DateInterval('PT'.$duree->format('G').'H'.$duree->format('i').'M'));
     }
 
     public function incJustifieOrNotJutifie(bool $isJustifie): void

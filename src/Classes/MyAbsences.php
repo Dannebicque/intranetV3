@@ -11,6 +11,7 @@ namespace App\Classes;
 
 use App\Classes\Etudiant\EtudiantAbsences;
 use App\Classes\Excel\MyExcelMultiExport;
+use App\DTO\AbsencesEtudiant;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
 use App\Entity\Departement;
@@ -32,7 +33,6 @@ class MyAbsences
      * @var Etudiant[]
      */
     private array $etudiants;
-
 
     /**
      * MyAbsences constructor.
@@ -115,5 +115,25 @@ class MyAbsences
     public function getAbsencesTempsReel(?Departement $departement): array
     {
         return $this->absenceRepository->getAbsencesTempsReel($departement);
+    }
+
+    public function getAbsencesSemestreDto(array $matieres, Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): array
+    {
+        $this->etudiants = $this->etudiantRepository->findBySemestre($semestre);
+
+        $t = [];
+        foreach ($this->etudiants as $etudiant) {
+            $abs = new AbsencesEtudiant();
+            $abs->etudiant = $etudiant;
+            $this->etudiantAbsences->setEtudiant($etudiant);
+            $absencesEtudiant = $this->etudiantAbsences->getAbsencesParSemestresEtAnneeUniversitaire($matieres,
+                $semestre->getAnneeUniversitaire());
+            $statistiques = new StatsAbsences();
+            $stats = $statistiques->calculStatistiquesAbsencesEtudiant($absencesEtudiant);
+            $abs->setStatisques($stats);
+            $t[] = $abs;
+        }
+
+        return $t;
     }
 }

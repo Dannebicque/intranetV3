@@ -24,6 +24,7 @@ use App\Event\AbsenceEvent;
 use App\Repository\AbsenceJustificatifRepository;
 use App\Repository\AbsenceRepository;
 use App\Repository\EtudiantRepository;
+use App\Table\AbsenceListeTableType;
 use App\Utils\Tools;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -69,28 +70,24 @@ class AbsenceController extends BaseController
     #[Route('/semestre/{semestre}/liste', name: 'administration_absences_semestre_liste', options: ['expose' => true])]
     public function liste(
         Request $request,
-        TypeMatiereManager $typeMatiereManager,
-        MyAbsences $myAbsences,
         Semestre $semestre
     ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
         //todo: doit utiliser un dto...
-//        $table = $this->createTable(AbsenceListeTableType::class, [
-//            'semestre' => $semestre,
-//            'anneeUniversitaire' => $this->getAnneeUniversitaire(),
-//        ]);
-//
-//        $table->handleRequest($request);
-//
-//        if ($table->isCallback()) {
-//            return $table->getCallbackResponse();
-//        }
-        $matieres = $typeMatiereManager->findBySemestreArray($semestre);
-        $myAbsences->getAbsencesSemestre($matieres, $semestre);
+        $table = $this->createTable(AbsenceListeTableType::class, [
+            'semestre' => $semestre,
+            'anneeUniversitaire' => $this->getAnneeUniversitaire(),
+        ]);
+
+        $table->handleRequest($request);
+
+        if ($table->isCallback()) {
+            return $table->getCallbackResponse();
+        }
 
         return $this->render('administration/absence/liste.html.twig', [
             'semestre' => $semestre,
-            'absences' => $myAbsences,
+            'table' => $table,
         ]);
     }
 

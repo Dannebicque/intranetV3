@@ -9,41 +9,38 @@
 
 namespace App\Table;
 
-use App\Components\Table\Adapter\EntityAdapter;
-use App\Components\Table\Column\BadgeColumnType;
+use App\Classes\Matieres\TypeMatiereManager;
+use App\Classes\MyAbsences;
+use App\Components\Table\Column\BadgeSeuilColumnType;
+use App\Components\Table\Column\PropertyColumnType;
 use App\Components\Table\Column\WidgetColumnType;
+use App\Components\Table\DTO\TableResult;
+use App\Components\Table\DTO\TableState;
 use App\Components\Table\TableBuilder;
 use App\Components\Table\TableType;
 use App\Components\Widget\Type\ExportDropdownType;
-use App\Components\Widget\Type\RowShowLinkType;
-use App\Components\Widget\Type\StimulusButtonModalType;
+use App\Components\Widget\Type\RowLinkType;
 use App\Components\Widget\WidgetBuilder;
-use App\Entity\Absence;
+use App\DTO\AbsencesEtudiant;
 use App\Entity\AnneeUniversitaire;
-use App\Entity\Etudiant;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Form\Type\SearchType;
 use App\Repository\GroupeRepository;
 use App\Table\ColumnType\EtudiantColumnType;
 use App\Table\ColumnType\GroupeEtudiantColumnType;
-use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Routing\RouterInterface;
-use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class AbsenceListeTableType extends TableType
 {
     private ?Semestre $semestre;
     private ?AnneeUniversitaire $anneeUniversitaire;
-    private CsrfTokenManagerInterface $csrfToken;
-    private RouterInterface $router;
 
-    public function __construct(CsrfTokenManagerInterface $csrfToken, RouterInterface $router)
-    {
-        $this->csrfToken = $csrfToken;
-        $this->router = $router;
+    public function __construct(
+        private readonly TypeMatiereManager $typeMatiereManager,
+        private readonly MyAbsences $myAbsences,
+    ) {
     }
 
     public function buildTable(TableBuilder $builder, array $options): void
@@ -54,7 +51,7 @@ class AbsenceListeTableType extends TableType
         $builder->addFilter('search', SearchType::class);
         $builder->addFilter('groupe', EntityType::class, [
             'class' => Groupe::class,
-            'query_builder' => function (GroupeRepository $groupeRepository) {
+            'query_builder' => function(GroupeRepository $groupeRepository) {
                 return $groupeRepository->findBySemestreBuilder($this->semestre);
             },
             'choice_label' => 'display',
@@ -63,7 +60,7 @@ class AbsenceListeTableType extends TableType
         ]);
 
         $builder->addWidget('export', ExportDropdownType::class, [
-            'route' => 'administration_rattrapage_export',
+            'route' => 'administration_absences_semestre_liste_export',
             'route_params' => [
                 'semestre' => $this->semestre->getId(),
             ],
@@ -75,69 +72,109 @@ class AbsenceListeTableType extends TableType
             ['label' => 'table.etudiant']);
         $builder->addColumn('etudiantGroupes', GroupeEtudiantColumnType::class,
             ['label' => 'table.groupe']);
-        $builder->addColumn('nbCoursManques', BadgeColumnType::class, //ajouter des seuils?
-            ['label' => 'table.nb_cours_manques']);
-        $builder->addColumn('dureeCoursManques', BadgeColumnType::class, //ajouter des seuils?
-            ['label' => 'table.duree_cours_manques']);
-        $builder->addColumn('dureeDemiJournee', BadgeColumnType::class, //ajouter des seuils?
-            ['label' => 'table.duree_demi_journee']);
-        $builder->addColumn('nbNonJustifies', BadgeColumnType::class, //ajouter des seuils?
-            ['label' => 'table.nb_non_justifies']);
-        $builder->addColumn('nbJustifies', BadgeColumnType::class, //ajouter des seuils?
-            ['label' => 'table.nb_justifies']);
+        $builder->addColumn('nbCoursManques', BadgeSeuilColumnType::class,
+            [
+                'label' => 'table.nb_cours_manques',
+                'seuils' => [
+                    5 => 'bg-success',
+                    10 => 'bg-warning',
+                    20 => 'bg-danger',
+                ],
+                'badge_defaut' => 'bg-dark',
+            ]);
+        $builder->addColumn('dureeCoursManques', PropertyColumnType::class,
+            [
+                'label' => 'table.duree_cours_manques',
+                'format_datetime' => 'H:i',
+            ]);
+        $builder->addColumn('nbDemiJournee', BadgeSeuilColumnType::class,
+            [
+                'label' => 'table.nb_demi_journee',
+                'seuils' => [
+                    5 => 'bg-success',
+                    10 => 'bg-warning',
+                    20 => 'bg-danger',
+                ],
+                'badge_defaut' => 'bg-dark',
+            ]);
+        $builder->addColumn('nbNonJustifie', BadgeSeuilColumnType::class,
+            [
+                'label' => 'table.nb_non_justifies',
+                'seuils' => [
+                    5 => 'bg-success',
+                    10 => 'bg-warning',
+                    20 => 'bg-danger',
+                ],
+                'badge_defaut' => 'bg-dark',
+            ]);
+        $builder->addColumn('nbJustifie', BadgeSeuilColumnType::class,
+            [
+                'label' => 'table.nb_justifies',
+                'seuils' => [
+                    5 => 'bg-success',
+                    10 => 'bg-warning',
+                    20 => 'bg-danger',
+                ],
+                'badge_defaut' => 'bg-dark',
+            ]);
 
         $builder->setLoadUrl('administration_absences_semestre_liste',
             ['semestre' => $this->semestre->getId()]);
 
-        $builder->addColumn('apercu', WidgetColumnType::class, [
-            'label' => 'apercu',
-            'build' => function (WidgetBuilder $builder, Absence $s) {
-                $builder->add('voir.justificatif', StimulusButtonModalType::class, [
-                    'class' => 'btn btn-outline btn-info',
-                    'icon' => 'fas fa-eye',
-                    'text' => false,
-                    'modalSize' => 'lg',
-                    'modalTitle' => 'Détail du justificatif',
-                    'modalUrl' => $this->router->generate('administration_absence_justificatif_details',
-                        ['uuid' => $s->getUuidString()]),
-                ]);
-            },
-        ]);
-
         $builder->addColumn('links', WidgetColumnType::class, [
-            'build' => function (WidgetBuilder $builder, Absence $s) {
-                $builder->add('profil', RowShowLinkType::class, [
+            'build' => function(WidgetBuilder $builder, AbsencesEtudiant $s) {
+                $builder->add('profil', RowLinkType::class, [
+                    'title' => 'table.details_absences',
+                    'icon' => 'fas fa-eye',
+                    'target' => '_blank',
                     'attr' => [
-                        'data-href' => 'administration_rattrapage_delete',
-                        'data-uuid' => $s->getUuidString(),
-                        'data-csrf' => $this->csrfToken->getToken('delete'.$s->getUuidString()),
+                        'class' => 'btn btn-info btn-outline btn-square',
+                        'data-bs-toggle' => 'tooltip',
+                        'data-bs-placement' => 'bottom'
+                    ],
+                    'route' => 'user_profil',
+                    'route_params' => [
+                        'type' => 'etudiant',
+                        'slug' => $s->etudiant->getSlug(),
+                        'onglet' => 'absences',
                     ],
                 ]);
             },
         ]);
 
-        $builder->useAdapter(EntityAdapter::class, [
-            'class' => Etudiant::class,
-            'fetch_join_collection' => false,
-            'query' => function (QueryBuilder $qb, array $formData) {
-                $qb->where('e.semestre = :semestre')
-                    ->andWhere('e.anneeUniversitaire = :anneeuniversitaire')
-                    ->setParameter('semestre', $this->semestre->getId())
-                    ->setParameter('anneeuniversitaire', $this->anneeUniversitaire->getId());
+        $builder->useAdapter(function(TableState $state) {
+            $orders = $state->getOrderBy();
+            $t = [];
 
-                if (isset($formData['search'])) {
-                    $qb->andWhere('LOWER(etu.nom) LIKE :search');
-                    $qb->orWhere('LOWER(etu.prenom) LIKE :search');
-                    $qb->setParameter('search', '%'.$formData['search'].'%');
+            $matieres = $this->typeMatiereManager->findBySemestreArray($this->semestre);
+            $data = $this->myAbsences->getAbsencesSemestreDto($matieres, $this->semestre, $this->anneeUniversitaire);
+
+            if (count($orders) > 0) {
+                foreach ($orders as $order) {
+                    //pour gérer le tri multiple
+                    $t = [];
+                    foreach ($data as $key => $d) {
+                        $t[$key] = $d->{$order[0]->getOption('id')};
+                    }
+                    if ($order[1] === 'ASC') {
+                        asort($t);
+                    } else {
+                        arsort($t);
+                    }
                 }
 
-                if (isset($formData['groupe']) && '' !== trim($formData['groupe'])) {
-                    $qb->innerJoin('etu.groupes', 'g');
-                    $qb->andWhere('g.id = :groupe');
-                    $qb->setParameter('groupe', $formData['groupe']);
+                $results = [];
+                foreach ($t as $k => $v) {
+                    $results[] = $data[$k];
                 }
-            },
-        ]);
+
+                $data = $results;
+            }
+
+            $pageData = array_slice($data, $state->getStart(), $state->getLength());
+
+            return new TableResult($pageData, count($data));
+        });
     }
 
     public function configureOptions(OptionsResolver $resolver): void

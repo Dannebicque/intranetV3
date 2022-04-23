@@ -156,7 +156,7 @@ class MyExcelMultiExport
             $this->myExcelWriter->writeCellXY(
                 $colonne,
                 $ligne,
-                $myAbsences->getStatistiques()[$etudiant->getId()]->totalDuree->format('H:i')
+                $myAbsences->getStatistiques()[$etudiant->getId()]->dureeCoursManques->format('H:i')
             );
             ++$colonne;
             $this->myExcelWriter->writeCellXY(

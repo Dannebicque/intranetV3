@@ -30,6 +30,7 @@ class GroupeEtudiantColumnType extends PropertyColumnType
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
+        $resolver->setDefault('order', false);
         $resolver->setDefault('is_safe_html', true);
     }
 }
