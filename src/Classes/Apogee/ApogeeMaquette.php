@@ -73,7 +73,8 @@ class ApogeeMaquette
             $res->setLibelle($elp['LIB_ELP']);
             $res->setCodeMatiere($c[0]);
             $res->setCodeElement($elp['COD_ELP']);
-            $res->setSemestre($semestre);
+            $res->addSemestre($semestre);
+            $semestre->addApcSemestresRessource($res);
             $res->setNbNotes(2);
             $this->entityManager->persist($res);
             $res->setLibelleCourt($elp['LIC_ELP']);
