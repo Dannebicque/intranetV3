@@ -38,6 +38,7 @@ export default class extends Controller {
   }
 
   async changeTypeQuestion (event) {
+    this.reponsesTarget.innerHTML = window.da.loaderStimulus
     const params = new URLSearchParams({
       q: event.target.dataset.value
     })

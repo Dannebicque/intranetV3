@@ -83,12 +83,12 @@ a .btn-round {
 
 
 .previtd {
-  background-color: #e3fcf2 !important;
+  background-color: var(--colorTD) !important;
   color: #3f4a59;
 }
 
 .previtp {
-  background-color: #fcf0e3 !important;
+  background-color: var(--colorTP) !important;
   color: #3f4a59;
 }
 
@@ -768,4 +768,37 @@ td.td-edt.col-new-day {
   border-color: var(--colorFocus);
   border-width: 2px;
   outline: 0;
+}
+
+.table th.vertical {
+  writing-mode: vertical-lr;
+  transform: rotate(180deg);
+}
+
+input.mcc {
+  width: 50px;
+}
+
+td.bg-disabled {
+  background-color: #cccccc;
+}
+
+.bg-cm {
+  background-color: var(--colorCM) !important;
+}
+
+.bg-td {
+  background-color: var(--colorTD) !important;
+}
+
+.bg-tp {
+  background-color: var(--colorTP) !important;
+}
+
+.bg-ptut {
+  background-color: var(--colorPTUT) !important;
+}
+
+.col-odd {
+  background-color: #eaeaea !important;
 }

@@ -5,6 +5,7 @@
 // @lastUpdate 01/10/2021 10:59
 
 import '../tinyMce'
+import {addCallout} from '../util'
 
 $(document).on('click', '.messagerie-filtre', function (e) {
   e.preventDefault()
@@ -65,6 +66,9 @@ $(document).on('click', '#saveDraft', function (e) {
     method: 'POST',
     success: function (data) {
       $('#messages-liste').empty().load(Routing.generate('messagerie_filtre', {'filtre': 'draft'}))
+    },
+    error: function () {
+      addCallout('danger', 'Une erreur est survenue. Le message est vide.')
     }
   })
 })

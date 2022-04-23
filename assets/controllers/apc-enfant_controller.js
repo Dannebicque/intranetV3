@@ -9,11 +9,26 @@ import {post} from '../js/fetch'
 import {addCallout} from '../js/util'
 
 export default class extends Controller {
-  static targets = ['content']
+  static targets = ['content','contentDiplome']
   static values = {
     urlListe: String,
     urlPost: String,
     urlDelete: String,
+    urlListeDiplome: String,
+    urlPostDiplome: String,
+    urlDeleteDiplome: String,
+    urlUpdateGroupe: String,
+  }
+
+  changeGroupe (e) {
+    post(this.urlUpdateGroupeValue, {
+      enfant: e.target.dataset.enfant,
+      groupe: e.target.value
+    }).then(async (data) => {
+      addCallout('success', 'Groupe mis à jour')
+    }).catch((error) => {
+      addCallout('danger', 'Erreur lors de la mise à jour')
+    })
   }
 
   async removeEnfant (e) {
@@ -44,6 +59,35 @@ export default class extends Controller {
 
     const response = await fetch(`${this.urlListeValue}`)
     this.contentTarget.innerHTML = await response.text()
+  }
+
+  async removeDiplome (e) {
+    post(this.urlDeleteDiplomeValue, {
+      diplome: e.target.dataset.semestre
+    }).then(async (data) => {
+      addCallout('success', 'Diplôme supprimé')
+      this._updateContentDiplome()
+    }).catch((error) => {
+      addCallout('danger', 'Erreur lors de la suppression')
+    })
+  }
+
+  async addDiplome (e) {
+    post(this.urlPostDiplomeValue, {
+      diplome: document.getElementById('semestreAdd').value
+    }).then(async (data) => {
+      addCallout('success', 'Diplôme ajouté')
+      this._updateContentDiplome()
+    }).catch((error) => {
+      addCallout('danger', 'Erreur lors de l\'ajout')
+    })
+  }
+
+  async _updateContentDiplome () {
+    this.contentDiplomeTarget.innerHTML = window.da.loaderStimulus
+
+    const response = await fetch(`${this.urlListeDiplomeValue}`)
+    this.contentDiplomeTarget.innerHTML = await response.text()
   }
 
 }

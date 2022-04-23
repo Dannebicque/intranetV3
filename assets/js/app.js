@@ -56,30 +56,31 @@ window.addEventListener('load', function () { //le dom est chargé
   })
 
   //menu changement de département
-  document.getElementById('changeDepartement').addEventListener('click', function (e) {
-   console.log('changement')
-    const zone = document.getElementById('listeChangeDepartement')
-    zone.innerHtml = window.da.loaderStimulus
-    get(Routing.generate('user_get_departements'), {}).then((data) => {
-      let html = ''
-      data.forEach(function (departement) {
-        let isDefault = ''
-        console.log(departement.defaut)
-        if (departement.defaut === true) {
-          isDefault = 'is-default'
-        }
-        html += '<a class="dropdown-item '+ isDefault +' col-4"\n' +
-          'href="' + Routing.generate('security_change_departement',{departement:departement.uuid}) +'">\n' +
-          '<div class="avatar-departement"\n' +
-          'style="background-color: '+ departement.couleur +'">\n' +
-          '<span class="initials">'+departement.libelleInitiales +'</span>\n' +
-          '</div>\n' +
-          '</a>'
-      })
+  if (document.getElementById('changeDepartement')) {
+    document.getElementById('changeDepartement').addEventListener('click', async function (e) {
+      const zone = document.getElementById('listeChangeDepartement')
+      zone.innerHtml = '<a href="#" class="dropdown-item col-12">' + window.da.loaderStimulus + '</a>'//todo: ne s'affiche pas ? faire tout le header avec stimulus ? Avec Turbo?
 
-      zone.innerHTML = html
+      await get(Routing.generate('user_get_departements'), {}).then((data) => {
+        let html = ''
+        data.forEach(function (departement) {
+          let isDefault = ''
+          if (departement.defaut === true) {
+            isDefault = 'is-default'
+          }
+          html += '<a class="dropdown-item ' + isDefault + ' col-4"\n' +
+            'href="' + Routing.generate('security_change_departement', {departement: departement.uuid}) + '">\n' +
+            '<div class="avatar-departement"\n' +
+            'style="background-color: ' + departement.couleur + '">\n' +
+            '<span class="initials">' + departement.libelleInitiales + '</span>\n' +
+            '</div>\n' +
+            '</a>'
+        })
+
+        zone.innerHTML = html
+      })
     })
-  })
+  }
 
 
   if (menuDarkTheme !== null) {
