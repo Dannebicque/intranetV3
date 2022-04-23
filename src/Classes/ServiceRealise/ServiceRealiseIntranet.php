@@ -16,7 +16,6 @@ namespace App\Classes\ServiceRealise;
 use App\DTO\EvenementEdt;
 use App\Entity\Constantes;
 use App\Entity\EdtPlanning;
-use App\Entity\Personnel;
 use App\Interfaces\UtilisateurInterface;
 use App\Repository\EdtPlanningRepository;
 

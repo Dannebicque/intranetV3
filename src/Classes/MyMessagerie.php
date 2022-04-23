@@ -16,7 +16,6 @@ use App\Entity\MessageDestinataireEtudiant;
 use App\Entity\MessageDestinatairePersonnel;
 use App\Entity\MessagePieceJointe;
 use App\Entity\Personnel;
-use App\Entity\Semestre;
 use App\Interfaces\UtilisateurInterface;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;

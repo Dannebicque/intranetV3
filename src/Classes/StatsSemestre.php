@@ -17,7 +17,6 @@ use App\DTO\StatistiquesSemestre;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
-use App\Entity\Utilisateur;
 use function array_key_exists;
 use function count;
 

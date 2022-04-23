@@ -17,7 +17,6 @@ use App\Classes\Excel\MyExcelMultiExport;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\Pdf\MyPDF;
 use App\Entity\Constantes;
-use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Evaluation;
 use App\Entity\Note;

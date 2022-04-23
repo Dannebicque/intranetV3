@@ -14,7 +14,6 @@ use App\Entity\Absence;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
 use App\Entity\Personnel;
-use App\Entity\Semestre;
 use App\Event\AbsenceEvent;
 use App\Repository\AbsenceRepository;
 use function array_key_exists;

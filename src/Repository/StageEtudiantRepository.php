@@ -9,12 +9,10 @@
 
 namespace App\Repository;
 
-use App\Entity\Adresse;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Entreprise;
 use App\Entity\Etudiant;
 use App\Entity\Personnel;
-use App\Entity\Semestre;
 use App\Entity\StageEtudiant;
 use App\Entity\StagePeriode;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;

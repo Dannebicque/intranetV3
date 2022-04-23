@@ -9,7 +9,6 @@
 
 namespace App\Security\Voter;
 
-use App\DTO\Matiere;
 use App\Entity\Personnel;
 use App\Repository\PrevisionnelRepository;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;

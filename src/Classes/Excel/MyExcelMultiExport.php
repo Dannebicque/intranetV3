@@ -14,8 +14,6 @@
 namespace App\Classes\Excel;
 
 use App\Classes\MyAbsences;
-use App\Classes\MyExport;
-use App\Classes\MySerializer;
 use App\DTO\Matiere;
 use App\Entity\Absence;
 use App\Entity\Etudiant;

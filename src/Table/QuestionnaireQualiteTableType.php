@@ -21,14 +21,12 @@ use App\Components\Widget\Type\RowEditLinkType;
 use App\Components\Widget\Type\RowShowLinkType;
 use App\Components\Widget\WidgetBuilder;
 use App\Entity\Annee;
-use App\Entity\Diplome;
 use App\Entity\QuestionnaireQualite;
 use App\Entity\Semestre;
 use App\Form\Type\DatePickerType;
 use App\Form\Type\DiplomeEntityType;
 use App\Form\Type\SearchType;
 use Doctrine\ORM\QueryBuilder;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 

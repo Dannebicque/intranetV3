@@ -10,8 +10,6 @@
 namespace App\Entity\Traits;
 
 use Carbon\CarbonInterface;
-use DateTime;
-use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 trait SoftDeletableTrait

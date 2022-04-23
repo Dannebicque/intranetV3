@@ -15,7 +15,6 @@ use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
 use App\Entity\Departement;
 use App\Entity\Etudiant;
-use App\Entity\Matiere;
 use App\Entity\Semestre;
 use App\Repository\AbsenceRepository;
 use App\Repository\EtudiantRepository;

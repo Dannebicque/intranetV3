@@ -119,7 +119,8 @@ class DepartementFixtures extends Fixture implements DependentFixtureInterface
         $ressource->setCodeElement('TS123S1UE1R1');
         $ressource->setCodeMatiere('R101');
         $ressource->setLibelle('Ressource 1');
-        $ressource->setSemestre($semestre);
+        $ressource->addSemestre($semestre);
+        $semestre->addApcSemestresRessource($ressource);
         $ressource->setCmFormation(10);
         $ressource->setTdFormation(10);
         $ressource->setTpFormation(10);

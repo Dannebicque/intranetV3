@@ -15,7 +15,6 @@ namespace App\Classes;
 
 use App\Classes\Apogee\ApogeeGroupe;
 use App\Entity\Departement;
-use App\Entity\Etudiant;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;

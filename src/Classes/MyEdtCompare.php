@@ -16,7 +16,6 @@ namespace App\Classes;
 use App\Classes\Previsionnel\PrevisionnelManager;
 use App\DTO\Matiere;
 use App\Entity\Personnel;
-use App\Entity\Previsionnel;
 use App\Repository\EdtPlanningRepository;
 
 class MyEdtCompare

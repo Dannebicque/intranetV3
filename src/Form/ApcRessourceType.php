@@ -15,7 +15,6 @@ use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Form\Type\YesNoType;
 use App\Repository\ApcComptenceRepository;
-use App\Repository\ApcRessourceRepository;
 use App\Repository\SemestreRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;

@@ -19,7 +19,6 @@ use Symfony\Component\HttpKernel\KernelInterface;
 use function count;
 use Exception;
 use function in_array;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use ZipArchive;
 
 class MyUpload

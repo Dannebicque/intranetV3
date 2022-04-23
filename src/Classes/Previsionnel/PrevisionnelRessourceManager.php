@@ -16,7 +16,6 @@ use App\Entity\Diplome;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Repository\PrevisionnelRessourceRepository;
-use App\Repository\SemestreRepository;
 
 class PrevisionnelRessourceManager extends AbstractPrevisionnelManager implements PrevisionnelManagerInterface
 {
@@ -24,8 +23,8 @@ class PrevisionnelRessourceManager extends AbstractPrevisionnelManager implement
 
 
     public function __construct(
-        private PrevisionnelRessourceRepository $previsionnelRepository,
-        private PrevisionnelRessourceAdapter $previsionnelRessourceAdapter
+        private readonly PrevisionnelRessourceRepository $previsionnelRepository,
+        private readonly PrevisionnelRessourceAdapter $previsionnelRessourceAdapter
     ) {
 
     }

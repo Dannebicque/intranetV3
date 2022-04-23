@@ -10,11 +10,8 @@
 namespace App\Repository;
 
 use App\Entity\Annee;
-use App\Entity\ApcRessource;
 use App\Entity\Departement;
 use App\Entity\Diplome;
-use App\Entity\Personnel;
-use App\Entity\Previsionnel;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;

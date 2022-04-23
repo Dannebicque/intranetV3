@@ -16,7 +16,6 @@ use App\Components\Table\DTO\Table;
 use App\Components\Table\TableBuilder;
 use App\Components\Table\TableType;
 use App\Entity\Diplome;
-use App\Entity\TypeDiplome;
 use App\Form\Type\DiplomeEntityType;
 use App\Form\Type\SearchType;
 use App\Form\Type\TypeDiplomeEntityType;

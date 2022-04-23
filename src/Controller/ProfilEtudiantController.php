@@ -26,7 +26,6 @@ use App\Repository\DepartementRepository;
 use App\Repository\ScolariteRepository;
 use App\Repository\StageEtudiantRepository;
 use App\Repository\UeRepository;
-use App\Utils\JsonRequest;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;

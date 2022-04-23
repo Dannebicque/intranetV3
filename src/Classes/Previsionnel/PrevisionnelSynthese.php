@@ -9,7 +9,6 @@
 
 namespace App\Classes\Previsionnel;
 
-use App\DTO\Previsionnel;
 use App\DTO\PrevisionnelCollection;
 use App\Entity\Constantes;
 use App\Entity\Personnel;

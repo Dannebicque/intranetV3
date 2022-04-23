@@ -15,7 +15,6 @@ use App\Entity\Constantes;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Exception\AnneeUniversitaireNotFoundException;
-use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\SemestreRepository;
 use App\Table\ScolariteDiplomesTableType;
 use Symfony\Component\HttpFoundation\RedirectResponse;

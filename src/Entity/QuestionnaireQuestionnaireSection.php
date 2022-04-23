@@ -13,8 +13,6 @@ use App\Entity\Traits\ConfigTrait;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\QuestionnaireQuestionnaireSectionRepository;
 use Doctrine\DBAL\Types\Types;
-use function array_key_exists;
-use function count;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: QuestionnaireQuestionnaireSectionRepository::class)]

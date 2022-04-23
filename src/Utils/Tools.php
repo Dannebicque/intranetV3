@@ -113,11 +113,11 @@ abstract class Tools
         $texte = trim($texte);
 
         /* Replace all the characters that are not in a-z or 0-9 by a hyphen */
-        $texte = preg_replace('/[^a-z0-9]/', '-', $texte);
+        $texte = preg_replace('/[^a-z\d]/', '-', $texte);
 
         /* Remove hyphen anywhere it's more than one */
 
-        return preg_replace("/[\-]+/", '-', $texte);
+        return preg_replace("/\-+/", '-', $texte);
     }
 
     public static function personnaliseTexte(string $texte, array $config): string

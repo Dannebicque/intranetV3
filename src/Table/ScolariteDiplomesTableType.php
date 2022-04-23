@@ -20,14 +20,10 @@ use App\Components\Table\TableType;
 use App\Components\Widget\Type\RowShowLinkType;
 use App\Components\Widget\WidgetBuilder;
 use App\Entity\Diplome;
-use App\Entity\TypeDiplome;
 use App\Form\Type\DiplomeEntityType;
 use App\Form\Type\SearchType;
 use App\Form\Type\TypeDiplomeEntityType;
-use App\Repository\DiplomeRepository;
-use App\Repository\TypeDiplomeRepository;
 use Doctrine\ORM\QueryBuilder;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ScolariteDiplomesTableType extends TableType
