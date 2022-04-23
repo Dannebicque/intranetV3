@@ -26,19 +26,21 @@ use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
+use App\Enums\AbsenceJustificatifEnum;
 use App\Form\Type\DatePickerType;
 use App\Form\Type\SearchType;
 use App\Repository\GroupeRepository;
 use App\Table\ColumnType\DatePeriodeJustificatifColumnType;
 use App\Table\ColumnType\EtudiantColumnType;
 use App\Table\ColumnType\GroupeEtudiantColumnType;
-use App\Table\ColumnType\StatusJustificatifAbsenceColumnType;
+use App\Table\ColumnType\StatusBadgeEnumColumnType;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use UnitEnum;
 
 class AbsenceJustificatifTableType extends TableType
 {
@@ -65,15 +67,15 @@ class AbsenceJustificatifTableType extends TableType
         $builder->addFilter('to', DatePickerType::class, [
             'input_prefix_text' => 'au',
         ]);
-        $builder->addFilter('etat_demande', ChoiceType::class, [
-            'choices' => [
-                'Acceptée' => AbsenceJustificatif::ACCEPTE,
-                'Refusée' => AbsenceJustificatif::REFUSE,
-                'En attente' => AbsenceJustificatif::DEPOSE,
-            ],
+        $builder->addFilter('etat_demande', EnumType::class, [
+            'class' => AbsenceJustificatifEnum::class,
             'required' => false,
+            'choice_label' => static function (UnitEnum $choice): string {
+                return 'absence_justificatif.'.$choice->value;
+            },
             'placeholder' => 'Etat de la demande',
         ]);
+
         $builder->addFilter('groupe', EntityType::class, [
             'class' => Groupe::class,
             'query_builder' => function (GroupeRepository $groupeRepository) {
@@ -106,8 +108,10 @@ class AbsenceJustificatifTableType extends TableType
         ]);
         $builder->addColumn('motif', PropertyColumnType::class,
             ['label' => 'table.motif']);
-        $builder->addColumn('etat', StatusJustificatifAbsenceColumnType::class,
+        $builder->addColumn('etat', StatusBadgeEnumColumnType::class,
             [
+                'enumClass' => AbsenceJustificatifEnum::class,
+                'prefix_trans' => 'absence_justificatif',
                 'label' => 'table.etat_justificatif_absence',
             ]);
 

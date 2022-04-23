@@ -36,6 +36,7 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
     use UuidTrait;
     use LifeCycleTrait;
 
+    //todo: remplace par l'enumération ?
     public const ACCEPTE = 'A';
     public const REFUSE = 'R';
     public const DEPOSE = 'D';

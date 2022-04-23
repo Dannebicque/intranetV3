@@ -31,7 +31,7 @@ class StatusBadgeEnumColumnType extends PropertyColumnType
         }
 
         if (null !== $value) {
-            return '<span class="badge bg-'.$value->badge().'">'.$this->translator->trans('enum.'.$value->value).'</span>';
+            return '<span class="badge bg-'.$value->badge().'">'.$this->translator->trans($options['prefix_trans'].'.'.$value->value).'</span>';
         }
 
         return '<span class="badge">'.$this->translator->trans('enum.error').'</span>';
@@ -42,5 +42,6 @@ class StatusBadgeEnumColumnType extends PropertyColumnType
         parent::configureOptions($resolver);
         $resolver->setDefault('is_safe_html', true);
         $resolver->setDefault('enumClass', null);
+        $resolver->setDefault('prefix_trans', 'enum');
     }
 }
