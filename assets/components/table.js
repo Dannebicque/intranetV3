@@ -9,8 +9,9 @@ import {post} from '../js/fetch'
 const ASC = 'ASC'
 const DESC = 'DESC'
 
-const ICON_ASC = '&#9660;'
-const ICON_DESC = '&#9650;'
+const ICON_DESC = '&#9660;'
+const ICON_ASC = '&#9650;'
+const ICON_NONE = '&#9650;&#9660;'
 
 export default class Table extends HTMLElement {
 
@@ -48,6 +49,7 @@ export default class Table extends HTMLElement {
             order: elem.target.dataset.order//todo: ordre actuel... a inverser dans la requete? Mettre les deux fleches si pas trié ? si defaultorder = false?
           }]
           //todo: mettre à jour le sens de la fleche...
+          this._updateHeader()
           this._buildArray()
         })
       }
@@ -95,12 +97,29 @@ export default class Table extends HTMLElement {
       })
     }
 
-    this._updateHeader()
+    this._initHeader()
     this._buildArray()
   }
 
   _filterArray (event) {
     this._buildArray()
+  }
+
+  _updateHeader() {
+    //mise à jour du header après un tri
+    this.order.forEach((order) => {
+      const column = document.getElementById(order.column)
+      if (order.order === ASC) {
+        column.innerHTML =  column.dataset.originalName + ' ' + ICON_ASC
+        column.dataset.order = 'DESC'
+      } else if (order.order === DESC) {
+        column.innerHTML = column.dataset.originalName + ' ' + ICON_DESC
+        column.dataset.order = 'ASC'
+      } else {
+        column.innerHTML = column.dataset.originalName + ' ' + ICON_NONE
+        column.dataset.order = 'ASC'
+      }
+    })
   }
 
   _buildArray () {
@@ -133,15 +152,21 @@ export default class Table extends HTMLElement {
   }
 
 
-  _updateHeader () {
+  _initHeader () {
     this.options.columns.forEach((column) => {
       let texte = document.getElementById(column.id).innerText
+      document.getElementById(column.id).dataset.originalName = texte
       if (column.orderable === true) {
-        if (column.order === DESC || column.order === '') {
+
+        if (column.order === DESC) {
           document.getElementById(column.id).innerHTML = texte + ' ' + ICON_DESC
           document.getElementById(column.id).dataset.order = DESC
-        } else {
+
+        } else if (column.order === ASC) {
           document.getElementById(column.id).innerHTML = texte + ' ' + ICON_ASC
+          document.getElementById(column.id).dataset.order = ASC
+        } else {
+          document.getElementById(column.id).innerHTML = texte + ' ' + ICON_NONE
           document.getElementById(column.id).dataset.order = ASC
         }
       }
