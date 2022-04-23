@@ -156,7 +156,7 @@ class MyExcelWriter
         }
     }
 
-    public function writeCellName(string $adresse, string $value, array $options = []): void
+    public function writeCellName(string $adresse, mixed $value, array $options = []): void
     {
         $this->sheet->setCellValue($adresse, $value);
 
