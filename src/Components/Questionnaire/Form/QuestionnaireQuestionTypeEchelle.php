@@ -9,28 +9,36 @@
 
 namespace App\Components\Questionnaire\Form;
 
-use App\Entity\QuestionnaireQuestion;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 class QuestionnaireQuestionTypeEchelle extends QuestionnaireQuestionType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
-        $builder->add('min', TextType::class,
-            ['mapped' => false, 'label' => 'label.question.min', 'help' => 'help.question.min'])
-            ->add('max', TextType::class,
-                ['mapped' => false, 'label' => 'label.question.max', 'help' => 'help.question.max'])
-            ->add('pas', TextType::class,
-                ['mapped' => false, 'label' => 'label.question.pas', 'help' => 'hel.question.pas']);
-    }
-
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'data_class' => QuestionnaireQuestion::class,
-        ]);
+        $builder
+            ->addEventListener(FormEvents::PRE_SET_DATA, static function (FormEvent $event) {
+                $question = $event->getData();
+                $config = $question->getConfiguration();
+                $form = $event->getForm();
+                $form->add('min', TextType::class,
+                    ['mapped' => false, 'label' => 'label.question.min', 'help' => 'help.question.min', 'data' => $config['min']])
+                    ->add('max', TextType::class,
+                        ['mapped' => false, 'label' => 'label.question.max', 'help' => 'help.question.max', 'data' => $config['max']])
+                    ->add('pas', TextType::class,
+                        ['mapped' => false, 'label' => 'label.question.pas', 'help' => 'help.question.pas', 'data' => $config['pas']]);
+            })
+            ->addEventListener(FormEvents::POST_SUBMIT, static function (FormEvent $event) {
+                $question = $event->getData();
+                $form = $event->getForm();
+                $t = $question->getConfiguration();
+                $t['min'] = $form->get('min')->getData();
+                $t['max'] = $form->get('max')->getData();
+                $t['pas'] = $form->get('pas')->getData();
+                $question->setConfiguration($t);
+            });
     }
 }

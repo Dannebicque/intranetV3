@@ -24,7 +24,7 @@
                 <h4>Choisissez le type de question ?</h4>
                 <div class="row">
                     {% for typeQuestion in typeQuestions %}
-                        <div class="col-sm-6 col-md-2 d-grid d-block">
+                        <div class="col-sm-6 col-md-2 d-grid d-block mb-2">
                             <button data-action="questionnaire-question#changeTypeQuestion" class="btn btn-primary"
                                     data-value="{{ typeQuestion|fqn }}">
                                 <i class=" {{ constant('ICON', typeQuestion) }}"></i><br>

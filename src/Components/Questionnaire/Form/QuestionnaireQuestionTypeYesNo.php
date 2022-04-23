@@ -12,6 +12,8 @@ namespace App\Components\Questionnaire\Form;
 use App\Entity\QuestionnaireQuestion;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class QuestionnaireQuestionTypeYesNo extends QuestionnaireQuestionType
@@ -20,21 +22,37 @@ class QuestionnaireQuestionTypeYesNo extends QuestionnaireQuestionType
     {
         parent::buildForm($builder, $options);
         $builder
-            //->add('parametre', TextType::class)
-            ->add('libelle_1', TextType::class,
-                ['mapped' => false, 'label' => 'label.libelle_1', 'help' => 'help.libelle_1', 'data' => 'Oui'])
-            ->add('valeur_1', TextType::class,
-                ['mapped' => false, 'label' => 'label.valeur_1', 'help' => 'help.valeur_1', 'data' => 1])
-            ->add('libelle_2', TextType::class,
-                ['mapped' => false, 'label' => 'label.libelle_2', 'help' => 'help.libelle_2', 'data' => 'Non'])
-            ->add('valeur_2', TextType::class,
-                ['mapped' => false, 'label' => 'label.valeur_2', 'help' => 'help.valeur_2', 'data' => 0]);
+            ->addEventListener(FormEvents::PRE_SET_DATA, static function (FormEvent $event) {
+                $question = $event->getData();
+                $config = $question->getConfiguration();
+                $form = $event->getForm();
+                $form->add('libelle_1', TextType::class,
+                    ['mapped' => false, 'label' => 'label.libelle_1', 'help' => 'help.libelle_1', 'data' => $config['libelle_1'] ?? 'Oui'])
+                    ->add('valeur_1', TextType::class,
+                        ['mapped' => false, 'label' => 'label.valeur_1', 'help' => 'help.valeur_1', 'data' => $config['valeur_1'] ?? 1])
+                    ->add('libelle_2', TextType::class,
+                        ['mapped' => false, 'label' => 'label.libelle_2', 'help' => 'help.libelle_2', 'data' => $config['libelle_2'] ?? 'Non'])
+                    ->add('valeur_2', TextType::class,
+                        ['mapped' => false, 'label' => 'label.valeur_2', 'help' => 'help.valeur_2', 'data' => $config['valeur_2'] ?? 0]);
+            })
+            ->addEventListener(FormEvents::POST_SUBMIT, static function (FormEvent $event) {
+                $question = $event->getData();
+                $form = $event->getForm();
+                $t = $question->getConfiguration();
+                $t['libelle_1'] = $form->get('libelle_1')->getData();
+                $t['valeur_1'] = $form->get('valeur_1')->getData();
+                $t['libelle_2'] = $form->get('libelle_2')->getData();
+                $t['valeur_2'] = $form->get('valeur_2')->getData();
+                $question->setConfiguration($t);
+            });
+        //->add('parametre', TextType::class)
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => QuestionnaireQuestion::class,
+            'translation_domain' => 'form',
         ]);
     }
 }

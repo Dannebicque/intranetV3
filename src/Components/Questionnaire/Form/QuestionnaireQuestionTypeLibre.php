@@ -18,6 +18,7 @@ class QuestionnaireQuestionTypeLibre extends QuestionnaireQuestionType
     {
         $resolver->setDefaults([
             'data_class' => QuestionnaireQuestion::class,
+            'translation_domain' => 'form',
         ]);
     }
 }
