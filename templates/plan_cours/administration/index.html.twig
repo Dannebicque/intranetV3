@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.plan_cours.index.heading'|trans }}
+{% endblock %}
+
+{% block stimulus %}
+    {{ stimulus_controller('plan-cours-adm', {
+        urlDiplome: path('administration_plan_cours_diplome'),
+        urlRecherche: path('administration_plan_cours_recherche'),
+    }) }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <nav class="nav nav-tabs">
+            {% for diplome in user_data.diplomes %}
+                <a class="nav-link {% if (diplomeSelect == null and loop.first) or (diplomeSelect != null and diplomeSelect
+                .id==diplome.id) %}active{% endif %} changeDiplome"
+                   href="#" data-diplome="{{ diplome.id }}"
+                   data-action="click->plan-cours-adm#changeDiplome">{{ diplome.displayCourt }}</a>
+            {% endfor %}
+        </nav>
+
+        <div class="buttons">
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip"
+               data-bs-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div data-plan-cours-adm-target="content">
+    </div>
+{% endblock %}

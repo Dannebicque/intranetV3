@@ -10,6 +10,7 @@
 namespace App\DTO;
 
 use App\Entity\Constantes;
+use App\Enums\PlanCoursEnum;
 
 class Previsionnel
 {
@@ -35,6 +36,7 @@ class Previsionnel
     public float $nbHeuresService;
     public int $semestre_id;
     public ?string $semestre_libelle = '';
+    public PlanCoursEnum $etatPlanCours = PlanCoursEnum::COMPLET;
     public int $annee_id;
     public ?string $annee_libelle = '';
     public int $diplome_id;
@@ -91,5 +93,9 @@ class Previsionnel
     public function getTypeIdMatiere(): string
     {
         return $this->type_matiere.'_'.$this->matiere_id;
+    }
+
+    public function personnelDisplay(): string {
+        return $this->personnel_nom.' '.$this->personnel_prenom;
     }
 }
