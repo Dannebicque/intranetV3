@@ -2,6 +2,74 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.6.0](https://github.com/Dannebicque/intranetV3/compare/v3.5.15...v3.6.0) (2022-04-24)
+
+
+### Features
+
+* [Absences]Liste sur le dashboard des absences en "temps réel" sur la demi-journée en cours ([78c4c89](https://github.com/Dannebicque/intranetV3/commit/78c4c899cb727c4a71f1032ae977d73966a3b823))
+* [Annee Prévisionnel] Suppression de la dépend à annéeprevisionnel ([5b9739f](https://github.com/Dannebicque/intranetV3/commit/5b9739f61e6f6794097eb9e3070fcaa404e4de75))
+* [APC] Choix du PN pour l'APC ([6e6a202](https://github.com/Dannebicque/intranetV3/commit/6e6a202dddaac4afa13719e3a850d1bed0a4e620))
+* [Changement de département] Le menu changement de département est chargé en ajax pour optimisé le nombre de requêtes ([568a73c](https://github.com/Dannebicque/intranetV3/commit/568a73c204305ab792408f78d4a1f5d75347a45b))
+* [HRS] suppression de la dépendance à AnneePrévisionnel ([fd37c78](https://github.com/Dannebicque/intranetV3/commit/fd37c78cc77e3d0bc6353d310c49d34e461dbdbd))
+* [Matieres] Notion de matière parent et de matières mutualisée. La structure et le formulaire ([ea62816](https://github.com/Dannebicque/intranetV3/commit/ea6281649807f90fd6ede9c5c4d5f2aebd0e0041))
+* [Plan De Cours] Mise en place d'une page synthèse de la saisie des plans de cours en admin ([08860c7](https://github.com/Dannebicque/intranetV3/commit/08860c7b1ae524875ca45f50c8fc5122a6853d60))
+* [PN] Import ([347e8ef](https://github.com/Dannebicque/intranetV3/commit/347e8ef3c94f21680a496e8eb7404f0c22a316c0))
+* [PN] Import d'un référentiel de compétences en lien avec un PN en SA ([724386a](https://github.com/Dannebicque/intranetV3/commit/724386abeec4cbc67228ef801f0a59eba233417d))
+* [PPN] Le PN est lié à l'année universitaire et au semestre et non plus au semestre. Ce qui empéchait le changement en cours d'année ([a4541a8](https://github.com/Dannebicque/intranetV3/commit/a4541a8fe5400f7778db5b1f2a2d7c7a016d6f9d))
+* [PPN] Le PN est lié à l'année universitaire et au semestre et non plus au semestre. Ce qui empéchait le changement en cours d'année ([0cb221e](https://github.com/Dannebicque/intranetV3/commit/0cb221e3203a49b92c86134197cda0682715299e))
+* [Previsionnel] suppression de la dépendance à AnneePrévisionnel ([02b9d7e](https://github.com/Dannebicque/intranetV3/commit/02b9d7ee966f1161b629c422b0091914101817b3))
+* [Profil etudiant] Affichage des bilans des semestres précédents pour les B.U.T. ([d37f50e](https://github.com/Dannebicque/intranetV3/commit/d37f50e9b93bad98770ca471a7c7e0f3164af2e8))
+* [Ressource Enfant] Gestion de la notion de ressource enfant. Formulaire, gestion des enfants, et affichage dans la section note. Reste : prise en compte en sous-comm, et sur le profil des étudiants ([80510ff](https://github.com/Dannebicque/intranetV3/commit/80510ff1610f3b4367568edd292a7ba9b56f88fc))
+* [Saisie des notes] Modification de la saisie des notes, si c'est une ressource enfant. Quelques corrections dans la gestion et la création de ressource enfants/parent. ([ffb6938](https://github.com/Dannebicque/intranetV3/commit/ffb693888ffc2c2c57e09e8e7a836783ddb269cd))
+* [Structure] Réorganisation de la page structure et chargement avec Stimulus ([044c766](https://github.com/Dannebicque/intranetV3/commit/044c7660849a93b060b19411e3943983178606cf))
+
+
+### Bug Fixes
+
+* [Absence] Mise en place du TableType pour Absence, avec tris, et DTO. Pour le moment un seul tri. ([c7b6729](https://github.com/Dannebicque/intranetV3/commit/c7b67293ddee9c0fee78acd6e59855f8fda1cd8b))
+* [AbsenceJustificatif] Utlisation de Enum pour le tableType. A reprendre dans l'entité ([0bb8233](https://github.com/Dannebicque/intranetV3/commit/0bb823340a3ec5ec613f306b59451198584deaaa))
+* [Alternance] droits pour les assistantes ([a0d1930](https://github.com/Dannebicque/intranetV3/commit/a0d1930b0b8bd91e2959ba37064c24d29b2bd277))
+* [Alternance] fix formulaire edit ([7941ac4](https://github.com/Dannebicque/intranetV3/commit/7941ac43ca7cda436f4dba7d935175e6b5b58a3a))
+* [Apc] Correctifs suite semestre multi-semestres ([62179bf](https://github.com/Dannebicque/intranetV3/commit/62179bfc29c2f993a373732352b773b38e62b748))
+* [Apc] Liaison PPN/Compétences ([ae3b622](https://github.com/Dannebicque/intranetV3/commit/ae3b6220950253ab986123108c0acebda093c25a))
+* [base] typo et lint ([1c56c8f](https://github.com/Dannebicque/intranetV3/commit/1c56c8f70422e89b31007d8e9028e6cc485fceca))
+* [Composant Table] Amélioration pour afficher les badges avec des seuls, et les propriétés avec des dates ([19d319e](https://github.com/Dannebicque/intranetV3/commit/19d319e348387a45c31acc34cd0cc20e6e07d1e3))
+* [Composant Table] Gestion des tris et des flèches en JS. ([01cc8c6](https://github.com/Dannebicque/intranetV3/commit/01cc8c6dbaee19f56b524a3a978ecc9a9c0f6667))
+* [constantes] typo dans une constantes pour les toasts ([c1ecefc](https://github.com/Dannebicque/intranetV3/commit/c1ecefcdf77acc59892290927debca7b21c1acb9))
+* [edt] code apogée ([b1501c8](https://github.com/Dannebicque/intranetV3/commit/b1501c834d00b4a9f9080bc1b5d2aee11ca6463a))
+* [edt] code apogée ([d146da8](https://github.com/Dannebicque/intranetV3/commit/d146da8d0fbd6071852628dfbc5f495857d5a62f))
+* [edt] code apogée ([1a11167](https://github.com/Dannebicque/intranetV3/commit/1a1116794752f464709c25757341b98f6f1eb5fb))
+* [Enquete] Bug calcul ([e80cda0](https://github.com/Dannebicque/intranetV3/commit/e80cda0cb413e43912a99fa378115c92a8ffc2f1))
+* [Enquete] Bug calcul ([d28195f](https://github.com/Dannebicque/intranetV3/commit/d28195f407eca5567e8c35f40883a0599605eb83))
+* [evaluation] typage groupe ([2e04c27](https://github.com/Dannebicque/intranetV3/commit/2e04c27b94618b9af2ca5e2840f46944a8e40bdf))
+* [Export] typage ([8b30fe3](https://github.com/Dannebicque/intranetV3/commit/8b30fe3b590cb7c6aec130f331e54078d1e05fa3))
+* [JS] Correctifs et optimisations JS/CSS ([4ae2899](https://github.com/Dannebicque/intranetV3/commit/4ae2899d9e36745a1a75368898be9a186b881427))
+* [Nettoyage] Suppression de CreneauBloque CreneauCours ([a8e9002](https://github.com/Dannebicque/intranetV3/commit/a8e90025e6b131570e223253121a7edb35054685))
+* [Opti SQL] Optimisation des requêtes ([0da4dcb](https://github.com/Dannebicque/intranetV3/commit/0da4dcb1289d7927498529da6068c34dcf257963))
+* [PlanCours] Amélioration du TableType associé ([86bd89a](https://github.com/Dannebicque/intranetV3/commit/86bd89af7e0dbf82d08652245644493e376c8246))
+* [PN] Import d'un PN, en fonction de la version et suppression des anciennes datas ([587ff29](https://github.com/Dannebicque/intranetV3/commit/587ff298f5c17488e2b01b469e60fe2383449be7))
+* [previsionnel] typage groupe ([6b9a04a](https://github.com/Dannebicque/intranetV3/commit/6b9a04af85492de7d1d88a3a405c851eebff39a2))
+* [previsionnel] typage groupe ([510f5c4](https://github.com/Dannebicque/intranetV3/commit/510f5c45514c1f6f9accc6952105b42551baf04e))
+* [profil] reorganisation de la page action ([9aad14d](https://github.com/Dannebicque/intranetV3/commit/9aad14dfa7768d1fda73e1231c15924660947b5c))
+* [profil] typo et lint ([a49767c](https://github.com/Dannebicque/intranetV3/commit/a49767c8a539de9cbff7eaa3600f6cb1ca4cef28))
+* [Qualite] Type sur question ([e1a5370](https://github.com/Dannebicque/intranetV3/commit/e1a5370e02bf4f5dcea826c1592faf95ca37ea51))
+* [QUestionnaires] Formulaire de création/modification des questions selon le type ([5d39e75](https://github.com/Dannebicque/intranetV3/commit/5d39e75c15df126d85a2b778a24908cd4e12ca39))
+* [Res. Mutualisées] Suppression de la dépendance du semestre et de la ressource. le semestre est une donnée à passer indépendamment. Permet de gérer les Res/Sae mutualisées ([52f7ae0](https://github.com/Dannebicque/intranetV3/commit/52f7ae0a5d2c661d239b24c8dee72150a6f55cd4))
+* [Stage] règle de validation du formulaire ([d3d2c22](https://github.com/Dannebicque/intranetV3/commit/d3d2c2234b8a1049608d773d32c69ce6285840a4))
+* [stage] validation ([a570882](https://github.com/Dannebicque/intranetV3/commit/a57088262fe844b413b1281d7fedc4c6ae491b14))
+* [Tables] Correctifs et suppressions de Todo ([b2f9ead](https://github.com/Dannebicque/intranetV3/commit/b2f9ead117246b23126216a7de291d058a8768d6))
+* [traductions] fix et add ([be565b7](https://github.com/Dannebicque/intranetV3/commit/be565b714056ffab625ad5c9892ac69b0c57b58e))
+* [trombi] fix si pas de groupes? ([9d776a5](https://github.com/Dannebicque/intranetV3/commit/9d776a5ef0316a49d0fd3f3695dff661ab1c799d))
+* [typage] correction ([f9ba063](https://github.com/Dannebicque/intranetV3/commit/f9ba0634d29d9506f1591499bccb1c1cb8c1be65))
+* [Typage] Export des notes ([6145da8](https://github.com/Dannebicque/intranetV3/commit/6145da808ebd616ca3f6f839d67b774ce0435108))
+* [typage] sur l'écriture Excel ([9762474](https://github.com/Dannebicque/intranetV3/commit/976247482ff0f414e57afbf9a75baf7e3df0a6bf))
+* [typage] sur la sauvegarde du draft ([31ee0a0](https://github.com/Dannebicque/intranetV3/commit/31ee0a0c3962d9db07a1b145d39bebcc6e9acff2))
+* [typage] typage ([6140fba](https://github.com/Dannebicque/intranetV3/commit/6140fbad0b3e34c34599a2b5bd0aff615440ed8b))
+* [Typage] Typages ([3fc719d](https://github.com/Dannebicque/intranetV3/commit/3fc719d6416b54b228876a15486a8b0ba407403f))
+* [typo] typos, correctifs ([6bea878](https://github.com/Dannebicque/intranetV3/commit/6bea878fc93240a84d355e237f500820ff9e6966))
+* [Utilisateur] nullable ([2a9cb71](https://github.com/Dannebicque/intranetV3/commit/2a9cb71a07cba34e0b5719009a0a24cb25934f7c))
+
 ### [3.5.15](https://github.com/Dannebicque/intranetV3/compare/v3.5.14...v3.5.15) (2022-03-05)
 
 
