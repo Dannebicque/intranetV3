@@ -170,38 +170,6 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
         return $this;
     }
 
-//    #[Deprecated(reason: 'n\'a plus de sens, si le semestre n\'est plus unique')]
-//    public function getDiplome(): ?Diplome
-//    {
-//        if (null !== $this->getSemestre()) {
-//            return $this->getSemestre()->getDiplome();
-//        }
-//
-//        return null;
-//    }
-
-//    public function getSemestre(): ?Semestre
-//    {
-//        //todo: provisoire pour ne pas tout casser...
-//        if (null !== $this->getSemestres()->first()) {
-//            return $this->getSemestres()->first();
-//        }
-//        return null;
-//    }
-
-    public function getSemestre(): ?Semestre
-    {
-        return $this->semestre;
-    }
-
-//    #[Deprecated(reason: 'Une ressource peut être commune  à plusieurs parcours. Le plus simple serait d\'avoir une gestion manytomany')]
-//    public function setSemestre(?Semestre $semestre): self
-//    {
-//        $this->semestre = $semestre;
-//
-//        return $this;
-//    }
-
     /**
      * @return Collection|ApcCompetence[]
      */

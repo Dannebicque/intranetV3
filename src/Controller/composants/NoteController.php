@@ -50,10 +50,10 @@ class NoteController extends BaseController
                 'action' => $this->generateUrl('composant_edit_form_evaluation',
                     ['evaluation' => $evaluation->getId(), 'source' => $source]),
                 'departement' => $this->dataUserSession->getDepartement(),
-                'semestre' => $matiere->semestre,
                 'matiereDisabled' => !('app' === $source),
                 'autorise' => $evaluation->getAutorise($this->getUser()->getId(), $this->dataUserSession),
                 'locale' => $request->getLocale(),
+                'semestre' => $evaluation->getSemestre(),
                 'attr' => [
                     'data-provide' => 'validation',
                 ],

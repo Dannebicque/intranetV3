@@ -165,7 +165,11 @@ class Matiere
 
     public function groupeEnfant(): ?Groupe
     {
-        return $this->objet->groupeEnfant();
+        if (method_exists($this->objet, 'groupeEnfant')) {
+            return $this->objet->groupeEnfant();
+        }
+
+        return null;
     }
 
     public function parent(): mixed
@@ -180,7 +184,11 @@ class Matiere
 
     public function getSemestres(): ?Collection
     {
-        return $this->objet->getSemestres();
+        if (method_exists($this->objet, 'getSemestres')) {
+            return $this->objet->getSemestres();
+        }
+
+        return null;
     }
 
     public function semestre(): ?Semestre

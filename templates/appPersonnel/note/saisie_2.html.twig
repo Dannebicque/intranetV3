@@ -7,7 +7,8 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-            <a href="{{ path('application_personnel_note_index', {matiere: matiere.typeIdMatiere, index: evaluation.id}) }}"
+            <a href="{{ path('application_personnel_note_index', {matiere: matiere.typeIdMatiere, index: evaluation
+            .id, semestre: evaluation.semestre.id}) }}"
                class="btn btn-primary btn-float"
                data-bs-toggle="tooltip" data-bs-placement="bottom"
                title="{{ 'atitle.retour_synthese'|trans }}"><i class="fas fa-arrow-left"></i></a>
