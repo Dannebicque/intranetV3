@@ -79,6 +79,16 @@ Etat: Etat
 fichier_import: 'Fichier à importer'
 h: Heure
 help:
+  valeur_1: 'Valeur pour le choix A'
+  valeur_2: 'Valeur pour le choix B'
+  libelle_1: Valeur A (Oui, Vrai, ...)
+  libelle_2: Valeur B (Non, Faux, ...)
+  question:
+    min: Définir la valeur de départ de l'échelle
+    max: Définir la valeur maximale de l'échelle
+    pas: Définir le pas de l'échelle, c'est à dire l'évolution entre le minimum et le maximum.
+  ressourceParent: 'Définissez cette ressource comme parent, si vous souhaitez pouvoir créer des "sous-ressources" pour la saisie et l''affichage des notes. Exemple pour la LV2.'
+  mutualisee: 'Cocher si la matière/ressource/SAE est mutualisée entre plusieurs parcours ou diplômes'
   duree_evaluation: 'Durée de l''évaluation, en heures (ex: 1h30)'
   ficheRenseignement: 'Vous pouvez joindre un document à pré-remplir. Ce document sera accessible aux étudiants dans la partie Applications > Stages'
   personnel:
@@ -91,7 +101,7 @@ help:
   commentaire_evaluation: 'Commentaire optionnel de l''évaluation (255 caractères maximum)'
   commentaireDureeHebdomadaire: 'Toutes précisions nécessaires sur la durée de travail'
   competencesVisees: 'Compétences visées pendant la période de stage'
-  copieAssistant: "Permet de mettre en copie des envois automatique de l'intranet l'assistant(e) de la formation\n        "
+  copieAssistant: "Permet de mettre en copie des envois automatique de l'intranet l'assistant(e) de la formation"
   dateDebutStage: 'Date de début de stage'
   dateFermeture.enquete: 'Date de fermeture de l''enquête (aucune réponse possible passée cette date)'
   dateFinStage: 'Date de fin de stage'
@@ -132,6 +142,17 @@ initiales: Initiales
 j: Jour
 Jour: Jour
 label:
+  valeur_1: 'Valeur pour le choix A'
+  valeur_2: 'Valeur pour le choix B'
+  libelle_1: Valeur A (Oui, Vrai, ...)
+  libelle_2: Valeur B (Non, Faux, ...)
+  question:
+      min: Valeur minimale de l'échelle
+      max: Valeur maximale de l'échelle
+      pas: Pas de l'échelle
+  libelle.court: 'Libellé court'
+  ressourceParent: Ressource parent ?
+  mutualisee: 'Matière/SAE/Ressource mutualisée'
   matiere: Matière
   duree_evaluation: Durée de l'évaluation
   heure_evaluation: Heure de l'évaluation

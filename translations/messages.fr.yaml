@@ -93,6 +93,9 @@ abs:
 absence_justificatif_deposer: 'Déposer un justificatif d''absence'
 absence_justificatif_etat: 'Etat du justificatif d''absence'
 absence_justificatif:
+  A: Accepté, absences justifiées
+  R: Refusée
+  D: Déposé, en attente de validation
   add.success.flash: 'Justificatif d''absence ajouté avec succès'
   delete.success.flash: 'Justificatif d''absence supprimé avec succès'
   edit.success.flash: 'Justificatif d''absence modifié avec succès'
@@ -537,7 +540,7 @@ adm:
     edit.heading: 'Modification d''un parcours'
     show.heading: 'Détails d''un parcours'
     new.heading: 'Création d''un parcours'
-  referentiel.de.competence.heading: 'Référentiel de compétences pour le diplôme %diplome%'
+  referentiel.de.competence.heading: 'Référentiel de compétences pour le diplôme :<br> %diplome%'
   apc.parcours.heading: 'Parcours pour le diplôme %diplome%'
   ressources.et.sae.index.heading: 'Ressources et SAÉ'
   apc_parcours_niveau:
@@ -874,7 +877,7 @@ bac:
   edit.success.flash: 'Diplôme de bac modifié avec succès'
 
 bloc:
-  note.apc.etu.heading: Bilan du semestre
+  note.apc.etu.heading: Bilan du semestre %semestre%
   absence.etu.heading: 'Vos absences'
   actions.etu.heading: Actions
   actions.personnel.heading: Actions
@@ -1006,7 +1009,8 @@ csv:
   point-virgule: 'Csv (;)'
   virgule: 'Csv (,)'
 
-danger: danger
+danger: Erreur
+warning: Avertissement
 
 date_: Date
 date:
@@ -1294,7 +1298,7 @@ importer:
   une.etudiant: 'Importer un étudiant'
   une.liste: 'Importer une liste d''étudiants (csv)'
 imprimer: Imprimer
-info: info
+info: Information
 informations.heading: Informations
 infos: Informations
 initialisation.des.evaluations: 'Initialisation des évaluations'
@@ -1556,6 +1560,11 @@ personnelf.delete.success.flash: 'Personnel retiré du département avec succès
 personnelf.delete.error.flash: 'Erreur lors de la suppression d''un personnel'
 personnelf.edit.success.flash: 'Personnel modifié avec succès'
 personnelf.droit.access: 'Droit d''accès'
+
+plan_cours:
+  NONE: 'Aucun'
+  EN_COURS: 'En cours'
+  COMPLET: 'Terminé'
 
 Place: Place
 planning.annee.annee: planning.annee.annee
