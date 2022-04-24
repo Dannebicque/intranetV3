@@ -193,7 +193,7 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
      * @throws \Exception
      */
     private function createEvent(
-        bool $result,
+        mixed $result,
         $anneeUniversitaire,
         $codeDepartement,
         mixed $eventId,
