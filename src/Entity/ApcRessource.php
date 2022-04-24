@@ -189,6 +189,11 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
 //        return null;
 //    }
 
+    public function getSemestre(): ?Semestre
+    {
+        return $this->semestre;
+    }
+
 //    #[Deprecated(reason: 'Une ressource peut être commune  à plusieurs parcours. Le plus simple serait d\'avoir une gestion manytomany')]
 //    public function setSemestre(?Semestre $semestre): self
 //    {
