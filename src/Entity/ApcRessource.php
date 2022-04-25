@@ -321,10 +321,10 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
         return $this->getRessourceParent();
     }
 
-    public function groupeEnfant(): ?Groupe
+    public function groupesEnfant(): ?Collection
     {
         if ($this->isEnfant()) {
-            return $this->getApcRessourceEnfantEnfants()->first()->getGroupe();
+            return $this->getApcRessourceEnfantEnfants()->first()->getGroupes();
         }
 
         return null;

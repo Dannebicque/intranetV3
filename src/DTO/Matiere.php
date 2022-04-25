@@ -65,6 +65,7 @@ class Matiere
     public ?Parcour $parcours;
 
     public mixed $objet;
+    private ?Collection $groupesEnfant = null;
 
     public function getUeId(): ?int
     {
@@ -163,14 +164,29 @@ class Matiere
         return false;
     }
 
-    public function groupeEnfant(): ?Groupe
+    public function groupesEnfant(): ?Collection
     {
-        if (method_exists($this->objet, 'groupeEnfant')) {
-            return $this->objet->groupeEnfant();
+        if (method_exists($this->objet, 'groupesEnfant')) {
+            $this->groupesEnfant = $this->objet->groupesEnfant();
+            return $this->objet->groupesEnfant();
         }
 
         return null;
     }
+
+    public function containsGroupesEnfant(Groupe $groupe): bool
+    {
+        if (null === $this->groupesEnfant) {
+            $this->groupesEnfant();
+        }
+
+        if ($this->groupesEnfant->count() > 0) {
+            return $this->groupesEnfant->contains($groupe);
+        }
+        return true;
+    }
+
+
 
     public function parent(): mixed
     {

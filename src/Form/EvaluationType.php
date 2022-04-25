@@ -100,7 +100,7 @@ class EvaluationType extends AbstractType
                 ['label' => 'label.evaluation.visible', 'help' => 'help.evaluation.visible'])
 
             ->add('typeGroupe', EntityType::class, [
-                'data' => true === $options['enfant'] ? ($options['groupeEnfant']?->getTypeGroupe()) : null,
+                'data' => true === $options['enfant'] ? ($options['groupeEnfant']?->first()->getTypeGroupe()) : null, //todo: en attendant mieux. Car peut y avoir plusieurs groupes, et donc plusieurs types groupes.)
                 'class' => TypeGroupe::class,
                 'label' => 'label.evaluation_type_groupe',
                 'choice_label' => 'libelle',

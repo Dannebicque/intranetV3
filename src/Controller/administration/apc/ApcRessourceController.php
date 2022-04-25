@@ -18,6 +18,7 @@ use App\Entity\ApcRessourceEnfants;
 use App\Entity\ApcSaeRessource;
 use App\Entity\Constantes;
 use App\Entity\Diplome;
+use App\Entity\Semestre;
 use App\Form\ApcRessourceType;
 use App\Repository\ApcApprentissageCritiqueRepository;
 use App\Repository\ApcRessourceApprentissageCritiqueRepository;
@@ -195,13 +196,23 @@ class ApcRessourceController extends BaseController
         ApcRessource $apcRessource): Response
     {
         $enfants = $apcRessourceEnfantsRepository->findBy(['apcRessourceParent' => $apcRessource->getId()]);
-        $groupes = $groupeRepository->findBySemestre($apcRessource->getSemestre());
+
+        $groupes = [];
+        $ressources = [];
+        foreach ($apcRessource->getSemestres() as $semestre) {
+            $groupes[] = $groupeRepository->findBySemestre($semestre);
+            $ressources[] = $apcRessourceRepository->findBySemestre($semestre);
+        }
+
+        $groupes = array_merge(...$groupes);
+        $ressources = array_merge(...$ressources);
+
 
         return $this->render('apc/apc_ressource/enfants.html.twig', [
             'groupes' => $groupes,
             'apcRessource' => $apcRessource,
             'enfants' => $enfants,
-            'ressources' => $apcRessourceRepository->findBySemestre($apcRessource->getSemestre()), //todo: comment gérer le semestre ?
+            'ressources' => $ressources,
             'ressourceSemestres' => $apcRessource->getSemestres(),
             'semestres' => $this->dataUserSession->getSemestres(),
         ]);
@@ -210,16 +221,25 @@ class ApcRessourceController extends BaseController
     #[Route(path: '/{id}/enfants', name: 'apc_ressource_add_enfant', methods: ['POST'])]
     public function addEnfant(
         Request $request,
+        GroupeRepository $groupeRepository,
         ApcRessourceRepository $apcRessourceRepository,
         ApcRessource $apcRessource): Response
     {
         $id = JsonRequest::getValueFromRequest($request, 'enfant');
+        $idsGroupe = JsonRequest::getValueFromRequest($request, 'groupes');
         $apcRessourceEnfant = $apcRessourceRepository->find($id);
 
         if (null !== $apcRessourceEnfant) {
             $apcE = new ApcRessourceEnfants();
             $apcE->setApcRessourceParent($apcRessource);
             $apcE->setApcRessourceEnfant($apcRessourceEnfant);
+            foreach ($idsGroupe as $idGroupe) {
+                $groupe = $groupeRepository->find($idGroupe);
+                if (null !== $groupe) {
+                    $apcE->addGroupe($groupe);
+                    $groupe->addApcRessourceEnfant($apcE);
+                }
+            }
             $this->entityManager->persist($apcE);
             $this->entityManager->flush();
             $this->addFlashBag(
@@ -260,12 +280,18 @@ class ApcRessourceController extends BaseController
         ApcRessource $apcRessource): Response
     {
         $id = JsonRequest::getValueFromRequest($request, 'enfant');
-        $idGroupe = JsonRequest::getValueFromRequest($request, 'groupe');
+        $idsGroupe = JsonRequest::getValueFromRequest($request, 'groupes');
         $apcRessourceEnfant = $apcRessourceEnfantsRepository->findOneBy(['apcRessourceParent' => $apcRessource->getId(), 'apcRessourceEnfant' => $id]);
-        $groupe = $groupeRepository->find($idGroupe);
 
-        if (null !== $apcRessourceEnfant && null !== $groupe) {
-            $apcRessourceEnfant->setGroupe($groupe);
+        if (null !== $apcRessourceEnfant) {
+            foreach ($idsGroupe as $idGroupe) {
+                $groupe = $groupeRepository->find($idGroupe);
+                if (null !== $groupe) {
+                    $apcRessourceEnfant->addGroupe($groupe);
+                    $groupe->addApcRessourceEnfant($apcRessourceEnfant);
+                }
+            }
+
             $this->entityManager->flush();
 
             return $this->json(['success' => true], Response::HTTP_OK);
@@ -281,7 +307,13 @@ class ApcRessourceController extends BaseController
         ApcRessource $apcRessource): Response
     {
         $enfants = $apcRessourceEnfantsRepository->findBy(['apcRessourceParent' => $apcRessource->getId()]);
-        $groupes = $groupeRepository->findBySemestre($apcRessource->getSemestre());
+
+        $groupes = [];
+        foreach ($apcRessource->getSemestres() as $semestre) {
+            $groupes[] = $groupeRepository->findBySemestre($semestre);
+        }
+
+        $groupes = array_merge(...$groupes);
 
         return $this->render('apc/apc_ressource/_liste_enfants.html.twig', [
             'apcRessource' => $apcRessource,
@@ -340,7 +372,6 @@ class ApcRessourceController extends BaseController
 
     #[Route(path: '/{id}/diplomes/liste', name: 'apc_ressource_liste_diplomes', methods: ['GET'])]
     public function listeDiplomes(
-        ApcRessourceEnfantsRepository $apcRessourceEnfantsRepository,
         ApcRessource $apcRessource): Response
     {
         return $this->render('apc/apc_ressource/_liste_diplomes.html.twig', [
@@ -349,11 +380,12 @@ class ApcRessourceController extends BaseController
         ]);
     }
 
-    #[Route(path: '/{id}/edit', name: 'apc_ressource_edit', methods: ['GET', 'POST'])]
-    public function edit(ApcApprentissageCritiqueRepository $apcApprentissageCritiqueRepository, ApcSaeRepository $apcSaeRepository, Request $request, ApcRessource $apcRessource): Response
+    #[Route(path: '/{id}/{semestre}/edit', name: 'apc_ressource_edit', methods: ['GET', 'POST'])]
+    public function edit(ApcApprentissageCritiqueRepository $apcApprentissageCritiqueRepository, ApcSaeRepository $apcSaeRepository, Request $request, ApcRessource $apcRessource, Semestre $semestre): Response
     {
         $form = $this->createForm(ApcRessourceType::class, $apcRessource, [
             'diplome' => $apcRessource->getDiplome(),
+            'semestre' => $semestre,
         ]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -430,21 +462,21 @@ class ApcRessourceController extends BaseController
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    #[Route(path: '/{id}/duplicate', name: 'apc_ressource_duplicate', methods: 'GET|POST')]
-    public function duplicate(ApcRessource $apcRessource): Response
+    #[Route(path: '/{id}/{semestre}duplicate', name: 'apc_ressource_duplicate', methods: 'GET|POST')]
+    public function duplicate(ApcRessource $apcRessource, Semestre $semestre): Response
     {
         $newApcRessource = clone $apcRessource;
 
         // Recopie des semestres (todo: faire idem sur les autres)
-        foreach ($apcRessource->getSemestres() as $semestre) {
-            $newApcRessource->addSemestre($semestre);
-            $semestre->addApcSemestresRessource($newApcRessource);
+        foreach ($apcRessource->getSemestres() as $sem) {
+            $newApcRessource->addSemestre($sem);
+            $sem->addApcSemestresRessource($newApcRessource);
         }
 
         $this->entityManager->persist($newApcRessource);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.ressource.duplicate.success.flash');
 
-        return $this->redirectToRoute('administration_apc_ressource_edit', ['id' => $newApcRessource->getId()]);
+        return $this->redirectToRoute('administration_apc_ressource_edit', ['id' => $newApcRessource->getId(), 'semestre' => $semestre->getId()]);
     }
 }

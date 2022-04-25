@@ -23,7 +23,7 @@ export default class extends Controller {
   changeGroupe (e) {
     post(this.urlUpdateGroupeValue, {
       enfant: e.target.dataset.enfant,
-      groupe: e.target.value
+      groupes: this._getSelectedOptions(e.target)
     }).then(async (data) => {
       addCallout('success', 'Groupe mis à jour')
     }).catch((error) => {
@@ -42,10 +42,25 @@ export default class extends Controller {
     })
   }
 
+  _getSelectedOptions(sel) {
+    var opts = [],
+      opt;
+    var len = sel.options.length;
+    for (var i = 0; i < len; i++) {
+      opt = sel.options[i];
+
+      if (opt.selected) {
+        opts.push(opt.value);
+      }
+    }
+
+    return opts;
+  }
+
   async addEnfant (e) {
-    console.log('add')
     post(this.urlPostValue, {
-      enfant: document.getElementById('ressourceEnfant').value
+      enfant: document.getElementById('ressourceEnfant').value,
+      groupes: this._getSelectedOptions(document.getElementById('groupeAdd'))
     }).then(async (data) => {
       addCallout('success', 'Enfant ajouté')
       this._updateContent()

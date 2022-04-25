@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ApcRessourceEnfantsRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ApcRessourceEnfantsRepository::class)]
@@ -14,8 +16,14 @@ class ApcRessourceEnfants extends BaseEntity
     #[ORM\ManyToOne(targetEntity: ApcRessource::class, inversedBy: 'apcRessourceEnfantEnfants')]
     private ?ApcRessource $apcRessourceEnfant;
 
-    #[ORM\ManyToOne(targetEntity: Groupe::class, inversedBy: 'apcRessourceEnfants')]
-    private ?Groupe $groupe;
+    #[ORM\ManyToMany(targetEntity: Groupe::class, inversedBy: 'apcRessourceEnfants')]
+    private $groupes;
+
+    public function __construct()
+    {
+        $this->groupes = new ArrayCollection();
+    }
+
 
 
     public function getApcRessourceParent(): ?ApcRessource
@@ -42,15 +50,32 @@ class ApcRessourceEnfants extends BaseEntity
         return $this;
     }
 
-    public function getGroupe(): ?Groupe
+    /**
+     * @return Collection<int, Groupe>
+     */
+    public function getGroupes(): Collection
     {
-        return $this->groupe;
+        return $this->groupes;
     }
 
-    public function setGroupe(?Groupe $groupe): self
+    public function addGroupe(Groupe $groupe): self
     {
-        $this->groupe = $groupe;
+        if (!$this->groupes->contains($groupe)) {
+            $this->groupes[] = $groupe;
+        }
 
         return $this;
+    }
+
+    public function removeGroupe(Groupe $groupe): self
+    {
+        $this->groupes->removeElement($groupe);
+
+        return $this;
+    }
+
+    public function containsGroupe(Groupe $groupe): bool
+    {
+        return $this->groupes->contains($groupe);
     }
 }

@@ -36,14 +36,13 @@ use Twig\Error\SyntaxError;
 #[Route(path: '/administration/evaluation')]
 class EvaluationController extends BaseController
 {
-    // todo: accès à préciser, car comment lier semestre à évaluation?
     /**
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
      */
     #[Route(path: '/details/{uuid}', name: 'administration_evaluation_show', methods: ['GET', 'POST'])]
     public function show(TypeMatiereManager $typeMatiereManager, MyEvaluation $myEvaluation, Evaluation $evaluation): Response
     {
-        //$this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $evaluation->);
+        //$this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $evaluation->getSemestre());
         $notes = $myEvaluation->setEvaluation($evaluation)->getNotesTableau();
 
         return $this->render('administration/evaluation/show.html.twig', [
@@ -100,14 +99,14 @@ class EvaluationController extends BaseController
                     'data-provide' => 'validation',
                 ],
                 'enfant' => $mat->isEnfant(),
-                'groupeEnfant' => $mat->groupeEnfant(),
+                'groupeEnfant' => $mat->groupesEnfant(),
             ]
         );
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $evaluation->setAnneeUniversitaire($this->dataUserSession->getAnneeUniversitaire());
             if ($mat->isEnfant()) {
-                $evaluation->setTypeGroupe($mat->groupeEnfant()->getTypeGroupe());
+                $evaluation->setTypeGroupe($mat->groupesEnfant()?->first()->getTypeGroupe());//todo: en attendant mieux. Car peut y avoir plusieurs groupes, et donc plusieurs types groupes.
             }
             $this->entityManager->persist($evaluation);
             $this->entityManager->flush();
@@ -122,6 +121,7 @@ class EvaluationController extends BaseController
         return $this->render('administration/evaluation/create.html.twig', [
             'form' => $form->createView(),
             'matiere' => $mat,
+            'semestre' => $semestre,
         ]);
     }
 
@@ -144,6 +144,7 @@ class EvaluationController extends BaseController
         return $this->render('administration/evaluation/saisie_2.html.twig', [
             'evaluation' => $evaluation,
             'notes' => $notes,
+            'semestre' => $evaluation->getSemestre(),
             'matiere' => $matiere,
             'autorise' => true,
         ]);

@@ -18,6 +18,7 @@ use App\Repository\ApcComptenceRepository;
 use App\Repository\SemestreRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -26,10 +27,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ApcRessourceType extends AbstractType
 {
     protected ?Diplome $diplome;
+    protected ?Semestre $semestre;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->diplome = $options['diplome'];
+        $this->semestre = $options['semestre'];
 
         $builder
             ->add('ressourceParent', YesNoType::class, ['label' => 'label.ressourceParent', 'help' => 'help.ressourceParent'])
@@ -60,6 +63,7 @@ class ApcRessourceType extends AbstractType
             ->add('tpFormation', TextType::class, ['label' => 'label.tp_formation'])
             ->add('semestre', EntityType::class, [
                 'class' => Semestre::class,
+                'data' => $this->semestre,
                 'required' => true,
                 'choice_label' => 'display',
                 'query_builder' => function (SemestreRepository $semestreRepository) {
@@ -67,6 +71,7 @@ class ApcRessourceType extends AbstractType
                 },
                 'label' => 'label.semestre',
                 'expanded' => true,
+                'mapped' => false,
             ])
             ->add('competences', EntityType::class, [
                 'class' => ApcCompetence::class,
@@ -88,6 +93,7 @@ class ApcRessourceType extends AbstractType
         $resolver->setDefaults([
             'data_class' => ApcRessource::class,
             'diplome' => null,
+            'semestre' => null,
             'translation_domain' => 'form',
         ]);
     }

@@ -62,8 +62,8 @@ class Groupe extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'groupe', targetEntity: AbsenceEtatAppel::class)]
     private Collection $absenceEtatAppels;
 
-    #[ORM\OneToMany(mappedBy: 'groupe', targetEntity: ApcRessourceEnfants::class)]
-    private Collection $apcRessourceEnfants;
+    #[ORM\ManyToMany(targetEntity: ApcRessourceEnfants::class, mappedBy: 'groupes')]
+    private $apcRessourceEnfants;
 
     public function __construct()
     {
@@ -314,7 +314,7 @@ class Groupe extends BaseEntity
     {
         if (!$this->apcRessourceEnfants->contains($apcRessourceEnfant)) {
             $this->apcRessourceEnfants[] = $apcRessourceEnfant;
-            $apcRessourceEnfant->setGroupe($this);
+            $apcRessourceEnfant->addGroupe($this);
         }
 
         return $this;
@@ -323,10 +323,7 @@ class Groupe extends BaseEntity
     public function removeApcRessourceEnfant(ApcRessourceEnfants $apcRessourceEnfant): self
     {
         if ($this->apcRessourceEnfants->removeElement($apcRessourceEnfant)) {
-            // set the owning side to null (unless already changed)
-            if ($apcRessourceEnfant->getGroupe() === $this) {
-                $apcRessourceEnfant->setGroupe(null);
-            }
+            $apcRessourceEnfant->removeGroupe($this);
         }
 
         return $this;

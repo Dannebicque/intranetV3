@@ -12,17 +12,18 @@
             <td>{{ enfant.apcRessourceEnfant.display }}</td>
             <td>
                 <select class="form-select"
+                        multiple
                         data-enfant="{{ enfant.apcRessourceEnfant.id }}"
                         data-action="change->apc-enfant#changeGroupe"
                 >
                     <option value="">Choisir un groupe particulier (laisser vide pour tous les groupes)</option>
                     {% for groupe in groupes %}
-                        <option value="{{ groupe.id }}" {% if enfant.groupe != null and enfant.groupe.id == groupe
-                        .id%}selected{% endif %}>
+                        <option value="{{ groupe.id }}" {% if enfant.containsGroupe(groupe) %}selected{% endif %}>
                             {{ groupe.display }}
                         </option>
                     {% endfor %}
                 </select>
+                <p class="text-small">Possibilité de selectionner plusieurs groupes</p>
             </td>
             <td><button class="btn btn-danger d-block"
                         data-enfant="{{ enfant.apcRessourceEnfant.id }}"

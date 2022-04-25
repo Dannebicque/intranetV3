@@ -77,7 +77,7 @@
             <td>
                 {% if settings('MODIFICATION_PPN') == 1 %}
 
-                    <a href="{{ path('administration_apc_ressource_duplicate', {'id': ressource.id}) }}"
+                    <a href="{{ path('administration_apc_ressource_duplicate', {'id': ressource.id, semestre:semestre.id}) }}"
                        class="btn btn-success btn-outline btn-square"
                        data-bs-toggle="tooltip" data-bs-placement="bottom"
 
@@ -97,7 +97,7 @@
                 </a>
                 {% if settings('MODIFICATION_PPN') == 1 %}
 
-                    <a href="{{ path('administration_apc_ressource_edit', {'id': ressource.id}) }}"
+                    <a href="{{ path('administration_apc_ressource_edit', {'id': ressource.id, semestre:semestre.id}) }}"
                        class="btn btn-warning btn-outline btn-square"
                        data-bs-toggle="tooltip" data-bs-placement="bottom"
 
@@ -105,6 +105,7 @@
                         <i class="{{ iconEdit }}"></i>
                         <span class="sr-only">{{ 'atitle.modifier'|trans }}</span>
                     </a>
+
                     <a href="{{ path('administration_apc_ressource_delete', {id: ressource.id}) }}"
                        data-csrf="{{ csrf_token('delete' ~ ressource.id) }}"
                        class="btn btn-danger btn-outline btn-square supprimer"
