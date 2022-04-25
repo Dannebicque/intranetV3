@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.6.1](https://github.com/Dannebicque/intranetV3/compare/v3.6.0...v3.6.1) (2022-04-25)
+
+
+### Features
+
+* [Command] Mise à jour de la BDD ([ec1d32d](https://github.com/Dannebicque/intranetV3/commit/ec1d32df1077fa40df29a71fcbc2d772636a4b29))
+* [Command] Mise à jour de la BDD ([eac2eb7](https://github.com/Dannebicque/intranetV3/commit/eac2eb7028533f565f19f6b1861030f10ce405ee))
+* [MCC] Gestion de la saisie des MCC pour le B.U.T. ([8c64777](https://github.com/Dannebicque/intranetV3/commit/8c647773fa26b8b3c184f056255fd59146f59a6d))
+* [Saisie Note] Correctifs suite Réorganisation DTO ([ce4098d](https://github.com/Dannebicque/intranetV3/commit/ce4098dda4101b94da54ad4b2f42d2c31716a2e1))
+* [Semestre] typo dans l'URL ([5b73f4c](https://github.com/Dannebicque/intranetV3/commit/5b73f4c3faa87d1e34aa450e26931115fdb7473e))
+
+
+### Bug Fixes
+
+* [Absence] Mise à jour de la liste en ajax ([7c1cd66](https://github.com/Dannebicque/intranetV3/commit/7c1cd66a3597df46b26d61a22a74006e383ba2f4))
+* [Absences] Semestre dans ressoruce ([9260d35](https://github.com/Dannebicque/intranetV3/commit/9260d352bfdaa5eb1f0e9df5325bae83b40cecd6))
+* [Absences] Url pour l'export ([6c487a2](https://github.com/Dannebicque/intranetV3/commit/6c487a25112e39ea5594d15e8510603df0436765))
+* [ApcRessource ] Gestion des ressources Enfants et saisie des notes sur plusieurs groupes associés ([d1a4d8d](https://github.com/Dannebicque/intranetV3/commit/d1a4d8d6c819477e72721fe1542c4d400d7cfca2))
+* [Celcat] typage ([26db9c5](https://github.com/Dannebicque/intranetV3/commit/26db9c5b9e9d003b72013bb9d3e775bb4fa2a7ce))
+* [Celcat] typage ([003316c](https://github.com/Dannebicque/intranetV3/commit/003316c4c1157c2bf5c8514ae7b05e20dba951db))
+* [Celcat] typage ([83e0dab](https://github.com/Dannebicque/intranetV3/commit/83e0dab5efc90a22d6a78939c156a8fd5f51b189))
+* [Edt] Semestre ([a1895bb](https://github.com/Dannebicque/intranetV3/commit/a1895bb0c8b491a24e7bbdf5a040779c01187fad))
+* [Edt] Semestre ([1b695c0](https://github.com/Dannebicque/intranetV3/commit/1b695c07c00b01e82ee8a96bed0f92036481b0fb))
+* [Evaluation] Semestre dans ressoruce ([7bcede8](https://github.com/Dannebicque/intranetV3/commit/7bcede85191d25dc8ab92a83e41e80ab094819cf))
+* [Ressource] Dépendance au diplôme. ([f5c3860](https://github.com/Dannebicque/intranetV3/commit/f5c38600047a11e9957049f5e7e239aa941cd001))
+* [Ressource] Dépendance au diplôme. ([14f697f](https://github.com/Dannebicque/intranetV3/commit/14f697f9749fa6503d45d5f0e2fc909904444701))
+* [Ressources] Liste des ressources dans le PN ([94ea332](https://github.com/Dannebicque/intranetV3/commit/94ea3323d8820d65549647f1cdb791e3b3c49cea))
+
 ## [3.6.0](https://github.com/Dannebicque/intranetV3/compare/v3.5.15...v3.6.0) (2022-04-24)
 
 
