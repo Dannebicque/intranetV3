@@ -104,7 +104,7 @@ class MyEdtIntranet extends BaseEdt
                 break;
             case Constantes::FILTRE_EDT_MODULE:
                 $this->module = $this->typeMatiereManager->getMatiereFromSelect($this->valeur);
-                $this->semestre = $this->module->semestre;
+                $this->semestre = $this->module->getSemestres()->first(); //todo: pas idéal, comment récupérer le semestre du module ? En fait ne doit pas dépendre du semestre... si un module est sur plusieurs semestres.
                 $this->groupes = $this->groupeRepository->findAllGroupes($this->semestre);
 
                 $pl = $this->edtPlanningRepository->findEdtModule($this->module->id, $this->module->typeMatiere,
