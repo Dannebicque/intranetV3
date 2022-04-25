@@ -91,7 +91,7 @@ class AbsenceController extends BaseController
         $this->denyAccessUnlessGranted('CAN_ADD_ABSENCE', ['matiere' => $matiere, 'semestre' => $planning->semestre]);
         if (null !== $planning) {
             return $this->render('appPersonnel/absence/index.html.twig', [
-                'semestre' => $matiere?->semestre,
+                'semestre' => $planning?->semestre,
                 'matiere' => $matiere,
                 'event' => $planning,
                 'groupes' => $myGroupes->getGroupesSemestre($planning->semestre ?? $matiere->semestre,
