@@ -72,13 +72,13 @@
 {% block fabactions %}
     {{ include('composants/fab-buttons.html.twig', {boutons:[
         {type: 'info',
-            href: path('application_personnel_absence_export', {matiere:matiere.typeIdMatiere, _format:'pdf'}),
+            href: path('application_personnel_absence_export', {semestre: semestre.id,matiere:matiere.typeIdMatiere, _format:'pdf'}),
             title: 'exporter.pdf'|trans,
             icone : "fa fa-file-pdf"
         },
         {
             type:'info',
-            href:path('application_personnel_absence_export', {matiere:matiere.typeIdMatiere,_format:'csv'}),
+            href:path('application_personnel_absence_export', {semestre: semestre.id,matiere:matiere.typeIdMatiere,_format:'csv'}),
             title: 'exporter.csv'|trans,
             icone: 'fa fa-file-csv'
         },
