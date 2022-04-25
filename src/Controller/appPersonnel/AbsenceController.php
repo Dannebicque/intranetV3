@@ -174,11 +174,11 @@ class AbsenceController extends BaseController
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    #[Route(path: '/ajax/absences/{matiere}/{semestre}', name: 'application_personnel_absence_get_ajax', options: ['expose' => true], methods: 'GET')]
-    public function ajaxGetAbsencesMatiere(TypeMatiereManager $typeMatiereManager, AbsenceRepository $absenceRepository, string $matiere, Semestre $semestre): JsonResponse
+    #[Route(path: '/ajax/absences/{matiere}', name: 'application_personnel_absence_get_ajax', options: ['expose' => true], methods: 'GET')]
+    public function ajaxGetAbsencesMatiere(TypeMatiereManager $typeMatiereManager, AbsenceRepository $absenceRepository, string $matiere): JsonResponse
     {
         $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
-        $this->denyAccessUnlessGranted('CAN_ADD_ABSENCE', ['matiere' => $mat, 'semestre' => $semestre]);
+       // $this->denyAccessUnlessGranted('CAN_ADD_ABSENCE', ['matiere' => $mat, 'semestre' => $semestre]);//todo: comment passer le semestre au JS.
         if (null !== $mat) {
             $absences = $absenceRepository->getByMatiereArray(
                 $mat,
