@@ -186,11 +186,13 @@ class MyEdtIntranet extends BaseEdt
 
     private function getDonneesFromModule(EdtPlanning $p, EvenementEdt $evt): EvenementEdt
     {
+        //todo: utuliser un transformer/adapter ? et ne plus dépenedre de EdtPlanning
         if (array_key_exists($p->getTypeIdMatiere(), $this->matieres)) {
             $matiere = $this->matieres[$p->getTypeIdMatiere()];
-            if (null !== $matiere && null !== $matiere->semestre) {
+            if (null !== $matiere) {
                 $evt->matiere = $matiere->display;
-                $annee = $matiere->semestre->getAnnee(); //todo: ne pas dépendre de matièere
+                $evt->semestre = $p->getSemestre();
+                $annee = $evt->semestre->getAnnee();
                 if (null !== $annee) {
                     $evt->couleur = $annee->getCouleur();
                 }
