@@ -353,4 +353,9 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
 
         return $this;
     }
+
+    public function hasSemestre(Semestre $semestre): bool
+    {
+        return $this->getSemestres()->contains($semestre);
+    }
 }
