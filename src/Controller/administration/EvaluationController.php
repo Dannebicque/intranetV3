@@ -16,7 +16,6 @@ use App\Entity\Constantes;
 use App\Entity\Evaluation;
 use App\Entity\Semestre;
 use App\Exception\MatiereNotFoundException;
-use App\Exception\SemestreNotFoundException;
 use App\Form\EvaluationType;
 use App\Repository\EvaluationRepository;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
@@ -85,10 +84,6 @@ class EvaluationController extends BaseController
             throw new MatiereNotFoundException();
         }
 
-        if (!$mat->getSemestres()?->contains($semestre)) {
-            throw new SemestreNotFoundException();
-        }
-
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
         $evaluation = new Evaluation($this->getUser(), $mat, $semestre);
         $form = $this->createForm(
@@ -132,6 +127,7 @@ class EvaluationController extends BaseController
 
     /**
      * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
+     *
      * @throws \App\Exception\MatiereNotFoundException
      */
     #[Route(path: '/saisie/etape-2/{uuid}', name: 'administration_note_saisie_2')]
