@@ -365,6 +365,10 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
             return $this->apcRessourceCompetences->first()->getCompetence()->getDiplome();
         }
 
+        if ($this->semestres->count() > 0) {
+            return $this->semestres->first()->getDiplome();
+        }
+
         return null;
     }
 }

@@ -434,6 +434,13 @@ class ApcRessourceController extends BaseController
     public function duplicate(ApcRessource $apcRessource): Response
     {
         $newApcRessource = clone $apcRessource;
+
+        // Recopie des semestres (todo: faire idem sur les autres)
+        foreach ($apcRessource->getSemestres() as $semestre) {
+            $newApcRessource->addSemestre($semestre);
+            $semestre->addApcSemestresRessource($newApcRessource);
+        }
+
         $this->entityManager->persist($newApcRessource);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.ressource.duplicate.success.flash');
