@@ -86,7 +86,8 @@ class SaisieAbsenceController extends BaseController
         Etudiant $etudiant
     ) {
         $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
-        if (null !== $mat) {
+        $semestre = $etudiant->getSemestre();
+        if (null !== $mat && $semestre !== null) {
             $dateHeure = Tools::convertDateHeureToObject($request->request->get('date'),
                 $request->request->get('heure'));
             $absence = $absenceRepository->findBy([
@@ -98,7 +99,7 @@ class SaisieAbsenceController extends BaseController
             ]);
 
             if ('saisie' === $request->get('action') && 0 === count($absence)) {
-                if ($this->saisieAutorise($mat->semestre->getOptNbJoursSaisieAbsence(), $dateHeure)) {
+                if ($this->saisieAutorise($semestre->getOptNbJoursSaisieAbsence(), $dateHeure)) {
                     $etudiantAbsences->setEtudiant($etudiant);
                     $etudiantAbsences->addAbsence(
                         $dateHeure,
@@ -108,7 +109,7 @@ class SaisieAbsenceController extends BaseController
 
                     $absences = $absenceRepository->getByMatiereArray(
                         $mat,
-                        $mat->semestre?->getAnneeUniversitaire()
+                        $this->getAnneeUniversitaire()
                     );
 
                     return $this->json($absences);
@@ -123,7 +124,7 @@ class SaisieAbsenceController extends BaseController
 
                 $absences = $absenceRepository->getByMatiereArray(
                     $mat,
-                    $mat->semestre->getAnneeUniversitaire()
+                    $this->getAnneeUniversitaire()
                 );
 
                 return $this->json($absences);
