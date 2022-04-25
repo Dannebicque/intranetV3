@@ -99,7 +99,7 @@ class ApcSaeController extends BaseController
     {
         $semestre = $semestreRepository->find($request->request->get('semestre'));
         if (null !== $semestre) {
-            if (null !== $request->request->get('sae')) {
+            if (null !== $request->request->get('sae') || '' !== trim($request->request->get('sae'))) {
                 $tabAcSae = $apcSaeRessourceRepository->findArrayIdRessources($request->request->get('sae'));
             } else {
                 $tabAcSae = [];
