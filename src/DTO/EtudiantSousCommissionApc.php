@@ -126,9 +126,9 @@ class EtudiantSousCommissionApc
             foreach ($matieres as $matiere) {
                 if (false === $matiere->bonification) {
                     if (false === $tabs['matieres'][$matiere->codeElement]['matiereAAnnuler']) {
-                        if (array_key_exists($ue->ue->getApcCompetence()->getId(),
+                        if (array_key_exists($ue->ue->getApcCompetence()?->getId(),
                                 $ressources) && array_key_exists($matiere->codeElement,
-                                $ressources[$ue->ue->getApcCompetence()->getId()])) {
+                                $ressources[$ue->ue->getApcCompetence()?->getId()])) {
                             $ue->matieres[$matiere->codeElement]['coefficient'] = $ressources[$competenceId][$matiere->codeElement]->getCoefficient(); //moyenne
                             // officiellement du module.
                             $ue->totalCoefficients += $ressources[$competenceId][$matiere->codeElement]->getCoefficient();
