@@ -57,14 +57,14 @@ class NoteController extends BaseController
                 'autorise' => true,
                 'locale' => $request->getLocale(),
                 'enfant' => $mat->isEnfant(),
-                'groupeEnfant' => $mat->groupeEnfant(),
+                'groupeEnfant' => $mat->groupesEnfant(),
             ]
         );
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $evaluation->setAnneeUniversitaire($this->dataUserSession->getAnneeUniversitaire());
             if ($mat->isEnfant()) {
-                $evaluation->setTypeGroupe($mat->groupeEnfant()->getTypeGroupe());
+                $evaluation->setTypeGroupe($mat->groupesEnfant()?->first()->getTypeGroupe()); //todo: en attendant mieux. Car peut y avoir plusieurs groupes, et donc plusieurs types groupes.
             }
             $this->entityManager->persist($evaluation);
             $this->entityManager->flush();
