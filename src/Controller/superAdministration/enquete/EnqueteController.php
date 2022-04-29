@@ -133,10 +133,10 @@ class EnqueteController extends BaseController
         foreach ($questionnaire->getSections() as $section) {
             $nSection = clone $section;
             $newQuestionnaireQualite->addSection($nSection);
-            if (null !== $nSection->getConfig()) {
-                $t = explode('-', $nSection->getConfig());
-                $nSection->setConfig($t[0].'-');
-            }
+//            if (null !== $nSection->getConfig()) {
+//                $t = explode('-', $nSection->getConfig());
+//                $nSection->setConfig($t[0].'-');
+//            }
             $nSection->setQuestionnaireQualite($newQuestionnaireQualite);
             $this->entityManager->persist($nSection);
         }
