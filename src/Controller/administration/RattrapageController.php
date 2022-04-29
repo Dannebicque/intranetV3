@@ -69,7 +69,7 @@ class RattrapageController extends BaseController
         $tab = [];
         foreach ($rattrapages as $rattrapage) {
             if (array_key_exists($rattrapage->getTypeIdMatiere(),
-                    $matieres) && $matieres[$rattrapage->getTypeIdMatiere()]->semestre->getId() === $semestre->getId()) {
+                    $matieres)) {
                 $rattrapage->setLibelleMatiere($matieres[$rattrapage->getTypeIdMatiere()]->display);
                 $tab[] = $rattrapage;
             }
