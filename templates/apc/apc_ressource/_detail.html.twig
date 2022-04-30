@@ -6,8 +6,12 @@
         <td style="width: 25%">{{ apc_ressource.codeMatiere }}</td>
     </tr>
     <tr>
-        <th>Semestre</th>
-        <td colspan="4">{{ apc_ressource.semestre != null ? apc_ressource.semestre.display : 'non.defini'|trans }}</td>
+        <th>Semestres</th>
+        <td colspan="4">
+            {% for semestre in apc_ressource.semestres %}
+            {{semestre.display}}{% if not loop.last %}, {% endif %}
+            {% endfor %}
+        </td>
     </tr>
     <tr>
         <th>
