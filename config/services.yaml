@@ -63,10 +63,6 @@ services:
               arguments:
                   - '@App\Classes\Configuration'
 
-    App\EventListener\LoggedOutAjaxListener:
-      tags:
-        - { name: kernel.event_listener, event: kernel.exception, priority: 8 }
-
     breadcrumbs_bundle.helper.breadcrumbs:
         class: App\Components\Breadcrumbs\BreadcrumbHelper
         arguments:
