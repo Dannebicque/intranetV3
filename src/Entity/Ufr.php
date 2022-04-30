@@ -30,18 +30,18 @@ class Ufr extends BaseEntity
     private Collection $departements;
 
     #[Groups(['ufr_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 255)]
-    private ?string $libelle;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
+    private ?string $libelle = null;
 
     #[ORM\ManyToMany(targetEntity: Site::class, inversedBy: 'ufrs')]
     private Collection $sites;
 
     #[Groups(['ufr_administration'])]
     #[ORM\ManyToOne(targetEntity: Personnel::class)]
-    private ?Personnel $responsable;
+    private ?Personnel $responsable = null;
 
     #[ORM\ManyToOne(targetEntity: Site::class, inversedBy: 'ufrPrincipales')]
-    private ?Site $sitePrincipal;
+    private ?Site $sitePrincipal = null;
 
     public function __construct()
     {

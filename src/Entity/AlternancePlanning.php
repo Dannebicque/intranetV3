@@ -13,10 +13,10 @@ class AlternancePlanning extends BaseEntity
     #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class, inversedBy: 'planningAlternances')]
     private ?AnneeUniversitaire $anneeUniversitaire = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE)]
     private ?CarbonInterface $date = null;
 
-    #[ORM\Column(type: Types::STRING, length: 10)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 10)]
     private ?string $etat = null;
 
     #[ORM\ManyToOne(targetEntity: Annee::class, inversedBy: 'alternancePlannings')]

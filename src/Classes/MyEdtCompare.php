@@ -28,7 +28,7 @@ class MyEdtCompare
     /**
      * MyEdtCompare constructor.
      */
-    public function __construct(private EdtPlanningRepository $edtPlanningRepository, private PrevisionnelManager $previsionnelManager)
+    public function __construct(private readonly EdtPlanningRepository $edtPlanningRepository, private readonly PrevisionnelManager $previsionnelManager)
     {
     }
 

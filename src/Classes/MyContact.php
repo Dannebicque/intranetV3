@@ -18,14 +18,11 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class MyContact
 {
-    private EntityManagerInterface $entityManager;
-
     /**
      * MyAdresse constructor.
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(private readonly EntityManagerInterface $entityManager)
     {
-        $this->entityManager = $entityManager;
     }
 
     public function update(Contact $contact, string $name, mixed $value): bool

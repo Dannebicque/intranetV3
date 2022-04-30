@@ -100,7 +100,7 @@ class ApogeeController extends BaseController
     #[Route(path: '/import/etudiant', name: 'sa_apogee_import_etudiant', methods: ['POST'])]
     public function importEtudiant(EtudiantImport $etudiantImport, ApogeeEtudiant $apogeeEtudiant, Request $request, EtudiantRepository $etudiantRepository, SemestreRepository $semestreRepository, BacRepository $bacRepository): Response
     {
-        $listeetudiants = explode(';', $request->request->get('listeetudiants'));
+        $listeetudiants = explode(';', (string) $request->request->get('listeetudiants'));
         $semestre = $semestreRepository->find($request->request->get('semestreforce'));
         $this->etudiants = [];
         foreach ($listeetudiants as $numEtu) {

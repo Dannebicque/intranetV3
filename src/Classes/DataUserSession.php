@@ -66,7 +66,7 @@ class DataUserSession
 
     private array $semestresActifs;
 
-    private ?string $type_user;
+    private ?string $type_user = null;
 
     public function getTypeUser(): string
     {

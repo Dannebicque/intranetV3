@@ -20,15 +20,11 @@ class ApcComposanteEssentielle extends BaseEntity
 {
     use LifeCycleTrait;
 
-    #[ORM\ManyToOne(targetEntity: ApcCompetence::class, inversedBy: 'apcComposanteEssentielles')]
-    private ?ApcCompetence $competence;
-
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $libelle = null;
 
-    public function __construct(?ApcCompetence $competence = null)
+    public function __construct(#[ORM\ManyToOne(targetEntity: ApcCompetence::class, inversedBy: 'apcComposanteEssentielles')] private ?\App\Entity\ApcCompetence $competence = null)
     {
-        $this->competence = $competence;
     }
 
     public function getLibelle(): ?string

@@ -92,11 +92,11 @@ class EvaluationController extends BaseController
      * @throws \App\Exception\MatiereNotFoundException
      */
     #[Route(path: '/export/{uuid}/{type}-{semestre}.{_format}', name: 'application_personnel_evaluation_export', requirements: ['evaluation' => '\d+', '_format' => 'csv|xlsx|pdf'])]
-    public function exportEvaluation(GroupeRepository $groupeRepository, MyEvaluation $myEvaluation, Evaluation $evaluation, $type, $_format, Semestre $semestre)
+    public function exportEvaluation(GroupeRepository $groupeRepository, MyEvaluation $myEvaluation, Evaluation $evaluation, $type, $_format, Semestre $semestre): \Symfony\Component\HttpFoundation\Response
     {
         //todo: tester au niveau évaluation
         //todo: supprimer semestre s'il est dans évaluation ensuite...
-        $t = explode('_', $type);
+        $t = explode('_', (string) $type);
         if ('groupe' === $t[0]) {
             $grp = $groupeRepository->find($t[1]);
             $data = [$grp];

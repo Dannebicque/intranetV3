@@ -38,7 +38,7 @@ class PpnRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->where('p.diplome = :diplome')
             ->setParameter('diplome', $diplome->getId())
-            ->orderBy('p.annee', 'ASC');
+            ->orderBy('p.annee', \Doctrine\Common\Collections\Criteria::ASC);
     }
 
     public function findByDepartementBuilder(Departement $departement): QueryBuilder
@@ -47,6 +47,6 @@ class PpnRepository extends ServiceEntityRepository
             ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = p.diplome')
             ->where('d.departement = :departement')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('p.annee', 'ASC');
+            ->orderBy('p.annee', \Doctrine\Common\Collections\Criteria::ASC);
     }
 }

@@ -21,58 +21,58 @@ use Symfony\Component\Serializer\Annotation\Groups;
 abstract class AbstractMatiere extends BaseEntity
 {
     #[Groups(groups: ['matiere'])]
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private string $libelle;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
     private ?string $description = null;
 
     #[Groups(groups: ['matiere_administration'])]
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private float $cmPpn = 0;
 
     #[Groups(groups: ['matiere_administration'])]
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private float $tdPpn = 0;
 
     #[Groups(groups: ['matiere_administration'])]
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private float $tpPpn = 0;
 
     #[Groups(groups: ['matiere_administration'])]
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private float $cmFormation = 0;
 
     #[Groups(groups: ['matiere_administration'])]
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private float $tdFormation = 0;
 
     #[Groups(groups: ['matiere_administration'])]
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private float $tpFormation = 0;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
     private ?string $commentaire = '';
 
     #[Groups(groups: ['matiere'])]
-    #[ORM\Column(type: Types::STRING, length: 20)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20)]
     private ?string $codeMatiere = null;
 
     #[Groups(groups: ['matiere_administration'])]
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private int $nbNotes = 2;
 
-    #[ORM\Column(type: Types::STRING, length: 20)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20)]
     private ?string $codeElement = null;
 
     #[Groups(groups: ['matiere_administration'])]
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $suspendu = false;
 
-    #[ORM\Column(type: Types::STRING, length: 25, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 25, nullable: true)]
     private ?string $libelleCourt = null;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private ?bool $mutualisee = false;
 
     /**

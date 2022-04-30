@@ -34,11 +34,9 @@ class DiplomeImport
 {
     private string $fichier;
     private Diplome $diplome;
-    private EntityManagerInterface $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(private readonly EntityManagerInterface $entityManager)
     {
-        $this->entityManager = $entityManager;
     }
 
     public function import(Diplome $diplome, string $fichier, $type, Ppn $ppn): void

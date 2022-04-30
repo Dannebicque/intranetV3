@@ -20,7 +20,7 @@ class ApcSituationProfessionnelle extends BaseEntity
 {
     use LifeCycleTrait;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT)]
     private ?string $libelle = null;
 
     #[ORM\ManyToOne(targetEntity: ApcCompetence::class, inversedBy: 'apcSituationProfessionnelles')]

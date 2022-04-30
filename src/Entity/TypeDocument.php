@@ -24,11 +24,11 @@ class TypeDocument extends BaseEntity
     use LifeCycleTrait;
 
     #[Groups(['typedocument_administration', 'document_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 75)]
-    private ?string $libelle;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 75)]
+    private ?string $libelle = null;
 
     #[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'typeDocuments')]
-    private ?Departement $departement;
+    private ?Departement $departement = null;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Document>

@@ -23,37 +23,29 @@ class Previsionnel extends BaseEntity
     use LifeCycleTrait;
     use MatiereTrait;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $referent = false;
 
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private ?float $nbHCm = 0;
 
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private ?float $nbHTd = 0;
 
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private ?float $nbHTp = 0;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private int $nbGrCm = 0;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private int $nbGrTd = 0;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private int $nbGrTp = 0;
 
-    #[ORM\Column(type: Types::INTEGER)]
-    private int $annee;
-
-    #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'previsionnels')]
-    private ?Personnel $personnel;
-
-    public function __construct(int $annee, Personnel $personnel = null)
+    public function __construct(#[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)] private int $annee, #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'previsionnels')] private ?\App\Entity\Personnel $personnel = null)
     {
-        $this->annee = $annee;
-        $this->personnel = $personnel;
     }
 
     public function getPersonnel(): ?Personnel

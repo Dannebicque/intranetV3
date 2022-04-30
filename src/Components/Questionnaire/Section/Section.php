@@ -16,7 +16,7 @@ use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
 
 class Section extends AbstractSection
 {
-    public const LABEL = 'question.section';
+    public final const LABEL = 'question.section';
     public string $type_calcul = '';
 
     public function getQuestions(): array

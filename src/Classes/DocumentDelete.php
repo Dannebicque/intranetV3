@@ -17,21 +17,8 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 class DocumentDelete
 {
-    protected KernelInterface $kernel;
-    protected EntityManagerInterface $entityManager;
-    protected DocumentFavoriEtudiantRepository $documentFavoriEtudiantRepository;
-    protected DocumentFavoriPersonnelRepository $documentFavoriPersonnelRepository;
-
-    public function __construct(
-        KernelInterface $kernel,
-        DocumentFavoriEtudiantRepository $documentFavoriEtudiantRepository,
-        DocumentFavoriPersonnelRepository $documentFavoriPersonnelRepository,
-        EntityManagerInterface $entityManager
-    ) {
-        $this->kernel = $kernel;
-        $this->documentFavoriEtudiantRepository = $documentFavoriEtudiantRepository;
-        $this->documentFavoriPersonnelRepository = $documentFavoriPersonnelRepository;
-        $this->entityManager = $entityManager;
+    public function __construct(protected KernelInterface $kernel, protected DocumentFavoriEtudiantRepository $documentFavoriEtudiantRepository, protected DocumentFavoriPersonnelRepository $documentFavoriPersonnelRepository, protected EntityManagerInterface $entityManager)
+    {
     }
 
     public function deleteDocument(Document $document): bool

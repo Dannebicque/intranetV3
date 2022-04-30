@@ -22,7 +22,7 @@ class MyMaterielCommun
      * MyMaterielCommun constructor.
      */
     public function __construct(
-        private MaterielCommunPretRepository $materielCommunPretRepository
+        private readonly MaterielCommunPretRepository $materielCommunPretRepository
     ) {
     }
 

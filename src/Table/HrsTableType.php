@@ -36,17 +36,11 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class HrsTableType extends TableType
 {
-    private ?Departement $departement;
-    private ?int $annee;
-    private CsrfTokenManagerInterface $csrfToken;
-    private RouterInterface $router;
+    private ?Departement $departement = null;
+    private ?int $annee = null;
 
-    public function __construct(
-        RouterInterface $router,
-        CsrfTokenManagerInterface $csrfToken)
+    public function __construct(private readonly RouterInterface $router, private readonly CsrfTokenManagerInterface $csrfToken)
     {
-        $this->csrfToken = $csrfToken;
-        $this->router = $router;
     }
 
     public function buildTable(TableBuilder $builder, array $options): void
@@ -60,18 +54,14 @@ class HrsTableType extends TableType
             'choice_label' => 'libelle',
             'required' => false,
             'placeholder' => 'Filtrer par type de HRS/Prime',
-            'query_builder' => function (TypeHrsRepository $typeHrsRepository) {
-                return $typeHrsRepository->findAllBuilder();
-            },
+            'query_builder' => fn(TypeHrsRepository $typeHrsRepository) => $typeHrsRepository->findAllBuilder(),
         ]);
         $builder->addFilter('personnel', EntityType::class, [
             'class' => Personnel::class,
             'choice_label' => 'displayPr',
             'required' => false,
             'placeholder' => 'Filtrer par personnel',
-            'query_builder' => function (PersonnelRepository $personnelRepository) {
-                return $personnelRepository->findByDepartementBuilder($this->departement);
-            },
+            'query_builder' => fn(PersonnelRepository $personnelRepository) => $personnelRepository->findByDepartementBuilder($this->departement),
         ]);
 
         $builder->setLoadUrl('administration_hrs_index', ['annee' => $this->annee]);

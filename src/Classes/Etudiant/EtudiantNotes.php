@@ -27,12 +27,7 @@ use Exception;
 
 class EtudiantNotes
 {
-    public NoteRepository $noteRepository;
     private Etudiant $etudiant;
-
-    private EntityManagerInterface $entityManager;
-
-    private TypeMatiereManager $typeMatiereManager;
 
     private ?array $notes = [];
     private ?array $tabGraphique = [];
@@ -40,14 +35,8 @@ class EtudiantNotes
     /**
      * EtudiantNotes constructor.
      */
-    public function __construct(
-        TypeMatiereManager $typeMatiereManager,
-        NoteRepository $noteRepository,
-        EntityManagerInterface $entityManager
-    ) {
-        $this->noteRepository = $noteRepository;
-        $this->entityManager = $entityManager;
-        $this->typeMatiereManager = $typeMatiereManager;
+    public function __construct(private readonly TypeMatiereManager $typeMatiereManager, public NoteRepository $noteRepository, private readonly EntityManagerInterface $entityManager)
+    {
     }
 
     public function setEtudiant(Etudiant $etudiant): void

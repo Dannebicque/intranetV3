@@ -22,9 +22,9 @@ use function is_string;
  */
 abstract class CsvWrite
 {
-    public const FORMAT_DATETIME = 'DateTime';
-    public const FORMAT_STRING = 'string';
-    public const ECHAPPEMENT = '"';
+    public final const FORMAT_DATETIME = 'DateTime';
+    public final const FORMAT_STRING = 'string';
+    public final const ECHAPPEMENT = '"';
 
     public static function writeField(mixed $value, string $key = ''): string
     {
@@ -33,7 +33,7 @@ abstract class CsvWrite
         if (is_string($value)) {
             $field .= self::ECHAPPEMENT.$value.self::ECHAPPEMENT;
         } elseif (is_object($value)) {
-            if (self::FORMAT_DATETIME === get_class($value)) {
+            if (self::FORMAT_DATETIME === $value::class) {
                 $field .= $value->format('d-m-Y');
             }
         } else {

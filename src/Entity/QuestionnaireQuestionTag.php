@@ -18,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: QuestionnaireQuestionTagRepository::class)]
 class QuestionnaireQuestionTag extends BaseEntity
 {
-    #[ORM\Column(type: Types::STRING, length: 100)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 100)]
     private ?string $libelle = null;
 
     /**

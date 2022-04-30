@@ -15,25 +15,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class WidgetBuilder
 {
-    protected WidgetFactory $factory;
-
-    protected WidgetType $type;
-
-    protected string $name;
-
-    protected array $options;
-
     protected array $childrenData = [];
 
     /**
      * WidgetBuilder constructor.
      */
-    public function __construct(WidgetFactory $factory, WidgetType $type, string $name, array $options)
+    public function __construct(protected WidgetFactory $factory, protected WidgetType $type, protected string $name, protected array $options)
     {
-        $this->factory = $factory;
-        $this->type = $type;
-        $this->name = $name;
-        $this->options = $options;
     }
 
     // Widget Api

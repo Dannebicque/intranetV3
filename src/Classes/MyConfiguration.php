@@ -28,39 +28,11 @@ use Doctrine\ORM\EntityManagerInterface;
  */
 class MyConfiguration
 {
-    private DepartementRepository $departementRepository;
-
-    private DiplomeRepository $diplomeRepository;
-
-    private AnneeRepository $anneeRepository;
-
-    private SemestreRepository $semestreRepository;
-
-    private AnneeUniversitaireRepository $anneeUniversitaireRepository;
-
-    private PersonnelRepository $personnelRepository;
-
-    private EntityManagerInterface $entityManager;
-
     /**
      * MyConfiguration constructor.
      */
-    public function __construct(
-        DepartementRepository $departementRepository,
-        DiplomeRepository $diplomeRepository,
-        AnneeRepository $anneeRepository,
-        SemestreRepository $semestreRepository,
-        PersonnelRepository $personnelRepository,
-        AnneeUniversitaireRepository $anneeUniversitaireRepository,
-        EntityManagerInterface $entityManager
-    ) {
-        $this->departementRepository = $departementRepository;
-        $this->diplomeRepository = $diplomeRepository;
-        $this->anneeRepository = $anneeRepository;
-        $this->semestreRepository = $semestreRepository;
-        $this->personnelRepository = $personnelRepository;
-        $this->anneeUniversitaireRepository = $anneeUniversitaireRepository;
-        $this->entityManager = $entityManager;
+    public function __construct(private readonly DepartementRepository $departementRepository, private readonly DiplomeRepository $diplomeRepository, private readonly AnneeRepository $anneeRepository, private readonly SemestreRepository $semestreRepository, private readonly PersonnelRepository $personnelRepository, private readonly AnneeUniversitaireRepository $anneeUniversitaireRepository, private readonly EntityManagerInterface $entityManager)
+    {
     }
 
     public function updateOption(string $type, int | string $id, string $name, mixed $value): bool

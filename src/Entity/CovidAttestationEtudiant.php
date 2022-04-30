@@ -25,11 +25,11 @@ class CovidAttestationEtudiant extends BaseEntity
 {
     use LifeCycleTrait;
 
-    public const MATIN = 'AM';
-    public const APRESMIDI = 'PM';
-    public const TOUTELAJOURNEE = 'AL';
+    public final const MATIN = 'AM';
+    public final const APRESMIDI = 'PM';
+    public final const TOUTELAJOURNEE = 'AL';
 
-    #[ORM\Column(type: Types::STRING, length: 10, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 10, nullable: true)]
     private ?string $motif = null;
 
     #[ORM\ManyToOne(targetEntity: Diplome::class, inversedBy: 'covidAttestationEtudiants')]
@@ -41,7 +41,7 @@ class CovidAttestationEtudiant extends BaseEntity
     #[ORM\ManyToMany(targetEntity: Matiere::class, inversedBy: 'covidAttestationEtudiants')]
     private Collection $matieres;
 
-    #[ORM\Column(type: Types::STRING, length: 150, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 150, nullable: true)]
     private ?string $salles = null;
 
     /**
@@ -50,22 +50,22 @@ class CovidAttestationEtudiant extends BaseEntity
     #[ORM\ManyToMany(targetEntity: Groupe::class, inversedBy: 'covidAttestationEtudiants')]
     private Collection $groupes;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE, nullable: true)]
     private ?DateTimeInterface $datePresence = null;
 
-    #[ORM\Column(type: Types::STRING, length: 2)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 2)]
     private string $heure = 'AL';
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $convocationEnvoyee = false;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateEnvoi = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateDebut = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateFin = null;
 
     public function __construct()

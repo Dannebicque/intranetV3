@@ -32,7 +32,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class QualiteTableType extends TableType
 {
-    private ?Departement $departement;
+    private ?Departement $departement = null;
 
     public function buildTable(TableBuilder $builder, array $options): void
     {
@@ -48,9 +48,7 @@ class QualiteTableType extends TableType
             ['class' => Semestre::class,
                 'choice_label' => 'libelle',
                 'required' => false,
-                'query_builder' => function (SemestreRepository $semestreRepository) {
-                    return $semestreRepository->findByDepartementBuilder($this->departement);
-                },
+                'query_builder' => fn(SemestreRepository $semestreRepository) => $semestreRepository->findByDepartementBuilder($this->departement),
         ]);
 
         $builder->addColumn('titre', PropertyColumnType::class, ['label' => 'table.titre']);

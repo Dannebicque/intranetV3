@@ -18,9 +18,9 @@ use InvalidArgumentException;
  */
 class TableRegistry
 {
-    public const TAG_TABLE_TYPE = 'da.table.type';
-    public const TAG_COLUMN_TYPE = 'da.table.columntype';
-    public const TAG_ADAPTER = 'da.table.adapter';
+    public final const TAG_TABLE_TYPE = 'da.table.type';
+    public final const TAG_COLUMN_TYPE = 'da.table.columntype';
+    public final const TAG_ADAPTER = 'da.table.adapter';
 
     /**
      * @var TableType[]

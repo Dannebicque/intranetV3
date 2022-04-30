@@ -15,18 +15,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class StatusAppelFaitColumnType extends PropertyColumnType
 {
-    private TranslatorInterface $translator;
-
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(private readonly TranslatorInterface $translator)
     {
         parent::__construct();
-        $this->translator = $translator;
     }
 
     public function renderProperty(mixed $value, array $options): string
     {
         $statsAppel = $options['statsAppel'];
-        $elt = explode('_', $value); //'dmY_typeIdMatiere_heure_groupeId'
+        $elt = explode('_', (string) $value); //'dmY_typeIdMatiere_heure_groupeId'
 
         if (array_key_exists($elt[0], $statsAppel) &&
             array_key_exists($elt[1], $statsAppel[0]) &&

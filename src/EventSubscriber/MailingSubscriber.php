@@ -25,19 +25,11 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class MailingSubscriber implements EventSubscriberInterface
 {
-    protected MailerFromTwig $myMailer;
-
-    private TypeMatiereManager $typeMatiereManager;
-
     /**
      * MailingSubscriber constructor.
      */
-    public function __construct(
-        MailerFromTwig $myMailer,
-        TypeMatiereManager $typeMatiereManager
-    ) {
-        $this->myMailer = $myMailer;
-        $this->typeMatiereManager = $typeMatiereManager;
+    public function __construct(protected MailerFromTwig $myMailer, private readonly TypeMatiereManager $typeMatiereManager)
+    {
     }
 
     public static function getSubscribedEvents(): array

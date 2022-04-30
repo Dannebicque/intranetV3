@@ -26,27 +26,23 @@ class SalleExamen extends BaseEntity
     private ?Salle $salle = null;
 
     #[Groups(groups: ['salle_examen_administration'])]
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private ?int $nbColonnes = null;
 
     #[Groups(groups: ['salle_examen_administration'])]
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private ?int $nbRangs = null;
 
     #[Groups(groups: ['salle_examen_administration'])]
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private ?int $capacite = null;
 
     #[Groups(groups: ['salle_examen_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
     private ?string $placesInterdites = null;
 
-    #[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'salleExamens')]
-    private ?Departement $departement;
-
-    public function __construct(Departement $departement)
+    public function __construct(#[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'salleExamens')] private ?\App\Entity\Departement $departement)
     {
-        $this->departement = $departement;
     }
 
     public function getSalle(): ?Salle

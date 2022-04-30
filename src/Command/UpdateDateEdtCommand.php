@@ -25,24 +25,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 //probablement plus nécessaire...
 class UpdateDateEdtCommand extends Command
 {
-    private CalendrierRepository $calendrierRepository;
-
-    private EdtPlanningRepository $edtPlanningRepository;
-
-    private EntityManagerInterface $entityManager;
-
     /**
      * ClearOldNotificationCommand constructor.
      */
     public function __construct(
-        CalendrierRepository $calendrierRepository,
-        EdtPlanningRepository $edtPlanningRepository,
-        EntityManagerInterface $entityManager
+        private readonly CalendrierRepository $calendrierRepository,
+        private readonly EdtPlanningRepository $edtPlanningRepository,
+        private readonly EntityManagerInterface $entityManager
     ) {
-        $this->calendrierRepository = $calendrierRepository;
-        $this->edtPlanningRepository = $edtPlanningRepository;
-        $this->entityManager = $entityManager;
-
         parent::__construct();
     }
 

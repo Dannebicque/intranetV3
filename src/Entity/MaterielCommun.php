@@ -27,22 +27,22 @@ class MaterielCommun extends BaseEntity
 {
     use LifeCycleTrait;
 
-    #[ORM\Column(type: Types::STRING, length: 150)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 150)]
     private ?string $designation = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
     private ?string $description = null;
 
     #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'materielCommuns')]
     private ?Personnel $contact = null;
 
-    #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50, nullable: true)]
     private ?string $photoName = 'noimage.png';
 
     /**
      * @Vich\UploadableField(mapping="materiel_commun", fileNameProperty="photoName")
      */
-    private ?File $photoFile;
+    private ?File $photoFile = null;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\MaterielCommunPret>

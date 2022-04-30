@@ -17,11 +17,8 @@ class Configuration
 {
     private array $settings = [];
 
-    private ConfigurationRepository $configurationRepository;
-
-    public function __construct(ConfigurationRepository $configurationRepository)
+    public function __construct(private readonly ConfigurationRepository $configurationRepository)
     {
-        $this->configurationRepository = $configurationRepository;
     }
 
     public function get(string $name): string

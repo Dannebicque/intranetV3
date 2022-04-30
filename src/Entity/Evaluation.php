@@ -37,21 +37,21 @@ class Evaluation extends BaseEntity
     #[ORM\ManyToMany(targetEntity: Personnel::class, inversedBy: 'evaluationsAutorise')]
     private Collection $personnelAutorise;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE)]
     private ?CarbonInterface $dateEvaluation;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $visible = false;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $modifiable = false;
 
     #[Assert\NotBlank]
     #[Assert\Positive]
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private ?float $coefficient = 1;
 
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
     private ?string $commentaire = '';
 
     /**
@@ -72,7 +72,7 @@ class Evaluation extends BaseEntity
     #[ORM\ManyToOne(targetEntity: TypeGroupe::class)]
     private ?TypeGroupe $typeGroupe = null;
 
-    #[ORM\Column(type: Types::STRING, length: 100, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 100, nullable: true)]
     private ?string $libelle = null;
 
     #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class, inversedBy: 'evaluations')]
@@ -81,17 +81,12 @@ class Evaluation extends BaseEntity
     #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'evaluations')]
     private ?Semestre $semestre = null;
 
-    #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'evaluationsAuteur')]
-    private ?Personnel $personnelAuteur;
-
     /**
      * @throws Exception
      */
-    public function __construct(?Personnel $personnelAuteur, \App\DTO\Matiere $mat, Semestre $semestre)
+    public function __construct(#[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'evaluationsAuteur')] private ?\App\Entity\Personnel $personnelAuteur, \App\DTO\Matiere $mat, Semestre $semestre)
     {
         $this->setUuid(Uuid::uuid4());
-
-        $this->personnelAuteur = $personnelAuteur;
         $this->idMatiere = $mat->id;
         $this->typeMatiere = $mat->typeMatiere;
 

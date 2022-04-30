@@ -24,9 +24,7 @@ class TypeDiplomeEntityType extends EntityType
             'choice_label' => 'libelle',
             'required' => false,
             'placeholder' => 'filtre.typeDiplome',
-            'query_builder' => function (TypeDiplomeRepository $er) {
-                return $er->findAllBuilder();
-            },
+            'query_builder' => fn(TypeDiplomeRepository $er) => $er->findAllBuilder(),
             'translation_domain' => 'table',
         ]);
     }

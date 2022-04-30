@@ -14,9 +14,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TypeSlider extends TypeEchelle
 {
-    public const LABEL = 'type_slider';
-    public const BADGE = 'bg-yellow'; //ajouter constante de couleur et de nom de template ?
-    public const ICON = 'fas fa-slider'; //ajouter constante de couleur et de nom de template ?
+    public final const LABEL = 'type_slider';
+    public final const BADGE = 'bg-yellow'; //ajouter constante de couleur et de nom de template ?
+    public final const ICON = 'fas fa-slider'; //ajouter constante de couleur et de nom de template ?
 
     public function configureOptions(OptionsResolver $resolver): void
     {

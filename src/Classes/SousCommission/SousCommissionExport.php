@@ -44,19 +44,19 @@ class SousCommissionExport
     ];
 
     private ?SousCommissionInterface $sousCommission = null;
-    private string $dir;
+    private readonly string $dir;
 
     /**
      * SousCommissionExport constructor.
      */
     public function __construct(
-        private SousCommissionManager $sousCommissionManager,
+        private readonly SousCommissionManager $sousCommissionManager,
         KernelInterface $kernel,
-        private ApogeeSousCommission $apogeeSousCommission,
-        private MyExcelWriter $myExcelWriter,
-        private MyExcelRead $myExcelRead,
-        private TypeMatiereManager $typeMatiereManager,
-        private MyUpload $myUpload
+        private readonly ApogeeSousCommission $apogeeSousCommission,
+        private readonly MyExcelWriter $myExcelWriter,
+        private readonly MyExcelRead $myExcelRead,
+        private readonly TypeMatiereManager $typeMatiereManager,
+        private readonly MyUpload $myUpload
     ) {
         $this->dir = $kernel->getProjectDir().'/public/upload/temp/';
     }
@@ -132,7 +132,7 @@ class SousCommissionExport
         foreach ($this->sousCommission->getSemestresScolarite() as $s) {
             //titre semestre
             $this->myExcelWriter->writeCellXY($colonne, $ligne - 1, $s->getLibelle(), ['style' => 'HORIZONTAL_CENTER']);
-            $colFin = $colonne + count($s->getUes()) + 1;
+            $colFin = $colonne + (is_countable($s->getUes()) ? count($s->getUes()) : 0) + 1;
             $this->myExcelWriter->mergeCellsCaR($colonne, $ligne - 1, $colFin, $ligne - 1);
             /** @var Ue $ue */
             foreach ($s->getUes() as $ue) {
@@ -323,7 +323,7 @@ class SousCommissionExport
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            200,
+            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="Sous Commission '.$semestre->getLibelle().'.xlsx"',
@@ -401,7 +401,7 @@ class SousCommissionExport
         foreach ($this->sousCommission->getSemestresScolarite() as $s) {
             //titre semestre
             $this->myExcelWriter->writeCellXY($colonne, $ligne - 1, $s->getLibelle(), ['style' => 'HORIZONTAL_CENTER']);
-            $colFin = $colonne + count($s->getUes()) + 1;
+            $colFin = $colonne + (is_countable($s->getUes()) ? count($s->getUes()) : 0) + 1;
             $this->myExcelWriter->mergeCellsCaR($colonne, $ligne - 1, $colFin, $ligne - 1);
             /** @var Ue $ue */
             foreach ($s->getUes() as $ue) {
@@ -590,7 +590,7 @@ class SousCommissionExport
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            200,
+            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="Sous Commission '.$semestre->getLibelle().'.xlsx"',
@@ -719,7 +719,7 @@ class SousCommissionExport
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            200,
+            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="Export Grand Jury '.$semestre->getLibelle().'.xlsx"',
@@ -752,7 +752,7 @@ class SousCommissionExport
         $tModule = [];
         $colonne = 5;
         while ('' != $this->myExcelRead->getCellColLigne($colonne, 14)) {
-            $val = explode('-', $this->myExcelRead->getCellColLigne($colonne, 14));
+            $val = explode('-', (string) $this->myExcelRead->getCellColLigne($colonne, 14));
             $tModule[$colonne] = trim($val[0]);
             $colonne += 2; //3 si colonne résultat
         }
@@ -795,7 +795,7 @@ class SousCommissionExport
             unlink($fichier);
             $this->myExcelRead->sauvegarde($this->dir.'temp.xls');
 
-            $nom = explode('.', $file->getClientOriginalName());
+            $nom = explode('.', (string) $file->getClientOriginalName());
             $stream = $this->apogeeSousCommission->transformeApogeeTexte($this->dir.'temp.xls', $nom[0]);
 
             unlink($this->dir.'temp.xls');
@@ -979,7 +979,7 @@ class SousCommissionExport
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            200,
+            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="Export Grand Jury '.$semestre->getLibelle().'.xlsx"',

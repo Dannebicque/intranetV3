@@ -9,17 +9,17 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: TypeCoursRepository::class)]
 class TypeCours extends BaseEntity
 {
-    #[ORM\Column(type: Types::STRING, length: 150)]
-    private ?string $libelle;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 150)]
+    private ?string $libelle = null;
 
-    #[ORM\Column(type: Types::STRING, length: 5)]
-    private ?string $libelleCourt;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 5)]
+    private ?string $libelleCourt = null;
 
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private ?float $ratioHeureEqTd = 1;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $commentaire;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
+    private ?string $commentaire = null;
 
     public function getLibelle(): ?string
     {

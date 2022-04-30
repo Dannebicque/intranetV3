@@ -24,13 +24,13 @@ class ApcCompetence extends BaseEntity
 {
     use LifeCycleTrait;
 
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $libelle = null;
 
-    #[ORM\Column(type: Types::STRING, length: 50)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50)]
     private ?string $nomCourt = null;
 
-    #[ORM\Column(type: Types::STRING, length: 20)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20)]
     private ?string $couleur = null;
 
     #[ORM\ManyToOne(targetEntity: Diplome::class, inversedBy: 'apcComptences')]
@@ -79,7 +79,7 @@ class ApcCompetence extends BaseEntity
     private Collection $ue;
 
     #[ORM\ManyToOne(targetEntity: Ppn::class, inversedBy: 'apcCompetences')]
-    private ?Ppn $ppn;
+    private ?Ppn $ppn = null;
 
     public function __construct(Diplome $diplome)
     {

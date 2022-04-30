@@ -21,11 +21,11 @@ class Hrs extends BaseEntity
     use LifeCycleTrait;
 
     #[Groups(groups: ['hrs_administration'])]
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private ?float $nbHeuresTd = null;
 
     #[Groups(groups: ['hrs_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 150)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 150)]
     private ?string $libelle = null;
 
     #[Groups(groups: ['hrs_administration'])]
@@ -43,19 +43,11 @@ class Hrs extends BaseEntity
     #[ORM\ManyToOne(targetEntity: TypeHrs::class, inversedBy: 'hrs')]
     private ?TypeHrs $typeHrs = null;
 
-    #[ORM\Column(type: Types::INTEGER)]
-    private int $annee;
-
-    #[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'hrs')]
-    private ?Departement $departement;
-
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
     private ?string $commentaire = null;
 
-    public function __construct(Departement $departement, ?int $annee)
+    public function __construct(#[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'hrs')] private ?\App\Entity\Departement $departement, #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)] private ?int $annee)
     {
-        $this->annee = $annee;
-        $this->departement = $departement;
     }
 
     public function getNbHeuresTd(): ?float

@@ -19,14 +19,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EntityAdapter extends TableAdapter implements DoctrineAdapterInterface
 {
-    protected EntityManagerInterface $em;
-
     /**
      * EntityCollector constructor.
      */
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(protected EntityManagerInterface $em)
     {
-        $this->em = $em;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -94,7 +91,7 @@ class EntityAdapter extends TableAdapter implements DoctrineAdapterInterface
         foreach ($state->getOrderBy() as [$column, $direction]) {
             foreach ($column->getOrderBy() as $path) {
                 // if path is not a sub property path, prefix it by alias
-                if (!str_contains($path, '.')) {
+                if (!str_contains((string) $path, '.')) {
                     $path = sprintf('%s.%s', $options['query_alias'], $path);
                 }
 

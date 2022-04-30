@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: StageMailTemplateRepository::class)]
 class StageMailTemplate extends BaseEntity
 {
-    public const CHAMPS_PUBLIPOSTAGE = [
+    public final const CHAMPS_PUBLIPOSTAGE = [
         '{{civilite_court_etudiant}}' => '{{stageEtudiant.etudiant.civilite}}',
         '{{civilite_etudiant}}' => '{{stageEtudiant.etudiant.civiliteLong}}',
         '{{prenom_etudiant}}' => '{{stageEtudiant.etudiant.prenom}}',
@@ -40,16 +40,16 @@ class StageMailTemplate extends BaseEntity
     ];
 
     #[ORM\ManyToOne(targetEntity: StagePeriode::class, inversedBy: 'stageMailTemplates')]
-    private ?StagePeriode $stagePeriode;
+    private ?StagePeriode $stagePeriode = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255)]
-    private ?string $subject;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
+    private ?string $subject = null;
 
-    #[ORM\Column(type: Types::STRING, length: 50)]
-    private ?string $event;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50)]
+    private ?string $event = null;
 
     #[ORM\OneToOne(targetEntity: TwigTemplate::class, cascade: ['persist', 'remove'])]
-    private ?TwigTemplate $twigTemplate;
+    private ?TwigTemplate $twigTemplate = null;
 
     public function getStagePeriode(): ?StagePeriode
     {

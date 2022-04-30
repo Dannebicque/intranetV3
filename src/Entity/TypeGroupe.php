@@ -22,19 +22,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class TypeGroupe extends BaseEntity
 {
     use LifeCycleTrait;
-    public const TYPE_GROUPE_CM = 'CM';
-    public const TYPE_GROUPE_TD = 'TD';
-    public const TYPE_GROUPE_TP = 'TP';
-    public const TYPES = [self::TYPE_GROUPE_CM, self::TYPE_GROUPE_TD, self::TYPE_GROUPE_TP, self::TYPE_GROUPE_LV];
-    public const TYPE_GROUPE_LV = 'LV';
+    public final const TYPE_GROUPE_CM = 'CM';
+    public final const TYPE_GROUPE_TD = 'TD';
+    public final const TYPE_GROUPE_TP = 'TP';
+    public final const TYPES = [self::TYPE_GROUPE_CM, self::TYPE_GROUPE_TD, self::TYPE_GROUPE_TP, self::TYPE_GROUPE_LV];
+    public final const TYPE_GROUPE_LV = 'LV';
 
     #[Groups(['type_groupe_administration'])]
-    #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'typeGroupes')]
-    private Semestre $semestre;
-
-    #[Groups(['type_groupe_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 100)]
-    private ?string $libelle;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 100)]
+    private ?string $libelle = null;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Groupe>
@@ -43,15 +39,14 @@ class TypeGroupe extends BaseEntity
     #[ORM\OrderBy(value: ['ordre' => 'ASC'])]
     private Collection $groupes;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $defaut = false;
 
-    #[ORM\Column(type: Types::STRING, length: 2)]
-    private ?string $type;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 2)]
+    private ?string $type = null;
 
-    public function __construct(Semestre $semestre)
+    public function __construct(#[Groups(['type_groupe_administration'])] #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'typeGroupes')] private Semestre $semestre)
     {
-        $this->semestre = $semestre;
         $this->groupes = new ArrayCollection();
     }
 

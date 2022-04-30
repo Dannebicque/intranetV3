@@ -23,16 +23,16 @@ class QuestionnaireReponse extends BaseEntity
     #[ORM\ManyToOne(targetEntity: QuestionnaireQuestion::class, inversedBy: 'quizzReponses')]
     private ?QuestionnaireQuestion $question = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $libelle = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $valeur = null;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private ?int $ordre = null;
 
-    #[ORM\Column(type: Types::STRING, length: 30)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 30)]
     private string $alignement = 'HORIZONTAL_CENTER';
 
     public function getQuestion(): ?QuestionnaireQuestion

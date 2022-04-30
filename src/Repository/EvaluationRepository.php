@@ -42,7 +42,7 @@ class EvaluationRepository extends ServiceEntityRepository
             ->innerJoin(AnneeUniversitaire::class, 'n', 'WITH', 'e.anneeUniversitaire = n.id')
             ->where('n.annee = :annee')
             ->setParameter('annee', $annee->getAnnee())
-            ->orderBy('e.dateEvaluation', 'ASC');
+            ->orderBy('e.dateEvaluation', \Doctrine\Common\Collections\Criteria::ASC);
 
         $ors = [];
         foreach ($matieres as $matiere) {
@@ -61,7 +61,7 @@ class EvaluationRepository extends ServiceEntityRepository
             ->andWhere('e.typeMatiere = :type')
             ->setParameter('matiere', $matiere)
             ->setParameter('type', $type)
-            ->orderBy('e.dateEvaluation', 'ASC');
+            ->orderBy('e.dateEvaluation', \Doctrine\Common\Collections\Criteria::ASC);
 
         if (null !== $annee) {
             $query->innerJoin(AnneeUniversitaire::class, 'u', 'WITH', 'e.anneeUniversitaire = u.id')

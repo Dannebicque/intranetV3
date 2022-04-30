@@ -22,16 +22,16 @@ class Ue extends BaseEntity
 {
     use LifeCycleTrait;
 
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private string $libelle;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private int $numeroUe = 1;
 
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private float $coefficient = 1;
 
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private float $nbEcts = 1;
 
     /**
@@ -40,28 +40,24 @@ class Ue extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'ue', targetEntity: Matiere::class)]
     private Collection $matieres;
 
-    #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'ues')]
-    private ?Semestre $semestre;
-
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $actif = true;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $bonification = false;
 
-    #[ORM\Column(type: Types::STRING, length: 15)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 15)]
     private string $codeElement;
 
     #[ORM\ManyToOne(targetEntity: ApcCompetence::class, inversedBy: 'ue')]
-    private ?ApcCompetence $apcCompetence;
+    private ?ApcCompetence $apcCompetence = null;
 
     /**
      * Ue constructor.
      */
-    public function __construct(Semestre $semestre)
+    public function __construct(#[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'ues')] private ?\App\Entity\Semestre $semestre)
     {
         $this->matieres = new ArrayCollection();
-        $this->semestre = $semestre;
     }
 
     public function getCoefficient(): float

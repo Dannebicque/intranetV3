@@ -30,26 +30,26 @@ class TypeDiplome extends BaseEntity
     private Collection $diplomes;
 
     #[Groups(['type_diplome_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 255)]
-    private ?string $libelle;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
+    private ?string $libelle = null;
 
     #[Groups(['type_diplome_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 20)]
-    private ?string $sigle;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20)]
+    private ?string $sigle = null;
 
     #[Groups(['type_diplome_administration'])]
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private int $nbSemestres = 2;
 
     #[Groups(['type_diplome_administration'])]
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private int $niveauEntree = 0;
 
     #[Groups(['type_diplome_administration'])]
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private int $niveauSortie = 3;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $apc = false;
 
     public function __construct()

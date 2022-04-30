@@ -30,14 +30,14 @@ use Symfony\Component\Mailer\MailerInterface;
 
 class MyMessagerie
 {
-    private ?string $sujet;
+    private ?string $sujet = null;
 
-    private ?string $message;
+    private ?string $message = null;
 
     private int $nbMessagesEnvoyes = 0;
     private int $nbEtudiants = 0;
 
-    private ?Personnel $expediteur;
+    private ?Personnel $expediteur = null;
 
     /** @var Etudiant[] */
     private array | Collection $etudiants = [];
@@ -51,13 +51,13 @@ class MyMessagerie
      * MyMessagerie constructor.
      */
     public function __construct(
-        private MailerInterface $myMailer,
-        private EntityManagerInterface $entityManager,
-        private GroupeRepository $groupeRepository,
-        private EtudiantRepository $etudiantRepository,
-        private SemestreRepository $semestreRepository,
-        private PersonnelRepository $personnelRepository,
-        private Configuration $configuration
+        private readonly MailerInterface $myMailer,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly GroupeRepository $groupeRepository,
+        private readonly EtudiantRepository $etudiantRepository,
+        private readonly SemestreRepository $semestreRepository,
+        private readonly PersonnelRepository $personnelRepository,
+        private readonly Configuration $configuration
     ) {
     }
 
@@ -212,9 +212,9 @@ class MyMessagerie
 
         foreach ($this->pjs as $file) {
             $fichier = new MessagePieceJointe();
-            $ext = explode('/', $file);
+            $ext = explode('/', (string) $file);
             $fichier->setFichier($ext[count($ext) - 1]);
-            $ext = explode('.', $file);
+            $ext = explode('.', (string) $file);
             $fichier->setExtension($ext[count($ext) - 1]);
             $fichier->setMessage($mess);
             $this->entityManager->persist($fichier);

@@ -48,34 +48,34 @@ abstract class Emprunt extends BaseEntity
     ];
 
     #[Groups(groups: ['emprunts_administration'])]
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE)]
     private ?DateTimeInterface $dateDebut = null;
 
     #[Groups(groups: ['emprunts_administration'])]
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE)]
     private ?DateTimeInterface $dateFin = null;
 
     #[Groups(groups: ['emprunts_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $motif = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $description = null;
 
     #[Groups(groups: ['emprunts_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 20)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20)]
     private ?string $telephone = null;
 
     #[Groups(groups: ['emprunts_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 10)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 10)]
     private ?string $etat = null;
 
     #[Groups(groups: ['emprunts_administration'])]
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
     private ?DateTimeInterface $dateSortie = null;
 
     #[Groups(groups: ['emprunts_administration'])]
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
     private ?DateTimeInterface $dateRetour = null;
 
     /**
@@ -84,7 +84,7 @@ abstract class Emprunt extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'emprunt', targetEntity: EmpruntMateriel::class, cascade: ['remove'])]
     private Collection $empruntMateriels;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
     private ?DateTimeInterface $dateValidation = null;
 
     #[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'emprunts')]

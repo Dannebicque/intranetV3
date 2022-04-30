@@ -40,7 +40,7 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
             ->andWhere('j.anneeUniversitaire = :annee')
             ->setParameter('semestre', $semestre->getId())
             ->setParameter('annee', $semestre->getAnneeUniversitaire())
-            ->orderBy('j.created', 'DESC')
+            ->orderBy('j.created', \Doctrine\Common\Collections\Criteria::DESC)
             ->getQuery()
             ->getResult()
             ;
@@ -83,7 +83,7 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
 
-        return count($query) >= 1;
+        return (is_countable($query) ? count($query) : 0) >= 1;
     }
 
     public function findByEtudiant(Etudiant $etudiant): array
@@ -94,7 +94,7 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
             ->andWhere('j.anneeUniversitaire = :annee')
             ->setParameter('etudiant', $etudiant->getId())
             ->setParameter('annee', $etudiant->getAnneeUniversitaire())
-            ->orderBy('j.created', 'DESC')
+            ->orderBy('j.created', \Doctrine\Common\Collections\Criteria::DESC)
             ->getQuery()
             ->getResult();
     }
@@ -106,7 +106,7 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
             ->innerJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
             ->where('s.annee = :annee')
             ->setParameter('annee', $annee->getId())
-            ->orderBy('j.created', 'DESC')
+            ->orderBy('j.created', \Doctrine\Common\Collections\Criteria::DESC)
             ->getQuery()
             ->getResult();
     }

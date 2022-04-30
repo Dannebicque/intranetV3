@@ -17,14 +17,11 @@ use Twig\Environment;
 // FIXME use View Object ?
 class TableRenderer
 {
-    protected Environment $twig;
-
     /**
      * DataTableRenderer constructor.
      */
-    public function __construct(Environment $twig)
+    public function __construct(protected Environment $twig)
     {
-        $this->twig = $twig;
     }
 
     /**
@@ -58,7 +55,7 @@ class TableRenderer
         $vars['attr'] = [
             'id' => $options['id'],
             'class' => 'datable-container',
-            'data-options' => json_encode($this->getJsOptions($dataTable)),
+            'data-options' => json_encode($this->getJsOptions($dataTable), JSON_THROW_ON_ERROR),
         ];
 
         if ($options['paging']) {
@@ -79,9 +76,7 @@ class TableRenderer
         $vars['table_attr'] = [
             'class' => $options['class'] .= ' datable',
         ];
-        $vars['columns'] = array_map(function (Column $c) {
-            return $this->columnView($c);
-        }, $dataTable->getColumns());
+        $vars['columns'] = array_map(fn(Column $c) => $this->columnView($c), $dataTable->getColumns());
 
         return $vars;
     }

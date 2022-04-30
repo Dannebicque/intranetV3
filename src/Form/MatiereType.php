@@ -41,27 +41,11 @@ class MatiereType extends AbstractType
 {
     protected Diplome $diplome;
 
-    private SemestreRepository $semestreRepository;
-
-    private UeRepository $ueRepository;
-
-    private ParcourRepository $parcourRepository;
-
-    private MatiereRepository $matiereRepository;
-
     /**
      * MatiereType constructor.
      */
-    public function __construct(
-        SemestreRepository $semestreRepository,
-        UeRepository $ueRepository,
-        ParcourRepository $parcourRepository,
-        MatiereRepository $matiereRepository
-    ) {
-        $this->semestreRepository = $semestreRepository;
-        $this->ueRepository = $ueRepository;
-        $this->parcourRepository = $parcourRepository;
-        $this->matiereRepository = $matiereRepository;
+    public function __construct(private readonly SemestreRepository $semestreRepository, private readonly UeRepository $ueRepository, private readonly ParcourRepository $parcourRepository, private readonly MatiereRepository $matiereRepository)
+    {
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -71,9 +55,7 @@ class MatiereType extends AbstractType
             ->add('saeParent', EntityType::class, ['label' => 'label.saeParent', 'help' => 'help.saeParent',
                 'class' => ApcSae::class,
                 'choice_label' => 'display',
-                'query_builder' => function (ApcSaeRepository $apcSaeRepository) {
-                    return $apcSaeRepository->findByDiplomeBuilder($this->diplome);
-                },
+                'query_builder' => fn(ApcSaeRepository $apcSaeRepository) => $apcSaeRepository->findByDiplomeBuilder($this->diplome),
                 'required' => false, ])
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
             ->add('codeMatiere', TextType::class, ['label' => 'label.code_matiere'])
@@ -110,9 +92,7 @@ class MatiereType extends AbstractType
                 'label' => 'label.ppn',
                 'class' => Ppn::class,
                 'choice_label' => 'libelle',
-                'query_builder' => function (PpnRepository $ppnRepository) {
-                    return $ppnRepository->findByDiplomeBuilder($this->diplome);
-                },
+                'query_builder' => fn(PpnRepository $ppnRepository) => $ppnRepository->findByDiplomeBuilder($this->diplome),
             ]);
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, [$this, 'onPreSetData']);

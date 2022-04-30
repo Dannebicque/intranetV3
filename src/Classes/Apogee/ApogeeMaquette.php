@@ -23,11 +23,8 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class ApogeeMaquette
 {
-    protected EntityManagerInterface $entityManager;
-
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(protected EntityManagerInterface $entityManager)
     {
-        $this->entityManager = $entityManager;
     }
 
     public function createSemestre($elpAnnee, Annee $annee, Ppn $pn): Semestre
@@ -69,7 +66,7 @@ class ApogeeMaquette
         if ('R' === substr($elp['LIC_ELP'], 1, 1)) {
             //ressource
             $res = new ApcRessource();
-            $c = explode(' ', $elp['LIC_ELP']);
+            $c = explode(' ', (string) $elp['LIC_ELP']);
             $res->setLibelle($elp['LIB_ELP']);
             $res->setCodeMatiere($c[0]);
             $res->setCodeElement($elp['COD_ELP']);
@@ -95,7 +92,7 @@ class ApogeeMaquette
         if ('S' === substr($elp['LIC_ELP'], 1, 1)) {
             //Sae
             $res = new ApcSae();
-            $c = explode(' ', $elp['LIC_ELP']);
+            $c = explode(' ', (string) $elp['LIC_ELP']);
             $res->setLibelle($elp['LIB_ELP']);
             $res->setCodeMatiere($c[0]);
             $res->setCodeElement($elp['COD_ELP']);
@@ -181,12 +178,12 @@ class ApogeeMaquette
     {
         //ressource
         $res = new Matiere();
-        $c = explode(' ', $elp['LIC_ELP']);
+        $c = explode(' ', (string) $elp['LIC_ELP']);
         $res->setLibelle($elp['LIB_ELP']);
         $res->setCodeMatiere($c[0]);
         $res->setCodeElement($elp['COD_ELP']);
         $res->setUe($ue);
-        $coeff = explode('(', $elp['LIB_ELP']);
+        $coeff = explode('(', (string) $elp['LIB_ELP']);
         $toto = substr($coeff[count($coeff) - 1], 0, -1);
         $res->setNbEcts((float) (trim($toto)));
         $res->setLibelleCourt($elp['LIC_ELP']);

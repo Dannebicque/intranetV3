@@ -27,15 +27,15 @@ class CahierTexte extends BaseEntity
     use MatiereTrait;
 
     #[Groups(groups: ['carnet_personnel'])]
-    #[ORM\Column(type: Types::STRING, length: 150)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 150)]
     private ?string $libelle = null;
 
     #[Groups(groups: ['carnet_personnel'])]
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT)]
     private ?string $description = null;
 
     #[Groups(groups: ['carnet_personnel'])]
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE)]
     private ?CarbonInterface $dateRetour = null;
 
     #[Groups(groups: ['carnet_personnel'])]

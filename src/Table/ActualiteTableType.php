@@ -31,12 +31,10 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class ActualiteTableType extends TableType
 {
-    private ?Departement $departement;
-    private CsrfTokenManagerInterface $csrfToken;
+    private ?Departement $departement = null;
 
-    public function __construct(CsrfTokenManagerInterface $csrfToken)
+    public function __construct(private readonly CsrfTokenManagerInterface $csrfToken)
     {
-        $this->csrfToken = $csrfToken;
     }
 
     public function buildTable(TableBuilder $builder, array $options): void
@@ -105,7 +103,7 @@ class ActualiteTableType extends TableType
             'query' => function (QueryBuilder $qb, array $formData) {
                 $qb->where('e.departement = :departement')
                     ->setParameter('departement', $this->departement->getId())
-                    ->orderBy('e.updated', 'DESC');
+                    ->orderBy('e.updated', \Doctrine\Common\Collections\Criteria::DESC);
 
                 if (isset($formData['search'])) {
                     $qb->andWhere('LOWER(e.titre) LIKE :search');

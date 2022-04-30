@@ -24,12 +24,12 @@ class Site extends BaseEntity
     use LifeCycleTrait;
 
     #[Groups(['sites_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 255)]
-    private ?string $libelle;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
+    private ?string $libelle = null;
 
     #[Groups(['sites_administration'])]
     #[ORM\OneToOne(targetEntity: Adresse::class, cascade: ['persist', 'remove'])]
-    private ?Adresse $adresse;
+    private ?Adresse $adresse = null;
 
     #[ORM\ManyToMany(targetEntity: Ufr::class, mappedBy: 'sites')]
     private Collection $ufrs;

@@ -35,7 +35,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 #[Route('rdd', name: 'rdd_')]
 class RddController extends AbstractController
 {
-    public function __construct(private EntityManagerInterface $entityManager, private MailerInterface $mailer)
+    public function __construct(private readonly EntityManagerInterface $entityManager, private readonly MailerInterface $mailer)
     {
     }
 

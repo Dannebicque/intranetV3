@@ -37,13 +37,9 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class MyEnquete
 {
-    public const SEUIL = 65;
-    public const COLOR_QUALITE = 'bb1e10';
-    private QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository;
-
-    private QuestionnaireEtudiantRepository $quizzEtudiantRepository;
+    public final const SEUIL = 65;
+    public final const COLOR_QUALITE = 'bb1e10';
     private array $resultatQuestion = [];
-    private MyExcelWriter $myExcelWriter;
     private int $ligne;
 
     /** @var Previsionnel[] */
@@ -53,22 +49,12 @@ class MyEnquete
 
     private int | float $sommePourcentage = 0;
 
-    private Configuration $configuration;
-
     /**
      * MyEnquete constructor.
      * todo: a revoir et exploiter le composant ?
      */
-    public function __construct(
-        QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository,
-        QuestionnaireEtudiantRepository $quizzEtudiantRepository,
-        MyExcelWriter $myExcelWriter,
-        Configuration $configuration
-    ) {
-        $this->quizzEtudiantReponseRepository = $quizzEtudiantReponseRepository;
-        $this->quizzEtudiantRepository = $quizzEtudiantRepository;
-        $this->myExcelWriter = $myExcelWriter;
-        $this->configuration = $configuration;
+    public function __construct(private readonly QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository, private readonly QuestionnaireEtudiantRepository $quizzEtudiantRepository, private readonly MyExcelWriter $myExcelWriter, private readonly Configuration $configuration)
+    {
     }
 
     /**
@@ -80,7 +66,7 @@ class MyEnquete
         $this->previsionnel = $previsionnel;
         //data
         $this->getReponseFromQuestionnaire($questionnaire);
-        $nbEtudiants = count($questionnaire->getSemestre()?->getEtudiants());
+        $nbEtudiants = $questionnaire->getSemestre()?->getEtudiants() === null ? 0 : count($questionnaire->getSemestre()?->getEtudiants());
         $this->nbReponses = count($quizzEtudiants);
         $pourcentageReponses = $this->nbReponses / $nbEtudiants;
         //export
@@ -159,7 +145,7 @@ class MyEnquete
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            200,
+            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="'.$questionnaire->getLibelle().'.xlsx"',
@@ -282,6 +268,7 @@ class MyEnquete
         string $config = '',
         QuestionnaireQuestion $questionParent = null
     ): void {
+        $retire = null;
         if (null === $questionParent) {
             $questionParent = $question;
         }

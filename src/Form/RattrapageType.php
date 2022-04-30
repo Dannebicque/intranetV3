@@ -28,12 +28,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class RattrapageType extends AbstractType
 {
-    private ?Semestre $semestre;
-    private TypeMatiereManager $typeMatiereManager;
+    private ?Semestre $semestre = null;
 
-    public function __construct(TypeMatiereManager $typeMatiereManager)
+    public function __construct(private readonly TypeMatiereManager $typeMatiereManager)
     {
-        $this->typeMatiereManager = $typeMatiereManager;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -66,9 +64,7 @@ class RattrapageType extends AbstractType
                 'class' => Personnel::class,
                 'label' => 'label.personnel',
                 'choice_label' => 'displayPr',
-                'query_builder' => function (PersonnelRepository $personnelRepository) {
-                    return $personnelRepository->findBySemestreBuilder($this->semestre);
-                },
+                'query_builder' => fn(PersonnelRepository $personnelRepository) => $personnelRepository->findBySemestreBuilder($this->semestre),
                 'required' => true,
                 'expanded' => false,
                 'multiple' => false,

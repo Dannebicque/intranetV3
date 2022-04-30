@@ -25,11 +25,11 @@ class ExportPdfEdtHandler implements MessageHandlerInterface
      * ExportReleveHandler constructor.
      */
     public function __construct(
-        private Configuration $configuration,
-        private MyEdtExport $myEdtExport,
-        private DepartementRepository $departementRepository,
-        private MailerInterface $mailer,
-        private PersonnelRepository $personnelRepository
+        private readonly Configuration $configuration,
+        private readonly MyEdtExport $myEdtExport,
+        private readonly DepartementRepository $departementRepository,
+        private readonly MailerInterface $mailer,
+        private readonly PersonnelRepository $personnelRepository
     ) {
     }
 

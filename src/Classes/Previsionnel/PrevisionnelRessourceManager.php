@@ -19,7 +19,7 @@ use App\Repository\PrevisionnelRessourceRepository;
 
 class PrevisionnelRessourceManager extends AbstractPrevisionnelManager implements PrevisionnelManagerInterface
 {
-    public const TYPE = 'ressource';
+    public final const TYPE = 'ressource';
 
 
     public function __construct(

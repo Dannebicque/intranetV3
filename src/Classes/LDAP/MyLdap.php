@@ -20,11 +20,8 @@ class MyLdap
 {
     private Ldap $ds;
 
-    private ParameterBagInterface $parameterBag;
-
-    public function __construct(ParameterBagInterface $parameterBag)
+    public function __construct(private readonly ParameterBagInterface $parameterBag)
     {
-        $this->parameterBag = $parameterBag;
     }
 
     public function connect(): void
@@ -36,6 +33,7 @@ class MyLdap
 
     public function getInfoEtudiant(string $numetudiant): ?array
     {
+        $t = [];
         $this->connect();
 
         $query = $this->ds->query($this->parameterBag->get('LDAP_BASE_DN'), '(supannetuid='.$numetudiant.')',
@@ -54,6 +52,7 @@ class MyLdap
 
     public function getInfoPersonnel(string $numeroHarpege): ?array
     {
+        $t = [];
         $this->connect();
 
         $query = $this->ds->query($this->parameterBag->get('LDAP_BASE_DN'), '(supannEmpId='.$numeroHarpege.')',

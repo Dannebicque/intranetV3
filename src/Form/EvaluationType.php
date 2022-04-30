@@ -37,11 +37,9 @@ class EvaluationType extends AbstractType
 {
     private Departement $departement;
     private Semestre $semestre;
-    private TypeMatiereManager $typeMatiereManager;
 
-    public function __construct(TypeMatiereManager $typeMatiereManager)
+    public function __construct(private readonly TypeMatiereManager $typeMatiereManager)
     {
-        $this->typeMatiereManager = $typeMatiereManager;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -64,9 +62,7 @@ class EvaluationType extends AbstractType
                     'disabled' => $personnelDisabled,
                     'class' => Personnel::class,
                     'choice_label' => 'displayPr',
-                    'query_builder' => function (PersonnelRepository $personnelRepository) {
-                        return $personnelRepository->findByDepartementBuilder($this->semestre->getAnnee()->getDiplome()->getDepartement());
-                    },
+                    'query_builder' => fn(PersonnelRepository $personnelRepository) => $personnelRepository->findByDepartementBuilder($this->semestre->getAnnee()->getDiplome()->getDepartement()),
                 ])
             ->add('libelle', TextType::class,
                 [
@@ -105,9 +101,7 @@ class EvaluationType extends AbstractType
                 'label' => 'label.evaluation_type_groupe',
                 'choice_label' => 'libelle',
                 'disabled' => $autorise || ($options['enfant'] && null !== $options['groupeEnfant']),
-                'query_builder' => function (TypeGroupeRepository $typeGroupeRepository) {
-                    return $typeGroupeRepository->findBySemestreBuilder($this->semestre);
-                },
+                'query_builder' => fn(TypeGroupeRepository $typeGroupeRepository) => $typeGroupeRepository->findBySemestreBuilder($this->semestre),
                 'required' => true,
                 'expanded' => true,
                 'multiple' => false,
@@ -119,9 +113,7 @@ class EvaluationType extends AbstractType
                 'disabled' => $autorise,
                 'choice_label' => 'display',
                 'attr' => ['class' => ''],
-                'query_builder' => function (PersonnelRepository $personnelRepository) {
-                    return $personnelRepository->findByDepartementBuilder($this->departement);
-                },
+                'query_builder' => fn(PersonnelRepository $personnelRepository) => $personnelRepository->findByDepartementBuilder($this->departement),
                 'required' => true,
                 'expanded' => true,
                 'multiple' => true,

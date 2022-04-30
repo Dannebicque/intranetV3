@@ -32,12 +32,6 @@ use Twig\Error\SyntaxError;
 
 class MyEmprunts
 {
-    protected EventDispatcherInterface $eventDispatcher;
-
-    protected EmpruntRepository $empruntRepository;
-
-    protected EntityManagerInterface $entityManager;
-
     /** @var Emprunt[] */
     protected array $emprunts;
 
@@ -45,23 +39,18 @@ class MyEmprunts
 
     protected array $statistiques;
     private array $jours;
-    private MyPDF $myPDF;
 
     /**
      * MyEmprunts constructor.
      */
     public function __construct(
-        EmpruntRepository $empruntRepository,
+        protected EmpruntRepository $empruntRepository,
         MaterielRepository $materielRepository,
-        EntityManagerInterface $entityManager,
-        EventDispatcherInterface $eventDispatcher,
-        MyPDF $myPDF
+        protected EntityManagerInterface $entityManager,
+        protected EventDispatcherInterface $eventDispatcher,
+        private readonly MyPDF $myPDF
     ) {
         $this->materielRepository = $materielRepository;
-        $this->empruntRepository = $empruntRepository;
-        $this->myPDF = $myPDF;
-        $this->entityManager = $entityManager;
-        $this->eventDispatcher = $eventDispatcher;
         $this->statistiques = [
             Emprunt::DEMANDE => 0,
             Emprunt::ACCEPTE => 0,
@@ -231,7 +220,7 @@ class MyEmprunts
         $d2 = null;
 
         foreach ($materieljour as $m) {
-            $t = explode('_', $m); //jour, AM/PM, matériel
+            $t = explode('_', (string) $m); //jour, AM/PM, matériel
             if (array_key_exists($t[1], $tmat)) {
                 //matériel existant, on ajoute
                 if (!array_key_exists($t[1], $matde)) {

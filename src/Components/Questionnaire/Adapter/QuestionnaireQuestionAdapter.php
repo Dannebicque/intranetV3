@@ -20,11 +20,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class QuestionnaireQuestionAdapter
 {
     protected AbstractQuestion $question;
-    private QuestionnaireRegistry $questionnaireRegistry;
 
-    public function __construct(QuestionnaireRegistry $questionnaireRegistry)
+    public function __construct(private readonly QuestionnaireRegistry $questionnaireRegistry)
     {
-        $this->questionnaireRegistry = $questionnaireRegistry;
     }
 
     /**

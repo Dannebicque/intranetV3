@@ -40,7 +40,7 @@ class MessageDestinataireEtudiantRepository extends ServiceEntityRepository
             ->innerJoin(Personnel::class, 'p', 'WITH', 'mes.expediteur = p.id')
             ->where('m.etudiant = :etudiant')
             ->setParameter('etudiant', $user->getId())
-            ->orderBy('m.created', 'DESC');
+            ->orderBy('m.created', \Doctrine\Common\Collections\Criteria::DESC);
 
         switch ($filtre) {
             case 'all':

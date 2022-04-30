@@ -18,7 +18,7 @@ use App\Entity\Semestre;
 
 class PrevisionnelRessourceRepository extends PrevisionnelRepository
 {
-    public const TYPE = 'ressource';
+    public final const TYPE = 'ressource';
 
     public function findPrevisionnelEnseignantComplet(Personnel $personnel, int $annee): array
     {
@@ -94,8 +94,8 @@ class PrevisionnelRessourceRepository extends PrevisionnelRepository
             ->setParameter('annee', $annee)
             ->setParameter('type', self::TYPE)
             ->setParameter('matiere', $matiere)
-            ->orderBy('pers.nom', 'ASC')
-            ->orderBy('pers.prenom', 'ASC')
+            ->orderBy('pers.nom', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('pers.prenom', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -113,7 +113,7 @@ class PrevisionnelRessourceRepository extends PrevisionnelRepository
             ->setParameter('type', self::TYPE)
             ->setParameter('annee', $annee)
             ->setParameter('semestre', $semestre->getId())
-            ->orderBy('m.codeMatiere', 'ASC')
+            ->orderBy('m.codeMatiere', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -133,7 +133,7 @@ class PrevisionnelRessourceRepository extends PrevisionnelRepository
             ->setParameter('annee', $annee)
             ->setParameter('personnel', $personnel->getId())
             ->setParameter('semestre', $semestre->getId())
-            ->orderBy('m.codeMatiere', 'ASC')
+            ->orderBy('m.codeMatiere', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -153,8 +153,8 @@ class PrevisionnelRessourceRepository extends PrevisionnelRepository
             ->setParameter('annee', $annee)
             ->setParameter('type', self::TYPE)
             ->setParameter('matiere', $matiere)
-            ->orderBy('pers.nom', 'ASC')
-            ->orderBy('pers.prenom', 'ASC')
+            ->orderBy('pers.nom', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('pers.prenom', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

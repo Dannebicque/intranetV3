@@ -15,15 +15,12 @@ use Symfony\Component\Routing\RouterInterface;
 
 class LinkColumnType extends PropertyColumnType
 {
-    protected RouterInterface $router;
-
     /**
      * LinkColumnType constructor.
      */
-    public function __construct(RouterInterface $router)
+    public function __construct(protected RouterInterface $router)
     {
         parent::__construct();
-        $this->router = $router;
     }
 
     public function render(mixed $rowData, array $options): string

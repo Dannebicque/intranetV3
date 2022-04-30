@@ -18,22 +18,13 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class UpdateSemestreCommand extends Command
 {
-    protected EntityManagerInterface $entityManager;
-    protected AbsenceRepository $absenceRepository;
-    protected AbsenceJustificatifRepository $absenceJustificatifRepository;
-    protected RattrapageRepository $rattrapageRepository;
-
     public function __construct(
-        EntityManagerInterface $entityManager,
-        AbsenceRepository $absenceRepository,
-        AbsenceJustificatifRepository $absenceJustificatifRepository,
-        RattrapageRepository $rattrapageRepository
+        protected EntityManagerInterface $entityManager,
+        protected AbsenceRepository $absenceRepository,
+        protected AbsenceJustificatifRepository $absenceJustificatifRepository,
+        protected RattrapageRepository $rattrapageRepository
     ) {
         parent::__construct();
-        $this->entityManager = $entityManager;
-        $this->absenceRepository = $absenceRepository;
-        $this->absenceJustificatifRepository = $absenceJustificatifRepository;
-        $this->rattrapageRepository = $rattrapageRepository;
     }
 
 

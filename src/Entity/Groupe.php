@@ -20,7 +20,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class Groupe extends BaseEntity
 {
     #[Groups(groups: ['groupe_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 50)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50)]
     private ?string $libelle = null;
 
     #[Groups(groups: ['groupe_administration'])]
@@ -28,7 +28,7 @@ class Groupe extends BaseEntity
     private ?TypeGroupe $typeGroupe = null;
 
     #[Groups(groups: ['groupe_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50, nullable: true)]
     private ?string $codeApogee = '';
 
     #[Groups(groups: ['groupe_administration'])]
@@ -46,7 +46,7 @@ class Groupe extends BaseEntity
     private Collection $enfants;
 
     #[Groups(groups: ['groupe_administration'])]
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private ?int $ordre = null;
 
     #[Groups(groups: ['groupe_administration'])]
@@ -62,8 +62,11 @@ class Groupe extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'groupe', targetEntity: AbsenceEtatAppel::class)]
     private Collection $absenceEtatAppels;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection<\App\Entity\ApcRessourceEnfants>
+     */
     #[ORM\ManyToMany(targetEntity: ApcRessourceEnfants::class, mappedBy: 'groupes')]
-    private $apcRessourceEnfants;
+    private \Doctrine\Common\Collections\Collection $apcRessourceEnfants;
 
     public function __construct()
     {

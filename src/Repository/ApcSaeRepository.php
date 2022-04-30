@@ -49,9 +49,9 @@ class ApcSaeRepository extends ServiceEntityRepository
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->where('a.diplome = :diplome')
             ->setParameter('diplome', $diplome->getId())
-            ->orderBy('s.ordreLmd', 'ASC')
-            ->addOrderBy('r.codeMatiere', 'ASC')
-            ->addOrderBy('r.libelle', 'ASC')
+            ->orderBy('s.ordreLmd', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('r.codeMatiere', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('r.libelle', \Doctrine\Common\Collections\Criteria::ASC)
             ;
     }
 
@@ -62,8 +62,8 @@ class ApcSaeRepository extends ServiceEntityRepository
             ->addSelect('apcSaeCompetences')
             ->where('r.semestre = :semestre')
             ->setParameter('semestre', $semestre->getId())
-            ->orderBy('r.codeMatiere', 'ASC')
-            ->addOrderBy('r.libelle', 'ASC')
+            ->orderBy('r.codeMatiere', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('r.libelle', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -94,8 +94,8 @@ class ApcSaeRepository extends ServiceEntityRepository
             ->addSelect('apcSaeCompetences')
             ->where('d.departement = :departement')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('r.codeMatiere', 'ASC')
-            ->addOrderBy('r.libelle', 'ASC')
+            ->orderBy('r.codeMatiere', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('r.libelle', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

@@ -21,46 +21,46 @@ class RddDiplome extends BaseEntity
 {
     use LifeCycleTrait;
 
-    #[ORM\Column(type: Types::STRING, length: 10)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 10)]
     private ?string $numEtudiant = null;
 
-    #[ORM\Column(type: Types::STRING, length: 15)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 15)]
     private ?string $ine = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
     private ?string $mailperso = null;
 
-    #[ORM\Column(type: Types::STRING, length: 20)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20)]
     private ?string $diplome = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $libelleDiplome = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE)]
     private ?CarbonInterface $dateNaissance = null;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $confirme = false;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $enqueteAFaire = false;
 
-    #[ORM\Column(type: Types::STRING, length: 30, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 30, nullable: true)]
     private ?string $codeEtape = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $adresse = null;
 
-    #[ORM\Column(type: Types::STRING, length: 5)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 5)]
     private ?string $codePostal = null;
 
-    #[ORM\Column(type: Types::STRING, length: 100)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 100)]
     private ?string $ville = null;
 
-    #[ORM\Column(type: Types::STRING, length: 50)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50)]
     private ?string $pays = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
     private ?string $adresseComplement = null;
 
     public function getNumEtudiant(): ?string

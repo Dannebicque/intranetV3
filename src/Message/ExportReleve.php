@@ -11,15 +11,8 @@ namespace App\Message;
 
 class ExportReleve
 {
-    private int $semestre;
-    private int $anneeUniversitaire;
-    private int $personnel;
-
-    public function __construct(int $semestre, int $anneeUniversitaire, int $personnel)
+    public function __construct(private readonly int $semestre, private readonly int $anneeUniversitaire, private readonly int $personnel)
     {
-        $this->semestre = $semestre;
-        $this->anneeUniversitaire = $anneeUniversitaire;
-        $this->personnel = $personnel;
     }
 
     public function getSemestre(): int

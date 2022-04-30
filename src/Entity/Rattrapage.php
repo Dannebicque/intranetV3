@@ -29,10 +29,10 @@ class Rattrapage extends BaseEntity
     use LifeCycleTrait;
     use MatiereTrait;
 
-    public const DEMANDE_FAITE = 'f';
-    public const DEMANDE_ACCEPTEE = 'a';
-    public const DEMANDE_REFUSEE = 'r';
-    public const ETATLONG = [
+    public final const DEMANDE_FAITE = 'f';
+    public final const DEMANDE_ACCEPTEE = 'a';
+    public final const DEMANDE_REFUSEE = 'r';
+    public final const ETATLONG = [
         self::DEMANDE_FAITE => 'demande faite',
         self::DEMANDE_ACCEPTEE => 'demande acceptée',
         self::DEMANDE_REFUSEE => 'demande refusée',
@@ -43,30 +43,30 @@ class Rattrapage extends BaseEntity
     private ?Personnel $personnel = null;
 
     #[Groups(groups: ['rattrapage_administration'])]
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE)]
     private ?CarbonInterface $dateEval = null;
 
     #[Groups(groups: ['rattrapage_administration'])]
-    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $heureEval = null;
 
     #[Groups(groups: ['rattrapage_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 20, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20, nullable: true)]
     private ?string $duree = null;
 
     #[Groups(groups: ['rattrapage_administration'])]
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateRattrapage = null;
 
     #[Groups(groups: ['rattrapage_administration'])]
-    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $heureRattrapage = null;
 
     #[Groups(groups: ['rattrapage_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 10, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 10, nullable: true)]
     private ?string $salle = null;
 
-    #[ORM\Column(type: Types::STRING, length: 1)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 1)]
     private string $etatDemande;
 
     #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class)]
@@ -78,13 +78,8 @@ class Rattrapage extends BaseEntity
     #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'rattrapages')]
     private ?Semestre $semestre = null;
 
-    #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'rattrapages')]
-    #[Groups(groups: ['rattrapage_administration'])]
-    private ?Etudiant $etudiant;
-
-    public function __construct(?Etudiant $etudiant)
+    public function __construct(#[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'rattrapages')] #[Groups(groups: ['rattrapage_administration'])] private ?\App\Entity\Etudiant $etudiant)
     {
-        $this->etudiant = $etudiant;
         $this->setUuid(Uuid::uuid4());
         $this->etatDemande = self::DEMANDE_FAITE;
         $this->anneeUniversitaire = $etudiant?->getAnneeUniversitaire();

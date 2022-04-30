@@ -31,7 +31,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class HrsType extends AbstractType
 {
-    protected ?Departement $departement;
+    protected ?Departement $departement = null;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -42,9 +42,7 @@ class HrsType extends AbstractType
                 'class' => Personnel::class,
                 'required' => true,
                 'choice_label' => 'display',
-                'query_builder' => function (PersonnelRepository $personnelRepository) {
-                    return $personnelRepository->findByDepartementBuilder($this->departement);
-                },
+                'query_builder' => fn(PersonnelRepository $personnelRepository) => $personnelRepository->findByDepartementBuilder($this->departement),
                 'label' => 'label.personnel',
             ])
             ->add('typeHrs', EntityCompleteType::class, [
@@ -59,18 +57,14 @@ class HrsType extends AbstractType
                 'class' => Semestre::class,
                 'required' => false,
                 'choice_label' => 'display',
-                'query_builder' => function (SemestreRepository $semestreRepository) {
-                    return $semestreRepository->findByDepartementBuilder($this->departement);
-                },
+                'query_builder' => fn(SemestreRepository $semestreRepository) => $semestreRepository->findByDepartementBuilder($this->departement),
                 'label' => 'label.semestre',
             ])
             ->add('diplome', EntityType::class, [
                 'class' => Diplome::class,
                 'required' => false,
                 'choice_label' => 'libelle',
-                'query_builder' => function (DiplomeRepository $diplomeRepository) {
-                    return $diplomeRepository->findByDepartementBuilder($this->departement);
-                },
+                'query_builder' => fn(DiplomeRepository $diplomeRepository) => $diplomeRepository->findByDepartementBuilder($this->departement),
                 'label' => 'label.diplome',
             ])
             ->add('commentaire', TextareaType::class, ['label' => 'label.commentaire', 'required' => false]);

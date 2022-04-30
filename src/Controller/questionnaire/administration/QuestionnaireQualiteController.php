@@ -124,7 +124,7 @@ class QuestionnaireQualiteController extends BaseController
             $nSection = clone $section;
             $newQuestionnaireQualite->addSection($nSection);
             if (null !== $nSection->getConfig()) {
-                $t = explode('-', $nSection->getConfig());
+                $t = explode('-', (string) $nSection->getConfig());
                 $nSection->setConfig($t[0].'-');
             }
             $nSection->setQuestionnaireQualite($newQuestionnaireQualite);

@@ -13,37 +13,10 @@ use Doctrine\Common\Collections\Collection;
 
 class Section
 {
-    public string $typeSection;
-    public ?string $titre;
-    public ?string $texte_explicatif;
-    public int $id_section;
-    public int $questionnaire_id;
-    public int $id_questionnaire_section;
-    public int | string $ordre;
-    public ?array $configGlobale;
-    public ?array $configQuestionnaire;
     public Collection $questions;
 
-    public function __construct(
-        string $typeSection,
-        string $titre,
-        int $id_section,
-        int $id_questionnaire_section,
-        int | string $ordre,
-        ?int $questionnaireId,
-        ?string $texte_explicatif = '',
-        array $configGlobale = [],
-        array $configQuestionnaire = []
-    ) {
-        $this->typeSection = $typeSection;
-        $this->titre = $titre;
-        $this->texte_explicatif = $texte_explicatif;
-        $this->id_section = $id_section;
-        $this->id_questionnaire_section = $id_questionnaire_section;
-        $this->ordre = $ordre;
-        $this->configGlobale = $configGlobale;
-        $this->configQuestionnaire = $configQuestionnaire;
-        $this->questionnaire_id = $questionnaireId;
+    public function __construct(public string $typeSection, public ?string $titre, public int $id_section, public int $id_questionnaire_section, public int | string $ordre, public ?int $questionnaire_id, public ?string $texte_explicatif = '', public array $configGlobale = [], public array $configQuestionnaire = [])
+    {
     }
 
     public function setQuestions(Collection | array $questions): void

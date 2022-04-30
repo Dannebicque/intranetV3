@@ -23,7 +23,7 @@ class ToolBarController extends AbstractController
 {
     private MessageDestinatairePersonnelRepository | MessageDestinataireEtudiantRepository $messagesRepository;
 
-    public function __construct(private NotificationRepository $notificationRepository, private AnneeUniversitaireRepository $anneeUniversitaireRepository, private MessageDestinataireEtudiantRepository $messageDestinataireEtudiantRepository, private MessageDestinatairePersonnelRepository $messageDestinatairePersonnelRepository)
+    public function __construct(private readonly NotificationRepository $notificationRepository, private readonly AnneeUniversitaireRepository $anneeUniversitaireRepository, private readonly MessageDestinataireEtudiantRepository $messageDestinataireEtudiantRepository, private readonly MessageDestinatairePersonnelRepository $messageDestinatairePersonnelRepository)
     {
     }
 

@@ -30,9 +30,9 @@ class MyProjet
      * MyStage constructor.
      */
     public function __construct(
-        private EntityManagerInterface $entityManger,
-        private ProjetEtudiantRepository $projetEtudiantRepository,
-        private EtudiantRepository $etudiantRepository
+        private readonly EntityManagerInterface $entityManger,
+        private readonly ProjetEtudiantRepository $projetEtudiantRepository,
+        private readonly EtudiantRepository $etudiantRepository
     ) {
     }
 

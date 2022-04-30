@@ -17,14 +17,11 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class EnqueteRelance
 {
-    private EventDispatcherInterface $eventDispatcher;
-
     /**
      * EnqueteRelance constructor.
      */
-    public function __construct(EventDispatcherInterface $eventDispatcher)
+    public function __construct(private readonly EventDispatcherInterface $eventDispatcher)
     {
-        $this->eventDispatcher = $eventDispatcher;
     }
 
     public function envoyerRelance(QuestionnaireQualite $questionnaire, $reponses, array $etudiants): void

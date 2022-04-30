@@ -25,7 +25,7 @@ class PrevisionnelManager
     protected array $managers;
 
     public function __construct(
-        private EntityManagerInterface $entityManager,
+        private readonly EntityManagerInterface $entityManager,
         PrevisionnelSaeManager $previsionnelSae,
         PrevisionnelRessourceManager $previsionnelRessource,
         PrevisionnelMatiereManager $previsionnelMatiere

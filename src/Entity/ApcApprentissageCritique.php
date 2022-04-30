@@ -22,10 +22,10 @@ class ApcApprentissageCritique extends BaseEntity
 {
     use LifeCycleTrait;
 
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $libelle = null;
 
-    #[ORM\Column(type: Types::STRING, length: 20)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20)]
     private ?string $code = null;
 
     /**
@@ -40,12 +40,8 @@ class ApcApprentissageCritique extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'apprentissageCritique', targetEntity: ApcSaeApprentissageCritique::class)]
     private Collection $apcSaeApprentissageCritiques;
 
-    #[ORM\ManyToOne(targetEntity: ApcNiveau::class, inversedBy: 'apcApprentissageCritiques')]
-    private ?ApcNiveau $niveau;
-
-    public function __construct(?ApcNiveau $niveau = null)
+    public function __construct(#[ORM\ManyToOne(targetEntity: ApcNiveau::class, inversedBy: 'apcApprentissageCritiques')] private ?\App\Entity\ApcNiveau $niveau = null)
     {
-        $this->niveau = $niveau;
         $this->apcRessourceApprentissageCritiques = new ArrayCollection();
         $this->apcSaeApprentissageCritiques = new ArrayCollection();
     }

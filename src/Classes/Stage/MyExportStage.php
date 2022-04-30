@@ -21,15 +21,11 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class MyExportStage
 {
-    private MyExcelWriter $myExcelWriter;
-
     /**
      * MyExport constructor.
      */
-    public function __construct(
-        MyExcelWriter $myExcelWriter
-    ) {
-        $this->myExcelWriter = $myExcelWriter;
+    public function __construct(private readonly MyExcelWriter $myExcelWriter)
+    {
     }
 
     public function genereFichier(
@@ -186,7 +182,7 @@ class MyExportStage
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            200,
+            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="'.$stagePeriode->getLibelle().'.xlsx"',

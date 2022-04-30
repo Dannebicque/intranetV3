@@ -24,19 +24,13 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SelectChangeType extends WidgetType
 {
-    protected TranslatorInterface $translator;
-    protected EntityManagerInterface $entityManager;
     protected PropertyAccessorInterface $accessor;
-    protected RouterInterface $router;
 
     public function __construct(
-        RouterInterface $router,
-        TranslatorInterface $translator,
-        EntityManagerInterface $entityManager
+        protected RouterInterface $router,
+        protected TranslatorInterface $translator,
+        protected EntityManagerInterface $entityManager
     ) {
-        $this->entityManager = $entityManager;
-        $this->router = $router;
-        $this->translator = $translator;
         $this->accessor = PropertyAccess::createPropertyAccessor();
     }
 
@@ -45,7 +39,7 @@ class SelectChangeType extends WidgetType
         parent::buildView($view, $options);
         $view->vars['attr']['is'] = 'select-live-update';
         $view->vars['attr']['data-route'] = $this->router->generate($options['route'], $options['route_params']);
-        $view->vars['attr']['data-params'] = json_encode($options['post_params']);
+        $view->vars['attr']['data-params'] = json_encode($options['post_params'], JSON_THROW_ON_ERROR);
         $view->vars['value'] = $options['value'];
         $this->getDatas($view, $options);
     }
@@ -92,9 +86,7 @@ class SelectChangeType extends WidgetType
         parent::configureOptions($resolver);
 
         $resolver
-            ->setDefault('property_path', function (Options $options) {
-                return $options['id'];
-            })
+            ->setDefault('property_path', fn(Options $options) => $options['id'])
             ->setDefault('id', null)
             ->setDefault('value', null)
             ->setDefault('translation_domain', null)

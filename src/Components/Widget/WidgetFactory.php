@@ -14,14 +14,11 @@ use App\Components\Widget\Type\WidgetType;
 
 class WidgetFactory
 {
-    protected WidgetRegistry $registry;
-
     /**
      * WidgetFactory constructor.
      */
-    public function __construct(WidgetRegistry $registry)
+    public function __construct(protected WidgetRegistry $registry)
     {
-        $this->registry = $registry;
     }
 
     public function create(string $type = WidgetType::class, array $options = []): Widget

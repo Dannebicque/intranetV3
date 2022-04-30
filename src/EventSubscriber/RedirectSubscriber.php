@@ -16,12 +16,8 @@ use Symfony\Component\Routing\RouterInterface;
 
 class RedirectSubscriber implements EventSubscriberInterface
 {
-    private RouterInterface $router;
-
-    public function __construct(
-        RouterInterface $router
-    ) {
-        $this->router = $router;
+    public function __construct(private readonly RouterInterface $router)
+    {
     }
 
     public static function getSubscribedEvents(): array

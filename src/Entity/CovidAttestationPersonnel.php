@@ -24,22 +24,22 @@ class CovidAttestationPersonnel extends BaseEntity
 {
     use LifeCycleTrait;
 
-    #[ORM\Column(type: Types::STRING, length: 150)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 150)]
     private ?string $moyenDeplacement = null;
 
-    #[ORM\Column(type: Types::STRING, length: 20)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20)]
     private ?string $motif = null;
 
-    #[ORM\Column(type: Types::BOOLEAN, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN, nullable: true)]
     private ?bool $validationDepartement = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
     private ?DateTimeInterface $dateValidationDepartement = null;
 
-    #[ORM\Column(type: Types::BOOLEAN, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN, nullable: true)]
     private bool $validationDirection;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
     private ?DateTimeInterface $dateValidationDirection = null;
 
     #[ORM\ManyToOne(targetEntity: Diplome::class, inversedBy: 'covidAttestationPersonnels')]
@@ -51,15 +51,11 @@ class CovidAttestationPersonnel extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'attestation', targetEntity: CovidCreneauPresence::class, cascade: ['persist', 'remove'])]
     private Collection $covidCreneauPresences;
 
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
     private ?string $motifRefus = null;
 
-    #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'covidAttestationPersonnels')]
-    private Personnel $personnel;
-
-    public function __construct(Personnel $personnel)
+    public function __construct(#[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'covidAttestationPersonnels')] private Personnel $personnel)
     {
-        $this->personnel = $personnel;
         $this->covidCreneauPresences = new ArrayCollection();
     }
 

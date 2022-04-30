@@ -20,47 +20,43 @@ use Doctrine\ORM\Mapping as ORM;
 class StageAvenant extends BaseEntity
 {
     use LifeCycleTrait;
-    public const CAS1 = 1;
-    public const CAS2 = 2;
-    public const CAS3 = 3;
-    public const CAS4 = 4;
+    public final const CAS1 = 1;
+    public final const CAS2 = 2;
+    public final const CAS3 = 3;
+    public final const CAS4 = 4;
 
-    #[ORM\ManyToOne(targetEntity: StageEtudiant::class, inversedBy: 'stageAvenants')]
-    private ?StageEtudiant $stageEtudiant;
-
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private ?int $cas = 0;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?CarbonInterface $nouvelleDateFin;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE, nullable: true)]
+    private ?CarbonInterface $nouvelleDateFin = null;
 
-    #[ORM\Column(type: Types::INTEGER, nullable: true)]
-    private ?int $nouvelleDureeJour;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER, nullable: true)]
+    private ?int $nouvelleDureeJour = null;
 
     #[ORM\OneToOne(targetEntity: Adresse::class, cascade: ['persist', 'remove'])]
-    private ?Adresse $nouvelleAdresse;
+    private ?Adresse $nouvelleAdresse = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?CarbonInterface $dateDebutSuspension;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateDebutSuspension = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?CarbonInterface $dateFinSuspension;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateFinSuspension = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?CarbonInterface $dateRepriseStage;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateRepriseStage = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?CarbonInterface $dateInterruption;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateInterruption = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?CarbonInterface $dateDebutAbsence;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateDebutAbsence = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
-    private ?CarbonInterface $dateFinAbsence;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateFinAbsence = null;
 
-    public function __construct(StageEtudiant $stageEtudiant)
+    public function __construct(#[ORM\ManyToOne(targetEntity: StageEtudiant::class, inversedBy: 'stageAvenants')] private ?\App\Entity\StageEtudiant $stageEtudiant)
     {
-        $this->stageEtudiant = $stageEtudiant;
     }
 
     public function getStageEtudiant(): ?StageEtudiant

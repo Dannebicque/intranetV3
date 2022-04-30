@@ -38,6 +38,6 @@ class TypeHrsRepository extends ServiceEntityRepository
     public function findAllBuilder(): QueryBuilder
     {
         return $this->createQueryBuilder('t')
-            ->orderBy('t.libelle', 'ASC');
+            ->orderBy('t.libelle', \Doctrine\Common\Collections\Criteria::ASC);
     }
 }

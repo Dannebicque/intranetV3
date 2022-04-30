@@ -26,15 +26,15 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
     use LifeCycleTrait;
 
     #[Groups(groups: ['annee_universitaire'])]
-    #[ORM\Column(type: Types::STRING, length: 30)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 30)]
     private ?string $libelle = null;
 
     #[Groups(groups: ['annee_universitaire'])]
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private ?int $annee = null;
 
     #[Groups(groups: ['annee_universitaire'])]
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
     private ?string $commentaire = null;
 
     /**
@@ -80,7 +80,7 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
     #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: Evaluation::class)]
     private Collection $evaluations;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $active = false;
 
     /**
@@ -101,11 +101,15 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
     #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: AlternancePlanning::class)]
     private Collection $planningAlternances;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\AnneeUniversitaireSemestre>|\App\Entity\AnneeUniversitaireSemestre[]
+     */
     #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: AnneeUniversitaireSemestre::class)]
     private Collection $anneeUniversitaireSemestres;
 
     public function __construct()
     {
+        $this->departements = new \Doctrine\Common\Collections\ArrayCollection();
         $this->setAnnee((int) date('Y'));
         $this->calendriers = new ArrayCollection();
         $this->scolarites = new ArrayCollection();

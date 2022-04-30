@@ -24,13 +24,13 @@ class AbsenceEtatAppel extends BaseEntity
     use LifeCycleTrait;
     use MatiereTrait;
 
-    public const SAISIE_SANS_ABSENT = 'pas-absent';
-    public const SAISIE_AVEC_ABSENT = 'des-absent';
+    public final const SAISIE_SANS_ABSENT = 'pas-absent';
+    public final const SAISIE_AVEC_ABSENT = 'des-absent';
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE)]
     private ?CarbonInterface $date = null;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TIME_MUTABLE)]
     private ?CarbonInterface $heure = null;
 
     #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'absenceEtatAppels')]
@@ -39,7 +39,7 @@ class AbsenceEtatAppel extends BaseEntity
     #[ORM\ManyToOne(targetEntity: Groupe::class, inversedBy: 'absenceEtatAppels')]
     private ?Groupe $groupe = null;
 
-    #[ORM\Column(type: Types::STRING, length: 10)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 10)]
     private ?string $typeSaisie = null;
 
     #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'absenceEtatAppels')]

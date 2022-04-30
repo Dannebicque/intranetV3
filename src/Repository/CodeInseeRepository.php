@@ -31,7 +31,7 @@ class CodeInseeRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('c')
             ->select('c.codeInsee, c.ville')
-            ->orderBy('c.codeInsee', 'ASC')
+            ->orderBy('c.codeInsee', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

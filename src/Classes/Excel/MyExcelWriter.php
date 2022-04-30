@@ -28,22 +28,19 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class MyExcelWriter
 {
-    private Spreadsheet $spreadsheet;
+    private readonly Spreadsheet $spreadsheet;
 
-    private ?Worksheet $sheet;
-
-    private TranslatorInterface $translator;
+    private ?Worksheet $sheet = null;
 
     /**
      * MyExcelWriter constructor.
      *
      * @throws Exception
      */
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(private readonly TranslatorInterface $translator)
     {
         $this->spreadsheet = new Spreadsheet();
         $this->spreadsheet->removeSheetByIndex(0);
-        $this->translator = $translator;
     }
 
     public function getSpreadsheet(): Spreadsheet

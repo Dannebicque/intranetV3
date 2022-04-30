@@ -18,8 +18,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class Table
 {
-    public const SORT_ASCENDING = 'ASC';
-    public const SORT_DESCENDING = 'DESC';
+    public final const SORT_ASCENDING = 'ASC';
+    public final const SORT_DESCENDING = 'DESC';
 
     protected TableState $state;
 

@@ -23,8 +23,6 @@ use Symfony\Component\Routing\RouterInterface;
  */
 class MyPagination
 {
-    private RouterInterface $router;
-
     private int $nbMaxResult;
     private array $data;
     private int $page;
@@ -34,9 +32,8 @@ class MyPagination
     /**
      * MyPagination constructor.
      */
-    public function __construct(RouterInterface $router)
+    public function __construct(private readonly RouterInterface $router)
     {
-        $this->router = $router;
     }
 
     public function calculPagination(QueryBuilder $queryBuilder, array $link, int $page = 1): void

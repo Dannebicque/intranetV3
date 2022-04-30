@@ -29,18 +29,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class UpdateEdtCommand extends Command
 {
-    protected DiplomeRepository $diplomeRepository;
-    protected MyCelcat $myCelcat;
-    private CalendrierRepository $calendrierRepository;
-    private GroupeRepository $groupeRepository;
-
-    public function __construct(DiplomeRepository $diplomeRepository, MyCelcat $myCelcat, CalendrierRepository $calendrierRepository, GroupeRepository $groupeRepository)
+    public function __construct(protected DiplomeRepository $diplomeRepository, protected MyCelcat $myCelcat, private readonly CalendrierRepository $calendrierRepository, private readonly GroupeRepository $groupeRepository)
     {
         parent::__construct();
-        $this->diplomeRepository = $diplomeRepository;
-        $this->myCelcat = $myCelcat;
-        $this->calendrierRepository = $calendrierRepository;
-        $this->groupeRepository = $groupeRepository;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

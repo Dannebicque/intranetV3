@@ -49,7 +49,7 @@ class ArticleRepository extends ServiceEntityRepository
             ->andWhere('c.departement = :departement')
             ->setParameter('idType', $type)
             ->setParameter('departement', $departement->getId())
-            ->orderBy('a.updated', 'DESC');
+            ->orderBy('a.updated', \Doctrine\Common\Collections\Criteria::DESC);
 
         if (true === $isEtudiant) {
             $query->andWhere('a.typeDestinataire = :typeDestinataire')
@@ -68,7 +68,7 @@ class ArticleRepository extends ServiceEntityRepository
             ->innerJoin(ArticleCategorie::class, 'c', 'WITH', 'c.id = a.categorie')
             ->andWhere('c.departement = :departement')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('a.created', 'DESC');
+            ->orderBy('a.created', \Doctrine\Common\Collections\Criteria::DESC);
 
         if (0 !== $nbResult) {
             $q->setMaxResults($nbResult);

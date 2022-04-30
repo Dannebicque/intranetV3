@@ -19,9 +19,9 @@ class UpdateSemestreRessourceCommand extends Command
 {
 
     public function __construct(
-        private ApcRessourceRepository $apcRessourceRepository,
-        private EvaluationRepository $evaluationRepository,
-        private EntityManagerInterface $entityManager
+        private readonly ApcRessourceRepository $apcRessourceRepository,
+        private readonly EvaluationRepository $evaluationRepository,
+        private readonly EntityManagerInterface $entityManager
     ) {
         parent::__construct();
     }

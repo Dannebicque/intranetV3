@@ -32,7 +32,7 @@ use function ord;
 
 class MyEdtImport
 {
-    private ?string $nomfile;
+    private ?string $nomfile = null;
 
     private mixed $semaine;
 

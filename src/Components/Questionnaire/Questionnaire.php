@@ -30,21 +30,15 @@ class Questionnaire
     protected ?int $etudiant = null;
     private AbstractQuestionnaire $questionnaire;
     private array $options = [];
-    private QuestionnaireRegistry $questionnaireRegistry;
     private string $typeQuestionnaire;
-    private RouterInterface $router;
-    private Environment $twig;
-    private ?int $ordreSection;
+    private ?int $ordreSection = null;
 
     public function __construct(
-        Environment $twig,
-        RouterInterface $router,
-        QuestionnaireRegistry $questionnaireRegistry
+        private readonly Environment $twig,
+        private readonly RouterInterface $router,
+        private readonly QuestionnaireRegistry $questionnaireRegistry
     ) {
         $this->sections = new Sections();
-        $this->questionnaireRegistry = $questionnaireRegistry;
-        $this->router = $router;
-        $this->twig = $twig;
     }
 
     public function setIdEtudiant(?int $etudiant): void

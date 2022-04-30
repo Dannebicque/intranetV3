@@ -17,7 +17,7 @@ trait SoftDeletableTrait
     /**
      * @var CarbonInterface|null
      */
-    #[ORM\Column(type: 'datetime', nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $deletedAt = null;
 
     public function getDeletedAt(): ?CarbonInterface

@@ -78,7 +78,7 @@ class EtudiantGroupeController extends BaseController
     public function change(Request $request, EtudiantRepository $etudiantRepository, GroupeRepository $groupeRepository): Response
     {
         $cle = $request->request->get('id');
-        $t = explode('-', $cle);
+        $t = explode('-', (string) $cle);
         $id = explode('_', $t[0]);
         //récupére l'étudiant
         $etu = $etudiantRepository->find($id[1]);

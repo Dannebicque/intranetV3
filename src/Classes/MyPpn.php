@@ -23,11 +23,11 @@ class MyPpn
 
 
     public function __construct(
-        private MyUpload $myUpload,
-        private EntityManagerInterface $entityManager,
-        private UeRepository $ueRepository,
-        private PpnRepository $ppnRepository,
-        private ParcourRepository $parcourRepository
+        private readonly MyUpload $myUpload,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly UeRepository $ueRepository,
+        private readonly PpnRepository $ppnRepository,
+        private readonly ParcourRepository $parcourRepository
     ) {
     }
 

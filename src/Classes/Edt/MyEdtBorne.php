@@ -24,30 +24,13 @@ use App\Repository\SemestreRepository;
 
 class MyEdtBorne
 {
-    public array $data = [];
-
-    private CalendrierRepository $calendrierRepository;
-    private GroupeRepository $groupeRepository;
-
-    private EdtManager $edtManager;
-    private SemestreRepository $semestreRepository;
-    private EdtPlanningRepository $edtPlanningRepository; //todo: passer par EvenementCollection pour gérer tous les cas??
+    public array $data = []; //todo: passer par EvenementCollection pour gérer tous les cas??
 
     /**
      * MyEdtBorne constructor.
      */
-    public function __construct(
-        CalendrierRepository $calendrierRepository,
-        GroupeRepository $groupeRepository,
-        EdtManager $edtManager,
-        SemestreRepository $semestreRepository,
-        EdtPlanningRepository $edtPlanningRepository,
-    ) {
-        $this->calendrierRepository = $calendrierRepository;
-        $this->groupeRepository = $groupeRepository;
-        $this->edtManager = $edtManager;
-        $this->semestreRepository = $semestreRepository;
-        $this->edtPlanningRepository = $edtPlanningRepository;
+    public function __construct(private readonly CalendrierRepository $calendrierRepository, private readonly GroupeRepository $groupeRepository, private readonly EdtManager $edtManager, private readonly SemestreRepository $semestreRepository, private readonly EdtPlanningRepository $edtPlanningRepository)
+    {
     }
 
     public function init(): void

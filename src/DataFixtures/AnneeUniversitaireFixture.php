@@ -16,7 +16,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class AnneeUniversitaireFixture extends Fixture
 {
-    public const ANNEE_UNIVERSITAIRE_REFERENCE = 'annee-universitaire';
+    public final const ANNEE_UNIVERSITAIRE_REFERENCE = 'annee-universitaire';
 
     public function load(ObjectManager $manager): void
     {

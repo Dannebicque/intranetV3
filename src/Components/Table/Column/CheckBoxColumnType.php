@@ -14,14 +14,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class CheckBoxColumnType extends ColumnType
 {
-    protected TranslatorInterface $translator;
-
     /**
      * CheckBoxColumnType constructor.
      */
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(protected TranslatorInterface $translator)
     {
-        $this->translator = $translator;
     }
 
     public function render(mixed $rowData, array $options): string

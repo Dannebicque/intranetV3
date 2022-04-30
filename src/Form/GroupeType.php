@@ -27,7 +27,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class GroupeType extends AbstractType
 {
-    private ?Semestre $semestre;
+    private ?Semestre $semestre = null;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -46,9 +46,7 @@ class GroupeType extends AbstractType
                 'class' => TypeGroupe::class,
                 'label' => 'label.typeGroupe',
                 'choice_label' => 'libelle',
-                'query_builder' => function (TypeGroupeRepository $typeGroupeRepository) {
-                    return $typeGroupeRepository->findBySemestreBuilder($this->semestre);
-                },
+                'query_builder' => fn(TypeGroupeRepository $typeGroupeRepository) => $typeGroupeRepository->findBySemestreBuilder($this->semestre),
                 'required' => true,
                 'expanded' => false,
                 'multiple' => false,
@@ -57,9 +55,7 @@ class GroupeType extends AbstractType
                 'class' => Groupe::class,
                 'label' => 'label.groupe_parent',
                 'choice_label' => 'libelle',
-                'query_builder' => function (GroupeRepository $groupeRepository) {
-                    return $groupeRepository->findBySemestreBuilder($this->semestre);
-                },
+                'query_builder' => fn(GroupeRepository $groupeRepository) => $groupeRepository->findBySemestreBuilder($this->semestre),
                 'required' => false,
                 'expanded' => false,
                 'multiple' => false,
@@ -68,9 +64,7 @@ class GroupeType extends AbstractType
                 'class' => Parcour::class,
                 'label' => 'label.parcours',
                 'choice_label' => 'libelle',
-                'query_builder' => function (ParcourRepository $parcourRepository) {
-                    return $parcourRepository->findBySemestreBuilder($this->semestre);
-                },
+                'query_builder' => fn(ParcourRepository $parcourRepository) => $parcourRepository->findBySemestreBuilder($this->semestre),
                 'required' => false,
                 'expanded' => false,
                 'multiple' => false,

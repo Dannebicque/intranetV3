@@ -31,7 +31,7 @@ use UnexpectedValueException;
  */
 class Csv
 {
-    public const DELIMITER = ';';
+    public final const DELIMITER = ';';
 
     private string $file;
     private string$filename;

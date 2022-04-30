@@ -32,7 +32,7 @@ class QuestionnaireEtudiant extends BaseEntity
     #[ORM\ManyToOne(targetEntity: QuestionnaireQuizz::class)]
     private ?QuestionnaireQuizz $questionnaireQuizz = null;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $termine = false;
 
     /**
@@ -44,7 +44,7 @@ class QuestionnaireEtudiant extends BaseEntity
     ])]
     private Collection $questionnaireEtudiantReponses;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateTermine = null;
 
     public function __construct(Etudiant $etudiant, QuestionnaireQuizz | QuestionnaireQualite $questionnaire, ?string $typeQuestionnaire)

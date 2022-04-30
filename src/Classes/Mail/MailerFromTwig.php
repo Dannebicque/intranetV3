@@ -44,7 +44,7 @@ class MailerFromTwig extends BaseMailer
 
     public function setTemplate(?string $template, ?array $data): void
     {
-        if (!str_contains($template, 'html')) {
+        if (!str_contains((string) $template, 'html')) {
             $this->mail->textTemplate($template)
                 ->context($data);
         } else {

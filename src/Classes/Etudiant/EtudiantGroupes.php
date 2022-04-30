@@ -21,14 +21,11 @@ class EtudiantGroupes
 {
     private Etudiant $etudiant;
 
-    private EntityManagerInterface $entityManager;
-
     /**
      * EtudiantGroupes constructor.
      */
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(private readonly EntityManagerInterface $entityManager)
     {
-        $this->entityManager = $entityManager;
     }
 
     public function setEtudiant(Etudiant $etudiant): void

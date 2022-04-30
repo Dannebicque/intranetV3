@@ -44,27 +44,12 @@ class MyEvaluation
     protected array $statistiques = [];
     protected Collection $notes;
     protected array $classement = [];
-    protected EntityManagerInterface $entityManager;
-    private MyPDF $myPdf;
-    private MyExcelMultiExport $myExcelMultiExport;
-    private TypeMatiereManager $typeMatiereManager;
-    private EtudiantRepository $etudiantRepository;
 
     /**
      * MyEvaluation constructor.
      */
-    public function __construct(
-        TypeMatiereManager $typeMatiereManager,
-        EntityManagerInterface $entityManager,
-        MyPDF $myPdf,
-        MyExcelMultiExport $myExcelMultiExport,
-        EtudiantRepository $etudiantRepository
-    ) {
-        $this->entityManager = $entityManager;
-        $this->myPdf = $myPdf;
-        $this->myExcelMultiExport = $myExcelMultiExport;
-        $this->typeMatiereManager = $typeMatiereManager;
-        $this->etudiantRepository = $etudiantRepository;
+    public function __construct(private readonly TypeMatiereManager $typeMatiereManager, protected EntityManagerInterface $entityManager, private readonly MyPDF $myPdf, private readonly MyExcelMultiExport $myExcelMultiExport, private readonly EtudiantRepository $etudiantRepository)
+    {
     }
 
     public function setEvaluation(Evaluation $evaluation): self
@@ -340,6 +325,7 @@ class MyEvaluation
 
     private function importXlsx(string $fichier): array
     {
+        $t = [];
         $excel = IOFactory::load($fichier);
         $sheetData = $excel->getActiveSheet()->toArray(null, true, true, true);
         $data = [];
@@ -365,6 +351,7 @@ class MyEvaluation
 
     private function importCsv(string $fichier): array
     {
+        $t = [];
         $handle = fopen($fichier, 'rb');
         $data = [];
         $ordre = [];

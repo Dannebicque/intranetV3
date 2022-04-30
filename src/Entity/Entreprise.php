@@ -25,11 +25,11 @@ class Entreprise extends BaseEntity
     use LifeCycleTrait;
 
     #[Assert\Length(min: 0, max: 30, maxMessage: 'Maximum {{ limit }} caractères')]
-    #[ORM\Column(type: Types::STRING, length: 30, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 30, nullable: true)]
     private ?string $siret = null;
 
     #[Groups(groups: ['stage_entreprise_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $raisonSociale = null;
 
     #[Groups(groups: ['stage_entreprise_administration'])]

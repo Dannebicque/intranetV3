@@ -28,28 +28,11 @@ class MyCelcat
 {
     private mixed $conn;
 
-    private EntityManagerInterface $entityManger;
-
-    private ParameterBagInterface $parameterBag;
-    private CalendrierRepository $calendrierRepository;
-    private CelcatEventsRepository $celcatEventsRepository;
-    private GroupeRepository $groupeRepository;
-
     /**
      * MyCelcat constructor.
      */
-    public function __construct(
-        EntityManagerInterface $entityManger,
-        ParameterBagInterface $parameterBag,
-        GroupeRepository $groupeRepository,
-        CelcatEventsRepository $celcatEventsRepository,
-        CalendrierRepository $calendrierRepository
-    ) {
-        $this->entityManger = $entityManger;
-        $this->calendrierRepository = $calendrierRepository;
-        $this->groupeRepository = $groupeRepository;
-        $this->parameterBag = $parameterBag;
-        $this->celcatEventsRepository = $celcatEventsRepository;
+    public function __construct(private readonly EntityManagerInterface $entityManger, private readonly ParameterBagInterface $parameterBag, private readonly GroupeRepository $groupeRepository, private readonly CelcatEventsRepository $celcatEventsRepository, private readonly CalendrierRepository $calendrierRepository)
+    {
     }
 
     private function connect()
@@ -200,9 +183,10 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
         $calendriers,
         $groupes
     ): CelcatEvent {
+        $event = null;
         //Et on ecrit la nouvelle version ou la nouvelle ligne
-        $debut = explode(' ', odbc_result($result, 3));
-        $fin = explode(' ', odbc_result($result, 4));
+        $debut = explode(' ', (string) odbc_result($result, 3));
+        $fin = explode(' ', (string) odbc_result($result, 4));
         $type = mb_substr(odbc_result($result, 6), 1, -1);
         $semaines = odbc_result($result, 5);
         $lg = mb_strlen($semaines);
@@ -231,7 +215,7 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
                 $event->setLibSalle(utf8_encode(odbc_result($result, 12)));
                 $event->setDateCours($calendriers[$semaine]->addDays($jour));
                 $event->setSemestre($groupes[$codeGroupe] ?? null);
-                $dt = explode(' ', odbc_result($result, 15));
+                $dt = explode(' ', (string) odbc_result($result, 15));
                 $event->setUpdateEvent(Tools::convertDateHeureToObject($dt[0], $dt[1]));
 
                 $this->entityManger->persist($event);

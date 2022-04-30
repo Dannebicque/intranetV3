@@ -62,7 +62,7 @@ class Matiere
     /** @deprecated */
     public ?Semestre $semestre = null;
 
-    public ?Parcour $parcours;
+    public ?Parcour $parcours = null;
 
     public mixed $objet;
     private ?Collection $groupesEnfant = null;

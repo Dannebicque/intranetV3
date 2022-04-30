@@ -19,7 +19,7 @@ abstract class BaseEntity
     #[Groups(groups: ['acutalite_administration'])]
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     protected ?int $id = null;
 
     public function getId(): ?int

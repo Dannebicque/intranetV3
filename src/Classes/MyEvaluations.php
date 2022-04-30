@@ -37,23 +37,11 @@ class MyEvaluations
 
     private array $statistiques = [];
 
-    private TypeMatiereManager $typeMatiereManager;
-
-    private MyEvaluation $myEvaluation;
-
-    private EvaluationRepository $evaluationRespository;
-
     /**
      * MyEvaluations constructor.
      */
-    public function __construct(
-        MyEvaluation $myEvaluation,
-        TypeMatiereManager $typeMatiereManager,
-        EvaluationRepository $evaluationRespository
-    ) {
-        $this->typeMatiereManager = $typeMatiereManager;
-        $this->evaluationRespository = $evaluationRespository;
-        $this->myEvaluation = $myEvaluation;
+    public function __construct(private readonly MyEvaluation $myEvaluation, private readonly TypeMatiereManager $typeMatiereManager, private readonly EvaluationRepository $evaluationRespository)
+    {
     }
 
     public function setSemestre(Semestre $semestre): self

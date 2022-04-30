@@ -24,13 +24,13 @@ class QuestionnaireSection extends BaseEntity
     use LifeCycleTrait;
     use ConfigTrait;
 
-    public const DETAIL = 'DETAIL';
-    public const GROUPE = 'GROUPE';
+    public final const DETAIL = 'DETAIL';
+    public final const GROUPE = 'GROUPE';
 
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $titre = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
     private ?string $textExplicatif = null;
 
     /**
@@ -47,10 +47,10 @@ class QuestionnaireSection extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'section', targetEntity: QuestionnaireQuestionnaireSection::class)]
     private Collection $qualiteQuestionnaireSections;
 
-    #[ORM\Column(type: Types::STRING, length: 10, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 10, nullable: true)]
     private string $typeCalcul;
 
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
     private ?string $typeSection = null;
 
     public function __construct()

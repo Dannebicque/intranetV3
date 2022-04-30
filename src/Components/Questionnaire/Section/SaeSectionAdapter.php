@@ -13,11 +13,11 @@ use App\Entity\ApcSae;
 
 class SaeSectionAdapter extends AbstractSectionAdapter
 {
-    public const ENTITY = ApcSae::class;
-    public const FIELD_LIBELLE = 'libelle';
-    public const FIELD_CODE = 'codeMatiere';
-    public const FIELD_ID = 'id';
-    public const LABEL = 'sae';
+    public final const ENTITY = ApcSae::class;
+    public final const FIELD_LIBELLE = 'libelle';
+    public final const FIELD_CODE = 'codeMatiere';
+    public final const FIELD_ID = 'id';
+    public final const LABEL = 'sae';
 
     public function getData(mixed $id): ?array
     {

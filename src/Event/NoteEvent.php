@@ -14,14 +14,11 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class NoteEvent extends Event
 {
-    public const ADDED = 'note.added';
-    public const UPDATED = 'note.updated';
+    public final const ADDED = 'note.added';
+    public final const UPDATED = 'note.updated';
 
-    protected Note $note;
-
-    public function __construct(Note $note)
+    public function __construct(protected Note $note)
     {
-        $this->note = $note;
     }
 
     public function getNote(): Note

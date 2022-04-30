@@ -16,25 +16,17 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: PersonnelDepartementRepository::class)]
 class PersonnelDepartement extends BaseEntity
 {
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private int $annee;
 
-    #[ORM\Column(type: Types::STRING, length: 250)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 250)]
     private ?string $roles = '';
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $defaut = false;
 
-    #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'personnelDepartements')]
-    private Personnel $personnel;
-
-    #[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'personnelDepartements')]
-    private Departement $departement;
-
-    public function __construct(Personnel $personnel, Departement $departement)
+    public function __construct(#[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'personnelDepartements')] private Personnel $personnel, #[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'personnelDepartements')] private Departement $departement)
     {
-        $this->personnel = $personnel;
-        $this->departement = $departement;
         $this->addRole('ROLE_PERMANENT');
         $this->annee = (int) date('Y');
     }
@@ -50,7 +42,7 @@ class PersonnelDepartement extends BaseEntity
 
     public function getRoles(): ?array
     {
-        return json_decode($this->roles); //, false, 512, JSON_THROW_ON_ERROR);
+        return json_decode($this->roles, null, 512, JSON_THROW_ON_ERROR); //, false, 512, JSON_THROW_ON_ERROR);
     }
 
     public function setRoles(string $roles): self

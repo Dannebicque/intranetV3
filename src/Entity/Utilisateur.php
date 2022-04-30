@@ -28,74 +28,74 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 abstract class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface, Serializable
 {
 
-    #[ORM\Column(type: Types::STRING, length: 75)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 75)]
     protected ?string $username = null;
 
-    #[ORM\Column(type: Types::STRING, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, nullable: true)]
     protected ?string $password = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255, unique: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, unique: true)]
     protected ?string $slug = null;
 
-    #[ORM\Column(type: Types::STRING, length: 75)]
-    protected ?string $typeUser;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 75)]
+    protected ?string $typeUser = null;
 
-    #[ORM\Column(type: Types::STRING, length: 75)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 75)]
     #[Groups(['etudiants_administration', 'utilisateur'])]
     protected ?string $nom = '';
 
-    #[ORM\Column(type: Types::STRING, length: 75)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 75)]
     #[Groups(['etudiants_administration', 'utilisateur'])]
     protected ?string $prenom = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255, unique: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, unique: true)]
     #[Groups(['etudiants_administration', 'utilisateur'])]
     protected ?string $mailUniv = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
     protected ?string $siteUniv = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
     protected ?string $mailPerso = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
     protected ?string $sitePerso = null;
 
-    #[ORM\Column(name: 'civilite', type: Types::STRING, length: 3, options: ['default' => Constantes::CIVILITE_HOMME])]
+    #[ORM\Column(name: 'civilite', type: \Doctrine\DBAL\Types\Types::STRING, length: 3, options: ['default' => Constantes::CIVILITE_HOMME])]
     #[Groups(['etudiants_administration', 'personnel:read'])]
     protected string $civilite = Constantes::CIVILITE_HOMME;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE, nullable: true)]
     protected ?CarbonInterface $dateNaissance = null;
 
-    #[ORM\Column(type: Types::STRING, length: 20, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20, nullable: true)]
     #[Groups(['etudiants_administration'])]
     protected ?string $tel1 = null;
 
-    #[ORM\Column(type: Types::STRING, length: 20, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20, nullable: true)]
     #[Groups(['etudiants_administration'])]
     protected ?string $tel2 = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
     protected ?string $remarque = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
     protected ?string $signature = null;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     protected bool $visible = true;
 
     #[ORM\OneToOne(targetEntity: Adresse::class, cascade: ['persist'])]
     #[Groups(['etudiants_administration'])]
     private ?Adresse $adresse = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT)]
     private string $roles = '';
 
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
     private ?string $resetToken = null;
 
-    #[ORM\Column(type: Types::STRING, length: 150, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 150, nullable: true)]
     private ?string $lieuNaissance = null;
 
     public function __construct()

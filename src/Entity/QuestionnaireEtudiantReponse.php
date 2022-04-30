@@ -21,13 +21,13 @@ class QuestionnaireEtudiantReponse extends BaseEntity
 {
     use LifeCycleTrait;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
     private ?string $valeur = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
     private ?string $cleReponse = null;
 
-    #[ORM\Column(type: Types::STRING, length: 100)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 100)]
     private ?string $cleQuestion = null;
 
     #[ORM\ManyToOne(targetEntity: QuestionnaireEtudiant::class, inversedBy: 'questionnaireEtudiantReponses')]
@@ -88,7 +88,7 @@ class QuestionnaireEtudiantReponse extends BaseEntity
 
     public function getIdReponse(): string
     {
-        $t = explode('_', $this->cleReponse);
+        $t = explode('_', (string) $this->cleReponse);
 
         return $t[count($t) - 1];
     }

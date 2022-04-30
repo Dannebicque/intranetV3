@@ -16,15 +16,8 @@ use Twig\TwigFunction;
 
 class QuestionnaireExtension extends AbstractExtension
 {
-    private TypeQuestionRenderer $typeQuestionRenderer;
-    private QuestionnaireRenderer $questionnaireRenderer;
-
-    public function __construct(
-        TypeQuestionRenderer $typeQuestionRenderer,
-        QuestionnaireRenderer $questionnaireRenderer
-    ) {
-        $this->typeQuestionRenderer = $typeQuestionRenderer;
-        $this->questionnaireRenderer = $questionnaireRenderer;
+    public function __construct(private readonly TypeQuestionRenderer $typeQuestionRenderer, private readonly QuestionnaireRenderer $questionnaireRenderer)
+    {
     }
 
     public function getFunctions(): array

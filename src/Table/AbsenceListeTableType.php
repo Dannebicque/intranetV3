@@ -34,8 +34,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AbsenceListeTableType extends TableType
 {
-    private ?Semestre $semestre;
-    private ?AnneeUniversitaire $anneeUniversitaire;
+    private ?Semestre $semestre = null;
+    private ?AnneeUniversitaire $anneeUniversitaire = null;
 
     public function __construct(
         private readonly TypeMatiereManager $typeMatiereManager,

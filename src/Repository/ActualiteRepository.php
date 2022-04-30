@@ -39,7 +39,7 @@ class ActualiteRepository extends ServiceEntityRepository
         $q = $this->createQueryBuilder('a')
             ->andWhere('a.departement = :departement')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('a.created', 'DESC');
+            ->orderBy('a.created', \Doctrine\Common\Collections\Criteria::DESC);
 
         if ($nbResult > 0) {
             $q->setMaxResults($nbResult);

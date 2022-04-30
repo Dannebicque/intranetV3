@@ -40,7 +40,7 @@ class PersonnelDepartementRepository extends ServiceEntityRepository
             ->innerJoin(Departement::class, 'm', 'WITH', 'f.departement = m.id')
             ->where('f.personnel = :personnel')
             ->setParameter('personnel', $user)
-            ->orderBy('m.libelle', 'DESC')
+            ->orderBy('m.libelle', \Doctrine\Common\Collections\Criteria::DESC)
             ->getQuery()
             ->getResult();
     }
@@ -88,8 +88,8 @@ class PersonnelDepartementRepository extends ServiceEntityRepository
             ->innerJoin(Personnel::class, 'p', 'WITH', 'f.personnel = p.id')
             ->where('f.departement = :departement')
             ->setParameter('departement', $departement)
-            ->orderBy('p.nom', 'asc')
-            ->addOrderBy('p.prenom', 'asc')
+            ->orderBy('p.nom', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('p.prenom', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -105,8 +105,8 @@ class PersonnelDepartementRepository extends ServiceEntityRepository
             ->andWhere('d.departement = :departement')
             ->setParameter('needle', '%'.$needle.'%')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('p.nom', 'ASC')
-            ->addOrderBy('p.prenom', 'ASC')
+            ->orderBy('p.nom', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('p.prenom', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
 

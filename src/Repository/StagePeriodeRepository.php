@@ -48,8 +48,8 @@ class StagePeriodeRepository extends ServiceEntityRepository
             ->andWhere('p.anneeUniversitaire = :annee')
             ->setParameter('annee', $anneeUniversitaire->getId())
             ->setParameter('diplome', $diplome->getId())
-            ->orderBy('p.anneeUniversitaire', 'DESC')
-            ->addOrderBy('p.numeroPeriode', 'ASC');
+            ->orderBy('p.anneeUniversitaire', \Doctrine\Common\Collections\Criteria::DESC)
+            ->addOrderBy('p.numeroPeriode', \Doctrine\Common\Collections\Criteria::ASC);
     }
 
     public function findStageEtudiant(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): array
@@ -67,7 +67,7 @@ class StagePeriodeRepository extends ServiceEntityRepository
             ->setParameter('semestreCourant', $semestre->getId())
             ->setParameter('annee', $anneeUniversitaire->getId());
 
-        $query->orderBy('s.numeroPeriode', 'ASC');
+        $query->orderBy('s.numeroPeriode', \Doctrine\Common\Collections\Criteria::ASC);
 
         return $query->getQuery()->getResult();
     }
@@ -80,8 +80,8 @@ class StagePeriodeRepository extends ServiceEntityRepository
             ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
             ->where('d.departement = :departement')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('p.anneeUniversitaire', 'DESC')
-            ->orderBy('p.numeroPeriode', 'ASC');
+            ->orderBy('p.anneeUniversitaire', \Doctrine\Common\Collections\Criteria::DESC)
+            ->orderBy('p.numeroPeriode', \Doctrine\Common\Collections\Criteria::ASC);
 
         return $query->getQuery()->getResult();
     }
@@ -97,7 +97,7 @@ class StagePeriodeRepository extends ServiceEntityRepository
 
         $query->setParameter('departement', $departement->getId())
             ->setParameter('annee', $annee)
-            ->orderBy('p.numeroPeriode', 'ASC');
+            ->orderBy('p.numeroPeriode', \Doctrine\Common\Collections\Criteria::ASC);
 
         return $query;
     }

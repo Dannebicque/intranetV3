@@ -24,11 +24,11 @@ use Doctrine\ORM\EntityManagerInterface;
 class PrevisionnelImport
 {
     public function __construct(
-        private TypeMatiereManager $typeMatiereManager,
-        private PrevisionnelManager $previsionnelManager,
-        private EntityManagerInterface $entityManager,
-        private PersonnelRepository $personnelRepository,
-        private MyUpload $myUpload
+        private readonly TypeMatiereManager $typeMatiereManager,
+        private readonly PrevisionnelManager $previsionnelManager,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly PersonnelRepository $personnelRepository,
+        private readonly MyUpload $myUpload
     ) {
     }
 

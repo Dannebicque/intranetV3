@@ -17,18 +17,8 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class QuestionnaireSectionQuestionManage
 {
-    protected QuestionnaireSectionQuestionRepository $questionnaireSectionQuestionRepository;
-    protected QuestionnaireQuestionRepository $questionnaireQuestionRepository;
-    protected EntityManagerInterface $entityManager;
-
-    public function __construct(
-        QuestionnaireSectionQuestionRepository $questionnaireSectionQuestionRepository,
-        QuestionnaireQuestionRepository $questionnaireQuestionRepository,
-        EntityManagerInterface $entityManager
-    ) {
-        $this->questionnaireSectionQuestionRepository = $questionnaireSectionQuestionRepository;
-        $this->questionnaireQuestionRepository = $questionnaireQuestionRepository;
-        $this->entityManager = $entityManager;
+    public function __construct(protected QuestionnaireSectionQuestionRepository $questionnaireSectionQuestionRepository, protected QuestionnaireQuestionRepository $questionnaireQuestionRepository, protected EntityManagerInterface $entityManager)
+    {
     }
 
     public function updateSection(

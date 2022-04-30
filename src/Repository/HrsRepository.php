@@ -41,8 +41,8 @@ class HrsRepository extends ServiceEntityRepository
             ->addSelect('p')
             ->where('h.personnel = :user')
             ->setParameter('user', $personnel)
-            ->orderBy('h.typeHrs', 'ASC')
-            ->orderBy('h.semestre', 'ASC');
+            ->orderBy('h.typeHrs', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('h.semestre', \Doctrine\Common\Collections\Criteria::ASC);
 
         if (0 !== $annee) {
             $query->andWhere('h.annee = :annee')
@@ -72,8 +72,8 @@ class HrsRepository extends ServiceEntityRepository
             ->andWhere('h.annee = :annee')
             ->setParameter('user', $personnel)
             ->setParameter('annee', $annee)
-            ->orderBy('h.typeHrs', 'ASC')
-            ->orderBy('h.semestre', 'ASC')
+            ->orderBy('h.typeHrs', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('h.semestre', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -89,8 +89,8 @@ class HrsRepository extends ServiceEntityRepository
             ->andWhere('h.annee = :annee')
             ->setParameter('departement', $departement->getId())
             ->setParameter('annee', $annee)
-            ->orderBy('h.typeHrs', 'ASC')
-            ->orderBy('h.semestre', 'ASC')
+            ->orderBy('h.typeHrs', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('h.semestre', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

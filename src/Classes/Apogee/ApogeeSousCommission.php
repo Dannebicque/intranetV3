@@ -226,7 +226,7 @@ class ApogeeSousCommission extends Apogee
             function () use ($objWriter) {
                 $objWriter->save('php://output');
             },
-            200,
+            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
             [
                 'Content-Type' => 'text/plain',
                 'Content-Disposition' => 'attachment;filename="'.$nomfichier.'.txt"',

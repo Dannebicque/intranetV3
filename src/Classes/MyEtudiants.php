@@ -23,20 +23,11 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class MyEtudiants
 {
-    private EntityManagerInterface $entityManager;
-    private MyUpload $myUpload;
-    private BacRepository $bacRepository;
-
     /**
      * MyEtudiants constructor.
      */
-    public function __construct(EntityManagerInterface $entityManager,
-        BacRepository $bacRepository,
-        MyUpload $myUpload)
+    public function __construct(private readonly EntityManagerInterface $entityManager, private readonly BacRepository $bacRepository, private readonly MyUpload $myUpload)
     {
-        $this->entityManager = $entityManager;
-        $this->myUpload = $myUpload;
-        $this->bacRepository = $bacRepository;
     }
 
     /**

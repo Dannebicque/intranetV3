@@ -14,22 +14,13 @@ use Symfony\Component\Form\FormInterface;
 
 class Toolbar
 {
-    protected FormInterface $form;
-
-    protected Widget $widget;
-
-    protected array $options;
-
     protected array $formData = [];
 
     /**
      * Toolbar constructor.
      */
-    public function __construct(FormInterface $form, Widget $widget, array $options)
+    public function __construct(protected FormInterface $form, protected Widget $widget, protected array $options)
     {
-        $this->form = $form;
-        $this->widget = $widget;
-        $this->options = $options;
     }
 
     public function getForm(): FormInterface

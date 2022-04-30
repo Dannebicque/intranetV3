@@ -15,11 +15,8 @@ use App\Repository\HrsRepository;
 
 class HrsManager
 {
-    protected HrsRepository $hrsRepository;
-
-    public function __construct(HrsRepository $hrsRepository)
+    public function __construct(protected HrsRepository $hrsRepository)
     {
-        $this->hrsRepository = $hrsRepository;
     }
 
     public function getHrsPersonnelDepartementAnnee(

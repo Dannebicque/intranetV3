@@ -19,18 +19,8 @@ class ApcRessourceApprentissageCritique extends BaseEntity
 {
     use LifeCycleTrait;
 
-    #[ORM\ManyToOne(targetEntity: ApcRessource::class, inversedBy: 'apcRessourceApprentissageCritiques')]
-    private ?ApcRessource $ressource;
-
-    #[ORM\ManyToOne(targetEntity: ApcApprentissageCritique::class, inversedBy: 'apcRessourceApprentissageCritiques')]
-    private ?ApcApprentissageCritique $apprentissageCritique;
-
-    public function __construct(
-        ?ApcRessource $ressource,
-        ?ApcApprentissageCritique $apprentissageCritique
-    ) {
-        $this->ressource = $ressource;
-        $this->apprentissageCritique = $apprentissageCritique;
+    public function __construct(#[ORM\ManyToOne(targetEntity: ApcRessource::class, inversedBy: 'apcRessourceApprentissageCritiques')] private ?\App\Entity\ApcRessource $ressource, #[ORM\ManyToOne(targetEntity: ApcApprentissageCritique::class, inversedBy: 'apcRessourceApprentissageCritiques')] private ?\App\Entity\ApcApprentissageCritique $apprentissageCritique)
+    {
     }
 
     public function getRessource(): ?ApcRessource

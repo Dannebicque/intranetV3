@@ -29,22 +29,14 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class UpdateVilleCommand extends Command
 {
-    private EtudiantRepository $etudiantRepository;
-    private EntityManagerInterface $entityManager;
-    private CodeInseeRepository $codeInseeRepository;
-
     /**
      * ClearOldNotificationCommand constructor.
      */
     public function __construct(
-        EntityManagerInterface $entityManager,
-        EtudiantRepository $etudiantRepository,
-        CodeInseeRepository $codeInseeRepository
+        private readonly EntityManagerInterface $entityManager,
+        private readonly EtudiantRepository $etudiantRepository,
+        private readonly CodeInseeRepository $codeInseeRepository
     ) {
-        $this->etudiantRepository = $etudiantRepository;
-        $this->codeInseeRepository = $codeInseeRepository;
-        $this->entityManager = $entityManager;
-
         parent::__construct();
     }
 

@@ -48,8 +48,8 @@ class RddDiplomeRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('r')
             ->join(Etudiant::class, 'e', 'WITH', 'r.numEtudiant = e.numEtudiant')
             ->where('r.enqueteAFaire = true')
-            ->orderBy('e.nom', 'ASC')
-            ->addOrderBy('e.prenom', 'ASC')
+            ->orderBy('e.nom', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('e.prenom', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

@@ -22,14 +22,14 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class MyExport
 {
-    public const ONLY_DATE = 'date';
-    public const ONLY_HEURE = 'heure';
+    public final const ONLY_DATE = 'date';
+    public final const ONLY_HEURE = 'heure';
     private array $options = [];
 
     public function __construct(
-        private MyPDF $myPDF,
-        private MySerializer $serializer,
-        private MyExcelMultiExport $excel
+        private readonly MyPDF $myPDF,
+        private readonly MySerializer $serializer,
+        private readonly MyExcelMultiExport $excel
     ) {
     }
 
@@ -44,7 +44,7 @@ class MyExport
         $dataArray = [];
         //serialize les data
         $dataJson = $this->serializer->serialize($data, $modele);
-        $tabData = json_decode($dataJson, true);
+        $tabData = json_decode($dataJson, true, 512, JSON_THROW_ON_ERROR);
         //header
         $i = 1;
         $ligne = 1;
@@ -167,11 +167,11 @@ class MyExport
         if (array_key_exists($key, $this->options)) {
             switch ($this->options[$key]) {
                 case self::ONLY_DATE:
-                    $t = explode(' ', $value);
+                    $t = explode(' ', (string) $value);
 
                     return $t[0];
                 case self::ONLY_HEURE:
-                    $t = explode(' ', $value);
+                    $t = explode(' ', (string) $value);
 
                     return 2 === count($t) ? $t[1] : 'err';
             }

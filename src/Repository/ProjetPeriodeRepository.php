@@ -41,8 +41,8 @@ class ProjetPeriodeRepository extends ServiceEntityRepository
             ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
             ->where('d.departement = :departement')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('p.anneeUniversitaire', 'DESC')
-            ->orderBy('p.libelle', 'ASC');
+            ->orderBy('p.anneeUniversitaire', \Doctrine\Common\Collections\Criteria::DESC)
+            ->orderBy('p.libelle', \Doctrine\Common\Collections\Criteria::ASC);
 
         return $query->getQuery()->getResult();
     }
@@ -62,8 +62,8 @@ class ProjetPeriodeRepository extends ServiceEntityRepository
             ->andWhere('p.anneeUniversitaire = :annee')
             ->setParameter('annee', $anneeUniversitaire->getId())
             ->setParameter('diplome', $diplome->getId())
-            ->orderBy('p.anneeUniversitaire', 'DESC')
-            ->addOrderBy('p.libelle', 'ASC');
+            ->orderBy('p.anneeUniversitaire', \Doctrine\Common\Collections\Criteria::DESC)
+            ->addOrderBy('p.libelle', \Doctrine\Common\Collections\Criteria::ASC);
     }
 
     public function findBySemestre(Semestre $semestre): array
@@ -71,7 +71,7 @@ class ProjetPeriodeRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->where('p.semestre = :semestre')
             ->setParameter('semestre', $semestre->getId())
-            ->orderBy('p.libelle', 'ASC')
+            ->orderBy('p.libelle', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

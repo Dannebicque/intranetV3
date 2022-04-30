@@ -18,26 +18,10 @@ use function array_key_exists;
 
 class ComparePrevisonnelMatiere extends ComparePrevisionnel
 {
-    private EdtPlanningRepository $edtPlanningRepository;
-
-    private TypeMatiereManager $typeMatiereManager;
-
-    private CelcatEventsRepository $celcatEventsRepository;
-
-    private PrevisionnelManager $previsionnelManager;
-
     private array $matieres;
 
-    public function __construct(
-        EdtPlanningRepository $edtPlanningRepository,
-        CelcatEventsRepository $celcatEventsRepository,
-        TypeMatiereManager $typeMatiereManager,
-        PrevisionnelManager $previsionnelManager
-    ) {
-        $this->edtPlanningRepository = $edtPlanningRepository;
-        $this->celcatEventsRepository = $celcatEventsRepository;
-        $this->typeMatiereManager = $typeMatiereManager;
-        $this->previsionnelManager = $previsionnelManager;
+    public function __construct(private readonly EdtPlanningRepository $edtPlanningRepository, private readonly CelcatEventsRepository $celcatEventsRepository, private readonly TypeMatiereManager $typeMatiereManager, private readonly PrevisionnelManager $previsionnelManager)
+    {
     }
 
     public function compareEdtPreviMatiere(Departement $departement, int $annee, string $source): array

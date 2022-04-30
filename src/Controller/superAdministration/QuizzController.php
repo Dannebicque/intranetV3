@@ -23,7 +23,7 @@ class QuizzController extends AbstractController
     /**
      * EnqueteController constructor.
      */
-    public function __construct(private EntityManagerInterface $entityManager)
+    public function __construct(private readonly EntityManagerInterface $entityManager)
     {
     }
 

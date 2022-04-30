@@ -22,18 +22,8 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class SaeManager extends AbstractMatiereManager implements MatiereInterface
 {
-    private ApcSaeRepository $apcSaeRepository;
-    private MatiereSaeAdapter $saeAdapter;
-    private EntityManagerInterface $entityManager;
-
-    public function __construct(
-        EntityManagerInterface $entityManager,
-        ApcSaeRepository $apcSaeRepository,
-        MatiereSaeAdapter $saeAdapter
-    ) {
-        $this->entityManager = $entityManager;
-        $this->apcSaeRepository = $apcSaeRepository;
-        $this->saeAdapter = $saeAdapter;
+    public function __construct(private readonly EntityManagerInterface $entityManager, private readonly ApcSaeRepository $apcSaeRepository, private readonly MatiereSaeAdapter $saeAdapter)
+    {
     }
 
     public function find(int | string $id): ?Matiere

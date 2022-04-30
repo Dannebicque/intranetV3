@@ -19,12 +19,10 @@ use Twig\TwigFilter;
  */
 class PathExtension extends AbstractExtension
 {
-    protected Security $security;
     protected Configuration $config;
 
-    public function __construct(Security $security)
+    public function __construct(protected Security $security)
     {
-        $this->security = $security;
     }
 
     public function getFilters(): array

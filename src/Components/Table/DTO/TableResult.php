@@ -11,17 +11,14 @@ namespace App\Components\Table\DTO;
 
 class TableResult
 {
-    protected iterable $data;
-
     protected int $count; // The count total of data without paging
     protected int $nbResults;
 
     /**
      * DataTableResult constructor.
      */
-    public function __construct(iterable $data = [], ?int $count = null)
+    public function __construct(protected iterable $data = [], ?int $count = null)
     {
-        $this->data = $data;
         $this->nbResults = count($data);
         $this->count = $count ?? count($data);
     }

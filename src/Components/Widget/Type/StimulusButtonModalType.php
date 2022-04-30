@@ -16,14 +16,11 @@ use Symfony\Component\Routing\RouterInterface;
 
 class StimulusButtonModalType extends WidgetType
 {
-    protected RouterInterface $router;
-
     /**
      * LinkType constructor.
      */
-    public function __construct(RouterInterface $router)
+    public function __construct(protected RouterInterface $router)
     {
-        $this->router = $router;
     }
 
     public function buildView(WidgetView $view, array $options): void

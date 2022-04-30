@@ -26,16 +26,16 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
 {
     use LifeCycleTrait;
 
-    public const SOURCE = 'ressource';
+    public final const SOURCE = 'ressource';
 
     #[Deprecated(reason: 'Une ressource peut être commune  à plusieurs parcours. Le plus simple serait d\'avoir une gestion manytomany')]
     #[ORM\ManyToOne(targetEntity: Semestre::class, fetch: 'EAGER', inversedBy: 'apcRessources')]
     private ?Semestre $semestre = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
     private ?string $preRequis = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
     private ?string $motsCles = null;
 
     /**
@@ -56,12 +56,18 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
     #[ORM\OneToMany(mappedBy: 'ressource', targetEntity: ApcSaeRessource::class, cascade: ['persist', 'remove'])]
     private Collection $apcSaeRessources;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private ?bool $ressourceParent = false;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcRessourceEnfants>|\App\Entity\ApcRessourceEnfants[]
+     */
     #[ORM\OneToMany(mappedBy: 'apcRessourceParent', targetEntity: ApcRessourceEnfants::class, cascade: ['persist', 'remove'])]
     private Collection $apcRessourceParentEnfants;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcRessourceEnfants>|\App\Entity\ApcRessourceEnfants[]
+     */
     #[ORM\OneToMany(mappedBy: 'apcRessourceEnfant', targetEntity: ApcRessourceEnfants::class, cascade: ['persist', 'remove'])]
     private Collection $apcRessourceEnfantEnfants;
 

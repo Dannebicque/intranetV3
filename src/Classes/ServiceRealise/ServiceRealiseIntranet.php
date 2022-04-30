@@ -21,11 +21,8 @@ use App\Repository\EdtPlanningRepository;
 
 class ServiceRealiseIntranet implements ServiceRealiseInterface
 {
-    private EdtPlanningRepository $edtPlanningRepository;
-
-    public function __construct(EdtPlanningRepository $edtPlanningRepository)
+    public function __construct(private readonly EdtPlanningRepository $edtPlanningRepository)
     {
-        $this->edtPlanningRepository = $edtPlanningRepository;
     }
 
     public function getServiceRealiseParMatiere(int $idMatiere, string $type): array
@@ -92,6 +89,7 @@ class ServiceRealiseIntranet implements ServiceRealiseInterface
 
     public function statistiques(array $chronologique): array
     {
+        $tab = [];
         $tab['nbCM'] = 0;
         $tab['nbTD'] = 0;
         $tab['nbTP'] = 0;

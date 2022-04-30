@@ -34,7 +34,7 @@ class CovidAttestationPersonnelRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->where('p.personnel = :personnel')
             ->setParameter('personnel', $personnel->getId())
-            ->orderBy('p.created', 'DESC')
+            ->orderBy('p.created', \Doctrine\Common\Collections\Criteria::DESC)
             ->getQuery()
             ->getResult();
     }
@@ -45,7 +45,7 @@ class CovidAttestationPersonnelRepository extends ServiceEntityRepository
             ->innerJoin(Diplome::class, 'd', 'WITH', 'p.diplome=d.id')
             ->where('d.departement = :departement')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('p.created', 'DESC')
+            ->orderBy('p.created', \Doctrine\Common\Collections\Criteria::DESC)
             ->getQuery()
             ->getResult();
     }

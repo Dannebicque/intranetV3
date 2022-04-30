@@ -24,9 +24,7 @@ class DiplomeEntityType extends EntityType
             'choice_label' => 'displayCourt',
             'required' => false,
             'placeholder' => 'filtre.diplome',
-            'query_builder' => function (DiplomeRepository $er) {
-                return $er->findAllBuilder();
-            },
+            'query_builder' => fn(DiplomeRepository $er) => $er->findAllBuilder(),
             'translation_domain' => 'table',
         ]);
     }

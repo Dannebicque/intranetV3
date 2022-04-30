@@ -23,11 +23,8 @@ class PrevisionnelExport
 {
     private int $ligne = 0;
 
-    private MyExcelWriter $myExcelWriter;
-
-    public function __construct(MyExcelWriter $myExcelWriter)
+    public function __construct(private readonly MyExcelWriter $myExcelWriter)
     {
-        $this->myExcelWriter = $myExcelWriter;
     }
 
     public function exportOmegaDepartement(
@@ -60,7 +57,7 @@ class PrevisionnelExport
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            200,
+            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="export-omega'.$departement->getLibelle().'.xlsx"',

@@ -9,12 +9,13 @@
 
 namespace App\Classes;
 
+use Bugsnag\Client;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 class Version
 {
-    private string $dir;
-    private ?object $bugsnag;
+    private readonly string $dir;
+    private readonly ?object $bugsnag;
 
     public function __construct(KernelInterface $kernel)
     {
@@ -25,7 +26,7 @@ class Version
     public function version(): string
     {
         $filename = $this->dir.'/package.json';
-        $composerData = json_decode(file_get_contents($filename), true);
+        $composerData = json_decode(file_get_contents($filename), true, 512, JSON_THROW_ON_ERROR);
         $version = $composerData['version'];
         $this->bugsnag->setAppVersion($version);
 

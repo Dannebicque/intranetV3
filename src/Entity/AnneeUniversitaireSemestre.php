@@ -9,15 +9,15 @@ use Doctrine\ORM\Mapping as ORM;
 class AnneeUniversitaireSemestre extends BaseEntity
 {
     #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class, inversedBy: 'anneeUniversitaireSemestres')]
-    private ?AnneeUniversitaire $anneeUniversitaire;
+    private ?AnneeUniversitaire $anneeUniversitaire = null;
 
     #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'anneeUniversitaireSemestres')]
-    private ?Semestre $semestre;
+    private ?Semestre $semestre = null;
 
     #[ORM\ManyToOne(targetEntity: Ppn::class, inversedBy: 'anneeUniversitaireSemestres')]
-    private ?Ppn $ppn;
+    private ?Ppn $ppn = null;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
     private ?string $commentaire = '';
 
     public function getId(): ?int

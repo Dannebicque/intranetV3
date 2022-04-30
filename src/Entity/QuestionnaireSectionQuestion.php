@@ -26,10 +26,10 @@ class QuestionnaireSectionQuestion extends BaseEntity
     #[ORM\ManyToOne(targetEntity: QuestionnaireQuestion::class, inversedBy: 'qualiteSectionQuestions')]
     private ?QuestionnaireQuestion $question = null;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private ?int $ordre = null;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $enabled = true;
 
     public function getSection(): ?QuestionnaireSection

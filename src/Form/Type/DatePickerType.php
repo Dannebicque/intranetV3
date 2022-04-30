@@ -39,7 +39,7 @@ class DatePickerType extends AbstractType
             'maxDate' => $this->toDate($options['max'], $options['format']),
         ];
 
-        $view->vars['attr']['data-options'] = json_encode($jsOptions);
+        $view->vars['attr']['data-options'] = json_encode($jsOptions, JSON_THROW_ON_ERROR);
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -81,9 +81,7 @@ class DatePickerType extends AbstractType
             ->setDefault('allow_input', true)
             ->setDefault('input_prefix_text', '<i class="fas fa-calendar-day"></i>')
             ->setAllowedTypes('allow_input', 'bool')
-            ->setDefault('format', function (Options $options) {
-                return $options['enable_time'] ? 'd/m/Y H:i' : 'd/m/Y';
-            })
+            ->setDefault('format', fn(Options $options) => $options['enable_time'] ? 'd/m/Y H:i' : 'd/m/Y')
             ->setAllowedTypes('format', 'string');
     }
 

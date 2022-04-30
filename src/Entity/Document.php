@@ -36,7 +36,7 @@ class Document extends BaseEntity
     use LifeCycleTrait;
     use TypeDestinataireTrait;
 
-    public const TYPE_DOCUMENT = [
+    public final const TYPE_DOCUMENT = [
         'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'Prés. PPT',
         'application/pdf' => 'PDF',
         'image/jpeg' => 'Image (jpeg)',
@@ -47,10 +47,10 @@ class Document extends BaseEntity
         'application/vnd.oasis.opendocument.text' => 'Doc. ODT',
     ];
 
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private ?float $taille = null;
 
-    #[ORM\Column(type: Types::STRING, length: 100)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 100)]
     private ?string $typeFichier = null;
 
     #[Groups(groups: ['document_administration'])]
@@ -58,22 +58,22 @@ class Document extends BaseEntity
     private ?TypeDocument $typeDocument = null;
 
     #[Groups(groups: ['document_administration'])]
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
     private ?string $description = null;
 
     #[Groups(groups: ['document_administration'])]
     #[Assert\Length(min: 5, max: 100, minMessage: 'Le titre du document doit contenir au minimum {{ limit }} caractères', maxMessage: 'Le titre du document doit contenir au maximum {{ limit }} caractères')]
-    #[ORM\Column(type: Types::STRING, length: 100)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 100)]
     private ?string $libelle = null;
 
-    #[ORM\Column(type: Types::STRING, length: 50)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50)]
     private ?string $documentName = '';
 
     /**
      * @Vich\UploadableField(mapping="documentFile", fileNameProperty="documentName", size="taille",
      *                                               mimeType="typeFichier")
      */
-    private ?File $documentFile;
+    private ?File $documentFile = null;
 
     #[Groups(groups: ['document_administration'])]
     #[ORM\ManyToMany(targetEntity: Semestre::class, inversedBy: 'documents')]

@@ -26,18 +26,11 @@ use Symfony\Component\Routing\RouterInterface;
  */
 class RegistrationNotifySubscriber implements EventSubscriberInterface
 {
-    private EntityManagerInterface $entityManager;
-    private RouterInterface $router;
-
     /**
      * RegistrationNotifySubscriber constructor.
      */
-    public function __construct(
-        EntityManagerInterface $entityManager,
-        RouterInterface $router
-    ) {
-        $this->entityManager = $entityManager;
-        $this->router = $router;
+    public function __construct(private readonly EntityManagerInterface $entityManager, private readonly RouterInterface $router)
+    {
     }
 
     public static function getSubscribedEvents(): array

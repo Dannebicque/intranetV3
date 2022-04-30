@@ -34,16 +34,10 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class PersonnelDepartementTableType extends TableType
 {
-    private ?Departement $departement;
-    private RouterInterface $router;
-    private CsrfTokenManagerInterface $csrfToken;
+    private ?Departement $departement = null;
 
-    public function __construct(
-        RouterInterface $router,
-        CsrfTokenManagerInterface $csrfToken
-    ) {
-        $this->csrfToken = $csrfToken;
-        $this->router = $router;
+    public function __construct(private readonly RouterInterface $router, private readonly CsrfTokenManagerInterface $csrfToken)
+    {
     }
 
     public function buildTable(TableBuilder $builder, array $options): void
@@ -79,9 +73,7 @@ class PersonnelDepartementTableType extends TableType
         $builder->addColumn('contact_personnel', ColumnType::class,
             [
                 'label' => 'table.contact_personnel',
-                'render' => function (Personnel $personnel) {
-                    return Personnel::VACATAIRE === $personnel->getType() ? $personnel->getEntreprise() : $personnel->getPosteInterne();
-                },
+                'render' => fn(Personnel $personnel) => Personnel::VACATAIRE === $personnel->getType() ? $personnel->getEntreprise() : $personnel->getPosteInterne(),
             ]);
         $builder->addColumn('numero_harpege', PropertyColumnType::class,
             ['label' => 'table.numero_harpege']);

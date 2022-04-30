@@ -23,10 +23,10 @@ class Ppn extends BaseEntity
 {
     use LifeCycleTrait;
 
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private string $libelle;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private int $annee;
 
     /**
@@ -45,9 +45,15 @@ class Ppn extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'ppnActif', targetEntity: Semestre::class)]
     private Collection $semestres;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcCompetence>|\App\Entity\ApcCompetence[]
+     */
     #[ORM\OneToMany(mappedBy: 'ppn', targetEntity: ApcCompetence::class)]
     private Collection $apcCompetences;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\AnneeUniversitaireSemestre>|\App\Entity\AnneeUniversitaireSemestre[]
+     */
     #[ORM\OneToMany(mappedBy: 'ppn', targetEntity: AnneeUniversitaireSemestre::class)]
     private Collection $anneeUniversitaireSemestres;
 

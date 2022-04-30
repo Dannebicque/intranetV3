@@ -24,7 +24,7 @@ abstract class AbstractQuestion
 
     public string $libelle;
     public ?array $valeurs = null;
-    public ?string $help;
+    public ?string $help = null;
     public int $id;
     public array $parametres;
     public array $config;
@@ -33,7 +33,7 @@ abstract class AbstractQuestion
     public ?Question $questionParente = null;
     public bool $hasEnfants = false;
     public string $numero = '1';
-    private Reponses $reponses;
+    private readonly Reponses $reponses;
     public ?ReponseEtudiant $reponseEtudiant = null;
 
     public function __construct()

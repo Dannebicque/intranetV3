@@ -14,13 +14,10 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class SousCommissionEvent extends Event
 {
-    public const PUBLISHED = 'sooscommission.publiee';
+    public final const PUBLISHED = 'sooscommission.publiee';
 
-    protected ScolaritePromo $scolaritePromo;
-
-    public function __construct(ScolaritePromo $scolaritePromo)
+    public function __construct(protected ScolaritePromo $scolaritePromo)
     {
-        $this->scolaritePromo = $scolaritePromo;
     }
 
     public function getScolaritePromo(): ScolaritePromo

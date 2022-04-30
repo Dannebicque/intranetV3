@@ -18,16 +18,10 @@ use App\Repository\QuestionnaireEtudiantRepository;
 
 class ReponsesEtudiantAdapter
 {
-    protected QuestionnaireEtudiantRepository $questionnaireEtudiantRepository;
-    protected QuestionnaireEtudiantReponseRepository $questionnaireEtudiantReponseRepository;
     protected ReponsesEtudiant $reponsesEtudiant;
 
-    public function __construct(
-        QuestionnaireEtudiantRepository $questionnaireEtudiantRepository,
-        QuestionnaireEtudiantReponseRepository $questionnaireEtudiantReponseRepository
-    ) {
-        $this->questionnaireEtudiantRepository = $questionnaireEtudiantRepository;
-        $this->questionnaireEtudiantReponseRepository = $questionnaireEtudiantReponseRepository;
+    public function __construct(protected QuestionnaireEtudiantRepository $questionnaireEtudiantRepository, protected QuestionnaireEtudiantReponseRepository $questionnaireEtudiantReponseRepository)
+    {
     }
 
     public function getReponsesEtudiant(Section $section, mixed $etudiant_id, string $type = 'qualite'): ReponsesEtudiant

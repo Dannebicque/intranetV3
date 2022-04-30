@@ -19,16 +19,10 @@ use App\Repository\PrevisionnelMatiereRepository;
 
 class PrevisionnelMatiereManager extends AbstractPrevisionnelManager implements PrevisionnelManagerInterface
 {
-    public const TYPE = 'matiere';
-    private PrevisionnelMatiereRepository $previsionnelRepository;
-    private PrevisionnelMatiereAdapter $previsionnelMatiereAdapter;
+    public final const TYPE = 'matiere';
 
-    public function __construct(
-        PrevisionnelMatiereRepository $previsionnelRepository,
-        PrevisionnelMatiereAdapter $previsionnelMatiereAdapter
-    ) {
-        $this->previsionnelRepository = $previsionnelRepository;
-        $this->previsionnelMatiereAdapter = $previsionnelMatiereAdapter;
+    public function __construct(private readonly PrevisionnelMatiereRepository $previsionnelRepository, private readonly PrevisionnelMatiereAdapter $previsionnelMatiereAdapter)
+    {
     }
 
     public function getPrevisionnelPersonnelAnnee(Personnel $personnel, int $annee = 0): PrevisionnelCollection

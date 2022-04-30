@@ -69,7 +69,7 @@ class AbsenceRepository extends ServiceEntityRepository
             ->andWhere('m.typeMatiere = :type')
             ->setParameter('matiere', $matiere->id)
             ->setParameter('type', $matiere->typeMatiere)
-            ->orderBy('m.dateHeure', 'DESC');
+            ->orderBy('m.dateHeure', \Doctrine\Common\Collections\Criteria::DESC);
 
         if (null !== $anneeUniversitaire) {
             $query->innerJoin(AnneeUniversitaire::class, 'a', 'WITH', 'm.anneeUniversitaire = a.id')
@@ -122,7 +122,7 @@ class AbsenceRepository extends ServiceEntityRepository
             ->andWhere('a.anneeUniversitaire = :annee')
             ->setParameter('semestre', $semestre->getId())
             ->setParameter('annee', $anneeCourante->getId())
-            ->orderBy('a.dateHeure', 'DESC')
+            ->orderBy('a.dateHeure', \Doctrine\Common\Collections\Criteria::DESC)
             ->getQuery()
             ->getResult();
     }
@@ -142,7 +142,7 @@ class AbsenceRepository extends ServiceEntityRepository
             ->andWhere('a.etudiant = :etudiant')
             ->setParameter('annee', $anneeUniversitaire->getId())
             ->setParameter('etudiant', $etudiant->getId())
-            ->orderBy('a.dateHeure', 'DESC');
+            ->orderBy('a.dateHeure', \Doctrine\Common\Collections\Criteria::DESC);
 
         $ors = [];
         foreach ($matieres as $matiere) {
@@ -179,7 +179,7 @@ class AbsenceRepository extends ServiceEntityRepository
             ->andWhere('e.typeMatiere = :type')
             ->setParameter('matiere', $matiere)
             ->setParameter('type', $type)
-            ->orderBy('e.dateHeure', 'ASC');
+            ->orderBy('e.dateHeure', \Doctrine\Common\Collections\Criteria::ASC);
 
         if (null !== $annee) {
             $query->innerJoin(AnneeUniversitaire::class, 'u', 'WITH', 'e.anneeUniversitaire = u.id')
@@ -212,9 +212,9 @@ class AbsenceRepository extends ServiceEntityRepository
             ->setParameter('dateDebut', $dateDebut)
             ->setParameter('dateFin', $dateFin)
             ->setParameter('departement', $departement->getId())
-            ->orderBy('s.libelle', 'ASC')
-            ->addOrderBy('a.dateHeure', 'ASC')
-            ->addOrderBy('e.nom', 'ASC')
+            ->orderBy('s.libelle', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('a.dateHeure', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('e.nom', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

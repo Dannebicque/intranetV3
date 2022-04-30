@@ -25,31 +25,34 @@ class ScolaritePromo extends BaseEntity
     #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class, inversedBy: 'scolaritePromos')]
     private ?AnneeUniversitaire $anneeUniversitaire = null;
 
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private float $min = -0.01;
 
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private float $max = -0.01;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private int $nbEtudiants = 0;
 
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private float $moyenne = -0.01;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Scolarite>|\App\Entity\Scolarite[]
+     */
     #[ORM\OneToMany(mappedBy: 'scolaritePromo', targetEntity: Scolarite::class)]
     private Collection $scolarites;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $datePublication = null;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $publie = false;
 
-    #[ORM\Column(type: Types::ARRAY)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::ARRAY)]
     private array $moyenneUes = [];
 
-    #[ORM\Column(type: Types::ARRAY)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::ARRAY)]
     private array $moyenneMatieres = [];
 
     public function __construct()

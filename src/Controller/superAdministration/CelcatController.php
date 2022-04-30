@@ -26,7 +26,7 @@ class CelcatController extends BaseController
     /**
      * CelcatController constructor.
      */
-    public function __construct(private MyCelcat $myCelcat)
+    public function __construct(private readonly MyCelcat $myCelcat)
     {
     }
 

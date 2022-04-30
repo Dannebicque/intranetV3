@@ -47,7 +47,7 @@ class SalleExamenController extends BaseController
      * @throws RuntimeError
      */
     #[Route(path: '/application/salle-examen/genere/document', name: 'application_personnel_salle_examen_genere_placement', methods: ['POST'])]
-    public function generePlacement(MySalleExamen $mySalleExamen, Request $request)
+    public function generePlacement(MySalleExamen $mySalleExamen, Request $request): \Symfony\Component\HttpFoundation\Response
     {
         $capacite = $mySalleExamen->calculCapacite($request->request->get('salle'),
             $request->request->get('selectgroupes'), $request->request->get('detail_groupes'));

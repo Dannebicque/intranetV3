@@ -21,11 +21,8 @@ use Doctrine\ORM\Mapping as ORM;
 class TypeMateriel extends BaseEntity
 {
     use LifeCycleTrait;
-    #[ORM\Column(type: Types::STRING, length: 100)]
-    private ?string $libelle;
-
-    #[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'typeMateriels')]
-    private Departement $departement;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 100)]
+    private ?string $libelle = null;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Materiel>
@@ -33,10 +30,9 @@ class TypeMateriel extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'typeMateriel', targetEntity: Materiel::class)]
     private Collection $materiels;
 
-    public function __construct(Departement $departement)
+    public function __construct(#[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'typeMateriels')] private Departement $departement)
     {
         $this->materiels = new ArrayCollection();
-        $this->departement = $departement;
     }
 
     public function getLibelle(): ?string

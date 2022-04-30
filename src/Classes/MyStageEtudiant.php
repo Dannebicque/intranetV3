@@ -30,10 +30,10 @@ class MyStageEtudiant
      * MyStageEtudiant constructor.
      */
     public function __construct(
-        private Configuration $configuration,
-        private EntityManagerInterface $entityManager,
-        private EventDispatcherInterface $eventDispatcher,
-        private StageEtudiantRepository $stageEtudiantRepository
+        private readonly Configuration $configuration,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly StageEtudiantRepository $stageEtudiantRepository
     ) {
     }
 

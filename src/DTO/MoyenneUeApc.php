@@ -11,7 +11,6 @@ namespace App\DTO;
 
 class MoyenneUeApc
 {
-    public \App\Entity\Ue $ue;
     public float $coefficient = 0;
     public array $matieres = [];
     public float $totalCoefficients = 0;
@@ -25,8 +24,7 @@ class MoyenneUeApc
     public ?string $decision = null;
     public ?string $decisionPenalisee = null;
 
-    public function __construct(\App\Entity\Ue $ue)
+    public function __construct(public \App\Entity\Ue $ue)
     {
-        $this->ue = $ue;
     }
 }

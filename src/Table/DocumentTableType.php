@@ -37,12 +37,10 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class DocumentTableType extends TableType
 {
-    private ?Departement $departement;
-    private CsrfTokenManagerInterface $csrfToken;
+    private ?Departement $departement = null;
 
-    public function __construct(CsrfTokenManagerInterface $csrfToken)
+    public function __construct(private readonly CsrfTokenManagerInterface $csrfToken)
     {
-        $this->csrfToken = $csrfToken;
     }
 
     public function buildTable(TableBuilder $builder, array $options): void

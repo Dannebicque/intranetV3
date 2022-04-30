@@ -48,7 +48,7 @@ class ReservationMaterielCommunController extends BaseController
     public function addReservation(MyMaterielCommunReservation $myReservationMaterielCommun, Request $request): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
-        $t = explode('_', $request->request->get('id'));
+        $t = explode('_', (string) $request->request->get('id'));
         $rep = $myReservationMaterielCommun->addReservation($t[2], $t[0], $t[1], $this->getUser());
 
         return new Response($rep, $rep ? Response::HTTP_OK : Response::HTTP_INTERNAL_SERVER_ERROR);

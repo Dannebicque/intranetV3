@@ -53,6 +53,6 @@ class NotificationController extends BaseController
         }
         $this->entityManager->flush();
 
-        return new Response('ok', 200);
+        return new Response('ok', \Symfony\Component\HttpFoundation\Response::HTTP_OK);
     }
 }

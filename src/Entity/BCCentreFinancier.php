@@ -20,10 +20,10 @@ class BCCentreFinancier extends BaseEntity
 {
     use LifeCycleTrait;
 
-    #[ORM\Column(type: Types::STRING, length: 100)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 100)]
     private ?string $libelle = null;
 
-    #[ORM\Column(type: Types::STRING, length: 15)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 15)]
     private ?string $code = null;
 
     public function getLibelle(): ?string

@@ -35,64 +35,64 @@ class StagePeriode extends BaseEntity implements Serializable
     use UuidTrait;
     use LifeCycleTrait;
 
-    #[ORM\Column(type: Types::STRING, length: 50)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50)]
     private ?string $documentName = '';
 
     /**
      * @Vich\UploadableField(mapping="ficheRenseignement", fileNameProperty="documentName")
      */
-    private ?File $documentFile;
+    private ?File $documentFile = null;
 
     #[Groups(['stage_periode_administration'])]
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private int $numeroPeriode = 1;
 
     #[Groups(['stage_periode_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 100)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 100)]
     private string $libelle = 'stage';
 
     #[Groups(['stage_periode_administration'])]
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private int $nbSemaines = 10;
 
     #[Groups(['stage_periode_administration'])]
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private int $nbJours = 40;
 
     #[Groups(['stage_periode_administration'])]
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE)]
     private ?CarbonInterface $dateDebut = null;
 
     #[Groups(['stage_periode_administration'])]
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE)]
     private ?CarbonInterface $dateFin = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $competencesVisees;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
+    private ?string $competencesVisees = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $modaliteEvaluation;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
+    private ?string $modaliteEvaluation = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $modaliteEvaluationPedagogique;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
+    private ?string $modaliteEvaluationPedagogique = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $modaliteEncadrement;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
+    private ?string $modaliteEncadrement = null;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private ?string $documentRendre;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
+    private ?string $documentRendre = null;
 
     #[Groups(['stage_periode_administration'])]
-    #[ORM\Column(type: 'float')]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private float $nbEcts = 12;
 
     #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'stagePeriodes')]
-    private ?Semestre $semestre;
+    private ?Semestre $semestre = null;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $datesFlexibles = false;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $copieAssistant = true;
 
     /**
@@ -111,8 +111,8 @@ class StagePeriode extends BaseEntity implements Serializable
     #[ORM\ManyToMany(targetEntity: Personnel::class, inversedBy: 'stagePeriodes')]
     private Collection $responsables;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $texteLibre;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
+    private ?string $texteLibre = null;
 
     #[ORM\ManyToMany(targetEntity: StagePeriodeOffre::class, mappedBy: 'stagePeriodes')]
     private Collection $stagePeriodeOffres;
@@ -130,7 +130,7 @@ class StagePeriode extends BaseEntity implements Serializable
     private Collection $stageMailTemplates;
 
     #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class, inversedBy: 'stagePeriodes')]
-    private ?AnneeUniversitaire $anneeUniversitaire;
+    private ?AnneeUniversitaire $anneeUniversitaire = null;
 
     public function __construct()
     {
@@ -585,6 +585,6 @@ class StagePeriode extends BaseEntity implements Serializable
 
     public function unserialize($data): void
     {
-        $this->uuid = unserialize($data, [__CLASS__]);
+        $this->uuid = unserialize($data, [self::class]);
     }
 }

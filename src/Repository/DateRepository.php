@@ -45,7 +45,7 @@ class DateRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('d')
             ->where('d.departement = :departement')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('d.dateDebut', 'DESC');
+            ->orderBy('d.dateDebut', \Doctrine\Common\Collections\Criteria::DESC);
         if (0 !== $nbResult) {
             $query->setMaxResults($nbResult);
         }
@@ -88,7 +88,7 @@ class DateRepository extends ServiceEntityRepository
             ->setParameter('departement', $departement)
             ->setParameter('datedebut', $datedebut)
             ->setParameter('datefin', $datefin)
-            ->orderBy('d.dateDebut', 'ASC');
+            ->orderBy('d.dateDebut', \Doctrine\Common\Collections\Criteria::ASC);
 
         if (true === $isEtudiant) {
             $query->andWhere('d.typeDestinataire = :typeDestinataire')
@@ -123,7 +123,7 @@ class DateRepository extends ServiceEntityRepository
             ->andWhere('d.typeDestinataire = :typeDestinataire')
             ->setParameter('semestre', $etudiant->getSemestre()?->getId())
             ->setParameter('typeDestinataire', Constantes::TYPE_DESTINATAIRE_ETUDIANT)
-            ->orderBy('d.dateDebut', 'DESC');
+            ->orderBy('d.dateDebut', \Doctrine\Common\Collections\Criteria::DESC);
         if (0 !== $nbResult) {
             $query->setMaxResults($nbResult);
         }
@@ -138,7 +138,7 @@ class DateRepository extends ServiceEntityRepository
             ->andWhere('d.typeDestinataire = :typeDestinataire')
             ->setParameter('departement', $departement->getId())
             ->setParameter('typeDestinataire', Constantes::TYPE_DESTINATAIRE_PERSONNEL)
-            ->orderBy('d.dateDebut', 'DESC');
+            ->orderBy('d.dateDebut', \Doctrine\Common\Collections\Criteria::DESC);
         if (0 !== $nbResult) {
             $query->setMaxResults($nbResult);
         }

@@ -26,8 +26,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ApcRessourceType extends AbstractType
 {
-    protected ?Diplome $diplome;
-    protected ?Semestre $semestre;
+    protected ?Diplome $diplome = null;
+    protected ?Semestre $semestre = null;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -66,9 +66,7 @@ class ApcRessourceType extends AbstractType
                 'data' => $this->semestre,
                 'required' => true,
                 'choice_label' => 'display',
-                'query_builder' => function (SemestreRepository $semestreRepository) {
-                    return $semestreRepository->findByDiplomeBuilder($this->diplome);
-                },
+                'query_builder' => fn(SemestreRepository $semestreRepository) => $semestreRepository->findByDiplomeBuilder($this->diplome),
                 'label' => 'label.semestre',
                 'expanded' => true,
                 'mapped' => false,
@@ -79,9 +77,7 @@ class ApcRessourceType extends AbstractType
                 'label' => 'label.nomCourt.competence',
                 'expanded' => true,
                 'multiple' => true,
-                'query_builder' => function (ApcComptenceRepository $apcComptenceRepository) {
-                    return $apcComptenceRepository->findByDiplomeBuilder($this->diplome);
-                },
+                'query_builder' => fn(ApcComptenceRepository $apcComptenceRepository) => $apcComptenceRepository->findByDiplomeBuilder($this->diplome),
                 'help' => 'Ajoutez les compétences couvertes par la ressource.',
             ])
             ->add('suspendu', YesNoType::class, ['label' => 'label.suspendu', 'help' => 'Une matière suspendue n\'entre pas dans le calcul des moyennes.'])

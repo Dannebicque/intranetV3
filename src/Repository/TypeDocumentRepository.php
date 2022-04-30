@@ -44,6 +44,6 @@ class TypeDocumentRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('t')
             ->where('t.departement = :departement')
             ->setParameter('departement', $departement)
-            ->orderBy('t.libelle', 'ASC');
+            ->orderBy('t.libelle', \Doctrine\Common\Collections\Criteria::ASC);
     }
 }

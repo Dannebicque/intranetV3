@@ -37,43 +37,43 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
     use LifeCycleTrait;
 
     //todo: remplace par l'enumération ?
-    public const ACCEPTE = 'A';
-    public const REFUSE = 'R';
-    public const DEPOSE = 'D';
-    public const ETATLONG = [
+    public final const ACCEPTE = 'A';
+    public final const REFUSE = 'R';
+    public final const DEPOSE = 'D';
+    public final const ETATLONG = [
         self::ACCEPTE => 'Accepté, absences justifiées',
         self::DEPOSE => 'Déposé, en attente de validation',
         self::REFUSE => 'Refusé',
     ];
 
-    public const TAB_ETAT = [
+    public final const TAB_ETAT = [
         'label.absence_justficatif.'.self::ACCEPTE => self::ACCEPTE,
         'label.absence_justficatif.'.self::DEPOSE => self::DEPOSE,
         'label.absence_justficatif.'.self::REFUSE => self::REFUSE,
     ];
 
     #[Groups(groups: ['justificatif_administration'])]
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE)]
     private ?CarbonInterface $dateHeureDebut = null;
 
     #[Groups(groups: ['justificatif_administration'])]
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE)]
     private ?CarbonInterface $dateHeureFin = null;
 
     #[Groups(groups: ['justificatif_administration'])]
     #[Assert\NotBlank(message: 'label.absence_justificatif.justificatif.not_blank')]
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT)]
     private ?string $motif = '';
 
     #[Groups(groups: ['justificatif_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 1)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 1)]
     private string $etat;
 
     #[Groups(groups: ['justificatif_administration'])]
     #[ORM\ManyToOne(targetEntity: Etudiant::class, fetch: 'EAGER', inversedBy: 'absenceJustificatifs')]
     private ?Etudiant $etudiant = null;
 
-    #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50, nullable: true)]
     private ?string $fichierName = '';
 
     /**

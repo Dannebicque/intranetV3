@@ -38,7 +38,7 @@ class QuestionnaireQualiteRepository extends ServiceEntityRepository
             ->innerJoin(Annee::class, 'a', 'with', 'a.id = s.annee')
             ->where('a.diplome = :diplome')
             ->setParameter('diplome', $diplome->getId())
-            ->orderBy('q.dateOuverture', 'ASC')
+            ->orderBy('q.dateOuverture', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

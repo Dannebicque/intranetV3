@@ -16,14 +16,12 @@ use Twig\TemplateWrapper;
 
 class TypeQuestionRenderer
 {
-    public Environment $twig;
     public ?TemplateWrapper $templateWrapper = null;
-    private string $template;
+    private readonly string $template;
 
-    public function __construct(Environment $twig)
+    public function __construct(public Environment $twig)
     {
         $this->template = 'components/questionnaire/blocks_type_question.html.twig';
-        $this->twig = $twig;
     }
 
     /**

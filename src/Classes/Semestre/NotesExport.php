@@ -25,24 +25,11 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class NotesExport
 {
-    private MyExcelWriter $myExcel;
-    private NoteRepository $noteRepository;
-    private EvaluationRepository $evaluationRepository;
-    private TypeMatiereManager $typeMatiereManager;
-
     /**
      * NotesExport constructor.
      */
-    public function __construct(
-        MyExcelWriter $myExcel,
-        NoteRepository $noteRepository,
-        EvaluationRepository $evaluationRepository,
-        TypeMatiereManager $typeMatiereManager
-    ) {
-        $this->myExcel = $myExcel;
-        $this->noteRepository = $noteRepository;
-        $this->evaluationRepository = $evaluationRepository;
-        $this->typeMatiereManager = $typeMatiereManager;
+    public function __construct(private readonly MyExcelWriter $myExcel, private readonly NoteRepository $noteRepository, private readonly EvaluationRepository $evaluationRepository, private readonly TypeMatiereManager $typeMatiereManager)
+    {
     }
 
     public function exportXlsToutesLesNotes(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): StreamedResponse
@@ -115,7 +102,7 @@ class NotesExport
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            200,
+            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="Export des notes du semestre '.$semestre->getLibelle().'.xlsx"',

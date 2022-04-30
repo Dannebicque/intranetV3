@@ -18,10 +18,10 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: FichierRepository::class)]
 class Fichier extends BaseEntity
 {
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $libelle = null;
 
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private ?float $taille = null;
 
     #[ORM\ManyToMany(targetEntity: CahierTexte::class, mappedBy: 'fichiers')]

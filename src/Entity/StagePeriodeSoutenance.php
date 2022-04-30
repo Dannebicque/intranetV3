@@ -22,16 +22,16 @@ class StagePeriodeSoutenance extends BaseEntity
     use LifeCycleTrait;
 
     #[ORM\ManyToOne(targetEntity: StagePeriode::class, inversedBy: 'stagePeriodeSoutenances')]
-    private ?StagePeriode $stagePeriode;
+    private ?StagePeriode $stagePeriode = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE)]
     private ?CarbonInterface $dateDebut = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE)]
     private ?CarbonInterface $dateFin = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?CarbonInterface $dateRenduRapport;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateRenduRapport = null;
 
     public function getStagePeriode(): ?StagePeriode
     {

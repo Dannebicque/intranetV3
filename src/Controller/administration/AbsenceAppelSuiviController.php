@@ -22,7 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/administration/absence/appel')]
 class AbsenceAppelSuiviController extends BaseController
 {
-    public function __construct(private EdtManager $edtManager, private AbsenceEtatAppel $absenceEtatAppel)
+    public function __construct(private readonly EdtManager $edtManager, private readonly AbsenceEtatAppel $absenceEtatAppel)
     {
     }
 
@@ -54,7 +54,7 @@ class AbsenceAppelSuiviController extends BaseController
 
         return $this->render('administration/absence_appel/index.html.twig',
             [
-                'pl' => $this->edtManager->getPlanningSemestre($semestre),
+                'pl' => $this->edtManager->getPlanningSemestre($semestre, $matieres),
                 'semestre' => $semestre,
                 'table' => $table,
                 'statsAppel' => $statsAppel,

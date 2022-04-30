@@ -23,21 +23,21 @@ class Salle extends BaseEntity
 {
     use LifeCycleTrait;
 
-    public const SALLE_TD = 'td';
-    public const SALLE_TP = 'tp';
-    public const SALLE_AMPHI = 'amphi';
-    public const SALLE_INFORMATIQUE = 'info';
+    public final const SALLE_TD = 'td';
+    public final const SALLE_TP = 'tp';
+    public final const SALLE_AMPHI = 'amphi';
+    public final const SALLE_INFORMATIQUE = 'info';
 
     #[Groups(groups: ['salle_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 30)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 30)]
     private ?string $libelle = null;
 
     #[Groups(groups: ['salle_administration'])]
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private int $capacite = 0;
 
     #[Groups(groups: ['salle_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $type = null;
 
     #[Groups(groups: ['salle_administration'])]

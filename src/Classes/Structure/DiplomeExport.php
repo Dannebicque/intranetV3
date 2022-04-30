@@ -16,13 +16,8 @@ use Twig\Environment;
 
 class DiplomeExport
 {
-    private Environment $twig;
-    private ApogeeExport $apogeeExport;
-
-    public function __construct(Environment $twig, ApogeeExport $apogeeExport)
+    public function __construct(private readonly Environment $twig, private readonly ApogeeExport $apogeeExport)
     {
-        $this->twig = $twig;
-        $this->apogeeExport = $apogeeExport;
     }
 
     /**

@@ -14,23 +14,20 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class ProjetEvent extends Event
 {
-    public const CHGT_ETAT_PROJET_AUTORISE = 'chgt.etat_projet_autorise';
-    public const CHGT_ETAT_PROJET_DEPOSE = 'chgt.etat_projet_depose';
-    public const CHGT_ETAT_PROJET_VALIDE = 'chgt.etat_projet_valide';
-    public const CHGT_ETAT_PROJET_IMPRIME = 'chgt.etat_projet_imprime';
+    public final const CHGT_ETAT_PROJET_AUTORISE = 'chgt.etat_projet_autorise';
+    public final const CHGT_ETAT_PROJET_DEPOSE = 'chgt.etat_projet_depose';
+    public final const CHGT_ETAT_PROJET_VALIDE = 'chgt.etat_projet_valide';
+    public final const CHGT_ETAT_PROJET_IMPRIME = 'chgt.etat_projet_imprime';
 
-    public const EQ_ETATS = [
+    public final const EQ_ETATS = [
         self::CHGT_ETAT_PROJET_AUTORISE => ProjetEtudiant::ETAT_PROJET_AUTORISE,
         self::CHGT_ETAT_PROJET_DEPOSE => ProjetEtudiant::ETAT_PROJET_DEPOSE,
         self::CHGT_ETAT_PROJET_VALIDE => ProjetEtudiant::ETAT_PROJET_VALIDE,
         self::CHGT_ETAT_PROJET_IMPRIME => ProjetEtudiant::ETAT_PROJET_IMPRIME,
     ];
 
-    protected ProjetEtudiant $projetEtudiant;
-
-    public function __construct(ProjetEtudiant $projetEtudiant)
+    public function __construct(protected ProjetEtudiant $projetEtudiant)
     {
-        $this->projetEtudiant = $projetEtudiant;
     }
 
     public function getProjetEtudiant(): ProjetEtudiant

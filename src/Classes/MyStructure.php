@@ -25,8 +25,8 @@ class MyStructure
     protected Departement $departement;
 
     public function __construct(
-        private MyPDF $myPdf,
-        private MyExcelWriter $myExcel)
+        private readonly MyPDF $myPdf,
+        private readonly MyExcelWriter $myExcel)
     {
     }
 

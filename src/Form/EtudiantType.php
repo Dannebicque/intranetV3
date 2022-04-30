@@ -31,7 +31,7 @@ use Vich\UploaderBundle\Form\Type\VichFileType;
  */
 class EtudiantType extends AbstractType
 {
-    private ?Departement $departement;
+    private ?Departement $departement = null;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -57,9 +57,7 @@ class EtudiantType extends AbstractType
                 'label' => 'semestre',
                 'class' => Semestre::class,
                 'required' => false,
-                'query_builder' => function (SemestreRepository $semestreRepository) {
-                    return $semestreRepository->findByDepartementBuilder($this->departement);
-                },
+                'query_builder' => fn(SemestreRepository $semestreRepository) => $semestreRepository->findByDepartementBuilder($this->departement),
                 'choice_label' => 'libelle',
             ])
             ->add('mail_univ', TextType::class, ['label' => 'mail_univ'])

@@ -37,7 +37,7 @@ class CovidAttestationEtudiantRepository extends ServiceEntityRepository
             ->innerJoin(Diplome::class, 'd', 'WITH', 'p.diplome=d.id')
             ->where('d.departement = :departement')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('p.created', 'DESC')
+            ->orderBy('p.created', \Doctrine\Common\Collections\Criteria::DESC)
             ->getQuery()
             ->getResult();
     }

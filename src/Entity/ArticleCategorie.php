@@ -20,7 +20,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class ArticleCategorie extends BaseEntity
 {
     #[Groups(groups: ['article_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $libelle = null;
 
     /**

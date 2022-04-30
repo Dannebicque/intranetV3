@@ -25,7 +25,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AlternanceEtudiantType extends AbstractType
 {
-    private ?Departement $departement;
+    private ?Departement $departement = null;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -52,9 +52,7 @@ class AlternanceEtudiantType extends AbstractType
                 'class' => Personnel::class,
                 'help' => 'help.tuteur_universitaire',
                 'choice_label' => 'display',
-                'query_builder' => function (PersonnelRepository $personnelRepository) {
-                    return $personnelRepository->findByDepartementBuilder($this->departement);
-                },
+                'query_builder' => fn(PersonnelRepository $personnelRepository) => $personnelRepository->findByDepartementBuilder($this->departement),
                 'attr' => ['class' => 'form-control selectpicker'],
             ])
             ->add('sujet', TextareaType::class, ['label' => 'label.sujet_altenance'])

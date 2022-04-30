@@ -15,17 +15,15 @@ use Twig\TemplateWrapper;
 
 class WidgetRenderer
 {
-    public Environment $twig;
     public ?TemplateWrapper $templateWrapper = null;
-    private string $template;
+    private readonly string $template;
 
     /**
      * WidgetRenderer constructor.
      */
-    public function __construct(Environment $twig)
+    public function __construct(public Environment $twig)
     {
         $this->template = 'components/toolbar/block_filters.html.twig';
-        $this->twig = $twig;
     }
 
     /**

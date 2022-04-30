@@ -11,11 +11,11 @@ namespace App\Components\Questionnaire\DTO;
 
 class ReponseEtudiant
 {
-    public ?int $questionnaire_etudiant_id;
+    public ?int $questionnaire_etudiant_id = null;
     public mixed $valeur;
-    public ?int $question_id;
-    public ?int $etudiant_id;
-    public ?string $cle_question;
-    public ?string $complementValeur;
-    public ?string $cle_reponse; //todo: est-ce que c'est utile ?
+    public ?int $question_id = null;
+    public ?int $etudiant_id = null;
+    public ?string $cle_question = null;
+    public ?string $complementValeur = null;
+    public ?string $cle_reponse = null; //todo: est-ce que c'est utile ?
 }

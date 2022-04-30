@@ -42,14 +42,14 @@ class MyGroupes
     protected array $groupes;
 
     public function __construct(
-        private EntityManagerInterface $entityManager,
-        private ParcourRepository $parcourRepository,
-        private SemestreRepository $semestreRepository,
-        private TypeGroupeRepository $typeGroupeRepository,
-        private GroupeRepository $groupeRepository,
-        private MyUpload $myUpload,
-        private ApogeeGroupe $apogeeGroupe,
-        private EtudiantRepository $etudiantRepository
+        private readonly EntityManagerInterface $entityManager,
+        private readonly ParcourRepository $parcourRepository,
+        private readonly SemestreRepository $semestreRepository,
+        private readonly TypeGroupeRepository $typeGroupeRepository,
+        private readonly GroupeRepository $groupeRepository,
+        private readonly MyUpload $myUpload,
+        private readonly ApogeeGroupe $apogeeGroupe,
+        private readonly EtudiantRepository $etudiantRepository
     ) {
         $this->groupedefaut = null;
     }

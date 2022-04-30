@@ -27,14 +27,14 @@ class Article extends BaseEntity
     use TypeDestinataireTrait;
 
     #[Groups(groups: ['article_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $titre = null;
 
     #[Groups(groups: ['article_administration'])]
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT)]
     private ?string $texte = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $slug = null;
 
     #[MaxDepth(2)]

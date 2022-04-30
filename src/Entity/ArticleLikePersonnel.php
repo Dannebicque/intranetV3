@@ -16,12 +16,8 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\HasLifecycleCallbacks]
 class ArticleLikePersonnel extends ArticleLike
 {
-    #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'articlesLike')]
-    private Personnel $personnel;
-
-    public function __construct(Personnel $personnel, Article $article)
+    public function __construct(#[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'articlesLike')] private Personnel $personnel, Article $article)
     {
-        $this->personnel = $personnel;
         $this->setArticle($article);
     }
 

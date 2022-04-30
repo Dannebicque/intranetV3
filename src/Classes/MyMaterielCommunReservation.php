@@ -21,24 +21,11 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class MyMaterielCommunReservation
 {
-    private MaterielCommunRepository $materielCommunRepository;
-    private MaterielCommunPretRepository $materielCommunPretRepository;
-    private EntityManagerInterface $entityManager;
-    private EventDispatcherInterface $eventDispatcher;
-
     /**
      * MyMaterielCommun constructor.
      */
-    public function __construct(
-        MaterielCommunRepository $materielCommunRepository,
-        MaterielCommunPretRepository $materielCommunPretRepository,
-        EntityManagerInterface $entityManager,
-        EventDispatcherInterface $eventDispatcher
-    ) {
-        $this->materielCommunRepository = $materielCommunRepository;
-        $this->materielCommunPretRepository = $materielCommunPretRepository;
-        $this->entityManager = $entityManager;
-        $this->eventDispatcher = $eventDispatcher;
+    public function __construct(private readonly MaterielCommunRepository $materielCommunRepository, private readonly MaterielCommunPretRepository $materielCommunPretRepository, private readonly EntityManagerInterface $entityManager, private readonly EventDispatcherInterface $eventDispatcher)
+    {
     }
 
     /**

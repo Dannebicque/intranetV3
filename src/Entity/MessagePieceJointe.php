@@ -19,10 +19,10 @@ class MessagePieceJointe extends BaseEntity
     #[ORM\ManyToOne(targetEntity: Message::class, inversedBy: 'messagePieceJointes')]
     private ?Message $message = null;
 
-    #[ORM\Column(type: Types::STRING, length: 50)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50)]
     private ?string $fichier = null;
 
-    #[ORM\Column(type: Types::STRING, length: 5)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 5)]
     private ?string $extension = null;
 
     public function getMessage(): ?Message

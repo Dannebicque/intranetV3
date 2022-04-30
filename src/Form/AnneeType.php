@@ -28,7 +28,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class AnneeType extends AbstractType
 {
-    protected ?Departement $departement;
+    protected ?Departement $departement = null;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -46,9 +46,7 @@ class AnneeType extends AbstractType
                 'required' => true,
                 'choice_label' => 'displayCourt',
                 'expanded' => true,
-                'query_builder' => function (DiplomeRepository $diplomeRepository) {
-                    return $diplomeRepository->findByDepartementBuilder($this->departement);
-                },
+                'query_builder' => fn(DiplomeRepository $diplomeRepository) => $diplomeRepository->findByDepartementBuilder($this->departement),
                 'label' => 'label.diplome',
             ])
             ->add('codeEtape', TextType::class, [

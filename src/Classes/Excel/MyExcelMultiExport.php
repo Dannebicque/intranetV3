@@ -34,7 +34,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 class MyExcelMultiExport
 {
     public function __construct(
-        private MyExcelWriter $myExcelWriter
+        private readonly MyExcelWriter $myExcelWriter
     ) {
     }
 
@@ -47,7 +47,7 @@ class MyExcelMultiExport
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            200,
+            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="'.$name.'.xlsx"',
@@ -81,7 +81,7 @@ class MyExcelMultiExport
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            200,
+            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
             [
                 'Content-Type' => 'application/csv',
                 'Content-Disposition' => 'attachment;filename="'.$name.'.csv"',
@@ -99,7 +99,7 @@ class MyExcelMultiExport
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            200,
+            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
             [
                 'Content-Type' => 'application/pdf',
                 'Content-Disposition' => 'attachment;filename="'.$name.'.pdf"',
@@ -120,7 +120,7 @@ class MyExcelMultiExport
             ++$ligne;
             $i = 1;
         }
-        $nbCol = count($data[1]);
+        $nbCol = is_countable($data[1]) ? count($data[1]) : 0;
         for ($j = 1; $j <= $nbCol; ++$j) {
             $this->myExcelWriter->getColumnAutoSize($j);
             $this->myExcelWriter->setCellEnteteStyle($j, 1);

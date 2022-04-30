@@ -15,7 +15,6 @@ use Doctrine\Common\Collections\Collection;
 
 class MoyenneMatiere
 {
-    public Matiere $matiere;
     public array $notes = [];
     public array $coefficients = [];
     public float $totalNotes = 0;
@@ -24,13 +23,10 @@ class MoyenneMatiere
     public int $absencesJustifiee = 0; //nombre d'absences  justifiées impliquant
     public bool $optionFaite;
     private float $bonification = 0;
-    private float $penalite;
     public bool $matiereAAnnuler = false;
 
-    public function __construct(Matiere $matiere, float $penalite, Collection $groupes)
+    public function __construct(public Matiere $matiere, private readonly float $penalite, Collection $groupes)
     {
-        $this->matiere = $matiere;
-        $this->penalite = $penalite;
         $this->isOption($groupes);
     }
 

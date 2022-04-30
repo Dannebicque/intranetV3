@@ -18,20 +18,18 @@ class ConfigurableSection
 {
     //todo: doit être un type de section... sinon comment créer la section ?
 
-    public const NB_QUESTIONS_PAR_SECTION = 3;
+    public final const NB_QUESTIONS_PAR_SECTION = 3;
     public ?AbstractSectionAdapter $sectionAdapter = null;
     public ?array $config = [];
     public string $type_calcul = '';
     public array $sections = []; //en mode configurable, on peut avoir la création de sections
 
     private \App\Components\Questionnaire\DTO\Section $section;
-    private Questions $questions;
-    private QuestionnaireRegistry $questionnaireRegistry;
+    private readonly Questions $questions;
     private array $options;
 
-    public function __construct(QuestionnaireRegistry $questionnaireRegistry)
+    public function __construct(private readonly QuestionnaireRegistry $questionnaireRegistry)
     {
-        $this->questionnaireRegistry = $questionnaireRegistry;
         $this->questions = new Questions();
     }
 
@@ -106,11 +104,11 @@ class ConfigurableSection
 
     private function getQuestionsParPartie(int $i): int
     {
-        if ($i * self::NB_QUESTIONS_PAR_SECTION <= count($this->config['valeurs'])) {
+        if ($i * self::NB_QUESTIONS_PAR_SECTION <= (is_countable($this->config['valeurs']) ? count($this->config['valeurs']) : 0)) {
             return self::NB_QUESTIONS_PAR_SECTION;
         }
 
-        return count($this->config['valeurs']) % self::NB_QUESTIONS_PAR_SECTION;
+        return (is_countable($this->config['valeurs']) ? count($this->config['valeurs']) : 0) % self::NB_QUESTIONS_PAR_SECTION;
     }
 
     public function getDataPourConfiguration(Annee $annee): array

@@ -17,9 +17,9 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: EmpruntMaterielRepository::class)]
 class EmpruntMateriel extends BaseEntity
 {
-    public const ETAT_MATERIEL_DISPO = 'DISPO';
-    public const ETAT_MATERIEL_SORTI = 'SORTI';
-    public const ETAT_MATERIEL_RESERVE = 'RESER';
+    public final const ETAT_MATERIEL_DISPO = 'DISPO';
+    public final const ETAT_MATERIEL_SORTI = 'SORTI';
+    public final const ETAT_MATERIEL_RESERVE = 'RESER';
 
     #[ORM\ManyToOne(targetEntity: Emprunt::class, inversedBy: 'empruntMateriels')]
     private ?Emprunt $emprunt = null;
@@ -27,13 +27,13 @@ class EmpruntMateriel extends BaseEntity
     #[ORM\ManyToOne(targetEntity: Materiel::class, inversedBy: 'empruntMateriels')]
     private ?Materiel $materiel = null;
 
-    #[ORM\Column(type: Types::STRING, length: 5)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 5)]
     private ?string $etat = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
     private ?DateTimeInterface $datesortie = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
     private ?DateTimeInterface $daterentree = null;
 
     public function getEmprunt(): ?Emprunt

@@ -16,10 +16,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TypeOuiNon extends TypeQcu
 {
-    public const LABEL = 'type_oui_non';
-    public const BADGE = 'bg-purple';
-    public const ICON = 'fas fa-toggle-on';
-    public const FORM = QuestionnaireQuestionTypeYesNo::class;
+    public final const LABEL = 'type_oui_non';
+    public final const BADGE = 'bg-purple';
+    public final const ICON = 'fas fa-toggle-on';
+    public final const FORM = QuestionnaireQuestionTypeYesNo::class;
 
     public function configureOptions(OptionsResolver $resolver): void
     {

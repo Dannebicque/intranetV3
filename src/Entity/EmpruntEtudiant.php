@@ -15,16 +15,12 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: EmpruntEtudiantRepository::class)]
 class EmpruntEtudiant extends Emprunt
 {
-    #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'emprunts')]
-    private ?Etudiant $etudiant;
-
     /**
      *
      * @throws \Exception
      */
-    public function __construct(?Etudiant $etudiant)
+    public function __construct(#[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'emprunts')] private ?\App\Entity\Etudiant $etudiant)
     {
-        $this->etudiant = $etudiant;
         parent::__construct();
     }
 

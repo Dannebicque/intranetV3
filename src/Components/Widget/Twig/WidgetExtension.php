@@ -15,14 +15,11 @@ use Twig\TwigFunction;
 
 class WidgetExtension extends AbstractExtension
 {
-    protected WidgetRenderer $renderer;
-
     /**
      * WidgetExtension constructor.
      */
-    public function __construct(WidgetRenderer $renderer)
+    public function __construct(protected WidgetRenderer $renderer)
     {
-        $this->renderer = $renderer;
     }
 
     public function getFunctions(): array

@@ -24,10 +24,10 @@ class ApcParcours extends BaseEntity
     use LifeCycleTrait;
     use ApogeeTrait;
 
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $libelle = null;
 
-    #[ORM\Column(type: Types::STRING, length: 10)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 10)]
     private ?string $code = null;
 
     /**
@@ -39,7 +39,7 @@ class ApcParcours extends BaseEntity
     #[ORM\ManyToOne(targetEntity: Diplome::class, inversedBy: 'apcParcours')]
     private ?Diplome $diplome = null;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $actif = true;
 
     public function __construct(Diplome $diplome)

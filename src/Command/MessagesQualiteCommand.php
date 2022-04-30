@@ -17,14 +17,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class MessagesQualiteCommand extends Command
 {
-    protected QuestionnaireQualiteRepository $questionnaireQualiteRepository;
-    protected MailerFromTwig $mailer;
-
-    public function __construct(QuestionnaireQualiteRepository $questionnaireQualiteRepository, MailerFromTwig $mailer)
+    public function __construct(protected QuestionnaireQualiteRepository $questionnaireQualiteRepository, protected MailerFromTwig $mailer)
     {
         parent::__construct();
-        $this->questionnaireQualiteRepository = $questionnaireQualiteRepository;
-        $this->mailer = $mailer;
     }
 
     protected function configure(): void

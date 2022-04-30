@@ -26,12 +26,12 @@ use function is_array;
 
 class EtudiantImport
 {
-    private array $tBac;
+    private readonly array $tBac;
 
     public function __construct(
         BacRepository $bacRepository,
-        private MyLdap $myLdap,
-        private EntityManagerInterface $entity)
+        private readonly MyLdap $myLdap,
+        private readonly EntityManagerInterface $entity)
     {
         $this->tBac = $bacRepository->getApogeeArray();
     }
@@ -60,7 +60,7 @@ class EtudiantImport
         $etuLdap = $this->myLdap->getInfoEtudiant($etudiant->getNumEtudiant());
         if (is_array($etuLdap) && 2 === count($etuLdap) && '' !== $etuLdap['mail'] && '' !== $etuLdap['login']) {
             $etudiant->updateFromLdap($etuLdap);
-            $slug = explode('@', $etudiant->getMailUniv());
+            $slug = explode('@', (string) $etudiant->getMailUniv());
             $etudiant->setSlug($slug[0]);
 
             return true;

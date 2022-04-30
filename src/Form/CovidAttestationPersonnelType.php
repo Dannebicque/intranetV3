@@ -34,9 +34,7 @@ class CovidAttestationPersonnelType extends AbstractType
                 'required' => true,
                 'choice_label' => 'getDisplay',
                 'expanded' => true,
-                'query_builder' => function (DiplomeRepository $diplomeRepository) {
-                    return $diplomeRepository->findByDepartementBuilder($this->departement);
-                },
+                'query_builder' => fn(DiplomeRepository $diplomeRepository) => $diplomeRepository->findByDepartementBuilder($this->departement),
                 'label' => 'Diplôme concerné par votre demande (pour validation par le responsable)',
             ])
             ->add('personnel', CovidPersonnelType::class)

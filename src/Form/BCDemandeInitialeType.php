@@ -59,9 +59,7 @@ class BCDemandeInitialeType extends AbstractType
                 'label' => 'label.bc.responsable',
                 'class' => Personnel::class,
                 'choice_label' => 'displayPr',
-                'query_builder' => function (PersonnelRepository $personnelRepository) {
-                    return $personnelRepository->findByDepartementBuilder($this->departement);
-                },
+                'query_builder' => fn(PersonnelRepository $personnelRepository) => $personnelRepository->findByDepartementBuilder($this->departement),
             ])
             ->add('fournisseur');
     }

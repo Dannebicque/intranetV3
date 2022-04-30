@@ -20,16 +20,16 @@ class CovidCreneauPresence
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private ?int $id = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE)]
     private ?DateTimeInterface $date;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TIME_MUTABLE)]
     private ?DateTimeInterface $heureArrivee;
 
-    #[ORM\Column(type: Types::TIME_MUTABLE)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TIME_MUTABLE)]
     private ?DateTimeInterface $heureDepart;
 
     #[ORM\ManyToOne(targetEntity: CovidAttestationPersonnel::class, inversedBy: 'covidCreneauPresences')]

@@ -29,27 +29,11 @@ class MyArticle
 {
     protected Article $article;
 
-    protected EntityManagerInterface $entityManager;
-
-    protected ArticleRepository $articleRepository;
-
-    protected ArticleLikeEtudiantRepository $articleLikeEtudiantRepository;
-
-    protected ArticleLikePersonnelRepository $articleLikePersonnelRepository;
-
     /**
      * MyArticle constructor.
      */
-    public function __construct(
-        EntityManagerInterface $entityManager,
-        ArticleRepository $articleRepository,
-        ArticleLikeEtudiantRepository $articleLikeEtudiantRepository,
-        ArticleLikePersonnelRepository $articleLikePersonnelRepository
-    ) {
-        $this->entityManager = $entityManager;
-        $this->articleRepository = $articleRepository;
-        $this->articleLikeEtudiantRepository = $articleLikeEtudiantRepository;
-        $this->articleLikePersonnelRepository = $articleLikePersonnelRepository;
+    public function __construct(protected EntityManagerInterface $entityManager, protected ArticleRepository $articleRepository, protected ArticleLikeEtudiantRepository $articleLikeEtudiantRepository, protected ArticleLikePersonnelRepository $articleLikePersonnelRepository)
+    {
     }
 
     public function setArticle(Article $article): self

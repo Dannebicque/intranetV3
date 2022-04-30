@@ -32,9 +32,9 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class AbsenceController.
  *
- * @Route("/application/personnel/absence/ajax")
  * @IsGranted("ROLE_PERMANENT")
  */
+#[Route(path: '/application/personnel/absence/ajax')]
 class SaisieAbsenceController extends BaseController
 {
     public function index(
@@ -68,26 +68,17 @@ class SaisieAbsenceController extends BaseController
             ],
         ]);
     }
-
     /**
-     * @Route("/saisie/{matiere}/{etudiant}", name="application_personnel_absence_saisie_ajax", methods="POST",
-     *                                             options={"expose":true})
      *
      * @return JsonResponse|Response
-     *
      * @throws Exception
      */
-    public function ajaxSaisie(
-        TypeMatiereManager $typeMatiereManager,
-        EtudiantAbsences $etudiantAbsences,
-        AbsenceRepository $absenceRepository,
-        Request $request,
-        string $matiere,
-        Etudiant $etudiant
-    ) {
+    #[Route(path: '/saisie/{matiere}/{etudiant}', name: 'application_personnel_absence_saisie_ajax', methods: 'POST', options: ['expose' => true])]
+    public function ajaxSaisie(TypeMatiereManager $typeMatiereManager, EtudiantAbsences $etudiantAbsences, AbsenceRepository $absenceRepository, Request $request, string $matiere, Etudiant $etudiant) : \Symfony\Component\HttpFoundation\JsonResponse|\Symfony\Component\HttpFoundation\Response
+    {
         $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
         $semestre = $etudiant->getSemestre();
-        if (null !== $mat && $semestre !== null) {
+        if (null !== $mat && null !== $semestre) {
             $dateHeure = Tools::convertDateHeureToObject($request->request->get('date'),
                 $request->request->get('heure'));
             $absence = $absenceRepository->findBy([
@@ -115,7 +106,7 @@ class SaisieAbsenceController extends BaseController
                     return $this->json($absences);
                 }
 
-                return new response('out', 500);
+                return new response('out', \Symfony\Component\HttpFoundation\Response::HTTP_INTERNAL_SERVER_ERROR);
             }
 
             if (1 === count($absence)) {
@@ -130,10 +121,8 @@ class SaisieAbsenceController extends BaseController
                 return $this->json($absences);
             }
         }
-
-        return new response('nok', 500);
+        return new response('nok', \Symfony\Component\HttpFoundation\Response::HTTP_INTERNAL_SERVER_ERROR);
     }
-
     private function saisieAutorise(int $nbjour, CarbonInterface $datesymfony): bool
     {
         return 0 === $nbjour || $datesymfony->diffInDays(Carbon::now()) <= $nbjour;

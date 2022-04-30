@@ -33,10 +33,10 @@ class Note extends BaseEntity
     #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'notes')]
     private ?Etudiant $etudiant = null;
 
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private ?float $note = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
     private ?string $commentaire = null;
 
     /**
@@ -45,7 +45,7 @@ class Note extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'note', targetEntity: ModificationNote::class)]
     private Collection $modificationNotes;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $absenceJustifie = false;
 
     /**

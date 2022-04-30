@@ -11,18 +11,11 @@ namespace App\Message;
 
 class ExportPdfEdt
 {
-    private array $personnels;
-    private int $departement;
-    private int $personnel;
-
     /**
      * ExportPdfEdt constructor.
      */
-    public function __construct(array $personnels, int $departement, int $personnel)
+    public function __construct(private readonly array $personnels, private readonly int $departement, private readonly int $personnel)
     {
-        $this->personnels = $personnels;
-        $this->departement = $departement;
-        $this->personnel = $personnel;
     }
 
     public function getPersonnels(): array

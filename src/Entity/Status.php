@@ -16,25 +16,25 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: StatusRepository::class)]
 class Status extends BaseEntity
 {
-    #[ORM\Column(type: Types::STRING, length: 50)]
-    private ?string $libelle;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50)]
+    private ?string $libelle = null;
 
-    #[ORM\Column(type: Types::STRING, length: 10)]
-    private ?string $sigle;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 10)]
+    private ?string $sigle = null;
 
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private float $serviceStatus = 192;
 
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private ?float $tauxTd = 1;
 
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private ?float $tauxTp = 1;
 
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private ?float $tauxTdHC = 1;
 
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private ?float $tauxTpHC = 0.66;
 
     public function getLibelle(): ?string

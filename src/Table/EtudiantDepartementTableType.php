@@ -34,12 +34,10 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class EtudiantDepartementTableType extends TableType
 {
-    private ?Departement $departement;
-    private CsrfTokenManagerInterface $csrfToken;
+    private ?Departement $departement = null;
 
-    public function __construct(CsrfTokenManagerInterface $csrfToken)
+    public function __construct(private readonly CsrfTokenManagerInterface $csrfToken)
     {
-        $this->csrfToken = $csrfToken;
     }
 
     public function buildTable(TableBuilder $builder, array $options): void
@@ -52,9 +50,7 @@ class EtudiantDepartementTableType extends TableType
             'choice_label' => 'displayAvecTypeDiplome',
             'required' => false,
             'placeholder' => 'Filtrer par semestre',
-            'query_builder' => function (SemestreRepository $semestreRepository) {
-                return $semestreRepository->findByDepartementBuilder($this->departement);
-            },
+            'query_builder' => fn(SemestreRepository $semestreRepository) => $semestreRepository->findByDepartementBuilder($this->departement),
         ]);
         $builder->addFilter('bac', EntityType::class, [
             'class' => Bac::class,
@@ -85,9 +81,7 @@ class EtudiantDepartementTableType extends TableType
                     'post_params' => [
                         'field' => 'semestre',
                     ],
-                    'query_builder' => function (SemestreRepository $semestreRepository) {
-                        return $semestreRepository->findByDepartementBuilder($this->departement);
-                    },
+                    'query_builder' => fn(SemestreRepository $semestreRepository) => $semestreRepository->findByDepartementBuilder($this->departement),
                     'value' => $s->getSemestre()?->getId(),
                     'entity' => Semestre::class,
                     'choice_label' => 'libelle',

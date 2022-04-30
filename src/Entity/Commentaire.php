@@ -20,15 +20,11 @@ class Commentaire extends BaseEntity
 {
     use LifeCycleTrait;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT)]
     private ?string $texte = null;
 
-    #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'commentaires')]
-    private ?Etudiant $etudiant;
-
-    public function __construct(Etudiant $etudiant)
+    public function __construct(#[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'commentaires')] private ?\App\Entity\Etudiant $etudiant)
     {
-        $this->etudiant = $etudiant;
     }
 
     public function getEtudiant(): ?Etudiant

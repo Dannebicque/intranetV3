@@ -14,9 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class SocialController.
- *
- * @Route("/social")
  */
+#[Route(path: '/social')]
 class SocialController extends BaseController
 {
 }

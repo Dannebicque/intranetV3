@@ -14,12 +14,10 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class EvaluationEvent extends Event
 {
-    public const ADDED = 'evaluation.added';
-    protected Evaluation $evaluation;
+    public final const ADDED = 'evaluation.added';
 
-    public function __construct(Evaluation $evaluation)
+    public function __construct(protected Evaluation $evaluation)
     {
-        $this->evaluation = $evaluation;
     }
 
     public function getEvaluation(): Evaluation

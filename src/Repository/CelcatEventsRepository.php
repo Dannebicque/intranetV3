@@ -43,9 +43,9 @@ class CelcatEventsRepository extends ServiceEntityRepository
             ->where('p.semaineFormation = :semaine')
             ->andWhere('p.codePersonnel = :idprof')
             ->setParameters(['semaine' => $semaine, 'idprof' => $numeroHarpege])
-            ->orderBy('p.jour', 'ASC')
-            ->addOrderBy('p.debut', 'ASC')
-            ->addOrderBy('p.codeGroupe', 'ASC')
+            ->orderBy('p.jour', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('p.debut', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('p.codeGroupe', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -63,8 +63,8 @@ class CelcatEventsRepository extends ServiceEntityRepository
             }
 
             $query->setParameters($this->params)
-                ->orderBy('p.jour', 'ASC')
-                ->addOrderBy('p.debut', 'ASC');
+                ->orderBy('p.jour', \Doctrine\Common\Collections\Criteria::ASC)
+                ->addOrderBy('p.debut', \Doctrine\Common\Collections\Criteria::ASC);
 
             return $query->getQuery()->getResult();
         }
@@ -109,14 +109,14 @@ class CelcatEventsRepository extends ServiceEntityRepository
     public function findEdtSemestre(Semestre $semestre, ?int $semaineFormationIUT): array | int
     {
         return $this->createQueryBuilder('p')
-            ->innerJoin(Matiere::class, 'm', 'WITH', 'p.codeModule = m.codeElement')
-            ->innerJoin(Ue::class, 'u', 'WITH', 'u.id = m.ue')
+           // ->innerJoin(Matiere::class, 'm', 'WITH', 'p.codeModule = m.codeElement')
+           // ->innerJoin(Ue::class, 'u', 'WITH', 'u.id = m.ue')
             ->where('p.semaineFormation = :semaine')
-            ->andWhere('u.semestre = :semestre')
+            ->andWhere('p.semestre = :semestre')
             ->setParameters(['semaine' => $semaineFormationIUT, 'semestre' => $semestre->getId()])
-            ->orderBy('p.jour', 'ASC')
-            ->addOrderBy('p.debut', 'ASC')
-            ->addOrderBy('p.codeGroupe', 'ASC')
+            ->orderBy('p.jour', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('p.debut', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('p.codeGroupe', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -126,9 +126,9 @@ class CelcatEventsRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('p')
             ->where('p.codePersonnel = :idprof')
             ->setParameter('idprof', $user->getNumeroHarpege())
-            ->orderBy('p.jour', 'ASC')
-            ->addOrderBy('p.debut', 'ASC')
-            ->addOrderBy('p.libGroupe', 'ASC')
+            ->orderBy('p.jour', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('p.debut', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('p.libGroupe', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
 
@@ -160,5 +160,18 @@ class CelcatEventsRepository extends ServiceEntityRepository
         }
 
         return $t;
+    }
+
+    public function findEdtSemestreSemaine(Semestre $semestre, int $semaineFormationIUT, AnneeUniversitaire $anneeUniversitaire)
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.semaineFormation = :semaine')
+            ->andWhere('p.semestre = :semestre')
+            ->setParameters(['semaine' => $semaineFormationIUT, 'semestre' => $semestre->getId()])
+            ->orderBy('p.jour', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('p.debut', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('p.codeGroupe', \Doctrine\Common\Collections\Criteria::ASC)
+            ->getQuery()
+            ->getResult();
     }
 }

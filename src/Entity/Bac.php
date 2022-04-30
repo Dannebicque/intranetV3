@@ -21,12 +21,12 @@ class Bac extends BaseEntity
 {
     use LifeCycleTrait;
 
-    public const SERIE_BAC_GENERAL = 'g';
-    public const SERIE_BAC_TECHNO = 't';
-    public const SERIE_BAC_PRO = 'p';
-    public const SERIE_BAC_ETRANGER = 'e';
-    public const SERIE_BAC_AUTRE = 'a';
-    public const TAB_TYPE_BAC = [
+    public final const SERIE_BAC_GENERAL = 'g';
+    public final const SERIE_BAC_TECHNO = 't';
+    public final const SERIE_BAC_PRO = 'p';
+    public final const SERIE_BAC_ETRANGER = 'e';
+    public final const SERIE_BAC_AUTRE = 'a';
+    public final const TAB_TYPE_BAC = [
         self::SERIE_BAC_GENERAL => self::SERIE_BAC_GENERAL,
         self::SERIE_BAC_TECHNO => self::SERIE_BAC_TECHNO,
         self::SERIE_BAC_PRO => self::SERIE_BAC_PRO,
@@ -35,17 +35,17 @@ class Bac extends BaseEntity
     ];
 
     #[Groups(groups: ['bac_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 30)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 30)]
     private ?string $libelle = null;
 
     #[Groups(groups: ['bac_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $libelleLong = null;
 
-    #[ORM\Column(type: Types::STRING, length: 10, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 10, nullable: true)]
     private ?string $codeApogee = null;
 
-    #[ORM\Column(type: Types::STRING, length: 1, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 1, nullable: true)]
     private ?string $typeBac = null;
 
     public function getLibelle(): ?string

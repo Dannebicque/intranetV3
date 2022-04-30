@@ -40,10 +40,6 @@ class MyExportListing
 {
     private array $colonnesEnTete = [];
 
-    protected TypeGroupeRepository $typeGroupeRepository;
-
-    protected GroupeRepository $groupeRepository;
-
     protected array | Collection $groupes;
     private string $name = '';
     private int $ligne = 1;
@@ -52,36 +48,25 @@ class MyExportListing
 
     private string $exportTypeDocument;
     private array $exportChamps;
-    private ?Matiere $matiere;
-
-    private DataUserSession $dataUserSession;
-    private string $base;
+    private ?Matiere $matiere = null;
+    private readonly string $base;
 
     private TypeGroupe $typeGroupe;
-
-    private MyExcelWriter $myExcelWriter;
-
-    private MyPDF $myPdf;
     private string $titre = '';
 
-    private ?Personnel $personnel;
+    private ?Personnel $personnel = null;
 
     /**
      * MyExport constructor.
      */
     public function __construct(
-        TypeGroupeRepository $typeGroupeRepository,
-        GroupeRepository $groupeRepository,
-        DataUserSession $dataUserSession,
+        protected TypeGroupeRepository $typeGroupeRepository,
+        protected GroupeRepository $groupeRepository,
+        private readonly DataUserSession $dataUserSession,
         KernelInterface $kernel,
-        MyExcelWriter $myExcelWriter,
-        MyPDF $myPdf
+        private readonly MyExcelWriter $myExcelWriter,
+        private readonly MyPDF $myPdf
     ) {
-        $this->typeGroupeRepository = $typeGroupeRepository;
-        $this->groupeRepository = $groupeRepository;
-        $this->dataUserSession = $dataUserSession;
-        $this->myExcelWriter = $myExcelWriter;
-        $this->myPdf = $myPdf;
         $this->base = $kernel->getProjectDir().'/';
     }
 
@@ -192,7 +177,7 @@ class MyExportListing
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            200,
+            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
             [
                 'Content-Type' => 'application/csv',
                 'Content-Disposition' => 'attachment;filename="'.$this->name.'.csv"',
@@ -243,7 +228,7 @@ class MyExportListing
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            200,
+            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="'.$this->name.'.xlsx"',
@@ -302,7 +287,7 @@ class MyExportListing
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            200,
+            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="'.$nom.'.xlsx"',

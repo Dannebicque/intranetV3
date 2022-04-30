@@ -39,9 +39,7 @@ class ProjetPeriodeType extends AbstractType
                 'class' => Semestre::class,
                 'label' => 'semestre_stage_periode',
                 'choice_label' => 'libelle',
-                'query_builder' => function (SemestreRepository $semestreRepository) {
-                    return $semestreRepository->findByDepartementBuilder($this->departement);
-                },
+                'query_builder' => fn(SemestreRepository $semestreRepository) => $semestreRepository->findByDepartementBuilder($this->departement),
                 'required' => true,
                 'expanded' => true,
                 'multiple' => false,
@@ -53,9 +51,7 @@ class ProjetPeriodeType extends AbstractType
                 'class' => Personnel::class,
                 'help' => 'help.responsables',
                 'choice_label' => 'display',
-                'query_builder' => function (PersonnelRepository $personnelRepository) {
-                    return $personnelRepository->findByDepartementBuilder($this->departement);
-                },
+                'query_builder' => fn(PersonnelRepository $personnelRepository) => $personnelRepository->findByDepartementBuilder($this->departement),
             ])
             ->add('anneeUniversitaire', EntityType::class, [
                 'label' => 'anneeUniversitaire',

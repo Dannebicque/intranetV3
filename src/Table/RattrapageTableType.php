@@ -39,13 +39,11 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class RattrapageTableType extends TableType
 {
-    private ?Semestre $semestre;
-    private ?AnneeUniversitaire $anneeUniversitaire;
-    private CsrfTokenManagerInterface $csrfToken;
+    private ?Semestre $semestre = null;
+    private ?AnneeUniversitaire $anneeUniversitaire = null;
 
-    public function __construct(CsrfTokenManagerInterface $csrfToken)
+    public function __construct(private readonly CsrfTokenManagerInterface $csrfToken)
     {
-        $this->csrfToken = $csrfToken;
     }
 
     public function buildTable(TableBuilder $builder, array $options): void
@@ -73,9 +71,7 @@ class RattrapageTableType extends TableType
         ]);
         $builder->addFilter('groupe', EntityType::class, [
             'class' => Groupe::class,
-            'query_builder' => function (GroupeRepository $groupeRepository) {
-                return $groupeRepository->findBySemestreBuilder($this->semestre);
-            },
+            'query_builder' => fn(GroupeRepository $groupeRepository) => $groupeRepository->findBySemestreBuilder($this->semestre),
             'choice_label' => 'display',
             'required' => false,
             'placeholder' => 'Filtrer par groupe',

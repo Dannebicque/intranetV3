@@ -24,23 +24,14 @@ use Doctrine\ORM\EntityManagerInterface;
 class EtudiantScolarite
 {
     private Etudiant $etudiant;
-    private ?Semestre $semestre;
-    private ?AnneeUniversitaire $anneeUniversitaire;
-    private EtudiantGroupes $etudiantsGroupes;
-    private EntityManagerInterface $entityManger;
-    private ScolariteRepository $scolariteRepository;
+    private ?Semestre $semestre = null;
+    private ?AnneeUniversitaire $anneeUniversitaire = null;
 
     /**
      * EtudiantScolarite constructor.
      */
-    public function __construct(
-        EtudiantGroupes $etudiantsGroupes,
-        EntityManagerInterface $entityManger,
-        ScolariteRepository $scolariteRepository
-    ) {
-        $this->etudiantsGroupes = $etudiantsGroupes;
-        $this->entityManger = $entityManger;
-        $this->scolariteRepository = $scolariteRepository;
+    public function __construct(private readonly EtudiantGroupes $etudiantsGroupes, private readonly EntityManagerInterface $entityManger, private readonly ScolariteRepository $scolariteRepository)
+    {
     }
 
     public function setSemestre(Semestre $semestre): void

@@ -19,8 +19,6 @@ use function in_array;
 
 class EtudiantSousCommission
 {
-    public Etudiant $etudiant;
-
     /** @var MoyenneMatiere[] */
     public array $moyenneMatieres;
 
@@ -30,8 +28,6 @@ class EtudiantSousCommission
     public string $decision = '';
 
     public float $moyenneSemestre;
-
-    public Semestre $semestre;
     public float $moyenneSemestrePenalisee;
     public float $bonif = 0;
     public string $proposition = '';
@@ -40,10 +36,8 @@ class EtudiantSousCommission
     /**
      * EtudiantSousCommission constructor.
      */
-    public function __construct(Etudiant $etudiant, Semestre $semestre)
+    public function __construct(public Etudiant $etudiant, public Semestre $semestre)
     {
-        $this->etudiant = $etudiant;
-        $this->semestre = $semestre;
     }
 
     public function calculMoyenneSemestreMatiere(): void

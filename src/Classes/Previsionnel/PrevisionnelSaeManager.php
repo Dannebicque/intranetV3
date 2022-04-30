@@ -19,16 +19,10 @@ use App\Repository\PrevisionnelSaeRepository;
 
 class PrevisionnelSaeManager extends AbstractPrevisionnelManager implements PrevisionnelManagerInterface
 {
-    public const TYPE = 'sae';
-    private PrevisionnelSaeRepository $previsionnelRepository;
-    private PrevisionnelSaeAdapter $previsionnelSaeAdapter;
+    public final const TYPE = 'sae';
 
-    public function __construct(
-        PrevisionnelSaeRepository $previsionnelRepository,
-        PrevisionnelSaeAdapter $previsionnelSaeAdapter
-    ) {
-        $this->previsionnelRepository = $previsionnelRepository;
-        $this->previsionnelSaeAdapter = $previsionnelSaeAdapter;
+    public function __construct(private readonly PrevisionnelSaeRepository $previsionnelRepository, private readonly PrevisionnelSaeAdapter $previsionnelSaeAdapter)
+    {
     }
 
     public function getPrevisionnelPersonnelAnnee(Personnel $personnel, int $annee = 0): PrevisionnelCollection

@@ -22,17 +22,17 @@ class ApcNiveau extends BaseEntity
 {
     use LifeCycleTrait;
 
-    public const NIVEAU_1 = 'Novice';
-    public const NIVEAU_2 = 'Intermédiaire';
-    public const NIVEAU_3 = 'Compétent';
+    public final const NIVEAU_1 = 'Novice';
+    public final const NIVEAU_2 = 'Intermédiaire';
+    public final const NIVEAU_3 = 'Compétent';
 
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $libelle = null;
 
     #[ORM\ManyToOne(targetEntity: ApcCompetence::class, inversedBy: 'apcNiveaux')]
     private ?ApcCompetence $competence = null;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private ?int $ordre = null;
 
     #[ORM\ManyToOne(targetEntity: Annee::class, inversedBy: 'apcNiveaux')]

@@ -17,11 +17,11 @@ use App\Repository\PrevisionnelRepository;
 
 class PrevisionnelSectionAdapter extends AbstractSectionAdapter
 {
-    public const ENTITY = Previsionnel::class;
-    public const FIELD_LIBELLE = 'libelle';
-    public const FIELD_PERSONNEL = 'libelle';
-    public const FIELD_CODE = 'codeMatiere';
-    public const LABEL = 'previsionnel';
+    public final const ENTITY = Previsionnel::class;
+    public final const FIELD_LIBELLE = 'libelle';
+    public final const FIELD_PERSONNEL = 'libelle';
+    public final const FIELD_CODE = 'codeMatiere';
+    public final const LABEL = 'previsionnel';
 
     public function __construct(
         protected PrevisionnelManager $previsionnelManager,

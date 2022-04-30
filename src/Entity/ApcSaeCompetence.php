@@ -20,19 +20,11 @@ class ApcSaeCompetence extends BaseEntity
 {
     use LifeCycleTrait;
 
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private float $coefficient = 0;
 
-    #[ORM\ManyToOne(targetEntity: ApcSae::class, inversedBy: 'apcSaeCompetences')]
-    private ?ApcSae $sae;
-
-    #[ORM\ManyToOne(targetEntity: ApcCompetence::class, inversedBy: 'apcSaeCompetences')]
-    private ?ApcCompetence $competence;
-
-    public function __construct(?ApcSae $sae, ?ApcCompetence $competence)
+    public function __construct(#[ORM\ManyToOne(targetEntity: ApcSae::class, inversedBy: 'apcSaeCompetences')] private ?\App\Entity\ApcSae $sae, #[ORM\ManyToOne(targetEntity: ApcCompetence::class, inversedBy: 'apcSaeCompetences')] private ?\App\Entity\ApcCompetence $competence)
     {
-        $this->sae = $sae;
-        $this->competence = $competence;
     }
 
     public function getSae(): ?ApcSae

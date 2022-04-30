@@ -29,7 +29,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/but')]
 class ButMmiController extends AbstractController
 {
-    public function __construct(private DiplomeRepository $diplomeRepository)
+    public function __construct(private readonly DiplomeRepository $diplomeRepository)
     {
     }
 

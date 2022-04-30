@@ -44,15 +44,11 @@ use UnitEnum;
 
 class AbsenceJustificatifTableType extends TableType
 {
-    private ?Semestre $semestre;
-    private ?AnneeUniversitaire $anneeUniversitaire;
-    private CsrfTokenManagerInterface $csrfToken;
-    private RouterInterface $router;
+    private ?Semestre $semestre = null;
+    private ?AnneeUniversitaire $anneeUniversitaire = null;
 
-    public function __construct(CsrfTokenManagerInterface $csrfToken, RouterInterface $router)
+    public function __construct(private readonly CsrfTokenManagerInterface $csrfToken, private readonly RouterInterface $router)
     {
-        $this->csrfToken = $csrfToken;
-        $this->router = $router;
     }
 
     public function buildTable(TableBuilder $builder, array $options): void
@@ -70,17 +66,13 @@ class AbsenceJustificatifTableType extends TableType
         $builder->addFilter('etat_demande', EnumType::class, [
             'class' => AbsenceJustificatifEnum::class,
             'required' => false,
-            'choice_label' => static function (UnitEnum $choice): string {
-                return 'absence_justificatif.'.$choice->value;
-            },
+            'choice_label' => static fn(UnitEnum $choice): string => 'absence_justificatif.'.$choice->value,
             'placeholder' => 'Etat de la demande',
         ]);
 
         $builder->addFilter('groupe', EntityType::class, [
             'class' => Groupe::class,
-            'query_builder' => function (GroupeRepository $groupeRepository) {
-                return $groupeRepository->findBySemestreBuilder($this->semestre);
-            },
+            'query_builder' => fn(GroupeRepository $groupeRepository) => $groupeRepository->findBySemestreBuilder($this->semestre),
             'choice_label' => 'display',
             'required' => false,
             'placeholder' => 'Filtrer par groupe',

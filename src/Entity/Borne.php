@@ -25,46 +25,46 @@ class Borne extends BaseEntity
 {
     use LifeCycleTrait;
 
-    public const ICONES = [
+    public final const ICONES = [
         'information' => 'fas fa-info-circle',
         'danger' => 'fas fa-exclamation-circle',
         'demande' => 'fas fa-question-circle',
     ];
 
-    public const ICONES_CHOICE = [
+    public final const ICONES_CHOICE = [
         'fas fa-info-circle' => 'fas fa-info-circle',
         'fas fa-exclamation-circle' => 'fas fa-exclamation-circle',
         'fas fa-question-circle' => 'fas fa-question-circle',
     ];
 
-    public const COULEURS = ['Rouge' => '#FF0000', 'Vert' => '#00FF00', 'Bleu' => '#0000FF'];
+    public final const COULEURS = ['Rouge' => '#FF0000', 'Vert' => '#00FF00', 'Bleu' => '#0000FF'];
 
     #[Groups(groups: ['bornes_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 40)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 40)]
     private ?string $icone = null;
 
     #[Groups(groups: ['bornes_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 20)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20)]
     private ?string $couleur = null;
 
     #[Groups(groups: ['bornes_administration'])]
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT)]
     private ?string $message = null;
 
     #[Groups(groups: ['bornes_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
     private ?string $url = null;
 
     #[Groups(groups: ['bornes_administration'])]
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE)]
     private ?CarbonInterface $dateDebutPublication;
 
     #[Groups(groups: ['bornes_administration'])]
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE)]
     private ?CarbonInterface $dateFinPublication;
 
     #[Groups(groups: ['bornes_administration'])]
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private ?bool $visible = true;
 
     #[Groups(groups: ['bornes_administration'])]

@@ -87,8 +87,8 @@ class EtudiantRepository extends ServiceEntityRepository
                     break;
             }
         } else {
-            $qb->orderBy('u.nom', 'ASC')
-                ->addOrderBy('u.prenom', 'ASC');
+            $qb->orderBy('u.nom', \Doctrine\Common\Collections\Criteria::ASC)
+                ->addOrderBy('u.prenom', \Doctrine\Common\Collections\Criteria::ASC);
         }
 
         if ($query) {
@@ -115,8 +115,8 @@ class EtudiantRepository extends ServiceEntityRepository
             ->where('e.semestre = :semestre')
             ->andWhere('e.anneeSortie = 0')
             ->setParameter('semestre', $semestre)
-            ->orderBy('e.nom', 'ASC')
-            ->addOrderBy('e.prenom', 'ASC');
+            ->orderBy('e.nom', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('e.prenom', \Doctrine\Common\Collections\Criteria::ASC);
     }
 
     public function findBySemestre(Semestre $semestre): array
@@ -179,8 +179,8 @@ class EtudiantRepository extends ServiceEntityRepository
             ++$i;
         }
 
-        return $query->orderBy('e.nom', 'ASC')
-            ->addOrderBy('e.prenom', 'ASC')
+        return $query->orderBy('e.nom', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('e.prenom', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -197,8 +197,8 @@ class EtudiantRepository extends ServiceEntityRepository
             ->andWhere('p.departement = :departement')
             ->setParameter('needle', '%'.$needle.'%')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('p.nom', 'ASC')
-            ->orderBy('p.prenom', 'ASC')
+            ->orderBy('p.nom', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('p.prenom', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -213,8 +213,8 @@ class EtudiantRepository extends ServiceEntityRepository
             ->orWhere('p.numEtudiant LIKE :needle')
             ->orWhere('p.numIne LIKE :needle')
             ->setParameter('needle', '%'.$needle.'%')
-            ->orderBy('p.nom', 'ASC')
-            ->orderBy('p.prenom', 'ASC')
+            ->orderBy('p.nom', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('p.prenom', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

@@ -20,16 +20,8 @@ class TwigTemplate extends BaseEntity
 {
     use LifeCycleTrait;
 
-    #[ORM\Column(type: Types::STRING, length: 255)]
-    private ?string $name;
-
-    #[ORM\Column(type: Types::TEXT)]
-    private ?string $source;
-
-    public function __construct(string $name, string $source)
+    public function __construct(#[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)] private ?string $name, #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT)] private ?string $source)
     {
-        $this->name = $name;
-        $this->source = $source;
     }
 
     public function getName(): ?string

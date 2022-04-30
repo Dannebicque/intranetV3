@@ -28,14 +28,11 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class DepartementFixtures extends Fixture implements DependentFixtureInterface
 {
-    public const DEPARTEMENT_REFERENCE = 'departement';
-    public const SEMESTRE_REFERENCE = 'semestre';
+    public final const DEPARTEMENT_REFERENCE = 'departement';
+    public final const SEMESTRE_REFERENCE = 'semestre';
 
-    private UserPasswordHasherInterface $encoder;
-
-    public function __construct(UserPasswordHasherInterface $encoder)
+    public function __construct(private readonly UserPasswordHasherInterface $encoder)
     {
-        $this->encoder = $encoder;
     }
 
     /**

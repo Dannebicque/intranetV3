@@ -17,15 +17,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class CASAuthenticationFailureEvent extends Event
 {
-    private Request $request;
-    private AuthenticationException $exception;
-    private Response $response;
-
-    public function __construct(Request $request, AuthenticationException $exception, Response $response)
+    public function __construct(private readonly Request $request, private readonly AuthenticationException $exception, private Response $response)
     {
-        $this->request = $request;
-        $this->exception = $exception;
-        $this->response = $response;
     }
 
     public function getResponse(): Response
@@ -50,6 +43,6 @@ class CASAuthenticationFailureEvent extends Event
 
     public function getExceptionType(): string
     {
-        return get_class($this->exception);
+        return $this->exception::class;
     }
 }

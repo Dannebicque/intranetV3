@@ -16,18 +16,10 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class GenereCodeApogee
 {
-    protected EntityManagerInterface $entityManager;
-    protected ApcRessourceRepository $apcRessourceRepository;
-    protected ApcSaeRepository $apcSaeRepository;
-    private ?Diplome $diplome;
+    private ?Diplome $diplome = null;
 
-    public function __construct(EntityManagerInterface $entityManager,
-        ApcRessourceRepository $apcRessourceRepository,
-        ApcSaeRepository $apcSaeRepository)
+    public function __construct(protected EntityManagerInterface $entityManager, protected ApcRessourceRepository $apcRessourceRepository, protected ApcSaeRepository $apcSaeRepository)
     {
-        $this->entityManager = $entityManager;
-        $this->apcSaeRepository = $apcSaeRepository;
-        $this->apcRessourceRepository = $apcRessourceRepository;
     }
 
     public function checkDiplome(string $arg1): bool
@@ -58,7 +50,7 @@ class GenereCodeApogee
 
                 $ressources = $this->apcRessourceRepository->findBySemestre($semestre);
                 foreach ($ressources as $ressource) {
-                    if (1 === count($ressource->getApcRessourceCompetences())) {
+                    if (1 === (is_countable($ressource->getApcRessourceCompetences()) ? count($ressource->getApcRessourceCompetences()) : 0)) {
                         $ue = $ressource->getApcRessourceCompetences()[0]->getCompetence()->getCouleur();
                         $ressource->setCodeElement($debut.$semestre->getOrdreLmd().$ue[1].substr($ressource->getCodeMatiere(),
                                 -2));
@@ -70,7 +62,7 @@ class GenereCodeApogee
 
                 $saes = $this->apcSaeRepository->findBySemestre($semestre);
                 foreach ($saes as $sae) {
-                    if (1 === count($sae->getApcSaeCompetences())) {
+                    if (1 === (is_countable($sae->getApcSaeCompetences()) ? count($sae->getApcSaeCompetences()) : 0)) {
                         $ue = $sae->getApcSaeCompetences()[0]->getCompetence()->getCouleur();
                         $sae->setCodeElement($debut.$semestre->getOrdreLmd().$ue[1].((int) substr($sae->getCodeMatiere(),
                                     -2) + 50));

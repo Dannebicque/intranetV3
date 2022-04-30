@@ -18,7 +18,7 @@ use App\Entity\Semestre;
 
 class PrevisionnelSaeRepository extends PrevisionnelRepository
 {
-    public const TYPE = 'sae';
+    public final const TYPE = 'sae';
 
     public function findPrevisionnelEnseignantComplet(Personnel $personnel, int $annee): array
     {
@@ -86,16 +86,16 @@ class PrevisionnelSaeRepository extends PrevisionnelRepository
         return $this->createQueryBuilder('p')
             ->leftJoin(Personnel::class, 'pers', 'WITH', 'p.personnel = pers.id')
             ->innerJoin(ApcSae::class, 'm', 'WITH', 'p.idMatiere = m.id')
-            ->innerJoin(Semestre::class, 's', 'WITH', 'm.semestre = s.id')
-            ->select('p.id as id_previsionnel, p.annee, p.referent, p.nbHCm, p.nbHTd, p.nbHTp, p.nbGrCm, p.nbGrTd, p.nbGrTp, m.id as id_sae, m.libelle, m.codeMatiere, m.codeElement as matiere_code_element,  pers.id as id_personnel, pers.nom, pers.prenom, pers.numeroHarpege, pers.mailUniv, pers.nbHeuresService, s.id as id_semestre, s.libelle as libelle_semestre')
+            //->innerJoin(Semestre::class, 's', 'WITH', 'm.semestre = s.id')
+            ->select('p.id as id_previsionnel, p.annee, p.referent, p.nbHCm, p.nbHTd, p.nbHTp, p.nbGrCm, p.nbGrTd, p.nbGrTp, m.id as id_sae, m.libelle, m.codeMatiere, m.codeElement as matiere_code_element,  pers.id as id_personnel, pers.nom, pers.prenom, pers.numeroHarpege, pers.mailUniv, pers.nbHeuresService')
             ->where('p.annee = :annee')
             ->andWhere('p.idMatiere = :matiere')
             ->andWhere('p.typeMatiere = :type')
             ->setParameter('annee', $annee)
             ->setParameter('type', self::TYPE)
             ->setParameter('matiere', $matiere)
-            ->orderBy('pers.nom', 'ASC')
-            ->orderBy('pers.prenom', 'ASC')
+            ->orderBy('pers.nom', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('pers.prenom', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -112,7 +112,7 @@ class PrevisionnelSaeRepository extends PrevisionnelRepository
             ->setParameter('type', self::TYPE)
             ->setParameter('annee', $annee)
             ->setParameter('semestre', $semestre->getId())
-            ->orderBy('m.codeMatiere', 'ASC')
+            ->orderBy('m.codeMatiere', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -131,7 +131,7 @@ class PrevisionnelSaeRepository extends PrevisionnelRepository
             ->setParameter('annee', $annee)
             ->setParameter('semestre', $semestre->getId())
             ->setParameter('personnel', $personnel->getId())
-            ->orderBy('m.codeMatiere', 'ASC')
+            ->orderBy('m.codeMatiere', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -151,8 +151,8 @@ class PrevisionnelSaeRepository extends PrevisionnelRepository
             ->setParameter('personnel', $personnel->getId())
             ->setParameter('type', self::TYPE)
             ->setParameter('matiere', $matiere)
-            ->orderBy('pers.nom', 'ASC')
-            ->orderBy('pers.prenom', 'ASC')
+            ->orderBy('pers.nom', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('pers.prenom', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

@@ -24,10 +24,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TableBuilder
 {
-    protected TableBuilderHelper $helper;
-
-    protected TableType $type;
-
     protected array $options = [];
 
     protected array $columnsData = [];
@@ -43,13 +39,10 @@ class TableBuilder
      * DataTableBuilder constructor.
      */
     public function __construct(
-        TableBuilderHelper $helper,
-        TableType $type,
+        protected TableBuilderHelper $helper,
+        protected TableType $type,
         array $options = []
     ) {
-        $this->helper = $helper;
-        $this->type = $type;
-
         $this->resolveOptions($options);
 
         $this->widgetBuilder = $this->helper->createWidgetBuilder();
@@ -70,7 +63,7 @@ class TableBuilder
 
         // Configure options from bundle config
         $resolver
-            ->setDefault('id', HtmlUtils::type_class_to_id(get_class($this->type)))
+            ->setDefault('id', HtmlUtils::type_class_to_id($this->type::class))
             ->setDefault('page_length', 30)
             ->setDefault('page_active', 1)
             ->setDefault('class', 'table table-striped table-centered dt-responsive w-100');

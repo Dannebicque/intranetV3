@@ -26,25 +26,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 )]
 class UpdateEtudiantApogeeCommand extends Command
 {
-    private AnneeRepository $anneeRepository;
-    private EtudiantRepository $etudiantRepository;
-    private ApogeeEtudiant $apogeeEtudiant;
-    private BacRepository $bacRepository;
-    private EntityManagerInterface $entityManager;
-
     public function __construct(
-        AnneeRepository $anneeRepository,
-        EtudiantRepository $etudiantRepository,
-        ApogeeEtudiant $apogeeEtudiant,
-        BacRepository $bacRepository,
-        EntityManagerInterface $entityManager
+        private readonly AnneeRepository $anneeRepository,
+        private readonly EtudiantRepository $etudiantRepository,
+        private readonly ApogeeEtudiant $apogeeEtudiant,
+        private readonly BacRepository $bacRepository,
+        private readonly EntityManagerInterface $entityManager
     ) {
-        $this->anneeRepository = $anneeRepository;
-        $this->etudiantRepository = $etudiantRepository;
-        $this->apogeeEtudiant = $apogeeEtudiant;
-        $this->bacRepository = $bacRepository;
-        $this->entityManager = $entityManager;
-
         parent::__construct();
     }
 

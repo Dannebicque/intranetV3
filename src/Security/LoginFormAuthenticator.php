@@ -28,11 +28,8 @@ class LoginFormAuthenticator extends AbstractAuthenticator implements Authentica
 {
     use TargetPathTrait;
 
-    private RouterInterface $router;
-
-    public function __construct(RouterInterface $router)
+    public function __construct(private readonly RouterInterface $router)
     {
-        $this->router = $router;
     }
 
     public function supports(Request $request): ?bool

@@ -26,46 +26,46 @@ class Scolarite extends BaseEntity
     use UuidTrait;
     use LifeCycleTrait;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private ?int $ordre = null;
 
     #[ORM\ManyToOne(targetEntity: Semestre::class)]
     private ?Semestre $semestre = null;
 
-    #[ORM\Column(type: Types::STRING, length: 10)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 10)]
     private string $decision = Constantes::SEMESTRE_EN_COURS;
 
-    #[ORM\Column(type: Types::STRING, length: 10, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 10, nullable: true)]
     private ?string $proposition = null;
 
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private ?float $moyenne = 0;
 
     #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'scolarites')]
     private ?Etudiant $etudiant = null;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private int $nbAbsences = 0;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
     private ?string $commentaire = null;
 
     #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class, inversedBy: 'scolarites')]
     private ?AnneeUniversitaire $anneeUniversitaire = null;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $diffuse = false;
 
     #[ORM\ManyToOne(targetEntity: ScolaritePromo::class, inversedBy: 'scolarites')]
     private ?ScolaritePromo $scolaritePromo = null;
 
-    #[ORM\Column(type: Types::ARRAY, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::ARRAY, nullable: true)]
     private array $moyennesMatieres = [];
 
-    #[ORM\Column(type: Types::ARRAY, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::ARRAY, nullable: true)]
     private array $moyennesUes = [];
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private int $rang = -1;
     // idUe => ['moyenne' => ..., 'rang' => ...],
 

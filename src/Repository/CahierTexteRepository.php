@@ -36,7 +36,7 @@ class CahierTexteRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('c')
             ->where('c.personnel = :personnel')
             ->setParameter('personnel', $getId)
-            ->orderBy('c.dateRetour', 'DESC')
+            ->orderBy('c.dateRetour', \Doctrine\Common\Collections\Criteria::DESC)
             ->getQuery()
             ->getResult();
     }
@@ -46,7 +46,7 @@ class CahierTexteRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('c')
             ->where('c.semestre = :semestre')
             ->setParameter('semestre', $semestre->getId())
-            ->orderBy('c.dateRetour', 'DESC')
+            ->orderBy('c.dateRetour', \Doctrine\Common\Collections\Criteria::DESC)
             ->getQuery()
             ->getResult();
     }

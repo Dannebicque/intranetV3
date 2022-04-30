@@ -26,18 +26,18 @@ class ApcSae extends AbstractMatiere implements MatiereEntityInterface
 {
     use LifeCycleTrait;
 
-    public const SOURCE = 'sae';
+    public final const SOURCE = 'sae';
 
     #[ORM\ManyToOne(targetEntity: Semestre::class, fetch: 'EAGER', inversedBy: 'apcSaes')]
     private ?Semestre $semestre = null;
 
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private float $projetPpn = 0;
 
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private float $projetFormation = 0;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
     private ?string $livrables = null;
 
     /**
@@ -58,10 +58,10 @@ class ApcSae extends AbstractMatiere implements MatiereEntityInterface
     #[ORM\OneToMany(mappedBy: 'sae', targetEntity: ApcSaeApprentissageCritique::class, cascade: ['persist', 'remove'])]
     private Collection $apcSaeApprentissageCritiques;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
     private ?string $exemples = null;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $bonification = false;
 
     public function __construct()

@@ -17,13 +17,8 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class AbsenceNoteVoter extends Voter
 {
-    protected AbstractVoter $abstractVoter;
-    protected PrevisionnelRepository $previsionnelRepository;
-
-    public function __construct(AbstractVoter $abstractVoter, PrevisionnelRepository $previsionnelRepository)
+    public function __construct(protected AbstractVoter $abstractVoter, protected PrevisionnelRepository $previsionnelRepository)
     {
-        $this->abstractVoter = $abstractVoter;
-        $this->previsionnelRepository = $previsionnelRepository;
     }
 
     protected function supports(string $attribute, $subject): bool

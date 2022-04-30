@@ -23,8 +23,8 @@ class AlternanceFicheSuivi extends BaseEntity
 {
     use LifeCycleTrait;
 
-    public const VISITE_PHYSIQUE = 'v';
-    public const VISITE_TELEPHONIQUE = 't';
+    public final const VISITE_PHYSIQUE = 'v';
+    public final const VISITE_TELEPHONIQUE = 't';
     protected static array $tabTexte = [
         0 => 'Non applicable',
         1 => 'Faible',
@@ -41,37 +41,37 @@ class AlternanceFicheSuivi extends BaseEntity
         4 => 'Excellent',
     ];
 
-    #[ORM\Column(type: Types::STRING, length: 1)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 1)]
     private string $methode = self::VISITE_PHYSIQUE;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT)]
     private ?string $commentaire = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT)]
     private ?string $missions = null;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private ?int $integration = null;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private ?int $initiative = null;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private ?int $adaptation = null;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private ?int $performance = null;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private ?int $delais = null;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private ?int $comportement = null;
 
     #[ORM\ManyToOne(targetEntity: Alternance::class, inversedBy: 'alternanceFicheSuivis')]
     private ?Alternance $alternance = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE)]
     private ?CarbonInterface $date = null;
 
     /**

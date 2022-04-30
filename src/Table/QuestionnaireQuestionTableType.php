@@ -34,11 +34,8 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class QuestionnaireQuestionTableType extends TableType
 {
-    private CsrfTokenManagerInterface $csrfToken;
-
-    public function __construct(CsrfTokenManagerInterface $csrfToken)
+    public function __construct(private readonly CsrfTokenManagerInterface $csrfToken)
     {
-        $this->csrfToken = $csrfToken;
     }
 
     public function buildTable(TableBuilder $builder, array $options): void
@@ -62,9 +59,7 @@ class QuestionnaireQuestionTableType extends TableType
         $builder->addColumn('type', TypeQuestionColumnType::class, ['label' => 'table.type']);
         $builder->addColumn('questionnaireQuestionTags', ManyColumnType::class, [
             'label' => 'table.questionnaireQuestionTags',
-            'one_renderer' => function ($elem) {
-                return '<span class="badge bg-primary me-1">'.$elem->getLibelle().'</span>';
-            },
+            'one_renderer' => fn($elem) => '<span class="badge bg-primary me-1">'.$elem->getLibelle().'</span>',
         ]);
         $builder->addColumn('auteur', PersonnelColumnType::class, ['label' => 'table.auteur']);
         $builder->addColumn('obligatoire', BooleanColumnType::class, ['label' => 'table.obligatoire']);

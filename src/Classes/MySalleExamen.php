@@ -37,22 +37,22 @@ use Twig\Error\SyntaxError;
 
 class MySalleExamen
 {
-    protected ?SalleExamen $salle;
-    protected ?TypeGroupe $typeGroupe;
-    protected ?Matiere $matiere;
+    protected ?SalleExamen $salle = null;
+    protected ?TypeGroupe $typeGroupe = null;
+    protected ?Matiere $matiere = null;
     private array $requestgroupes;
 
     /**
      * MySalleExamen constructor.
      */
     public function __construct(
-        private TypeMatiereManager $typeMatiereManager,
-        private TypeGroupeRepository $typeGroupeRepository,
-        private PersonnelRepository $personnelRepository,
-        private SalleExamenRepository $salleExamenRepository,
-        private GroupeRepository $groupeRepository,
-        private EtudiantRepository $etudiantRepository,
-        private MyPDF $myPdf
+        private readonly TypeMatiereManager $typeMatiereManager,
+        private readonly TypeGroupeRepository $typeGroupeRepository,
+        private readonly PersonnelRepository $personnelRepository,
+        private readonly SalleExamenRepository $salleExamenRepository,
+        private readonly GroupeRepository $groupeRepository,
+        private readonly EtudiantRepository $etudiantRepository,
+        private readonly MyPDF $myPdf
     ) {
     }
 
@@ -130,7 +130,7 @@ class MySalleExamen
     private function calculPlaces(): array
     {
         $k = 0;
-        $tabinterdit = explode(';', $this->salle->getPlacesInterdites());
+        $tabinterdit = explode(';', (string) $this->salle->getPlacesInterdites());
         $tabplace = [];
 
         $nbCol = $this->salle->getNbColonnes();

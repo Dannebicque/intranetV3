@@ -198,7 +198,7 @@ class AppExtension extends AbstractExtension
 
     public function keyWords(?string $text): string
     {
-        $t = explode(',', $text);
+        $t = explode(',', (string) $text);
         $html = '';
         foreach ($t as $word) {
             if ('' !== trim($word)) {

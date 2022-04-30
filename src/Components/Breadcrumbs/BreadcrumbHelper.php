@@ -18,7 +18,7 @@ class BreadcrumbHelper
     private array $breadcrumbs = [];
 
     public function __construct(
-        private RouterInterface $router
+        private readonly RouterInterface $router
     ) {
         $this->breadcrumbs[] = new Breadcrumb('dashboard', $this->router->generate('default_homepage'), 'fas fa-home');
     }

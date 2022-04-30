@@ -22,34 +22,34 @@ class Contact extends BaseEntity
     use LifeCycleTrait;
 
     #[Groups(groups: ['alternance_administration', 'stage_entreprise_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50, nullable: true)]
     private ?string $nom = null;
 
     #[Groups(groups: ['alternance_administration', 'stage_entreprise_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50, nullable: true)]
     private ?string $prenom = null;
 
     #[Groups(groups: ['alternance_administration', 'stage_entreprise_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
     private ?string $fonction = null;
 
     #[Groups(groups: ['alternance_administration', 'stage_entreprise_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 25, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 25, nullable: true)]
     private ?string $telephone = null;
 
     #[Groups(groups: ['alternance_administration', 'stage_entreprise_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
     private ?string $email = null;
 
     #[Groups(groups: ['alternance_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 25, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 25, nullable: true)]
     private ?string $portable = null;
 
     #[Groups(groups: ['alternance_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 3)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 3)]
     private ?string $civilite;
 
-    #[ORM\Column(type: Types::STRING, length: 25, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 25, nullable: true)]
     private ?string $fax = null;
 
     public function __construct()

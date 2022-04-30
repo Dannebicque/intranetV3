@@ -14,15 +14,12 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class BooleanColumnType extends PropertyColumnType
 {
-    protected TranslatorInterface $translator;
-
     /**
      * EnableColumnType constructor.
      */
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(protected TranslatorInterface $translator)
     {
         parent::__construct();
-        $this->translator = $translator;
     }
 
     public function renderProperty(mixed $value, array $options): string

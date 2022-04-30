@@ -16,7 +16,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class GenereGroupes
 {
-    protected EntityManagerInterface $entityManager;
     private Semestre $semestre;
 
     private TypeGroupe $tgCm;
@@ -24,9 +23,8 @@ class GenereGroupes
     private TypeGroupe $tgTd;
     private string $format;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(protected EntityManagerInterface $entityManager)
     {
-        $this->entityManager = $entityManager;
     }
 
     public function genereGroupesSemestre(Semestre $semestre, string $format): void

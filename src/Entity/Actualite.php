@@ -22,19 +22,15 @@ class Actualite extends BaseEntity
     use LifeCycleTrait;
 
     #[Groups(groups: ['actualite_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 150)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 150)]
     private ?string $titre = null;
 
     #[Groups(groups: ['actualite_administration'])]
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT)]
     private ?string $texte = null;
 
-    #[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'actualites')]
-    private ?Departement $departement;
-
-    public function __construct(Departement $departement)
+    public function __construct(#[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'actualites')] private ?\App\Entity\Departement $departement)
     {
-        $this->departement = $departement;
     }
 
     public function getTitre(): ?string

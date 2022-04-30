@@ -27,13 +27,13 @@ class ProjetEtudiant extends BaseEntity
     use UuidTrait;
     use LifeCycleTrait;
 
-    public const ETAT_PROJET_ATTENTE = 'ETAT_PROJET_ATTENTE';
-    public const ETAT_PROJET_AUTORISE = 'ETAT_PROJET_AUTORISE';
-    public const ETAT_PROJET_DEPOSE = 'ETAT_PROJET_DEPOSE';
-    public const ETAT_PROJET_VALIDE = 'ETAT_PROJET_VALIDE';
-    public const ETAT_PROJET_IMPRIME = 'ETAT_PROJET_IMPRIME';
-    public const DUREE_HEURE = 'h';
-    public const DUREE_JOUR = 'j';
+    public final const ETAT_PROJET_ATTENTE = 'ETAT_PROJET_ATTENTE';
+    public final const ETAT_PROJET_AUTORISE = 'ETAT_PROJET_AUTORISE';
+    public final const ETAT_PROJET_DEPOSE = 'ETAT_PROJET_DEPOSE';
+    public final const ETAT_PROJET_VALIDE = 'ETAT_PROJET_VALIDE';
+    public final const ETAT_PROJET_IMPRIME = 'ETAT_PROJET_IMPRIME';
+    public final const DUREE_HEURE = 'h';
+    public final const DUREE_JOUR = 'j';
 
     #[ORM\ManyToOne(targetEntity: ProjetPeriode::class, inversedBy: 'projetEtudiants')]
     private ?ProjetPeriode $projetPeriode = null;
@@ -41,37 +41,37 @@ class ProjetEtudiant extends BaseEntity
     #[ORM\ManyToOne(targetEntity: Entreprise::class, cascade: ['persist', 'remove'], inversedBy: 'projetEtudiants')]
     private ?Entreprise $organisme = null;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $tempComplet = true;
 
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private float $duree = 8;
 
-    #[ORM\Column(type: Types::STRING, length: 10)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 10)]
     private string $uniteDuree = self::DUREE_HEURE;
 
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
     private ?string $sujet = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
     private ?string $activitesConfiees = null;
 
     #[ORM\ManyToMany(targetEntity: Etudiant::class, inversedBy: 'projetEtudiants')]
     private Collection $etudiants;
 
-    #[ORM\Column(type: Types::STRING, length: 30)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 30)]
     private string $etatProjet = self::ETAT_PROJET_ATTENTE;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateAutorise = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateDepose = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateValidation = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateImprime = null;
 
     public function __construct()

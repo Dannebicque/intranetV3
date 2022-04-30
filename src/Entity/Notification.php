@@ -23,9 +23,9 @@ class Notification extends BaseEntity
     use UuidTrait;
     use LifeCycleTrait;
 
-    public const ETUDIANT = 'e';
-    public const PERSONNEL = 'p';
-    public const TABICONE = [
+    public final const ETUDIANT = 'e';
+    public final const PERSONNEL = 'p';
+    public final const TABICONE = [
         'carnet.added' => 'fas fa-bookmark',
         'absence.removed' => 'fas fa-bookmark',
         'absence.added' => 'fas fa-bookmark',
@@ -46,7 +46,7 @@ class Notification extends BaseEntity
         'decision.justificatif.refuse' => 'fas fa-ban',
     ];
 
-    public const TABCOLOR = [
+    public final const TABCOLOR = [
         'carnet.added' => 'info',
         'absence.removed' => 'success',
         'absence.added' => 'danger',
@@ -70,16 +70,16 @@ class Notification extends BaseEntity
     #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'notifications')]
     private ?Etudiant $etudiant = null;
 
-    #[ORM\Column(type: Types::STRING, length: 100)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 100)]
     private ?string $type = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $url = null;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $lu = false;
 
-    #[ORM\Column(type: Types::STRING, length: 1)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 1)]
     private ?string $typeUser = null;
 
     #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'notifications')]

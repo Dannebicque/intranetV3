@@ -24,7 +24,7 @@ class Favori extends BaseEntity
     #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'etudiantDemandeur')]
     private ?Etudiant $etudiantDemande = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE)]
     private ?CarbonInterface $dateAjout;
 
     public function __construct(Etudiant $etudiantDemandeur, Etudiant $etudiantDemande)

@@ -27,19 +27,16 @@ class MailerFromDatabase extends BaseMailer
 {
     private Email $mail;
 
-    private Environment $twig;
-
     /**
      * MailerFromDatabase constructor.
      */
     public function __construct(
-        Environment $twig,
+        private readonly Environment $twig,
         MailerInterface $mailer,
         TranslatorInterface $translator,
         Configuration $configuration
     ) {
         parent::__construct($mailer, $translator, $configuration);
-        $this->twig = $twig;
     }
 
     public function initEmail(): void

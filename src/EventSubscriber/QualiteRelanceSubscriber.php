@@ -18,15 +18,11 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class QualiteRelanceSubscriber implements EventSubscriberInterface
 {
-    private MailerFromTwig $mailer;
-
     /**
      * RegistrationNotifySubscriber constructor.
      */
-    public function __construct(
-        MailerFromTwig $mailer
-    ) {
-        $this->mailer = $mailer;
+    public function __construct(private readonly MailerFromTwig $mailer)
+    {
     }
 
     public static function getSubscribedEvents(): array

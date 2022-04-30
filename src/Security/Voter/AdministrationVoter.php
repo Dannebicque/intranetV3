@@ -20,11 +20,8 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class AdministrationVoter extends Voter
 {
-    protected AbstractVoter $abstractVoter;
-
-    public function __construct(AbstractVoter $abstractVoter)
+    public function __construct(protected AbstractVoter $abstractVoter)
     {
-        $this->abstractVoter = $abstractVoter;
     }
 
     protected function supports(string $attribute, $subject): bool

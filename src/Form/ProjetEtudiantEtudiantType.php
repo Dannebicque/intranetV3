@@ -39,9 +39,7 @@ class ProjetEtudiantEtudiantType extends AbstractType
             ->add('etudiants', EntityType::class, [
                 'class' => Etudiant::class,
                 'choice_label' => 'displayPr',
-                'query_builder' => function (EtudiantRepository $etudiantRepository) {
-                    return $etudiantRepository->findBySemestreBuilder($this->semestre);
-                },
+                'query_builder' => fn(EtudiantRepository $etudiantRepository) => $etudiantRepository->findBySemestreBuilder($this->semestre),
                 'multiple' => true,
                 'expanded' => true,
             ])

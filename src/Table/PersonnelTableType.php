@@ -33,12 +33,8 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class PersonnelTableType extends TableType
 {
-    private CsrfTokenManagerInterface $csrfToken;
-
-    public function __construct(
-        CsrfTokenManagerInterface $csrfToken
-    ) {
-        $this->csrfToken = $csrfToken;
+    public function __construct(private readonly CsrfTokenManagerInterface $csrfToken)
+    {
     }
 
     public function buildTable(TableBuilder $builder, array $options): void

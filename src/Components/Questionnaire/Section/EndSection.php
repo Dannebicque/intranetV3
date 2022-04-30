@@ -15,8 +15,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class EndSection extends AbstractSection
 {
-    public const LABEL = 'end.section';
-    public const DEFAULT_TEMPLATE = 'components/questionnaire/sections/end-section.html.twig';
+    public final const LABEL = 'end.section';
+    public final const DEFAULT_TEMPLATE = 'components/questionnaire/sections/end-section.html.twig';
 
     public ?string $texteFin = '';
     public ?string $titre = '';

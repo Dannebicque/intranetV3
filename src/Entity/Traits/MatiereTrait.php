@@ -13,10 +13,10 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait MatiereTrait
 {
-    #[ORM\Column(type: 'string', length: 15, nullable: true)]
-    private ?string $typeMatiere;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 15, nullable: true)]
+    private ?string $typeMatiere = null;
 
-    #[ORM\Column(type: 'integer')]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private int $idMatiere = 0;
 
     public function getTypeMatiere(): ?string

@@ -9,6 +9,7 @@
 
 namespace App\DTO;
 
+use App\Entity\Constantes;
 use App\Entity\Groupe;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
@@ -16,30 +17,30 @@ use Carbon\CarbonInterface;
 
 class EvenementEdt
 {
-    public ?string $source;
-    public ?int $id;
+    public ?string $source = null;
+    public ?int $id = null;
 
-    public ?string $date;
-    public ?string $jour;
+    public ?string $date = null;
+    public ?string $jour = null;
     /** @deprecated */
-    public ?float $duree;
+    public ?float $duree = null;
 
-    public ?CarbonInterface $heureDebut;
-    public ?CarbonInterface $heureFin;
+    public ?CarbonInterface $heureDebut = null;
+    public ?CarbonInterface $heureFin = null;
     public ?CarbonInterface $dateObjet = null;
 
     public ?string $matiere = '';
     public ?string $code_matiere = '';
-    public ?string $salle;
-    public ?string $personnel;
-    public ?string $groupe;
+    public ?string $salle = '';
+    public ?string $personnel = null;
+    public ?string $groupe = null;
 
     public ?Personnel $personnelObjet = null;
     public ?Groupe $groupeObjet = null;
 
-    public ?int $groupeId;
-    public ?string $typeIdMatiere;
-    public ?string $type_cours;
+    public ?int $groupeId = null;
+    public ?string $typeIdMatiere = null;
+    public ?string $type_cours = null;
     public ?string $texte = null;
 
     public ?Semestre $semestre = null;
@@ -48,6 +49,7 @@ class EvenementEdt
     public ?string $gridEnd = '';
 
     public ?string $couleur = '';
+    public bool $evaluation = false;
 
     /** @deprecated */
     public ?string $display = '';
@@ -72,15 +74,88 @@ class EvenementEdt
 
     public function getIdMatiere(): int
     {
-        $t = explode('_', $this->typeIdMatiere);
+        $t = explode('_', (string) $this->typeIdMatiere);
 
         return (int) $t[1];
     }
 
     public function getTypeMatiere(): string
     {
-        $t = explode('_', $this->typeIdMatiere);
+        $t = explode('_', (string) $this->typeIdMatiere);
 
         return $t[0];
+    }
+
+    public function debutToInt()
+    {
+        return Constantes::TAB_HEURES_INDEX[$this->heureDebut->format('H:i:s')];
+    }
+
+    public function largeur()
+    {
+        switch ($this->type_cours) {
+            case 'CM':
+            case 'cm':
+                return 0;
+            case 'TP':
+            case 'tp':
+                $taille = 4;
+
+                return 1;
+
+            case 'TD':
+            case 'td':
+                $taille = 12;
+
+                return 2;
+        }
+    }
+
+    public function duree()
+    {
+        $d = $this->heureFin;
+        $h = $d->diffInMinutes($this->heureDebut);
+
+        return $h / 30;
+    }
+
+    public function texteEvt()
+    {
+        if (null !== $this->texte) {
+            return $this->texte;
+        }
+
+        if ('' !== $this->matiere) {
+            return $this->matiere;
+        }
+
+        return null;
+    }
+
+    public function couleurEdt(): string
+    {
+        return strtolower($this->type_cours).'_'.$this->couleur;
+    }
+
+    public function displayEdt(): string
+    {
+        if ('' === $this->personnel && $this->personnelObjet === null) {
+            $inter = '';
+        } elseif ($this->personnel !== '') {
+            $inter = $this->personnel;
+        } else {
+            $inter = $this->personnelObjet->getNom();
+        }
+
+        return $this->isEvaluation().'<br />'.$this->salle.'<br />'.$inter.'<br />'.$this->groupe;
+    }
+
+    public function isEvaluation(): string
+    {
+        if (false === $this->evaluation) {
+            return $this->matiere;
+        }
+
+        return '* '.$this->matiere.' *';
     }
 }

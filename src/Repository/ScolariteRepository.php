@@ -49,9 +49,9 @@ class ScolariteRepository extends ServiceEntityRepository
             ->andWhere('e.promotion = :annee')
             ->setParameter('departement', $departement->getId())
             ->setParameter('annee', $annee)
-            ->orderBy('e.nom', 'asc')
-            ->orderBy('e.prenom', 'asc')
-            ->orderBy('p.ordre', 'asc')
+            ->orderBy('e.nom', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('e.prenom', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('p.ordre', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -61,7 +61,7 @@ class ScolariteRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('s')
             ->where('s.etudiant = :etudiant')
             ->setParameter('etudiant', $etudiant->getId())
-            ->orderBy('s.ordre', 'ASC')
+            ->orderBy('s.ordre', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -77,9 +77,9 @@ class ScolariteRepository extends ServiceEntityRepository
             ->andWhere('p.etudiant = :etudiant')
             ->setParameter('departement', $departement->getId())
             ->setParameter('etudiant', $etudiant->getId())
-            ->orderBy('e.nom', 'asc')
-            ->orderBy('e.prenom', 'asc')
-            ->orderBy('p.ordre', 'asc')
+            ->orderBy('e.nom', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('e.prenom', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('p.ordre', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

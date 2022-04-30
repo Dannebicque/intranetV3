@@ -21,14 +21,10 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SelectColumnType extends ColumnType
 {
-    protected TranslatorInterface $translator;
-    protected EntityManagerInterface $entityManager;
     protected PropertyAccessorInterface $accessor;
 
-    public function __construct(TranslatorInterface $translator, EntityManagerInterface $entityManager)
+    public function __construct(protected TranslatorInterface $translator, protected EntityManagerInterface $entityManager)
     {
-        $this->entityManager = $entityManager;
-        $this->translator = $translator;
         $this->accessor = PropertyAccess::createPropertyAccessor();
     }
 
@@ -92,9 +88,7 @@ class SelectColumnType extends ColumnType
         parent::configureOptions($resolver);
 
         $resolver
-            ->setDefault('property_path', function (Options $options) {
-                return $options['id'];
-            })
+            ->setDefault('property_path', fn(Options $options) => $options['id'])
             ->setDefault('order', false)
             ->setDefault('class', 'text-center row-selector')
             ->setDefault('class_select', 'form-control')

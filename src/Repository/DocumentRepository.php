@@ -38,7 +38,7 @@ class DocumentRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('d')
             ->where('d.typeDocument = :type')
             ->setParameter('type', $type)
-            ->orderBy('d.libelle', 'DESC');
+            ->orderBy('d.libelle', \Doctrine\Common\Collections\Criteria::DESC);
 
         if (true === $isEtudiant) {
             $query->andWhere('d.typeDestinataire = :typeDestinataire')
@@ -55,7 +55,7 @@ class DocumentRepository extends ServiceEntityRepository
             ->innerJoin(TypeDocument::class, 't', 'WITH', 'd.typeDocument = t.id')
             ->where('t.departement = :departement')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('d.libelle', 'ASC')
+            ->orderBy('d.libelle', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

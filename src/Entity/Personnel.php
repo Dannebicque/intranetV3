@@ -31,55 +31,55 @@ class Personnel extends Utilisateur implements UtilisateurInterface
 {
     use LifeCycleTrait;
 
-    public const PERMANENT = 'permanent';
-    public const VACATAIRE = 'vacataire';
-    public const CONTRACTUEL = 'contractuel';
-    public const MCF = 'MCF';
-    public const PU = 'PU';
-    public const PRAG = 'PRAG';
-    public const PRCE = 'PRCE';
-    public const ATER = 'ATER';
-    public const ASSISTANTE = 'ASS';
-    public const ADMINISTRATIF = 'ADM';
-    public const TECHNICIEN = 'TEC';
+    public final const PERMANENT = 'permanent';
+    public final const VACATAIRE = 'vacataire';
+    public final const CONTRACTUEL = 'contractuel';
+    public final const MCF = 'MCF';
+    public final const PU = 'PU';
+    public final const PRAG = 'PRAG';
+    public final const PRCE = 'PRCE';
+    public final const ATER = 'ATER';
+    public final const ASSISTANTE = 'ASS';
+    public final const ADMINISTRATIF = 'ADM';
+    public final const TECHNICIEN = 'TEC';
 
-    #[ORM\Column(type: Types::STRING, length: 15)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 15)]
     #[Groups(['personnel:read'])]
     protected ?string $statut = null;
 
-    #[ORM\Column(type: Types::STRING, length: 10, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 10, nullable: true)]
     protected ?string $posteInterne = null;
 
-    #[ORM\Column(type: Types::STRING, length: 20, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20, nullable: true)]
     protected ?string $telBureau = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
     protected ?string $responsabilites = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
     protected ?string $domaines = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
     protected ?string $entreprise = null;
 
-    #[ORM\Column(type: Types::STRING, length: 20, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20, nullable: true)]
     protected ?string $bureau1 = null;
 
-    #[ORM\Column(type: Types::STRING, length: 20, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20, nullable: true)]
     protected ?string $bureau2 = null;
 
-    #[ORM\Column(type: Types::INTEGER, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER, nullable: true)]
     protected ?string $numeroHarpege = null;
 
-    #[ORM\Column(type: Types::STRING, length: 10, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 10, nullable: true)]
     protected ?string $initiales = null;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private mixed $id;
 
-    #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50, nullable: true)]
     private ?string $cvName = '';
 
     /**
@@ -87,7 +87,7 @@ class Personnel extends Utilisateur implements UtilisateurInterface
      */
     private ?File $cvFile = null;
 
-    #[ORM\Column(type: Types::STRING, length: 50)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50)]
     private ?string $photoName = 'noimage.png';
 
     /**
@@ -128,7 +128,7 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: PersonnelDepartement::class)]
     private Collection $personnelDepartements;
 
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private float $nbHeuresService = 192;
 
     /**
@@ -171,10 +171,10 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     #[ORM\OneToMany(mappedBy: 'tuteurUniversitaire', targetEntity: Alternance::class)]
     private Collection $alternances;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $deleted = false;
 
-    #[ORM\Column(type: Types::STRING, length: 20, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20, nullable: true)]
     private ?string $couleur = null;
 
     /**
@@ -222,7 +222,7 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: MaterielCommunPret::class)]
     private Collection $materielCommunPrets;
 
-    #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50, nullable: true)]
     private ?string $signatureElectronique = null;
 
     /**
@@ -240,7 +240,7 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class, inversedBy: 'personnels')]
     private ?AnneeUniversitaire $anneeUniversitaire = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
     private ?string $configuration = null;
 
     /**

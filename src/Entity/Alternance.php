@@ -25,12 +25,12 @@ class Alternance extends BaseEntity
 {
     use LifeCycleTrait;
 
-    public const ALTERNANCE_APPRENTISSAGE = 'apprentissage';
-    public const ALTERNANCE_PROFESSIONALISATION = 'professionalisation';
-    public const ALTERNANCE_ETAT_INITIALISE = 'init';
-    public const ALTERNANCE_ETAT_COMPLETE = 'complete';
-    public const ALTERNANCE_ETAT_VALIDE = 'valide';
-    public const ALTERNANCE_ETAT_SANS = 'sans';
+    public final const ALTERNANCE_APPRENTISSAGE = 'apprentissage';
+    public final const ALTERNANCE_PROFESSIONALISATION = 'professionalisation';
+    public final const ALTERNANCE_ETAT_INITIALISE = 'init';
+    public final const ALTERNANCE_ETAT_COMPLETE = 'complete';
+    public final const ALTERNANCE_ETAT_VALIDE = 'valide';
+    public final const ALTERNANCE_ETAT_SANS = 'sans';
 
     #[Groups(groups: ['alternance_administration'])]
     #[ORM\OneToOne(targetEntity: Entreprise::class, cascade: ['persist', 'remove'])]
@@ -52,23 +52,26 @@ class Alternance extends BaseEntity
     private ?Personnel $tuteurUniversitaire = null;
 
     #[Groups(groups: ['alternance_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 20)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20)]
     private ?string $typeContrat;
 
     #[ORM\ManyToOne(targetEntity: Annee::class, inversedBy: 'alternances')]
     private ?Annee $annee = null;
 
-    #[ORM\Column(type: Types::STRING, length: 10)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 10)]
     private ?string $etat = null;
 
     #[Groups(groups: ['alternance_administration'])]
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateDebut = null;
 
     #[Groups(groups: ['alternance_administration'])]
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateFin = null;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\AlternanceFicheSuivi>|\App\Entity\AlternanceFicheSuivi[]
+     */
     #[ORM\OneToMany(mappedBy: 'alternance', targetEntity: AlternanceFicheSuivi::class)]
     private Collection $alternanceFicheSuivis;
 
@@ -78,7 +81,7 @@ class Alternance extends BaseEntity
     #[ORM\OneToOne(inversedBy: 'alternance', targetEntity: Adresse::class, cascade: ['persist', 'remove'])]
     private ?Adresse $adresseAlternance = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
     private ?string $sujet = null;
 
     public function __construct()

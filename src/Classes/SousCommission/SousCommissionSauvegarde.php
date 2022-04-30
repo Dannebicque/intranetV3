@@ -26,23 +26,11 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class SousCommissionSauvegarde
 {
-    private ScolaritePromoRepository $scolaritePromoRepository;
-
-    private ScolariteRepository $scolariteRepository;
-
-    private EntityManagerInterface $entityManager;
-
     /**
      * SousCommissionSauvegarde constructor.
      */
-    public function __construct(
-        ScolaritePromoRepository $scolaritePromoRepository,
-        ScolariteRepository $scolariteRepository,
-        EntityManagerInterface $entityManager
-    ) {
-        $this->scolaritePromoRepository = $scolaritePromoRepository;
-        $this->scolariteRepository = $scolariteRepository;
-        $this->entityManager = $entityManager;
+    public function __construct(private readonly ScolaritePromoRepository $scolaritePromoRepository, private readonly ScolariteRepository $scolariteRepository, private readonly EntityManagerInterface $entityManager)
+    {
     }
 
     public function sauvegardeTravail(SousCommissionInterface $sousCommission, array $matieres): SousCommissionTravail

@@ -22,27 +22,27 @@ class Adresse extends BaseEntity
     use LifeCycleTrait;
 
     #[Groups(groups: ['adresse'])]
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
     private ?string $adresse1 = '';
 
     #[Groups(groups: ['adresse'])]
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
     private ?string $adresse2 = '';
 
     #[Groups(groups: ['adresse'])]
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
     private ?string $adresse3 = '';
 
     #[Groups(groups: ['adresse'])]
-    #[ORM\Column(type: Types::STRING, length: 10, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 10, nullable: true)]
     private ?string $codePostal = '';
 
     #[Groups(groups: ['adresse'])]
-    #[ORM\Column(type: Types::STRING, length: 100, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 100, nullable: true)]
     private ?string $ville = '';
 
     #[Groups(groups: ['adresse'])]
-    #[ORM\Column(type: Types::STRING, length: 100, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 100, nullable: true)]
     private ?string $pays = 'France';
 
     #[ORM\OneToOne(mappedBy: 'adresseAlternance', targetEntity: Alternance::class, cascade: [

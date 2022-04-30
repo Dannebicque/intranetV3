@@ -57,7 +57,7 @@ class NoteRepository extends ServiceEntityRepository
         ?array $matieres,
         AnneeUniversitaire $annee
     ): ?array {
-        if (count($matieres) <= 0) {
+        if (count((array) $matieres) <= 0) {
             return null;
         }
 
@@ -67,7 +67,7 @@ class NoteRepository extends ServiceEntityRepository
             ->andWhere('n.etudiant = :etudiant')
             ->setParameter('annee', $annee->getId())
             ->setParameter('etudiant', $etudiant->getId())
-            ->addOrderBy('e.dateEvaluation', 'ASC');
+            ->addOrderBy('e.dateEvaluation', \Doctrine\Common\Collections\Criteria::ASC);
 
         return $query->andWhere(implode(' OR ', $this->getOrs($matieres, $query)))
             ->getQuery()

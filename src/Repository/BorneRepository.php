@@ -43,7 +43,7 @@ class BorneRepository extends ServiceEntityRepository
             ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
             ->where('d.departement = :departement')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('a.created', 'DESC');
+            ->orderBy('a.created', \Doctrine\Common\Collections\Criteria::DESC);
 
         if ($nbResult > 0) {
             $q->setMaxResults($nbResult);

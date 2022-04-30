@@ -16,18 +16,8 @@ class AuthenticationSuccessSubscriber implements EventSubscriberInterface
 {
     use TargetPathTrait;
 
-    private UrlGeneratorInterface $urlGenerator;
-    private RequestStack $session;
-    private DepartementRepository $departementRepository;
-
-    public function __construct(
-        DepartementRepository $departementRepository,
-        RequestStack $session,
-        UrlGeneratorInterface $urlGenerator
-    ) {
-        $this->urlGenerator = $urlGenerator;
-        $this->departementRepository = $departementRepository;
-        $this->session = $session;
+    public function __construct(private readonly DepartementRepository $departementRepository, private readonly RequestStack $session, private readonly UrlGeneratorInterface $urlGenerator)
+    {
     }
 
     public function onSecurityAuthenticationSuccess(AuthenticationEvent $event): RedirectResponse

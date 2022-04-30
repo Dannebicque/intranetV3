@@ -32,30 +32,18 @@ class EtudiantExportReleve
 
     private Etudiant $etudiant;
 
-    private MyPDF $myPdf;
-
-    private MyEvaluations $myEvaluations;
-
-    private string $dir;
-
-    private EtudiantNotes $etudiantNotes;
-
-    private TypeMatiereManager $typeMatiereManager;
+    private readonly string $dir;
 
     /**
      * EtudiantNotes constructor.
      */
     public function __construct(
-        TypeMatiereManager $typeMatiereManager,
-        EtudiantNotes $etudiantNotes,
-        MyPDF $myPdf,
+        private readonly TypeMatiereManager $typeMatiereManager,
+        private readonly EtudiantNotes $etudiantNotes,
+        private readonly MyPDF $myPdf,
         KernelInterface $kernel,
-        MyEvaluations $myEvaluations
+        private readonly MyEvaluations $myEvaluations
     ) {
-        $this->typeMatiereManager = $typeMatiereManager;
-        $this->etudiantNotes = $etudiantNotes;
-        $this->myEvaluations = $myEvaluations;
-        $this->myPdf = $myPdf;
         $this->dir = $kernel->getProjectDir().'/public/upload/temp/pdf/';
     }
 

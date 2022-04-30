@@ -36,12 +36,10 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class DateTableType extends TableType
 {
-    private CsrfTokenManagerInterface $csrfToken;
-    private ?Departement $departement;
+    private ?Departement $departement = null;
 
-    public function __construct(CsrfTokenManagerInterface $csrfToken)
+    public function __construct(private readonly CsrfTokenManagerInterface $csrfToken)
     {
-        $this->csrfToken = $csrfToken;
     }
 
     public function buildTable(TableBuilder $builder, array $options): void

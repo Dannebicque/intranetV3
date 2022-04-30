@@ -35,7 +35,7 @@ class ArticleCategorieRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('c')
             ->where('c.departement = :departement')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('c.libelle', 'ASC');
+            ->orderBy('c.libelle', \Doctrine\Common\Collections\Criteria::ASC);
     }
 
     public function findByDepartementJson(Departement $departement): array

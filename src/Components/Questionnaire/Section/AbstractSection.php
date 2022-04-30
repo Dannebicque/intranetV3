@@ -24,15 +24,13 @@ abstract class AbstractSection
     public ?int $id = null;
     public ?int $questionnaire_section_id = null;
     public int | string $ordre = 1;
-    public ?string $titre;
-    public ?string $text_explicatif;
+    public ?string $titre = null;
+    public ?string $text_explicatif = null;
 
     public int $nbParties = 1;
     public array $params = [];
     public bool $configurable = false;
     public AbstractSectionAdapter $abstractSectionAdapter;
-
-    public QuestionnaireRegistry $questionnaireRegistry;
     public \App\Components\Questionnaire\DTO\Section $section;
 
     protected Questions $questions;
@@ -42,9 +40,8 @@ abstract class AbstractSection
     public ?int $etudiant_id = null;
 
     public function __construct(
-        QuestionnaireRegistry $questionnaireRegistry)
+        public QuestionnaireRegistry $questionnaireRegistry)
     {
-        $this->questionnaireRegistry = $questionnaireRegistry;
         $this->questions = new Questions();
     }
 

@@ -22,14 +22,11 @@ use Twig\Error\SyntaxError;
 
 class MyAlternanceFicheSuivi
 {
-    private MyPDF $myPdf;
-
     /**
      * MyAlternanceFicheSuivi constructor.
      */
-    public function __construct(MyPDF $myPdf)
+    public function __construct(private readonly MyPDF $myPdf)
     {
-        $this->myPdf = $myPdf;
     }
 
     /**

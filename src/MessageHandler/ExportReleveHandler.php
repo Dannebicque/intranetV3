@@ -21,30 +21,11 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 class ExportReleveHandler implements MessageHandlerInterface
 {
-    private EtudiantExportReleve $etudiantExportReleve;
-    private SemestreRepository $semestreRepository;
-    private AnneeUniversitaireRepository $anneeUniversitaireRepository;
-    private PersonnelRepository $personnelRepository;
-    private MailerInterface $mailer;
-    private Configuration $configuration;
-
     /**
      * ExportReleveHandler constructor.
      */
-    public function __construct(
-        Configuration $configuration,
-        EtudiantExportReleve $etudiantExportReleve,
-        SemestreRepository $semestreRepository,
-        AnneeUniversitaireRepository $anneeUniversitaireRepository,
-        MailerInterface $mailer,
-        PersonnelRepository $personnelRepository
-    ) {
-        $this->etudiantExportReleve = $etudiantExportReleve;
-        $this->semestreRepository = $semestreRepository;
-        $this->anneeUniversitaireRepository = $anneeUniversitaireRepository;
-        $this->personnelRepository = $personnelRepository;
-        $this->mailer = $mailer;
-        $this->configuration = $configuration;
+    public function __construct(private readonly Configuration $configuration, private readonly EtudiantExportReleve $etudiantExportReleve, private readonly SemestreRepository $semestreRepository, private readonly AnneeUniversitaireRepository $anneeUniversitaireRepository, private readonly MailerInterface $mailer, private readonly PersonnelRepository $personnelRepository)
+    {
     }
 
     /**

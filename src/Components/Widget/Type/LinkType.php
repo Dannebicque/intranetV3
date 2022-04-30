@@ -18,16 +18,11 @@ use Symfony\Component\Routing\RouterInterface;
 
 class LinkType extends WidgetType
 {
-    protected RouterInterface $router;
-    protected ParameterBagInterface $parameterBag;
-
     /**
      * LinkType constructor.
      */
-    public function __construct(RouterInterface $router, ParameterBagInterface $parameterBag)
+    public function __construct(protected RouterInterface $router, protected ParameterBagInterface $parameterBag)
     {
-        $this->router = $router;
-        $this->parameterBag = $parameterBag;
     }
 
     public function buildView(WidgetView $view, array $options): void

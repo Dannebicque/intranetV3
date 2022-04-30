@@ -40,7 +40,7 @@ class UeRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('u')
             ->where('u.semestre = :semestre')
             ->setParameter('semestre', $semestre->getId())
-            ->orderBy('u.numeroUe', 'ASC');
+            ->orderBy('u.numeroUe', \Doctrine\Common\Collections\Criteria::ASC);
     }
 
     /**

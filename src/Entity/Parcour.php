@@ -24,11 +24,8 @@ class Parcour extends BaseEntity
     use LifeCycleTrait;
 
     #[Groups(groups: ['groupe_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $libelle = null;
-
-    #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'parcours')]
-    private Semestre $semestre;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Matiere>
@@ -36,7 +33,7 @@ class Parcour extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'parcours', targetEntity: Matiere::class)]
     private Collection $matieres;
 
-    #[ORM\Column(type: Types::STRING, length: 20)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20)]
     private ?string $codeElement = null;
 
     /**
@@ -45,9 +42,8 @@ class Parcour extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'parcours', targetEntity: Groupe::class)]
     private Collection $groupes;
 
-    public function __construct(Semestre $semestre)
+    public function __construct(#[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'parcours')] private Semestre $semestre)
     {
-        $this->semestre = $semestre;
         $this->matieres = new ArrayCollection();
         $this->groupes = new ArrayCollection();
     }

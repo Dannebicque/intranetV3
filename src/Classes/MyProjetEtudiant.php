@@ -31,9 +31,9 @@ class MyProjetEtudiant
      * MyProjetEtudiant constructor.
      */
     public function __construct(
-        private EntityManagerInterface $entityManger,
-        private EventDispatcherInterface $eventDispatcher,
-        private ProjetEtudiantRepository $projetEtudiantRepository
+        private readonly EntityManagerInterface $entityManger,
+        private readonly EventDispatcherInterface $eventDispatcher,
+        private readonly ProjetEtudiantRepository $projetEtudiantRepository
     ) {
     }
 

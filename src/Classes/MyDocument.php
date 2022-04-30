@@ -27,21 +27,12 @@ use Doctrine\ORM\EntityManagerInterface;
 class MyDocument
 {
     protected Document $document;
-    protected EntityManagerInterface $entityManager;
-    protected DocumentFavoriEtudiantRepository $documentFavoriEtudiantRepository;
-    protected DocumentFavoriPersonnelRepository $documentFavoriPersonnelRepository;
 
     /**
      * MyArticle constructor.
      */
-    public function __construct(
-        EntityManagerInterface $entityManager,
-        DocumentFavoriEtudiantRepository $documentFavoriEtudiantRepository,
-        DocumentFavoriPersonnelRepository $documentFavoriPersonnelRepository
-    ) {
-        $this->entityManager = $entityManager;
-        $this->documentFavoriEtudiantRepository = $documentFavoriEtudiantRepository;
-        $this->documentFavoriPersonnelRepository = $documentFavoriPersonnelRepository;
+    public function __construct(protected EntityManagerInterface $entityManager, protected DocumentFavoriEtudiantRepository $documentFavoriEtudiantRepository, protected DocumentFavoriPersonnelRepository $documentFavoriPersonnelRepository)
+    {
     }
 
     public function setDocument(Document $document): void

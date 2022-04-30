@@ -24,27 +24,15 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class EtudiantAbsences
 {
-    private AbsenceRepository $absenceRepository;
-
     private Etudiant $etudiant;
-
-    private EntityManagerInterface $entityManager;
-
-    private EventDispatcherInterface $eventDispatcher;
 
     private mixed $absences;
 
     /**
      * EtudiantAbsences constructor.
      */
-    public function __construct(
-        AbsenceRepository $absenceRepository,
-        EntityManagerInterface $entityManager,
-        EventDispatcherInterface $eventDispatcher
-    ) {
-        $this->absenceRepository = $absenceRepository;
-        $this->entityManager = $entityManager;
-        $this->eventDispatcher = $eventDispatcher;
+    public function __construct(private readonly AbsenceRepository $absenceRepository, private readonly EntityManagerInterface $entityManager, private readonly EventDispatcherInterface $eventDispatcher)
+    {
     }
 
     public function setEtudiant(Etudiant $etudiant): void

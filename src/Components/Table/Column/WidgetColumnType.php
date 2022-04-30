@@ -15,17 +15,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class WidgetColumnType extends ColumnType
 {
-    protected WidgetFactory $factory;
-
-    protected WidgetRenderer $renderer;
-
     /**
      * WidgetColumnType constructor.
      */
-    public function __construct(WidgetFactory $factory, WidgetRenderer $renderer)
+    public function __construct(protected WidgetFactory $factory, protected WidgetRenderer $renderer)
     {
-        $this->factory = $factory;
-        $this->renderer = $renderer;
     }
 
     /**

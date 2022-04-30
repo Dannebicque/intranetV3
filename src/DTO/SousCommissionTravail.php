@@ -18,41 +18,24 @@ use App\Entity\Ue;
 
 class SousCommissionTravail
 {
-    public Semestre $semestre;
-    public AnneeUniversitaire $anneeUniversitaire;
-
-    /** @var Ue[] */
-    public array $ues;
-
-    /** @var Matiere[] */
-    public array $matieres;
-
-    /** @var Etudiant[] */
-    public array $etudiants;
-
-    public ScolaritePromo $ssComm;
     private array $tEtudiants;
     private array $tMatieres;
     private array $tUes;
 
     /**
      * SousCommissionTravail constructor.
+     * @param \App\Entity\Ue[] $ues
+     * @param \App\Entity\Matiere[] $matieres
+     * @param \App\Entity\Etudiant[] $etudiants
      */
     public function __construct(
-        Semestre $semestre,
-        AnneeUniversitaire $anneeUniversitaire,
-        array $ues,
-        array $matieres,
-        array $etudiants,
-        ScolaritePromo $ssComm
+        public Semestre $semestre,
+        public AnneeUniversitaire $anneeUniversitaire,
+        public array $ues,
+        public array $matieres,
+        public array $etudiants,
+        public ScolaritePromo $ssComm
     ) {
-        $this->semestre = $semestre;
-        $this->anneeUniversitaire = $anneeUniversitaire;
-        $this->ues = $ues;
-        $this->matieres = $matieres;
-        $this->etudiants = $etudiants;
-        $this->ssComm = $ssComm;
-
         foreach ($ssComm->getScolarites() as $scolarite) {
             if (null !== $scolarite->getEtudiant()) {
                 $this->tEtudiants[$scolarite->getEtudiant()->getId()] = $scolarite;

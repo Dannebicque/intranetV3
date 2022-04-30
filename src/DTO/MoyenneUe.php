@@ -13,20 +13,15 @@ use App\Entity\Ue;
 
 class MoyenneUe
 {
-    public Ue $ue;
-
     public float $totalMatiere = 0;
     public float $totalMatierePenalisee = 0;
     public float $totalCoefficient = 0;
-    private float $penalite;
 
     /**
      * MoyenneUe constructor.
      */
-    public function __construct(Ue $ue, float $penalite)
+    public function __construct(public Ue $ue, private readonly float $penalite)
     {
-        $this->ue = $ue;
-        $this->penalite = $penalite;
     }
 
     public function addMatiere(MoyenneMatiere $moyenneMatiere): void

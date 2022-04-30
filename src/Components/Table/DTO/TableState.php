@@ -13,8 +13,6 @@ use function in_array;
 
 class TableState
 {
-    protected Table $table;
-
     protected int $start = 0;
     protected int $length = -1;
 
@@ -28,9 +26,8 @@ class TableState
     /**
      * DataTableState constructor.
      */
-    public function __construct(Table $table)
+    public function __construct(protected Table $table)
     {
-        $this->table = $table;
     }
 
     public function applyParameters(array $parameters): void

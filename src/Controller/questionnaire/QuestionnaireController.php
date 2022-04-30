@@ -40,20 +40,8 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class QuestionnaireController extends AbstractController
 {
-    private QuestionnaireQualiteRepository $questionnaireQualiteRepository;
-
-    private QuestionnaireQuizzRepository $questionnaireQuizzRepository;
-
-    private EntityManagerInterface $entityManager;
-
-    public function __construct(
-        QuestionnaireQualiteRepository $questionnaireQualiteRepository,
-        QuestionnaireQuizzRepository $questionnaireQuizzRepository,
-        EntityManagerInterface $entityManager
-    ) {
-        $this->questionnaireQualiteRepository = $questionnaireQualiteRepository;
-        $this->questionnaireQuizzRepository = $questionnaireQuizzRepository;
-        $this->entityManager = $entityManager;
+    public function __construct(private readonly QuestionnaireQualiteRepository $questionnaireQualiteRepository, private readonly QuestionnaireQuizzRepository $questionnaireQuizzRepository, private readonly EntityManagerInterface $entityManager)
+    {
     }
 
     public function section(
@@ -66,6 +54,7 @@ class QuestionnaireController extends AbstractController
         int $onglet = 1,
         bool $apercu = false
     ): Response {
+        $quizzEtudiant = null;
         switch ($type) {
             case 'quizz':
                 $questionnaire = $questionnaireSection->getQuestionnaireQuizz()->getId();
@@ -104,28 +93,18 @@ class QuestionnaireController extends AbstractController
     }
 
     /**
-     * @Route("/api/ajax/reponse/{questionnaire}/{typeQuestionnaire}", name="app_etudiant_qualite_ajax_reponse",
-     *                                                                 options={"expose"=true})
      *
      * @throws NonUniqueResultException
      * @throws \JsonException
      */
-    public function sauvegardeReponse(
-        EtudiantRepository $etudiantRepository,
-        QuestionnaireQuestionRepository $quizzQuestionRepository,
-        QuestionnaireReponseRepository $quizzReponseRepository,
-        QuestionnaireEtudiantRepository $quizzEtudiantRepository,
-        QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository,
-        Request $request,
-        $questionnaire,
-        $typeQuestionnaire
-    ): JsonResponse {
+    #[Route(path: '/api/ajax/reponse/{questionnaire}/{typeQuestionnaire}', name: 'app_etudiant_qualite_ajax_reponse', options: ['expose' => true])]
+    public function sauvegardeReponse(EtudiantRepository $etudiantRepository, QuestionnaireQuestionRepository $quizzQuestionRepository, QuestionnaireReponseRepository $quizzReponseRepository, QuestionnaireEtudiantRepository $quizzEtudiantRepository, QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository, Request $request, $questionnaire, $typeQuestionnaire) : JsonResponse
+    {
+        $quizzEtudiant = null;
         $donnees = JsonRequest::getFromRequest($request);
-
         $cleReponse = $donnees['cleReponse'];
         $cleQuestion = $donnees['cleQuestion'];
         $etudiant = $etudiantRepository->find($donnees['etudiant']);
-
         if (null !== $etudiant) {
             switch ($typeQuestionnaire) {
                 case 'quizz':
@@ -153,7 +132,7 @@ class QuestionnaireController extends AbstractController
             /** @var QuestionnaireEtudiantReponse $exist */
             $exist = $quizzEtudiantReponseRepository->findExistQuestion($cleQuestion, $quizzEtudiant);
 
-            $t = explode('_', $cleReponse);
+            $t = explode('_', (string) $cleReponse);
             $question = $quizzQuestionRepository->find(mb_substr($t[3], 1, mb_strlen($t[0])));
             if (str_starts_with($t[4], 'c')) {
                 $reponse = $quizzReponseRepository->find($t[5]);
@@ -167,8 +146,8 @@ class QuestionnaireController extends AbstractController
                     $qr->setCleQuestion($cleQuestion);
 
                     if (QuestionnaireQuestion::QUESTION_TYPE_QCM === $question->getType()) {
-                        $qr->setCleReponse(json_encode([$cleReponse]));
-                        $qr->setValeur(json_encode([$reponse->getValeur()]));
+                        $qr->setCleReponse(json_encode([$cleReponse], JSON_THROW_ON_ERROR));
+                        $qr->setValeur(json_encode([$reponse->getValeur()], JSON_THROW_ON_ERROR));
                     } else {
                         $qr->setCleReponse($cleReponse);
                         $qr->setValeur($reponse->getValeur());
@@ -180,8 +159,8 @@ class QuestionnaireController extends AbstractController
                     $exist->setValeur($reponse->getValeur());
                 } elseif (TypeQcm::class === $question->getType()) {
                     //si c'est un QCM, on fait un tableau de réponse.
-                    $cleReponses = json_decode($exist->getCleReponse(), false);
-                    $valeurs = json_decode($exist->getValeur(), false);
+                    $cleReponses = json_decode($exist->getCleReponse(), false, 512, JSON_THROW_ON_ERROR);
+                    $valeurs = json_decode($exist->getValeur(), false, 512, JSON_THROW_ON_ERROR);
                     $idCle = array_search($cleReponse, $cleReponses, true);
                     $idValeur = array_search($reponse->getValeur(), $valeurs, true);
                     if (false !== $idCle && false !== $idValeur) {
@@ -194,8 +173,8 @@ class QuestionnaireController extends AbstractController
                         $valeurs[] = $reponse->getValeur();
                     }
 
-                    $exist->setCleReponse(json_encode($cleReponses));
-                    $exist->setValeur(json_encode($valeurs));
+                    $exist->setCleReponse(json_encode($cleReponses, JSON_THROW_ON_ERROR));
+                    $exist->setValeur(json_encode($valeurs, JSON_THROW_ON_ERROR));
                 }
                 $this->entityManager->flush();
 
@@ -204,32 +183,22 @@ class QuestionnaireController extends AbstractController
 
             return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**
-     * @Route("/api/ajax/reponse-txt/{questionnaire}/{typeQuestionnaire}", name="app_etudiant_qualite_ajax_reponse_txt",
-     *                                             options={"expose"=true})
      *
      * @throws NonUniqueResultException
      * @throws \JsonException
      * @throws \JsonException
      */
-    public function sauvegardeReponseTxt(
-        EtudiantRepository $etudiantRepository,
-        QuestionnaireQuestionRepository $quizzQuestionRepository,
-        QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository,
-        QuestionnaireEtudiantRepository $quizzEtudiantRepository,
-        Request $request,
-        $questionnaire,
-        $typeQuestionnaire
-    ): JsonResponse {
+    #[Route(path: '/api/ajax/reponse-txt/{questionnaire}/{typeQuestionnaire}', name: 'app_etudiant_qualite_ajax_reponse_txt', options: ['expose' => true])]
+    public function sauvegardeReponseTxt(EtudiantRepository $etudiantRepository, QuestionnaireQuestionRepository $quizzQuestionRepository, QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository, QuestionnaireEtudiantRepository $quizzEtudiantRepository, Request $request, $questionnaire, $typeQuestionnaire) : JsonResponse
+    {
+        $quizzEtudiant = null;
         $donnees = JsonRequest::getFromRequest($request);
-
         $cleQuestion = $donnees['cleQuestion'];
         $etudiant = $etudiantRepository->find($donnees['etudiant']);
-
         if (null !== $etudiant) {
             switch ($typeQuestionnaire) {
                 case 'quizz':
@@ -252,7 +221,7 @@ class QuestionnaireController extends AbstractController
                 $quizzEtudiant = new QuestionnaireEtudiant($etudiant, $questionnaire, $typeQuestionnaire);
                 $this->entityManager->persist($quizzEtudiant);
             }
-            $t = explode('_', $cleQuestion);
+            $t = explode('_', (string) $cleQuestion);
             if ('autre' === $t[3]) {
                 $cleQuestion = $t[0].'_'.$t[1].'_reponses_'.$t[4].'_autre';
 
@@ -295,7 +264,6 @@ class QuestionnaireController extends AbstractController
 
             return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

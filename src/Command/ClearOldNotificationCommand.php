@@ -27,15 +27,11 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class ClearOldNotificationCommand extends Command
 {
-    private NotificationRepository $notificationRepository;
-
     /**
      * ClearOldNotificationCommand constructor.
      */
-    public function __construct(NotificationRepository $notificationRepository)
+    public function __construct(private readonly NotificationRepository $notificationRepository)
     {
-        $this->notificationRepository = $notificationRepository;
-
         parent::__construct();
     }
 

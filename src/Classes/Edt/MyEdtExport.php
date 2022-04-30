@@ -34,7 +34,7 @@ class MyEdtExport
 {
     private array $calendrier;
 
-    private string $dir;
+    private readonly string $dir;
 
     /**
      * MyEdtExport constructor.
@@ -43,11 +43,11 @@ class MyEdtExport
         protected EdtPlanningRepository $edtPlanningRepository,
         protected CelcatEventsRepository $celcatEventsRepository,
         protected CalendrierRepository $calendrierRepository,
-        private MyEdtIntranet $myEdtIntranet,
-        private MyEdtCelcat $myEdtCelcat,
+        private readonly MyEdtIntranet $myEdtIntranet,
+        private readonly MyEdtCelcat $myEdtCelcat,
         protected MyIcal $myIcal,
-        private MyPDF $myPDF,
-        private TypeMatiereManager $typeMatiereManager,
+        private readonly MyPDF $myPDF,
+        private readonly TypeMatiereManager $typeMatiereManager,
         KernelInterface $kernel
     ) {
         $this->dir = $kernel->getProjectDir().'/public/upload/';

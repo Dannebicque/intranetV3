@@ -31,25 +31,25 @@ class Absence extends BaseEntity implements Serializable
     use LifeCycleTrait;
     use MatiereTrait;
 
-    public const STATUS_COLORS = [
+    public final const STATUS_COLORS = [
         self::ABSENCE_JUSTIFIE => 'success',
         self::ABSENCE_INJUSTIFIEE => 'danger',
         self::ABSENCE_EN_ATTENTE => 'warning',
     ];
-    public const ABSENCE_JUSTIFIE = 'justifie';
-    public const ABSENCE_INJUSTIFIEE = 'injustifie';
-    public const ABSENCE_EN_ATTENTE = '-';
+    public final const ABSENCE_JUSTIFIE = 'justifie';
+    public final const ABSENCE_INJUSTIFIEE = 'injustifie';
+    public final const ABSENCE_EN_ATTENTE = '-';
 
     #[Groups(groups: ['absences_administration'])]
-    #[ORM\Column(name: 'dateHeure', type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(name: 'dateHeure', type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE)]
     private ?CarbonInterface $dateHeure = null;
 
     #[Groups(groups: ['absences_administration'])]
-    #[ORM\Column(name: 'duree', type: Types::TIME_MUTABLE)]
+    #[ORM\Column(name: 'duree', type: \Doctrine\DBAL\Types\Types::TIME_MUTABLE)]
     private ?CarbonInterface $duree = null;
 
     #[Groups(groups: ['absences_administration'])]
-    #[ORM\Column(name: 'justifie', type: Types::BOOLEAN)]
+    #[ORM\Column(name: 'justifie', type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $justifie = false;
 
     #[MaxDepth(2)]
@@ -62,7 +62,7 @@ class Absence extends BaseEntity implements Serializable
     #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'absences')]
     private Etudiant $etudiant;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateJustifie = null;
 
     #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class)]

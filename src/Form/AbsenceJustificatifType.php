@@ -26,8 +26,8 @@ use Vich\UploaderBundle\Form\Type\VichFileType;
 
 class AbsenceJustificatifType extends AbstractType
 {
-    protected ?Semestre $semestre;
-    protected ?string $role;
+    protected ?Semestre $semestre = null;
+    protected ?string $role = null;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -74,9 +74,7 @@ class AbsenceJustificatifType extends AbstractType
                     'label' => 'etudiant',
                     'class' => Etudiant::class,
                     'choice_label' => 'display',
-                    'query_builder' => function (EtudiantRepository $etudiantRepository) {
-                        return $etudiantRepository->findBySemestreBuilder($this->semestre);
-                    },
+                    'query_builder' => fn(EtudiantRepository $etudiantRepository) => $etudiantRepository->findBySemestreBuilder($this->semestre),
                 ])
                 ->add('etat', ChoiceType::class, [
                     'choices' => AbsenceJustificatif::TAB_ETAT,

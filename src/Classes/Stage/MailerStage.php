@@ -22,16 +22,11 @@ use Twig\Error\SyntaxError;
 
 class MailerStage
 {
-    private MailerFromTwig $mailerFromTwig;
-    private MailerFromDatabase $mailerFromDatabase;
-
     /**
      * MailerStage constructor.
      */
-    public function __construct(MailerFromTwig $mailerFromTwig, MailerFromDatabase $mailerFromDatabase)
+    public function __construct(private readonly MailerFromTwig $mailerFromTwig, private readonly MailerFromDatabase $mailerFromDatabase)
     {
-        $this->mailerFromTwig = $mailerFromTwig;
-        $this->mailerFromDatabase = $mailerFromDatabase;
     }
 
     /**

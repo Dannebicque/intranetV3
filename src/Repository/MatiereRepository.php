@@ -53,8 +53,8 @@ class MatiereRepository extends ServiceEntityRepository
             ->where('d.departement = :departement')
             ->andWhere('s.ppnActif = m.ppn')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('m.codeMatiere', 'ASC')
-            ->addOrderBy('m.libelle', 'ASC');
+            ->orderBy('m.codeMatiere', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('m.libelle', \Doctrine\Common\Collections\Criteria::ASC);
     }
 
     public function findBySemestreBuilder(Semestre $semestre): QueryBuilder
@@ -65,8 +65,8 @@ class MatiereRepository extends ServiceEntityRepository
             ->where('u.semestre = :semestre')
             ->andWhere('s.ppnActif = m.ppn')
             ->setParameter('semestre', $semestre->getId())
-            ->orderBy('u.numeroUe', 'ASC')
-            ->addOrderBy('m.codeMatiere', 'ASC');
+            ->orderBy('u.numeroUe', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('m.codeMatiere', \Doctrine\Common\Collections\Criteria::ASC);
     }
 
     public function findByDepartement(Departement $departement): array
@@ -104,8 +104,8 @@ class MatiereRepository extends ServiceEntityRepository
             ->where('a.diplome = :diplome')
             ->andWhere('s.ppnActif = m.ppn')
             ->setParameter('diplome', $diplome->getId())
-            ->orderBy('m.codeMatiere', 'ASC')
-            ->addOrderBy('m.libelle', 'ASC')
+            ->orderBy('m.codeMatiere', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('m.libelle', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

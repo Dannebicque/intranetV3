@@ -9,6 +9,7 @@
 
 namespace App\Repository;
 
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Departement;
 use App\Entity\EdtPlanning;
 use App\Entity\Etudiant;
@@ -46,10 +47,10 @@ class EdtPlanningRepository extends ServiceEntityRepository
             $query->andWhere('p.semaine = :semaine')
                 ->setParameter('semaine', $semaine);
         }
-        $query->orderBy('p.semaine', 'ASC')
-            ->addOrderBy('p.jour', 'ASC')
-            ->addOrderBy('p.debut', 'ASC')
-            ->addOrderBy('p.groupe', 'ASC');
+        $query->orderBy('p.semaine', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('p.jour', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('p.debut', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('p.groupe', \Doctrine\Common\Collections\Criteria::ASC);
 
         return $query->getQuery()
             ->getResult();
@@ -61,9 +62,9 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->where('p.semaine = :semaine')
             ->andWhere('p.semestre = :semestre')
             ->setParameters(['semaine' => $semaine, 'semestre' => $semestre->getid()])
-            ->orderBy('p.jour', 'ASC')
-            ->addOrderBy('p.debut', 'ASC')
-            ->addOrderBy('p.groupe', 'ASC')
+            ->orderBy('p.jour', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('p.debut', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('p.groupe', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -75,9 +76,9 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->andWhere('p.idMatiere = :idMatiere')
             ->andWhere('p.typeMatiere = :typeMatiere')
             ->setParameters(['semaine' => $semaine, 'idMatiere' => $idModule, 'typeMatiere' => $typeModule])
-            ->orderBy('p.jour', 'ASC')
-            ->addOrderBy('p.debut', 'ASC')
-            ->addOrderBy('p.groupe', 'ASC')
+            ->orderBy('p.jour', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('p.debut', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('p.groupe', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -88,9 +89,9 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->where('p.semaine = :semaine')
             ->andWhere('p.jour = :jour')
             ->setParameters(['semaine' => $semaine, 'jour' => $jour])
-            ->orderBy('p.annee', 'ASC')
-            ->addOrderBy('p.debut', 'ASC')
-            ->addOrderBy('p.groupe', 'ASC')
+            ->orderBy('p.annee', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('p.debut', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('p.groupe', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -101,9 +102,9 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->where('p.semaine = :semaine')
             ->andWhere('p.salle = :salle')
             ->setParameters(['semaine' => $semaine, 'salle' => $salle])
-            ->orderBy('p.semestre', 'ASC')
-            ->addOrderBy('p.debut', 'ASC')
-            ->addOrderBy('p.groupe', 'ASC')
+            ->orderBy('p.semestre', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('p.debut', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('p.groupe', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -150,8 +151,8 @@ class EdtPlanningRepository extends ServiceEntityRepository
                     'groupetd' => $this->groupetd,
                     'groupetp' => $this->groupetp,
                 ])
-                ->orderBy('p.jour', 'ASC')
-                ->addOrderBy('p.debut', 'ASC')
+                ->orderBy('p.jour', \Doctrine\Common\Collections\Criteria::ASC)
+                ->addOrderBy('p.debut', \Doctrine\Common\Collections\Criteria::ASC)
                 ->getQuery()
                 ->getResult();
         }
@@ -189,8 +190,8 @@ class EdtPlanningRepository extends ServiceEntityRepository
                 'jour' => $jour,
                 'semestre' => $semestre->getId(),
             ])
-            ->orderBy('p.jour', 'ASC')
-            ->addOrderBy('p.debut', 'ASC')
+            ->orderBy('p.jour', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('p.debut', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
 
@@ -302,8 +303,8 @@ class EdtPlanningRepository extends ServiceEntityRepository
                 'jour' => $jour,
                 'semestre' => $semestre->getId(),
             ])
-            ->orderBy('p.jour', 'ASC')
-            ->addOrderBy('p.debut', 'ASC')
+            ->orderBy('p.jour', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('p.debut', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -313,9 +314,9 @@ class EdtPlanningRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('p')
             ->andWhere('p.intervenant = :idprof')
             ->setParameter('idprof', $user->getId())
-            ->orderBy('p.jour', 'ASC')
-            ->addOrderBy('p.debut', 'ASC')
-            ->addOrderBy('p.groupe', 'ASC');
+            ->orderBy('p.jour', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('p.debut', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('p.groupe', \Doctrine\Common\Collections\Criteria::ASC);
         $ors = [];
 
         foreach ($departement->getDiplomes() as $diplome) {
@@ -405,16 +406,33 @@ class EdtPlanningRepository extends ServiceEntityRepository
         return $quer->getQuery()->getResult();
     }
 
-    public function findAllEdtSemestre(Semestre $semestre): array
+    public function findAllEdtSemestre(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): array
     {
-        //todo: ajouter année universitaire
         return $this->createQueryBuilder('p')
             ->where('p.semestre = :semestre')
-            ->setParameter('semestre', $semestre)
-            ->orderBy('p.semaine', 'ASC')
-            ->addOrderBy('p.jour', 'ASC')
-            ->addOrderBy('p.debut', 'ASC')
-            ->addOrderBy('p.groupe', 'ASC')
+           // ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
+            ->setParameter('semestre', $semestre->getId())
+           // ->setParameter('anneeUniversitaire', $anneeUniversitaire->getId())
+            ->orderBy('p.semaine', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('p.jour', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('p.debut', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('p.groupe', \Doctrine\Common\Collections\Criteria::ASC)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findEdtSemestreSemaine(Semestre $semestre, int $semaine, AnneeUniversitaire $anneeUniversitaire): array
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.semestre = :semestre')
+            ->andWhere('p.semaine = :semaine')
+            // ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
+            ->setParameter('semestre', $semestre->getId())
+            ->setParameter('semaine', $semaine)
+            // ->setParameter('anneeUniversitaire', $anneeUniversitaire->getId())
+            ->addOrderBy('p.jour', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('p.debut', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('p.groupe', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

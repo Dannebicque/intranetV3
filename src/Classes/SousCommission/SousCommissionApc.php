@@ -25,8 +25,8 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class SousCommissionApc extends AbstractSousCommission implements SousCommissionInterface
 {
-    public const TEMPLATE_LIVE = 'liveApc.html.twig';
-    public const TEMPLATE_TRAVAIL = 'travailApc.html.twig';
+    public final const TEMPLATE_LIVE = 'liveApc.html.twig';
+    public final const TEMPLATE_TRAVAIL = 'travailApc.html.twig';
 
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -35,7 +35,7 @@ class SousCommissionApc extends AbstractSousCommission implements SousCommission
         TypeMatiereManager $typeMatiereManager,
         EtudiantNotes $etudiantNotes,
         EtudiantAbsences $etudiantAbsences,
-        private ApcRessourceCompetenceRepository $apcRessourceCompetenceRepository, private ApcSaeCompetenceRepository $apcSaeCompetenceRepository
+        private readonly ApcRessourceCompetenceRepository $apcRessourceCompetenceRepository, private readonly ApcSaeCompetenceRepository $apcSaeCompetenceRepository
     ) {
         parent::__construct($entityManager, $etudiantRepository, $ueRepository, $typeMatiereManager, $etudiantNotes, $etudiantAbsences);
     }

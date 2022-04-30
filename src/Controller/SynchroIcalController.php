@@ -36,7 +36,7 @@ class SynchroIcalController extends AbstractController
             $ical = $myEdtExport->export($personnel, $_format, 'Personnel');
             $timestamp = Carbon::now();
 
-            return new Response($ical, 200, [
+            return new Response($ical, \Symfony\Component\HttpFoundation\Response::HTTP_OK, [
                 'Content-Type' => 'text/calendar; charset=utf-8',
                 'Content-Disposition' => 'inline; filename="ical'.$timestamp->format('YmdHis').'.ics"',
             ]);
@@ -56,7 +56,7 @@ class SynchroIcalController extends AbstractController
             $ical = $myEdtExport->export($etudiant, $_format, 'Etudiant');
             $timestamp = Carbon::now();
 
-            return new Response($ical, 200, [
+            return new Response($ical, \Symfony\Component\HttpFoundation\Response::HTTP_OK, [
                 'Content-Type' => 'text/calendar; charset=utf-8',
                 'Content-Disposition' => 'inline; filename="ical'.$timestamp->format('YmdHis').'.ics"',
             ]);

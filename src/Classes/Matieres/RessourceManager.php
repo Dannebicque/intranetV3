@@ -22,18 +22,8 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class RessourceManager extends AbstractMatiereManager implements MatiereInterface
 {
-    private ApcRessourceRepository $apcRessourceRepository;
-    private MatiereRessourceAdapter $ressourceAdapter;
-    private EntityManagerInterface $entityManager;
-
-    public function __construct(
-        EntityManagerInterface $entityManager,
-        ApcRessourceRepository $apcRessourceRepository,
-        MatiereRessourceAdapter $ressourceAdapter
-    ) {
-        $this->entityManager = $entityManager;
-        $this->apcRessourceRepository = $apcRessourceRepository;
-        $this->ressourceAdapter = $ressourceAdapter;
+    public function __construct(private readonly EntityManagerInterface $entityManager, private readonly ApcRessourceRepository $apcRessourceRepository, private readonly MatiereRessourceAdapter $ressourceAdapter)
+    {
     }
 
     public function find(int | string $id): ?Matiere

@@ -36,8 +36,8 @@ class DiplomeRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('d')
             ->join(TypeDiplome::class, 't', 'WITH', 'd.typeDiplome = t.id')
-            ->orderBy('t.libelle', 'ASC')
-            ->addOrderBy('d.libelle', 'ASC');
+            ->orderBy('t.libelle', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('d.libelle', \Doctrine\Common\Collections\Criteria::ASC);
     }
 
     public function findAll(): array
@@ -68,8 +68,8 @@ class DiplomeRepository extends ServiceEntityRepository
             ->join(TypeDiplome::class, 't', 'WITH', 'd.typeDiplome = t.id')
             ->where('d.actif = :actif')
             ->setParameter('actif', true)
-            ->orderBy('t.libelle', 'ASC')
-            ->addOrderBy('d.libelle', 'ASC')
+            ->orderBy('t.libelle', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('d.libelle', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

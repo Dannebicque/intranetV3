@@ -69,7 +69,7 @@ class QuestionnaireEtudiantReponseRepository extends ServiceEntityRepository
             ->innerJoin(QuestionnaireEtudiant::class, 'e', 'WITH', 'q.questionnaireEtudiant=e.id')
             ->where('e.questionnaireQualite = :questionnaireQualite')
             ->setParameter('questionnaireQualite', $questionnaire->getId())
-            ->orderBy('q.cleQuestion', 'ASC')
+            ->orderBy('q.cleQuestion', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

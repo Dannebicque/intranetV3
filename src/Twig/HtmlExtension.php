@@ -9,7 +9,7 @@ use Twig\TwigFilter;
 
 class HtmlExtension extends AbstractExtension
 {
-    public function __construct(private TranslatorInterface $translator)
+    public function __construct(private readonly TranslatorInterface $translator)
     {
     }
 

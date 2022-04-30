@@ -50,6 +50,8 @@ class PrevisionnelExportController extends BaseController
         PrevisionnelManager $previsionnelManager,
         TypeMatiereManager $typeMatiereManager, PrevisionnelExport $myPrevisionnel, int $annee, string $data, string $type, string $_format): StreamedResponse
     {
+        $matiere = null;
+        $previsionnels = null;
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
         switch ($type) {
             case 'personnel':

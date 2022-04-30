@@ -22,29 +22,18 @@ use Symfony\Component\Mime\Address;
 
 class CovidSubscriber implements EventSubscriberInterface
 {
-    protected MailerFromTwig $myMailer;
-
-    private EntityManagerInterface $entityManager;
-
-    private MyExportPresence $myExportPresence;
-    private string $dir;
-
-    private Configuration $configuration;
+    private readonly string $dir;
 
     /**
      * StageSubscriber constructor.
      */
     public function __construct(
-        EntityManagerInterface $entityManager,
-        MailerFromTwig $myMailer,
-        MyExportPresence $myExportPresence,
+        private readonly EntityManagerInterface $entityManager,
+        protected MailerFromTwig $myMailer,
+        private readonly MyExportPresence $myExportPresence,
         KernelInterface $kernel,
-        Configuration $configuration
+        private readonly Configuration $configuration
     ) {
-        $this->configuration = $configuration;
-        $this->entityManager = $entityManager;
-        $this->myMailer = $myMailer;
-        $this->myExportPresence = $myExportPresence;
         $this->dir = $kernel->getProjectDir().'/public/upload/';
     }
 

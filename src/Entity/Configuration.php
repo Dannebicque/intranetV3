@@ -22,14 +22,14 @@ class Configuration extends BaseEntity
     use LifeCycleTrait;
 
     #[Groups(groups: ['configuration_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 50)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50)]
     private ?string $cle = null;
 
     #[Groups(groups: ['configuration_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $valeur = null;
 
-    #[ORM\Column(type: Types::STRING, length: 1)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 1)]
     private string $type = 'T';
 
     public function getCle(): ?string

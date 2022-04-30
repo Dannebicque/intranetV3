@@ -15,7 +15,7 @@ use App\Enums\PlanCoursEnum;
 class Previsionnel
 {
     public int $id;
-    public ?int $personnel_id;
+    public ?int $personnel_id = null;
     public int $matiere_id;
     public string $type_matiere;
     public float $nbHCm;

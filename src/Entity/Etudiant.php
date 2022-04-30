@@ -36,16 +36,16 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private mixed $id;
 
-    #[ORM\Column(type: Types::STRING, length: 50)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50)]
     private ?string $photoName = 'noimage.png';
 
     /**
      * @Vich\UploadableField(mapping="etudiant", fileNameProperty="photoName")
      */
-    private ?File $photoFile;
+    private ?File $photoFile = null;
 
     #[Groups(groups: ['etudiants_administration'])]
     #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'etudiants')]
@@ -58,13 +58,13 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     private Collection $notes;
 
     #[Groups(groups: ['etudiants_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 20)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20)]
     private ?string $numEtudiant = null;
 
-    #[ORM\Column(type: Types::STRING, length: 20, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20, nullable: true)]
     private ?string $numIne = null;
 
-    #[ORM\Column(type: Types::INTEGER, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER, nullable: true)]
     private ?int $anneeBac;
 
     /**
@@ -109,10 +109,10 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     #[ORM\OrderBy(value: ['created' => 'desc'])]
     private Collection $notifications;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $boursier = false;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $demandeurEmploi = false;
 
     #[ORM\ManyToMany(targetEntity: Groupe::class, inversedBy: 'etudiants')]
@@ -142,25 +142,25 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: Alternance::class)]
     private Collection $alternances;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $deleted = false;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
     private ?string $amenagementsParticuliers = null;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private ?int $promotion;
 
     #[ORM\ManyToOne(targetEntity: Bac::class)]
     private ?Bac $bac = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
     private ?string $intituleSecuriteSociale = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
     private ?string $adresseSecuriteSociale = null;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private int $anneeSortie = 0;
 
     /**
@@ -185,10 +185,10 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: QuestionnaireEtudiant::class)]
     private Collection $quizzEtudiants;
 
-    #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50, nullable: true)]
     private ?string $loginSpecifique = null;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $formationContinue = false;
 
     /**

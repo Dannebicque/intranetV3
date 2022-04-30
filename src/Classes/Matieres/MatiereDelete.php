@@ -17,21 +17,8 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class MatiereDelete
 {
-    public EvaluationRepository $evaluationRepository;
-    public AbsenceRepository $absenceRepository;
-    public RattrapageRepository $rattrapageRepository;
-    public EntityManagerInterface $entityManager;
-
-    public function __construct(
-        EvaluationRepository $evaluationRepository,
-        AbsenceRepository $absenceRepository,
-        RattrapageRepository $rattrapageRepository,
-        EntityManagerInterface $entityManager
-    ) {
-        $this->evaluationRepository = $evaluationRepository;
-        $this->absenceRepository = $absenceRepository;
-        $this->rattrapageRepository = $rattrapageRepository;
-        $this->entityManager = $entityManager;
+    public function __construct(public EvaluationRepository $evaluationRepository, public AbsenceRepository $absenceRepository, public RattrapageRepository $rattrapageRepository, public EntityManagerInterface $entityManager)
+    {
     }
 
     public function delete(Matiere $matiere): bool

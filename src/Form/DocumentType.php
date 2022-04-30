@@ -29,7 +29,7 @@ use Vich\UploaderBundle\Form\Type\VichFileType;
  */
 class DocumentType extends AbstractType
 {
-    private ?Departement $departement;
+    private ?Departement $departement = null;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -52,18 +52,14 @@ class DocumentType extends AbstractType
                     'class' => TypeDocument::class,
                     'choice_label' => 'libelle',
                     'label' => 'label.type_document',
-                    'query_builder' => function (TypeDocumentRepository $typeDocumentRepository) {
-                        return $typeDocumentRepository->findByDepartementBuilder($this->departement);
-                    },
+                    'query_builder' => fn(TypeDocumentRepository $typeDocumentRepository) => $typeDocumentRepository->findByDepartementBuilder($this->departement),
                 ]
             )
             ->add('semestres', EntityType::class, [
                 'class' => Semestre::class,
                 'label' => 'label.semestres_document',
                 'choice_label' => 'libelle',
-                'query_builder' => function (SemestreRepository $semestreRepository) {
-                    return $semestreRepository->findByDepartementBuilder($this->departement);
-                },
+                'query_builder' => fn(SemestreRepository $semestreRepository) => $semestreRepository->findByDepartementBuilder($this->departement),
                 'required' => true,
                 'expanded' => true,
                 'multiple' => true,

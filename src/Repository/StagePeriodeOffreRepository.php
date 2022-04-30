@@ -41,7 +41,7 @@ class StagePeriodeOffreRepository extends ServiceEntityRepository
             ->where('d.departement = :departement')
             ->setParameter('departement', $departement->getId())
             ->groupBy('o.id')
-            ->orderBy('o.libelle', 'ASC')
+            ->orderBy('o.libelle', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

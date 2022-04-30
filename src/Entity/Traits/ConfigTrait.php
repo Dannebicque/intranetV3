@@ -13,13 +13,13 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait ConfigTrait
 {
-    #[ORM\Column(type: 'text', nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
     private ?string $config = null;
 
     public function getConfig(): ?array
     {
         if (null !== $this->config) {
-            return json_decode($this->config, true);
+            return json_decode($this->config, true, 512, JSON_THROW_ON_ERROR);
         }
 
         return [];
@@ -27,7 +27,7 @@ trait ConfigTrait
 
     public function setConfig(array $config = []): self
     {
-        $this->config = json_encode($config);
+        $this->config = json_encode($config, JSON_THROW_ON_ERROR);
 
         return $this;
     }

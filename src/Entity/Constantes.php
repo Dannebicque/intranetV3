@@ -14,59 +14,59 @@ namespace App\Entity;
  */
 class Constantes
 {
-    public const TYPE_DESTINATAIRE_PERMANENT = 'PERM';
-    public const TYPE_DESTINATAIRE_PERSONNEL = 'PERS';
-    public const TYPE_DESTINATAIRE_ETUDIANT = 'ETU';
-    public const TYPE_DESTINATAIRE_TOUS = 'ALL';
-    public const TYPE_DESTINATAIRE_LISTE =
+    public final const TYPE_DESTINATAIRE_PERMANENT = 'PERM';
+    public final const TYPE_DESTINATAIRE_PERSONNEL = 'PERS';
+    public final const TYPE_DESTINATAIRE_ETUDIANT = 'ETU';
+    public final const TYPE_DESTINATAIRE_TOUS = 'ALL';
+    public final const TYPE_DESTINATAIRE_LISTE =
         [
             self::TYPE_DESTINATAIRE_PERMANENT => self::TYPE_DESTINATAIRE_PERMANENT,
             self::TYPE_DESTINATAIRE_ETUDIANT => self::TYPE_DESTINATAIRE_ETUDIANT,
             self::TYPE_DESTINATAIRE_TOUS => self::TYPE_DESTINATAIRE_TOUS,
         ];
 
-    public const ROLE_CDD = 'ROLE_CDD';
-    public const ROLE_DDE = 'ROLE_DDE';
-    public const ROLE_ASS = 'ROLE_ASS';
-    public const ROLE_PRJ = 'ROLE_PRJ';
-    public const ROLE_RP = 'ROLE_RP';
-    public const ROLE_ABS = 'ROLE_ABS';
-    public const ROLE_EDT = 'ROLE_EDT';
-    public const ROLE_STA = 'ROLE_STA';
-    public const ROLE_NOTES = 'ROLE_NOTES';
-    public const ROLE_AUTEUR = 'ROLE_AUTEUR';
-    public const ROLE_MAT = 'ROLE_MAT';
-    public const ROLE_PERMANENT = 'ROLE_PERMANENT';
+    public final const ROLE_CDD = 'ROLE_CDD';
+    public final const ROLE_DDE = 'ROLE_DDE';
+    public final const ROLE_ASS = 'ROLE_ASS';
+    public final const ROLE_PRJ = 'ROLE_PRJ';
+    public final const ROLE_RP = 'ROLE_RP';
+    public final const ROLE_ABS = 'ROLE_ABS';
+    public final const ROLE_EDT = 'ROLE_EDT';
+    public final const ROLE_STA = 'ROLE_STA';
+    public final const ROLE_NOTES = 'ROLE_NOTES';
+    public final const ROLE_AUTEUR = 'ROLE_AUTEUR';
+    public final const ROLE_MAT = 'ROLE_MAT';
+    public final const ROLE_PERMANENT = 'ROLE_PERMANENT';
 
-    public const DUREE_SEMESTRE = 5;
+    public final const DUREE_SEMESTRE = 5;
 
-    public const FLASHBAG_SUCCESS = 'success';
-    public const FLASHBAG_INFO = 'info';
-    public const FLASHBAG_NOTICE = 'warning';
-    public const FLASHBAG_ERROR = 'danger';
-    public const DUREE_COURS = 1.5;
+    public final const FLASHBAG_SUCCESS = 'success';
+    public final const FLASHBAG_INFO = 'info';
+    public final const FLASHBAG_NOTICE = 'warning';
+    public final const FLASHBAG_ERROR = 'danger';
+    public final const DUREE_COURS = 1.5;
 
-    public const TYPEDOCUMENT_EMARGEMENT = 'emargement';
-    public const TYPEDOCUMENT_EVALUATION = 'evaluation';
-    public const TYPEDOCUMENT_LISTE = 'liste';
+    public final const TYPEDOCUMENT_EMARGEMENT = 'emargement';
+    public final const TYPEDOCUMENT_EVALUATION = 'evaluation';
+    public final const TYPEDOCUMENT_LISTE = 'liste';
 
-    public const CHAMPS_NOM_PRENOM = 'nom';
-    public const CHAMPS_GROUPE = 'groupe';
-    public const CHAMPS_NUM_ETUDIANT = 'num';
-    public const CHAMPS_BAC = 'bac';
-    public const CHAMPS_MAIL_ETUDIANT = 'mail';
+    public final const CHAMPS_NOM_PRENOM = 'nom';
+    public final const CHAMPS_GROUPE = 'groupe';
+    public final const CHAMPS_NUM_ETUDIANT = 'num';
+    public final const CHAMPS_BAC = 'bac';
+    public final const CHAMPS_MAIL_ETUDIANT = 'mail';
 
-    public const FORMAT_CSV_POINT_VIRGULE = 'csv';
-    public const FORMAT_CSV_VIRGULE = 'csv-v';
-    public const FORMAT_EXCEL = 'xlsx';
-    public const FORMAT_PDF = 'pdf';
+    public final const FORMAT_CSV_POINT_VIRGULE = 'csv';
+    public final const FORMAT_CSV_VIRGULE = 'csv-v';
+    public final const FORMAT_EXCEL = 'xlsx';
+    public final const FORMAT_PDF = 'pdf';
 
-    public const NB_RESULTS_PER_PAGE = 2;
+    public final const NB_RESULTS_PER_PAGE = 2;
 
-    public const CIVILITE_HOMME = 'M.';
-    public const CIVILITE_FEMME = 'Mme';
+    public final const CIVILITE_HOMME = 'M.';
+    public final const CIVILITE_FEMME = 'Mme';
 
-    public const ROLE_LISTE = [
+    public final const ROLE_LISTE = [
         self::ROLE_CDD,
         self::ROLE_PERMANENT,
         self::ROLE_DDE,
@@ -81,7 +81,7 @@ class Constantes
         self::ROLE_PRJ,
     ];
 
-    public const TAB_HEURES = [
+    public final const TAB_HEURES = [
         '',
         '08:00',
         '08:30',
@@ -111,7 +111,7 @@ class Constantes
         '20:30',
     ];
 
-    public const TAB_HEURES_INDEX = [
+    public final const TAB_HEURES_INDEX = [
         '' => 0,
         '08:00:00' => 1,
         '08:30:00' => 2,
@@ -141,15 +141,15 @@ class Constantes
         '20:30:00' => 26,
     ];
 
-    public const METHODE_CALCUL_MOY_MODULE = 'moymodules';
-    public const METHODE_CALCUL_MOY_UE = 'moyues';
+    public final const METHODE_CALCUL_MOY_MODULE = 'moymodules';
+    public final const METHODE_CALCUL_MOY_UE = 'moyues';
 
-    public const TAB_METHODE_CALCUL = [
+    public final const TAB_METHODE_CALCUL = [
         'choice.moymodules' => Constantes::METHODE_CALCUL_MOY_MODULE,
         'choice.moyues' => Constantes::METHODE_CALCUL_MOY_UE,
     ];
 
-    public const TAB_GROUPES_INDEX = [
+    public final const TAB_GROUPES_INDEX = [
         'S1 DEC TP11' => 1,
         'S1 DEC TP12' => 2,
         'S1 DEC TD1' => 1,
@@ -165,8 +165,8 @@ class Constantes
         'S2 TP32' => 6,
     ];
 
-    public const TAB_JOURS = ['', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'];
-    public const TAB_MOIS = [
+    public final const TAB_JOURS = ['', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'];
+    public final const TAB_MOIS = [
         '',
         'Janvier',
         'Février',
@@ -182,7 +182,7 @@ class Constantes
         'Décembre',
     ];
 
-    public const TAB_CRENEAUX = [
+    public final const TAB_CRENEAUX = [
         1 => ['8h00', '9h30'],
         4 => ['9h30', '11h00'],
         7 => ['11h00', '12h30'],
@@ -193,26 +193,26 @@ class Constantes
     ];
 
     //Sous Commission
-    public const PAS_OPTION = 'pasoption';
+    public final const PAS_OPTION = 'pasoption';
 
-    public const UE_VALIDE = 'V';
-    public const UE_NON_VALIDE = 'NV';
+    public final const UE_VALIDE = 'V';
+    public final const UE_NON_VALIDE = 'NV';
 
-    public const SEUIL_UE = 8;
-    public const SEUIL_MOYENNE = 10;
-    public const SEMESTRE_VALIDE = 'V';
-    public const SEMESTRE_NON_VALIDE = 'NV';
-    public const SEMESTRE_VCA = 'VCA';
-    public const SEMESTRE_VCJ = 'VCJ';
-    public const PROPOSITION_INDEFINIE = '?';
-    public const SEMESTRE_EN_COURS = 'E.C.';
-    public const SEMESTRE_DEMISSIONNAIRE = 'DEM';
-    public const SEMESTRE_REORIENTE = 'REO';
-    public const SEMESTRE_BLANCHIMENT = 'BL';
-    public const SUPPRIMER_FORMATION = 'SUPPRIMER_FORMATION';
-    public const SCOLARITE_DIPLOME = 'DIPLOME';
+    public final const SEUIL_UE = 8;
+    public final const SEUIL_MOYENNE = 10;
+    public final const SEMESTRE_VALIDE = 'V';
+    public final const SEMESTRE_NON_VALIDE = 'NV';
+    public final const SEMESTRE_VCA = 'VCA';
+    public final const SEMESTRE_VCJ = 'VCJ';
+    public final const PROPOSITION_INDEFINIE = '?';
+    public final const SEMESTRE_EN_COURS = 'E.C.';
+    public final const SEMESTRE_DEMISSIONNAIRE = 'DEM';
+    public final const SEMESTRE_REORIENTE = 'REO';
+    public final const SEMESTRE_BLANCHIMENT = 'BL';
+    public final const SUPPRIMER_FORMATION = 'SUPPRIMER_FORMATION';
+    public final const SCOLARITE_DIPLOME = 'DIPLOME';
 
-    public const SS_COMM_DECISION_COULEUR = [
+    public final const SS_COMM_DECISION_COULEUR = [
         self::SEMESTRE_VALIDE => 'ff00cc00',
         self::SEMESTRE_NON_VALIDE => 'ffff0000',
         self::SEMESTRE_VCA => 'fff0a300',
@@ -221,8 +221,8 @@ class Constantes
         'EC' => 'ffff0000',
         'E.C.' => 'ffff0000',
     ];
-    public const NB_MESSAGE_PAR_PAGE = 10;
-    public const TAB_HEURES_EDT = [
+    public final const NB_MESSAGE_PAR_PAGE = 10;
+    public final const TAB_HEURES_EDT = [
         1 => ['8h00', '9h30'],
         2 => ['9h30', '11h00'],
         3 => ['11h00', '12h30'],
@@ -232,7 +232,7 @@ class Constantes
         7 => ['17h00', '18h30'],
     ];
 
-    public const TAB_HEURES_EDT_2 = [
+    public final const TAB_HEURES_EDT_2 = [
         0 => ['0800', '8h00'],
         1 => ['0830', '8h30'],
         2 => ['0900', '9h00'],
@@ -260,7 +260,7 @@ class Constantes
         24 => ['2000', '20h00'],
     ];
 
-    public const TAB_HEURES_EDT_LIGNE_2 = [
+    public final const TAB_HEURES_EDT_LIGNE_2 = [
         '0800' => 0,
         '0830' => 1,
         '0900' => 2,
@@ -288,7 +288,7 @@ class Constantes
         '2000' => 24,
     ];
 
-    public const COULEURS = [
+    public final const COULEURS = [
         'Bleu' => 'blue',
         'Indigo' => 'Indigo',
         'Mauve/pourpre' => 'purple',
@@ -300,13 +300,13 @@ class Constantes
         'Turquoise' => 'teal',
         'Cyan' => 'cyan',
     ];
-    public const PAS_DE_SOUS_COMM = 'PAS_DE_SOUS_COMM';
-    public const MAJORATION_CM = 1.5;
+    public final const PAS_DE_SOUS_COMM = 'PAS_DE_SOUS_COMM';
+    public final const MAJORATION_CM = 1.5;
 
-    public const FILTRE_EDT_PROMO = 'promo';
-    public const FILTRE_EDT_PROF = 'prof';
-    public const FILTRE_EDT_MODULE = 'module';
-    public const FILTRE_EDT_SALLE = 'salle';
-    public const FILTRE_EDT_ETUDIANT = 'etudiant';
-    public const FILTRE_EDT_JOUR = 'jour';
+    public final const FILTRE_EDT_PROMO = 'promo';
+    public final const FILTRE_EDT_PROF = 'prof';
+    public final const FILTRE_EDT_MODULE = 'module';
+    public final const FILTRE_EDT_SALLE = 'salle';
+    public final const FILTRE_EDT_ETUDIANT = 'etudiant';
+    public final const FILTRE_EDT_JOUR = 'jour';
 }

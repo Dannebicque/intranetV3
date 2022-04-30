@@ -18,10 +18,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 trait LifeCycleTrait
 {
-    #[ORM\Column(type: 'datetime')]
-    private ?CarbonInterface $created;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE)]
+    private ?CarbonInterface $created = null;
 
-    #[ORM\Column(type: 'datetime')]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE)]
     private ?CarbonInterface $updated = null;
 
     public function getCreated(): ?CarbonInterface

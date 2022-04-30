@@ -19,15 +19,15 @@ use DateTimeInterface;
  */
 class MyIcal
 {
-    protected ?string $dtstart; //DTSTART: Date de début de l'événement
-    protected ?string $dtend; //DTEND: Date de fin de l'événement
-    protected ?string $summary; //SUMMARY: Titre de l'événement
-    protected ?string $location; //LOCATION: Lieu de l'événement
-    protected ?string $description; //DESCRIPTION: Description de l'événement
+    protected ?string $dtstart = null; //DTSTART: Date de début de l'événement
+    protected ?string $dtend = null; //DTEND: Date de fin de l'événement
+    protected ?string $summary = null; //SUMMARY: Titre de l'événement
+    protected ?string $location = null; //LOCATION: Lieu de l'événement
+    protected ?string $description = null; //DESCRIPTION: Description de l'événement
     protected ?string $filevt;
-    protected ?string $uid;
-    protected ?string $decalage;
-    private array $tabheure;
+    protected ?string $uid = null;
+    protected ?string $decalage = null;
+    private readonly array $tabheure;
 
     public function __construct()
     {
@@ -108,7 +108,7 @@ class MyIcal
 
     public function setDtstart(CarbonInterface $date, $creneau): void
     {
-        $h = explode(':', $this->tabheure[$creneau]);
+        $h = explode(':', (string) $this->tabheure[$creneau]);
 
         $timestamp = mktime($h[0], $h[1], '00', $date->month, $date->day, $date->year);
         $this->dtstart = 'DTSTART:'.$this->calculHeureEte($timestamp);
@@ -169,7 +169,7 @@ class MyIcal
 
     public function setDtend(CarbonInterface $date, $creneau): void
     {
-        $h = explode(':', $this->tabheure[$creneau]);
+        $h = explode(':', (string) $this->tabheure[$creneau]);
 
         $timestamp = mktime($h[0], $h[1], '00', $date->month, $date->day, $date->year);
         $this->dtend = 'DTEND:'.$this->calculHeureEte($timestamp);

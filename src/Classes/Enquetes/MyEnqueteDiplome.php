@@ -31,23 +31,23 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class MyEnqueteDiplome
 {
-    private ?QuestionnaireQuizz $questionnaire;
+    private readonly ?QuestionnaireQuizz $questionnaire;
     private array $etudiantsReponses;
     private array $reponses;
-    private array $AllEtudiants;
+    private readonly array $AllEtudiants;
 
     /**
      * MyEnqueteDiplome constructor.
      */
     public function __construct(
         Configuration $configuration,
-        private RddDiplomeRepository $rddDiplomeRepository,
-        private QuestionnaireReponseRepository $questionnaireReponseRepository,
+        private readonly RddDiplomeRepository $rddDiplomeRepository,
+        private readonly QuestionnaireReponseRepository $questionnaireReponseRepository,
         QuestionnaireQuizzRepository $questionnaireQuizzRepository,
         QuestionnaireEtudiantRepository $questionnaireEtudiantRepository,
-        private QuestionnaireEtudiantReponseRepository $questionnaireEtudiantReponse,
-        private MyExcelWriter $myExcelWriter,
-        private EtudiantRepository $etudiantRepository
+        private readonly QuestionnaireEtudiantReponseRepository $questionnaireEtudiantReponse,
+        private readonly MyExcelWriter $myExcelWriter,
+        private readonly EtudiantRepository $etudiantRepository
     ) {
         $this->AllEtudiants = $this->rddDiplomeRepository->getEtudiantAvecQuestionnaire();
         $this->questionnaire = $questionnaireQuizzRepository->find($configuration->get('ENQUETE_DIPLOME'));
@@ -145,7 +145,7 @@ class MyEnqueteDiplome
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            200,
+            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="synthese_reponse'.$date->format('d-m-Y').'.xlsx"',
@@ -219,7 +219,7 @@ class MyEnqueteDiplome
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            200,
+            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="synthese_reponse'.$date->format('d-m-Y').'.xlsx"',

@@ -13,17 +13,11 @@ use App\Components\Table\DTO\Table;
 
 class TableFactory
 {
-    protected TableRegistry $registry;
-
-    protected TableBuilderHelper $helper;
-
     /**
      * DataTableFactory constructor.
      */
-    public function __construct(TableRegistry $registry, TableBuilderHelper $helper)
+    public function __construct(protected TableRegistry $registry, protected TableBuilderHelper $helper)
     {
-        $this->registry = $registry;
-        $this->helper = $helper;
     }
 
     public function create(string $type, array $options = []): Table

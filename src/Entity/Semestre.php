@@ -26,21 +26,21 @@ class Semestre extends BaseEntity implements Stringable
 {
     use LifeCycleTrait;
 
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     #[Groups(groups: ['article_administration', 'date_administration', 'semestre', 'etudiants_administration', 'document_administration'])]
     private ?string $libelle = null;
 
     #[Deprecated("plus utilisé, centralisé avec l'année")]
-    #[ORM\Column(type: Types::STRING, length: 20, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20, nullable: true)]
     private ?string $couleur = null;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private int $ordreAnnee = 1;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private int $ordreLmd = 1;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $actif = false;
 
     #[ORM\ManyToOne(targetEntity: Semestre::class)]
@@ -52,23 +52,26 @@ class Semestre extends BaseEntity implements Stringable
     #[ORM\ManyToOne(targetEntity: Semestre::class)]
     private ?Semestre $decale = null;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private int $nbGroupesCm = 1;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private int $nbGroupesTd = 1;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private int $nbGroupesTP = 2;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Etudiant>|\App\Entity\Etudiant[]
+     */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: Etudiant::class)]
     #[ORM\OrderBy(value: ['nom' => 'ASC', 'prenom' => 'ASC'])]
     private Collection $etudiants;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $optMailReleve = false;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $optMailModificationNote = false;
 
     #[ORM\ManyToOne(targetEntity: Personnel::class)]
@@ -77,25 +80,25 @@ class Semestre extends BaseEntity implements Stringable
     #[ORM\ManyToOne(targetEntity: Personnel::class)]
     private ?Personnel $optDestMailModifNote = null;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $optEvaluationVisible = true;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $optEvaluationModifiable = true;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $optPenaliteAbsence = true;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $optMailAbsenceResp = false;
 
     #[ORM\ManyToOne(targetEntity: Personnel::class)]
     private ?Personnel $optDestMailAbsenceResp = null;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $optMailAbsenceEtudiant = false;
 
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private float $optPointPenaliteAbsence = 0.5;
 
     #[ORM\ManyToMany(targetEntity: Article::class, mappedBy: 'semestres')]
@@ -107,88 +110,142 @@ class Semestre extends BaseEntity implements Stringable
     #[ORM\ManyToMany(targetEntity: Date::class, mappedBy: 'semestres')]
     private Collection $dates;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Hrs>|\App\Entity\Hrs[]
+     */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: Hrs::class)]
     private Collection $hrs;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Parcour>|\App\Entity\Parcour[]
+     */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: Parcour::class)]
     private Collection $parcours;
 
     #[ORM\ManyToMany(targetEntity: Borne::class, mappedBy: 'semestres')]
     private Collection $bornes;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\CahierTexte>|\App\Entity\CahierTexte[]
+     */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: CahierTexte::class)]
     private Collection $cahierTextes;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Ue>|\App\Entity\Ue[]
+     */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: Ue::class)]
     #[ORM\OrderBy(value: ['numeroUe' => 'ASC'])]
     private Collection $ues;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\TypeGroupe>|\App\Entity\TypeGroupe[]
+     */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: TypeGroupe::class)]
     #[ORM\OrderBy(value: ['libelle' => 'ASC'])]
     private Collection $typeGroupes;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private ?int $moisDebut = 9;
 
     #[ORM\ManyToOne(targetEntity: Annee::class, fetch: 'EAGER', inversedBy: 'semestres')]
     #[Groups(groups: ['semestre'])]
     private ?Annee $annee = null;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\StagePeriode>|\App\Entity\StagePeriode[]
+     */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: StagePeriode::class)]
     private Collection $stagePeriodes;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ScolaritePromo>|\App\Entity\ScolaritePromo[]
+     */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: ScolaritePromo::class)]
     private Collection $scolaritePromos;
 
     #[ORM\ManyToOne(targetEntity: Ppn::class, inversedBy: 'semestres')]
     private ?Ppn $ppnActif = null;
 
-    #[ORM\Column(type: Types::STRING, length: 20)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20)]
     private ?string $codeElement = null;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $optEvaluationPreInitialisee = false;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\QuestionnaireQualite>|\App\Entity\QuestionnaireQualite[]
+     */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: QuestionnaireQualite::class)]
     private Collection $qualiteQuestionnaires;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private int $optNbJoursSaisieAbsence = 10;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ProjetPeriode>|\App\Entity\ProjetPeriode[]
+     */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: ProjetPeriode::class)]
     private Collection $projetPeriodes;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcRessource>|\App\Entity\ApcRessource[]
+     */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: ApcRessource::class)]
     #[Deprecated('plus nécessaire, passe par la collection plus bas.')]
     private Collection $apcRessources;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcSae>|\App\Entity\ApcSae[]
+     */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: ApcSae::class)]
     private Collection $apcSaes;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\AbsenceEtatAppel>|\App\Entity\AbsenceEtatAppel[]
+     */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: AbsenceEtatAppel::class)]
     private Collection $absenceEtatAppels;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\CelcatEvent>|\App\Entity\CelcatEvent[]
+     */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: CelcatEvent::class)]
     private Collection $celcatEvents;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Evaluation>|\App\Entity\Evaluation[]
+     */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: Evaluation::class)]
     private Collection $evaluations;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Rattrapage>|\App\Entity\Rattrapage[]
+     */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: Rattrapage::class)]
     private Collection $rattrapages;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\AbsenceJustificatif>|\App\Entity\AbsenceJustificatif[]
+     */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: AbsenceJustificatif::class)]
     private Collection $absenceJustificatifs;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Absence>|\App\Entity\Absence[]
+     */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: Absence::class)]
     private Collection $absences;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private ?bool $optMailAssistanteJustificatifAbsence = false;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private ?bool  $optBilanSemestre = false;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\AnneeUniversitaireSemestre>|\App\Entity\AnneeUniversitaireSemestre[]
+     */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: AnneeUniversitaireSemestre::class)]
     private Collection $anneeUniversitaireSemestres;
 
@@ -197,6 +254,24 @@ class Semestre extends BaseEntity implements Stringable
 
     public function __construct()
     {
+        $this->etudiants = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->documents = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->dates = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->hrs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->parcours = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->bornes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->cahierTextes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->ues = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->typeGroupes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->stagePeriodes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->scolaritePromos = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->qualiteQuestionnaires = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->projetPeriodes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->apcRessources = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->apcSaes = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->absenceEtatAppels = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->celcatEvents = new \Doctrine\Common\Collections\ArrayCollection();
         $this->init();
         $this->evaluations = new ArrayCollection();
         $this->rattrapages = new ArrayCollection();

@@ -26,15 +26,15 @@ class Date extends BaseEntity
     use LifeCycleTrait;
     use TypeDestinataireTrait;
 
-    public const TYPE_STAGE = 'type.stage';
-    public const TYPE_SOUTENANCE = 'type.soutenance';
-    public const TYPE_PROJET = 'type.projet';
-    public const TYPE_AUTRE = 'type.autre';
-    public const TYPE_COMMISSION = 'type.commission';
-    public const TYPE_REUNION = 'type.reunion';
-    public const TYPE_RENTREE = 'type.rentree';
-    public const TYPE_VACANCES = 'type.vacances';
-    public const COULEUR_BADGE = [
+    public final const TYPE_STAGE = 'type.stage';
+    public final const TYPE_SOUTENANCE = 'type.soutenance';
+    public final const TYPE_PROJET = 'type.projet';
+    public final const TYPE_AUTRE = 'type.autre';
+    public final const TYPE_COMMISSION = 'type.commission';
+    public final const TYPE_REUNION = 'type.reunion';
+    public final const TYPE_RENTREE = 'type.rentree';
+    public final const TYPE_VACANCES = 'type.vacances';
+    public final const COULEUR_BADGE = [
         self::TYPE_STAGE => 'bg-primary',
         self::TYPE_SOUTENANCE => 'bg-danger',
         self::TYPE_PROJET => 'bg-purple',
@@ -46,42 +46,42 @@ class Date extends BaseEntity
     ];
 
     #[Groups(groups: ['date_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $libelle = null;
 
     #[Groups(groups: ['date_administration'])]
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
     private ?string $texte = null;
 
     #[Groups(groups: ['date_administration'])]
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateDebut = null;
 
     #[Groups(groups: ['date_administration'])]
-    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $heureDebut = null;
 
     #[Groups(groups: ['date_administration'])]
-    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateFin = null;
 
     #[Groups(groups: ['date_administration'])]
-    #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $heureFin = null;
 
     #[Groups(groups: ['date_administration'])]
-    #[ORM\Column(name: 'lieu', type: Types::STRING, length: 150)]
+    #[ORM\Column(name: 'lieu', type: \Doctrine\DBAL\Types\Types::STRING, length: 150)]
     private ?string $lieu = null;
 
     #[Groups(groups: ['date_administration'])]
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $allday = false;
 
     /**
      * @deprecated
      */
     #[Groups(groups: ['date_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 1)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 1)]
     private string $qui = '-';
 
     #[ORM\ManyToOne(targetEntity: Departement::class)]
@@ -92,7 +92,7 @@ class Date extends BaseEntity
     private Collection $semestres;
 
     #[Groups(groups: ['date_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 30)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 30)]
     private ?string $type = null;
 
     public function __construct()

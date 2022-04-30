@@ -23,7 +23,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class EvaluationsPersonnelsType extends AbstractType
 {
-    protected ?Semestre $semestre;
+    protected ?Semestre $semestre = null;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -35,9 +35,7 @@ class EvaluationsPersonnelsType extends AbstractType
                 'choice_label' => 'display',
                 'multiple' => true,
                 'expanded' => true,
-                'query_builder' => function (PersonnelRepository $repo) {
-                    return $repo->findBySemestreBuilder($this->semestre);
-                },
+                'query_builder' => fn(PersonnelRepository $repo) => $repo->findBySemestreBuilder($this->semestre),
             ]);
     }
 

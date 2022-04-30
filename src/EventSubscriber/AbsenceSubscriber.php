@@ -23,23 +23,11 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class AbsenceSubscriber implements EventSubscriberInterface
 {
-    private EntityManagerInterface $entityManager;
-
-    private AbsenceRepository $absenceRepository;
-
-    private AbsenceJustificatifRepository $absenceJustificatifRepository;
-
     /**
      * RegistrationNotifySubscriber constructor.
      */
-    public function __construct(
-        EntityManagerInterface $entityManager,
-        AbsenceRepository $absenceRepository,
-        AbsenceJustificatifRepository $absenceJustificatifRepository
-    ) {
-        $this->entityManager = $entityManager;
-        $this->absenceRepository = $absenceRepository;
-        $this->absenceJustificatifRepository = $absenceJustificatifRepository;
+    public function __construct(private readonly EntityManagerInterface $entityManager, private readonly AbsenceRepository $absenceRepository, private readonly AbsenceJustificatifRepository $absenceJustificatifRepository)
+    {
     }
 
     public static function getSubscribedEvents(): array

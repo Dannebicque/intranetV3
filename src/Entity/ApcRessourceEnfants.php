@@ -11,13 +11,16 @@ use Doctrine\ORM\Mapping as ORM;
 class ApcRessourceEnfants extends BaseEntity
 {
     #[ORM\ManyToOne(targetEntity: ApcRessource::class, inversedBy: 'apcRessourceParentEnfants')]
-    private ?ApcRessource $apcRessourceParent;
+    private ?ApcRessource $apcRessourceParent = null;
 
     #[ORM\ManyToOne(targetEntity: ApcRessource::class, inversedBy: 'apcRessourceEnfantEnfants')]
-    private ?ApcRessource $apcRessourceEnfant;
+    private ?ApcRessource $apcRessourceEnfant = null;
 
+    /**
+     * @var \Doctrine\Common\Collections\Collection<\App\Entity\Groupe>
+     */
     #[ORM\ManyToMany(targetEntity: Groupe::class, inversedBy: 'apcRessourceEnfants')]
-    private $groupes;
+    private \Doctrine\Common\Collections\Collection $groupes;
 
     public function __construct()
     {

@@ -22,20 +22,20 @@ class Message extends BaseEntity
 {
     use LifeCycleTrait;
 
-    public const ETAT_MESSAGE_DRAFT = 'D';
-    public const ETAT_MESSAGE_ENVOYE = 'E';
-    public const MESSAGE_TYPE_ETUDIANT = 'e';
-    public const MESSAGE_TYPE_SEMESTRE = 's';
-    public const MESSAGE_TYPE_GROUPE = 'g';
-    public const MESSAGE_TYPE_PERMANENT = 'p';
+    public final const ETAT_MESSAGE_DRAFT = 'D';
+    public final const ETAT_MESSAGE_ENVOYE = 'E';
+    public final const MESSAGE_TYPE_ETUDIANT = 'e';
+    public final const MESSAGE_TYPE_SEMESTRE = 's';
+    public final const MESSAGE_TYPE_GROUPE = 'g';
+    public final const MESSAGE_TYPE_PERMANENT = 'p';
 
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $sujet = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT)]
     private ?string $message = null;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private ?bool $important = null;
 
     #[ORM\ManyToOne(targetEntity: Personnel::class, fetch: 'EAGER', inversedBy: 'messages')]
@@ -53,13 +53,13 @@ class Message extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'message', targetEntity: MessagePieceJointe::class, fetch: 'EAGER')]
     private Collection $messagePieceJointes;
 
-    #[ORM\Column(type: Types::STRING, length: 1)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 1)]
     private string $etat = self::ETAT_MESSAGE_DRAFT;
 
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $typeDestinataires = null;
 
-    #[ORM\Column(type: Types::STRING, length: 1)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 1)]
     private ?string $type = null;
 
     public function __construct()

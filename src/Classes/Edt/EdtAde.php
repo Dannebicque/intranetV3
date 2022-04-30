@@ -11,11 +11,12 @@ namespace App\Classes\Edt;
 
 use App\DTO\EvenementEdt;
 use App\DTO\EvenementEdtCollection;
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Semestre;
 
 class EdtAde extends AbstractEdt implements EdtInterface
 {
-    public function getPlanningSemestre(Semestre $semestre): EvenementEdtCollection
+    public function getPlanningSemestre(Semestre $semestre, array $matieres, AnneeUniversitaire $anneeUniversitaire): EvenementEdtCollection
     {
         return new EvenementEdtCollection();
     }

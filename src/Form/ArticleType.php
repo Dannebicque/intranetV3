@@ -29,7 +29,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ArticleType extends AbstractType
 {
-    private ?Departement $departement;
+    private ?Departement $departement = null;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -48,9 +48,7 @@ class ArticleType extends AbstractType
                 'class' => ArticleCategorie::class,
                 'label' => 'label.article_categorie',
                 'choice_label' => 'libelle',
-                'query_builder' => function (ArticleCategorieRepository $articleCategorieRepository) {
-                    return $articleCategorieRepository->findByDepartementBuilder($this->departement);
-                },
+                'query_builder' => fn(ArticleCategorieRepository $articleCategorieRepository) => $articleCategorieRepository->findByDepartementBuilder($this->departement),
                 'required' => true,
                 'expanded' => false,
                 'multiple' => false,
@@ -59,9 +57,7 @@ class ArticleType extends AbstractType
                 'class' => Semestre::class,
                 'label' => 'label.semestres_article',
                 'choice_label' => 'libelle',
-                'query_builder' => function (SemestreRepository $semestreRepository) {
-                    return $semestreRepository->findByDepartementBuilder($this->departement);
-                },
+                'query_builder' => fn(SemestreRepository $semestreRepository) => $semestreRepository->findByDepartementBuilder($this->departement),
                 'required' => true,
                 'expanded' => true,
                 'multiple' => true,

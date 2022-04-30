@@ -18,23 +18,11 @@ use Symfony\Component\Routing\RouterInterface;
 
 class ProjetSubscriber implements EventSubscriberInterface
 {
-    protected MailerStage $myMailer;
-
-    private EntityManagerInterface $entityManager;
-
-    private RouterInterface $router;
-
     /**
      * StageSubscriber constructor.
      */
-    public function __construct(
-        EntityManagerInterface $entityManager,
-        RouterInterface $router,
-        MailerStage $myMailer
-    ) {
-        $this->entityManager = $entityManager;
-        $this->router = $router;
-        $this->myMailer = $myMailer;
+    public function __construct(private readonly EntityManagerInterface $entityManager, private readonly RouterInterface $router, protected MailerStage $myMailer)
+    {
     }
 
     public static function getSubscribedEvents(): array

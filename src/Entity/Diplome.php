@@ -27,7 +27,7 @@ class Diplome extends BaseEntity implements Serializable
     use ApogeeTrait;
     use LifeCycleTrait;
 
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $libelle = null;
 
     #[ORM\ManyToOne(targetEntity: Personnel::class)]
@@ -39,31 +39,31 @@ class Diplome extends BaseEntity implements Serializable
     #[ORM\ManyToOne(targetEntity: TypeDiplome::class, inversedBy: 'diplomes')]
     private ?TypeDiplome $typeDiplome = null;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private int $optNbJoursSaisie = 15;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $optDilpomeDecale = false;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $optSupprAbsence = false;
 
-    #[ORM\Column(type: Types::STRING, length: 10)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 10)]
     private string $optMethodeCalcul = Constantes::METHODE_CALCUL_MOY_MODULE;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $optAnonymat = false;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $optCommentairesReleve = false;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $optEspacePersoVisible = true;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private int $volumeHoraire = 0;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private int $codeCelcatDepartement = 0;
 
     /**
@@ -85,19 +85,19 @@ class Diplome extends BaseEntity implements Serializable
     #[ORM\OrderBy(value: ['libelle' => 'ASC'])]
     private Collection $annees;
 
-    #[ORM\Column(type: Types::STRING, length: 40)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 40)]
     private ?string $sigle = null;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $actif = true;
 
     #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class, inversedBy: 'diplomes')]
     private ?AnneeUniversitaire $anneeUniversitaire = null;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private int $optSemainesVisibles = 2;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $optCertifieQualite = false;
 
     #[ORM\ManyToOne(targetEntity: Personnel::class)]
@@ -127,15 +127,11 @@ class Diplome extends BaseEntity implements Serializable
     #[ORM\OneToMany(mappedBy: 'diplome', targetEntity: ApcParcours::class)]
     private Collection $apcParcours;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private ?bool $optUpdateCelcat = false;
 
-    #[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'diplomes')]
-    private ?Departement $departement;
-
-    public function __construct(Departement $departement)
+    public function __construct(#[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'diplomes')] private ?\App\Entity\Departement $departement)
     {
-        $this->departement = $departement;
         $this->hrs = new ArrayCollection();
         $this->ppns = new ArrayCollection();
         $this->annees = new ArrayCollection();

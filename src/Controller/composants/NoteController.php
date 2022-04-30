@@ -23,23 +23,18 @@ use Symfony\Component\Routing\Annotation\Route;
 /**
  * Class NotesController.
  *
- * @Route("/composant")
  * @IsGranted("ROLE_PERMANENT")
  */
+#[Route(path: '/composant')]
 class NoteController extends BaseController
 {
     /**
-     * @Route("/edit-form-evaluation/{evaluation}/{source}", name="composant_edit_form_evaluation")
      * @throws \App\Exception\MatiereNotFoundException
      */
-    public function editFormEvaluation(
-        TypeMatiereManager $typeMatiereManager,
-        Request $request,
-        Evaluation $evaluation,
-        $source
-    ): Response {
+    #[Route(path: '/edit-form-evaluation/{evaluation}/{source}', name: 'composant_edit_form_evaluation')]
+    public function editFormEvaluation(TypeMatiereManager $typeMatiereManager, Request $request, Evaluation $evaluation, $source) : Response
+    {
         $matiere = $typeMatiereManager->getMatiere($evaluation->getIdMatiere(), $evaluation->getTypeMatiere());
-
         if (null === $matiere) {
             throw new MatiereNotFoundException();
         }
@@ -60,7 +55,6 @@ class NoteController extends BaseController
             ]
         );
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'evaluation.edit.success.flash');
@@ -72,7 +66,6 @@ class NoteController extends BaseController
             return $this->redirectToRoute('application_personnel_evaluation_show',
                 ['uuid' => $evaluation->getUuidString()]);
         }
-
         return $this->render('composants/_edit_eval.html.twig', [
             'evaluation' => $evaluation,
             'form' => $form->createView(),

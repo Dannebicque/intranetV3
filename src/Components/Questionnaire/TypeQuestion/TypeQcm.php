@@ -16,10 +16,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TypeQcm extends AbstractQuestion
 {
-    public const LABEL = 'type_qcm';
-    public const BADGE = 'bg-cyan';
-    public const ICON = 'fas fa-ballot-check';
-    public const FORM = QuestionnaireQuestionTypeQcm::class;
+    public final const LABEL = 'type_qcm';
+    public final const BADGE = 'bg-cyan';
+    public final const ICON = 'fas fa-ballot-check';
+    public final const FORM = QuestionnaireQuestionTypeQcm::class;
 
     public function configureOptions(OptionsResolver $resolver): void
     {

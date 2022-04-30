@@ -24,91 +24,91 @@ class BCDemande extends BaseEntity
 {
     use LifeCycleTrait;
 
-    public const BC_PRESTATION_FOURNITURE = 'fourniture';
-    public const BC_PRESTATION_SERVICE = 'service';
-    public const BC_PRESTATION_TRAVAUX = 'travaux';
-    public const BC_TABS_PRESTATIONS = [
+    public final const BC_PRESTATION_FOURNITURE = 'fourniture';
+    public final const BC_PRESTATION_SERVICE = 'service';
+    public final const BC_PRESTATION_TRAVAUX = 'travaux';
+    public final const BC_TABS_PRESTATIONS = [
         self::BC_PRESTATION_FOURNITURE => self::BC_PRESTATION_FOURNITURE,
         self::BC_PRESTATION_SERVICE => self::BC_PRESTATION_SERVICE,
         self::BC_PRESTATION_TRAVAUX => self::BC_PRESTATION_TRAVAUX,
     ];
 
-    public const BC_AVIS_DIRECTION_FAVORABLE = 'favorable';
-    public const BC_AVIS_DIRECTION_DEFAVORABLE = 'defavorable';
-    public const BC_AVIS_DIRECTION_COMPLEMENT = 'complement';
-    public const BC_TABS_AVIS = [
+    public final const BC_AVIS_DIRECTION_FAVORABLE = 'favorable';
+    public final const BC_AVIS_DIRECTION_DEFAVORABLE = 'defavorable';
+    public final const BC_AVIS_DIRECTION_COMPLEMENT = 'complement';
+    public final const BC_TABS_AVIS = [
         self::BC_AVIS_DIRECTION_FAVORABLE => self::BC_AVIS_DIRECTION_FAVORABLE,
         self::BC_AVIS_DIRECTION_DEFAVORABLE => self::BC_AVIS_DIRECTION_DEFAVORABLE,
         self::BC_AVIS_DIRECTION_COMPLEMENT => self::BC_AVIS_DIRECTION_COMPLEMENT,
     ];
 
-    public const BC_SERVICE_SIA = 'sia';
-    public const BC_SERVICE_SG = 'sg';
-    public const BC_SERVICE_IUT = 'iut';
-    public const BC_TABS_SERVICES = [
+    public final const BC_SERVICE_SIA = 'sia';
+    public final const BC_SERVICE_SG = 'sg';
+    public final const BC_SERVICE_IUT = 'iut';
+    public final const BC_TABS_SERVICES = [
         self::BC_SERVICE_SIA => self::BC_SERVICE_SIA,
         self::BC_SERVICE_SG => self::BC_SERVICE_SG,
         self::BC_SERVICE_IUT => self::BC_SERVICE_IUT,
     ];
 
-    #[ORM\Column(type: Types::STRING, length: 100, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 100, nullable: true)]
     private ?string $service = null;
 
     #[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'bCDemandes')]
     private ?Departement $departement = null;
 
-    #[ORM\Column(type: Types::STRING, length: 20)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20)]
     private ?string $prestation = null;
 
     #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'bcDemandesResponsable')]
     private ?Personnel $responsable = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $objet = null;
 
-    #[ORM\Column(type: Types::FLOAT, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT, nullable: true)]
     private ?float $montantTTC = null;
 
-    #[ORM\Column(type: Types::FLOAT, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT, nullable: true)]
     private ?float $montantHT = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE)]
     private ?CarbonInterface $dateDemandeInitiale;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateValidationResponsable = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateValidationDirection = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateVerificationCompta = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateValidationCSA = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateClotureServiceFaitCSA = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateLivraisonEstimee = null;
 
-    #[ORM\Column(type: Types::STRING, length: 20, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20, nullable: true)]
     private ?string $avisDirection = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
     private ?string $texteInfoComplementaire = null;
 
     #[ORM\ManyToOne(targetEntity: BCFournisseur::class, inversedBy: 'bCDemandes')]
     private ?BCFournisseur $fournisseur = null;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private ?bool $commandeMarche = null;
 
-    #[ORM\Column(type: Types::STRING, length: 20)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20)]
     private ?string $numeroBC = null;
 
     #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'bcDemandeSignataireCompta')]
@@ -120,7 +120,7 @@ class BCDemande extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'bCDemande', targetEntity: BCServiceFait::class)]
     private Collection $migos;
 
-    #[ORM\Column(type: Types::STRING, length: 30)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 30)]
     private ?string $etatProcess = 'demande_initiale';
 
     public function __construct()

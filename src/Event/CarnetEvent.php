@@ -14,13 +14,10 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class CarnetEvent extends Event
 {
-    public const ADDED = 'carnet.added';
+    public final const ADDED = 'carnet.added';
 
-    protected CahierTexte $carnet;
-
-    public function __construct(CahierTexte $carnet)
+    public function __construct(protected CahierTexte $carnet)
     {
-        $this->carnet = $carnet;
     }
 
     public function getCahierTexte(): CahierTexte

@@ -15,12 +15,12 @@ namespace App\Classes\Edt;
 
 use App\DTO\EvenementEdt;
 use App\DTO\EvenementEdtCollection;
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Semestre;
 
 interface EdtInterface
 {
-    public function getPlanningSemestre(Semestre $semestre): EvenementEdtCollection;
-
+    public function getPlanningSemestre(Semestre $semestre, array $matieres, AnneeUniversitaire $anneeUniversitaire): EvenementEdtCollection;
     public function find(int $event): EvenementEdt;
     public function recupereEdtJourBorne(Semestre $semestre, array $matieres, int $jourSemaine, int $semaineFormation): EvenementEdtCollection;
 

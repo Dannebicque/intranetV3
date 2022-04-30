@@ -37,13 +37,11 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class EtudiantSemestreTableType extends TableType
 {
-    private ?Semestre $semestre;
-    private ?Departement $departement;
-    private CsrfTokenManagerInterface $csrfToken;
+    private ?Semestre $semestre = null;
+    private ?Departement $departement = null;
 
-    public function __construct(CsrfTokenManagerInterface $csrfToken)
+    public function __construct(private readonly CsrfTokenManagerInterface $csrfToken)
     {
-        $this->csrfToken = $csrfToken;
     }
 
     public function buildTable(TableBuilder $builder, array $options): void
@@ -54,9 +52,7 @@ class EtudiantSemestreTableType extends TableType
         $builder->addFilter('search', SearchType::class);
         $builder->addFilter('groupe', EntityType::class, [
             'class' => Groupe::class,
-            'query_builder' => function (GroupeRepository $groupeRepository) {
-                return $groupeRepository->findBySemestreBuilder($this->semestre);
-            },
+            'query_builder' => fn(GroupeRepository $groupeRepository) => $groupeRepository->findBySemestreBuilder($this->semestre),
             'choice_label' => 'display',
             'required' => false,
             'placeholder' => 'Filtrer par groupe',
@@ -127,9 +123,7 @@ class EtudiantSemestreTableType extends TableType
                     'post_params' => [
                         'field' => 'semestre',
                     ],
-                    'query_builder' => function (SemestreRepository $semestreRepository) {
-                        return $semestreRepository->findByDepartementBuilder($this->departement);
-                    },
+                    'query_builder' => fn(SemestreRepository $semestreRepository) => $semestreRepository->findByDepartementBuilder($this->departement),
                     'value' => $s->getSemestre()?->getId(),
                     'entity' => Semestre::class,
                     'choice_label' => 'libelle',

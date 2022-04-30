@@ -56,8 +56,8 @@ class PersonnelRepository extends ServiceEntityRepository
             $query->setParameter('type', $type);
         }
 
-        return $query->orderBy('p.nom', 'ASC')
-            ->addOrderBy('p.prenom', 'ASC')
+        return $query->orderBy('p.nom', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('p.prenom', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -70,8 +70,8 @@ class PersonnelRepository extends ServiceEntityRepository
             ->orWhere('p.username LIKE :needle')
             ->orWhere('p.mailUniv LIKE :needle')
             ->setParameter('needle', '%'.$needle.'%')
-            ->orderBy('p.nom', 'ASC')
-            ->addOrderBy('p.prenom', 'ASC')
+            ->orderBy('p.nom', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('p.prenom', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
 
@@ -122,8 +122,8 @@ class PersonnelRepository extends ServiceEntityRepository
             ->innerJoin(PersonnelDepartement::class, 'f', 'WITH', 'f.personnel = p.id')
             ->where('f.departement = :departement')
             ->setParameter('departement', $departement)
-            ->orderBy('p.nom', 'ASC')
-            ->addOrderBy('p.prenom', 'ASC');
+            ->orderBy('p.nom', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('p.prenom', \Doctrine\Common\Collections\Criteria::ASC);
     }
 
     public function findBySemestreBuilder(Semestre $semestre): ?QueryBuilder
@@ -155,7 +155,7 @@ class PersonnelRepository extends ServiceEntityRepository
             ->innerJoin(PersonnelDepartement::class, 'p', 'WITH', 's.id = p.personnel')
             ->where('p.departement = :departement')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('s.nom,s.prenom', 'ASC')
+            ->orderBy('s.nom,s.prenom', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
 
@@ -184,6 +184,6 @@ class PersonnelRepository extends ServiceEntityRepository
     public function findAllOrder(): QueryBuilder
     {
         return $this->createQueryBuilder('s')
-            ->orderBy('s.nom,s.prenom', 'ASC');
+            ->orderBy('s.nom,s.prenom', \Doctrine\Common\Collections\Criteria::ASC);
     }
 }

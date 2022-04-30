@@ -19,23 +19,11 @@ use Symfony\Component\Routing\RouterInterface;
 
 class SousCommissionSubscriber implements EventSubscriberInterface
 {
-    protected MailerFromTwig $myMailer;
-
-    private RouterInterface $router;
-
-    private EntityManagerInterface $entityManager;
-
     /**
      * StageSubscriber constructor.
      */
-    public function __construct(
-        EntityManagerInterface $entityManager,
-        RouterInterface $router,
-        MailerFromTwig $myMailer
-    ) {
-        $this->entityManager = $entityManager;
-        $this->router = $router;
-        $this->myMailer = $myMailer;
+    public function __construct(private readonly EntityManagerInterface $entityManager, private readonly RouterInterface $router, protected MailerFromTwig $myMailer)
+    {
     }
 
     public static function getSubscribedEvents(): array

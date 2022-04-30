@@ -29,7 +29,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class UeType extends AbstractType
 {
-    protected ?Diplome $diplome;
+    protected ?Diplome $diplome = null;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -42,9 +42,7 @@ class UeType extends AbstractType
                 'class' => Semestre::class,
                 'required' => true,
                 'choice_label' => 'display',
-                'query_builder' => function (SemestreRepository $semestreRepository) {
-                    return $semestreRepository->findByDiplomeBuilder($this->diplome);
-                },
+                'query_builder' => fn(SemestreRepository $semestreRepository) => $semestreRepository->findByDiplomeBuilder($this->diplome),
                 'label' => 'label.semestre',
                 'expanded' => true,
             ])
@@ -58,9 +56,7 @@ class UeType extends AbstractType
                 'class' => ApcCompetence::class,
                 'required' => false,
                 'choice_label' => 'nomCourt',
-                'query_builder' => function (ApcComptenceRepository $apcComptenceRepository) {
-                    return $apcComptenceRepository->findByDiplomeBuilder($this->diplome);
-                },
+                'query_builder' => fn(ApcComptenceRepository $apcComptenceRepository) => $apcComptenceRepository->findByDiplomeBuilder($this->diplome),
                 'label' => 'label.apc.competence',
                 'expanded' => true,
                 'help' => 'Le diplôme étant au format APC, vous pouvez attacher une compétence à cette UE',

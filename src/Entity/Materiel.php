@@ -30,24 +30,24 @@ class Materiel extends BaseEntity
     #[ORM\ManyToOne(targetEntity: TypeMateriel::class, inversedBy: 'materiels')]
     private ?TypeMateriel $typeMateriel = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $libelle = null;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50, nullable: true)]
     private ?string $photoName = 'noimage.png';
 
     /**
      * @Vich\UploadableField(mapping="materiel", fileNameProperty="photoName")
      */
-    private ?File $photoFile;
+    private ?File $photoFile = null;
 
-    #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50, nullable: true)]
     private ?string $codebarre = null;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private ?bool $empruntable = true;
 
     /**

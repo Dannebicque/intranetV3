@@ -20,7 +20,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ApcRessourceApprentissageCritiqueType extends AbstractType
 {
-    protected ?Diplome $diplome;
+    protected ?Diplome $diplome = null;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -30,9 +30,7 @@ class ApcRessourceApprentissageCritiqueType extends AbstractType
             ->add('apprentissageCritique', EntityType::class, [
                 'class' => ApcApprentissageCritique::class,
                 'choice_label' => 'libelle',
-                'query_builder' => function (ApcApprentissageCritiqueRepository $apcApprentissageCritiqueRepository) {
-                    return $apcApprentissageCritiqueRepository->findByDiplomeBuilder($this->diplome);
-                },
+                'query_builder' => fn(ApcApprentissageCritiqueRepository $apcApprentissageCritiqueRepository) => $apcApprentissageCritiqueRepository->findByDiplomeBuilder($this->diplome),
             ])
         ;
     }

@@ -25,7 +25,8 @@ use RuntimeException;
 abstract class BaseEdt
 {
     protected array $tabJour = [];
-
+    protected array $groupes;
+    protected array $planning;
     protected array $semaines;
 
     protected int $semaine;
@@ -213,7 +214,7 @@ abstract class BaseEdt
         return $this->salle;
     }
 
-    protected function calculSemaines(): array
+    public function calculSemaines(): array
     {
         //déja fait dans le parent ??
         $allsemaine = $this->calendrierRepository->findByAnneeUniversitaire($this->anneeUniversitaire);
@@ -256,5 +257,10 @@ abstract class BaseEdt
     protected function convertToDate(int $jour): CarbonImmutable
     {
         return $this->calendrier->getDateLundi()?->addDays($jour - 1);
+    }
+
+    public function getGroupes(): array
+    {
+        return $this->groupes;
     }
 }

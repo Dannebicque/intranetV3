@@ -76,9 +76,7 @@ class DatesType extends AbstractType
                 'class' => Semestre::class,
                 'label' => 'label.semestres_date',
                 'choice_label' => 'libelle',
-                'query_builder' => function (SemestreRepository $semestreRepository) {
-                    return $semestreRepository->findByDepartementBuilder($this->departement);
-                },
+                'query_builder' => fn(SemestreRepository $semestreRepository) => $semestreRepository->findByDepartementBuilder($this->departement),
                 'required' => true,
                 'expanded' => true,
                 'multiple' => true,

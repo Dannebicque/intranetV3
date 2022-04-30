@@ -13,14 +13,14 @@ use Doctrine\ORM\Mapping as ORM;
 
 trait ApogeeTrait
 {
-    #[ORM\Column(type: 'string', length: 20, nullable: true)]
-    private ?string $codeDiplome;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20, nullable: true)]
+    private ?string $codeDiplome = null;
 
-    #[ORM\Column(type: 'string', length: 10, nullable: true)]
-    private ?string $codeVersion;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 10, nullable: true)]
+    private ?string $codeVersion = null;
 
-    #[ORM\Column(type: 'string', length: 10, nullable: true)]
-    private ?string $codeDepartement;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 10, nullable: true)]
+    private ?string $codeDepartement = null;
 
     public function getCodeDiplome(): ?string
     {

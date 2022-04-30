@@ -16,12 +16,10 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ApogeeExport
 {
-    protected MyExcelWriter $myExcelWriter;
     protected Diplome $diplome;
 
-    public function __construct(MyExcelWriter $myExcelWriter)
+    public function __construct(protected MyExcelWriter $myExcelWriter)
     {
-        $this->myExcelWriter = $myExcelWriter;
     }
 
     public function setDiplome(Diplome $diplome): void
@@ -39,7 +37,7 @@ class ApogeeExport
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            200,
+            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="'.$nomFichier.'"',

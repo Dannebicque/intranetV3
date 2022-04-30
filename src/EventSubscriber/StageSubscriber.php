@@ -25,34 +25,21 @@ use Twig\Error\SyntaxError;
 
 class StageSubscriber implements EventSubscriberInterface
 {
-    protected MailerStage $myMailer;
-    protected MailerFromTwig $mailerFromTwig;
-
-    private EntityManagerInterface $entityManager;
-
-    private RouterInterface $router;
-
-    private StageMailTemplateRepository $stageMailTemplateRepository;
     private array $responsablesStagesMails = [];
-    private string $dir;
+    private readonly string $dir;
 
     /**
      * StageSubscriber constructor.
      */
     public function __construct(
         KernelInterface $kernel,
-        EntityManagerInterface $entityManager,
-        RouterInterface $router,
-        MailerStage $myMailer,
-        MailerFromTwig $mailerFromTwig,
-        StageMailTemplateRepository $stageMailTemplateRepository
+        private readonly EntityManagerInterface $entityManager,
+        private readonly RouterInterface $router,
+        protected MailerStage $myMailer,
+        protected MailerFromTwig $mailerFromTwig,
+        private readonly StageMailTemplateRepository $stageMailTemplateRepository
     ) {
         $this->dir = $kernel->getProjectDir().'/public/upload/conventions/';
-        $this->entityManager = $entityManager;
-        $this->mailerFromTwig = $mailerFromTwig;
-        $this->stageMailTemplateRepository = $stageMailTemplateRepository;
-        $this->router = $router;
-        $this->myMailer = $myMailer;
     }
 
     public static function getSubscribedEvents(): array

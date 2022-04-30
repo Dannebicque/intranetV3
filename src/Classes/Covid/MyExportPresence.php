@@ -31,25 +31,17 @@ use Twig\Error\SyntaxError;
 
 class MyExportPresence
 {
-    private MyExcelWriter $myExcelWriter;
-
-    private MyPDF $myPdf;
-    private string $dir;
-
-    private MailerFromTwig $myMailer;
+    private readonly string $dir;
 
     /**
      * MyExport constructor.
      */
     public function __construct(
-        MyExcelWriter $myExcelWriter,
-        MailerFromTwig $myMailer,
-        MyPdf $myPdf,
+        private readonly MyExcelWriter $myExcelWriter,
+        private readonly MailerFromTwig $myMailer,
+        private readonly MyPdf $myPdf,
         KernelInterface $kernel
     ) {
-        $this->myMailer = $myMailer;
-        $this->myExcelWriter = $myExcelWriter;
-        $this->myPdf = $myPdf;
         $this->dir = $kernel->getProjectDir().'/public/upload/';
     }
 
@@ -112,7 +104,7 @@ class MyExportPresence
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            200,
+            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="presence'.$date->format('d-m-Y').'.xlsx"',
@@ -278,7 +270,7 @@ class MyExportPresence
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            200,
+            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="presence-etudiant-'.$date->format('d-m-Y').'.xlsx"',

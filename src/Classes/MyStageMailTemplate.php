@@ -23,8 +23,8 @@ use Doctrine\ORM\NonUniqueResultException;
 class MyStageMailTemplate
 {
     public function __construct(
-        private StageMailTemplateRepository $stageMailTemplateRepository,
-        private EntityManagerInterface $entityManager
+        private readonly StageMailTemplateRepository $stageMailTemplateRepository,
+        private readonly EntityManagerInterface $entityManager
     ) {
     }
 

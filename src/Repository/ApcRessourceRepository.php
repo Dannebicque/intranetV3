@@ -51,8 +51,8 @@ class ApcRessourceRepository extends ServiceEntityRepository
             ->where('a.diplome = :diplome')
             //->andWhere('s.ppn_actif = m.ppn')
             ->setParameter('diplome', $diplome->getId())
-            ->orderBy('r.codeMatiere', 'ASC')
-            ->addOrderBy('r.libelle', 'ASC');
+            ->orderBy('r.codeMatiere', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('r.libelle', \Doctrine\Common\Collections\Criteria::ASC);
     }
 
     public function findBySemestre(Semestre $semestre): array
@@ -65,8 +65,8 @@ class ApcRessourceRepository extends ServiceEntityRepository
             ->addSelect('apcRessourceCompetences')
             //->andWhere('s.ppn_actif = m.ppn')
             ->setParameter('semestre', $semestre->getId())
-            ->orderBy('r.codeMatiere', 'ASC')
-            ->addOrderBy('r.libelle', 'ASC')
+            ->orderBy('r.codeMatiere', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('r.libelle', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -100,8 +100,8 @@ class ApcRessourceRepository extends ServiceEntityRepository
             ->where('d.departement = :departement')
             //->andWhere('s.ppn_actif = m.ppn')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('r.codeMatiere', 'ASC')
-            ->addOrderBy('r.libelle', 'ASC')
+            ->orderBy('r.codeMatiere', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('r.libelle', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

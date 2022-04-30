@@ -17,12 +17,10 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFixtures extends Fixture
 {
-    private UserPasswordHasherInterface $encoder;
-    public const PERMANENT_USER_REFERENCE = 'permanent-user';
+    public final const PERMANENT_USER_REFERENCE = 'permanent-user';
 
-    public function __construct(UserPasswordHasherInterface $encoder)
+    public function __construct(private readonly UserPasswordHasherInterface $encoder)
     {
-        $this->encoder = $encoder;
     }
 
     /**

@@ -19,14 +19,11 @@ abstract class Apogee
     //todo refaire avec Doctrine ORM?
     protected PDO $conn;
 
-    private ParameterBagInterface $parameterBag;
-
     /**
      * MyApogee constructor.
      */
-    public function __construct(ParameterBagInterface $parameterBag)
+    public function __construct(private readonly ParameterBagInterface $parameterBag)
     {
-        $this->parameterBag = $parameterBag;
     }
 
     protected function connect(): ?PDO

@@ -24,7 +24,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class ImportPrevisionnelType extends AbstractType
 {
-    private ?Departement $departement;
+    private ?Departement $departement = null;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -37,9 +37,7 @@ class ImportPrevisionnelType extends AbstractType
                 [
                     'class' => Diplome::class,
                     'choice_label' => 'display',
-                    'query_builder' => function (DiplomeRepository $diplomeRepository) {
-                        return $diplomeRepository->findByDepartementBuilder($this->departement);
-                    },
+                    'query_builder' => fn(DiplomeRepository $diplomeRepository) => $diplomeRepository->findByDepartementBuilder($this->departement),
                     'label' => 'diplome',
                 ]
             )

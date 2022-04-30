@@ -17,19 +17,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class UpdateAdresseRddCommand extends Command
 {
-    private RddDiplomeRepository $diplomeRepository;
-    private EntityManagerInterface $entityManager;
-    private EtudiantRepository $etudiantRepository;
-
     public function __construct(
-        RddDiplomeRepository $diplomeRepository,
-        EntityManagerInterface $entityManager,
-        EtudiantRepository $etudiantRepository
+        private readonly RddDiplomeRepository $diplomeRepository,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly EtudiantRepository $etudiantRepository
     ) {
         parent::__construct();
-        $this->diplomeRepository = $diplomeRepository;
-        $this->entityManager = $entityManager;
-        $this->etudiantRepository = $etudiantRepository;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

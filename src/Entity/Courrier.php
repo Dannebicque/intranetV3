@@ -20,7 +20,7 @@ class Courrier extends BaseEntity
 {
     use LifeCycleTrait;
 
-    #[ORM\Column(type: Types::TEXT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT)]
     private ?string $texte = null;
 
     public function getTexte(): ?string

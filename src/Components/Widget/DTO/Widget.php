@@ -14,28 +14,14 @@ use function str_ends_with;
 
 class Widget
 {
-    protected string $name;
-
-    protected WidgetType $type;
-
-    protected array $options;
-
-    /**
-     * @var Widget[]
-     */
-    protected array $children = [];
-
     protected ?WidgetView $view = null;
 
     /**
      * Widget constructor.
+     * @param \App\Components\Widget\DTO\Widget[] $children
      */
-    public function __construct(string $name, WidgetType $type, array $options, array $children = [])
+    public function __construct(protected string $name, protected WidgetType $type, protected array $options, protected array $children = [])
     {
-        $this->name = $name;
-        $this->type = $type;
-        $this->options = $options;
-        $this->children = $children;
     }
 
     public function createView(): WidgetView

@@ -33,24 +33,24 @@ class StagePeriodeOffre extends BaseEntity
     private Collection $stagePeriodes;
 
     #[Groups(['stage_offre_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 255)]
-    private ?string $libelle;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
+    private ?string $libelle = null;
 
     #[Groups(['stage_offre_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 255)]
-    private ?string $entreprise;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
+    private ?string $entreprise = null;
 
     #[Groups(['stage_offre_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 255)]
-    private ?string $ville;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
+    private ?string $ville = null;
 
-    #[ORM\Column(type: Types::STRING, length: 50)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50)]
     private ?string $documentName = '';
 
     /**
      * @Vich\UploadableField(mapping="offreStage", fileNameProperty="documentName")
      */
-    private ?File $documentFile;
+    private ?File $documentFile = null;
 
     public function __construct(StagePeriode $stagePeriode)
     {

@@ -15,16 +15,14 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class QualiteRelanceEvent extends Event
 {
-    public const SEND_RELANCE = 'sendRelance';
-    public const SEND_SYNTHESE = 'sendSynthese';
+    public final const SEND_RELANCE = 'sendRelance';
+    public final const SEND_SYNTHESE = 'sendSynthese';
 
     protected ?Etudiant $etudiant = null;
     protected array $etudiants;
-    protected ?QuestionnaireQualite $questionnaireQualite;
 
-    public function __construct(QuestionnaireQualite $questionnaireQualite)
+    public function __construct(protected ?\App\Entity\QuestionnaireQualite $questionnaireQualite)
     {
-        $this->questionnaireQualite = $questionnaireQualite;
     }
 
     public function getEtudiant(): ?Etudiant

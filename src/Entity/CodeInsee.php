@@ -16,13 +16,13 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: CodeInseeRepository::class)]
 class CodeInsee extends BaseEntity
 {
-    #[ORM\Column(type: Types::STRING, length: 6)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 6)]
     private ?string $codeInsee = null;
 
-    #[ORM\Column(type: Types::STRING, length: 60)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 60)]
     private ?string $codePostal = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $ville = null;
 
     public function getCodeInsee(): ?string

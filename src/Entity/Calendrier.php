@@ -23,15 +23,15 @@ class Calendrier extends BaseEntity
     use LifeCycleTrait;
 
     #[Groups(groups: ['celcat_administration'])]
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private ?int $semaineFormation = null;
 
     #[Groups(groups: ['celcat_administration'])]
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private ?int $semaineReelle = null;
 
     #[Groups(groups: ['celcat_administration'])]
-    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_IMMUTABLE)]
     private ?CarbonImmutable $dateLundi = null;
 
     #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class, inversedBy: 'calendriers')]

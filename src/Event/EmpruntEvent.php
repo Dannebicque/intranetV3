@@ -14,15 +14,12 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class EmpruntEvent extends Event
 {
-    public const CHGT_ETAT_EMPRUNT_DEMANDE = 'chgt.emprunt.demande';
-    public const CHGT_ETAT_EMPRUNT_ACCEPTE = 'chgt.emprunt.accepte';
-    public const CHGT_ETAT_EMPRUNT_REFUS = 'chgt.emprunt.refus';
+    public final const CHGT_ETAT_EMPRUNT_DEMANDE = 'chgt.emprunt.demande';
+    public final const CHGT_ETAT_EMPRUNT_ACCEPTE = 'chgt.emprunt.accepte';
+    public final const CHGT_ETAT_EMPRUNT_REFUS = 'chgt.emprunt.refus';
 
-    protected Emprunt $emprunt;
-
-    public function __construct(Emprunt $emprunt)
+    public function __construct(protected Emprunt $emprunt)
     {
-        $this->emprunt = $emprunt;
     }
 
     public function getEmprunt(): Emprunt

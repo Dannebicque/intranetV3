@@ -18,11 +18,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ChoiceCompleteType extends AbstractType
 {
-    protected TranslatorInterface $translator;
-
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(protected TranslatorInterface $translator)
     {
-        $this->translator = $translator;
     }
 
     public function buildView(FormView $view, FormInterface $form, array $options): void

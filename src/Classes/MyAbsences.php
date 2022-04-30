@@ -38,10 +38,10 @@ class MyAbsences
      * MyAbsences constructor.
      */
     public function __construct(
-        private AbsenceRepository $absenceRepository,
-        private EtudiantRepository $etudiantRepository,
-        private MyExcelMultiExport $myExcelMultiExport,
-        private EtudiantAbsences $etudiantAbsences
+        private readonly AbsenceRepository $absenceRepository,
+        private readonly EtudiantRepository $etudiantRepository,
+        private readonly MyExcelMultiExport $myExcelMultiExport,
+        private readonly EtudiantAbsences $etudiantAbsences
     ) {
     }
 

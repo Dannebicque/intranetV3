@@ -43,11 +43,11 @@ class MyEdtIntranet extends BaseEdt
     public function __construct(
         CalendrierRepository $celcatCalendrierRepository,
         protected EdtPlanningRepository $edtPlanningRepository,
-        private SemestreRepository $semestreRepository,
-        private GroupeRepository $groupeRepository,
-        private TypeMatiereManager $typeMatiereManager,
-        private PersonnelRepository $personnelRepository,
-        private EntityManagerInterface $entityManager
+        private readonly SemestreRepository $semestreRepository,
+        private readonly GroupeRepository $groupeRepository,
+        private readonly TypeMatiereManager $typeMatiereManager,
+        private readonly PersonnelRepository $personnelRepository,
+        private readonly EntityManagerInterface $entityManager
     ) {
         parent::__construct($celcatCalendrierRepository);
     }
@@ -592,7 +592,7 @@ class MyEdtIntranet extends BaseEdt
         $plann->setJour($request->request->get('jourc'));
         $plann->setEvaluation($request->request->get('evaluation'));
 
-        $tc = explode('-', $request->request->get('typecours'));
+        $tc = explode('-', (string) $request->request->get('typecours'));
         $plann->setType($tc[0]);
 
         switch ($tc[0]) {

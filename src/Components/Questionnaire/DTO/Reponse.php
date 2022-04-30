@@ -13,19 +13,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class Reponse
 {
-    public int $id;
-    public string $libelle;
-    public string | int $valeur;
-    public int $ordre = 1;
     protected array $options = [];
 
-    public function __construct(int $id, string $libelle, string | int $valeur, int $ordre = 1, array $options = [])
+    public function __construct(public int $id, public string $libelle, public string | int $valeur, public int $ordre = 1, array $options = [])
     {
-        $this->id = $id;
-        $this->libelle = $libelle;
-        $this->valeur = $valeur;
-        $this->ordre = $ordre;
-
         $this->resolveOptions($options);
     }
 

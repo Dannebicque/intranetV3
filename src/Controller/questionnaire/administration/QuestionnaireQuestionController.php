@@ -23,11 +23,8 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/administratif/questionnaire/question', name: 'sadm_questionnaire_question_')]
 class QuestionnaireQuestionController extends BaseController
 {
-    private QuestionnaireQuestionTagRepository $questionnaireQuestionTagRepository;
-
-    public function __construct(QuestionnaireQuestionTagRepository $questionnaireQuestionTagRepository)
+    public function __construct(private readonly QuestionnaireQuestionTagRepository $questionnaireQuestionTagRepository)
     {
-        $this->questionnaireQuestionTagRepository = $questionnaireQuestionTagRepository;
     }
 
     /**

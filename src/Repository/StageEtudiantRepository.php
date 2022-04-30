@@ -101,7 +101,7 @@ class StageEtudiantRepository extends ServiceEntityRepository
             ->innerJoin(Entreprise::class, 'e', 'WITH', 's.entreprise = e.id')
             ->where('s.stagePeriode = :stagePeriode')
             ->setParameter('stagePeriode', $stagePeriode->getId())
-            ->orderBy('e.raisonSociale', 'ASC')
+            ->orderBy('e.raisonSociale', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

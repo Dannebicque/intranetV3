@@ -26,7 +26,7 @@ class ProjetPeriode extends BaseEntity
     use UuidTrait;
     use LifeCycleTrait;
 
-    #[ORM\Column(type: Types::STRING, length: 100)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 100)]
     private ?string $libelle = null;
 
     #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'projetPeriodes')]
@@ -35,10 +35,10 @@ class ProjetPeriode extends BaseEntity
     #[ORM\ManyToMany(targetEntity: Personnel::class, inversedBy: 'projetPeriodes')]
     private Collection $responsables;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE)]
     private ?CarbonInterface $dateDebut = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE)]
     private ?CarbonInterface $dateFin = null;
 
     #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class, inversedBy: 'projetPeriodes')]
@@ -50,7 +50,7 @@ class ProjetPeriode extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'projetPeriode', targetEntity: ProjetEtudiant::class)]
     private Collection $projetEtudiants;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
     private ?string $texteLibre = null;
 
     public function __construct()

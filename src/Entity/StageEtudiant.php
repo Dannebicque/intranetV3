@@ -30,21 +30,21 @@ class StageEtudiant extends BaseEntity
     use UuidTrait;
     use LifeCycleTrait;
 
-    public const ETAT_STAGE_AUTORISE = 'ETAT_STAGE_AUTORISE';
-    public const ETAT_STAGE_DEPOSE = 'ETAT_STAGE_DEPOSE';
-    public const ETAT_STAGE_VALIDE = 'ETAT_STAGE_VALIDE';
-    public const ETAT_STAGE_REFUS = 'ETAT_STAGE_REFUS';
-    public const ETAT_STAGE_INCOMPLET = 'ETAT_STAGE_INCOMPLET';
-    public const ETAT_STAGE_CONVENTION_IMPRIMEE = 'ETAT_STAGE_CONVENTION_IMPRIMEE';
-    public const ETAT_STAGE_CONVENTION_ENVOYEE = 'ETAT_STAGE_CONVENTION_ENVOYEE';
-    public const ETAT_STAGE_CONVENTION_RECUE = 'ETAT_STAGE_CONVENTION_RECUE';
-    public const ETAT_STAGE_ERASMUS = 'ETAT_STAGE_ERASMUS';
-    public const ETAT_STAGE_ETRANGER = 'ETAT_STAGE_ETRANGER';
-    public const ETAT_STAGE_APPRENTISSAGE = 'ETAT_STAGE_APPRENTISSAGE';
-    public const PERIODE_GRATIFICATION_HEURE = 'H';
-    public const PERIODE_GRATIFICATION_JOUR = 'J';
-    public const PERIODE_GRATIFICATION_MOIS = 'M';
-    public const ETATS = [
+    public final const ETAT_STAGE_AUTORISE = 'ETAT_STAGE_AUTORISE';
+    public final const ETAT_STAGE_DEPOSE = 'ETAT_STAGE_DEPOSE';
+    public final const ETAT_STAGE_VALIDE = 'ETAT_STAGE_VALIDE';
+    public final const ETAT_STAGE_REFUS = 'ETAT_STAGE_REFUS';
+    public final const ETAT_STAGE_INCOMPLET = 'ETAT_STAGE_INCOMPLET';
+    public final const ETAT_STAGE_CONVENTION_IMPRIMEE = 'ETAT_STAGE_CONVENTION_IMPRIMEE';
+    public final const ETAT_STAGE_CONVENTION_ENVOYEE = 'ETAT_STAGE_CONVENTION_ENVOYEE';
+    public final const ETAT_STAGE_CONVENTION_RECUE = 'ETAT_STAGE_CONVENTION_RECUE';
+    public final const ETAT_STAGE_ERASMUS = 'ETAT_STAGE_ERASMUS';
+    public final const ETAT_STAGE_ETRANGER = 'ETAT_STAGE_ETRANGER';
+    public final const ETAT_STAGE_APPRENTISSAGE = 'ETAT_STAGE_APPRENTISSAGE';
+    public final const PERIODE_GRATIFICATION_HEURE = 'H';
+    public final const PERIODE_GRATIFICATION_JOUR = 'J';
+    public final const PERIODE_GRATIFICATION_MOIS = 'M';
+    public final const ETATS = [
         self::ETAT_STAGE_AUTORISE,
         self::ETAT_STAGE_DEPOSE,
         self::ETAT_STAGE_VALIDE,
@@ -56,77 +56,77 @@ class StageEtudiant extends BaseEntity
     ];
 
     #[ORM\ManyToOne(targetEntity: StagePeriode::class, inversedBy: 'stageEtudiants')]
-    private ?StagePeriode $stagePeriode;
+    private ?StagePeriode $stagePeriode = null;
 
     #[Groups(['stage_periode_gestion'])]
     #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'stageEtudiants')]
-    private ?Etudiant $etudiant;
+    private ?Etudiant $etudiant = null;
 
     #[Groups(['stage_periode_gestion', 'stage_entreprise'])]
     #[ORM\OneToOne(targetEntity: Contact::class, cascade: ['persist', 'remove'])]
-    private ?Contact $tuteur;
+    private ?Contact $tuteur = null;
 
     #[Groups(['stage_periode_gestion', 'stage_entreprise'])]
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
     private ?string $serviceStageEntreprise = '';
 
     #[Groups(['stage_entreprise'])]
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
     private ?string $sujetStage = '';
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?CarbonInterface $dateDepotFormulaire;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateDepotFormulaire = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?CarbonInterface $dateValidation;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateValidation = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?CarbonInterface $dateConventionEnvoyee;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateConventionEnvoyee = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?CarbonInterface $dateConventionRecu;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateConventionRecu = null;
 
-    #[ORM\Column(type: Types::STRING, length: 30)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 30)]
     private string $etatStage = 'ETAT_STAGE_AUTORISE';
 
     #[Groups(['stage_entreprise_administration', 'stage_entreprise', 'stage_periode_gestion'])]
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE)]
     private ?CarbonInterface $dateDebutStage = null;
 
     #[Groups(['stage_entreprise_administration', 'stage_entreprise', 'stage_periode_gestion'])]
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE)]
     private ?CarbonInterface $dateFinStage = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $activites;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
+    private ?string $activites = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $amenagementStage;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
+    private ?string $amenagementStage = null;
 
-    #[ORM\Column(type: 'boolean')]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $gratification = false;
 
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     #[Assert\Type(
         type: 'float',
         message: 'La valeur {{ value }} doit un valeur décimale positive.',
     )]
-    private ?float $gratificationMontant;
+    private ?float $gratificationMontant = null;
 
-    #[ORM\Column(type: Types::STRING, length: 1)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 1)]
     private string $gratificationPeriode = self::PERIODE_GRATIFICATION_HEURE;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $avantages;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
+    private ?string $avantages = null;
 
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     #[Assert\Type(
         type: 'float',
         message: 'La valeur {{ value }} doit un valeur décimale positive.',
     )]
     private float $dureeHebdomadaire = 35;
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     #[Assert\Type(
         type: 'integer',
         message: 'La valeur {{ value }} doit être entière et positive.',
@@ -135,26 +135,26 @@ class StageEtudiant extends BaseEntity
 
     #[Groups(['stage_periode_gestion'])]
     #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'stageEtudiants')]
-    private ?Personnel $tuteurUniversitaire;
+    private ?Personnel $tuteurUniversitaire = null;
 
     #[Groups(['stage_entreprise_administration', 'stage_periode_gestion'])]
     #[ORM\ManyToOne(targetEntity: Entreprise::class, cascade: ['persist', 'remove'], fetch: 'EAGER', inversedBy: 'stageEtudiants')]
-    private ?Entreprise $entreprise;
+    private ?Entreprise $entreprise = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?CarbonInterface $dateAutorise;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateAutorise = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?CarbonInterface $dateImprime;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateImprime = null;
 
     #[ORM\OneToOne(targetEntity: Adresse::class, cascade: ['persist', 'remove'])]
-    private ?Adresse $adresseStage;
+    private ?Adresse $adresseStage = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $periodesInterruptions;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
+    private ?string $periodesInterruptions = null;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
-    private ?string $commentaireDureeHebdomadaire;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
+    private ?string $commentaireDureeHebdomadaire = null;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\StageAvenant>

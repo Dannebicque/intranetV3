@@ -16,16 +16,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class TypeQuestionColumnType extends PropertyColumnType
 {
-    private QuestionnaireRegistry $questionnaireRegistry;
-    private TranslatorInterface $translator;
-
     public function __construct(
-        QuestionnaireRegistry $questionnaireRegistry,
-        TranslatorInterface $translator
+        private readonly QuestionnaireRegistry $questionnaireRegistry,
+        private readonly TranslatorInterface $translator
     ) {
         parent::__construct();
-        $this->questionnaireRegistry = $questionnaireRegistry;
-        $this->translator = $translator;
     }
 
     /**

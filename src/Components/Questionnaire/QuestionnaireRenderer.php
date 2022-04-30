@@ -14,13 +14,11 @@ use Twig\Environment;
 
 class QuestionnaireRenderer
 {
-    protected Environment $twig;
     protected ?int $idEtudiant = null;
     protected ?int $idQuestionnaire = null;
 
-    public function __construct(Environment $twig)
+    public function __construct(protected Environment $twig)
     {
-        $this->twig = $twig;
     }
 
     /**

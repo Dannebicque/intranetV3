@@ -34,9 +34,7 @@ class ParcourType extends AbstractType
                 'class' => Semestre::class,
                 'required' => true,
                 'choice_label' => 'display',
-                'query_builder' => function (SemestreRepository $semestreRepository) {
-                    return $semestreRepository->findByDiplomeBuilder($this->diplome);
-                },
+                'query_builder' => fn(SemestreRepository $semestreRepository) => $semestreRepository->findByDiplomeBuilder($this->diplome),
                 'label' => 'label.semestre',
                 'expanded' => true,
             ])

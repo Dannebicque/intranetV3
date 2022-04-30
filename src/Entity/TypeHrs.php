@@ -19,15 +19,15 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: TypeHrsRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class TypeHrs extends BaseEntity
+class TypeHrs extends BaseEntity implements \Stringable
 {
     use LifeCycleTrait;
-    public const TYPE_HRS_HRS = 'HRS';
-    public const TYPE_HRS_PCA = 'PCA';
-    public const TYPE_HRS_PRP = 'PRP';
-    public const TYPE_HRS_SUIVI = 'Suivi';
-    public const TYPE_HRS_AUTRE = 'Autre';
-    public const TAB_TYPE_HRS = [
+    public final const TYPE_HRS_HRS = 'HRS';
+    public final const TYPE_HRS_PCA = 'PCA';
+    public final const TYPE_HRS_PRP = 'PRP';
+    public final const TYPE_HRS_SUIVI = 'Suivi';
+    public final const TYPE_HRS_AUTRE = 'Autre';
+    public final const TAB_TYPE_HRS = [
         'choice.'.self::TYPE_HRS_HRS => self::TYPE_HRS_HRS,
         'choice.'.self::TYPE_HRS_PCA => self::TYPE_HRS_PCA,
         'choice.'.self::TYPE_HRS_PRP => self::TYPE_HRS_PRP,
@@ -38,12 +38,12 @@ class TypeHrs extends BaseEntity
     //STAGE, PRP, PCA, HRS
 
     #[Groups(['type_hrs_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 100)]
-    private ?string $libelle;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 100)]
+    private ?string $libelle = null;
 
     #[Groups(['type_hrs_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 20)]
-    private ?string $type;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20)]
+    private ?string $type = null;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Hrs>
@@ -52,11 +52,11 @@ class TypeHrs extends BaseEntity
     private Collection $hrs;
 
     #[Groups(['type_hrs_administration'])]
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $incluService = false;
 
     #[Groups(['type_hrs_administration'])]
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private float $maximum = 96;
 
     public function __construct()

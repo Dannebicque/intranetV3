@@ -22,16 +22,16 @@ class StagePeriodeInterruption extends BaseEntity
     use LifeCycleTrait;
 
     #[ORM\ManyToOne(targetEntity: StagePeriode::class, inversedBy: 'stagePeriodeInterruptions')]
-    private ?StagePeriode $stagePeriode;
+    private ?StagePeriode $stagePeriode = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE)]
     private ?CarbonInterface $dateDebut = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE)]
     private ?CarbonInterface $dateFin = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255)]
-    private ?string $motif;
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
+    private ?string $motif = null;
 
     public function getStagePeriode(): ?StagePeriode
     {

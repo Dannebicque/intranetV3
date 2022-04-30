@@ -15,14 +15,11 @@ use Twig\TwigFunction;
 
 class TableExtension extends AbstractExtension
 {
-    protected TableRenderer $renderer;
-
     /**
      * DataTableTwigExtension constructor.
      */
-    public function __construct(TableRenderer $renderer)
+    public function __construct(protected TableRenderer $renderer)
     {
-        $this->renderer = $renderer;
     }
 
     /**

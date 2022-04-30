@@ -16,12 +16,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class StatusBadgeEnumColumnType extends PropertyColumnType
 {
-    private TranslatorInterface $translator;
-
-    public function __construct(TranslatorInterface $translator)
+    public function __construct(private readonly TranslatorInterface $translator)
     {
         parent::__construct();
-        $this->translator = $translator;
     }
 
     public function renderProperty(mixed $value, array $options): string

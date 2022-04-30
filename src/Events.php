@@ -14,6 +14,6 @@ namespace App;
  */
 class Events
 {
-    public const REDIRECT_TO_LOGIN = 'redirect.to.login';
-    public const CHOISIR_DEPARTEMENT_DEFAUT = 'choisir.departement.par.defaut';
+    public final const REDIRECT_TO_LOGIN = 'redirect.to.login';
+    public final const CHOISIR_DEPARTEMENT_DEFAUT = 'choisir.departement.par.defaut';
 }

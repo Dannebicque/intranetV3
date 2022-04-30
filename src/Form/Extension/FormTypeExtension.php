@@ -19,17 +19,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FormTypeExtension extends AbstractTypeExtension
 {
-    private ?string $defaultLabelClass;
-
-    private ?string $defaultGroupClass;
-
     /**
      * FormTypeExtension constructor.
      */
-    public function __construct(?string $defaultLabelClass = null, ?string $defaultGroupClass = null)
+    public function __construct(private readonly ?string $defaultLabelClass = null, private readonly ?string $defaultGroupClass = null)
     {
-        $this->defaultLabelClass = $defaultLabelClass;
-        $this->defaultGroupClass = $defaultGroupClass;
     }
 
     /**

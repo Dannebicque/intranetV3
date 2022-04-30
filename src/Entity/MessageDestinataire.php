@@ -32,16 +32,16 @@ abstract class MessageDestinataire extends BaseEntity
     public const STARRED = 'S';
     public const DELETED = 'D';
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateLu = null;
 
-    #[ORM\Column(type: Types::STRING, length: 1)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 1)]
     private string $etat = self::UNREAD;
 
     #[ORM\ManyToOne(targetEntity: Message::class, fetch: 'EAGER', inversedBy: 'messageDestinataires')]
     private ?Message $message = null;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $starred = false;
 
     public function getDateLu(): ?CarbonInterface

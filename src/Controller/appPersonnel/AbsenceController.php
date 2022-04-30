@@ -224,7 +224,7 @@ class AbsenceController extends BaseController
                 return $this->json($absences);
             }
 
-            return new response('out', 500);
+            return new response('out', \Symfony\Component\HttpFoundation\Response::HTTP_INTERNAL_SERVER_ERROR);
         }
         if (1 === count($absence)) {
             //un tableau, donc une absence ?
@@ -238,7 +238,7 @@ class AbsenceController extends BaseController
             return $this->json($absences);
         }
 
-        return new response('nok', 500);
+        return new response('nok', \Symfony\Component\HttpFoundation\Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     private function saisieAutorise(int $nbjour, CarbonInterface $datesymfony): bool

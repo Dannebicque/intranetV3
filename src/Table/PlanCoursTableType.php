@@ -45,15 +45,12 @@ class PlanCoursTableType extends TableType
             'choice_label' => 'display',
             'required' => false,
             'placeholder' => 'Filtrer par semestre',
-            'query_builder' => function (SemestreRepository $semestreRepository) {
-                return $semestreRepository->findByDiplomeBuilder($this->diplome);
-            },
+            'query_builder' => fn(SemestreRepository $semestreRepository) => $semestreRepository->findByDiplomeBuilder($this->diplome),
         ]);
         $builder->addFilter('etat_plan_cours', EnumType::class, [
             'class' => PlanCoursEnum::class,
             'required' => false,
-            'choice_label' => static function (UnitEnum $choice): string {
-                return 'plan_cours.'.$choice->value;},
+            'choice_label' => static fn(UnitEnum $choice): string => 'plan_cours.'.$choice->value,
             'placeholder' => 'Etat du plan de cours',
         ]);
 

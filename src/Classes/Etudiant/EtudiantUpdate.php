@@ -21,27 +21,11 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class EtudiantUpdate
 {
-    private BacRepository $bacRepository;
-    private DepartementRepository $departementRepository;
-    private SemestreRepository $semestreRepository;
-    private EntityManagerInterface $entityManager;
-    private EtudiantGroupes $etudiantGroupes;
-
     /**
      * EtudiantUpdate constructor.
      */
-    public function __construct(
-        BacRepository $bacRepository,
-        DepartementRepository $departementRepository,
-        SemestreRepository $semestreRepository,
-        EntityManagerInterface $entityManager,
-        EtudiantGroupes $etudiantGroupes
-    ) {
-        $this->bacRepository = $bacRepository;
-        $this->departementRepository = $departementRepository;
-        $this->semestreRepository = $semestreRepository;
-        $this->entityManager = $entityManager;
-        $this->etudiantGroupes = $etudiantGroupes;
+    public function __construct(private readonly BacRepository $bacRepository, private readonly DepartementRepository $departementRepository, private readonly SemestreRepository $semestreRepository, private readonly EntityManagerInterface $entityManager, private readonly EtudiantGroupes $etudiantGroupes)
+    {
     }
 
     public function update(Etudiant $etudiant, string $field, mixed $value): bool

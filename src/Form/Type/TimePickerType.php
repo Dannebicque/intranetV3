@@ -39,7 +39,7 @@ class TimePickerType extends AbstractType
             'maxDate' => $this->toDate($options['max'], $options['format']),
         ];
 
-        $view->vars['attr']['data-options'] = json_encode($jsOptions);
+        $view->vars['attr']['data-options'] = json_encode($jsOptions, JSON_THROW_ON_ERROR);
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void

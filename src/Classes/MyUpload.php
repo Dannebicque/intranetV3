@@ -23,7 +23,7 @@ use ZipArchive;
 
 class MyUpload
 {
-    private ?string $dir;
+    private readonly ?string $dir;
 
     public function __construct(
         KernelInterface $kernel)

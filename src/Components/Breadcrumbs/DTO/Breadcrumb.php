@@ -11,20 +11,7 @@ namespace App\Components\Breadcrumbs\DTO;
 
 class Breadcrumb
 {
-    public string $label;
-    public string $url;
-    public string $transDomain;
-    public string $icone;
-    public array $transParameters;
-    public bool $translatable = true;
-
-    public function __construct(string $label, string $url, string $icone = '', bool $translatable = true, string $transDomain = '', array $transParams = [])
+    public function __construct(public string $label, public string $url, public string $icone = '', public bool $translatable = true, public string $transDomain = '', public array $transParameters = [])
     {
-        $this->label = $label;
-        $this->url = $url;
-        $this->translatable = $translatable;
-        $this->transDomain = $transDomain;
-        $this->transParameters = $transParams;
-        $this->icone = $icone;
     }
 }

@@ -26,10 +26,10 @@ class ModificationNote extends BaseEntity
     #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'modificationNotes')]
     private ?Personnel $personnel = null;
 
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private ?float $ancienneNote = null;
 
-    #[ORM\Column(type: Types::FLOAT)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private ?float $nouvelleNote = null;
 
     public function getNote(): ?Note

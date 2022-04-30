@@ -26,11 +26,8 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class QuestionnaireSectionTableType extends TableType
 {
-    private CsrfTokenManagerInterface $csrfToken;
-
-    public function __construct(CsrfTokenManagerInterface $csrfToken)
+    public function __construct(private readonly CsrfTokenManagerInterface $csrfToken)
     {
-        $this->csrfToken = $csrfToken;
     }
 
     public function buildTable(TableBuilder $builder, array $options): void

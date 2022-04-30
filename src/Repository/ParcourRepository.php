@@ -40,7 +40,7 @@ class ParcourRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('u')
             ->where('u.semestre = :semestre')
             ->setParameter('semestre', $semestre->getId())
-            ->orderBy('u.libelle', 'ASC');
+            ->orderBy('u.libelle', \Doctrine\Common\Collections\Criteria::ASC);
     }
 
     public function findBySemestre(Semestre $semestre): array

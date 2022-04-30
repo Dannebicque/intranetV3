@@ -19,14 +19,8 @@ use App\Repository\MatiereRepository;
 
 class MatiereManager extends AbstractMatiereManager implements MatiereInterface
 {
-    private MatiereRepository $matiereRepository;
-
-    private MatiereMatiereAdapter $matiereAdapter;
-
-    public function __construct(MatiereRepository $matiereRepository, MatiereMatiereAdapter $matiereAdapter)
+    public function __construct(private readonly MatiereRepository $matiereRepository, private readonly MatiereMatiereAdapter $matiereAdapter)
     {
-        $this->matiereRepository = $matiereRepository;
-        $this->matiereAdapter = $matiereAdapter;
     }
 
     public function find(int | string $id): ?Matiere

@@ -9,6 +9,8 @@
 
 namespace App\Controller;
 
+use App\Classes\Edt\Calendrier;
+use App\Classes\Edt\EdtManager;
 use App\Classes\Edt\MyEdtCelcat;
 use App\Classes\Edt\MyEdtExport;
 use App\Classes\Edt\MyEdtIntranet;
@@ -17,6 +19,7 @@ use App\Classes\Pdf\MyPDF;
 use App\Entity\Constantes;
 use App\Entity\Semestre;
 use App\Repository\EdtPlanningRepository;
+use App\Repository\GroupeRepository;
 use Exception;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -35,9 +38,11 @@ use Twig\Error\SyntaxError;
 class EdtController extends BaseController
 {
     public function __construct(
-        private TypeMatiereManager $typeMatiereManager,
-        private MyEdtIntranet $myEdtIntranet,
-        private MyEdtCelcat $myEdtCelcat
+        private readonly Calendrier $calendrier,
+        private readonly EdtManager $edtManager,
+        private readonly TypeMatiereManager $typeMatiereManager,
+        private readonly MyEdtIntranet $myEdtIntranet,
+        private readonly MyEdtCelcat $myEdtCelcat
     ) {
     }
 
@@ -61,6 +66,7 @@ class EdtController extends BaseController
         }
 
         $matieres = $this->typeMatiereManager->findByDepartementArray($this->getDepartement());
+        $sem = $this->calendrier->calculSemaine($semaine, $this->getAnneeUniversitaire());
         $this->myEdtIntranet->initPersonnel($this->getUser(),
             $this->dataUserSession->getAnneeUniversitaire(),
             $semaine, $matieres);
@@ -68,34 +74,32 @@ class EdtController extends BaseController
         return $this->render('edt/_intervenant2.html.twig', [
             'edt' => $this->myEdtIntranet,
             'filtre' => 'prof',
+            'semaine' => $sem,
+            'semaines' => $this->calendrier->calculSemaines($this->getAnneeUniversitaire()),
             'valeur' => $this->getUser()->getId(),
             'tabHeures' => Constantes::TAB_HEURES_EDT_2,
         ]);
     }
 
-    public function personnelSemestre(Semestre $semestre, $semaine = 0): Response
+    public function personnelSemestre(
+        GroupeRepository $groupeRepository,
+        Semestre $semestre, $semaine = 0): Response
     {
-        if (null !== $semestre->getDiplome() && $semestre->getDiplome()->isOptUpdateCelcat()) {
-            $this->myEdtCelcat->initSemestre($semaine, $semestre, $this->getAnneeUniversitaire());
+        $matieres = $this->typeMatiereManager->findBySemestreArray($semestre);
+        $groupes = $groupeRepository->findBySemestre($semestre);
 
-            return $this->render('edt/_semestre.html.twig', [
-                'edt' => $this->myEdtCelcat,
+        $sem = $this->calendrier->calculSemaine($semaine, $this->getAnneeUniversitaire());
+        $edt = $this->edtManager->getPlanningSemestreSemaine($semestre, $sem->semaineFormationIUT, $matieres, $groupes, $this->getAnneeUniversitaire());
+
+        return $this->render('edt/_semestre.html.twig', [
+                'edt' => $edt->toArray($semestre->getNbgroupeTpEdt()),
+                'semaine' => $sem,
+                'semaines' => $this->calendrier->calculSemaines($this->getAnneeUniversitaire()),
                 'semestre' => $semestre,
                 'filtre' => 'promo',
                 'valeur' => $semestre->getId(),
-                'tabHeures' => Constantes::TAB_HEURES_EDT,
+                'groupes' => $groupeRepository->findAllGroupes($semestre),//todo: fusionner avec $groupes?
             ]);
-        }
-
-        $this->myEdtIntranet->initSemestre($semaine, $semestre, $this->getAnneeUniversitaire());
-
-        return $this->render('edt/_semestre.html.twig', [
-            'edt' => $this->myEdtIntranet,
-            'semestre' => $semestre,
-            'filtre' => 'promo',
-            'valeur' => $semestre->getId(),
-            'tabHeures' => Constantes::TAB_HEURES_EDT,
-        ]);
     }
 
     /**
@@ -135,7 +139,7 @@ class EdtController extends BaseController
      * @throws SyntaxError
      */
     #[Route(path: '/semestre/export/semaine/{semaine}/{semestre}', name: 'edt_semestre_export_semaine_courante')]
-    public function exportSemestreSemaine(MyEdtExport $myEdtExport, $semaine, Semestre $semestre)
+    public function exportSemestreSemaine(MyEdtExport $myEdtExport, $semaine, Semestre $semestre): \Symfony\Component\HttpFoundation\Response
     {
         $myEdtExport->exportSemestre($semaine, $semestre);
     }
@@ -150,7 +154,7 @@ class EdtController extends BaseController
     {
         $ical = $myEdtExport->export($this->getUser(), 'ics', 'personnel');
 
-        return new Response($ical, 200, [
+        return new Response($ical, \Symfony\Component\HttpFoundation\Response::HTTP_OK, [
             'Content-Type' => 'application/force-download',
             'Content-Disposition' => 'attachment; filename="export.ics"',
         ]);
@@ -212,7 +216,7 @@ class EdtController extends BaseController
         //Le nombre de semaine selon la configuraiton
         $ical = $myEdtExport->export($this->getUser(), 'ics', 'etudiant');
 
-        return new Response($ical, 200, [
+        return new Response($ical, \Symfony\Component\HttpFoundation\Response::HTTP_OK, [
             'Content-Type' => 'application/force-download',
             'Content-Disposition' => 'attachment; filename="export.ics"',
         ]);

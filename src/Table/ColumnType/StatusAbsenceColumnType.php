@@ -17,8 +17,8 @@ class StatusAbsenceColumnType extends PropertyColumnType
     public function renderProperty(mixed $value, array $options): string
     {
         $absences = $options['absences'];
-        $data = explode('_', $value);
-        if ((null !== $value) && (count($absences) > 0) &&
+        $data = explode('_', (string) $value);
+        if ((null !== $value) && ((is_countable($absences) ? count($absences) : 0) > 0) &&
             array_key_exists($data[0], $absences) &&
             array_key_exists($data[1], $absences[$data[0]]) &&
             array_key_exists($data[2],

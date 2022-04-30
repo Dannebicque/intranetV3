@@ -24,11 +24,11 @@ use Exception;
 class MyScolarite
 {
     public function __construct(
-        private MyUpload $myUpload,
-        private EntityManagerInterface $entityManager,
-        private SemestreRepository $semestreRepository,
-        private UeRepository $ueRepository,
-        private EtudiantRepository $etudiantRepository
+        private readonly MyUpload $myUpload,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly SemestreRepository $semestreRepository,
+        private readonly UeRepository $ueRepository,
+        private readonly EtudiantRepository $etudiantRepository
     ) {
     }
 
@@ -65,7 +65,7 @@ class MyScolarite
                     $scol->setProposition($ligne[7]);
                     $scol->setDiffuse(true);
                     $this->entityManager->persist($scol);
-                    $tues = explode('!', $ligne[8]);
+                    $tues = explode('!', (string) $ligne[8]);
                     $tUe = [];
                     foreach ($tues as $tue) {
                         $ue = explode(':', $tue);

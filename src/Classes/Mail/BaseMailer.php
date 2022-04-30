@@ -25,21 +25,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class BaseMailer
 {
-    protected MailerInterface $mailer;
-    protected TranslatorInterface $translator;
-    protected Configuration $configuration;
-
     /**
      * MyMailer constructor.
      */
-    public function __construct(
-        MailerInterface $mailer,
-        TranslatorInterface $translator,
-        Configuration $configuration
-    ) {
-        $this->mailer = $mailer;
-        $this->configuration = $configuration;
-        $this->translator = $translator;
+    public function __construct(protected MailerInterface $mailer, protected TranslatorInterface $translator, protected Configuration $configuration)
+    {
     }
 
     /**
@@ -60,7 +50,7 @@ class BaseMailer
     private function getFrom(array $options): Address
     {
         //todo: ne sert plus ? tout passe par le mail générique ?
-        if (array_key_exists('from', $options) && count($options['from']) > 0) {
+        if (array_key_exists('from', $options) && (is_countable($options['from']) ? count($options['from']) : 0) > 0) {
             if ($options['from'][0] instanceof Address) {
                 return $options['from'][0];
             }
@@ -97,7 +87,7 @@ class BaseMailer
 
     private function checkCc(Email | TemplatedEmail $mail, array $options): void
     {
-        if (array_key_exists('cc', $options) && count($options['cc']) > 0) {
+        if (array_key_exists('cc', $options) && (is_countable($options['cc']) ? count($options['cc']) : 0) > 0) {
             foreach ($options['cc'] as $cc) {
                 $mail->addCc(new Address($cc));
             }

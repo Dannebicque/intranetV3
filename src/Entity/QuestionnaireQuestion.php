@@ -28,12 +28,12 @@ class QuestionnaireQuestion extends BaseEntity
     use LifeCycleTrait;
 
     /** @var string A ne pas utiliser. utiliser QuestionnaireRegistry */
-    public const QUESTION_TYPE_QCU = 'qcu';
-    public const QUESTION_TYPE_QCM = 'qcm';
-    public const QUESTION_TYPE_YESNO = 'yesno';
-    public const QUESTION_TYPE_ECHELLE = 'echelle';
-    public const QUESTION_TYPE_LIBRE = 'libre';
-    public const LISTE_TYPE_QUESTION = [
+    public final const QUESTION_TYPE_QCU = 'qcu';
+    public final const QUESTION_TYPE_QCM = 'qcm';
+    public final const QUESTION_TYPE_YESNO = 'yesno';
+    public final const QUESTION_TYPE_ECHELLE = 'echelle';
+    public final const QUESTION_TYPE_LIBRE = 'libre';
+    public final const LISTE_TYPE_QUESTION = [
         self::QUESTION_TYPE_ECHELLE => self::QUESTION_TYPE_ECHELLE,
         self::QUESTION_TYPE_LIBRE => self::QUESTION_TYPE_LIBRE,
         self::QUESTION_TYPE_QCM => self::QUESTION_TYPE_QCM,
@@ -41,13 +41,13 @@ class QuestionnaireQuestion extends BaseEntity
         self::QUESTION_TYPE_YESNO => self::QUESTION_TYPE_YESNO,
     ];
 
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $libelle = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
     private ?string $help = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $type = null;
 
     /**
@@ -78,19 +78,19 @@ class QuestionnaireQuestion extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'questionParent', targetEntity: QuestionnaireQuestion::class)]
     private Collection $questionsEnfants;
 
-    #[ORM\Column(type: Types::BOOLEAN)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private bool $obligatoire = true;
 
-    #[ORM\Column(type: Types::STRING, length: 30)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 30)]
     private string $alignement = 'HORIZONTAL_CENTER';
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
     private ?string $parametre = '[]';
 
-    #[ORM\Column(type: Types::INTEGER)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private ?int $maxChoix = 1;
 
-    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
     private ?string $configuration = '[]';
 
     /**

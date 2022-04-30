@@ -21,15 +21,8 @@ use Symfony\Component\Security\Http\Authenticator\Passport\SelfValidatingPasspor
 
 class LoginCasAuthenticator extends AbstractAuthenticator
 {
-    private UrlGeneratorInterface $urlGenerator;
-    private RouterInterface $router;
-    private ParameterBagInterface $parameterBag;
-
-    public function __construct(ParameterBagInterface $parameterBag, RouterInterface $router, UrlGeneratorInterface $urlGenerator)
+    public function __construct(private readonly ParameterBagInterface $parameterBag, private readonly RouterInterface $router, private readonly UrlGeneratorInterface $urlGenerator)
     {
-        $this->router = $router;
-        $this->parameterBag = $parameterBag;
-        $this->urlGenerator = $urlGenerator;
     }
 
     public function supports(Request $request): ?bool
@@ -81,7 +74,7 @@ class LoginCasAuthenticator extends AbstractAuthenticator
             'message' => strtr($exception->getMessageKey(), $exception->getMessageData()),
         ];
 
-        $def_response = new JsonResponse($data, 403);
+        $def_response = new JsonResponse($data, \Symfony\Component\HttpFoundation\Response::HTTP_FORBIDDEN);
 
         return (new CASAuthenticationFailureEvent($request, $exception, $def_response))->getResponse();
     }

@@ -67,8 +67,8 @@ class GroupeRepository extends ServiceEntityRepository
             ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')
             ->where('t.semestre = :semestre')
             ->setParameter('semestre', $semestre->getId())
-            ->orderBy('t.libelle', 'ASC')
-            ->addOrderBy('g.libelle', 'ASC');
+            ->orderBy('t.libelle', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('g.libelle', \Doctrine\Common\Collections\Criteria::ASC);
     }
 
     public function findAllGroupes(Semestre $semestre): array
@@ -97,7 +97,7 @@ class GroupeRepository extends ServiceEntityRepository
             ->where('t.type = :type')
             ->andWhere('t.semestre = :semestre')
             ->setParameters(['type' => 'TP', 'semestre' => $semestre])
-            ->orderBy('g.libelle', 'ASC')
+            ->orderBy('g.libelle', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -109,7 +109,7 @@ class GroupeRepository extends ServiceEntityRepository
             ->where('t.type = :type')
             ->andWhere('t.semestre = :semestre')
             ->setParameters(['type' => 'TD', 'semestre' => $semestre])
-            ->orderBy('g.libelle', 'ASC')
+            ->orderBy('g.libelle', \Doctrine\Common\Collections\Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -159,7 +159,7 @@ class GroupeRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('g')
             ->where('g.typeGroupe = :typeGroupe')
-            ->orderBy('g.ordre', 'ASC')
+            ->orderBy('g.ordre', \Doctrine\Common\Collections\Criteria::ASC)
             ->setParameter('typeGroupe', $typegroupe)
             ->getQuery()
             ->getResult();

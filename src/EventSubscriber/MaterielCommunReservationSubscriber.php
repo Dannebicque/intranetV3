@@ -18,15 +18,11 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
  */
 class MaterielCommunReservationSubscriber implements EventSubscriberInterface
 {
-    private MailerFromTwig $myMailer;
-
     /**
      * RegistrationNotifySubscriber constructor.
      */
-    public function __construct(
-        MailerFromTwig $myMailer
-    ) {
-        $this->myMailer = $myMailer;
+    public function __construct(private readonly MailerFromTwig $myMailer)
+    {
     }
 
     public static function getSubscribedEvents(): array

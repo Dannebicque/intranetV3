@@ -23,24 +23,11 @@ use Symfony\Component\Routing\RouterInterface;
 
 class TableBuilderHelper
 {
-    private TableRegistry $registry;
-    private WidgetFactory $widgetFactory;
-    private FormFactoryInterface $formFactory;
-    private RouterInterface $router;
-
     /**
      * TableBuilerHelper constructor.
      */
-    public function __construct(
-        TableRegistry $registry,
-        WidgetFactory $widgetFactory,
-        FormFactoryInterface $formFactory,
-        RouterInterface $router
-    ) {
-        $this->registry = $registry;
-        $this->widgetFactory = $widgetFactory;
-        $this->formFactory = $formFactory;
-        $this->router = $router;
+    public function __construct(private readonly TableRegistry $registry, private readonly WidgetFactory $widgetFactory, private readonly FormFactoryInterface $formFactory, private readonly RouterInterface $router)
+    {
     }
 
     public function createWidgetBuilder(string $type = WidgetType::class, array $options = []): WidgetBuilder
