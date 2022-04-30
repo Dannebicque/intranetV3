@@ -47,7 +47,7 @@ class MyExportListing
     private int $colonne = 1;
 
     private string $exportTypeDocument;
-    private array $exportChamps;
+    private ?array $exportChamps = [];
     private ?Matiere $matiere = null;
     private readonly string $base;
 
