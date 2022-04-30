@@ -55,7 +55,7 @@ class MatiereType extends AbstractType
             ->add('saeParent', EntityType::class, ['label' => 'label.saeParent', 'help' => 'help.saeParent',
                 'class' => ApcSae::class,
                 'choice_label' => 'display',
-                'query_builder' => fn(ApcSaeRepository $apcSaeRepository) => $apcSaeRepository->findByDiplomeBuilder($this->diplome),
+                'query_builder' => fn (ApcSaeRepository $apcSaeRepository) => $apcSaeRepository->findByDiplomeBuilder($this->diplome),
                 'required' => false, ])
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
             ->add('codeMatiere', TextType::class, ['label' => 'label.code_matiere'])
@@ -92,7 +92,7 @@ class MatiereType extends AbstractType
                 'label' => 'label.ppn',
                 'class' => Ppn::class,
                 'choice_label' => 'libelle',
-                'query_builder' => fn(PpnRepository $ppnRepository) => $ppnRepository->findByDiplomeBuilder($this->diplome),
+                'query_builder' => fn (PpnRepository $ppnRepository) => $ppnRepository->findByDiplomeBuilder($this->diplome),
             ]);
 
         $builder->addEventListener(FormEvents::PRE_SET_DATA, [$this, 'onPreSetData']);

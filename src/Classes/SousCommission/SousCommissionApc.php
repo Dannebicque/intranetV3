@@ -25,8 +25,8 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class SousCommissionApc extends AbstractSousCommission implements SousCommissionInterface
 {
-    public final const TEMPLATE_LIVE = 'liveApc.html.twig';
-    public final const TEMPLATE_TRAVAIL = 'travailApc.html.twig';
+    final public const TEMPLATE_LIVE = 'liveApc.html.twig';
+    final public const TEMPLATE_TRAVAIL = 'travailApc.html.twig';
 
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -55,20 +55,20 @@ class SousCommissionApc extends AbstractSousCommission implements SousCommission
         foreach ($this->etudiants as $etudiant) {
             $etudiantSousCommission = new EtudiantSousCommissionApc($etudiant, $semestre, $this->ues);
 
-            //récupérer les notes et calculer la moyenne des matières (sans pénalité)
+            // récupérer les notes et calculer la moyenne des matières (sans pénalité)
             $this->etudiantNotes->setEtudiant($etudiant);
             $etudiantSousCommission->moyenneMatieres = $this->etudiantNotes->getMoyenneParMatiereParSemestresEtAnneeUniversitaire($matieres,
                 $this->semestre,
                 $anneeUniversitaire);
-            //récupérer les pénalités d'absence par matière
+            // récupérer les pénalités d'absence par matière
             $this->etudiantAbsences->setEtudiant($etudiant);
             $this->etudiantAbsences->getPenalitesAbsencesParMatiere($matieres, $anneeUniversitaire,
                 $etudiantSousCommission->moyenneMatieres);
-            //calculer la moyenne des ues (avec et sans pénalité)
+            // calculer la moyenne des ues (avec et sans pénalité)
             $etudiantSousCommission->calculMoyenneUes($matieres, $ressources, $saes);
             $etudiantSousCommission->recupereScolarite();
 
-            //calcul de la décision du semestre
+            // calcul de la décision du semestre
             $etudiantSousCommission->calculDecision();
 
             $this->sousCommissionEtudiant[$etudiant->getId()] = $etudiantSousCommission;
@@ -98,5 +98,4 @@ class SousCommissionApc extends AbstractSousCommission implements SousCommission
             'anneeUniversitaire' => $anneeUniversitaire->getId(),
         ]);
     }
-
 }

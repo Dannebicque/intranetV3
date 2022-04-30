@@ -13,11 +13,11 @@ use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
 use App\Repository\ScolariteRepository;
 use App\Utils\Tools;
+use function array_key_exists;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
-use function array_key_exists;
 
 #[ORM\Entity(repositoryClass: ScolariteRepository::class)]
 #[ORM\HasLifecycleCallbacks]

@@ -30,21 +30,21 @@ class StageEtudiant extends BaseEntity
     use UuidTrait;
     use LifeCycleTrait;
 
-    public final const ETAT_STAGE_AUTORISE = 'ETAT_STAGE_AUTORISE';
-    public final const ETAT_STAGE_DEPOSE = 'ETAT_STAGE_DEPOSE';
-    public final const ETAT_STAGE_VALIDE = 'ETAT_STAGE_VALIDE';
-    public final const ETAT_STAGE_REFUS = 'ETAT_STAGE_REFUS';
-    public final const ETAT_STAGE_INCOMPLET = 'ETAT_STAGE_INCOMPLET';
-    public final const ETAT_STAGE_CONVENTION_IMPRIMEE = 'ETAT_STAGE_CONVENTION_IMPRIMEE';
-    public final const ETAT_STAGE_CONVENTION_ENVOYEE = 'ETAT_STAGE_CONVENTION_ENVOYEE';
-    public final const ETAT_STAGE_CONVENTION_RECUE = 'ETAT_STAGE_CONVENTION_RECUE';
-    public final const ETAT_STAGE_ERASMUS = 'ETAT_STAGE_ERASMUS';
-    public final const ETAT_STAGE_ETRANGER = 'ETAT_STAGE_ETRANGER';
-    public final const ETAT_STAGE_APPRENTISSAGE = 'ETAT_STAGE_APPRENTISSAGE';
-    public final const PERIODE_GRATIFICATION_HEURE = 'H';
-    public final const PERIODE_GRATIFICATION_JOUR = 'J';
-    public final const PERIODE_GRATIFICATION_MOIS = 'M';
-    public final const ETATS = [
+    final public const ETAT_STAGE_AUTORISE = 'ETAT_STAGE_AUTORISE';
+    final public const ETAT_STAGE_DEPOSE = 'ETAT_STAGE_DEPOSE';
+    final public const ETAT_STAGE_VALIDE = 'ETAT_STAGE_VALIDE';
+    final public const ETAT_STAGE_REFUS = 'ETAT_STAGE_REFUS';
+    final public const ETAT_STAGE_INCOMPLET = 'ETAT_STAGE_INCOMPLET';
+    final public const ETAT_STAGE_CONVENTION_IMPRIMEE = 'ETAT_STAGE_CONVENTION_IMPRIMEE';
+    final public const ETAT_STAGE_CONVENTION_ENVOYEE = 'ETAT_STAGE_CONVENTION_ENVOYEE';
+    final public const ETAT_STAGE_CONVENTION_RECUE = 'ETAT_STAGE_CONVENTION_RECUE';
+    final public const ETAT_STAGE_ERASMUS = 'ETAT_STAGE_ERASMUS';
+    final public const ETAT_STAGE_ETRANGER = 'ETAT_STAGE_ETRANGER';
+    final public const ETAT_STAGE_APPRENTISSAGE = 'ETAT_STAGE_APPRENTISSAGE';
+    final public const PERIODE_GRATIFICATION_HEURE = 'H';
+    final public const PERIODE_GRATIFICATION_JOUR = 'J';
+    final public const PERIODE_GRATIFICATION_MOIS = 'M';
+    final public const ETATS = [
         self::ETAT_STAGE_AUTORISE,
         self::ETAT_STAGE_DEPOSE,
         self::ETAT_STAGE_VALIDE,

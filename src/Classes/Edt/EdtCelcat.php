@@ -91,7 +91,7 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
                 $event->groupeId = 0;
             }
 
-            $event->personnel = $evt->getLibPersonnel(); //null !== $evt->getIntervenant() ? $evt->getIntervenant()->getDisplayPr() : '-';
+            $event->personnel = $evt->getLibPersonnel(); // null !== $evt->getIntervenant() ? $evt->getIntervenant()->getDisplayPr() : '-';
             $event->groupe = $evt->getLibGroupe();
             $event->type_cours = $evt->getType();
             $evtCollection->add($event);

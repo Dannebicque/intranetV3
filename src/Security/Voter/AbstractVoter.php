@@ -18,18 +18,18 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class AbstractVoter
 {
-    public final const MINIMAL_ROLE_ABS = 'MINIMAL_ROLE_ABS';
-    public final const MINIMAL_ROLE_NOTE = 'MINIMAL_ROLE_NOTE';
-    public final const MINIMAL_ROLE_ASS = 'MINIMAL_ROLE_ASS';
-    public final const MINIMAL_ROLE_RP = 'MINIMAL_ROLE_RP';
-    public final const MINIMAL_ROLE_DDE = 'MINIMAL_ROLE_DDE';
-    public final const MINIMAL_ROLE_STAGE = 'MINIMAL_ROLE_STAGE';
-    public final const MINIMAL_ROLE_PROJET = 'MINIMAL_ROLE_PROJET';
-    public final const MINIMAL_ROLE_CDD = 'MINIMAL_ROLE_CDD';
-    public final const MINIMAL_ROLE_EDT = 'MINIMAL_ROLE_EDT';
-    public final const MINIMAL_ROLE_SCOL = 'MINIMAL_ROLE_SCOL';
+    final public const MINIMAL_ROLE_ABS = 'MINIMAL_ROLE_ABS';
+    final public const MINIMAL_ROLE_NOTE = 'MINIMAL_ROLE_NOTE';
+    final public const MINIMAL_ROLE_ASS = 'MINIMAL_ROLE_ASS';
+    final public const MINIMAL_ROLE_RP = 'MINIMAL_ROLE_RP';
+    final public const MINIMAL_ROLE_DDE = 'MINIMAL_ROLE_DDE';
+    final public const MINIMAL_ROLE_STAGE = 'MINIMAL_ROLE_STAGE';
+    final public const MINIMAL_ROLE_PROJET = 'MINIMAL_ROLE_PROJET';
+    final public const MINIMAL_ROLE_CDD = 'MINIMAL_ROLE_CDD';
+    final public const MINIMAL_ROLE_EDT = 'MINIMAL_ROLE_EDT';
+    final public const MINIMAL_ROLE_SCOL = 'MINIMAL_ROLE_SCOL';
 
-    public final const LIST_OF_MINIMAL_ROLES = [
+    final public const LIST_OF_MINIMAL_ROLES = [
         self::MINIMAL_ROLE_ABS,
         self::MINIMAL_ROLE_NOTE,
         self::MINIMAL_ROLE_ASS,
@@ -42,7 +42,7 @@ class AbstractVoter
         self::MINIMAL_ROLE_SCOL,
     ];
 
-    public final const HIERARCHICAL_ACCESS_FROM_ROLE = [
+    final public const HIERARCHICAL_ACCESS_FROM_ROLE = [
         self::MINIMAL_ROLE_ABS => ['ROLE_ABS', 'ROLE_ASS', 'ROLE_DDE', 'ROLE_RP', 'ROLE_CDD'],
         self::MINIMAL_ROLE_SCOL => ['ROLE_NOTES', 'ROLE_ABS', 'ROLE_ASS', 'ROLE_DDE', 'ROLE_RP', 'ROLE_CDD'],
         self::MINIMAL_ROLE_NOTE => ['ROLE_NOTES', 'ROLE_ASS', 'ROLE_DDE', 'ROLE_RP', 'ROLE_CDD'],
@@ -54,7 +54,7 @@ class AbstractVoter
         self::MINIMAL_ROLE_EDT => ['ROLE_EDT', 'ROLE_ASS', 'ROLE_DDE', 'ROLE_RP', 'ROLE_CDD'],
         self::MINIMAL_ROLE_CDD => ['ROLE_CDD'],
     ];
-    protected UserInterface | string $user;
+    protected UserInterface|string $user;
     protected array $departementRoles;
 
     public function __construct(protected RequestStack $session, TokenStorageInterface $tokenStorage)

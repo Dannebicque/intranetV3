@@ -47,7 +47,7 @@ class Matiere
     public ?Groupe $groupeEnfant = null;
 
     /**  ne-pas-exporter */
-    //todo: ce n'est vrai que pour matière (old school...) pour les SAE/Ressources, c'est potentiellement plusieurs UE...
+    // todo: ce n'est vrai que pour matière (old school...) pour les SAE/Ressources, c'est potentiellement plusieurs UE...
     /** @deprecated */
     public int $ue_id = 0;
     /** @deprecated */
@@ -55,7 +55,7 @@ class Matiere
     /** @deprecated */
     public ?int $ue_numero = 0;
 
-    public array $tab_ues = []; //tableau d'UE/Compétences
+    public array $tab_ues = []; // tableau d'UE/Compétences
 
     public bool $suspendu = false;
 
@@ -168,6 +168,7 @@ class Matiere
     {
         if (method_exists($this->objet, 'groupesEnfant')) {
             $this->groupesEnfant = $this->objet->groupesEnfant();
+
             return $this->objet->groupesEnfant();
         }
 
@@ -183,10 +184,9 @@ class Matiere
         if ($this->groupesEnfant->count() > 0) {
             return $this->groupesEnfant->contains($groupe);
         }
+
         return true;
     }
-
-
 
     public function parent(): mixed
     {

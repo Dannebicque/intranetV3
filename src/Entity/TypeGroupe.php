@@ -22,11 +22,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class TypeGroupe extends BaseEntity
 {
     use LifeCycleTrait;
-    public final const TYPE_GROUPE_CM = 'CM';
-    public final const TYPE_GROUPE_TD = 'TD';
-    public final const TYPE_GROUPE_TP = 'TP';
-    public final const TYPES = [self::TYPE_GROUPE_CM, self::TYPE_GROUPE_TD, self::TYPE_GROUPE_TP, self::TYPE_GROUPE_LV];
-    public final const TYPE_GROUPE_LV = 'LV';
+    final public const TYPE_GROUPE_CM = 'CM';
+    final public const TYPE_GROUPE_TD = 'TD';
+    final public const TYPE_GROUPE_TP = 'TP';
+    final public const TYPES = [self::TYPE_GROUPE_CM, self::TYPE_GROUPE_TD, self::TYPE_GROUPE_TP, self::TYPE_GROUPE_LV];
+    final public const TYPE_GROUPE_LV = 'LV';
 
     #[Groups(['type_groupe_administration'])]
     #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 100)]

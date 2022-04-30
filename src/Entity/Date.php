@@ -26,15 +26,15 @@ class Date extends BaseEntity
     use LifeCycleTrait;
     use TypeDestinataireTrait;
 
-    public final const TYPE_STAGE = 'type.stage';
-    public final const TYPE_SOUTENANCE = 'type.soutenance';
-    public final const TYPE_PROJET = 'type.projet';
-    public final const TYPE_AUTRE = 'type.autre';
-    public final const TYPE_COMMISSION = 'type.commission';
-    public final const TYPE_REUNION = 'type.reunion';
-    public final const TYPE_RENTREE = 'type.rentree';
-    public final const TYPE_VACANCES = 'type.vacances';
-    public final const COULEUR_BADGE = [
+    final public const TYPE_STAGE = 'type.stage';
+    final public const TYPE_SOUTENANCE = 'type.soutenance';
+    final public const TYPE_PROJET = 'type.projet';
+    final public const TYPE_AUTRE = 'type.autre';
+    final public const TYPE_COMMISSION = 'type.commission';
+    final public const TYPE_REUNION = 'type.reunion';
+    final public const TYPE_RENTREE = 'type.rentree';
+    final public const TYPE_VACANCES = 'type.vacances';
+    final public const COULEUR_BADGE = [
         self::TYPE_STAGE => 'bg-primary',
         self::TYPE_SOUTENANCE => 'bg-danger',
         self::TYPE_PROJET => 'bg-purple',

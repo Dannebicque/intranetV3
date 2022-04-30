@@ -122,7 +122,7 @@ class ProjetPeriodeController extends BaseController
     public function delete(Request $request, ProjetPeriode $projetPeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestre());
-        //la suppression entraine la suppression des offres, des templates et des stages déjà présent.
+        // la suppression entraine la suppression des offres, des templates et des stages déjà présent.
         $id = $projetPeriode->getUuidString();
         if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $this->entityManager->remove($projetPeriode);

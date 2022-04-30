@@ -15,10 +15,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TypeChainee extends AbstractQuestion
 {
-    public final const LABEL = 'type_chainee';
-    public final const BADGE = 'bg-pink';
-    public final const ICON = 'fas fa-link';
-    //public const FORM = QuestionnaireQuestionTypeQcu::class;
+    final public const LABEL = 'type_chainee';
+    final public const BADGE = 'bg-pink';
+    final public const ICON = 'fas fa-link';
+    // public const FORM = QuestionnaireQuestionTypeQcu::class;
 
     public array $questions = [];
 

@@ -126,7 +126,7 @@ class StagePeriodeController extends BaseController
     public function delete(Request $request, StagePeriode $stagePeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
-        //la suppression entraine la suppression des offres, des templates et des stages déjà présent.
+        // la suppression entraine la suppression des offres, des templates et des stages déjà présent.
         $id = $stagePeriode->getUuidString();
         if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $this->entityManager->remove($stagePeriode);

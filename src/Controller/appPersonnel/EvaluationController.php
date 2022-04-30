@@ -53,7 +53,7 @@ class EvaluationController extends BaseController
     #[Route(path: '/visible/{uuid}/{etat}', name: 'application_personnel_evaluation_visible', requirements: ['evaluation' => '\d+'])]
     public function evaluationVisible(MyEvaluation $myEvaluation, Evaluation $evaluation, $etat): Response
     {
-        //todo: tester au niveau évaluation
+        // todo: tester au niveau évaluation
         $notes = $myEvaluation->setEvaluation($evaluation)->getNotesTableau();
         $evaluation->setVisible('visible' === $etat);
         $this->entityManager->flush();
@@ -71,8 +71,8 @@ class EvaluationController extends BaseController
     #[Route(path: '/update/{uuid}', name: 'application_personnel_evaluation_update')]
     public function updateEvaluation(Request $request, Evaluation $evaluation): Response
     {
-        //todo: tester au niveau évaluation
-        //mise à jour d'un champ d'une évaluation
+        // todo: tester au niveau évaluation
+        // mise à jour d'un champ d'une évaluation
         $name = $request->request->get('field');
         $value = $request->request->get('value');
         $evaluation->updateData($name, $value);
@@ -92,10 +92,10 @@ class EvaluationController extends BaseController
      * @throws \App\Exception\MatiereNotFoundException
      */
     #[Route(path: '/export/{uuid}/{type}-{semestre}.{_format}', name: 'application_personnel_evaluation_export', requirements: ['evaluation' => '\d+', '_format' => 'csv|xlsx|pdf'])]
-    public function exportEvaluation(GroupeRepository $groupeRepository, MyEvaluation $myEvaluation, Evaluation $evaluation, $type, $_format, Semestre $semestre): \Symfony\Component\HttpFoundation\Response
+    public function exportEvaluation(GroupeRepository $groupeRepository, MyEvaluation $myEvaluation, Evaluation $evaluation, $type, $_format, Semestre $semestre): Response
     {
-        //todo: tester au niveau évaluation
-        //todo: supprimer semestre s'il est dans évaluation ensuite...
+        // todo: tester au niveau évaluation
+        // todo: supprimer semestre s'il est dans évaluation ensuite...
         $t = explode('_', (string) $type);
         if ('groupe' === $t[0]) {
             $grp = $groupeRepository->find($t[1]);

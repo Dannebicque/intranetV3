@@ -22,6 +22,7 @@ class ApplicationController extends BaseController
     public function index(string $onglet = 'messagerie', string $param = ''): Response
     {
         $this->breadcrumbHelper->addItem('application.breadcrumb.index', 'application_index', ['onglet' => $onglet, 'param' => $param]);
+
         return $this->render('application/index.html.twig', [
             'onglet' => $onglet,
             'param' => $param,

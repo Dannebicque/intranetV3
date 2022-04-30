@@ -63,7 +63,7 @@ class StageEtudiantRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('s')
             ->innerJoin(StagePeriode::class, 'p', 'WITH', 's.stagePeriode = p.id')
-            ->where('p.anneeUniversitaire < :annee')//todo: a modifier avec un inner join sur  année universitaire pour faire la comparaison
+            ->where('p.anneeUniversitaire < :annee')// todo: a modifier avec un inner join sur  année universitaire pour faire la comparaison
             ->andWhere('s.tuteurUniversitaire = :personnel')
             ->setParameter('annee', $anneeUniversitaire->getId())
             ->setParameter('personnel', $personnel->getId())

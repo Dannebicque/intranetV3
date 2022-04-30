@@ -17,9 +17,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class TypeEchelle extends TypeQcu
 {
     public const LABEL = 'type_echelle';
-    public const BADGE = 'bg-yellow'; //ajouter constante de couleur et de nom de template ?
-    public const ICON = 'fas fa-escalator'; //ajouter constante de couleur et de nom de template ?
-    public const FORM = QuestionnaireQuestionTypeEchelle::class; //ajouter constante de couleur et de nom de template ?
+    public const BADGE = 'bg-yellow'; // ajouter constante de couleur et de nom de template ?
+    public const ICON = 'fas fa-escalator'; // ajouter constante de couleur et de nom de template ?
+    public const FORM = QuestionnaireQuestionTypeEchelle::class; // ajouter constante de couleur et de nom de template ?
 
     public function configureOptions(OptionsResolver $resolver): void
     {

@@ -120,7 +120,7 @@ class MyExportPresence
     public function genereAttestationPdf(
         CovidAttestationPersonnel $covidAttestationPersonnel,
         string $sortie
-    ): string | PdfResponse {
+    ): string|PdfResponse {
         if ('force' === $sortie) {
             return $this->myPdf::generePdf(
                 'pdf/covid/autorisationPersonnel.html.twig',
@@ -193,7 +193,7 @@ class MyExportPresence
             'etudiant' => $etudiant,
         ]);
 
-        //joindre le PDF
+        // joindre le PDF
         $this->myMailer->attachFile($this->dir.'covid/convocations/'.$name.'.pdf');
         $this->myMailer->attachFile($this->dir.'covid/Conditions accès  IUT  Troyes au 01.02.2021- Note aux étudiants.pdf');
         $this->myMailer->sendMessage(
@@ -228,7 +228,7 @@ class MyExportPresence
         $tEnTete = [
             'date début',
             'date fin',
-            //'Heure',
+            // 'Heure',
             'Civ.',
             'Nom',
             'Prénom',

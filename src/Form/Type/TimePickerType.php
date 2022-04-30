@@ -102,7 +102,7 @@ class TimePickerType extends AbstractType
             $value = new DateTime($value);
         }
 
-        if (!is_a($value, DateTimeInterface::class)) {//todo: CarbonInterface ?
+        if (!is_a($value, DateTimeInterface::class)) {// todo: CarbonInterface ?
             return null;
         }
 

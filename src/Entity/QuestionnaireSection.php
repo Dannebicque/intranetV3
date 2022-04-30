@@ -24,8 +24,8 @@ class QuestionnaireSection extends BaseEntity
     use LifeCycleTrait;
     use ConfigTrait;
 
-    public final const DETAIL = 'DETAIL';
-    public final const GROUPE = 'GROUPE';
+    final public const DETAIL = 'DETAIL';
+    final public const GROUPE = 'GROUPE';
 
     #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $titre = null;
@@ -40,7 +40,7 @@ class QuestionnaireSection extends BaseEntity
     #[ORM\OrderBy(value: ['ordre' => 'ASC'])]
     private Collection $qualiteSectionQuestions;
 
-    //todo: éventuellement faire une vraie requete ? pour éviter de multiplier les requetes
+    // todo: éventuellement faire une vraie requete ? pour éviter de multiplier les requetes
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\QuestionnaireQuestionnaireSection>
      */

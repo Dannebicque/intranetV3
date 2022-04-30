@@ -102,6 +102,7 @@ class ApcCompetenceController extends BaseController
                     'diplome' => $diplome->getId(),
                 ]);
         }
+
         return $this->redirectToRoute('administration_index');
     }
 

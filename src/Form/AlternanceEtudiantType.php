@@ -52,7 +52,7 @@ class AlternanceEtudiantType extends AbstractType
                 'class' => Personnel::class,
                 'help' => 'help.tuteur_universitaire',
                 'choice_label' => 'display',
-                'query_builder' => fn(PersonnelRepository $personnelRepository) => $personnelRepository->findByDepartementBuilder($this->departement),
+                'query_builder' => fn (PersonnelRepository $personnelRepository) => $personnelRepository->findByDepartementBuilder($this->departement),
                 'attr' => ['class' => 'form-control selectpicker'],
             ])
             ->add('sujet', TextareaType::class, ['label' => 'label.sujet_altenance'])

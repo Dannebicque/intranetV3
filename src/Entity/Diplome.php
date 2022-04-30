@@ -130,7 +130,7 @@ class Diplome extends BaseEntity implements Serializable
     #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
     private ?bool $optUpdateCelcat = false;
 
-    public function __construct(#[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'diplomes')] private ?\App\Entity\Departement $departement)
+    public function __construct(#[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'diplomes')] private ?Departement $departement)
     {
         $this->hrs = new ArrayCollection();
         $this->ppns = new ArrayCollection();

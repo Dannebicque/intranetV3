@@ -71,7 +71,7 @@ class LinkType extends WidgetType
 
         $resolver
             ->setDefault('text', null); // enable text
-        $resolver->setDefault('stimulus', false); //désactive stimulus partout, par défaut
+        $resolver->setDefault('stimulus', false); // désactive stimulus partout, par défaut
         $resolver
             ->define('route')
             ->default(null)

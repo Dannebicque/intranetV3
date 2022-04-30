@@ -25,12 +25,12 @@ class Alternance extends BaseEntity
 {
     use LifeCycleTrait;
 
-    public final const ALTERNANCE_APPRENTISSAGE = 'apprentissage';
-    public final const ALTERNANCE_PROFESSIONALISATION = 'professionalisation';
-    public final const ALTERNANCE_ETAT_INITIALISE = 'init';
-    public final const ALTERNANCE_ETAT_COMPLETE = 'complete';
-    public final const ALTERNANCE_ETAT_VALIDE = 'valide';
-    public final const ALTERNANCE_ETAT_SANS = 'sans';
+    final public const ALTERNANCE_APPRENTISSAGE = 'apprentissage';
+    final public const ALTERNANCE_PROFESSIONALISATION = 'professionalisation';
+    final public const ALTERNANCE_ETAT_INITIALISE = 'init';
+    final public const ALTERNANCE_ETAT_COMPLETE = 'complete';
+    final public const ALTERNANCE_ETAT_VALIDE = 'valide';
+    final public const ALTERNANCE_ETAT_SANS = 'sans';
 
     #[Groups(groups: ['alternance_administration'])]
     #[ORM\OneToOne(targetEntity: Entreprise::class, cascade: ['persist', 'remove'])]

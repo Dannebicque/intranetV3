@@ -26,7 +26,7 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
 {
     use LifeCycleTrait;
 
-    public final const SOURCE = 'ressource';
+    final public const SOURCE = 'ressource';
 
     #[Deprecated(reason: 'Une ressource peut être commune  à plusieurs parcours. Le plus simple serait d\'avoir une gestion manytomany')]
     #[ORM\ManyToOne(targetEntity: Semestre::class, fetch: 'EAGER', inversedBy: 'apcRessources')]

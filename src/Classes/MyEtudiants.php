@@ -40,17 +40,17 @@ class MyEtudiants
             $file = $this->myUpload->upload($fichier, 'temp');
             $handle = fopen($file, 'rb');
 
-            /*Si on a réussi à ouvrir le fichier*/
+            /* Si on a réussi à ouvrir le fichier */
             if ($handle) {
                 /* supprime la première ligne */
                 fgetcsv($handle, 1024, ';');
-                /*Tant que l'on est pas à la fin du fichier*/
+                /* Tant que l'on est pas à la fin du fichier */
                 while (!feof($handle)) {
-                    /*On lit la ligne courante*/
+                    /* On lit la ligne courante */
                     $ligne = fgetcsv($handle, 1024, ';');
                     if (is_array($ligne) && count($ligne) > 10) {
                         $etudiant = new Etudiant();
-                        //login	numetudiant	numine	nom	prenom	photo	mailuniv	siteuniv	mailperso	siteperso	visible	sexe	promo	anneesortie	datenaissance	bac	tel1	tel2	remarques	signature	anneebac	commentaire	typeuser	intitulesecu	adressesecu	loginMMI	slug	fifc	boursier	adresse1	adresse2	adresse3	cp	ville	pays	nomadresse	codeetape
+                        // login	numetudiant	numine	nom	prenom	photo	mailuniv	siteuniv	mailperso	siteperso	visible	sexe	promo	anneesortie	datenaissance	bac	tel1	tel2	remarques	signature	anneebac	commentaire	typeuser	intitulesecu	adressesecu	loginMMI	slug	fifc	boursier	adresse1	adresse2	adresse3	cp	ville	pays	nomadresse	codeetape
                         $etudiant->setSemestre($semestre);
                         $etudiant->setDepartement($semestre->getDiplome()->getDepartement());
                         $etudiant->setUsername($ligne[0]);
@@ -100,9 +100,9 @@ class MyEtudiants
             }
             $this->entityManager->flush();
 
-            /*On ferme le fichier*/
+            /* On ferme le fichier */
             fclose($handle);
-            unlink($file); //suppression du fichier
+            unlink($file); // suppression du fichier
 
             return true;
         }

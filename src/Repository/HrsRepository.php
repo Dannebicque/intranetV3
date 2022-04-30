@@ -58,7 +58,7 @@ class HrsRepository extends ServiceEntityRepository
         Departement $departement,
         int $annee): array
     {
-        //todo: gérer le département pour le filtre
+        // todo: gérer le département pour le filtre
 
         return $this->createQueryBuilder('h')
             ->join('h.typeHrs', 'tp')

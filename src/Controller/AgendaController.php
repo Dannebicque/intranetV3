@@ -39,7 +39,7 @@ class AgendaController extends BaseController
         ServiceRealiseCelcat $serviceRealiseCelcat,
         Previsionnel $previ
     ): Response {
-        //todo: a généraliser avec SAE, Ressources
+        // todo: a généraliser avec SAE, Ressources
         if (null !== $this->getDepartement() && true === $this->getDepartement()->getOptUpdateCelcat()) {
             $chronologique = $serviceRealiseCelcat->getServiceRealiseParPersonnelMatiere($this->getUser(),
                 $previ->getIdMatiere(), $previ->getTypeMatiere());

@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AideController extends AbstractController
 {
-    public final const BASE_URL_AIDE = 'https://documentation.iutranet.fr/';
+    final public const BASE_URL_AIDE = 'https://documentation.iutranet.fr/';
 
     #[Route('/aide/{sujet}', name: 'help_article')]
     public function index(

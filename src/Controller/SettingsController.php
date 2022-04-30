@@ -39,7 +39,6 @@ class SettingsController extends BaseController
             }
         }
 
-
         return $this->json(false);
     }
 

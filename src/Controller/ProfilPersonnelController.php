@@ -63,7 +63,7 @@ class ProfilPersonnelController extends BaseController
             'synthsePrevisionnel' => $synthsePrevisionnel,
             'anneePrevisionnel' => $anneePrevisionnel,
             'semestres' => $this->dataUserSession->getSemestres(),
-            //todo: doit être tous les semestres dans lequel le personnel intervient. Sans nuance de département
+            // todo: doit être tous les semestres dans lequel le personnel intervient. Sans nuance de département
             'hrs' => $hrs,
             'personnel' => $personnel,
         ]);

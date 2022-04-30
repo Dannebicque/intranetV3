@@ -28,8 +28,8 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class DepartementFixtures extends Fixture implements DependentFixtureInterface
 {
-    public final const DEPARTEMENT_REFERENCE = 'departement';
-    public final const SEMESTRE_REFERENCE = 'semestre';
+    final public const DEPARTEMENT_REFERENCE = 'departement';
+    final public const SEMESTRE_REFERENCE = 'semestre';
 
     public function __construct(private readonly UserPasswordHasherInterface $encoder)
     {
@@ -57,7 +57,7 @@ class DepartementFixtures extends Fixture implements DependentFixtureInterface
         $personnelDepartement->setRoles('["ROLE_CDD"]');
         $manager->persist($personnelDepartement);
 
-        //Diplome
+        // Diplome
         $diplome = new Diplome($departement);
         $diplome->setLibelle('Métiers du Multimédia et de l\'Internet');
         $diplome->setSigle('MMI');
@@ -73,7 +73,7 @@ class DepartementFixtures extends Fixture implements DependentFixtureInterface
         $diplome->setTypeDiplome($this->getReference(TypeDiplomeFixtures::TYPE_BUT_REFERENCE));
         $manager->persist($diplome);
 
-        //Annee
+        // Annee
         $annee = new Annee();
         $annee->setLibelle('BUT 1');
         $annee->setDiplome($diplome);
@@ -84,7 +84,7 @@ class DepartementFixtures extends Fixture implements DependentFixtureInterface
         $annee->setCouleur('red');
         $manager->persist($annee);
 
-        //Semestre
+        // Semestre
         $semestre = new Semestre();
         $semestre->setCouleur('red');
         $semestre->setLibelle('S1');
@@ -98,7 +98,7 @@ class DepartementFixtures extends Fixture implements DependentFixtureInterface
         $this->addReference(self::SEMESTRE_REFERENCE, $semestre);
         $manager->persist($semestre);
 
-        //UE
+        // UE
         $ue = new Ue($semestre);
         $ue->setSemestre($semestre);
         $ue->setCodeElement('TS123S1UE1');
@@ -111,7 +111,7 @@ class DepartementFixtures extends Fixture implements DependentFixtureInterface
         $ue->setNbEcts(5);
         $manager->persist($ue);
 
-        //Ressource
+        // Ressource
         $ressource = new ApcRessource();
         $ressource->setCodeElement('TS123S1UE1R1');
         $ressource->setCodeMatiere('R101');
@@ -127,7 +127,7 @@ class DepartementFixtures extends Fixture implements DependentFixtureInterface
         $ressource->setUpdated(Carbon::now());
         $manager->persist($ressource);
 
-        //Etudiant
+        // Etudiant
         $user3 = new Etudiant();
         $user3->setUsername('etudiant');
         $password = $this->encoder->hashPassword($user3, 'test');

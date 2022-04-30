@@ -27,7 +27,6 @@ class UpdateSemestreCommand extends Command
         parent::__construct();
     }
 
-
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $absences = $this->absenceRepository->findBy(['anneeUniversitaire' => 2]);

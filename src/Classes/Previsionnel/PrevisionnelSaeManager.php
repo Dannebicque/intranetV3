@@ -19,7 +19,7 @@ use App\Repository\PrevisionnelSaeRepository;
 
 class PrevisionnelSaeManager extends AbstractPrevisionnelManager implements PrevisionnelManagerInterface
 {
-    public final const TYPE = 'sae';
+    final public const TYPE = 'sae';
 
     public function __construct(private readonly PrevisionnelSaeRepository $previsionnelRepository, private readonly PrevisionnelSaeAdapter $previsionnelSaeAdapter)
     {
@@ -43,7 +43,7 @@ class PrevisionnelSaeManager extends AbstractPrevisionnelManager implements Prev
         return $this->previsionnelSaeAdapter->collection($previs);
     }
 
-    public function findPrevisionnelMatiere(string | int $matiere, int $anneePrevisionnel): PrevisionnelCollection
+    public function findPrevisionnelMatiere(string|int $matiere, int $anneePrevisionnel): PrevisionnelCollection
     {
         $data = $this->previsionnelRepository->findPrevisionnelMatiere($matiere, $anneePrevisionnel);
 
@@ -51,7 +51,7 @@ class PrevisionnelSaeManager extends AbstractPrevisionnelManager implements Prev
     }
 
     public function findPrevisionnelMatierePersonnelAnnee(
-        string | int $matiere,
+        string|int $matiere,
         Personnel $personnel,
         int $anneePrevisionnel
     ): PrevisionnelCollection {

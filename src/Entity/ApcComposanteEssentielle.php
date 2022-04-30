@@ -23,7 +23,7 @@ class ApcComposanteEssentielle extends BaseEntity
     #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $libelle = null;
 
-    public function __construct(#[ORM\ManyToOne(targetEntity: ApcCompetence::class, inversedBy: 'apcComposanteEssentielles')] private ?\App\Entity\ApcCompetence $competence = null)
+    public function __construct(#[ORM\ManyToOne(targetEntity: ApcCompetence::class, inversedBy: 'apcComposanteEssentielles')] private ?ApcCompetence $competence = null)
     {
     }
 

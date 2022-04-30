@@ -15,9 +15,9 @@ use App\Entity\Semestre;
 
 interface MatiereInterface
 {
-    public function findFromSelect(string $data): ?Matiere; //champ select structuré avec typeMatiere_idmatiere
+    public function findFromSelect(string $data): ?Matiere; // champ select structuré avec typeMatiere_idmatiere
 
-    public function find(int | string $id): ?Matiere; //récupère depuis un ID
+    public function find(int|string $id): ?Matiere; // récupère depuis un ID
 
     public function findBySemestre(Semestre $semestre): MatiereCollection;
 }

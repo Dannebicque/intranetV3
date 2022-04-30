@@ -57,7 +57,7 @@ class EtudiantType extends AbstractType
                 'label' => 'semestre',
                 'class' => Semestre::class,
                 'required' => false,
-                'query_builder' => fn(SemestreRepository $semestreRepository) => $semestreRepository->findByDepartementBuilder($this->departement),
+                'query_builder' => fn (SemestreRepository $semestreRepository) => $semestreRepository->findByDepartementBuilder($this->departement),
                 'choice_label' => 'libelle',
             ])
             ->add('mail_univ', TextType::class, ['label' => 'mail_univ'])

@@ -18,9 +18,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 abstract class AbstractQuestion
 {
-    public const LABEL = 'non_defini'; //ajouter constante de couleur et de nom de template ?
-    public const BADGE = 'non_defini'; //ajouter constante de couleur et de nom de template ?
-    public const ICON = 'non_defini'; //ajouter constante de couleur et de nom de template ?
+    public const LABEL = 'non_defini'; // ajouter constante de couleur et de nom de template ?
+    public const BADGE = 'non_defini'; // ajouter constante de couleur et de nom de template ?
+    public const ICON = 'non_defini'; // ajouter constante de couleur et de nom de template ?
 
     public string $libelle;
     public ?array $valeurs = null;

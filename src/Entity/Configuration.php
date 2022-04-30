@@ -51,7 +51,7 @@ class Configuration extends BaseEntity
 
     public function setValeur(mixed $valeur): self
     {
-        //todo: gérer un cast selon le type??
+        // todo: gérer un cast selon le type??
         $this->valeur = $valeur;
 
         return $this;

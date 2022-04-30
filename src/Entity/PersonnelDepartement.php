@@ -42,7 +42,7 @@ class PersonnelDepartement extends BaseEntity
 
     public function getRoles(): ?array
     {
-        return json_decode($this->roles, null, 512, JSON_THROW_ON_ERROR); //, false, 512, JSON_THROW_ON_ERROR);
+        return json_decode($this->roles, null, 512, JSON_THROW_ON_ERROR); // , false, 512, JSON_THROW_ON_ERROR);
     }
 
     public function setRoles(string $roles): self

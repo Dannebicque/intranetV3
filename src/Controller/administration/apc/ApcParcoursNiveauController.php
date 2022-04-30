@@ -28,13 +28,13 @@ class ApcParcoursNiveauController extends BaseController
     public function ajax(ApcParcoursNiveauRepository $apcParcoursNiveauRepository, ApcParcours $parcours, $etat, ApcNiveau $niveau): Response
     {
         if (0 == $etat) {
-            //existe et on souhaite retirer
+            // existe et on souhaite retirer
             $pn = $apcParcoursNiveauRepository->findParcoursNiveau($parcours, $niveau);
             if ($pn) {
                 $this->entityManager->remove($pn);
             }
         } else {
-            //n'existe pas on ajoute
+            // n'existe pas on ajoute
             $pn = new ApcParcoursNiveau();
             $pn->setNiveau($niveau);
             $pn->setParcours($parcours);

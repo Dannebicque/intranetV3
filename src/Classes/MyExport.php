@@ -22,8 +22,8 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class MyExport
 {
-    public final const ONLY_DATE = 'date';
-    public final const ONLY_HEURE = 'heure';
+    final public const ONLY_DATE = 'date';
+    final public const ONLY_HEURE = 'heure';
     private array $options = [];
 
     public function __construct(
@@ -42,10 +42,10 @@ class MyExport
     public function convertDataFromSerializationToArray(array $data, array $modele, array $colonne): array
     {
         $dataArray = [];
-        //serialize les data
+        // serialize les data
         $dataJson = $this->serializer->serialize($data, $modele);
         $tabData = json_decode($dataJson, true, 512, JSON_THROW_ON_ERROR);
-        //header
+        // header
         $i = 1;
         $ligne = 1;
         foreach ($colonne as $value) {
@@ -76,7 +76,7 @@ class MyExport
         }
         $i = 1;
         ++$ligne;
-        //data
+        // data
         foreach ($tabData as $row) {
             foreach ($colonne as $key => $value) {
                 if ((!is_array($value) && array_key_exists($value,

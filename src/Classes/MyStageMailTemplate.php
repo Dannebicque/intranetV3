@@ -33,8 +33,8 @@ class MyStageMailTemplate
      */
     public function updateTemplate(string $code, string $sujet, string $message, StagePeriode $stagePeriode): void
     {
-        //todo: update du mail généré $this->>load(template) avec Environnment
-        //rechercher si le modèle existe
+        // todo: update du mail généré $this->>load(template) avec Environnment
+        // rechercher si le modèle existe
         $modele = $this->stageMailTemplateRepository->findEventPeriode($code, $stagePeriode);
 
         if (null !== $modele) {

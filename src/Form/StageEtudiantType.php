@@ -25,7 +25,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class StageEtudiantType extends AbstractType
 {
-    //formuliare Administrateur.
+    // formuliare Administrateur.
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder

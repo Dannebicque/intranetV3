@@ -122,7 +122,7 @@ class PrevisionnelSynthese
         return $this;
     }
 
-    public function getSyntheseSemestre(array | PrevisionnelCollection $previsionnel): PrevisionnelSynthese
+    public function getSyntheseSemestre(array|PrevisionnelCollection $previsionnel): PrevisionnelSynthese
     {
         foreach ($previsionnel as $pr) {
             $this->totalCm += $pr->getTotalHCm();

@@ -90,8 +90,8 @@ class EtudiantSousCommission
     {
         if (false === $this->hasPoleFaible() && ((true === $this->semestre->isOptPenaliteAbsence() &&
                     $this->moyenneSemestrePenalisee >= Constantes::SEUIL_MOYENNE) || (false === $this->semestre->isOptPenaliteAbsence() && $this->moyenneSemestre >= Constantes::SEUIL_MOYENNE))) {
-            //semestre >=10 et UE >=8
-            //todo: vérifier semestres rpécédents
+            // semestre >=10 et UE >=8
+            // todo: vérifier semestres rpécédents
             $this->decision = Constantes::SEMESTRE_VALIDE;
 
             if (null !== $this->semestre->getSuivant()) {
@@ -100,14 +100,14 @@ class EtudiantSousCommission
                 $this->proposition = Constantes::PROPOSITION_INDEFINIE;
             }
         } elseif (1 === $this->semestre->getOrdreLmd()) {
-            //premier semestre
+            // premier semestre
             $this->decision = Constantes::SEMESTRE_NON_VALIDE;
             $this->proposition = Constantes::PROPOSITION_INDEFINIE;
         } elseif (array_key_exists($this->semestre->getOrdreLmd() - 1, $this->scolarite)) {
-            //c'est pas le premier, on regarde le passé.
+            // c'est pas le premier, on regarde le passé.
             $prec = $this->scolarite[$this->semestre->getOrdreLmd() - 1];
             if (in_array($prec->decision, [Constantes::SEMESTRE_VALIDE, Constantes::SEMESTRE_NON_VALIDE], true)) {
-                //donc pas utilisé pour VCA ou VCJ
+                // donc pas utilisé pour VCA ou VCJ
                 if (true === $this->semestre->isOptPenaliteAbsence()) {
                     $moyenneS = ($this->moyenneSemestrePenalisee + $prec->moyenne) / 2;
                 } else {
@@ -139,7 +139,7 @@ class EtudiantSousCommission
     {
         foreach ($this->moyenneUes as $moyenneUe) {
             if (true === $moyenneUe->ue->getBonification()) {
-                return false; //on ne traite pas les UEs qui ont une bonification
+                return false; // on ne traite pas les UEs qui ont une bonification
             }
             if ((true === $this->semestre->isOptPenaliteAbsence() && $moyenneUe->getMoyennePenalisee() < Constantes::SEUIL_UE) || (false === $this->semestre->isOptPenaliteAbsence() && $moyenneUe->getMoyenne() < Constantes::SEUIL_UE)) {
                 return true;
@@ -214,7 +214,7 @@ class EtudiantSousCommission
 
     public function recupereScolarite(): void
     {
-        //on ne récupère la scolarité que par rapport au diplôme en cours
+        // on ne récupère la scolarité que par rapport au diplôme en cours
         foreach ($this->etudiant->getScolarites() as $scolarite) {
             if ($scolarite->getSemestre()->getDiplome() === $this->etudiant->getDiplome()) {
                 $this->scolarite[$scolarite->getSemestre()->getOrdreLmd()] = new Scolarite($scolarite);

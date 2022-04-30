@@ -22,7 +22,7 @@ class QuestionnaireQuestionTypeQcm extends QuestionnaireQuestionType
     {
         parent::buildForm($builder, $options);
         $builder
-            //->add('parametre', TextType::class)
+            // ->add('parametre', TextType::class)
             ->add('maxChoix', IntegerType::class, [
                 'label' => 'label.maxChoix',
                 'help' => 'Indiquez un nombre maximum de réponses acceptées. Laisser 0 si pas de limite.',
@@ -37,7 +37,7 @@ class QuestionnaireQuestionTypeQcm extends QuestionnaireQuestionType
                 'by_reference' => false,
                 'max_items' => 0,
 
-                //'help' => 'Ajoutez les situations professionnelles de la compétence.',
+                // 'help' => 'Ajoutez les situations professionnelles de la compétence.',
             ]);
     }
 

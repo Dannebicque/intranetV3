@@ -13,10 +13,10 @@ use App\Entity\ApcRessource;
 
 class RessourceSectionAdapter extends AbstractSectionAdapter
 {
-    public final const ENTITY = ApcRessource::class;
-    public final const FIELD_LIBELLE = 'libelle';
-    public final const FIELD_CODE = 'codeMatiere';
-    public final const LABEL = 'ressources';
+    final public const ENTITY = ApcRessource::class;
+    final public const FIELD_LIBELLE = 'libelle';
+    final public const FIELD_CODE = 'codeMatiere';
+    final public const LABEL = 'ressources';
 
     public function getData(mixed $id): ?array
     {

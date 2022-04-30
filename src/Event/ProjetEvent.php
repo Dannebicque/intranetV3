@@ -14,12 +14,12 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class ProjetEvent extends Event
 {
-    public final const CHGT_ETAT_PROJET_AUTORISE = 'chgt.etat_projet_autorise';
-    public final const CHGT_ETAT_PROJET_DEPOSE = 'chgt.etat_projet_depose';
-    public final const CHGT_ETAT_PROJET_VALIDE = 'chgt.etat_projet_valide';
-    public final const CHGT_ETAT_PROJET_IMPRIME = 'chgt.etat_projet_imprime';
+    final public const CHGT_ETAT_PROJET_AUTORISE = 'chgt.etat_projet_autorise';
+    final public const CHGT_ETAT_PROJET_DEPOSE = 'chgt.etat_projet_depose';
+    final public const CHGT_ETAT_PROJET_VALIDE = 'chgt.etat_projet_valide';
+    final public const CHGT_ETAT_PROJET_IMPRIME = 'chgt.etat_projet_imprime';
 
-    public final const EQ_ETATS = [
+    final public const EQ_ETATS = [
         self::CHGT_ETAT_PROJET_AUTORISE => ProjetEtudiant::ETAT_PROJET_AUTORISE,
         self::CHGT_ETAT_PROJET_DEPOSE => ProjetEtudiant::ETAT_PROJET_DEPOSE,
         self::CHGT_ETAT_PROJET_VALIDE => ProjetEtudiant::ETAT_PROJET_VALIDE,

@@ -16,7 +16,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class TypeDiplomeFixtures extends Fixture
 {
-    public final const TYPE_BUT_REFERENCE = 'type-but';
+    final public const TYPE_BUT_REFERENCE = 'type-but';
 
     public function load(ObjectManager $manager): void
     {

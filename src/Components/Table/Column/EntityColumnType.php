@@ -31,7 +31,7 @@ class EntityColumnType extends ColumnType
      */
     public function render(mixed $rowData, array $options): string
     {
-        $obj = $this->accessor->getValue($rowData, $options['property_path']); //on récupère l'objet de la liaison
+        $obj = $this->accessor->getValue($rowData, $options['property_path']); // on récupère l'objet de la liaison
 
         return $this->renderProperty($this->accessor->getValue($obj, $options['display_field']), $options);
     }
@@ -49,11 +49,11 @@ class EntityColumnType extends ColumnType
         parent::configureOptions($resolver);
 
         $resolver
-            ->setDefault('property_path', fn(Options $options) => $options['id'])
+            ->setDefault('property_path', fn (Options $options) => $options['id'])
             ->setRequired('display_field')
             ->setAllowedTypes('property_path', 'string')
             ->setAllowedTypes('display_field', 'string')
             ->setDefault('order', null)
-            ->setDefault('order_by', fn(Options $options) => $options['property_path']);
+            ->setDefault('order_by', fn (Options $options) => $options['property_path']);
     }
 }

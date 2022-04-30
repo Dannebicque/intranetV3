@@ -37,7 +37,7 @@ class CelcatEventsRepository extends ServiceEntityRepository
         parent::__construct($registry, CelcatEvent::class);
     }
 
-    public function findEdtProf(string $numeroHarpege, int $semaine): array | int
+    public function findEdtProf(string $numeroHarpege, int $semaine): array|int
     {
         return $this->createQueryBuilder('p')
             ->where('p.semaineFormation = :semaine')
@@ -50,7 +50,7 @@ class CelcatEventsRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findEdtEtu(Etudiant $user, int $semaine): null | array | int
+    public function findEdtEtu(Etudiant $user, int $semaine): null|array|int
     {
         if (null !== $user->getSemestre()) {
             $this->groupes($user);
@@ -91,7 +91,7 @@ class CelcatEventsRepository extends ServiceEntityRepository
     public function deleteDepartement(
         int $codeCelcatDepartement,
         ?AnneeUniversitaire $anneeUniversitaire
-    ): array | int {
+    ): array|int {
         if (null === $anneeUniversitaire) {
             throw new InvalidArgumentException('L\'année universitaire n\'est pas définie');
         }
@@ -106,7 +106,7 @@ class CelcatEventsRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findEdtSemestre(Semestre $semestre, ?int $semaineFormationIUT): array | int
+    public function findEdtSemestre(Semestre $semestre, ?int $semaineFormationIUT): array|int
     {
         return $this->createQueryBuilder('p')
            // ->innerJoin(Matiere::class, 'm', 'WITH', 'p.codeModule = m.codeElement')
@@ -121,7 +121,7 @@ class CelcatEventsRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getByPersonnelArray(Personnel $user): array | int
+    public function getByPersonnelArray(Personnel $user): array|int
     {
         $query = $this->createQueryBuilder('p')
             ->where('p.codePersonnel = :idprof')
@@ -135,7 +135,7 @@ class CelcatEventsRepository extends ServiceEntityRepository
         return $this->transformeArray($query);
     }
 
-    public function getByEtudiantArray(Etudiant $user, int $semaine): array | int
+    public function getByEtudiantArray(Etudiant $user, int $semaine): array|int
     {
         $query = $this->findEdtEtu($user, $semaine);
 

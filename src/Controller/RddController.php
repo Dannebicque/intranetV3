@@ -54,7 +54,7 @@ class RddController extends AbstractController
             $etudiant = $etudiantRepository->identificationRdd($request->request->get('login'), $date);
 
             if (null !== $etudiant) {
-                //vérification s'il est bien diplôme
+                // vérification s'il est bien diplôme
                 $diplome = $rddDiplomeRepository->findOneBy(['numEtudiant' => $etudiant['numEtudiant']]);
                 if (null !== $diplome) {
                     return $this->redirectToRoute('rdd_inscription',
@@ -162,13 +162,13 @@ class RddController extends AbstractController
                         'numetudiant' => $numetudiant,
                         'diplome' => $diplome,
                     ], ]);
-            $questionnaire->setIdEtudiant($etudiant->getId()); //todo: pourrait être plus générique si c'est des questionnaires aux personnels
+            $questionnaire->setIdEtudiant($etudiant->getId()); // todo: pourrait être plus générique si c'est des questionnaires aux personnels
             $questionnaire->AddSpecialSection(AbstractSection::INTRODUCTION);
 
             foreach ($questionnaireQuizz->getSections() as $section) {
                 $sect = (new SectionQuizzEntityAdapter($section))->getSection();
                 $questionnaire->addSection($sect);
-                $reponses->merge($reponsesEtudiantAdapter->getReponsesEtudiant($sect, $etudiant->getId())); //todo: on pourrait faire que sur la section concernée ?
+                $reponses->merge($reponsesEtudiantAdapter->getReponsesEtudiant($sect, $etudiant->getId())); // todo: on pourrait faire que sur la section concernée ?
             }
 
             $questionnaire->AddSpecialSection(AbstractSection::END);

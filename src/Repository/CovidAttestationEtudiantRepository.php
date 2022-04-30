@@ -50,7 +50,7 @@ class CovidAttestationEtudiantRepository extends ServiceEntityRepository
     public function findNext(Etudiant $etudiant): array
     {
         return $this->createQueryBuilder('a')
-            ->innerJoin('a.groupes', 'c')//récupération de la jointure dans la table dédiée
+            ->innerJoin('a.groupes', 'c')// récupération de la jointure dans la table dédiée
             ->innerJoin(Groupe::class, 'g', 'WITH', 'c.id = g.id')
             ->innerJoin('g.etudiants', 'f')
             ->innerJoin(Etudiant::class, 'e', 'WITH', 'e.id = f.id')

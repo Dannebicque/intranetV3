@@ -73,7 +73,7 @@ class EtudiantScolarite
                 $this->etudiant->setAnneeSortie((int) date('Y'));
                 $this->etudiantsGroupes->setEtudiant($this->etudiant);
                 $this->etudiantsGroupes->suppressionGroupes();
-                //todo: supprimer les scolarités
+                // todo: supprimer les scolarités
                 break;
         }
 
@@ -100,7 +100,7 @@ class EtudiantScolarite
             ]);
 
             if (null === $scolarite) {
-                //si non ??? Créer mais comment associer à une sous-comm?
+                // si non ??? Créer mais comment associer à une sous-comm?
                 $scolarite = new Scolarite($this->etudiant, $this->semestre, $this->anneeUniversitaire);
             }
 

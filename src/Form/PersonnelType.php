@@ -75,7 +75,7 @@ class PersonnelType extends AbstractType
             ->add('cvFile', VichFileType::class, [
                 'label' => 'cv',
                 'required' => false,
-            ])//->add('photo', VichImageType::class, ['label' => 'photo'])
+            ])// ->add('photo', VichImageType::class, ['label' => 'photo'])
         ;
     }
 

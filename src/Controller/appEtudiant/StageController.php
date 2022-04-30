@@ -55,7 +55,7 @@ class StageController extends BaseController
     public function detailsStage(StageEtudiant $stageEtudiant): Response
     {
         if ($stageEtudiant->getEtudiant()->getId() !== $this->getUser()->getId()) {
-            //si incohérence entre l'utilisateur connecté et le stage
+            // si incohérence entre l'utilisateur connecté et le stage
             throw new AccessDeniedException('Vous n\'êtes pas l\'auteur de ce formulaire de stage');
         }
 
@@ -73,7 +73,7 @@ class StageController extends BaseController
     public function create(EventDispatcherInterface $eventDispatcher, Request $request, StageEtudiant $stageEtudiant): Response
     {
         if ($stageEtudiant->getEtudiant()->getId() !== $this->getUser()->getId()) {
-            //si incohérence entre l'utilisateur connecté et le stage
+            // si incohérence entre l'utilisateur connecté et le stage
             throw new AccessDeniedException('Vous n\'êtes pas l\'auteur de ce formulaire de stage');
         }
 
@@ -112,7 +112,7 @@ class StageController extends BaseController
     public function periodeInfo(StageEtudiant $stageEtudiant): Response
     {
         if ($stageEtudiant->getEtudiant()->getId() !== $this->getUser()->getId()) {
-            //si incohérence entre l'utilisateur connecté et le stage
+            // si incohérence entre l'utilisateur connecté et le stage
             throw new AccessDeniedException('Vous n\'êtes pas l\'auteur de ce formulaire de stage');
         }
 
@@ -126,7 +126,7 @@ class StageController extends BaseController
     public function entrepriseInfo(StageEtudiant $stageEtudiant): Response
     {
         if ($stageEtudiant->getEtudiant()->getId() !== $this->getUser()->getId()) {
-            //si incohérence entre l'utilisateur connecté et le stage
+            // si incohérence entre l'utilisateur connecté et le stage
             throw new AccessDeniedException('Vous n\'êtes pas l\'auteur de ce formulaire de stage');
         }
 

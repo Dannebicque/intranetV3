@@ -64,7 +64,7 @@ class MyExcelWriter
 
     public function setHeader(bool $logo = true): void
     {
-        //todo: a fusionner avec le header de writeSpecialHeader dans MyExportListing
+        // todo: a fusionner avec le header de writeSpecialHeader dans MyExportListing
     }
 
     public function writeHeader(array $array, int $col = 1, int $row = 1, bool $translate = true): void
@@ -82,8 +82,8 @@ class MyExcelWriter
     public function writeCellXY(int $col, int $row, mixed $value = '', array $options = []): void
     {
         $this->sheet->setCellValueByColumnAndRow($col, $row, $value);
-        //traiter les options
-        //style n'est pas un tableau
+        // traiter les options
+        // style n'est pas un tableau
         if (is_array($options)) {
             foreach ($options as $key => $valeur) {
                 switch ($key) {
@@ -158,7 +158,7 @@ class MyExcelWriter
         $this->sheet->setCellValue($adresse, $value);
 
         if (is_array($options) && array_key_exists('style', $options)) {
-            //style n'est pas un tableau
+            // style n'est pas un tableau
             switch ($options['style']) {
                 case 'HORIZONTAL_RIGHT':
                     $this->sheet->getStyle($adresse)->getAlignment()->setHorizontal(Alignment::HORIZONTAL_RIGHT);
@@ -225,7 +225,7 @@ class MyExcelWriter
         $this->sheet->getColumnDimension($col)->setWidth($taille);
     }
 
-    public function getColumnAutoSize(int | string $col): void
+    public function getColumnAutoSize(int|string $col): void
     {
         if (is_numeric($col)) {
             $col = Coordinate::stringFromColumnIndex($col);

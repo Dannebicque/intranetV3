@@ -42,13 +42,13 @@ class ArticleType extends AbstractType
             ->add('typeDestinataire', TypeDestinataireType::class, ['label' => 'label.typedestinataire'])
             ->add('texte', TextareaType::class, [
                 'label' => 'label.texte',
-                'attr' => ['rows' => 20, 'class' => 'tinyMce'], //todo: tinyMce ne fonctionne plus
+                'attr' => ['rows' => 20, 'class' => 'tinyMce'], // todo: tinyMce ne fonctionne plus
             ])
             ->add('categorie', EntityType::class, [
                 'class' => ArticleCategorie::class,
                 'label' => 'label.article_categorie',
                 'choice_label' => 'libelle',
-                'query_builder' => fn(ArticleCategorieRepository $articleCategorieRepository) => $articleCategorieRepository->findByDepartementBuilder($this->departement),
+                'query_builder' => fn (ArticleCategorieRepository $articleCategorieRepository) => $articleCategorieRepository->findByDepartementBuilder($this->departement),
                 'required' => true,
                 'expanded' => false,
                 'multiple' => false,
@@ -57,7 +57,7 @@ class ArticleType extends AbstractType
                 'class' => Semestre::class,
                 'label' => 'label.semestres_article',
                 'choice_label' => 'libelle',
-                'query_builder' => fn(SemestreRepository $semestreRepository) => $semestreRepository->findByDepartementBuilder($this->departement),
+                'query_builder' => fn (SemestreRepository $semestreRepository) => $semestreRepository->findByDepartementBuilder($this->departement),
                 'required' => true,
                 'expanded' => true,
                 'multiple' => true,

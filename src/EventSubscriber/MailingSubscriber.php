@@ -80,7 +80,7 @@ class MailingSubscriber implements EventSubscriberInterface
                     ['replyTo' => [$absence->getPersonnel()?->getMailUniv()]]);
             }
             $this->myMailer->initEmail();
-            //envoi en copie au responsable si l'option est activée
+            // envoi en copie au responsable si l'option est activée
             if ($semestre->isOptMailAbsenceResp() && null !== $semestre->getOptDestMailAbsenceResp()) {
                 $this->myMailer->initEmail();
                 $this->myMailer->setTemplate('mails/absence_added_responsable.txt.twig',
@@ -208,7 +208,6 @@ class MailingSubscriber implements EventSubscriberInterface
     public function onMailNoteModificationResponsable(NoteEvent $event): void
     {
         $note = $event->getNote();
-
 
         if (null !== $note->getEvaluation()) {
             $semestre = $note->getEvaluation()->getSemestre();

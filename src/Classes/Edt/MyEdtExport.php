@@ -96,14 +96,14 @@ class MyEdtExport
         };
     }
 
-    private function genereIcal($edt): bool | string
+    private function genereIcal($edt): bool|string
     {
         foreach ($edt as $pl) {
             if (null !== $pl['date']) {
                 $this->myIcal->setDtstart($pl['date'], $pl['debut']);
                 $this->myIcal->setDtend($pl['date'], $pl['fin']);
                 $this->myIcal->setDescription($pl['commentaire']);
-                $this->myIcal->setSummary($pl['ical']); //soit typeIdMatiere si Intranet, sinon OK pour Celcat...
+                $this->myIcal->setSummary($pl['ical']); // soit typeIdMatiere si Intranet, sinon OK pour Celcat...
                 $this->myIcal->setLocation($pl['salle']);
                 $this->myIcal->addEvent($pl['id']);
             }
@@ -121,7 +121,7 @@ class MyEdtExport
 
     public function getAllDocs(Departement $departement): array
     {
-        //parcour fichiers
+        // parcour fichiers
         $folder = $this->dir.'pdfedt/'.$departement->getId().'/';
         $dossier = opendir($folder);
 
@@ -143,7 +143,7 @@ class MyEdtExport
         if ('pdf' === $_format) {
             $this->genereaAllPdf($source, $departement);
         }
-        //todo: export CSV/XLSX
+        // todo: export CSV/XLSX
     }
 
     /**
@@ -168,7 +168,7 @@ class MyEdtExport
     {
         $dir = $this->dir.'pdfedt/'.$departement->getId().'/';
         Tools::checkDirectoryExist($dir);
-        //todo: passer par le DTO Evenement, comme ca compatible avec celcat
+        // todo: passer par le DTO Evenement, comme ca compatible avec celcat
         if ('intranet' === $source) {
             $planning = $this->edtPlanningRepository->findEdtProf($personnel->getId());
             $this->myPDF::genereAndSavePdf('pdf/edt/planning.html.twig',
@@ -213,7 +213,7 @@ class MyEdtExport
         $zip->open($zipName, ZipArchive::CREATE);
         $tabFiles = [];
 
-        //lecture du repertoire
+        // lecture du repertoire
         $repertoire = opendir($dir);
         while ($file = readdir($repertoire)) {
             if ('.' !== $file && '..' !== $file) {
@@ -225,7 +225,7 @@ class MyEdtExport
 
         $zip->close();
 
-        //suppression des PDF
+        // suppression des PDF
         foreach ($tabFiles as $file) {
             unlink($file);
         }

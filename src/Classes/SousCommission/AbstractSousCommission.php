@@ -54,7 +54,7 @@ abstract class AbstractSousCommission
         $this->ues = $this->ueRepository->findBySemestre($this->semestre);
         $this->etudiants = $this->etudiantRepository->findBySemestre($this->semestre);
 
-        //récupération des semestres précédents
+        // récupération des semestres précédents
         $sem = $this->semestre;
         while (null !== $sem->getPrecedent()) {
             $this->semestresScolarite[] = $sem->getPrecedent();

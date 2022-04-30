@@ -27,8 +27,6 @@ class ApcRessourceEnfants extends BaseEntity
         $this->groupes = new ArrayCollection();
     }
 
-
-
     public function getApcRessourceParent(): ?ApcRessource
     {
         return $this->apcRessourceParent;

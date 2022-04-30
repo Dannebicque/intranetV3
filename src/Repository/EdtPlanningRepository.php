@@ -242,7 +242,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
                     }
                 }
 
-                $planning[$casedebut][$groupe]['module'] = $refmatiere; //création du premier créneaux
+                $planning[$casedebut][$groupe]['module'] = $refmatiere; // création du premier créneaux
 
                 if (0 === $duree % 3) {
                     for ($i = 1; $i < $duree / 3; ++$i) {
@@ -250,7 +250,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
                     }
                 }
             } else {
-                //pas sur un créneau classique pour le début
+                // pas sur un créneau classique pour le début
                 if (!array_key_exists($casedebut, $creneaux)) {
                     $casedebut -= ($duree % 3);
                 }
@@ -285,7 +285,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
                     }
                 }
 
-                $planning[$casedebut][$groupe]['module'] = $refmatiere; //création du premier créneaux
+                $planning[$casedebut][$groupe]['module'] = $refmatiere; // création du premier créneaux
             }
         }
 

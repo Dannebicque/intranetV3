@@ -54,14 +54,14 @@ class HrsTableType extends TableType
             'choice_label' => 'libelle',
             'required' => false,
             'placeholder' => 'Filtrer par type de HRS/Prime',
-            'query_builder' => fn(TypeHrsRepository $typeHrsRepository) => $typeHrsRepository->findAllBuilder(),
+            'query_builder' => fn (TypeHrsRepository $typeHrsRepository) => $typeHrsRepository->findAllBuilder(),
         ]);
         $builder->addFilter('personnel', EntityType::class, [
             'class' => Personnel::class,
             'choice_label' => 'displayPr',
             'required' => false,
             'placeholder' => 'Filtrer par personnel',
-            'query_builder' => fn(PersonnelRepository $personnelRepository) => $personnelRepository->findByDepartementBuilder($this->departement),
+            'query_builder' => fn (PersonnelRepository $personnelRepository) => $personnelRepository->findByDepartementBuilder($this->departement),
         ]);
 
         $builder->setLoadUrl('administration_hrs_index', ['annee' => $this->annee]);

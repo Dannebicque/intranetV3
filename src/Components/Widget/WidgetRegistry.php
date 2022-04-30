@@ -14,7 +14,7 @@ use InvalidArgumentException;
 
 class WidgetRegistry
 {
-    public final const TAG_TYPE = 'da.widget.type';
+    final public const TAG_TYPE = 'da.widget.type';
 
     /**
      * @var WidgetType[]

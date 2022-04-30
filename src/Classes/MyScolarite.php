@@ -45,17 +45,17 @@ class MyScolarite
 
         $handle = fopen($file, 'rb');
 
-        /*Si on a réussi à ouvrir le fichier*/
+        /* Si on a réussi à ouvrir le fichier */
         if ($handle) {
             /* supprime la première ligne */
             fgetcsv($handle, 1024, ';');
-            /*Tant que l'on est pas à la fin du fichier*/
+            /* Tant que l'on est pas à la fin du fichier */
             while (!feof($handle)) {
-                /*On lit la ligne courante*/
+                /* On lit la ligne courante */
                 $ligne = fgetcsv($handle, 1024, ';');
                 if (false !== $ligne && count($ligne) > 1 && array_key_exists($ligne[1],
                         $semestres) && array_key_exists($ligne[0], $etudiants)) {
-                    //numetudiant	codesemestre	semestre	ordre	moyenne	nbabsences	decision	suite ues
+                    // numetudiant	codesemestre	semestre	ordre	moyenne	nbabsences	decision	suite ues
                     $scol = new Scolarite($etudiants[$ligne[0]], $semestres[$ligne[1]]);
                     $scol->setAnneeUniversitaire($anneeUniversitaire);
                     $scol->setDecision($ligne[6]);
@@ -79,9 +79,9 @@ class MyScolarite
             }
             $this->entityManager->flush();
 
-            /*On ferme le fichier*/
+            /* On ferme le fichier */
             fclose($handle);
-            unlink($file); //suppression du fichier
+            unlink($file); // suppression du fichier
 
             return true;
         }

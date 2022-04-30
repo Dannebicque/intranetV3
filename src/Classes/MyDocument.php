@@ -46,24 +46,24 @@ class MyDocument
         if ($getConnectedUser instanceof Personnel) {
             $r = $this->documentFavoriPersonnelRepository->findFavori($getConnectedUser, $this->document);
             if (0 === count($r)) {
-                //add
+                // add
                 $n = new DocumentFavoriPersonnel($getConnectedUser, $this->document);
                 $this->entityManager->persist($n);
                 $etat = 'add';
             } else {
-                //remove
+                // remove
                 $this->remove($r);
                 $etat = 'remove';
             }
         } elseif ($getConnectedUser instanceof Etudiant) {
             $r = $this->documentFavoriEtudiantRepository->findFavori($getConnectedUser, $this->document);
             if (0 === count($r)) {
-                //add
+                // add
                 $n = new DocumentFavoriEtudiant($getConnectedUser, $this->document);
                 $this->entityManager->persist($n);
                 $etat = 'add';
             } else {
-                //remove
+                // remove
                 $this->remove($r);
                 $etat = 'remove';
             }

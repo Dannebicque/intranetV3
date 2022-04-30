@@ -19,7 +19,7 @@ class ApcSaeRessource extends BaseEntity
 {
     use LifeCycleTrait;
 
-    public function __construct(#[ORM\ManyToOne(targetEntity: ApcSae::class, inversedBy: 'apcSaeRessources')] private ?\App\Entity\ApcSae $sae, #[ORM\ManyToOne(targetEntity: ApcRessource::class, inversedBy: 'apcSaeRessources')] private ?\App\Entity\ApcRessource $ressource)
+    public function __construct(#[ORM\ManyToOne(targetEntity: ApcSae::class, inversedBy: 'apcSaeRessources')] private ?ApcSae $sae, #[ORM\ManyToOne(targetEntity: ApcRessource::class, inversedBy: 'apcSaeRessources')] private ?ApcRessource $ressource)
     {
     }
 

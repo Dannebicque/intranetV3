@@ -60,10 +60,10 @@ class CelcatController extends BaseController
     #[Route(path: '/update/{id}', name: 'sa_celcat_update_events', methods: ['GET'])]
     public function update(CelcatEventsRepository $celcatEventsRepository, Diplome $diplome): RedirectResponse
     {
-        //suppression des events existants pour le département
+        // suppression des events existants pour le département
         $celcatEventsRepository->deleteDepartement($diplome->getCodeCelcatDepartement(),
             $diplome->getAnneeUniversitaire());
-        //récupération et ajouts des events.
+        // récupération et ajouts des events.
         $this->myCelcat->getEvents($diplome->getCodeCelcatDepartement(), $diplome->getAnneeUniversitaire());
 
         return $this->redirectToRoute('sa_celcat_index');

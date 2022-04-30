@@ -31,17 +31,17 @@ class Personnel extends Utilisateur implements UtilisateurInterface
 {
     use LifeCycleTrait;
 
-    public final const PERMANENT = 'permanent';
-    public final const VACATAIRE = 'vacataire';
-    public final const CONTRACTUEL = 'contractuel';
-    public final const MCF = 'MCF';
-    public final const PU = 'PU';
-    public final const PRAG = 'PRAG';
-    public final const PRCE = 'PRCE';
-    public final const ATER = 'ATER';
-    public final const ASSISTANTE = 'ASS';
-    public final const ADMINISTRATIF = 'ADM';
-    public final const TECHNICIEN = 'TEC';
+    final public const PERMANENT = 'permanent';
+    final public const VACATAIRE = 'vacataire';
+    final public const CONTRACTUEL = 'contractuel';
+    final public const MCF = 'MCF';
+    final public const PU = 'PU';
+    final public const PRAG = 'PRAG';
+    final public const PRCE = 'PRCE';
+    final public const ATER = 'ATER';
+    final public const ASSISTANTE = 'ASS';
+    final public const ADMINISTRATIF = 'ADM';
+    final public const TECHNICIEN = 'TEC';
 
     #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 15)]
     #[Groups(['personnel:read'])]

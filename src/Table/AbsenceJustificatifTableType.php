@@ -66,13 +66,13 @@ class AbsenceJustificatifTableType extends TableType
         $builder->addFilter('etat_demande', EnumType::class, [
             'class' => AbsenceJustificatifEnum::class,
             'required' => false,
-            'choice_label' => static fn(UnitEnum $choice): string => 'absence_justificatif.'.$choice->value,
+            'choice_label' => static fn (UnitEnum $choice): string => 'absence_justificatif.'.$choice->value,
             'placeholder' => 'Etat de la demande',
         ]);
 
         $builder->addFilter('groupe', EntityType::class, [
             'class' => Groupe::class,
-            'query_builder' => fn(GroupeRepository $groupeRepository) => $groupeRepository->findBySemestreBuilder($this->semestre),
+            'query_builder' => fn (GroupeRepository $groupeRepository) => $groupeRepository->findBySemestreBuilder($this->semestre),
             'choice_label' => 'display',
             'required' => false,
             'placeholder' => 'Filtrer par groupe',

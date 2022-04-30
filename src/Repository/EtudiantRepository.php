@@ -63,7 +63,7 @@ class EtudiantRepository extends ServiceEntityRepository
         ?int $max = null,
         bool $getResult = true
     ): mixed {
-        //todo: utile ?
+        // todo: utile ?
         $qb = $this->createQueryBuilder('u');
         $query = isset($data['query']) && $data['query'] ? $data['query'] : null;
         $order = isset($data['order']) && $data['order'] ? $data['order'] : null;
@@ -270,12 +270,12 @@ class EtudiantRepository extends ServiceEntityRepository
 
     public function statistiquesEtudiants(): array
     {
-        //SELECT count(etudiant.id) FROM `etudiant`
-        //INNER JOIN semestre ON semestre.id=etudiant.semestre_id
-        //INNER JOIN annee ON semestre.annee_id=annee.id
-        //INNER JOIN diplome ON annee.diplome_id=diplome.id
-        //WHERE diplome.actif=1 AND etudiant.annee_sortie=0
-        //GROUP BY diplome.id
+        // SELECT count(etudiant.id) FROM `etudiant`
+        // INNER JOIN semestre ON semestre.id=etudiant.semestre_id
+        // INNER JOIN annee ON semestre.annee_id=annee.id
+        // INNER JOIN diplome ON annee.diplome_id=diplome.id
+        // WHERE diplome.actif=1 AND etudiant.annee_sortie=0
+        // GROUP BY diplome.id
         $query = $this->createQueryBuilder('e')
             ->select('d.id, count(e.id)')
             ->innerJoin(Semestre::class, 's', 'WITH', 'e.semestre=s.id')

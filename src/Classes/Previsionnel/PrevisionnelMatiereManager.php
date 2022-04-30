@@ -19,7 +19,7 @@ use App\Repository\PrevisionnelMatiereRepository;
 
 class PrevisionnelMatiereManager extends AbstractPrevisionnelManager implements PrevisionnelManagerInterface
 {
-    public final const TYPE = 'matiere';
+    final public const TYPE = 'matiere';
 
     public function __construct(private readonly PrevisionnelMatiereRepository $previsionnelRepository, private readonly PrevisionnelMatiereAdapter $previsionnelMatiereAdapter)
     {
@@ -43,7 +43,7 @@ class PrevisionnelMatiereManager extends AbstractPrevisionnelManager implements 
         return $this->previsionnelMatiereAdapter->collection($data);
     }
 
-    public function findPrevisionnelMatiere(string | int $matiere, int $anneePrevisionnel): PrevisionnelCollection
+    public function findPrevisionnelMatiere(string|int $matiere, int $anneePrevisionnel): PrevisionnelCollection
     {
         $data = $this->previsionnelRepository->findPrevisionnelMatiere($matiere, $anneePrevisionnel);
 
@@ -51,7 +51,7 @@ class PrevisionnelMatiereManager extends AbstractPrevisionnelManager implements 
     }
 
     public function findPrevisionnelMatierePersonnelAnnee(
-        string | int $matiere,
+        string|int $matiere,
         Personnel $personnel,
         int $anneePrevisionnel
     ): PrevisionnelCollection {

@@ -11,12 +11,12 @@ namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\CovidAttestationPersonnelRepository;
+use function array_key_exists;
 use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use function array_key_exists;
 
 #[ORM\Entity(repositoryClass: CovidAttestationPersonnelRepository::class)]
 #[ORM\HasLifecycleCallbacks]

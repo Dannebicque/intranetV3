@@ -67,7 +67,7 @@ class PrevisionnelController extends BaseController
 
         $mat = $typeMatiereManager->getMatiere($matiere, $type);
 
-        //$this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $mat->semestre); //todo: gérer avec l'année ?
+        // $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $mat->semestre); //todo: gérer avec l'année ?
 
         $previsionnel = $previsionnelManager->getPrevisionnelMatiere($matiere, $type, $annee);
         $synthese = $previsionnelSynthese->getSyntheseMatiere($previsionnel);
@@ -158,11 +158,11 @@ class PrevisionnelController extends BaseController
         PersonnelRepository $personnelRepository,
         TypeMatiereManager $typeMatiereManager,
         Request $request
-    ): RedirectResponse | Response {
-        //todo: faire une comparaison avec le prévisionnel max... et mettre des alertes.
+    ): RedirectResponse|Response {
+        // todo: faire une comparaison avec le prévisionnel max... et mettre des alertes.
         if ($request->isMethod('POST')) {
             $matiere = $typeMatiereManager->getMatiereFromSelect($request->request->get('previsionnel_matiere'));
-            //$this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $matiere->semestre); //todo: faire avec l'année ?
+            // $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $matiere->semestre); //todo: faire avec l'année ?
 
             $annee = '' !== $request->request->get('previsionnel_annee_previsionnel') ? $request->request->get('previsionnel_annee_previsionnel') : $this->dataUserSession->getAnneePrevisionnel();
 

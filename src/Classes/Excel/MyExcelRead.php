@@ -25,12 +25,11 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
  */
 class MyExcelRead
 {
-
     protected Spreadsheet $phpExcelObject;
     protected Worksheet $sheet;
 
     protected int $line = 1;
-    protected int $nbColumns = -1; //on ne connait pas l nombre de colonne
+    protected int $nbColumns = -1; // on ne connait pas l nombre de colonne
 
     /**
      * MyExcelRead constructor.
@@ -48,7 +47,7 @@ class MyExcelRead
         $inputFileType = IOFactory::identify($fichier);
         /**  Create a new Reader of the type that has been identified  **/
         $reader = IOFactory::createReader($inputFileType);
-        /*  Load $inputFileName to a Spreadsheet Object  **/
+        /*  Load $inputFileName to a Spreadsheet Object  * */
         $this->phpExcelObject = $reader->load($fichier);
         $this->sheet = $this->phpExcelObject->getSheet(0);
     }
@@ -56,10 +55,10 @@ class MyExcelRead
     /**
      * Lecture séquentielle du fichier. Retourne false si ligne vide.
      */
-    public function readNewLine(): array | bool
+    public function readNewLine(): array|bool
     {
         if (-1 === $this->nbColumns) {
-            //on analyse le nombre de colonne
+            // on analyse le nombre de colonne
             $this->countColumns();
         }
 

@@ -130,7 +130,7 @@ class SousCommissionExport
         /* semestres précédent */
 
         foreach ($this->sousCommission->getSemestresScolarite() as $s) {
-            //titre semestre
+            // titre semestre
             $this->myExcelWriter->writeCellXY($colonne, $ligne - 1, $s->getLibelle(), ['style' => 'HORIZONTAL_CENTER']);
             $colFin = $colonne + (is_countable($s->getUes()) ? count($s->getUes()) : 0) + 1;
             $this->myExcelWriter->mergeCellsCaR($colonne, $ligne - 1, $colFin, $ligne - 1);
@@ -225,7 +225,7 @@ class SousCommissionExport
                     }
                     ++$colonne;
                 }
-                //note pas présente
+                // note pas présente
             }
 
             foreach ($ues as $ue) {
@@ -399,7 +399,7 @@ class SousCommissionExport
         /* semestres précédent */
 
         foreach ($this->sousCommission->getSemestresScolarite() as $s) {
-            //titre semestre
+            // titre semestre
             $this->myExcelWriter->writeCellXY($colonne, $ligne - 1, $s->getLibelle(), ['style' => 'HORIZONTAL_CENTER']);
             $colFin = $colonne + (is_countable($s->getUes()) ? count($s->getUes()) : 0) + 1;
             $this->myExcelWriter->mergeCellsCaR($colonne, $ligne - 1, $colFin, $ligne - 1);
@@ -496,7 +496,7 @@ class SousCommissionExport
                     }
                     ++$colonne;
                 }
-                //note pas présente
+                // note pas présente
             }
 
             foreach ($ues as $ue) {
@@ -754,7 +754,7 @@ class SousCommissionExport
         while ('' != $this->myExcelRead->getCellColLigne($colonne, 14)) {
             $val = explode('-', (string) $this->myExcelRead->getCellColLigne($colonne, 14));
             $tModule[$colonne] = trim($val[0]);
-            $colonne += 2; //3 si colonne résultat
+            $colonne += 2; // 3 si colonne résultat
         }
 
         $etudiants = $semestre->getEtudiants();
@@ -791,7 +791,7 @@ class SousCommissionExport
                 }
             }
 
-            //EXPORT
+            // EXPORT
             unlink($fichier);
             $this->myExcelRead->sauvegarde($this->dir.'temp.xls');
 
@@ -840,7 +840,7 @@ class SousCommissionExport
             'UE2',
             'UE3',
             'UE4',
-            'UE5', //todo: rendre flexible
+            'UE5', // todo: rendre flexible
             'Moyenne',
             'Valid.',
             'Décision',
@@ -959,7 +959,7 @@ class SousCommissionExport
                 } else {
                 $colonne = $colonne + 7;
                 }*/
-                //}
+                // }
 
                 ++$ligne;
             }

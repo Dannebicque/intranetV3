@@ -18,7 +18,6 @@ use App\Repository\ApcComptenceRepository;
 use App\Repository\SemestreRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -66,7 +65,7 @@ class ApcRessourceType extends AbstractType
                 'data' => $this->semestre,
                 'required' => true,
                 'choice_label' => 'display',
-                'query_builder' => fn(SemestreRepository $semestreRepository) => $semestreRepository->findByDiplomeBuilder($this->diplome),
+                'query_builder' => fn (SemestreRepository $semestreRepository) => $semestreRepository->findByDiplomeBuilder($this->diplome),
                 'label' => 'label.semestre',
                 'expanded' => true,
                 'mapped' => false,
@@ -77,7 +76,7 @@ class ApcRessourceType extends AbstractType
                 'label' => 'label.nomCourt.competence',
                 'expanded' => true,
                 'multiple' => true,
-                'query_builder' => fn(ApcComptenceRepository $apcComptenceRepository) => $apcComptenceRepository->findByDiplomeBuilder($this->diplome),
+                'query_builder' => fn (ApcComptenceRepository $apcComptenceRepository) => $apcComptenceRepository->findByDiplomeBuilder($this->diplome),
                 'help' => 'Ajoutez les compétences couvertes par la ressource.',
             ])
             ->add('suspendu', YesNoType::class, ['label' => 'label.suspendu', 'help' => 'Une matière suspendue n\'entre pas dans le calcul des moyennes.'])

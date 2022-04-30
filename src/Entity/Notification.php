@@ -23,9 +23,9 @@ class Notification extends BaseEntity
     use UuidTrait;
     use LifeCycleTrait;
 
-    public final const ETUDIANT = 'e';
-    public final const PERSONNEL = 'p';
-    public final const TABICONE = [
+    final public const ETUDIANT = 'e';
+    final public const PERSONNEL = 'p';
+    final public const TABICONE = [
         'carnet.added' => 'fas fa-bookmark',
         'absence.removed' => 'fas fa-bookmark',
         'absence.added' => 'fas fa-bookmark',
@@ -46,7 +46,7 @@ class Notification extends BaseEntity
         'decision.justificatif.refuse' => 'fas fa-ban',
     ];
 
-    public final const TABCOLOR = [
+    final public const TABCOLOR = [
         'carnet.added' => 'info',
         'absence.removed' => 'success',
         'absence.added' => 'danger',

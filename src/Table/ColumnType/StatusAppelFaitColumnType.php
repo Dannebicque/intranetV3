@@ -23,7 +23,7 @@ class StatusAppelFaitColumnType extends PropertyColumnType
     public function renderProperty(mixed $value, array $options): string
     {
         $statsAppel = $options['statsAppel'];
-        $elt = explode('_', (string) $value); //'dmY_typeIdMatiere_heure_groupeId'
+        $elt = explode('_', (string) $value); // 'dmY_typeIdMatiere_heure_groupeId'
 
         if (array_key_exists($elt[0], $statsAppel) &&
             array_key_exists($elt[1], $statsAppel[0]) &&

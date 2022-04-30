@@ -19,7 +19,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/administration/etudiant/import')]
 class EtudiantImportController extends BaseController
 {
-    //todo: a finaliser ou inutile ?
+    // todo: a finaliser ou inutile ?
 
     /**
      * @throws \Exception
@@ -32,10 +32,10 @@ class EtudiantImportController extends BaseController
     ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
-        //traitement de l'import
+        // traitement de l'import
         $fichier = $myUpload->upload($request->files->get('fichierimportcsv'), 'temp');
         $etudiantImport->importFomCsv($fichier);
 
-        return $this->redirectToRoute('administration_etudiant_import_liste_csv'); //page de synthèse ? ou nouvel import ?
+        return $this->redirectToRoute('administration_etudiant_import_liste_csv'); // page de synthèse ? ou nouvel import ?
     }
 }

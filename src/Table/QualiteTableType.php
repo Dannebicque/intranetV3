@@ -48,7 +48,7 @@ class QualiteTableType extends TableType
             ['class' => Semestre::class,
                 'choice_label' => 'libelle',
                 'required' => false,
-                'query_builder' => fn(SemestreRepository $semestreRepository) => $semestreRepository->findByDepartementBuilder($this->departement),
+                'query_builder' => fn (SemestreRepository $semestreRepository) => $semestreRepository->findByDepartementBuilder($this->departement),
         ]);
 
         $builder->addColumn('titre', PropertyColumnType::class, ['label' => 'table.titre']);

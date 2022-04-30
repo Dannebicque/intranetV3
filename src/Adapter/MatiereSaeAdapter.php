@@ -36,7 +36,7 @@ class MatiereSaeAdapter extends AbstractMatiereAdapter implements MatiereAdapter
             $m->id = $matiere->getId();
             $m->projetFormation = $matiere->getProjetFormation();
             $m->projetPpn = $matiere->getProjetPpn();
-            //$m->semestre = $matiere->getSemestre();//todo: supprimer et gérer en mutualiser avec semestres
+            // $m->semestre = $matiere->getSemestre();//todo: supprimer et gérer en mutualiser avec semestres
             $m->apc = true;
             $m->bonification = $matiere->getBonification();
 

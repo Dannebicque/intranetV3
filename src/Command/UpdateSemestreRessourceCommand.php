@@ -17,7 +17,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class UpdateSemestreRessourceCommand extends Command
 {
-
     public function __construct(
         private readonly ApcRessourceRepository $apcRessourceRepository,
         private readonly EvaluationRepository $evaluationRepository,
@@ -25,7 +24,6 @@ class UpdateSemestreRessourceCommand extends Command
     ) {
         parent::__construct();
     }
-
 
     protected function execute(
         InputInterface $input,
@@ -37,7 +35,7 @@ class UpdateSemestreRessourceCommand extends Command
             $semestre = $ressource->getSemestre();
             $ressource->addSemestre($semestre);
             $semestre->addApcSemestresRessource($ressource);
-           // $ressource->setSemestre(null);
+            // $ressource->setSemestre(null);
         }
         $this->entityManager->flush();
         $io->success('Ressources mises à jour');

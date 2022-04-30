@@ -30,7 +30,7 @@ abstract class AbstractMatiereManager
         return null;
     }
 
-    public function find(int | string $id): ?Matiere
+    public function find(int|string $id): ?Matiere
     {
         return null;
     }

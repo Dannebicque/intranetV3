@@ -63,7 +63,7 @@ class SousCommissionSubscriber implements EventSubscriberInterface
     public function sendMail(Scolarite $scolarite, string $codeEvent): void
     {
         $this->myMailer->initEmail();
-        //mail par défaut
+        // mail par défaut
         $this->myMailer->setTemplate('mails/sousCommission_'.$codeEvent.'.txt.twig',
             ['scolarite' => $scolarite,
             'etudiant' => $scolarite->getEtudiant(), ]);

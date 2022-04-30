@@ -17,12 +17,12 @@ use PDOStatement;
 
 class ApogeeImport extends Apogee
 {
-    public function getElementsFromAnnee(Annee $annee): bool | PDOStatement
+    public function getElementsFromAnnee(Annee $annee): bool|PDOStatement
     {
         $this->connect();
         $stid = $this->conn->prepare('SELECT COD_ETP, COD_LSE FROM VET_REGROUPE_LSE WHERE COD_ETP=:codeannee AND COD_VRS_VET=:version');
         $stid->execute([':codeannee' => trim($annee->getCodeEtape()), ':version' => trim($annee->getCodeVersion())]);
-        //permet de récupérer le code de la liste generale (L5RV1GEN)
+        // permet de récupérer le code de la liste generale (L5RV1GEN)
         $liste = $stid->fetch();
         $listeElp = $this->conn->prepare('SELECT COD_LSE, COD_ELP FROM LSE_REGROUPE_ELP WHERE COD_LSE=:codeListe');
         $listeElp->execute([':codeListe' => trim($liste['COD_LSE'])]);
@@ -39,20 +39,20 @@ class ApogeeImport extends Apogee
         return $stid;
     }
 
-    public function getElementsFromAnneeDut(Annee $annee): bool | PDOStatement
+    public function getElementsFromAnneeDut(Annee $annee): bool|PDOStatement
     {
         $this->connect();
         $stid = $this->conn->prepare('SELECT COD_ETP, COD_LSE FROM VET_REGROUPE_LSE WHERE COD_ETP=:codeannee AND COD_VRS_VET=:version');
         $stid->execute([':codeannee' => trim($annee->getCodeEtape()), ':version' => trim($annee->getCodeVersion())]);
-        //permet de récupérer le code de la liste generale (L5RV1GEN)
+        // permet de récupérer le code de la liste generale (L5RV1GEN)
         $liste = $stid->fetch();
         $listeElp = $this->conn->prepare('SELECT LSE_REGROUPE_ELP.COD_LSE, ELEMENT_PEDAGOGI.COD_ELP, ELEMENT_PEDAGOGI.LIB_ELP FROM LSE_REGROUPE_ELP INNER JOIN ELEMENT_PEDAGOGI ON ELEMENT_PEDAGOGI.COD_ELP=LSE_REGROUPE_ELP.COD_ELP WHERE COD_LSE=:codeListe');
-        $listeElp->execute([':codeListe' => trim($liste['COD_LSE'])]); //récupère le semestre
+        $listeElp->execute([':codeListe' => trim($liste['COD_LSE'])]); // récupère le semestre
 
         return $listeElp;
     }
 
-    public function getUesFromSemestreDut(Semestre $semestre): bool | PDOStatement
+    public function getUesFromSemestreDut(Semestre $semestre): bool|PDOStatement
     {
         $this->connect();
         $listeElpsSemComp = $this->conn->prepare('SELECT * FROM ELP_REGROUPE_LSE WHERE COD_ELP=:codeliste');
@@ -63,10 +63,10 @@ class ApogeeImport extends Apogee
 
         $stid->execute([':elpSemComp' => trim($elpSemComp['COD_LSE'])]);
 
-        return $stid; //liste des UE
+        return $stid; // liste des UE
     }
 
-    public function getMatieresFromUe(Ue $ue): bool | PDOStatement
+    public function getMatieresFromUe(Ue $ue): bool|PDOStatement
     {
         $this->connect();
         $stid = $this->conn->prepare('SELECT * FROM ELP_REGROUPE_LSE WHERE COD_ELP=:codElp');
@@ -79,7 +79,7 @@ class ApogeeImport extends Apogee
         return $stid;
     }
 
-    public function getElementsFromSemestre(string $codElp): bool | PDOStatement
+    public function getElementsFromSemestre(string $codElp): bool|PDOStatement
     {
         $this->connect();
         $stid = $this->conn->prepare('SELECT * FROM ELP_REGROUPE_LSE WHERE COD_ELP=:codElp');
@@ -92,7 +92,7 @@ class ApogeeImport extends Apogee
         return $stid;
     }
 
-    public function getCompUesFromSemestre(string $codElp): bool | PDOStatement
+    public function getCompUesFromSemestre(string $codElp): bool|PDOStatement
     {
         $this->connect();
         $stid = $this->conn->prepare('SELECT * FROM ELP_REGROUPE_LSE WHERE COD_ELP=:codElp');

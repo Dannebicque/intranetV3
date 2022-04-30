@@ -84,7 +84,7 @@ class TableBuilder
 
     // Toolbar Api
 
-    public function addFilter(string | FormBuilderInterface $child, string $type = null, array $options = []): self
+    public function addFilter(string|FormBuilderInterface $child, string $type = null, array $options = []): self
     {
         $this->formBuilder->add($child, $type, $options);
 

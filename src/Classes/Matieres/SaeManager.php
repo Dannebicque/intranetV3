@@ -26,7 +26,7 @@ class SaeManager extends AbstractMatiereManager implements MatiereInterface
     {
     }
 
-    public function find(int | string $id): ?Matiere
+    public function find(int|string $id): ?Matiere
     {
         $matiere = $this->apcSaeRepository->find($id);
 

@@ -41,7 +41,7 @@ abstract class BaseEdt
     protected array $total = [];
 
     protected ?Semestre $semestre;
-    protected Personnel | Etudiant $user;
+    protected Personnel|Etudiant $user;
     protected ?Matiere $module = null;
 
     protected int $jour;
@@ -83,7 +83,7 @@ abstract class BaseEdt
         $this->total['TD'] = 0;
         $this->total['TP'] = 0;
 
-        //pour gérer les vacances
+        // pour gérer les vacances
         if ($semaine >= 29 && $semaine < 35) {
             $semaine = 35;
         }
@@ -96,7 +96,7 @@ abstract class BaseEdt
             }
             $this->semaine = $semaine;
 
-            //traitement du Week end
+            // traitement du Week end
             if (CarbonInterface::SATURDAY === $dateDuJour->dayOfWeek || CarbonInterface::SUNDAY === $dateDuJour->dayOfWeek) {
                 ++$this->semaine;
                 if ($this->semaine > CarbonInterface::WEEKS_PER_YEAR) {
@@ -118,7 +118,7 @@ abstract class BaseEdt
             $this->semaineFormationIUT = $this->calendrier->getSemaineFormation();
             $this->semaineFormationLundi = $this->calendrier->getDatelundi();
         } else {
-            //si la requete est vide, on prend la première...
+            // si la requete est vide, on prend la première...
             $this->calendrier = $this->calendrierRepository->findOneBy([
                 'semaineFormation' => 1,
                 'anneeUniversitaire' => $anneeUniversitaire->getId(),
@@ -134,13 +134,13 @@ abstract class BaseEdt
 
         if ('' === $filtre) {
             $this->filtre = Constantes::FILTRE_EDT_PROMO;
-        //récupérer promo par défaut !
+        // récupérer promo par défaut !
         } else {
             $this->filtre = $filtre;
         }
 
         if ('' === $valeur) {
-            //todo: a refaire...
+            // todo: a refaire...
         } else {
             $this->valeur = $valeur;
         }
@@ -216,7 +216,7 @@ abstract class BaseEdt
 
     public function calculSemaines(): array
     {
-        //déja fait dans le parent ??
+        // déja fait dans le parent ??
         $allsemaine = $this->calendrierRepository->findByAnneeUniversitaire($this->anneeUniversitaire);
 
         $t = [];

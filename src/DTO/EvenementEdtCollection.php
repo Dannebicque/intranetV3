@@ -33,13 +33,13 @@ class EvenementEdtCollection
     {
         $planning = [];
         foreach ($this->evenements as $evenement) {
-            //[jour][ligne][groupe]
+            // [jour][ligne][groupe]
             $debut = Constantes::TAB_HEURES_INDEX[$evenement->heureDebut->format('H:i:s')];
             $fin = Constantes::TAB_HEURES_INDEX[$evenement->heureFin->format('H:i:s')];
             $planning[$evenement->jour][$debut][$evenement->ordreGroupe] = $evenement;
             $groupe = $evenement->ordreGroupe;
             if (strtoupper($evenement->type_cours) === 'CM') {
-                $groupefin = $groupe + $maxGroupe;//todo: nb groupes du semestre ??
+                $groupefin = $groupe + $maxGroupe; // todo: nb groupes du semestre ??
             } else {
                 $groupefin = $groupe + $evenement->largeur();
             }
@@ -49,7 +49,6 @@ class EvenementEdtCollection
                     if (!isset($planning[$evenement->jour][$i][$j])) {
                         $planning[$evenement->jour][$i][$j] = 'xx';
                     }
-
                 }
             }
         }

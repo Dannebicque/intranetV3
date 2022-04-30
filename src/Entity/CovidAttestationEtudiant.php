@@ -25,9 +25,9 @@ class CovidAttestationEtudiant extends BaseEntity
 {
     use LifeCycleTrait;
 
-    public final const MATIN = 'AM';
-    public final const APRESMIDI = 'PM';
-    public final const TOUTELAJOURNEE = 'AL';
+    final public const MATIN = 'AM';
+    final public const APRESMIDI = 'PM';
+    final public const TOUTELAJOURNEE = 'AL';
 
     #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 10, nullable: true)]
     private ?string $motif = null;

@@ -14,9 +14,9 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class RattrapageEvent extends Event
 {
-    public final const DECISION = 'rattrapage.decision';
-    public final const DECISION_RATTRAPAGE_ACCEPTEE = 'decision.rattrapage.acceptee';
-    public final const DECISION_RATTRAPAGE_REFUSEE = 'decision.rattrapage.refusee';
+    final public const DECISION = 'rattrapage.decision';
+    final public const DECISION_RATTRAPAGE_ACCEPTEE = 'decision.rattrapage.acceptee';
+    final public const DECISION_RATTRAPAGE_REFUSEE = 'decision.rattrapage.refusee';
 
     public function __construct(protected Rattrapage $rattrapage)
     {

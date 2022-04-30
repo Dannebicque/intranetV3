@@ -37,7 +37,7 @@ class MyPDF
     {
         self::$templating = $templating;
         self::$pdf = $pdf;
-        self::$options['enable-local-file-access'] = true; //https://yusufbiberoglu.medium.com/symfony-5-knpsnappybundle-wkhtmltopdf-setup-and-example-with-an-explanation-of-possible-errors-a890dbca238a
+        self::$options['enable-local-file-access'] = true; // https://yusufbiberoglu.medium.com/symfony-5-knpsnappybundle-wkhtmltopdf-setup-and-example-with-an-explanation-of-possible-errors-a890dbca238a
 
         $date = Carbon::now();
 
@@ -50,7 +50,7 @@ class MyPDF
 
     public static function addOptions(string $key, string $value): void
     {
-        //options disponibles : https://wkhtmltopdf.org/usage/wkhtmltopdf.txt
+        // options disponibles : https://wkhtmltopdf.org/usage/wkhtmltopdf.txt
         self::$options[$key] = $value;
     }
 
@@ -88,7 +88,7 @@ class MyPDF
      */
     private static function genereOutputPdf(string $template, array $data, string $name, ?Departement $departement = null): PdfResponse
     {
-        //todo: est-ce que le département est encore nécessaire sur l'export ???
+        // todo: est-ce que le département est encore nécessaire sur l'export ???
         $html = self::$templating->render($template, $data);
 
         if ('.pdf' !== mb_substr($name, -4)) {

@@ -18,6 +18,7 @@ class Widget
 
     /**
      * Widget constructor.
+     *
      * @param \App\Components\Widget\DTO\Widget[] $children
      */
     public function __construct(protected string $name, protected WidgetType $type, protected array $options, protected array $children = [])

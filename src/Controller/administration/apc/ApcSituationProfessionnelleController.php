@@ -34,6 +34,7 @@ class ApcSituationProfessionnelleController extends BaseController
                 Constantes::FLASHBAG_SUCCESS,
                 'apc.edit.success.situation.professionnelle'
             );
+
             return $this->redirectToRoute('administration_apc_competence_show',
                 ['id' => $competence->getId()]);
         }
@@ -55,6 +56,7 @@ class ApcSituationProfessionnelleController extends BaseController
                 Constantes::FLASHBAG_SUCCESS,
                 'apc.edit.success.situation.professionnelle'
             );
+
             return $this->redirectToRoute('administration_apc_competence_show',
                 ['id' => $apcSituationProfessionnelle->getCompetence()->getId()]);
         }

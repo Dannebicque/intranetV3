@@ -64,7 +64,7 @@ class ApcSaeType extends AbstractType
                 'attr' => ['class' => 'semestreSae'],
                 'required' => true,
                 'choice_label' => 'display',
-                'query_builder' => fn(SemestreRepository $semestreRepository) => $semestreRepository->findByDiplomeBuilder($this->diplome),
+                'query_builder' => fn (SemestreRepository $semestreRepository) => $semestreRepository->findByDiplomeBuilder($this->diplome),
                 'label' => 'label.semestre',
                 'expanded' => true,
             ])
@@ -75,7 +75,7 @@ class ApcSaeType extends AbstractType
                 'attr' => ['class' => 'competencesSae'],
                 'expanded' => true,
                 'multiple' => true,
-                'query_builder' => fn(ApcComptenceRepository $apcComptenceRepository) => $apcComptenceRepository->findByDiplomeBuilder($this->diplome),
+                'query_builder' => fn (ApcComptenceRepository $apcComptenceRepository) => $apcComptenceRepository->findByDiplomeBuilder($this->diplome),
                 'help' => 'Ajoutez les compétences couvertes par la SAÉ.',
             ])
             ->add('exemples', TextareaType::class,

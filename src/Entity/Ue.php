@@ -55,7 +55,7 @@ class Ue extends BaseEntity
     /**
      * Ue constructor.
      */
-    public function __construct(#[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'ues')] private ?\App\Entity\Semestre $semestre)
+    public function __construct(#[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'ues')] private ?Semestre $semestre)
     {
         $this->matieres = new ArrayCollection();
     }

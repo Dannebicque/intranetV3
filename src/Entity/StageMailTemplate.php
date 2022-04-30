@@ -16,7 +16,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: StageMailTemplateRepository::class)]
 class StageMailTemplate extends BaseEntity
 {
-    public final const CHAMPS_PUBLIPOSTAGE = [
+    final public const CHAMPS_PUBLIPOSTAGE = [
         '{{civilite_court_etudiant}}' => '{{stageEtudiant.etudiant.civilite}}',
         '{{civilite_etudiant}}' => '{{stageEtudiant.etudiant.civiliteLong}}',
         '{{prenom_etudiant}}' => '{{stageEtudiant.etudiant.prenom}}',

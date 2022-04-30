@@ -123,7 +123,7 @@ class MessagerieController extends BaseController
         } else {
             $messages = null;
         }
-        //feature: gérer la pagination?
+        // feature: gérer la pagination?
         return $this->render('messagerie/listeMessages.html.twig', [
             'filtre' => $filtre,
             'messages' => $messages,
@@ -177,7 +177,7 @@ class MessagerieController extends BaseController
         return $this->json('message vide', Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    private function getDestinataires(Request $request, ?string $typeDestinataire): string | array | null
+    private function getDestinataires(Request $request, ?string $typeDestinataire): string|array|null
     {
         return match ($typeDestinataire) {
             's' => $request->request->get('messageToSemestre'),

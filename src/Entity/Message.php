@@ -22,12 +22,12 @@ class Message extends BaseEntity
 {
     use LifeCycleTrait;
 
-    public final const ETAT_MESSAGE_DRAFT = 'D';
-    public final const ETAT_MESSAGE_ENVOYE = 'E';
-    public final const MESSAGE_TYPE_ETUDIANT = 'e';
-    public final const MESSAGE_TYPE_SEMESTRE = 's';
-    public final const MESSAGE_TYPE_GROUPE = 'g';
-    public final const MESSAGE_TYPE_PERMANENT = 'p';
+    final public const ETAT_MESSAGE_DRAFT = 'D';
+    final public const ETAT_MESSAGE_ENVOYE = 'E';
+    final public const MESSAGE_TYPE_ETUDIANT = 'e';
+    final public const MESSAGE_TYPE_SEMESTRE = 's';
+    final public const MESSAGE_TYPE_GROUPE = 'g';
+    final public const MESSAGE_TYPE_PERMANENT = 'p';
 
     #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $sujet = null;

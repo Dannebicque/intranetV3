@@ -20,7 +20,6 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 class ExportPdfEdtHandler implements MessageHandlerInterface
 {
-
     /**
      * ExportReleveHandler constructor.
      */
@@ -62,7 +61,7 @@ class ExportPdfEdtHandler implements MessageHandlerInterface
                 ->htmlTemplate('mails/documents_prets.html.twig')
 
                 // pass variables (name => value) to the template
-                    //todo: a finir pour les expors des PDF des EDT sur le principes des notes avec RabbitMq...
+                    // todo: a finir pour les expors des PDF des EDT sur le principes des notes avec RabbitMq...
                 ->context([
 //                    'semestre' => $semestre,
 //                    'personnel' => $personnel,

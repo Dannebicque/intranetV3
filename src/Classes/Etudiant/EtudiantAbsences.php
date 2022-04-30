@@ -70,7 +70,7 @@ class EtudiantAbsences
         $this->entityManager->persist($absence);
         $this->entityManager->flush();
 
-        //On déclenche les events : mails étudiants et responsable si actif, notification et vérification avec les justificatifs existants
+        // On déclenche les events : mails étudiants et responsable si actif, notification et vérification avec les justificatifs existants
         $event = new AbsenceEvent($absence);
         $this->eventDispatcher->dispatch($event, AbsenceEvent::ADDED);
 
@@ -83,7 +83,7 @@ class EtudiantAbsences
         $this->entityManager->remove($absence);
         $this->entityManager->flush();
 
-        //On déclenche les events
+        // On déclenche les events
         $this->eventDispatcher->dispatch($event, AbsenceEvent::REMOVED);
     }
 

@@ -41,13 +41,13 @@ class EmpruntSubscriber implements EventSubscriberInterface
     {
         $emprunt = $event->getEmprunt();
 
-        //mail par défaut
+        // mail par défaut
         $this->myMailer->initEmail();
         $this->myMailer->setTemplate('mails/emprunt_'.$codeEvent.'.txt.twig',
             ['emprunt' => $emprunt]);
         $this->myMailer->sendMessage($emprunt->getEtudiant()->getMails(), $codeEvent);
 
-        //copie au RP lors du dépôt par l'étudiant
+        // copie au RP lors du dépôt par l'étudiant
         if (EmpruntEvent::CHGT_ETAT_EMPRUNT_DEMANDE === $codeEvent && null !== $emprunt->getResponsable()) {
             $this->myMailer->initEmail();
             $this->myMailer->setTemplate('mails/emprunt_'.$codeEvent.'_copie.txt.twig',

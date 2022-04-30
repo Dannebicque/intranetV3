@@ -23,8 +23,8 @@ use function array_key_exists;
 
 class SousCommission extends AbstractSousCommission implements SousCommissionInterface
 {
-    public final const TEMPLATE_LIVE = 'live.html.twig';
-    public final const TEMPLATE_TRAVAIL = 'travail.html.twig';
+    final public const TEMPLATE_LIVE = 'live.html.twig';
+    final public const TEMPLATE_TRAVAIL = 'travail.html.twig';
 
     public function calcul(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): void
     {
@@ -38,19 +38,19 @@ class SousCommission extends AbstractSousCommission implements SousCommissionInt
         foreach ($this->etudiants as $etudiant) {
             $etudiantSousCommission = new EtudiantSousCommission($etudiant, $semestre);
 
-            //récupérer les notes et calculer la moyenne des matières (sans pénalité)
+            // récupérer les notes et calculer la moyenne des matières (sans pénalité)
             $this->etudiantNotes->setEtudiant($etudiant);
             $etudiantSousCommission->moyenneMatieres = $this->etudiantNotes->getMoyenneParMatiereParSemestresEtAnneeUniversitaire($matieres,
                 $this->semestre,
                 $anneeUniversitaire);
-            //récupérer les pénalités d'absence par matière
+            // récupérer les pénalités d'absence par matière
             $this->etudiantAbsences->setEtudiant($etudiant);
             $this->etudiantAbsences->getPenalitesAbsencesParMatiere($matieres, $anneeUniversitaire,
                 $etudiantSousCommission->moyenneMatieres);
-            //calculer la moyenne des ues (avec et sans pénalité)
+            // calculer la moyenne des ues (avec et sans pénalité)
             $etudiantSousCommission->moyenneUes = $this->calculMoyenneUes($etudiantSousCommission->moyenneMatieres);
 
-            //calculer la moyenne générale selon l'option séléctionnée (avec et sans pénalité)
+            // calculer la moyenne générale selon l'option séléctionnée (avec et sans pénalité)
             if (null !== $semestre->getDiplome()) {
                 if (Constantes::METHODE_CALCUL_MOY_MODULE === $semestre->getDiplome()->getOptMethodeCalcul()) {
                     $etudiantSousCommission->calculMoyenneSemestreMatiere();
@@ -61,7 +61,7 @@ class SousCommission extends AbstractSousCommission implements SousCommissionInt
 
             $etudiantSousCommission->recupereScolarite();
 
-            //calcul de la décision du semestre
+            // calcul de la décision du semestre
             $etudiantSousCommission->calculDecision();
 
             $this->sousCommissionEtudiant[$etudiant->getId()] = $etudiantSousCommission;
@@ -136,8 +136,6 @@ class SousCommission extends AbstractSousCommission implements SousCommissionInt
                 break;
         }
         $scolarite->setMoyennesUes($t);
-
-
     }
 
     private function updateScolariteMatiere(Scolarite $scolarite, string $field, mixed $value): void

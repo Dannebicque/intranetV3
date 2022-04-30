@@ -48,21 +48,21 @@ class MyArticle
         if ($getConnectedUser instanceof Personnel) {
             $r = $this->articleLikePersonnelRepository->findLike($getConnectedUser, $this->article);
             if (0 === count($r)) {
-                //add
+                // add
                 $n = new ArticleLikePersonnel($getConnectedUser, $this->article);
                 $this->entityManager->persist($n);
             } else {
-                //remove
+                // remove
                 $this->remove($r);
             }
         } elseif ($getConnectedUser instanceof Etudiant) {
             $r = $this->articleLikeEtudiantRepository->findLike($getConnectedUser, $this->article);
             if (0 === count($r)) {
-                //add
+                // add
                 $n = new ArticleLikeEtudiant($getConnectedUser, $this->article);
                 $this->entityManager->persist($n);
             } else {
-                //remove
+                // remove
                 $this->remove($r);
             }
         }

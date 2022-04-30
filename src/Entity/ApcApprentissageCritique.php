@@ -40,7 +40,7 @@ class ApcApprentissageCritique extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'apprentissageCritique', targetEntity: ApcSaeApprentissageCritique::class)]
     private Collection $apcSaeApprentissageCritiques;
 
-    public function __construct(#[ORM\ManyToOne(targetEntity: ApcNiveau::class, inversedBy: 'apcApprentissageCritiques')] private ?\App\Entity\ApcNiveau $niveau = null)
+    public function __construct(#[ORM\ManyToOne(targetEntity: ApcNiveau::class, inversedBy: 'apcApprentissageCritiques')] private ?ApcNiveau $niveau = null)
     {
         $this->apcRessourceApprentissageCritiques = new ArrayCollection();
         $this->apcSaeApprentissageCritiques = new ArrayCollection();
@@ -138,7 +138,6 @@ class ApcApprentissageCritique extends BaseEntity
     public function getCompetence(): ?ApcCompetence
     {
         return $this->getNiveau()?->getCompetence();
-
     }
 
     public function getNiveau(): ?ApcNiveau

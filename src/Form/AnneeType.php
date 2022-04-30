@@ -46,7 +46,7 @@ class AnneeType extends AbstractType
                 'required' => true,
                 'choice_label' => 'displayCourt',
                 'expanded' => true,
-                'query_builder' => fn(DiplomeRepository $diplomeRepository) => $diplomeRepository->findByDepartementBuilder($this->departement),
+                'query_builder' => fn (DiplomeRepository $diplomeRepository) => $diplomeRepository->findByDepartementBuilder($this->departement),
                 'label' => 'label.diplome',
             ])
             ->add('codeEtape', TextType::class, [

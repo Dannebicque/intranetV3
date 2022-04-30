@@ -44,7 +44,8 @@ yarn-error.log
 /.github/
 /aide/intranetGitBook-master/
 /public/export.sql
-/tools/
+/tools/php-cs-fixer/vendor/
+/.php-cs-fixer.cache
 /.automate.yml
 
 ###> squizlabs/php_codesniffer ###
@@ -58,5 +59,7 @@ yarn-error.log
 .phpunit.result.cache
 ###< phpunit/phpunit ###
 /*.sql
+/infra/mysql/
+/infra/*.sql
+/stan
 
-/stan-analyse

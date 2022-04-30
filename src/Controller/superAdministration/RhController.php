@@ -56,7 +56,7 @@ class RhController extends BaseController
     #[Route(path: '/import', name: 'sa_rh_import_personnel')]
     public function import(Request $request): Response
     {
-        //Todo: si fonctionne à faire en ajax?
+        // Todo: si fonctionne à faire en ajax?
         if ('POST' === $request->getMethod()) {
             $username = $request->request->get('username');
             $ldap = Ldap::create('ext_ldap', [
@@ -64,7 +64,7 @@ class RhController extends BaseController
                 'encryption' => 'ssl',
             ]);
             $ldap->bind('uid=app-intranet-iut,ou=account,ou=app,dc=univ-reims,dc=fr', 'heXzHr7p7MKuccQ2UqKu');
-            //supannEmpId ou uid
+            // supannEmpId ou uid
             $query = $ldap->query('ou=people,dc=univ-reims,dc=fr',
                 '(|(supannEmpId='.$username.')(uid='.$username.')(mail='.$username.')(sn='.$username.'))');
             $results = $query->execute();
@@ -132,12 +132,12 @@ class RhController extends BaseController
     {
         $id = $personnel->getId();
         if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
-            //retirer le personnel des départements
+            // retirer le personnel des départements
             $departements = $personnelDepartementRepository->findByPersonnel($personnel);
             foreach ($departements as $departement) {
                 $this->entityManager->remove($departement);
             }
-            //suspendre le personnel (ne jamais effacer)
+            // suspendre le personnel (ne jamais effacer)
             $personnel->setVisible(false);
             $this->entityManager->persist($personnel);
             $this->entityManager->flush();

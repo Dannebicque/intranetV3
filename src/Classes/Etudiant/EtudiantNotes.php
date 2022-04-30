@@ -63,14 +63,14 @@ class EtudiantNotes
      */
     public function addNote(Evaluation $evaluation, array $data, Personnel $personnel): bool
     {
-        //on cherche si deja une note de présente
+        // on cherche si deja une note de présente
         $note = $this->noteRepository->findBy([
             'evaluation' => $evaluation->getId(),
             'etudiant' => $this->etudiant->getId(),
         ]);
 
         if (1 === count($note)) {
-            //update
+            // update
             $modif = new ModificationNote();
             $modif->setNote($note[0]);
             $modif->setAncienneNote($note[0]->getNote());
@@ -88,7 +88,7 @@ class EtudiantNotes
             $this->entityManager->persist($note[0]);
             $this->entityManager->flush();
         } elseif (0 === count($note)) {
-            //creation
+            // creation
 
             $newnote = new Note();
             $newnote->setEtudiant($this->etudiant);

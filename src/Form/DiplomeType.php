@@ -46,13 +46,13 @@ class DiplomeType extends AbstractType
             ])
             ->add('responsable_diplome', EntityCompleteType::class, [
                 'class' => Personnel::class,
-                'query_builder' => static fn(PersonnelRepository $personnelRepository) => $personnelRepository->findAllOrder(),
+                'query_builder' => static fn (PersonnelRepository $personnelRepository) => $personnelRepository->findAllOrder(),
                 'choice_label' => 'display',
                 'label' => 'label.responsable_diplome',
             ])
             ->add('assistant_diplome', EntityCompleteType::class, [
                 'class' => Personnel::class,
-                'query_builder' => static fn(PersonnelRepository $personnelRepository) => $personnelRepository->findAllOrder(),
+                'query_builder' => static fn (PersonnelRepository $personnelRepository) => $personnelRepository->findAllOrder(),
                 'choice_label' => 'display',
                 'label' => 'label.assistant_diplome',
             ])

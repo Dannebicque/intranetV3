@@ -30,7 +30,7 @@ interface SousCommissionInterface
 
     public function getAnneeUniversitaire(): ?AnneeUniversitaire;
 
-    public function getSousCommissionEtudiant(int $idEtudiant): null | EtudiantSousCommissionApc | EtudiantSousCommission;
+    public function getSousCommissionEtudiant(int $idEtudiant): null|EtudiantSousCommissionApc|EtudiantSousCommission;
 
     public function getUes(): array;
 

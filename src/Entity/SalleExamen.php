@@ -41,7 +41,7 @@ class SalleExamen extends BaseEntity
     #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
     private ?string $placesInterdites = null;
 
-    public function __construct(#[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'salleExamens')] private ?\App\Entity\Departement $departement)
+    public function __construct(#[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'salleExamens')] private ?Departement $departement)
     {
     }
 

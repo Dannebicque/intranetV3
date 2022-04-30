@@ -51,7 +51,7 @@ class ScolariteType extends AbstractType
                 'label' => 'semestre',
                 'placeholder' => 'Choisir le semestre',
                 'class' => Semestre::class,
-                'query_builder' => fn(SemestreRepository $semestreRepository) => $semestreRepository->findByDepartementBuilder($this->departement),
+                'query_builder' => fn (SemestreRepository $semestreRepository) => $semestreRepository->findByDepartementBuilder($this->departement),
                 'choice_label' => 'libelle',
             ])
             ->add('anneeUniversitaire', EntityType::class, [

@@ -35,7 +35,7 @@ class BaseMailer
     /**
      * @throws TransportExceptionInterface
      */
-    public function baseSendMessage(Email | TemplatedEmail $mail, array $to, string $subject, array $options = []): void
+    public function baseSendMessage(Email|TemplatedEmail $mail, array $to, string $subject, array $options = []): void
     {
         $mail->from($this->getFrom($options))
             ->subject($this->translator->trans($subject));
@@ -49,7 +49,7 @@ class BaseMailer
 
     private function getFrom(array $options): Address
     {
-        //todo: ne sert plus ? tout passe par le mail générique ?
+        // todo: ne sert plus ? tout passe par le mail générique ?
         if (array_key_exists('from', $options) && (is_countable($options['from']) ? count($options['from']) : 0) > 0) {
             if ($options['from'][0] instanceof Address) {
                 return $options['from'][0];
@@ -61,7 +61,7 @@ class BaseMailer
         return $this->configuration->getExpediteurIntranet();
     }
 
-    private function getReplyTo(array $options, Email | TemplatedEmail $mail): void
+    private function getReplyTo(array $options, Email|TemplatedEmail $mail): void
     {
         if (array_key_exists('replyTo', $options) && '' !== $options['replyTo']) {
             if (is_array($options['replyTo'])) {
@@ -76,7 +76,7 @@ class BaseMailer
         }
     }
 
-    private function checkTo(Email | TemplatedEmail $mail, array $mails): void
+    private function checkTo(Email|TemplatedEmail $mail, array $mails): void
     {
         foreach ($mails as $m) {
             if (null !== $m && '' !== trim($m)) {
@@ -85,7 +85,7 @@ class BaseMailer
         }
     }
 
-    private function checkCc(Email | TemplatedEmail $mail, array $options): void
+    private function checkCc(Email|TemplatedEmail $mail, array $options): void
     {
         if (array_key_exists('cc', $options) && (is_countable($options['cc']) ? count($options['cc']) : 0) > 0) {
             foreach ($options['cc'] as $cc) {
@@ -94,7 +94,7 @@ class BaseMailer
         }
     }
 
-    public function baseAttachFile(Email | TemplatedEmail $mail, string $file): void
+    public function baseAttachFile(Email|TemplatedEmail $mail, string $file): void
     {
         $mail->attachFromPath($file);
     }

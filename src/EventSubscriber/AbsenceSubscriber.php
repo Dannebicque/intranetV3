@@ -58,7 +58,7 @@ class AbsenceSubscriber implements EventSubscriberInterface
         $justificatifs = $this->absenceJustificatifRepository->findJustificatifByAbsence($absence);
 
         if ($justificatifs) {
-            //il existe un justificatif valide, donc on justifie
+            // il existe un justificatif valide, donc on justifie
             $absence->setJustifie(true);
             $absence->setDateJustifie(new Carbon('now'));
             $this->entityManager->persist($absence);

@@ -47,7 +47,7 @@ class QuestionnaireEtudiant extends BaseEntity
     #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateTermine = null;
 
-    public function __construct(Etudiant $etudiant, QuestionnaireQuizz | QuestionnaireQualite $questionnaire, ?string $typeQuestionnaire)
+    public function __construct(Etudiant $etudiant, QuestionnaireQuizz|QuestionnaireQualite $questionnaire, ?string $typeQuestionnaire)
     {
         $this->setEtudiant($etudiant);
         switch ($typeQuestionnaire) {

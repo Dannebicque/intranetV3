@@ -31,7 +31,7 @@ class MyMaterielCommunReservation
     /**
      * @throws Exception
      */
-    public function addReservation(int | string $materiel, mixed $dateEmprunt, string $creneau, Personnel $personnel): bool
+    public function addReservation(int|string $materiel, mixed $dateEmprunt, string $creneau, Personnel $personnel): bool
     {
         $mat = $this->materielCommunRepository->find(trim($materiel));
 
@@ -45,7 +45,7 @@ class MyMaterielCommunReservation
             $this->entityManager->persist($pret);
             $this->entityManager->flush();
             $event = new MaterielCommunReservationEvent($pret);
-            //On déclenche les events
+            // On déclenche les events
             $this->eventDispatcher->dispatch($event, MaterielCommunReservationEvent::ADDED);
 
             return true;
@@ -54,12 +54,12 @@ class MyMaterielCommunReservation
         return false;
     }
 
-    public function supprReservation(int | string $id): bool
+    public function supprReservation(int|string $id): bool
     {
         $pret = $this->materielCommunPretRepository->find(trim($id));
         if (null !== $pret) {
             $event = new MaterielCommunReservationEvent($pret);
-            //On déclenche les events
+            // On déclenche les events
             $this->eventDispatcher->dispatch($event, MaterielCommunReservationEvent::REMOVED);
             $this->entityManager->remove($pret);
             $this->entityManager->flush();

@@ -33,21 +33,21 @@ class StatsSemestre
 
         /** @var Etudiant $etudiant */
         foreach ($semestre->getEtudiants() as $etudiant) {
-            //Homme/femme
+            // Homme/femme
             if (Constantes::CIVILITE_HOMME === $etudiant->getCivilite()) {
                 ++$stats->hommes;
             } elseif (Constantes::CIVILITE_FEMME === $etudiant->getCivilite()) {
                 ++$stats->femmes;
             }
 
-            //bac
+            // bac
             if ((null !== $etudiant->getBac()) &&
                 array_key_exists($etudiant->getBac()->getId(), $stats->repartitionBacEffectif)) {
                 ++$stats->repartitionBacEffectif[$etudiant->getBac()->getId()];
             }
             $stats->calculPourcentageRepartitionBac();
 
-            //origine géographique
+            // origine géographique
             if (null !== $etudiant->getAdresseParentale()) {
                 $departement = mb_substr($etudiant->getAdresseParentale()->getCodePostal(), 0, 2);
                 if (!array_key_exists($departement, $stats->repartitionGeographiqueEffectif)) {

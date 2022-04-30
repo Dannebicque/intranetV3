@@ -59,7 +59,7 @@ class UserController extends BaseController
      * @throws NonUniqueResultException
      */
     #[Route(path: '/{type}/{slug}/{onglet}', name: 'user_profil', options: ['expose' => true])]
-    public function index(EtudiantRepository $etudiantRepository, PersonnelRepository $personnelRepository, string $type, string $slug, string $onglet = 'scolarite'): RedirectResponse | Response
+    public function index(EtudiantRepository $etudiantRepository, PersonnelRepository $personnelRepository, string $type, string $slug, string $onglet = 'scolarite'): RedirectResponse|Response
     {
         if ('personnel' === $type) {
             $user = $personnelRepository->findOneBySlug($slug);

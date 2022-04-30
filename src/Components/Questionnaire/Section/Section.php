@@ -16,7 +16,7 @@ use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
 
 class Section extends AbstractSection
 {
-    public final const LABEL = 'question.section';
+    final public const LABEL = 'question.section';
     public string $type_calcul = '';
 
     public function getQuestions(): array
@@ -66,7 +66,7 @@ class Section extends AbstractSection
 
     public function addQuestion(AbstractQuestion $question): void
     {
-        //ajouter dans la section concernée...
+        // ajouter dans la section concernée...
         $this->questions->addQuestion($question);
     }
 }

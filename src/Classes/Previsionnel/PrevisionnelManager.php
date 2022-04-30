@@ -87,7 +87,7 @@ class PrevisionnelManager
             $t[] = $previs->toArray();
         }
 
-        return array_merge(...$t); //todo: ca retourne un array ? comment retourner une collection ? Add ?
+        return array_merge(...$t); // todo: ca retourne un array ? comment retourner une collection ? Add ?
     }
 
     public function getPrevisionnelPersonnelSemestre(Personnel $personnel, Semestre $semestre, int $annee): array
@@ -196,7 +196,7 @@ class PrevisionnelManager
         array $personnels,
         ?string $annee_concerver = 'false'
     ): void {
-        //on efface, sauf si la case est cochée.
+        // on efface, sauf si la case est cochée.
         if ('true' !== $annee_concerver) {
             $this->supprimeAnnee($departement, $annee_destination);
         }

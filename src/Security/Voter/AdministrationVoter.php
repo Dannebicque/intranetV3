@@ -50,7 +50,7 @@ class AdministrationVoter extends Voter
 
         if (!$this->abstractVoter->userHasMinimalRoleInDepartement($attribute, $departement
         )) {
-            //on vérifie s'il a le rôle dans le département associé
+            // on vérifie s'il a le rôle dans le département associé
             throw new AccessDeniedException('Vous ne disposez pas des droits suffisant dans ce département');
         }
 

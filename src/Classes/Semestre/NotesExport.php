@@ -36,7 +36,7 @@ class NotesExport
     {
         $this->myExcel->createSheet('semestre '.$semestre->getLibelle());
         $matieres = $this->typeMatiereManager->findBySemestreArray($semestre);
-        //todo: filtrer si option faite ou pas
+        // todo: filtrer si option faite ou pas
         $etudiants = $semestre->getEtudiants();
         $evaluations = $this->evaluationRepository->findBySemestre($matieres, $anneeUniversitaire);
         $notes = $this->noteRepository->findByEtudiantSemestreArray($matieres, $anneeUniversitaire, $etudiants);
@@ -95,7 +95,7 @@ class NotesExport
             }
         }
 
-        //EXPORT
+        // EXPORT
         $writer = new Xlsx($this->myExcel->getSpreadsheet());
 
         return new StreamedResponse(

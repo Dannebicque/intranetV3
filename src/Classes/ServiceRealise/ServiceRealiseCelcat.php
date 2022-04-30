@@ -72,7 +72,7 @@ class ServiceRealiseCelcat implements ServiceRealiseInterface
 //        $ev->date = $event->getDate();
 //
 //        $ev->heure = $event->getDebut();
-        //todo: revoir.
+        // todo: revoir.
         $ev->matiere = $event->getLibModule();
         $ev->type_cours = $event->getType();
         $ev->personnel = $event->getLibPersonnel();

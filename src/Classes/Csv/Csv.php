@@ -31,7 +31,7 @@ use UnexpectedValueException;
  */
 class Csv
 {
-    public final const DELIMITER = ';';
+    final public const DELIMITER = ';';
 
     private string $file;
     private string$filename;
@@ -40,7 +40,7 @@ class Csv
     {
         $this->filename = $filename;
 
-        //pour prendre en compte les annotations groups et maxdepth
+        // pour prendre en compte les annotations groups et maxdepth
         $classMetaDataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
 
         $encoder = new CsvEncoder();

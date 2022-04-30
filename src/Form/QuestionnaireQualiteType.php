@@ -53,7 +53,7 @@ class QuestionnaireQualiteType extends AbstractType
                 'label' => 'label.semestre',
                 'choice_label' => 'display',
                 'class' => Semestre::class,
-                'query_builder' => fn(SemestreRepository $semestreRepository) => $semestreRepository->findSemestresActifBuilder(),
+                'query_builder' => fn (SemestreRepository $semestreRepository) => $semestreRepository->findSemestresActifBuilder(),
                 'help' => 'Semestre concerné par l\'enquête.',
             ])
             ->add('dateOuverture', DatePickerType::class, [
@@ -78,7 +78,7 @@ class QuestionnaireQualiteType extends AbstractType
                 'by_reference' => false,
                 'max_items' => 0,
 
-                //'help' => 'Ajoutez les situations professionnelles de la compétence.',
+                // 'help' => 'Ajoutez les situations professionnelles de la compétence.',
             ])
         ;
     }

@@ -80,14 +80,14 @@ class DiplomeImport
             foreach ($competence->composantes_essentielles->composante as $composante) {
                 $compos = new ApcComposanteEssentielle();
                 $compos->setLibelle($composante);
-                //todo: à intégrer ici et dans ORéBUT $compos->setCode();
+                // todo: à intégrer ici et dans ORéBUT $compos->setCode();
                 $compos->setCompetence($comp);
                 $this->entityManager->persist($compos);
             }
 
             foreach ($competence->niveaux->niveau as $niveau) {
                 $niv = new ApcNiveau();
-                //todo: ajouter l'année
+                // todo: ajouter l'année
                 $niv->setLibelle($niveau['libelle']);
                 $niv->setOrdre((int) $niveau['ordre']);
                 $niv->setCompetence($comp);
@@ -121,7 +121,7 @@ class DiplomeImport
         $this->entityManager->flush();
     }
 
-    private function openXmlFile(): SimpleXMLElement | bool
+    private function openXmlFile(): SimpleXMLElement|bool
     {
         if (file_exists($this->fichier)) {
             return simplexml_load_string(file_get_contents($this->fichier));
@@ -155,18 +155,18 @@ class DiplomeImport
                     $this->entityManager->persist($ar);
                     $tRessources[$ar->getCodeMatiere()] = $ar;
 
-                    //acs
+                    // acs
                     foreach ($ressource->acs->ac as $ac) {
                         $rac = new ApcRessourceApprentissageCritique($ar, $tAcs[trim((string) $ac)]);
                         $this->entityManager->persist($rac);
                     }
-                    //competences
+                    // competences
                     foreach ($ressource->competences->competence as $comp) {
                         $rac = new ApcRessourceCompetence($ar, $tCompetences[trim((string) $comp['nom'])]);
                         $rac->setCoefficient((float) $comp['coefficient']);
                         $this->entityManager->persist($rac);
                     }
-                    //les saes seront ajoutée par les SAE
+                    // les saes seront ajoutée par les SAE
                 }
 
                 foreach ($sem->saes->sae as $sae) {
@@ -183,19 +183,19 @@ class DiplomeImport
                     $ar->setLivrables((string) $sae->livrables);
                     $this->entityManager->persist($ar);
 
-                    //acs
+                    // acs
                     foreach ($sae->acs->ac as $ac) {
                         $rac = new ApcSaeApprentissageCritique($ar, $tAcs[trim((string) $ac)]);
                         $this->entityManager->persist($rac);
                     }
 
-                    //competences
+                    // competences
                     foreach ($sae->competences->competence as $comp) {
                         $rac = new ApcSaeCompetence($ar, $tCompetences[trim((string) $comp['nom'])]);
                         $rac->setCoefficient((float) $comp['coefficient']);
                         $this->entityManager->persist($rac);
                     }
-                    //Ressources
+                    // Ressources
                     foreach ($sae->ressources->ressource as $comp) {
                         $rac = new ApcSaeRessource($ar, $tRessources[trim((string) $comp)]);
                         $this->entityManager->persist($rac);

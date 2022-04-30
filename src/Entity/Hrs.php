@@ -46,7 +46,7 @@ class Hrs extends BaseEntity
     #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
     private ?string $commentaire = null;
 
-    public function __construct(#[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'hrs')] private ?\App\Entity\Departement $departement, #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)] private ?int $annee)
+    public function __construct(#[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'hrs')] private ?Departement $departement, #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)] private ?int $annee)
     {
     }
 

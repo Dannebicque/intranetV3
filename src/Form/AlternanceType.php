@@ -60,13 +60,13 @@ class AlternanceType extends AbstractType
                 'class' => Personnel::class,
                 'help' => 'help.tuteur_universitaire',
                 'choice_label' => 'display',
-                'query_builder' => fn(PersonnelRepository $personnelRepository) => $personnelRepository->findByDepartementBuilder($this->departement),
+                'query_builder' => fn (PersonnelRepository $personnelRepository) => $personnelRepository->findByDepartementBuilder($this->departement),
             ])
             ->add('sujet', TextareaType::class, ['label' => 'label.sujet_altenance'])
             ->add('adresseAlternance', AdresseType::class,
                 ['label' => 'adresse_lieu_alternance', 'help' => 'help.complete.meme.si.identique'])
             ->addEventListener(FormEvents::POST_SUBMIT, static function (FormEvent $event) {
-                $alternance = $event->getData();//todo: vérifier ?
+                $alternance = $event->getData(); // todo: vérifier ?
                 $form = $event->getForm();
                 $dateRange = $form->get('dateRange')->getData();
             })

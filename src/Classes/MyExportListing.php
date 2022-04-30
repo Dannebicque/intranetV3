@@ -40,7 +40,7 @@ class MyExportListing
 {
     private array $colonnesEnTete = [];
 
-    protected array | Collection $groupes;
+    protected array|Collection $groupes;
     private string $name = '';
     private int $ligne = 1;
 
@@ -83,7 +83,7 @@ class MyExportListing
         mixed $exportFiltre,
         ?Matiere $matiere = null,
         ?Personnel $personnel = null
-    ): StreamedResponse | PdfResponse | null {
+    ): StreamedResponse|PdfResponse|null {
         $this->exportTypeDocument = $exportTypeDocument;
         $this->exportChamps = $exportChamps;
         $this->matiere = $matiere;
@@ -300,7 +300,7 @@ class MyExportListing
      */
     private function writeSpecialHeader(Groupe $groupe): void
     {
-        //gérer les infos par le diplôme
+        // gérer les infos par le diplôme
         $anneeU = $groupe->getTypeGroupe()->getSemestre()->getAnneeUniversitaire()->displayAnneeUniversitaire();
 
         $this->myExcelWriter->writeCellName('J1', 'Année Universitaire - '.$anneeU,

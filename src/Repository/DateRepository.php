@@ -108,7 +108,7 @@ class DateRepository extends ServiceEntityRepository
                     $tab[$key] = [];
                 }
                 $tab[$key][] = $event;
-                //si sur plusieurs jours, faire une boucle pour remplir le tableau
+                // si sur plusieurs jours, faire une boucle pour remplir le tableau
             }
         }
 

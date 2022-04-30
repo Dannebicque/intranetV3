@@ -31,7 +31,7 @@ class EvaluationRepository extends ServiceEntityRepository
         parent::__construct($registry, Evaluation::class);
     }
 
-    //todo: utiliser le semestre de Evaluation ? plutot que matière / Semestre pas mis à jour.
+    // todo: utiliser le semestre de Evaluation ? plutot que matière / Semestre pas mis à jour.
     public function findBySemestre(array $matieres, AnneeUniversitaire $annee): ?array
     {
         if (count($matieres) <= 0) {

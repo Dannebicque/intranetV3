@@ -38,7 +38,7 @@ class QuestionnaireEtudiantRepository extends ServiceEntityRepository
      * @throws NoResultException
      * @throws NonUniqueResultException
      */
-    public function compteReponse(QuestionnaireQualite $qualiteQuestionnaire): null | int | string
+    public function compteReponse(QuestionnaireQualite $qualiteQuestionnaire): null|int|string
     {
         $qb = $this->createQueryBuilder('prov');
 

@@ -503,12 +503,12 @@ class Semestre extends BaseEntity implements Stringable
         $this->optPointPenaliteAbsence = $optPointPenaliteAbsence;
     }
 
-    public function getEtudiants(): ArrayCollection | Collection
+    public function getEtudiants(): ArrayCollection|Collection
     {
         return $this->etudiants;
     }
 
-    public function setEtudiants(ArrayCollection | Collection $etudiants): void
+    public function setEtudiants(ArrayCollection|Collection $etudiants): void
     {
         $this->etudiants = $etudiants;
     }

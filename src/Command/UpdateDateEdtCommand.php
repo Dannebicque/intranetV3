@@ -22,7 +22,7 @@ use Symfony\Component\Console\Output\OutputInterface;
     name: 'app:update-date-edt',
     description: 'Mets à jour les dates de l\'EDT MMI'
 )]
-//probablement plus nécessaire...
+// probablement plus nécessaire...
 class UpdateDateEdtCommand extends Command
 {
     /**

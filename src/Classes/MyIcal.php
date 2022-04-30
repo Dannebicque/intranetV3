@@ -19,11 +19,11 @@ use DateTimeInterface;
  */
 class MyIcal
 {
-    protected ?string $dtstart = null; //DTSTART: Date de début de l'événement
-    protected ?string $dtend = null; //DTEND: Date de fin de l'événement
-    protected ?string $summary = null; //SUMMARY: Titre de l'événement
-    protected ?string $location = null; //LOCATION: Lieu de l'événement
-    protected ?string $description = null; //DESCRIPTION: Description de l'événement
+    protected ?string $dtstart = null; // DTSTART: Date de début de l'événement
+    protected ?string $dtend = null; // DTEND: Date de fin de l'événement
+    protected ?string $summary = null; // SUMMARY: Titre de l'événement
+    protected ?string $location = null; // LOCATION: Lieu de l'événement
+    protected ?string $description = null; // DESCRIPTION: Description de l'événement
     protected ?string $filevt;
     protected ?string $uid = null;
     protected ?string $decalage = null;
@@ -31,7 +31,7 @@ class MyIcal
 
     public function __construct()
     {
-        //todo: a tester si les données viennent de Celcat ?
+        // todo: a tester si les données viennent de Celcat ?
         $this->filevt = 'BEGIN:VCALENDAR'.chr(13).chr(10);
         $this->filevt .= 'VERSION:2.0'.chr(13).chr(10);
         $this->filevt .= 'CALSCALE:GREGORIAN'.chr(13).chr(10);

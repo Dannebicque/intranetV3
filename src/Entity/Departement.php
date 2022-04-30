@@ -822,7 +822,7 @@ class Departement extends BaseEntity
         return $this;
     }
 
-    public function libelleInitiales(): array | string | null
+    public function libelleInitiales(): array|string|null
     {
         return str_replace(' ', '<br>', $this->libelle);
     }

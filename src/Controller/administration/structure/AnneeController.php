@@ -25,7 +25,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class AnneeController extends BaseController
 {
     #[Route(path: '/nouveau/{diplome}', name: 'administration_annee_new', methods: 'GET|POST')]
-    public function create(Request $request, Diplome $diplome): RedirectResponse | Response
+    public function create(Request $request, Diplome $diplome): RedirectResponse|Response
     {
         if (null !== $diplome->getDepartement()) {
             $annee = new Annee();

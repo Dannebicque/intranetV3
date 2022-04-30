@@ -237,14 +237,14 @@ class PersonnelController extends BaseController
 
         if (1 === (is_countable($pf) ? count($pf) : 0) && in_array($droit, Constantes::ROLE_LISTE, true)) {
             if (in_array($droit, $pf[0]->getRoles(), true)) {
-                //deja existant on retire
+                // deja existant on retire
                 $pf[0]->removeRole($droit);
                 $this->entityManager->flush();
 
                 return $this->json($droit, Response::HTTP_OK);
             }
 
-            //pas présent on ajoute
+            // pas présent on ajoute
             $pf[0]->addRole($droit);
             $this->entityManager->flush();
 
@@ -252,7 +252,7 @@ class PersonnelController extends BaseController
         }
 
         if (0 === (is_countable($pf) ? count($pf) : 0) && in_array($droit, Constantes::ROLE_LISTE, true)) {
-            //etrangement pas dans un département, on ajoute.
+            // etrangement pas dans un département, on ajoute.
             $pf = new PersonnelDepartement($personnel, $this->getDepartement());
             $pf->setDepartement($this->getDepartement());
             $pf->setAnnee(date('Y'));

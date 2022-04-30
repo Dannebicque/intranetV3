@@ -24,10 +24,10 @@ use App\Repository\CalendrierRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
+use function array_key_exists;
 use Carbon\CarbonImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use function array_key_exists;
 use function ord;
 
 class MyEdtImport
@@ -41,8 +41,6 @@ class MyEdtImport
     private DataUserSession $dataUserSession;
 
     private Calendrier $calendrier;
-
-
 
     /**
      * MyEdtImport constructor.
@@ -72,33 +70,33 @@ class MyEdtImport
 
     public function traite(): void
     {
-        //Récupérer la liste des profs avec initiales
+        // Récupérer la liste des profs avec initiales
         $tabIntervenants = $this->personnelRepository->tableauIntervenants($this->dataUserSession->getDepartement());
         $tabMatieres = $this->typeMatiereManager->tableauMatieres($this->dataUserSession->getDepartement());
         $tabSemestre = $this->semestreRepository->tableauSemestres($this->dataUserSession->getDepartement());
         $tabdebut = [1 => 1, 2 => 4, 3 => 7, 4 => 13, 5 => 16, 6 => 19, 7 => 22];
 
         $handle = fopen($this->nomfile, 'rb');
-        $tSemaineClear = []; //tableau pour mémoriser les semaines à supprimer
+        $tSemaineClear = []; // tableau pour mémoriser les semaines à supprimer
 
-        /*Si on a réussi à ouvrir le fichier*/
+        /* Si on a réussi à ouvrir le fichier */
         if ($handle) {
-            /*Tant que l'on est pas à la fin du fichier*/
+            /* Tant que l'on est pas à la fin du fichier */
             while (!feof($handle)) {
-                /*On lit la ligne courante*/
+                /* On lit la ligne courante */
                 $phrase = fgets($handle);
                 $phrase = trim($phrase);
                 if (mb_strlen($phrase) > 10 && '*' !== $phrase[mb_strlen($phrase) - 1]) {
-                    $this->semaine = mb_substr($phrase, 1, 2); //on ne récupère pas le S
+                    $this->semaine = mb_substr($phrase, 1, 2); // on ne récupère pas le S
                     $jour = $phrase[3];
-                    $heure = $phrase[4]; //a convertir
+                    $heure = $phrase[4]; // a convertir
                     $semestre = mb_substr($phrase, 5, 2);
 
                     if (!array_key_exists($semestre, $tSemaineClear)) {
-                        //si la clé n'est pas dans le tableau, la semaine n'a pas encore été effacée, on supprime
+                        // si la clé n'est pas dans le tableau, la semaine n'a pas encore été effacée, on supprime
                         $this->clearSemaine($this->semaine, $tabSemestre[$semestre]);
 
-                        //on mémorise le semestre
+                        // on mémorise le semestre
                         $tSemaineClear[$semestre] = true;
                     }
                     $this->calendrier = $this->calendrierRepository->findOneBy([
@@ -109,8 +107,8 @@ class MyEdtImport
                     $groupe = $phrase[7];
 
                     if ('Z' === $phrase[8]) {
-                        //prof commence par Z, donc, c'est une zone sans enseignant
-                        //&& mb_substr($phrase, 16, 4) !== 'PROJ'
+                        // prof commence par Z, donc, c'est une zone sans enseignant
+                        // && mb_substr($phrase, 16, 4) !== 'PROJ'
                         $salle = mb_substr($phrase, 11, 4);
                         $fin = $phrase[15];
                         $texte = mb_substr($phrase, 16);
@@ -153,13 +151,13 @@ class MyEdtImport
 //                            }
 //                        } else {
                         if ('S' === $phrase[11] || 'R' === $phrase[11]) {
-                            //code sur 4
+                            // code sur 4
                             $matiere = mb_substr($phrase, 11, 4);
                             $typecours = mb_substr($phrase, 15, 2);
                             $ordre = mb_substr($phrase, 17, 2);
                             $salle = mb_substr($phrase, 19);
                         } else {
-                            //code sur 5
+                            // code sur 5
                             $matiere = mb_substr($phrase, 11, 5);
                             $typecours = mb_substr($phrase, 16, 2);
                             if ('T' !== $typecours[0] && 'C' !== $typecours[0]) {
@@ -182,7 +180,7 @@ class MyEdtImport
                             $pl->setTypeMatiere($tabMatieres[$matiere]->typeMatiere);
                             if ('DOA' !== $prof && 'DOB' !== $prof && 'DOC' !== $prof && 'DOD' !== $prof && 'PRJ' !== $prof && array_key_exists($prof,
                                     $tabIntervenants)) {
-                                $pl->setIntervenant($tabIntervenants[$prof]); //todo: pourrait être NULL  équivalent à john doe?? gérer affichage
+                                $pl->setIntervenant($tabIntervenants[$prof]); // todo: pourrait être NULL  équivalent à john doe?? gérer affichage
                             } else {
                                 $pl->setIntervenant(null);
                             }
@@ -206,9 +204,9 @@ class MyEdtImport
                 }
             }
 
-            /*On ferme le fichier*/
+            /* On ferme le fichier */
             fclose($handle);
-            unlink($this->nomfile); //suppression du fichier
+            unlink($this->nomfile); // suppression du fichier
             $this->entityManager->flush();
         }
     }

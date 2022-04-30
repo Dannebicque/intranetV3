@@ -35,7 +35,7 @@ class MaterielCommunType extends AbstractType
             ])
             ->add('contact', EntityCompleteType::class, [
                 'class' => Personnel::class,
-                'query_builder' => static fn(PersonnelRepository $personnelRepository) => $personnelRepository->findAllOrder(),
+                'query_builder' => static fn (PersonnelRepository $personnelRepository) => $personnelRepository->findAllOrder(),
                 'choice_label' => 'display',
                 'label' => 'contact_materiel_commun',
             ]);

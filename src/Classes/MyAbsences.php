@@ -85,7 +85,7 @@ class MyAbsences
         AnneeUniversitaire $anneeUniversitaire,
         Semestre $semestre,
         string $_format
-    ): bool | StreamedResponse {
+    ): bool|StreamedResponse {
         $absences = $this->getAbsencesMatiere($matiere, $anneeUniversitaire, $semestre);
         $name = 'absences-'.$matiere->codeMatiere;
         switch ($_format) {

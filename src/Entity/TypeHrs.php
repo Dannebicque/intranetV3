@@ -22,12 +22,12 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class TypeHrs extends BaseEntity implements \Stringable
 {
     use LifeCycleTrait;
-    public final const TYPE_HRS_HRS = 'HRS';
-    public final const TYPE_HRS_PCA = 'PCA';
-    public final const TYPE_HRS_PRP = 'PRP';
-    public final const TYPE_HRS_SUIVI = 'Suivi';
-    public final const TYPE_HRS_AUTRE = 'Autre';
-    public final const TAB_TYPE_HRS = [
+    final public const TYPE_HRS_HRS = 'HRS';
+    final public const TYPE_HRS_PCA = 'PCA';
+    final public const TYPE_HRS_PRP = 'PRP';
+    final public const TYPE_HRS_SUIVI = 'Suivi';
+    final public const TYPE_HRS_AUTRE = 'Autre';
+    final public const TAB_TYPE_HRS = [
         'choice.'.self::TYPE_HRS_HRS => self::TYPE_HRS_HRS,
         'choice.'.self::TYPE_HRS_PCA => self::TYPE_HRS_PCA,
         'choice.'.self::TYPE_HRS_PRP => self::TYPE_HRS_PRP,
@@ -35,7 +35,7 @@ class TypeHrs extends BaseEntity implements \Stringable
         'choice.'.self::TYPE_HRS_AUTRE => self::TYPE_HRS_AUTRE,
     ];
 
-    //STAGE, PRP, PCA, HRS
+    // STAGE, PRP, PCA, HRS
 
     #[Groups(['type_hrs_administration'])]
     #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 100)]

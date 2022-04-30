@@ -52,7 +52,7 @@ class MatiereController extends BaseController
     ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $diplome);
 
-        //feature: A optimiser pour pas dépendre des repository??
+        // feature: A optimiser pour pas dépendre des repository??
         if (null !== $diplome->getTypeDiplome() && true === $diplome->getTypeDiplome()->getApc()) {
             return $this->render('administration/matiere/_tableauApc.html.twig', [
                 'diplome' => $diplome,

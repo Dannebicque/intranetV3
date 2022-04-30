@@ -62,7 +62,7 @@ class ManyColumnType extends ColumnType
     {
         parent::configureOptions($resolver);
         $resolver
-            ->setDefault('many_path', fn(Options $options) => $options['id'])
+            ->setDefault('many_path', fn (Options $options) => $options['id'])
             ->setAllowedTypes('many_path', 'string')
             ->setDefault('one_path', null)
             ->setAllowedTypes('one_path', ['null', 'string'])

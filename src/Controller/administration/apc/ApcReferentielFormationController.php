@@ -72,13 +72,13 @@ class ApcReferentielFormationController extends BaseController
                     'ressource' => $id,
                     'competence' => $competence->getId(),
                 ]);
-                if (null === $obj && Tools::convertToFloat($value) > 0) { //n'eiste pas et > 0 on créé
+                if (null === $obj && Tools::convertToFloat($value) > 0) { // n'eiste pas et > 0 on créé
                     $obj = new ApcRessourceCompetence($ressource, $competence);
                     $obj->setCoefficient(Tools::convertToFloat($value));
                     $this->entityManager->persist($obj);
-                } elseif (Tools::convertToFloat($value) > 0) { //existe et > 0 on met à jour
+                } elseif (Tools::convertToFloat($value) > 0) { // existe et > 0 on met à jour
                     $obj->setCoefficient(Tools::convertToFloat($value));
-                } else { //existe et <=0 on supprime
+                } else { // existe et <=0 on supprime
                     $this->entityManager->remove($obj);
                 }
                 $this->entityManager->flush();

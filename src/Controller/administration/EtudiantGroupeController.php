@@ -80,10 +80,10 @@ class EtudiantGroupeController extends BaseController
         $cle = $request->request->get('id');
         $t = explode('-', (string) $cle);
         $id = explode('_', $t[0]);
-        //récupére l'étudiant
+        // récupére l'étudiant
         $etu = $etudiantRepository->find($id[1]);
         if (null !== $etu) {
-            //efface l'ancien groupe
+            // efface l'ancien groupe
             if (0 !== $request->request->get('oldgroupe')) {
                 $oldgroupe = $groupeRepository->find($request->request->get('oldgroupe'));
                 if (null !== $oldgroupe) {
@@ -94,9 +94,9 @@ class EtudiantGroupeController extends BaseController
             }
 
             if (0 !== $t[1]) {
-                $groupe = $groupeRepository->find(trim($t[1])); //récupérer groupe etudiant...
+                $groupe = $groupeRepository->find(trim($t[1])); // récupérer groupe etudiant...
                 if ($groupe) {
-                    //supprimer l'ancier groupe...
+                    // supprimer l'ancier groupe...
                     $groupe->addEtudiant($etu);
                     $this->entityManager->persist($groupe);
                     $this->entityManager->flush();

@@ -30,7 +30,7 @@ class ApcSaeCompetenceType extends AbstractType
             ->add('competence', EntityType::class, [
                 'class' => ApcCompetence::class,
                 'choice_label' => 'nomCourt',
-                'query_builder' => fn(ApcComptenceRepository $apcComptenceRepository) => $apcComptenceRepository->findByDiplomeBuilder($this->diplome),
+                'query_builder' => fn (ApcComptenceRepository $apcComptenceRepository) => $apcComptenceRepository->findByDiplomeBuilder($this->diplome),
             ])
         ;
     }

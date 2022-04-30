@@ -160,7 +160,7 @@ class AbsenceRepository extends ServiceEntityRepository
             return null;
         }
 
-        //recherche toutes les absences sur la période du justificatif
+        // recherche toutes les absences sur la période du justificatif
         return $this->createQueryBuilder('a')
             ->where('a.dateHeure >= :dateDebut')
             ->andWhere('a.etudiant = :etudiant')

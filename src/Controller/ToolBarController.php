@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ToolBarController extends AbstractController
 {
-    private MessageDestinatairePersonnelRepository | MessageDestinataireEtudiantRepository $messagesRepository;
+    private MessageDestinatairePersonnelRepository|MessageDestinataireEtudiantRepository $messagesRepository;
 
     public function __construct(private readonly NotificationRepository $notificationRepository, private readonly AnneeUniversitaireRepository $anneeUniversitaireRepository, private readonly MessageDestinataireEtudiantRepository $messageDestinataireEtudiantRepository, private readonly MessageDestinatairePersonnelRepository $messageDestinatairePersonnelRepository)
     {

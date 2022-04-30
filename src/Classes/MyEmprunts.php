@@ -220,9 +220,9 @@ class MyEmprunts
         $d2 = null;
 
         foreach ($materieljour as $m) {
-            $t = explode('_', (string) $m); //jour, AM/PM, matériel
+            $t = explode('_', (string) $m); // jour, AM/PM, matériel
             if (array_key_exists($t[1], $tmat)) {
-                //matériel existant, on ajoute
+                // matériel existant, on ajoute
                 if (!array_key_exists($t[1], $matde)) {
                     $matde[$t[1]] = $tmat[$t[1]];
                 }
@@ -261,8 +261,8 @@ class MyEmprunts
 
     public function deleteReservation(Emprunt $emprunt): bool
     {
-        //Supprimer l'emprunt
-        //Supprimer les réservations des métériels associés'
+        // Supprimer l'emprunt
+        // Supprimer les réservations des métériels associés'
         foreach ($emprunt->getEmpruntMateriels() as $materiel) {
             $this->entityManager->remove($materiel);
         }

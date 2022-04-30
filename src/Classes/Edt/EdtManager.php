@@ -12,14 +12,13 @@ namespace App\Classes\Edt;
 use App\DTO\EvenementEdt;
 use App\DTO\EvenementEdtCollection;
 use App\Entity\AnneeUniversitaire;
-use App\Entity\Calendrier;
 use App\Entity\Semestre;
 
 class EdtManager
 {
-    public final const EDT_CELCAT = 'celcat';
-    public final const EDT_ADE = 'ade';
-    public final const EDT_INTRANET = 'intranet';
+    final public const EDT_CELCAT = 'celcat';
+    final public const EDT_ADE = 'ade';
+    final public const EDT_INTRANET = 'intranet';
 
     private array $tabSources = [];
 

@@ -36,7 +36,7 @@ class ExportController extends AbstractController
      * @throws LoaderError
      */
     #[Route(path: '/listing', name: 'export_listing')]
-    public function listing(TypeMatiereManager $typeMatiereManager, MyExportListing $myExport, Request $request): null | StreamedResponse | PdfResponse
+    public function listing(TypeMatiereManager $typeMatiereManager, MyExportListing $myExport, Request $request): null|StreamedResponse|PdfResponse
     {
         $matiere = $request->request->get('matiere');
         $typeMatiere = $request->request->get('typeMatiere');

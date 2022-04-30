@@ -17,5 +17,5 @@ class ReponseEtudiant
     public ?int $etudiant_id = null;
     public ?string $cle_question = null;
     public ?string $complementValeur = null;
-    public ?string $cle_reponse = null; //todo: est-ce que c'est utile ?
+    public ?string $cle_reponse = null; // todo: est-ce que c'est utile ?
 }

@@ -22,7 +22,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\HasLifecycleCallbacks]
 class Matiere extends AbstractMatiere implements MatiereEntityInterface
 {
-    public final const SOURCE = 'matiere';
+    final public const SOURCE = 'matiere';
 
     #[Groups(groups: ['matiere_administration'])]
     #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
@@ -364,6 +364,7 @@ class Matiere extends AbstractMatiere implements MatiereEntityInterface
         $method = 'set'.$name;
         if (method_exists($this, $method)) {
             $this->$method(Tools::convertToFloat($value));
+
             return true;
         }
 

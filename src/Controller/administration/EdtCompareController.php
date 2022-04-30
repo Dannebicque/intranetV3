@@ -66,13 +66,13 @@ class EdtCompareController extends BaseController
     #[Route(path: '/ajax/enseignants/plusinfo/{matiere}', name: 'administration_edt_compare_plus_info')]
     public function comparePlusInfoAction(TypeMatiereManager $typeMatiereManager, string $matiere): Response
     {
-        //todo: a gérer le cas des mutualisés et des prévisionnels
+        // todo: a gérer le cas des mutualisés et des prévisionnels
         $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
         if (null === $mat) {
             throw new MatiereNotFoundException();
         }
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_EDT', $mat->semestre);
-        //tester si celcat ou intranet
+        // tester si celcat ou intranet
         $planning = $this->edtPlanningRepository->findBy(['idMatiere' => $mat->id, 'typeMatiere' => $mat->typeMatiere]);
         $calendrier = $this->calendrierRepository->findCalendrierArray();
 

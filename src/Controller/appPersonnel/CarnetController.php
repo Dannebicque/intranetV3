@@ -80,7 +80,7 @@ class CarnetController extends BaseController
             $this->entityManager->persist($cahierTexte);
             $this->entityManager->flush();
 
-            //On déclenche l'event
+            // On déclenche l'event
             $event = new CarnetEvent($cahierTexte);
             $eventDispatcher->dispatch($event, CarnetEvent::ADDED);
 

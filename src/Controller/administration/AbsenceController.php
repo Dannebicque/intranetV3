@@ -73,7 +73,7 @@ class AbsenceController extends BaseController
         Semestre $semestre
     ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
-        //todo: doit utiliser un dto...
+        // todo: doit utiliser un dto...
         $table = $this->createTable(AbsenceListeTableType::class, [
             'semestre' => $semestre,
             'anneeUniversitaire' => $this->getAnneeUniversitaire(),

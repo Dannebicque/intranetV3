@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/administratif/questionnaire/section', name: 'sadm_questionnaire_section_')]
-//#[Route('/administration/questionnaire/section', name: 'adm_questionnaire_section_')]
+// #[Route('/administration/questionnaire/section', name: 'adm_questionnaire_section_')]
 class QuestionnaireSectionController extends BaseController
 {
     /**
@@ -115,7 +115,7 @@ class QuestionnaireSectionController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'questionnaire.administration.section.edit.success.flash');
-            //todo: sadm
+            // todo: sadm
             return $this->redirectToRoute('adm_questionnaire_section_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -148,5 +148,5 @@ class QuestionnaireSectionController extends BaseController
         return $this->redirectToRoute('sadm_questionnaire_section_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    //todo: duplicate, export
+    // todo: duplicate, export
 }

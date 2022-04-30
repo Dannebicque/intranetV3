@@ -38,7 +38,7 @@ class NoteController extends BaseController
      * @throws \App\Exception\MatiereNotFoundException
      */
     #[Route(path: '/saisie/etape-1/{matiere}/{semestre}', name: 'application_personnel_note_saisie')]
-    public function saisie(TypeMatiereManager $typeMatiereManager, Request $request, string $matiere, Semestre $semestre): RedirectResponse | Response
+    public function saisie(TypeMatiereManager $typeMatiereManager, Request $request, string $matiere, Semestre $semestre): RedirectResponse|Response
     {
         $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
         if (null === $mat) {
@@ -64,7 +64,7 @@ class NoteController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $evaluation->setAnneeUniversitaire($this->dataUserSession->getAnneeUniversitaire());
             if ($mat->isEnfant()) {
-                $evaluation->setTypeGroupe($mat->groupesEnfant()?->first()->getTypeGroupe()); //todo: en attendant mieux. Car peut y avoir plusieurs groupes, et donc plusieurs types groupes.
+                $evaluation->setTypeGroupe($mat->groupesEnfant()?->first()->getTypeGroupe()); // todo: en attendant mieux. Car peut y avoir plusieurs groupes, et donc plusieurs types groupes.
             }
             $this->entityManager->persist($evaluation);
             $this->entityManager->flush();
@@ -90,7 +90,7 @@ class NoteController extends BaseController
     {
         $matiere = $typeMatiereManager->getMatiere($evaluation->getIdMatiere(), $evaluation->getTypeMatiere());
         $this->denyAccessUnlessGranted('CAN_ADD_NOTE', ['matiere' => $matiere, 'semestre' => $evaluation->getSemestre()]);
-        //todo: vérifier s'il est autorisé dans l'évaluation
+        // todo: vérifier s'il est autorisé dans l'évaluation
         $notes = $myEvaluation->setEvaluation($evaluation)->getNotesTableau();
 
         return $this->render('appPersonnel/note/saisie_2.html.twig', [
@@ -127,14 +127,14 @@ class NoteController extends BaseController
     #[Route(path: '/import/{evaluation}/{semestre}', name: 'application_personnel_note_import', requirements: ['evaluation' => '\d+'])]
     public function import(TypeMatiereManager $typeMatiereManager, Request $request, MyUpload $myUpload, MyEvaluation $myEvaluation, Evaluation $evaluation, Semestre $semestre): Response
     {
-        //upload
+        // upload
         $fichier = $myUpload->upload($request->files->get('fichier_import'), 'temp/');
         $matiere = $typeMatiereManager->getMatiere($evaluation->getIdMatiere(), $evaluation->getTypeMatiere());
         $this->denyAccessUnlessGranted('CAN_ADD_NOTE', ['matiere' => $matiere, 'semestre' => $evaluation->getSemestre()]);
         if (null === $matiere) {
             throw new MatiereNotFoundException();
         }
-        //traitement de l'import des notes.
+        // traitement de l'import des notes.
         $myEvaluation->importEvaluation($evaluation, $fichier, $semestre);
         $this->addFlashBag('success', 'import_note_a_verifier');
 

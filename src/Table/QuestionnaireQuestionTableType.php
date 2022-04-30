@@ -59,7 +59,7 @@ class QuestionnaireQuestionTableType extends TableType
         $builder->addColumn('type', TypeQuestionColumnType::class, ['label' => 'table.type']);
         $builder->addColumn('questionnaireQuestionTags', ManyColumnType::class, [
             'label' => 'table.questionnaireQuestionTags',
-            'one_renderer' => fn($elem) => '<span class="badge bg-primary me-1">'.$elem->getLibelle().'</span>',
+            'one_renderer' => fn ($elem) => '<span class="badge bg-primary me-1">'.$elem->getLibelle().'</span>',
         ]);
         $builder->addColumn('auteur', PersonnelColumnType::class, ['label' => 'table.auteur']);
         $builder->addColumn('obligatoire', BooleanColumnType::class, ['label' => 'table.obligatoire']);

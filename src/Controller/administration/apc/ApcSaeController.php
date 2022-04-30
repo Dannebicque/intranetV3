@@ -132,7 +132,7 @@ class ApcSaeController extends BaseController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($apcSae);
-            //sauvegarde des AC
+            // sauvegarde des AC
             $acs = $request->request->get('ac');
             if (is_array($acs)) {
                 foreach ($acs as $idAc) {
@@ -181,12 +181,12 @@ class ApcSaeController extends BaseController
         $form = $this->createForm(ApcSaeType::class, $apcSae, ['diplome' => $apcSae->getDiplome()]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            //on supprimer ceux présent
+            // on supprimer ceux présent
             foreach ($apcSae->getApcSaeApprentissageCritiques() as $ac) {
                 $this->entityManager->remove($ac);
             }
 
-            //sauvegarde des AC
+            // sauvegarde des AC
             $acs = $request->request->get('ac');
             if (is_array($acs)) {
                 foreach ($acs as $idAc) {

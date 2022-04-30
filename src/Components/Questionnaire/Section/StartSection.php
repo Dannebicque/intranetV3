@@ -15,8 +15,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class StartSection extends AbstractSection
 {
-    public final const LABEL = 'start.section';
-    public final const DEFAULT_TEMPLATE = 'components/questionnaire/sections/start-section.html.twig';
+    final public const LABEL = 'start.section';
+    final public const DEFAULT_TEMPLATE = 'components/questionnaire/sections/start-section.html.twig';
 
     public ?string $texteDebut = '';
     public ?string $titre = '';

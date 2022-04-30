@@ -48,7 +48,7 @@ class TrombinoscopeController extends BaseController
      * @throws SyntaxError
      */
     #[Route(path: '/etudiant/export/{typeGroupe<\d+>}.{_format}', name: 'trombinoscope_etudiant_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function trombiEtudiantExport(MyExportListing $myExportListing, TypeGroupe $typeGroupe, $_format): \Symfony\Component\HttpFoundation\Response
+    public function trombiEtudiantExport(MyExportListing $myExportListing, TypeGroupe $typeGroupe, $_format): Response
     {
         return $myExportListing->genereFichier(
             Constantes::TYPEDOCUMENT_EMARGEMENT,
@@ -65,7 +65,7 @@ class TrombinoscopeController extends BaseController
      * @throws SyntaxError
      */
     #[Route(path: '/etudiant/export-groupe/{groupe<\d+>}.{_format}', name: 'trombinoscope_etudiant_export_groupe', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function trombiEtudiantExportGroupe(MyExportListing $myExportListing, Groupe $groupe, $_format): \Symfony\Component\HttpFoundation\Response
+    public function trombiEtudiantExportGroupe(MyExportListing $myExportListing, Groupe $groupe, $_format): Response
     {
         return $myExportListing->genereFichier(
             Constantes::TYPEDOCUMENT_EMARGEMENT,

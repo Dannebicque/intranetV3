@@ -135,7 +135,7 @@ class MatiereController extends BaseController
     #[Route(path: '/{id}', name: 'sa_matiere_delete', methods: 'DELETE')]
     public function delete(): void
     {
-        //todo: delete
+        // todo: delete
     }
 
     /**

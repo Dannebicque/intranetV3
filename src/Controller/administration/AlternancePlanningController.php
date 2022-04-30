@@ -38,7 +38,7 @@ class AlternancePlanningController extends BaseController
                 'tabFerie' => Calendrier::getTabJoursFeries(),
                 'tabFinMois' => Calendrier::getTabFinMois(),
                 'annee' => $annee,
-                //'events' => $events
+                // 'events' => $events
             ]);
     }
 }

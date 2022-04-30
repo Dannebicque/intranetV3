@@ -43,7 +43,7 @@ class AbsenceEtatAppel
             return true;
         }
 
-        return false; //déjà présent
+        return false; // déjà présent
     }
 
     /**
@@ -82,7 +82,7 @@ class AbsenceEtatAppel
                 }
                 if (!array_key_exists($ab->getGroupe()->getOrdre(),
                     $tab[$ab->getDate()->format('Ymd')][$ab->getTypeIdMatiere()][$ab->getHeure()->format('H:i')])) {
-                    //todo: ordre risuqe de buguer... faudrait un type+ordre?
+                    // todo: ordre risuqe de buguer... faudrait un type+ordre?
                     $tab[$ab->getDate()->format('Ymd')][$ab->getTypeIdMatiere()][$ab->getHeure()->format('H:i')][$ab->getGroupe()->getOrdre()] = [];
                 }
 

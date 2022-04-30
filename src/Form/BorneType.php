@@ -53,7 +53,7 @@ class BorneType extends AbstractType
                 'required' => false,
                 'input_prefix' => '<div class="input-group-text">HTTPS://</div>',
             ])
-            //->add('dateRange', DateRangeType::class, ['label' => 'dateRange', 'mapped' => false, 'required' => true])
+            // ->add('dateRange', DateRangeType::class, ['label' => 'dateRange', 'mapped' => false, 'required' => true])
             ->add('dateRange', DateRangeType::class, ['label' => 'label.dateRange', 'mapped' => false, 'required' => true])
             ->add(
                 'visible',
@@ -66,7 +66,7 @@ class BorneType extends AbstractType
                 'class' => Semestre::class,
                 'label' => 'label.semestres_date',
                 'choice_label' => 'libelle',
-                'query_builder' => fn(SemestreRepository $semestreRepository) => $semestreRepository->findByDepartementBuilder($this->departement),
+                'query_builder' => fn (SemestreRepository $semestreRepository) => $semestreRepository->findByDepartementBuilder($this->departement),
                 'required' => true,
                 'expanded' => true,
                 'multiple' => true,

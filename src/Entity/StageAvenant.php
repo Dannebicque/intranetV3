@@ -20,10 +20,10 @@ use Doctrine\ORM\Mapping as ORM;
 class StageAvenant extends BaseEntity
 {
     use LifeCycleTrait;
-    public final const CAS1 = 1;
-    public final const CAS2 = 2;
-    public final const CAS3 = 3;
-    public final const CAS4 = 4;
+    final public const CAS1 = 1;
+    final public const CAS2 = 2;
+    final public const CAS3 = 3;
+    final public const CAS4 = 4;
 
     #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private ?int $cas = 0;
@@ -55,7 +55,7 @@ class StageAvenant extends BaseEntity
     #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateFinAbsence = null;
 
-    public function __construct(#[ORM\ManyToOne(targetEntity: StageEtudiant::class, inversedBy: 'stageAvenants')] private ?\App\Entity\StageEtudiant $stageEtudiant)
+    public function __construct(#[ORM\ManyToOne(targetEntity: StageEtudiant::class, inversedBy: 'stageAvenants')] private ?StageEtudiant $stageEtudiant)
     {
     }
 

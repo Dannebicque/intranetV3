@@ -24,8 +24,8 @@ class AbsenceEtatAppel extends BaseEntity
     use LifeCycleTrait;
     use MatiereTrait;
 
-    public final const SAISIE_SANS_ABSENT = 'pas-absent';
-    public final const SAISIE_AVEC_ABSENT = 'des-absent';
+    final public const SAISIE_SANS_ABSENT = 'pas-absent';
+    final public const SAISIE_AVEC_ABSENT = 'des-absent';
 
     #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE)]
     private ?CarbonInterface $date = null;

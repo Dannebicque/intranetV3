@@ -30,16 +30,16 @@ class SelectColumnType extends ColumnType
 
     public function render(mixed $rowData, array $options): string
     {
-        $obj = $this->accessor->getValue($rowData, $options['property_path']); //on récupère l'objet de la liaison
+        $obj = $this->accessor->getValue($rowData, $options['property_path']); // on récupère l'objet de la liaison
 
-        $html = '<select class="'.$options['class_select'].'" >'; //name="'.$options['name'].'"
+        $html = '<select class="'.$options['class_select'].'" >'; // name="'.$options['name'].'"
 
         if (false === $options['required']) {
             $html .= '<option value="" selected>Choisir</option>';
         }
 
         if (null !== $options['choices']) {
-            //on a un tableau
+            // on a un tableau
             foreach ($options['choices'] as $key => $value) {
                 if (null !== $obj && $value === $obj->getId()) {
                     $selected = 'selected';
@@ -51,7 +51,7 @@ class SelectColumnType extends ColumnType
             }
         } elseif (null !== $options['entity']) {
             $em = $this->entityManager->getRepository($options['entity']);
-            //on a une entity
+            // on a une entity
             if (null !== $options['query_builder']) {
                 $queryBuilder = $options['query_builder'];
                 if (is_callable($queryBuilder)) {
@@ -88,7 +88,7 @@ class SelectColumnType extends ColumnType
         parent::configureOptions($resolver);
 
         $resolver
-            ->setDefault('property_path', fn(Options $options) => $options['id'])
+            ->setDefault('property_path', fn (Options $options) => $options['id'])
             ->setDefault('order', false)
             ->setDefault('class', 'text-center row-selector')
             ->setDefault('class_select', 'form-control')

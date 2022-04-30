@@ -20,7 +20,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class QuestionnaireSectionType extends AbstractType
 {
-    //todo: ConfigurableSection doit être un type de section... sinon comment créer la section ?
+    // todo: ConfigurableSection doit être un type de section... sinon comment créer la section ?
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {

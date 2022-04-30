@@ -37,17 +37,17 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class MyEnquete
 {
-    public final const SEUIL = 65;
-    public final const COLOR_QUALITE = 'bb1e10';
+    final public const SEUIL = 65;
+    final public const COLOR_QUALITE = 'bb1e10';
     private array $resultatQuestion = [];
     private int $ligne;
 
     /** @var Previsionnel[] */
     private array $previsionnel;
 
-    private int | float $nbReponses = 0;
+    private int|float $nbReponses = 0;
 
-    private int | float $sommePourcentage = 0;
+    private int|float $sommePourcentage = 0;
 
     /**
      * MyEnquete constructor.
@@ -64,12 +64,12 @@ class MyEnquete
     {
         $quizzEtudiants = $this->quizzEtudiantRepository->findBy(['questionnaireQualite' => $questionnaire->getId()]);
         $this->previsionnel = $previsionnel;
-        //data
+        // data
         $this->getReponseFromQuestionnaire($questionnaire);
         $nbEtudiants = $questionnaire->getSemestre()?->getEtudiants() === null ? 0 : count($questionnaire->getSemestre()?->getEtudiants());
         $this->nbReponses = count($quizzEtudiants);
         $pourcentageReponses = $this->nbReponses / $nbEtudiants;
-        //export
+        // export
         $this->myExcelWriter->createSheet(mb_substr('Exp '.$questionnaire->getLibelle(), 0, 31));
         $this->myExcelWriter->getSheet()->getPageSetup()->setPaperSize(PageSetup::PAPERSIZE_A4);
         $this->myExcelWriter->getSheet()->getPageSetup()->setScale(91);
@@ -215,7 +215,7 @@ class MyEnquete
         }
 
         if (null === $question->getQuestionParent() && 0 === count($question->getQuestionsEnfants())) {
-            //si QCU/QCM
+            // si QCU/QCM
             $this->writeExcelReponses($question, $section, $config);
         } else {
             $this->sommePourcentage = 0;
@@ -231,7 +231,7 @@ class MyEnquete
                         ['wrap' => true, 'font-weight' => 'bold', 'style' => 'HORIZONTAL_CENTER']);
                     ++$this->ligne;
                 }
-                //si QCU/QCM
+                // si QCU/QCM
                 ++$nbQuestionsPourcentage;
                 $this->writeExcelReponses($subQuestion, $section, $config, $question);
             }
@@ -317,7 +317,7 @@ class MyEnquete
                     --$nbProps;
                     $retire = $nbReponses;
                 }
-                //version détaillée, on affiche tout.
+                // version détaillée, on affiche tout.
                 if (QuestionnaireSection::DETAIL === $section->getTypeCalcul()) {
                     $this->myExcelWriter->writeCellXY(1, $this->ligne, $reponse->getLibelle(),
                         ['style' => $reponse->getAlignement()]);
@@ -330,7 +330,7 @@ class MyEnquete
                     ]);
                     ++$this->ligne;
                 }
-                //si autre, énumérer les réponses autres
+                // si autre, énumérer les réponses autres
                 if (array_key_exists($cleQ.'_autre',
                         $this->resultatQuestion) && 'CHX:OTHER' === $reponse->getValeur()) {
                     foreach ($this->resultatQuestion[$cleQ.'_autre']['totalReponse'] as $key => $value) {
@@ -346,7 +346,7 @@ class MyEnquete
                 }
             }
             if ('echelle' === $question->getConfiguration()['type'] || TypeEchelle::class === $question->getType()) {
-                //si échelle ... tôt de satisfaction
+                // si échelle ... tôt de satisfaction
                 $div = ($nbProps * ($nbTotalReponseQuestion - $retire));
                 if (0 !== $div) {
                     $total = $satisfaction / ($nbProps * ($nbTotalReponseQuestion - $retire));
@@ -380,7 +380,7 @@ class MyEnquete
             ++$this->ligne;
             $cleQ = 'quizz_question_text_q'.$question->getId();
             if (array_key_exists($cleQ, $this->resultatQuestion)) {
-                //liste les réponses
+                // liste les réponses
                 foreach ($this->resultatQuestion[$cleQ]['totalReponse'] as $key => $rep) {
                     ++$nbRep;
                     $this->myExcelWriter->writeCellXY(1, $this->ligne, $key,

@@ -33,7 +33,6 @@ class MyEdtCelcat extends BaseEdt
 
     private array $matieres;
 
-
     public function __construct(
         CalendrierRepository $celcatCalendrierRepository,
         protected CelcatEventsRepository $celcatEventsRepository,
@@ -63,7 +62,7 @@ class MyEdtCelcat extends BaseEdt
         int $semaine = 0,
         array $matieres = []
     ): self {
-        $this->matieres = $matieres; //todo: vériifer que pas vide
+        $this->matieres = $matieres; // todo: vériifer que pas vide
         $this->user = $etudiant;
         $this->init($anneeUniversitaire, 'etudiant', $etudiant->getId(), $semaine);
         $this->calculEdt();
@@ -115,7 +114,7 @@ class MyEdtCelcat extends BaseEdt
         $tab = [];
         /** @var CelcatEvent $p */
         foreach ($pl as $p) {
-            //todo: passer par le DTO???
+            // todo: passer par le DTO???
             if (array_key_exists($p->getCodeGroupe(), $gr)) {
                 $groupe = $gr[$p->getCodeGroupe()];
                 $jour = $p->getJour() + 1;
@@ -124,7 +123,7 @@ class MyEdtCelcat extends BaseEdt
                 $tab[$jour][$dbtEdt][$groupe]['duree'] = $p->getFin()->sub($p->getDebut());
 
                 $tab[$jour][$dbtEdt][$groupe]['couleur'] = $this->getCouleur($p);
-                $tab[$jour][$dbtEdt][$groupe]['couleurTexte'] = $this->annee->getCouleurTexte(); //todo: le code est dans le semestre...
+                $tab[$jour][$dbtEdt][$groupe]['couleurTexte'] = $this->annee->getCouleurTexte(); // todo: le code est dans le semestre...
 
                 $tab[$jour][$dbtEdt][$groupe]['largeur'] = match ($p->getType()) {
                     'CM', 'cm' => $this->semestre->getNbgroupeTPEDT(),
@@ -149,12 +148,12 @@ class MyEdtCelcat extends BaseEdt
 
     private function transformeIndividuel(array $pl): array
     {
-        //prof ou étudiant
+        // prof ou étudiant
         $tab = [];
 
         /** @var CelcatEvent $p */
         foreach ($pl as $p) {
-            //todo: passer en partie par le manager ?
+            // todo: passer en partie par le manager ?
             $evt = new EvenementEdt();
             $evt->source = EdtManager::EDT_CELCAT;
             $evt->id = $p->getId();
@@ -184,7 +183,7 @@ class MyEdtCelcat extends BaseEdt
     {
         if (array_key_exists($p->getCodeModule(), $this->matieres)) {
             $matiere = $this->matieres[$p->getCodeModule()];
-            if (null !== $matiere && null !== $matiere->semestre) {//todo: passer le semestre et pas via matiere
+            if (null !== $matiere && null !== $matiere->semestre) {// todo: passer le semestre et pas via matiere
                 $annee = $matiere->semestre->getAnnee();
                 if (null !== $annee) {
                     return $annee->getCouleur();

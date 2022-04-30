@@ -25,19 +25,19 @@ class Borne extends BaseEntity
 {
     use LifeCycleTrait;
 
-    public final const ICONES = [
+    final public const ICONES = [
         'information' => 'fas fa-info-circle',
         'danger' => 'fas fa-exclamation-circle',
         'demande' => 'fas fa-question-circle',
     ];
 
-    public final const ICONES_CHOICE = [
+    final public const ICONES_CHOICE = [
         'fas fa-info-circle' => 'fas fa-info-circle',
         'fas fa-exclamation-circle' => 'fas fa-exclamation-circle',
         'fas fa-question-circle' => 'fas fa-question-circle',
     ];
 
-    public final const COULEURS = ['Rouge' => '#FF0000', 'Vert' => '#00FF00', 'Bleu' => '#0000FF'];
+    final public const COULEURS = ['Rouge' => '#FF0000', 'Vert' => '#00FF00', 'Bleu' => '#0000FF'];
 
     #[Groups(groups: ['bornes_administration'])]
     #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 40)]

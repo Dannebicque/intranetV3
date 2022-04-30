@@ -82,7 +82,7 @@ class BCDemandeDepartementType extends TableType
             ['label' => 'table.montantTTC', 'translation_domain' => 'messages']);
         $builder->addColumn('etat_process', PropertyColumnType::class,
             ['label' => 'table.etat_process', 'translation_domain' => 'messages']);
-        //todo: autres dates/étapes
+        // todo: autres dates/étapes
 
         $builder->addColumn('links', WidgetColumnType::class, [
             'build' => function (WidgetBuilder $builder, BCDemande $s) {

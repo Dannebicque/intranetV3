@@ -30,13 +30,13 @@ class RedirectSubscriber implements EventSubscriberInterface
 
     public function onRedirectToLogin($event): RedirectResponse
     {
-        //logout
+        // logout
         return new RedirectResponse($this->router->generate('security_login', ['message' => $event->getSubject()]));
     }
 
     public function onChoixDepartementDefaut($event): RedirectResponse
     {
-        //logout
+        // logout
         return new RedirectResponse($this->router->generate('security_choix_departement', ['message' => $event->getSubject()]));
     }
 }

@@ -14,8 +14,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class NoteEvent extends Event
 {
-    public final const ADDED = 'note.added';
-    public final const UPDATED = 'note.updated';
+    final public const ADDED = 'note.added';
+    final public const UPDATED = 'note.updated';
 
     public function __construct(protected Note $note)
     {

@@ -37,7 +37,7 @@ class EtudiantGroupes
     {
         /** @var Groupe $groupe */
         foreach ($this->etudiant->getGroupes() as $groupe) {
-            //suppression des groupes
+            // suppression des groupes
             $this->etudiant->removeGroupe($groupe);
             $groupe->removeEtudiant($this->etudiant);
             $this->entityManager->persist($groupe);

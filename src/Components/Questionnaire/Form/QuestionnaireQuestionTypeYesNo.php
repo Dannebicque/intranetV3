@@ -45,7 +45,7 @@ class QuestionnaireQuestionTypeYesNo extends QuestionnaireQuestionType
                 $t['valeur_2'] = $form->get('valeur_2')->getData();
                 $question->setConfiguration($t);
             });
-        //->add('parametre', TextType::class)
+        // ->add('parametre', TextType::class)
     }
 
     public function configureOptions(OptionsResolver $resolver): void

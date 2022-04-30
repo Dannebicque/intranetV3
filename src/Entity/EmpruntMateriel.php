@@ -17,9 +17,9 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: EmpruntMaterielRepository::class)]
 class EmpruntMateriel extends BaseEntity
 {
-    public final const ETAT_MATERIEL_DISPO = 'DISPO';
-    public final const ETAT_MATERIEL_SORTI = 'SORTI';
-    public final const ETAT_MATERIEL_RESERVE = 'RESER';
+    final public const ETAT_MATERIEL_DISPO = 'DISPO';
+    final public const ETAT_MATERIEL_SORTI = 'SORTI';
+    final public const ETAT_MATERIEL_RESERVE = 'RESER';
 
     #[ORM\ManyToOne(targetEntity: Emprunt::class, inversedBy: 'empruntMateriels')]
     private ?Emprunt $emprunt = null;

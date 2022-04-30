@@ -54,7 +54,7 @@ class StagePeriodeRepository extends ServiceEntityRepository
 
     public function findStageEtudiant(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): array
     {
-        //trouver les périodes de stage sur ce semestre et le suivant
+        // trouver les périodes de stage sur ce semestre et le suivant
         $query = $this->createQueryBuilder('s')
             ->where('s.semestre = :semestreCourant');
 

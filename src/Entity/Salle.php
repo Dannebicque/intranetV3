@@ -23,10 +23,10 @@ class Salle extends BaseEntity
 {
     use LifeCycleTrait;
 
-    public final const SALLE_TD = 'td';
-    public final const SALLE_TP = 'tp';
-    public final const SALLE_AMPHI = 'amphi';
-    public final const SALLE_INFORMATIQUE = 'info';
+    final public const SALLE_TD = 'td';
+    final public const SALLE_TP = 'tp';
+    final public const SALLE_AMPHI = 'amphi';
+    final public const SALLE_INFORMATIQUE = 'info';
 
     #[Groups(groups: ['salle_administration'])]
     #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 30)]

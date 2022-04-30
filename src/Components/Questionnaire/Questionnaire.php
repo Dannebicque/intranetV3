@@ -76,7 +76,7 @@ class Questionnaire
     public function addSection(DTO\Section $section): Questionnaire
     {
         if (ConfigurableSection::class === $section->typeSection) {
-            //c'est configurable, potentiellement plusieurs sections à créer
+            // c'est configurable, potentiellement plusieurs sections à créer
             $configSection = new ConfigurableSection($this->questionnaireRegistry);
             $configSection->setSection($section, [
                 'questionnaire_id' => $this->getQuestionnaire()->id,
@@ -85,7 +85,7 @@ class Questionnaire
             ]);
             $sections = $configSection->genereSections();
             foreach ($sections as $cSection) {
-                //pour chaque "section configurable", on ajoute une section "classique"
+                // pour chaque "section configurable", on ajoute une section "classique"
                 $this->sections->addSection($cSection);
             }
         } else {

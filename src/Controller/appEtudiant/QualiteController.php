@@ -90,7 +90,7 @@ class QualiteController extends BaseController
     public function questionnaire(ReponsesEtudiantAdapter $reponsesEtudiantAdapter, Request $request, Questionnaire $questionnaire, QuestionnaireQualite $questionnaireQualite): Response
     {
         $reponses = new ReponsesEtudiant();
-        //todo: créer dans Questionnaire selon le type de questionnaire...
+        // todo: créer dans Questionnaire selon le type de questionnaire...
         $questionnaire->createQuestionnaire(QuestionnaireQualite::class,
             (new QuestionnaireQualiteAdapter($questionnaireQualite))->getQuestionnaire(),
             [
@@ -102,12 +102,12 @@ class QualiteController extends BaseController
             ]);
         $questionnaire->AddSpecialSection(AbstractSection::INTRODUCTION);
         foreach ($questionnaireQualite->getSections() as $section) {
-            $sect = (new SectionQualiteEntityAdapter($section))->getSection(); //todo: tester si la section est visible
+            $sect = (new SectionQualiteEntityAdapter($section))->getSection(); // todo: tester si la section est visible
             $questionnaire->addSection($sect);
-            $reponses->merge($reponsesEtudiantAdapter->getReponsesEtudiant($sect, $this->getUser()->getId())); //todo: on pourrait faire que sur la section concernée ?
+            $reponses->merge($reponsesEtudiantAdapter->getReponsesEtudiant($sect, $this->getUser()->getId())); // todo: on pourrait faire que sur la section concernée ?
         }
         $questionnaire->setIdEtudiant($this->getUser()->getId());
-        //todo: passer l'étudiant aux réponses
+        // todo: passer l'étudiant aux réponses
         $questionnaire->AddSpecialSection(AbstractSection::END);
         if ($questionnaire->handleRequest($request)) {
             $questionnaire->setQuestionsForSection($reponses);

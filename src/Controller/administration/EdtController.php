@@ -30,7 +30,7 @@ class EdtController extends BaseController
     public function index(int $semaine = 0, string $valeur = '', string $filtre = ''): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_EDT', $this->getDepartement());
-        //todo: a priciser ?
+        // todo: a priciser ?
         return $this->render('administration/edt/index.html.twig', [
             'semaine' => $semaine,
             'valeur' => $valeur,
@@ -49,7 +49,7 @@ class EdtController extends BaseController
     {
         $filtre = '' === $filtre ? Constantes::FILTRE_EDT_PROMO : $filtre;
         $matieres = $typeMatiereManager->findByDepartementArray($this->getDepartement());
-        //todo: codeApogee si depuis Celcat. Trouverune solution, si Edt récupère depuis touues les tables pour la conversion...
+        // todo: codeApogee si depuis Celcat. Trouverune solution, si Edt récupère depuis touues les tables pour la conversion...
         $edt = $myEdt->initAdministration($this->getDepartement(), $semaine, $filtre,
             $valeur, $this->getAnneeUniversitaire(), $matieres);
 
@@ -64,7 +64,7 @@ class EdtController extends BaseController
                 'tabHeures' => Constantes::TAB_HEURES_EDT_2,
             ]),
             Constantes::FILTRE_EDT_MODULE => $this->render('administration/edt/_edt-matiere.html.twig', [
-                'matiere' => $typeMatiereManager->getMatiereFromSelect($valeur), //todo: manque le type?
+                'matiere' => $typeMatiereManager->getMatiereFromSelect($valeur), // todo: manque le type?
                 'filtre' => $filtre,
                 'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
                 'salles' => $salleRepository->findAll(),

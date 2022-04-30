@@ -50,7 +50,7 @@ class EtudiantDepartementTableType extends TableType
             'choice_label' => 'displayAvecTypeDiplome',
             'required' => false,
             'placeholder' => 'Filtrer par semestre',
-            'query_builder' => fn(SemestreRepository $semestreRepository) => $semestreRepository->findByDepartementBuilder($this->departement),
+            'query_builder' => fn (SemestreRepository $semestreRepository) => $semestreRepository->findByDepartementBuilder($this->departement),
         ]);
         $builder->addFilter('bac', EntityType::class, [
             'class' => Bac::class,
@@ -81,7 +81,7 @@ class EtudiantDepartementTableType extends TableType
                     'post_params' => [
                         'field' => 'semestre',
                     ],
-                    'query_builder' => fn(SemestreRepository $semestreRepository) => $semestreRepository->findByDepartementBuilder($this->departement),
+                    'query_builder' => fn (SemestreRepository $semestreRepository) => $semestreRepository->findByDepartementBuilder($this->departement),
                     'value' => $s->getSemestre()?->getId(),
                     'entity' => Semestre::class,
                     'choice_label' => 'libelle',

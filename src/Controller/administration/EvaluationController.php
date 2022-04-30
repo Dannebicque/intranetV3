@@ -42,7 +42,7 @@ class EvaluationController extends BaseController
     #[Route(path: '/details/{uuid}', name: 'administration_evaluation_show', methods: ['GET', 'POST'])]
     public function show(TypeMatiereManager $typeMatiereManager, MyEvaluation $myEvaluation, Evaluation $evaluation): Response
     {
-        //$this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $evaluation->getSemestre());
+        // $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $evaluation->getSemestre());
         $notes = $myEvaluation->setEvaluation($evaluation)->getNotesTableau();
 
         return $this->render('administration/evaluation/show.html.twig', [
@@ -62,9 +62,9 @@ class EvaluationController extends BaseController
      * @throws \App\Exception\MatiereNotFoundException
      */
     #[Route(path: '/export/{semestre}/{uuid}.{_format}', name: 'administration_evaluation_export', methods: 'GET')]
-    public function exportEvaluation(MyEvaluation $myEvaluation, Evaluation $evaluation, $_format, Semestre $semestre): StreamedResponse | PdfResponse | null
+    public function exportEvaluation(MyEvaluation $myEvaluation, Evaluation $evaluation, $_format, Semestre $semestre): StreamedResponse|PdfResponse|null
     {
-        //todo: $semestre pourrait être supprimé s'il est dans évaluation
+        // todo: $semestre pourrait être supprimé s'il est dans évaluation
         $data = $evaluation->getTypeGroupe()->getGroupes();
 
         return $myEvaluation->setEvaluation($evaluation)->exportReleve($_format, $data,
@@ -76,7 +76,7 @@ class EvaluationController extends BaseController
      * @throws \Exception
      */
     #[Route(path: '/ajouter/{matiere}/{semestre}', name: 'administration_evaluation_create', methods: ['GET', 'POST'])]
-    public function create(TypeMatiereManager $typeMatiereManager, Request $request, string $matiere, Semestre $semestre): RedirectResponse | Response
+    public function create(TypeMatiereManager $typeMatiereManager, Request $request, string $matiere, Semestre $semestre): RedirectResponse|Response
     {
         $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
         if (null === $mat) {
@@ -106,7 +106,7 @@ class EvaluationController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $evaluation->setAnneeUniversitaire($this->dataUserSession->getAnneeUniversitaire());
             if ($mat->isEnfant()) {
-                $evaluation->setTypeGroupe($mat->groupesEnfant()?->first()->getTypeGroupe());//todo: en attendant mieux. Car peut y avoir plusieurs groupes, et donc plusieurs types groupes.
+                $evaluation->setTypeGroupe($mat->groupesEnfant()?->first()->getTypeGroupe()); // todo: en attendant mieux. Car peut y avoir plusieurs groupes, et donc plusieurs types groupes.
             }
             $this->entityManager->persist($evaluation);
             $this->entityManager->flush();

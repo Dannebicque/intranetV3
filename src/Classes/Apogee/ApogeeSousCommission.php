@@ -130,7 +130,7 @@ class ApogeeSousCommission extends Apogee
                 if ('x' === $cellule->getValue()) {
                     $cellule->setValue(0);
                 }
-                //-- fin conversion_adm_temoin --
+                // -- fin conversion_adm_temoin --
 
                 if ('apol_a04_naissance' === mb_strtolower($G_tab_apoL[$key])) {
                     $notesSheet->setCellValueByColumnAndRow(1, $j + 1, 'APO_COL_VAL_DEB');

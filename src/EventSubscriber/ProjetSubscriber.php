@@ -51,7 +51,7 @@ class ProjetSubscriber implements EventSubscriberInterface
         foreach ($projetEtudiant->getProjetPeriode()?->getResponsables() as $destinataire) {
             $destinataires[] = $destinataire->getMailUniv();
         }
-        //table avec les templates des mails et le sujet, a récupérer en fonction du codeEvent et de la période.
+        // table avec les templates des mails et le sujet, a récupérer en fonction du codeEvent et de la période.
         $mailsEtudiants = [];
 
         foreach ($projetEtudiant->getEtudiants() as $etudiant) {

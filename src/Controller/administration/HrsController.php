@@ -66,7 +66,7 @@ class HrsController extends BaseController
     public function edit(Request $request, Hrs $hrs): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $hrs->getDepartement());
-        //todo: département parfois null??
+        // todo: département parfois null??
         $form = $this->createForm(HrsType::class, $hrs, [
             'departement' => $this->getDepartement(),
             'attr' => [
@@ -96,7 +96,7 @@ class HrsController extends BaseController
         $anneeDepart = $request->request->get('annee_depart');
         $annee_destination = $request->request->get('annee_destination');
         $annee_concerver = $request->request->get('annee_concerver');
-        //on efface, sauf si la case est cochée.
+        // on efface, sauf si la case est cochée.
         if ('true' !== $annee_concerver) {
             $hrs = $hrsRepository->findByDepartement($this->getDepartement(), $annee_destination);
             foreach ($hrs as $hr) {
@@ -125,7 +125,7 @@ class HrsController extends BaseController
         $this->entityManager->persist($newHrs);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'hrs.duplicate.success.flash');
-        //'Copie effectuée avec succès. VOus pouvez modifier le nouvel élément.'
+        // 'Copie effectuée avec succès. VOus pouvez modifier le nouvel élément.'
         return $this->redirectToRoute('administration_hrs_edit', ['id' => $newHrs->getId()]);
     }
 

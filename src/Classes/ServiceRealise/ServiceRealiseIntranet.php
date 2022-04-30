@@ -78,8 +78,8 @@ class ServiceRealiseIntranet implements ServiceRealiseInterface
         $ev->jour = $date->dayName;
         $ev->duree = $event->getDureeInt();
         $ev->date = $date->isoFormat('L');
-        $ev->heure = Constantes::TAB_HEURES[$event->getDebut()].' à '.Constantes::TAB_HEURES[$event->getFin()]; //todo: gérer la convesion... et pas l'affichage ici. Vérifier le template
-        //$ev->matiere = null !== $event->getMatiere() ? $event->getMatiere()->getDisplay() : $event->getTexte();
+        $ev->heure = Constantes::TAB_HEURES[$event->getDebut()].' à '.Constantes::TAB_HEURES[$event->getFin()]; // todo: gérer la convesion... et pas l'affichage ici. Vérifier le template
+        // $ev->matiere = null !== $event->getMatiere() ? $event->getMatiere()->getDisplay() : $event->getTexte();
         $ev->typeIdMatiere = $event->getTypeIdMatiere();
         $ev->type_cours = $event->getType();
         $ev->personnel = null !== $event->getIntervenant() ? $event->getIntervenantEdt() : '';

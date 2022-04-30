@@ -52,7 +52,7 @@ class SemestreType extends AbstractType
                 'required' => true,
                 'choice_label' => 'libelle',
                 'expanded' => true,
-                'query_builder' => fn(AnneeRepository $anneeRepository) => $anneeRepository->findByDiplomeBuilder($this->diplome),
+                'query_builder' => fn (AnneeRepository $anneeRepository) => $anneeRepository->findByDiplomeBuilder($this->diplome),
                 'label' => 'label.annee',
             ])
 
@@ -119,7 +119,7 @@ class SemestreType extends AbstractType
                 'choice_label' => 'display',
                 'label' => 'label.opt_destinataire_mail_releve',
                 'required' => false,
-                'query_builder' => static fn(PersonnelRepository $personnelRepository) => $personnelRepository->findAllOrder(),
+                'query_builder' => static fn (PersonnelRepository $personnelRepository) => $personnelRepository->findAllOrder(),
             ])
             ->add(
                 'optEvaluationModifiable',
@@ -140,7 +140,7 @@ class SemestreType extends AbstractType
                 'choice_label' => 'display',
                 'label' => 'label.opt_destinataire_mail_modification_note',
                 'required' => false,
-                'query_builder' => static fn(PersonnelRepository $personnelRepository) => $personnelRepository->findAllOrder(),
+                'query_builder' => static fn (PersonnelRepository $personnelRepository) => $personnelRepository->findAllOrder(),
             ])
             ->add(
                 'optEvaluationVisible',
@@ -176,7 +176,7 @@ class SemestreType extends AbstractType
                 'choice_label' => 'display',
                 'label' => 'label.opt_destinataire_mail_absence_responsable',
                 'required' => false,
-                'query_builder' => static fn(PersonnelRepository $personnelRepository) => $personnelRepository->findAllOrder(),
+                'query_builder' => static fn (PersonnelRepository $personnelRepository) => $personnelRepository->findAllOrder(),
             ])
             ->add(
                 'optMailAbsenceEtudiant',
@@ -196,7 +196,7 @@ class SemestreType extends AbstractType
                 'class' => Ppn::class,
                 'required' => false,
                 'choice_label' => 'libelle',
-                'query_builder' => fn(PpnRepository $ppnRepository) => $ppnRepository->findByDiplomeBuilder($this->diplome),
+                'query_builder' => fn (PpnRepository $ppnRepository) => $ppnRepository->findByDiplomeBuilder($this->diplome),
                 'label' => 'label.ppn_actif',
             ])
             ->add('precedent', EntityType::class, [
@@ -204,7 +204,7 @@ class SemestreType extends AbstractType
                 'class' => Semestre::class,
                 'required' => false,
                 'choice_label' => 'display',
-                'query_builder' => fn(SemestreRepository $semestreRepository) => $semestreRepository->findByDiplomeBuilder($this->diplome),
+                'query_builder' => fn (SemestreRepository $semestreRepository) => $semestreRepository->findByDiplomeBuilder($this->diplome),
                 'label' => 'label.semestre_precedent',
             ])
             ->add('suivant', EntityType::class, [
@@ -212,7 +212,7 @@ class SemestreType extends AbstractType
                 'class' => Semestre::class,
                 'required' => false,
                 'choice_label' => 'display',
-                'query_builder' => fn(SemestreRepository $semestreRepository) => $semestreRepository->findByDiplomeBuilder($this->diplome),
+                'query_builder' => fn (SemestreRepository $semestreRepository) => $semestreRepository->findByDiplomeBuilder($this->diplome),
                 'label' => 'label.semestre_suivant',
             ]);
         if ($this->diplome->isOptDilpomeDecale()) {
@@ -221,7 +221,7 @@ class SemestreType extends AbstractType
                 'class' => Semestre::class,
                 'required' => false,
                 'choice_label' => 'display',
-                'query_builder' => fn(SemestreRepository $semestreRepository) => $semestreRepository->findByDiplomeBuilder($this->diplome),
+                'query_builder' => fn (SemestreRepository $semestreRepository) => $semestreRepository->findByDiplomeBuilder($this->diplome),
                 'label' => 'label.semestre_decale',
             ]);
         }

@@ -23,7 +23,7 @@ class Commentaire extends BaseEntity
     #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT)]
     private ?string $texte = null;
 
-    public function __construct(#[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'commentaires')] private ?\App\Entity\Etudiant $etudiant)
+    public function __construct(#[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'commentaires')] private ?Etudiant $etudiant)
     {
     }
 

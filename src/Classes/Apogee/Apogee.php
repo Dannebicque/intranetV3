@@ -16,7 +16,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 abstract class Apogee
 {
-    //todo refaire avec Doctrine ORM?
+    // todo refaire avec Doctrine ORM?
     protected PDO $conn;
 
     /**

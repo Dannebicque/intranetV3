@@ -16,10 +16,10 @@ use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
 
 class QuestionnaireRegistry
 {
-    //todo: utilisé ?
-    public final const TAG_TYPE_QUESTION = 'da.questionnaire.typequestion';
-    public final const TAG_TYPE_SECTION = 'da.questionnaire.typesection';
-    public final const TAG_TYPE_SECTION_ADAPTER = 'da.questionnaire.section.adapter';
+    // todo: utilisé ?
+    final public const TAG_TYPE_QUESTION = 'da.questionnaire.typequestion';
+    final public const TAG_TYPE_SECTION = 'da.questionnaire.typesection';
+    final public const TAG_TYPE_SECTION_ADAPTER = 'da.questionnaire.section.adapter';
     private array $typeQuestions = [];
     private array $typeSections = [];
     private array $sectionsAdapter = [];

@@ -31,12 +31,12 @@ class ReponsesEtudiantAdapter
             $questionnaireEtudiant = $this->questionnaireEtudiantRepository->findOneBy([
                 'etudiant' => $etudiant_id,
                 'questionnaireQuizz' => $section->questionnaire_id,
-            ]); //todo: a gérer selon le type avec le questionnaire...
+            ]); // todo: a gérer selon le type avec le questionnaire...
         } else {
             $questionnaireEtudiant = $this->questionnaireEtudiantRepository->findOneBy([
                 'etudiant' => $etudiant_id,
                 'questionnaireQualite' => $section->questionnaire_id,
-            ]); //todo: a gérer selon le type
+            ]); // todo: a gérer selon le type
         }
         if (null !== $questionnaireEtudiant) {
             $reponses = $this->questionnaireEtudiantReponseRepository->findBy(['questionnaireEtudiant' => $questionnaireEtudiant]);
@@ -60,7 +60,7 @@ class ReponsesEtudiantAdapter
         $reponseEtudiant->valeur = $reponse->getValeur();
         $reponseEtudiant->etudiant_id = $etudiant_id;
         $reponseEtudiant->cle_question = $reponse->getCleQuestion();
-        $reponseEtudiant->cle_reponse = $reponse->getCleReponse(); //todo: est-ce que c'est utile ?
+        $reponseEtudiant->cle_reponse = $reponse->getCleReponse(); // todo: est-ce que c'est utile ?
 
         return $reponseEtudiant;
     }

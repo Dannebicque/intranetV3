@@ -22,9 +22,9 @@ class ApcNiveau extends BaseEntity
 {
     use LifeCycleTrait;
 
-    public final const NIVEAU_1 = 'Novice';
-    public final const NIVEAU_2 = 'Intermédiaire';
-    public final const NIVEAU_3 = 'Compétent';
+    final public const NIVEAU_1 = 'Novice';
+    final public const NIVEAU_2 = 'Intermédiaire';
+    final public const NIVEAU_3 = 'Compétent';
 
     #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
     private ?string $libelle = null;

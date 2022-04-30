@@ -63,11 +63,11 @@ class FinSemestreController extends BaseController
                         $etudiantScolarite->changeEtat($valeur);
                         break;
                     case 'TRANSFERT':
-                        //si transfert dans un autre département, faire un mail au département
-                        //todo: mettre à jour la scolarité si résultats non publiés?
+                        // si transfert dans un autre département, faire un mail au département
+                        // todo: mettre à jour la scolarité si résultats non publiés?
                         break;
                     default:
-                        //transfert dans un semestre
+                        // transfert dans un semestre
                         $se = $semestreRepository->find($valeur);
                         if (null !== $se) {
                             $e->setSemestre($se);

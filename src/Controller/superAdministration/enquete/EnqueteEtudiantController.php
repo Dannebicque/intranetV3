@@ -52,7 +52,7 @@ class EnqueteEtudiantController extends BaseController
     ): Response {
         $id = $questionnaire->getId();
         if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
-            //suppression des réponses
+            // suppression des réponses
             $reponses = $questionnaire->getQuestionnaireEtudiantReponses();
             foreach ($reponses as $reponse) {
                 $this->entityManager->remove($reponse);

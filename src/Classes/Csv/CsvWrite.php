@@ -13,7 +13,6 @@
 
 namespace App\Classes\Csv;
 
-use function get_class;
 use function is_object;
 use function is_string;
 
@@ -22,9 +21,9 @@ use function is_string;
  */
 abstract class CsvWrite
 {
-    public final const FORMAT_DATETIME = 'DateTime';
-    public final const FORMAT_STRING = 'string';
-    public final const ECHAPPEMENT = '"';
+    final public const FORMAT_DATETIME = 'DateTime';
+    final public const FORMAT_STRING = 'string';
+    final public const ECHAPPEMENT = '"';
 
     public static function writeField(mixed $value, string $key = ''): string
     {

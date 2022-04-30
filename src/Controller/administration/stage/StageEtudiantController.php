@@ -74,7 +74,7 @@ class StageEtudiantController extends BaseController
     #[Route(path: '/{id}/edit', name: 'administration_stage_etudiant_edit', methods: 'GET|POST')]
     public function edit(Request $request, StageEtudiant $stageEtudiant): Response
     {
-        //$this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stageEtudiant->getStagePeriode()?->getSemestre());
+        // $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stageEtudiant->getStagePeriode()?->getSemestre());
         $form = $this->createForm(StageEtudiantType::class, $stageEtudiant);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
@@ -146,10 +146,10 @@ class StageEtudiantController extends BaseController
     public function conventionPdf(MyPDF $myPDF, StageEtudiant $stageEtudiant): PdfResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stageEtudiant->getStagePeriode()?->getSemestre());
-        //1. regarder si convention existe dans le répertoire ? (un champ avec le nom dans la BDD ?)
-        //2. Si oui envoyer
-        //3. Si non générer et envoyer + sauvegarde
-        //todo: prevoir bouton pour "regenerer" la convention
+        // 1. regarder si convention existe dans le répertoire ? (un champ avec le nom dans la BDD ?)
+        // 2. Si oui envoyer
+        // 3. Si non générer et envoyer + sauvegarde
+        // todo: prevoir bouton pour "regenerer" la convention
         return $myPDF::generePdf('pdf/stage/conventionStagePDF.html.twig',
             [
                 'proposition' => $stageEtudiant,

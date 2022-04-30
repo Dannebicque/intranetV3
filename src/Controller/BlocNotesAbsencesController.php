@@ -24,7 +24,6 @@ class BlocNotesAbsencesController extends BaseController
 {
     public function personnel(PrevisionnelManager $myPrevisionnel): Response
     {
-
         $previsionnels = [];
 
         foreach ($this->getDataUserSession()->getSemestresActifs() as $semestre) {

@@ -26,7 +26,7 @@ class ApcSae extends AbstractMatiere implements MatiereEntityInterface
 {
     use LifeCycleTrait;
 
-    public final const SOURCE = 'sae';
+    final public const SOURCE = 'sae';
 
     #[ORM\ManyToOne(targetEntity: Semestre::class, fetch: 'EAGER', inversedBy: 'apcSaes')]
     private ?Semestre $semestre = null;
@@ -124,7 +124,6 @@ class ApcSae extends AbstractMatiere implements MatiereEntityInterface
     public function getDiplome(): ?Diplome
     {
         return $this->getSemestre()?->getDiplome();
-
     }
 
     public function getSemestre(): ?Semestre

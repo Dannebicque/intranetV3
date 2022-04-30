@@ -26,7 +26,7 @@ class RessourceManager extends AbstractMatiereManager implements MatiereInterfac
     {
     }
 
-    public function find(int | string $id): ?Matiere
+    public function find(int|string $id): ?Matiere
     {
         $matiere = $this->apcRessourceRepository->find($id);
 

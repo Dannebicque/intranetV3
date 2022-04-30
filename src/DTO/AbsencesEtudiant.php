@@ -22,7 +22,6 @@ class AbsencesEtudiant
     public CarbonInterface $dureeCoursManques;
     public int $nbCoursManques;
 
-
     public function etudiantGroupes(): Collection
     {
         return $this->etudiant->getGroupes();
@@ -36,6 +35,4 @@ class AbsencesEtudiant
         $this->dureeCoursManques = $stats->dureeCoursManques;
         $this->nbCoursManques = $stats->nbCoursManques;
     }
-
-
 }

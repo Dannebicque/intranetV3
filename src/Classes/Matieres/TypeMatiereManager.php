@@ -50,12 +50,12 @@ class TypeMatiereManager
         return null;
     }
 
-    public function typeDeMatiere(string $type): SaeManager | RessourceManager | MatiereManager
+    public function typeDeMatiere(string $type): SaeManager|RessourceManager|MatiereManager
     {
         return $this->managers[$type];
     }
 
-    public function getMatiere(int | string $id, string $type): ?\App\DTO\Matiere
+    public function getMatiere(int|string $id, string $type): ?\App\DTO\Matiere
     {
         return $this->typeDeMatiere($type)->find($id);
     }
@@ -202,6 +202,5 @@ class TypeMatiereManager
             EdtManager::EDT_INTRANET => $this->getMatiereFromSelect($planning->typeIdMatiere),
             default => null,
         };
-
     }
 }

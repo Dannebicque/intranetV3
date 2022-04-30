@@ -183,7 +183,7 @@ class SecurityController extends AbstractController
             $entityManager->flush();
             if (null !== $update && null !== $update->getDepartement()) {
                 $flashBag->add(Constantes::FLASHBAG_SUCCESS, $translator->trans('formation.par.defaut.sauvegarde'));
-                $session->getSession()->set('departement', $update->getDepartement()->getUuid()); //on sauvegarde
+                $session->getSession()->set('departement', $update->getDepartement()->getUuid()); // on sauvegarde
 
                 return $this->redirectToRoute('default_homepage');
             }

@@ -36,7 +36,7 @@ class UfrType extends AbstractType
                 'choice_label' => 'displayPr',
                 'expanded' => false,
                 'multiple' => false,
-                'query_builder' => static fn(PersonnelRepository $personnelRepository) => $personnelRepository->findAllOrder(),
+                'query_builder' => static fn (PersonnelRepository $personnelRepository) => $personnelRepository->findAllOrder(),
             ])
             ->add('sitePrincipal', EntityType::class, [
                 'class' => Site::class,

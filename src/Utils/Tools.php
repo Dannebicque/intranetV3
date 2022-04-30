@@ -99,7 +99,7 @@ abstract class Tools
         return str_replace($search, $replace, $texte);
     }
 
-    public static function slug(string $texte): array | string | null
+    public static function slug(string $texte): array|string|null
     {
         /* Get rid of accented characters */
         $search = explode(',', 'ç,æ,œ,á,é,í,ó,ú,à,è,ì,ò,ù,ä,ë,ï,ö,ü,ÿ,â,ê,î,ô,û,å,e,i,ø,u');
@@ -162,7 +162,7 @@ abstract class Tools
         return true;
     }
 
-    public static function convertToInt(mixed $int): int | string
+    public static function convertToInt(mixed $int): int|string
     {
         $int = trim($int);
         if ('' === $int) {

@@ -13,8 +13,8 @@ use App\Entity\MaterielCommunPret;
 
 class MaterielCommunReservationEvent
 {
-    public final const ADDED = 'reservation.added';
-    public final const REMOVED = 'reservation.removed';
+    final public const ADDED = 'reservation.added';
+    final public const REMOVED = 'reservation.removed';
 
     public function __construct(protected MaterielCommunPret $materielCommunPret)
     {

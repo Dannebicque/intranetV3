@@ -21,12 +21,12 @@ class Bac extends BaseEntity
 {
     use LifeCycleTrait;
 
-    public final const SERIE_BAC_GENERAL = 'g';
-    public final const SERIE_BAC_TECHNO = 't';
-    public final const SERIE_BAC_PRO = 'p';
-    public final const SERIE_BAC_ETRANGER = 'e';
-    public final const SERIE_BAC_AUTRE = 'a';
-    public final const TAB_TYPE_BAC = [
+    final public const SERIE_BAC_GENERAL = 'g';
+    final public const SERIE_BAC_TECHNO = 't';
+    final public const SERIE_BAC_PRO = 'p';
+    final public const SERIE_BAC_ETRANGER = 'e';
+    final public const SERIE_BAC_AUTRE = 'a';
+    final public const TAB_TYPE_BAC = [
         self::SERIE_BAC_GENERAL => self::SERIE_BAC_GENERAL,
         self::SERIE_BAC_TECHNO => self::SERIE_BAC_TECHNO,
         self::SERIE_BAC_PRO => self::SERIE_BAC_PRO,

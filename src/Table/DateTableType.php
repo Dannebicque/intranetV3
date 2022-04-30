@@ -115,7 +115,7 @@ class DateTableType extends TableType
             'class' => Date::class,
             'fetch_join_collection' => false,
             'query' => function (QueryBuilder $qb, array $formData) {
-                $qb->innerJoin('e.semestres', 'c')//récupération de la jointure dans la table dédiée
+                $qb->innerJoin('e.semestres', 'c')// récupération de la jointure dans la table dédiée
                 ->innerJoin(Semestre::class, 's', 'WITH', 'c.id = s.id')
                     ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
                     ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')

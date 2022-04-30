@@ -95,7 +95,8 @@ class Previsionnel
         return $this->type_matiere.'_'.$this->matiere_id;
     }
 
-    public function personnelDisplay(): string {
+    public function personnelDisplay(): string
+    {
         return $this->personnel_nom.' '.$this->personnel_prenom;
     }
 }

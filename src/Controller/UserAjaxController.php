@@ -123,7 +123,7 @@ class UserAjaxController extends BaseController
         } else {
             $etudiant->setSemestre(null);
         }
-        //suppression des groupes
+        // suppression des groupes
         foreach ($etudiant->getGroupes() as $groupe) {
             $etudiant->removeGroupe($groupe);
             $groupe->removeEtudiant($etudiant);
@@ -143,7 +143,7 @@ class UserAjaxController extends BaseController
             $etudiant->setDepartement(null);
         }
         $etudiant->setSemestre(null);
-        //suppression des groupes
+        // suppression des groupes
         foreach ($etudiant->getGroupes() as $groupe) {
             $etudiant->removeGroupe($groupe);
             $groupe->removeEtudiant($etudiant);
@@ -159,7 +159,7 @@ class UserAjaxController extends BaseController
         $etudiant->setAnneeSortie($annee);
         if (0 !== $annee) {
             $etudiant->setSemestre(null);
-            //suppression des groupes
+            // suppression des groupes
             foreach ($etudiant->getGroupes() as $groupe) {
                 $etudiant->removeGroupe($groupe);
                 $groupe->removeEtudiant($etudiant);

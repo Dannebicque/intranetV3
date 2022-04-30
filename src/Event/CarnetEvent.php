@@ -14,7 +14,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class CarnetEvent extends Event
 {
-    public final const ADDED = 'carnet.added';
+    final public const ADDED = 'carnet.added';
 
     public function __construct(protected CahierTexte $carnet)
     {

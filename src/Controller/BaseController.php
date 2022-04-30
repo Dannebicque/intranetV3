@@ -97,7 +97,7 @@ class BaseController extends AbstractController
         }
     }
 
-    public function getUser(): UtilisateurInterface | Personnel | Etudiant
+    public function getUser(): UtilisateurInterface|Personnel|Etudiant
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = parent::getUser();

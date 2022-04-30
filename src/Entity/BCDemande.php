@@ -24,28 +24,28 @@ class BCDemande extends BaseEntity
 {
     use LifeCycleTrait;
 
-    public final const BC_PRESTATION_FOURNITURE = 'fourniture';
-    public final const BC_PRESTATION_SERVICE = 'service';
-    public final const BC_PRESTATION_TRAVAUX = 'travaux';
-    public final const BC_TABS_PRESTATIONS = [
+    final public const BC_PRESTATION_FOURNITURE = 'fourniture';
+    final public const BC_PRESTATION_SERVICE = 'service';
+    final public const BC_PRESTATION_TRAVAUX = 'travaux';
+    final public const BC_TABS_PRESTATIONS = [
         self::BC_PRESTATION_FOURNITURE => self::BC_PRESTATION_FOURNITURE,
         self::BC_PRESTATION_SERVICE => self::BC_PRESTATION_SERVICE,
         self::BC_PRESTATION_TRAVAUX => self::BC_PRESTATION_TRAVAUX,
     ];
 
-    public final const BC_AVIS_DIRECTION_FAVORABLE = 'favorable';
-    public final const BC_AVIS_DIRECTION_DEFAVORABLE = 'defavorable';
-    public final const BC_AVIS_DIRECTION_COMPLEMENT = 'complement';
-    public final const BC_TABS_AVIS = [
+    final public const BC_AVIS_DIRECTION_FAVORABLE = 'favorable';
+    final public const BC_AVIS_DIRECTION_DEFAVORABLE = 'defavorable';
+    final public const BC_AVIS_DIRECTION_COMPLEMENT = 'complement';
+    final public const BC_TABS_AVIS = [
         self::BC_AVIS_DIRECTION_FAVORABLE => self::BC_AVIS_DIRECTION_FAVORABLE,
         self::BC_AVIS_DIRECTION_DEFAVORABLE => self::BC_AVIS_DIRECTION_DEFAVORABLE,
         self::BC_AVIS_DIRECTION_COMPLEMENT => self::BC_AVIS_DIRECTION_COMPLEMENT,
     ];
 
-    public final const BC_SERVICE_SIA = 'sia';
-    public final const BC_SERVICE_SG = 'sg';
-    public final const BC_SERVICE_IUT = 'iut';
-    public final const BC_TABS_SERVICES = [
+    final public const BC_SERVICE_SIA = 'sia';
+    final public const BC_SERVICE_SG = 'sg';
+    final public const BC_SERVICE_IUT = 'iut';
+    final public const BC_TABS_SERVICES = [
         self::BC_SERVICE_SIA => self::BC_SERVICE_SIA,
         self::BC_SERVICE_SG => self::BC_SERVICE_SG,
         self::BC_SERVICE_IUT => self::BC_SERVICE_IUT,

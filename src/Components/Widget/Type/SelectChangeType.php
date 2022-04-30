@@ -54,7 +54,7 @@ class SelectChangeType extends WidgetType
         } elseif (null !== $options['entity']) {
             $view->vars['choices'] = false;
             $em = $this->entityManager->getRepository($options['entity']);
-            //on a une entity
+            // on a une entity
             if (null !== $options['query_builder']) {
                 $queryBuilder = $options['query_builder'];
                 if (is_callable($queryBuilder)) {
@@ -86,7 +86,7 @@ class SelectChangeType extends WidgetType
         parent::configureOptions($resolver);
 
         $resolver
-            ->setDefault('property_path', fn(Options $options) => $options['id'])
+            ->setDefault('property_path', fn (Options $options) => $options['id'])
             ->setDefault('id', null)
             ->setDefault('value', null)
             ->setDefault('translation_domain', null)

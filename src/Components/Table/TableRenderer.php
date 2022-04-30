@@ -76,7 +76,7 @@ class TableRenderer
         $vars['table_attr'] = [
             'class' => $options['class'] .= ' datable',
         ];
-        $vars['columns'] = array_map(fn(Column $c) => $this->columnView($c), $dataTable->getColumns());
+        $vars['columns'] = array_map(fn (Column $c) => $this->columnView($c), $dataTable->getColumns());
 
         return $vars;
     }

@@ -39,7 +39,7 @@ class UpdateEdtCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $diplomes = $this->diplomeRepository->findAllWithCelcat();
-        $calendriers = $this->calendrierRepository->findBy(['anneeUniversitaire' => 4]); //todo: en argument
+        $calendriers = $this->calendrierRepository->findBy(['anneeUniversitaire' => 4]); // todo: en argument
         $tCalendrier = [];
         foreach ($calendriers as $calendrier) {
             $tCalendrier[$calendrier->getSemaineFormation()] = $calendrier->getDateLundi();

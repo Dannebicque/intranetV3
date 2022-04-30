@@ -30,7 +30,7 @@ class ApcRessourceApprentissageCritiqueType extends AbstractType
             ->add('apprentissageCritique', EntityType::class, [
                 'class' => ApcApprentissageCritique::class,
                 'choice_label' => 'libelle',
-                'query_builder' => fn(ApcApprentissageCritiqueRepository $apcApprentissageCritiqueRepository) => $apcApprentissageCritiqueRepository->findByDiplomeBuilder($this->diplome),
+                'query_builder' => fn (ApcApprentissageCritiqueRepository $apcApprentissageCritiqueRepository) => $apcApprentissageCritiqueRepository->findByDiplomeBuilder($this->diplome),
             ])
         ;
     }

@@ -132,9 +132,9 @@ class MyCelcat
         while (odbc_fetch_row($result)) {
             $eventId = odbc_result($result, 1);
 
-            //Recherche si déjà présent
+            // Recherche si déjà présent
             $events = $this->celcatEventsRepository->findBy(['eventId' => $eventId]);
-            //On supprimer ce qui existe déjà, parce que potentiellement plusieurs.
+            // On supprimer ce qui existe déjà, parce que potentiellement plusieurs.
             foreach ($events as $event) {
                 $this->entityManger->remove($event);
             }
@@ -184,7 +184,7 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
         $groupes
     ): CelcatEvent {
         $event = null;
-        //Et on ecrit la nouvelle version ou la nouvelle ligne
+        // Et on ecrit la nouvelle version ou la nouvelle ligne
         $debut = explode(' ', (string) odbc_result($result, 3));
         $fin = explode(' ', (string) odbc_result($result, 4));
         $type = mb_substr(odbc_result($result, 6), 1, -1);
@@ -219,9 +219,9 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
                 $event->setUpdateEvent(Tools::convertDateHeureToObject($dt[0], $dt[1]));
 
                 $this->entityManger->persist($event);
-            } //endif
+            } // endif
         }
 
-        return $event; //todo: plusieurs event potentiellement ?
+        return $event; // todo: plusieurs event potentiellement ?
     }
 }

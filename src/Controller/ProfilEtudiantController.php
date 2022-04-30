@@ -101,7 +101,7 @@ class ProfilEtudiantController extends BaseController
             $chart->setData([
                 'labels' => $etudiantNotes->getLabelsGraphique(),
                 'datasets' => [
-                    [//todo: intégrer l'historique des semestres
+                    [// todo: intégrer l'historique des semestres
                         'label' => $etudiant->getSemestre()->getLibelle(),
                         'data' => $etudiantNotes->getDataGraphique(),
                         'backgroundColor' => 'rgb(255, 99, 132)',
@@ -247,17 +247,17 @@ class ProfilEtudiantController extends BaseController
                 $this->dataUserSession->getAnneeUniversitaire());
             $statistiquesAbsences = $statsAbsences->calculStatistiquesAbsencesEtudiant($absences);
 
-            //todo: gérer les mois, selon le semestre ?
+            // todo: gérer les mois, selon le semestre ?
             return $this->render('user/composants/_absences.html.twig', [
-                'tabPlanning' => Calendrier::getTabPlanning(), //objet...
-                'tabJour' => ['', 'L', 'M', 'M', 'J', 'V', 'S', 'D'], //objet...
-                'tabFerie' => Calendrier::getTabJoursFeries(), //objet Calendrier???...
-                'tabFinMois' => Calendrier::getTabFinMois(), //objet...
+                'tabPlanning' => Calendrier::getTabPlanning(), // objet...
+                'tabJour' => ['', 'L', 'M', 'M', 'J', 'V', 'S', 'D'], // objet...
+                'tabFerie' => Calendrier::getTabJoursFeries(), // objet Calendrier???...
+                'tabFinMois' => Calendrier::getTabFinMois(), // objet...
                 'annee' => $etudiant->getAnneeUniversitaire(),
                 'etudiant' => $etudiant,
                 'absences' => $absences,
                 'statistiquesAbsences' => $statistiquesAbsences,
-                'tabAbsence' => [], //compte des absences par créneaux du planning.
+                'tabAbsence' => [], // compte des absences par créneaux du planning.
                 'matieres' => $matieres,
             ]);
         }
@@ -276,7 +276,7 @@ class ProfilEtudiantController extends BaseController
         Etudiant $etudiant
     ): Response {
         return $this->render('user/composants/_stages.html.twig', [
-            //todo: si l'étudiant n'est plus dans un semestre, garder l'historique uniquemenent. Dans ce cas l'historique ne doit pas dépendre d'une année ?
+            // todo: si l'étudiant n'est plus dans un semestre, garder l'historique uniquemenent. Dans ce cas l'historique ne doit pas dépendre d'une année ?
             'stagesEnCours' => $stageEtudiantRepository->findByEtudiantAnnee($etudiant,
                 $this->dataUserSession->getAnneeUniversitaire()),
             'stagesHistorique' => $stageEtudiantRepository->findByEtudiantHistorique($etudiant,

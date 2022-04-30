@@ -52,7 +52,7 @@ class EtudiantSemestreTableType extends TableType
         $builder->addFilter('search', SearchType::class);
         $builder->addFilter('groupe', EntityType::class, [
             'class' => Groupe::class,
-            'query_builder' => fn(GroupeRepository $groupeRepository) => $groupeRepository->findBySemestreBuilder($this->semestre),
+            'query_builder' => fn (GroupeRepository $groupeRepository) => $groupeRepository->findBySemestreBuilder($this->semestre),
             'choice_label' => 'display',
             'required' => false,
             'placeholder' => 'Filtrer par groupe',
@@ -123,7 +123,7 @@ class EtudiantSemestreTableType extends TableType
                     'post_params' => [
                         'field' => 'semestre',
                     ],
-                    'query_builder' => fn(SemestreRepository $semestreRepository) => $semestreRepository->findByDepartementBuilder($this->departement),
+                    'query_builder' => fn (SemestreRepository $semestreRepository) => $semestreRepository->findByDepartementBuilder($this->departement),
                     'value' => $s->getSemestre()?->getId(),
                     'entity' => Semestre::class,
                     'choice_label' => 'libelle',

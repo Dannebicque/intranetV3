@@ -18,7 +18,7 @@ use App\Entity\Semestre;
 
 class PrevisionnelRessourceRepository extends PrevisionnelRepository
 {
-    public final const TYPE = 'ressource';
+    final public const TYPE = 'ressource';
 
     public function findPrevisionnelEnseignantComplet(Personnel $personnel, int $annee): array
     {
@@ -165,7 +165,7 @@ class PrevisionnelRessourceRepository extends PrevisionnelRepository
             ->innerJoin(ApcRessource::class, 'm', 'WITH', 'p.idMatiere = m.id')
             ->innerJoin(Personnel::class, 'pers', 'WITH', 'p.personnel = pers.id')
             ->select('p.id as id_previsionnel, p.annee, p.referent, p.nbHCm, p.nbHTd, p.nbHTp, p.nbGrCm, p.nbGrTd, p.nbGrTp, m.id as id_ressource, m.libelle, m.codeMatiere, m.codeElement as matiere_code_element, pers.id as id_personnel, pers.nom, pers.prenom, pers.numeroHarpege, pers.mailUniv, pers.nbHeuresService, s.id as id_semestre, s.libelle as libelle_semestre, a.codeEtape as annee_code_etape, a.libelleLong as annee_libelle_long, a.id as id_annee, a.libelle as libelle_annee')
-            //->innerJoin(Semestre::class, 's', 'WITH', 'm.semestre = s.id')
+            // ->innerJoin(Semestre::class, 's', 'WITH', 'm.semestre = s.id')
             ->innerJoin('m.semestres', 's')
             ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
             ->andWhere('p.typeMatiere = :type')

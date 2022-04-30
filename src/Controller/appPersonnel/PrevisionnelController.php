@@ -76,7 +76,7 @@ class PrevisionnelController extends BaseController
     #[Route(path: '/export.{_format}', name: 'application_personnel_previsionnel_export', methods: 'GET')]
     public function export(): Response
     {
-        //save en csv
+        // save en csv
         return new Response('', Response::HTTP_OK);
     }
 }

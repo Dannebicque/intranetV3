@@ -53,6 +53,7 @@ class AlternanceFicheSuiviController extends BaseController
                 Constantes::FLASHBAG_SUCCESS,
                 'alternance.edit.success.fiche_suivi'
             );
+
             return $this->redirectToRoute('application_personnel_alternance_fiche_suivi_show',
                 ['id' => $alternanceFicheSuivi->getId()]);
         }
@@ -94,6 +95,7 @@ class AlternanceFicheSuiviController extends BaseController
                 Constantes::FLASHBAG_SUCCESS,
                 'alternance.edit.success.fiche_suivi'
             );
+
             return $this->redirectToRoute('application_personnel_alternance_fiche_suivi_show',
                 ['id' => $alternanceFicheSuivi->getId()]);
         }
@@ -123,6 +125,5 @@ class AlternanceFicheSuiviController extends BaseController
         }
 
         return $this->redirectToRoute('administration_index');
-
     }
 }

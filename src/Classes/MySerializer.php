@@ -24,13 +24,13 @@ use Symfony\Component\Serializer\Serializer;
 
 class MySerializer
 {
-    public final const ONLY_DATE = 'date';
-    public final const ONLY_HEURE = 'heure';
+    final public const ONLY_DATE = 'date';
+    final public const ONLY_HEURE = 'heure';
     private array $options = [];
 
-    public function serialize(array $data, array | string $groups): string
+    public function serialize(array $data, array|string $groups): string
     {
-        //pour prendre en compte les annotations groups et maxdepth
+        // pour prendre en compte les annotations groups et maxdepth
         $classMetaDataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
 
         $encoder = new JsonEncoder();
@@ -50,11 +50,11 @@ class MySerializer
     {
         $this->options = $options;
         $dataArray = [];
-        //serialize les data
+        // serialize les data
         $dataJson = $this->serialize($data, $modele);
 
         $tabData = json_decode($dataJson, true, 512, JSON_THROW_ON_ERROR);
-        //header
+        // header
         $i = 1;
         $ligne = 1;
         foreach ($colonne as $value) {
@@ -84,7 +84,7 @@ class MySerializer
         }
         $i = 1;
         ++$ligne;
-        //data
+        // data
         foreach ($tabData as $row) {
             foreach ($colonne as $key => $value) {
                 if ((!is_array($value) && array_key_exists($value,

@@ -23,7 +23,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class MyProjet
 {
-
     protected array$dataEtudiants = [];
 
     /**

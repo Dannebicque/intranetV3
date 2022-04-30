@@ -792,7 +792,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     public function getAnneeUniversitaire(): ?AnneeUniversitaire
     {
         return $this->getSemestre()?->getAnneeUniversitaire();
-
     }
 
     public function getIntituleSecuriteSociale(): ?string
@@ -906,7 +905,7 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
 
     public function removeEmprunt(EmpruntEtudiant $emprunt): self
     {
-        //Todo: revoir la partie emprunt
+        // Todo: revoir la partie emprunt
         if ($this->emprunts->contains($emprunt)) {
             $this->emprunts->removeElement($emprunt);
             // set the owning side to null (unless already changed)

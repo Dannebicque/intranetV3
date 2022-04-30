@@ -108,9 +108,9 @@ class StatutController extends BaseController
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'status.delete.success.flash');
 
             return $this->json($id, Response::HTTP_OK);
-            //}
+            // }
 
-            //return $this->json('not_empty', Response::HTTP_INTERNAL_SERVER_ERROR);
+            // return $this->json('not_empty', Response::HTTP_INTERNAL_SERVER_ERROR);
         }
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'status.delete.error.flash');
 

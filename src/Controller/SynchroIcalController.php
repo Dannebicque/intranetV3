@@ -30,7 +30,7 @@ class SynchroIcalController extends AbstractController
     #[Route(path: '/intervenant/{code}.{_format}', name: 'edt_intervenant_synchro_ical')]
     public function synchroIntervenantIcal(MyEdtExport $myEdtExport, PersonnelRepository $personnelRepository, $code, $_format): Response
     {
-        //Toutes les semaines
+        // Toutes les semaines
         $personnel = $personnelRepository->findByCode($code);
         if (null !== $personnel) {
             $ical = $myEdtExport->export($personnel, $_format, 'Personnel');

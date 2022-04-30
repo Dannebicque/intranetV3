@@ -80,7 +80,7 @@ class ScolariteController extends BaseController
      * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
      */
     #[Route(path: '/genere-apogee/{semestre}', name: 'sa_scolarite_semestre_genere_apogee', requirements: ['semestre' => '\d+'], methods: ['POST'])]
-    public function genereFichierApogee(SousCommissionExport $sousCommissionExport, Request $request, Semestre $semestre): RedirectResponse | StreamedResponse
+    public function genereFichierApogee(SousCommissionExport $sousCommissionExport, Request $request, Semestre $semestre): RedirectResponse|StreamedResponse
     {
         $anneeUniersitaire = $this->getUser()->getAnneeUniversitaire();
         if (null === $anneeUniersitaire) {

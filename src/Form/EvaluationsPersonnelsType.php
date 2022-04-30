@@ -35,7 +35,7 @@ class EvaluationsPersonnelsType extends AbstractType
                 'choice_label' => 'display',
                 'multiple' => true,
                 'expanded' => true,
-                'query_builder' => fn(PersonnelRepository $repo) => $repo->findBySemestreBuilder($this->semestre),
+                'query_builder' => fn (PersonnelRepository $repo) => $repo->findBySemestreBuilder($this->semestre),
             ]);
     }
 

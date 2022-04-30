@@ -71,27 +71,27 @@ class PrevisionnelExport
         /** @var \App\DTO\Previsionnel $previ */
         foreach ($previsionnels as $previ) {
             $colonne = 1;
-            //CODE VET
+            // CODE VET
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
                 $previ->annee_code_etape);
             ++$colonne;
-            //LIBELLE VET
+            // LIBELLE VET
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
                 $previ->annee_libelle_long);
             ++$colonne;
-            //CODE ELEMENT*
+            // CODE ELEMENT*
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne, $previ->matiere_code_element);
             ++$colonne;
-            //LIBELLE ELEMENT
+            // LIBELLE ELEMENT
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne, $previ->matiere_libelle);
             ++$colonne;
 
             if (null !== $previ->personnel_id) {
-                //CODE HARPEGE*
+                // CODE HARPEGE*
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
                     $previ->personnel_numeroHarpege);
                 ++$colonne;
-                //NOM PRENOM
+                // NOM PRENOM
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
                     mb_strtoupper(Tools::supprimeAccent($previ->personnel_nom)).' '.mb_strtoupper(Tools::supprimeAccent($previ->personnel_prenom)));
             } else {
@@ -101,22 +101,22 @@ class PrevisionnelExport
                     'ERR-XXX');
             }
             ++$colonne;
-            //H CM PREVU*
+            // H CM PREVU*
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne, $previ->nbHCm);
             ++$colonne;
-            //GP CM PREVU*
+            // GP CM PREVU*
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne, $previ->nbGrCm);
             ++$colonne;
             // H TD PREVU*
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne, $previ->nbHTd);
             ++$colonne;
-            //GP TD PREVU*
+            // GP TD PREVU*
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne, $previ->nbGrTd);
             ++$colonne;
-            //H TP PREVU*
+            // H TP PREVU*
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne, $previ->nbHTp);
             ++$colonne;
-            //GP TP PREVU*
+            // GP TP PREVU*
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne, $previ->nbGrTp);
             ++$this->ligne;
         }
@@ -126,7 +126,7 @@ class PrevisionnelExport
     {
         foreach ($hrs as $previ) {
             $colonne = 1;
-            //CODE VET
+            // CODE VET
             if (null !== $previ->getSemestre() && null !== $previ->getSemestre()->getAnnee()) {
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
                     $previ->getSemestre()->getAnnee()->getCodeEtape());
@@ -145,11 +145,11 @@ class PrevisionnelExport
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne);
             }
             ++$colonne;
-            //CODE ELEMENT*
+            // CODE ELEMENT*
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
                 $previ->getTypeHrs() ? $previ->getTypeHrs()->getType() : 'non défini');
             ++$colonne;
-            //LIBELLE ELEMENT
+            // LIBELLE ELEMENT
             if (null !== $previ->getTypeHrs()) {
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
                     $previ->getTypeHrs()->getLibelle().' '.$previ->getLibelle());
@@ -160,11 +160,11 @@ class PrevisionnelExport
             ++$colonne;
 
             if (null !== $previ->getPersonnel()) {
-                //CODE HARPEGE*
+                // CODE HARPEGE*
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
                     $previ->getPersonnel()->getNumeroHarpege());
                 ++$colonne;
-                //NOM PRENOM
+                // NOM PRENOM
                 $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
                     mb_strtoupper(Tools::supprimeAccent($previ->getPersonnel()->getNom())).' '.mb_strtoupper(Tools::supprimeAccent($previ->getPersonnel()->getPrenom())));
             } else {
@@ -174,29 +174,29 @@ class PrevisionnelExport
                     'ERR-XXX');
             }
             ++$colonne;
-            //H CM PREVU*
+            // H CM PREVU*
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne, 0);
             ++$colonne;
-            //GP CM PREVU*
+            // GP CM PREVU*
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne, 1);
             ++$colonne;
             // H TD PREVU*
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne, $previ->getNbHeuresTd());
             ++$colonne;
-            //GP TD PREVU*
+            // GP TD PREVU*
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne, 1);
             ++$colonne;
-            //H TP PREVU*
+            // H TP PREVU*
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne, 0);
             ++$colonne;
-            //GP TP PREVU*
+            // GP TP PREVU*
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne, 1);
             ++$this->ligne;
         }
     }
 
-    public function export(?Departement $getDepartement, int $annee, Matiere $matiere, string $_format,array $previsionnels): StreamedResponse
+    public function export(?Departement $getDepartement, int $annee, Matiere $matiere, string $_format, array $previsionnels): StreamedResponse
     {
-        //todo: a faire.
+        // todo: a faire.
     }
 }

@@ -19,7 +19,7 @@ class DocumentFavoriEtudiant extends DocumentFavori
 {
     use LifeCycleTrait;
 
-    public function __construct(#[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'documentsFavoris')] private ?\App\Entity\Etudiant $etudiant, Document $document)
+    public function __construct(#[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'documentsFavoris')] private ?Etudiant $etudiant, Document $document)
     {
         $this->setDocument($document);
     }

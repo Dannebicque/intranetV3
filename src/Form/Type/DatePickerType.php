@@ -81,7 +81,7 @@ class DatePickerType extends AbstractType
             ->setDefault('allow_input', true)
             ->setDefault('input_prefix_text', '<i class="fas fa-calendar-day"></i>')
             ->setAllowedTypes('allow_input', 'bool')
-            ->setDefault('format', fn(Options $options) => $options['enable_time'] ? 'd/m/Y H:i' : 'd/m/Y')
+            ->setDefault('format', fn (Options $options) => $options['enable_time'] ? 'd/m/Y H:i' : 'd/m/Y')
             ->setAllowedTypes('format', 'string');
     }
 
@@ -102,7 +102,7 @@ class DatePickerType extends AbstractType
             $value = new DateTime($value);
         }
 
-        if (!is_a($value, DateTimeInterface::class)) {//todo: CarbonInterface ?
+        if (!is_a($value, DateTimeInterface::class)) {// todo: CarbonInterface ?
             return null;
         }
 

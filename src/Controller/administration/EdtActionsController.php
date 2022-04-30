@@ -36,7 +36,7 @@ class EdtActionsController extends BaseController
     public function uploadSemaine(Request $request, MyEdtImport $myEdtImport): ?RedirectResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_EDT', $this->getDepartement());
-        //récupérer le fichier
+        // récupérer le fichier
         $myEdtImport->init($request->files->get('fichieredt'), $this->dataUserSession)->traite();
         /* fin necessaire ? */
         $s = $myEdtImport->getCalendrier();
@@ -44,7 +44,7 @@ class EdtActionsController extends BaseController
             return $this->redirectToRoute('administration_edt_index',
                 ['semaine' => $s->getSemaineReelle(), 'valeur' => $myEdtImport->getSemestre(), 'filtre' => 'promo']);
         }
-        //pas de semaine trouvée
+        // pas de semaine trouvée
         return $this->redirectToRoute('administration_edt_index');
     }
 

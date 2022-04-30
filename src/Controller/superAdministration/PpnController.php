@@ -26,7 +26,7 @@ class PpnController extends BaseController
     #[Route(path: '/export.{_format}', name: 'sa_ppn_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
     public function export(): Response
     {
-        //save en csv
+        // save en csv
         return new Response('', Response::HTTP_OK);
     }
 
@@ -39,13 +39,13 @@ class PpnController extends BaseController
         $ppnOrigine = $ppnRepository->find($request->request->get('ppn_origine'));
         $ppnDest = $ppnRepository->find($request->request->get('ppn_dest'));
         if (null !== $ppnDest && null !== $ppnOrigine) {
-            //effacer contenu PPN de destination
+            // effacer contenu PPN de destination
             foreach ($ppnDest->getMatieres() as $matiere) {
                 $this->entityManager->remove($matiere);
             }
             $this->entityManager->flush();
 
-            //Copie PPN
+            // Copie PPN
             foreach ($ppnOrigine->getMatieres() as $matiere) {
                 $newMatiere = clone $matiere;
                 $newMatiere->setPpn($ppnDest);
@@ -119,8 +119,8 @@ class PpnController extends BaseController
     #[Route(path: '/{id}', name: 'sa_ppn_delete', methods: 'DELETE')]
     public function delete(Request $request, Ppn $ppn): Response
     {
-        //suppression uniquement si vide.
-        //feature: gérer une suppression plus complete en super-admin
+        // suppression uniquement si vide.
+        // feature: gérer une suppression plus complete en super-admin
         $id = $ppn->getId();
         if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $this->entityManager->remove($ppn);

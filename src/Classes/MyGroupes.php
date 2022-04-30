@@ -104,7 +104,7 @@ class MyGroupes
         $groupes = $this->groupeRepository->findBySemestre($semestre);
         /** @var Groupe $groupe */
         foreach ($groupes as $groupe) {
-            //pas d'enfant c'est le groupe de plus bas  niveau
+            // pas d'enfant c'est le groupe de plus bas  niveau
             if (0 === count($groupe->getEnfants()) && TypeGroupe::TYPE_GROUPE_LV !== $groupe->getTypeGroupe()->getType()) {
                 $groupeParents = [];
                 $g = $groupe;
@@ -114,13 +114,13 @@ class MyGroupes
                 }
 
                 foreach ($groupe->getEtudiants() as $etudiant) {
-                    //supprimer les groupes de l'étudiant
+                    // supprimer les groupes de l'étudiant
                     foreach ($etudiant->getGroupes() as $gr) {
                         $etudiant->removeGroupe($gr);
                     }
-                    //remettre le groupe en cours
+                    // remettre le groupe en cours
                     $etudiant->addGroupe($groupe);
-                    //ajouter les parents
+                    // ajouter les parents
                     foreach ($groupeParents as $gp) {
                         $etudiant->addGroupe($gp);
                     }
@@ -174,19 +174,19 @@ class MyGroupes
 
         $handle = fopen($file, 'rb');
 
-        /*Si on a réussi à ouvrir le fichier*/
+        /* Si on a réussi à ouvrir le fichier */
         if ($handle) {
             /* supprime la première ligne */
             fgetcsv($handle, 1024);
-            /*Tant que l'on est pas à la fin du fichier*/
+            /* Tant que l'on est pas à la fin du fichier */
             while (!feof($handle)) {
-                /*On lit la ligne courante*/
+                /* On lit la ligne courante */
                 $ligne = fgetcsv($handle, 1024);
-                //nomgroupe,"ordre","codeapogee","option_apogee","semestre","tg_nom","tg_type"
+                // nomgroupe,"ordre","codeapogee","option_apogee","semestre","tg_nom","tg_type"
                 if (is_array($ligne) && count($ligne) > 5 && array_key_exists($ligne[4], $semestres)) {
                     if (!array_key_exists($ligne[4], $typeGroupes) || !array_key_exists($ligne[5],
                             $typeGroupes[$ligne[4]])) {
-                        //le type de groupe n'existe pas encore, donc on ajoute.
+                        // le type de groupe n'existe pas encore, donc on ajoute.
                         $tg = new TypeGroupe($semestres[$ligne[4]]);
                         $tg->setLibelle($ligne[5]);
                         $tg->setType($ligne[6]);
@@ -209,9 +209,9 @@ class MyGroupes
             }
             $this->entityManager->flush();
 
-            /*On ferme le fichier*/
+            /* On ferme le fichier */
             fclose($handle);
-            unlink($file); //suppression du fichier
+            unlink($file); // suppression du fichier
 
             return true;
         }
@@ -237,13 +237,13 @@ class MyGroupes
 
         $handle = fopen($file, 'rb');
 
-        /*Si on a réussi à ouvrir le fichier*/
+        /* Si on a réussi à ouvrir le fichier */
         if ($handle) {
             /* supprime la première ligne */
             fgetcsv($handle, 1024);
-            /*Tant que l'on est pas à la fin du fichier*/
+            /* Tant que l'on est pas à la fin du fichier */
             while (!feof($handle)) {
-                /*On lit la ligne courante*/
+                /* On lit la ligne courante */
                 $ligne = fgetcsv($handle, 1024);
                 if (is_array($ligne) && 2 === count($ligne) && array_key_exists($ligne[0],
                         $groupes) && array_key_exists($ligne[1], $etudiants)) {
@@ -252,9 +252,9 @@ class MyGroupes
             }
             $this->entityManager->flush();
 
-            /*On ferme le fichier*/
+            /* On ferme le fichier */
             fclose($handle);
-            unlink($file); //suppression du fichier
+            unlink($file); // suppression du fichier
 
             return true;
         }

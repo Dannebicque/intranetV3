@@ -54,9 +54,9 @@ abstract class Calendrier
 
     public static function joursFeries(?int $year): void
     {
-        $year1 = $year + 1; //second "semestre"
+        $year1 = $year + 1; // second "semestre"
 
-        $easter = easter_date($year1, CAL_FRENCH); //paque (dimanche)
+        $easter = easter_date($year1, CAL_FRENCH); // paque (dimanche)
         $easterDay = (int) date('j', $easter);
         $easterMonth = (int) date('n', $easter);
         $easterYear = (int) date('Y', $easter);
@@ -66,18 +66,18 @@ abstract class Calendrier
         $lundiPentecote = mktime(0, 0, 0, $easterMonth, $easterDay + 50, $easterYear);
 
         self::$tabJoursFeries = [
-            $year.'-11-01', //toussaints
-            $year.'-11-11', //armistice
-            $year.'-12-25', //noel
-            $year1.'-01-01', //jour de l'an
-            $year1.'-05-01', //fete du travail
-            $year1.'-05-08', //victoire
-            $year1.'-07-14', //fete nationale
-            $year1.'-08-15', //assomption
-            date('Y-m-d', $easter), //dimanche de pâque
-            date('Y-m-d', $lundiPaque), //lundi de pâque
-            date('Y-m-d', $jeudiAscension), //jeudi ascension
-            date('Y-m-d', $lundiPentecote), //lundi de pentecote
+            $year.'-11-01', // toussaints
+            $year.'-11-11', // armistice
+            $year.'-12-25', // noel
+            $year1.'-01-01', // jour de l'an
+            $year1.'-05-01', // fete du travail
+            $year1.'-05-08', // victoire
+            $year1.'-07-14', // fete nationale
+            $year1.'-08-15', // assomption
+            date('Y-m-d', $easter), // dimanche de pâque
+            date('Y-m-d', $lundiPaque), // lundi de pâque
+            date('Y-m-d', $jeudiAscension), // jeudi ascension
+            date('Y-m-d', $lundiPentecote), // lundi de pentecote
         ];
     }
 

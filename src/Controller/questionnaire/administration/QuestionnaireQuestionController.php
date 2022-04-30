@@ -178,7 +178,7 @@ class QuestionnaireQuestionController extends BaseController
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    //todo:  export
+    // todo:  export
     private function traitementTags(QuestionnaireQuestion $questionnaireQuestion, string $tags): void
     {
         $tabTags = explode(';', $tags);

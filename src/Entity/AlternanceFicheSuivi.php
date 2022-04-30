@@ -23,8 +23,8 @@ class AlternanceFicheSuivi extends BaseEntity
 {
     use LifeCycleTrait;
 
-    public final const VISITE_PHYSIQUE = 'v';
-    public final const VISITE_TELEPHONIQUE = 't';
+    final public const VISITE_PHYSIQUE = 'v';
+    final public const VISITE_TELEPHONIQUE = 't';
     protected static array $tabTexte = [
         0 => 'Non applicable',
         1 => 'Faible',

@@ -93,12 +93,11 @@ class QuestionnaireController extends AbstractController
     }
 
     /**
-     *
      * @throws NonUniqueResultException
      * @throws \JsonException
      */
     #[Route(path: '/api/ajax/reponse/{questionnaire}/{typeQuestionnaire}', name: 'app_etudiant_qualite_ajax_reponse', options: ['expose' => true])]
-    public function sauvegardeReponse(EtudiantRepository $etudiantRepository, QuestionnaireQuestionRepository $quizzQuestionRepository, QuestionnaireReponseRepository $quizzReponseRepository, QuestionnaireEtudiantRepository $quizzEtudiantRepository, QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository, Request $request, $questionnaire, $typeQuestionnaire) : JsonResponse
+    public function sauvegardeReponse(EtudiantRepository $etudiantRepository, QuestionnaireQuestionRepository $quizzQuestionRepository, QuestionnaireReponseRepository $quizzReponseRepository, QuestionnaireEtudiantRepository $quizzEtudiantRepository, QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository, Request $request, $questionnaire, $typeQuestionnaire): JsonResponse
     {
         $quizzEtudiant = null;
         $donnees = JsonRequest::getFromRequest($request);
@@ -158,13 +157,13 @@ class QuestionnaireController extends AbstractController
                     $exist->setCleReponse($cleReponse);
                     $exist->setValeur($reponse->getValeur());
                 } elseif (TypeQcm::class === $question->getType()) {
-                    //si c'est un QCM, on fait un tableau de réponse.
+                    // si c'est un QCM, on fait un tableau de réponse.
                     $cleReponses = json_decode($exist->getCleReponse(), false, 512, JSON_THROW_ON_ERROR);
                     $valeurs = json_decode($exist->getValeur(), false, 512, JSON_THROW_ON_ERROR);
                     $idCle = array_search($cleReponse, $cleReponses, true);
                     $idValeur = array_search($reponse->getValeur(), $valeurs, true);
                     if (false !== $idCle && false !== $idValeur) {
-                        //réponse déjà présente on supprime
+                        // réponse déjà présente on supprime
                         unset($cleReponses[$idCle], $valeurs[$idValeur]);
                         $cleReponses = array_values($cleReponses);
                         $valeurs = array_values($valeurs);
@@ -183,17 +182,17 @@ class QuestionnaireController extends AbstractController
 
             return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     /**
-     *
      * @throws NonUniqueResultException
      * @throws \JsonException
      * @throws \JsonException
      */
     #[Route(path: '/api/ajax/reponse-txt/{questionnaire}/{typeQuestionnaire}', name: 'app_etudiant_qualite_ajax_reponse_txt', options: ['expose' => true])]
-    public function sauvegardeReponseTxt(EtudiantRepository $etudiantRepository, QuestionnaireQuestionRepository $quizzQuestionRepository, QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository, QuestionnaireEtudiantRepository $quizzEtudiantRepository, Request $request, $questionnaire, $typeQuestionnaire) : JsonResponse
+    public function sauvegardeReponseTxt(EtudiantRepository $etudiantRepository, QuestionnaireQuestionRepository $quizzQuestionRepository, QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository, QuestionnaireEtudiantRepository $quizzEtudiantRepository, Request $request, $questionnaire, $typeQuestionnaire): JsonResponse
     {
         $quizzEtudiant = null;
         $donnees = JsonRequest::getFromRequest($request);
@@ -225,8 +224,8 @@ class QuestionnaireController extends AbstractController
             if ('autre' === $t[3]) {
                 $cleQuestion = $t[0].'_'.$t[1].'_reponses_'.$t[4].'_autre';
 
-                //gesion du cas autre...
-                //on met à jour la question de base. On ajoute la réponse écrite
+                // gesion du cas autre...
+                // on met à jour la question de base. On ajoute la réponse écrite
 
                 $exist = $quizzEtudiantReponseRepository->findOneBy(['questionnaireEtudiant' => $quizzEtudiant->getId(), 'cleQuestion' => $cleQuestion]);
                 if (null === $exist) {
@@ -264,6 +263,7 @@ class QuestionnaireController extends AbstractController
 
             return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
+
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }

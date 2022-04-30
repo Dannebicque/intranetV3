@@ -24,7 +24,7 @@ class EtudiantSousCommissionApc
 
     public float $bonification = 0;
     public ?string $decision = null;
-    public ?string $conseil = null; //todo: information sur les enjeux du S"pair"
+    public ?string $conseil = null; // todo: information sur les enjeux du S"pair"
     public ?string $proposition = null;
     public array $scolarite = [];
 
@@ -54,7 +54,7 @@ class EtudiantSousCommissionApc
         }
 
         if ($nbUes === $nbUesValidees) {
-            $this->decision = Constantes::SEMESTRE_VALIDE; //cas simple, toutes les UE sont validées.
+            $this->decision = Constantes::SEMESTRE_VALIDE; // cas simple, toutes les UE sont validées.
             $this->conseil = 'RAS. Passage au semestre suivant, sans problème.';
         } elseif (0 === $nbUesValidees) {
             $this->decision = Constantes::SEMESTRE_NON_VALIDE;
@@ -90,7 +90,7 @@ class EtudiantSousCommissionApc
 
     public function recupereScolarite(): void
     {
-        //on ne récupère la scolarité que par rapport au diplôme en cours
+        // on ne récupère la scolarité que par rapport au diplôme en cours
         foreach ($this->etudiant->getScolarites() as $scolarite) {
             if ($scolarite->getSemestre()->getDiplome() === $this->etudiant->getDiplome()) {
                 $this->scolarite[$scolarite->getSemestre()->getOrdreLmd()] = new Scolarite($scolarite);
@@ -106,7 +106,7 @@ class EtudiantSousCommissionApc
                 $this->bonification += $this->moyenneMatieres[$matiere->getTypeIdMatiere()]->getBonification();
             } elseif (array_key_exists($matiere->getTypeIdMatiere(), $this->moyenneMatieres)) {
                 if (true === $this->moyenneMatieres[$matiere->getTypeIdMatiere()]->matiereAAnnuler) {
-                    //toutes les notes sont des absences justifiéées
+                    // toutes les notes sont des absences justifiéées
                     $tabs['matieres'][$matiere->codeElement]['matiereAAnnuler'] = true;
                 } else {
                     $tabs['matieres'][$matiere->codeElement]['matiereAAnnuler'] = false;
@@ -129,13 +129,13 @@ class EtudiantSousCommissionApc
                         if (array_key_exists($ue->ue->getApcCompetence()?->getId(),
                                 $ressources) && array_key_exists($matiere->codeElement,
                                 $ressources[$ue->ue->getApcCompetence()?->getId()])) {
-                            $ue->matieres[$matiere->codeElement]['coefficient'] = $ressources[$competenceId][$matiere->codeElement]->getCoefficient(); //moyenne
+                            $ue->matieres[$matiere->codeElement]['coefficient'] = $ressources[$competenceId][$matiere->codeElement]->getCoefficient(); // moyenne
                             // officiellement du module.
                             $ue->totalCoefficients += $ressources[$competenceId][$matiere->codeElement]->getCoefficient();
                         } elseif (array_key_exists($competenceId,
                                 $saes) && array_key_exists($matiere->codeElement,
                                 $saes[$competenceId])) {
-                            $ue->matieres[$matiere->codeElement]['coefficient'] = $saes[$competenceId][$matiere->codeElement]->getCoefficient(); //moyenne officiellement du module.
+                            $ue->matieres[$matiere->codeElement]['coefficient'] = $saes[$competenceId][$matiere->codeElement]->getCoefficient(); // moyenne officiellement du module.
                             $ue->totalCoefficients += $saes[$competenceId][$matiere->codeElement]->getCoefficient();
                         } else {
                             $ue->matieres[$matiere->codeElement]['coefficient'] = 0;

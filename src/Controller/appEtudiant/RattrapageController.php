@@ -26,7 +26,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class RattrapageController extends BaseController
 {
     #[Route(path: '/', name: 'application_etudiant_rattrapage_index')]
-    public function index(TypeMatiereManager $typeMatiereManager, RattrapageRepository $rattrapageRepository, Request $request): RedirectResponse | Response
+    public function index(TypeMatiereManager $typeMatiereManager, RattrapageRepository $rattrapageRepository, Request $request): RedirectResponse|Response
     {
         $rattrapage = new Rattrapage($this->getUser());
         $form = $this->createForm(

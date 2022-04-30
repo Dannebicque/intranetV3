@@ -19,8 +19,8 @@ class MoyenneMatiere
     public array $coefficients = [];
     public float $totalNotes = 0;
     public float $totalCoefficient = 0;
-    public int $absences = 0; //nombre d'absences non justifiées impliquant une pénalité
-    public int $absencesJustifiee = 0; //nombre d'absences  justifiées impliquant
+    public int $absences = 0; // nombre d'absences non justifiées impliquant une pénalité
+    public int $absencesJustifiee = 0; // nombre d'absences  justifiées impliquant
     public bool $optionFaite;
     private float $bonification = 0;
     public bool $matiereAAnnuler = false;
@@ -61,7 +61,7 @@ class MoyenneMatiere
         }
 
         if (true === $note->getAbsenceJustifie()) {
-            //j'ai une absence justifiée.
+            // j'ai une absence justifiée.
             ++$this->absencesJustifiee;
         }
 
@@ -94,8 +94,6 @@ class MoyenneMatiere
 
     public function getMoyenne(): ?float
     {
-
-
         $moy = $this->totalCoefficient > 0 ? $this->totalNotes / $this->totalCoefficient : 0;
 
         return max($moy, 0);

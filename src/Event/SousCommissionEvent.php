@@ -14,7 +14,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class SousCommissionEvent extends Event
 {
-    public final const PUBLISHED = 'sooscommission.publiee';
+    final public const PUBLISHED = 'sooscommission.publiee';
 
     public function __construct(protected ScolaritePromo $scolaritePromo)
     {

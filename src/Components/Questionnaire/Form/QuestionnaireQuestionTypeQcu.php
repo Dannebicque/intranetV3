@@ -21,7 +21,7 @@ class QuestionnaireQuestionTypeQcu extends QuestionnaireQuestionType
     {
         parent::buildForm($builder, $options);
         $builder
-            //->add('parametre', TextType::class)
+            // ->add('parametre', TextType::class)
             ->add('quizzReponses', CollectionStimulusType::class, [
                 'entry_type' => QuestionnaireReponseType::class,
                 'entry_options' => ['label' => false],
@@ -32,7 +32,7 @@ class QuestionnaireQuestionTypeQcu extends QuestionnaireQuestionType
                 'by_reference' => false,
                 'max_items' => 0,
 
-                //'help' => 'Ajoutez les situations professionnelles de la compétence.',
+                // 'help' => 'Ajoutez les situations professionnelles de la compétence.',
             ]);
     }
 

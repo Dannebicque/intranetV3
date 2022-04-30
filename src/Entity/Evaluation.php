@@ -84,7 +84,7 @@ class Evaluation extends BaseEntity
     /**
      * @throws Exception
      */
-    public function __construct(#[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'evaluationsAuteur')] private ?\App\Entity\Personnel $personnelAuteur, \App\DTO\Matiere $mat, Semestre $semestre)
+    public function __construct(#[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'evaluationsAuteur')] private ?Personnel $personnelAuteur, \App\DTO\Matiere $mat, Semestre $semestre)
     {
         $this->setUuid(Uuid::uuid4());
         $this->idMatiere = $mat->id;

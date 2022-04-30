@@ -42,7 +42,7 @@ class StagePeriodeGestionController extends BaseController
             [
                 'etudiant' => ['nom', 'prenom'],
                 'entreprise' => ['raisonSociale'],
-                //'adresse' => ['adresse1','adresse2', 'cp', 'ville', 'pays']
+                // 'adresse' => ['adresse1','adresse2', 'cp', 'ville', 'pays']
                 'tuteur' => ['nom', 'prenom', 'fonction', 'telephone', 'email'],
                 'tuteurUniversitaire' => ['nom', 'prenom', 'mailUniv'],
                 'dateDebutStage',

@@ -91,7 +91,6 @@ abstract class Emprunt extends BaseEntity
     private ?Departement $departement = null;
 
     /**
-     *
      * @throws Exception
      */
     public function __construct()
@@ -255,7 +254,6 @@ abstract class Emprunt extends BaseEntity
     public function getResponsable(): ?Personnel
     {
         return $this->getDepartement()?->getRespMateriel();
-
     }
 
     public function getDepartement(): ?Departement

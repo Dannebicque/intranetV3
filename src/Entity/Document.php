@@ -36,7 +36,7 @@ class Document extends BaseEntity
     use LifeCycleTrait;
     use TypeDestinataireTrait;
 
-    public final const TYPE_DOCUMENT = [
+    final public const TYPE_DOCUMENT = [
         'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'Prés. PPT',
         'application/pdf' => 'PDF',
         'image/jpeg' => 'Image (jpeg)',

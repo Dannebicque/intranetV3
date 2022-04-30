@@ -120,7 +120,7 @@ class AbsenceListeTableType extends TableType
             ['semestre' => $this->semestre->getId()]);
 
         $builder->addColumn('links', WidgetColumnType::class, [
-            'build' => function(WidgetBuilder $builder, AbsencesEtudiant $s) {
+            'build' => function (WidgetBuilder $builder, AbsencesEtudiant $s) {
                 $builder->add('profil', RowLinkType::class, [
                     'title' => 'table.details_absences',
                     'icon' => 'fas fa-eye',
@@ -128,7 +128,7 @@ class AbsenceListeTableType extends TableType
                     'attr' => [
                         'class' => 'btn btn-info btn-outline btn-square',
                         'data-bs-toggle' => 'tooltip',
-                        'data-bs-placement' => 'bottom'
+                        'data-bs-placement' => 'bottom',
                     ],
                     'route' => 'user_profil',
                     'route_params' => [
@@ -140,7 +140,7 @@ class AbsenceListeTableType extends TableType
             },
         ]);
 
-        $builder->useAdapter(function(TableState $state) {
+        $builder->useAdapter(function (TableState $state) {
             $orders = $state->getOrderBy();
             $t = [];
 
@@ -149,7 +149,7 @@ class AbsenceListeTableType extends TableType
 
             if (count($orders) > 0) {
                 foreach ($orders as $order) {
-                    //pour gérer le tri multiple
+                    // pour gérer le tri multiple
                     $t = [];
                     foreach ($data as $key => $d) {
                         $t[$key] = $d->{$order[0]->getOption('id')};

@@ -27,7 +27,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ORM\HasLifecycleCallbacks]
 abstract class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface, Serializable
 {
-
     #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 75)]
     protected ?string $username = null;
 

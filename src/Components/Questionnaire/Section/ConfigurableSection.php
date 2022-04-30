@@ -16,13 +16,13 @@ use App\Entity\Annee;
 
 class ConfigurableSection
 {
-    //todo: doit être un type de section... sinon comment créer la section ?
+    // todo: doit être un type de section... sinon comment créer la section ?
 
-    public final const NB_QUESTIONS_PAR_SECTION = 3;
+    final public const NB_QUESTIONS_PAR_SECTION = 3;
     public ?AbstractSectionAdapter $sectionAdapter = null;
     public ?array $config = [];
     public string $type_calcul = '';
-    public array $sections = []; //en mode configurable, on peut avoir la création de sections
+    public array $sections = []; // en mode configurable, on peut avoir la création de sections
 
     private \App\Components\Questionnaire\DTO\Section $section;
     private readonly Questions $questions;
@@ -35,15 +35,15 @@ class ConfigurableSection
 
     public function addQuestions(AbstractQuestion $abstractQuestion): void
     {
-        //boucler sur toutes les options, et ajouter successivement les questions... QUid des questions enfants ? Logiquement elles ne sont pas envoyées ici
+        // boucler sur toutes les options, et ajouter successivement les questions... QUid des questions enfants ? Logiquement elles ne sont pas envoyées ici
         if (is_array($this->config) && array_key_exists('valeurs', $this->config) && is_array($this->config['valeurs'])) {
             foreach ($this->config['valeurs'] as $valeur) {
-                $abstractQuestion->numero = $valeur; //pour tester
+                $abstractQuestion->numero = $valeur; // pour tester
                 $abstractQuestion->config = $valeur;
                 $this->questions->addQuestion($abstractQuestion);
             }
         } else {
-            //ce cas ne devrait pas exister...
+            // ce cas ne devrait pas exister...
             $this->questions->addQuestion($abstractQuestion);
         }
     }
@@ -61,12 +61,12 @@ class ConfigurableSection
         $this->config = $config;
     }
 
-    //todo: ajouter un libelle sur la section pour faciliter la gestion
+    // todo: ajouter un libelle sur la section pour faciliter la gestion
 
     /**
      * @throws \App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException
      */
-    public function setSection(\App\Components\Questionnaire\DTO\Section $section, array $options = []): void //peut être passer par un dto car on dépend de la BDD...
+    public function setSection(\App\Components\Questionnaire\DTO\Section $section, array $options = []): void // peut être passer par un dto car on dépend de la BDD...
     {
         $this->options = $options;
 
@@ -84,7 +84,7 @@ class ConfigurableSection
                 $valeursParSection[$i] = array_slice($this->config['valeurs'], ($i - 1) * self::NB_QUESTIONS_PAR_SECTION, self::NB_QUESTIONS_PAR_SECTION);
                 $numSection = $this->section->ordre.'-'.$i;
                 $this->sections[$numSection] = new Section($this->questionnaireRegistry);
-                $newSection = clone $this->section; //clonage pour gérer indépendement les sections ?
+                $newSection = clone $this->section; // clonage pour gérer indépendement les sections ?
 
                 // Définir les éléments liés ) la configuration
                 $this->sections[$numSection]->nbParties = $this->getQuestionsParPartie($i);

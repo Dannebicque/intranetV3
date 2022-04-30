@@ -52,7 +52,7 @@ class CovidSubscriber implements EventSubscriberInterface
     public function onCovidAutorisationDeposee(CovidEvent $event): void
     {
         $autorisation = $event->getCovidAttestationPersonnel();
-        //mail envoyé au directeur de département
+        // mail envoyé au directeur de département
         $this->sendToDepartement($autorisation, CovidEvent::COVID_AUTORISATION_DEPOSEE);
     }
 
@@ -78,7 +78,7 @@ class CovidSubscriber implements EventSubscriberInterface
     public function onCovidAutorisationEditee(CovidEvent $event): void
     {
         $autorisation = $event->getCovidAttestationPersonnel();
-        //mail envoyé au directeur de département
+        // mail envoyé au directeur de département
         $this->sendToDepartement($autorisation, CovidEvent::COVID_AUTORISATION_EDITEE);
     }
 
@@ -143,11 +143,11 @@ class CovidSubscriber implements EventSubscriberInterface
                     $covidAttestationPersonnel,
                     'sauvegarde'
                 );
-                //générer le PDF et joindre au mail
+                // générer le PDF et joindre au mail
                 $this->myMailer->setTemplate('mails/covid/'.$codeEvent.'.html.twig', [
                     'covidAttestationPersonnel' => $covidAttestationPersonnel,
                 ]);
-                //joindre le PDF
+                // joindre le PDF
                 $this->myMailer->attachFile($file);
                 $this->myMailer->attachFile($this->dir.'covid/Organisation Accès  IUT  Troyes - Note personnels 27.01.2020.pdf');
                 $this->myMailer->sendMessage(

@@ -31,14 +31,14 @@ class Absence extends BaseEntity implements Serializable
     use LifeCycleTrait;
     use MatiereTrait;
 
-    public final const STATUS_COLORS = [
+    final public const STATUS_COLORS = [
         self::ABSENCE_JUSTIFIE => 'success',
         self::ABSENCE_INJUSTIFIEE => 'danger',
         self::ABSENCE_EN_ATTENTE => 'warning',
     ];
-    public final const ABSENCE_JUSTIFIE = 'justifie';
-    public final const ABSENCE_INJUSTIFIEE = 'injustifie';
-    public final const ABSENCE_EN_ATTENTE = '-';
+    final public const ABSENCE_JUSTIFIE = 'justifie';
+    final public const ABSENCE_INJUSTIFIEE = 'injustifie';
+    final public const ABSENCE_EN_ATTENTE = '-';
 
     #[Groups(groups: ['absences_administration'])]
     #[ORM\Column(name: 'dateHeure', type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE)]
@@ -193,9 +193,9 @@ class Absence extends BaseEntity implements Serializable
         $this->justifie = $justifie;
     }
 
-    public function serialize(): string | null
+    public function serialize(): string|null
     {
-        //todo: a ajouter ou retirer ?
+        // todo: a ajouter ou retirer ?
         return null;
     }
 
@@ -204,7 +204,7 @@ class Absence extends BaseEntity implements Serializable
      */
     public function unserialize($data): void
     {
-        //todo: a ajouter ou retirer ?
+        // todo: a ajouter ou retirer ?
     }
 
     public function getSemestre(): ?Semestre

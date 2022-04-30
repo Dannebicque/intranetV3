@@ -73,7 +73,7 @@ class PersonnelDepartementTableType extends TableType
         $builder->addColumn('contact_personnel', ColumnType::class,
             [
                 'label' => 'table.contact_personnel',
-                'render' => fn(Personnel $personnel) => Personnel::VACATAIRE === $personnel->getType() ? $personnel->getEntreprise() : $personnel->getPosteInterne(),
+                'render' => fn (Personnel $personnel) => Personnel::VACATAIRE === $personnel->getType() ? $personnel->getEntreprise() : $personnel->getPosteInterne(),
             ]);
         $builder->addColumn('numero_harpege', PropertyColumnType::class,
             ['label' => 'table.numero_harpege']);

@@ -14,11 +14,11 @@
 namespace App\Classes;
 
 use App\Exception\ExtensionInterditeException;
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\HttpKernel\KernelInterface;
 use function count;
 use Exception;
 use function in_array;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Symfony\Component\HttpKernel\KernelInterface;
 use ZipArchive;
 
 class MyUpload
@@ -76,9 +76,9 @@ class MyUpload
         $folder = $this->dir.$dossierTemp;
         $dossier = opendir($folder);
         $newdir = $this->dir.$dossierDest;
-        //2)Tant que le dossier est aps vide
+        // 2)Tant que le dossier est aps vide
         while ($fichier = readdir($dossier)) {
-            //todo: supprimer si existe ou ca remplace ? Purger le cache de vich ?
+            // todo: supprimer si existe ou ca remplace ? Purger le cache de vich ?
             if ('.' !== $fichier && '..' !== $fichier) {
                 $t = explode('.', $fichier);
                 $vidage = $folder.$fichier;
@@ -90,7 +90,7 @@ class MyUpload
                     }
                     rename($vidage, $newdir.$name);
                 } else {
-                    unlink($vidage); //suppression du fichier
+                    unlink($vidage); // suppression du fichier
                 }
             }
         }
@@ -110,7 +110,7 @@ class MyUpload
         $zip->extractTo($this->dir.$dest);
         // Fermer l'archive
         $zip->close();
-        unlink($fichier); //suppression du zip.
+        unlink($fichier); // suppression du zip.
 
         return true;
     }

@@ -19,7 +19,7 @@ class ApcSaeApprentissageCritique extends BaseEntity
 {
     use LifeCycleTrait;
 
-    public function __construct(#[ORM\ManyToOne(targetEntity: ApcSae::class, inversedBy: 'apcSaeApprentissageCritiques')] private ?\App\Entity\ApcSae $sae, #[ORM\ManyToOne(targetEntity: ApcApprentissageCritique::class, inversedBy: 'apcSaeApprentissageCritiques')] private ?\App\Entity\ApcApprentissageCritique $apprentissageCritique)
+    public function __construct(#[ORM\ManyToOne(targetEntity: ApcSae::class, inversedBy: 'apcSaeApprentissageCritiques')] private ?ApcSae $sae, #[ORM\ManyToOne(targetEntity: ApcApprentissageCritique::class, inversedBy: 'apcSaeApprentissageCritiques')] private ?ApcApprentissageCritique $apprentissageCritique)
     {
     }
 

@@ -124,7 +124,7 @@ class PersonnelDepartementRepository extends ServiceEntityRepository
                 $tt['numeroHarpege'] = $personnel->getNumeroHarpege();
                 $tt['prenom'] = $personnel->getPrenom();
                 $tt['username'] = $personnel->getUsername();
-                $tt['mail_univ'] = $personnel->getMailUniv(); //todo: mailUniv
+                $tt['mail_univ'] = $personnel->getMailUniv(); // todo: mailUniv
                 $tt['mail_perso'] = $personnel->getMailPerso();
                 $tt['avatarInitiales'] = $personnel->getAvatarInitiales();
 

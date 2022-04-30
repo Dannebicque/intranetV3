@@ -85,7 +85,6 @@ class ScolariteRepository extends ServiceEntityRepository
     }
 
     /**
-     *
      * @throws NoResultException
      * @throws NonUniqueResultException
      */

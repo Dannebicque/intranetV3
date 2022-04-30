@@ -61,10 +61,10 @@ class ApogeeMaquette
         return $semestre;
     }
 
-    public function createElement($elp, Semestre $semestre): ApcRessource | ApcSae | null
+    public function createElement($elp, Semestre $semestre): ApcRessource|ApcSae|null
     {
         if ('R' === substr($elp['LIC_ELP'], 1, 1)) {
-            //ressource
+            // ressource
             $res = new ApcRessource();
             $c = explode(' ', (string) $elp['LIC_ELP']);
             $res->setLibelle($elp['LIB_ELP']);
@@ -90,7 +90,7 @@ class ApogeeMaquette
         }
 
         if ('S' === substr($elp['LIC_ELP'], 1, 1)) {
-            //Sae
+            // Sae
             $res = new ApcSae();
             $c = explode(' ', (string) $elp['LIC_ELP']);
             $res->setLibelle($elp['LIB_ELP']);
@@ -116,7 +116,7 @@ class ApogeeMaquette
         return null;
     }
 
-    public function updateElement(ApcSae | ApcRessource $obj, $elpSemestre): ApcRessource | ApcSae
+    public function updateElement(ApcSae|ApcRessource $obj, $elpSemestre): ApcRessource|ApcSae
     {
         if ('CM' === $elpSemestre['COD_TYP_HEU']) {
             $obj->setCmPpn($elpSemestre['NBR_HEU_ELP']);
@@ -176,7 +176,7 @@ class ApogeeMaquette
 
     public function createMatiere($elp, $ue, ?Ppn $pn): Matiere
     {
-        //ressource
+        // ressource
         $res = new Matiere();
         $c = explode(' ', (string) $elp['LIC_ELP']);
         $res->setLibelle($elp['LIB_ELP']);

@@ -107,13 +107,13 @@ class EtudiantImport
     {
         $handle = fopen($fichier, 'rb');
 
-        /*Si on a réussi à ouvrir le fichier*/
+        /* Si on a réussi à ouvrir le fichier */
         if ($handle) {
             /* supprime la première ligne */
             fgetcsv($handle, 1024, ';');
-            /*Tant que l'on est pas à la fin du fichier*/
+            /* Tant que l'on est pas à la fin du fichier */
             while (!feof($handle)) {
-                /*On lit la ligne courante*/
+                /* On lit la ligne courante */
                 $ligne = fgetcsv($handle, 1024, ';');
                 if (array_key_exists($ligne[10], $tabSemestres)) {
                     $this->createEtudiantFromCsv($ligne, $tabSemestres[$ligne[10]]);
@@ -121,16 +121,16 @@ class EtudiantImport
             }
             $this->entity->flush();
             fclose($handle);
-            unlink($fichier); //suppression du fichier
+            unlink($fichier); // suppression du fichier
         }
     }
 
     /**
      * @throws \Exception
      */
-    private function createEtudiantFromCsv(bool | array $ligne, Semestre $semestre): void
+    private function createEtudiantFromCsv(bool|array $ligne, Semestre $semestre): void
     {
-        //todo: importer les bacs... Revoir cette partie.
+        // todo: importer les bacs... Revoir cette partie.
         $adresse = new Adresse();
         $adresse->setAdresse1($ligne[10]);
         $adresse->setAdresse2($ligne[11]);
@@ -145,12 +145,12 @@ class EtudiantImport
         $etudiant->setNumIne($ligne[1]);
         $etudiant->setNom($ligne[2]);
         $etudiant->setPrenom($ligne[3]);
-        $etudiant->setDateNaissance(Tools::convertDateToObject($ligne[4])); //en fr?
+        $etudiant->setDateNaissance(Tools::convertDateToObject($ligne[4])); // en fr?
         $etudiant->setPromotion($ligne[5]);
 
         $etudiant->setAnneeBac($ligne[6]);
         $etudiant->setBac(true === array_key_exists($ligne[7], $this->tBac) ? $this->tBac[$ligne[7]] : null);
-        $etudiant->setCivilite('M' === $ligne[8] ? 'M.' : 'Mme'); //M ou F
+        $etudiant->setCivilite('M' === $ligne[8] ? 'M.' : 'Mme'); // M ou F
 
         $etudiant->setTel1($ligne[9]);
         $etudiant->setTypeUser('etudiant');

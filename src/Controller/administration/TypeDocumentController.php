@@ -47,7 +47,7 @@ class TypeDocumentController extends BaseController
             ['typedocument_administration'],
             [
                 'libelle',
-                'nbDocuments', //todo: comment l'intégrer ?
+                'nbDocuments', // todo: comment l'intégrer ?
             ]
         );
     }

@@ -78,7 +78,6 @@ class Annee extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'annee', targetEntity: AlternancePlanning::class)]
     private Collection $alternancePlannings;
 
-
     public function __construct()
     {
         $this->semestres = new ArrayCollection();

@@ -40,7 +40,7 @@ class MyMessagerie
     private ?Personnel $expediteur = null;
 
     /** @var Etudiant[] */
-    private array | Collection $etudiants = [];
+    private array|Collection $etudiants = [];
 
     private string $typeDestinataires = '';
     private string $type;
@@ -66,8 +66,8 @@ class MyMessagerie
      */
     public function sendToPersonnels(array $destinataires, Departement $departement): void
     {
-        //mail réel + notification (utiliser le busMessage ?
-        //sauvegarde en BDD
+        // mail réel + notification (utiliser le busMessage ?
+        // sauvegarde en BDD
         $mess = $this->saveMessageDatabase(Message::ETAT_MESSAGE_ENVOYE);
         $listeDestinataires = [];
         $this->typeDestinataires = '';
@@ -90,7 +90,7 @@ class MyMessagerie
             }
         }
         foreach ($listeDestinataires as $destinataire) {
-            //foreach ($tdestinataire as $destinataire) {
+            // foreach ($tdestinataire as $destinataire) {
             if (null !== $destinataire) {
                 $message = $this->sendMessage($destinataire);
 
@@ -99,7 +99,7 @@ class MyMessagerie
                 $this->myMailer->send($message);
                 ++$this->nbMessagesEnvoyes;
             }
-            //}
+            // }
         }
         $mess->setTypeDestinataires($this->typeDestinataires);
         $this->entityManager->flush();
@@ -110,7 +110,7 @@ class MyMessagerie
      */
     public function sendToEtudiants(): void
     {
-        //sauvegarde en BDD
+        // sauvegarde en BDD
         $mess = $this->saveMessageDatabase(Message::ETAT_MESSAGE_ENVOYE);
 
         foreach ($this->etudiants as $etu) {
@@ -127,7 +127,7 @@ class MyMessagerie
 
     public function setMessage(string $sujet, string $message, Personnel $expediteur, array $pjs = []): void
     {
-        //pour définir les éléments du message, commun à tous les destinataires
+        // pour définir les éléments du message, commun à tous les destinataires
         $this->sujet = $sujet;
         $this->expediteur = $expediteur;
         $this->message = $message;
@@ -146,7 +146,7 @@ class MyMessagerie
      */
     public function sendSynthese(): void
     {
-        //envoi de la synthèse à l'auteur
+        // envoi de la synthèse à l'auteur
         $email = (new TemplatedEmail())
             ->subject('Votre message : '.$this->sujet)
             ->from($this->configuration->getExpediteurIntranet())
@@ -203,7 +203,7 @@ class MyMessagerie
         $mess->setMessage($this->message);
         $mess->setSujet($this->sujet);
         $mess->setExpediteur($this->expediteur);
-        $mess->setImportant(false); //todo: a gérer
+        $mess->setImportant(false); // todo: a gérer
         $mess->setTypeDestinataires($this->typeDestinataires);
         $mess->setType($this->type);
         $mess->setEtat($etat);
@@ -245,13 +245,13 @@ class MyMessagerie
     private function getEtudiantsSemestre(string $codeSemestre): void
     {
         $semestre = $this->semestreRepository->find($codeSemestre);
-        //récupére tous les étudiants d'un semestre
+        // récupére tous les étudiants d'un semestre
         $this->etudiants = $this->etudiantRepository->findBySemestre($semestre);
     }
 
-    private function getEtudiantsGroupe(int | string $codeGroupe): void
+    private function getEtudiantsGroupe(int|string $codeGroupe): void
     {
-        //récupère tous les étudiants d'un ensemble de groupe
+        // récupère tous les étudiants d'un ensemble de groupe
         $groupe = $this->groupeRepository->find($codeGroupe);
         if (null !== $groupe) {
             $this->etudiants = $groupe->getEtudiants();
@@ -271,7 +271,7 @@ class MyMessagerie
 
     public function saveDraft(?string $sujet, ?string $message, ?Personnel $expediteur, ?array $destinataires = [], ?string $typeDestinataire = null, ?string $copie = null): void
     {
-        //todo: a refaire
+        // todo: a refaire
         $this->sujet = $sujet;
         $this->message = $message;
         $this->expediteur = $expediteur;
@@ -299,7 +299,7 @@ class MyMessagerie
             ->htmlTemplate('mails/message.html.twig')
             ->context(['message' => $this->message, 'expediteur' => $this->expediteur]);
 
-        //récupération des fichiers uploadés
+        // récupération des fichiers uploadés
         foreach ($this->pjs as $file) {
             $message->attachFromPath($file);
         }

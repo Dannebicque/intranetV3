@@ -24,7 +24,7 @@ class MessagesQualiteCommand extends Command
 
     protected function configure(): void
     {
-        //pas d'argument ou de commande particulière
+        // pas d'argument ou de commande particulière
     }
 
     /**
@@ -32,14 +32,14 @@ class MessagesQualiteCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        //todo: prendre en compte le WE/jours fériés....
-        //todo: fiches résultats découpées. Tout sauf les autres collègues.
-        //todo: supprimer une question d'une section pour un questionnaire spécifique
-        //todo: page RP identique à la page de Maud, sans les édit, et uniquement la formation.
-        //todo: gérer le semestre...
+        // todo: prendre en compte le WE/jours fériés....
+        // todo: fiches résultats découpées. Tout sauf les autres collègues.
+        // todo: supprimer une question d'une section pour un questionnaire spécifique
+        // todo: page RP identique à la page de Maud, sans les édit, et uniquement la formation.
+        // todo: gérer le semestre...
         $io = new SymfonyStyle($input, $output);
         $nbMessages = 0;
-        $questionnaires = $this->questionnaireQualiteRepository->findInDate((new DateTime())->modify('+2 days')); //tous les questionnaires dans deux jours
+        $questionnaires = $this->questionnaireQualiteRepository->findInDate((new DateTime())->modify('+2 days')); // tous les questionnaires dans deux jours
         /** @var \App\Entity\QuestionnaireQualite $questionnaire */
         foreach ($questionnaires as $questionnaire) {
             $dests = [

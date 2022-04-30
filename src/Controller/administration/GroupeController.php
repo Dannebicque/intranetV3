@@ -49,8 +49,8 @@ class GroupeController extends BaseController
     public function genereGroupes(Request $request, Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
-        //sauvegarde du nombre de groupe de semestre ?
-        //génére les groupes
+        // sauvegarde du nombre de groupe de semestre ?
+        // génére les groupes
         $genereGroupes = new GenereGroupes($this->entityManager);
         $genereGroupes->genereGroupesSemestre($semestre, $request->request->get('appelation'));
 

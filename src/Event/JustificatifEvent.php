@@ -14,11 +14,11 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class JustificatifEvent extends Event
 {
-    public final const DECISION = 'justificatif.decision';
-    public final const ADDED = 'justificatif.added';
-    public final const DELETED = 'justificatif.deleted';
-    public final const DECISION_JUSTIFICATIF_ACCEPTEE = 'decision.justificatif.acceptee';
-    public final const DECISION_JUSTIFICATIF_REFUSEE = 'decision.justificatif.refusee';
+    final public const DECISION = 'justificatif.decision';
+    final public const ADDED = 'justificatif.added';
+    final public const DELETED = 'justificatif.deleted';
+    final public const DECISION_JUSTIFICATIF_ACCEPTEE = 'decision.justificatif.acceptee';
+    final public const DECISION_JUSTIFICATIF_REFUSEE = 'decision.justificatif.refusee';
 
     public function __construct(protected AbsenceJustificatif $absenceJustificatif)
     {

@@ -20,8 +20,6 @@ use Exception;
 
 class MyPpn
 {
-
-
     public function __construct(
         private readonly MyUpload $myUpload,
         private readonly EntityManagerInterface $entityManager,
@@ -45,13 +43,13 @@ class MyPpn
 
             $handle = fopen($file, 'rb');
 
-            /*Si on a réussi à ouvrir le fichier*/
+            /* Si on a réussi à ouvrir le fichier */
             if ($handle) {
                 /* supprime la première ligne */
                 fgetcsv($handle, 1024, ';');
-                /*Tant que l'on est pas à la fin du fichier*/
+                /* Tant que l'on est pas à la fin du fichier */
                 while (!feof($handle)) {
-                    /*On lit la ligne courante*/
+                    /* On lit la ligne courante */
                     $ligne = fgetcsv($handle, 1024, ';');
 
                     if (array_key_exists($ligne[0], $ues)) {
@@ -86,9 +84,9 @@ class MyPpn
                 }
                 $this->entityManager->flush();
 
-                /*On ferme le fichier*/
+                /* On ferme le fichier */
                 fclose($handle);
-                unlink($file); //suppression du fichier
+                unlink($file); // suppression du fichier
 
                 return true;
             }

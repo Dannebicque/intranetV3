@@ -45,13 +45,13 @@ class SousCommissionSauvegarde
         $ues = $semestre->getUes();
 
         if (null === $ssComm) {
-            //N'existe pas on ajoute
+            // N'existe pas on ajoute
             $ssComm = new ScolaritePromo();
             $ssComm->setAnneeUniversitaire($anneeUniversitaire);
             $ssComm->setSemestre($semestre);
             $this->entityManager->persist($ssComm);
 
-            //sauvegarde des données
+            // sauvegarde des données
             foreach ($etudiants as $etudiant) {
                 $scEtudiant = $sousCommission->getSousCommissionEtudiant($etudiant->getId());
                 if (null !== $scEtudiant) {
@@ -94,7 +94,7 @@ class SousCommissionSauvegarde
                         if (array_key_exists($matiere->getTypeIdMatiere(), $scEtudiant->moyenneMatieres)) {
                             if (true === $matiere->bonification) {
                                 $tMatiere[$matiere->getTypeIdMatiere()]['moyenne'] = max(0,
-                                    $scEtudiant->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyenne()); //todo: gérer avec une variable de configuration global.
+                                    $scEtudiant->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyenne()); // todo: gérer avec une variable de configuration global.
 //                                $tMatiere[$matiere->getTypeIdMatiere()]['moyenne'] = max(0,
 //                                    ($scEtudiant->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyenne() - 10) / 20);
                             } elseif (true === $scEtudiant->moyenneMatieres[$matiere->getTypeIdMatiere()]->matiereAAnnuler) {

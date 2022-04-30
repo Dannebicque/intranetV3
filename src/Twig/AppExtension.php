@@ -65,7 +65,7 @@ class AppExtension extends AbstractExtension
         return number_format($note, $nbdecimales);
     }
 
-    public function formatDifference(int | float $valeur): string
+    public function formatDifference(int|float $valeur): string
     {
         if (0 !== $valeur) {
             return '<span class="badge bg-warning">'.$valeur.'</span>';
@@ -179,7 +179,7 @@ class AppExtension extends AbstractExtension
         return str_replace(['<strong>', '</strong>'], '', $texte);
     }
 
-    public function badge(float | int $number): ?string
+    public function badge(float|int $number): ?string
     {
         if ($number >= 5 && $number < 10) {
             return 'badge bg-warning';

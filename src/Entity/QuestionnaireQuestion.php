@@ -28,12 +28,12 @@ class QuestionnaireQuestion extends BaseEntity
     use LifeCycleTrait;
 
     /** @var string A ne pas utiliser. utiliser QuestionnaireRegistry */
-    public final const QUESTION_TYPE_QCU = 'qcu';
-    public final const QUESTION_TYPE_QCM = 'qcm';
-    public final const QUESTION_TYPE_YESNO = 'yesno';
-    public final const QUESTION_TYPE_ECHELLE = 'echelle';
-    public final const QUESTION_TYPE_LIBRE = 'libre';
-    public final const LISTE_TYPE_QUESTION = [
+    final public const QUESTION_TYPE_QCU = 'qcu';
+    final public const QUESTION_TYPE_QCM = 'qcm';
+    final public const QUESTION_TYPE_YESNO = 'yesno';
+    final public const QUESTION_TYPE_ECHELLE = 'echelle';
+    final public const QUESTION_TYPE_LIBRE = 'libre';
+    final public const LISTE_TYPE_QUESTION = [
         self::QUESTION_TYPE_ECHELLE => self::QUESTION_TYPE_ECHELLE,
         self::QUESTION_TYPE_LIBRE => self::QUESTION_TYPE_LIBRE,
         self::QUESTION_TYPE_QCM => self::QUESTION_TYPE_QCM,

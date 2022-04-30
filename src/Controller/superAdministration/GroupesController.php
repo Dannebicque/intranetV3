@@ -56,15 +56,15 @@ class GroupesController extends BaseController
 
     private function insertGroupes(Semestre $semestre, ApogeeGroupe $apogeeGroupe): void
     {
-        //$treeGroupes = $apogeeGroupe->getHierarchieGroupesSemestre($semestre);
+        // $treeGroupes = $apogeeGroupe->getHierarchieGroupesSemestre($semestre);
 
-        //récupérer les groupes
+        // récupérer les groupes
         $groupes = $apogeeGroupe->getGroupesSemestre($semestre);
         $i = 1;
         if (count($semestre->getTypeGroupes()) > 0) {
             $tg = $semestre->getTypeGroupes()[0];
         } else {
-            //si pas de type de groupe on en ajoute un par défaut.
+            // si pas de type de groupe on en ajoute un par défaut.
             $tg = new TypeGroupe($semestre);
             $tg->setLibelle('Defaut');
             $tg->setDefaut(true);
@@ -73,7 +73,7 @@ class GroupesController extends BaseController
         }
 
         while ($ligne = $groupes->fetch()) {
-            //todo: gérer la hierarchie
+            // todo: gérer la hierarchie
             $groupe = new Groupe();
             $groupe->setTypeGroupe($tg);
             $groupe->setCodeApogee($ligne['COD_EXT_GPE']);
@@ -88,8 +88,8 @@ class GroupesController extends BaseController
     #[Route(path: '/synchronise/semestre/{semestre}', name: 'sa_groupes_departement_synchro_semestre')]
     public function synchroApogeeSemestre(ApogeeGroupe $apogeeGroupe, GroupeRepository $groupeRepository, Semestre $semestre): Response
     {
-        //supprimer les groupes du semestre
-        //calcluler l'aroborescence
+        // supprimer les groupes du semestre
+        // calcluler l'aroborescence
         $this->insertGroupes($semestre, $apogeeGroupe);
 
         return $this->redirectToRoute('sa_groupes_departement_index', ['semestre' => $semestre->getId()]);
@@ -98,7 +98,7 @@ class GroupesController extends BaseController
     #[Route(path: '/synchronise/etudiant/semestre/{semestre}', name: 'sa_groupes_etudiant_synchro_semestre')]
     public function synchroApogeeEtudiantSemestre(ApogeeGroupe $apogeeGroupe, EtudiantRepository $etudiantRepository, GroupeRepository $groupeRepository, Semestre $semestre): Response
     {
-        //suppression des groupes d'origine.
+        // suppression des groupes d'origine.
         $tEtudiants = [];
         $etudiants = $etudiantRepository->findEtudiantEnFormation();
         /** @var Etudiant $etudiant */
@@ -114,14 +114,14 @@ class GroupesController extends BaseController
         foreach ($groupes as $groupe) {
             $tGroupes[$groupe->getCodeApogee()] = $groupe;
         }
-        //récupération des groupes
+        // récupération des groupes
         $groupes = $apogeeGroupe->getEtudiantsGroupesSemestre($semestre);
         while ($groupe = $groupes->fetch()) {
             if (array_key_exists($groupe['COD_ETU'], $tEtudiants) && array_key_exists($groupe['COD_EXT_GPE'],
                     $tGroupes)) {
                 $tEtudiants[$groupe['COD_ETU']]->addGroupe($tGroupes[$groupe['COD_EXT_GPE']]);
                 $tGroupes[$groupe['COD_EXT_GPE']]->addEtudiant($tEtudiants[$groupe['COD_ETU']]);
-                //$tEtudiants[$groupe['COD_ETU']]->setSemestre($tGroupes[$groupe['COD_EXT_GPE']]->getTypeGroupe()->getSemestre());
+                // $tEtudiants[$groupe['COD_ETU']]->setSemestre($tGroupes[$groupe['COD_EXT_GPE']]->getTypeGroupe()->getSemestre());
             }
         }
         $this->entityManager->flush();

@@ -38,7 +38,7 @@ class CovidAttestationEtudiantType extends AbstractType
                 'required' => true,
                 'choice_label' => 'libelle',
                 'expanded' => true,
-                'query_builder' => fn(DiplomeRepository $diplomeRepository) => $diplomeRepository->findByDepartementBuilder($this->departement),
+                'query_builder' => fn (DiplomeRepository $diplomeRepository) => $diplomeRepository->findByDepartementBuilder($this->departement),
                 'label' => 'Diplôme concerné par votre demande',
             ])
             ->add('dateDebut', DatePickerType::class, [
@@ -57,7 +57,7 @@ class CovidAttestationEtudiantType extends AbstractType
                 'multiple' => true,
                 'class' => Groupe::class,
                 'choice_label' => 'displaySemestre',
-                'query_builder' => fn(GroupeRepository $groupeRepository) => $groupeRepository->findByDepartementSemestreActifBuilder($this->departement),
+                'query_builder' => fn (GroupeRepository $groupeRepository) => $groupeRepository->findByDepartementSemestreActifBuilder($this->departement),
             ]);
     }
 

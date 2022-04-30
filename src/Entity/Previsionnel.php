@@ -44,7 +44,7 @@ class Previsionnel extends BaseEntity
     #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
     private int $nbGrTp = 0;
 
-    public function __construct(#[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)] private int $annee, #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'previsionnels')] private ?\App\Entity\Personnel $personnel = null)
+    public function __construct(#[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)] private int $annee, #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'previsionnels')] private ?Personnel $personnel = null)
     {
     }
 

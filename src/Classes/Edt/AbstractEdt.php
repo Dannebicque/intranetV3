@@ -13,13 +13,13 @@ use App\Classes\Matieres\TypeMatiereManager;
 
 abstract class AbstractEdt
 {
-    public final const SOURCE_EDT_INTRANET = 'intranet';
-    public final const SOURCE_EDT_CELCAT = 'celcat';
+    final public const SOURCE_EDT_INTRANET = 'intranet';
+    final public const SOURCE_EDT_CELCAT = 'celcat';
 
     protected TypeMatiereManager $typeMatiereManager;
 
     #[\Symfony\Contracts\Service\Attribute\Required]
-    public function setTypeMatiereManager(TypeMatiereManager $typeMatiereManager) : void
+    public function setTypeMatiereManager(TypeMatiereManager $typeMatiereManager): void
     {
         $this->typeMatiereManager = $typeMatiereManager;
     }

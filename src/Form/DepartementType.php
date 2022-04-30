@@ -125,7 +125,7 @@ class DepartementType extends AbstractType
             ->add('respri', EntityCompleteType::class, [
                 'class' => Personnel::class,
                 'choice_label' => 'display',
-                'query_builder' => static fn(PersonnelRepository $personnelRepository) => $personnelRepository->findAllOrder(),
+                'query_builder' => static fn (PersonnelRepository $personnelRepository) => $personnelRepository->findAllOrder(),
                 'label' => 'label.respri',
                 'required' => false,
             ])

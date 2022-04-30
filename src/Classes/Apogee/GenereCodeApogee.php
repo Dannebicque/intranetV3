@@ -34,11 +34,11 @@ class GenereCodeApogee
 
     public function genereCodes(): bool
     {
-        //annees
+        // annees
         $annees = $this->diplome->getAnnees();
         foreach ($annees as $annee) {
             $debut = substr($annee->getCodeEtape(), 1,
-                4); //je récupère le code étape de l'année, et je retire le 5 et le nuéro.
+                4); // je récupère le code étape de l'année, et je retire le 5 et le nuéro.
             $semestres = $annee->getSemestres();
             foreach ($semestres as $semestre) {
                 $semestre->setCodeElement($debut.$semestre->getOrdreLmd());

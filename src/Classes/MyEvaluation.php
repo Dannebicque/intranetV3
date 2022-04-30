@@ -113,37 +113,37 @@ class MyEvaluation
         return $this;
     }
 
-    private function ecartType(array $donnees): float | int
+    private function ecartType(array $donnees): float|int
     {
-        //0 - Nombre d’éléments dans le tableau
+        // 0 - Nombre d’éléments dans le tableau
         $population = count($donnees);
         if (0 !== $population) {
-            //1 - somme du tableau
+            // 1 - somme du tableau
             $somme_tableau = array_sum($donnees);
-            //2 - Calcul de la moyenne
+            // 2 - Calcul de la moyenne
 
             $moyenne = $somme_tableau / $population;
-            //3 - écart pour chaque valeur
+            // 3 - écart pour chaque valeur
             $ecart = [];
             foreach ($donnees as $value) {
-                //écart entre la valeur et la moyenne
+                // écart entre la valeur et la moyenne
                 $ecart_donnee = $value - $moyenne;
-                //carré de l'écart
+                // carré de l'écart
                 $ecart_donnee_carre = $ecart_donnee ** 2;
-                //Insertion dans le tableau
+                // Insertion dans le tableau
                 $ecart[] = $ecart_donnee_carre;
             }
-            //4 - somme des écarts
+            // 4 - somme des écarts
             $somme_ecart = array_sum($ecart);
-            //5 - division de la somme des écarts par la population
+            // 5 - division de la somme des écarts par la population
             $division = $somme_ecart / $population;
-            //6 - racine carrée de la division
+            // 6 - racine carrée de la division
             $ecart_type = sqrt($division);
         } else {
             $ecart_type = 0;
         }
 
-        //7 - renvoi du résultat
+        // 7 - renvoi du résultat
         return $ecart_type;
     }
 
@@ -160,12 +160,12 @@ class MyEvaluation
         foreach ($this->classement as $key => $value) {
             ++$rangreel;
             if ($value !== $notePrec) {
-                //index de la note en cours de lecture
+                // index de la note en cours de lecture
                 $rangEtudiant = $rangreel;
                 $notePrec = $value;
             }
             if ($key === $etudiant->getId()) {
-                return $rangEtudiant; //si c'est l'étudiant, on retourne le rang
+                return $rangEtudiant; // si c'est l'étudiant, on retourne le rang
             }
         }
 
@@ -181,7 +181,7 @@ class MyEvaluation
             if (null !== $note->getEtudiant()) {
                 $tabEtudiant[$note->getEtudiant()->getId()] = $note;
             } else {
-                //note sans étudiant, on la supprime ?
+                // note sans étudiant, on la supprime ?
                 $this->deleteNote($note);
             }
         }
@@ -216,7 +216,7 @@ class MyEvaluation
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function exportReleve(string $_format, Collection | array $groupes, Semestre $semestre): StreamedResponse | PdfResponse | null
+    public function exportReleve(string $_format, Collection|array $groupes, Semestre $semestre): StreamedResponse|PdfResponse|null
     {
         $notes = $this->getNotesTableau();
         $matiere = $this->typeMatiereManager->getMatiereFromSelect($this->evaluation->getTypeIdMatiere());
@@ -278,7 +278,7 @@ class MyEvaluation
 
                 return $this->insertNotes($evaluation, $data, $semestre);
             default:
-                return false; //erreur
+                return false; // erreur
         }
     }
 
@@ -287,7 +287,7 @@ class MyEvaluation
      */
     private function insertNotes(Evaluation $evaluation, array $data, Semestre $semestre): bool
     {
-        $evaluation->setVisible(false); //on masque l'évaluation le temps de l'import et de la vérification
+        $evaluation->setVisible(false); // on masque l'évaluation le temps de l'import et de la vérification
         $notes = [];
         $req = $this->etudiantRepository->findBySemestre($semestre);
         $etudiants = [];
@@ -304,11 +304,11 @@ class MyEvaluation
             if (array_key_exists($note['num_etudiant'], $etudiants)) {
                 if (array_key_exists($note['num_etudiant'],
                         $notes) && -0.01 === $notes[$note['num_etudiant']]->getNote()) {
-                    //une note = -0.01, on met à jour...
+                    // une note = -0.01, on met à jour...
                     $notes[$note['num_etudiant']]->setNote(Tools::convertToFloat($note['note']));
                     $notes[$note['num_etudiant']]->setCommentaire($note['commentaire']);
                 } elseif (!array_key_exists($note['num_etudiant'], $notes)) {
-                    //pas de note, on ajoute
+                    // pas de note, on ajoute
                     $nnnote = new Note();
                     $nnnote->setEvaluation($evaluation);
                     $nnnote->setEtudiant($etudiants[$note['num_etudiant']]);
@@ -356,27 +356,27 @@ class MyEvaluation
         $data = [];
         $ordre = [];
 
-        /*Si on a réussi à ouvrir le fichier*/
+        /* Si on a réussi à ouvrir le fichier */
         if ($handle) {
-            //on récupère l'en-tête
+            // on récupère l'en-tête
             $phrase = fgetcsv($handle, 1024, ';');
 
             if (in_array('num_etudiant', $phrase, false) && in_array('note', $phrase, false)) {
-                //on vérifie que les clés existent.
+                // on vérifie que les clés existent.
                 foreach ($phrase as $key) {
                     $ordre[] = $key;
                 }
             } else {
-                //ordre par défaut attendu
+                // ordre par défaut attendu
                 $ordre = ['num_etudiant', 'note', 'commentaire'];
             }
 
-            //pas de clé en en-tête
-            //s'assurer que c'est les bonnes données ?
+            // pas de clé en en-tête
+            // s'assurer que c'est les bonnes données ?
 
-            /*Tant que l'on est pas à la fin du fichier*/
+            /* Tant que l'on est pas à la fin du fichier */
             while (!feof($handle)) {
-                /*On lit la ligne courante*/
+                /* On lit la ligne courante */
                 $phrase = fgetcsv($handle, 1024, ';');
                 if (is_array($phrase)) {
                     $nb = count($phrase);

@@ -27,13 +27,13 @@ class ProjetEtudiant extends BaseEntity
     use UuidTrait;
     use LifeCycleTrait;
 
-    public final const ETAT_PROJET_ATTENTE = 'ETAT_PROJET_ATTENTE';
-    public final const ETAT_PROJET_AUTORISE = 'ETAT_PROJET_AUTORISE';
-    public final const ETAT_PROJET_DEPOSE = 'ETAT_PROJET_DEPOSE';
-    public final const ETAT_PROJET_VALIDE = 'ETAT_PROJET_VALIDE';
-    public final const ETAT_PROJET_IMPRIME = 'ETAT_PROJET_IMPRIME';
-    public final const DUREE_HEURE = 'h';
-    public final const DUREE_JOUR = 'j';
+    final public const ETAT_PROJET_ATTENTE = 'ETAT_PROJET_ATTENTE';
+    final public const ETAT_PROJET_AUTORISE = 'ETAT_PROJET_AUTORISE';
+    final public const ETAT_PROJET_DEPOSE = 'ETAT_PROJET_DEPOSE';
+    final public const ETAT_PROJET_VALIDE = 'ETAT_PROJET_VALIDE';
+    final public const ETAT_PROJET_IMPRIME = 'ETAT_PROJET_IMPRIME';
+    final public const DUREE_HEURE = 'h';
+    final public const DUREE_JOUR = 'j';
 
     #[ORM\ManyToOne(targetEntity: ProjetPeriode::class, inversedBy: 'projetEtudiants')]
     private ?ProjetPeriode $projetPeriode = null;

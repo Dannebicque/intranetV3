@@ -29,10 +29,10 @@ class Rattrapage extends BaseEntity
     use LifeCycleTrait;
     use MatiereTrait;
 
-    public final const DEMANDE_FAITE = 'f';
-    public final const DEMANDE_ACCEPTEE = 'a';
-    public final const DEMANDE_REFUSEE = 'r';
-    public final const ETATLONG = [
+    final public const DEMANDE_FAITE = 'f';
+    final public const DEMANDE_ACCEPTEE = 'a';
+    final public const DEMANDE_REFUSEE = 'r';
+    final public const ETATLONG = [
         self::DEMANDE_FAITE => 'demande faite',
         self::DEMANDE_ACCEPTEE => 'demande acceptée',
         self::DEMANDE_REFUSEE => 'demande refusée',
@@ -78,7 +78,7 @@ class Rattrapage extends BaseEntity
     #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'rattrapages')]
     private ?Semestre $semestre = null;
 
-    public function __construct(#[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'rattrapages')] #[Groups(groups: ['rattrapage_administration'])] private ?\App\Entity\Etudiant $etudiant)
+    public function __construct(#[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'rattrapages')] #[Groups(groups: ['rattrapage_administration'])] private ?Etudiant $etudiant)
     {
         $this->setUuid(Uuid::uuid4());
         $this->etatDemande = self::DEMANDE_FAITE;
@@ -209,7 +209,7 @@ class Rattrapage extends BaseEntity
         return self::ETATLONG[$this->etatDemande] ?? '-erreur code-';
     }
 
-    public function groupes(): Collection | array | null
+    public function groupes(): Collection|array|null
     {
         return $this->getEtudiant()?->getGroupes();
     }

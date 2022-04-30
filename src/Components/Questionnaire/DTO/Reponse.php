@@ -15,7 +15,7 @@ class Reponse
 {
     protected array $options = [];
 
-    public function __construct(public int $id, public string $libelle, public string | int $valeur, public int $ordre = 1, array $options = [])
+    public function __construct(public int $id, public string $libelle, public string|int $valeur, public int $ordre = 1, array $options = [])
     {
         $this->resolveOptions($options);
     }

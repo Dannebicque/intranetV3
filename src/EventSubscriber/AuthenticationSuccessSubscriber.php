@@ -37,15 +37,15 @@ class AuthenticationSuccessSubscriber implements EventSubscriberInterface
         }
 
         if (in_array('ROLE_PERMANENT', $rolesTab, true)) {
-            //si pas de département
-            //pas de departement par défaut, ou pas de departement du tout.
+            // si pas de département
+            // pas de departement par défaut, ou pas de departement du tout.
             $departements = $this->departementRepository->findDepartementPersonnel($user);
             if (0 === count($departements)) {
                 return new RedirectResponse($this->urlGenerator->generate('security_login',
                     ['message' => 'pas-departement']));
             }
 
-            //init de la session departement
+            // init de la session departement
             $departements = $this->departementRepository->findDepartementPersonnelDefaut($user);
 
             if (0 === count($departements)) {
@@ -55,16 +55,16 @@ class AuthenticationSuccessSubscriber implements EventSubscriberInterface
             if (1 === count($departements)) {
                 /** @var Departement $departement */
                 $departement = $departements[0];
-                $this->session->getSession()->set('departement', $departement->getUuid()); //on sauvegarde
+                $this->session->getSession()->set('departement', $departement->getUuid()); // on sauvegarde
 
                 return new RedirectResponse($target ?? $this->urlGenerator->generate('default_homepage'));
             }
 
-            //donc il y a une departement, mais pas une par défaut.
+            // donc il y a une departement, mais pas une par défaut.
             return new RedirectResponse($this->urlGenerator->generate('security_choix_departement'));
         }
 
-        //c'est aucun des rôles...
+        // c'est aucun des rôles...
         return new RedirectResponse($this->urlGenerator->generate('security_login',
             ['message' => 'erreur_role']));
     }

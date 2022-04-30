@@ -36,17 +36,17 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
     use UuidTrait;
     use LifeCycleTrait;
 
-    //todo: remplace par l'enumération ?
-    public final const ACCEPTE = 'A';
-    public final const REFUSE = 'R';
-    public final const DEPOSE = 'D';
-    public final const ETATLONG = [
+    // todo: remplace par l'enumération ?
+    final public const ACCEPTE = 'A';
+    final public const REFUSE = 'R';
+    final public const DEPOSE = 'D';
+    final public const ETATLONG = [
         self::ACCEPTE => 'Accepté, absences justifiées',
         self::DEPOSE => 'Déposé, en attente de validation',
         self::REFUSE => 'Refusé',
     ];
 
-    public final const TAB_ETAT = [
+    final public const TAB_ETAT = [
         'label.absence_justficatif.'.self::ACCEPTE => self::ACCEPTE,
         'label.absence_justficatif.'.self::DEPOSE => self::DEPOSE,
         'label.absence_justficatif.'.self::REFUSE => self::REFUSE,
@@ -244,7 +244,7 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
             $this->getDateFin()?->format('Y-m-d').' '.$this->getHeureFin()?->format('H:i')));
     }
 
-    public function getDateDebut(): CarbonInterface | null
+    public function getDateDebut(): CarbonInterface|null
     {
         return $this->dateDebut;
     }
@@ -254,7 +254,7 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         $this->dateDebut = $dateDebut;
     }
 
-    public function getHeureDebut(): CarbonInterface | null
+    public function getHeureDebut(): CarbonInterface|null
     {
         return $this->heureDebut;
     }
@@ -264,7 +264,7 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         $this->heureDebut = Carbon::instance($heureDebut);
     }
 
-    public function getDateFin(): CarbonInterface | null
+    public function getDateFin(): CarbonInterface|null
     {
         return $this->dateFin;
     }
@@ -274,7 +274,7 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         $this->dateFin = $dateFin;
     }
 
-    public function getHeureFin(): CarbonInterface | null
+    public function getHeureFin(): CarbonInterface|null
     {
         return $this->heureFin;
     }
@@ -292,7 +292,7 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         ];
     }
 
-    public function getEtudiantGroupes(): Collection | array | null
+    public function getEtudiantGroupes(): Collection|array|null
     {
         return $this->getEtudiant()?->getGroupes();
     }

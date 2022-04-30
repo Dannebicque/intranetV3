@@ -33,7 +33,7 @@ class ComparePrevisionnelPersonnel extends ComparePrevisionnel
         if (AbstractEdt::SOURCE_EDT_INTRANET === $source) {
             $planning = $this->edtPlanningRepository->findByDepartement($departement);
         } else {
-            $planning = []; //todo: récupérer d'une autre source... et récupérer aussi du manager pour fusionner les deux ? Peut être pas indispensable ici
+            $planning = []; // todo: récupérer d'une autre source... et récupérer aussi du manager pour fusionner les deux ? Peut être pas indispensable ici
         }
         $t = [];
 

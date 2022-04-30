@@ -25,8 +25,8 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ProjetEtudiantEtudiantType extends AbstractType
 {
     protected ?Semestre $semestre = null;
-    //todo: faire un input avec une zone jour/mois/heure : Développer un composant ? Commenter lier deux champs d'entité avec ?
-    //https://getbootstrap.com/docs/5.1/forms/input-group/#buttons-with-dropdowns
+    // todo: faire un input avec une zone jour/mois/heure : Développer un composant ? Commenter lier deux champs d'entité avec ?
+    // https://getbootstrap.com/docs/5.1/forms/input-group/#buttons-with-dropdowns
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -39,7 +39,7 @@ class ProjetEtudiantEtudiantType extends AbstractType
             ->add('etudiants', EntityType::class, [
                 'class' => Etudiant::class,
                 'choice_label' => 'displayPr',
-                'query_builder' => fn(EtudiantRepository $etudiantRepository) => $etudiantRepository->findBySemestreBuilder($this->semestre),
+                'query_builder' => fn (EtudiantRepository $etudiantRepository) => $etudiantRepository->findBySemestreBuilder($this->semestre),
                 'multiple' => true,
                 'expanded' => true,
             ])

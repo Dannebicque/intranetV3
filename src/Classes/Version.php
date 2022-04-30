@@ -9,7 +9,6 @@
 
 namespace App\Classes;
 
-use Bugsnag\Client;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 class Version

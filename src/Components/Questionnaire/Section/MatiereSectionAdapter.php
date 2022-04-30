@@ -13,10 +13,10 @@ use App\Entity\Matiere;
 
 class MatiereSectionAdapter extends AbstractSectionAdapter
 {
-    public final const ENTITY = Matiere::class;
-    public final const FIELD_LIBELLE = 'libelle';
-    public final const FIELD_CODE = 'ref_matiere';
-    public final const LABEL = 'matiere';
+    final public const ENTITY = Matiere::class;
+    final public const FIELD_LIBELLE = 'libelle';
+    final public const FIELD_CODE = 'ref_matiere';
+    final public const LABEL = 'matiere';
 
     public function getData(mixed $id): ?array
     {

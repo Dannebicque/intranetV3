@@ -48,7 +48,7 @@ class DataUserSession
     /**
      * @var Semestre[]
      */
-    protected array $semestres; //semestres actifs de la departement
+    protected array $semestres; // semestres actifs de la departement
 
     /**
      * @var Diplome[]
@@ -98,7 +98,7 @@ class DataUserSession
                 $this->departement = $this->departementRepository->findOneBy(['uuid' => $requestStack->getSession()->get('departement')]);
             }
         } else {
-            //ni étudiant, ni personnel... étrange
+            // ni étudiant, ni personnel... étrange
             $event = new GenericEvent('erreur-type-user');
             $eventDispatcher->dispatch($event, Events::REDIRECT_TO_LOGIN);
         }

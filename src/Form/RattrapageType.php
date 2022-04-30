@@ -64,7 +64,7 @@ class RattrapageType extends AbstractType
                 'class' => Personnel::class,
                 'label' => 'label.personnel',
                 'choice_label' => 'displayPr',
-                'query_builder' => fn(PersonnelRepository $personnelRepository) => $personnelRepository->findBySemestreBuilder($this->semestre),
+                'query_builder' => fn (PersonnelRepository $personnelRepository) => $personnelRepository->findBySemestreBuilder($this->semestre),
                 'required' => true,
                 'expanded' => false,
                 'multiple' => false,

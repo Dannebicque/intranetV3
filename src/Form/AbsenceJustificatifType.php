@@ -74,7 +74,7 @@ class AbsenceJustificatifType extends AbstractType
                     'label' => 'etudiant',
                     'class' => Etudiant::class,
                     'choice_label' => 'display',
-                    'query_builder' => fn(EtudiantRepository $etudiantRepository) => $etudiantRepository->findBySemestreBuilder($this->semestre),
+                    'query_builder' => fn (EtudiantRepository $etudiantRepository) => $etudiantRepository->findBySemestreBuilder($this->semestre),
                 ])
                 ->add('etat', ChoiceType::class, [
                     'choices' => AbsenceJustificatif::TAB_ETAT,

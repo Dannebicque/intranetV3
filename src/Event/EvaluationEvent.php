@@ -14,7 +14,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class EvaluationEvent extends Event
 {
-    public final const ADDED = 'evaluation.added';
+    final public const ADDED = 'evaluation.added';
 
     public function __construct(protected Evaluation $evaluation)
     {

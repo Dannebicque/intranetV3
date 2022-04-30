@@ -51,7 +51,7 @@ class EdtController extends BaseController
      */
     public function dashboardPersonnel(int $semaine = 0): Response
     {
-        //todo: passer le lien semestre-> couleur plutôt que les matières ??
+        // todo: passer le lien semestre-> couleur plutôt que les matières ??
         if (null !== $this->dataUserSession->getDepartement() && $this->dataUserSession->getDepartement()->isOptUpdateCelcat()) {
             $matieres = $this->typeMatiereManager->tableauMatieresCodeApogee($this->getDepartement());
             $this->myEdtCelcat->initPersonnel($this->getUser(),
@@ -98,7 +98,7 @@ class EdtController extends BaseController
                 'semestre' => $semestre,
                 'filtre' => 'promo',
                 'valeur' => $semestre->getId(),
-                'groupes' => $groupeRepository->findAllGroupes($semestre),//todo: fusionner avec $groupes?
+                'groupes' => $groupeRepository->findAllGroupes($semestre), // todo: fusionner avec $groupes?
             ]);
     }
 
@@ -139,7 +139,7 @@ class EdtController extends BaseController
      * @throws SyntaxError
      */
     #[Route(path: '/semestre/export/semaine/{semaine}/{semestre}', name: 'edt_semestre_export_semaine_courante')]
-    public function exportSemestreSemaine(MyEdtExport $myEdtExport, $semaine, Semestre $semestre): \Symfony\Component\HttpFoundation\Response
+    public function exportSemestreSemaine(MyEdtExport $myEdtExport, $semaine, Semestre $semestre): Response
     {
         $myEdtExport->exportSemestre($semaine, $semestre);
     }
@@ -189,7 +189,7 @@ class EdtController extends BaseController
      * @throws Exception
      */
     #[Route(path: '/etudiant/export/semaine/{semaine}', name: 'edt_etudiant_export_semaine_courante')]
-    public function exportEtudiantSemaine(MyPDF $myPDF, int $semaine = 0): RedirectResponse | StreamedResponse | PdfResponse
+    public function exportEtudiantSemaine(MyPDF $myPDF, int $semaine = 0): RedirectResponse|StreamedResponse|PdfResponse
     {
         if (0 === $semaine) {
             $semaine = (int) date('W');
@@ -213,7 +213,7 @@ class EdtController extends BaseController
     #[Route(path: '/etudiant/export/ical', name: 'edt_etudiant_export_ical')]
     public function exportEtudiantIcal(MyEdtExport $myEdtExport): Response
     {
-        //Le nombre de semaine selon la configuraiton
+        // Le nombre de semaine selon la configuraiton
         $ical = $myEdtExport->export($this->getUser(), 'ics', 'etudiant');
 
         return new Response($ical, \Symfony\Component\HttpFoundation\Response::HTTP_OK, [

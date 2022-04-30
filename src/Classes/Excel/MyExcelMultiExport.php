@@ -60,12 +60,12 @@ class MyExcelMultiExport
         $this->myExcelWriter->getSpreadsheet()->getProperties()->setTitle($name);
         $this->myExcelWriter->getSpreadsheet()->getActiveSheet()->getPageSetup()->setPaperSize(PageSetup::PAPERSIZE_A4);
         $this->myExcelWriter->getSpreadsheet()->getActiveSheet()->getPageSetup()->setOrientation(PageSetup::ORIENTATION_LANDSCAPE);
-        $this->myExcelWriter->getSpreadsheet()->getActiveSheet()->setShowGridlines(true); //affichage de la grille
-        $this->myExcelWriter->getSpreadsheet()->getActiveSheet()->setPrintGridlines(true); //affichage de la grille
+        $this->myExcelWriter->getSpreadsheet()->getActiveSheet()->setShowGridlines(true); // affichage de la grille
+        $this->myExcelWriter->getSpreadsheet()->getActiveSheet()->setPrintGridlines(true); // affichage de la grille
         $this->myExcelWriter->getSpreadsheet()->getActiveSheet()->getPageSetup()->setRowsToRepeatAtTopByStartAndEnd(
             1,
             1
-        ); //ligne a répéter en haut
+        ); // ligne a répéter en haut
         $this->myExcelWriter->getSpreadsheet()->getActiveSheet()->getHeaderFooter()
             ->setOddHeader('&C&HDocument généré depuis l\'Intranet !');
         $this->myExcelWriter->getSpreadsheet()->getActiveSheet()->getHeaderFooter()
@@ -185,7 +185,7 @@ class MyExcelMultiExport
         /** @var Etudiant $etudiant */
         foreach ($semestre->getEtudiants() as $etudiant) {
             if (count($etudiant->getGroupes()) > 0) {
-                //uniquement si l'étudiant est dans un groupe.
+                // uniquement si l'étudiant est dans un groupe.
                 $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNumEtudiant());
                 ++$colonne;
                 $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNom());
@@ -202,7 +202,7 @@ class MyExcelMultiExport
         /** @var Groupe $groupe */
         foreach ($groupes as $groupe) {
             $this->myExcelWriter->createSheet($groupe->getLibelle());
-            //todo: modifier en-tete pour ajouter les infos de l'évaluation. modele PDF. Sauf si CSV? Evaluation et Matiere inutiles ?
+            // todo: modifier en-tete pour ajouter les infos de l'évaluation. modele PDF. Sauf si CSV? Evaluation et Matiere inutiles ?
             if (true === $semestre->getAnnee()?->getDiplome()?->isOptAnonymat()) {
                 $this->myExcelWriter->writeHeader(['num_etudiant', 'note', 'remise copie', 'commentaire']);
             } else {
@@ -355,6 +355,4 @@ class MyExcelMultiExport
             $colonne = 1;
         }
     }
-
-
 }

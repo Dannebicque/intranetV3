@@ -46,7 +46,7 @@ class CahierTexteType extends AbstractType
                 'class' => Semestre::class,
                 'label' => 'semestre',
                 'choice_label' => 'libelle',
-                'query_builder' => fn(SemestreRepository $semestreRepository) => $semestreRepository->findByDepartementBuilder($this->departement),
+                'query_builder' => fn (SemestreRepository $semestreRepository) => $semestreRepository->findByDepartementBuilder($this->departement),
                 'required' => true,
                 'expanded' => true,
                 'multiple' => false,

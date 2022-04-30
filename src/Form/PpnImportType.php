@@ -33,7 +33,7 @@ class PpnImportType extends AbstractType
             ->add('ppn', EntityType::class, [
                 'choice_label' => 'libelle',
                 'class' => Ppn::class,
-                'query_builder' => fn(PpnRepository $ppnRepository) => $ppnRepository->findByDepartementBuilder($this->departement),
+                'query_builder' => fn (PpnRepository $ppnRepository) => $ppnRepository->findByDepartementBuilder($this->departement),
             ])
             ->add('fichier', FileType::class, [
                 'label' => 'fichier',

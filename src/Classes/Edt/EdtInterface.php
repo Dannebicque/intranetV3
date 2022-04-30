@@ -21,7 +21,8 @@ use App\Entity\Semestre;
 interface EdtInterface
 {
     public function getPlanningSemestre(Semestre $semestre, array $matieres, AnneeUniversitaire $anneeUniversitaire): EvenementEdtCollection;
-    public function find(int $event): EvenementEdt;
-    public function recupereEdtJourBorne(Semestre $semestre, array $matieres, int $jourSemaine, int $semaineFormation): EvenementEdtCollection;
 
+    public function find(int $event): EvenementEdt;
+
+    public function recupereEdtJourBorne(Semestre $semestre, array $matieres, int $jourSemaine, int $semaineFormation): EvenementEdtCollection;
 }

@@ -78,7 +78,7 @@ class EtudiantSemestreController extends BaseController
 
             return $this->redirectToRoute('administration_etudiant_semestre_add', ['semestre' => $semestre->getId()]);
         }
-        //on parcours les fichiers, on renome, on copie et on supprime.
+        // on parcours les fichiers, on renome, on copie et on supprime.
         $myUpload->traitePhoto('ph/', 'etudiants/');
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Photos importées avec succés.');
 

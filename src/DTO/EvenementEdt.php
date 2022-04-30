@@ -59,7 +59,7 @@ class EvenementEdt
 
     public function getDisplay(): void
     {
-        //générer un affichage
+        // générer un affichage
     }
 
     public function getMatiere(): ?string

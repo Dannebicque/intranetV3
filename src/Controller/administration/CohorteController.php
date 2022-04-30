@@ -30,7 +30,7 @@ class CohorteController extends BaseController
         if (0 === $annee) {
             $annee = (int) date('Y') - 1;
         }
-        //on ne récupère la cohorte que de la departement.
+        // on ne récupère la cohorte que de la departement.
         $parcours = $scolariteRepository->findEtudiantsDepartement($annee, $this->dataUserSession->getDepartement());
         $etudiants = [];
         /** @var Scolarite $parcour */
@@ -52,6 +52,6 @@ class CohorteController extends BaseController
     public function export(): void
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
-        //todo: a faire
+        // todo: a faire
     }
 }

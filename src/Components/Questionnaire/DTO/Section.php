@@ -15,11 +15,11 @@ class Section
 {
     public Collection $questions;
 
-    public function __construct(public string $typeSection, public ?string $titre, public int $id_section, public int $id_questionnaire_section, public int | string $ordre, public ?int $questionnaire_id, public ?string $texte_explicatif = '', public array $configGlobale = [], public array $configQuestionnaire = [])
+    public function __construct(public string $typeSection, public ?string $titre, public int $id_section, public int $id_questionnaire_section, public int|string $ordre, public ?int $questionnaire_id, public ?string $texte_explicatif = '', public array $configGlobale = [], public array $configQuestionnaire = [])
     {
     }
 
-    public function setQuestions(Collection | array $questions): void
+    public function setQuestions(Collection|array $questions): void
     {
         $this->questions = $questions;
     }

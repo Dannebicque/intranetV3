@@ -186,7 +186,7 @@ class EtudiantController extends BaseController
     public function export(MyExport $myExport, EtudiantRepository $etudiantRepository, $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
-        //todo: mettre un databtable et supprimer la requete ?
+        // todo: mettre un databtable et supprimer la requete ?
         $etudiants = $etudiantRepository->getByDepartement($this->getDepartement(), []);
 
         return $myExport->genereFichierGenerique(

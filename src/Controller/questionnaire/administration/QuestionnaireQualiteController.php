@@ -149,5 +149,5 @@ class QuestionnaireQualiteController extends BaseController
         return $this->redirectToRoute('sadm_questionnaire_qualite_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    //todo: duplicate, export
+    // todo: duplicate, export
 }

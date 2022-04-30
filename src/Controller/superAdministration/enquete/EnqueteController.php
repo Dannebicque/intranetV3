@@ -188,7 +188,7 @@ class EnqueteController extends BaseController
         PrevisionnelManager $previsionnelManager,
         QuestionnaireQualite $questionnaire
     ): Response {
-        //todo: utiliser le manager de questionnaire.
+        // todo: utiliser le manager de questionnaire.
         $previsionnel = $previsionnelManager->getPrevisionnelAnneeArray($questionnaire->getSemestre()?->getAnnee(),
             $questionnaire->getSemestre()?->getAnneeUniversitaire()?->getAnnee());
 
@@ -203,14 +203,14 @@ class EnqueteController extends BaseController
     ): Response {
         $id = $questionnaire->getId();
         if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
-            //suppression des réponses
+            // suppression des réponses
             $reponses = $quizzEtudiantReponseRepository->findByQuestionnaire($questionnaire);
             foreach ($reponses as $reponse) {
                 $this->entityManager->remove($reponse);
             }
 
-            //suppression de l'enquete
-            //suppression des liens enquetes sections
+            // suppression de l'enquete
+            // suppression des liens enquetes sections
             $this->entityManager->remove($questionnaire);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'questionnaire.delete.success.flash');

@@ -23,7 +23,7 @@ abstract class AbstractSection
     public ?int $arrayKey = 0;
     public ?int $id = null;
     public ?int $questionnaire_section_id = null;
-    public int | string $ordre = 1;
+    public int|string $ordre = 1;
     public ?string $titre = null;
     public ?string $text_explicatif = null;
 

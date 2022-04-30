@@ -11,10 +11,8 @@ namespace App\DTO;
 
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
-use App\Entity\Matiere;
 use App\Entity\ScolaritePromo;
 use App\Entity\Semestre;
-use App\Entity\Ue;
 
 class SousCommissionTravail
 {
@@ -24,8 +22,9 @@ class SousCommissionTravail
 
     /**
      * SousCommissionTravail constructor.
-     * @param \App\Entity\Ue[] $ues
-     * @param \App\Entity\Matiere[] $matieres
+     *
+     * @param \App\Entity\Ue[]       $ues
+     * @param \App\Entity\Matiere[]  $matieres
      * @param \App\Entity\Etudiant[] $etudiants
      */
     public function __construct(
@@ -72,7 +71,7 @@ class SousCommissionTravail
     public function recupereScolarite(Etudiant $etudiant): array
     {
         $tScolarite = [];
-        //on ne récupère la scolarité que par rapport au diplôme en cours
+        // on ne récupère la scolarité que par rapport au diplôme en cours
         foreach ($etudiant->getScolarites() as $scolarite) {
             if ($scolarite->getSemestre()?->getDiplome() === $etudiant->getDiplome()) {
                 $tScolarite[$scolarite->getSemestre()?->getOrdreLmd()] = new Scolarite($scolarite);

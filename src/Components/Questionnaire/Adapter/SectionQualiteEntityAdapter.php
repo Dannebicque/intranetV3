@@ -28,7 +28,6 @@ class SectionQualiteEntityAdapter
             $section->getSection()->getTextExplicatif(),
             $section->getSection()->getConfig(),
             $section->getConfig()
-
         );
 
         $this->section->setQuestions($section->getSection()->getQualiteSectionQuestions());

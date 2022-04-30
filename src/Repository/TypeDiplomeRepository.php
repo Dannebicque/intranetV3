@@ -22,7 +22,6 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class TypeDiplomeRepository extends ServiceEntityRepository
 {
-
     /**
      * TypeDiplomeRepository constructor.
      */

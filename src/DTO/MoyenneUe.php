@@ -51,7 +51,7 @@ class MoyenneUe
         return '';
     }
 
-    public function getMoyenne(): float | int
+    public function getMoyenne(): float|int
     {
         return $this->totalCoefficient > 0 ? $this->totalMatiere / $this->totalCoefficient : -0.01;
     }
@@ -61,7 +61,7 @@ class MoyenneUe
         return $this->style($this->getMoyennePenalisee());
     }
 
-    public function getMoyennePenalisee(): float | int
+    public function getMoyennePenalisee(): float|int
     {
         return $this->totalCoefficient > 0 ? $this->totalMatierePenalisee / $this->totalCoefficient : -0.01;
     }

@@ -19,7 +19,7 @@ use App\Entity\Ue;
 
 class PrevisionnelMatiereRepository extends PrevisionnelRepository
 {
-    public final const TYPE = 'matiere';
+    final public const TYPE = 'matiere';
 
     public function findPrevisionnelEnseignantComplet(Personnel $personnel, int $annee): array
     {
@@ -53,7 +53,6 @@ class PrevisionnelMatiereRepository extends PrevisionnelRepository
             ->setParameter('type', self::TYPE)
             ->andWhere('p.annee = :annee')
             ->setParameter('annee', $annee);
-
 
         if (null !== $departement) {
             $query->andWhere('d.departement = :departement')

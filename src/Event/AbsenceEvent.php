@@ -14,9 +14,9 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class AbsenceEvent extends Event
 {
-    public final const ADDED = 'absence.added';
-    public final const REMOVED = 'absence.removed';
-    public final const JUSTIFIED = 'absence.justified';
+    final public const ADDED = 'absence.added';
+    final public const REMOVED = 'absence.removed';
+    final public const JUSTIFIED = 'absence.justified';
 
     public function __construct(protected Absence $absence)
     {

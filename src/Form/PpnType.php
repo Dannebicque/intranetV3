@@ -40,7 +40,7 @@ class PpnType extends AbstractType
                 [
                     'class' => Diplome::class,
                     'choice_label' => 'display',
-                    'query_builder' => fn(DiplomeRepository $diplomeRepository) => $diplomeRepository->findByDepartementBuilder($this->departement),
+                    'query_builder' => fn (DiplomeRepository $diplomeRepository) => $diplomeRepository->findByDepartementBuilder($this->departement),
                     'label' => 'diplome',
                 ]
             );

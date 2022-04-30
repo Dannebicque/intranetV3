@@ -34,7 +34,6 @@ class GenereCodeApogeeCommand extends Command
         protected ApcRessourceRepository $apcRessourceRepository,
         protected ApcSaeRepository $apcSaeRepository)
     {
-
         parent::__construct();
     }
 

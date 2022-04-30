@@ -23,7 +23,6 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class MyStageEtudiant
 {
-
     protected StageEtudiant $stageEtudiant;
 
     /**
@@ -107,7 +106,6 @@ class MyStageEtudiant
     }
 
     /**
-     *
      * @throws NonUniqueResultException
      * @throws Exception
      */

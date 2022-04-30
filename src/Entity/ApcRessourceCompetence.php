@@ -23,7 +23,7 @@ class ApcRessourceCompetence extends BaseEntity
     #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
     private float $coefficient = 0;
 
-    public function __construct(#[ORM\ManyToOne(targetEntity: ApcRessource::class, inversedBy: 'apcRessourceCompetences')] private ?\App\Entity\ApcRessource $ressource, #[ORM\ManyToOne(targetEntity: ApcCompetence::class, inversedBy: 'apcRessourceCompetences')] private ?\App\Entity\ApcCompetence $competence)
+    public function __construct(#[ORM\ManyToOne(targetEntity: ApcRessource::class, inversedBy: 'apcRessourceCompetences')] private ?ApcRessource $ressource, #[ORM\ManyToOne(targetEntity: ApcCompetence::class, inversedBy: 'apcRessourceCompetences')] private ?ApcCompetence $competence)
     {
     }
 

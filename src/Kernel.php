@@ -47,7 +47,7 @@ class Kernel extends BaseKernel
             $container->import('../config/{services}.php');
         }
 
-        //mon service pour Table
+        // mon service pour Table
         $container->import('../src/Components/Table/DependencyInjection/{services}.php');
         $container->import('../src/Components/Widget/DependencyInjection/{services}.php');
         $container->import('../src/Components/Questionnaire/DependencyInjection/{services}.php');

@@ -14,11 +14,9 @@ enum AbsenceJustificatifEnum: string implements BadgeEnumInterface
     case ACCEPTE = 'A';
     case REFUSE = 'R';
     case DEPOSE = 'D';
-
     public function badge(): string
     {
-        return match($this)
-        {
+        return match ($this) {
             self::DEPOSE => 'info',
             self::REFUSE => 'danger',
             self::ACCEPTE => 'success',

@@ -62,7 +62,7 @@ class MyEdtIntranet extends BaseEdt
         $this->user = $personnel;
         $this->init($anneeUniversitaire, Constantes::FILTRE_EDT_PROF, $personnel->getId(), $semaine);
         $this->semaines = $this->calculSemaines();
-        $this->calculEdt(); //todo: pour des datas en BDD sans scelcat. Ajouter test. Devrait permettre de récupérer les EDT des deux tables... et fusionner. Pour ensuite un affichage. On se moque de savoir qui est où...
+        $this->calculEdt(); // todo: pour des datas en BDD sans scelcat. Ajouter test. Devrait permettre de récupérer les EDT des deux tables... et fusionner. Pour ensuite un affichage. On se moque de savoir qui est où...
 
         return $this;
     }
@@ -104,7 +104,7 @@ class MyEdtIntranet extends BaseEdt
                 break;
             case Constantes::FILTRE_EDT_MODULE:
                 $this->module = $this->typeMatiereManager->getMatiereFromSelect($this->valeur);
-                $this->semestre = $this->module->getSemestres()->first(); //todo: pas idéal, comment récupérer le semestre du module ? En fait ne doit pas dépendre du semestre... si un module est sur plusieurs semestres.
+                $this->semestre = $this->module->getSemestres()->first(); // todo: pas idéal, comment récupérer le semestre du module ? En fait ne doit pas dépendre du semestre... si un module est sur plusieurs semestres.
                 $this->groupes = $this->groupeRepository->findAllGroupes($this->semestre);
 
                 $pl = $this->edtPlanningRepository->findEdtModule($this->module->id, $this->module->typeMatiere,
@@ -142,7 +142,7 @@ class MyEdtIntranet extends BaseEdt
             if ((is_countable($semestres) ? count($semestres) : 0) > 0) {
                 $valeur = $semestres[0]->getId();
             }
-            //erreur
+            // erreur
         }
         $this->matieres = $matieres;
         $this->init($anneeUniversitaire, $filtre, $valeur, $semaine);
@@ -154,13 +154,13 @@ class MyEdtIntranet extends BaseEdt
 
     private function transformeIndividuel(array $pl): array
     {
-        //prof ou étudiant
+        // prof ou étudiant
         $tab = [];
 
         /** @var EdtPlanning $p */
         foreach ($pl as $p) {
             $evt = new EvenementEdt();
-            //todo: utiliser le manager?? => En fait la requete doit être via le manager... Du coup un seul fichier EDT???
+            // todo: utiliser le manager?? => En fait la requete doit être via le manager... Du coup un seul fichier EDT???
             $evt->source = EdtManager::EDT_INTRANET;
             $evt->id = $p->getId();
             $evt->jour = $p->getJour();
@@ -186,7 +186,7 @@ class MyEdtIntranet extends BaseEdt
 
     private function getDonneesFromModule(EdtPlanning $p, EvenementEdt $evt): EvenementEdt
     {
-        //todo: utuliser un transformer/adapter ? et ne plus dépenedre de EdtPlanning
+        // todo: utuliser un transformer/adapter ? et ne plus dépenedre de EdtPlanning
         if (array_key_exists($p->getTypeIdMatiere(), $this->matieres)) {
             $matiere = $this->matieres[$p->getTypeIdMatiere()];
             if (null !== $matiere) {
@@ -214,7 +214,7 @@ class MyEdtIntranet extends BaseEdt
                 if (
                     array_key_exists($p->getJour(), $this->tab) &&
                     array_key_exists($dbtEdt, $this->tab[$p->getJour()])) {
-                    //le créneau est déjà utilisé on utilise le suivant
+                    // le créneau est déjà utilisé on utilise le suivant
                     ++$dbtEdt;
                 }
 
@@ -526,7 +526,7 @@ class MyEdtIntranet extends BaseEdt
         $this->semestre = $semestre;
         $this->init($anneeUniversitaire, 'promo', $semestre->getId(), $semaine);
         $this->semaines = $this->calculSemaines();
-        $this->calculEdt(); //todo: pour des datas en BDD sasn scelcat. Ajouter test.
+        $this->calculEdt(); // todo: pour des datas en BDD sasn scelcat. Ajouter test.
 
         return $this;
     }
@@ -620,7 +620,7 @@ class MyEdtIntranet extends BaseEdt
         $this->tab[$jour][$idDebut]['debut'] = $casedebut;
         $this->tab[$jour][$idDebut]['format'] = 'aie';
 
-        //regarde si le format entre dans une case ou dépasse. retourne 'ok' ou 'nok'
+        // regarde si le format entre dans une case ou dépasse. retourne 'ok' ou 'nok'
         if (array_key_exists($casedebut, Constantes::TAB_CRENEAUX) && 0 === ($duree % 3)) {
             $this->tab[$jour][$idDebut]['format'] = 'ok';
 

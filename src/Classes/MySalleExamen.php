@@ -64,8 +64,8 @@ class MySalleExamen
     public function genereDocument(
         string $requestdateeval,
         string $requestmatiere,
-        int | string $requestenseignant1,
-        int | string $requestenseignant2,
+        int|string $requestenseignant1,
+        int|string $requestenseignant2,
         Departement $departement
     ) {
         $this->matiere = $this->typeMatiereManager->getMatiereFromSelect($requestmatiere);
@@ -86,7 +86,7 @@ class MySalleExamen
                 }
             }
         } else {
-            $grdetail = $this->groupeDefaut($this->matiere->semestre); //todo: comment récupérer le semestre sans dépendre de matière ? ou justement garder ca et afficher tous les groupes mutualisés
+            $grdetail = $this->groupeDefaut($this->matiere->semestre); // todo: comment récupérer le semestre sans dépendre de matière ? ou justement garder ca et afficher tous les groupes mutualisés
             $this->typeGroupe = $grdetail[0]->getTypeGroupe();
             $etudiants = $this->etudiantRepository->findBySemestre($this->matiere->semestre);
         }
@@ -110,10 +110,10 @@ class MySalleExamen
             return $this->myPdf::generePdf('pdf/placement.html.twig', $data, 'placement');
         }
 
-        return null; //todo: afficher un lessage de salle trop petite ?
+        return null; // todo: afficher un lessage de salle trop petite ?
     }
 
-    private function groupeDefaut(Semestre $semestre): bool | Collection | array
+    private function groupeDefaut(Semestre $semestre): bool|Collection|array
     {
         $typegroupe = $this->typeGroupeRepository->findBySemestre($semestre);
 
@@ -175,7 +175,7 @@ class MySalleExamen
         return $pl;
     }
 
-    public function calculCapacite(int | string $salle, int | string $typeGroupe, array $requestgroupes): bool
+    public function calculCapacite(int|string $salle, int|string $typeGroupe, array $requestgroupes): bool
     {
         $this->requestgroupes = $requestgroupes;
         $this->salle = $this->salleExamenRepository->find($salle);

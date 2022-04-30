@@ -29,7 +29,7 @@ class Actualite extends BaseEntity
     #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT)]
     private ?string $texte = null;
 
-    public function __construct(#[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'actualites')] private ?\App\Entity\Departement $departement)
+    public function __construct(#[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'actualites')] private ?Departement $departement)
     {
     }
 

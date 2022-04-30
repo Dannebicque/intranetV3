@@ -68,7 +68,7 @@ class AbsenceAppelSuiviController extends BaseController
         string $_format
     ): ?Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
-        //todo: gérer l'export passer par un DTO, et l'injecter aussi dans le table de l'index
+        // todo: gérer l'export passer par un DTO, et l'injecter aussi dans le table de l'index
         $statsAppel = $this->absenceEtatAppel->getBySemestre($semestre);
 //        $datas = new DtoSourceIterator($statsAppel, AbsenceEtatAppel::class);
 //

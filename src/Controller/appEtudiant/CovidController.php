@@ -43,7 +43,7 @@ class CovidController extends BaseController
     #[Route(path: '/export/{id}.pdf', name: 'app_etudiant_covid_attestation_pdf')]
     public function details(MyExportPresence $myExportPresence, CovidAttestationEtudiant $attestationEtudiant): Response
     {
-        //vérifier s'il est autorisé
+        // vérifier s'il est autorisé
         $autorise = false;
         foreach ($attestationEtudiant->getGroupes() as $groupe) {
             foreach ($groupe->getEtudiants() as $etudiant) {
@@ -53,7 +53,7 @@ class CovidController extends BaseController
             }
         }
         if ($autorise) {
-            //exporter le PDF
+            // exporter le PDF
             $myExportPresence->genereConvocationPdf($attestationEtudiant, $this->getUser());
 
             return new Response();

@@ -14,11 +14,9 @@ enum PlanCoursEnum: string implements BadgeEnumInterface
     case NONE = 'NONE';
     case EN_COURS = 'EN_COURS';
     case COMPLET = 'COMPLET';
-
     public function badge(): string
     {
-        return match($this)
-        {
+        return match ($this) {
             self::NONE => 'danger',
             self::EN_COURS => 'warning',
             self::COMPLET => 'success',

@@ -166,7 +166,7 @@ class ApcRessourceController extends BaseController
             );
 
             if (true === $apcRessource->getRessourceParent() || true === $apcRessource->getMutualisee()) {
-                //si c'est défini comme une ressource parente, on redirige vers la page de gestion des ressources "enfants"
+                // si c'est défini comme une ressource parente, on redirige vers la page de gestion des ressources "enfants"
                 return $this->redirectToRoute('administration_apc_ressource_enfants', ['id' => $apcRessource->getId()]);
             }
 
@@ -206,7 +206,6 @@ class ApcRessourceController extends BaseController
 
         $groupes = array_merge(...$groupes);
         $ressources = array_merge(...$ressources);
-
 
         return $this->render('apc/apc_ressource/enfants.html.twig', [
             'groupes' => $groupes,
@@ -447,7 +446,7 @@ class ApcRessourceController extends BaseController
     {
         $id = $apcRessource->getId();
         if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
-            //todo: vérifier si pas d'évaluation ou d'absence (idem SAE)
+            // todo: vérifier si pas d'évaluation ou d'absence (idem SAE)
             $this->entityManager->remove($apcRessource);
             $this->entityManager->flush();
             $this->addFlashBag(

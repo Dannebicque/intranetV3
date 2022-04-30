@@ -21,7 +21,6 @@ use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use App\Exception\MatiereNotFoundException;
-use App\Exception\SemestreNotFoundException;
 use App\Repository\AbsenceRepository;
 use App\Utils\JsonRequest;
 use App\Utils\Tools;
@@ -132,7 +131,7 @@ class AbsenceController extends BaseController
     #[Route('/ajax/pas-absent/', name: 'application_personnel_absence_ajax_pas_absent', options: ['expose' => true], methods: ['POST'])]
     public function pasAbsentEvent(Request $request, EdtManager $edtManager): JsonResponse
     {
-        //todo: vérifier si autorisé, vérifié si pas déjà présent
+        // todo: vérifier si autorisé, vérifié si pas déjà présent
         $idEvent = JsonRequest::getFromRequest($request)['event'];
         $event = $edtManager->getEvent($idEvent);
         $appelFait = new AbsenceEtatAppel();
@@ -161,7 +160,7 @@ class AbsenceController extends BaseController
     #[Route(path: '/{uuid}', name: 'application_personnel_absence_delete', methods: 'DELETE')]
     public function supprimer(EtudiantAbsences $etudiantAbsences, Request $request, Absence $absence): Response
     {
-        //todo: tester...
+        // todo: tester...
         $id = $absence->getUuidString();
         if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             $etudiantAbsences->removeAbsence($absence);
@@ -178,11 +177,11 @@ class AbsenceController extends BaseController
     public function ajaxGetAbsencesMatiere(TypeMatiereManager $typeMatiereManager, AbsenceRepository $absenceRepository, string $matiere): JsonResponse
     {
         $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
-       // $this->denyAccessUnlessGranted('CAN_ADD_ABSENCE', ['matiere' => $mat, 'semestre' => $semestre]);//todo: comment passer le semestre au JS.
+        // $this->denyAccessUnlessGranted('CAN_ADD_ABSENCE', ['matiere' => $mat, 'semestre' => $semestre]);//todo: comment passer le semestre au JS.
         if (null !== $mat) {
             $absences = $absenceRepository->getByMatiereArray(
                 $mat,
-                $this->getAnneeUniversitaire() //todo: ?? $mat->semestre?->getAnneeUniversitaire() equivalent ?
+                $this->getAnneeUniversitaire() // todo: ?? $mat->semestre?->getAnneeUniversitaire() equivalent ?
             );
 
             return $this->json($absences);
@@ -195,7 +194,7 @@ class AbsenceController extends BaseController
      * @throws Exception
      */
     #[Route(path: '/ajax/saisie/{matiere}/{etudiant}', name: 'application_personnel_absence_saisie_ajax', options: ['expose' => true], methods: 'POST')]
-    public function ajaxSaisie(TypeMatiereManager $typeMatiereManager, EtudiantAbsences $etudiantAbsences, AbsenceRepository $absenceRepository, Request $request, string $matiere, Etudiant $etudiant): JsonResponse | Response
+    public function ajaxSaisie(TypeMatiereManager $typeMatiereManager, EtudiantAbsences $etudiantAbsences, AbsenceRepository $absenceRepository, Request $request, string $matiere, Etudiant $etudiant): JsonResponse|Response
     {
         $dateHeure = Tools::convertDateHeureToObject($request->request->get('date'), $request->request->get('heure'));
         $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
@@ -227,7 +226,7 @@ class AbsenceController extends BaseController
             return new response('out', \Symfony\Component\HttpFoundation\Response::HTTP_INTERNAL_SERVER_ERROR);
         }
         if (1 === count($absence)) {
-            //un tableau, donc une absence ?
+            // un tableau, donc une absence ?
             $etudiantAbsences->removeAbsence($absence[0]);
 
             $absences = $absenceRepository->getByMatiereArray(

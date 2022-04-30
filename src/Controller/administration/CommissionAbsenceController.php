@@ -34,6 +34,6 @@ class CommissionAbsenceController extends BaseController
     public function export(Semestre $semestre): void
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
-        //todo:  a faire
+        // todo:  a faire
     }
 }

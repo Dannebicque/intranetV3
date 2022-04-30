@@ -52,14 +52,14 @@ class DocumentType extends AbstractType
                     'class' => TypeDocument::class,
                     'choice_label' => 'libelle',
                     'label' => 'label.type_document',
-                    'query_builder' => fn(TypeDocumentRepository $typeDocumentRepository) => $typeDocumentRepository->findByDepartementBuilder($this->departement),
+                    'query_builder' => fn (TypeDocumentRepository $typeDocumentRepository) => $typeDocumentRepository->findByDepartementBuilder($this->departement),
                 ]
             )
             ->add('semestres', EntityType::class, [
                 'class' => Semestre::class,
                 'label' => 'label.semestres_document',
                 'choice_label' => 'libelle',
-                'query_builder' => fn(SemestreRepository $semestreRepository) => $semestreRepository->findByDepartementBuilder($this->departement),
+                'query_builder' => fn (SemestreRepository $semestreRepository) => $semestreRepository->findByDepartementBuilder($this->departement),
                 'required' => true,
                 'expanded' => true,
                 'multiple' => true,

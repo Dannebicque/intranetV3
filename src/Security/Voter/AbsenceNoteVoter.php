@@ -29,13 +29,13 @@ class AbsenceNoteVoter extends Voter
 
     protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
     {
-        //vérifier que c'est un prof, qu'il est dans le bon département et qu'il a un prévisionnel associé.
+        // vérifier que c'est un prof, qu'il est dans le bon département et qu'il a un prévisionnel associé.
         $user = $token->getUser();
 
         if (!$user instanceof Personnel) {
             return false;
         }
-        //todo: tester éventuellement des droits supplémentaire, et donc pas besoin de prévisionnel?
+        // todo: tester éventuellement des droits supplémentaire, et donc pas besoin de prévisionnel?
 
         if (!$this->abstractVoter->userInGoodDepartement($subject['semestre']->getDiplome()?->getDepartement())) {
             throw new AccessDeniedException('Vous n\'êtes pas dans le département associé à cette matière/ressource/SAÉ');
@@ -47,7 +47,7 @@ class AbsenceNoteVoter extends Voter
 
         switch ($attribute) {
             case 'CAN_ADD_ABSENCE':
-                //check if previsionnel exist...
+                // check if previsionnel exist...
                 $previ = $this->previsionnelRepository->findBy([
                     'typeMatiere' => $subject['matiere']->typeMatiere,
                     'idMatiere' => $subject['matiere']->id,
@@ -57,7 +57,7 @@ class AbsenceNoteVoter extends Voter
                 }
                 break;
             case 'CAN_ADD_NOTE':
-                //check if previsionnel exist... Vérifier selon l'étape s'il peut agir sur l'évaluation
+                // check if previsionnel exist... Vérifier selon l'étape s'il peut agir sur l'évaluation
                 $previ = $this->previsionnelRepository->findBy([
                     'typeMatiere' => $subject['matiere']->typeMatiere,
                     'idMatiere' => $subject['matiere']->id,

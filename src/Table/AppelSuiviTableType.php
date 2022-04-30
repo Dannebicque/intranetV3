@@ -95,13 +95,13 @@ class AppelSuiviTableType extends TableType
 //        ]);
 
         $builder->useAdapter(EntityAdapter::class, [
-            'class' => AbsenceEtatAppel::class, //todo: doit être le planning... Passer par un DTO...
+            'class' => AbsenceEtatAppel::class, // todo: doit être le planning... Passer par un DTO...
             'fetch_join_collection' => false,
             'query' => static function (QueryBuilder $qb, array $formData) {
                 // $qb->innerJoin(Etudiant::class, 'etu', 'WITH', 'e.etudiant = etu.id')
                 //    ->where('etu.semestre = :semestre')
                 // ->andWhere('e.anneeUniversitaire = :anneeuniversitaire')
-                //->setParameter('semestre', $this->semestre->getId());
+                // ->setParameter('semestre', $this->semestre->getId());
                 //  ->setParameter('anneeuniversitaire', $this->anneeUniversitaire->getId());
             },
         ]);

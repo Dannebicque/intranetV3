@@ -45,12 +45,12 @@ class PlanCoursTableType extends TableType
             'choice_label' => 'display',
             'required' => false,
             'placeholder' => 'Filtrer par semestre',
-            'query_builder' => fn(SemestreRepository $semestreRepository) => $semestreRepository->findByDiplomeBuilder($this->diplome),
+            'query_builder' => fn (SemestreRepository $semestreRepository) => $semestreRepository->findByDiplomeBuilder($this->diplome),
         ]);
         $builder->addFilter('etat_plan_cours', EnumType::class, [
             'class' => PlanCoursEnum::class,
             'required' => false,
-            'choice_label' => static fn(UnitEnum $choice): string => 'plan_cours.'.$choice->value,
+            'choice_label' => static fn (UnitEnum $choice): string => 'plan_cours.'.$choice->value,
             'placeholder' => 'Etat du plan de cours',
         ]);
 
@@ -93,14 +93,14 @@ class PlanCoursTableType extends TableType
                 $t[$semestre->getId()] = $this->previsionnelManager->getPrevisionnelSemestre($semestre, $this->annee);
             }
             if (isset($formData['semestre']) && array_key_exists($formData['semestre'], $t)) {
-                //filtre par semestre
+                // filtre par semestre
                 $t = $t[$formData['semestre']];
             } else {
                 $t = array_merge(...$t);
             }
 
             if (isset($formData['etat_plan_cours'])) {
-                //filtre par etat
+                // filtre par etat
                 $tab = [];
                 foreach ($t as $elt) {
                     if ($elt->etatPlanCours === $formData['etat_plan_cours']) {

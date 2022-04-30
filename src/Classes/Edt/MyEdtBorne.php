@@ -24,7 +24,7 @@ use App\Repository\SemestreRepository;
 
 class MyEdtBorne
 {
-    public array $data = []; //todo: passer par EvenementCollection pour gérer tous les cas??
+    public array $data = []; // todo: passer par EvenementCollection pour gérer tous les cas??
 
     /**
      * MyEdtBorne constructor.

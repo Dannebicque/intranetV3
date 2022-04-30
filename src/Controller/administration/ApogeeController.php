@@ -46,20 +46,20 @@ class ApogeeController extends BaseController
             $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
 
             $this->etudiants = [];
-            //requete pour récupérer les étudiants de la promo.
-            //pour chaque étudiant, s'il existe, on update, sinon on ajoute (et si type=force).
+            // requete pour récupérer les étudiants de la promo.
+            // pour chaque étudiant, s'il existe, on update, sinon on ajoute (et si type=force).
             $stid = $apogeeEtudiant->getEtudiantsAnnee($semestre->getAnnee());
             while ($row = $stid->fetch()) {
                 $dataApogee = $apogeeEtudiant->transformeApogeeToArray($row, $bacRepository->getApogeeArray());
                 $numEtudiant = $dataApogee['etudiant']['setNumEtudiant'];
                 $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $numEtudiant]);
                 if (null === $etudiant) {
-                    //l'étudiant n'existe pas, quelque soit la situation, on va l'ajouter
+                    // l'étudiant n'existe pas, quelque soit la situation, on va l'ajouter
                     $etudiant = $etudiantImport->createEtudiant($semestre, $dataApogee);
                     $this->etudiants[$numEtudiant]['etat'] = 'force';
                     $this->etudiants[$numEtudiant]['data'] = $etudiant;
                 } elseif ('force' === $type) {
-                    //l'étudiant existe, et on force la mise à jour
+                    // l'étudiant existe, et on force la mise à jour
                     $etudiant = $etudiantImport->updateEtudiant($etudiant, $semestre, $dataApogee);
                     $this->etudiants[$numEtudiant]['etat'] = 'maj';
                     $this->etudiants[$numEtudiant]['data'] = $etudiant;
@@ -105,16 +105,16 @@ class ApogeeController extends BaseController
             if (0 !== $numEtu) {
                 $stid = $apogeeEtudiant->getEtudiant($numEtu, $semestre->getAnnee());
                 while ($row = $stid->fetch()) {
-                    //requete pour récupérer les datas de l'étudiant et ajouter à la BDD.
+                    // requete pour récupérer les datas de l'étudiant et ajouter à la BDD.
                     $dataApogee = $apogeeEtudiant->transformeApogeeToArray($row, $bacRepository->getApogeeArray());
                     $numEtudiant = $dataApogee['etudiant']['setNumEtudiant'];
 
-                    //Stocker réponse dans un tableau pour page confirmation
+                    // Stocker réponse dans un tableau pour page confirmation
                     $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $numEtudiant]);
                     if ($etudiant) {
                         $this->etudiants[$numEtudiant]['etat'] = 'deja';
                     } else {
-                        //n'existe pas on ajoute.
+                        // n'existe pas on ajoute.
                         $etudiant = $etudiantImport->createEtudiant($semestre, $dataApogee);
                         $this->etudiants[$numEtudiant]['etat'] = 'add';
                         $this->entityManager->flush();
