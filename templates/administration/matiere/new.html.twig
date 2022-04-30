@@ -14,7 +14,16 @@
     <div class="card">
         <h4 class="card-title">{{ 'adm.matiere.new.heading'|trans }}</h4>
         <div class="card-body">
-            {{ include('composants/adm-form.html.twig') }}
+            {% form_theme form 'form/my-form.html.twig' %}
+            {{ form_start(form) }}
+            {{ include('administration/matiere/_form.html.twig', {'button_label': 'update'|trans})}}
+
+            <button class="btn btn-success"><i class="fas fa-floppy-disk"></i> {{ button_label|default('label.save'|trans) }}
+            </button>
+            <div class="alert alert-info mt-2">
+                Tous les champs avec un <span class="text-red">*</span> sont obligatoires
+            </div>
+            {{ form_end(form) }}
         </div>
     </div>
 {% endblock %}

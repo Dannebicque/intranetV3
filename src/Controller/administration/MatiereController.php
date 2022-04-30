@@ -205,7 +205,7 @@ class MatiereController extends BaseController
 
         if (true === (bool) ($configuration->get('MODIFICATION_PPN'))) {
             $form = $this->createForm(MatiereType::class, $matiere, [
-                'diplome' => $matiere->getSemestre()->getAnnee()->getDiplome(),
+                'diplome' => $matiere->getSemestre()?->getAnnee()?->getDiplome(),
                 'attr' => [
                     'data-provide' => 'validation',
                 ],
