@@ -43,7 +43,7 @@ class MyMessagerie
     private array|Collection $etudiants = [];
 
     private string $typeDestinataires = '';
-    private string $type;
+    private ?string $type = null;
     private int $id;
     private array $pjs = [];
 
