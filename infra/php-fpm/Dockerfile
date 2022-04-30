@@ -13,6 +13,7 @@ RUN curl -sSk https://getcomposer.org/installer | php -- --disable-tls && \
 
 RUN docker-php-ext-configure intl
 RUN docker-php-ext-install pdo pdo_mysql gd opcache intl zip calendar dom mbstring bcmath
-RUN pecl install apcu && docker-php-ext-enable apcu
+#RUN pecl install apcu && docker-php-ext-enable apcu
+ENV PHP_MEMORY_LIMIT=-1
 
 WORKDIR /var/www/project

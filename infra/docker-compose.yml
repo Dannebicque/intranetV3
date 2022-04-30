@@ -38,6 +38,7 @@ services:
       - mysql8-service
     environment:
       - APP_ENV=dev
+      - COMPOSER_MEMORY_LIMIT=-1
   # mysql
   mysql8-service:
     image: mysql:5.7
