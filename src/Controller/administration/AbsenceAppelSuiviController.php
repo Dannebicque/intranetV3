@@ -14,6 +14,7 @@ use App\Classes\Edt\EdtManager;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Controller\BaseController;
 use App\Entity\Semestre;
+use App\Table\AppelSuiviTableType;
 use App\Table\PlanCoursTableType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,7 +41,7 @@ class AbsenceAppelSuiviController extends BaseController
         $statsAppel = $this->absenceEtatAppel->getBySemestre($semestre);
         $matieres = $typeMatiereManager->findBySemestreArray($semestre);
 
-        $table = $this->createTable(PlanCoursTableType::class, [
+        $table = $this->createTable(AppelSuiviTableType::class, [
             'matieres' => $matieres,
             'statsAppel' => $statsAppel,
             'semestre' => $semestre,
@@ -54,7 +55,7 @@ class AbsenceAppelSuiviController extends BaseController
 
         return $this->render('administration/absence_appel/index.html.twig',
             [
-                'pl' => $this->edtManager->getPlanningSemestre($semestre, $matieres),
+                'pl' => $this->edtManager->getPlanningSemestre($semestre, $matieres, $this->getAnneeUniversitaire()),
                 'semestre' => $semestre,
                 'table' => $table,
                 'statsAppel' => $statsAppel,
