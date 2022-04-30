@@ -21,7 +21,6 @@ use JetBrains\PhpStorm\Deprecated;
 
 #[ORM\Entity(repositoryClass: ApcRessourceRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-#[ApiResource]
 class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
 {
     use LifeCycleTrait;
