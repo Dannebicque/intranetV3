@@ -41,7 +41,9 @@
         urlCarnetDeBord: path('application_personnel_absence_ajax_pas_absent'),
         urlPasDAbsent: path('application_personnel_absence_ajax_pas_absent')
     }) }}>
-        {{ include('edt/_navpersonnel.html.twig') }}
+        {{ render_esi(controller(
+            'App\\Controller\\EdtController::navPersonnel', {filtre:filtre, valeur:valeur, semaine:semaine}
+        )) }}
         <br>
         <div class="row">
             <div class="col-sm-12">

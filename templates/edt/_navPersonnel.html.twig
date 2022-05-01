@@ -28,9 +28,9 @@
                data-bs-toggle="tooltip" data-bs-placement="bottom" title="Votre emploi du temps">Perso.</a>
         </div>
         <div class="btn-group hide-on-small">
-            {% for sem in user_data.semestresActifs %}
-                <a class="btn {% if filtre == 'promo' and semestre.id==sem.id %}btn-primary{% else %}btn-secondary{% endif %}"
-                   href="{{ path('agenda_index',{filtre:'promo',valeur:sem.id,semaine:semaine.semaine}) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Emploi du temps du semestre {{ sem.libelle }}">{{ sem.display }}</a>
+            {% for seme in user_data.semestresActifs %}
+                <a class="btn {% if filtre == 'promo' and semestre.id==seme.id %}btn-primary{% else %}btn-secondary{% endif %}"
+                   href="{{ path('agenda_index',{filtre:'promo',valeur:seme.id,semaine:semaine.semaine}) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Emploi du temps du semestre {{ seme.libelle }}">{{ seme.display }}</a>
             {% endfor %}
             <a class="btn {% if filtre=='prof' %} btn-primary{% else %}btn-secondary{% endif %}"
                href="{{ path('agenda_index',{filtre:'prof',valeur:user_data.user.id,semaine:semaine.semaine}) }}"

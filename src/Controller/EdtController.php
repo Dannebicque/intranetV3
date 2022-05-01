@@ -60,13 +60,13 @@ class EdtController extends BaseController
             return $this->render('edt/_intervenant2.html.twig', [
                 'edt' => $this->myEdtCelcat,
                 'filtre' => 'prof',
+                'semaine' => $semaine,
                 'valeur' => $this->getUser()->getId(),
                 'tabHeures' => Constantes::TAB_HEURES_EDT_2,
             ]);
         }
 
         $matieres = $this->typeMatiereManager->findByDepartementArray($this->getDepartement());
-        $sem = $this->calendrier->calculSemaine($semaine, $this->getAnneeUniversitaire());
         $this->myEdtIntranet->initPersonnel($this->getUser(),
             $this->dataUserSession->getAnneeUniversitaire(),
             $semaine, $matieres);
@@ -74,10 +74,20 @@ class EdtController extends BaseController
         return $this->render('edt/_intervenant2.html.twig', [
             'edt' => $this->myEdtIntranet,
             'filtre' => 'prof',
-            'semaine' => $sem,
-            'semaines' => $this->calendrier->calculSemaines($this->getAnneeUniversitaire()),
+            'semaine' => $semaine,
             'valeur' => $this->getUser()->getId(),
             'tabHeures' => Constantes::TAB_HEURES_EDT_2,
+        ]);
+    }
+
+    public function navPersonnel(string $filtre, string $valeur, int $semaine, ?Semestre $semestre = null): Response
+    {
+        return $this->render('edt/_navPersonnel.html.twig', [
+            'semaines' => $this->calendrier->calculSemaines($this->getAnneeUniversitaire()),
+            'filtre' => $filtre,
+            'valeur' => $valeur,
+            'semestre' => $semestre,
+            'semaine' => $this->calendrier->calculSemaine($semaine, $this->getAnneeUniversitaire()),
         ]);
     }
 
@@ -93,7 +103,8 @@ class EdtController extends BaseController
 
         return $this->render('edt/_semestre.html.twig', [
                 'edt' => $edt->toArray($semestre->getNbgroupeTpEdt()),
-                'semaine' => $sem,
+                'sem' => $sem,
+                'semaine' => $semaine,
                 'semaines' => $this->calendrier->calculSemaines($this->getAnneeUniversitaire()),
                 'semestre' => $semestre,
                 'filtre' => 'promo',
