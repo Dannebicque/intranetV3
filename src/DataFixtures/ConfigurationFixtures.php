@@ -78,6 +78,11 @@ class ConfigurationFixtures extends Fixture
         $manager->persist($conf);
 
         $conf = new Configuration();
+        $conf->setCle('LOGO_IUT_QUALTIE');
+        $conf->setValeur('logo_iut_qualite.png');
+        $manager->persist($conf);
+
+        $conf = new Configuration();
         $conf->setCle('SITE_IUT');
         $conf->setValeur('https://iut-troyes.univ-reims.fr');
         $manager->persist($conf);
