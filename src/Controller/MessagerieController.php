@@ -151,9 +151,15 @@ class MessagerieController extends BaseController
             }
         }
         $messagerie->setMessage($sujet, $message, $this->getUser());
-        $messagerie->sendToDestinataires($this->checkArray($destinataires), $typeDestinataire, $this->getDepartement());
-        if (is_countable($copie) && count($copie) > 0) {
-            $messagerie->setCopie($copie, $this->getDepartement());
+        try {
+            $messagerie->sendToDestinataires($this->checkArray($destinataires), $typeDestinataire,
+                $this->getDepartement());
+            if (is_countable($copie) && count($copie) > 0) {
+                $messagerie->setCopie($copie, $this->getDepartement());
+            }
+        } catch (Exception $e) {
+            $messagerie->sendSynthese();
+            return new JsonResponse(['error' => $e->getCode()], Response::HTTP_BAD_REQUEST);
         }
         $messagerie->sendSynthese();
 

@@ -43,6 +43,7 @@ class MyMessagerie
     private array|Collection $etudiants = [];
 
     private string $typeDestinataires = '';
+    private string $logMessagerie = '';
     private ?string $type = null;
     private int $id;
     private array $pjs = [];
@@ -157,6 +158,7 @@ class MyMessagerie
                 'expediteur' => $this->expediteur,
                 'nb' => $this->nbMessagesEnvoyes,
                 'nbetudiant' => $this->nbEtudiants,
+                'log' => $this->logMessagerie,
             ]);
 
         $this->myMailer->send($email);
@@ -305,7 +307,11 @@ class MyMessagerie
         }
 
         foreach ($destinataire->getMails() as $mail) {
-            $message->addTo($mail);
+            if (filter_var($mail, FILTER_VALIDATE_EMAIL)) {
+                $message->addTo($mail);
+            } else {
+                $this->logMessagerie .= $mail.' n\'est pas un mail valide pour '.$destinataire->getPrenom().' '.$destinataire->getNom().'<br>';
+            }
         }
 
         return $message;

@@ -1,5 +1,8 @@
 Copie du message envoyé à {{ nbetudiant }} personne(s). Au total {{ nb }} message(s) ont été envoyé(s) (mailuniversité et mail personnel lorsque disponible).
 <br>
+{%if log != ''%}
+<strong>/!\ : {{log|raw}}</strong>
+{%endif%}
 ====
 <br><br>
 {{ message|raw }}

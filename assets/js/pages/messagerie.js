@@ -106,7 +106,6 @@ $(document).on('click', '#new-message', function (e) {
 })
 
 
-
 $(document).on('change', '.pjFile', function () {
   let tailleTotale = 0
   $('input[type="file"]').each(function (file, element) {
@@ -122,11 +121,58 @@ $(document).on('change', '.pjFile', function () {
 $(document).on('click', '#messageSent', function (e) {
   e.preventDefault()
   e.stopPropagation()
-  $(this).attr('disabled', true)
-  $(this).text('Envoi en cours...')
 
   let formData = new FormData($('form')[0])
   formData.append('messageMessage', tinymce.activeEditor.getContent({format: 'html'}))
+
+  //vérifie si tous les éléments sont présents.
+  if (document.getElementById('messageSubject').value === '') {
+    alert('Le sujet du message est vide.')
+    return
+  }
+
+  // if (formData.get('messageMessage') === '') {
+  //   alert('Le texte du message est vide.')
+  //   return
+  // }
+
+  let typeDestinataire = document.querySelector('input[name="messageDestinataireType"]:checked')
+  if (typeDestinataire === null) {
+    alert('Veuillez indiquer un type de destinataire')
+    return
+  }
+  switch (typeDestinataire.value) {
+    case 'g':
+      if (document.getElementById('messageToGroupe').value === '') {
+        alert('Veuillez indiquer au moins un groupe.')
+        return
+      }
+      break
+    case 's':
+      if (document.getElementById('messageToSemestre').value === '') {
+        alert('Veuillez indiquer au moins un semestre.')
+        return
+      }
+      break
+    case 'e':
+      if (document.getElementById('messageToLibreEtudiant').value === '') {
+        alert('Veuillez indiquer au moins un étudiant.')
+        return
+      }
+      break
+    case 'p':
+      let personnelDestinataire = document.querySelector('input[name="messageToLibrePersonnel[]"]:checked')
+      if (personnelDestinataire === null) {
+        alert('Veuillez choisir entre permanents et/ou vacataires.')
+        return
+      }
+      break
+  }
+
+  const heure = new Date()
+
+  $(this).attr('disabled', true)
+  $(this).text('Envoi en cours...')
 
   $.ajax({
     url: Routing.generate('messagerie_sent'),
@@ -141,6 +187,11 @@ $(document).on('click', '#messageSent', function (e) {
       $('#messages-liste').empty().load(Routing.generate('messagerie_message_envoye', {message: data.message}))
       $('#messageSent').attr('disabled', false)
       $(this).text('Envoyer')
+    },
+    error: function (data) {
+      $('#messageSent').attr('disabled', false).text('Envoyer')
+      console.log(data)
+      alert('Une erreur est survenue lors de l\'envoi du message (tentative à : '+ heure.toLocaleDateString()+' '+ heure.toLocaleTimeString()+')')
     }
   })
 })
