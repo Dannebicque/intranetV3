@@ -1,0 +1,120 @@
+<?php
+/*
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/Calendrier.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 30/04/2022 15:25
+ */
+
+namespace App\Classes\Edt;
+
+use App\Entity\AnneeUniversitaire;
+use App\Entity\Constantes;
+use App\Repository\CalendrierRepository;
+use Carbon\Carbon;
+use Carbon\CarbonImmutable;
+use Carbon\CarbonInterface;
+use RuntimeException;
+
+class Calendrier
+{
+    public ?int $semaine = null;
+    public array $tabJour;
+    public ?int $semaineSuivante = 0;
+    public ?int $semainePrecedente = 0;
+    private ?\App\Entity\Calendrier $calendrier = null;
+    public ?int $semaineFormationIUT = null;
+    public ?CarbonImmutable $semaineFormationLundi = null;
+
+    public array $tabHeures;
+
+    public function __construct(
+        protected CalendrierRepository $calendrierRepository
+    ) {
+    }
+
+    public function calculSemaines(AnneeUniversitaire $anneeUniversitaire): array
+    {
+        // déja fait dans le parent ??
+        $allsemaine = $this->calendrierRepository->findByAnneeUniversitaire($anneeUniversitaire);
+
+        $t = [];
+        $i = 0;
+        /** @var \App\Entity\Calendrier $s */
+        foreach ($allsemaine as $s) {
+            $t[$i]['semaineReelle'] = $s->getSemaineReelle();
+            $t[$i]['semaineIUT'] = $s->getSemaineFormation();
+            $t[$i]['debut'] = $s->getDatelundi();
+            $date1 = strtotime($t[$i]['debut']->format('Y-m-d'));
+            $fin = date('d-m-Y', mktime(12, 30, 00, date('n', $date1), ((int) date('j', $date1)) + 7, ((int) date('Y', $date1))));
+            $t[$i]['fin'] = $fin;
+            ++$i;
+        }
+
+        return $t;
+    }
+
+    public function calculSemaine(int $semaine, AnneeUniversitaire $anneeUniversitaire)
+    {
+        // pour gérer les vacances
+        $dateDuJour = Carbon::now();
+
+        if ($semaine >= 29 && $semaine < 35) {
+            $semaine = 35;
+        }
+
+        if (0 === $semaine) {
+            $semaine = $dateDuJour->weekOfYear;
+
+            if ($semaine >= 29 && $semaine < 35) {
+                $semaine = 35;
+            }
+            $this->semaine = $semaine;
+
+            // traitement du Week end
+            if (CarbonInterface::SATURDAY === $dateDuJour->dayOfWeek || CarbonInterface::SUNDAY === $dateDuJour->dayOfWeek) {
+                ++$this->semaine;
+                if ($this->semaine > CarbonInterface::WEEKS_PER_YEAR) {
+                    $this->semaine = 1;
+                }
+            }
+        } else {
+            if ($semaine >= 29 && $semaine < 35) {
+                $semaine = 35;
+            }
+            $this->semaine = $semaine;
+        }
+
+        $this->calendrier = $this->calendrierRepository->findOneBy([
+            'semaineReelle' => $this->semaine,
+            'anneeUniversitaire' => $anneeUniversitaire->getId(),
+        ]);
+        if (null !== $this->calendrier) {
+            $this->semaineFormationIUT = $this->calendrier->getSemaineFormation();
+            $this->semaineFormationLundi = $this->calendrier->getDatelundi();
+        } else {
+            // si la requete est vide, on prend la première...
+            $this->calendrier = $this->calendrierRepository->findOneBy([
+                'semaineFormation' => 1,
+                'anneeUniversitaire' => $anneeUniversitaire->getId(),
+            ]);
+            if (null !== $this->calendrier) {
+                $this->semaineFormationIUT = $this->calendrier->getSemaineFormation();
+                $this->semaineFormationLundi = $this->calendrier->getDatelundi();
+                $this->semaine = $this->calendrier->getSemaineReelle();
+            } else {
+                throw new RuntimeException('Erreur de semaine');
+            }
+        }
+
+        $this->tabJour['lundi'] = $this->semaineFormationLundi;
+        $this->tabJour['mardi'] = $this->semaineFormationLundi->addDays();
+        $this->tabJour['mercredi'] = $this->semaineFormationLundi->addDays(2);
+        $this->tabJour['jeudi'] = $this->semaineFormationLundi->addDays(3);
+        $this->tabJour['vendredi'] = $this->semaineFormationLundi->addDays(4);
+        $this->tabHeures = Constantes::TAB_HEURES_EDT;
+
+        return $this;
+    }
+}
