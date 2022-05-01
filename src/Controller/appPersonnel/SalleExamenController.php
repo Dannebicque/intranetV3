@@ -47,17 +47,20 @@ class SalleExamenController extends BaseController
      * @throws RuntimeError
      */
     #[Route(path: '/application/salle-examen/genere/document', name: 'application_personnel_salle_examen_genere_placement', methods: ['POST'])]
-    public function generePlacement(MySalleExamen $mySalleExamen, Request $request): Response
+    public function generePlacement(
+        SemestreRepository $semestreRepository,
+        MySalleExamen $mySalleExamen, Request $request): Response
     {
         $capacite = $mySalleExamen->calculCapacite($request->request->get('salle'),
             $request->request->get('selectgroupes'), $request->request->get('detail_groupes'));
-        if ($capacite) {
+        $semestre = $semestreRepository->find($request->request->get('selectsemestre'));
+        if ($capacite && null !== $semestre) {
             return $mySalleExamen->genereDocument(
                 $request->request->get('dateeval'),
                 $request->request->get('selectmatiere'),
                 $request->request->get('enseignant1'),
                 $request->request->get('enseignant2'),
-                $this->dataUserSession->getDepartement()
+                $semestre
             );
         }
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Salle trop petite');

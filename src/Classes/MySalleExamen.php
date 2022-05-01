@@ -66,7 +66,7 @@ class MySalleExamen
         string $requestmatiere,
         int|string $requestenseignant1,
         int|string $requestenseignant2,
-        Departement $departement
+        Semestre $semestre,
     ) {
         $this->matiere = $this->typeMatiereManager->getMatiereFromSelect($requestmatiere);
 
@@ -88,7 +88,7 @@ class MySalleExamen
         } else {
             $grdetail = $this->groupeDefaut($this->matiere->semestre); // todo: comment récupérer le semestre sans dépendre de matière ? ou justement garder ca et afficher tous les groupes mutualisés
             $this->typeGroupe = $grdetail[0]->getTypeGroupe();
-            $etudiants = $this->etudiantRepository->findBySemestre($this->matiere->semestre);
+            $etudiants = $this->etudiantRepository->findBySemestre($semestre);
         }
 
         if (count($etudiants) <= $this->salle->getCapacite()) {
@@ -105,6 +105,7 @@ class MySalleExamen
                 'ens2' => '' !== $requestenseignant2 ? $this->personnelRepository->find($requestenseignant2) : null,
                 'groupes' => $grdetail,
                 'depreuve' => $requestdateeval,
+                'semestre' => $semestre,
             ];
 
             return $this->myPdf::generePdf('pdf/placement.html.twig', $data, 'placement');
