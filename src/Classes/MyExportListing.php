@@ -60,6 +60,7 @@ class MyExportListing
      * MyExport constructor.
      */
     public function __construct(
+        protected Configuration $configuration,
         protected TypeGroupeRepository $typeGroupeRepository,
         protected GroupeRepository $groupeRepository,
         private readonly DataUserSession $dataUserSession,
@@ -302,7 +303,7 @@ class MyExportListing
     {
         // gérer les infos par le diplôme
         $anneeU = $groupe->getTypeGroupe()->getSemestre()->getAnneeUniversitaire()->displayAnneeUniversitaire();
-
+        $diplome = $groupe->getTypeGroupe()->getSemestre()->getDiplome();
         $this->myExcelWriter->writeCellName('J1', 'Année Universitaire - '.$anneeU,
             ['style' => 'HORIZONTAL_RIGHT']);
         $this->myExcelWriter->writeCellName('J4',
@@ -318,6 +319,16 @@ class MyExportListing
         $objDrawing->setHeight(120);
         $objDrawing->setCoordinates('A1');
         $objDrawing->setWorksheet($this->myExcelWriter->getSheet());
+
+        if ($diplome->getOptCertifieQualite()) {
+            $objDrawing = new Drawing();
+            $objDrawing->setName('Logo certification qualité');
+            $objDrawing->setDescription('Logo certification qualité');
+            $objDrawing->setPath($base.'logo/'.$this->configuration->get('LOGO_QUALITE'));
+            $objDrawing->setHeight(120);
+            $objDrawing->setCoordinates('C1');
+            $objDrawing->setWorksheet($this->myExcelWriter->getSheet());
+        }
 
         switch ($this->exportTypeDocument) {
             case Constantes::TYPEDOCUMENT_EMARGEMENT:
