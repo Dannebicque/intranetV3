@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.6.2](https://github.com/Dannebicque/intranetV3/compare/v3.6.1...v3.6.2) (2022-05-01)
+
+
+### Features
+
+* [Configuration] Ajout du logo qualité. ([3b4e2b6](https://github.com/Dannebicque/intranetV3/commit/3b4e2b62ca85070dd819d5e5f15f3aaeeee90b36))
+* [rector] configuration corrigée pour PHP8.1 ([cd64c86](https://github.com/Dannebicque/intranetV3/commit/cd64c86d34af3dffb6ab4508a61b668e87507c4e))
+
+
+### Bug Fixes
+
+* [APC] fix typage ([f614a72](https://github.com/Dannebicque/intranetV3/commit/f614a72a3e8e96c23d74075e9eddf8c0ce97fb52))
+* [ApcSae ] Gestion si rien de selectionné ([294714b](https://github.com/Dannebicque/intranetV3/commit/294714bec10d06616d594f116adc8fb7e28328b5))
+* [EDT] Filtre par module, ne doit pas dépendre du semestre ([80be890](https://github.com/Dannebicque/intranetV3/commit/80be8903ad614e9534767d2cdbf6d116b7aff3cf))
+* [Edt] Gestion du menu personnel dans un controller. Mutualisation du code ([a35e680](https://github.com/Dannebicque/intranetV3/commit/a35e6803b12486fe8e4d66ccc2efebe73688ca49))
+* [Excel] gestion du logo qualité selon les formations. ([6a67d24](https://github.com/Dannebicque/intranetV3/commit/6a67d2469df25d6e3fa7e04596b8da36e361bff1))
+* [Export] Fix typage ([18c8d28](https://github.com/Dannebicque/intranetV3/commit/18c8d28c40da203919ad0fb315177da5ebe16c35))
+* [infra] Docker corrigé pour PHP ([8c0194e](https://github.com/Dannebicque/intranetV3/commit/8c0194ef2dd6ca21189834ffc48993484f5a019a))
+* [Matiere] Saisie + mise en page du formulaire ([7061153](https://github.com/Dannebicque/intranetV3/commit/7061153b4ca229e308a1e2e9edc0b3b050488a18))
+* [Messagerie] Ajout de tests et de retour en cas d'erreur. ([9691a3e](https://github.com/Dannebicque/intranetV3/commit/9691a3eb7d0831df43febb592c7a4c12ebef8907))
+* [Messagerie] typage ([f18c60a](https://github.com/Dannebicque/intranetV3/commit/f18c60a7cd3ac5a186f3f787d901e0f691e1619a))
+* [Notes] Bug groupes enfants ([ff33eef](https://github.com/Dannebicque/intranetV3/commit/ff33eeffd909a17205de10a7e731f2110ba19b6b))
+* [pdf] Mutualisation de l'en-tête, harmonisation, et gestion du logo qualité selon les formations. ([d66b2f7](https://github.com/Dannebicque/intranetV3/commit/d66b2f74f0f665f7a874458765ac592e9fbcd26b))
+* [Previsionnel] Bug ajout ([5e027cb](https://github.com/Dannebicque/intranetV3/commit/5e027cb5ff6c6303fc1381f4d23b64e20a585b11))
+* [Profil] Bug UE/Competence null ? ([1788426](https://github.com/Dannebicque/intranetV3/commit/178842658c4ef48599cd3ec6e3519cc2a43ca0be))
+* [Questionnaires] Dupliquer ([8d2fc0e](https://github.com/Dannebicque/intranetV3/commit/8d2fc0ec7d498393f033656fa2f7a20075b5a711))
+* [Rattrapage] Bug export ([8b18490](https://github.com/Dannebicque/intranetV3/commit/8b1849003543446b7f8b9cb54d194f9533e0b047))
+* [Ressource] bug avec semestre ([2ead1bb](https://github.com/Dannebicque/intranetV3/commit/2ead1bb70d21b12200283c4a28e97eac47f4fade))
+* [Ressource] bug avec semestre ([18b3816](https://github.com/Dannebicque/intranetV3/commit/18b38166b8f2470ded666de43580dc4b85da75e1))
+* [Salle Examen] Suppression dépendance au semestre via la matière. ([b6c53b7](https://github.com/Dannebicque/intranetV3/commit/b6c53b7bba165718590c4634cf6952013438560c))
+* [Suivi Appel] Erreur tableType ([fb146e1](https://github.com/Dannebicque/intranetV3/commit/fb146e15a2886653f420d180849d8f691afe157f))
+* Service corrigé, suppression d'une dépendance ([02bbd03](https://github.com/Dannebicque/intranetV3/commit/02bbd036d840b1e5c0ba78ad7a06ad3b142a2fa2))
+
 ### [3.6.1](https://github.com/Dannebicque/intranetV3/compare/v3.6.0...v3.6.1) (2022-04-25)
 
 
