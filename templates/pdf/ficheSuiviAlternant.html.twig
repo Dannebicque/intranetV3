@@ -13,16 +13,31 @@
  {% endblock %}
 
 {% block content %}
-    <table style="width: 100%; border:0;">
-        <tr>
-            <td style="text-align: center; width:20%"><img src="{{ settings('BASE_PATH') }}{{ 'logo/'~user_data.departement.logoName }}" alt="logo"height="70px"/></td>
-            <td style="text-align: center; width:60%">&nbsp;</td>
-            <td style="text-align: center; width:20%"><img
-                        src="{{ settings('BASE_PATH') }}{{ 'logo/' }}{{ settings('LOGO_IUT') }}"
-                        alt="logo"
-                        height="70px"/></td>
-        </tr>
-    </table>
+    {{include('pdf/_headerPdf.html.twig', {
+        departement: user_data.departement,
+        titre: '',
+        qualite: alternance_fiche_suivi.alternance.annee.diplome.optCertifieQualite
+    }) }}
+{#    <table style="width: 100%; border:0;">#}
+{#        <tr>#}
+{#            <td style="text-align: center; width:20%">#}
+{#                <img src="{{ settings('BASE_PATH') }}{{ 'logo/'~user_data.departement.logoName }}" alt="logo"height="70px"/>#}
+
+
+{#            </td>#}
+{#            <td style="text-align: center; width:50%">&nbsp;</td>#}
+{#            <td style="text-align: center; width:30%">#}
+{#                <img#}
+{#                        src="{{ settings('BASE_PATH') }}{{ 'logo/' }}{{ settings('LOGO_IUT') }}"#}
+{#                        alt="logo"#}
+{#                        height="70px"/>#}
+{#                {% if alternance_fiche_suivi.alternance.etudiant.semestre.diplome.optCertifieQualite == true %}#}
+{#                    <img src="{{ settings('BASE_PATH') }}{{ 'logo/'~settings('LOGO_QUALITE') }}" alt="logo certificat#}
+{#                     qualité" height="70px"  style="float: right"/>#}
+{#                {% endif %}#}
+{#            </td>#}
+{#        </tr>#}
+{#    </table>#}
 
     <h1 class="cadre center">
         VISITE ENTREPRISE - Formation {{ alternance_fiche_suivi.alternance.etudiant.semestre.annee.diplome.display }}

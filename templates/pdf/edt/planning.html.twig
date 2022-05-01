@@ -1,21 +1,26 @@
 {% extends "pdf/basepdf.html.twig" %}
 
 {% block content %}
-    <table style="width: 100%; border:none;">
-        <tr>
-            <td style="text-align: center; width:20%">
-                <img src="{{ settings('BASE_PATH') }}{{ 'logo/'~user_data.departement.logoName }}" alt="logo" height="75px"/>
-            </td>
-            <td style="text-align: center; width:60%">
-                <h2>Planning | {{ personnel.display }} | {{ user_data.displayAnneeUniversitaire }}</h2>
-            </td>
-            <td style="text-align: center; width:20%">
-                <img src="{{ settings('BASE_PATH') }}{{ 'logo/' }}{{ settings('LOGO_IUT') }}"
-                     alt="logo"
-                     height="75px"/>
-            </td>
-        </tr>
-    </table>
+    {{include('pdf/_headerPdf.html.twig', {
+        departement: semestre.diplome.departement,
+        titre: '<h2>Planning | '~personnel.display~' | '~user_data.displayAnneeUniversitaire~'</h2>',
+        qualite: false
+    }) }}
+{#    <table style="width: 100%; border:none;">#}
+{#        <tr>#}
+{#            <td style="text-align: center; width:20%">#}
+{#                <img src="{{ settings('BASE_PATH') }}{{ 'logo/'~user_data.departement.logoName }}" alt="logo" height="75px"/>#}
+{#            </td>#}
+{#            <td style="text-align: center; width:60%">#}
+{#                <h2>Planning | {{ personnel.display }} | {{ user_data.displayAnneeUniversitaire }}</h2>#}
+{#            </td>#}
+{#            <td style="text-align: center; width:20%">#}
+{#                <img src="{{ settings('BASE_PATH') }}{{ 'logo/' }}{{ settings('LOGO_IUT') }}"#}
+{#                     alt="logo"#}
+{#                     height="75px"/>#}
+{#            </td>#}
+{#        </tr>#}
+{#    </table>#}
 
     <table style="clear:both;width:100%" class="table">
         <thead>

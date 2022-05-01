@@ -66,20 +66,31 @@
     {% endfor %}
 
     {# PV d'examen #}
-    <table style="width: 100%; border:0;">
-        <tr>
-            <td style="text-align: center; width:20%"><img
-                        src="{{ settings('BASE_PATH') }}{{ 'logo/'~user_data.departement.logoName }}" alt="logo"
-                        height="70px"/></td>
-            <td style="text-align: center; width:60%"><h1>{{ user_data.departement.libelle }}</h1>
+    {{include('pdf/_headerPdf.html.twig', {
+        departement: user_data.departement,
+        titre: '<h2>PV de surveillance de partiel</h2>',
+        qualite: semestre.diplome.optCertifieQualite
+    }) }}
+{#    <table style="width: 100%; border:0;">#}
+{#        <tr>#}
+{#            <td style="text-align: center; width:20%">#}
+{#                <img src="{{ settings('BASE_PATH') }}{{ 'logo/'~user_data.departement.logoName }}" alt="logo"#}
+{#                        height="70px"/>#}
+{#            </td>#}
+{#            <td style="text-align: center; width:50%"><h1>{{ user_data.departement.libelle }}</h1>#}
 
-                <h2>PV de surveillance de partiel</h2>
-            <td style="text-align: center; width:20%"><img
-                        src="{{ settings('BASE_PATH') }}{{ 'logo/' }}{{ settings('LOGO_IUT') }}"
-                        alt="logo"
-                        height="70px"/></td>
-        </tr>
-    </table>
+{#                <h2>PV de surveillance de partiel</h2>#}
+{#            <td style="text-align: center; width:30%"><img#}
+{#                        src="{{ settings('BASE_PATH') }}{{ 'logo/' }}{{ settings('LOGO_IUT') }}"#}
+{#                        alt="logo"#}
+{#                        height="70px"/>#}
+{#                {% if semestre.diplome.optCertifieQualite == true %}#}
+{#                    <img src="{{ settings('BASE_PATH') }}{{ 'logo/'~settings('LOGO_QUALITE') }}" alt="logo certificat#}
+{#                     qualité" height="70px"  style="float:right"/>#}
+{#                {% endif %}#}
+{#            </td>#}
+{#        </tr>#}
+{#    </table>#}
     <p>Article 22 du décret n° 92-657 du 13 juillet 1992 relatif à la procédure disciplinaire dans les établissements
         publics d'enseignement supérieur :</p><br />
     <i>"En cas de flagrant délit de fraude ou tentative de fraude aux examens ou concours, le surveillant responsable de

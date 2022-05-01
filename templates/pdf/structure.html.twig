@@ -1,21 +1,10 @@
 {% extends "pdf/basepdf.html.twig" %}
 
 {% block content %}
-    <table style="width: 100%; border:0;">
-        <tr>
-            <td style="text-align: center; width:20%"><img
-                        src="{{ settings('BASE_PATH') }}{{ 'logo/'~ departement.logoName }}" alt="logo"
-                        height="70px"/></td>
-            <td style="text-align: center; width:60%"><h1>{{ departement.libelle }}</h1>
-
-                <h2>Structure de la formation</h2>
-            </td>
-            <td style="text-align: center; width:20%"><img
-                        src="{{ settings('BASE_PATH') }}{{ 'logo/' }}{{ settings('LOGO_IUT') }}"
-                        alt="logo"
-                        height="70px"/></td>
-        </tr>
-    </table>
+{{include('pdf/_headerPdf.html.twig', {
+    titre: 'Structure de la formation',
+    qualite: false
+}) }}
 
     <br>
     <table class="table" style="width:100%">

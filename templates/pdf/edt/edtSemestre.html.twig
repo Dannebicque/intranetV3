@@ -10,21 +10,35 @@
     }
 {% endblock %}
 {% block content %}
-    <table style="width: 100%; border:none;">
-        <tr>
-            <td style="text-align: center; width:20%">
-                <img src="{{ settings('BASE_PATH') }}{{ 'logo/'~user_data.departement.logoName }}" alt="logo" height="75px"/>
-            </td>
-            <td style="text-align: center; width:60%"><h2>Emploi du temps</h2>
-                <h2>Semestre {{ semestre.display }}</h2>
-                <h3>Semaine {{ edt.semaine }} ({{ departement.libelle }}: semaine {{ edt
-                    .semaineFormation }})</h3></td>
-            <td style="text-align: center; width:20%"><img
-                        src="{{ settings('BASE_PATH') }}{{ 'logo/' }}{{ settings('LOGO_IUT') }}"
-                        alt="logo"
-                        height="75px"/></td>
-        </tr>
-    </table>
+    {{ include('pdf/_headerPdf.html.twig', {
+        departement: user_data.departement,
+        titre: '<h2>Emploi du temps</h2>
+                <h2>Semestre '~semestre.display~'</h2>
+                <h3>Semaine '~edt.semaine~' ('~departement.libelle~': semaine '~edt
+                    .semaineFormation~')</h3>',
+        qualite: semestre.diplome.optCertifieQualite
+    }) }}
+{#    <table style="width: 100%; border:none;">#}
+{#        <tr>#}
+{#            <td style="text-align: center; width:20%">#}
+{#                <img src="{{ settings('BASE_PATH') }}{{ 'logo/'~user_data.departement.logoName }}" alt="logo" height="75px"/>#}
+{#            </td>#}
+{#            <td style="text-align: center; width:60%"><h2>Emploi du temps</h2>#}
+{#                <h2>Semestre {{ semestre.display }}</h2>#}
+{#                <h3>Semaine {{ edt.semaine }} ({{ departement.libelle }}: semaine {{ edt#}
+{#                    .semaineFormation }})</h3></td>#}
+{#            <td style="text-align: center; width:20%">#}
+{#                <img#}
+{#                        src="{{ settings('BASE_PATH') }}{{ 'logo/' }}{{ settings('LOGO_IUT') }}"#}
+{#                        alt="logo"#}
+{#                        height="75px"/>#}
+{#                {% if semestre.diplome.optCertifieQualite == true %}#}
+{#                    <img src="{{ settings('BASE_PATH') }}{{ 'logo/'~settings('LOGO_QUALITE') }}" alt="logo certificat#}
+{#                     qualité" height="75px"/>#}
+{#                {% endif %}#}
+{#            </td>#}
+{#        </tr>#}
+{#    </table>#}
 
     {{ include('pdf/edt/_semestre.html.twig') }}
 
