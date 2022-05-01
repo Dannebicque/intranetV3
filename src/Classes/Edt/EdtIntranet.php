@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/EdtIntranet.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/EdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 10:05
+ * @lastUpdate 01/05/2022 19:47
  */
 
 namespace App\Classes\Edt;
@@ -105,6 +105,7 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
             $event->personnel = null !== $evt->getIntervenant() ? $evt->getIntervenant()->getDisplayPr() : '-';
             $event->groupe = $evt->getDisplayGroupe();
             $event->type_cours = $evt->getType();
+            $event->couleur = $semestre->getCouleur();
             $evtCollection->add($event);
         }
 
