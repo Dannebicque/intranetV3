@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/EvenementEdt.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/EvenementEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/10/2021 16:44
+ * @lastUpdate 01/05/2022 20:10
  */
 
 namespace App\DTO;
@@ -22,8 +22,6 @@ class EvenementEdt
 
     public ?string $date = null;
     public ?string $jour = null;
-    /** @deprecated */
-    public ?float $duree = null;
 
     public ?CarbonInterface $heureDebut = null;
     public ?CarbonInterface $heureFin = null;

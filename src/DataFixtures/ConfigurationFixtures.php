@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/DataFixtures/ConfigurationFixtures.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/DataFixtures/ConfigurationFixtures.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/03/2021 20:43
+ * @lastUpdate 01/05/2022 17:01
  */
 
 namespace App\DataFixtures;
@@ -78,7 +78,7 @@ class ConfigurationFixtures extends Fixture
         $manager->persist($conf);
 
         $conf = new Configuration();
-        $conf->setCle('LOGO_IUT_QUALTIE');
+        $conf->setCle('LOGO_QUALTIE');
         $conf->setValeur('logo_iut_qualite.png');
         $manager->persist($conf);
 

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/BaseEdt.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/BaseEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/09/2021 08:49
+ * @lastUpdate 01/05/2022 20:16
  */
 
 namespace App\Classes\Edt;
@@ -263,4 +263,11 @@ abstract class BaseEdt
     {
         return $this->groupes;
     }
+
+    public function getPlanning(): array
+    {
+        return $this->planning;
+    }
+
+
 }
