@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/PersonnelDepartement.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/PersonnelDepartement.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2021 18:52
+ * @lastUpdate 03/05/2022 13:52
  */
 
 namespace App\Entity;
@@ -16,13 +16,13 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: PersonnelDepartementRepository::class)]
 class PersonnelDepartement extends BaseEntity
 {
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER)]
     private int $annee;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 250)]
+    #[ORM\Column(type: Types::STRING, length: 250)]
     private ?string $roles = '';
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $defaut = false;
 
     public function __construct(#[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'personnelDepartements')] private Personnel $personnel, #[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'personnelDepartements')] private Departement $departement)
@@ -42,7 +42,10 @@ class PersonnelDepartement extends BaseEntity
 
     public function getRoles(): ?array
     {
-        return json_decode($this->roles, null, 512, JSON_THROW_ON_ERROR); // , false, 512, JSON_THROW_ON_ERROR);
+        if ($this->roles === '') {
+            return [];
+        }
+        return json_decode($this->roles, false, 2, JSON_THROW_ON_ERROR);
     }
 
     public function setRoles(string $roles): self
