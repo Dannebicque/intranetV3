@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/AbsenceController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/10/2021 15:12
+ * @lastUpdate 03/05/2022 13:54
  */
 
 namespace App\Controller\appPersonnel;
@@ -118,6 +118,7 @@ class AbsenceController extends BaseController
 
         return $this->render('appPersonnel/absence/voir.html.twig', [
             'matiere' => $mat,
+            'semestre' => $semestre,
             'absences' => $this->myAbsences->getAbsencesMatiere(
                 $mat,
                 $semestre->getAnneeUniversitaire()
