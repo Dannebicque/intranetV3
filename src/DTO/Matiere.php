@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/Matiere.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/Matiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/10/2021 10:36
+ * @lastUpdate 05/05/2022 15:06
  */
 
 namespace App\DTO;
@@ -13,6 +13,7 @@ use App\Entity\Constantes;
 use App\Entity\Groupe;
 use App\Entity\Parcour;
 use App\Entity\Semestre;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 
 class Matiere
@@ -202,6 +203,12 @@ class Matiere
     {
         if (method_exists($this->objet, 'getSemestres')) {
             return $this->objet->getSemestres();
+        }
+
+        if (method_exists($this->objet, 'getSemestre')) {
+            $coll = new ArrayCollection();
+            $coll->add($this->objet->getSemestre());
+            return $coll;
         }
 
         return null;
