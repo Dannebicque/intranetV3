@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/EdtInterface.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/05/2022 10:30
+ * @lastUpdate 05/05/2022 18:12
  */
 
 /*
@@ -24,5 +24,5 @@ interface EdtInterface
 
     public function find(int $event, array $matieres = [], array $groupes = []): EvenementEdt;
 
-    public function recupereEdtJourBorne(Semestre $semestre, array $matieres, int $jourSemaine, int $semaineFormation): EvenementEdtCollection;
+    public function recupereEdtJourBorne(Semestre $semestre, array $matieres, int $jourSemaine, int $semaineFormation, array $groupes): EvenementEdtCollection;
 }

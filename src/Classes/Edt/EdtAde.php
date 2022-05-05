@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/EdtAde.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/05/2022 10:32
+ * @lastUpdate 05/05/2022 18:12
  */
 
 namespace App\Classes\Edt;
@@ -30,7 +30,8 @@ class EdtAde extends AbstractEdt implements EdtInterface
         Semestre $semestre,
         array $matieres,
         int $jourSemaine,
-        int $semaineFormation
+        int $semaineFormation,
+        array $groupes
     ): EvenementEdtCollection {
         // TODO: Implement recupereEdtJourBorne() method.
         return new EvenementEdtCollection();

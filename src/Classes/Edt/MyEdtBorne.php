@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtBorne.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtBorne.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/10/2021 11:54
+ * @lastUpdate 05/05/2022 18:13
  */
 
 /*
@@ -76,7 +76,8 @@ class MyEdtBorne
     /**
      * @throws \App\Exception\SemestreNotFoundException
      */
-    public function getAffichageBorneJourSemestre(mixed $intSemestre, TypeMatiereManager $typeMatiereManager): array
+    public function getAffichageBorneJourSemestre(
+        mixed $intSemestre, TypeMatiereManager $typeMatiereManager): array
     {
         $semestre = $this->semestreRepository->find($intSemestre);
 
@@ -89,10 +90,12 @@ class MyEdtBorne
             'anneeUniversitaire' => $semestre->getAnneeUniversitaire()?->getId(),
         ]);
 
+        $groupes = $this->groupeRepository->findBySemestre($semestre);
+
         $this->data['semestre'] = $semestre;
         if (null !== $semaine) {
             $planning = $this->edtManager->recupereEDTBornes($semaine->getSemaineFormation(),
-                $semestre, $this->data['jsem'], $typeMatiereManager->findBySemestreArray($semestre));
+                $semestre, $this->data['jsem'], $typeMatiereManager->findBySemestreArray($semestre), $groupes);
             $tab = [];
             foreach ($planning->getEvents() as $pl) {
                 $tab[$pl->ordreGroupe][$pl->gridStart] = $pl;

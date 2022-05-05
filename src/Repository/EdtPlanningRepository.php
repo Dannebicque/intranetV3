@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EdtPlanningRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/10/2021 10:02
+ * @lastUpdate 05/05/2022 18:14
  */
 
 namespace App\Repository;
@@ -18,6 +18,7 @@ use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use function array_key_exists;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -47,10 +48,10 @@ class EdtPlanningRepository extends ServiceEntityRepository
             $query->andWhere('p.semaine = :semaine')
                 ->setParameter('semaine', $semaine);
         }
-        $query->orderBy('p.semaine', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('p.jour', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('p.debut', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('p.groupe', \Doctrine\Common\Collections\Criteria::ASC);
+        $query->orderBy('p.semaine', Criteria::ASC)
+            ->addOrderBy('p.jour', Criteria::ASC)
+            ->addOrderBy('p.debut', Criteria::ASC)
+            ->addOrderBy('p.groupe', Criteria::ASC);
 
         return $query->getQuery()
             ->getResult();
@@ -62,9 +63,9 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->where('p.semaine = :semaine')
             ->andWhere('p.semestre = :semestre')
             ->setParameters(['semaine' => $semaine, 'semestre' => $semestre->getid()])
-            ->orderBy('p.jour', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('p.debut', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('p.groupe', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('p.jour', Criteria::ASC)
+            ->addOrderBy('p.debut', Criteria::ASC)
+            ->addOrderBy('p.groupe', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -76,9 +77,9 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->andWhere('p.idMatiere = :idMatiere')
             ->andWhere('p.typeMatiere = :typeMatiere')
             ->setParameters(['semaine' => $semaine, 'idMatiere' => $idModule, 'typeMatiere' => $typeModule])
-            ->orderBy('p.jour', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('p.debut', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('p.groupe', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('p.jour', Criteria::ASC)
+            ->addOrderBy('p.debut', Criteria::ASC)
+            ->addOrderBy('p.groupe', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -89,9 +90,9 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->where('p.semaine = :semaine')
             ->andWhere('p.jour = :jour')
             ->setParameters(['semaine' => $semaine, 'jour' => $jour])
-            ->orderBy('p.annee', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('p.debut', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('p.groupe', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('p.annee', Criteria::ASC)
+            ->addOrderBy('p.debut', Criteria::ASC)
+            ->addOrderBy('p.groupe', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -102,9 +103,9 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->where('p.semaine = :semaine')
             ->andWhere('p.salle = :salle')
             ->setParameters(['semaine' => $semaine, 'salle' => $salle])
-            ->orderBy('p.semestre', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('p.debut', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('p.groupe', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('p.semestre', Criteria::ASC)
+            ->addOrderBy('p.debut', Criteria::ASC)
+            ->addOrderBy('p.groupe', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -151,8 +152,8 @@ class EdtPlanningRepository extends ServiceEntityRepository
                     'groupetd' => $this->groupetd,
                     'groupetp' => $this->groupetp,
                 ])
-                ->orderBy('p.jour', \Doctrine\Common\Collections\Criteria::ASC)
-                ->addOrderBy('p.debut', \Doctrine\Common\Collections\Criteria::ASC)
+                ->orderBy('p.jour', Criteria::ASC)
+                ->addOrderBy('p.debut', Criteria::ASC)
                 ->getQuery()
                 ->getResult();
         }
@@ -190,8 +191,8 @@ class EdtPlanningRepository extends ServiceEntityRepository
                 'jour' => $jour,
                 'semestre' => $semestre->getId(),
             ])
-            ->orderBy('p.jour', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('p.debut', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('p.jour', Criteria::ASC)
+            ->addOrderBy('p.debut', Criteria::ASC)
             ->getQuery()
             ->getResult();
 
@@ -303,8 +304,8 @@ class EdtPlanningRepository extends ServiceEntityRepository
                 'jour' => $jour,
                 'semestre' => $semestre->getId(),
             ])
-            ->orderBy('p.jour', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('p.debut', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('p.jour', Criteria::ASC)
+            ->addOrderBy('p.debut', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -314,9 +315,9 @@ class EdtPlanningRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('p')
             ->andWhere('p.intervenant = :idprof')
             ->setParameter('idprof', $user->getId())
-            ->orderBy('p.jour', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('p.debut', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('p.groupe', \Doctrine\Common\Collections\Criteria::ASC);
+            ->orderBy('p.jour', Criteria::ASC)
+            ->addOrderBy('p.debut', Criteria::ASC)
+            ->addOrderBy('p.groupe', Criteria::ASC);
         $ors = [];
 
         foreach ($departement->getDiplomes() as $diplome) {
@@ -413,10 +414,10 @@ class EdtPlanningRepository extends ServiceEntityRepository
            // ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
             ->setParameter('semestre', $semestre->getId())
            // ->setParameter('anneeUniversitaire', $anneeUniversitaire->getId())
-            ->orderBy('p.semaine', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('p.jour', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('p.debut', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('p.groupe', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('p.semaine', Criteria::ASC)
+            ->addOrderBy('p.jour', Criteria::ASC)
+            ->addOrderBy('p.debut', Criteria::ASC)
+            ->addOrderBy('p.groupe', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -430,9 +431,9 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->setParameter('semestre', $semestre->getId())
             ->setParameter('semaine', $semaine)
             // ->setParameter('anneeUniversitaire', $anneeUniversitaire->getId())
-            ->addOrderBy('p.jour', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('p.debut', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('p.groupe', \Doctrine\Common\Collections\Criteria::ASC)
+            ->addOrderBy('p.jour', Criteria::ASC)
+            ->addOrderBy('p.debut', Criteria::ASC)
+            ->addOrderBy('p.groupe', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

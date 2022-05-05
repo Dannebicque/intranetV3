@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/EdtManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/05/2022 21:40
+ * @lastUpdate 05/05/2022 18:12
  */
 
 namespace App\Classes\Edt;
@@ -70,10 +70,11 @@ class EdtManager
         int $semaineFormation,
         Semestre $semestre,
         string $jourSemaine,
-        array $matieres
+        array $matieres,
+        array $groupes
     ): EvenementEdtCollection {
         return $this->getManager($this->getSourceEdt($semestre))?->recupereEdtJourBorne($semestre, $matieres,
-            $jourSemaine, $semaineFormation);
+            $jourSemaine, $semaineFormation, $groupes);
     }
 
     public function getEvent(string $idEvent): EvenementEdt
