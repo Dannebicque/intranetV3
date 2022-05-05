@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtImport.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/09/2021 16:05
+ * @lastUpdate 05/05/2022 15:00
  */
 
 /*
@@ -136,20 +136,6 @@ class MyEdtImport
                         $this->entityManager->persist($pl);
                     } else {
                         $prof = mb_substr($phrase, 8, 3);
-
-//                        if ('D' === $semestre[1]) {
-//                            $matiere = mb_substr($phrase, 11, 6);
-//                            $typecours = mb_substr($phrase, 17, 2);
-//                            if ('T' !== $typecours[0] && 'C' !== $typecours[0]) {
-//                                $matiere .= $typecours[0];
-//                                $typecours = mb_substr($phrase, 18, 2);
-//                                $ordre = mb_substr($phrase, 20, 2);
-//                                $salle = mb_substr($phrase, 22);
-//                            } else {
-//                                $ordre = mb_substr($phrase, 19, 2);
-//                                $salle = mb_substr($phrase, 21);
-//                            }
-//                        } else {
                         if ('S' === $phrase[11] || 'R' === $phrase[11]) {
                             // code sur 4
                             $matiere = mb_substr($phrase, 11, 4);
@@ -170,12 +156,11 @@ class MyEdtImport
                                 $salle = mb_substr($phrase, 20);
                             }
                         }
-                        // }
 
                         if (array_key_exists($matiere, $tabMatieres)) {
                             $pl = new EdtPlanning();
-                            $pl->setSemestre($tabMatieres[$matiere]->semestre);
-                            $this->semestre = $pl->getSemestre()->getId();
+                            $pl->setSemestre($tabMatieres[$matiere]->semestres->first());
+                            $this->semestre = $pl->getSemestre()?->getId();
                             $pl->setIdMatiere($tabMatieres[$matiere]->id);
                             $pl->setTypeMatiere($tabMatieres[$matiere]->typeMatiere);
                             if ('DOA' !== $prof && 'DOB' !== $prof && 'DOC' !== $prof && 'DOD' !== $prof && 'PRJ' !== $prof && array_key_exists($prof,
