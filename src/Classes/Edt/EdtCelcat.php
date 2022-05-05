@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/EdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/05/2022 22:23
+ * @lastUpdate 05/05/2022 10:30
  */
 
 namespace App\Classes\Edt;
@@ -30,7 +30,7 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
         return new EvenementEdtCollection();
     }
 
-    public function find(int $event): EvenementEdt
+    public function find(int $event, array $matieres = [], array $groupes = []): EvenementEdt
     {
         $evt = $this->celcatEventsRepository->find($event);
 

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/EdtInterface.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/05/2022 21:40
+ * @lastUpdate 05/05/2022 10:30
  */
 
 /*
@@ -22,7 +22,7 @@ interface EdtInterface
 {
     public function getPlanningSemestre(Semestre $semestre, array $matieres, AnneeUniversitaire $anneeUniversitaire, array $groupes): EvenementEdtCollection;
 
-    public function find(int $event): EvenementEdt;
+    public function find(int $event, array $matieres = [], array $groupes = []): EvenementEdt;
 
     public function recupereEdtJourBorne(Semestre $semestre, array $matieres, int $jourSemaine, int $semaineFormation): EvenementEdtCollection;
 }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/EdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/05/2022 21:40
+ * @lastUpdate 05/05/2022 10:30
  */
 
 namespace App\Classes\Edt;
@@ -15,7 +15,6 @@ use App\DTO\EvenementEdtCollection;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Semestre;
 use App\Repository\EdtPlanningRepository;
-use Carbon\Carbon;
 
 class EdtIntranet extends AbstractEdt implements EdtInterface
 {
@@ -30,19 +29,14 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
     {
         $evts = $this->edtPlanningRepository->findAllEdtSemestre($semestre, $anneeUniversitaire);
 
-        $tGroupes = [];
-        foreach ($groupes as $groupe) {
-            $tGroupes[$groupe->getOrdre()] = $groupe;
-        }
-
-        return $this->adapter->collection($evts, $matieres, $tGroupes);
+        return $this->adapter->collection($evts, $matieres, $this->transformeGroupe($groupes));
     }
 
-    public function find(int $event): EvenementEdt
+    public function find(int $event, array $matieres = [], array $groupes = []): EvenementEdt
     {
         $evt = $this->edtPlanningRepository->find($event);
 
-        return $this->edtIntranetAdapter->single($evt);
+        return $this->edtIntranetAdapter->single($evt, $matieres, $this->transformeGroupe($groupes));
     }
 
     public function recupereEdtJourBorne(Semestre $semestre, array $matieres, int $jourSemaine, int $semaineFormation): EvenementEdtCollection
@@ -67,5 +61,15 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
         }
 
         return $this->adapter->collection($evts, $matieres, $tGroupes);
+    }
+
+    private function transformeGroupe(array $groupes): array
+    {
+        $tGroupes = [];
+        foreach ($groupes as $groupe) {
+            $tGroupes[$groupe->getOrdre()] = $groupe;
+        }
+
+        return $tGroupes;
     }
 }
