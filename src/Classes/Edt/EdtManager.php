@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/EdtManager.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/EdtManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/10/2021 10:02
+ * @lastUpdate 01/05/2022 21:40
  */
 
 namespace App\Classes\Edt;
@@ -32,11 +32,11 @@ class EdtManager
         $this->tabSources[self::EDT_INTRANET] = $edtIntranet;
     }
 
-    public function getPlanningSemestre(Semestre $semestre, array $matieres, AnneeUniversitaire $anneeUniversitaire): ?EvenementEdtCollection
+    public function getPlanningSemestre(Semestre $semestre, array $matieres, AnneeUniversitaire $anneeUniversitaire, array $groupes): ?EvenementEdtCollection
     {
         return match ($this->getSourceEdt($semestre)) {
-            self::EDT_CELCAT => $this->edtCelcat->getPlanningSemestre($semestre, $matieres, $anneeUniversitaire),
-            self::EDT_INTRANET => $this->edtIntranet->getPlanningSemestre($semestre, $matieres, $anneeUniversitaire),
+            self::EDT_CELCAT => $this->edtCelcat->getPlanningSemestre($semestre, $matieres, $anneeUniversitaire, $groupes),
+            self::EDT_INTRANET => $this->edtIntranet->getPlanningSemestre($semestre, $matieres, $anneeUniversitaire, $groupes),
             self::EDT_ADE => $this->edtAde->getPlanningSemestre($semestre, $matieres, $anneeUniversitaire),
             default => null,
         };

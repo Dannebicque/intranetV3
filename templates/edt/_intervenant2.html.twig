@@ -53,7 +53,7 @@
                         <h2 class="time-slot" style="grid-row: time-{{ tabHeures[ligne][0] }};">{{ tabHeures[ligne][1] }}</h2>
                         {% for j in 1..5 %}
                             {% if edt.planning[j][ligne] is defined %}
-                                <div class="session {{ edt.planning[j][ligne].classCss }}" style="grid-column: track-{{ j }}; grid-row:
+                                <div class="session {{ edt.planning[j][ligne].couleurEdt }}" style="grid-column: track-{{ j }}; grid-row:
                                         time-{{ edt
                                 .planning[j][ligne].gridStart }} / time-{{ edt.planning[j][ligne].gridEnd }};">
                                     <div class="session-body">

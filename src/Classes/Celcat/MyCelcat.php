@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Celcat/MyCelcat.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/09/2021 19:47
+ * @lastUpdate 01/05/2022 21:59
  */
 
 namespace App\Classes\Celcat;
@@ -214,7 +214,7 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
                 $event->setCodeSalle(odbc_result($result, 11));
                 $event->setLibSalle(utf8_encode(odbc_result($result, 12)));
                 $event->setDateCours($calendriers[$semaine]->addDays($jour));
-                $event->setSemestre($groupes[$codeGroupe] ?? null);
+                $event->setSemestre($groupes[$codeGroupe] ?? null);//todo: ajouter une commande pour mettre à jour si erreur lors de l'import ,
                 $dt = explode(' ', (string) odbc_result($result, 15));
                 $event->setUpdateEvent(Tools::convertDateHeureToObject($dt[0], $dt[1]));
 

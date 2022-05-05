@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/EvenementEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/05/2022 20:10
+ * @lastUpdate 05/05/2022 10:07
  */
 
 namespace App\DTO;
@@ -137,9 +137,9 @@ class EvenementEdt
 
     public function displayEdt(): string
     {
-        if ('' === $this->personnel && $this->personnelObjet === null) {
+        if ('' === $this->personnel && null === $this->personnelObjet) {
             $inter = '';
-        } elseif ($this->personnel !== '') {
+        } elseif ('' !== $this->personnel) {
             $inter = $this->personnel;
         } else {
             $inter = $this->personnelObjet->getNom();

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/EdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/05/2022 19:47
+ * @lastUpdate 01/05/2022 21:40
  */
 
 namespace App\Classes\Edt;
@@ -19,40 +19,23 @@ use Carbon\Carbon;
 
 class EdtIntranet extends AbstractEdt implements EdtInterface
 {
-    public function __construct(private readonly EdtPlanningRepository $edtPlanningRepository, private readonly EdtIntranetAdapter $edtIntranetAdapter)
+    public function __construct(
+        private readonly EdtIntranetAdapter $adapter,
+        private readonly EdtPlanningRepository $edtPlanningRepository,
+        private readonly EdtIntranetAdapter $edtIntranetAdapter)
     {
     }
 
-    public function getPlanningSemestre(Semestre $semestre, array $matieres, AnneeUniversitaire $anneeUniversitaire): EvenementEdtCollection
+    public function getPlanningSemestre(Semestre $semestre, array $matieres, AnneeUniversitaire $anneeUniversitaire, array $groupes): EvenementEdtCollection
     {
         $evts = $this->edtPlanningRepository->findAllEdtSemestre($semestre, $anneeUniversitaire);
-        $evtCollection = new EvenementEdtCollection();
 
-        /** @var \App\Entity\EdtPlanning $evt */
-        foreach ($evts as $evt) {
-            $event = new EvenementEdt();
-
-            if (array_key_exists($evt->getTypeIdMatiere(), $matieres)) {
-                $matiere = $matieres[$evt->getTypeIdMatiere()]->display;
-            } else {
-                $matiere = 'Inconnue';
-            }
-            $event->source = EdtManager::EDT_INTRANET;
-            $event->date = $evt->getDate();
-            $event->jour = (string) $evt->getJour();
-            $event->heureDebut = Carbon::createFromTimeString($evt->getDebutTexte());
-            $event->heureFin = Carbon::createFromTimeString($evt->getFinTexte());
-            $event->matiere = $matiere;
-            $event->typeIdMatiere = $evt->getTypeIdMatiere();
-            $event->texte = $evt->getTexte();
-            $event->groupeId = $evt->getGroupe();
-            $event->personnel = null !== $evt->getIntervenant() ? $evt->getIntervenant()->getDisplayPr() : '-';
-            $event->groupe = $evt->getDisplayGroupe();
-            $event->type_cours = $evt->getType();
-            $evtCollection->add($event);
+        $tGroupes = [];
+        foreach ($groupes as $groupe) {
+            $tGroupes[$groupe->getOrdre()] = $groupe;
         }
 
-        return $evtCollection;
+        return $this->adapter->collection($evts, $matieres, $tGroupes);
     }
 
     public function find(int $event): EvenementEdt
@@ -77,38 +60,12 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
         AnneeUniversitaire $anneeUniversitaire
     ) {
         $evts = $this->edtPlanningRepository->findEdtSemestreSemaine($semestre, $semaine, $anneeUniversitaire);
-        $evtCollection = new EvenementEdtCollection();
 
         $tGroupes = [];
         foreach ($groupes as $groupe) {
             $tGroupes[$groupe->getOrdre()] = $groupe;
         }
-        /** @var \App\Entity\EdtPlanning $evt */
-        foreach ($evts as $evt) {
-            $event = new EvenementEdt();
 
-            if (array_key_exists($evt->getTypeIdMatiere(), $matieres)) {
-                $matiere = $matieres[$evt->getTypeIdMatiere()]->display;
-            } else {
-                $matiere = 'Inconnue';
-            }
-            $event->source = EdtManager::EDT_INTRANET;
-            $event->date = $evt->getDate();
-            $event->jour = (string) $evt->getJour();
-            $event->heureDebut = Carbon::createFromTimeString($evt->getDebutTexte());
-            $event->heureFin = Carbon::createFromTimeString($evt->getFinTexte());
-            $event->matiere = $matiere;
-            $event->typeIdMatiere = $evt->getTypeIdMatiere();
-            $event->texte = $evt->getTexte();
-            $event->groupeId = $evt->getGroupe();
-            $event->ordreGroupe = $tGroupes[$evt->getGroupe()]->getOrdre();
-            $event->personnel = null !== $evt->getIntervenant() ? $evt->getIntervenant()->getDisplayPr() : '-';
-            $event->groupe = $evt->getDisplayGroupe();
-            $event->type_cours = $evt->getType();
-            $event->couleur = $semestre->getCouleur();
-            $evtCollection->add($event);
-        }
-
-        return $evtCollection;
+        return $this->adapter->collection($evts, $matieres, $tGroupes);
     }
 }

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/EdtAde.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/EdtAde.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/09/2021 19:11
+ * @lastUpdate 01/05/2022 21:41
  */
 
 namespace App\Classes\Edt;
@@ -16,7 +16,7 @@ use App\Entity\Semestre;
 
 class EdtAde extends AbstractEdt implements EdtInterface
 {
-    public function getPlanningSemestre(Semestre $semestre, array $matieres, AnneeUniversitaire $anneeUniversitaire): EvenementEdtCollection
+    public function getPlanningSemestre(Semestre $semestre, array $matieres, AnneeUniversitaire $anneeUniversitaire, array $groupes): EvenementEdtCollection
     {
         return new EvenementEdtCollection();
     }

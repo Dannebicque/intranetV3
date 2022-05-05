@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Adapter/EdtIntranetAdapter.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Adapter/EdtIntranetAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/10/2021 16:44
+ * @lastUpdate 01/05/2022 21:35
  */
 
 namespace App\Adapter;
@@ -17,47 +17,47 @@ use Carbon\Carbon;
 
 class EdtIntranetAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
 {
-    private array $matieres = [];
-
-    public function collection(array $events, array $matieres = []): EvenementEdtCollection
+    public function collection(array $events, array $matieres, array $groupes): EvenementEdtCollection
     {
-        $this->matieres = $matieres;
         $collection = new EvenementEdtCollection();
 
         foreach ($events as $event) {
-            $collection->add($this->single($event));
+            $collection->add($this->single($event, $matieres, $groupes));
         }
 
         return $collection;
     }
 
-    public function single(mixed $event): ?EvenementEdt
+    public function single(mixed $evt, array $matieres, array $groupes): ?EvenementEdt
     {
-        // todo: pourrait être une interface ? mais après l'interface ?
-        $evt = new EvenementEdt();
-        $evt->source = EdtManager::EDT_INTRANET;
-        $evt->id = $event->getId();
-        $evt->jour = $event->getJour();
-        $evt->heureDebut = Carbon::createFromTimeString($event->getDebutTexte());
-        $evt->heureFin = Carbon::createFromTimeString($event->getFinTexte());
+        $event = new EvenementEdt();
 
-        $evt->salle = $event->getSalle();
-        $evt->personnel = $event->getIntervenant()?->getDisplay();
-        $evt->ordreGroupe = (int) $event->getGroupe();
-        $evt->groupe = $event->getDisplayGroupe();
-        $evt->typeIdMatiere = $event->getTypeIdMatiere();
-        if (array_key_exists($evt->typeIdMatiere, $this->matieres)) {
-            $evt->matiere = $this->matieres[$evt->typeIdMatiere]->display;
-            $evt->code_matiere = $this->matieres[$evt->typeIdMatiere]->codeMatiere;
+        if (array_key_exists($evt->getTypeIdMatiere(), $matieres)) {
+            $event->matiere = $matieres[$evt->getTypeIdMatiere()]->display;
+            $event->code_matiere = $matieres[$evt->getTypeIdMatiere()]->codeMatiere;
+        } else {
+            $event->matiere = 'Inconnue';
         }
-        $evt->type_cours = $event->getType();
-        $evt->semestre = $event->getSemestre();
-        $evt->dateObjet = $event->getDate();
-        $evt->couleur = null !== $event->getSemestre() ? $event->getSemestre()->getAnnee()->getCouleur() : '';
+        $event->source = EdtManager::EDT_INTRANET;
+        $event->id = $evt->getId();
+        $event->date = $evt->getDate();
+        $event->jour = (string) $evt->getJour();
+        $event->heureDebut = Carbon::createFromTimeString($evt->getDebutTexte());
+        $event->heureFin = Carbon::createFromTimeString($evt->getFinTexte());
+        $event->typeIdMatiere = $evt->getTypeIdMatiere();
+        $event->texte = $evt->getTexte();
+        $event->groupeId = $evt->getGroupe();
+        $event->salle = $evt->getSalle();
+        $event->groupe = $evt->getDisplayGroupe();
+        $event->dateObjet = $evt->getDate();
+        $event->gridStart = Constantes::TAB_HEURES_EDT_2[$evt->getDebut() - 1][0];
+        $event->gridEnd = Constantes::TAB_HEURES_EDT_2[$evt->getFin() - 1][0];
+        $event->ordreGroupe = $groupes[$evt->getGroupe()]->getOrdre();
+        $event->personnel = null !== $evt->getIntervenant() ? $evt->getIntervenant()->getDisplayPr() : '-';
+        $event->groupe = $evt->getDisplayGroupe();
+        $event->type_cours = $evt->getType();
+        $event->couleur = $evt->getSemestre()->getAnnee()->getCouleur();
 
-        $evt->gridStart = Constantes::TAB_HEURES_EDT_2[$event->getDebut() - 1][0];
-        $evt->gridEnd = Constantes::TAB_HEURES_EDT_2[$event->getFin() - 1][0];
-
-        return $evt;
+        return $event;
     }
 }

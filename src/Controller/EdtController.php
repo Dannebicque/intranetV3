@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/EdtController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 07:01
+ * @lastUpdate 01/05/2022 22:09
  */
 
 namespace App\Controller;
@@ -51,7 +51,7 @@ class EdtController extends BaseController
      */
     public function dashboardPersonnel(int $semaine = 0): Response
     {
-        // todo: passer le lien semestre-> couleur plutôt que les matières ??
+        //todo: fusionner les deux et passer par le manager
         if (null !== $this->dataUserSession->getDepartement() && $this->dataUserSession->getDepartement()->isOptUpdateCelcat()) {
             $matieres = $this->typeMatiereManager->tableauMatieresCodeApogee($this->getDepartement());
             $this->myEdtCelcat->initPersonnel($this->getUser(),
@@ -105,7 +105,6 @@ class EdtController extends BaseController
                 'edt' => $edt->toArray($semestre->getNbgroupeTpEdt()),
                 'sem' => $sem,
                 'semaine' => $semaine,
-                'semaines' => $this->calendrier->calculSemaines($this->getAnneeUniversitaire()),
                 'semestre' => $semestre,
                 'filtre' => 'promo',
                 'valeur' => $semestre->getId(),

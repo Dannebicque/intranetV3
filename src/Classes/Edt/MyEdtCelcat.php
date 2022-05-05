@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtCelcat.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/09/2021 07:48
+ * @lastUpdate 01/05/2022 21:59
  */
 
 /*
@@ -148,6 +148,7 @@ class MyEdtCelcat extends BaseEdt
 
     private function transformeIndividuel(array $pl): array
     {
+
         // prof ou étudiant
         $tab = [];
 
@@ -167,31 +168,15 @@ class MyEdtCelcat extends BaseEdt
             $evt->typeIdMatiere = $this->getTypeIdMatiere($p);
             $evt->type_cours = $p->getType();
             $evt->codeelement = $p->getCodeModule();
-
+            $evt->couleur = $p->getSemestre()?->getAnnee()?->getCouleur();
             $evt->gridStart = $p->getDebut()?->format('Hi');
             $evt->gridEnd = $p->getFin()?->format('Hi');
 
-            $evt->couleur = $this->getCouleurFromModule($p);
             $dbtEdt = Constantes::TAB_HEURES_EDT_LIGNE_2[$p->getDebut()->format('Hi')];
             $tab[$evt->jour][$dbtEdt] = $evt;
         }
 
         return $tab;
-    }
-
-    private function getCouleurFromModule(CelcatEvent $p): string
-    {
-        if (array_key_exists($p->getCodeModule(), $this->matieres)) {
-            $matiere = $this->matieres[$p->getCodeModule()];
-            if (null !== $matiere && null !== $matiere->semestre) {// todo: passer le semestre et pas via matiere
-                $annee = $matiere->semestre->getAnnee();
-                if (null !== $annee) {
-                    return $annee->getCouleur();
-                }
-            }
-        }
-
-        return 'CCCCCC';
     }
 
     public function initSemestre(int $semaine, Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): self
