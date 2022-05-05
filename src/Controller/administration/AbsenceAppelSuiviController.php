@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceAppelSuiviController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AbsenceAppelSuiviController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/10/2021 09:44
+ * @lastUpdate 01/05/2022 21:40
  */
 
 namespace App\Controller\administration;
@@ -14,6 +14,7 @@ use App\Classes\Edt\EdtManager;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Controller\BaseController;
 use App\Entity\Semestre;
+use App\Repository\GroupeRepository;
 use App\Table\AppelSuiviTableType;
 use App\Table\PlanCoursTableType;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,6 +33,7 @@ class AbsenceAppelSuiviController extends BaseController
      */
     #[Route('/{semestre}', name: 'administration_absence_appel_index', requirements: ['semestre' => "\d+"])]
     public function index(
+        GroupeRepository $groupeRepository,
         Request $request,
         TypeMatiereManager $typeMatiereManager,
         Semestre $semestre
@@ -40,7 +42,7 @@ class AbsenceAppelSuiviController extends BaseController
 
         $statsAppel = $this->absenceEtatAppel->getBySemestre($semestre);
         $matieres = $typeMatiereManager->findBySemestreArray($semestre);
-
+        $groupes = $groupeRepository->findBySemestre($semestre);
         $table = $this->createTable(AppelSuiviTableType::class, [
             'matieres' => $matieres,
             'statsAppel' => $statsAppel,
@@ -55,7 +57,7 @@ class AbsenceAppelSuiviController extends BaseController
 
         return $this->render('administration/absence_appel/index.html.twig',
             [
-                'pl' => $this->edtManager->getPlanningSemestre($semestre, $matieres, $this->getAnneeUniversitaire()),
+                'pl' => $this->edtManager->getPlanningSemestre($semestre, $matieres, $this->getAnneeUniversitaire(), $groupes),
                 'semestre' => $semestre,
                 'table' => $table,
                 'statsAppel' => $statsAppel,
