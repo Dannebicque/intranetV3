@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.6.3](https://github.com/Dannebicque/intranetV3/compare/v3.6.2...v3.6.3) (2022-05-05)
+
+
+### Features
+
+* [Calendrier] Calculs déportés ([3c687b3](https://github.com/Dannebicque/intranetV3/commit/3c687b34044a5e04c3a4b9146dc81367af43113e))
+
+
+### Bug Fixes
+
+* [Absence] Suppression de la dépendance matière/semestre ([6220769](https://github.com/Dannebicque/intranetV3/commit/622076977013f5a609ce744ea77d2d8154c40977))
+* [EDT] Affichage du semestre ([f88c18f](https://github.com/Dannebicque/intranetV3/commit/f88c18fc37d6988c1fe7ea443aa03723f32674b2))
+* [Edt] Couleur semestre ([00ca6ae](https://github.com/Dannebicque/intranetV3/commit/00ca6aea17209c51e211b47c326f88629b8db543))
+* [Edt] Couleur semestre ([e0a9998](https://github.com/Dannebicque/intranetV3/commit/e0a99985cb1c5b3a0b0e8c6265d26295ed9876d7))
+* [PersonnelDepartement] Erreur lors de l'ajout si rôle vide. ([82729c5](https://github.com/Dannebicque/intranetV3/commit/82729c56a7236cb3aa4e2bc160c98952b4d1a4ec))
+* [Saisie] Visualisation des semestres ([a3745d9](https://github.com/Dannebicque/intranetV3/commit/a3745d9d9f2ae84a6b04a4716a2fd1c897e7e7d8))
+
 ### [3.6.2](https://github.com/Dannebicque/intranetV3/compare/v3.6.1...v3.6.2) (2022-05-01)
 
 
