@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/05/2022 15:00
+ * @lastUpdate 05/05/2022 15:11
  */
 
 /*
@@ -159,7 +159,7 @@ class MyEdtImport
 
                         if (array_key_exists($matiere, $tabMatieres)) {
                             $pl = new EdtPlanning();
-                            $pl->setSemestre($tabMatieres[$matiere]->semestres->first());
+                            $pl->setSemestre($tabMatieres[$matiere]->getSemestres()->first());
                             $this->semestre = $pl->getSemestre()?->getId();
                             $pl->setIdMatiere($tabMatieres[$matiere]->id);
                             $pl->setTypeMatiere($tabMatieres[$matiere]->typeMatiere);
