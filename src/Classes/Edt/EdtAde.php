@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/EdtAde.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/05/2022 21:41
+ * @lastUpdate 05/05/2022 10:32
  */
 
 namespace App\Classes\Edt;
@@ -21,7 +21,7 @@ class EdtAde extends AbstractEdt implements EdtInterface
         return new EvenementEdtCollection();
     }
 
-    public function find(int $event): EvenementEdt
+    public function find(int $event, array $matieres = [], array $groupes = []): EvenementEdt
     {
         return new EvenementEdt();
     }
