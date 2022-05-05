@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Adapter/EdtIntranetAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/05/2022 10:36
+ * @lastUpdate 05/05/2022 11:03
  */
 
 namespace App\Adapter;
@@ -60,6 +60,7 @@ class EdtIntranetAdapter extends AbstractEdtAdapter implements EdtAdapterInterfa
         $event->personnel = null !== $evt->getIntervenant() ? $evt->getIntervenant()->getDisplayPr() : '-';
         $event->groupe = $evt->getDisplayGroupe();
         $event->type_cours = $evt->getType();
+        $event->semestre = $evt->getSemestre();
         $event->couleur = $evt->getSemestre()->getAnnee()->getCouleur();
 
         return $event;
