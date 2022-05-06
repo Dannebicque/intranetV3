@@ -1,15 +1,16 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/DateController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/DateController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/10/2021 12:32
+ * @lastUpdate 06/05/2022 20:53
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\MyExport;
+use App\Classes\MySerializer;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Date;
@@ -48,18 +49,15 @@ class DateController extends BaseController
 
     #[Route(path: '/export.{_format}', name: 'administration_date_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
     public function export(
+        MySerializer $mySerializer,
         MyExport $myExport,
         DateRepository $dateRepository,
         $_format
     ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
         $dates = $dateRepository->findByDepartement($this->getDepartement());
-
-        return $myExport->genereFichierGenerique(
-            $_format,
+        $data = $mySerializer->getDataFromSerialization(
             $dates,
-            'dates',
-            ['date_administration', 'semestre'],
             [
                 'libelle',
                 'texte',
@@ -71,8 +69,9 @@ class DateController extends BaseController
                 'allday',
                 'qui',
                 'type',
-                'semestre' => ['libelle'],
+                'semestres' => ['libelle'],
             ],
+            ['date_administration', 'semestre'],
             [
                 'dateDebut' => MyExport::ONLY_DATE,
                 'heureDebut' => MyExport::ONLY_HEURE,
@@ -81,7 +80,11 @@ class DateController extends BaseController
             ]
         );
 
-        return $exporter->export($datas, $_format, 'dates');
+        return $myExport->genereFichierGeneriqueFromData(
+            $_format,
+            $data,
+            'dates_'.$this->getDepartement()?->getLibelle(),
+        );
     }
 
     #[Route(path: '/new', name: 'administration_date_new', methods: 'GET|POST')]
