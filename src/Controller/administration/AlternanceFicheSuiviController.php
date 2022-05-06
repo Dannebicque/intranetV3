@@ -1,15 +1,15 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AlternanceFicheSuiviController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AlternanceFicheSuiviController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 06/05/2022 10:31
  */
 
 namespace App\Controller\administration;
 
-use App\Classes\MyAlternanceFicheSuivi;
+use App\Classes\MyFicheSuivi;
 use App\Controller\BaseController;
 use App\Entity\Alternance;
 use App\Entity\AlternanceFicheSuivi;
@@ -54,7 +54,7 @@ class AlternanceFicheSuiviController extends BaseController
      * @throws \Twig\Error\SyntaxError
      */
     #[Route(path: '/imprimer/{id}', name: 'administration_alternance_fiche_suivi_export', methods: ['GET'])]
-    public function print(MyAlternanceFicheSuivi $myAlternanceFicheSuivi, AlternanceFicheSuivi $alternanceFicheSuivi): PdfResponse
+    public function print(MyFicheSuivi $myAlternanceFicheSuivi, AlternanceFicheSuivi $alternanceFicheSuivi): PdfResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $alternanceFicheSuivi->getAlternance()?->getAnnee());
 
