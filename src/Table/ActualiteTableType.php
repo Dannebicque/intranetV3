@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/ActualiteTableType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Table/ActualiteTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 21:51
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Table;
@@ -25,6 +25,7 @@ use App\Entity\Actualite;
 use App\Entity\Departement;
 use App\Form\Type\DatePickerType;
 use App\Form\Type\SearchType;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
@@ -103,7 +104,7 @@ class ActualiteTableType extends TableType
             'query' => function (QueryBuilder $qb, array $formData) {
                 $qb->where('e.departement = :departement')
                     ->setParameter('departement', $this->departement->getId())
-                    ->orderBy('e.updated', \Doctrine\Common\Collections\Criteria::DESC);
+                    ->orderBy('e.updated', Criteria::DESC);
 
                 if (isset($formData['search'])) {
                     $qb->andWhere('LOWER(e.titre) LIKE :search');

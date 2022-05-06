@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/BCDemandeDepartementType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Table/BCDemandeDepartementType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/10/2021 10:02
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Table;
@@ -24,6 +24,7 @@ use App\Entity\BCDemande;
 use App\Entity\Departement;
 use App\Form\Type\DatePickerType;
 use App\Form\Type\SearchType;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -87,26 +88,26 @@ class BCDemandeDepartementType extends TableType
         $builder->addColumn('links', WidgetColumnType::class, [
             'build' => function (WidgetBuilder $builder, BCDemande $s) {
                 $builder->add('duplicate', RowDuplicateLinkType::class, [
-                    'route' => 'administration_actualite_duplicate',
+                    'route' => 'administration_bc_demande_duplicate',
                     'route_params' => ['id' => $s->getId()],
                     'xhr' => false,
                 ]);
                 $builder->add('show', RowShowLinkType::class, [
-                    'route' => 'administration_actualite_show',
+                    'route' => 'administration_bc_demande_show',
                     'route_params' => [
                         'id' => $s->getId(),
                     ],
                     'xhr' => false,
                 ]);
                 $builder->add('edit', RowEditLinkType::class, [
-                    'route' => 'administration_actualite_edit',
+                    'route' => 'administration_bc_demande_edit',
                     'route_params' => [
                         'id' => $s->getId(),
                     ],
                     'xhr' => false,
                 ]);
                 $builder->add('delete', RowDeleteLinkType::class, [
-                    'route' => 'administration_actualite_delete',
+                    'route' => 'administration_bc_demande_delete',
                     'route_params' => ['id' => $s->getId()],
                     'attr' => [
                         'data-csrf' => $this->csrfToken->getToken('delete'.$s->getId()),
@@ -121,7 +122,7 @@ class BCDemandeDepartementType extends TableType
             'query' => function (QueryBuilder $qb, array $formData) {
                 $qb->where('e.departement = :departement')
                     ->setParameter('departement', $this->departement->getId())
-                    ->orderBy('e.updated', \Doctrine\Common\Collections\Criteria::DESC);
+                    ->orderBy('e.updated', Criteria::DESC);
             },
         ]);
     }
