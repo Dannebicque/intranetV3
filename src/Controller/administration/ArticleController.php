@@ -1,15 +1,16 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ArticleController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/ArticleController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 06/05/2022 20:44
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\MyExport;
+use App\Classes\MySerializer;
 use App\Controller\BaseController;
 use App\Entity\Article;
 use App\Entity\ArticleCategorie;
@@ -48,17 +49,22 @@ class ArticleController extends BaseController
     }
 
     #[Route(path: '/export.{_format}', name: 'administration_article_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function export(MyExport $myExport, ArticleRepository $articleRepository, $_format): Response
+    public function export(
+        MySerializer $mySerializer,
+        MyExport $myExport, ArticleRepository $articleRepository, $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
         $articles = $articleRepository->findByDepartement($this->getDepartement());
-
-        return $myExport->genereFichierGenerique(
-            $_format,
+        $data = $mySerializer->getDataFromSerialization(
             $articles,
-            'articles',
-            ['article_administration', 'utilisateur'],
-            ['titre', 'texte', 'categorie' => ['libelle'], 'personnel' => ['nom', 'prenom']]
+            ['titre', 'texte', 'categorie' => ['libelle'], 'personnel' => ['nom', 'prenom']],
+            ['article_administration', 'utilisateur']
+        );
+
+        return $myExport->genereFichierGeneriqueFromData(
+            $_format,
+            $data,
+            'articles_'.$this->getDepartement()?->getLibelle(),
         );
     }
 
