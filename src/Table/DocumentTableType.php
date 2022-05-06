@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/DocumentTableType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Table/DocumentTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/09/2021 09:04
+ * @lastUpdate 06/05/2022 21:02
  */
 
 namespace App\Table;
@@ -63,7 +63,7 @@ class DocumentTableType extends TableType
 
         $builder->addColumn('libelle', PropertyColumnType::class,
             ['label' => 'table.titre', 'translation_domain' => 'messages']);
-        $builder->addColumn('typeFichier', PropertyColumnType::class,
+        $builder->addColumn('typeFichierIcone', PropertyColumnType::class,
             ['label' => 'table.type_fichier', 'translation_domain' => 'messages']);
         $builder->addColumn('typeDocument', CategorieArticleColumnType::class,
             ['label' => 'table.categorie', 'translation_domain' => 'messages']);

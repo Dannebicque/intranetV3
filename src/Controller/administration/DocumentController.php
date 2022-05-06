@@ -1,16 +1,17 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/DocumentController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/DocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 19:11
+ * @lastUpdate 06/05/2022 20:57
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\DocumentDelete;
 use App\Classes\MyExport;
+use App\Classes\MySerializer;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Document;
@@ -48,18 +49,23 @@ class DocumentController extends BaseController
     }
 
     #[Route('/export.{_format}', name: 'export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function export(MyExport $myExport, DocumentRepository $documentRepository, $_format): Response
+    public function export(
+        MySerializer $mySerializer,
+        MyExport $myExport, DocumentRepository $documentRepository, $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $this->getDepartement());
 
         $documents = $documentRepository->findByDepartement($this->getDepartement());
-
-        return $myExport->genereFichierGenerique(
-            $_format,
+        $data = $mySerializer->getDataFromSerialization(
             $documents,
-            'documents',
-            ['document_administration', 'semestre'],
-            ['libelle', 'description', 'typeDocument' => ['libelle'], 'semestre' => ['libelle']]
+            ['libelle', 'description', 'typeDocument' => ['libelle'], 'semestres' => ['libelle']],
+            ['document_administration', 'semestre']
+        );
+
+        return $myExport->genereFichierGeneriqueFromData(
+            $_format,
+            $data,
+            'documents_'.$this->getDepartement()?->getLibelle(),
         );
     }
 

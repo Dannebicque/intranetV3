@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Document.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Document.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/10/2021 12:02
+ * @lastUpdate 06/05/2022 21:03
  */
 
 namespace App\Entity;
@@ -36,6 +36,7 @@ class Document extends BaseEntity
     use LifeCycleTrait;
     use TypeDestinataireTrait;
 
+    //todo: enum
     final public const TYPE_DOCUMENT = [
         'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'Prés. PPT',
         'application/pdf' => 'PDF',
@@ -47,10 +48,21 @@ class Document extends BaseEntity
         'application/vnd.oasis.opendocument.text' => 'Doc. ODT',
     ];
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
+    final public const TYPE_DOCUMENT_ICON = [
+        'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'fas fa-file-powerpoint',
+        'application/pdf' => 'fas fa-file-pdf',
+        'image/jpeg' => 'fas fa-file-image',
+        'application/vnd.ms-excel' => 'fas fa-file-excel',
+        'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'fas fa-file-excel',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'fas fa-file-word',
+        'application/msword' => 'fas fa-file-word',
+        'application/vnd.oasis.opendocument.text' => 'fas fa-file-lines',
+    ];
+
+    #[ORM\Column(type: Types::FLOAT)]
     private ?float $taille = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 100)]
+    #[ORM\Column(type: Types::STRING, length: 100)]
     private ?string $typeFichier = null;
 
     #[Groups(groups: ['document_administration'])]
@@ -58,15 +70,15 @@ class Document extends BaseEntity
     private ?TypeDocument $typeDocument = null;
 
     #[Groups(groups: ['document_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
     #[Groups(groups: ['document_administration'])]
     #[Assert\Length(min: 5, max: 100, minMessage: 'Le titre du document doit contenir au minimum {{ limit }} caractères', maxMessage: 'Le titre du document doit contenir au maximum {{ limit }} caractères')]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 100)]
+    #[ORM\Column(type: Types::STRING, length: 100)]
     private ?string $libelle = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50)]
+    #[ORM\Column(type: Types::STRING, length: 50)]
     private ?string $documentName = '';
 
     /**
@@ -218,6 +230,15 @@ class Document extends BaseEntity
     {
         if (array_key_exists($this->typeFichier, self::TYPE_DOCUMENT)) {
             return self::TYPE_DOCUMENT[$this->typeFichier];
+        }
+
+        return $this->typeFichier;
+    }
+
+    public function typeFichierIcone(): ?string
+    {
+        if (array_key_exists($this->typeFichier, self::TYPE_DOCUMENT_ICON)) {
+            return '<i class="'.self::TYPE_DOCUMENT_ICON[$this->typeFichier].'"></i> '.$this->typeFichierTraduit();
         }
 
         return $this->typeFichier;
