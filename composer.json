@@ -9,7 +9,7 @@
     "ext-json": "*",
     "ext-zip": "*",
     "bugsnag/bugsnag-symfony": "^1.5",
-    "composer/package-versions-deprecated": "1.11.99.3",
+    "composer/package-versions-deprecated": "^1.11",
     "doctrine/annotations": "^1.0",
     "doctrine/doctrine-bundle": "^2.4",
     "doctrine/doctrine-migrations-bundle": "^3.1",

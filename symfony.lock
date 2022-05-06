@@ -14,12 +14,6 @@
     "composer/ca-bundle": {
         "version": "1.2.8"
     },
-    "composer/composer": {
-        "version": "2.1.11"
-    },
-    "composer/metadata-minifier": {
-        "version": "1.0.0"
-    },
     "composer/package-versions-deprecated": {
         "version": "1.11.99.1"
     },
@@ -28,9 +22,6 @@
     },
     "composer/semver": {
         "version": "3.2.6"
-    },
-    "composer/spdx-licenses": {
-        "version": "1.5.5"
     },
     "composer/xdebug-handler": {
         "version": "2.0.2"
@@ -386,9 +377,6 @@
             "config/packages/ramsey_uuid_doctrine.yaml"
         ]
     },
-    "react/promise": {
-        "version": "v2.8.0"
-    },
     "rector/rector": {
         "version": "0.11.60"
     },
@@ -439,12 +427,6 @@
     },
     "sebastian/version": {
         "version": "3.0.2"
-    },
-    "seld/jsonlint": {
-        "version": "1.8.3"
-    },
-    "seld/phar-utils": {
-        "version": "1.1.2"
     },
     "sensio/framework-extra-bundle": {
         "version": "5.2",
