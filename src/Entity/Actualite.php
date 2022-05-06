@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Actualite.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Actualite.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 15:51
+ * @lastUpdate 06/05/2022 20:32
  */
 
 namespace App\Entity;
@@ -22,15 +22,20 @@ class Actualite extends BaseEntity
     use LifeCycleTrait;
 
     #[Groups(groups: ['actualite_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 150)]
+    #[ORM\Column(type: Types::STRING, length: 150)]
     private ?string $titre = null;
 
     #[Groups(groups: ['actualite_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $texte = null;
 
-    public function __construct(#[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'actualites')] private ?Departement $departement)
+    #[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'actualites')]
+    #[Groups(groups: ['actualite_administration'])]
+    private ?Departement $departement;
+
+    public function __construct(?Departement $departement)
     {
+        $this->departement = $departement;
     }
 
     public function getTitre(): ?string

@@ -1,15 +1,16 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ActualiteController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/ActualiteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/10/2021 10:02
+ * @lastUpdate 06/05/2022 20:33
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\MyExport;
+use App\Classes\MySerializer;
 use App\Controller\BaseController;
 use App\Entity\Actualite;
 use App\Entity\Constantes;
@@ -49,19 +50,25 @@ class ActualiteController extends BaseController
         );
     }
 
+    /**
+     * @throws \JsonException
+     */
     #[Route('/export.{_format}', name: 'export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: ['GET'])]
-    public function export(MyExport $myExport, ActualiteRepository $actualiteRepository, $_format): Response
+    public function export(MySerializer $mySerializer, MyExport $myExport, ActualiteRepository $actualiteRepository, $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
-
         $actualites = $actualiteRepository->getByDepartement($this->getDepartement());
 
-        return $myExport->genereFichierGenerique(
-            $_format,
+        $data = $mySerializer->getDataFromSerialization(
             $actualites,
-            'actualites',
-            ['actualite_administration', 'utilisateur'],
-            ['titre', 'texte', 'departement' => ['libelle']]
+            ['titre', 'texte', 'departement' => ['libelle']],
+            ['actualite_administration', 'utilisateur']
+        );
+
+        return $myExport->genereFichierGeneriqueFromData(
+            $_format,
+            $data,
+            'acutalites',
         );
     }
 
