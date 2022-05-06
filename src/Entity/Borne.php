@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Borne.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Borne.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/10/2021 10:33
+ * @lastUpdate 06/05/2022 20:54
  */
 
 namespace App\Entity;
@@ -25,6 +25,7 @@ class Borne extends BaseEntity
 {
     use LifeCycleTrait;
 
+    //todo: mettre Enum...
     final public const ICONES = [
         'information' => 'fas fa-info-circle',
         'danger' => 'fas fa-exclamation-circle',
@@ -40,31 +41,31 @@ class Borne extends BaseEntity
     final public const COULEURS = ['Rouge' => '#FF0000', 'Vert' => '#00FF00', 'Bleu' => '#0000FF'];
 
     #[Groups(groups: ['bornes_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 40)]
+    #[ORM\Column(type: Types::STRING, length: 40)]
     private ?string $icone = null;
 
     #[Groups(groups: ['bornes_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20)]
+    #[ORM\Column(type: Types::STRING, length: 20)]
     private ?string $couleur = null;
 
     #[Groups(groups: ['bornes_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $message = null;
 
     #[Groups(groups: ['bornes_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $url = null;
 
     #[Groups(groups: ['bornes_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?CarbonInterface $dateDebutPublication;
 
     #[Groups(groups: ['bornes_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?CarbonInterface $dateFinPublication;
 
     #[Groups(groups: ['bornes_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private ?bool $visible = true;
 
     #[Groups(groups: ['bornes_administration'])]

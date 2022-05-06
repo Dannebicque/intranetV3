@@ -1,15 +1,16 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/BorneController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/BorneController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/10/2021 11:00
+ * @lastUpdate 06/05/2022 20:47
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\MyExport;
+use App\Classes\MySerializer;
 use App\Controller\BaseController;
 use App\Entity\Borne;
 use App\Entity\Constantes;
@@ -47,17 +48,22 @@ class BorneController extends BaseController
     }
 
     #[Route(path: '/export.{_format}', name: 'administration_borne_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function export(MyExport $myExport, BorneRepository $borneRepository, $_format): Response
+    public function export(
+        MySerializer $mySerializer,
+        MyExport $myExport, BorneRepository $borneRepository, $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
         $bornes = $borneRepository->findByDepartement($this->dataUserSession->getDepartement(), 0);
-
-        return $myExport->genereFichierGenerique(
-            $_format,
+        $data = $mySerializer->getDataFromSerialization(
             $bornes,
-            'bornes',
-            ['bornes_administration', 'semestre'],
-            ['message', 'icone', 'couleur', 'url', 'dateDebutPublication', 'dateFinPublication']
+            ['message', 'icone', 'couleur', 'url', 'dateDebutPublication', 'dateFinPublication'],
+            ['bornes_administration', 'semestre']
+        );
+
+        return $myExport->genereFichierGeneriqueFromData(
+            $_format,
+            $data,
+            'bornes_'.$this->getDepartement()?->getLibelle(),
         );
     }
 
