@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TypeHrs.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/TypeHrs.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/10/2021 11:08
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Entity;
@@ -15,11 +15,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Stringable;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: TypeHrsRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class TypeHrs extends BaseEntity implements \Stringable
+class TypeHrs extends BaseEntity implements Stringable
 {
     use LifeCycleTrait;
     final public const TYPE_HRS_HRS = 'HRS';

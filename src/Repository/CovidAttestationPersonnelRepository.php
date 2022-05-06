@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/CovidAttestationPersonnelRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/CovidAttestationPersonnelRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:08
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Repository;
@@ -14,6 +14,7 @@ use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Personnel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -34,7 +35,7 @@ class CovidAttestationPersonnelRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->where('p.personnel = :personnel')
             ->setParameter('personnel', $personnel->getId())
-            ->orderBy('p.created', \Doctrine\Common\Collections\Criteria::DESC)
+            ->orderBy('p.created', Criteria::DESC)
             ->getQuery()
             ->getResult();
     }
@@ -45,7 +46,7 @@ class CovidAttestationPersonnelRepository extends ServiceEntityRepository
             ->innerJoin(Diplome::class, 'd', 'WITH', 'p.diplome=d.id')
             ->where('d.departement = :departement')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('p.created', \Doctrine\Common\Collections\Criteria::DESC)
+            ->orderBy('p.created', Criteria::DESC)
             ->getQuery()
             ->getResult();
     }

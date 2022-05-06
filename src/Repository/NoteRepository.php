@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/NoteRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/NoteRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Repository;
@@ -15,6 +15,7 @@ use App\Entity\Evaluation;
 use App\Entity\Note;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -67,7 +68,7 @@ class NoteRepository extends ServiceEntityRepository
             ->andWhere('n.etudiant = :etudiant')
             ->setParameter('annee', $annee->getId())
             ->setParameter('etudiant', $etudiant->getId())
-            ->addOrderBy('e.dateEvaluation', \Doctrine\Common\Collections\Criteria::ASC);
+            ->addOrderBy('e.dateEvaluation', Criteria::ASC);
 
         return $query->andWhere(implode(' OR ', $this->getOrs($matieres, $query)))
             ->getQuery()

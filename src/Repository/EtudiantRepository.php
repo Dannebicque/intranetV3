@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EtudiantRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EtudiantRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/10/2021 12:28
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Repository;
@@ -16,6 +16,7 @@ use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use Carbon\CarbonInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -87,8 +88,8 @@ class EtudiantRepository extends ServiceEntityRepository
                     break;
             }
         } else {
-            $qb->orderBy('u.nom', \Doctrine\Common\Collections\Criteria::ASC)
-                ->addOrderBy('u.prenom', \Doctrine\Common\Collections\Criteria::ASC);
+            $qb->orderBy('u.nom', Criteria::ASC)
+                ->addOrderBy('u.prenom', Criteria::ASC);
         }
 
         if ($query) {
@@ -115,8 +116,8 @@ class EtudiantRepository extends ServiceEntityRepository
             ->where('e.semestre = :semestre')
             ->andWhere('e.anneeSortie = 0')
             ->setParameter('semestre', $semestre)
-            ->orderBy('e.nom', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('e.prenom', \Doctrine\Common\Collections\Criteria::ASC);
+            ->orderBy('e.nom', Criteria::ASC)
+            ->addOrderBy('e.prenom', Criteria::ASC);
     }
 
     public function findBySemestre(Semestre $semestre): array
@@ -179,8 +180,8 @@ class EtudiantRepository extends ServiceEntityRepository
             ++$i;
         }
 
-        return $query->orderBy('e.nom', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('e.prenom', \Doctrine\Common\Collections\Criteria::ASC)
+        return $query->orderBy('e.nom', Criteria::ASC)
+            ->addOrderBy('e.prenom', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -197,8 +198,8 @@ class EtudiantRepository extends ServiceEntityRepository
             ->andWhere('p.departement = :departement')
             ->setParameter('needle', '%'.$needle.'%')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('p.nom', \Doctrine\Common\Collections\Criteria::ASC)
-            ->orderBy('p.prenom', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('p.nom', Criteria::ASC)
+            ->orderBy('p.prenom', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -213,8 +214,8 @@ class EtudiantRepository extends ServiceEntityRepository
             ->orWhere('p.numEtudiant LIKE :needle')
             ->orWhere('p.numIne LIKE :needle')
             ->setParameter('needle', '%'.$needle.'%')
-            ->orderBy('p.nom', \Doctrine\Common\Collections\Criteria::ASC)
-            ->orderBy('p.prenom', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('p.nom', Criteria::ASC)
+            ->orderBy('p.prenom', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/MatiereRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/MatiereRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 18:45
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Repository;
@@ -16,6 +16,7 @@ use App\Entity\Matiere;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -53,8 +54,8 @@ class MatiereRepository extends ServiceEntityRepository
             ->where('d.departement = :departement')
             ->andWhere('s.ppnActif = m.ppn')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('m.codeMatiere', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('m.libelle', \Doctrine\Common\Collections\Criteria::ASC);
+            ->orderBy('m.codeMatiere', Criteria::ASC)
+            ->addOrderBy('m.libelle', Criteria::ASC);
     }
 
     public function findBySemestreBuilder(Semestre $semestre): QueryBuilder
@@ -65,8 +66,8 @@ class MatiereRepository extends ServiceEntityRepository
             ->where('u.semestre = :semestre')
             ->andWhere('s.ppnActif = m.ppn')
             ->setParameter('semestre', $semestre->getId())
-            ->orderBy('u.numeroUe', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('m.codeMatiere', \Doctrine\Common\Collections\Criteria::ASC);
+            ->orderBy('u.numeroUe', Criteria::ASC)
+            ->addOrderBy('m.codeMatiere', Criteria::ASC);
     }
 
     public function findByDepartement(Departement $departement): array
@@ -104,8 +105,8 @@ class MatiereRepository extends ServiceEntityRepository
             ->where('a.diplome = :diplome')
             ->andWhere('s.ppnActif = m.ppn')
             ->setParameter('diplome', $diplome->getId())
-            ->orderBy('m.codeMatiere', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('m.libelle', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('m.codeMatiere', Criteria::ASC)
+            ->addOrderBy('m.libelle', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Enquetes/MyEnquete.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Enquetes/MyEnquete.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/07/2021 17:05
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Classes\Enquetes;
@@ -24,6 +24,7 @@ use App\Entity\QuestionnaireSection;
 use App\Repository\QuestionnaireEtudiantReponseRepository;
 use App\Repository\QuestionnaireEtudiantRepository;
 use App\Utils\Tools;
+use Symfony\Component\HttpFoundation\Response;
 use function array_key_exists;
 use function count;
 use function in_array;
@@ -145,7 +146,7 @@ class MyEnquete
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
+            Response::HTTP_OK,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="'.$questionnaire->getLibelle().'.xlsx"',

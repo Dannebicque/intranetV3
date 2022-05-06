@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyAbsences.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyAbsences.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 21:29
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Classes;
@@ -12,6 +12,7 @@ namespace App\Classes;
 use App\Classes\Etudiant\EtudiantAbsences;
 use App\Classes\Excel\MyExcelMultiExport;
 use App\DTO\AbsencesEtudiant;
+use App\DTO\Matiere;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
 use App\Entity\Departement;
@@ -58,7 +59,7 @@ class MyAbsences
         return $this->etudiants;
     }
 
-    public function getAbsencesMatiere(\App\DTO\Matiere $matiere, AnneeUniversitaire $anneeCourante, ?Semestre $semestre = null): array
+    public function getAbsencesMatiere(Matiere $matiere, AnneeUniversitaire $anneeCourante, ?Semestre $semestre = null): array
     {
         return $this->absenceRepository->getByMatiere($matiere, $anneeCourante, $semestre);
     }
@@ -81,7 +82,7 @@ class MyAbsences
     }
 
     public function export(
-        \App\DTO\Matiere $matiere,
+        Matiere $matiere,
         AnneeUniversitaire $anneeUniversitaire,
         Semestre $semestre,
         string $_format

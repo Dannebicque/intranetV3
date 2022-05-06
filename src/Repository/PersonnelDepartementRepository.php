@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PersonnelDepartementRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/PersonnelDepartementRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 15:01
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Repository;
@@ -13,6 +13,7 @@ use App\Entity\Departement;
 use App\Entity\Personnel;
 use App\Entity\PersonnelDepartement;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -40,7 +41,7 @@ class PersonnelDepartementRepository extends ServiceEntityRepository
             ->innerJoin(Departement::class, 'm', 'WITH', 'f.departement = m.id')
             ->where('f.personnel = :personnel')
             ->setParameter('personnel', $user)
-            ->orderBy('m.libelle', \Doctrine\Common\Collections\Criteria::DESC)
+            ->orderBy('m.libelle', Criteria::DESC)
             ->getQuery()
             ->getResult();
     }
@@ -88,8 +89,8 @@ class PersonnelDepartementRepository extends ServiceEntityRepository
             ->innerJoin(Personnel::class, 'p', 'WITH', 'f.personnel = p.id')
             ->where('f.departement = :departement')
             ->setParameter('departement', $departement)
-            ->orderBy('p.nom', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('p.prenom', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('p.nom', Criteria::ASC)
+            ->addOrderBy('p.prenom', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -105,8 +106,8 @@ class PersonnelDepartementRepository extends ServiceEntityRepository
             ->andWhere('d.departement = :departement')
             ->setParameter('needle', '%'.$needle.'%')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('p.nom', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('p.prenom', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('p.nom', Criteria::ASC)
+            ->addOrderBy('p.prenom', Criteria::ASC)
             ->getQuery()
             ->getResult();
 

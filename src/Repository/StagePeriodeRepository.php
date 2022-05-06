@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/StagePeriodeRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/StagePeriodeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/09/2021 08:38
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Repository;
@@ -16,6 +16,7 @@ use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Entity\StagePeriode;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -48,8 +49,8 @@ class StagePeriodeRepository extends ServiceEntityRepository
             ->andWhere('p.anneeUniversitaire = :annee')
             ->setParameter('annee', $anneeUniversitaire->getId())
             ->setParameter('diplome', $diplome->getId())
-            ->orderBy('p.anneeUniversitaire', \Doctrine\Common\Collections\Criteria::DESC)
-            ->addOrderBy('p.numeroPeriode', \Doctrine\Common\Collections\Criteria::ASC);
+            ->orderBy('p.anneeUniversitaire', Criteria::DESC)
+            ->addOrderBy('p.numeroPeriode', Criteria::ASC);
     }
 
     public function findStageEtudiant(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): array
@@ -67,7 +68,7 @@ class StagePeriodeRepository extends ServiceEntityRepository
             ->setParameter('semestreCourant', $semestre->getId())
             ->setParameter('annee', $anneeUniversitaire->getId());
 
-        $query->orderBy('s.numeroPeriode', \Doctrine\Common\Collections\Criteria::ASC);
+        $query->orderBy('s.numeroPeriode', Criteria::ASC);
 
         return $query->getQuery()->getResult();
     }
@@ -80,8 +81,8 @@ class StagePeriodeRepository extends ServiceEntityRepository
             ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
             ->where('d.departement = :departement')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('p.anneeUniversitaire', \Doctrine\Common\Collections\Criteria::DESC)
-            ->orderBy('p.numeroPeriode', \Doctrine\Common\Collections\Criteria::ASC);
+            ->orderBy('p.anneeUniversitaire', Criteria::DESC)
+            ->orderBy('p.numeroPeriode', Criteria::ASC);
 
         return $query->getQuery()->getResult();
     }
@@ -97,7 +98,7 @@ class StagePeriodeRepository extends ServiceEntityRepository
 
         $query->setParameter('departement', $departement->getId())
             ->setParameter('annee', $annee)
-            ->orderBy('p.numeroPeriode', \Doctrine\Common\Collections\Criteria::ASC);
+            ->orderBy('p.numeroPeriode', Criteria::ASC);
 
         return $query;
     }

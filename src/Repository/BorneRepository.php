@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/BorneRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/BorneRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:08
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Repository;
@@ -15,6 +15,7 @@ use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -43,7 +44,7 @@ class BorneRepository extends ServiceEntityRepository
             ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
             ->where('d.departement = :departement')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('a.created', \Doctrine\Common\Collections\Criteria::DESC);
+            ->orderBy('a.created', Criteria::DESC);
 
         if ($nbResult > 0) {
             $q->setMaxResults($nbResult);

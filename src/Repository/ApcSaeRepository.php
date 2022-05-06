@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ApcSaeRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcSaeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/07/2021 13:25
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Repository;
@@ -18,6 +18,7 @@ use App\Entity\Diplome;
 use App\Entity\Ppn;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -49,9 +50,9 @@ class ApcSaeRepository extends ServiceEntityRepository
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->where('a.diplome = :diplome')
             ->setParameter('diplome', $diplome->getId())
-            ->orderBy('s.ordreLmd', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('r.codeMatiere', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('r.libelle', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('s.ordreLmd', Criteria::ASC)
+            ->addOrderBy('r.codeMatiere', Criteria::ASC)
+            ->addOrderBy('r.libelle', Criteria::ASC)
             ;
     }
 
@@ -62,8 +63,8 @@ class ApcSaeRepository extends ServiceEntityRepository
             ->addSelect('apcSaeCompetences')
             ->where('r.semestre = :semestre')
             ->setParameter('semestre', $semestre->getId())
-            ->orderBy('r.codeMatiere', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('r.libelle', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('r.codeMatiere', Criteria::ASC)
+            ->addOrderBy('r.libelle', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -94,8 +95,8 @@ class ApcSaeRepository extends ServiceEntityRepository
             ->addSelect('apcSaeCompetences')
             ->where('d.departement = :departement')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('r.codeMatiere', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('r.libelle', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('r.codeMatiere', Criteria::ASC)
+            ->addOrderBy('r.libelle', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Rdd/MyExportRdd.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Rdd/MyExportRdd.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 06/05/2022 14:27
  */
 
 /*
@@ -16,6 +16,7 @@ namespace App\Classes\Rdd;
 use App\Classes\Excel\MyExcelWriter;
 use App\Entity\Etudiant;
 use App\Entity\RddDiplome;
+use Symfony\Component\HttpFoundation\Response;
 use function array_key_exists;
 use Carbon\Carbon;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -122,7 +123,7 @@ class MyExportRdd
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
+            Response::HTTP_OK,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="rdd'.$date->format('d-m-Y').'.xlsx"',

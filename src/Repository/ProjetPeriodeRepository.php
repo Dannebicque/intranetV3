@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ProjetPeriodeRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ProjetPeriodeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:08
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Repository;
@@ -16,6 +16,7 @@ use App\Entity\Diplome;
 use App\Entity\ProjetPeriode;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -41,8 +42,8 @@ class ProjetPeriodeRepository extends ServiceEntityRepository
             ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
             ->where('d.departement = :departement')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('p.anneeUniversitaire', \Doctrine\Common\Collections\Criteria::DESC)
-            ->orderBy('p.libelle', \Doctrine\Common\Collections\Criteria::ASC);
+            ->orderBy('p.anneeUniversitaire', Criteria::DESC)
+            ->orderBy('p.libelle', Criteria::ASC);
 
         return $query->getQuery()->getResult();
     }
@@ -62,8 +63,8 @@ class ProjetPeriodeRepository extends ServiceEntityRepository
             ->andWhere('p.anneeUniversitaire = :annee')
             ->setParameter('annee', $anneeUniversitaire->getId())
             ->setParameter('diplome', $diplome->getId())
-            ->orderBy('p.anneeUniversitaire', \Doctrine\Common\Collections\Criteria::DESC)
-            ->addOrderBy('p.libelle', \Doctrine\Common\Collections\Criteria::ASC);
+            ->orderBy('p.anneeUniversitaire', Criteria::DESC)
+            ->addOrderBy('p.libelle', Criteria::ASC);
     }
 
     public function findBySemestre(Semestre $semestre): array
@@ -71,7 +72,7 @@ class ProjetPeriodeRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->where('p.semestre = :semestre')
             ->setParameter('semestre', $semestre->getId())
-            ->orderBy('p.libelle', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('p.libelle', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

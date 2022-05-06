@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/RddDiplomeRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/RddDiplomeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Repository;
@@ -12,6 +12,7 @@ namespace App\Repository;
 use App\Entity\Etudiant;
 use App\Entity\RddDiplome;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
@@ -48,8 +49,8 @@ class RddDiplomeRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('r')
             ->join(Etudiant::class, 'e', 'WITH', 'r.numEtudiant = e.numEtudiant')
             ->where('r.enqueteAFaire = true')
-            ->orderBy('e.nom', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('e.prenom', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('e.nom', Criteria::ASC)
+            ->addOrderBy('e.prenom', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

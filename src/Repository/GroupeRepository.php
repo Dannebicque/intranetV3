@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/GroupeRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/GroupeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2021 14:50
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Repository;
@@ -16,6 +16,7 @@ use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -67,8 +68,8 @@ class GroupeRepository extends ServiceEntityRepository
             ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')
             ->where('t.semestre = :semestre')
             ->setParameter('semestre', $semestre->getId())
-            ->orderBy('t.libelle', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('g.libelle', \Doctrine\Common\Collections\Criteria::ASC);
+            ->orderBy('t.libelle', Criteria::ASC)
+            ->addOrderBy('g.libelle', Criteria::ASC);
     }
 
     public function findAllGroupes(Semestre $semestre): array
@@ -97,7 +98,7 @@ class GroupeRepository extends ServiceEntityRepository
             ->where('t.type = :type')
             ->andWhere('t.semestre = :semestre')
             ->setParameters(['type' => 'TP', 'semestre' => $semestre])
-            ->orderBy('g.libelle', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('g.libelle', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -109,7 +110,7 @@ class GroupeRepository extends ServiceEntityRepository
             ->where('t.type = :type')
             ->andWhere('t.semestre = :semestre')
             ->setParameters(['type' => 'TD', 'semestre' => $semestre])
-            ->orderBy('g.libelle', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('g.libelle', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -159,7 +160,7 @@ class GroupeRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('g')
             ->where('g.typeGroupe = :typeGroupe')
-            ->orderBy('g.ordre', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('g.ordre', Criteria::ASC)
             ->setParameter('typeGroupe', $typegroupe)
             ->getQuery()
             ->getResult();

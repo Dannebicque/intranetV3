@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2021 09:15
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Classes\SousCommission;
@@ -21,6 +21,7 @@ use App\Entity\ScolaritePromo;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use App\Exception\SemestreNotFoundException;
+use Symfony\Component\HttpFoundation\Response;
 use function array_key_exists;
 use Carbon\Carbon;
 use function count;
@@ -323,7 +324,7 @@ class SousCommissionExport
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
+            Response::HTTP_OK,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="Sous Commission '.$semestre->getLibelle().'.xlsx"',
@@ -590,7 +591,7 @@ class SousCommissionExport
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
+            Response::HTTP_OK,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="Sous Commission '.$semestre->getLibelle().'.xlsx"',
@@ -719,7 +720,7 @@ class SousCommissionExport
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
+            Response::HTTP_OK,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="Export Grand Jury '.$semestre->getLibelle().'.xlsx"',
@@ -979,7 +980,7 @@ class SousCommissionExport
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
+            Response::HTTP_OK,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="Export Grand Jury '.$semestre->getLibelle().'.xlsx"',

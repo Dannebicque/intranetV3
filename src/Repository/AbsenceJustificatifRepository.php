@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/AbsenceJustificatifRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/AbsenceJustificatifRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/10/2021 10:33
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Repository;
@@ -15,6 +15,7 @@ use App\Entity\Annee;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
+use Doctrine\Common\Collections\Criteria;
 use function count;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -40,7 +41,7 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
             ->andWhere('j.anneeUniversitaire = :annee')
             ->setParameter('semestre', $semestre->getId())
             ->setParameter('annee', $semestre->getAnneeUniversitaire())
-            ->orderBy('j.created', \Doctrine\Common\Collections\Criteria::DESC)
+            ->orderBy('j.created', Criteria::DESC)
             ->getQuery()
             ->getResult()
             ;
@@ -94,7 +95,7 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
             ->andWhere('j.anneeUniversitaire = :annee')
             ->setParameter('etudiant', $etudiant->getId())
             ->setParameter('annee', $etudiant->getAnneeUniversitaire())
-            ->orderBy('j.created', \Doctrine\Common\Collections\Criteria::DESC)
+            ->orderBy('j.created', Criteria::DESC)
             ->getQuery()
             ->getResult();
     }
@@ -106,7 +107,7 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
             ->innerJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
             ->where('s.annee = :annee')
             ->setParameter('annee', $annee->getId())
-            ->orderBy('j.created', \Doctrine\Common\Collections\Criteria::DESC)
+            ->orderBy('j.created', Criteria::DESC)
             ->getQuery()
             ->getResult();
     }

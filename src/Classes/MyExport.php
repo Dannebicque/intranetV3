@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyExport.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/05/2021 16:12
+ * @lastUpdate 06/05/2022 14:19
  */
 
 /*
@@ -17,6 +17,7 @@ use App\Classes\Excel\MyExcelMultiExport;
 use App\Classes\Pdf\MyPDF;
 use App\Entity\Semestre;
 use App\Exception\SemestreNotFoundException;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
@@ -38,7 +39,7 @@ class MyExport
         return $this->excel;
     }
 
-    /** @deprecated  */
+    /** @deprecated */
     public function convertDataFromSerializationToArray(array $data, array $modele, array $colonne): array
     {
         $dataArray = [];
@@ -108,11 +109,11 @@ class MyExport
         return $dataArray;
     }
 
-    /** @deprecated  */
+    /** @deprecated */
     public function genereFichierGenerique(
-       string $format,
-       array $data,
-       string $nomFichier,
+        string $format,
+        array|Collection $data,
+        string $nomFichier,
         array $groups,
         array $colonne,
         array $options = []
@@ -151,7 +152,7 @@ class MyExport
 
         $this->excel->genereModeleExcel($semestre);
 
-        return $this->excel->saveXlsx('modele-import-note-'.$semestre->getLibelle());
+        return $this->excel->saveXlsx('modele-import-note-' . $semestre->getLibelle());
     }
 
     public function genereFichierJustificatifAbsence(mixed $justificatifs, string $nomFichier): StreamedResponse
@@ -161,17 +162,17 @@ class MyExport
         return $this->excel->saveXlsx($nomFichier);
     }
 
-    /** @deprecated  */
+    /** @deprecated */
     private function transformValue(?string $value, string $key): ?string
     {
         if (array_key_exists($key, $this->options)) {
             switch ($this->options[$key]) {
                 case self::ONLY_DATE:
-                    $t = explode(' ', (string) $value);
+                    $t = explode(' ', (string)$value);
 
                     return $t[0];
                 case self::ONLY_HEURE:
-                    $t = explode(' ', (string) $value);
+                    $t = explode(' ', (string)$value);
 
                     return 2 === count($t) ? $t[1] : 'err';
             }

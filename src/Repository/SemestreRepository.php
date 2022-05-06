@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/SemestreRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/SemestreRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/07/2021 17:23
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Repository;
@@ -14,6 +14,7 @@ use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -42,8 +43,8 @@ class SemestreRepository extends ServiceEntityRepository
             ->where('d.departement = :departement')
             ->andWhere('a.actif = true')
             ->setParameter('departement', $departement)
-            ->orderBy('s.ordreLmd', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('s.libelle', \Doctrine\Common\Collections\Criteria::ASC);
+            ->orderBy('s.ordreLmd', Criteria::ASC)
+            ->addOrderBy('s.libelle', Criteria::ASC);
     }
 
     public function findByDepartementActif(Departement $departement): array
@@ -64,7 +65,7 @@ class SemestreRepository extends ServiceEntityRepository
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->where('a.diplome = :diplome')
             ->setParameter('diplome', $diplome)
-            ->orderBy('s.ordreLmd', \Doctrine\Common\Collections\Criteria::ASC);
+            ->orderBy('s.ordreLmd', Criteria::ASC);
     }
 
     public function findByDiplome(Diplome $diplome): array
@@ -131,7 +132,7 @@ class SemestreRepository extends ServiceEntityRepository
             ->setParameter('diplome', $diplome->getId())
             ->setParameter('numero', $numero)
             ->setParameter('ordreAnnee', $ordreAnnee)
-            ->orderBy('s.ordreLmd', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('s.ordreLmd', Criteria::ASC)
             ->getQuery()
             ->getOneOrNullResult();
     }
@@ -142,8 +143,8 @@ class SemestreRepository extends ServiceEntityRepository
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
             ->where('s.actif = true')
-            ->orderBy('d.sigle', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('s.ordreLmd', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('d.sigle', Criteria::ASC)
+            ->addOrderBy('s.ordreLmd', Criteria::ASC)
             ;
     }
 }

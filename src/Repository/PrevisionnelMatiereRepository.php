@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PrevisionnelMatiereRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/PrevisionnelMatiereRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 19:44
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Repository;
@@ -16,6 +16,7 @@ use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Entity\Ue;
+use Doctrine\Common\Collections\Criteria;
 
 class PrevisionnelMatiereRepository extends PrevisionnelRepository
 {
@@ -98,8 +99,8 @@ class PrevisionnelMatiereRepository extends PrevisionnelRepository
             ->setParameter('annee', $annee)
             ->setParameter('type', self::TYPE)
             ->setParameter('matiere', $matiere)
-            ->orderBy('pers.nom', \Doctrine\Common\Collections\Criteria::ASC)
-            ->orderBy('pers.prenom', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('pers.nom', Criteria::ASC)
+            ->orderBy('pers.prenom', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -117,7 +118,7 @@ class PrevisionnelMatiereRepository extends PrevisionnelRepository
             ->setParameter('type', self::TYPE)
             ->setParameter('annee', $annee)
             ->setParameter('semestre', $semestre->getId())
-            ->orderBy('m.codeMatiere', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('m.codeMatiere', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -137,7 +138,7 @@ class PrevisionnelMatiereRepository extends PrevisionnelRepository
             ->setParameter('annee', $annee)
             ->setParameter('semestre', $semestre->getId())
             ->setParameter('personnel', $personnel->getId())
-            ->orderBy('m.codeMatiere', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('m.codeMatiere', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -158,8 +159,8 @@ class PrevisionnelMatiereRepository extends PrevisionnelRepository
             ->setParameter('annee', $annee)
             ->setParameter('type', self::TYPE)
             ->setParameter('matiere', $matiere)
-            ->orderBy('pers.nom', \Doctrine\Common\Collections\Criteria::ASC)
-            ->orderBy('pers.prenom', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('pers.nom', Criteria::ASC)
+            ->orderBy('pers.prenom', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

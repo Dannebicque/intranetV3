@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Enquetes/MyEnqueteDiplome.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Enquetes/MyEnqueteDiplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 06/05/2022 14:27
  */
 
 /*
@@ -24,6 +24,7 @@ use App\Repository\QuestionnaireQuizzRepository;
 use App\Repository\QuestionnaireReponseRepository;
 use App\Repository\RddDiplomeRepository;
 use App\Utils\Tools;
+use Symfony\Component\HttpFoundation\Response;
 use function array_key_exists;
 use Carbon\Carbon;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -145,7 +146,7 @@ class MyEnqueteDiplome
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
+            Response::HTTP_OK,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="synthese_reponse'.$date->format('d-m-Y').'.xlsx"',
@@ -219,7 +220,7 @@ class MyEnqueteDiplome
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
+            Response::HTTP_OK,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="synthese_reponse'.$date->format('d-m-Y').'.xlsx"',

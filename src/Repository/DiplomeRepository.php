@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/DiplomeRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/DiplomeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Repository;
@@ -13,6 +13,7 @@ use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\TypeDiplome;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -36,8 +37,8 @@ class DiplomeRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('d')
             ->join(TypeDiplome::class, 't', 'WITH', 'd.typeDiplome = t.id')
-            ->orderBy('t.libelle', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('d.libelle', \Doctrine\Common\Collections\Criteria::ASC);
+            ->orderBy('t.libelle', Criteria::ASC)
+            ->addOrderBy('d.libelle', Criteria::ASC);
     }
 
     public function findAll(): array
@@ -68,8 +69,8 @@ class DiplomeRepository extends ServiceEntityRepository
             ->join(TypeDiplome::class, 't', 'WITH', 'd.typeDiplome = t.id')
             ->where('d.actif = :actif')
             ->setParameter('actif', true)
-            ->orderBy('t.libelle', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('d.libelle', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('t.libelle', Criteria::ASC)
+            ->addOrderBy('d.libelle', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

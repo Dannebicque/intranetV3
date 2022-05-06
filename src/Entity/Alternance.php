@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Alternance.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Alternance.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:30
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Entity;
@@ -33,44 +33,44 @@ class Alternance extends BaseEntity
     final public const ALTERNANCE_ETAT_SANS = 'sans';
 
     #[Groups(groups: ['alternance_administration'])]
-    #[ORM\OneToOne(targetEntity: Entreprise::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(targetEntity: Entreprise::class, cascade: ['persist', 'remove'], fetch: 'EAGER')]
     private ?Entreprise $entreprise = null;
 
     #[MaxDepth(2)]
     #[Groups(groups: ['alternance_administration'])]
-    #[ORM\OneToOne(targetEntity: Contact::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(targetEntity: Contact::class, cascade: ['persist', 'remove'], fetch: 'EAGER')]
     private ?Contact $tuteur = null;
 
     #[MaxDepth(2)]
     #[Groups(groups: ['alternance_administration'])]
-    #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'alternances')]
+    #[ORM\ManyToOne(targetEntity: Etudiant::class, fetch: 'EAGER', inversedBy: 'alternances')]
     private ?Etudiant $etudiant = null;
 
     #[MaxDepth(2)]
     #[Groups(groups: ['alternance_administration'])]
-    #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'alternances')]
+    #[ORM\ManyToOne(targetEntity: Personnel::class, fetch: 'EAGER', inversedBy: 'alternances')]
     private ?Personnel $tuteurUniversitaire = null;
 
     #[Groups(groups: ['alternance_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20)]
+    #[ORM\Column(type: Types::STRING, length: 20)]
     private ?string $typeContrat;
 
-    #[ORM\ManyToOne(targetEntity: Annee::class, inversedBy: 'alternances')]
+    #[ORM\ManyToOne(targetEntity: Annee::class, fetch: 'EAGER', inversedBy: 'alternances')]
     private ?Annee $annee = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 10)]
+    #[ORM\Column(type: Types::STRING, length: 10)]
     private ?string $etat = null;
 
     #[Groups(groups: ['alternance_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateDebut = null;
 
     #[Groups(groups: ['alternance_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateFin = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\AlternanceFicheSuivi>|\App\Entity\AlternanceFicheSuivi[]
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\AlternanceFicheSuivi>
      */
     #[ORM\OneToMany(mappedBy: 'alternance', targetEntity: AlternanceFicheSuivi::class)]
     private Collection $alternanceFicheSuivis;
@@ -78,10 +78,10 @@ class Alternance extends BaseEntity
     #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class)]
     private ?AnneeUniversitaire $anneeUniversitaire = null;
 
-    #[ORM\OneToOne(inversedBy: 'alternance', targetEntity: Adresse::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'alternance', targetEntity: Adresse::class, cascade: ['persist', 'remove'], fetch: 'EAGER')]
     private ?Adresse $adresseAlternance = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $sujet = null;
 
     public function __construct()

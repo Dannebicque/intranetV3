@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyIcal.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyIcal.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/07/2021 13:07
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Classes;
@@ -108,7 +108,7 @@ class MyIcal
 
     public function setDtstart(CarbonInterface $date, $creneau): void
     {
-        $h = explode(':', (string) $this->tabheure[$creneau]);
+        $h = explode(':', $this->tabheure[$creneau]);
 
         $timestamp = mktime($h[0], $h[1], '00', $date->month, $date->day, $date->year);
         $this->dtstart = 'DTSTART:'.$this->calculHeureEte($timestamp);

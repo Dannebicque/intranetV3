@@ -1,16 +1,17 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Traits/LifeCycleTrait.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Traits/LifeCycleTrait.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/09/2021 08:59
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Entity\Traits;
 
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,10 +19,10 @@ use Doctrine\ORM\Mapping as ORM;
  */
 trait LifeCycleTrait
 {
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?CarbonInterface $created = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?CarbonInterface $updated = null;
 
     public function getCreated(): ?CarbonInterface

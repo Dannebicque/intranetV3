@@ -1,16 +1,17 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/TypeDiplomeRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/TypeDiplomeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:08
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Repository;
 
 use App\Entity\TypeDiplome;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -33,7 +34,7 @@ class TypeDiplomeRepository extends ServiceEntityRepository
     public function findAllBuilder(): QueryBuilder
     {
         return $this->createQueryBuilder('t')
-            ->orderBy('t.libelle', \Doctrine\Common\Collections\Criteria::ASC);
+            ->orderBy('t.libelle', Criteria::ASC);
     }
 
     public function findAll(): array

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/DocumentRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/DocumentRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Repository;
@@ -14,6 +14,7 @@ use App\Entity\Departement;
 use App\Entity\Document;
 use App\Entity\TypeDocument;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -38,7 +39,7 @@ class DocumentRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('d')
             ->where('d.typeDocument = :type')
             ->setParameter('type', $type)
-            ->orderBy('d.libelle', \Doctrine\Common\Collections\Criteria::DESC);
+            ->orderBy('d.libelle', Criteria::DESC);
 
         if (true === $isEtudiant) {
             $query->andWhere('d.typeDestinataire = :typeDestinataire')
@@ -55,7 +56,7 @@ class DocumentRepository extends ServiceEntityRepository
             ->innerJoin(TypeDocument::class, 't', 'WITH', 'd.typeDocument = t.id')
             ->where('t.departement = :departement')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('d.libelle', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('d.libelle', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

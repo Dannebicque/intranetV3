@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelMultiExport.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Excel/MyExcelMultiExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 18:02
+ * @lastUpdate 06/05/2022 14:27
  */
 
 /*
@@ -20,6 +20,7 @@ use App\Entity\Etudiant;
 use App\Entity\Evaluation;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
+use Symfony\Component\HttpFoundation\Response;
 use function array_key_exists;
 use function count;
 use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
@@ -47,7 +48,7 @@ class MyExcelMultiExport
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
+            Response::HTTP_OK,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="'.$name.'.xlsx"',
@@ -81,7 +82,7 @@ class MyExcelMultiExport
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
+            Response::HTTP_OK,
             [
                 'Content-Type' => 'application/csv',
                 'Content-Disposition' => 'attachment;filename="'.$name.'.csv"',
@@ -99,7 +100,7 @@ class MyExcelMultiExport
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
+            Response::HTTP_OK,
             [
                 'Content-Type' => 'application/pdf',
                 'Content-Disposition' => 'attachment;filename="'.$name.'.pdf"',

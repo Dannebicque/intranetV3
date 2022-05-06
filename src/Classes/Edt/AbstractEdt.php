@@ -1,15 +1,16 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/AbstractEdt.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/AbstractEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/09/2021 13:00
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Classes\Edt;
 
 use App\Classes\Matieres\TypeMatiereManager;
+use Symfony\Contracts\Service\Attribute\Required;
 
 abstract class AbstractEdt
 {
@@ -18,7 +19,7 @@ abstract class AbstractEdt
 
     protected TypeMatiereManager $typeMatiereManager;
 
-    #[\Symfony\Contracts\Service\Attribute\Required]
+    #[Required]
     public function setTypeMatiereManager(TypeMatiereManager $typeMatiereManager): void
     {
         $this->typeMatiereManager = $typeMatiereManager;

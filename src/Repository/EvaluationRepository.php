@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/EvaluationRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EvaluationRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/10/2021 10:33
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Repository;
@@ -12,6 +12,7 @@ namespace App\Repository;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Evaluation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -42,7 +43,7 @@ class EvaluationRepository extends ServiceEntityRepository
             ->innerJoin(AnneeUniversitaire::class, 'n', 'WITH', 'e.anneeUniversitaire = n.id')
             ->where('n.annee = :annee')
             ->setParameter('annee', $annee->getAnnee())
-            ->orderBy('e.dateEvaluation', \Doctrine\Common\Collections\Criteria::ASC);
+            ->orderBy('e.dateEvaluation', Criteria::ASC);
 
         $ors = [];
         foreach ($matieres as $matiere) {
@@ -61,7 +62,7 @@ class EvaluationRepository extends ServiceEntityRepository
             ->andWhere('e.typeMatiere = :type')
             ->setParameter('matiere', $matiere)
             ->setParameter('type', $type)
-            ->orderBy('e.dateEvaluation', \Doctrine\Common\Collections\Criteria::ASC);
+            ->orderBy('e.dateEvaluation', Criteria::ASC);
 
         if (null !== $annee) {
             $query->innerJoin(AnneeUniversitaire::class, 'u', 'WITH', 'e.anneeUniversitaire = u.id')

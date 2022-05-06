@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/MessageDestinatairePersonnelRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/MessageDestinatairePersonnelRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Repository;
@@ -14,6 +14,7 @@ use App\Entity\Message;
 use App\Entity\MessageDestinatairePersonnel;
 use App\Entity\Personnel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
@@ -39,7 +40,7 @@ class MessageDestinatairePersonnelRepository extends ServiceEntityRepository
             ->innerJoin(Personnel::class, 'p', 'WITH', 'mes.expediteur = p.id')
             ->where('m.personnel = :personnel')
             ->setParameter('personnel', $user->getId())
-            ->orderBy('m.created', \Doctrine\Common\Collections\Criteria::DESC);
+            ->orderBy('m.created', Criteria::DESC);
 
         switch ($filtre) {
             case 'all':

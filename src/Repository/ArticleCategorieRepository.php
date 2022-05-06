@@ -1,16 +1,17 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ArticleCategorieRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ArticleCategorieRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:25
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Repository;
 
 use App\Entity\ArticleCategorie;
 use App\Entity\Departement;
+use Doctrine\Common\Collections\Criteria;
 use function count;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -35,7 +36,7 @@ class ArticleCategorieRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('c')
             ->where('c.departement = :departement')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('c.libelle', \Doctrine\Common\Collections\Criteria::ASC);
+            ->orderBy('c.libelle', Criteria::ASC);
     }
 
     public function findByDepartementJson(Departement $departement): array

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/CahierTexteRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/CahierTexteRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Repository;
@@ -12,6 +12,7 @@ namespace App\Repository;
 use App\Entity\CahierTexte;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -36,7 +37,7 @@ class CahierTexteRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('c')
             ->where('c.personnel = :personnel')
             ->setParameter('personnel', $getId)
-            ->orderBy('c.dateRetour', \Doctrine\Common\Collections\Criteria::DESC)
+            ->orderBy('c.dateRetour', Criteria::DESC)
             ->getQuery()
             ->getResult();
     }
@@ -46,7 +47,7 @@ class CahierTexteRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('c')
             ->where('c.semestre = :semestre')
             ->setParameter('semestre', $semestre->getId())
-            ->orderBy('c.dateRetour', \Doctrine\Common\Collections\Criteria::DESC)
+            ->orderBy('c.dateRetour', Criteria::DESC)
             ->getQuery()
             ->getResult();
     }

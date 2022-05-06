@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ScolariteRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ScolariteRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Repository;
@@ -17,6 +17,7 @@ use App\Entity\Etudiant;
 use App\Entity\Scolarite;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
@@ -49,9 +50,9 @@ class ScolariteRepository extends ServiceEntityRepository
             ->andWhere('e.promotion = :annee')
             ->setParameter('departement', $departement->getId())
             ->setParameter('annee', $annee)
-            ->orderBy('e.nom', \Doctrine\Common\Collections\Criteria::ASC)
-            ->orderBy('e.prenom', \Doctrine\Common\Collections\Criteria::ASC)
-            ->orderBy('p.ordre', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('e.nom', Criteria::ASC)
+            ->orderBy('e.prenom', Criteria::ASC)
+            ->orderBy('p.ordre', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -61,7 +62,7 @@ class ScolariteRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('s')
             ->where('s.etudiant = :etudiant')
             ->setParameter('etudiant', $etudiant->getId())
-            ->orderBy('s.ordre', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('s.ordre', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -77,9 +78,9 @@ class ScolariteRepository extends ServiceEntityRepository
             ->andWhere('p.etudiant = :etudiant')
             ->setParameter('departement', $departement->getId())
             ->setParameter('etudiant', $etudiant->getId())
-            ->orderBy('e.nom', \Doctrine\Common\Collections\Criteria::ASC)
-            ->orderBy('e.prenom', \Doctrine\Common\Collections\Criteria::ASC)
-            ->orderBy('p.ordre', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('e.nom', Criteria::ASC)
+            ->orderBy('e.prenom', Criteria::ASC)
+            ->orderBy('p.ordre', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

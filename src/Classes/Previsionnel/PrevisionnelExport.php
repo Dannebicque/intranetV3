@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Previsionnel/PrevisionnelExport.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Previsionnel/PrevisionnelExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/10/2021 10:36
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Classes\Previsionnel;
@@ -14,6 +14,7 @@ use App\DTO\Matiere;
 use App\Entity\Departement;
 use App\Utils\Tools;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
@@ -57,7 +58,7 @@ class PrevisionnelExport
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
+            Response::HTTP_OK,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="export-omega'.$departement->getLibelle().'.xlsx"',

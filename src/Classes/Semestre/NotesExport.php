@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Semestre/NotesExport.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Semestre/NotesExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/10/2021 15:30
+ * @lastUpdate 06/05/2022 14:27
  */
 
 /*
@@ -19,6 +19,7 @@ use App\Entity\AnneeUniversitaire;
 use App\Entity\Semestre;
 use App\Repository\EvaluationRepository;
 use App\Repository\NoteRepository;
+use Symfony\Component\HttpFoundation\Response;
 use function array_key_exists;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -102,7 +103,7 @@ class NotesExport
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
+            Response::HTTP_OK,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="Export des notes du semestre '.$semestre->getLibelle().'.xlsx"',

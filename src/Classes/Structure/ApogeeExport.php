@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Structure/ApogeeExport.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Structure/ApogeeExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Classes\Structure;
@@ -12,6 +12,7 @@ namespace App\Classes\Structure;
 use App\Classes\Excel\MyExcelWriter;
 use App\Entity\Diplome;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ApogeeExport
@@ -37,7 +38,7 @@ class ApogeeExport
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
+            Response::HTTP_OK,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="'.$nomFichier.'"',

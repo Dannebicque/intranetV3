@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Kernel.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Kernel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/10/2021 12:29
+ * @lastUpdate 06/05/2022 15:44
  */
 
 namespace App;
@@ -51,17 +51,5 @@ class Kernel extends BaseKernel
         $container->import('../src/Components/Table/DependencyInjection/{services}.php');
         $container->import('../src/Components/Widget/DependencyInjection/{services}.php');
         $container->import('../src/Components/Questionnaire/DependencyInjection/{services}.php');
-    }
-
-    protected function configureRoutes(RoutingConfigurator $routes): void
-    {
-        $routes->import('../config/{routes}/'.$this->environment.'/*.yaml');
-        $routes->import('../config/{routes}/*.yaml');
-
-        if (is_file(dirname(__DIR__).'/config/routes.yaml')) {
-            $routes->import('../config/routes.yaml');
-        } else {
-            $routes->import('../config/{routes}.php');
-        }
     }
 }

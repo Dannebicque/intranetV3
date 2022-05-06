@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Covid/MyExportPresence.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Covid/MyExportPresence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/10/2021 10:02
+ * @lastUpdate 06/05/2022 14:27
  */
 
 /*
@@ -22,6 +22,7 @@ use App\Entity\Etudiant;
 use Carbon\Carbon;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
@@ -104,7 +105,7 @@ class MyExportPresence
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
+            Response::HTTP_OK,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="presence'.$date->format('d-m-Y').'.xlsx"',
@@ -270,7 +271,7 @@ class MyExportPresence
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
+            Response::HTTP_OK,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="presence-etudiant-'.$date->format('d-m-Y').'.xlsx"',

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/CelcatEventsRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/CelcatEventsRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/09/2021 22:06
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Repository;
@@ -17,6 +17,7 @@ use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\String\Exception\InvalidArgumentException;
 
@@ -43,9 +44,9 @@ class CelcatEventsRepository extends ServiceEntityRepository
             ->where('p.semaineFormation = :semaine')
             ->andWhere('p.codePersonnel = :idprof')
             ->setParameters(['semaine' => $semaine, 'idprof' => $numeroHarpege])
-            ->orderBy('p.jour', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('p.debut', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('p.codeGroupe', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('p.jour', Criteria::ASC)
+            ->addOrderBy('p.debut', Criteria::ASC)
+            ->addOrderBy('p.codeGroupe', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -63,8 +64,8 @@ class CelcatEventsRepository extends ServiceEntityRepository
             }
 
             $query->setParameters($this->params)
-                ->orderBy('p.jour', \Doctrine\Common\Collections\Criteria::ASC)
-                ->addOrderBy('p.debut', \Doctrine\Common\Collections\Criteria::ASC);
+                ->orderBy('p.jour', Criteria::ASC)
+                ->addOrderBy('p.debut', Criteria::ASC);
 
             return $query->getQuery()->getResult();
         }
@@ -114,9 +115,9 @@ class CelcatEventsRepository extends ServiceEntityRepository
             ->where('p.semaineFormation = :semaine')
             ->andWhere('p.semestre = :semestre')
             ->setParameters(['semaine' => $semaineFormationIUT, 'semestre' => $semestre->getId()])
-            ->orderBy('p.jour', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('p.debut', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('p.codeGroupe', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('p.jour', Criteria::ASC)
+            ->addOrderBy('p.debut', Criteria::ASC)
+            ->addOrderBy('p.codeGroupe', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -126,9 +127,9 @@ class CelcatEventsRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('p')
             ->where('p.codePersonnel = :idprof')
             ->setParameter('idprof', $user->getNumeroHarpege())
-            ->orderBy('p.jour', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('p.debut', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('p.libGroupe', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('p.jour', Criteria::ASC)
+            ->addOrderBy('p.debut', Criteria::ASC)
+            ->addOrderBy('p.libGroupe', Criteria::ASC)
             ->getQuery()
             ->getResult();
 
@@ -168,9 +169,9 @@ class CelcatEventsRepository extends ServiceEntityRepository
             ->where('p.semaineFormation = :semaine')
             ->andWhere('p.semestre = :semestre')
             ->setParameters(['semaine' => $semaineFormationIUT, 'semestre' => $semestre->getId()])
-            ->orderBy('p.jour', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('p.debut', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('p.codeGroupe', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('p.jour', Criteria::ASC)
+            ->addOrderBy('p.debut', Criteria::ASC)
+            ->addOrderBy('p.codeGroupe', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

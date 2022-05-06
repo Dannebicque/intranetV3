@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyExportListing.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyExportListing.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/09/2021 17:43
+ * @lastUpdate 06/05/2022 14:27
  */
 
 /*
@@ -23,6 +23,7 @@ use App\Entity\Personnel;
 use App\Entity\TypeGroupe;
 use App\Repository\GroupeRepository;
 use App\Repository\TypeGroupeRepository;
+use Symfony\Component\HttpFoundation\Response;
 use function count;
 use Doctrine\Common\Collections\Collection;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
@@ -178,7 +179,7 @@ class MyExportListing
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
+            Response::HTTP_OK,
             [
                 'Content-Type' => 'application/csv',
                 'Content-Disposition' => 'attachment;filename="'.$this->name.'.csv"',
@@ -229,7 +230,7 @@ class MyExportListing
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
+            Response::HTTP_OK,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="'.$this->name.'.xlsx"',
@@ -288,7 +289,7 @@ class MyExportListing
             static function () use ($writer) {
                 $writer->save('php://output');
             },
-            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
+            Response::HTTP_OK,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'Content-Disposition' => 'attachment;filename="'.$nom.'.xlsx"',

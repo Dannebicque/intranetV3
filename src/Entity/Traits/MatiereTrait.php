@@ -1,22 +1,23 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Traits/MatiereTrait.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Traits/MatiereTrait.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Entity\Traits;
 
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 trait MatiereTrait
 {
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 15, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 15, nullable: true)]
     private ?string $typeMatiere = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER)]
     private int $idMatiere = 0;
 
     public function getTypeMatiere(): ?string

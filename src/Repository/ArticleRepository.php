@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ArticleRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ArticleRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 09:03
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Repository;
@@ -14,6 +14,7 @@ use App\Entity\ArticleCategorie;
 use App\Entity\Constantes;
 use App\Entity\Departement;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -49,7 +50,7 @@ class ArticleRepository extends ServiceEntityRepository
             ->andWhere('c.departement = :departement')
             ->setParameter('idType', $type)
             ->setParameter('departement', $departement->getId())
-            ->orderBy('a.updated', \Doctrine\Common\Collections\Criteria::DESC);
+            ->orderBy('a.updated', Criteria::DESC);
 
         if (true === $isEtudiant) {
             $query->andWhere('a.typeDestinataire = :typeDestinataire')
@@ -68,7 +69,7 @@ class ArticleRepository extends ServiceEntityRepository
             ->innerJoin(ArticleCategorie::class, 'c', 'WITH', 'c.id = a.categorie')
             ->andWhere('c.departement = :departement')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('a.created', \Doctrine\Common\Collections\Criteria::DESC);
+            ->orderBy('a.created', Criteria::DESC);
 
         if (0 !== $nbResult) {
             $q->setMaxResults($nbResult);

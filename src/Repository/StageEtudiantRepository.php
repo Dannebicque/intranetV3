@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/StageEtudiantRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/StageEtudiantRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:08
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Repository;
@@ -16,6 +16,7 @@ use App\Entity\Personnel;
 use App\Entity\StageEtudiant;
 use App\Entity\StagePeriode;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -101,7 +102,7 @@ class StageEtudiantRepository extends ServiceEntityRepository
             ->innerJoin(Entreprise::class, 'e', 'WITH', 's.entreprise = e.id')
             ->where('s.stagePeriode = :stagePeriode')
             ->setParameter('stagePeriode', $stagePeriode->getId())
-            ->orderBy('e.raisonSociale', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('e.raisonSociale', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

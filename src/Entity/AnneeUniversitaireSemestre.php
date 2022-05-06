@@ -1,8 +1,16 @@
 <?php
+/*
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/AnneeUniversitaireSemestre.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 06/05/2022 14:27
+ */
 
 namespace App\Entity;
 
 use App\Repository\AnneeUniversitaireSemestreRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AnneeUniversitaireSemestreRepository::class)]
@@ -17,7 +25,7 @@ class AnneeUniversitaireSemestre extends BaseEntity
     #[ORM\ManyToOne(targetEntity: Ppn::class, inversedBy: 'anneeUniversitaireSemestres')]
     private ?Ppn $ppn = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $commentaire = '';
 
     public function getId(): ?int

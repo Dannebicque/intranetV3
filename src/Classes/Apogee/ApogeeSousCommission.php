@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/ApogeeSousCommission.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Apogee/ApogeeSousCommission.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 19:11
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Classes\Apogee;
@@ -14,6 +14,7 @@ use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Protection;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class ApogeeSousCommission extends Apogee
@@ -226,7 +227,7 @@ class ApogeeSousCommission extends Apogee
             function () use ($objWriter) {
                 $objWriter->save('php://output');
             },
-            \Symfony\Component\HttpFoundation\Response::HTTP_OK,
+            Response::HTTP_OK,
             [
                 'Content-Type' => 'text/plain',
                 'Content-Disposition' => 'attachment;filename="'.$nomfichier.'.txt"',

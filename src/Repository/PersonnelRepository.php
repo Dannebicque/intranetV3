@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PersonnelRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/PersonnelRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/10/2021 10:36
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Repository;
@@ -15,6 +15,7 @@ use App\Entity\Personnel;
 use App\Entity\PersonnelDepartement;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -56,8 +57,8 @@ class PersonnelRepository extends ServiceEntityRepository
             $query->setParameter('type', $type);
         }
 
-        return $query->orderBy('p.nom', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('p.prenom', \Doctrine\Common\Collections\Criteria::ASC)
+        return $query->orderBy('p.nom', Criteria::ASC)
+            ->addOrderBy('p.prenom', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -70,8 +71,8 @@ class PersonnelRepository extends ServiceEntityRepository
             ->orWhere('p.username LIKE :needle')
             ->orWhere('p.mailUniv LIKE :needle')
             ->setParameter('needle', '%'.$needle.'%')
-            ->orderBy('p.nom', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('p.prenom', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('p.nom', Criteria::ASC)
+            ->addOrderBy('p.prenom', Criteria::ASC)
             ->getQuery()
             ->getResult();
 
@@ -122,8 +123,8 @@ class PersonnelRepository extends ServiceEntityRepository
             ->innerJoin(PersonnelDepartement::class, 'f', 'WITH', 'f.personnel = p.id')
             ->where('f.departement = :departement')
             ->setParameter('departement', $departement)
-            ->orderBy('p.nom', \Doctrine\Common\Collections\Criteria::ASC)
-            ->addOrderBy('p.prenom', \Doctrine\Common\Collections\Criteria::ASC);
+            ->orderBy('p.nom', Criteria::ASC)
+            ->addOrderBy('p.prenom', Criteria::ASC);
     }
 
     public function findBySemestreBuilder(Semestre $semestre): ?QueryBuilder
@@ -155,7 +156,7 @@ class PersonnelRepository extends ServiceEntityRepository
             ->innerJoin(PersonnelDepartement::class, 'p', 'WITH', 's.id = p.personnel')
             ->where('p.departement = :departement')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('s.nom,s.prenom', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('s.nom,s.prenom', Criteria::ASC)
             ->getQuery()
             ->getResult();
 
@@ -184,6 +185,6 @@ class PersonnelRepository extends ServiceEntityRepository
     public function findAllOrder(): QueryBuilder
     {
         return $this->createQueryBuilder('s')
-            ->orderBy('s.nom,s.prenom', \Doctrine\Common\Collections\Criteria::ASC);
+            ->orderBy('s.nom,s.prenom', Criteria::ASC);
     }
 }

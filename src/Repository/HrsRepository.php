@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/HrsRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/HrsRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Repository;
@@ -13,6 +13,7 @@ use App\Entity\Departement;
 use App\Entity\Hrs;
 use App\Entity\Personnel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -41,8 +42,8 @@ class HrsRepository extends ServiceEntityRepository
             ->addSelect('p')
             ->where('h.personnel = :user')
             ->setParameter('user', $personnel)
-            ->orderBy('h.typeHrs', \Doctrine\Common\Collections\Criteria::ASC)
-            ->orderBy('h.semestre', \Doctrine\Common\Collections\Criteria::ASC);
+            ->orderBy('h.typeHrs', Criteria::ASC)
+            ->orderBy('h.semestre', Criteria::ASC);
 
         if (0 !== $annee) {
             $query->andWhere('h.annee = :annee')
@@ -72,8 +73,8 @@ class HrsRepository extends ServiceEntityRepository
             ->andWhere('h.annee = :annee')
             ->setParameter('user', $personnel)
             ->setParameter('annee', $annee)
-            ->orderBy('h.typeHrs', \Doctrine\Common\Collections\Criteria::ASC)
-            ->orderBy('h.semestre', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('h.typeHrs', Criteria::ASC)
+            ->orderBy('h.semestre', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -89,8 +90,8 @@ class HrsRepository extends ServiceEntityRepository
             ->andWhere('h.annee = :annee')
             ->setParameter('departement', $departement->getId())
             ->setParameter('annee', $annee)
-            ->orderBy('h.typeHrs', \Doctrine\Common\Collections\Criteria::ASC)
-            ->orderBy('h.semestre', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('h.typeHrs', Criteria::ASC)
+            ->orderBy('h.semestre', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

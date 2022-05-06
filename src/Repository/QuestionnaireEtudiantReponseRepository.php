@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/QuestionnaireEtudiantReponseRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/QuestionnaireEtudiantReponseRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/09/2021 19:17
+ * @lastUpdate 06/05/2022 14:27
  */
 
 namespace App\Repository;
@@ -13,6 +13,7 @@ use App\Entity\QuestionnaireEtudiant;
 use App\Entity\QuestionnaireEtudiantReponse;
 use App\Entity\QuestionnaireQualite;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -69,7 +70,7 @@ class QuestionnaireEtudiantReponseRepository extends ServiceEntityRepository
             ->innerJoin(QuestionnaireEtudiant::class, 'e', 'WITH', 'q.questionnaireEtudiant=e.id')
             ->where('e.questionnaireQualite = :questionnaireQualite')
             ->setParameter('questionnaireQualite', $questionnaire->getId())
-            ->orderBy('q.cleQuestion', \Doctrine\Common\Collections\Criteria::ASC)
+            ->orderBy('q.cleQuestion', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
