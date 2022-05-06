@@ -1,3 +1,31 @@
+<div class="alert alert-info">
+    Vos paramètres de saisie sont les suivants :
+    <ul>
+        <li>
+            {% if user_data.user.configuration['validationSaisieAbsence'] is defined and user_data.user
+            .configuration['validationSaisieAbsence'] == true %}
+                Etape de confirmation de la saisie avant sauvegarde et envois des mails aux étudiants (si vous
+                quittez avant de confirmer, aucune donnée n'est sauvegardée).
+            {% else %}
+                Les absences sont enregistées automatiquement, et les mails envoyés aux étudiants.
+            {% endif %}
+        </li>
+        <li>
+            {% if user_data.user.configuration['saisieDesPresents'] is defined and user_data.user
+            .configuration['saisieDesPresents'] == true %}
+                Vous indiquez les étudiants présents, et vous devez valider pour comptabiliser les absents (si vous
+                quittez avant de confirmer, aucune donnée n'est sauvegardée).
+            {% else %}
+                Vous indiquez les étudiants absents.
+            {% endif %}
+        </li>
+    </ul>
+
+        Pour modidier ce comportement par défaut, <a href="{{ path('settings_configuration_personnel') }}" target="_blank">
+        vous devez aller dans vos paramètres et actualiser cette page une fois les modifications faites</a>
+</div>
+
+
 <div class="card">
     <h4 class="card-title">{{ 'parametres'|trans }}</h4>
     <div class="card-body">

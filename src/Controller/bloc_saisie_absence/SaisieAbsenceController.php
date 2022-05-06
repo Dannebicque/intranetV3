@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/bloc_saisie_absence/SaisieAbsenceController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/bloc_saisie_absence/SaisieAbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 19:11
+ * @lastUpdate 06/05/2022 15:48
  */
 
 namespace App\Controller\bloc_saisie_absence;
@@ -70,11 +70,17 @@ class SaisieAbsenceController extends BaseController
     }
 
     /**
+     * @param \App\Classes\Matieres\TypeMatiereManager  $typeMatiereManager
+     * @param \App\Classes\Etudiant\EtudiantAbsences    $etudiantAbsences
+     * @param \App\Repository\AbsenceRepository         $absenceRepository
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param string                                    $matiere
+     * @param \App\Entity\Etudiant                      $etudiant
+     *
      * @return JsonResponse|Response
      *
-     * @throws Exception
      */
-    #[Route(path: '/saisie/{matiere}/{etudiant}', name: 'application_personnel_absence_saisie_ajax', methods: 'POST', options: ['expose' => true])]
+    #[Route(path: '/saisie/{matiere}/{etudiant}', name: 'application_personnel_absence_saisie_ajax', options: ['expose' => true], methods: 'POST')]
     public function ajaxSaisie(TypeMatiereManager $typeMatiereManager, EtudiantAbsences $etudiantAbsences, AbsenceRepository $absenceRepository, Request $request, string $matiere, Etudiant $etudiant): JsonResponse|Response
     {
         $mat = $typeMatiereManager->getMatiereFromSelect($matiere);

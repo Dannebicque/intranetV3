@@ -63,3 +63,5 @@ yarn-error.log
 /infra/*.sql
 /stan
 
+/aide/assets/
+/.idea/
