@@ -1,15 +1,16 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AlternanceController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AlternanceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 19:11
+ * @lastUpdate 06/05/2022 20:39
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\MyExport;
+use App\Classes\MySerializer;
 use App\Controller\BaseController;
 use App\Entity\Alternance;
 use App\Entity\Annee;
@@ -29,6 +30,9 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/administration/alternance')]
 class AlternanceController extends BaseController
 {
+    //todo: optimiser les requetes
+    //todo: utiliser le TableType
+
     #[Route(path: '/init/all/{annee}', name: 'administration_alternance_init_all')]
     public function initAll(EtudiantRepository $etudiantRepository, AlternanceRepository $alternanceRepository, Annee $annee): RedirectResponse
     {
@@ -77,17 +81,16 @@ class AlternanceController extends BaseController
     }
 
     #[Route(path: '/export/{annee}.{_format}', name: 'administration_alternance_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function export(MyExport $myExport, AlternanceRepository $alternanceRepository, Annee $annee, $_format): Response
+    public function export(
+        MySerializer $mySerializer,
+        MyExport $myExport, AlternanceRepository $alternanceRepository, Annee $annee, $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $annee);
-        $actualites = $alternanceRepository->getByAnneeAndAnneeUniversitaire($annee,
+        $alternances = $alternanceRepository->getByAnneeAndAnneeUniversitaire($annee,
             $annee->getDiplome()?->getAnneeUniversitaire());
 
-        return $myExport->genereFichierGenerique(
-            $_format,
-            $actualites,
-            'alternances',
-            ['alternance_administration', 'utilisateur'],
+        $data = $mySerializer->getDataFromSerialization(
+            $alternances,
             [
                 'entreprise' => ['libelle'],
                 'tuteur' => ['nom', 'prenom', 'fonction', 'telephone', 'email', 'portable'],
@@ -96,7 +99,14 @@ class AlternanceController extends BaseController
                 'typeContrat',
                 'dateDebut',
                 'dateFin',
-            ]
+            ],
+            ['alternance_administration', 'utilisateur'],
+        );
+
+        return $myExport->genereFichierGeneriqueFromData(
+            $_format,
+            $data,
+            'alternances_'.$annee->getLibelle(),
         );
     }
 
