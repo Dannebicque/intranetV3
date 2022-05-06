@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.6.4](https://github.com/Dannebicque/intranetV3/compare/v3.6.3...v3.6.4) (2022-05-06)
+
+
+### Bug Fixes
+
+* [App Stage] Corrections de mise en page + fiche de suivi de stage ([3bc9aae](https://github.com/Dannebicque/intranetV3/commit/3bc9aae0072f15e73d3acafb48ad39f07d4460c2))
+* [Edt] Bornes ([ede5900](https://github.com/Dannebicque/intranetV3/commit/ede5900fccb6f52593d5167380aba5c2f573fbfe))
+* [Edt] Import sans le semestre ([8d7868a](https://github.com/Dannebicque/intranetV3/commit/8d7868af6ee054efb6757c3ce14ff0f1707c2b7b))
+* [Edt] Import sans le semestre ([201049c](https://github.com/Dannebicque/intranetV3/commit/201049c1f998c91928d78dc9ca95c647215e3365))
+* [Edt] Import sans le semestre ([28b5553](https://github.com/Dannebicque/intranetV3/commit/28b555311f61fbbe48a9f899b8e7b5163cd983d3))
+* [Edt] truncate de l'information de la salle ([a7fc819](https://github.com/Dannebicque/intranetV3/commit/a7fc819f3bf2f520565bbfd0a9227798f46fdcbc))
+* [Edt] Types ([582eba8](https://github.com/Dannebicque/intranetV3/commit/582eba876de04639df57f5137aadbf0764ca7370))
+* [Edt] Types ([4388507](https://github.com/Dannebicque/intranetV3/commit/4388507d56dda13b49b49e92488760c069cb1b1d))
+* [Edt] Types ([2c63809](https://github.com/Dannebicque/intranetV3/commit/2c638094bedd50d1376f1ebc801d6034cd451a9f))
+* [Voter] Absences ([ad4fb13](https://github.com/Dannebicque/intranetV3/commit/ad4fb13e424cef4edbea790f60b7ee8ad1c248c0))
+* [Voter] Absences ([31310f6](https://github.com/Dannebicque/intranetV3/commit/31310f627ba6268ace64da82ed29ca11ce7b688c))
+
 ### [3.6.3](https://github.com/Dannebicque/intranetV3/compare/v3.6.2...v3.6.3) (2022-05-05)
 
 
