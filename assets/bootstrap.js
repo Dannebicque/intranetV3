@@ -1,10 +1,12 @@
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/assets/bootstrap.js
+// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/Sites/intranetV3/assets/bootstrap.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 28/08/2021 08:35
+// @lastUpdate 06/05/2022 15:47
 
 import {startStimulusApp} from '@symfony/stimulus-bridge'
+import LiveController from '@symfony/ux-live-component';
+import '@symfony/ux-live-component/styles/live.css';
 
 // Registers Stimulus controllers from controllers.json and in the controllers/ directory
 export const app = startStimulusApp(require.context(
@@ -21,3 +23,4 @@ import Notification from "stimulus-notification"
 
 app.register('clipboard', Clipboard)
 app.register('notification', Notification)
+app.register('live', LiveController);
