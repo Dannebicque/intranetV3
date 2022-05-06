@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Etudiant.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Etudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 19:44
+ * @lastUpdate 06/05/2022 18:17
  */
 
 namespace App\Entity;
@@ -36,10 +36,10 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER)]
     private mixed $id;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50)]
+    #[ORM\Column(type: Types::STRING, length: 50)]
     private ?string $photoName = 'noimage.png';
 
     /**
@@ -58,13 +58,13 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     private Collection $notes;
 
     #[Groups(groups: ['etudiants_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20)]
+    #[ORM\Column(type: Types::STRING, length: 20)]
     private ?string $numEtudiant = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 20, nullable: true)]
     private ?string $numIne = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER, nullable: true)]
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
     private ?int $anneeBac;
 
     /**
@@ -109,10 +109,10 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     #[ORM\OrderBy(value: ['created' => 'desc'])]
     private Collection $notifications;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $boursier = false;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $demandeurEmploi = false;
 
     #[ORM\ManyToMany(targetEntity: Groupe::class, inversedBy: 'etudiants')]
@@ -142,25 +142,25 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: Alternance::class)]
     private Collection $alternances;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $deleted = false;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $amenagementsParticuliers = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER)]
     private ?int $promotion;
 
     #[ORM\ManyToOne(targetEntity: Bac::class)]
     private ?Bac $bac = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $intituleSecuriteSociale = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $adresseSecuriteSociale = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER)]
     private int $anneeSortie = 0;
 
     /**
@@ -185,10 +185,10 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: QuestionnaireEtudiant::class)]
     private Collection $quizzEtudiants;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
     private ?string $loginSpecifique = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $formationContinue = false;
 
     /**
@@ -519,24 +519,24 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this;
     }
 
-    public function serialize(): string
+    public function __serialize(): array
     {
         // Ajouté pour le problème de connexion avec le usernametoken
-        return serialize([
+        return [
             $this->id,
             $this->password,
             $this->username,
-        ]);
+        ];
     }
 
-    public function unserialize($data): void
+    public function __unserialize($data): void
     {
         // Ajouté pour le problème de connexion avec le usernametoken
         [
             $this->id,
             $this->password,
             $this->username
-        ] = unserialize($data, ['allowed_classes' => false]);
+        ] = $data;
     }
 
     public function getBoursier(): ?bool

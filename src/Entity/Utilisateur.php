@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Utilisateur.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/05/2022 13:49
+ * @lastUpdate 06/05/2022 18:14
  */
 
 namespace App\Entity;
@@ -14,7 +14,6 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use const JSON_THROW_ON_ERROR;
 use JsonException;
-use Serializable;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -25,7 +24,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 #[ORM\MappedSuperclass]
 #[ORM\HasLifecycleCallbacks]
-abstract class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface, Serializable
+abstract class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Column(type: Types::STRING, length: 75, unique: true)]
     protected ?string $username = null;
@@ -402,5 +401,10 @@ abstract class Utilisateur implements UserInterface, PasswordAuthenticatedUserIn
     public function getSalt(): ?string
     {
         return null;
+    }
+
+    public function serialize(): string
+    {
+        return serialize($this->__serialize());
     }
 }

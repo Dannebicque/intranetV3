@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Personnel.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/10/2021 10:24
+ * @lastUpdate 06/05/2022 18:16
  */
 
 namespace App\Entity;
@@ -672,33 +672,25 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         return $this;
     }
 
-    /**
-     * String representation of object.
-     *
-     * @see   http://php.net/manual/en/serializable.serialize.php
-     *
-     * @return string the string representation of the object or null
-     *
-     * @since 5.1.0
-     */
-    public function serialize(): string
+
+    public function __serialize(): array
     {
         // Ajouté pour le problème de connexion avec le usernametoken
-        return serialize([
+        return [
             $this->id,
             $this->password,
             $this->username,
-        ]);
+        ];
     }
 
-    public function unserialize($data): void
+    public function __unserialize($data): void
     {
         // Ajouté pour le problème de connexion avec le usernametoken
         [
             $this->id,
             $this->password,
             $this->username
-        ] = unserialize($data, ['allowed_classes' => false]);
+        ] = $data;
     }
 
     /**
