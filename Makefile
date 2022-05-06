@@ -67,3 +67,7 @@ stan:
 .PHONY: rector
 rector:
 	cd infra && docker-compose run --rm php8-service sh -c 'vendor/bin/rector process src/Entity'
+
+.PHONY: translate
+translate:
+	cd infra && docker-compose run --rm php8-service sh -c 'bin/console translation:extract --force --format=xlf --sort=asc fr --domain=messages'
