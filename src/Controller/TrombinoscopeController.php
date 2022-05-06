@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/TrombinoscopeController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/TrombinoscopeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 06/05/2022 20:27
  */
 
 namespace App\Controller;
@@ -12,6 +12,7 @@ namespace App\Controller;
 use App\Classes\Configuration;
 use App\Classes\MyExport;
 use App\Classes\MyExportListing;
+use App\Classes\MySerializer;
 use App\Classes\Pdf\MyPDF;
 use App\Entity\Constantes;
 use App\Entity\Groupe;
@@ -145,16 +146,23 @@ class TrombinoscopeController extends BaseController
     }
 
     #[Route(path: '/{type}.{_format}', name: 'trombinoscope_personnel_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function trombiPersonnelExport(MyExport $myExport, PersonnelRepository $personnelRepository, $type, $_format): Response
+    public function trombiPersonnelExport(MySerializer $mySerializer,
+        MyExport $myExport, PersonnelRepository $personnelRepository, $type, $_format): Response
     {
         $personnels = $personnelRepository->findByType($type, $this->dataUserSession->getDepartement());
 
-        return $myExport->genereFichierGenerique(
-            $_format,
+        $data = $mySerializer->getDataFromSerialization(
             $personnels,
+            [
+                'nom', 'prenom', 'mailUniv',
+            ],
+            ['utilisateur']
+        );
+
+        return $myExport->genereFichierGeneriqueFromData(
+            $_format,
+            $data,
             'listing_'.$type,
-            ['utilisateur'],
-            ['nom', 'prenom']
         );
     }
 }
