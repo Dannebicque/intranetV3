@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    <strong>Résumé de la fiche de suivie</strong> de {{ stage_fiche_suivi
+.stage.etudiant.displayPr }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('app_personnel_stage_fiche_suivi_delete', {id: stage_fiche_suivi.id}) }}"
+               data-csrf="{{ csrf_token('delete' ~ stage_fiche_suivi.id) }}"
+               class="btn btn-danger btn-sm btn-float supprimer"
+               title="{{ 'atitle.supprimer'|trans }}"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
+                <i class="{{ iconDelete }}"></i>
+                <span class="sr-only">{{ 'atitle.supprimer'|trans }}</span>
+            </a>
+            <a href="{{ path('app_personnel_stage_fiche_suivi_print', {id: stage_fiche_suivi.id}) }}"
+               class="btn btn-info btn-sm btn-float"
+               title="{{ 'atitle.print'|trans }}"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
+                <i class="{{ iconPrint }}"></i>
+                <span class="sr-only">{{ 'atitle.print'|trans }}</span>
+            </a>
+            <a href="{{ path('app_personnel_stage_fiche_suivi_edit', {id: stage_fiche_suivi.id}) }}"
+               class="btn btn-warning btn-sm btn-float"
+               title="{{ 'atitle.modifier'|trans }}"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
+                <i class="{{ iconEdit }}"></i>
+                <span class="sr-only">{{ 'atitle.modifier'|trans }}</span>
+            </a>
+            <a href="{{ path('app_personnel_stage_fiche_suivi_index', {stage:
+                stage_fiche_suivi.stage.id}) }}"
+               class="btn btn-primary btn-float"
+               title="{{ 'atitle.retour_liste'|trans }}"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
+                <i class="fas fa-arrow-left"></i>
+                <span class="sr-only">{{ 'atitle.retour_liste'|trans }}</span>
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title"><strong>Résumé de la fiche de suivie</strong> de {{ stage_fiche_suivi
+            .stage.etudiant.displayPr }}</h4>
+        <div class="card-body">
+            <dl>
+                <dt>Nom de l'étudiant :</dt>
+                <dd>{{ stage_fiche_suivi.stage.etudiant.displayPr }}</dd>
+                <dt>Entreprise :</dt>
+                <dd>{{ stage_fiche_suivi.stage.entreprise.raisonSociale }}</dd>
+                <dt>Tuteur Universitaire :</dt>
+                <dd>{{ stage_fiche_suivi.stage.tuteurUniversitaire.displayPr }}</dd>
+                <dt>Visite réalisée le :</dt>
+                <dd>{{ stage_fiche_suivi.date|format_date('short') }},
+                                                                          par {{ stage_fiche_suivi.methodeLong }}</dd>
+                <dt>Personne rencontrée :</dt>
+                <dd>{{ stage_fiche_suivi.stage.tuteur.display }}</dd>
+                <dt>Missions :</dt>
+                <dd>{{ stage_fiche_suivi.missions|nl2br }}</dd>
+                <dt>Evaluation de l'stage :</dt>
+                <dd>
+                    <ul>
+                        <li>Intégration dans l'entreprise : {{ stage_fiche_suivi.integrationLong }}</li>
+                        <li>Prise d'initiative : {{ stage_fiche_suivi.initiativeLong }}</li>
+                        <li>Capacité d'adaptation : {{ stage_fiche_suivi.adaptationLong }}</li>
+                        <li>Niveau de performances : {{ stage_fiche_suivi.performanceLong }}</li>
+                        <li>Respect des délais : {{ stage_fiche_suivi.delaisLong }}</li>
+                        <li>Comportement de manière globale : {{ stage_fiche_suivi.comportementLong }}</li>
+                    </ul>
+                </dd>
+
+                <dt>Commentaire :</dt>
+                <dd>{{ stage_fiche_suivi.commentaire|nl2br }}</dd>
+            </dl>
+        </div>
+    </div>
+{% endblock %}

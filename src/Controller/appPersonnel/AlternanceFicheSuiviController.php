@@ -1,15 +1,15 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/AlternanceFicheSuiviController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/AlternanceFicheSuiviController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 06/05/2022 10:17
  */
 
 namespace App\Controller\appPersonnel;
 
-use App\Classes\MyAlternanceFicheSuivi;
+use App\Classes\MyFicheSuivi;
 use App\Controller\BaseController;
 use App\Entity\Alternance;
 use App\Entity\AlternanceFicheSuivi;
@@ -79,7 +79,7 @@ class AlternanceFicheSuiviController extends BaseController
      * @throws SyntaxError
      */
     #[Route(path: '/{id}/imprimer', name: 'application_personnel_alternance_fiche_suivi_print', methods: ['GET'])]
-    public function print(MyAlternanceFicheSuivi $myAlternanceFicheSuivi, AlternanceFicheSuivi $alternanceFicheSuivi): Response
+    public function print(MyFicheSuivi $myAlternanceFicheSuivi, AlternanceFicheSuivi $alternanceFicheSuivi): Response
     {
         return $myAlternanceFicheSuivi->print($alternanceFicheSuivi);
     }

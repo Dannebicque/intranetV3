@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StageEtudiant.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/StageEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/08/2021 12:37
+ * @lastUpdate 06/05/2022 08:16
  */
 
 namespace App\Entity;
@@ -67,66 +67,66 @@ class StageEtudiant extends BaseEntity
     private ?Contact $tuteur = null;
 
     #[Groups(['stage_periode_gestion', 'stage_entreprise'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $serviceStageEntreprise = '';
 
     #[Groups(['stage_entreprise'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $sujetStage = '';
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateDepotFormulaire = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateValidation = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateConventionEnvoyee = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateConventionRecu = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 30)]
+    #[ORM\Column(type: Types::STRING, length: 30)]
     private string $etatStage = 'ETAT_STAGE_AUTORISE';
 
     #[Groups(['stage_entreprise_administration', 'stage_entreprise', 'stage_periode_gestion'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?CarbonInterface $dateDebutStage = null;
 
     #[Groups(['stage_entreprise_administration', 'stage_entreprise', 'stage_periode_gestion'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?CarbonInterface $dateFinStage = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $activites = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $amenagementStage = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $gratification = false;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
+    #[ORM\Column(type: Types::FLOAT)]
     #[Assert\Type(
         type: 'float',
         message: 'La valeur {{ value }} doit un valeur décimale positive.',
     )]
     private ?float $gratificationMontant = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 1)]
+    #[ORM\Column(type: Types::STRING, length: 1)]
     private string $gratificationPeriode = self::PERIODE_GRATIFICATION_HEURE;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $avantages = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
+    #[ORM\Column(type: Types::FLOAT)]
     #[Assert\Type(
         type: 'float',
         message: 'La valeur {{ value }} doit un valeur décimale positive.',
     )]
     private float $dureeHebdomadaire = 35;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER)]
     #[Assert\Type(
         type: 'integer',
         message: 'La valeur {{ value }} doit être entière et positive.',
@@ -141,19 +141,19 @@ class StageEtudiant extends BaseEntity
     #[ORM\ManyToOne(targetEntity: Entreprise::class, cascade: ['persist', 'remove'], fetch: 'EAGER', inversedBy: 'stageEtudiants')]
     private ?Entreprise $entreprise = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateAutorise = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateImprime = null;
 
     #[ORM\OneToOne(targetEntity: Adresse::class, cascade: ['persist', 'remove'])]
     private ?Adresse $adresseStage = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $periodesInterruptions = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $commentaireDureeHebdomadaire = null;
 
     /**
@@ -162,11 +162,15 @@ class StageEtudiant extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'stageEtudiant', targetEntity: StageAvenant::class)]
     private Collection $stageAvenants;
 
+    #[ORM\OneToMany(mappedBy: 'stage', targetEntity: StageFicheSuivi::class)]
+    private $stageFicheSuivis;
+
     public function __construct(?float $gratificationMontant)
     {
         $this->setUuid(Uuid::uuid4());
         $this->setGratificationMontant($gratificationMontant);
         $this->stageAvenants = new ArrayCollection();
+        $this->stageFicheSuivis = new ArrayCollection();
     }
 
     public function setUuid(UuidInterface $uuid): self
@@ -540,6 +544,36 @@ class StageEtudiant extends BaseEntity
             // set the owning side to null (unless already changed)
             if ($stageAvenant->getStageEtudiant() === $this) {
                 $stageAvenant->setStageEtudiant(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, StageFicheSuivi>
+     */
+    public function getStageFicheSuivis(): Collection
+    {
+        return $this->stageFicheSuivis;
+    }
+
+    public function addStageFicheSuivi(StageFicheSuivi $stageFicheSuivi): self
+    {
+        if (!$this->stageFicheSuivis->contains($stageFicheSuivi)) {
+            $this->stageFicheSuivis[] = $stageFicheSuivi;
+            $stageFicheSuivi->setStage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStageFicheSuivi(StageFicheSuivi $stageFicheSuivi): self
+    {
+        if ($this->stageFicheSuivis->removeElement($stageFicheSuivi)) {
+            // set the owning side to null (unless already changed)
+            if ($stageFicheSuivi->getStage() === $this) {
+                $stageFicheSuivi->setStage(null);
             }
         }
 

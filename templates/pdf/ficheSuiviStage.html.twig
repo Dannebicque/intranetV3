@@ -1,0 +1,63 @@
+{% extends "pdf/basepdf.html.twig" %}
+
+ {% block style %}
+     .cadre {
+     border: 1px solid black;
+     padding: 10px;
+     margin-bottom: 15px;
+     }
+
+     .center {
+     text-align:center;
+     }
+ {% endblock %}
+
+{% block content %}
+    {{include('pdf/_headerPdf.html.twig', {
+        departement: user_data.departement,
+        titre: '',
+        qualite: fiche_suivi.stage.etudiant.annee.diplome.optCertifieQualite
+    }) }}
+
+    <h1 class="cadre center">
+        VISITE ENTREPRISE - Formation {{ fiche_suivi.stage.etudiant.annee.diplome.display }}
+        <br/>
+        Année universitaire {{ user_data.anneeUniversitaire }}
+    </h1>
+
+    <p><strong>Nom de l'étudiant :</strong> {{ fiche_suivi.stage.etudiant.displayPr }}</p>
+    <p><strong>Entreprise :</strong> {{ fiche_suivi.stage.entreprise.raisonSociale }}</p>
+    <p><strong>Tuteur universitaire :</strong> {{ fiche_suivi.stage.tuteurUniversitaire.displayPr }}</p>
+
+    <div class="cadre">
+        <p><strong>Date de la visite :</strong> {{ fiche_suivi.date|format_date('short') }}
+            . {{ fiche_suivi.methodeLong }}</p>
+    </div>
+
+    <div class="cadre">
+        <p><strong>Personne rencontrée / contactée
+                   :</strong> {{ fiche_suivi.stage.tuteur ? fiche_suivi.stage.tuteur.display }}
+        </p>
+    </div>
+    <div class="cadre">
+        <p><strong>Thème du stage :</strong> {{ fiche_suivi.missions|nl2br }}</p>
+    </div>
+    <div class="cadre">
+        <p><strong>Commentaires :</strong> {{ fiche_suivi.commentaire|nl2br }}</p>
+    </div>
+    <div class="cadre">
+        <p><strong>Evaluation du stage :</strong></p>
+        <ul>
+            <li>Intégration dans l'entreprise : {{ fiche_suivi.integrationLong }}</li>
+            <li>Prise d'initiative : {{ fiche_suivi.initiativeLong }}</li>
+            <li>Capacité d'adaptation : {{ fiche_suivi.adaptationLong }}</li>
+            <li>Niveau de performances : {{ fiche_suivi.performanceLong }}</li>
+            <li>Respect des délais : {{ fiche_suivi.delaisLong }}</li>
+            <li>Comportement de manière globale : {{ fiche_suivi.comportementLong }}</li>
+        </ul>
+
+    </div>
+    <p>Signature du tuteur :</p>
+    <p>{{ fiche_suivi.stage.tuteurUniversitaire.displayPr }}</p>
+
+{% endblock %}

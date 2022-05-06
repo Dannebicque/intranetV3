@@ -16,7 +16,7 @@
     {{include('pdf/_headerPdf.html.twig', {
         departement: user_data.departement,
         titre: '',
-        qualite: alternance_fiche_suivi.alternance.annee.diplome.optCertifieQualite
+        qualite: fiche_suivi.alternance.annee.diplome.optCertifieQualite
     }) }}
 {#    <table style="width: 100%; border:0;">#}
 {#        <tr>#}
@@ -31,7 +31,7 @@
 {#                        src="{{ settings('BASE_PATH') }}{{ 'logo/' }}{{ settings('LOGO_IUT') }}"#}
 {#                        alt="logo"#}
 {#                        height="70px"/>#}
-{#                {% if alternance_fiche_suivi.alternance.etudiant.semestre.diplome.optCertifieQualite == true %}#}
+{#                {% if fiche_suivi.alternance.etudiant.semestre.diplome.optCertifieQualite == true %}#}
 {#                    <img src="{{ settings('BASE_PATH') }}{{ 'logo/'~settings('LOGO_QUALITE') }}" alt="logo certificat#}
 {#                     qualité" height="70px"  style="float: right"/>#}
 {#                {% endif %}#}
@@ -40,44 +40,44 @@
 {#    </table>#}
 
     <h1 class="cadre center">
-        VISITE ENTREPRISE - Formation {{ alternance_fiche_suivi.alternance.etudiant.semestre.annee.diplome.display }}
+        VISITE ENTREPRISE - Formation {{ fiche_suivi.alternance.etudiant.semestre.annee.diplome.display }}
         <br/>
         Année universitaire {{ user_data.anneeUniversitaire }}
     </h1>
 
-    <p><strong>Nom de l'étudiant :</strong> {{ alternance_fiche_suivi.alternance.etudiant.displayPr }}</p>
-    <p><strong>Entreprise :</strong> {{ alternance_fiche_suivi.alternance.entreprise.raisonSociale }}</p>
-    <p><strong>Tuteur universitaire :</strong> {{ alternance_fiche_suivi.alternance.tuteurUniversitaire.displayPr }}</p>
+    <p><strong>Nom de l'étudiant :</strong> {{ fiche_suivi.alternance.etudiant.displayPr }}</p>
+    <p><strong>Entreprise :</strong> {{ fiche_suivi.alternance.entreprise.raisonSociale }}</p>
+    <p><strong>Tuteur universitaire :</strong> {{ fiche_suivi.alternance.tuteurUniversitaire.displayPr }}</p>
 
     <div class="cadre">
-        <p><strong>Date de la visite :</strong> {{ alternance_fiche_suivi.date|format_date('short') }}
-            . {{ alternance_fiche_suivi.methodeLong }}</p>
+        <p><strong>Date de la visite :</strong> {{ fiche_suivi.date|format_date('short') }}
+            . {{ fiche_suivi.methodeLong }}</p>
     </div>
 
     <div class="cadre">
         <p><strong>Personne rencontrée / contactée
-                   :</strong> {{ alternance_fiche_suivi.alternance.tuteur ? alternance_fiche_suivi.alternance.tuteur.display }}
+                   :</strong> {{ fiche_suivi.alternance.tuteur ? fiche_suivi.alternance.tuteur.display }}
         </p>
     </div>
     <div class="cadre">
-        <p><strong>Thème du stage :</strong> {{ alternance_fiche_suivi.missions|nl2br }}</p>
+        <p><strong>Thème du stage :</strong> {{ fiche_suivi.missions|nl2br }}</p>
     </div>
     <div class="cadre">
-        <p><strong>Commentaires :</strong> {{ alternance_fiche_suivi.commentaire|nl2br }}</p>
+        <p><strong>Commentaires :</strong> {{ fiche_suivi.commentaire|nl2br }}</p>
     </div>
     <div class="cadre">
         <p><strong>Evaluation de l'atlernance :</strong></p>
         <ul>
-            <li>Intégration dans l'entreprise : {{ alternance_fiche_suivi.integrationLong }}</li>
-            <li>Prise d'initiative : {{ alternance_fiche_suivi.initiativeLong }}</li>
-            <li>Capacité d'adaptation : {{ alternance_fiche_suivi.adaptationLong }}</li>
-            <li>Niveau de performances : {{ alternance_fiche_suivi.performanceLong }}</li>
-            <li>Respect des délais : {{ alternance_fiche_suivi.delaisLong }}</li>
-            <li>Comportement de manière globale : {{ alternance_fiche_suivi.comportementLong }}</li>
+            <li>Intégration dans l'entreprise : {{ fiche_suivi.integrationLong }}</li>
+            <li>Prise d'initiative : {{ fiche_suivi.initiativeLong }}</li>
+            <li>Capacité d'adaptation : {{ fiche_suivi.adaptationLong }}</li>
+            <li>Niveau de performances : {{ fiche_suivi.performanceLong }}</li>
+            <li>Respect des délais : {{ fiche_suivi.delaisLong }}</li>
+            <li>Comportement de manière globale : {{ fiche_suivi.comportementLong }}</li>
         </ul>
 
     </div>
     <p>Signature du tuteur :</p>
-    <p>{{ alternance_fiche_suivi.alternance.tuteurUniversitaire.displayPr }}</p>
+    <p>{{ fiche_suivi.alternance.tuteurUniversitaire.displayPr }}</p>
 
 {% endblock %}

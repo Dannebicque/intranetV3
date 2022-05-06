@@ -401,6 +401,11 @@ adm:
     new.heading: 'Création d''une période de stage'
     show.heading: 'Détails d''une période de stage'
     edit.heading: 'Modification d''une période de stage'
+  stage:
+    fiche_suivi:
+      edit.heading: 'Modification d''une fiche de suivi de stage'
+      new.heading: 'Création d''une fiche de suivi de stage'
+      show.heading: 'Détails de la fiche de suivi de stage de %etudiant%'
   stages: Stages
   statistiques:
     menu: Statistiques
@@ -658,6 +663,9 @@ app:
   alternance_fiche_suivi:
     new.heading: 'Création d''une fiche de suivi d''alternance'
     show.heading: 'Détail de la fiche de suivi d''alternance de %etudiant%'
+  stage_fiche_suivi:
+    new.heading: 'Création d''une fiche de suivi de stage'
+    show.heading: 'Détail de la fiche de suivi de stage de %etudiant%'
   etudiant:
     absence:
       justificatif:
@@ -671,6 +679,12 @@ app:
       show:
         heading: 'Détail des informations de votre stage'
   personnel:
+    stage:
+      fiche_suivi:
+        index.heading: 'Liste des fiches de suivi de stage pour %etudiant%'
+        new.heading: 'Création d''une fiche de suivi de stage'
+        edit.heading: 'Modification d''une fiche de suivi de stage'
+        show.heading: 'Détail de la fiche de suivi de stage de %etudiant%'
     alternance_fiche_suivi:
       new.heading: 'Création d''une fiche de suivi d''alternance'
       edit.heading: 'Modification d''une fiche de suivi d''alternance'

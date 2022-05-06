@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'app.personnel.stage_fiche_suivi.new.heading'|trans({'%etudiant%': stage.etudiant.displayPr}) }}
+{% endblock %}
+
+{%block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+
+                <a href="{{ path('app_personnel_stage_fiche_suivi_index',{stage:stage
+                    .id}) }}"
+                   class="btn btn-primary btn-float"
+                   title="{{ 'atitle.retour_liste'|trans }}"
+                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+                >
+                    <i class="fas fa-arrow-left"></i>
+                    <span class="sr-only">{{ 'atitle.retour_liste'|trans }}</span>
+                </a>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'app.personnel.stage_fiche_suivi.new.heading'|trans({'%etudiant%': stage.etudiant
+            .displayPr}) }}</h4>
+        <div class="card-body">
+            <div class="alert alert-info">stage de <strong>{{ stage.etudiant.displayPr }}</strong>, dans
+                                          l'entreprise
+                <strong>{{ stage.entreprise.raisonSociale }}</strong>.
+            </div>
+            {{ include('composants/adm-form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}

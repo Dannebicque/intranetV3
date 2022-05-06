@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'app.personnel.stage.fiche_suivi.edit.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('app_personnel_stage_fiche_suivi_delete', {id: stage_fiche_suivi.id}) }}"
+               data-csrf="{{ csrf_token('delete' ~ stage_fiche_suivi.id) }}"
+               class="btn btn-danger btn-sm btn-float supprimer"
+               title="{{ 'atitle.supprimer'|trans }}"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
+                <i class="fas fa-trash"></i>
+                <span class="sr-only">{{ 'atitle.supprimer'|trans }}</span>
+            </a>
+            <a href="{{ path('app_personnel_stage_fiche_suivi_show', {id: stage_fiche_suivi.id}) }}"
+               class="btn btn-info btn-sm btn-float"
+               title="{{ 'atitle.voir'|trans }}"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
+                <i class="fas fa-eye"></i>
+                <span class="sr-only">{{ 'atitle.voir'|trans }}</span>
+            </a>
+
+            <a href="{{ path('app_personnel_stage_fiche_suivi_index', {stage:
+                stage_fiche_suivi.stage.id}) }}"
+               class="btn btn-primary btn-float"
+               title="{{ 'atitle.retour_liste'|trans }}"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
+                <i class="fas fa-arrow-left"></i>
+                <span class="sr-only">{{ 'atitle.retour_liste'|trans }}</span>
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'app.personnel.stage.fiche_suivi.edit.heading'|trans }}</h4>
+        <div class="card-body">
+            {{ include('composants/adm-form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}

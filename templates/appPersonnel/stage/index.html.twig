@@ -82,8 +82,16 @@
                                     </a>
                                 {% else %} - {% endif %}
                             </td>
-                            <td>{% if stage.adresseStage != null %}{{ stage.adresseStage.ville }} ({{ stage.adresseStage.codePostal }}){% else %} - {% endif %}</td>
-                            <td></td>
+                            <td>{% if stage.adresseStage != null and stage.adresseStage.ville != '' %}
+                                    {{ stage.adresseStage.ville }} ({{ stage.adresseStage.codePostal }})
+                                {% elseif stage.entreprise != null and stage.entreprise.adresse != null and stage
+                                    .entreprise.adresse.ville != '' %}
+                                    {{ stage.entreprise.adresse.ville }} ({{ stage.entreprise.adresse.codePostal }})
+                                    {% else %} - {% endif %}</td>
+                            <td>
+                                    <a href="{{ path('app_personnel_stage_fiche_suivi_index',
+                                        {stage: stage.id}) }}" class="btn btn-info">Suivi</a>
+                            </td>
                         </tr>
                     {% else %}
                         <tr>
