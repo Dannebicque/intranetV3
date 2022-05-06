@@ -31,7 +31,6 @@ doctrine:
 
     orm:
         auto_generate_proxy_classes: true
-
         default_entity_manager: default
         entity_managers:
             default:
@@ -50,4 +49,30 @@ doctrine:
                         MD5: App\DQL\MD5
             apogee:
                 connection: apogee
+
+when@test:
+    doctrine:
+        dbal:
+            # "TEST_TOKEN" is typically set by ParaTest
+            dbname_suffix: '_test%env(default::TEST_TOKEN)%'
+
+when@prod:
+    doctrine:
+        orm:
+            auto_generate_proxy_classes: false
+            query_cache_driver:
+                type: pool
+                pool: doctrine.system_cache_pool
+            result_cache_driver:
+                type: pool
+                pool: doctrine.result_cache_pool
+
+    framework:
+        cache:
+            pools:
+                doctrine.result_cache_pool:
+                    adapter: cache.app
+                doctrine.system_cache_pool:
+                    adapter: cache.system
+
 
