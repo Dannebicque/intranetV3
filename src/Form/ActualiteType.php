@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ActualiteType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/ActualiteType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 10:56
+ * @lastUpdate 07/05/2022 17:45
  */
 
 namespace App\Form;
@@ -31,7 +31,7 @@ class ActualiteType extends AbstractType
                 'label' => 'label.texte',
                 'required' => true,
                 'attr' => ['rows' => 10, 'class' => 'tinyMce'],
-            ]); // todo: tinyMce ne fonctionne plus
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

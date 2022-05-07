@@ -53,7 +53,7 @@
                                 <div class="timeline-content">
                                     <time datetime="{{ actualite.updated|date('Y-m-d') }}" class="text-complementaire">{{ actualite
                                         .updated|format_datetime('short', 'short') }}</time>
-                                    <p><strong>{{ actualite.titre }}</strong> : {{ actualite.texte|striptags }}
+                                    <p><strong>{{ actualite.titre }}</strong> : {{ actualite.texte|raw }}
                                     </p>
                                 </div>
                             </li>

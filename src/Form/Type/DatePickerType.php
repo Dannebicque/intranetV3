@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/Type/DatePickerType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/Type/DatePickerType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/10/2021 12:10
+ * @lastUpdate 07/05/2022 17:41
  */
 
 namespace App\Form\Type;
@@ -102,7 +102,7 @@ class DatePickerType extends AbstractType
             $value = new DateTime($value);
         }
 
-        if (!is_a($value, DateTimeInterface::class)) {// todo: CarbonInterface ?
+        if (!is_a($value, DateTimeInterface::class)) {
             return null;
         }
 
