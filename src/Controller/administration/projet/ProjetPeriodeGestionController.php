@@ -1,16 +1,17 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/projet/ProjetPeriodeGestionController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/projet/ProjetPeriodeGestionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 07/05/2022 09:34
  */
 
 namespace App\Controller\administration\projet;
 
 use App\Classes\MyExport;
 use App\Classes\MyProjet;
+use App\Classes\MySerializer;
 use App\Controller\BaseController;
 use App\Entity\ProjetPeriode;
 use App\Repository\ProjetPeriodeRepository;
@@ -28,16 +29,15 @@ class ProjetPeriodeGestionController extends BaseController
      * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
      */
     #[Route(path: '/{uuid}/export.{_format}', name: 'administration_projet_periode_gestion_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function export(MyExport $myExport, ProjetPeriode $projetPeriode, $_format): Response
+    public function export(
+        MySerializer $mySerializer,
+        MyExport $myExport, ProjetPeriode $projetPeriode, $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestre());
         $projetEtudiants = $projetPeriode->getProjetEtudiants();
 
-        return $myExport->genereFichierGenerique(
-            $_format,
+        $data = $mySerializer->getDataFromSerialization(
             $projetEtudiants,
-            'periode_stage_'.$projetPeriode->getLibelle(),
-            ['projet_periode_gestion', 'utilisateur', 'projet_entreprise_administration', 'adresse'],
             [
                 'etudiant' => ['nom', 'prenom'],
                 'entreprise' => ['raisonSociale'],
@@ -45,7 +45,15 @@ class ProjetPeriodeGestionController extends BaseController
                 'tuteurUniversitaire' => ['nom', 'prenom'],
                 'dateDebutStage',
                 'dateFinStage',
-            ]
+            ],
+            ['projet_periode_gestion', 'utilisateur', 'projet_entreprise_administration', 'adresse'],
+            ['dateDebutStage' => MySerializer::ONLY_DATE, 'dateFinStage' => MySerializer::ONLY_DATE]
+        );
+
+        return $myExport->genereFichierGeneriqueFromData(
+            $_format,
+            $data,
+            'periode_projet_'.$projetPeriode->getLibelle(),
         );
     }
 

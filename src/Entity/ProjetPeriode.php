@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ProjetPeriode.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ProjetPeriode.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/08/2021 12:37
+ * @lastUpdate 07/05/2022 09:36
  */
 
 namespace App\Entity;
@@ -26,7 +26,7 @@ class ProjetPeriode extends BaseEntity
     use UuidTrait;
     use LifeCycleTrait;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 100)]
+    #[ORM\Column(type: Types::STRING, length: 100)]
     private ?string $libelle = null;
 
     #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'projetPeriodes')]
@@ -35,10 +35,10 @@ class ProjetPeriode extends BaseEntity
     #[ORM\ManyToMany(targetEntity: Personnel::class, inversedBy: 'projetPeriodes')]
     private Collection $responsables;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?CarbonInterface $dateDebut = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?CarbonInterface $dateFin = null;
 
     #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class, inversedBy: 'projetPeriodes')]
@@ -50,7 +50,7 @@ class ProjetPeriode extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'projetPeriode', targetEntity: ProjetEtudiant::class)]
     private Collection $projetEtudiants;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $texteLibre = null;
 
     public function __construct()

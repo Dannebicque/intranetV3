@@ -1,15 +1,16 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/projet/ProjetPeriodeController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/projet/ProjetPeriodeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 10:48
+ * @lastUpdate 07/05/2022 09:34
  */
 
 namespace App\Controller\administration\projet;
 
 use App\Classes\MyExport;
+use App\Classes\MySerializer;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\ProjetPeriode;
@@ -34,17 +35,24 @@ class ProjetPeriodeController extends BaseController
     }
 
     #[Route(path: '/export.{_format}', name: 'administration_projet_periode_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function export(MyExport $myExport, ProjetPeriodeRepository $projetPeriodeRepository, $_format): Response
+    public function export(
+        MySerializer $mySerializer,
+        MyExport $myExport, ProjetPeriodeRepository $projetPeriodeRepository, $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $this->getDepartement());
-        $dates = $projetPeriodeRepository->findByDepartement($this->getDepartement());
+        $projetPeriodes = $projetPeriodeRepository->findByDepartement($this->getDepartement());
 
-        return $myExport->genereFichierGenerique(
-            $_format,
-            $dates,
-            'periodes_stage',
+        $data = $mySerializer->getDataFromSerialization(
+            $projetPeriodes,
+            ['libelle', 'dateDebut', 'dateFin'],
             ['projet_periode_administration'],
-            ['libelle', 'dateDebut', 'dateFin']
+            ['dateDebut' => MySerializer::ONLY_DATE, 'dateFin' => MySerializer::ONLY_DATE]
+        );
+
+        return $myExport->genereFichierGeneriqueFromData(
+            $_format,
+            $data,
+            'periodes_projet_'.$this->getDepartement()?->getLibelle(),
         );
     }
 
