@@ -1,15 +1,16 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StageEntrepriseController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/stage/StageEntrepriseController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 07/05/2022 09:31
  */
 
 namespace App\Controller\administration\stage;
 
 use App\Classes\MyExport;
+use App\Classes\MySerializer;
 use App\Controller\BaseController;
 use App\Entity\Entreprise;
 use App\Entity\StageEtudiant;
@@ -66,25 +67,33 @@ class StageEntrepriseController extends BaseController
      * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
      */
     #[Route(path: '/{uuid}/export.{_format}', name: 'administration_stage_entreprise_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function export(StageEtudiantRepository $stageEtudiantRepository, MyExport $myExport, StagePeriode $stagePeriode, $_format): Response
+    public function export(
+        MySerializer $mySerializer,
+        StageEtudiantRepository $stageEtudiantRepository, MyExport $myExport, StagePeriode $stagePeriode, $_format): Response
     {
+        //feature: Développer de manière général en super Admin...
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
         $entreprises = $stageEtudiantRepository->findEntreprisesByPeriode($stagePeriode);
 
-        return $myExport->genereFichierGenerique(
-            $_format,
+        $data = $mySerializer->getDataFromSerialization(
             $entreprises,
-            'Entreprises',
-            ['stage_entreprise_administration', 'adresse'],
             [
+                //todo: gérer le 3eme niveau...
                 'entreprise' => ['raisonSociale', 'responsable' => ['nom', 'prenom', 'fonction', 'telephone', 'email']],
                 'tuteur' => ['nom', 'prenom', 'fonction', 'telephone', 'email'],
                 'serviceStageEntreprise',
-                'type',
                 'personnel' => ['nom', 'prenom'],
                 'dateDebutStage',
                 'dateFinStage',
-            ]
+            ],
+            ['stage_entreprise_administration', 'adresse'],
+            ['dateDebutStage' => MySerializer::ONLY_DATE, 'dateFinStage' => MySerializer::ONLY_DATE]
+        );
+
+        return $myExport->genereFichierGeneriqueFromData(
+            $_format,
+            $data,
+            'entreprises_'.$stagePeriode->getSemestre()?->getLibelle(),
         );
     }
 }

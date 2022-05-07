@@ -1,15 +1,16 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeGestionController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/stage/StagePeriodeGestionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 07/05/2022 09:11
  */
 
 namespace App\Controller\administration\stage;
 
 use App\Classes\MyExport;
+use App\Classes\MySerializer;
 use App\Classes\MyStage;
 use App\Classes\Stage\MyExportStage;
 use App\Controller\BaseController;
@@ -29,16 +30,15 @@ class StagePeriodeGestionController extends BaseController
      * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
      */
     #[Route(path: '/{uuid}/export.{_format}', name: 'administration_stage_periode_gestion_export', requirements: ['_format' => 'csv|pdf'], methods: 'GET')]
-    public function export(MyExport $myExport, StagePeriode $stagePeriode, $_format): Response
+    public function export(
+        MySerializer $mySerializer,
+        MyExport $myExport, StagePeriode $stagePeriode, $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
         $stageEtudiants = $stagePeriode->getStageEtudiants();
 
-        return $myExport->genereFichierGenerique(
-            $_format,
+        $data = $mySerializer->getDataFromSerialization(
             $stageEtudiants,
-            'periode_stage_'.$stagePeriode->getLibelle(),
-            ['stage_periode_gestion', 'utilisateur', 'stage_entreprise_administration', 'adresse'],
             [
                 'etudiant' => ['nom', 'prenom'],
                 'entreprise' => ['raisonSociale'],
@@ -47,7 +47,15 @@ class StagePeriodeGestionController extends BaseController
                 'tuteurUniversitaire' => ['nom', 'prenom', 'mailUniv'],
                 'dateDebutStage',
                 'dateFinStage',
-            ]
+            ],
+            ['stage_periode_gestion', 'utilisateur', 'stage_entreprise_administration', 'adresse'],
+            ['dateDebutStage' => MySerializer::ONLY_DATE, 'dateFinStage' => MySerializer::ONLY_DATE]
+        );
+
+        return $myExport->genereFichierGeneriqueFromData(
+            $_format,
+            $data,
+            'periode_stage_'.$stagePeriode->getLibelle(),
         );
     }
 

@@ -1,15 +1,16 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeOffreController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/stage/StagePeriodeOffreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 07/05/2022 09:08
  */
 
 namespace App\Controller\administration\stage;
 
 use App\Classes\MyExport;
+use App\Classes\MySerializer;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\StagePeriode;
@@ -44,17 +45,23 @@ class StagePeriodeOffreController extends BaseController
      * @ParamConverter("stagePeriode", options={"mapping": {"stagePeriode": "uuid"}})
      */
     #[Route(path: '/{stagePeriode}/export.{_format}', name: 'administration_stage_periode_offre_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function export(MyExport $myExport, StagePeriode $stagePeriode, $_format): Response
+    public function export(
+        MySerializer $mySerializer,
+        MyExport $myExport, StagePeriode $stagePeriode, $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
         $offres = $stagePeriode->getStagePeriodeOffres();
 
-        return $myExport->genereFichierGenerique(
-            $_format,
+        $data = $mySerializer->getDataFromSerialization(
             $offres,
-            'offres_stage',
+            ['libelle', 'entreprise', 'ville'],
             ['stage_offre_administration'],
-            ['libelle', 'entreprise', 'ville']
+        );
+
+        return $myExport->genereFichierGeneriqueFromData(
+            $_format,
+            $data,
+            'offres_stage_'.$stagePeriode->getSemestre()?->getLibelle(),
         );
     }
 

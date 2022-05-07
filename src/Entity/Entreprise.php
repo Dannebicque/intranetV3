@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Entreprise.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Entreprise.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/03/2021 22:10
+ * @lastUpdate 07/05/2022 09:24
  */
 
 namespace App\Entity;
@@ -25,11 +25,11 @@ class Entreprise extends BaseEntity
     use LifeCycleTrait;
 
     #[Assert\Length(min: 0, max: 30, maxMessage: 'Maximum {{ limit }} caractères')]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 30, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 30, nullable: true)]
     private ?string $siret = null;
 
     #[Groups(groups: ['stage_entreprise_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $raisonSociale = null;
 
     #[Groups(groups: ['stage_entreprise_administration'])]

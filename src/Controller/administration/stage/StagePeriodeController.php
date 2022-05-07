@@ -1,15 +1,16 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/stage/StagePeriodeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 10:48
+ * @lastUpdate 07/05/2022 09:16
  */
 
 namespace App\Controller\administration\stage;
 
 use App\Classes\MyExport;
+use App\Classes\MySerializer;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\StagePeriode;
@@ -36,17 +37,23 @@ class StagePeriodeController extends BaseController
     }
 
     #[Route(path: '/export.{_format}', name: 'administration_stage_periode_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function export(MyExport $myExport, StagePeriodeRepository $stagePeriodeRepository, $_format): Response
+    public function export(
+        MySerializer $mySerializer,
+        MyExport $myExport, StagePeriodeRepository $stagePeriodeRepository, $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $this->getDepartement());
-        $dates = $stagePeriodeRepository->findByDepartement($this->dataUserSession->getDepartement());
-
-        return $myExport->genereFichierGenerique(
-            $_format,
-            $dates,
-            'periodes_stage',
+        $stagePeriodes = $stagePeriodeRepository->findByDepartement($this->dataUserSession->getDepartement());
+        $data = $mySerializer->getDataFromSerialization(
+            $stagePeriodes,
+            ['numeroPeriode', 'libelle', 'numeroPeriode', 'dateDebut', 'dateFin', 'nbSemaines', 'nbJours', 'nbEcts'],
             ['stage_periode_administration'],
-            ['numeroPeriode', 'libelle', 'numeroPeriode', 'dateDebut', 'dateFin', 'nbSemaines', 'nbJours', 'nbEcts']
+            ['dateDebut' => MySerializer::ONLY_DATE, 'dateFin' => MySerializer::ONLY_DATE]
+        );
+
+        return $myExport->genereFichierGeneriqueFromData(
+            $_format,
+            $data,
+            'periodes_stage_'.$this->getDepartement()?->getLibelle(),
         );
     }
 
