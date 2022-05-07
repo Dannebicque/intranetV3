@@ -4,29 +4,31 @@
 
         <div class="media-list media-list-hover">
             {% for etudiant in etudiants %}
-                <div class="row mb-2 h-64px">
-                    {% if (etudiant.photo == 'noimage.png' or etudiant.photo == null) %}
-                        <div class="col-3">
+                <div class="row mb-4 h-64px">
+                    <div class="col-3">
+                        {% if (etudiant.photo == 'noimage.png' or etudiant.photo == null) %}
+
                             <a href="{{ path('user_profil', {slug: etudiant.slug, type:'etudiant'}) }}" target="_blank">
                                 <div class="avatar-circle-md">
-                                <span class="initials">{{ etudiant.avatarInitiales }}</span>
+                                    <span class="initials">{{ etudiant.avatarInitiales }}</span>
                                 </div>
                             </a>
-                        </div>
-                    {% else %}
-                        <a href="{{ path('user_profil', {slug: etudiant.slug, type:'etudiant'}) }}" target="_blank">
-                            <img class="col-3 avatar avatar-sm"
-                                 src="{{ absolute_url(asset('/upload/etudiants/'~etudiant.photo)|imagine_filter('avatar')) }}"
-                                 alt="Photo de profil de {{ etudiant.displayPr }}"
-                            >
-                        </a>
-                    {% endif %}
 
-                    <div class="col-9 media-body">
+                        {% else %}
+                            <a href="{{ path('user_profil', {slug: etudiant.slug, type:'etudiant'}) }}" target="_blank">
+                                <img class="avatar-circle-md"
+                                     src="{{ absolute_url(asset('/upload/etudiants/'~etudiant.photo)|imagine_filter('avatar')) }}"
+                                     alt="Photo de profil de {{ etudiant.displayPr }}"
+                                >
+                            </a>
+                        {% endif %}
+                    </div>
+                    <div class="col-9">
                         <a href="{{ path('user_profil', {slug: etudiant.slug, type:'etudiant'}) }}" target="_blank">
                             <p>
                                 <strong>{{ etudiant.displayPr }} ({{ etudiant.semestre }})</strong><br>
-                                <span class="text-sm-end">{{ etudiant.groupes }}</span>
+                                <span class="text-sm-end">{{ etudiant.groupes }}</span><br>
+                                <a href="mailto:{{ etudiant.mailUniv }}" target="_blank">{{ etudiant.mailUniv }}</a><br>
                             </p>
                         </a>
                     </div>
@@ -44,26 +46,29 @@
         <div class="media-list media-list-divided media-list-hover">
             {% for personnel in personnels %}
                 <div class="row mb-2 h-64px">
-                    {% if (personnel.photo == 'noimage.png' or personnel.photo == null) %}
-                        <div class="col-3">
+                    <div class="col-3">
+                        {% if (personnel.photo == 'noimage.png' or personnel.photo == null) %}
+
                             <a href="{{ path('user_profil', {slug: personnel.slug, type:'personnel'}) }}" target="_blank">
                                 <div class="avatar-circle-md">
                                     <span class="initials">{{ personnel.avatarInitiales }}</span>
                                 </div>
                             </a>
-                        </div>
-                    {% else %}
-                        <a href="{{ path('user_profil', {slug: personnel.slug, type:'personnel'}) }}" target="_blank">
-                            <img class="col-3 avatar avatar-sm" src="{{ absolute_url(asset('/upload/personnels/'~personnel
-                            .photo)|imagine_filter('avatar')) }}"
-                                 alt="Photo de profil de {{ personnel.displayPr }}">
-                        </a>
-                    {% endif %}
 
-                    <div class="col-9 media-body">
+                        {% else %}
+                            <a href="{{ path('user_profil', {slug: personnel.slug, type:'personnel'}) }}" target="_blank">
+                                <img class="avatar-circle-md" src="{{ absolute_url(asset
+                                    ('/upload/personnels/'~personnel
+                                    .photo)|imagine_filter('avatar')) }}"
+                                     alt="Photo de profil de {{ personnel.displayPr }}">
+                            </a>
+                        {% endif %}
+                    </div>
+                    <div class="col-9">
                         <a href="{{ path('user_profil', {slug: personnel.slug, type:'personnel'}) }}" target="_blank">
                             <p>
                                 <strong>{{ personnel.displayPr }}</strong><br>
+                                <a href="mailto:{{ personnel.mailUniv }}" target="_blank">{{ personnel.mailUniv }}</a><br>
                             </p>
                         </a>
                     </div>
