@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 09:57
+ * @lastUpdate 07/05/2022 16:53
  */
 
 namespace App\Controller\administration;
@@ -187,7 +187,7 @@ class EtudiantController extends BaseController
     public function export(MySerializer $mySerializer, MyExport $myExport, EtudiantRepository $etudiantRepository, $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
-        $etudiants = $etudiantRepository->getByDepartement($this->getDepartement(), []);
+        $etudiants = $etudiantRepository->getByDepartement($this->getDepartement());
         $data = $mySerializer->getDataFromSerialization(
             $etudiants,
             [
