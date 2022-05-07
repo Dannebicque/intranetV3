@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/StageEtudiantEtudiantType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/StageEtudiantEtudiantType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 14:21
+ * @lastUpdate 07/05/2022 18:37
  */
 
 namespace App\Form;
@@ -25,8 +25,6 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class StageEtudiantEtudiantType extends AbstractType
 {
-    // todo: faire un input avec une zone jour/mois/heure : Développer un composant ? Commenter lier deux champs d'entité avec ?
-    // https://getbootstrap.com/docs/5.1/forms/input-group/#buttons-with-dropdowns
     protected bool $flexible = false;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
