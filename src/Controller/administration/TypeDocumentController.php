@@ -1,16 +1,17 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/TypeDocumentController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/TypeDocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 07/05/2022 09:42
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\DocumentDelete;
 use App\Classes\MyExport;
+use App\Classes\MySerializer;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\TypeDocument;
@@ -35,20 +36,26 @@ class TypeDocumentController extends BaseController
     }
 
     #[Route(path: '/export.{_format}', name: 'administration_type_document_export', requirements: ['_format' => 'pdf|csv|xlsx'], methods: 'GET')]
-    public function export(MyExport $myExport, TypeDocumentRepository $typeDocumentRepository, $_format): Response
+    public function export(
+        MySerializer $mySerializer,
+        MyExport $myExport, TypeDocumentRepository $typeDocumentRepository, $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
         $typesDocuments = $typeDocumentRepository->findByDepartement($this->getDepartement());
 
-        return $myExport->genereFichierGenerique(
-            $_format,
+        $data = $mySerializer->getDataFromSerialization(
             $typesDocuments,
-            'types documents',
-            ['typedocument_administration'],
             [
                 'libelle',
                 'nbDocuments', // todo: comment l'intégrer ?
-            ]
+            ],
+            ['typedocument_administration'],
+        );
+
+        return $myExport->genereFichierGeneriqueFromData(
+            $_format,
+            $data,
+            'type_documents_'.$this->getDepartement()?->getLibelle(),
         );
     }
 

@@ -1,16 +1,17 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/GroupeController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/GroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 19:11
+ * @lastUpdate 07/05/2022 09:55
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\Groupes\GenereGroupes;
 use App\Classes\MyExport;
+use App\Classes\MySerializer;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Groupe;
@@ -77,6 +78,7 @@ class GroupeController extends BaseController
 
     #[Route(path: '/{semestre}/export.{_format}', name: 'administration_groupe_export', requirements: ['_format' => 'csv|xlsx|pdf'], options: ['expose' => true], methods: 'GET')]
     public function export(
+        MySerializer $mySerializer,
         MyExport $myExport,
         GroupeRepository $groupeRepository,
         Semestre $semestre,
@@ -84,12 +86,8 @@ class GroupeController extends BaseController
     ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
         $groupes = $groupeRepository->findBySemestre($semestre);
-
-        return $myExport->genereFichierGenerique(
-            $_format,
+        $data = $mySerializer->getDataFromSerialization(
             $groupes,
-            'groupes',
-            ['groupes_administration'],
             [
                 'libelle',
                 'typeGroupe' => ['libelle'],
@@ -97,7 +95,14 @@ class GroupeController extends BaseController
                 'parent' => ['libelle'],
                 'ordre',
                 'parcours' => ['libelle'],
-            ]
+            ],
+            ['groupes_administration'],
+        );
+
+        return $myExport->genereFichierGeneriqueFromData(
+            $_format,
+            $data,
+            'groupes_'.$semestre->getLibelle(),
         );
     }
 

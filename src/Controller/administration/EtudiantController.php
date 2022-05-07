@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 19:11
+ * @lastUpdate 07/05/2022 09:57
  */
 
 namespace App\Controller\administration;
@@ -12,6 +12,7 @@ namespace App\Controller\administration;
 use App\Classes\Etudiant\EtudiantScolarite;
 use App\Classes\Etudiant\EtudiantUpdate;
 use App\Classes\MyExport;
+use App\Classes\MySerializer;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
@@ -183,17 +184,12 @@ class EtudiantController extends BaseController
 
     #[Route('/export.{_format}', name: 'administration_all_etudiant_export', requirements: ['_format' => 'csv|xlsx|pdf'],
         methods: ['GET'])]
-    public function export(MyExport $myExport, EtudiantRepository $etudiantRepository, $_format): Response
+    public function export(MySerializer $mySerializer, MyExport $myExport, EtudiantRepository $etudiantRepository, $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
-        // todo: mettre un databtable et supprimer la requete ?
         $etudiants = $etudiantRepository->getByDepartement($this->getDepartement(), []);
-
-        return $myExport->genereFichierGenerique(
-            $_format,
+        $data = $mySerializer->getDataFromSerialization(
             $etudiants,
-            'etudiants_'.$this->getDepartement()->getLibelle(),
-            ['etudiants_administration', 'adresse'],
             [
                 'nom',
                 'prenom',
@@ -202,7 +198,14 @@ class EtudiantController extends BaseController
                 'mailUniv',
                 'semestre' => ['libelle'],
                 'adresse' => ['adresse1', 'adresse2', 'cp', 'ville', 'pays'],
-            ]
+            ],
+            ['etudiants_administration', 'adresse']
+        );
+
+        return $myExport->genereFichierGeneriqueFromData(
+            $_format,
+            $data,
+            'etudiants_'.$this->getDepartement()?->getLibelle(),
         );
     }
 }

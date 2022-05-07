@@ -1,16 +1,17 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/RattrapagePlanningController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/RattrapagePlanningController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 07/05/2022 09:45
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyExport;
+use App\Classes\MySerializer;
 use App\Controller\BaseController;
 use App\Entity\Diplome;
 use App\Entity\Rattrapage;
@@ -45,16 +46,15 @@ class RattrapagePlanningController extends BaseController
     }
 
     #[Route(path: '/{diplome}/export.{_format}', name: 'administration_rattrapage_planning_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function export(MyExport $myExport, RattrapageRepository $rattrapageRepository, Diplome $diplome, string $_format): Response
+    public function export(
+        MySerializer $mySerializer,
+        MyExport $myExport, RattrapageRepository $rattrapageRepository, Diplome $diplome, string $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $diplome);
         $rattrapages = $rattrapageRepository->findValidByDiplome($diplome, $diplome->getAnneeUniversitaire());
 
-        return $myExport->genereFichierGenerique(
-            $_format,
+        $data = $mySerializer->getDataFromSerialization(
             $rattrapages,
-            'rattrapages_'.$diplome->getLibelle(),
-            ['rattrapage_administration', 'utilisateur', 'matiere'],
             [
                 'etudiant' => ['nom', 'prenom'],
                 'dateEval',
@@ -66,7 +66,15 @@ class RattrapagePlanningController extends BaseController
                 'heureRattrapage',
                 'salle',
                 'etatDemande',
-            ]
+            ],
+            ['rattrapage_administration', 'utilisateur', 'matiere'],
+            ['dateEval' => MySerializer::ONLY_DATE, 'dateRattrapage' => MySerializer::ONLY_DATE, 'heureRattrapage' => MySerializer::ONLY_TIME]
+        );
+
+        return $myExport->genereFichierGeneriqueFromData(
+            $_format,
+            $data,
+            'rattrapages_'.$diplome->getLibelle(),
         );
     }
 

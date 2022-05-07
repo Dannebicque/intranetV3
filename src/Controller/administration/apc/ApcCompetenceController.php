@@ -1,15 +1,16 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcCompetenceController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcCompetenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/06/2021 19:12
+ * @lastUpdate 07/05/2022 09:40
  */
 
 namespace App\Controller\administration\apc;
 
 use App\Classes\MyExport;
+use App\Classes\MySerializer;
 use App\Controller\BaseController;
 use App\Entity\ApcCompetence;
 use App\Entity\Constantes;
@@ -24,16 +25,23 @@ use Symfony\Component\Routing\Annotation\Route;
 class ApcCompetenceController extends BaseController
 {
     #[Route(path: '/{diplome}/export.{_format}', name: 'administration_apc_competence_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function export(MyExport $myExport, ApcComptenceRepository $apcComptenceRepository, Diplome $diplome, $_format): Response
+    public function export(
+        MySerializer $mySerializer,
+        MyExport $myExport, ApcComptenceRepository $apcComptenceRepository, Diplome $diplome, $_format): Response
     {
-        $actualites = $apcComptenceRepository->findByDiplome($diplome);
+        $apcCompetences = $apcComptenceRepository->findByDiplome($diplome);
+//todo: a faire.
+        $data = $mySerializer->getDataFromSerialization(
+            $apcCompetences,
+            [
+            ],
+            [],
+        );
 
-        return $myExport->genereFichierGenerique(
+        return $myExport->genereFichierGeneriqueFromData(
             $_format,
-            $actualites,
-            'actualites',
-            ['actualite_administration', 'utilisateur'],
-            ['titre', 'texte', 'departement' => ['libelle']]
+            $data,
+            'comptences_'.$diplome->getLibelle(),
         );
     }
 

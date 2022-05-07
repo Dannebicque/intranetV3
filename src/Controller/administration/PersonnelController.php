@@ -1,15 +1,16 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PersonnelController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/PersonnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 19:11
+ * @lastUpdate 07/05/2022 09:54
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\MyExport;
+use App\Classes\MySerializer;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Personnel;
@@ -57,18 +58,22 @@ class PersonnelController extends BaseController
         requirements: ['_format' => 'csv|xlsx|pdf'],
         options: ['expose' => true],
         methods: 'GET')]
-    public function export(MyExport $myExport, PersonnelRepository $personnelRepository, $_format): Response
+    public function export(MySerializer $mySerializer, MyExport $myExport, PersonnelRepository $personnelRepository, $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         $personnels = $personnelRepository->findByDepartement($this->dataUserSession->getDepartement());
 
-        return $myExport->genereFichierGenerique(
-            $_format,
+        $data = $mySerializer->getDataFromSerialization(
             $personnels,
-            'listing_personnels',
+            ['civilite', 'nom', 'prenom', 'statut'],
             ['utilisateur', 'personnel:read'],
-            ['civilite', 'nom', 'prenom', 'statut']
+        );
+
+        return $myExport->genereFichierGeneriqueFromData(
+            $_format,
+            $data,
+            'rattrapages_'.$this->getDepartement()?->getLibelle(),
         );
     }
 

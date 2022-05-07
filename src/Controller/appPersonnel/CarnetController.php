@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/CarnetController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/CarnetController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 07/05/2022 16:13
  */
 
 namespace App\Controller\appPersonnel;
@@ -44,20 +44,7 @@ class CarnetController extends BaseController
     {
         $actualites = $cahierTexteRepository->findByPersonnel($this->getUser());
 
-        return $myExport->genereFichierGenerique(
-            $_format,
-            $actualites,
-            'carnet_texte',
-            ['carnet_personnel', 'utilisateur', 'semestre', 'matiere'],
-            [
-                'libelle',
-                'description',
-                'dateRetour',
-                'personnel' => ['nom', 'prenom'],
-                'semestre' => ['libelle'],
-                'matiere' => ['libelle', 'codeMatiere'],
-            ]
-        );
+        //todo: a faire
     }
 
     #[Route(path: '/new', name: 'application_personnel_carnet_new', methods: 'GET|POST')]

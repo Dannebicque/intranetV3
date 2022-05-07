@@ -1,16 +1,17 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EmpruntsController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EmpruntsController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 07/05/2022 09:57
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\MyEmprunts;
 use App\Classes\MyExport;
+use App\Classes\MySerializer;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Emprunt;
@@ -79,15 +80,13 @@ class EmpruntsController extends BaseController
     }
 
     #[Route(path: '/export.{_format}', name: 'administration_emprunts_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function export(MyExport $myExport, MyEmprunts $myEmprunts, $_format): Response
+    public function export(
+        MySerializer $mySerializer,
+        MyExport $myExport, MyEmprunts $myEmprunts, $_format): Response
     {
         $myEmprunts->listeEmprunts($this->dataUserSession->getDepartement());
-
-        return $myExport->genereFichierGenerique(
-            $_format,
-            $myEmprunts->getEmprunts(),
-            'emprunts',
-            ['emprunts_administration', 'utilisateur'],
+        $data = $mySerializer->getDataFromSerialization(
+            $myEmprunts,
             [
                 'dateDebut',
                 'dateFin',
@@ -98,7 +97,14 @@ class EmpruntsController extends BaseController
                 'dateRetour',
                 'etudiant' => ['nom', 'prenom'],
                 'personnel' => ['nom', 'prenom'],
-            ]
+            ],
+            ['emprunts_administration', 'utilisateur'],
+        );
+
+        return $myExport->genereFichierGeneriqueFromData(
+            $_format,
+            $data,
+            'emprunts_'.$this->getDepartement()?->getLibelle(),
         );
     }
 

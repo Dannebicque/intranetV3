@@ -1,15 +1,16 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantSemestreController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EtudiantSemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/10/2021 11:21
+ * @lastUpdate 07/05/2022 09:56
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\MyExport;
+use App\Classes\MySerializer;
 use App\Classes\MyUpload;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
@@ -108,16 +109,12 @@ class EtudiantSemestreController extends BaseController
     }
 
     #[Route(path: '/export/{semestre}.{_format}', name: 'administration_etudiant_semestre_export', requirements: ['semestre' => '\d+', '_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function exportEtudiantsSemestre(MyExport $myExport, EtudiantRepository $etudiantRepository, Semestre $semestre, $_format): Response
+    public function exportEtudiantsSemestre(MySerializer $mySerializer, MyExport $myExport, EtudiantRepository $etudiantRepository, Semestre $semestre, $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
         $etudiants = $etudiantRepository->findBySemestre($semestre);
-
-        return $myExport->genereFichierGenerique(
-            $_format,
+        $data = $mySerializer->getDataFromSerialization(
             $etudiants,
-            'etudiants_'.$semestre->getLibelle(),
-            ['etudiants_administration', 'utilisateur', 'adresse'],
             [
                 'nom',
                 'prenom',
@@ -128,7 +125,14 @@ class EtudiantSemestreController extends BaseController
                 'adresse' => ['adresse1', 'adresse2', 'codePostal', 'ville', 'pays'],
                 'tel1',
                 'tel2',
-            ]
+            ],
+            ['etudiants_administration', 'utilisateur', 'adresse']
+        );
+
+        return $myExport->genereFichierGeneriqueFromData(
+            $_format,
+            $data,
+            'etudiants_'.$semestre->getLibelle(),
         );
     }
 }

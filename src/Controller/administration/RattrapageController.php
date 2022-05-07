@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/RattrapageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 08:58
+ * @lastUpdate 07/05/2022 09:47
  */
 
 namespace App\Controller\administration;
@@ -62,6 +62,7 @@ class RattrapageController extends BaseController
 
     #[Route(path: '/{semestre}/export.{_format}', name: 'administration_rattrapage_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
     public function export(
+        MySerializer $mySerializer,
         TypeMatiereManager $typeMatiereManager, MyExport $myExport, RattrapageRepository $rattrapageRepository, Semestre $semestre, string $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
@@ -76,11 +77,8 @@ class RattrapageController extends BaseController
             }
         }
 
-        return $myExport->genereFichierGenerique(
-            $_format,
+        $data = $mySerializer->getDataFromSerialization(
             $tab,
-            'rattrapages_'.$semestre->getLibelle(),
-            ['rattrapage_administration', 'utilisateur', 'matiere'],
             [
                 'etudiant' => ['nom', 'prenom'],
                 'dateEval',
@@ -93,10 +91,17 @@ class RattrapageController extends BaseController
                 'salle',
                 'etatDemandeLong',
             ],
-            [
-                'dateEval' => MySerializer::ONLY_DATE,
-                'heureEval' => MySerializer::ONLY_HEURE,
-            ]
+            ['rattrapage_administration', 'utilisateur', 'matiere'],
+            ['dateEval' => MySerializer::ONLY_DATE,
+                'heureEval' => MySerializer::ONLY_TIME,
+                'dateRattrapage' => MySerializer::ONLY_DATE,
+                'heureRattrapage' => MySerializer::ONLY_TIME, ]
+        );
+
+        return $myExport->genereFichierGeneriqueFromData(
+            $_format,
+            $data,
+            'rattrapages_'.$semestre->getLibelle(),
         );
     }
 

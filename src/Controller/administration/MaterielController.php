@@ -1,15 +1,16 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/MaterielController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/MaterielController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 07/05/2022 09:54
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\MyExport;
+use App\Classes\MySerializer;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Materiel;
@@ -30,16 +31,19 @@ class MaterielController extends BaseController
     }
 
     #[Route(path: '/export.{_format}', name: 'administration_materiel_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function export(MyExport $myExport, MaterielRepository $materielRepository, $_format): Response
+    public function export(MySerializer $mySerializer,MyExport $myExport, MaterielRepository $materielRepository, $_format): Response
     {
         $materiels = $materielRepository->findByDepartement($this->dataUserSession->getDepartement());
-
-        return $myExport->genereFichierGenerique(
-            $_format,
+        $data = $mySerializer->getDataFromSerialization(
             $materiels,
-            'materiels',
+            ['titre', 'texte', 'departement' => ['libelle']],
             ['materiel_administration', 'utilisateur'],
-            ['titre', 'texte', 'departement' => ['libelle']]
+        );
+
+        return $myExport->genereFichierGeneriqueFromData(
+            $_format,
+            $data,
+            'materiels_'.$this->getDepartement()?->getLibelle(),
         );
     }
 
