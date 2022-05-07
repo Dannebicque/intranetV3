@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ComparePrevisionnel/ComparePrevisionnelPersonnel.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/ComparePrevisionnel/ComparePrevisionnelPersonnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:30
+ * @lastUpdate 07/05/2022 22:50
  */
 
 namespace App\Classes\ComparePrevisionnel;
@@ -82,7 +82,7 @@ class ComparePrevisionnelPersonnel extends ComparePrevisionnel
                     $t[$ligne][$col]['matiere_code'] = $matiere?->codeMatiere;
                     $t[$ligne][$col]['matiere_code_element'] = $matiere?->codeElement;
                     $t[$ligne][$col]['matiere_libelle'] = $matiere?->libelle;
-                    $t[$ligne][$col]['semestre_libelle'] = $matiere?->semestre->getLibelle();
+                    $t[$ligne][$col]['semestre_libelle'] = $matiere?->getSemestres()?->first()->getLibelle();
                     $t[$ligne][$col]['nbCMPrevi'] = 0;
                     $t[$ligne][$col]['nbTDPrevi'] = 0;
                     $t[$ligne][$col]['nbTPPrevi'] = 0;

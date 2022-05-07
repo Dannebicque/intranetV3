@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/Matiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/05/2022 15:06
+ * @lastUpdate 07/05/2022 22:44
  */
 
 namespace App\DTO;
@@ -187,6 +187,15 @@ class Matiere
         }
 
         return true;
+    }
+
+    public function containSemestre(Semestre $semestre): bool
+    {
+        $semestres = $this->getSemestres();
+        if (null !== $semestres) {
+            return $semestres->contains($semestre);
+        }
+        return false;
     }
 
     public function parent(): mixed

@@ -57,7 +57,7 @@
                                         <th>&nbsp;</th>
                                     </tr>
                                     </thead>
-                            {% for matiere in matieres|filter(matiere => matiere.semestre.id == semestre.id) %}
+                            {% for matiere in matieres|filter(matiere => matiere.containSemestre(semestre)) %}
                                 <tr style="background-color:#cccccc;">
                                     <td colspan="10" style="text-align:center;">
                                         <button
