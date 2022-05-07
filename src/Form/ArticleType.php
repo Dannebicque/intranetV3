@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ArticleType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/ArticleType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 10:56
+ * @lastUpdate 07/05/2022 18:35
  */
 
 namespace App\Form;
@@ -42,8 +42,9 @@ class ArticleType extends AbstractType
             ->add('typeDestinataire', TypeDestinataireType::class, ['label' => 'label.typedestinataire'])
             ->add('texte', TextareaType::class, [
                 'label' => 'label.texte',
-                'attr' => ['rows' => 20, 'class' => 'tinyMce'], // todo: tinyMce ne fonctionne plus
+                'attr' => ['rows' => 20, 'class' => 'tinyMce'],
             ])
+            //feature: EntytityWithAddType ... Liste avec un bouton ajouter pour inserer en popup un nouvel element dans la bse et la liste. Stimulus
             ->add('categorie', EntityType::class, [
                 'class' => ArticleCategorie::class,
                 'label' => 'label.article_categorie',
