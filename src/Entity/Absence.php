@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Absence.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Absence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/10/2021 12:18
+ * @lastUpdate 07/05/2022 18:52
  */
 
 namespace App\Entity;
@@ -25,31 +25,22 @@ use Symfony\Component\Serializer\Annotation\MaxDepth;
 
 #[ORM\Entity(repositoryClass: AbsenceRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class Absence extends BaseEntity implements Serializable
+class Absence extends BaseEntity
 {
     use UuidTrait;
     use LifeCycleTrait;
     use MatiereTrait;
 
-    final public const STATUS_COLORS = [
-        self::ABSENCE_JUSTIFIE => 'success',
-        self::ABSENCE_INJUSTIFIEE => 'danger',
-        self::ABSENCE_EN_ATTENTE => 'warning',
-    ];
-    final public const ABSENCE_JUSTIFIE = 'justifie';
-    final public const ABSENCE_INJUSTIFIEE = 'injustifie';
-    final public const ABSENCE_EN_ATTENTE = '-';
-
     #[Groups(groups: ['absences_administration'])]
-    #[ORM\Column(name: 'dateHeure', type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE)]
+    #[ORM\Column(name: 'dateHeure', type: Types::DATETIME_MUTABLE)]
     private ?CarbonInterface $dateHeure = null;
 
     #[Groups(groups: ['absences_administration'])]
-    #[ORM\Column(name: 'duree', type: \Doctrine\DBAL\Types\Types::TIME_MUTABLE)]
+    #[ORM\Column(name: 'duree', type: Types::TIME_MUTABLE)]
     private ?CarbonInterface $duree = null;
 
     #[Groups(groups: ['absences_administration'])]
-    #[ORM\Column(name: 'justifie', type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(name: 'justifie', type: Types::BOOLEAN)]
     private bool $justifie = false;
 
     #[MaxDepth(2)]
@@ -62,7 +53,7 @@ class Absence extends BaseEntity implements Serializable
     #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'absences')]
     private Etudiant $etudiant;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateJustifie = null;
 
     #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class)]
@@ -86,13 +77,6 @@ class Absence extends BaseEntity implements Serializable
         $this->uuid = $uuid;
 
         return $this;
-    }
-
-    public static function getIconStatus(string $status): string
-    {
-        return isset(self::STATUS_COLORS[$status])
-            ? sprintf('<i class="fas fa-circle text-%s me-1"></i> %s', self::STATUS_COLORS[$status], $status)
-            : $status;
     }
 
     public function __clone()
@@ -191,20 +175,6 @@ class Absence extends BaseEntity implements Serializable
     public function setJustifie(bool $justifie): void
     {
         $this->justifie = $justifie;
-    }
-
-    public function serialize(): string|null
-    {
-        // todo: a ajouter ou retirer ?
-        return null;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function unserialize($data): void
-    {
-        // todo: a ajouter ou retirer ?
     }
 
     public function getSemestre(): ?Semestre
