@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Semestre/NotesExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 07/05/2022 17:27
  */
 
 /*
@@ -39,7 +39,7 @@ class NotesExport
         $matieres = $this->typeMatiereManager->findBySemestreArray($semestre);
         // todo: filtrer si option faite ou pas
         $etudiants = $semestre->getEtudiants();
-        $evaluations = $this->evaluationRepository->findBySemestre($matieres, $anneeUniversitaire);
+        $evaluations = $this->evaluationRepository->findBySemestre($semestre, $anneeUniversitaire);
         $notes = $this->noteRepository->findByEtudiantSemestreArray($matieres, $anneeUniversitaire, $etudiants);
 
         $ligne = 2;

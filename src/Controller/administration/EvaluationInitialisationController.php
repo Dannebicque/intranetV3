@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EvaluationInitialisationController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EvaluationInitialisationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 10:38
+ * @lastUpdate 07/05/2022 17:27
  */
 
 namespace App\Controller\administration;
@@ -34,7 +34,7 @@ class EvaluationInitialisationController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
         $matieres = $typeMatiereManager->findBySemestre($semestre);
-        $evaluations = $evaluationRepository->findBySemestre($matieres,
+        $evaluations = $evaluationRepository->findBySemestre($semestre,
             $this->dataUserSession->getAnneeUniversitaire());
         if ('POST' === $request->getMethod()) {
             $tGroupes = [];

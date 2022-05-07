@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EvaluationRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 07/05/2022 17:29
  */
 
 namespace App\Repository;
 
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Evaluation;
+use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
@@ -32,25 +33,15 @@ class EvaluationRepository extends ServiceEntityRepository
         parent::__construct($registry, Evaluation::class);
     }
 
-    // todo: utiliser le semestre de Evaluation ? plutot que matière / Semestre pas mis à jour.
-    public function findBySemestre(array $matieres, AnneeUniversitaire $annee): ?array
+    public function findBySemestre(Semestre $semestre, AnneeUniversitaire $annee): ?array
     {
-        if (count($matieres) <= 0) {
-            return null;
-        }
-
-        $query = $this->createQueryBuilder('e')
+        return $this->createQueryBuilder('e')
             ->innerJoin(AnneeUniversitaire::class, 'n', 'WITH', 'e.anneeUniversitaire = n.id')
             ->where('n.annee = :annee')
+            ->andWhere('e.semestre = :semestre')
             ->setParameter('annee', $annee->getAnnee())
-            ->orderBy('e.dateEvaluation', Criteria::ASC);
-
-        $ors = [];
-        foreach ($matieres as $matiere) {
-            $ors[] = '('.$query->expr()->orx('e.idMatiere = '.$query->expr()->literal($matiere->id)).' AND '.$query->expr()->andX('e.typeMatiere = '.$query->expr()->literal($matiere->typeMatiere)).')';
-        }
-
-        return $query->andWhere(implode(' OR ', $ors))
+            ->setParameter('semestre', $semestre->getId())
+            ->orderBy('e.dateEvaluation', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

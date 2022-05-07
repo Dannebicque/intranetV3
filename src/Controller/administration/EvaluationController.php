@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EvaluationController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EvaluationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 20:09
+ * @lastUpdate 07/05/2022 17:27
  */
 
 namespace App\Controller\administration;
@@ -154,8 +154,7 @@ class EvaluationController extends BaseController
     public function visibiliteAll(TypeMatiereManager $typeMatiereManager, EvaluationRepository $evaluationRepository, $etat, Semestre $semestre): RedirectResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
-        $matieres = $typeMatiereManager->findBySemestreArray($semestre);
-        $evals = $evaluationRepository->findBySemestre($matieres, $this->dataUserSession->getAnneeUniversitaire());
+        $evals = $evaluationRepository->findBySemestre($semestre, $this->dataUserSession->getAnneeUniversitaire());
         /** @var Evaluation $eval */
         foreach ($evals as $eval) {
             $eval->setVisible('visible' === $etat);
@@ -171,8 +170,7 @@ class EvaluationController extends BaseController
     public function modifiableAll(TypeMatiereManager $typeMatiereManager, EvaluationRepository $evaluationRepository, $etat, Semestre $semestre): RedirectResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
-        $matieres = $typeMatiereManager->findBySemestreArray($semestre);
-        $evals = $evaluationRepository->findBySemestre($matieres, $this->dataUserSession->getAnneeUniversitaire());
+        $evals = $evaluationRepository->findBySemestre($semestre, $this->dataUserSession->getAnneeUniversitaire());
         /** @var Evaluation $eval */
         foreach ($evals as $eval) {
             $eval->setModifiable('autorise' === $etat);
