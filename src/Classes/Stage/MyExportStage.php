@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Stage/MyExportStage.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 07/05/2022 09:14
  */
 
 /*
@@ -32,6 +32,7 @@ class MyExportStage
     public function genereFichier(
         StagePeriode $stagePeriode
     ): ?StreamedResponse {
+        //todo: améliroer avec ligne de tête et largeur automatique...
         $stagesEtudiants = $stagePeriode->getStageEtudiants();
         $this->myExcelWriter->createSheet('stage');
         $tEnTete = [

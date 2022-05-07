@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MySerializer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 08:49
+ * @lastUpdate 07/05/2022 09:45
  */
 
 /*
@@ -14,6 +14,7 @@
 namespace App\Classes;
 
 use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
 use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
@@ -25,11 +26,11 @@ use Symfony\Component\Serializer\Serializer;
 class MySerializer
 {
     final public const ONLY_DATE = 'date';
-    final public const ONLY_HEURE = 'heure';
+    final public const ONLY_TIME = 'heure';
     final public const YES_NO = 'yes_no';
     private array $options = [];
 
-    public function serialize(array $data, array|string $groups): string
+    public function serialize(array|Collection $data, array|string $groups): string
     {
         // pour prendre en compte les annotations groups et maxdepth
         $classMetaDataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
@@ -47,7 +48,7 @@ class MySerializer
         return $serializer->serialize($data, 'json', ['enable_max_depth' => true, 'groups' => $groups]);
     }
 
-    public function getDataFromSerialization(array $data, array $colonne, array $modele, array $options = [])
+    public function getDataFromSerialization(array|Collection $data, array $colonne, array $modele, array $options = [])
     {
         $this->options = $options;
         $dataArray = [];
@@ -94,6 +95,7 @@ class MySerializer
                     if (is_array($value)) {
                         foreach ($value as $col) {
                             if (is_array($row[$key])) {
+                                //todo: gérer le 3eme niveau...Si $col est un tableau...
                                 if (array_key_exists($col, $row[$key])) {
                                     $dataArray[$ligne][$i] = $this->transformValue($row[$key][$col], $key);
                                 } else {
@@ -121,7 +123,7 @@ class MySerializer
         return $dataArray;
     }
 
-    //todo: traiter le cas d'une collection ? Exemple des dates avec semestres ?
+    // todo: traiter le cas d'une collection ? Exemple des dates avec semestres ?
     private function transformValue(?string $value, string $key): ?string
     {
         if (array_key_exists($key, $this->options)) {
@@ -130,7 +132,7 @@ class MySerializer
                     $t = explode(' ', (string) $value);
 
                     return $t[0];
-                case self::ONLY_HEURE:
+                case self::ONLY_TIME:
                     $t = explode(' ', (string) $value);
 
                     return 2 === count($t) ? $t[1] : 'err';
