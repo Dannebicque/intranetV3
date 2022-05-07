@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/StageController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/StageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 07/05/2022 09:05
  */
 
 namespace App\Controller\appPersonnel;
@@ -72,7 +72,8 @@ class StageController extends BaseController
                 'dateDebutStage',
                 'dateFinStage',
             ],
-            ['stage_entreprise', 'adresse']
+            ['stage_entreprise', 'adresse'],
+            ['dateDebutStage' => MySerializer::ONLY_DATE, 'dateFinStage' => MySerializer::ONLY_DATE]
         );
 
         return $myExport->genereFichierGeneriqueFromData(
@@ -83,8 +84,11 @@ class StageController extends BaseController
     }
 
     #[Route(path: '/alternance/export/{periode}.{_format}', name: 'application_personnel_alternance_export')]
-    public function exportAlternance(MyExport $myExport, AlternanceRepository $alternanceRepository, $periode, $_format): Response
+    public function exportAlternance(
+        MySerializer $mySerializer,
+        MyExport $myExport, AlternanceRepository $alternanceRepository, $periode, $_format): Response
     {
+        // todo: séparer Stage et Alternance...
         if ('courant' === $periode) {
             $alternances = $alternanceRepository->getByPersonnelAndAnneeUniversitaire($this->getUser(),
                 $this->dataUserSession->getAnneeUniversitaire());
@@ -92,12 +96,8 @@ class StageController extends BaseController
             $alternances = $alternanceRepository->getHistoriqueByPersonnelAndAnneeUniversitaire($this->getUser(),
                 $this->dataUserSession->getAnneeUniversitaire());
         }
-
-        return $myExport->genereFichierGenerique(
-            $_format,
+        $data = $mySerializer->getDataFromSerialization(
             $alternances,
-            'alternances',
-            ['alternance_administration', 'utilisateur'],
             [
                 'entreprise' => ['libelle'],
                 'tuteur' => ['nom', 'prenom', 'fonction', 'telephone', 'email', 'portable'],
@@ -106,7 +106,15 @@ class StageController extends BaseController
                 'typeContrat',
                 'dateDebut',
                 'dateFin',
-            ]
+            ],
+            ['alternance_administration', 'utilisateur'],
+            ['dateDebut' => MySerializer::ONLY_DATE, 'dateFin' => MySerializer::ONLY_DATE]
+        );
+
+        return $myExport->genereFichierGeneriqueFromData(
+            $_format,
+            $data,
+            'alternances_'.$this->getDepartement()->getLibelle(), // todo: pas idéal... afficher le diplôme ?
         );
     }
 
