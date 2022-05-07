@@ -1,15 +1,16 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/TypeDiplomeController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/TypeDiplomeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 06/05/2022 21:28
  */
 
 namespace App\Controller\superAdministration;
 
 use App\Classes\MyExport;
+use App\Classes\MySerializer;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\TypeDiplome;
@@ -31,16 +32,21 @@ class TypeDiplomeController extends BaseController
     }
 
     #[Route(path: '/export.{_format}', name: 'sa_type_diplome_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function export(MyExport $myExport, TypeDiplomeRepository $typeDiplomeRepository, string $_format): Response
+    public function export(
+        MySerializer $mySerializer,
+        MyExport $myExport, TypeDiplomeRepository $typeDiplomeRepository, string $_format): Response
     {
         $typeDiplomes = $typeDiplomeRepository->findAll();
-
-        return $myExport->genereFichierGenerique(
-            $_format,
+        $data = $mySerializer->getDataFromSerialization(
             $typeDiplomes,
-            'typeDiplomes',
-            ['type_diplome_administration'],
-            ['libelle', 'sigle', 'nbSemestres', 'niveauEntree', 'niveauSortie']
+            ['libelle', 'sigle', 'nbSemestres', 'niveauEntree', 'niveauSortie'],
+            ['type_diplome_administration']
+        );
+
+        return $myExport->genereFichierGeneriqueFromData(
+            $_format,
+            $data,
+            'typeDiplomes'
         );
     }
 

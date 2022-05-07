@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Calendrier.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Calendrier.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 19:05
+ * @lastUpdate 07/05/2022 08:44
  */
 
 namespace App\Entity;
@@ -23,18 +23,19 @@ class Calendrier extends BaseEntity
     use LifeCycleTrait;
 
     #[Groups(groups: ['celcat_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER)]
     private ?int $semaineFormation = null;
 
     #[Groups(groups: ['celcat_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER)]
     private ?int $semaineReelle = null;
 
     #[Groups(groups: ['celcat_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_IMMUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
     private ?CarbonImmutable $dateLundi = null;
 
     #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class, inversedBy: 'calendriers')]
+    #[Groups(groups: ['celcat_administration'])]
     private ?AnneeUniversitaire $anneeUniversitaire = null;
 
     public function __construct()

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Bac.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Bac.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/07/2021 09:13
+ * @lastUpdate 07/05/2022 08:45
  */
 
 namespace App\Entity;
@@ -35,17 +35,20 @@ class Bac extends BaseEntity
     ];
 
     #[Groups(groups: ['bac_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 30)]
+    #[ORM\Column(type: Types::STRING, length: 30)]
     private ?string $libelle = null;
 
     #[Groups(groups: ['bac_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $libelleLong = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 10, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 10, nullable: true)]
+    #[Groups(groups: ['bac_administration'])]
     private ?string $codeApogee = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 1, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 1, nullable: true)]
+    #[Groups(groups: ['bac_administration'])]
+    //todo: pas géré...
     private ?string $typeBac = null;
 
     public function getLibelle(): ?string

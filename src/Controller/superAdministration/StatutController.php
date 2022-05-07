@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/StatutController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/StatutController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2021 23:16
+ * @lastUpdate 07/05/2022 08:47
  */
 
 namespace App\Controller\superAdministration;
@@ -21,6 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/administratif/statuts', name: 'sa_statuts_')]
 class StatutController extends BaseController
 {
+    //todo: finaliser et utiliser . Pas d'export
     #[Route('/', name: 'index', methods: ['GET'])]
     public function index(
         StatusRepository $statusRepository

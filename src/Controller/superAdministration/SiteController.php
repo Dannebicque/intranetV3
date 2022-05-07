@@ -1,15 +1,16 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/SiteController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/SiteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 06/05/2022 21:28
  */
 
 namespace App\Controller\superAdministration;
 
 use App\Classes\MyExport;
+use App\Classes\MySerializer;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Site;
@@ -30,16 +31,22 @@ class SiteController extends BaseController
     }
 
     #[Route(path: '/export.{_format}', name: 'sa_site_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function export(MyExport $myExport, SiteRepository $siteRepository, string $_format): Response
+    public function export(
+        MySerializer $mySerializer,
+        MyExport $myExport, SiteRepository $siteRepository, string $_format): Response
     {
         $sites = $siteRepository->findAll();
 
-        return $myExport->genereFichierGenerique(
-            $_format,
+        $data = $mySerializer->getDataFromSerialization(
             $sites,
+            ['libelle', 'adresse' => ['adresse1', 'adresse2', 'adresse3', 'codePostal', 'ville', 'pays']],
+            ['sites_administration', 'adresse']
+        );
+
+        return $myExport->genereFichierGeneriqueFromData(
+            $_format,
+            $data,
             'sites',
-            ['sites_administration', 'adresse'],
-            ['libelle', 'adresse' => ['adresse1', 'adresse2', 'adresse3', 'codePostal', 'ville', 'pays']]
         );
     }
 

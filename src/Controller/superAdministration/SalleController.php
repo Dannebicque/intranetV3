@@ -1,15 +1,16 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/SalleController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/SalleController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 06/05/2022 21:29
  */
 
 namespace App\Controller\superAdministration;
 
 use App\Classes\MyExport;
+use App\Classes\MySerializer;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Salle;
@@ -29,16 +30,22 @@ class SalleController extends BaseController
     }
 
     #[Route(path: '/export.{_format}', name: 'sa_salle_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function export(MyExport $myExport, SalleRepository $salleRepository, string $_format): Response
+    public function export(
+        MySerializer $mySerializer,
+        MyExport $myExport, SalleRepository $salleRepository, string $_format): Response
     {
         $salles = $salleRepository->findAll();
 
-        return $myExport->genereFichierGenerique(
-            $_format,
+        $data = $mySerializer->getDataFromSerialization(
             $salles,
+            ['libelle', 'capacite', 'type', 'site' => ['libelle']],
+            ['salle_administration', 'sites_administration']
+        );
+
+        return $myExport->genereFichierGeneriqueFromData(
+            $_format,
+            $data,
             'salles',
-            ['salle_administration', 'sites_administration'],
-            ['libelle', 'capacite', 'type', 'site' => ['libelle']]
         );
     }
 

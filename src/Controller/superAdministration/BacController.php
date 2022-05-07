@@ -1,15 +1,16 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/BacController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/BacController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 06/05/2022 21:33
  */
 
 namespace App\Controller\superAdministration;
 
 use App\Classes\MyExport;
+use App\Classes\MySerializer;
 use App\Controller\BaseController;
 use App\Entity\Bac;
 use App\Entity\Constantes;
@@ -29,16 +30,21 @@ class BacController extends BaseController
     }
 
     #[Route(path: '/export.{_format}', name: 'sa_bac_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function export(MyExport $myExport, BacRepository $bacRepository, string $_format): Response
+    public function export(
+        MySerializer $mySerializer,
+        MyExport $myExport, BacRepository $bacRepository, string $_format): Response
     {
         $bacs = $bacRepository->findAll();
-
-        return $myExport->genereFichierGenerique(
-            $_format,
+        $data = $mySerializer->getDataFromSerialization(
             $bacs,
+            ['libelle', 'libelleLong', 'codeApogee', 'typeBac'],
+            ['bac_administration']
+        );
+
+        return $myExport->genereFichierGeneriqueFromData(
+            $_format,
+            $data,
             'bacs',
-            ['bac_administration'],
-            ['libelle', 'libelleLong']
         );
     }
 

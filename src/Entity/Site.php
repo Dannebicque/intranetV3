@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Site.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Site.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 09:18
+ * @lastUpdate 06/05/2022 21:28
  */
 
 namespace App\Entity;
@@ -24,7 +24,7 @@ class Site extends BaseEntity
     use LifeCycleTrait;
 
     #[Groups(['sites_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $libelle = null;
 
     #[Groups(['sites_administration'])]

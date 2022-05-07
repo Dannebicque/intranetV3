@@ -1,15 +1,16 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/TypeHrsController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/TypeCoursController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 07/05/2022 08:46
  */
 
 namespace App\Controller\superAdministration;
 
 use App\Classes\MyExport;
+use App\Classes\MySerializer;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\TypeCours;
@@ -22,6 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/administratif/type-cours')]
 class TypeCoursController extends BaseController
 {
+    //todo: a finaliser et utiliser ?
     #[Route(path: '/', name: 'sa_type_cours_index', methods: 'GET')]
     public function index(TypeCoursRepository $typeCoursRepository): Response
     {
@@ -30,16 +32,21 @@ class TypeCoursController extends BaseController
     }
 
     #[Route(path: '/export.{_format}', name: 'sa_type_cours_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function export(MyExport $myExport, TypeCoursRepository $typeCoursRepository, string $_format): Response
+    public function export(
+        MySerializer $mySerializer,
+        MyExport $myExport, TypeCoursRepository $typeCoursRepository, string $_format): Response
     {
         $typeCours = $typeCoursRepository->findAll();
-
-        return $myExport->genereFichierGenerique(
-            $_format,
+        $data = $mySerializer->getDataFromSerialization(
             $typeCours,
-            'typeHrs',
-            ['type_cours_administration'],
-            ['libelle', 'type', 'incluService', 'maximum']
+            ['libelle', 'type', 'incluService', 'maximum'],
+            ['type_cours_administration']
+        );
+
+        return $myExport->genereFichierGeneriqueFromData(
+            $_format,
+            $data,
+            'typeCours'
         );
     }
 

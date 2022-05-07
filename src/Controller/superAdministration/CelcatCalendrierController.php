@@ -1,16 +1,17 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/CelcatCalendrierController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/CelcatCalendrierController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 07/05/2022 08:44
  */
 
 namespace App\Controller\superAdministration;
 
 use App\Classes\Celcat\MyCelcat;
 use App\Classes\MyExport;
+use App\Classes\MySerializer;
 use App\Controller\BaseController;
 use App\Entity\Calendrier;
 use App\Entity\Constantes;
@@ -32,16 +33,21 @@ class CelcatCalendrierController extends BaseController
     }
 
     #[Route(path: '/export.{_format}', name: 'sa_celcat_calendrier_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function export(MyExport $myExport, CalendrierRepository $celcatCalendrierRepository, string $_format): Response
+    public function export(
+        MySerializer $mySerializer,
+        MyExport $myExport, CalendrierRepository $celcatCalendrierRepository, string $_format): Response
     {
-        $articles = $celcatCalendrierRepository->findAll();
+        $celcatCalendrier = $celcatCalendrierRepository->findAll();
+        $data = $mySerializer->getDataFromSerialization(
+            $celcatCalendrier,
+            ['semaineFormation', 'semaineReelle', 'dateLundi', 'anneeUniversitaire' => ['libelle']],
+            ['celcat_administration']
+        );
 
-        return $myExport->genereFichierGenerique(
+        return $myExport->genereFichierGeneriqueFromData(
             $_format,
-            $articles,
-            'celcat',
-            ['celcat_administration'],
-            ['semaineFormation', 'semaineReelle', 'dateLundi']
+            $data,
+            'celcatCalendrier',
         );
     }
 

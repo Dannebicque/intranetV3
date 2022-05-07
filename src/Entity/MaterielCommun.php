@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/MaterielCommun.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/MaterielCommun.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/06/2021 21:12
+ * @lastUpdate 06/05/2022 21:29
  */
 
 namespace App\Entity;
@@ -27,16 +27,16 @@ class MaterielCommun extends BaseEntity
 {
     use LifeCycleTrait;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 150)]
+    #[ORM\Column(type: Types::STRING, length: 150)]
     private ?string $designation = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
     #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'materielCommuns')]
     private ?Personnel $contact = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
     private ?string $photoName = 'noimage.png';
 
     /**

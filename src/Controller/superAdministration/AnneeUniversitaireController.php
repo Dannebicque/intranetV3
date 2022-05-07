@@ -1,15 +1,16 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/AnneeUniversitaireController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/AnneeUniversitaireController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/07/2021 17:05
+ * @lastUpdate 06/05/2022 21:34
  */
 
 namespace App\Controller\superAdministration;
 
 use App\Classes\MyExport;
+use App\Classes\MySerializer;
 use App\Controller\BaseController;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
@@ -50,16 +51,21 @@ class AnneeUniversitaireController extends BaseController
     }
 
     #[Route(path: '/export.{_format}', name: 'sa_annee_universitaire_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function export(MyExport $myExport, AnneeUniversitaireRepository $anneeUniversitaireRepository, string $_format): Response
+    public function export(
+        MySerializer $mySerializer,
+        MyExport $myExport, AnneeUniversitaireRepository $anneeUniversitaireRepository, string $_format): Response
     {
         $annee_universitaires = $anneeUniversitaireRepository->findAll();
-
-        return $myExport->genereFichierGenerique(
-            $_format,
+        $data = $mySerializer->getDataFromSerialization(
             $annee_universitaires,
-            'annee_universitaire',
-            ['annee_universitaire'],
-            ['libelle', 'annee', 'commentaire']
+            ['libelle', 'annee', 'commentaire'],
+            ['annee_universitaire']
+        );
+
+        return $myExport->genereFichierGeneriqueFromData(
+            $_format,
+            $data,
+            'annee_universitaires',
         );
     }
 

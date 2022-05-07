@@ -1,15 +1,16 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/MaterielCommunController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/MaterielCommunController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 06/05/2022 21:29
  */
 
 namespace App\Controller\superAdministration;
 
 use App\Classes\MyExport;
+use App\Classes\MySerializer;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\MaterielCommun;
@@ -31,16 +32,22 @@ class MaterielCommunController extends BaseController
     }
 
     #[Route(path: '/export.{_format}', name: 'sa_materiel_commun_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function export(MyExport $myExport, MaterielCommunRepository $materielCommunRepository, string $_format): Response
+    public function export(
+        MySerializer $mySerializer,
+        MyExport $myExport, MaterielCommunRepository $materielCommunRepository, string $_format): Response
     {
         $materielsCommuns = $materielCommunRepository->findAll();
 
-        return $myExport->genereFichierGenerique(
-            $_format,
+        $data = $mySerializer->getDataFromSerialization(
             $materielsCommuns,
+            ['designation', 'description'],
+            ['materiel_commun_administration']
+        );
+
+        return $myExport->genereFichierGeneriqueFromData(
+            $_format,
+            $data,
             'materiel_commun',
-            ['materiel_commun_administration'],
-            ['designation', 'description']
         );
     }
 

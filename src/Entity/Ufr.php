@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Ufr.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Ufr.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 09:36
+ * @lastUpdate 06/05/2022 21:28
  */
 
 namespace App\Entity;
@@ -30,7 +30,7 @@ class Ufr extends BaseEntity
     private Collection $departements;
 
     #[Groups(['ufr_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $libelle = null;
 
     #[ORM\ManyToMany(targetEntity: Site::class, inversedBy: 'ufrs')]

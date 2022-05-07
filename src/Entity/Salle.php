@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Salle.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Salle.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 09:05
+ * @lastUpdate 06/05/2022 21:29
  */
 
 namespace App\Entity;
@@ -29,15 +29,15 @@ class Salle extends BaseEntity
     final public const SALLE_INFORMATIQUE = 'info';
 
     #[Groups(groups: ['salle_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 30)]
+    #[ORM\Column(type: Types::STRING, length: 30)]
     private ?string $libelle = null;
 
     #[Groups(groups: ['salle_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER)]
     private int $capacite = 0;
 
     #[Groups(groups: ['salle_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $type = null;
 
     #[Groups(groups: ['salle_administration'])]

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/TypeHrs.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 06/05/2022 21:28
  */
 
 namespace App\Entity;
@@ -39,11 +39,11 @@ class TypeHrs extends BaseEntity implements Stringable
     // STAGE, PRP, PCA, HRS
 
     #[Groups(['type_hrs_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 100)]
+    #[ORM\Column(type: Types::STRING, length: 100)]
     private ?string $libelle = null;
 
     #[Groups(['type_hrs_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20)]
+    #[ORM\Column(type: Types::STRING, length: 20)]
     private ?string $type = null;
 
     /**
@@ -53,11 +53,11 @@ class TypeHrs extends BaseEntity implements Stringable
     private Collection $hrs;
 
     #[Groups(['type_hrs_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $incluService = false;
 
     #[Groups(['type_hrs_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
+    #[ORM\Column(type: Types::FLOAT)]
     private float $maximum = 96;
 
     public function __construct()

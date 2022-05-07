@@ -1,15 +1,16 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/UfrController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/UfrController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 06/05/2022 21:28
  */
 
 namespace App\Controller\superAdministration;
 
 use App\Classes\MyExport;
+use App\Classes\MySerializer;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Ufr;
@@ -30,16 +31,21 @@ class UfrController extends BaseController
     }
 
     #[Route(path: '/export.{_format}', name: 'sa_ufr_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function export(MyExport $myExport, UfrRepository $ufrRepository, string $_format): Response
+    public function export(
+        MySerializer $mySerializer,
+        MyExport $myExport, UfrRepository $ufrRepository, string $_format): Response
     {
         $ufrs = $ufrRepository->findAll();
-
-        return $myExport->genereFichierGenerique(
-            $_format,
+        $data = $mySerializer->getDataFromSerialization(
             $ufrs,
-            'ufr',
-            ['ufr_administration', 'utilisateur'],
-            ['libelle', 'responsable' => ['nom', 'prenom', 'mailUniv']]
+            ['libelle', 'responsable' => ['nom', 'prenom', 'mailUniv']],
+            ['ufr_administration', 'utilisateur']
+        );
+
+        return $myExport->genereFichierGeneriqueFromData(
+            $_format,
+            $data,
+            'ufrs',
         );
     }
 

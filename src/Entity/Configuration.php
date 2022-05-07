@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Configuration.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Configuration.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 19:05
+ * @lastUpdate 07/05/2022 08:42
  */
 
 namespace App\Entity;
@@ -22,14 +22,15 @@ class Configuration extends BaseEntity
     use LifeCycleTrait;
 
     #[Groups(groups: ['configuration_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50)]
+    #[ORM\Column(type: Types::STRING, length: 50)]
     private ?string $cle = null;
 
     #[Groups(groups: ['configuration_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $valeur = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 1)]
+    #[ORM\Column(type: Types::STRING, length: 1)]
+    #[Groups(groups: ['configuration_administration'])]
     private string $type = 'T';
 
     public function getCle(): ?string

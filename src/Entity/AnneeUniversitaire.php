@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AnneeUniversitaire.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/AnneeUniversitaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/09/2021 08:06
+ * @lastUpdate 07/05/2022 08:44
  */
 
 namespace App\Entity;
@@ -25,16 +25,16 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
 {
     use LifeCycleTrait;
 
-    #[Groups(groups: ['annee_universitaire'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 30)]
+    #[Groups(groups: ['annee_universitaire', 'celcat_administration'])]
+    #[ORM\Column(type: Types::STRING, length: 30)]
     private ?string $libelle = null;
 
     #[Groups(groups: ['annee_universitaire'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER)]
     private ?int $annee = null;
 
     #[Groups(groups: ['annee_universitaire'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $commentaire = null;
 
     /**
@@ -80,7 +80,7 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
     #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: Evaluation::class)]
     private Collection $evaluations;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $active = false;
 
     /**
@@ -102,14 +102,14 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
     private Collection $planningAlternances;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\AnneeUniversitaireSemestre>|\App\Entity\AnneeUniversitaireSemestre[]
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\AnneeUniversitaireSemestre>
      */
     #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: AnneeUniversitaireSemestre::class)]
     private Collection $anneeUniversitaireSemestres;
 
     public function __construct()
     {
-        $this->departements = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->departements = new ArrayCollection();
         $this->setAnnee((int) date('Y'));
         $this->calendriers = new ArrayCollection();
         $this->scolarites = new ArrayCollection();

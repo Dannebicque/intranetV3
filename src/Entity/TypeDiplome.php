@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TypeDiplome.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/TypeDiplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 09:32
+ * @lastUpdate 06/05/2022 21:28
  */
 
 namespace App\Entity;
@@ -30,26 +30,26 @@ class TypeDiplome extends BaseEntity
     private Collection $diplomes;
 
     #[Groups(['type_diplome_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $libelle = null;
 
     #[Groups(['type_diplome_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20)]
+    #[ORM\Column(type: Types::STRING, length: 20)]
     private ?string $sigle = null;
 
     #[Groups(['type_diplome_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER)]
     private int $nbSemestres = 2;
 
     #[Groups(['type_diplome_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER)]
     private int $niveauEntree = 0;
 
     #[Groups(['type_diplome_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER)]
     private int $niveauSortie = 3;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $apc = false;
 
     public function __construct()

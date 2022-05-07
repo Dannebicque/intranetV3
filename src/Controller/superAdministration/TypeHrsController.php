@@ -1,15 +1,16 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/TypeHrsController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/TypeHrsController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 07/05/2022 08:49
  */
 
 namespace App\Controller\superAdministration;
 
 use App\Classes\MyExport;
+use App\Classes\MySerializer;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\TypeHrs;
@@ -31,16 +32,23 @@ class TypeHrsController extends BaseController
     }
 
     #[Route(path: '/export.{_format}', name: 'sa_type_hrs_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function export(MyExport $myExport, TypeHrsRepository $typeHrsRepository, string $_format): Response
+    public function export(
+        MySerializer $mySerializer,
+        MyExport $myExport, TypeHrsRepository $typeHrsRepository, string $_format): Response
     {
         $typeHrs = $typeHrsRepository->findAll();
 
-        return $myExport->genereFichierGenerique(
-            $_format,
+        $data = $mySerializer->getDataFromSerialization(
             $typeHrs,
-            'typeHrs',
+            ['libelle', 'type', 'incluService', 'maximum'],
             ['type_hrs_administration'],
-            ['libelle', 'type', 'incluService', 'maximum']
+            ['incluService' => MySerializer::YES_NO]
+        );
+
+        return $myExport->genereFichierGeneriqueFromData(
+            $_format,
+            $data,
+            'typeHrs',
         );
     }
 

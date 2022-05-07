@@ -1,15 +1,16 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/ConfigurationController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/ConfigurationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 06/05/2022 21:33
  */
 
 namespace App\Controller\superAdministration;
 
 use App\Classes\MyExport;
+use App\Classes\MySerializer;
 use App\Controller\BaseController;
 use App\Entity\Configuration;
 use App\Entity\Constantes;
@@ -30,16 +31,21 @@ class ConfigurationController extends BaseController
     }
 
     #[Route(path: '/export/{_format}', name: 'sa_configuration_export', methods: 'GET')]
-    public function export(MyExport $myExport, ConfigurationRepository $configurationRepository, string $_format): Response
+    public function export(
+        MySerializer $mySerializer,
+        MyExport $myExport, ConfigurationRepository $configurationRepository, string $_format): Response
     {
         $configurations = $configurationRepository->findAll();
-
-        return $myExport->genereFichierGenerique(
-            $_format,
+        $data = $mySerializer->getDataFromSerialization(
             $configurations,
+            ['cle', 'valeur', 'type'],
+            ['configuration_administration']
+        );
+
+        return $myExport->genereFichierGeneriqueFromData(
+            $_format,
+            $data,
             'configurations',
-            ['configuration_administration'],
-            ['cle', 'valeur']
         );
     }
 
