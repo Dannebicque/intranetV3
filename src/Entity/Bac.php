@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Bac.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 08:45
+ * @lastUpdate 07/05/2022 19:45
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Enums\BacEnum;
 use App\Repository\BacRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -20,19 +21,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class Bac extends BaseEntity
 {
     use LifeCycleTrait;
-
-    final public const SERIE_BAC_GENERAL = 'g';
-    final public const SERIE_BAC_TECHNO = 't';
-    final public const SERIE_BAC_PRO = 'p';
-    final public const SERIE_BAC_ETRANGER = 'e';
-    final public const SERIE_BAC_AUTRE = 'a';
-    final public const TAB_TYPE_BAC = [
-        self::SERIE_BAC_GENERAL => self::SERIE_BAC_GENERAL,
-        self::SERIE_BAC_TECHNO => self::SERIE_BAC_TECHNO,
-        self::SERIE_BAC_PRO => self::SERIE_BAC_PRO,
-        self::SERIE_BAC_ETRANGER => self::SERIE_BAC_ETRANGER,
-        self::SERIE_BAC_AUTRE => self::SERIE_BAC_AUTRE,
-    ];
 
     #[Groups(groups: ['bac_administration'])]
     #[ORM\Column(type: Types::STRING, length: 30)]
@@ -46,10 +34,9 @@ class Bac extends BaseEntity
     #[Groups(groups: ['bac_administration'])]
     private ?string $codeApogee = null;
 
-    #[ORM\Column(type: Types::STRING, length: 1, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 1, nullable: true, enumType: BacEnum::class)]
     #[Groups(groups: ['bac_administration'])]
-    //todo: pas géré...
-    private ?string $typeBac = null;
+    private ?BacEnum $typeBac = null;
 
     public function getLibelle(): ?string
     {
@@ -87,12 +74,12 @@ class Bac extends BaseEntity
         return $this;
     }
 
-    public function getTypeBac(): ?string
+    public function getTypeBac(): ?BacEnum
     {
         return $this->typeBac;
     }
 
-    public function setTypeBac(?string $typeBac): self
+    public function setTypeBac(BacEnum $typeBac): self
     {
         $this->typeBac = $typeBac;
 

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AbsenceJustificatif.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/AbsenceJustificatif.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/10/2021 10:38
+ * @lastUpdate 07/05/2022 19:07
  */
 
 namespace App\Entity;
@@ -26,11 +26,9 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @Vich\Uploadable
- */
 #[ORM\Entity(repositoryClass: AbsenceJustificatifRepository::class)]
 #[ORM\HasLifecycleCallbacks]
+#[Vich\Uploadable]
 class AbsenceJustificatif extends BaseEntity implements Serializable
 {
     use UuidTrait;
@@ -53,32 +51,30 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
     ];
 
     #[Groups(groups: ['justificatif_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?CarbonInterface $dateHeureDebut = null;
 
     #[Groups(groups: ['justificatif_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?CarbonInterface $dateHeureFin = null;
 
     #[Groups(groups: ['justificatif_administration'])]
     #[Assert\NotBlank(message: 'label.absence_justificatif.justificatif.not_blank')]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $motif = '';
 
     #[Groups(groups: ['justificatif_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 1)]
+    #[ORM\Column(type: Types::STRING, length: 1)]
     private string $etat;
 
     #[Groups(groups: ['justificatif_administration'])]
     #[ORM\ManyToOne(targetEntity: Etudiant::class, fetch: 'EAGER', inversedBy: 'absenceJustificatifs')]
     private ?Etudiant $etudiant = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
     private ?string $fichierName = '';
 
-    /**
-     * @Vich\UploadableField(mapping="justificatif", fileNameProperty="fichierName")
-     */
+    #[Vich\UploadableField(mapping: 'justificatif', fileNameProperty: 'fichierName')]
     private ?File $fichierFile = null;
 
     #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class)]
@@ -92,11 +88,6 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
     #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'absenceJustificatifs')]
     private ?Semestre $semestre = null;
 
-    /**
-     * AbsenceJustificatif constructor.
-     *
-     * @throws Exception
-     */
     public function __construct()
     {
         $this->dateDebut = Carbon::today();
@@ -193,14 +184,14 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         return self::ETATLONG[$this->etat];
     }
 
-    public function serialize(): ?string
+    public function __serialize(): array
     {
-        return serialize($this->getId());
+        return [$this->getId()];
     }
 
-    public function unserialize($data): void
+    public function __unserialize($data): void
     {
-        $this->uuid = unserialize($data, ['allowed_classes' => false]);
+        $this->uuid = $data[0];
     }
 
     public function prepareData(): void
@@ -319,5 +310,15 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         $this->semestre = $semestre;
 
         return $this;
+    }
+
+    public function serialize()
+    {
+        return $this->__serialize();
+    }
+
+    public function unserialize(string $data)
+    {
+        $this->__unserialize($data);
     }
 }

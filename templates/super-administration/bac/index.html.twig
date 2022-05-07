@@ -31,14 +31,14 @@
                         <td>{{ bac.libelle }}</td>
                         <td>{{ bac.libelleLong }}</td>
                         <td>{{ bac.codeApogee }}</td>
-                        <td>{{ 'type_bac.'~bac.typeBac|trans }}</td>
+                        <td>{{ bac.typeBac ? ('bac_type.'~bac.typeBac.value)|trans({}, 'form') }}</td>
                         <td>
                             {{ include('composants/sadm-buttons-table-index.html.twig', {elt:'bac', id: bac.id}) }}
                         </td>
                     </tr>
                 {% else %}
                     <tr>
-                        <td colspan="4">{{ 'no.record.found'|trans }}</td>
+                        <td colspan="5">{{ 'no.record.found'|trans }}</td>
                     </tr>
                 {% endfor %}
                 </tbody>

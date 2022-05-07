@@ -25,6 +25,12 @@ adresse: Adresse
 annee_bac: 'Année d''obtention du bac'
 apprentissage: 'En Apprentissage'
 bac: 'Bac obtenu'
+bac_type:
+  g: 'Général'
+  t: 'Technologique'
+  p: 'Professionnel'
+  e: 'Etranger'
+  a: 'Autre'
 boursier: Boursier
 choice:
   etudiant: 'Etudiants'
@@ -79,6 +85,7 @@ Etat: Etat
 fichier_import: 'Fichier à importer'
 h: Heure
 help:
+  typeBac: Type de bac, notamment pour les statistiques.
   complete.meme.si.identique: Compléter les informations, même si identique.
   valeur_1: 'Valeur pour le choix A'
   valeur_2: 'Valeur pour le choix B'
@@ -143,6 +150,7 @@ initiales: Initiales
 j: Jour
 Jour: Jour
 label:
+  typeBac: Type de bac
   sujet_alternance: Sujet de l'alternance
   adresse_lieu_alternance: Adresse du lieu de l'alternance
   valeur_1: 'Valeur pour le choix A'

@@ -1,20 +1,23 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/BacType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/BacType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/07/2021 11:15
+ * @lastUpdate 07/05/2022 19:14
  */
 
 namespace App\Form;
 
 use App\Entity\Bac;
+use App\Enums\BacEnum;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use UnitEnum;
 
 class BacType extends AbstractType
 {
@@ -24,7 +27,12 @@ class BacType extends AbstractType
             ->add('libelle', TextType::class, ['label' => 'label.libelle'])
             ->add('libelleLong', TextType::class, ['label' => 'label.libelle_long'])
             ->add('codeApogee', TextType::class, ['label' => 'label.codeApogee'])
-            ->add('typeBac', ChoiceType::class, ['label' => 'label.typeBac', 'choices' => Bac::TAB_TYPE_BAC])
+            ->add('typeBac', EnumType::class, [
+                'label' => 'label.typeBac',
+                'class' => BacEnum::class,
+                'help' => 'help.typeBac',
+                'choice_label' => static fn (UnitEnum $choice): string => 'bac_type.'.$choice->value,
+            ])
         ;
     }
 
