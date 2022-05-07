@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MySerializer.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MySerializer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:26
+ * @lastUpdate 07/05/2022 08:49
  */
 
 /*
@@ -26,6 +26,7 @@ class MySerializer
 {
     final public const ONLY_DATE = 'date';
     final public const ONLY_HEURE = 'heure';
+    final public const YES_NO = 'yes_no';
     private array $options = [];
 
     public function serialize(array $data, array|string $groups): string
@@ -120,6 +121,7 @@ class MySerializer
         return $dataArray;
     }
 
+    //todo: traiter le cas d'une collection ? Exemple des dates avec semestres ?
     private function transformValue(?string $value, string $key): ?string
     {
         if (array_key_exists($key, $this->options)) {
@@ -132,6 +134,8 @@ class MySerializer
                     $t = explode(' ', (string) $value);
 
                     return 2 === count($t) ? $t[1] : 'err';
+                case self::YES_NO:
+                    return $value ? 'Oui' : 'Non';
             }
         }
 

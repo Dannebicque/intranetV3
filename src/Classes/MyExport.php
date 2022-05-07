@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:19
+ * @lastUpdate 07/05/2022 08:58
  */
 
 /*
@@ -18,13 +18,17 @@ use App\Classes\Pdf\MyPDF;
 use App\Entity\Semestre;
 use App\Exception\SemestreNotFoundException;
 use Doctrine\Common\Collections\Collection;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class MyExport
 {
+    /** @deprecated  */
     final public const ONLY_DATE = 'date';
+    /** @deprecated  */
     final public const ONLY_HEURE = 'heure';
+
     private array $options = [];
 
     public function __construct(
@@ -152,7 +156,7 @@ class MyExport
 
         $this->excel->genereModeleExcel($semestre);
 
-        return $this->excel->saveXlsx('modele-import-note-' . $semestre->getLibelle());
+        return $this->excel->saveXlsx('modele-import-note-'.$semestre->getLibelle());
     }
 
     public function genereFichierJustificatifAbsence(mixed $justificatifs, string $nomFichier): StreamedResponse
@@ -168,11 +172,11 @@ class MyExport
         if (array_key_exists($key, $this->options)) {
             switch ($this->options[$key]) {
                 case self::ONLY_DATE:
-                    $t = explode(' ', (string)$value);
+                    $t = explode(' ', (string) $value);
 
                     return $t[0];
                 case self::ONLY_HEURE:
-                    $t = explode(' ', (string)$value);
+                    $t = explode(' ', (string) $value);
 
                     return 2 === count($t) ? $t[1] : 'err';
             }
@@ -181,8 +185,10 @@ class MyExport
         return $value;
     }
 
-    public function genereFichierGeneriqueFromData($format, $data, string $nomFichier)
+    public function genereFichierGeneriqueFromData(string $format, array $data, string $nomFichier): StreamedResponse|PdfResponse|null
     {
+        $nomFichier .= '_'.date('d-m-Y_H\hi');
+
         return match ($format) {
             'csv' => $this->excel->genereExcelFromArray($data)->saveCsv($nomFichier),
             'pdf' => $this->myPDF::generePdf('pdf/pdfExport.html.twig', ['data' => $data], $nomFichier),

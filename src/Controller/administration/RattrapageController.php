@@ -1,16 +1,17 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/RattrapageController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/RattrapageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 07/05/2022 08:58
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyExport;
+use App\Classes\MySerializer;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Rattrapage;
@@ -93,8 +94,8 @@ class RattrapageController extends BaseController
                 'etatDemandeLong',
             ],
             [
-                'dateEval' => MyExport::ONLY_DATE,
-                'heureEval' => MyExport::ONLY_HEURE,
+                'dateEval' => MySerializer::ONLY_DATE,
+                'heureEval' => MySerializer::ONLY_HEURE,
             ]
         );
     }

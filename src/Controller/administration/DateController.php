@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/DateController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 20:53
+ * @lastUpdate 07/05/2022 08:58
  */
 
 namespace App\Controller\administration;
@@ -73,10 +73,10 @@ class DateController extends BaseController
             ],
             ['date_administration', 'semestre'],
             [
-                'dateDebut' => MyExport::ONLY_DATE,
-                'heureDebut' => MyExport::ONLY_HEURE,
-                'dateFin' => MyExport::ONLY_DATE,
-                'heureFin' => MyExport::ONLY_HEURE,
+                'dateDebut' => MySerializer::ONLY_DATE,
+                'heureDebut' => MySerializer::ONLY_HEURE,
+                'dateFin' => MySerializer::ONLY_DATE,
+                'heureFin' => MySerializer::ONLY_HEURE,
             ]
         );
 
