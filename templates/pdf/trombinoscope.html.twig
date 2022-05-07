@@ -7,22 +7,6 @@
             titre: '<h2>'~typeGroupe.semestre.display ~' | '~ user_data.displayAnneeUniversitaire~'</h2>',
             qualite: typeGroupe.semestre.diplome.optCertifieQualite
         }) }}
-{#        <table style="width: 100%; border:none;">#}
-{#            <tr>#}
-{#                <td style="text-align: center; width:20%"><img src="{{ settings('BASE_PATH') }}{{ 'logo/'~user_data.departement.logoName }}" alt="logo" height="75px"/></td>#}
-{#                <td style="text-align: center; width:60%"><h2>{{ typeGroupe.semestre.display }} | {{ user_data.displayAnneeUniversitaire }}</h2></td>#}
-{#                <td style="text-align: center; width:20%">#}
-{#                    <img#}
-{#                            src="{{ settings('BASE_PATH') }}{{ 'logo/' }}{{ settings('LOGO_IUT') }}"#}
-{#                            alt="logo"#}
-{#                            height="75px"/>#}
-{#                    {% if typeGroupe.semestre.diplome.optCertifieQualite == true %}#}
-{#                        <img src="{{ settings('BASE_PATH') }}{{ 'logo/'~settings('LOGO_QUALITE') }}" alt="logo certificat#}
-{#                     qualité" height="75px"/>#}
-{#                    {% endif %}#}
-{#                </td>#}
-{#            </tr>#}
-{#        </table>#}
 
         <h4>Trombinoscope | <strong>Groupe {{ groupe.libelle }}</strong></h4>
         <table style="clear:both;width:100%" class="table">
@@ -32,9 +16,11 @@
                 {% if i==0 %}
                     <tr>
                 {% endif %}
-                {# todo: pourrait être absolute_url(asset(...)) #}
-                <td><img src="{{ settings('BASE_PATH')~'/etudiants/'~etu.photoName }}" alt="Photo" width="100px"
-                    /><br />{{ etu.display  }}</td>
+                <td>
+                    <img src="{{ absolute_url(asset('upload/etudiants/'~etu.photoName)) }}" alt="Photo"
+                         width="100px"
+                    /><br />{{ etu.display  }}
+                </td>
                 {% set i=i+1 %}
                 {% if i==4 %}
                     </tr>
