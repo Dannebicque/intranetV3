@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/AlternanceType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/AlternanceType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/08/2021 11:50
+ * @lastUpdate 07/05/2022 18:28
  */
 
 namespace App\Form;
@@ -62,13 +62,15 @@ class AlternanceType extends AbstractType
                 'choice_label' => 'display',
                 'query_builder' => fn (PersonnelRepository $personnelRepository) => $personnelRepository->findByDepartementBuilder($this->departement),
             ])
-            ->add('sujet', TextareaType::class, ['label' => 'label.sujet_altenance'])
+            ->add('sujet', TextareaType::class, ['label' => 'label.sujet_alternance'])
             ->add('adresseAlternance', AdresseType::class,
-                ['label' => 'adresse_lieu_alternance', 'help' => 'help.complete.meme.si.identique'])
+                ['label' => 'label.adresse_lieu_alternance', 'help' => 'help.complete.meme.si.identique'])
             ->addEventListener(FormEvents::POST_SUBMIT, static function (FormEvent $event) {
-                $alternance = $event->getData(); // todo: vérifier ?
+                $alternance = $event->getData();
                 $form = $event->getForm();
                 $dateRange = $form->get('dateRange')->getData();
+                $alternance->setDateDebut($dateRange['from_date']);
+                $alternance->setDateFin($dateRange['to_date']);
             })
             ->addEventListener(FormEvents::PRE_SET_DATA, static function (FormEvent $event) {
                 $alternance = $event->getData();

@@ -79,6 +79,7 @@ Etat: Etat
 fichier_import: 'Fichier à importer'
 h: Heure
 help:
+  complete.meme.si.identique: Compléter les informations, même si identique.
   valeur_1: 'Valeur pour le choix A'
   valeur_2: 'Valeur pour le choix B'
   libelle_1: Valeur A (Oui, Vrai, ...)
@@ -142,6 +143,8 @@ initiales: Initiales
 j: Jour
 Jour: Jour
 label:
+  sujet_alternance: Sujet de l'alternance
+  adresse_lieu_alternance: Adresse du lieu de l'alternance
   valeur_1: 'Valeur pour le choix A'
   valeur_2: 'Valeur pour le choix B'
   libelle_1: Valeur A (Oui, Vrai, ...)
