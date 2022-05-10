@@ -1,15 +1,14 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcRessource.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcRessource.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/07/2021 15:41
+ * @lastUpdate 10/05/2022 16:39
  */
 
 namespace App\Entity;
 
-use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Interfaces\MatiereEntityInterface;
 use App\Repository\ApcRessourceRepository;
@@ -31,10 +30,10 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
     #[ORM\ManyToOne(targetEntity: Semestre::class, fetch: 'EAGER', inversedBy: 'apcRessources')]
     private ?Semestre $semestre = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $preRequis = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $motsCles = null;
 
     /**
@@ -55,17 +54,17 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
     #[ORM\OneToMany(mappedBy: 'ressource', targetEntity: ApcSaeRessource::class, cascade: ['persist', 'remove'])]
     private Collection $apcSaeRessources;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private ?bool $ressourceParent = false;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcRessourceEnfants>|\App\Entity\ApcRessourceEnfants[]
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcRessourceEnfants>
      */
     #[ORM\OneToMany(mappedBy: 'apcRessourceParent', targetEntity: ApcRessourceEnfants::class, cascade: ['persist', 'remove'])]
     private Collection $apcRessourceParentEnfants;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcRessourceEnfants>|\App\Entity\ApcRessourceEnfants[]
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcRessourceEnfants>
      */
     #[ORM\OneToMany(mappedBy: 'apcRessourceEnfant', targetEntity: ApcRessourceEnfants::class, cascade: ['persist', 'remove'])]
     private Collection $apcRessourceEnfantEnfants;
