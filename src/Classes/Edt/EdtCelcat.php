@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/EdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/05/2022 18:12
+ * @lastUpdate 10/05/2022 16:49
  */
 
 namespace App\Classes\Edt;
@@ -34,7 +34,7 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
     {
         $evt = $this->celcatEventsRepository->find($event);
 
-        return $this->edtCelcatAdapter->single($evt);
+        return $this->edtCelcatAdapter->single($evt, $matieres, $groupes);
     }
 
     public function recupereEdtJourBorne(
