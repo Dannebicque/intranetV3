@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Adapter/AbstractMatiereAdapter.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Adapter/AbstractMatiereAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/09/2021 18:28
+ * @lastUpdate 08/05/2022 13:12
  */
 
 namespace App\Adapter;
@@ -14,8 +14,12 @@ use App\Interfaces\MatiereEntityInterface;
 
 abstract class AbstractMatiereAdapter
 {
-    public function single(MatiereEntityInterface $matiere): ?Matiere
+    public function single(?MatiereEntityInterface $matiere): ?Matiere
     {
+        if (null === $matiere) {
+            return null;
+        }
+
         $m = new Matiere();
         $m->typeMatiere = $matiere::SOURCE;
         $m->libelle = $matiere->getLibelle();
