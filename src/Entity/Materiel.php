@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Materiel.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Materiel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 12:28
+ * @lastUpdate 10/05/2022 16:34
  */
 
 namespace App\Entity;
@@ -19,9 +19,7 @@ use Exception;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @Vich\Uploadable
- */
+#[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: MaterielRepository::class)]
 class Materiel extends BaseEntity
 {
@@ -30,24 +28,22 @@ class Materiel extends BaseEntity
     #[ORM\ManyToOne(targetEntity: TypeMateriel::class, inversedBy: 'materiels')]
     private ?TypeMateriel $typeMateriel = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $libelle = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
     private ?string $photoName = 'noimage.png';
 
-    /**
-     * @Vich\UploadableField(mapping="materiel", fileNameProperty="photoName")
-     */
+    #[Vich\UploadableField(mapping: 'materiel', fileNameProperty: 'photoName')]
     private ?File $photoFile = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
     private ?string $codebarre = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private ?bool $empruntable = true;
 
     /**

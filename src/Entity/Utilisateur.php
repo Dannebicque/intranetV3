@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Utilisateur.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 18:14
+ * @lastUpdate 10/05/2022 16:34
  */
 
 namespace App\Entity;
@@ -19,9 +19,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @Vich\Uploadable
- */
+#[Vich\Uploadable]
 #[ORM\MappedSuperclass]
 #[ORM\HasLifecycleCallbacks]
 abstract class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface

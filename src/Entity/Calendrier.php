@@ -4,14 +4,14 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Calendrier.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 08:44
+ * @lastUpdate 08/05/2022 22:05
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\CalendrierRepository;
-use Carbon\CarbonImmutable;
+use Carbon\CarbonInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -32,7 +32,7 @@ class Calendrier extends BaseEntity
 
     #[Groups(groups: ['celcat_administration'])]
     #[ORM\Column(type: Types::DATETIME_IMMUTABLE)]
-    private ?CarbonImmutable $dateLundi = null;
+    private ?CarbonInterface $dateLundi = null;
 
     #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class, inversedBy: 'calendriers')]
     #[Groups(groups: ['celcat_administration'])]
@@ -66,12 +66,12 @@ class Calendrier extends BaseEntity
         return $this;
     }
 
-    public function getDateLundi(): ?CarbonImmutable
+    public function getDateLundi(): ?CarbonInterface
     {
         return $this->dateLundi;
     }
 
-    public function setDateLundi(CarbonImmutable $dateLundi): self
+    public function setDateLundi(CarbonInterface $dateLundi): self
     {
         $this->dateLundi = $dateLundi;
 

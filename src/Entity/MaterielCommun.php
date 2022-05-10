@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/MaterielCommun.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 21:29
+ * @lastUpdate 10/05/2022 16:34
  */
 
 namespace App\Entity;
@@ -19,9 +19,7 @@ use Exception;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @Vich\Uploadable
- */
+#[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: MaterielCommunRepository::class)]
 class MaterielCommun extends BaseEntity
 {
@@ -39,9 +37,7 @@ class MaterielCommun extends BaseEntity
     #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
     private ?string $photoName = 'noimage.png';
 
-    /**
-     * @Vich\UploadableField(mapping="materiel_commun", fileNameProperty="photoName")
-     */
+    #[Vich\UploadableField(mapping: 'materiel_commun', fileNameProperty: 'photoName')]
     private ?File $photoFile = null;
 
     /**

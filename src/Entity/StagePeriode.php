@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/StagePeriode.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 09:33
+ * @lastUpdate 10/05/2022 16:34
  */
 
 namespace App\Entity;
@@ -25,9 +25,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @Vich\Uploadable
- */
+#[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: StagePeriodeRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class StagePeriode extends BaseEntity implements Serializable
@@ -38,9 +36,7 @@ class StagePeriode extends BaseEntity implements Serializable
     #[ORM\Column(type: Types::STRING, length: 50)]
     private ?string $documentName = '';
 
-    /**
-     * @Vich\UploadableField(mapping="ficheRenseignement", fileNameProperty="documentName")
-     */
+    #[Vich\UploadableField(mapping: 'ficheRenseignement', fileNameProperty: 'documentName')]
     private ?File $documentFile = null;
 
     #[Groups(['stage_periode_administration'])]

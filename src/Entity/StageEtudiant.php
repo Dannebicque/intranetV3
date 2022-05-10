@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/StageEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 08:16
+ * @lastUpdate 08/05/2022 14:54
  */
 
 namespace App\Entity;
@@ -163,7 +163,7 @@ class StageEtudiant extends BaseEntity
     private Collection $stageAvenants;
 
     #[ORM\OneToMany(mappedBy: 'stage', targetEntity: StageFicheSuivi::class)]
-    private $stageFicheSuivis;
+    private Collection $stageFicheSuivis;
 
     public function __construct(?float $gratificationMontant)
     {

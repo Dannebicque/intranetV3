@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Ppn.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Ppn.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 07/05/2022 21:53
  */
 
 namespace App\Entity;
@@ -23,10 +23,10 @@ class Ppn extends BaseEntity
 {
     use LifeCycleTrait;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private string $libelle;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER)]
     private int $annee;
 
     /**
@@ -46,13 +46,13 @@ class Ppn extends BaseEntity
     private Collection $semestres;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcCompetence>|\App\Entity\ApcCompetence[]
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcCompetence>
      */
     #[ORM\OneToMany(mappedBy: 'ppn', targetEntity: ApcCompetence::class)]
     private Collection $apcCompetences;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\AnneeUniversitaireSemestre>|\App\Entity\AnneeUniversitaireSemestre[]
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\AnneeUniversitaireSemestre>
      */
     #[ORM\OneToMany(mappedBy: 'ppn', targetEntity: AnneeUniversitaireSemestre::class)]
     private Collection $anneeUniversitaireSemestres;

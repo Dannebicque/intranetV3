@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Document.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 21:03
+ * @lastUpdate 10/05/2022 16:34
  */
 
 namespace App\Entity;
@@ -25,9 +25,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @Vich\Uploadable
- */
+#[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: DocumentRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class Document extends BaseEntity
@@ -81,10 +79,7 @@ class Document extends BaseEntity
     #[ORM\Column(type: Types::STRING, length: 50)]
     private ?string $documentName = '';
 
-    /**
-     * @Vich\UploadableField(mapping="documentFile", fileNameProperty="documentName", size="taille",
-     *                                               mimeType="typeFichier")
-     */
+    #[Vich\UploadableField(mapping: 'documentFile', fileNameProperty: 'documentName', size: 'taille', mimeType: 'typeFichier')]
     private ?File $documentFile = null;
 
     #[Groups(groups: ['document_administration'])]

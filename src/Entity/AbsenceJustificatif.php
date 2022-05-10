@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/AbsenceJustificatif.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 19:07
+ * @lastUpdate 08/05/2022 14:37
  */
 
 namespace App\Entity;
@@ -189,7 +189,7 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         return [$this->getId()];
     }
 
-    public function __unserialize($data): void
+    public function __unserialize(array $data): void
     {
         $this->uuid = $data[0];
     }
@@ -312,12 +312,12 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         return $this;
     }
 
-    public function serialize()
+    public function serialize(): array|string|null
     {
         return $this->__serialize();
     }
 
-    public function unserialize(string $data)
+    public function unserialize(string $data): void
     {
         $this->__unserialize($data);
     }

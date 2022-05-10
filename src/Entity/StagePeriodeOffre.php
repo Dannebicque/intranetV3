@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/StagePeriodeOffre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 09:33
+ * @lastUpdate 10/05/2022 16:33
  */
 
 namespace App\Entity;
@@ -20,9 +20,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @Vich\Uploadable
- */
+#[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: StagePeriodeOffreRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class StagePeriodeOffre extends BaseEntity
@@ -47,9 +45,7 @@ class StagePeriodeOffre extends BaseEntity
     #[ORM\Column(type: Types::STRING, length: 50)]
     private ?string $documentName = '';
 
-    /**
-     * @Vich\UploadableField(mapping="offreStage", fileNameProperty="documentName")
-     */
+    #[Vich\UploadableField(mapping: 'offreStage', fileNameProperty: 'documentName')]
     private ?File $documentFile = null;
 
     public function __construct(StagePeriode $stagePeriode)

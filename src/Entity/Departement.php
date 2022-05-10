@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Departement.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Departement.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/10/2021 11:51
+ * @lastUpdate 10/05/2022 16:34
  */
 
 namespace App\Entity;
@@ -26,9 +26,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @Vich\Uploadable
- */
+#[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: DepartementRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class Departement extends BaseEntity
@@ -37,57 +35,55 @@ class Departement extends BaseEntity
     use LifeCycleTrait;
 
     #[Groups(groups: ['actualite_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $libelle = null;
 
     #[ORM\ManyToOne(targetEntity: Ufr::class, inversedBy: 'departements')]
     private ?Ufr $ufr = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50)]
+    #[ORM\Column(type: Types::STRING, length: 50)]
     private ?string $logoName = '';
 
-    /**
-     * @Vich\UploadableField(mapping="logo", fileNameProperty="logoName")
-     */
+    #[Vich\UploadableField(mapping: 'logo', fileNameProperty: 'logoName')]
     private ?File $logoFile = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 16, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 16, nullable: true)]
     private ?string $telContact = null;
 
-    #[ORM\Column(name: 'fax', type: \Doctrine\DBAL\Types\Types::STRING, length: 16, nullable: true)]
+    #[ORM\Column(name: 'fax', type: Types::STRING, length: 16, nullable: true)]
     private ?string $fax = null;
 
-    #[ORM\Column(name: 'couleur', type: \Doctrine\DBAL\Types\Types::STRING, length: 16, nullable: true)]
+    #[ORM\Column(name: 'couleur', type: Types::STRING, length: 16, nullable: true)]
     private ?string $couleur = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $siteWeb = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
     /**
      * @deprecated
      */
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $optUpdateCelcat = false;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $optAgence = false;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $optMateriel = false;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $optEdt = true;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $optStage = true;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $optSynthese = true;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $optMessagerie = true;
 
     #[ORM\ManyToOne(targetEntity: Personnel::class)]
@@ -96,7 +92,7 @@ class Departement extends BaseEntity
     /**
      * @deprecated
      */
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER)]
     private int $optAnneePrevisionnel;
 
     /**
@@ -143,10 +139,10 @@ class Departement extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'departement', targetEntity: TypeMateriel::class)]
     private Collection $typeMateriels;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $actif = true;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $preparationAnnee = false;
 
     #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class, inversedBy: 'departements')]

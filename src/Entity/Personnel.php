@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 18:16
+ * @lastUpdate 10/05/2022 16:34
  */
 
 namespace App\Entity;
@@ -22,9 +22,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @Vich\Uploadable
- */
+#[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: PersonnelRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class Personnel extends Utilisateur implements UtilisateurInterface
@@ -43,56 +41,52 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     final public const ADMINISTRATIF = 'ADM';
     final public const TECHNICIEN = 'TEC';
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 15)]
+    #[ORM\Column(type: Types::STRING, length: 15)]
     #[Groups(['personnel:read'])]
     protected ?string $statut = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 10, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 10, nullable: true)]
     protected ?string $posteInterne = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 20, nullable: true)]
     protected ?string $telBureau = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     protected ?string $responsabilites = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     protected ?string $domaines = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     protected ?string $entreprise = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 20, nullable: true)]
     protected ?string $bureau1 = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 20, nullable: true)]
     protected ?string $bureau2 = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER, nullable: true)]
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
     protected ?string $numeroHarpege = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 10, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 10, nullable: true)]
     protected ?string $initiales = null;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER)]
     private mixed $id;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
     private ?string $cvName = '';
 
-    /**
-     * @Vich\UploadableField(mapping="cv", fileNameProperty="cvName")
-     */
+    #[Vich\UploadableField(mapping: 'cv', fileNameProperty: 'cvName')]
     private ?File $cvFile = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50)]
+    #[ORM\Column(type: Types::STRING, length: 50)]
     private ?string $photoName = 'noimage.png';
 
-    /**
-     * @Vich\UploadableField(mapping="personnel", fileNameProperty="photoName")
-     */
+    #[Vich\UploadableField(mapping: 'personnel', fileNameProperty: 'photoName')]
     private ?File $photoFile = null;
 
     /**
@@ -128,7 +122,7 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: PersonnelDepartement::class)]
     private Collection $personnelDepartements;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
+    #[ORM\Column(type: Types::FLOAT)]
     private float $nbHeuresService = 192;
 
     /**
@@ -171,10 +165,10 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     #[ORM\OneToMany(mappedBy: 'tuteurUniversitaire', targetEntity: Alternance::class)]
     private Collection $alternances;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $deleted = false;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 20, nullable: true)]
     private ?string $couleur = null;
 
     /**
@@ -222,7 +216,7 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: MaterielCommunPret::class)]
     private Collection $materielCommunPrets;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
     private ?string $signatureElectronique = null;
 
     /**
@@ -240,7 +234,7 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class, inversedBy: 'personnels')]
     private ?AnneeUniversitaire $anneeUniversitaire = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $configuration = null;
 
     /**

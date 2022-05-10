@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Etudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 18:17
+ * @lastUpdate 10/05/2022 16:34
  */
 
 namespace App\Entity;
@@ -24,9 +24,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-/**
- * @Vich\Uploadable
- */
+#[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: EtudiantRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class Etudiant extends Utilisateur implements UtilisateurInterface
@@ -42,9 +40,7 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     #[ORM\Column(type: Types::STRING, length: 50)]
     private ?string $photoName = 'noimage.png';
 
-    /**
-     * @Vich\UploadableField(mapping="etudiant", fileNameProperty="photoName")
-     */
+    #[Vich\UploadableField(mapping: 'etudiant', fileNameProperty: 'photoName')]
     private ?File $photoFile = null;
 
     #[Groups(groups: ['etudiants_administration'])]
