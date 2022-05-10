@@ -2,6 +2,71 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.6.5](https://github.com/Dannebicque/intranetV3/compare/v3.6.4...v3.6.5) (2022-05-10)
+
+
+### Features
+
+* [Absences] Mode de saisie. Formulaires et affichage ([dff1ac3](https://github.com/Dannebicque/intranetV3/commit/dff1ac337f63b04dc36b5edd865811fa07f09c10))
+* [Bac] Type de bac avec les enum, et formulaire + doctrine ([02fc032](https://github.com/Dannebicque/intranetV3/commit/02fc032d85d76fb5c3619c88ab274580251f450a))
+* [Doctrine] Gestion de la connexion Apogée avec Doctrine ? ([50f77eb](https://github.com/Dannebicque/intranetV3/commit/50f77eb53025e2aa94e783a162c448452d288b72))
+* [Export] Composant d'export pour le TrombinoscopeController.php ([56e5673](https://github.com/Dannebicque/intranetV3/commit/56e56737e7ee58e45e867b3c8d49d15c573968e8))
+* [Export] Composant d'export pour les actualites.php ([70e9668](https://github.com/Dannebicque/intranetV3/commit/70e96684c97d374ab7fac1ecd3fcecf297aaf45f))
+* [Export] Composant d'export pour les alternances.php ([a2cf73d](https://github.com/Dannebicque/intranetV3/commit/a2cf73da0b82a1a3afdd9005e3c67078f5972b2b))
+* [Export] Composant d'export pour les articles.php ([ddba515](https://github.com/Dannebicque/intranetV3/commit/ddba51594fb2b58f167cc4a0a8a1f3d41e64a71d))
+* [Export] Composant d'export pour les borne.php ([120a8cf](https://github.com/Dannebicque/intranetV3/commit/120a8cfa7607c93acce85096cad0718c9b7fa656))
+* [Export] Composant d'export pour les date.php ([4bc7d8a](https://github.com/Dannebicque/intranetV3/commit/4bc7d8a667929f16dbfa7c01581a2e149cb84241))
+* [Export] Composant d'export pour les documents.php ([d1abbaf](https://github.com/Dannebicque/intranetV3/commit/d1abbaf7c775cfca43c9bdc7b33f566b01793ee4))
+* [Export] Composant d'export pour les éléments communs en superAdmin ([f7360a6](https://github.com/Dannebicque/intranetV3/commit/f7360a6a62d8719c4276e96408e2105891a24981))
+* [Export] Correctifs et améliorations sur la librairie d'export ([6863cdb](https://github.com/Dannebicque/intranetV3/commit/6863cdba1deac0ae17a30151b7d0f0d53175f17e))
+* [Export] Utiliser export et serializer ([44909f3](https://github.com/Dannebicque/intranetV3/commit/44909f3fdc5527d2c5bfee151b8db395880d9829))
+* [Export] Utiliser export et serializer sur AppStage ([212b407](https://github.com/Dannebicque/intranetV3/commit/212b407dafaf2f59cd18b1768440c03bce5489d1))
+* [Export] Utiliser export et serializer sur Projet ([456bcb4](https://github.com/Dannebicque/intranetV3/commit/456bcb4dde814c9410f90c20171ab46c41fff1fe))
+* [Export] Utiliser export et serializer sur Stages ([5c0cf0b](https://github.com/Dannebicque/intranetV3/commit/5c0cf0b0b6989737262f66dbade0314023b96fad))
+* [Plan de cours] Entity ([9010c68](https://github.com/Dannebicque/intranetV3/commit/9010c68125f47301c96a6257b049fc2842ec204c))
+* Add Live Twig Component ([e74756f](https://github.com/Dannebicque/intranetV3/commit/e74756f93cb91aaf1b55a95a5b0d0bb811b7f626))
+
+
+### Bug Fixes
+
+* [Absence] suppression de code inutile et transfert dans Enum ([d24a294](https://github.com/Dannebicque/intranetV3/commit/d24a29490c5f97e470cc1f24f7566855ca0ca3fe))
+* [Actualités] Correction du tinyMce ne fonctionnant pas. ([e322bbd](https://github.com/Dannebicque/intranetV3/commit/e322bbdb27e2e1c493a679c93bcfb851deeed864))
+* [Alternance] Fix daterange du formulaire ([d9c1847](https://github.com/Dannebicque/intranetV3/commit/d9c18474976a8bb1076fe1351f7dc42661dc5fc2))
+* [App Stage] Corrections de mise en page + fiche de suivi de stage ([a3e321a](https://github.com/Dannebicque/intranetV3/commit/a3e321affbba8e0c53bad5c80808d5b7fa74b597))
+* [Article] Fix tinymce ([39e911f](https://github.com/Dannebicque/intranetV3/commit/39e911ff8549e8c4e2e9c5460c796d2a66b516cd))
+* [Composer] fix recipe Symfony : console ([ac4f566](https://github.com/Dannebicque/intranetV3/commit/ac4f5664cf896202af129bb3e6f8996b04d04861))
+* [Composer] fix recipe Symfony : doctrine-fixture.yaml ([9e6dd51](https://github.com/Dannebicque/intranetV3/commit/9e6dd5149a8aef1094c6358d2d6163570e686775))
+* [Composer] fix recipe Symfony : doctrine-migration.yaml ([73a5eee](https://github.com/Dannebicque/intranetV3/commit/73a5eee732e343579c19e4323feb7b70a9a4bfa1))
+* [Composer] fix recipe Symfony : doctrine.yaml ([396038e](https://github.com/Dannebicque/intranetV3/commit/396038eb57725d4d5eb1bad9a8271489b78c2f4e))
+* [Composer] fix recipe Symfony : framework.yaml ([da05b03](https://github.com/Dannebicque/intranetV3/commit/da05b033cdb11f8a726bc0d8a2a5ee6d88aa28d3))
+* [Composer] fix recipe Symfony : liip.yaml ([85b0f97](https://github.com/Dannebicque/intranetV3/commit/85b0f97775c82df563c619d5bf90ee763d0af833))
+* [Composer] fix recipe Symfony : mailer.yaml ([2327691](https://github.com/Dannebicque/intranetV3/commit/23276916e526ff4d33c077f3e8d4c7da605a140e))
+* [Composer] fix recipe Symfony : messenger.yaml ([2130c90](https://github.com/Dannebicque/intranetV3/commit/2130c906f449b5b4c0c4e0b2a0fa308bd8769213))
+* [Composer] fix recipe Symfony : monolog.yaml ([9c785ce](https://github.com/Dannebicque/intranetV3/commit/9c785ceb52474a399247f58038b3204daa477591))
+* [Composer] fix recipe Symfony : phpcs.yaml ([5f1a532](https://github.com/Dannebicque/intranetV3/commit/5f1a532f38dd9d9f989d4a8e904f02ce5c7696fa))
+* [Composer] fix recipe Symfony : phpunit.yaml ([19dab32](https://github.com/Dannebicque/intranetV3/commit/19dab32271bf6544b7c06125a9225299a0b33105))
+* [Composer] fix recipe Symfony : profiler.yaml ([d081503](https://github.com/Dannebicque/intranetV3/commit/d081503a881b61cb09df0fbc52928e20755eaf42))
+* [Composer] fix recipe Symfony : router.yaml ([19be80c](https://github.com/Dannebicque/intranetV3/commit/19be80c742eff71ef961526c99828955c10a5233))
+* [Composer] fix recipe Symfony : security.yaml ([60d6bb2](https://github.com/Dannebicque/intranetV3/commit/60d6bb2bebdfb02161636ab36268ea9191cc9416))
+* [Composer] fix recipe Symfony : translator.yaml ([e51e752](https://github.com/Dannebicque/intranetV3/commit/e51e7521b3f59624985a9e40314cca150dc0173a))
+* [Composer] fix recipe Symfony : twig.yaml ([eaa8778](https://github.com/Dannebicque/intranetV3/commit/eaa87780cab12e8767e01c2d8f85b99297fa4df1))
+* [Composer] fix recipe Symfony : validator.yaml ([de58482](https://github.com/Dannebicque/intranetV3/commit/de58482541a00d03a2e42d24d5078e62cd2123d4))
+* [Composer] fix recipe Symfony : webpack-encore.yaml ([50905e7](https://github.com/Dannebicque/intranetV3/commit/50905e7ab9abe9f81df6d11c4bcc4347129679cf))
+* [Composer] update dependencies ([8fbfd2a](https://github.com/Dannebicque/intranetV3/commit/8fbfd2a2b02334d5dccca9efd001255077dea6e1))
+* [CSS] typos ([6588204](https://github.com/Dannebicque/intranetV3/commit/658820466002c0316675b571b62fc28a5523e8bd))
+* [Edt] Semaines suivantes/précédentes ([a189015](https://github.com/Dannebicque/intranetV3/commit/a189015550ad63e40bc4e0d33c20ac03f1b2dac8))
+* [Entity] Attributes pour Vich ([667e1bb](https://github.com/Dannebicque/intranetV3/commit/667e1bbd40a1385f64d5d2ca463c96a2757182c1))
+* [Evaluation] Selection par rapport au semestre et pas matières ([f0eaf25](https://github.com/Dannebicque/intranetV3/commit/f0eaf25619a2cfe5a8c9ce454ae314eae32b0f91))
+* [PDF] Amélioration en-tête de PDF avec le logo qualité ([828d795](https://github.com/Dannebicque/intranetV3/commit/828d7953a91e61b02d3d76b3087bda9020fbd707))
+* [previsionnel] fix sur les comparaisons. Dependance au semestre. ([ade8f18](https://github.com/Dannebicque/intranetV3/commit/ade8f183ddc745b8a6f979d9a91f82a974c84b24))
+* [Recherche] Correctifs de mise en page ([732c64e](https://github.com/Dannebicque/intranetV3/commit/732c64e6aa6f52d4ff52f9de845e032313b6a8ea))
+* [Recherche] Correctifs de mise en page ([ec2dc8b](https://github.com/Dannebicque/intranetV3/commit/ec2dc8b583239f59177ab70f4517770717285461))
+* [Table] typos ([93499c9](https://github.com/Dannebicque/intranetV3/commit/93499c94ea42f3c1f562a70e71ed7eeea0d30038))
+* [Table] typos ([51e4946](https://github.com/Dannebicque/intranetV3/commit/51e4946b4f4e6825073f3eef5ae6978a60a40d80))
+* [todo] suppression de todo obsolètes ([6ca309b](https://github.com/Dannebicque/intranetV3/commit/6ca309b86ed3776dc5e25192d21267a6a1834801))
+* [User] Remove deprecated : réécriture de la sérialisation ([648943b](https://github.com/Dannebicque/intranetV3/commit/648943b1ba9a1a48125844d0d11166c19e1b7bb9))
+* [Widget] Remove deprecated : type de sortie ([4db0c6b](https://github.com/Dannebicque/intranetV3/commit/4db0c6b31cf6f03d301118828285e3b0bb292321))
+
 ### [3.6.4](https://github.com/Dannebicque/intranetV3/compare/v3.6.3...v3.6.4) (2022-05-06)
 
 
