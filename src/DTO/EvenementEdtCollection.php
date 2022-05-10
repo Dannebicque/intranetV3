@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/EvenementEdtCollection.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/EvenementEdtCollection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/10/2021 18:26
+ * @lastUpdate 08/05/2022 14:11
  */
 
 namespace App\DTO;
@@ -29,7 +29,7 @@ class EvenementEdtCollection
         return $this->evenements;
     }
 
-    public function toArray(int $maxGroupe = 8)
+    public function toArray(int $maxGroupe = 8): array
     {
         $planning = [];
         foreach ($this->evenements as $evenement) {
@@ -38,7 +38,7 @@ class EvenementEdtCollection
             $fin = Constantes::TAB_HEURES_INDEX[$evenement->heureFin->format('H:i:s')];
             $planning[$evenement->jour][$debut][$evenement->ordreGroupe] = $evenement;
             $groupe = $evenement->ordreGroupe;
-            if (strtoupper($evenement->type_cours) === 'CM') {
+            if ('CM' === strtoupper($evenement->type_cours)) {
                 $groupefin = $groupe + $maxGroupe; // todo: nb groupes du semestre ??
             } else {
                 $groupefin = $groupe + $evenement->largeur();

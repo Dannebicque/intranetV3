@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/BaseEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/05/2022 20:16
+ * @lastUpdate 10/05/2022 16:28
  */
 
 namespace App\Classes\Edt;
@@ -40,7 +40,7 @@ abstract class BaseEdt
     protected mixed $valeur;
     protected array $total = [];
 
-    protected ?Semestre $semestre;
+    protected ?Semestre $semestre = null;
     protected Personnel|Etudiant $user;
     protected ?Matiere $module = null;
 
@@ -51,13 +51,9 @@ abstract class BaseEdt
 
     private AnneeUniversitaire $anneeUniversitaire;
 
-    /**
-     * MyEdt constructor.
-     */
     public function __construct(
         protected CalendrierRepository $calendrierRepository
     ) {
-        $this->semestre = null;
     }
 
     public function getSemaineFormation(): ?int
@@ -65,7 +61,7 @@ abstract class BaseEdt
         return $this->semaineFormationIUT;
     }
 
-    public function getSemaine()
+    public function getSemaine(): int
     {
         return $this->semaine;
     }
@@ -83,18 +79,10 @@ abstract class BaseEdt
         $this->total['TD'] = 0;
         $this->total['TP'] = 0;
 
-        // pour gérer les vacances
-        if ($semaine >= 29 && $semaine < 35) {
-            $semaine = 35;
-        }
-
+        //todo: en doublons avec edt/Calendrier.php A supprimer plus utile ici
         if (0 === $semaine) {
             $semaine = $dateDuJour->weekOfYear;
-
-            if ($semaine >= 29 && $semaine < 35) {
-                $semaine = 35;
-            }
-            $this->semaine = $semaine;
+            $this->excluVacances($semaine);
 
             // traitement du Week end
             if (CarbonInterface::SATURDAY === $dateDuJour->dayOfWeek || CarbonInterface::SUNDAY === $dateDuJour->dayOfWeek) {
@@ -104,10 +92,7 @@ abstract class BaseEdt
                 }
             }
         } else {
-            if ($semaine >= 29 && $semaine < 35) {
-                $semaine = 35;
-            }
-            $this->semaine = $semaine;
+            $this->excluVacances($semaine);
         }
 
         $this->calendrier = $this->calendrierRepository->findOneBy([
@@ -168,6 +153,7 @@ abstract class BaseEdt
         return $this->valeur;
     }
 
+    /** @deprecated  */
     public function getSemainePrecedente(): int
     {
         $s = $this->semaine - 1;
@@ -179,6 +165,7 @@ abstract class BaseEdt
         return $s;
     }
 
+    /** @deprecated  */
     public function getSemaineSuivante(): int
     {
         $s = $this->semaine + 1;
@@ -227,7 +214,7 @@ abstract class BaseEdt
             $t[$i]['semaineIUT'] = $s->getSemaineFormation();
             $t[$i]['debut'] = $s->getDatelundi();
             $date1 = strtotime($t[$i]['debut']->format('Y-m-d'));
-            $fin = date('d-m-Y', mktime(12, 30, 00, date('n', $date1), ((int) date('j', $date1)) + 7, ((int) date('Y', $date1))));
+            $fin = date('d-m-Y', mktime(12, 30, 00, (int) date('n', $date1), ((int) date('j', $date1)) + 7, ((int) date('Y', $date1))));
             $t[$i]['fin'] = $fin;
             ++$i;
         }
@@ -269,5 +256,11 @@ abstract class BaseEdt
         return $this->planning;
     }
 
-
+    private function excluVacances(int $semaine): void
+    {
+        if ($semaine >= 29 && $semaine < 35) {
+            $semaine = 35;
+        }
+        $this->semaine = $semaine;
+    }
 }

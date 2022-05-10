@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/EvenementEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/05/2022 10:07
+ * @lastUpdate 08/05/2022 14:20
  */
 
 namespace App\DTO;
@@ -84,32 +84,22 @@ class EvenementEdt
         return $t[0];
     }
 
-    public function debutToInt()
+    public function debutToInt(): int
     {
         return Constantes::TAB_HEURES_INDEX[$this->heureDebut->format('H:i:s')];
     }
 
-    public function largeur()
+    public function largeur(): int
     {
-        switch ($this->type_cours) {
-            case 'CM':
-            case 'cm':
-                return 0;
-            case 'TP':
-            case 'tp':
-                $taille = 4;
+        return match ($this->type_cours) {
+            'TP', 'tp' => 1,
+            'TD', 'td' => 2,
+            default => 0,
+        };
 
-                return 1;
-
-            case 'TD':
-            case 'td':
-                $taille = 12;
-
-                return 2;
-        }
     }
 
-    public function duree()
+    public function duree(): float|int
     {
         $d = $this->heureFin;
         $h = $d->diffInMinutes($this->heureDebut);
@@ -117,7 +107,7 @@ class EvenementEdt
         return $h / 30;
     }
 
-    public function texteEvt()
+    public function texteEvt(): ?string
     {
         if (null !== $this->texte) {
             return $this->texte;

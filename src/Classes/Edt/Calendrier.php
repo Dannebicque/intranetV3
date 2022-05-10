@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/Calendrier.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/04/2022 15:25
+ * @lastUpdate 08/05/2022 22:21
  */
 
 namespace App\Classes\Edt;
@@ -21,8 +21,6 @@ class Calendrier
 {
     public ?int $semaine = null;
     public array $tabJour;
-    public ?int $semaineSuivante = 0;
-    public ?int $semainePrecedente = 0;
     private ?\App\Entity\Calendrier $calendrier = null;
     public ?int $semaineFormationIUT = null;
     public ?CarbonImmutable $semaineFormationLundi = null;
@@ -47,7 +45,7 @@ class Calendrier
             $t[$i]['semaineIUT'] = $s->getSemaineFormation();
             $t[$i]['debut'] = $s->getDatelundi();
             $date1 = strtotime($t[$i]['debut']->format('Y-m-d'));
-            $fin = date('d-m-Y', mktime(12, 30, 00, date('n', $date1), ((int) date('j', $date1)) + 7, ((int) date('Y', $date1))));
+            $fin = date('d-m-Y', mktime(12, 30, 00, (int) date('n', $date1), ((int) date('j', $date1)) + 7, ((int) date('Y', $date1))));
             $t[$i]['fin'] = $fin;
             ++$i;
         }
@@ -60,17 +58,10 @@ class Calendrier
         // pour gérer les vacances
         $dateDuJour = Carbon::now();
 
-        if ($semaine >= 29 && $semaine < 35) {
-            $semaine = 35;
-        }
 
         if (0 === $semaine) {
             $semaine = $dateDuJour->weekOfYear;
-
-            if ($semaine >= 29 && $semaine < 35) {
-                $semaine = 35;
-            }
-            $this->semaine = $semaine;
+            $this->excluVacances($semaine);
 
             // traitement du Week end
             if (CarbonInterface::SATURDAY === $dateDuJour->dayOfWeek || CarbonInterface::SUNDAY === $dateDuJour->dayOfWeek) {
@@ -80,10 +71,7 @@ class Calendrier
                 }
             }
         } else {
-            if ($semaine >= 29 && $semaine < 35) {
-                $semaine = 35;
-            }
-            $this->semaine = $semaine;
+            $this->excluVacances($semaine);
         }
 
         $this->calendrier = $this->calendrierRepository->findOneBy([
@@ -116,5 +104,34 @@ class Calendrier
         $this->tabHeures = Constantes::TAB_HEURES_EDT;
 
         return $this;
+    }
+
+    private function excluVacances(int $semaine): void
+    {
+        if ($semaine >= 29 && $semaine < 35) {
+            $semaine = 35;
+        }
+        $this->semaine = $semaine;
+    }
+
+    public function getSemainePrecedente(): int
+    {
+        $s = $this->semaine - 1;
+
+        if (0 === $s) {
+            return CarbonInterface::WEEKS_PER_YEAR;
+        }
+
+        return $s;
+    }
+
+    public function getSemaineSuivante(): int
+    {
+        $s = $this->semaine + 1;
+        if ($s > CarbonInterface::WEEKS_PER_YEAR) {
+            return 1;
+        }
+
+        return $s;
     }
 }
