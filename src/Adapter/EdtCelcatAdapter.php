@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Adapter/EdtCelcatAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/05/2022 22:22
+ * @lastUpdate 10/05/2022 19:18
  */
 
 namespace App\Adapter;
@@ -35,7 +35,7 @@ class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
         $evt->source = EdtManager::EDT_CELCAT;
         $evt->id = $event->getId();
         $evt->couleur = $event->getSemestre()->getAnnee()->getCouleur();
-        $evt->jour = (string)($event->getJour() + 1);
+        $evt->jour = (string) ($event->getJour() + 1);
         $evt->heureDebut = Carbon::createFromTimeString($event->getDebut());
         $evt->heureFin = Carbon::createFromTimeString($event->getFin());
         $evt->matiere = $event->getLibModule();
@@ -57,6 +57,7 @@ class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
             $evt->ordreGroupe = 0;
             $evt->groupeId = 0;
         }
+        $evt->semestre = $event->getSemestre();
         $evt->groupe = $event->getLibGroupe();
         $evt->codeelement = $event->getCodeModule();
         $evt->type_cours = $event->getType();
