@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/MessageHandler/ExportReleveHandler.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/MessageHandler/ExportReleveHandler.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/03/2021 08:12
+ * @lastUpdate 11/05/2022 14:45
  */
 
 namespace App\MessageHandler;
@@ -57,6 +57,7 @@ class ExportReleveHandler implements MessageHandlerInterface
                         'semestre' => $semestre,
                         'personnel' => $personnel,
                         'lien' => $lien,
+                        'baseUrl' => $this->configuration->get('BASE_PATH'),
                     ]);
 
                 $this->mailer->send($mail);
