@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/StageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 09:05
+ * @lastUpdate 11/05/2022 10:18
  */
 
 namespace App\Controller\appPersonnel;
 
 use App\Classes\MyExport;
 use App\Classes\MySerializer;
+use App\Classes\Pdf\MyPDF;
 use App\Controller\BaseController;
 use App\Entity\Alternance;
 use App\Entity\StageEtudiant;
@@ -125,6 +126,17 @@ class StageController extends BaseController
             'stageEtudiant' => $stageEtudiant,
             'stagePeriode' => $stageEtudiant->getStagePeriode(),
         ]);
+    }
+
+    #[Route(path: '/stage/etudiant/info/{id}', name: 'app_personnel_stage_fiche_imprimer')]
+    public function imprimerFicheStage(MyPDF $myPDF, StageEtudiant $stageEtudiant): Response
+    {
+        return $myPDF::generePdf('pdf/fichePDFStage.html.twig',
+            [
+                'stageEtudiant' => $stageEtudiant,
+            ],
+            'Fiche-Enseignant-stage-'.$stageEtudiant->getEtudiant()->getNom()
+        );
     }
 
     #[Route(path: '/stage/entreprise/info/{id}', name: 'application_personnel_stage_entreprise_info')]

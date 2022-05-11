@@ -91,6 +91,9 @@
                             <td>
                                     <a href="{{ path('app_personnel_stage_fiche_suivi_index',
                                         {stage: stage.id}) }}" class="btn btn-info">Suivi</a>
+                                <a href="{{ path('app_personnel_stage_fiche_imprimer',
+                                    {id: stage.id}) }}" class="btn btn-info btn-outline-info"><i class="{{
+                                    iconPrint}}"></i> Imprimer</a>
                             </td>
                         </tr>
                     {% else %}
