@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Matieres/TypeMatiereManager.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Matieres/TypeMatiereManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/09/2021 18:46
+ * @lastUpdate 11/05/2022 09:55
  */
 
 namespace App\Classes\Matieres;
@@ -62,12 +62,14 @@ class TypeMatiereManager
 
     public function findByCodeApogee(string $code): ?\App\DTO\Matiere
     {
-        $matiere = null;
         foreach ($this->managers as $manager) {
             $matiere = $manager->findByCodeApogee($code);
+            if (null !== $matiere) {
+                return $matiere;
+            }
         }
 
-        return $matiere;
+        return null;
     }
 
     public function tableauMatieres(Departement $departement): array
