@@ -1,8 +1,8 @@
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/absences.js
+// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/absences.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/09/2021 20:58
+// @lastUpdate 13/05/2022 12:41
 import {addCallout} from '../util'
 
 import {post} from '../fetch'
@@ -27,6 +27,7 @@ $(document).on('change', '#absence-matiere', function () {
   let etudiants = $('.etudiant')
   let date = $('#absence-date')
   let heure = $('#absence-heure')
+  document.getElementById("text-matiere").innerText = $(this).find(':selected').text().trim()
   etudiants.removeClass('absent')
   updateAffichage(date.val(), heure.val())
 })
