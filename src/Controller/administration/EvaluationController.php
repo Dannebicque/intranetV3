@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EvaluationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 17:27
+ * @lastUpdate 13/05/2022 11:52
  */
 
 namespace App\Controller\administration;
@@ -48,6 +48,7 @@ class EvaluationController extends BaseController
         return $this->render('administration/evaluation/show.html.twig', [
             'autorise' => true,
             'evaluation' => $evaluation,
+            'semestre' => $evaluation->getSemestre(),
             'notes' => $notes,
             'matiere' => $typeMatiereManager->getMatiere($evaluation->getIdMatiere(), $evaluation->getTypeMatiere()),
         ]);

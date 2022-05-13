@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Excel/MyExcelMultiExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 13/05/2022 11:56
  */
 
 /*
@@ -20,6 +20,7 @@ use App\Entity\Etudiant;
 use App\Entity\Evaluation;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\Response;
 use function array_key_exists;
 use function count;
@@ -198,7 +199,7 @@ class MyExcelMultiExport
         }
     }
 
-    public function genereReleveExcel(Evaluation $evaluation, array $groupes, array $notes, Matiere $matiere, Semestre $semestre): void
+    public function genereReleveExcel(Evaluation $evaluation, array|Collection $groupes, array|Collection $notes, Matiere $matiere, Semestre $semestre): void
     {
         /** @var Groupe $groupe */
         foreach ($groupes as $groupe) {
