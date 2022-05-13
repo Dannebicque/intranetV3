@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/TableType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Table/TableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 14:37
+ * @lastUpdate 13/05/2022 15:15
  */
 
 namespace App\Components\Table;
@@ -14,8 +14,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TableType
 {
-    // FIXME : statically called to avoid to have add parent::configureOptions() on all inherit Type class
-    final public static function __configureOptions(OptionsResolver $resolver): void
+    public function buildTable(TableBuilder $builder, array $options): void
+    {
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired('id')
@@ -55,13 +58,5 @@ class TableType
             ->setDefault('toolbar_template', 'components/table/filters.html.twig')
             ->setAllowedTypes('toolbar_template', 'string')
             ->setDefault('toolbar_form_data', null);
-    }
-
-    public function buildTable(TableBuilder $builder, array $options): void
-    {
-    }
-
-    public function configureOptions(OptionsResolver $resolver): void
-    {
     }
 }

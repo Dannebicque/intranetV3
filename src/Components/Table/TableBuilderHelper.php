@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/TableBuilderHelper.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Table/TableBuilderHelper.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 14:37
+ * @lastUpdate 13/05/2022 15:10
  */
 
 namespace App\Components\Table;
@@ -49,7 +49,6 @@ class TableBuilderHelper
         $columnType = $this->registry->getColumnType($type);
 
         $resolver = new OptionsResolver();
-        ColumnType::__configureOptions($resolver); // FIXME
 
         $resolver
             ->setDefault('id', $name)

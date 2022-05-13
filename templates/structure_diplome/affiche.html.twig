@@ -79,7 +79,7 @@
             </div>
         {% endif %}
         <div class="row mb-2">
-            <div class="col-sm-12">
+            <div class="col-sm-8">
                 <label class="form-label" for="changePn">Changement de PN</label>
                 <select class="form-select" id="changePn" data-action="change->structure-diplome#changePn"
                         data-diplome="{{ diplome.id }}">
@@ -88,6 +88,11 @@
                         <option value="{{ pn.id }}">{{ pn.libelle }} ({{ pn.annee }})</option>
                     {% endfor %}
                 </select>
+            </div>
+            <div class="col-sm-4 d-grid">
+                <a href="{{ path('sa_ppn_new', {diplome:diplome.id})}}" class="btn btn-success d-block"><i
+                            class="{{
+                    iconAdd}}"></i> Ajouter PN</a>
             </div>
         </div>
 
@@ -152,10 +157,10 @@
                                     class="{{ iconShow }}"></i></a>
 
                         <a href="{{ path(baseurl ~ 'semestre_edit', {'id': semestre.id}) }}"
-                           class="btn btn-warning btn-outline btn-square btn-xs"><i class="{{ iconEdit }}"
-                                                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
-
-                                                                                    title="{{ 'atitle.modifier'|trans }}"></i></a>
+                           class="btn btn-warning btn-outline btn-square btn-xs">
+                            <i class="{{ iconEdit }}"
+                               data-bs-toggle="tooltip" data-bs-placement="bottom"
+                               title="{{ 'atitle.modifier'|trans }}"></i></a>
 
                         {% if is_granted('ROLE_SUPER_ADMIN') %}
                             {% if semestre.actif == true %}

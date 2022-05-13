@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/Column/ColumnType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Table/Column/ColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 14:37
+ * @lastUpdate 13/05/2022 15:10
  */
 
 namespace App\Components\Table\Column;
@@ -15,8 +15,12 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ColumnType
 {
-    // FIXME : statically called to avoid to have add parent::configureOptions() on all inherit Type class
-    final public static function __configureOptions(OptionsResolver $resolver): void
+    public function render(mixed $rowData, array $options): string
+    {
+        return (string) $rowData;
+    }
+
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired('id')
@@ -41,14 +45,5 @@ class ColumnType
             ->setDefault('is_safe_html', true)
             ->setAllowedTypes('is_safe_html', 'bool')
             ->setNormalizer('is_safe_html', fn (Options $options, $value) => $options['render_html'] ? true : $value);
-    }
-
-    public function render(mixed $rowData, array $options): string
-    {
-        return (string) $rowData;
-    }
-
-    public function configureOptions(OptionsResolver $resolver): void
-    {
     }
 }

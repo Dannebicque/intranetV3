@@ -25,6 +25,7 @@ security:
       pattern: ^/(_(profiler|wdt)|css|images|js)/
       security: false
     main:
+      #access_denied_handler: App\Security\AccessDeniedHandler => si je débloque le choix du département bloque
       lazy: true
       provider: chain_provider
       custom_authenticator:

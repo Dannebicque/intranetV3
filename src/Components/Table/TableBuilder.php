@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/TableBuilder.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Table/TableBuilder.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 19:11
+ * @lastUpdate 13/05/2022 15:11
  */
 
 namespace App\Components\Table;
@@ -57,9 +57,6 @@ class TableBuilder
     private function resolveOptions(array $options): void
     {
         $resolver = new OptionsResolver();
-
-        // Configure options from base TableType
-        TableType::__configureOptions($resolver);
 
         // Configure options from bundle config
         $resolver
