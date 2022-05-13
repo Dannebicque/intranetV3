@@ -1,8 +1,8 @@
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/assets/js/app.js
+// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/Sites/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/10/2021 19:25
+// @lastUpdate 07/05/2022 22:33
 import '@fortawesome/fontawesome-pro/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-pro/scss/brands.scss'
 import '@fortawesome/fontawesome-pro/scss/solid.scss'
@@ -21,10 +21,10 @@ import 'flatpickr/dist/l10n/fr.js'
 
 
 import Table from '../components/table'
-//import Editable from './editable'
 import SelectComplete from '../components/SelectComplete'
 import SelectChangeWidget from '../components/SelectChangeWidget'
 import {get, post} from './fetch'
+import TomSelect from 'tom-select'
 
 export const LANG = document.querySelector('html').getAttribute('lang')
 
@@ -38,6 +38,9 @@ customElements.define('my-table', Table)
 customElements.define('select-complete', SelectComplete, {extends: 'select'})
 customElements.define('select-live-update', SelectChangeWidget, {extends: 'select'})
 
+document.querySelectorAll('.selectpicker').forEach(el => {
+    new TomSelect(el, {})
+})
 
 $('input[type="file"]').on('change', function (e) {
   let filename = e.target.files[0].name

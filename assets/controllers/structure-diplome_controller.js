@@ -1,8 +1,8 @@
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/assets/controllers/modal_controller.js
+// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/structure-diplome_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/10/2021 21:49
+// @lastUpdate 07/05/2022 22:04
 
 import {Controller} from '@hotwired/stimulus'
 
@@ -26,7 +26,7 @@ export default class extends Controller {
   }
 
   changePn(event) {
-    this._loadDiplome(event.target.dataset.diplome, event.value)
+    this._loadDiplome(event.target.dataset.diplome, event.target.value)
   }
 
   changeDiplome (event) {
