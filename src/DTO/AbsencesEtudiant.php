@@ -1,10 +1,10 @@
 <?php
 /*
  * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/AbsencesEtudiant.php
+ * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/AbsencesEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/04/2022 09:43
+ * @lastUpdate 08/05/2022 14:21
  */
 
 namespace App\DTO;
@@ -27,7 +27,7 @@ class AbsencesEtudiant
         return $this->etudiant->getGroupes();
     }
 
-    public function setStatisques(StatisquesAbsences $stats)
+    public function setStatisques(StatisquesAbsences $stats): void
     {
         $this->nbJustifie = $stats->nbJustifie;
         $this->nbNonJustifie = $stats->nbNonJustifie;

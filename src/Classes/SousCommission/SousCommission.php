@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/SousCommission.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommission.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/06/2021 18:28
+ * @lastUpdate 08/05/2022 14:27
  */
 
 namespace App\Classes\SousCommission;
@@ -72,7 +72,7 @@ class SousCommission extends AbstractSousCommission implements SousCommissionInt
     {
         $tabUes = [];
         foreach ($this->ues as $ue) {
-            $tabUes[$ue->getNumeroUe()] = new MoyenneUe($ue, $this->semestre->getOptPointPenaliteAbsence());
+            $tabUes[$ue->getNumeroUe()] = new MoyenneUe($ue);
         }
 
         /** @var MoyenneMatiere $matiere */

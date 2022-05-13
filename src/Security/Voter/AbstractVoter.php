@@ -1,16 +1,17 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Security/Voter/AbstractVoter.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Security/Voter/AbstractVoter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/11/2021 18:14
+ * @lastUpdate 08/05/2022 15:42
  */
 
 namespace App\Security\Voter;
 
 use App\Entity\Departement;
 use App\Entity\Personnel;
+use App\Event\UnauthorizedDepartementEvent;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
@@ -77,16 +78,21 @@ class AbstractVoter
 
     public function userHasMinimalRoleInDepartement(string $attribute, ?Departement $departement): bool
     {
+        $unauthorizedDepartement = new UnauthorizedDepartementEvent($departement, $attribute);
         if (null !== $departement && $this->userInGoodDepartement($departement)) {
             if (!array_key_exists($departement->getId(), $this->departementRoles)) {
-                throw new AccessDeniedException('Vous n\'avez pas accès à ce département');
+                $accessDenied = new AccessDeniedException('Vous n\'avez pas accès à ce département');
+                $accessDenied->setSubject($unauthorizedDepartement);
+                throw $accessDenied;
             }
 
             return count(array_intersect(self::HIERARCHICAL_ACCESS_FROM_ROLE[$attribute],
                     $this->departementRoles[$departement->getId()])) > 0;
         }
 
-        throw new AccessDeniedException('Vous n\'êtes pas dans le bon département');
+        $accessDenied = new AccessDeniedException('Vous n\'êtes pas dans le bon département');
+        $accessDenied->setSubject($unauthorizedDepartement);
+        throw $accessDenied;
     }
 
     public function userInGoodDepartement(?Departement $departement): bool
@@ -109,7 +115,10 @@ class AbstractVoter
     public function isResponsableDepartement(Departement $departement): bool
     {
         if (!array_key_exists($departement->getId(), $this->departementRoles)) {
-            throw new AccessDeniedException('Vous n\'avez pas accès à ce département');
+            $unauthorizedDepartement = new UnauthorizedDepartementEvent($departement);
+            $accessDenied = new AccessDeniedException('Vous n\'avez pas accès à ce département');
+            $accessDenied->setSubject($unauthorizedDepartement);
+            throw $accessDenied;
         }
 
         return in_array('ROLE_CDD', $this->departementRoles[$departement->getId()], true) || in_array('ROLE_ASS',

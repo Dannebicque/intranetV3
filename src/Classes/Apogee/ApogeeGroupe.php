@@ -1,19 +1,20 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/ApogeeGroupe.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Apogee/ApogeeGroupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/09/2021 11:21
+ * @lastUpdate 08/05/2022 21:39
  */
 
 namespace App\Classes\Apogee;
 
 use App\Entity\Semestre;
+use PDOStatement;
 
 class ApogeeGroupe extends Apogee
 {
-    public function getGroupesSemestre(Semestre $semestre)
+    public function getGroupesSemestre(Semestre $semestre): bool|PDOStatement
     {
         $this->connect();
         $stid = $this->conn->prepare(
@@ -26,7 +27,7 @@ class ApogeeGroupe extends Apogee
         return $stid;
     }
 
-    public function getHierarchieGroupesSemestre(Semestre $semestre)
+    public function getHierarchieGroupesSemestre(Semestre $semestre): bool|PDOStatement
     {
         $this->connect();
         $stid = $this->conn->prepare(
@@ -37,7 +38,7 @@ class ApogeeGroupe extends Apogee
         return $stid;
     }
 
-    public function getEtudiantsGroupesSemestre(Semestre $semestre)
+    public function getEtudiantsGroupesSemestre(Semestre $semestre): bool|PDOStatement
     {
         $this->connect();
         $stid = $this->conn->prepare(

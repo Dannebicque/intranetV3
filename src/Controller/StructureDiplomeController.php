@@ -1,4 +1,11 @@
 <?php
+/*
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/StructureDiplomeController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 07/05/2022 22:06
+ */
 
 namespace App\Controller;
 
@@ -17,6 +24,7 @@ class StructureDiplomeController extends AbstractController
         Request $request
     ): Response {
         $idDiplome = $request->query->get('diplome');
+        $idPpn = $request->query->get('ppn');
         $diplome = $diplomeRepository->find($idDiplome);
 
         if (null === $diplome) {

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/05/2022 21:59
+ * @lastUpdate 08/05/2022 22:05
  */
 
 namespace App\Classes\Celcat;
@@ -28,19 +28,19 @@ class MyCelcat
 {
     private mixed $conn;
 
-    /**
-     * MyCelcat constructor.
-     */
-    public function __construct(private readonly EntityManagerInterface $entityManger, private readonly ParameterBagInterface $parameterBag, private readonly GroupeRepository $groupeRepository, private readonly CelcatEventsRepository $celcatEventsRepository, private readonly CalendrierRepository $calendrierRepository)
+    public function __construct(
+        private readonly EntityManagerInterface $entityManger,
+        private readonly ParameterBagInterface $parameterBag,
+        private readonly GroupeRepository $groupeRepository,
+        private readonly CelcatEventsRepository $celcatEventsRepository,
+        private readonly CalendrierRepository $calendrierRepository)
     {
     }
 
-    private function connect()
+    private function connect(): void
     {
         $this->conn = odbc_connect('MSSQLSRV', $this->parameterBag->get('MSSQL_USER'),
             $this->parameterBag->get('MSSQL_PASS'));
-
-        return $this->conn;
     }
 
     /**
@@ -57,7 +57,7 @@ class MyCelcat
             $date = odbc_result($result, 'week_date');
             $cal = new Calendrier();
             $cal->setAnneeUniversitaire($anneeUniversitaire);
-            $cal->setSemaineFormation(odbc_result($result, 'week_no'));
+            $cal->setSemaineFormation((int) odbc_result($result, 'week_no'));
             $cal->setSemaineReelle((int) date('W', strtotime($date)));
             $cal->setDateLundi(Tools::convertDateToObject($date));
             $this->entityManger->persist($cal);
@@ -120,8 +120,8 @@ class MyCelcat
 
     public function updateEventsDiplome(
         Diplome $diplome,
-        $calendriers,
-        $groupes
+        array $calendriers,
+        array $groupes
     ): void {
         $this->connect();
         $date = Carbon::now()->modify('-1 day');
@@ -177,11 +177,11 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
      */
     private function createEvent(
         mixed $result,
-        $anneeUniversitaire,
-        $codeDepartement,
+        AnneeUniversitaire $anneeUniversitaire,
+        int $codeDepartement,
         mixed $eventId,
-        $calendriers,
-        $groupes
+        array $calendriers,
+        array $groupes
     ): CelcatEvent {
         $event = null;
         // Et on ecrit la nouvelle version ou la nouvelle ligne
@@ -199,7 +199,7 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
                 $event = new CelcatEvent();
                 $event->setAnneeUniversitaire($anneeUniversitaire);
                 $event->setEventId($eventId);
-                $event->setJour($jour);
+                $event->setJour((int) $jour);
                 $event->setDebut(Tools::convertTimeToObject($debut[1]));
                 $event->setFin(Tools::convertTimeToObject($fin[1]));
                 $event->setSemaineFormation($semaine);
@@ -214,7 +214,7 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
                 $event->setCodeSalle(odbc_result($result, 11));
                 $event->setLibSalle(utf8_encode(odbc_result($result, 12)));
                 $event->setDateCours($calendriers[$semaine]->addDays($jour));
-                $event->setSemestre($groupes[$codeGroupe] ?? null);//todo: ajouter une commande pour mettre à jour si erreur lors de l'import ,
+                $event->setSemestre($groupes[$codeGroupe] ?? null); // todo: ajouter une commande pour mettre à jour si erreur lors de l'import ,
                 $dt = explode(' ', (string) odbc_result($result, 15));
                 $event->setUpdateEvent(Tools::convertDateHeureToObject($dt[0], $dt[1]));
 

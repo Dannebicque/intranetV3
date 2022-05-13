@@ -4,20 +4,19 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/BacType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 19:14
+ * @lastUpdate 08/05/2022 09:50
  */
 
 namespace App\Form;
 
 use App\Entity\Bac;
 use App\Enums\BacEnum;
+use BackedEnum;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use UnitEnum;
 
 class BacType extends AbstractType
 {
@@ -31,7 +30,7 @@ class BacType extends AbstractType
                 'label' => 'label.typeBac',
                 'class' => BacEnum::class,
                 'help' => 'help.typeBac',
-                'choice_label' => static fn (UnitEnum $choice): string => 'bac_type.'.$choice->value,
+                'choice_label' => static fn (BackedEnum $choice): string => 'bac_type.'.$choice->value,
             ])
         ;
     }

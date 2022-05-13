@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/DataUserSession.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/DataUserSession.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/10/2021 10:02
+ * @lastUpdate 08/05/2022 16:03
  */
 
 /*
@@ -48,17 +48,17 @@ class DataUserSession
     /**
      * @var Semestre[]
      */
-    protected array $semestres; // semestres actifs de la departement
+    protected array $semestres = []; // semestres actifs de la departement
 
     /**
      * @var Diplome[]
      */
-    protected array $diplomes;
+    protected array $diplomes = [];
 
     /**
      * @var Annee[]
      */
-    protected array $annees;
+    protected array $annees = [];
 
     protected ?Departement $departement = null;
 

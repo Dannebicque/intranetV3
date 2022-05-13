@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/AbsenceJustificatifTableType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Table/AbsenceJustificatifTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/10/2021 11:00
+ * @lastUpdate 13/05/2022 15:13
  */
 
 namespace App\Table;
@@ -34,13 +34,13 @@ use App\Table\ColumnType\DatePeriodeJustificatifColumnType;
 use App\Table\ColumnType\EtudiantColumnType;
 use App\Table\ColumnType\GroupeEtudiantColumnType;
 use App\Table\ColumnType\StatusBadgeEnumColumnType;
+use BackedEnum;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
-use UnitEnum;
 
 class AbsenceJustificatifTableType extends TableType
 {
@@ -66,7 +66,7 @@ class AbsenceJustificatifTableType extends TableType
         $builder->addFilter('etat_demande', EnumType::class, [
             'class' => AbsenceJustificatifEnum::class,
             'required' => false,
-            'choice_label' => static fn (UnitEnum $choice): string => 'absence_justificatif.'.$choice->value,
+            'choice_label' => static fn (BackedEnum $choice): string => 'absence_justificatif.'.$choice->value,
             'placeholder' => 'Etat de la demande',
         ]);
 
@@ -204,6 +204,8 @@ class AbsenceJustificatifTableType extends TableType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
+
         $resolver->setDefaults([
             'orderable' => true,
             'semestre' => null,

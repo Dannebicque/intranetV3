@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/RedirectSubscriber.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/EventSubscriber/RedirectSubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:52
+ * @lastUpdate 08/05/2022 15:00
  */
 
 namespace App\EventSubscriber;
@@ -36,7 +36,6 @@ class RedirectSubscriber implements EventSubscriberInterface
 
     public function onChoixDepartementDefaut($event): RedirectResponse
     {
-        // logout
         return new RedirectResponse($this->router->generate('security_choix_departement', ['message' => $event->getSubject()]));
     }
 }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/QuestionnaireQualiteRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 08/05/2022 08:49
  */
 
 namespace App\Repository;
@@ -35,8 +35,8 @@ class QuestionnaireQualiteRepository extends ServiceEntityRepository
     public function findByDiplome(Diplome $diplome): array
     {
         return $this->createQueryBuilder('q')
-            ->innerJoin(Semestre::class, 's', 'with', 's.id=q.semestre')
-            ->innerJoin(Annee::class, 'a', 'with', 'a.id = s.annee')
+            ->innerJoin(Semestre::class, 's', 'WITH', 's.id=q.semestre')
+            ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->where('a.diplome = :diplome')
             ->setParameter('diplome', $diplome->getId())
             ->orderBy('q.dateOuverture', Criteria::ASC)
@@ -47,8 +47,8 @@ class QuestionnaireQualiteRepository extends ServiceEntityRepository
     public function findInDate(DateTime $date): array
     {
         return $this->createQueryBuilder('q')
-            ->innerJoin(Semestre::class, 's', 'with', 's.id=q.semestre')
-            ->innerJoin(Annee::class, 'a', 'with', 'a.id = s.annee')
+            ->innerJoin(Semestre::class, 's', 'WITH', 's.id=q.semestre')
+            ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->where('q.dateOuverture  BETWEEN :matin AND :soir')
             ->setParameter('matin', $date->format('Y-m-d 00:00:00'))
             ->setParameter('soir', $date->format('Y-m-d 23:59:59'))

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/MoyenneUe.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/MoyenneUe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 15:38
+ * @lastUpdate 08/05/2022 14:27
  */
 
 namespace App\DTO;
@@ -20,7 +20,7 @@ class MoyenneUe
     /**
      * MoyenneUe constructor.
      */
-    public function __construct(public Ue $ue, private readonly float $penalite)
+    public function __construct(public Ue $ue)
     {
     }
 

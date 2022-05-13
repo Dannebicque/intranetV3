@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/api/EtudiantApiController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/api/EtudiantApiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/10/2021 10:34
+ * @lastUpdate 13/05/2022 15:30
  */
 
 namespace App\Controller\api;
@@ -32,7 +32,7 @@ class EtudiantApiController extends BaseController
     #[Route(path: '/semestre/{semestre}', name: 'api_etudiants_semestre', options: ['expose' => true])]
     public function trombinoscopeEtudiantsAjax(Semestre $semestre): JsonResponse
     {
-        $etudiants = $this->etudiantRepository->findBySemestre($semestre->getId());
+        $etudiants = $this->etudiantRepository->findBySemestre($semestre);
         $etus = [];
         /** @var Etudiant $p */
         foreach ($etudiants as $p) {

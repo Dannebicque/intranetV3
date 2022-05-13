@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/AbsenceListeTableType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Table/AbsenceListeTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/10/2021 11:51
+ * @lastUpdate 13/05/2022 14:27
  */
 
 namespace App\Table;
@@ -154,7 +154,7 @@ class AbsenceListeTableType extends TableType
                     foreach ($data as $key => $d) {
                         $t[$key] = $d->{$order[0]->getOption('id')};
                     }
-                    if ($order[1] === 'ASC') {
+                    if ('ASC' === $order[1]) {
                         asort($t);
                     } else {
                         arsort($t);

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Apogee/ApogeeSousCommission.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 08/05/2022 21:56
  */
 
 namespace App\Classes\Apogee;
@@ -22,7 +22,7 @@ class ApogeeSousCommission extends Apogee
     /**
      * @throws Exception
      */
-    public function transformeApogeeTexte($fichier, string $nomfichier): ?StreamedResponse
+    public function transformeApogeeTexte(string $fichier, string $nomfichier): ?StreamedResponse
     {
         $objPEENotes = new Spreadsheet();
         $objPEENotes->setActiveSheetIndex(0);
@@ -42,7 +42,7 @@ class ApogeeSousCommission extends Apogee
         foreach ($objPHPExcel->getNamedRanges() as $name => $namedRange) {
             if (str_starts_with($name, 'APOL_')) {
                 $G_tab_apoL[$i] = $namedRange->getName();
-                $G_tab_apoL_Coord[$i] = $namedRange->getRange();
+                $G_tab_apoL_Coord[$i] = $namedRange->getValue(); // ->getRange();
                 ++$i;
             }
         }
@@ -51,7 +51,7 @@ class ApogeeSousCommission extends Apogee
         foreach ($objPHPExcel->getNamedRanges() as $name => $namedRange) {
             if (str_starts_with($name, 'APOC_')) {
                 $G_tab_apoC[$i] = $namedRange->getName();
-                $G_tab_apoC_Coord[$i] = $namedRange->getRange();
+                $G_tab_apoC_Coord[$i] = $namedRange->getValue(); // ->getRange();
                 ++$i;
             }
         }
@@ -239,13 +239,13 @@ class ApogeeSousCommission extends Apogee
     /**
      * Calcule les nouvelles coordonnées d'une cellule à partir des offsets x et y.
      */
-    public function getNewCoordinates($cellCoordonate, int $offsetX = 0, int $offsetY = 0): string
+    public function getNewCoordinates(string $cellCoordonate, int $offsetX = 0, int $offsetY = 0): string
     {
         if (2 === mb_strlen($cellCoordonate)) {
-            $colonne = mb_substr($cellCoordonate, 0, 1);
+            $colonne = Coordinate::columnIndexFromString(mb_substr($cellCoordonate, 0, 1));
             $ligne = (int) mb_substr($cellCoordonate, 1, 5);
         } else {
-            $colonne = mb_substr($cellCoordonate, 0, 2);
+            $colonne = Coordinate::columnIndexFromString(mb_substr($cellCoordonate, 0, 2));
             $ligne = (int) mb_substr($cellCoordonate, 2, 5);
         }
         if (0 !== $offsetX) { // decalage colonne
@@ -255,6 +255,6 @@ class ApogeeSousCommission extends Apogee
             $ligne += $offsetY;
         }
 
-        return $colonne.$ligne;
+        return Coordinate::stringFromColumnIndex($colonne).$ligne;
     }
 }

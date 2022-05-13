@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/BCDemandeDepartementType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 13/05/2022 15:13
  */
 
 namespace App\Table;
@@ -129,6 +129,8 @@ class BCDemandeDepartementType extends TableType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
+
         $resolver->setDefaults([
             'orderable' => true,
             'departement' => null,

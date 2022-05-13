@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/PpnType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/PpnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 14:21
+ * @lastUpdate 07/05/2022 21:53
  */
 
 namespace App\Form;
@@ -32,8 +32,8 @@ class PpnType extends AbstractType
         $this->departement = $options['departement'];
 
         $builder
-            ->add('libelle', TextType::class, ['label' => 'libelle'])
-            ->add('annee', TextType::class, ['label' => 'annee_sortie'])
+            ->add('libelle', TextType::class, ['label' => 'label.libelle'])
+            ->add('annee', TextType::class, ['label' => 'label.annee_sortie'])
             ->add(
                 'diplome',
                 EntityType::class,
@@ -41,7 +41,7 @@ class PpnType extends AbstractType
                     'class' => Diplome::class,
                     'choice_label' => 'display',
                     'query_builder' => fn (DiplomeRepository $diplomeRepository) => $diplomeRepository->findByDepartementBuilder($this->departement),
-                    'label' => 'diplome',
+                    'label' => 'label.diplome',
                 ]
             );
     }

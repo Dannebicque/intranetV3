@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/AppelSuiviTableType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Table/PlanCoursTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/10/2021 11:51
+ * @lastUpdate 13/05/2022 15:13
  */
 
 namespace App\Table;
@@ -20,10 +20,10 @@ use App\Entity\Semestre;
 use App\Enums\PlanCoursEnum;
 use App\Repository\SemestreRepository;
 use App\Table\ColumnType\StatusBadgeEnumColumnType;
+use BackedEnum;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use UnitEnum;
 
 class PlanCoursTableType extends TableType
 {
@@ -50,7 +50,7 @@ class PlanCoursTableType extends TableType
         $builder->addFilter('etat_plan_cours', EnumType::class, [
             'class' => PlanCoursEnum::class,
             'required' => false,
-            'choice_label' => static fn (UnitEnum $choice): string => 'plan_cours.'.$choice->value,
+            'choice_label' => static fn (BackedEnum $choice): string => 'plan_cours.'.$choice->value,
             'placeholder' => 'Etat du plan de cours',
         ]);
 
@@ -116,6 +116,8 @@ class PlanCoursTableType extends TableType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
+
         $resolver->setDefaults([
             'orderable' => true,
             'diplome' => null,

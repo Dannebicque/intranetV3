@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/ArticleTableType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Table/QualiteTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 19:43
+ * @lastUpdate 13/05/2022 15:13
  */
 
 namespace App\Table;
@@ -104,6 +104,8 @@ class QualiteTableType extends TableType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
+
         $resolver->setDefaults([
             'orderable' => true,
             'departement' => null,

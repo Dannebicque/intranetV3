@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ParcourRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 08/05/2022 08:49
  */
 
 namespace App\Repository;
@@ -52,9 +52,9 @@ class ParcourRepository extends ServiceEntityRepository
     public function tableauParcourApogee(Departement $departement): array
     {
         $query = $this->createQueryBuilder('p')
-            ->innerJoin(Semestre::class, 's', 'with', 's.id=p.semestre')
-            ->innerJoin(Annee::class, 'a', 'with', 'a.id=s.annee')
-            ->innerJoin(Diplome::class, 'd', 'with', 'd.id=a.diplome')
+            ->innerJoin(Semestre::class, 's', 'WITH', 's.id=p.semestre')
+            ->innerJoin(Annee::class, 'a', 'WITH', 'a.id=s.annee')
+            ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id=a.diplome')
             ->where('d.departement= :departement')
             ->setParameter('departement', $departement->getId())
             ->getQuery()

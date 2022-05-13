@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/AppelSuiviTableType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Table/AppelSuiviTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/10/2021 11:51
+ * @lastUpdate 13/05/2022 15:13
  */
 
 namespace App\Table;
@@ -95,6 +95,7 @@ class AppelSuiviTableType extends TableType
 //        ]);
 
         $builder->useAdapter(EntityAdapter::class, [
+            //todo: passer par EdtManager pour avoir les infos sur le semestre quelque soit la source et utiliser EvenvementEdt comme DTO
             'class' => AbsenceEtatAppel::class, // todo: doit être le planning... Passer par un DTO...
             'fetch_join_collection' => false,
             'query' => static function (QueryBuilder $qb, array $formData) {
@@ -109,6 +110,8 @@ class AppelSuiviTableType extends TableType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
+
         $resolver->setDefaults([
             'orderable' => true,
             'semestre' => null,

@@ -1,6 +1,6 @@
 parameters:
-    #symfony:
-    #    container_xml_path: var/cache/dev/App_KernelDevDebugContainer.xml
+    symfony:
+        containerXmlPath: var/cache/dev/App_KernelDevDebugContainer.xml
 
     level: 6
 

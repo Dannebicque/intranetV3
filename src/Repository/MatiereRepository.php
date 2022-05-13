@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/MatiereRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 08/05/2022 08:49
  */
 
 namespace App\Repository;
@@ -78,9 +78,9 @@ class MatiereRepository extends ServiceEntityRepository
     public function tableauMatieresApogees(Diplome $diplome): array
     {
         $query = $this->createQueryBuilder('m')
-            ->innerJoin(Ue::class, 'u', 'with', 'u.id=m.ue')
-            ->innerJoin(Semestre::class, 's', 'with', 's.id=u.semestre')
-            ->innerJoin(Annee::class, 'a', 'with', 'a.id=s.annee')
+            ->innerJoin(Ue::class, 'u', 'WITH', 'u.id=m.ue')
+            ->innerJoin(Semestre::class, 's', 'WITH', 's.id=u.semestre')
+            ->innerJoin(Annee::class, 'a', 'WITH', 'a.id=s.annee')
             ->where('a.diplome= :diplome')
             ->setParameter('diplome', $diplome->getId())
             ->getQuery()

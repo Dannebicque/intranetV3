@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/AbsenceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 08/05/2022 12:52
  */
 
 namespace App\Repository;
@@ -192,7 +192,7 @@ class AbsenceRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getAbsencesTempsReel(Departement $departement)
+    public function getAbsencesTempsReel(Departement $departement): array
     {
         $dateNow = Carbon::now();
         $date13h = Carbon::create($dateNow->year, $dateNow->month, $dateNow->day, 13, 00, 00);

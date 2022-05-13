@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/QuestionnaireQualiteTableType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Table/QuestionnaireQualiteTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/11/2021 17:38
+ * @lastUpdate 13/05/2022 15:13
  */
 
 namespace App\Table;
@@ -131,6 +131,8 @@ class QuestionnaireQualiteTableType extends TableType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
+
         $resolver->setDefaults([
             'orderable' => true,
             'translation_domain' => 'table',

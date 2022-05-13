@@ -1,21 +1,22 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/ApogeeEtudiant.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Apogee/ApogeeEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/09/2021 12:41
+ * @lastUpdate 08/05/2022 21:39
  */
 
 namespace App\Classes\Apogee;
 
 use App\Entity\Annee;
 use App\Utils\Tools;
+use PDOStatement;
 use function array_key_exists;
 
 class ApogeeEtudiant extends Apogee
 {
-    public function getEtudiant(string $etudiant, Annee $annee)
+    public function getEtudiant(string $etudiant, Annee $annee): bool|PDOStatement
     {
         $this->connect();
         $stid = $this->conn->prepare(
@@ -60,7 +61,7 @@ class ApogeeEtudiant extends Apogee
         ];
     }
 
-    public function getEtudiantsAnnee(Annee $annee)
+    public function getEtudiantsAnnee(Annee $annee): bool|PDOStatement
     {
         $this->connect();
         $stid = $this->conn->prepare(
