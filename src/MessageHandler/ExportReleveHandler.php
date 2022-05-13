@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/MessageHandler/ExportReleveHandler.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2022 14:45
+ * @lastUpdate 13/05/2022 12:07
  */
 
 namespace App\MessageHandler;
@@ -24,7 +24,13 @@ class ExportReleveHandler implements MessageHandlerInterface
     /**
      * ExportReleveHandler constructor.
      */
-    public function __construct(private readonly Configuration $configuration, private readonly EtudiantExportReleve $etudiantExportReleve, private readonly SemestreRepository $semestreRepository, private readonly AnneeUniversitaireRepository $anneeUniversitaireRepository, private readonly MailerInterface $mailer, private readonly PersonnelRepository $personnelRepository)
+    public function __construct(
+        private readonly Configuration $configuration,
+        private readonly EtudiantExportReleve $etudiantExportReleve,
+        private readonly SemestreRepository $semestreRepository,
+        private readonly AnneeUniversitaireRepository $anneeUniversitaireRepository,
+        private readonly MailerInterface $mailer,
+        private readonly PersonnelRepository $personnelRepository)
     {
     }
 
