@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/PersonnelRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 14/05/2022 11:14
  */
 
 namespace App\Repository;
@@ -87,7 +87,7 @@ class PersonnelRepository extends ServiceEntityRepository
             $tt['nom'] = $personnel->getNom();
             $tt['numeroHarpege'] = $personnel->getNumeroHarpege();
             $tt['prenom'] = $personnel->getPrenom();
-            $tt['username'] = $personnel->getUsername();
+            $tt['username'] = $personnel->getUserIdentifier();
             $tt['mail_univ'] = $personnel->getMailUniv();
             $tt['mail_perso'] = $personnel->getMailPerso();
             $tt['avatarInitiales'] = $personnel->getAvatarInitiales();

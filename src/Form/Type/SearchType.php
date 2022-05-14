@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/Type/SearchType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/Type/SearchType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 19:11
+ * @lastUpdate 14/05/2022 11:13
  */
 
 namespace App\Form\Type;
@@ -45,12 +45,12 @@ class SearchType extends AbstractType implements DataTransformerInterface
         $builder->addModelTransformer($this);
     }
 
-    public function transform($value): mixed
+    public function transform($value)
     {
         return $value;
     }
 
-    public function reverseTransform($value): ?string
+    public function reverseTransform($value)
     {
         if (!is_string($value)) {
             return null;
