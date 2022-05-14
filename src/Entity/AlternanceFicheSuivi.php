@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/AlternanceFicheSuivi.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 08:21
+ * @lastUpdate 14/05/2022 09:56
  */
 
 namespace App\Entity;
@@ -37,9 +37,6 @@ class AlternanceFicheSuivi extends AbstractFicheSuivi
         $this->setDate(Carbon::today());
     }
 
-    /**
-     * @return int|null
-     */
     public function getId(): ?int
     {
         return $this->id;

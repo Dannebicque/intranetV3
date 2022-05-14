@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Event/UnauthorizedDepartementEvent.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/05/2022 15:42
+ * @lastUpdate 14/05/2022 09:59
  */
 
 namespace App\Event;
@@ -13,13 +13,8 @@ use App\Entity\Departement;
 
 class UnauthorizedDepartementEvent
 {
-    private Departement $departement;
-    private string|array|null $attributes;
-
-    public function __construct(Departement $departement, string|array|null $attributes = null)
+    public function __construct(private readonly Departement $departement, private $attributes = null)
     {
-        $this->departement = $departement;
-        $this->attributes = $attributes;
     }
 
     public function getDepartement(): Departement

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/05/2022 22:09
+ * @lastUpdate 14/05/2022 09:52
  */
 
 namespace App\Controller;
@@ -205,7 +205,7 @@ class EdtController extends BaseController
             $semaine = (int) date('W');
         }
         if ($semaine !== (int) date('W') && $semaine !== ((int) date('W') + 1)) {
-            return $this->redirect($this->generateUrl('erreur_666'));
+            return $this->redirectToRoute('erreur_666');
         }
         if (null !== $this->getUser()->getDiplome() && $this->getUser()->getDiplome()->isOptUpdateCelcat()) {
             $edt = $this->myEdtCelcat->initEtudiant($this->getUser(),

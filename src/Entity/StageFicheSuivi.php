@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/StageFicheSuivi.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 08:20
+ * @lastUpdate 14/05/2022 09:58
  */
 
 namespace App\Entity;
@@ -22,7 +22,7 @@ class StageFicheSuivi extends AbstractFicheSuivi
     private ?int $id = null;
 
     #[ORM\ManyToOne(targetEntity: StageEtudiant::class, inversedBy: 'stageFicheSuivis')]
-    private ?StageEtudiant $stage;
+    private ?StageEtudiant $stage = null;
 
     public function __construct(StageEtudiant $stageEtudiant)
     {

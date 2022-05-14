@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Security/AccessDeniedHandler.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/05/2022 16:00
+ * @lastUpdate 14/05/2022 10:02
  */
 
 // src/Security/AccessDeniedHandler.php
@@ -19,7 +19,7 @@ use Twig\Environment;
 
 class AccessDeniedHandler implements AccessDeniedHandlerInterface
 {
-    public function __construct(private Environment $twig)
+    public function __construct(private readonly Environment $twig)
     {
     }
 
@@ -38,6 +38,6 @@ class AccessDeniedHandler implements AccessDeniedHandlerInterface
             'exception' => $accessDeniedException,
         ]);
 
-        return new Response($content, 403);
+        return new Response($content, \Symfony\Component\HttpFoundation\Response::HTTP_FORBIDDEN);
     }
 }

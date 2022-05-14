@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/bloc_saisie_absence/SaisieAbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 15:48
+ * @lastUpdate 14/05/2022 09:55
  */
 
 namespace App\Controller\bloc_saisie_absence;
@@ -70,12 +70,6 @@ class SaisieAbsenceController extends BaseController
     }
 
     /**
-     * @param \App\Classes\Matieres\TypeMatiereManager  $typeMatiereManager
-     * @param \App\Classes\Etudiant\EtudiantAbsences    $etudiantAbsences
-     * @param \App\Repository\AbsenceRepository         $absenceRepository
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param string                                    $matiere
-     * @param \App\Entity\Etudiant                      $etudiant
      *
      * @return JsonResponse|Response
      *

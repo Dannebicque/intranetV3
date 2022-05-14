@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Actualite.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 20:32
+ * @lastUpdate 14/05/2022 10:02
  */
 
 namespace App\Entity;
@@ -35,7 +35,7 @@ class Actualite extends BaseEntity
 
     public function __construct(?Departement $departement)
     {
-        $this->departement = $departement;
+        $this->setDepartement($departement);
     }
 
     public function getTitre(): ?string

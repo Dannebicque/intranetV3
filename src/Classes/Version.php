@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Version.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Version.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 17:17
+ * @lastUpdate 14/05/2022 10:36
  */
 
 namespace App\Classes;

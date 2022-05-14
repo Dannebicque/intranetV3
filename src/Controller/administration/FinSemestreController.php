@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/FinSemestreController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/FinSemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 14/05/2022 09:53
  */
 
 namespace App\Controller\administration;
@@ -80,6 +80,6 @@ class FinSemestreController extends BaseController
         $this->entityManager->flush();
         $this->addFlashBag('success', 'changement.semestre.effectue');
 
-        return $this->redirect($this->generateUrl('administration_semestre_index', ['semestre' => $semestre->getId()]));
+        return $this->redirectToRoute('administration_semestre_index', ['semestre' => $semestre->getId()]);
     }
 }

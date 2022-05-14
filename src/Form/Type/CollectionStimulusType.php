@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/Type/CollectionStimulusType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/Type/CollectionStimulusType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/11/2021 17:36
+ * @lastUpdate 14/05/2022 10:00
  */
 
 namespace App\Form\Type;
@@ -29,11 +29,6 @@ class CollectionStimulusType extends AbstractType
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
         $view->vars['max_items'] = $options['max_items'];
-    }
-
-    public function getBlockPrefix(): string
-    {
-        return 'collection_stimulus';
     }
 
     public function getParent(): ?string

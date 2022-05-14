@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyUpload.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 08:49
+ * @lastUpdate 14/05/2022 09:50
  */
 
 /*
@@ -53,7 +53,7 @@ class MyUpload
             $this->nomfile = random_int(1, 99999).'_'.date('YmdHis').'.'.$extension;
             try {
                 $fichier->move($this->dir.$dir, $this->nomfile);
-            } catch (FileException $e) {
+            } catch (FileException) {
                 // ... handle exception if something happens during file upload
             }
 
