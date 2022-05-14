@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.7.0](https://github.com/Dannebicque/intranetV3/compare/v3.6.5...v3.7.0) (2022-05-14)
+
+
+### Features
+
+* [Document] Gestion documentaire depuis le superAdmin (originaux) + dropzone ([8d9a88e](https://github.com/Dannebicque/intranetV3/commit/8d9a88e2a62ab07227a278b2bb433a536aab0e37))
+
+
+### Bug Fixes
+
+* [absence] titre du module lors d'un changement de la liste ([693dc4e](https://github.com/Dannebicque/intranetV3/commit/693dc4e7eb0ff2ddf07f14aac71d44a60aa3aa3e))
+* [Email] absolute_url retourne localhost et non le domaine. ([f34823f](https://github.com/Dannebicque/intranetV3/commit/f34823f1abaf6272b0fdf5d3ccb25c1bafc45d56))
+* [Export évaluation] Export et affichages des évaluations sans dépendance au semestre de matières ([099e2e5](https://github.com/Dannebicque/intranetV3/commit/099e2e56efbca03ead5a373113e7d2d3277e55b7))
+* [Export évaluation] Export et affichages des évaluations sans dépendance au semestre de matières ([9e9de6a](https://github.com/Dannebicque/intranetV3/commit/9e9de6a361a5feef33e5c0251fdf1f880f43b02a))
+* [Export évaluation] Export et affichages des évaluations sans dépendance au semestre de matières ([5019d47](https://github.com/Dannebicque/intranetV3/commit/5019d478cc598123f8e75b383288ba4ae6fe19af))
+* [js] listes déroulantes + bug sur un chargement ajx ([03f4b11](https://github.com/Dannebicque/intranetV3/commit/03f4b116a25e9bab1aff80ca36eedcc2848e4191))
+* [Stage] Impression fiche suivi de stage pour les personnels ([7de22e7](https://github.com/Dannebicque/intranetV3/commit/7de22e7cfa09ec5cb886a3cf3b2b848583540476))
+* [Type Enum] Semaines suivantes/précédentes ([554532c](https://github.com/Dannebicque/intranetV3/commit/554532c7827dc0594ad2d04b2dfb251e19b4610c))
+* [Type Enum] Semaines suivantes/précédentes ([4d87ffd](https://github.com/Dannebicque/intranetV3/commit/4d87ffd1256da64087ccaea25aa861d700741987))
+* [Type Enum] Semaines suivantes/précédentes ([6011532](https://github.com/Dannebicque/intranetV3/commit/6011532e4113ca4bff59e3bf0b26e6fa9f3d746a))
+* [Type Matiere] ([f7320b4](https://github.com/Dannebicque/intranetV3/commit/f7320b49f45fb6ed76845a815ce75baa65764601))
+* [Type Matiere] ([e4baace](https://github.com/Dannebicque/intranetV3/commit/e4baaceea0306fde6e6d2d0c56abf1416647024e))
+* [Type Matiere] Problème de requete si plusieurs correspondances ([1b6cad1](https://github.com/Dannebicque/intranetV3/commit/1b6cad1fec2c07f948f146b4b2df51bf46fc1ec5))
+
 ### [3.6.5](https://github.com/Dannebicque/intranetV3/compare/v3.6.4...v3.6.5) (2022-05-10)
 
 
