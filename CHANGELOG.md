@@ -4,6 +4,9 @@ All notable changes to this project will be documented in this file. See [standa
 
 ## [3.7.0](https://github.com/Dannebicque/intranetV3/compare/v3.6.5...v3.7.0) (2022-05-14)
 
+### Refactoring
+
+* Changement de version, et passage en version 6.0 de Symfony avec PHP8.1
 
 ### Features
 
