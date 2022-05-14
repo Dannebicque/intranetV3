@@ -1000,6 +1000,9 @@
 "@symfony/ux-chartjs@file:vendor/symfony/ux-chartjs/Resources/assets":
   version "1.1.0"
 
+"@symfony/ux-dropzone@file:vendor/symfony/ux-dropzone/Resources/assets":
+  version "1.1.0"
+
 "@symfony/ux-live-component@file:vendor/symfony/ux-live-component/assets":
   version "0.0.1"
   dependencies:

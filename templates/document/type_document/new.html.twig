@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends is_granted('ROLE_QUALITE') ? 'base-super_admin.html.twig' : 'base.html.twig' %}
 
 {% block header %}
     {{ 'adm.type_document.new.heading'|trans }}
@@ -6,7 +6,11 @@
 
 {%block headeractions %}
     <div class="header-action">
-        {{ include('composants/adm-buttons-new.html.twig', {elt: 'type_document'}) }}
+        {% if is_granted('ROLE_QUALITE') %}
+            {{ include('composants/sadm-buttons-new.html.twig', {elt: 'qualite_type_document'}) }}
+        {% else %}
+            {{ include('composants/adm-buttons-new.html.twig', {elt: 'type_document'}) }}
+        {% endif %}
     </div>
 {% endblock %}
 

@@ -1,0 +1,24 @@
+{% extends is_granted('ROLE_QUALITE') ? 'base-super_admin.html.twig' : 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.document.modification.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {% if is_granted('ROLE_QUALITE') %}
+            {{ include('composants/sadm-buttons-edit.html.twig', {elt:'qualite_documents', id: document.uuidString}) }}
+        {% else %}
+            {{ include('composants/adm-buttons-edit.html.twig', {elt:'document', id: document.uuidString}) }}
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.document.modification.heading'|trans }}</h4>
+        <div class="card-body">
+                {{ include('composants/adm-form.html.twig', {'button_label': 'update'|trans}) }}
+        </div>
+    </div>
+{% endblock %}

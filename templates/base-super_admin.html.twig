@@ -66,6 +66,12 @@
                 <span class="title">{{ 'menu.qualite'|trans }}</span>
             </a>
         </li>
+        <li class="menu-item" id="menu-enquete">
+            <a class="menu-link" href="{{ path('sa_qualite_documents_index') }}">
+                <i class="fas fa-lobster fa-2x"></i>
+                <span class="title">{{ 'menu.originaux'|trans }}</span>
+            </a>
+        </li>
     {% endif %}
     {% if is_granted('ROLE_FINANCE') or is_granted('ROLE_SUPER_ADMIN') or is_granted('ROLE_ADMINISTRATIF') %}
         <li class="menu-item" id="menu-enquete">

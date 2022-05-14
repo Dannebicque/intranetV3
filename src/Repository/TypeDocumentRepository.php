@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/TypeDocumentRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 13/05/2022 20:42
  */
 
 namespace App\Repository;
@@ -46,5 +46,20 @@ class TypeDocumentRepository extends ServiceEntityRepository
             ->where('t.departement = :departement')
             ->setParameter('departement', $departement)
             ->orderBy('t.libelle', Criteria::ASC);
+    }
+
+    public function findByOriginauxBuilder(): QueryBuilder
+    {
+        return $this->createQueryBuilder('t')
+            ->where('t.originaux = :true')
+            ->setParameter('true', true)
+            ->orderBy('t.libelle', Criteria::ASC);
+    }
+
+    public function findByOriginaux()
+    {
+        return $this->findByOriginauxBuilder()
+            ->getQuery()
+            ->getResult();
     }
 }

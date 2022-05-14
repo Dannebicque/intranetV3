@@ -792,6 +792,9 @@
     "symfony/ux-chartjs": {
         "version": "v1.2.0"
     },
+    "symfony/ux-dropzone": {
+        "version": "v2.1.1"
+    },
     "symfony/ux-live-component": {
         "version": "v2.1.1"
     },

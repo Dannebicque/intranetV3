@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TypeDocument.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/TypeDocument.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 09:34
+ * @lastUpdate 13/05/2022 20:48
  */
 
 namespace App\Entity;
@@ -24,7 +24,7 @@ class TypeDocument extends BaseEntity
     use LifeCycleTrait;
 
     #[Groups(['typedocument_administration', 'document_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 75)]
+    #[ORM\Column(type: Types::STRING, length: 75)]
     private ?string $libelle = null;
 
     #[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'typeDocuments')]
@@ -36,7 +36,10 @@ class TypeDocument extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'typeDocument', targetEntity: Document::class)]
     private Collection $documents;
 
-    public function __construct(Departement $departement)
+    #[ORM\Column(type: 'boolean')]
+    private ?bool $originaux = false;
+
+    public function __construct(?Departement $departement)
     {
         $this->setDepartement($departement);
         $this->documents = new ArrayCollection();
@@ -91,6 +94,18 @@ class TypeDocument extends BaseEntity
                 $document->setTypeDocument(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOriginaux(): ?bool
+    {
+        return $this->originaux;
+    }
+
+    public function setOriginaux(bool $originaux): self
+    {
+        $this->originaux = $originaux;
 
         return $this;
     }

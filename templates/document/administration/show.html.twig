@@ -1,0 +1,79 @@
+{% extends is_granted('ROLE_QUALITE') ? 'base-super_admin.html.twig' : 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.document.show.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {% if is_granted('ROLE_QUALITE') %}
+            {{ include('composants/sadm-buttons-show.html.twig', {elt: 'qualite_documents', id: document.uuidString}) }}
+        {% else %}
+            {{ include('composants/adm-buttons-show.html.twig', {elt: 'document', id: document.uuidString}) }}
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.document.show.heading'|trans }}</h4>
+        <div class="card-body">
+
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>{{ 'table.libelle'|trans }}</th>
+                    <td>{{ document.libelle }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.fichier'|trans }}</th>
+                    <td>
+                        <a href="{{ asset('upload/documents/'~document.documentName) }}" target="_blank">{{ 'voir.le
+                        .document'|trans }}</a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.created'|trans }}</th>
+                    <td>{{ document.created ? document.created|format_datetime('long', 'short') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.updated'|trans }}</th>
+                    <td>{{ document.updated ? document.updated|format_datetime('long', 'short') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.taille'|trans }}</th>
+                    <td>{{ document.tailleKo|number_format(0,) }} Ko</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.type_fichier'|trans }}</th>
+                    <td>{{ document.typeFichier }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.description'|trans }}</th>
+                    <td>{{ document.description|raw }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.type_document'|trans }}</th>
+                    <td>{{ document.typeDocument != null ? ('<span class="badge bg-info">'~document.typeDocument
+                        .libelle~'</span>')|raw :
+                        '-' }}</td>
+                </tr>
+                {% if not is_granted('ROLE_QUALITE') %}
+                    <tr>
+                        <th>{{ 'table.type_destinataire'|trans }}</th>
+                        <td>{{ document.typeDestinataire }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'table.semestres_document'|trans }}</th>
+                        <td>
+                            {% for semestre in document.semestres %}
+                                <span class="badge bg-primary">{{ semestre.libelle }}</span>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

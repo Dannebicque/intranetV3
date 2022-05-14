@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/config/bundles.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/04/2022 15:33
+ * @lastUpdate 14/05/2022 07:56
  */
 
 return [
@@ -29,4 +29,5 @@ return [
     Symfony\UX\Chartjs\ChartjsBundle::class => ['all' => true],
     Symfony\UX\TwigComponent\TwigComponentBundle::class => ['all' => true],
     Symfony\UX\LiveComponent\LiveComponentBundle::class => ['all' => true],
+    Symfony\UX\Dropzone\DropzoneBundle::class => ['all' => true],
 ];

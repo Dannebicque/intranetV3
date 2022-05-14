@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/TypeDocumentType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/TypeDocumentType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/05/2021 18:37
+ * @lastUpdate 13/05/2022 20:50
  */
 
 namespace App\Form;
@@ -24,7 +24,7 @@ class TypeDocumentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('libelle', TextType::class, ['label' => 'libelle']);
+            ->add('libelle', TextType::class, ['label' => 'label.libelle']);
     }
 
     /**

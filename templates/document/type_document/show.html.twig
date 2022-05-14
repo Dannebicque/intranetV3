@@ -1,0 +1,52 @@
+{% extends is_granted('ROLE_QUALITE') ? 'base-super_admin.html.twig' : 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.type_document.show.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {% if is_granted('ROLE_QUALITE') %}
+            {{ include('composants/sadm-buttons-show.html.twig', {elt: 'qualite_type_document', id: type_document
+            .id}) }}
+        {% else %}
+            {{ include('composants/adm-buttons-show.html.twig', {elt: 'type_document', id: type_document.id}) }}
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.type_document.show.heading'|trans }}</h4>
+        <div class="card-body">
+
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>{{ 'table.id'|trans }}</th>
+                    <td>{{ type_document.id }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.libelle'|trans }}</th>
+                    <td>{{ type_document.libelle }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.created'|trans }}</th>
+                    <td>{{ type_document.created ? type_document.created|format_datetime('long', 'short') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.updated'|trans }}</th>
+                    <td>{{ type_document.updated ? type_document.updated|format_datetime('long', 'short') : '' }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.type_document.liste.documents'|trans }}</h4>
+        <div class="card-body">
+            {{ include('administration/document/_liste-document.html.twig', {documents: type_document.documents}) }}
+        </div>
+    </div>
+{% endblock %}

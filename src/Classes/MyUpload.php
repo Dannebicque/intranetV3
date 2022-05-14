@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyUpload.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyUpload.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/10/2021 11:21
+ * @lastUpdate 14/05/2022 08:49
  */
 
 /*
@@ -14,6 +14,7 @@
 namespace App\Classes;
 
 use App\Exception\ExtensionInterditeException;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use function count;
 use Exception;
 use function in_array;
@@ -24,10 +25,13 @@ use ZipArchive;
 class MyUpload
 {
     private readonly ?string $dir;
+    private string $nomfile = '';
+    private int $taille = 0;
+    private string $typeFichier = '';
 
     public function __construct(
-        KernelInterface $kernel)
-    {
+        KernelInterface $kernel
+    ) {
         $this->dir = $kernel->getProjectDir().'/public/upload/';
     }
 
@@ -36,18 +40,25 @@ class MyUpload
      */
     public function upload(?UploadedFile $fichier, string $destination = 'temp/', array $extensions = []): ?string
     {
-        $extension = $this->getExtension($fichier);
-        $dir = $this->valideDir($destination);
-
         if (null !== $fichier) {
+            $extension = $this->getExtension($fichier);
+            $this->typeFichier = $fichier->getMimeType();
+            $this->taille = $fichier->getSize();
+            $dir = $this->valideDir($destination);
+
             if ((count($extensions) > 0) && !in_array($extension, $extensions, true)) {
                 throw new ExtensionInterditeException();
             }
 
-            $nomfile = random_int(1, 99999).'_'.date('YmdHis').'.'.$extension;
-            $fichier->move($this->dir.$dir, $nomfile);
+            $this->nomfile = random_int(1, 99999).'_'.date('YmdHis').'.'.$extension;
+            try {
+                $fichier->move($this->dir.$dir, $this->nomfile);
+            } catch (FileException $e) {
+                // ... handle exception if something happens during file upload
+            }
 
-            return $this->dir.$dir.$nomfile;
+
+            return $this->dir.$dir.$this->nomfile;
         }
 
         return null;
@@ -113,5 +124,25 @@ class MyUpload
         unlink($fichier); // suppression du zip.
 
         return true;
+    }
+
+    public function getName(): string
+    {
+        return $this->nomfile;
+    }
+
+    public function getTaille(): int
+    {
+        return $this->taille;
+    }
+
+    public function getTypeFichier(): string
+    {
+        return $this->typeFichier;
+    }
+
+    public function deleteFile(?string $getDocumentName, string $dir): void
+    {
+        unlink($this->dir.$this->valideDir($dir).$getDocumentName);
     }
 }

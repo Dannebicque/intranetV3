@@ -7,6 +7,7 @@
     "@popperjs/core": "^2.10.2",
     "@symfony/stimulus-bridge": "^3.0",
     "@symfony/ux-chartjs": "file:vendor/symfony/ux-chartjs/Resources/assets",
+    "@symfony/ux-dropzone": "file:vendor/symfony/ux-dropzone/Resources/assets",
     "@symfony/ux-live-component": "file:vendor/symfony/ux-live-component/assets",
     "@symfony/webpack-encore": "^1.7",
     "bootstrap": "^5.1.2",

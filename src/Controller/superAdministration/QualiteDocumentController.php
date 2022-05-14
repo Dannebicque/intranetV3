@@ -1,13 +1,13 @@
 <?php
 /*
  * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/DocumentController.php
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/QualiteDocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 09:42
+ * @lastUpdate 14/05/2022 09:39
  */
 
-namespace App\Controller\administration;
+namespace App\Controller\superAdministration;
 
 use App\Classes\DocumentDelete;
 use App\Classes\MyExport;
@@ -25,19 +25,18 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/administration/documents', name: 'administration_document_')]
-class DocumentController extends BaseController
+#[Route(path: '/administratif/qualite/documents', name: 'sa_qualite_documents_')]
+class QualiteDocumentController extends BaseController
 {
     /**
      * @throws \JsonException
      */
-    #[Route('/', name: 'index', options: ['expose' => true], methods: ['GET', 'POST'])]
+    #[Route('/', name: 'index')]
     public function index(Request $request): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $this->getDepartement());
-
         $table = $this->createTable(DocumentTableType::class, [
             'departement' => $this->getDepartement(),
+            'source' => 'originaux',
         ]);
         $table->handleRequest($request);
 
@@ -45,17 +44,17 @@ class DocumentController extends BaseController
             return $table->getCallbackResponse();
         }
 
-        return $this->render('administration/document/index.html.twig',
+        return $this->render('document/administration/index.html.twig',
             ['table' => $table]);
     }
 
     #[Route('/export.{_format}', name: 'export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
     public function export(
         MySerializer $mySerializer,
-        MyExport $myExport, DocumentRepository $documentRepository, $_format): Response
-    {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $this->getDepartement());
-
+        MyExport $myExport,
+        DocumentRepository $documentRepository,
+        $_format
+    ): Response {
         $documents = $documentRepository->findByDepartement($this->getDepartement());
         $data = $mySerializer->getDataFromSerialization(
             $documents,
@@ -75,19 +74,20 @@ class DocumentController extends BaseController
         MyUpload $myUpload,
         Request $request): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $this->getDepartement());
-
         $document = new Document();
+        $document->setTypeDestinataire(Constantes::TYPE_DESTINATAIRE_PERSONNEL);
         $form = $this->createForm(
             DocumentType::class,
             $document,
             [
-                'departement' => $this->dataUserSession->getDepartement(),
+                'departement' => null,
+                'source' => 'originaux',
                 'attr' => [
                     'data-provide' => 'validation',
                 ],
             ]
         );
+
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -98,10 +98,10 @@ class DocumentController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'document.add.success.flash');
 
-            return $this->redirectToRoute('administration_document_index');
+            return $this->redirectToRoute('sa_qualite_documents_index');
         }
 
-        return $this->render('administration/document/new.html.twig', [
+        return $this->render('document/administration/new.html.twig', [
             'document' => $document,
             'form' => $form->createView(),
         ]);
@@ -113,9 +113,7 @@ class DocumentController extends BaseController
     #[Route(path: '/{id}', name: 'show', methods: 'GET')]
     public function show(Document $document): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $document->getSemestres()[0]);
-
-        return $this->render('administration/document/show.html.twig', ['document' => $document]);
+        return $this->render('document/administration/show.html.twig', ['document' => $document]);
     }
 
     /**
@@ -126,12 +124,12 @@ class DocumentController extends BaseController
         MyUpload $myUpload,
         Request $request, Document $document): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $document->getSemestres()[0]);
         $form = $this->createForm(
             DocumentType::class,
             $document,
             [
                 'departement' => $this->dataUserSession->getDepartement(),
+                'source' => 'originaux',
                 'attr' => [
                     'data-provide' => 'validation',
                 ],
@@ -149,13 +147,13 @@ class DocumentController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'document.edit.success.flash');
             if (null !== $request->request->get('btn_update')) {
-                return $this->redirectToRoute('administration_document_index');
+                return $this->redirectToRoute('sa_qualite_documents_index');
             }
 
-            return $this->redirectToRoute('administration_document_edit', ['id' => $document->getUuidString()]);
+            return $this->redirectToRoute('sa_qualite_documents_edit', ['id' => $document->getUuidString()]);
         }
 
-        return $this->render('administration/document/edit.html.twig', [
+        return $this->render('document/administration/edit.html.twig', [
             'document' => $document,
             'form' => $form->createView(),
         ]);
@@ -165,9 +163,9 @@ class DocumentController extends BaseController
      * @ParamConverter("document", options={"mapping": {"id": "uuid"}})
      */
     #[Route(path: '/{id}', name: 'delete', methods: 'DELETE|POST')]
-    public function delete(DocumentDelete $documentDelete, Request $request, Document $document): Response
+    public function delete(
+        DocumentDelete $documentDelete, Request $request, Document $document): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $document->getSemestres()[0]);
         $id = $document->getId();
         $uuid = $document->getUuid();
         if ($this->isCsrfTokenValid('delete'.$uuid, $request->request->get('_token'))) {
@@ -197,6 +195,6 @@ class DocumentController extends BaseController
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'document.duplicate.success.flash');
 
-        return $this->redirectToRoute('administration_document_edit', ['id' => $newDocument->getUuidString()]);
+        return $this->redirectToRoute('sa_qualite_documents_edit', ['id' => $newDocument->getUuidString()]);
     }
 }

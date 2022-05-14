@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Document.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/05/2022 16:34
+ * @lastUpdate 14/05/2022 08:36
  */
 
 namespace App\Entity;
 
+use App\Classes\MyUpload;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\TypeDestinataireTrait;
 use App\Entity\Traits\UuidTrait;
@@ -20,12 +21,10 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Ramsey\Uuid\Uuid;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
-#[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: DocumentRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class Document extends BaseEntity
@@ -78,9 +77,6 @@ class Document extends BaseEntity
 
     #[ORM\Column(type: Types::STRING, length: 50)]
     private ?string $documentName = '';
-
-    #[Vich\UploadableField(mapping: 'documentFile', fileNameProperty: 'documentName', size: 'taille', mimeType: 'typeFichier')]
-    private ?File $documentFile = null;
 
     #[Groups(groups: ['document_administration'])]
     #[ORM\ManyToMany(targetEntity: Semestre::class, inversedBy: 'documents')]
@@ -170,21 +166,6 @@ class Document extends BaseEntity
         return $this;
     }
 
-    public function getDocumentFile(): ?File
-    {
-        return $this->documentFile;
-    }
-
-    public function setDocumentFile(?File $documentFile = null): void
-    {
-        $this->documentFile = $documentFile;
-        if (null !== $documentFile) {
-            // It is required that at least one field changes if you are using doctrine
-            // otherwise the event listeners won't be called and the file is lost
-            $this->setUpdatedValue();
-        }
-    }
-
     public function getDocumentName(): ?string
     {
         return $this->documentName;
@@ -242,5 +223,12 @@ class Document extends BaseEntity
     public function tailleKo(): float
     {
         return $this->taille / 1024;
+    }
+
+    public function updateFile(MyUpload $myUpload): void
+    {
+        $this->setDocumentName($myUpload->getName());
+        $this->setTaille($myUpload->getTaille());
+        $this->setTypeFichier($myUpload->getTypeFichier());
     }
 }

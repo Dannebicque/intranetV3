@@ -1,0 +1,30 @@
+{% extends is_granted('ROLE_QUALITE') ? 'base-super_admin.html.twig' : 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.document.index.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {% if is_granted('ROLE_QUALITE') %}
+            {{ include('composants/sadm-buttons-index.html.twig', {elt:'qualite_documents', params:
+                {source:'originaux'}}) }}
+        {% else %}
+            {{ include('composants/adm-buttons-index.html.twig', {elt:'document'}) }}
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.document.index.heading'|trans }}</h4>
+        <div class="card-body">
+            {{ table_render(table) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block fabactions %}
+    {{ include('composants/fab-button-help.html.twig', {
+        href:path('help_article', {sujet: 'administration_document'})}) }}
+{% endblock %}
