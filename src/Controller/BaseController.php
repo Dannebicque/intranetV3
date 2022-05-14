@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/BaseController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/BaseController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/10/2021 10:59
+ * @lastUpdate 14/05/2022 11:19
  */
 
 namespace App\Controller;
@@ -22,6 +22,7 @@ use App\Entity\Semestre;
 use App\Interfaces\UtilisateurInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Translation\TranslatableMessage;
 use Symfony\Contracts\Service\Attribute\Required;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -97,7 +98,7 @@ class BaseController extends AbstractController
         }
     }
 
-    public function getUser(): UtilisateurInterface|Personnel|Etudiant
+    public function getUser(): UserInterface
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = parent::getUser();

@@ -458,9 +458,6 @@
             "phpcs.xml.dist"
         ]
     },
-    "symfony/amqp-messenger": {
-        "version": "v5.2.1"
-    },
     "symfony/asset": {
         "version": "v5.2.0"
     },
@@ -499,9 +496,6 @@
     },
     "symfony/doctrine-bridge": {
         "version": "v5.2.0"
-    },
-    "symfony/doctrine-messenger": {
-        "version": "v5.2.1"
     },
     "symfony/dom-crawler": {
         "version": "v5.1.6"
@@ -681,9 +675,6 @@
     "symfony/polyfill-php72": {
         "version": "v1.20.0"
     },
-    "symfony/polyfill-php73": {
-        "version": "v1.20.0"
-    },
     "symfony/polyfill-php80": {
         "version": "v1.17.0"
     },
@@ -700,9 +691,6 @@
         "version": "v5.1.0"
     },
     "symfony/proxy-manager-bridge": {
-        "version": "v5.2.1"
-    },
-    "symfony/redis-messenger": {
         "version": "v5.2.1"
     },
     "symfony/routing": {
@@ -737,9 +725,6 @@
         "version": "v5.2.0"
     },
     "symfony/security-csrf": {
-        "version": "v5.2.0"
-    },
-    "symfony/security-guard": {
         "version": "v5.2.0"
     },
     "symfony/security-http": {
