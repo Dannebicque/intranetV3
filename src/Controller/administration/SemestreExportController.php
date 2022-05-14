@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/SemestreExportController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/SemestreExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\administration;
@@ -49,9 +49,9 @@ class SemestreExportController extends BaseController
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
-     * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
      */
     #[Route(path: '/provisoire/{slug}/{semestre}', name: 'administration_semestre_export_releve_provisoire')]
+    #[ParamConverter('etudiant', options: ['mapping' => ['slug' => 'slug']])]
     public function exportReleveProvisoire(EtudiantExportReleve $etudiantExportReleve, Etudiant $etudiant, Semestre $semestre = null): PdfResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre ?: $etudiant->getSemestre());
@@ -61,10 +61,8 @@ class SemestreExportController extends BaseController
             $etudiant->getAnneeUniversitaire());
     }
 
-    /**
-     * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
-     */
     #[Route(path: '/definitif/{slug}/{scolarite}', name: 'administration_semestre_export_releve_definitif')]
+    #[ParamConverter('etudiant', options: ['mapping' => ['slug' => 'slug']])]
     public function exportReleveDefinitif(EtudiantExportReleve $etudiantExportReleve, Etudiant $etudiant, Scolarite $scolarite): PdfResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $etudiant->getSemestre());

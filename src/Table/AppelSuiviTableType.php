@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/AppelSuiviTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/05/2022 15:13
+ * @lastUpdate 14/05/2022 10:53
  */
 
 namespace App\Table;
@@ -95,7 +95,7 @@ class AppelSuiviTableType extends TableType
 //        ]);
 
         $builder->useAdapter(EntityAdapter::class, [
-            //todo: passer par EdtManager pour avoir les infos sur le semestre quelque soit la source et utiliser EvenvementEdt comme DTO
+            // todo: passer par EdtManager pour avoir les infos sur le semestre quelque soit la source et utiliser EvenvementEdt comme DTO
             'class' => AbsenceEtatAppel::class, // todo: doit être le planning... Passer par un DTO...
             'fetch_join_collection' => false,
             'query' => static function (QueryBuilder $qb, array $formData) {

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/CarnetController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/CarnetController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\appEtudiant;
@@ -19,10 +19,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class CarnetController.
- *
- * @IsGranted("ROLE_ETUDIANT")
  */
 #[Route(path: '/application/etudiant/carnet')]
+#[IsGranted('ROLE_ETUDIANT')]
 class CarnetController extends BaseController
 {
     #[Route(path: '/', name: 'application_etudiant_carnet_index')]

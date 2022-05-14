@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Semestre/NotesExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 17:27
+ * @lastUpdate 14/05/2022 10:52
  */
 
 /*
@@ -19,9 +19,9 @@ use App\Entity\AnneeUniversitaire;
 use App\Entity\Semestre;
 use App\Repository\EvaluationRepository;
 use App\Repository\NoteRepository;
-use Symfony\Component\HttpFoundation\Response;
 use function array_key_exists;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class NotesExport

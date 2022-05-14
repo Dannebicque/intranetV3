@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/bloc_saisie_absence/SaisieAbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 09:55
+ * @lastUpdate 14/05/2022 10:52
  */
 
 namespace App\Controller\bloc_saisie_absence;
@@ -22,7 +22,6 @@ use App\Utils\Tools;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use function count;
-use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,10 +30,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class AbsenceController.
- *
- * @IsGranted("ROLE_PERMANENT")
  */
 #[Route(path: '/application/personnel/absence/ajax')]
+#[IsGranted('ROLE_PERMANENT')]
 class SaisieAbsenceController extends BaseController
 {
     public function index(
@@ -70,9 +68,7 @@ class SaisieAbsenceController extends BaseController
     }
 
     /**
-     *
      * @return JsonResponse|Response
-     *
      */
     #[Route(path: '/saisie/{matiere}/{etudiant}', name: 'application_personnel_absence_saisie_ajax', options: ['expose' => true], methods: 'POST')]
     public function ajaxSaisie(TypeMatiereManager $typeMatiereManager, EtudiantAbsences $etudiantAbsences, AbsenceRepository $absenceRepository, Request $request, string $matiere, Etudiant $etudiant): JsonResponse|Response

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/StageController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/StageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 20:09
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\appEtudiant;
@@ -65,11 +65,10 @@ class StageController extends BaseController
     }
 
     /**
-     * @ParamConverter("stageEtudiant", options={"mapping": {"stageEtudiant": "uuid"}})
-     *
      * @throws Exception
      */
     #[Route(path: '/formulaire/{stageEtudiant}', name: 'application_etudiant_stage_formulaire', methods: 'GET|POST')]
+    #[ParamConverter('stageEtudiant', options: ['mapping' => ['stageEtudiant' => 'uuid']])]
     public function create(EventDispatcherInterface $eventDispatcher, Request $request, StageEtudiant $stageEtudiant): Response
     {
         if ($stageEtudiant->getEtudiant()->getId() !== $this->getUser()->getId()) {

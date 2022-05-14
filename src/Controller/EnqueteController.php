@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/EnqueteController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/EnqueteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/10/2021 20:19
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller;
@@ -30,10 +30,8 @@ class EnqueteController extends BaseController
         ]);
     }
 
-    /**
-     * @ParamConverter("questionnaireQuizz", options={"mapping": {"uuid": "uuid"}})
-     */
     #[Route(path: '/rdd/enquete/complet/{uuid}/{etudiant}', name: 'enquete_questionnaire_complete')]
+    #[ParamConverter('questionnaireQuizz', options: ['mapping' => ['uuid' => 'uuid']])]
     public function complet(QuestionnaireEtudiantRepository $quizzEtudiantRepository, QuestionnaireQuizz $questionnaireQuizz, Etudiant $etudiant): Response
     {
         $quizzEtudiant = $quizzEtudiantRepository->findOneBy([

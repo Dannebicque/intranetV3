@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/QualiteController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/QualiteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/06/2021 21:20
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\appEtudiant;
@@ -52,9 +52,9 @@ class QualiteController extends BaseController
 
     /**
      * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
-     * @ParamConverter("qualiteQuestionnaire", options={"mapping": {"uuid": "uuid"}})
      */
     #[Route(path: '/complet/{uuid}', name: 'app_etudiant_qualite_questionnaire_complete')]
+    #[ParamConverter('qualiteQuestionnaire', options: ['mapping' => ['uuid' => 'uuid']])]
     public function complet(QuestionnaireEtudiantRepository $quizzEtudiantRepository, MailerFromTwig $myMailer, QuestionnaireQualite $qualiteQuestionnaire): Response
     {
         $quizzEtudiant = $quizzEtudiantRepository->findOneBy([

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Borne.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 20:54
+ * @lastUpdate 14/05/2022 10:52
  */
 
 namespace App\Entity;
@@ -25,7 +25,7 @@ class Borne extends BaseEntity
 {
     use LifeCycleTrait;
 
-    //todo: mettre Enum...
+    // todo: mettre Enum...
     final public const ICONES = [
         'information' => 'fas fa-info-circle',
         'danger' => 'fas fa-exclamation-circle',

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/TrombinoscopeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 20:27
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller;
@@ -94,11 +94,9 @@ class TrombinoscopeController extends BaseController
         );
     }
 
-    /**
-     * @ParamConverter("typegroupe", options={"id" = "typegroupe"})
-     */
     #[Route(path: '/etudiant/{semestre<\d+>}', name: 'trombinoscope_etudiant_semestre', options: ['expose' => true])]
     #[Route(path: '/etudiant/{semestre<\d+>}/{typegroupe<\d+>}', name: 'trombinoscope_etudiant_semestre_type_groupe', options: ['expose' => true])]
+    #[ParamConverter('typegroupe', options: ['id' => 'typegroupe'])]
     public function trombiEtudiantSemestre(EtudiantRepository $etudiantRepository,
         GroupeRepository $groupeRepository,
         Semestre $semestre,

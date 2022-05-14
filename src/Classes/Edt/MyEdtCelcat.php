@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/05/2022 21:59
+ * @lastUpdate 14/05/2022 10:52
  */
 
 /*
@@ -148,7 +148,6 @@ class MyEdtCelcat extends BaseEdt
 
     private function transformeIndividuel(array $pl): array
     {
-
         // prof ou étudiant
         $tab = [];
 

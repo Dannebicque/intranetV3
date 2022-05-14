@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AlternanceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 20:39
+ * @lastUpdate 14/05/2022 10:53
  */
 
 namespace App\Controller\administration;
@@ -30,8 +30,8 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/administration/alternance')]
 class AlternanceController extends BaseController
 {
-    //todo: optimiser les requetes
-    //todo: utiliser le TableType
+    // todo: optimiser les requetes
+    // todo: utiliser le TableType
 
     #[Route(path: '/init/all/{annee}', name: 'administration_alternance_init_all')]
     public function initAll(EtudiantRepository $etudiantRepository, AlternanceRepository $alternanceRepository, Annee $annee): RedirectResponse

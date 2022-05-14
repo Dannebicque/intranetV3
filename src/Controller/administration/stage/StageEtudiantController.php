@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StageEtudiantController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/stage/StageEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\administration\stage;
@@ -112,9 +112,9 @@ class StageEtudiantController extends BaseController
 
     /**
      * @throws NonUniqueResultException
-     * @ParamConverter("stagePeriode", options={"mapping": {"stagePeriode": "uuid"}})
      */
     #[Route(path: '/change-etat/{stagePeriode}/{etudiant}/{etat}', name: 'administration_stage_etudiant_change_etat')]
+    #[ParamConverter('stagePeriode', options: ['mapping' => ['stagePeriode' => 'uuid']])]
     public function changeEtat(MyStageEtudiant $myStageEtudiant, StagePeriode $stagePeriode, Etudiant $etudiant, $etat): RedirectResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());

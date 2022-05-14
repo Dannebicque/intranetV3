@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/StageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2022 10:18
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\appPersonnel;
@@ -23,10 +23,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class StageController.
- *
- * @IsGranted("ROLE_PERMANENT")
  */
 #[Route(path: '/application/personnel')]
+#[IsGranted('ROLE_PERMANENT')]
 class StageController extends BaseController
 {
     #[Route(path: '/stage/', name: 'application_personnel_stage_index')]

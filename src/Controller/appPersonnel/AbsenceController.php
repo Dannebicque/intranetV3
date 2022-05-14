@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/05/2022 10:54
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\appPersonnel;
@@ -155,10 +155,8 @@ class AbsenceController extends BaseController
         return $this->myAbsences->export($mat, $mat->semestre->getAnneeUniversitaire(), $semestre, $_format);
     }
 
-    /**
-     * @ParamConverter("absence", options={"mapping": {"uuid": "uuid"}})
-     */
     #[Route(path: '/{uuid}', name: 'application_personnel_absence_delete', methods: 'DELETE')]
+    #[ParamConverter('absence', options: ['mapping' => ['uuid' => 'uuid']])]
     public function supprimer(EtudiantAbsences $etudiantAbsences, Request $request, Absence $absence): Response
     {
         // todo: tester...

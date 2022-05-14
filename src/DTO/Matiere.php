@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/Matiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 22:44
+ * @lastUpdate 14/05/2022 10:52
  */
 
 namespace App\DTO;
@@ -195,6 +195,7 @@ class Matiere
         if (null !== $semestres) {
             return $semestres->contains($semestre);
         }
+
         return false;
     }
 
@@ -217,6 +218,7 @@ class Matiere
         if (method_exists($this->objet, 'getSemestre')) {
             $coll = new ArrayCollection();
             $coll->add($this->objet->getSemestre());
+
             return $coll;
         }
 

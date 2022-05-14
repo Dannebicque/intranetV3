@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 16:53
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\administration;
@@ -126,10 +126,8 @@ class EtudiantController extends BaseController
         return $this->redirectToRoute('administration_etudiant_semestre_add');
     }
 
-    /**
-     * @ParamConverter("etudiant", options={"mapping": {"uuid": "uuid"}})
-     */
     #[Route(path: '/change-etat/{uuid}/{etat}', name: 'adm_etudiant_change_etat', options: ['expose' => true], methods: 'POST')]
+    #[ParamConverter('etudiant', options: ['mapping' => ['uuid' => 'uuid']])]
     public function changeEtat(EtudiantScolarite $etudiantScolarite, Etudiant $etudiant, $etat): JsonResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $etudiant->getSemestre());
@@ -139,10 +137,8 @@ class EtudiantController extends BaseController
         return $this->json(true, Response::HTTP_OK);
     }
 
-    /**
-     * @ParamConverter("etudiant", options={"mapping": {"uuid": "uuid"}})
-     */
     #[Route(path: '/demissionnaire/{uuid}', name: 'administration_etudiant_demissionnaire', methods: 'GET')]
+    #[ParamConverter('etudiant', options: ['mapping' => ['uuid' => 'uuid']])]
     public function demissionnaire(EtudiantScolarite $etudiantScolarite, Etudiant $etudiant): RedirectResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $etudiant->getSemestre());
@@ -152,10 +148,8 @@ class EtudiantController extends BaseController
         return $this->redirectToRoute('trombinoscope_index');
     }
 
-    /**
-     * @ParamConverter("etudiant", options={"mapping": {"uuid": "uuid"}})
-     */
     #[Route(path: '/supprimer/{uuid}', name: 'administration_etudiant_delete', methods: 'DELETE')]
+    #[ParamConverter('etudiant', options: ['mapping' => ['uuid' => 'uuid']])]
     public function delete(EtudiantScolarite $etudiantScolarite, Etudiant $etudiant): RedirectResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $etudiant->getSemestre());

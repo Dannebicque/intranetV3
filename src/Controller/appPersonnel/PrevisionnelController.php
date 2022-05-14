@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/PrevisionnelController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/10/2021 11:51
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\appPersonnel;
@@ -23,10 +23,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class PrevisionnelController.
- *
- * @IsGranted("ROLE_PERMANENT")
  */
 #[Route(path: '/application/personnel/previsionnel')]
+#[IsGranted('ROLE_PERMANENT')]
 class PrevisionnelController extends BaseController
 {
     #[Route(path: '/', name: 'previsionnel_index')]

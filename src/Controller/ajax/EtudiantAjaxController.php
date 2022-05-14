@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ajax/EtudiantAjaxController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/ajax/EtudiantAjaxController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:36
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\ajax;
@@ -24,10 +24,8 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/ajax/etudiant')]
 class EtudiantAjaxController extends BaseController
 {
-    /**
-     * @ParamConverter("etudiant", options={"mapping": {"uuid": "uuid"}})
-     */
     #[Route(path: '/edit/uuid/{uuid}', name: 'etudiant_ajax_edit_uuid', options: ['expose' => true])]
+    #[ParamConverter('etudiant', options: ['mapping' => ['uuid' => 'uuid']])]
     public function editUuid(EtudiantUpdate $etudiantUpdate, Request $request, Etudiant $etudiant): JsonResponse
     {
         return $this->update($request, $etudiantUpdate, $etudiant);

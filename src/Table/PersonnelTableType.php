@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/PersonnelTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/05/2022 15:13
+ * @lastUpdate 14/05/2022 10:53
  */
 
 namespace App\Table;
@@ -139,8 +139,7 @@ class PersonnelTableType extends TableType
 
     public function configureOptions(
         OptionsResolver $resolver
-    ): void
-    {
+    ): void {
         parent::configureOptions($resolver);
 
         $resolver->setDefaults([

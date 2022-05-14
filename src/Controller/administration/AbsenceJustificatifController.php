@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/AbsenceJustificatifController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AbsenceJustificatifController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/10/2021 10:30
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\administration;
@@ -155,10 +155,8 @@ class AbsenceJustificatifController extends BaseController
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * @ParamConverter("absenceJustificatif", options={"mapping": {"uuid": "uuid"}})
-     */
     #[Route(path: '/show/{uuid}', name: 'administration_absence_justificatif_details')]
+    #[ParamConverter('absenceJustificatif', options: ['mapping' => ['uuid' => 'uuid']])]
     public function details(AbsenceJustificatif $absenceJustificatif): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $absenceJustificatif->getEtudiant()?->getSemestre());
@@ -168,10 +166,8 @@ class AbsenceJustificatifController extends BaseController
         ]);
     }
 
-    /**
-     * @ParamConverter("absenceJustificatif", options={"mapping": {"uuid": "uuid"}})
-     */
     #[Route(path: '/change-etat/{uuid}/{etat}', name: 'administration_absence_justificatif_change_etat', requirements: ['etat' => 'A|R|D'], options: ['expose' => true], methods: 'GET')]
+    #[ParamConverter('absenceJustificatif', options: ['mapping' => ['uuid' => 'uuid']])]
     public function accepte(EventDispatcherInterface $eventDispatcher, AbsenceJustificatif $absenceJustificatif, $etat): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $absenceJustificatif->getEtudiant()?->getSemestre());

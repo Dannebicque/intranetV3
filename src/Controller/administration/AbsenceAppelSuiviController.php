@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AbsenceAppelSuiviController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/05/2022 21:40
+ * @lastUpdate 14/05/2022 10:53
  */
 
 namespace App\Controller\administration;
@@ -16,7 +16,6 @@ use App\Controller\BaseController;
 use App\Entity\Semestre;
 use App\Repository\GroupeRepository;
 use App\Table\AppelSuiviTableType;
-use App\Table\PlanCoursTableType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;

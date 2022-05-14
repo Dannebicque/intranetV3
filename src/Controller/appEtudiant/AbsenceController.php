@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/AbsenceController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\appEtudiant;
@@ -22,10 +22,8 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/application/etudiant/absence')]
 class AbsenceController extends BaseController
 {
-    /**
-     * @ParamConverter("absence", options={"mapping": {"uuid": "uuid"}})
-     */
     #[Route(path: '/details/{uuid}', name: 'app_etudiant_absence_detail', options: ['expose' => true])]
+    #[ParamConverter('absence', options: ['mapping' => ['uuid' => 'uuid']])]
     public function details(TypeMatiereManager $typeMatiereManager, Absence $absence): Response
     {
         return $this->render('appEtudiant/absence/_detail.html.twig', [

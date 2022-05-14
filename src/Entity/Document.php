@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Document.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 08:36
+ * @lastUpdate 14/05/2022 10:52
  */
 
 namespace App\Entity;
@@ -23,7 +23,6 @@ use Exception;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
-use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: DocumentRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -33,7 +32,7 @@ class Document extends BaseEntity
     use LifeCycleTrait;
     use TypeDestinataireTrait;
 
-    //todo: enum
+    // todo: enum
     final public const TYPE_DOCUMENT = [
         'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'Prés. PPT',
         'application/pdf' => 'PDF',

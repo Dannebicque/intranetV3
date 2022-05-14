@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/ArticleType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 18:35
+ * @lastUpdate 14/05/2022 10:52
  */
 
 namespace App\Form;
@@ -44,7 +44,7 @@ class ArticleType extends AbstractType
                 'label' => 'label.texte',
                 'attr' => ['rows' => 20, 'class' => 'tinyMce'],
             ])
-            //feature: EntytityWithAddType ... Liste avec un bouton ajouter pour inserer en popup un nouvel element dans la bse et la liste. Stimulus
+            // feature: EntytityWithAddType ... Liste avec un bouton ajouter pour inserer en popup un nouvel element dans la bse et la liste. Stimulus
             ->add('categorie', EntityType::class, [
                 'class' => ArticleCategorie::class,
                 'label' => 'label.article_categorie',

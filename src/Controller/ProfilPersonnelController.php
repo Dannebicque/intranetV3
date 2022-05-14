@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ProfilPersonnelController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/ProfilPersonnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/05/2021 17:10
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller;
@@ -23,10 +23,8 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/personnel')]
 class ProfilPersonnelController extends BaseController
 {
-    /**
-     * @ParamConverter("personnel", options={"mapping": {"slug": "slug"}})
-     */
     #[Route(path: '/profil/{slug}/actions', name: 'profil_personnel_action')]
+    #[ParamConverter('personnel', options: ['mapping' => ['slug' => 'slug']])]
     public function actions(Personnel $personnel): Response
     {
         return $this->render('user/composants/actions_personnel.html.twig', [
@@ -34,10 +32,8 @@ class ProfilPersonnelController extends BaseController
         ]);
     }
 
-    /**
-     * @ParamConverter("personnel", options={"mapping": {"slug": "slug"}})
-     */
     #[Route(path: '/profil/{slug}/a-propos', name: 'profil_personnel_about')]
+    #[ParamConverter('personnel', options: ['mapping' => ['slug' => 'slug']])]
     public function about(Personnel $personnel): Response
     {
         return $this->render('user/composants/_apropos.html.twig', [
@@ -45,10 +41,8 @@ class ProfilPersonnelController extends BaseController
         ]);
     }
 
-    /**
-     * @ParamConverter("personnel", options={"mapping": {"slug": "slug"}})
-     */
     #[Route(path: '/profil/{slug}/previsionnel', name: 'profil_personnel_previsionnel')]
+    #[ParamConverter('personnel', options: ['mapping' => ['slug' => 'slug']])]
     public function previsionnel(PrevisionnelManager $myPrevisionnel, PrevisionnelSynthese $previsionnelSynthese, HrsManager $hrsManager, Personnel $personnel): Response
     {
         $anneePrevisionnel = $this->dataUserSession->getAnneePrevisionnel();

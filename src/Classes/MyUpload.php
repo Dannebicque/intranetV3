@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyUpload.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 09:50
+ * @lastUpdate 14/05/2022 10:52
  */
 
 /*
@@ -14,10 +14,10 @@
 namespace App\Classes;
 
 use App\Exception\ExtensionInterditeException;
-use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use function count;
 use Exception;
 use function in_array;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpKernel\KernelInterface;
 use ZipArchive;
@@ -56,7 +56,6 @@ class MyUpload
             } catch (FileException) {
                 // ... handle exception if something happens during file upload
             }
-
 
             return $this->dir.$dir.$this->nomfile;
         }

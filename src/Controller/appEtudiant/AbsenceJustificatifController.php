@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/AbsenceJustificatifController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/AbsenceJustificatifController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/10/2021 09:44
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\appEtudiant;
@@ -68,10 +68,8 @@ class AbsenceJustificatifController extends BaseController
         return $this->render('bundles/TwigBundle/Exception/error500.html.twig');
     }
 
-    /**
-     * @ParamConverter("absenceJustificatif", options={"mapping": {"id": "uuid"}})
-     */
     #[Route(path: '/{id}/edit', name: 'app_etudiant_absence_justificatif_edit', methods: 'GET|POST')]
+    #[ParamConverter('absenceJustificatif', options: ['mapping' => ['id' => 'uuid']])]
     public function edit(Request $request, AbsenceJustificatif $absenceJustificatif): Response
     {
         $absenceJustificatif->prepareData();
@@ -96,10 +94,8 @@ class AbsenceJustificatifController extends BaseController
         ]);
     }
 
-    /**
-     * @ParamConverter("absenceJustificatif", options={"mapping": {"id": "uuid"}})
-     */
     #[Route(path: '/{id}', name: 'app_etudiant_absence_justificatif_delete', methods: 'DELETE')]
+    #[ParamConverter('absenceJustificatif', options: ['mapping' => ['id' => 'uuid']])]
     public function delete(Request $request, AbsenceJustificatif $absenceJustificatif): Response
     {
         $id = $absenceJustificatif->getUuidString();

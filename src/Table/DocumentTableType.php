@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/DocumentTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:02
+ * @lastUpdate 14/05/2022 10:53
  */
 
 namespace App\Table;
@@ -60,7 +60,7 @@ class DocumentTableType extends TableType
             $this->base_url = 'sa_qualite_documents_';
             $builder->addFilter('typeDocument', EntityType::class, [
                 'class' => TypeDocument::class,
-                'query_builder' => fn(TypeDocumentRepository $repository) => $repository->findByOriginauxBuilder(),
+                'query_builder' => fn (TypeDocumentRepository $repository) => $repository->findByOriginauxBuilder(),
                 'choice_label' => 'libelle',
                 'label' => 'Type de document',
                 'required' => false,
@@ -73,14 +73,14 @@ class DocumentTableType extends TableType
         } else {
             $builder->addFilter('semestres', EntityType::class, [
                 'class' => Semestre::class,
-                'query_builder' => fn(SemestreRepository $repository) => $repository->findByDepartementBuilder($this->departement),
+                'query_builder' => fn (SemestreRepository $repository) => $repository->findByDepartementBuilder($this->departement),
                 'choice_label' => 'display',
                 'label' => 'Semestre(s)',
                 'required' => false,
             ]);
             $builder->addFilter('typeDocument', EntityType::class, [
                 'class' => TypeDocument::class,
-                'query_builder' => fn(TypeDocumentRepository $repository) => $repository->findByDepartementBuilder($this->departement),
+                'query_builder' => fn (TypeDocumentRepository $repository) => $repository->findByDepartementBuilder($this->departement),
                 'choice_label' => 'libelle',
                 'label' => 'Type de document',
                 'required' => false,
@@ -93,8 +93,6 @@ class DocumentTableType extends TableType
         }
 
         $builder->setLoadUrl($this->base_url.'index');
-
-
 
         $builder->addWidget('export', ExportDropdownType::class, [
             'route' => 'administration_document_export',

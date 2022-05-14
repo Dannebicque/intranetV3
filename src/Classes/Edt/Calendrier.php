@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/Calendrier.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/05/2022 22:21
+ * @lastUpdate 14/05/2022 10:52
  */
 
 namespace App\Classes\Edt;
@@ -57,7 +57,6 @@ class Calendrier
     {
         // pour gérer les vacances
         $dateDuJour = Carbon::now();
-
 
         if (0 === $semaine) {
             $semaine = $dateDuJour->weekOfYear;

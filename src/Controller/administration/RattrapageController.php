@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/RattrapageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 09:47
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\administration;
@@ -105,10 +105,8 @@ class RattrapageController extends BaseController
         );
     }
 
-    /**
-     * @ParamConverter("rattrapage", options={"mapping": {"uuid": "uuid"}})
-     */
     #[Route(path: '/change-etat/{uuid}/{etat}', name: 'administration_rattrapage_change_etat', options: ['expose' => true], methods: 'GET')]
+    #[ParamConverter('rattrapage', options: ['mapping' => ['uuid' => 'uuid']])]
     public function accepte(EventDispatcherInterface $eventDispatcher, Rattrapage $rattrapage, $etat): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $rattrapage->getEtudiant()?->getSemestre());
@@ -143,10 +141,8 @@ class RattrapageController extends BaseController
         ]);
     }
 
-    /**
-     * @ParamConverter("rattrapage", options={"mapping": {"uuid": "uuid"}})
-     */
     #[Route(path: '/{uuid}', name: 'administration_rattrapage_delete', options: ['expose' => true], methods: 'DELETE')]
+    #[ParamConverter('rattrapage', options: ['mapping' => ['uuid' => 'uuid']])]
     public function delete(Request $request, Rattrapage $rattrapage): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $rattrapage->getEtudiant()?->getSemestre());

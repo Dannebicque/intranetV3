@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/projet/ProjetEtudiantController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/projet/ProjetEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\administration\projet;
@@ -82,9 +82,9 @@ class ProjetEtudiantController extends BaseController
 
     /**
      * @throws NonUniqueResultException
-     * @ParamConverter("projetPeriode", options={"mapping": {"projetPeriode": "uuid"}})
      */
     #[Route(path: '/change-etat/{projetPeriode}/{etudiant}/{etat}', name: 'administration_projet_etudiant_change_etat')]
+    #[ParamConverter('projetPeriode', options: ['mapping' => ['projetPeriode' => 'uuid']])]
     public function changeEtat(MyProjetEtudiant $myProjetEtudiant, ProjetPeriode $projetPeriode, Etudiant $etudiant, $etat): RedirectResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestre());

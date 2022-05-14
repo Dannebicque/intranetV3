@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/AnneeController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/AnneeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/09/2021 21:02
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\superAdministration;
@@ -135,10 +135,8 @@ class AnneeController extends BaseController
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * @IsGranted("ROLE_SUPER_ADMIN")
-     */
     #[Route(path: '/activate/{annee}/{etat}', name: 'sa_annee_activate', methods: ['GET'])]
+    #[IsGranted('ROLE_SUPER_ADMIN')]
     public function activate(Annee $annee, bool $etat): RedirectResponse
     {
         $annee->setActif($etat);

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/EvenementEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/05/2022 14:20
+ * @lastUpdate 14/05/2022 10:52
  */
 
 namespace App\DTO;
@@ -96,7 +96,6 @@ class EvenementEdt
             'TD', 'td' => 2,
             default => 0,
         };
-
     }
 
     public function duree(): float|int

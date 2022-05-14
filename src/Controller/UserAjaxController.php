@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/UserAjaxController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/UserAjaxController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/10/2021 15:20
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller;
@@ -67,10 +67,8 @@ class UserAjaxController extends BaseController
         return new Response('nok', Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * @ParamConverter("departement", options={"mapping": {"departement": "uuid"}})
-     */
     #[Route(path: '/change-defaut/{departement}', name: 'user_change_departement_defaut', options: ['expose' => true])]
+    #[ParamConverter('departement', options: ['mapping' => ['departement' => 'uuid']])]
     public function changeDepartementDefaut(PersonnelDepartementRepository $personnelDepartementRepository, Departement $departement): ?JsonResponse
     {
         if (null !== $this->getUser() && 'permanent' === $this->getUser()->getTypeUser()) {

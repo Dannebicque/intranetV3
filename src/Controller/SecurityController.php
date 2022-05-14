@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/SecurityController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/SecurityController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 09:03
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller;
@@ -149,10 +149,8 @@ class SecurityController extends AbstractController
         return $this->render('security/reset_password.html.twig', ['token' => $token]);
     }
 
-    /**
-     * @ParamConverter("departement", options={"mapping": {"departement": "uuid"}})
-     */
     #[Route(path: '/change-departement/{departement}', name: 'security_change_departement', options: ['expose' => true])]
+    #[ParamConverter('departement', options: ['mapping' => ['departement' => 'uuid']])]
     public function changeDepartement(Request $request, RequestStack $session, Departement $departement): Response
     {
         $session->getSession()->set('departement', $departement->getUuidString());

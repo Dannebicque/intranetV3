@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EvaluationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/05/2022 11:52
+ * @lastUpdate 14/05/2022 10:53
  */
 
 namespace App\Controller\administration;
@@ -36,10 +36,8 @@ use Twig\Error\SyntaxError;
 #[Route(path: '/administration/evaluation')]
 class EvaluationController extends BaseController
 {
-    /**
-     * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
-     */
     #[Route(path: '/details/{uuid}', name: 'administration_evaluation_show', methods: ['GET', 'POST'])]
+    #[ParamConverter('evaluation', options: ['mapping' => ['uuid' => 'uuid']])]
     public function show(TypeMatiereManager $typeMatiereManager, MyEvaluation $myEvaluation, Evaluation $evaluation): Response
     {
         // $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $evaluation->getSemestre());
@@ -55,14 +53,13 @@ class EvaluationController extends BaseController
     }
 
     /**
-     * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
-     *
      * @throws SyntaxError
      * @throws LoaderError
      * @throws RuntimeError
      * @throws \App\Exception\MatiereNotFoundException
      */
     #[Route(path: '/export/{semestre}/{uuid}.{_format}', name: 'administration_evaluation_export', methods: 'GET')]
+    #[ParamConverter('evaluation', options: ['mapping' => ['uuid' => 'uuid']])]
     public function exportEvaluation(MyEvaluation $myEvaluation, Evaluation $evaluation, $_format, Semestre $semestre): StreamedResponse|PdfResponse|null
     {
         // todo: $semestre pourrait être supprimé s'il est dans évaluation
@@ -127,11 +124,10 @@ class EvaluationController extends BaseController
     }
 
     /**
-     * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
-     *
      * @throws \App\Exception\MatiereNotFoundException
      */
     #[Route(path: '/saisie/etape-2/{uuid}', name: 'administration_note_saisie_2')]
+    #[ParamConverter('evaluation', options: ['mapping' => ['uuid' => 'uuid']])]
     public function saisieNotes(TypeMatiereManager $typeMatiereManager, MyEvaluation $myEvaluation, Evaluation $evaluation): Response
     {
         $matiere = $typeMatiereManager->getMatiere($evaluation->getIdMatiere(), $evaluation->getTypeMatiere());
@@ -183,10 +179,8 @@ class EvaluationController extends BaseController
         return $this->redirectToRoute('administration_notes_semestre_index', ['semestre' => $semestre->getId()]);
     }
 
-    /**
-     * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
-     */
     #[Route(path: '/modifiable/{uuid}', name: 'administration_evaluation_modifiable', options: ['expose' => true], methods: ['GET'])]
+    #[ParamConverter('evaluation', options: ['mapping' => ['uuid' => 'uuid']])]
     public function modifiable(Evaluation $evaluation): Response
     {
         $evaluation->setModifiable(!$evaluation->getModifiable());
@@ -195,10 +189,8 @@ class EvaluationController extends BaseController
         return new JsonResponse($evaluation->getModifiable(), Response::HTTP_OK);
     }
 
-    /**
-     * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
-     */
     #[Route(path: '/visibilite/{uuid}', name: 'administration_evaluation_visibilite', options: ['expose' => true], methods: ['GET'])]
+    #[ParamConverter('evaluation', options: ['mapping' => ['uuid' => 'uuid']])]
     public function visibilite(Evaluation $evaluation): Response
     {
         $evaluation->setVisible(!$evaluation->getVisible());
@@ -207,10 +199,8 @@ class EvaluationController extends BaseController
         return new JsonResponse($evaluation->getVisible(), Response::HTTP_OK);
     }
 
-    /**
-     * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
-     */
     #[Route(path: '/{uuid}', name: 'administration_evaluation_delete', methods: 'DELETE')]
+    #[ParamConverter('evaluation', options: ['mapping' => ['uuid' => 'uuid']])]
     public function delete(MyEvaluation $myEvaluation, Request $request, Evaluation $evaluation): Response
     {
         $id = $evaluation->getUuidString();

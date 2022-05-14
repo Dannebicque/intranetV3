@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/StatutController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 08:47
+ * @lastUpdate 14/05/2022 10:52
  */
 
 namespace App\Controller\superAdministration;
@@ -21,7 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/administratif/statuts', name: 'sa_statuts_')]
 class StatutController extends BaseController
 {
-    //todo: finaliser et utiliser . Pas d'export
+    // todo: finaliser et utiliser . Pas d'export
     #[Route('/', name: 'index', methods: ['GET'])]
     public function index(
         StatusRepository $statusRepository

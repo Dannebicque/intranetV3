@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/DocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 09:42
+ * @lastUpdate 14/05/2022 10:53
  */
 
 namespace App\Controller\administration;
@@ -107,10 +107,8 @@ class DocumentController extends BaseController
         ]);
     }
 
-    /**
-     * @ParamConverter("document", options={"mapping": {"id": "uuid"}})
-     */
     #[Route(path: '/{id}', name: 'show', methods: 'GET')]
+    #[ParamConverter('document', options: ['mapping' => ['id' => 'uuid']])]
     public function show(Document $document): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $document->getSemestres()[0]);
@@ -118,10 +116,8 @@ class DocumentController extends BaseController
         return $this->render('administration/document/show.html.twig', ['document' => $document]);
     }
 
-    /**
-     * @ParamConverter("document", options={"mapping": {"id": "uuid"}})
-     */
     #[Route(path: '/{id}/edit', name: 'edit', methods: 'GET|POST')]
+    #[ParamConverter('document', options: ['mapping' => ['id' => 'uuid']])]
     public function edit(
         MyUpload $myUpload,
         Request $request, Document $document): Response
@@ -141,7 +137,7 @@ class DocumentController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             if (null !== $form->get('documentFile')->getData()) {
                 // supprimer l'ancien
-                $myUpload->deleteFile($document->getDocumentName(),'documents/');
+                $myUpload->deleteFile($document->getDocumentName(), 'documents/');
                 $myUpload->upload($form->get('documentFile')->getData(), 'documents/');
                 $document->updateFile($myUpload);
             }
@@ -161,10 +157,8 @@ class DocumentController extends BaseController
         ]);
     }
 
-    /**
-     * @ParamConverter("document", options={"mapping": {"id": "uuid"}})
-     */
     #[Route(path: '/{id}', name: 'delete', methods: 'DELETE|POST')]
+    #[ParamConverter('document', options: ['mapping' => ['id' => 'uuid']])]
     public function delete(DocumentDelete $documentDelete, Request $request, Document $document): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $document->getSemestres()[0]);
@@ -184,11 +178,10 @@ class DocumentController extends BaseController
     }
 
     /**
-     * @ParamConverter("document", options={"mapping": {"id": "uuid"}})
-     *
      * @throws Exception
      */
     #[Route(path: '/{id}/duplicate', name: 'duplicate', methods: 'GET|POST')]
+    #[ParamConverter('document', options: ['mapping' => ['id' => 'uuid']])]
     public function duplicate(Document $document): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $document->getSemestres()[0]);

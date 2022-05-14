@@ -4,10 +4,11 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Security/AccessDeniedHandler.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:02
+ * @lastUpdate 14/05/2022 10:52
  */
 
 // src/Security/AccessDeniedHandler.php
+
 namespace App\Security;
 
 use App\Event\UnauthorizedDepartementEvent;

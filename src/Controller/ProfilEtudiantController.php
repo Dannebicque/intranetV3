@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ProfilEtudiantController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/ProfilEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 21:48
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller;
@@ -40,10 +40,8 @@ use Symfony\UX\Chartjs\Model\Chart;
 #[Route(path: '/etudiant')]
 class ProfilEtudiantController extends BaseController
 {
-    /**
-     * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
-     */
     #[Route(path: '/profil/{slug}/timeline', name: 'profil_etudiant_timeline')]
+    #[ParamConverter('etudiant', options: ['mapping' => ['slug' => 'slug']])]
     public function timeline(Etudiant $etudiant): Response
     {
         return $this->render('user/composants/_timeline.html.twig', [
@@ -51,10 +49,8 @@ class ProfilEtudiantController extends BaseController
         ]);
     }
 
-    /**
-     * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
-     */
     #[Route(path: '/profil/{slug}/actions', name: 'profil_etudiant_action')]
+    #[ParamConverter('etudiant', options: ['mapping' => ['slug' => 'slug']])]
     public function actions(DepartementRepository $departementRepository, Etudiant $etudiant): Response
     {
         return $this->render('user/composants/_actions_etudiant.html.twig', [
@@ -63,10 +59,8 @@ class ProfilEtudiantController extends BaseController
         ]);
     }
 
-    /**
-     * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
-     */
     #[Route(path: '/profil/{slug}/scolarite', name: 'profil_etudiant_scolarite')]
+    #[ParamConverter('etudiant', options: ['mapping' => ['slug' => 'slug']])]
     public function scolarite(ScolariteRepository $scolariteRepository, Etudiant $etudiant): Response
     {
         $scolarite = $scolariteRepository->findByEtudiant($etudiant);
@@ -77,10 +71,8 @@ class ProfilEtudiantController extends BaseController
         ]);
     }
 
-    /**
-     * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
-     */
     #[Route(path: '/profil/{slug}/notes', name: 'profil_etudiant_notes')]
+    #[ParamConverter('etudiant', options: ['mapping' => ['slug' => 'slug']])]
     public function notes(
         NotesTri $notesTri,
         TypeMatiereManager $typeMatiereManager,
@@ -137,10 +129,8 @@ class ProfilEtudiantController extends BaseController
         return $this->render('user/composants/_semestre_vide.html.twig');
     }
 
-    /**
-     * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
-     */
     #[Route(path: '/profil/apc_notes/ancien_semestre', name: 'profil_etudiant_apc_ancien_semestre', options: ['expose' => true])]
+    #[ParamConverter('etudiant', options: ['mapping' => ['slug' => 'slug']])]
     public function apcNotesAncienSemestre(
         Request $request,
         UeRepository $ueRepository,
@@ -179,10 +169,8 @@ class ProfilEtudiantController extends BaseController
         return $this->render('user/composants/_semestre_vide.html.twig');
     }
 
-    /**
-     * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
-     */
     #[Route(path: '/profil/{slug}/apc_notes', name: 'profil_etudiant_apc')]
+    #[ParamConverter('etudiant', options: ['mapping' => ['slug' => 'slug']])]
     public function apcNotes(
         UeRepository $ueRepository,
         ScolariteRepository $scolariteRepository,
@@ -227,11 +215,10 @@ class ProfilEtudiantController extends BaseController
     }
 
     /**
-     * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
-     *
      * @throws Exception
      */
     #[Route(path: '/profil/{slug}/absences', name: 'profil_etudiant_absences')]
+    #[ParamConverter('etudiant', options: ['mapping' => ['slug' => 'slug']])]
     public function absences(
         TypeMatiereManager $typeMatiereManager,
         EtudiantAbsences $etudiantAbsences,
@@ -266,10 +253,8 @@ class ProfilEtudiantController extends BaseController
         ]);
     }
 
-    /**
-     * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
-     */
     #[Route(path: '/profil/{slug}/stages', name: 'profil_etudiant_stages')]
+    #[ParamConverter('etudiant', options: ['mapping' => ['slug' => 'slug']])]
     public function stages(
         StageEtudiantRepository $stageEtudiantRepository,
         AlternanceRepository $alternanceRepository,
@@ -288,10 +273,8 @@ class ProfilEtudiantController extends BaseController
         ]);
     }
 
-    /**
-     * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
-     */
     #[Route(path: '/profil/{slug}/a-propos', name: 'profil_etudiant_about')]
+    #[ParamConverter('etudiant', options: ['mapping' => ['slug' => 'slug']])]
     public function aPropos(Etudiant $etudiant): Response
     {
         return $this->render('user/composants/_apropos.html.twig', [
@@ -300,11 +283,10 @@ class ProfilEtudiantController extends BaseController
     }
 
     /**
-     * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
-     *
      * @throws \JsonException
      */
     #[Route(path: '/profil/{slug}/ajout-commentaire', name: 'profil_etudiant_ajout_commentaire', options: ['expose' => true])]
+    #[ParamConverter('etudiant', options: ['mapping' => ['slug' => 'slug']])]
     public function ajoutCommentaire(Request $request, Etudiant $etudiant): Response
     {
         $datas = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);

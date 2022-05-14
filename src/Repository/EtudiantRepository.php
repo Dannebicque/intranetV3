@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EtudiantRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 16:53
+ * @lastUpdate 14/05/2022 10:52
  */
 
 namespace App\Repository;
@@ -120,7 +120,7 @@ class EtudiantRepository extends ServiceEntityRepository
             $tt['avatarInitiales'] = $etudiant->getAvatarInitiales();
             $gr = '';
             foreach ($etudiant->getGroupes() as $groupe) {
-                $gr .= $groupe->getLibelle() . ', ';
+                $gr .= $groupe->getLibelle().', ';
             }
             $tt['groupes'] = mb_substr($gr, 0, -2);
             $t[] = $tt;
@@ -134,7 +134,7 @@ class EtudiantRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('e');
         $i = 1;
         foreach ($annee->getSemestres() as $semestre) {
-            $query->orWhere('e.semestre = ?' . $i)
+            $query->orWhere('e.semestre = ?'.$i)
                 ->setParameter($i, $semestre->getId());
             ++$i;
         }
@@ -155,7 +155,7 @@ class EtudiantRepository extends ServiceEntityRepository
             ->orWhere('p.numEtudiant LIKE :needle')
             ->orWhere('p.numIne LIKE :needle')
             ->andWhere('p.departement = :departement')
-            ->setParameter('needle', '%' . $needle . '%')
+            ->setParameter('needle', '%'.$needle.'%')
             ->setParameter('departement', $departement->getId())
             ->orderBy('p.nom', Criteria::ASC)
             ->orderBy('p.prenom', Criteria::ASC)
@@ -172,7 +172,7 @@ class EtudiantRepository extends ServiceEntityRepository
             ->orWhere('p.mailUniv LIKE :needle')
             ->orWhere('p.numEtudiant LIKE :needle')
             ->orWhere('p.numIne LIKE :needle')
-            ->setParameter('needle', '%' . $needle . '%')
+            ->setParameter('needle', '%'.$needle.'%')
             ->orderBy('p.nom', Criteria::ASC)
             ->orderBy('p.prenom', Criteria::ASC)
             ->getQuery()

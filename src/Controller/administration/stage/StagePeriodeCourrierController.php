@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StagePeriodeCourrierController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/stage/StagePeriodeCourrierController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\administration\stage;
@@ -122,11 +122,10 @@ class StagePeriodeCourrierController extends BaseController
     }
 
     /**
-     * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
-     *
      * @throws NonUniqueResultException
      */
     #[Route(path: '/sauvegarde-modele/{uuid}/{mail}', name: 'administration_stage_periode_courrier_sauvegarde_modele', options: ['expose' => true])]
+    #[ParamConverter('stagePeriode', options: ['mapping' => ['uuid' => 'uuid']])]
     public function sauvegardeModele(MyStageMailTemplate $myStageMailTemplate, Request $request, StagePeriode $stagePeriode, $mail): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
@@ -155,10 +154,8 @@ class StagePeriodeCourrierController extends BaseController
         return new JsonResponse(true, Response::HTTP_OK);
     }
 
-    /**
-     * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
-     */
     #[Route(path: '/{uuid}', name: 'administration_stage_periode_courrier_index')]
+    #[ParamConverter('stagePeriode', options: ['mapping' => ['uuid' => 'uuid']])]
     public function index(StageMailTemplateRepository $stageMailTemplateRepository, StagePeriode $stagePeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/ProjetController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/ProjetController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\appEtudiant;
@@ -45,22 +45,8 @@ class ProjetController extends BaseController
         ]);
     }
 
-    //    /**
-    //     * @Route("/details/{id}", name="application_etudiant_stage_detail", methods={"GET"}, requirements={"id"="\d+"})
-    //     * @param StageEtudiant $stageEtudiant
-    //     *
-    //     * @return Response
-    //     */
-    //    public function detailsStage(StageEtudiant $stageEtudiant): Response
-    //    {
-    //        return $this->render('appEtudiant/stage/details.html.twig', [
-    //            'stageEtudiant' => $stageEtudiant
-    //        ]);
-    //    }
-    /**
-     * @ParamConverter("projetEtudiant", options={"mapping": {"projetEtudiant": "uuid"}})
-     */
     #[Route(path: '/formulaire/{projetEtudiant}', name: 'application_etudiant_projet_formulaire', methods: 'GET|POST')]
+    #[ParamConverter('projetEtudiant', options: ['mapping' => ['projetEtudiant' => 'uuid']])]
     public function create(EventDispatcherInterface $eventDispatcher, Request $request, ProjetEtudiant $projetEtudiant): Response
     {
         if (null !== $projetEtudiant->getProjetPeriode()) {

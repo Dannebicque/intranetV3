@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/05/2022 16:34
+ * @lastUpdate 14/05/2022 10:52
  */
 
 namespace App\Entity;
@@ -665,7 +665,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
 
         return $this;
     }
-
 
     public function __serialize(): array
     {

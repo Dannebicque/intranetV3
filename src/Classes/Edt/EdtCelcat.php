@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/EdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/05/2022 16:49
+ * @lastUpdate 14/05/2022 10:52
  */
 
 namespace App\Classes\Edt;
@@ -15,7 +15,6 @@ use App\DTO\EvenementEdtCollection;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Semestre;
 use App\Repository\CelcatEventsRepository;
-use Carbon\Carbon;
 
 class EdtCelcat extends AbstractEdt implements EdtInterface
 {

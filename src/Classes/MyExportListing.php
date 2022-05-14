@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyExportListing.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 14/05/2022 10:52
  */
 
 /*
@@ -23,7 +23,6 @@ use App\Entity\Personnel;
 use App\Entity\TypeGroupe;
 use App\Repository\GroupeRepository;
 use App\Repository\TypeGroupeRepository;
-use Symfony\Component\HttpFoundation\Response;
 use function count;
 use Doctrine\Common\Collections\Collection;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
@@ -31,6 +30,7 @@ use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use PhpOffice\PhpSpreadsheet\Writer\Csv;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Twig\Error\LoaderError;

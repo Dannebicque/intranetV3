@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/MessagerieController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/MessagerieController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 14/05/2022 10:52
  */
 
 namespace App\Controller;
@@ -159,6 +159,7 @@ class MessagerieController extends BaseController
             }
         } catch (Exception $e) {
             $messagerie->sendSynthese();
+
             return new JsonResponse(['error' => $e->getCode()], Response::HTTP_BAD_REQUEST);
         }
         $messagerie->sendSynthese();

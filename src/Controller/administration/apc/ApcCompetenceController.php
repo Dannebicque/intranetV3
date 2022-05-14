@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcCompetenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 09:40
+ * @lastUpdate 14/05/2022 10:53
  */
 
 namespace App\Controller\administration\apc;
@@ -30,7 +30,7 @@ class ApcCompetenceController extends BaseController
         MyExport $myExport, ApcComptenceRepository $apcComptenceRepository, Diplome $diplome, $_format): Response
     {
         $apcCompetences = $apcComptenceRepository->findByDiplome($diplome);
-//todo: a faire.
+        // todo: a faire.
         $data = $mySerializer->getDataFromSerialization(
             $apcCompetences,
             [

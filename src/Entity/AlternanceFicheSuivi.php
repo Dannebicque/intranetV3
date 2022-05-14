@@ -4,16 +4,13 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/AlternanceFicheSuivi.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 09:56
+ * @lastUpdate 14/05/2022 10:52
  */
 
 namespace App\Entity;
 
-use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\AlternanceFicheSuiviRepository;
 use Carbon\Carbon;
-use Carbon\CarbonInterface;
-use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
 
@@ -41,7 +38,6 @@ class AlternanceFicheSuivi extends AbstractFicheSuivi
     {
         return $this->id;
     }
-
 
     public function getAlternance(): ?Alternance
     {

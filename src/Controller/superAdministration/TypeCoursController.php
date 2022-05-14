@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/TypeCoursController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 08:46
+ * @lastUpdate 14/05/2022 10:52
  */
 
 namespace App\Controller\superAdministration;
@@ -23,7 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/administratif/type-cours')]
 class TypeCoursController extends BaseController
 {
-    //todo: a finaliser et utiliser ?
+    // todo: a finaliser et utiliser ?
     #[Route(path: '/', name: 'sa_type_cours_index', methods: 'GET')]
     public function index(TypeCoursRepository $typeCoursRepository): Response
     {

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/DocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/05/2022 18:57
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller;
@@ -63,10 +63,8 @@ class DocumentController extends BaseController
         ]);
     }
 
-    /**
-     * @ParamConverter("document", options={"mapping": {"document": "uuid"}})
-     */
     #[Route(path: '/ajax/add-favori/{document}', name: 'add_favori', options: ['expose' => true])]
+    #[ParamConverter('document', options: ['mapping' => ['document' => 'uuid']])]
     public function addFavori(MyDocument $myDocument, Document $document): Response
     {
         $myDocument->setDocument($document);

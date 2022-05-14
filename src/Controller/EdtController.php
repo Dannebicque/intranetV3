@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 09:52
+ * @lastUpdate 14/05/2022 10:53
  */
 
 namespace App\Controller;
@@ -51,7 +51,7 @@ class EdtController extends BaseController
      */
     public function dashboardPersonnel(int $semaine = 0): Response
     {
-        //todo: fusionner les deux et passer par le manager
+        // todo: fusionner les deux et passer par le manager
         if (null !== $this->dataUserSession->getDepartement() && $this->dataUserSession->getDepartement()->isOptUpdateCelcat()) {
             $matieres = $this->typeMatiereManager->tableauMatieresCodeApogee($this->getDepartement());
             $this->myEdtCelcat->initPersonnel($this->getUser(),

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/AlternanceController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/AlternanceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/10/2021 10:02
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\appEtudiant;
@@ -22,10 +22,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class AlternanceController.
- *
- * @IsGranted("ROLE_ETUDIANT")
  */
 #[Route(path: '/application/etudiant/alternance')]
+#[IsGranted('ROLE_ETUDIANT')]
 class AlternanceController extends BaseController
 {
     /**

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/stage/StagePeriodeGestionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 09:11
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\administration\stage;
@@ -26,10 +26,8 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/administration/stage/periode/gestion')]
 class StagePeriodeGestionController extends BaseController
 {
-    /**
-     * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
-     */
     #[Route(path: '/{uuid}/export.{_format}', name: 'administration_stage_periode_gestion_export', requirements: ['_format' => 'csv|pdf'], methods: 'GET')]
+    #[ParamConverter('stagePeriode', options: ['mapping' => ['uuid' => 'uuid']])]
     public function export(
         MySerializer $mySerializer,
         MyExport $myExport, StagePeriode $stagePeriode, $_format): Response
@@ -59,10 +57,8 @@ class StagePeriodeGestionController extends BaseController
         );
     }
 
-    /**
-     * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
-     */
     #[Route(path: '/{uuid}/export.xlsx', name: 'administration_stage_periode_gestion_export_xlsx', methods: 'GET')]
+    #[ParamConverter('stagePeriode', options: ['mapping' => ['uuid' => 'uuid']])]
     public function exportXlsx(MyExportStage $myExport, StagePeriode $stagePeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
@@ -70,10 +66,8 @@ class StagePeriodeGestionController extends BaseController
         return $myExport->genereFichier($stagePeriode);
     }
 
-    /**
-     * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
-     */
     #[Route(path: '/{uuid}', name: 'administration_stage_periode_gestion')]
+    #[ParamConverter('stagePeriode', options: ['mapping' => ['uuid' => 'uuid']])]
     public function periode(StagePeriodeRepository $stagePeriodeRepository, MyStage $myStage, StagePeriode $stagePeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());

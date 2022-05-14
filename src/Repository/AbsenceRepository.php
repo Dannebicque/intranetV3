@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/AbsenceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/05/2022 12:52
+ * @lastUpdate 14/05/2022 10:52
  */
 
 namespace App\Repository;
@@ -16,10 +16,10 @@ use App\Entity\AnneeUniversitaire;
 use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
-use Doctrine\Common\Collections\Criteria;
 use function array_key_exists;
 use Carbon\Carbon;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**

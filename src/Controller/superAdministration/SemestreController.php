@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/SemestreController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/SemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/09/2021 21:04
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\superAdministration;
@@ -135,10 +135,8 @@ class SemestreController extends BaseController
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * @IsGranted("ROLE_SUPER_ADMIN")
-     */
     #[Route(path: '/activate/{semestre}/{etat}', name: 'sa_semestre_activate', methods: ['GET'])]
+    #[IsGranted('ROLE_SUPER_ADMIN')]
     public function activate(Semestre $semestre, bool $etat): RedirectResponse
     {
         $semestre->setActif($etat);

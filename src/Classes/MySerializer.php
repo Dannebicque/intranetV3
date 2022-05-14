@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MySerializer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 09:45
+ * @lastUpdate 14/05/2022 10:52
  */
 
 /*
@@ -95,7 +95,7 @@ class MySerializer
                     if (is_array($value)) {
                         foreach ($value as $col) {
                             if (is_array($row[$key])) {
-                                //todo: gérer le 3eme niveau...Si $col est un tableau...
+                                // todo: gérer le 3eme niveau...Si $col est un tableau...
                                 if (array_key_exists($col, $row[$key])) {
                                     $dataArray[$ligne][$i] = $this->transformValue($row[$key][$col], $key);
                                 } else {

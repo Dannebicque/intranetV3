@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/BaseEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/05/2022 16:28
+ * @lastUpdate 14/05/2022 10:52
  */
 
 namespace App\Classes\Edt;
@@ -79,7 +79,7 @@ abstract class BaseEdt
         $this->total['TD'] = 0;
         $this->total['TP'] = 0;
 
-        //todo: en doublons avec edt/Calendrier.php A supprimer plus utile ici
+        // todo: en doublons avec edt/Calendrier.php A supprimer plus utile ici
         if (0 === $semaine) {
             $semaine = $dateDuJour->weekOfYear;
             $this->excluVacances($semaine);

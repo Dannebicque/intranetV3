@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/DiplomeController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/DiplomeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:30
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\superAdministration;
@@ -159,10 +159,8 @@ class DiplomeController extends BaseController
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * @IsGranted("ROLE_SUPER_ADMIN")
-     */
     #[Route(path: '/activate/{diplome}/{etat}', name: 'sa_diplome_activate', methods: ['GET'])]
+    #[IsGranted('ROLE_SUPER_ADMIN')]
     public function activate(Diplome $diplome, bool $etat): RedirectResponse
     {
         $diplome->setActif($etat);

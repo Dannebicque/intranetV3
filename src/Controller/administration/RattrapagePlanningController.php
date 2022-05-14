@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/RattrapagePlanningController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 09:45
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\administration;
@@ -79,11 +79,10 @@ class RattrapagePlanningController extends BaseController
     }
 
     /**
-     * @ParamConverter("rattrapage", options={"mapping": {"uuid": "uuid"}})
-     *
      * @throws \Exception
      */
     #[Route(path: '/change/{uuid}/{type}', name: 'administration_rattrapage_planning_change', requirements: ['type' => 'date|heure|salle'], options: ['expose' => true], methods: 'POST')]
+    #[ParamConverter('rattrapage', options: ['mapping' => ['uuid' => 'uuid']])]
     public function change(Request $request, Rattrapage $rattrapage, $type): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $rattrapage->getEtudiant()?->getSemestre());

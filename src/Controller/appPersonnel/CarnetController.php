@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/CarnetController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 16:13
+ * @lastUpdate 14/05/2022 10:53
  */
 
 namespace App\Controller\appPersonnel;
@@ -24,10 +24,9 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class CarnetController.
- *
- * @IsGranted("ROLE_PERMANENT")
  */
 #[Route(path: '/application/personnel/carnet')]
+#[IsGranted('ROLE_PERMANENT')]
 class CarnetController extends BaseController
 {
     #[Route(path: '/', name: 'application_personnel_carnet_index', methods: 'GET')]
@@ -44,7 +43,7 @@ class CarnetController extends BaseController
     {
         $actualites = $cahierTexteRepository->findByPersonnel($this->getUser());
 
-        //todo: a faire
+        // todo: a faire
     }
 
     #[Route(path: '/new', name: 'application_personnel_carnet_new', methods: 'GET|POST')]

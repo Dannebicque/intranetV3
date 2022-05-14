@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/NoteController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/NoteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 06:57
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\appPersonnel;
@@ -82,10 +82,8 @@ class NoteController extends BaseController
         ]);
     }
 
-    /**
-     * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
-     */
     #[Route(path: '/saisie/etape-2/{uuid}', name: 'application_personnel_note_saisie_2', requirements: ['matiere' => '\d+'])]
+    #[ParamConverter('evaluation', options: ['mapping' => ['uuid' => 'uuid']])]
     public function saisieNotes(TypeMatiereManager $typeMatiereManager, MyEvaluation $myEvaluation, Evaluation $evaluation): Response
     {
         $matiere = $typeMatiereManager->getMatiere($evaluation->getIdMatiere(), $evaluation->getTypeMatiere());
@@ -103,10 +101,9 @@ class NoteController extends BaseController
 
     /**
      * @throws Exception
-     *
-     * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
      */
     #[Route(path: '/sauvegarde/{uuid}', name: 'application_personnel_note_ajax_saisie', options: ['expose' => true], methods: ['POST|GET'])]
+    #[ParamConverter('evaluation', options: ['mapping' => ['uuid' => 'uuid']])]
     public function enregistreNoteAction(EtudiantNotes $etudiantNotes, EtudiantRepository $etudiantRepository, Request $request, Evaluation $evaluation): Response
     {
         $tnote = $request->request->get('notes')['notes'];

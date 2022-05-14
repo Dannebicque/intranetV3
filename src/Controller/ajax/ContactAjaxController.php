@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ajax/ContactAjaxController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/ajax/ContactAjaxController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:36
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\ajax;
@@ -20,10 +20,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class AbsenceApiController.
- *
- * @IsGranted("ROLE_PERMANENT")
  */
 #[Route(path: '/ajax/contact')]
+#[IsGranted('ROLE_PERMANENT')]
 class ContactAjaxController extends BaseController
 {
     #[Route(path: '/edit/{id}', name: 'contact_ajax_edit', options: ['expose' => true])]

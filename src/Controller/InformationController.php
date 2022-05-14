@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/InformationController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/InformationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/09/2021 13:31
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller;
@@ -58,10 +58,8 @@ class InformationController extends BaseController
         ]);
     }
 
-    /**
-     * @ParamConverter("article", options={"mapping": {"slug": "slug"}})
-     */
     #[Route(path: '/show/{slug}', name: 'information_read_more')]
+    #[ParamConverter('article', options: ['mapping' => ['slug' => 'slug']])]
     public function show(Article $article): Response
     {
         $like = false;
@@ -78,10 +76,8 @@ class InformationController extends BaseController
         ]);
     }
 
-    /**
-     * @ParamConverter("article", options={"mapping": {"slug": "slug"}})
-     */
     #[Route(path: '/like/{slug}', name: 'information_like', options: ['expose' => true])]
+    #[ParamConverter('article', options: ['mapping' => ['slug' => 'slug']])]
     public function like(MyArticle $myArticle, Article $article): JsonResponse
     {
         $myArticle->setArticle($article)->saveLike($this->getUser());

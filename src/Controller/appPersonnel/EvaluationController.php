@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/EvaluationController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/EvaluationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 20:09
+ * @lastUpdate 14/05/2022 10:53
  */
 
 namespace App\Controller\appPersonnel;
@@ -29,10 +29,8 @@ use Twig\Error\SyntaxError;
 #[Route(path: '/application/personnel/evaluation')]
 class EvaluationController extends BaseController
 {
-    /**
-     * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
-     */
     #[Route(path: '/details/{uuid}', name: 'application_personnel_evaluation_show', requirements: ['evaluation' => '\d+'])]
+    #[ParamConverter('evaluation', options: ['mapping' => ['uuid' => 'uuid']])]
     public function detailsEvaluation(TypeMatiereManager $typeMatiereManager, MyEvaluation $myEvaluation, Evaluation $evaluation): Response
     {
         $matiere = $typeMatiereManager->getMatiere($evaluation->getIdMatiere(), $evaluation->getTypeMatiere());
@@ -47,10 +45,8 @@ class EvaluationController extends BaseController
         ]);
     }
 
-    /**
-     * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
-     */
     #[Route(path: '/visible/{uuid}/{etat}', name: 'application_personnel_evaluation_visible', requirements: ['evaluation' => '\d+'])]
+    #[ParamConverter('evaluation', options: ['mapping' => ['uuid' => 'uuid']])]
     public function evaluationVisible(MyEvaluation $myEvaluation, Evaluation $evaluation, $etat): Response
     {
         // todo: tester au niveau évaluation
@@ -65,10 +61,8 @@ class EvaluationController extends BaseController
         ]);
     }
 
-    /**
-     * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
-     */
     #[Route(path: '/update/{uuid}', name: 'application_personnel_evaluation_update')]
+    #[ParamConverter('evaluation', options: ['mapping' => ['uuid' => 'uuid']])]
     public function updateEvaluation(Request $request, Evaluation $evaluation): Response
     {
         // todo: tester au niveau évaluation
@@ -82,8 +76,6 @@ class EvaluationController extends BaseController
     }
 
     /**
-     * @ParamConverter("evaluation", options={"mapping": {"uuid": "uuid"}})
-     *
      * @return Response|StreamedResponse|null
      *
      * @throws SyntaxError
@@ -92,6 +84,7 @@ class EvaluationController extends BaseController
      * @throws \App\Exception\MatiereNotFoundException
      */
     #[Route(path: '/export/{uuid}/{type}-{semestre}.{_format}', name: 'application_personnel_evaluation_export', requirements: ['evaluation' => '\d+', '_format' => 'csv|xlsx|pdf'])]
+    #[ParamConverter('evaluation', options: ['mapping' => ['uuid' => 'uuid']])]
     public function exportEvaluation(GroupeRepository $groupeRepository, MyEvaluation $myEvaluation, Evaluation $evaluation, $type, $_format, Semestre $semestre): Response
     {
         // todo: tester au niveau évaluation

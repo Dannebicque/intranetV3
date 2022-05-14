@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/QuizzController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/QuizzController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:36
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\appEtudiant;
@@ -16,10 +16,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class QuizzController.
- *
- * @IsGranted("ROLE_ETUDIANT")
  */
 #[Route(path: '/application/etudiant/quizz')]
+#[IsGranted('ROLE_ETUDIANT')]
 class QuizzController extends BaseController
 {
     #[Route(path: '/', name: 'application_etudiant_quizz_index')]

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/projet/ProjetPeriodeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 09:34
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\administration\projet;
@@ -83,10 +83,8 @@ class ProjetPeriodeController extends BaseController
         ]);
     }
 
-    /**
-     * @ParamConverter("projetPeriode", options={"mapping": {"id": "uuid"}})
-     */
     #[Route(path: '/{id}', name: 'administration_projet_periode_show', methods: ['GET'])]
+    #[ParamConverter('projetPeriode', options: ['mapping' => ['id' => 'uuid']])]
     public function show(ProjetPeriode $projetPeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestre());
@@ -96,10 +94,8 @@ class ProjetPeriodeController extends BaseController
         ]);
     }
 
-    /**
-     * @ParamConverter("projetPeriode", options={"mapping": {"id": "uuid"}})
-     */
     #[Route(path: '/{id}/edit', name: 'administration_projet_periode_edit', methods: ['GET', 'POST'])]
+    #[ParamConverter('projetPeriode', options: ['mapping' => ['id' => 'uuid']])]
     public function edit(Request $request, ProjetPeriode $projetPeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestre());
@@ -123,10 +119,8 @@ class ProjetPeriodeController extends BaseController
         ]);
     }
 
-    /**
-     * @ParamConverter("projetPeriode", options={"mapping": {"id": "uuid"}})
-     */
     #[Route(path: '/{id}', name: 'administration_projet_periode_delete', methods: ['DELETE'])]
+    #[ParamConverter('projetPeriode', options: ['mapping' => ['id' => 'uuid']])]
     public function delete(Request $request, ProjetPeriode $projetPeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestre());
@@ -147,10 +141,8 @@ class ProjetPeriodeController extends BaseController
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * @ParamConverter("projetPeriode", options={"mapping": {"id": "uuid"}})
-     */
     #[Route(path: '/{id}/duplicate', name: 'administration_projet_periode_duplicate', methods: 'GET')]
+    #[ParamConverter('projetPeriode', options: ['mapping' => ['id' => 'uuid']])]
     public function duplicate(ProjetPeriode $projetPeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestre());

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ScolariteController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/ScolariteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 10:52
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\administration;
@@ -34,10 +34,8 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/administration/scolarite')]
 class ScolariteController extends BaseController
 {
-    /**
-     * @ParamConverter("etudiant", options={"mapping": {"slug": "slug"}})
-     */
     #[Route(path: '/edit/{slug}/{scolarite?<\d+>}', name: 'administration_scolarite_etudiant_edit')]
+    #[ParamConverter('etudiant', options: ['mapping' => ['slug' => 'slug']])]
     public function editScolariteEtudiant(Request $request, Etudiant $etudiant, ?Scolarite $scolarite = null): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $etudiant->getSemestre());

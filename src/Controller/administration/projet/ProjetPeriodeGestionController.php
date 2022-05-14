@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/projet/ProjetPeriodeGestionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 09:34
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\administration\projet;
@@ -25,10 +25,8 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/administration/projet/periode/gestion')]
 class ProjetPeriodeGestionController extends BaseController
 {
-    /**
-     * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
-     */
     #[Route(path: '/{uuid}/export.{_format}', name: 'administration_projet_periode_gestion_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
+    #[ParamConverter('stagePeriode', options: ['mapping' => ['uuid' => 'uuid']])]
     public function export(
         MySerializer $mySerializer,
         MyExport $myExport, ProjetPeriode $projetPeriode, $_format): Response
@@ -57,10 +55,8 @@ class ProjetPeriodeGestionController extends BaseController
         );
     }
 
-    /**
-     * @ParamConverter("projetPeriode", options={"mapping": {"uuid": "uuid"}})
-     */
     #[Route(path: '/{uuid}', name: 'administration_projet_periode_gestion')]
+    #[ParamConverter('projetPeriode', options: ['mapping' => ['uuid' => 'uuid']])]
     public function periode(ProjetPeriodeRepository $projetPeriodeRepository, MyProjet $myProjet, ProjetPeriode $projetPeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestre());

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/MatiereController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/MatiereController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\superAdministration;
@@ -138,10 +138,8 @@ class MatiereController extends BaseController
         // todo: delete
     }
 
-    /**
-     * @IsGranted("ROLE_SUPER_ADMIN")
-     */
     #[Route(path: '/activate/{matiere}/{etat}', name: 'sa_matiere_activate', methods: ['GET'])]
+    #[IsGranted('ROLE_SUPER_ADMIN')]
     public function activate(Matiere $matiere, bool $etat): RedirectResponse
     {
         $matiere->setSuspendu($etat);

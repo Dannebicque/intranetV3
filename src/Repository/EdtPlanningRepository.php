@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 17:39
+ * @lastUpdate 14/05/2022 10:52
  */
 
 namespace App\Repository;
@@ -365,7 +365,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
 
     private function transformeArray(array $data, array $tabMatieresSemestre): array
     {
-        //Deprecated si on passe par le manager EDT
+        // Deprecated si on passe par le manager EDT
         /** todo: passer par le DTO*/
         $t = [];
         /** @var EdtPlanning $event */

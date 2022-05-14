@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/DocumentType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 08:25
+ * @lastUpdate 14/05/2022 10:52
  */
 
 namespace App\Form;
@@ -23,7 +23,6 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\UX\Dropzone\Form\DropzoneType;
-use Vich\UploaderBundle\Form\Type\VichFileType;
 
 /**
  * Class DocumentType.

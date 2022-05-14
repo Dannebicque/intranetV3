@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Rdd/MyExportRdd.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 14/05/2022 10:52
  */
 
 /*
@@ -16,10 +16,10 @@ namespace App\Classes\Rdd;
 use App\Classes\Excel\MyExcelWriter;
 use App\Entity\Etudiant;
 use App\Entity\RddDiplome;
-use Symfony\Component\HttpFoundation\Response;
 use function array_key_exists;
 use Carbon\Carbon;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class MyExportRdd

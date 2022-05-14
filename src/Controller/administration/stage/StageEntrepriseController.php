@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/stage/StageEntrepriseController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 09:31
+ * @lastUpdate 14/05/2022 10:53
  */
 
 namespace App\Controller\administration\stage;
@@ -27,10 +27,8 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/administration/stage/entreprise')]
 class StageEntrepriseController extends BaseController
 {
-    /**
-     * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
-     */
     #[Route(path: '/{uuid}', name: 'administration_stage_entreprise_index')]
+    #[ParamConverter('stagePeriode', options: ['mapping' => ['uuid' => 'uuid']])]
     public function index(StageEtudiantRepository $stageEtudiantRepository, StagePeriode $stagePeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
@@ -63,22 +61,20 @@ class StageEntrepriseController extends BaseController
         ]);
     }
 
-    /**
-     * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
-     */
     #[Route(path: '/{uuid}/export.{_format}', name: 'administration_stage_entreprise_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
+    #[ParamConverter('stagePeriode', options: ['mapping' => ['uuid' => 'uuid']])]
     public function export(
         MySerializer $mySerializer,
         StageEtudiantRepository $stageEtudiantRepository, MyExport $myExport, StagePeriode $stagePeriode, $_format): Response
     {
-        //feature: Développer de manière général en super Admin...
+        // feature: Développer de manière général en super Admin...
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
         $entreprises = $stageEtudiantRepository->findEntreprisesByPeriode($stagePeriode);
 
         $data = $mySerializer->getDataFromSerialization(
             $entreprises,
             [
-                //todo: gérer le 3eme niveau...
+                // todo: gérer le 3eme niveau...
                 'entreprise' => ['raisonSociale', 'responsable' => ['nom', 'prenom', 'fonction', 'telephone', 'email']],
                 'tuteur' => ['nom', 'prenom', 'fonction', 'telephone', 'email'],
                 'serviceStageEntreprise',

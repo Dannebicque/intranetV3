@@ -4,15 +4,15 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Apogee/ApogeeEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/05/2022 21:39
+ * @lastUpdate 14/05/2022 10:52
  */
 
 namespace App\Classes\Apogee;
 
 use App\Entity\Annee;
 use App\Utils\Tools;
-use PDOStatement;
 use function array_key_exists;
+use PDOStatement;
 
 class ApogeeEtudiant extends Apogee
 {

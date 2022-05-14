@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/stage/StagePeriodeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 09:16
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\administration\stage;
@@ -87,10 +87,8 @@ class StagePeriodeController extends BaseController
         ]);
     }
 
-    /**
-     * @ParamConverter("stagePeriode", options={"mapping": {"id": "uuid"}})
-     */
     #[Route(path: '/{id}', name: 'administration_stage_periode_show', methods: 'GET')]
+    #[ParamConverter('stagePeriode', options: ['mapping' => ['id' => 'uuid']])]
     public function show(StagePeriode $stagePeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
@@ -98,10 +96,8 @@ class StagePeriodeController extends BaseController
         return $this->render('administration/stage/stage_periode/show.html.twig', ['stage_periode' => $stagePeriode]);
     }
 
-    /**
-     * @ParamConverter("stagePeriode", options={"mapping": {"id": "uuid"}})
-     */
     #[Route(path: '/{id}/edit', name: 'administration_stage_periode_edit', methods: 'GET|POST')]
+    #[ParamConverter('stagePeriode', options: ['mapping' => ['id' => 'uuid']])]
     public function edit(Request $request, StagePeriode $stagePeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
@@ -126,10 +122,8 @@ class StagePeriodeController extends BaseController
         ]);
     }
 
-    /**
-     * @ParamConverter("stagePeriode", options={"mapping": {"id": "uuid"}})
-     */
     #[Route(path: '/{id}', name: 'administration_stage_periode_delete', methods: 'DELETE')]
+    #[ParamConverter('stagePeriode', options: ['mapping' => ['id' => 'uuid']])]
     public function delete(Request $request, StagePeriode $stagePeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
@@ -150,10 +144,8 @@ class StagePeriodeController extends BaseController
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    /**
-     * @ParamConverter("stagePeriode", options={"mapping": {"id": "uuid"}})
-     */
     #[Route(path: '/{id}/duplicate', name: 'administration_stage_periode_duplicate', methods: 'GET')]
+    #[ParamConverter('stagePeriode', options: ['mapping' => ['id' => 'uuid']])]
     public function duplicate(StagePeriode $stagePeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());

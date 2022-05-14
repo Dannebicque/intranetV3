@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/EmpruntController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/EmpruntController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 14/05/2022 10:53
  */
 
 namespace App\Controller\appEtudiant;
@@ -25,10 +25,9 @@ use Twig\Error\SyntaxError;
 
 /**
  * Class EmpruntController.
- *
- * @IsGranted("ROLE_ETUDIANT")
  */
 #[Route(path: '/application/etudiant/emprunt')]
+#[IsGranted('ROLE_ETUDIANT')]
 class EmpruntController extends BaseController
 {
     #[Route(path: '/', name: 'application_etudiant_emprunt_index')]
@@ -55,10 +54,8 @@ class EmpruntController extends BaseController
         return $this->redirectToRoute('application_index', ['onglet' => 'emprunt']);
     }
 
-    /**
-     * @ParamConverter("emprunt", options={"mapping": {"emprunt": "uuid"}})
-     */
     #[Route(path: '/details/{emprunt}', name: 'application_etudiant_emprunt_detail')]
+    #[ParamConverter('emprunt', options: ['mapping' => ['emprunt' => 'uuid']])]
     public function show(Emprunt $emprunt): Response
     {
         return $this->render('appEtudiant/emprunt/show.html.twig', [
@@ -67,22 +64,19 @@ class EmpruntController extends BaseController
     }
 
     /**
-     * @ParamConverter("emprunt", options={"mapping": {"emprunt": "uuid"}})
-     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
     #[Route(path: '/imprimer/{emprunt}', name: 'app_etudiant_emprunt_imprimer_fiche')]
+    #[ParamConverter('emprunt', options: ['mapping' => ['emprunt' => 'uuid']])]
     public function imprimerFiche(MyEmprunts $myEmprunts, Emprunt $emprunt): void
     {
         $myEmprunts->genereFiche($emprunt);
     }
 
-    /**
-     * @ParamConverter("emprunt", options={"mapping": {"emprunt": "uuid"}})
-     */
     #[Route(path: '/delete', name: 'app_etudiant_emprunt_delete', methods: ['DELETE'])]
+    #[ParamConverter('emprunt', options: ['mapping' => ['emprunt' => 'uuid']])]
     public function delete(MyEmprunts $myEmprunts, Request $request, Emprunt $emprunt): Response
     {
         $id = $emprunt->getId();

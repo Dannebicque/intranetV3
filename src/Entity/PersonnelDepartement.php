@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/PersonnelDepartement.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/05/2022 13:52
+ * @lastUpdate 14/05/2022 10:52
  */
 
 namespace App\Entity;
@@ -45,6 +45,7 @@ class PersonnelDepartement extends BaseEntity
         if ($this->roles === '') {
             return [];
         }
+
         return json_decode($this->roles, false, 2, JSON_THROW_ON_ERROR);
     }
 

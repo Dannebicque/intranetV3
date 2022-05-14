@@ -1,15 +1,14 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/MatiereType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/MatiereType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/09/2021 22:06
+ * @lastUpdate 14/05/2022 10:52
  */
 
 namespace App\Form;
 
-use App\Entity\ApcSae;
 use App\Entity\Diplome;
 use App\Entity\Matiere;
 use App\Entity\Parcour;
@@ -17,7 +16,6 @@ use App\Entity\Ppn;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use App\Form\Type\YesNoType;
-use App\Repository\ApcSaeRepository;
 use App\Repository\MatiereRepository;
 use App\Repository\ParcourRepository;
 use App\Repository\PpnRepository;

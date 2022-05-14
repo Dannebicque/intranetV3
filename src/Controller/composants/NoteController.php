@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/composants/NoteController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/composants/NoteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/09/2021 16:16
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\composants;
@@ -22,10 +22,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class NotesController.
- *
- * @IsGranted("ROLE_PERMANENT")
  */
 #[Route(path: '/composant')]
+#[IsGranted('ROLE_PERMANENT')]
 class NoteController extends BaseController
 {
     /**

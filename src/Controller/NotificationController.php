@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/NotificationController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/NotificationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:38
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller;
@@ -30,10 +30,8 @@ class NotificationController extends BaseController
         ]);
     }
 
-    /**
-     * @ParamConverter("notification", options={"mapping": {"uuid": "uuid"}})
-     */
     #[Route(path: '/lire/{uuid}', name: 'notification_lire')]
+    #[ParamConverter('notification', options: ['mapping' => ['uuid' => 'uuid']])]
     public function lire(Notification $notification): RedirectResponse
     {
         $notification->setLu(true);

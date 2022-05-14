@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/stage/StagePeriodeOffreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 09:08
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\administration\stage;
@@ -24,10 +24,8 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/administration/stage/offre')]
 class StagePeriodeOffreController extends BaseController
 {
-    /**
-     * @ParamConverter("stagePeriode", options={"mapping": {"uuid": "uuid"}})
-     */
     #[Route(path: '/{uuid}', name: 'administration_stage_periode_offre_index', methods: 'GET')]
+    #[ParamConverter('stagePeriode', options: ['mapping' => ['uuid' => 'uuid']])]
     public function index(StagePeriode $stagePeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
@@ -41,10 +39,8 @@ class StagePeriodeOffreController extends BaseController
         );
     }
 
-    /**
-     * @ParamConverter("stagePeriode", options={"mapping": {"stagePeriode": "uuid"}})
-     */
     #[Route(path: '/{stagePeriode}/export.{_format}', name: 'administration_stage_periode_offre_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
+    #[ParamConverter('stagePeriode', options: ['mapping' => ['stagePeriode' => 'uuid']])]
     public function export(
         MySerializer $mySerializer,
         MyExport $myExport, StagePeriode $stagePeriode, $_format): Response
@@ -65,10 +61,8 @@ class StagePeriodeOffreController extends BaseController
         );
     }
 
-    /**
-     * @ParamConverter("stagePeriode", options={"mapping": {"stagePeriode": "uuid"}})
-     */
     #[Route(path: '/new/{stagePeriode}', name: 'administration_stage_periode_offre_new', methods: 'GET|POST')]
+    #[ParamConverter('stagePeriode', options: ['mapping' => ['stagePeriode' => 'uuid']])]
     public function create(Request $request, StagePeriode $stagePeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
@@ -135,10 +129,8 @@ class StagePeriodeOffreController extends BaseController
             ['id' => $newStagePeriodeOffre->getId()]);
     }
 
-    /**
-     * @ParamConverter("stagePeriode", options={"mapping": {"stagePeriode": "uuid"}})
-     */
     #[Route(path: '/{id}/{stagePeriode}', name: 'administration_stage_periode_offre_show', methods: 'GET')]
+    #[ParamConverter('stagePeriode', options: ['mapping' => ['stagePeriode' => 'uuid']])]
     public function show(StagePeriodeOffre $stagePeriodeOffre, StagePeriode $stagePeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());

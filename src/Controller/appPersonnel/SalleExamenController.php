@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/SalleExamenController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/SalleExamenController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/05/2021 21:03
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\appPersonnel;
@@ -25,10 +25,9 @@ use Twig\Error\SyntaxError;
 
 /**
  * Class QuizzController.
- *
- * @IsGranted("ROLE_PERMANENT")
  */
 #[Route(path: '/application/personnel/salle-examen')]
+#[IsGranted('ROLE_PERMANENT')]
 class SalleExamenController extends BaseController
 {
     #[Route(path: '/', name: 'application_personnel_salle_examen_index')]

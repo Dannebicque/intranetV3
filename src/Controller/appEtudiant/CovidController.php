@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/CovidController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/CovidController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:36
+ * @lastUpdate 14/05/2022 10:53
  */
 
 namespace App\Controller\appEtudiant;
@@ -34,13 +34,12 @@ class CovidController extends BaseController
     }
 
     /**
-     * @ParamConverter("absence", options={"mapping": {"uuid": "uuid"}})
-     *
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
      */
     #[Route(path: '/export/{id}.pdf', name: 'app_etudiant_covid_attestation_pdf')]
+    #[ParamConverter('absence', options: ['mapping' => ['uuid' => 'uuid']])]
     public function details(MyExportPresence $myExportPresence, CovidAttestationEtudiant $attestationEtudiant): Response
     {
         // vérifier s'il est autorisé

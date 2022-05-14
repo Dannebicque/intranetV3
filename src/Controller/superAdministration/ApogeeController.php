@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/ApogeeController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/ApogeeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/09/2021 19:09
+ * @lastUpdate 14/05/2022 10:44
  */
 
 namespace App\Controller\superAdministration;
@@ -34,10 +34,8 @@ class ApogeeController extends BaseController
 {
     private array $etudiants;
 
-    /**
-     * @IsGranted("ROLE_SUPER_ADMIN")
-     */
     #[Route(path: '/', name: 'sa_apogee_index', methods: ['GET'])]
+    #[IsGranted('ROLE_SUPER_ADMIN')]
     public function index(SemestreRepository $semestreRepository, AnneeUniversitaireRepository $anneeUniversitaireRepository): Response
     {
         return $this->render('super-administration/apogee/index.html.twig', [
@@ -47,11 +45,10 @@ class ApogeeController extends BaseController
     }
 
     /**
-     * @IsGranted("ROLE_SUPER_ADMIN")
-     *
      * @throws Exception
      */
     #[Route(path: '/import/diplome/{type}', name: 'sa_apogee_maj', methods: ['POST'])]
+    #[IsGranted('ROLE_SUPER_ADMIN')]
     public function importMaj(ApogeeEtudiant $apogeeEtudiant, EtudiantImport $etudiantImport, Request $request, SemestreRepository $semestreRepository, EtudiantRepository $etudiantRepository, AnneeUniversitaireRepository $anneeUniversitaireRepository, BacRepository $bacRepository, $type): Response
     {
         $semestre = $semestreRepository->find($request->request->get('semestreforce'));
@@ -94,11 +91,10 @@ class ApogeeController extends BaseController
     }
 
     /**
-     * @IsGranted("ROLE_SUPER_ADMIN")
-     *
      * @throws Exception
      */
     #[Route(path: '/import/etudiant', name: 'sa_apogee_import_etudiant', methods: ['POST'])]
+    #[IsGranted('ROLE_SUPER_ADMIN')]
     public function importEtudiant(EtudiantImport $etudiantImport, ApogeeEtudiant $apogeeEtudiant, Request $request, EtudiantRepository $etudiantRepository, SemestreRepository $semestreRepository, BacRepository $bacRepository): Response
     {
         $listeetudiants = explode(';', (string) $request->request->get('listeetudiants'));
@@ -135,11 +131,10 @@ class ApogeeController extends BaseController
     }
 
     /**
-     * @IsGranted("ROLE_SUPER_ADMIN")
-     *
      * @throws Exception
      */
     #[Route(path: '/import/structure/annee/{annee}', name: 'sa_annee_synchronise_apogee', methods: ['GET'])]
+    #[IsGranted('ROLE_SUPER_ADMIN')]
     public function synchronisationApogeeAnnee(ApogeeMaquette $apogeeMaquette, ApogeeImport $apogeeImport, Annee $annee): Response
     {
         // création d'un PN
@@ -221,11 +216,10 @@ class ApogeeController extends BaseController
     }
 
     /**
-     * @IsGranted("ROLE_SUPER_ADMIN")
-     *
      * @throws Exception
      */
     #[Route(path: '/import/structure/semestre/{semestre}', name: 'sa_semestre_synchronise_apogee', methods: ['GET'])]
+    #[IsGranted('ROLE_SUPER_ADMIN')]
     public function synchronisationApogeeSemestre(ApogeeMaquette $apogeeMaquette, ApogeeImport $apogeeImport, Semestre $semestre): Response
     {
         // création d'un PN
@@ -277,11 +271,10 @@ class ApogeeController extends BaseController
     }
 
     /**
-     * @IsGranted("ROLE_SUPER_ADMIN")
-     *
      * @throws Exception
      */
     #[Route(path: '/import/structure/ue/{ue}', name: 'sa_ue_synchronise_apogee', methods: ['GET'])]
+    #[IsGranted('ROLE_SUPER_ADMIN')]
     public function synchronisationApogeeUe(ApogeeMaquette $apogeeMaquette, ApogeeImport $apogeeImport, Ue $ue): Response
     {
         // création d'un PN
