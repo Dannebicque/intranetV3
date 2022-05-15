@@ -129,7 +129,7 @@
                     </li>
 
                     <li class="menu-item" id="menu-document">
-                        <a class="menu-link" href="{{ path('document_index') }}">
+                        <a class="menu-link" href="{{ path('document_index', {source:'document'}) }}">
                             <i class="{{ iconDocuments }} fa-2x"><span class="sr-only">Documents</span></i>
                             <span class="title">{{ 'menu.documents'|trans }}</span>
                         </a>
@@ -139,6 +139,12 @@
                         <a class="menu-link" href="{{ path('informations_index') }}">
                             <i class="{{ iconInformation }} fa-2x"><span class="sr-only">Informations</span></i>
                             <span class="title">{{ 'menu.informations'|trans }}</span>
+                        </a>
+                    </li>
+                    <li class="menu-item" id="menu-originaux">
+                        <a class="menu-link" href="{{ path('document_index', {source: 'originaux'}) }}">
+                            <i class="{{ iconOriginaux }} fa-2x"><span class="sr-only">Originaux</span></i>
+                            <span class="title">{{ 'menu.originaux'|trans }}</span>
                         </a>
                     </li>
                     {% if user_data.isGoodDepartement('ROLE_CDD') or

@@ -34,6 +34,7 @@ parameters:
     iconInformation: '%env(resolve:ICON_INFORMATION)%' #fa-file-alt
     iconMessage: '%env(resolve:ICON_MESSAGE)%' #fas fa-home'
     iconNotification: '%env(resolve:ICON_NOTIFCATION)%' #fas fa-home'
+    iconOriginaux: '%env(resolve:ICON_ORIGINAUX)%' #fas fa-books'
 
 services:
     # default configuration for services in *this* file

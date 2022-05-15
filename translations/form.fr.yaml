@@ -85,6 +85,7 @@ Etat: Etat
 fichier_import: 'Fichier à importer'
 h: Heure
 help:
+  type_document_parent: Indiquez une catégorie de dcoument parent, pour créer une "sous-catégorie". 1 seul niveau possible.
   typeBac: Type de bac, notamment pour les statistiques.
   complete.meme.si.identique: Compléter les informations, même si identique.
   valeur_1: 'Valeur pour le choix A'
@@ -348,6 +349,7 @@ label:
   libelle_evaluation: 'Libellé de l''évaluation'
   libelle_long: 'Libellé long'
   libelle: Libellé
+  type_document_parent: Catégorie de document parent
   lieu_date: 'Lieu de l''événement'
   logoFile: 'Fichier du logo'
   mail_perso: 'Email personnel'

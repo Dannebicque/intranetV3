@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/DocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:44
+ * @lastUpdate 14/05/2022 11:59
  */
 
 namespace App\Controller;
@@ -18,19 +18,29 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/document', name: 'document_')]
+#[Route('/', name: 'document_')]
 class DocumentController extends BaseController
 {
-    #[Route('/', name: 'index')]
-    public function index(): Response
+    #[Route('{source}', name: 'index', requirements: [
+        'source' => 'document|originaux',
+    ], methods: ['GET'])]
+    public function index(string $source): Response
     {
-        return $this->render('document/public/index.html.twig', []);
+        return $this->render('document/public/index.html.twig', [
+            'source' => $source,
+        ]);
     }
 
-    #[Route('/ajax/typedocument', name: 'typedocument_ajax', options: ['expose' => true])]
-    public function typeDocument(TypeDocumentRepository $typeDocumentRepository): Response
+    #[Route('{source}/ajax/typedocument', name: 'typedocument_ajax', requirements: [
+        'source' => 'document|originaux',
+    ], options: ['expose' => true])]
+    public function typeDocument(TypeDocumentRepository $typeDocumentRepository, string $source): Response
     {
-        $typeDocuments = $typeDocumentRepository->findByDepartement($this->getDepartement());
+        if (Document::ORIGINAUX === $source) {
+            $typeDocuments = $typeDocumentRepository->findByOriginaux();
+        } else {
+            $typeDocuments = $typeDocumentRepository->findByDepartement($this->getDepartement());
+        }
 
         return $this->render('document/public/_typedocument.html.twig', [
             'typedocuments' => $typeDocuments,
@@ -38,7 +48,9 @@ class DocumentController extends BaseController
         ]);
     }
 
-    #[Route('/ajax/document/favori', name: 'ajax_favori', options: ['expose' => true])]
+    #[Route('{source}/ajax/document/favori', name: 'ajax_favori', requirements: [
+        'source' => 'document|originaux',
+    ], options: ['expose' => true])]
     public function documentsFavoris(MyDocument $myDocument): Response
     {
         $documents = $myDocument->mesDocumentsFavoris($this->getUser());
@@ -50,9 +62,14 @@ class DocumentController extends BaseController
         ]);
     }
 
-    #[Route('/ajax/document', name: 'ajax', options: ['expose' => true])]
-    public function documents(Request $request, MyDocument $myDocument, DocumentRepository $documentRepository): Response
-    {
+    #[Route('{source}/ajax/document', name: 'ajax', requirements: [
+        'source' => 'document|originaux',
+    ], options: ['expose' => true])]
+    public function documents(
+        Request $request,
+        MyDocument $myDocument,
+        DocumentRepository $documentRepository
+    ): Response {
         $typedocument = $request->query->get('typedocument');
         $documents = $documentRepository->findByTypeDocument($typedocument, $this->isEtudiant());
         $idDocuments = $myDocument->idMesDocumentsFavoris($this->getUser());
@@ -63,7 +80,9 @@ class DocumentController extends BaseController
         ]);
     }
 
-    #[Route(path: '/ajax/add-favori/{document}', name: 'add_favori', options: ['expose' => true])]
+    #[Route(path: '{source}/ajax/add-favori/{document}', name: 'add_favori', requirements: [
+        'source' => 'document|originaux',
+    ], options: ['expose' => true])]
     #[ParamConverter('document', options: ['mapping' => ['document' => 'uuid']])]
     public function addFavori(MyDocument $myDocument, Document $document): Response
     {
