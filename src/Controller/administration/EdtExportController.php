@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtExportController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/11/2021 17:40
+ * @lastUpdate 15/05/2022 18:27
  */
 
 namespace App\Controller\administration;
@@ -14,6 +14,7 @@ use App\Classes\Matieres\TypeMatiereManager;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Personnel;
+use App\Exception\SemestreNotFoundException;
 use App\Repository\CalendrierRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\GroupeRepository;
@@ -70,117 +71,122 @@ class EdtExportController extends BaseController
     {
         $semestre = $semestreRepository->find($request->request->get('semestre'));
         $semaine = $request->request->get('semaine');
-        $calendrier = $calendrierRepository->findOneBy([
-            'semaineFormation' => $semaine,
-            'anneeUniversitaire' => $this->getAnneeUniversitaire()->getId(),
-        ]);
 
-        $tabType = [
-            'CM' => 1,
-            'TD' => 4,
-            'TP' => 6,
-        ];
-        $tabSalles = [
-            'H001',
-            'H002',
-            'H005',
-            'H006',
-            'H007',
-            'H008',
-            'H009',
-            'H016',
-            'STUD01',
-            'STUD02',
-            'H023',
-            'H101',
-            'H103',
-            'H104',
-            'H105',
-            'H111',
-            'H201',
-            'H205',
-            'DIS1',
-            'DIS2',
-            'DIS3',
-            'DIS4',
-            'DIS5',
-            'DIS6',
-            'DIS7',
-            'DIS8',
-            'DISLP',
-        ];
-        $tabSalles = array_flip($tabSalles);
-        $pl = $edtPlanningRepository->findEdtSemestre($semestre, $semaine);
-        $matieres = $typeMatiereManager->findBySemestreArray($semestre);
-        $code = [];
-        $codeGroupe = [];
-        foreach ($semestre->getTypeGroupes() as $tg) {
-            $code[$tg->getType()] = [];
-            $groupes = $groupeRepository->findBy(['typeGroupe' => $tg->getId()], ['ordre' => 'ASC']);
-            foreach ($groupes as $groupe) {
-                $code[mb_strtoupper($tg->getType())][$groupe->getOrdre()] = 'call sleep 5'."\n";
-                $codeGroupe[mb_strtoupper($tg->getType()).'_'.$groupe->getOrdre()] = $groupe->getLibelle();
-            }
-        }
-        foreach ($pl as $p) {
-            if (null !== $p->getIntervenant()) {
-                $codeprof = $p->getIntervenant()->getNumeroHarpege();
-            } else {
-                $codeprof = 0;
-            }
+        if ($semestre !== null && $semaine !== '') {
+            $calendrier = $calendrierRepository->findOneBy([
+                'semaineFormation' => $semaine,
+                'anneeUniversitaire' => $this->getAnneeUniversitaire()->getId(),
+            ]);
 
-            if (
-                0 !== $p->getIdMatiere() &&
-                // array_key_exists($p->getIntervenant()->getNumeroHarpege(), $tabProf) &&
-                array_key_exists($p->getSalle(), $tabSalles)) {
-                /*
-                 * # 1= jour de la semaine (ex: 1 pour lundi)
-# 2= heure de debut (ex: 11:00)
-# 3= heure de fin (ex: 12:30)
-# 4= indice du prof (ex: 1 Annebicque)
-# 5= indice de la salle (ex:1 premiere salle de la liste bat H)
-# 6= indice de la matiere (ex:1 premiere matiere de la liste des matieres)
-# 7= type de cours (CM=1, TD=4, TP=6)
-                 */
-                $codeMatiere = $matieres[$p->getTypeIdMatiere()]->codeElement;
+            $tabType = [
+                'CM' => 1,
+                'TD' => 4,
+                'TP' => 6,
+            ];
+            $tabSalles = [
+                'H001',
+                'H002',
+                'H005',
+                'H006',
+                'H007',
+                'H008',
+                'H009',
+                'H016',
+                'STUD01',
+                'STUD02',
+                'H023',
+                'H101',
+                'H103',
+                'H104',
+                'H105',
+                'H111',
+                'H201',
+                'H205',
+                'DIS1',
+                'DIS2',
+                'DIS3',
+                'DIS4',
+                'DIS5',
+                'DIS6',
+                'DIS7',
+                'DIS8',
+                'DISLP',
+            ];
+            $tabSalles = array_flip($tabSalles);
+            $pl = $edtPlanningRepository->findEdtSemestre($semestre, $semaine);
+            $matieres = $typeMatiereManager->findBySemestreArray($semestre);
+            $code = [];
+            $codeGroupe = [];
+            foreach ($semestre->getTypeGroupes() as $tg) {
+                $code[$tg->getType()] = [];
+                $groupes = $groupeRepository->findBy(['typeGroupe' => $tg->getId()], ['ordre' => 'ASC']);
+                foreach ($groupes as $groupe) {
+                    $code[mb_strtoupper($tg->getType())][$groupe->getOrdre()] = 'call sleep 5' . "\n";
+                    $codeGroupe[mb_strtoupper($tg->getType()) . '_' . $groupe->getOrdre()] = $groupe->getLibelle();
+                }
+            }
+            foreach ($pl as $p) {
+                if (null !== $p->getIntervenant()) {
+                    $codeprof = $p->getIntervenant()->getNumeroHarpege();
+                } else {
+                    $codeprof = 0;
+                }
+
+                if (
+                    0 !== $p->getIdMatiere() &&
+                    // array_key_exists($p->getIntervenant()->getNumeroHarpege(), $tabProf) &&
+                    array_key_exists($p->getSalle(), $tabSalles)) {
+                    /*
+                     * # 1= jour de la semaine (ex: 1 pour lundi)
+    # 2= heure de debut (ex: 11:00)
+    # 3= heure de fin (ex: 12:30)
+    # 4= indice du prof (ex: 1 Annebicque)
+    # 5= indice de la salle (ex:1 premiere salle de la liste bat H)
+    # 6= indice de la matiere (ex:1 premiere matiere de la liste des matieres)
+    # 7= type de cours (CM=1, TD=4, TP=6)
+                     */
+                    $codeMatiere = $matieres[$p->getTypeIdMatiere()]->codeElement;
 //                if (2 === $semestre->getOrdreLmd()) {
 //                   // $codeMatiere = 'W'.$codeMatiere;
 //                    $codeMatiere
 //                }
-                $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= 'call  ajouter '.$p->getJour().' '.Constantes::TAB_HEURES[$p->getDebut()].' '.Constantes::TAB_HEURES[$p->getFin()].' '.$codeprof.' '.$tabSalles[$p->getSalle()].' '.$codeMatiere.' '.$tabType[mb_strtoupper($p->getType())]."\n";
+                    $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= 'call  ajouter ' . $p->getJour() . ' ' . Constantes::TAB_HEURES[$p->getDebut()] . ' ' . Constantes::TAB_HEURES[$p->getFin()] . ' ' . $codeprof . ' ' . $tabSalles[$p->getSalle()] . ' ' . $codeMatiere . ' ' . $tabType[mb_strtoupper($p->getType())] . "\n";
+                }
+                if (0 !== $p->getIdMatiere() && 'H018' === $p->getSalle()) { // array_key_exists($p->getIntervenant()->getNumeroHarpege(), $tabProf))
+                    $codeMatiere = $matieres[$p->getTypeIdMatiere()]->codeElement;
+                    $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= 'call  ajouterh018 ' . $p->getJour() . ' ' . Constantes::TAB_HEURES[$p->getDebut()] . ' ' . Constantes::TAB_HEURES[$p->getFin()] . ' ' . $codeprof . ' 0 ' . $codeMatiere . ' ' . $tabType[mb_strtoupper($p->getType())] . "\n";
+                }
             }
-            if (0 !== $p->getIdMatiere() && 'H018' === $p->getSalle()) { // array_key_exists($p->getIntervenant()->getNumeroHarpege(), $tabProf))
-                $codeMatiere = $matieres[$p->getTypeIdMatiere()]->codeElement;
-                $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= 'call  ajouterh018 '.$p->getJour().' '.Constantes::TAB_HEURES[$p->getDebut()].' '.Constantes::TAB_HEURES[$p->getFin()].' '.$codeprof.' 0 '.$codeMatiere.' '.$tabType[mb_strtoupper($p->getType())]."\n";
+            $codeComplet = '';
+            $zip = new ZipArchive();
+            $zipName = $kernel->getProjectDir() . '/public/upload/temp/ajouter_S' . $calendrier->getSemaineReelle() . '_' . $semestre->getLibelle() . '.zip';
+            @unlink($zipName);
+            $zip->open($zipName, ZipArchive::CREATE);
+            $i = 0;
+            foreach ($code as $type => $value) {
+                foreach ($value as $groupe => $c) {
+                    $codeComplet .= 'call groupe ' . $i . "\n";
+
+                    $n = $semestre->getLibelle() . '_S' . $calendrier->getSemaineReelle() . '_' . $type . '_' . $codeGroupe[$type . '_' . $groupe] . '.bat';
+
+                    $zip->addFromString($n, $c);
+                    $codeComplet .= 'call ' . $n . " \n";
+                    $codeComplet .= 'call fingroupe ' . "\n";
+                    ++$i;
+                }
             }
+            $zip->addFromString('script' . $calendrier->getSemaineReelle() . '.bat', $codeComplet);
+            $zip->close();
+            $response = new Response(file_get_contents($zipName));
+            $response->headers->set('Content-Type', 'application/zip');
+            $response->headers->set('Content-Disposition',
+                'attachment;filename="ajouter_S' . $calendrier->getSemaineReelle() . '_' . $semestre->getLibelle() . '.zip"');
+            $response->headers->set('Content-length', filesize($zipName));
+
+            return $response;
         }
-        $codeComplet = '';
-        $zip = new ZipArchive();
-        $zipName = $kernel->getProjectDir().'/public/upload/temp/ajouter_S'.$calendrier->getSemaineReelle().'_'.$semestre->getLibelle().'.zip';
-        @unlink($zipName);
-        $zip->open($zipName, ZipArchive::CREATE);
-        $i = 0;
-        foreach ($code as $type => $value) {
-            foreach ($value as $groupe => $c) {
-                $codeComplet .= 'call groupe '.$i."\n";
 
-                $n = $semestre->getLibelle().'_S'.$calendrier->getSemaineReelle().'_'.$type.'_'.$codeGroupe[$type.'_'.$groupe].'.bat';
-
-                $zip->addFromString($n, $c);
-                $codeComplet .= 'call '.$n." \n";
-                $codeComplet .= 'call fingroupe '."\n";
-                ++$i;
-            }
-        }
-        $zip->addFromString('script'.$calendrier->getSemaineReelle().'.bat', $codeComplet);
-        $zip->close();
-        $response = new Response(file_get_contents($zipName));
-        $response->headers->set('Content-Type', 'application/zip');
-        $response->headers->set('Content-Disposition',
-            'attachment;filename="ajouter_S'.$calendrier->getSemaineReelle().'_'.$semestre->getLibelle().'.zip"');
-        $response->headers->set('Content-length', filesize($zipName));
-
-        return $response;
+        throw new SemestreNotFoundException();
     }
 
     #[Route(path: '/one/{personnel}/{source}.{_format}', name: 'administration_edt_export_one', requirements: ['source' => 'intranet|celcat'])]
