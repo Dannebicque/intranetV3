@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/TypeDocument.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/05/2022 20:48
+ * @lastUpdate 15/05/2022 08:05
  */
 
 namespace App\Entity;
@@ -39,10 +39,17 @@ class TypeDocument extends BaseEntity
     #[ORM\Column(type: 'boolean')]
     private ?bool $originaux = false;
 
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'enfants')]
+    private $parent;
+
+    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
+    private $enfants;
+
     public function __construct(?Departement $departement)
     {
         $this->setDepartement($departement);
         $this->documents = new ArrayCollection();
+        $this->enfants = new ArrayCollection();
     }
 
     public function getLibelle(): ?string
@@ -106,6 +113,48 @@ class TypeDocument extends BaseEntity
     public function setOriginaux(bool $originaux): self
     {
         $this->originaux = $originaux;
+
+        return $this;
+    }
+
+    public function getParent(): ?self
+    {
+        return $this->parent;
+    }
+
+    public function setParent(?self $parent): self
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getEnfants(): Collection
+    {
+        return $this->enfants;
+    }
+
+    public function addEnfant(self $enfant): self
+    {
+        if (!$this->enfants->contains($enfant)) {
+            $this->enfants[] = $enfant;
+            $enfant->setParent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEnfant(self $enfant): self
+    {
+        if ($this->enfants->removeElement($enfant)) {
+            // set the owning side to null (unless already changed)
+            if ($enfant->getParent() === $this) {
+                $enfant->setParent(null);
+            }
+        }
 
         return $this;
     }

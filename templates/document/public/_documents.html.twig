@@ -1,31 +1,52 @@
+{# arborescence (fil ariane ?) zone de recherche (filtre/tri) #}
+
 {% for document in documents %}
-    <div class="col-md-6 col-xl-4 code code-card code-fold">
-        <div class="code-preview">
-            <div class="media align-items-center">
-                <span>
-                    <i class="fas fa-file fs-30 text-info"></i>
-                </span>
-                <div class="media-body">
-                    <h5>{{ document.libelle }}</h5>
-                    <p class="gap-items">
-                        <small>{{ 'taille'|trans }}: {{ document.tailleKo|number_format(2) }} ko</small>
-                        <small>{{ 'type_fichier'|trans }}: {{ document.typeFichierTraduit }}</small>
-                    </p>
-                    <p>
-                        <small>{{ 'update'|trans }}: {{ document.updated|format_datetime('long', 'short') }}</small>
-                    </p>
+    <div class="col-md-6 col-xl-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-title">
+                    {{ document.libelle }}
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-4">
+                        <a class="primary" href="{{ asset('upload/documents/'~document.documentName) }}"
+                           data-bs-toggle="tooltip" data-bs-placement="bottom" target="_blank"
+                           title="{{ 'telecharger'|trans }}">
+                                {{ document.typeFichierIcone|raw }}
+                        </a>
+                    </div>
+                    <div class="col-8">
+                        <p>
+                            {{document.description|raw}}
+                        </p>
+                    </div>
                 </div>
-                <a class="primary" href="{{ asset('upload/documents/'~document.documentName) }}"
-                   data-bs-toggle="tooltip" data-bs-placement="bottom"
-                   title="{{ 'telecharger'|trans }}"><i
-                            class="fas fa-save"></i></a>
-                <label class="toggler toggler-danger fs-16" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ 'favori'|trans }}">
-                    <input type="checkbox" class="addFavori" value="{{ document.uuidString }}"
-                           {% if document.id in listesFavoris %}checked{% endif %}
-                           data-action="click->documents#addFavori"
-                    >
-                    <i class="fa fa-heart"></i>
-                </label>
+            </div>
+            <div class="card-footer">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <a class="primary" href="{{ asset('upload/documents/'~document.documentName) }}"
+                           data-bs-toggle="tooltip" data-bs-placement="bottom" target="_blank"
+                           title="{{ 'telecharger'|trans }}"><i
+                                    class="fas fa-save"></i></a>
+                        <label class="toggler toggler-danger fs-16" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ 'favori'|trans }}">
+                            <input type="checkbox" class="addFavori" value="{{ document.uuidString }}"
+                                   {% if document.id in listesFavoris %}checked{% endif %}
+                                   data-action="click->documents#addFavori"
+                            >
+                            <i class="fa fa-heart"></i>
+                        </label>
+                    </div>
+                    <div>
+                        <small>{{ 'taille'|trans }}: {{ document.tailleKo|number_format(2) }} ko</small>
+                    </div>
+                    <div>
+                        <small>{{ 'updated'|trans }}
+                            : {{ document.updated|format_datetime('long', 'short') }}</small>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

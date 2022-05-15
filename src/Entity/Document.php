@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Document.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:52
+ * @lastUpdate 15/05/2022 08:27
  */
 
 namespace App\Entity;
@@ -37,6 +37,7 @@ class Document extends BaseEntity
         'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'Prés. PPT',
         'application/pdf' => 'PDF',
         'image/jpeg' => 'Image (jpeg)',
+        'image/png' => 'Image (png)',
         'application/vnd.ms-excel' => 'Tabl. Excel',
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'Tabl. Excel',
         'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'Doc. Word',
@@ -48,12 +49,16 @@ class Document extends BaseEntity
         'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'fas fa-file-powerpoint',
         'application/pdf' => 'fas fa-file-pdf',
         'image/jpeg' => 'fas fa-file-image',
+        'image/png' => 'fas fa-file-image',
         'application/vnd.ms-excel' => 'fas fa-file-excel',
         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' => 'fas fa-file-excel',
         'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'fas fa-file-word',
         'application/msword' => 'fas fa-file-word',
         'application/vnd.oasis.opendocument.text' => 'fas fa-file-lines',
     ];
+
+    public const ORIGINAUX = 'originaux';
+    public const DOCUMENT = 'document';
 
     #[ORM\Column(type: Types::FLOAT)]
     private ?float $taille = null;
@@ -213,7 +218,7 @@ class Document extends BaseEntity
     public function typeFichierIcone(): ?string
     {
         if (array_key_exists($this->typeFichier, self::TYPE_DOCUMENT_ICON)) {
-            return '<i class="'.self::TYPE_DOCUMENT_ICON[$this->typeFichier].'"></i> '.$this->typeFichierTraduit();
+            return '<i class="'.self::TYPE_DOCUMENT_ICON[$this->typeFichier].' fa-6x text-primary"></i> <br>'.$this->typeFichierTraduit();
         }
 
         return $this->typeFichier;

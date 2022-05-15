@@ -8,7 +8,7 @@
     <div class="header-action">
         <div class="buttons">
             {% if is_granted('ROLE_QUALITE') %}
-                <a href="{{ path('sa_qualite_documents_new') }}"
+                <a href="{{ path('sa_qualite_documents_new',{source:source}) }}"
                    class="btn btn-success btn-sm btn-float"
                    title="{{ 'atitle.creer_nouveau_document'|trans }}"
                    data-bs-toggle="tooltip" data-bs-placement="bottom"
@@ -16,14 +16,6 @@
                     <i class="fas fa-plus"></i>
                     <i class="fas fa-book"></i>
                     <span class="sr-only">{{ 'atitle.creer_nouveau_document'|trans }}</span>
-                </a>
-                <a href="{{ path('sa_qualite_type_document_new') }}"
-                   class="btn btn-info btn-sm btn-float"
-                   title="{{ 'atitle.creer_nouveau'|trans }}"
-                   data-bs-toggle="tooltip" data-bs-placement="bottom"
-                >
-                    <i class="fas fa-plus"></i>
-                    <span class="sr-only">{{ 'atitle.creer_nouveau'|trans }}</span>
                 </a>
 
                 <a href="{{ path('super_admin_homepage') }}"
@@ -34,7 +26,7 @@
                     <i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i>
                 </a>
             {% else %}
-                <a href="{{ path('administration_document_new') }}"
+                <a href="{{ path('administration_document_new',{source:source}) }}"
                    class="btn btn-success btn-sm btn-float"
                    title="{{ 'atitle.creer_nouveau_document'|trans }}"
                    data-bs-toggle="tooltip" data-bs-placement="bottom"
@@ -42,14 +34,6 @@
                     <i class="fas fa-plus"></i>
                     <i class="fas fa-book"></i>
                     <span class="sr-only">{{ 'atitle.creer_nouveau_document'|trans }}</span>
-                </a>
-                <a href="{{ path('administration_type_document_new') }}"
-                   class="btn btn-info btn-sm btn-float"
-                   title="{{ 'atitle.creer_nouveau'|trans }}"
-                   data-bs-toggle="tooltip" data-bs-placement="bottom"
-                >
-                    <i class="fas fa-plus"></i>
-                    <span class="sr-only">{{ 'atitle.creer_nouveau'|trans }}</span>
                 </a>
 
                 <a href="{{ path('administration_index') }}"
@@ -67,33 +51,38 @@
 
 
 {% block content %}
+    {{ render(controller('App\\Controller\\document\\TypeDocumentController::create', {source:source})) }}
+
     <div class="card">
         <h4 class="card-title">{{ 'adm.type_document.index.heading'|trans }}</h4>
         <div class="card-body">
             <table class="table table-striped table-bordered">
                 <thead>
                 <tr>
-                    <th>{{ 'table.id'|trans }}</th>
-                    <th>{{ 'table.libelle'|trans }}</th>
+                    <th colspan="2">{{ 'table.libelle'|trans }}</th>
                     <th>{{ 'table.nb_documents'|trans }}</th>
                     <th>{{ 'table.actions'|trans }}</th>
                 </tr>
                 </thead>
                 <tbody>
-                {% for type_document in type_documents %}
+                {% for type_document in type_documents|filter(type_document => type_document.parent == null) %}
                     <tr id="ligne_{{ type_document.id }}">
-                        <td>{{ type_document.id }}</td>
-                        <td>{{ type_document.libelle }}</td>
+                        <td colspan="2">{{ type_document.libelle }}</td>
                         <td>{{ type_document.documents|length }}</td>
                         <td>
-                            {% if is_granted('ROLE_QUALITE') %}
-                                {{ include('composants/sadm-buttons-table-index.html.twig',
-                                    {elt:'qualite_type_document', id:type_document.id}) }}
-                            {% else %}
-                                {{ include('composants/adm-buttons-table-index.html.twig', {elt:'type_document', id:type_document.id}) }}
-                            {% endif %}
+                            {{ include('document/type_document/_btnTable.html.twig') }}
                         </td>
                     </tr>
+                    {% for type_document_enfant in type_document.enfants %}
+                        <tr id="ligne_{{ type_document_enfant.id }}">
+                            <td>&nbsp;</td>
+                            <td>{{ type_document_enfant.libelle }}</td>
+                            <td>{{ type_document_enfant.documents|length }}</td>
+                            <td>
+                                {{ include('document/type_document/_btnTable.html.twig', {type_document: type_document_enfant}) }}
+                            </td>
+                        </tr>
+                    {% endfor %}
                 {% else %}
                     <tr>
                         <td colspan="4">{{ 'no.record.found'|trans }}</td>
@@ -108,27 +97,21 @@
 {% block fabactions %}
     {{ include('composants/fab-buttons.html.twig', {boutons:[
         {type: 'info',
-            href: path('administration_type_document_export', {_format:'pdf'}),
+            href: path('administration_type_document_export', {_format:'pdf', source:source}),
             title: 'exporter.pdf'|trans,
             icone : "fa fa-file-pdf"
         },
         {
             type:'info',
-            href:path('administration_type_document_export', {_format:'csv'}),
+            href:path('administration_type_document_export', {_format:'csv', source:source}),
             title: 'exporter.csv'|trans,
             icone: 'fa fa-file-csv'
         },
         {
             type:'info',
-            href:path('administration_type_document_export', {_format:'xlsx'}),
+            href:path('administration_type_document_export', {_format:'xlsx', source:source}),
             title: 'exporter.xls'|trans,
             icone: 'fa fa-file-excel'
-        },
-        {
-            type:'info',
-            href:path('administration_type_document_new'),
-            title: 'ajouter'|trans,
-            icone: 'fas fa-plus'
         },
         {
             type:'info',

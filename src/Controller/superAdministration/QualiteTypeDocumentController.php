@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/QualiteTypeDocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/05/2022 20:50
+ * @lastUpdate 15/05/2022 18:44
  */
 
 namespace App\Controller\superAdministration;
@@ -17,11 +17,13 @@ use App\Entity\Constantes;
 use App\Entity\TypeDocument;
 use App\Form\TypeDocumentType;
 use App\Repository\TypeDocumentRepository;
+use JetBrains\PhpStorm\Deprecated;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route(path: '/administratif/qualite/categorie-documents', name: 'sa_qualite_type_document_')]
+#[Deprecated]
 class QualiteTypeDocumentController extends BaseController
 {
     #[Route(path: '/', name: 'index', methods: 'GET')]

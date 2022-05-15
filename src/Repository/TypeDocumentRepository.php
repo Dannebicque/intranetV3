@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/TypeDocumentRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/05/2022 20:42
+ * @lastUpdate 15/05/2022 14:24
  */
 
 namespace App\Repository;
 
 use App\Entity\Departement;
+use App\Entity\Document;
 use App\Entity\TypeDocument;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Criteria;
@@ -56,10 +57,29 @@ class TypeDocumentRepository extends ServiceEntityRepository
             ->orderBy('t.libelle', Criteria::ASC);
     }
 
-    public function findByOriginaux()
+    public function findByOriginaux(): array
     {
         return $this->findByOriginauxBuilder()
             ->getQuery()
             ->getResult();
+    }
+
+    public function getParents(string $source, ?Departement $departement = null): ?QueryBuilder
+    {
+        if ($source === Document::ORIGINAUX) {
+            return $this->createQueryBuilder('t')
+                ->where('t.parent IS NULL')
+                ->andWhere('t.originaux = 1')
+                ->orderBy('t.libelle', Criteria::ASC);
+        }
+
+        if ($departement !== null && $source === Document::DOCUMENT) {
+            return $this->createQueryBuilder('t')
+                ->where('t.parent IS NULL')
+                ->andWhere('t.departement = :departement')
+                ->setParameter('departement', $departement->getId())
+                ->orderBy('t.libelle', Criteria::ASC);
+        }
+        return null;
     }
 }

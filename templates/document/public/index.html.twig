@@ -1,4 +1,4 @@
-{% extends '../../base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block header %}
     {{ 'documents.heading'|trans }}
@@ -6,9 +6,9 @@
 
 {% block stimulus %}
 {{ stimulus_controller('documents', {
-    'url': path('typedocument_ajax'),
-    'urlDocuments': path('document_ajax'),
-    'urlDocumentsFavori': path('document_ajax_favori')
+    'url': path('document_typedocument_ajax', {source:source}),
+    'urlDocuments': path('document_ajax', {source:source}),
+    'urlDocumentsFavori': path('document_ajax_favori', {source:source})
 }) }}
 {% endblock %}
 
