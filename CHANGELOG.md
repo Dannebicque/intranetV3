@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.7.1](https://github.com/Dannebicque/intranetV3/compare/v3.7.0...v3.7.1) (2022-05-16)
+
+
+### Features
+
+* [TypeDocument] Nouvelle gestion, avec différence Admin/SuperAdmin. Factorisation du code. ([1407923](https://github.com/Dannebicque/intranetV3/commit/14079235eac5d98f71627a3d4703984683e534b8))
+* [TypeDocument] Nouvelle gestion, avec différence Admin/SuperAdmin. Factorisation du code. ([e683a73](https://github.com/Dannebicque/intranetV3/commit/e683a737e99fdc608f7666a88b1b1af5dd132e95))
+
+
+### Bug Fixes
+
+* [Export EDT] Semestre vide ([ff28502](https://github.com/Dannebicque/intranetV3/commit/ff285026da2d0251b1c4b9f69989b562d19a9035))
+* [Security] FI FlashBag ne fonctionne pas ([b61f912](https://github.com/Dannebicque/intranetV3/commit/b61f9120a06cb06cf9393f823b1a6b3ab9dc9503))
+* [Security] Miseà jour SF6 ([df8f355](https://github.com/Dannebicque/intranetV3/commit/df8f355086d2c522657e78bac23b6c83a5d1f2bf))
+* [Table] Bug en supprimant le static ([86abf47](https://github.com/Dannebicque/intranetV3/commit/86abf4727b12cdb5b2d05ab7e878a17ca00cfc2f))
+
 ## [3.7.0](https://github.com/Dannebicque/intranetV3/compare/v3.6.5...v3.7.0) (2022-05-14)
 
 ### Refactoring
