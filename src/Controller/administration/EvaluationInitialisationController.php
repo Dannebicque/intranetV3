@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EvaluationInitialisationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 17:27
+ * @lastUpdate 16/05/2022 12:54
  */
 
 namespace App\Controller\administration;
@@ -30,8 +30,12 @@ class EvaluationInitialisationController extends BaseController
      * @throws Exception
      */
     #[Route(path: '/{semestre}', name: 'administration_evaluation_initialisation_index', methods: 'GET|POST')]
-    public function index(Request $request, TypeMatiereManager $typeMatiereManager, EvaluationRepository $evaluationRepository, Semestre $semestre): Response
-    {
+    public function index(
+        Request $request,
+        TypeMatiereManager $typeMatiereManager,
+        EvaluationRepository $evaluationRepository,
+        Semestre $semestre
+    ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
         $matieres = $typeMatiereManager->findBySemestre($semestre);
         $evaluations = $evaluationRepository->findBySemestre($semestre,
@@ -50,11 +54,12 @@ class EvaluationInitialisationController extends BaseController
             /** @var \App\DTO\Matiere $matiere */
             foreach ($matieres as $matiere) {
                 $nbNotes = $matiere->nbNotes;
+                // todo: attention les array ne sont plus possivle sur le request... Revoir pour filter les enseignants selon le prévisionnel.
                 for ($i = 1; $i <= $nbNotes; ++$i) {
                     if (!empty($request->request->get('commentaire_'.$matiere->getTypeIdMatiere().'_'.$i))) {
-                        $nbEnseignant = null === $request->request->get('enseignant_'.$matiere->getTypeIdMatiere().'_'.$i) ? 0 : count($request->request->get('enseignant_'.$matiere->getTypeIdMatiere().'_'.$i));
+                        $nbEnseignant = null === $request->request->all['enseignant_'.$matiere->getTypeIdMatiere().'_'.$i] ? 0 : count($request->request->all()['enseignant_'.$matiere->getTypeIdMatiere().'_'.$i]);
                         if ($nbEnseignant > 0) {
-                            $pers = $tPersonnels[$request->request->get('enseignant_'.$matiere->getTypeIdMatiere().'_'.$i)[0]];
+                            $pers = $tPersonnels[$request->request->all()['enseignant_'.$matiere->getTypeIdMatiere().'_'.$i][0]];
                         } else {
                             $pers = $this->getUser();
                         }

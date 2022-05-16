@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/questionnaire/administration/QuestionnaireQuestionController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/administration/QuestionnaireQuestionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/11/2021 17:38
+ * @lastUpdate 16/05/2022 12:56
  */
 
 namespace App\Controller\questionnaire\administration;
@@ -64,7 +64,7 @@ class QuestionnaireQuestionController extends BaseController
                 $this->entityManager->persist($questionnaireQuestion);
                 $this->entityManager->flush();
                 $this->traitementTags($questionnaireQuestion,
-                    $request->request->get($request->request->keys()[0])['newQuestionnaireQuestionTags']);
+                    $request->request->get($request->request->keys()[0])['newQuestionnaireQuestionTags']);//todo: fonctionne ? sinon all(), le request ne retrourannt plus un tableau
                 $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'questionnaire_question.add.success.flash');
 
                 return $this->redirectToRoute('sadm_questionnaire_question_index', [], Response::HTTP_SEE_OTHER);

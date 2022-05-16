@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/RattrapageController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/RattrapageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 20:09
+ * @lastUpdate 16/05/2022 13:06
  */
 
 namespace App\Controller\appEtudiant;
@@ -45,8 +45,8 @@ class RattrapageController extends BaseController
         if ($form->isSubmitted()) {
             $rattrapage->setAnneeUniversitaire($this->getAnneeUniversitaire());
             $rattrapage->setSemestre($this->getEtudiantSemestre());
-            $rattrapage->setTypeMatiere(ToolsMatiere::getType($request->request->get('rattrapage')['typeIdMatiere']));
-            $rattrapage->setIdMatiere(ToolsMatiere::getId($request->request->get('rattrapage')['typeIdMatiere']));
+            $rattrapage->setTypeMatiere(ToolsMatiere::getType($request->request->all()['rattrapage']['typeIdMatiere']));
+            $rattrapage->setIdMatiere(ToolsMatiere::getId($request->request->all()['rattrapage']['typeIdMatiere']));
             $this->entityManager->persist($rattrapage);
             $this->entityManager->flush();
 

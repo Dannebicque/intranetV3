@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/ExportController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/ExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/05/2021 08:58
+ * @lastUpdate 16/05/2022 13:05
  */
 
 namespace App\Controller;
@@ -46,9 +46,9 @@ class ExportController extends AbstractController
             $mat = null;
         }
         $exportTypeDocument = $request->request->get('exportTypeDocument');
-        $exportChamps = $request->request->get('exportChamps');
+        $exportChamps = $request->request->all()['exportChamps'];
         $exportFormat = $request->request->get('exportFormat');
-        $exportFiltre = $request->request->get('exportFiltre');
+        $exportFiltre = $request->request->all()['exportFiltre'];
 
         return $myExport->genereFichier($exportTypeDocument, $exportFormat, $exportChamps, $exportFiltre, $mat,
             $this->getUser());

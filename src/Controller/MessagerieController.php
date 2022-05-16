@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/MessagerieController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/05/2022 12:42
+ * @lastUpdate 16/05/2022 13:05
  */
 
 namespace App\Controller;
@@ -138,11 +138,10 @@ class MessagerieController extends BaseController
     #[Route(path: '/envoyer', name: 'messagerie_sent', options: ['expose' => true], methods: ['POST'])]
     public function sendMessage(MyUpload $myUpload, Request $request, MyMessagerie $messagerie): JsonResponse
     {
-        $req = $request->request->all();
         $typeDestinataire = $request->request->get('messageDestinataireType');
         $destinataires = $this->getDestinataires($request, $typeDestinataire);
         $sujet = $request->request->get('messageSubject');
-        $copie = $req['messageCopy'];
+        $copie = $request->request->all()['messageCopy'];
         $message = $request->request->get('messageMessage');
         foreach ($request->files as $file) {
             if (null !== $file) {

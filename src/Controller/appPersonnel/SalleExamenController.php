@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/SalleExamenController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:44
+ * @lastUpdate 16/05/2022 12:56
  */
 
 namespace App\Controller\appPersonnel;
@@ -51,7 +51,7 @@ class SalleExamenController extends BaseController
         MySalleExamen $mySalleExamen, Request $request): Response
     {
         $capacite = $mySalleExamen->calculCapacite($request->request->get('salle'),
-            $request->request->get('selectgroupes'), $request->request->get('detail_groupes'));
+            $request->request->get('selectgroupes'), $request->request->all()['detail_groupes']);
         $semestre = $semestreRepository->find($request->request->get('selectsemestre'));
         if ($capacite && null !== $semestre) {
             return $mySalleExamen->genereDocument(
