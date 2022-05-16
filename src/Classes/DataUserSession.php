@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/DataUserSession.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/05/2022 16:03
+ * @lastUpdate 16/05/2022 14:49
  */
 
 /*
@@ -64,7 +64,7 @@ class DataUserSession
 
     protected AnneeUniversitaireRepository $anneeUniversitaireRepository;
 
-    private array $semestresActifs;
+    private array $semestresActifs = [];
 
     private ?string $type_user = null;
 
