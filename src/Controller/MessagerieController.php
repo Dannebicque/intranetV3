@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/MessagerieController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:52
+ * @lastUpdate 16/05/2022 12:42
  */
 
 namespace App\Controller;
@@ -138,10 +138,11 @@ class MessagerieController extends BaseController
     #[Route(path: '/envoyer', name: 'messagerie_sent', options: ['expose' => true], methods: ['POST'])]
     public function sendMessage(MyUpload $myUpload, Request $request, MyMessagerie $messagerie): JsonResponse
     {
+        $req = $request->request->all();
         $typeDestinataire = $request->request->get('messageDestinataireType');
         $destinataires = $this->getDestinataires($request, $typeDestinataire);
         $sujet = $request->request->get('messageSubject');
-        $copie = $request->request->get('messageCopy');
+        $copie = $req['messageCopy'];
         $message = $request->request->get('messageMessage');
         foreach ($request->files as $file) {
             if (null !== $file) {
@@ -186,11 +187,12 @@ class MessagerieController extends BaseController
 
     private function getDestinataires(Request $request, ?string $typeDestinataire): string|array|null
     {
+        $req = $request->request->all();
         return match ($typeDestinataire) {
-            's' => $request->request->get('messageToSemestre'),
-            'g' => $request->request->get('messageToGroupe'),
-            'e' => $request->request->get('messageToLibreEtudiant'),
-            'p' => $request->request->get('messageToLibrePersonnel'),
+            's' => $req['messageToSemestre'],
+            'g' => $req['messageToGroupe'],
+            'e' => $req['messageToLibreEtudiant'],
+            'p' => $req['messageToLibrePersonnel'],
             default => null,
         };
     }
