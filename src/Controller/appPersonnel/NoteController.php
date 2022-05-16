@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/NoteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:44
+ * @lastUpdate 16/05/2022 12:36
  */
 
 namespace App\Controller\appPersonnel;
@@ -106,7 +106,8 @@ class NoteController extends BaseController
     #[ParamConverter('evaluation', options: ['mapping' => ['uuid' => 'uuid']])]
     public function enregistreNoteAction(EtudiantNotes $etudiantNotes, EtudiantRepository $etudiantRepository, Request $request, Evaluation $evaluation): Response
     {
-        $tnote = $request->request->get('notes')['notes'];
+        $tnote = $request->request->all();
+        $tnote = $tnote['notes']['notes'];
         foreach ($tnote as $iValue) {
             $etudiant = $etudiantRepository->find($iValue['id']);
             if (null !== $etudiant) {
