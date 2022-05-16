@@ -1,4 +1,11 @@
 <?php
+/*
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Security/LoginCasAuthenticator.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 16/05/2022 12:12
+ */
 
 namespace App\Security;
 
@@ -74,7 +81,7 @@ class LoginCasAuthenticator extends AbstractAuthenticator
             'message' => strtr($exception->getMessageKey(), $exception->getMessageData()),
         ];
 
-        $def_response = new JsonResponse($data, \Symfony\Component\HttpFoundation\Response::HTTP_FORBIDDEN);
+        $def_response = new JsonResponse($data, Response::HTTP_FORBIDDEN);
 
         return (new CASAuthenticationFailureEvent($request, $exception, $def_response))->getResponse();
     }

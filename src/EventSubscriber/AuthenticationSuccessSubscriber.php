@@ -1,4 +1,11 @@
 <?php
+/*
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/EventSubscriber/AuthenticationSuccessSubscriber.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 16/05/2022 12:13
+ */
 
 namespace App\EventSubscriber;
 
@@ -24,6 +31,11 @@ class AuthenticationSuccessSubscriber implements EventSubscriberInterface
     {
         $target = $this->getTargetPath($this->session->getSession(), $event->getAuthenticationToken()->getFirewallName());
         $user = $event->getAuthenticationToken()->getUser();
+
+        if (null === $user) {
+            return new RedirectResponse($this->urlGenerator->generate('security_login'));
+        }
+
         if ($user instanceof Etudiant) {
             return new RedirectResponse($target ?? $this->urlGenerator->generate('default_homepage'));
         }

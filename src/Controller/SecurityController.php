@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/SecurityController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/05/2022 10:15
+ * @lastUpdate 16/05/2022 12:15
  */
 
 namespace App\Controller;
@@ -182,6 +182,10 @@ class SecurityController extends AbstractController
         PersonnelDepartementRepository $personnelDepartementRepository
     ): Response {
         $user = $this->getUser();
+        if (null === $user) {
+            return $this->redirectToRoute('security_login');
+        }
+
         $departements = $personnelDepartementRepository->findByPersonnel($user);
         $update = null;
         if ('POST' === $request->getMethod()) {
