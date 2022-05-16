@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/SecurityController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:44
+ * @lastUpdate 16/05/2022 10:15
  */
 
 namespace App\Controller;
@@ -25,7 +25,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -53,8 +52,14 @@ class SecurityController extends AbstractController
      * @throws TransportExceptionInterface
      */
     #[Route(path: '/connexion/mot-de-passe-perdu', name: 'security_password_lost')]
-    public function passwordLost(Request $request, TokenGeneratorInterface $tokenGenerator, EntityManagerInterface $entityManager, MailerFromTwig $myMailer, PersonnelRepository $personnelRepository, EtudiantRepository $etudiantRepository): Response
-    {
+    public function passwordLost(
+        Request $request,
+        TokenGeneratorInterface $tokenGenerator,
+        EntityManagerInterface $entityManager,
+        MailerFromTwig $myMailer,
+        PersonnelRepository $personnelRepository,
+        EtudiantRepository $etudiantRepository
+    ): Response {
         $submittedToken = $request->request->get('token');
         if ($request->isMethod('POST') && $this->isCsrfTokenValid('password-lost', $submittedToken)) {
             $email = $request->request->get('email');
@@ -99,8 +104,12 @@ class SecurityController extends AbstractController
      * @throws \Exception
      */
     #[Route(path: '/connexion/init-password/{user}', name: 'security_password_init', options: ['expose' => true])]
-    public function initPassword(UserPasswordHasherInterface $passwordEncoder, EntityManagerInterface $entityManager, MailerFromTwig $mailerFromTwig, Personnel $user): JsonResponse
-    {
+    public function initPassword(
+        UserPasswordHasherInterface $passwordEncoder,
+        EntityManagerInterface $entityManager,
+        MailerFromTwig $mailerFromTwig,
+        Personnel $user
+    ): JsonResponse {
         $password = mb_substr(md5(time()), 0, 10);
         $passwordEncode = $passwordEncoder->hashPassword($user, $password);
         $user->setPassword($passwordEncode);
@@ -122,8 +131,14 @@ class SecurityController extends AbstractController
     }
 
     #[Route(path: '/connexion/reset-password/{token}', name: 'security_reset_password')]
-    public function resetPassword(Request $request, string $token, PersonnelRepository $personnelRepository, EtudiantRepository $etudiantRepository, UserPasswordHasherInterface $passwordEncoder, EntityManagerInterface $entityManager): Response
-    {
+    public function resetPassword(
+        Request $request,
+        string $token,
+        PersonnelRepository $personnelRepository,
+        EtudiantRepository $etudiantRepository,
+        UserPasswordHasherInterface $passwordEncoder,
+        EntityManagerInterface $entityManager
+    ): Response {
         if ($request->isMethod('POST')) {
             $etudiant = $etudiantRepository->findOneBy(['resetToken' => $token]);
             $personnel = $personnelRepository->findOneBy(['resetToken' => $token]);
@@ -161,8 +176,11 @@ class SecurityController extends AbstractController
     #[Route(path: '/choix-departement', name: 'security_choix_departement')]
     public function choixDepartement(
         EntityManagerInterface $entityManager,
-        TranslatorInterface $translator, FlashBagInterface $flashBag, RequestStack $session, Request $request, PersonnelDepartementRepository $personnelDepartementRepository): Response
-    {
+        TranslatorInterface $translator,
+        RequestStack $session,
+        Request $request,
+        PersonnelDepartementRepository $personnelDepartementRepository
+    ): Response {
         $user = $this->getUser();
         $departements = $personnelDepartementRepository->findByPersonnel($user);
         $update = null;
@@ -180,13 +198,13 @@ class SecurityController extends AbstractController
 
             $entityManager->flush();
             if (null !== $update && null !== $update->getDepartement()) {
-                $flashBag->add(Constantes::FLASHBAG_SUCCESS, $translator->trans('formation.par.defaut.sauvegarde'));
+                $this->addFlash(Constantes::FLASHBAG_SUCCESS, $translator->trans('formation.par.defaut.sauvegarde'));
                 $session->getSession()->set('departement', $update->getDepartement()->getUuid()); // on sauvegarde
 
                 return $this->redirectToRoute('default_homepage');
             }
 
-            $flashBag->add(Constantes::FLASHBAG_ERROR, $translator->trans('formation.par.defaut.erreur'));
+            $this->addFlash(Constantes::FLASHBAG_ERROR, $translator->trans('formation.par.defaut.erreur'));
 
             return $this->render('security/choix-departement.html.twig',
                 ['departements' => $departements, 'user' => $user]);
