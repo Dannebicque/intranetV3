@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.7.2](https://github.com/Dannebicque/intranetV3/compare/v3.7.1...v3.7.2) (2022-05-16)
+
+
+### Bug Fixes
+
+* [lgoo] Absolute_url ne fonctionne pas avec un serveur derrière un proxy ([0bf4ba4](https://github.com/Dannebicque/intranetV3/commit/0bf4ba42b794982e71f791a4be74e579e786cb7e))
+* [Request] Messagerie ([614c161](https://github.com/Dannebicque/intranetV3/commit/614c161ececee008e6185e48f1c80ad808fe6209))
+* [Request] Saisie des notes ([ccc3f89](https://github.com/Dannebicque/intranetV3/commit/ccc3f89b3d68c6f2480d1ef0b8e6b5700623feeb))
+* [security] Problème d'accès avec la session suite mise à jour ([2d50415](https://github.com/Dannebicque/intranetV3/commit/2d5041549596dfffaa394bfd388a7bb27ad287e7))
+
 ### [3.7.1](https://github.com/Dannebicque/intranetV3/compare/v3.7.0...v3.7.1) (2022-05-16)
 
 
