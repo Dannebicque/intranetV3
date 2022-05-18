@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/ajax/ContactAjaxController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:44
+ * @lastUpdate 18/05/2022 16:44
  */
 
 namespace App\Controller\ajax;
@@ -30,7 +30,11 @@ class ContactAjaxController extends BaseController
     {
         $name = $request->request->get('field');
         $value = $request->request->get('value');
-        $update = $myContact->update($contact, $name, $value);
+        if (null !== $name && '' !== $name) {
+            $update = $myContact->update($contact, $name, $value);
+        } else {
+            $update = false;
+        }
 
         return $update ? new JsonResponse('', Response::HTTP_OK) : new JsonResponse('erreur',
             Response::HTTP_INTERNAL_SERVER_ERROR);

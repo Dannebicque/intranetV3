@@ -1,14 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyContact.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyContact.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 19:44
- */
-
-/*
- * Pull your hearder here, for exemple, Licence header.
+ * @lastUpdate 18/05/2022 16:52
  */
 
 namespace App\Classes;
@@ -18,9 +14,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class MyContact
 {
-    /**
-     * MyAdresse constructor.
-     */
     public function __construct(private readonly EntityManagerInterface $entityManager)
     {
     }
