@@ -1,23 +1,17 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Mail/MailerFromDatabase.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Mail/MailerFromDatabase.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
- */
-
-/*
- * Pull your hearder here, for exemple, Licence header.
+ * @lastUpdate 18/05/2022 17:05
  */
 
 namespace App\Classes\Mail;
 
 use App\Classes\Configuration;
 use App\Entity\TwigTemplate;
-use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Twig\Environment;
 use Twig\Error\LoaderError;
@@ -25,8 +19,6 @@ use Twig\Error\SyntaxError;
 
 class MailerFromDatabase extends BaseMailer
 {
-    private Email $mail;
-
     /**
      * MailerFromDatabase constructor.
      */
@@ -39,10 +31,10 @@ class MailerFromDatabase extends BaseMailer
         parent::__construct($mailer, $translator, $configuration);
     }
 
-    public function initEmail(): void
-    {
-        $this->mail = (new Email());
-    }
+//    public function initEmail(): void
+//    {
+//        $this->mail = (new Email()); //pourquoi pas TemplatedEmail ?
+//    }
 
     /**
      * @throws LoaderError
@@ -52,13 +44,5 @@ class MailerFromDatabase extends BaseMailer
     {
         $template = $this->twig->createTemplate($templateName->getSource());
         $this->mail->html($template->render($array));
-    }
-
-    /**
-     * @throws TransportExceptionInterface
-     */
-    public function sendMessage(array $to, string $subject, array $options = []): void
-    {
-        $this->baseSendMessage($this->mail, $to, $subject, $options);
     }
 }
