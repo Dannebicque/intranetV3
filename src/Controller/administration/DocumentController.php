@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/DocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:53
+ * @lastUpdate 19/05/2022 14:42
  */
 
 namespace App\Controller\administration;
@@ -25,19 +25,20 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/administration/documents', name: 'administration_document_')]
+#[Route('/administration/document/{source}', name: 'administration_document_')]
 class DocumentController extends BaseController
 {
     /**
      * @throws \JsonException
      */
     #[Route('/', name: 'index', options: ['expose' => true], methods: ['GET', 'POST'])]
-    public function index(Request $request): Response
+    public function index(Request $request, string $source = Document::DOCUMENTS): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $this->getDepartement());
 
         $table = $this->createTable(DocumentTableType::class, [
             'departement' => $this->getDepartement(),
+            'source' => $source,
         ]);
         $table->handleRequest($request);
 
@@ -46,13 +47,13 @@ class DocumentController extends BaseController
         }
 
         return $this->render('administration/document/index.html.twig',
-            ['table' => $table]);
+            ['table' => $table, 'source' => $source]);
     }
 
     #[Route('/export.{_format}', name: 'export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
     public function export(
         MySerializer $mySerializer,
-        MyExport $myExport, DocumentRepository $documentRepository, $_format): Response
+        MyExport $myExport, DocumentRepository $documentRepository, $_format, string $source = Document::DOCUMENTS): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $this->getDepartement());
 
@@ -73,7 +74,7 @@ class DocumentController extends BaseController
     #[Route('/new', name: 'new', methods: ['GET', 'POST'])]
     public function create(
         MyUpload $myUpload,
-        Request $request): Response
+        Request $request, string $source = Document::DOCUMENTS): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $this->getDepartement());
 
@@ -104,23 +105,24 @@ class DocumentController extends BaseController
         return $this->render('administration/document/new.html.twig', [
             'document' => $document,
             'form' => $form->createView(),
+            'source' => $source,
         ]);
     }
 
     #[Route(path: '/{id}', name: 'show', methods: 'GET')]
     #[ParamConverter('document', options: ['mapping' => ['id' => 'uuid']])]
-    public function show(Document $document): Response
+    public function show(Document $document, string $source = Document::DOCUMENTS): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $document->getSemestres()[0]);
 
-        return $this->render('administration/document/show.html.twig', ['document' => $document]);
+        return $this->render('administration/document/show.html.twig', ['document' => $document, 'source' => $source]);
     }
 
     #[Route(path: '/{id}/edit', name: 'edit', methods: 'GET|POST')]
     #[ParamConverter('document', options: ['mapping' => ['id' => 'uuid']])]
     public function edit(
         MyUpload $myUpload,
-        Request $request, Document $document): Response
+        Request $request, Document $document, string $source = Document::DOCUMENTS): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $document->getSemestres()[0]);
         $form = $this->createForm(
@@ -154,6 +156,7 @@ class DocumentController extends BaseController
         return $this->render('administration/document/edit.html.twig', [
             'document' => $document,
             'form' => $form->createView(),
+            'source' => $source,
         ]);
     }
 

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Document.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/05/2022 08:27
+ * @lastUpdate 19/05/2022 14:38
  */
 
 namespace App\Entity;
@@ -34,6 +34,7 @@ class Document extends BaseEntity
 
     // todo: enum
     final public const TYPE_DOCUMENT = [
+        'application/vnd.ms-powerpoint' => 'Prés. PPT',
         'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'Prés. PPT',
         'application/pdf' => 'PDF',
         'image/jpeg' => 'Image (jpeg)',
@@ -46,6 +47,7 @@ class Document extends BaseEntity
     ];
 
     final public const TYPE_DOCUMENT_ICON = [
+        'application/vnd.ms-powerpoint' => 'fas fa-file-powerpoint',
         'application/vnd.openxmlformats-officedocument.presentationml.presentation' => 'fas fa-file-powerpoint',
         'application/pdf' => 'fas fa-file-pdf',
         'image/jpeg' => 'fas fa-file-image',
@@ -58,7 +60,7 @@ class Document extends BaseEntity
     ];
 
     public const ORIGINAUX = 'originaux';
-    public const DOCUMENT = 'document';
+    public const DOCUMENTS = 'documents';
 
     #[ORM\Column(type: Types::FLOAT)]
     private ?float $taille = null;
@@ -224,6 +226,15 @@ class Document extends BaseEntity
         return $this->typeFichier;
     }
 
+    public function typeFichierIconePetit(): ?string
+    {
+        if (array_key_exists($this->typeFichier, self::TYPE_DOCUMENT_ICON)) {
+            return '<i class="'.self::TYPE_DOCUMENT_ICON[$this->typeFichier].' fa-2x text-primary"></i> '.$this->typeFichierTraduit();
+        }
+
+        return $this->typeFichier;
+    }
+
     public function tailleKo(): float
     {
         return $this->taille / 1024;
@@ -234,5 +245,33 @@ class Document extends BaseEntity
         $this->setDocumentName($myUpload->getName());
         $this->setTaille($myUpload->getTaille());
         $this->setTypeFichier($myUpload->getTypeFichier());
+    }
+
+    /**
+     * @return Collection<int, DocumentFavori>
+     */
+    public function getDocumentsFavoris(): Collection
+    {
+        return $this->documentsFavoris;
+    }
+
+    public function addDocumentsFavori(DocumentFavori $documentsFavori): self
+    {
+        if (!$this->documentsFavoris->contains($documentsFavori)) {
+            $this->documentsFavoris[] = $documentsFavori;
+            $documentsFavori->setDocument($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDocumentsFavori(DocumentFavori $documentsFavori): self
+    {
+        // set the owning side to null (unless already changed)
+        if ($this->documentsFavoris->removeElement($documentsFavori) && $documentsFavori->getDocument() === $this) {
+            $documentsFavori->setDocument(null);
+        }
+
+        return $this;
     }
 }

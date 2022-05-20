@@ -6,7 +6,24 @@
 
 {% block headeractions %}
     <div class="header-action">
-        {{ include('composants/adm-buttons-index.html.twig', {elt:'document'}) }}
+        <div class="buttons">
+            <a href="{{ path('administration_document_new', {source:source}) }}"
+               class="btn btn-info btn-sm btn-float"
+               title="{{ 'atitle.creer_nouveau'|trans }}"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
+                <i class="{{ iconAdd }}"></i>
+                <span class="sr-only">{{ 'atitle.creer_nouveau'|trans }}</span>
+            </a>
+
+            <a href="{{ path('administration_index') }}"
+               class="btn btn-primary btn-float"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+
+               title="{{ 'atitle.retour_administration'|trans }}">
+                <i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
+        </div>
+
     </div>
 {% endblock %}
 

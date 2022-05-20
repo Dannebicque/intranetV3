@@ -5,63 +5,91 @@
 {% endblock %}
 
 {% block headeractions %}
-<div class="header-action">
-    {{ include('composants/adm-buttons-show.html.twig', {elt: 'document', id: document.uuidString}) }}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('administration_document_delete', {id: document.uuidString, source:source}) }}"
+               data-csrf="{{ csrf_token('delete' ~ document.id) }}"
+               class="btn btn-danger btn-sm btn-float supprimer"
+               title="{{ 'atitle.supprimer'|trans }}"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
+                <i class="{{ iconDelete }}"></i>
+                <span class="sr-only">{{ 'atitle.supprimer'|trans }}</span>
+            </a>
+            <a href="{{ path('administration_document_edit', {id: document.uuidString, source:source}) }}"
+               class="btn btn-warning btn-sm btn-float"
+               title="{{ 'atitle.modifier'|trans }}"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
+                <i class="{{ iconEdit }}"></i>
+                <span class="sr-only">{{ 'atitle.modifier'|trans }}</span>
+            </a>
 
-</div>
+            <a href="{{ path('administration_document_index', {source:source}) }}"
+               class="btn btn-primary btn-float"
+               title="{{ 'atitle.retour_liste'|trans }}"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
+                <i class="fas fa-arrow-left"></i>
+                <span class="sr-only">{{ 'atitle.retour_liste'|trans }}</span>
+            </a>
+        </div>
+    </div>
 {% endblock %}
 
 {% block content %}
-<div class="card">
-    <h4 class="card-title">{{ 'adm.document.show.heading'|trans }}</h4>
-    <div class="card-body">
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.document.show.heading'|trans }}</h4>
+        <div class="card-body">
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>{{ 'table.id'|trans }}</th>
-                <td>{{ document.id }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'table.libelle'|trans }}</th>
-                <td>{{ document.libelle }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'table.fichier'|trans }}</th>
-                <td>
-                    <a href="{{ vich_uploader_asset(document, 'documentFile') }}" target="_blank">{{ 'voir.le.document'|trans }}</a>
-                </td>
-            </tr>
-            <tr>
-                <th>{{ 'table.created'|trans }}</th>
-                <td>{{ document.created ? document.created|format_datetime('long', 'short') : '' }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'table.updated'|trans }}</th>
-                <td>{{ document.updated ? document.updated|format_datetime('long', 'short') : '' }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'table.taille'|trans }}</th>
-                <td>{{ document.taille }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'table.type_fichier'|trans }}</th>
-                <td>{{ document.typeFichier }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'table.description'|trans }}</th>
-                <td>{{ document.description|raw }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'table.type_document'|trans }}</th>
-                <td>{{ document.typeDocument != null ? document.typeDocument.libelle : '-' }}</td>
-            </tr>
-            <tr>
-                <th>{{ 'table.semestres_document'|trans }}</th>
-                <td>{% for semestre in document.semestres %}{{ semestre.libelle }} {% endfor %}</td>
-            </tr>
-        </tbody>
-    </table>
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>{{ 'table.id'|trans }}</th>
+                    <td>{{ document.id }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.libelle'|trans }}</th>
+                    <td>{{ document.libelle }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.fichier'|trans }}</th>
+                    <td>
+                        <a href="{{ asset('upload/documents/'~document.documentName) }}" target="_blank">
+                            {{ 'voir.le.document'|trans }}
+                        </a>
+                    </td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.created'|trans }}</th>
+                    <td>{{ document.created ? document.created|format_datetime('long', 'short') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.updated'|trans }}</th>
+                    <td>{{ document.updated ? document.updated|format_datetime('long', 'short') : '' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.taille'|trans }}</th>
+                    <td>{{ document.taille }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.type_fichier'|trans }}</th>
+                    <td>{{ document.typeFichier }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.description'|trans }}</th>
+                    <td>{{ document.description|raw }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.type_document'|trans }}</th>
+                    <td>{{ document.typeDocument != null ? document.typeDocument.libelle : '-' }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.semestres_document'|trans }}</th>
+                    <td>{% for semestre in document.semestres %}{{ semestre.libelle }} {% endfor %}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 {% endblock %}

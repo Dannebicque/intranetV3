@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/DocumentTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:53
+ * @lastUpdate 18/05/2022 08:34
  */
 
 namespace App\Table;
@@ -42,7 +42,7 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 class DocumentTableType extends TableType
 {
     private ?Departement $departement = null;
-    private ?string $source = 'administration';
+    private ?string $source = 'documents';
     private string $base_url = 'administration_document_';
 
     public function __construct(private readonly CsrfTokenManagerInterface $csrfToken)
@@ -56,7 +56,7 @@ class DocumentTableType extends TableType
 
         $builder->addFilter('search', SearchType::class);
 
-        if ('originaux' === $this->source) {
+        if (Document::ORIGINAUX === $this->source) {
             $this->base_url = 'sa_qualite_documents_';
             $builder->addFilter('typeDocument', EntityType::class, [
                 'class' => TypeDocument::class,
@@ -67,6 +67,7 @@ class DocumentTableType extends TableType
             ]);
             $builder->addWidget('add', LinkType::class, [
                 'route' => 'sa_qualite_type_document_index',
+                'route_params' => ['source' => $this->source],
                 'class' => 'btn btn-info',
                 'text' => 'Type de document',
             ]);
@@ -87,6 +88,7 @@ class DocumentTableType extends TableType
             ]);
             $builder->addWidget('add', LinkType::class, [
                 'route' => 'administration_type_document_index',
+                'route_params' => ['source' => $this->source],
                 'class' => 'btn btn-info',
                 'text' => 'Type de document',
             ]);
@@ -96,15 +98,16 @@ class DocumentTableType extends TableType
 
         $builder->addWidget('export', ExportDropdownType::class, [
             'route' => 'administration_document_export',
+            'route_params' => ['source' => $this->source],
         ]);
 
         $builder->addColumn('libelle', PropertyColumnType::class,
             ['label' => 'table.titre', 'translation_domain' => 'messages']);
-        $builder->addColumn('typeFichierIcone', PropertyColumnType::class,
+        $builder->addColumn('typeFichierIconePetit', PropertyColumnType::class,
             ['label' => 'table.type_fichier', 'translation_domain' => 'messages']);
         $builder->addColumn('typeDocument', CategorieArticleColumnType::class,
             ['label' => 'table.categorie', 'translation_domain' => 'messages']);
-        if ('administration' === $this->source) {
+        if (Document::DOCUMENTS === $this->source) {
             $builder->addColumn('typeDestinataire', BadgeColumnType::class,
                 ['label' => 'table.typeDestinataire', 'translation_domain' => 'messages']);
             $builder->addColumn('semestres', SemestreColumnType::class,
@@ -121,26 +124,26 @@ class DocumentTableType extends TableType
             'build' => function (WidgetBuilder $builder, Document $s) {
                 $builder->add('duplicate', RowDuplicateLinkType::class, [
                     'route' => $this->base_url.'duplicate',
-                    'route_params' => ['id' => $s->getUuidString()],
+                    'route_params' => ['id' => $s->getUuidString(), 'source' => $this->source],
                     'xhr' => false,
                 ]);
                 $builder->add('show', RowShowLinkType::class, [
                     'route' => $this->base_url.'show',
                     'route_params' => [
-                        'id' => $s->getUuidString(),
+                        'id' => $s->getUuidString(), 'source' => $this->source,
                     ],
                     'xhr' => false,
                 ]);
                 $builder->add('edit', RowEditLinkType::class, [
                     'route' => $this->base_url.'edit',
                     'route_params' => [
-                        'id' => $s->getUuidString(),
+                        'id' => $s->getUuidString(), 'source' => $this->source,
                     ],
                     'xhr' => false,
                 ]);
                 $builder->add('delete', RowDeleteLinkType::class, [
                     'route' => $this->base_url.'delete',
-                    'route_params' => ['id' => $s->getUuidString()],
+                    'route_params' => ['id' => $s->getUuidString(), 'source' => $this->source],
                     'attr' => [
                         'data-csrf' => $this->csrfToken->getToken('delete'.$s->getUuidString()),
                     ],
@@ -152,7 +155,7 @@ class DocumentTableType extends TableType
             'class' => Document::class,
             'fetch_join_collection' => false,
             'query' => function (QueryBuilder $qb, array $formData) {
-                if ('administration' === $this->source) {
+                if (Document::DOCUMENTS === $this->source) {
                     $qb->innerJoin('e.semestres', 'c')// récupération de la jointure dans la table dédiée
                     ->innerJoin(Semestre::class, 's', 'WITH', 'c.id = s.id')
                         ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
@@ -185,7 +188,7 @@ class DocumentTableType extends TableType
         $resolver->setDefaults([
             'orderable' => true,
             'departement' => null,
-            'source' => 'administration',
+            'source' => 'documents',
         ]);
     }
 }
