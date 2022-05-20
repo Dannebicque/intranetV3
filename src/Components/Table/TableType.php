@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Table/TableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/05/2022 09:56
+ * @lastUpdate 18/05/2022 19:04
  */
 
 namespace App\Components\Table;
@@ -14,8 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TableType
 {
-    // FIXME : statically called to avoid to have add parent::configureOptions() on all inherit Type class
-    final public static function __configureOptions(OptionsResolver $resolver): void
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver
             ->setRequired('id')
@@ -61,7 +60,7 @@ class TableType
     {
     }
 
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-    }
+//    public function configureOptions(OptionsResolver $resolver): void
+//    {
+//    }
 }
