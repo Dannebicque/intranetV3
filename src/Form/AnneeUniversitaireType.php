@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/AnneeUniversitaireType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/AnneeUniversitaireType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 14:21
+ * @lastUpdate 19/05/2022 14:40
  */
 
 namespace App\Form;
@@ -28,13 +28,13 @@ class AnneeUniversitaireType extends AbstractType
             ])
             ->add('annee', ChoiceType::class, [
                 'label' => 'label.annee_courante',
-                'choices' => array_combine(range(date('Y') - 2, date('Y') + 4), range(date('Y') - 2, date('Y') + 4)),
+                'choices' => array_combine(range((int) date('Y') - 2, (int) date('Y') + 4),
+                    range((int) date('Y') - 2, (int) date('Y') + 4)),
             ])
             ->add('active', YesNoType::class, [
                 'label' => 'label.annee.par.defaut',
             ])
-            ->add('commentaire', TextareaType::class, ['label' => 'label.commentaire', 'required' => false])
-        ;
+            ->add('commentaire', TextareaType::class, ['label' => 'label.commentaire', 'required' => false]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

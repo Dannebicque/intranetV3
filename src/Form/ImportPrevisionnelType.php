@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ImportPrevisionnelType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/ImportPrevisionnelType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2021 22:11
+ * @lastUpdate 19/05/2022 14:42
  */
 
 namespace App\Form;
@@ -44,8 +44,8 @@ class ImportPrevisionnelType extends AbstractType
             ->add('annee', ChoiceType::class, [
                 'label' => 'opt_annee_previsionnel',
                 'choices' => array_combine(
-                    range(date('Y') - 2, date('Y') + 4),
-                    range(date('Y') - 2, date('Y') + 4)
+                    range((int) date('Y') - 2, (int) date('Y') + 4),
+                    range((int) date('Y') - 2, (int) date('Y') + 4)
                 ),
                 'data' => date('Y'),
             ])

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantGroupeController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EtudiantGroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 10:52
+ * @lastUpdate 19/05/2022 14:38
  */
 
 namespace App\Controller\administration;
@@ -93,7 +93,7 @@ class EtudiantGroupeController extends BaseController
                 }
             }
 
-            if (0 !== $t[1]) {
+            if (0 !== (int) $t[1]) {
                 $groupe = $groupeRepository->find(trim($t[1])); // récupérer groupe etudiant...
                 if ($groupe) {
                     // supprimer l'ancier groupe...

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcNiveauController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcNiveauController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/06/2021 19:12
+ * @lastUpdate 18/05/2022 19:15
  */
 
 namespace App\Controller\administration\apc;
@@ -76,7 +76,7 @@ class ApcNiveauController extends BaseController
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.niveau.edit.success.flash');
 
             return $this->redirectToRoute('administration_apc_competence_show',
-                ['id' => $apcNiveau->getCompetence()->getId()]);
+                ['id' => $apcNiveau->getCompetence()?->getId()]);
         }
 
         return $this->render('apc/apc_niveau/edit.html.twig', [

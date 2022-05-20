@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEmprunts.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyEmprunts.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 19/05/2022 14:41
  */
 
 namespace App\Classes;
@@ -147,18 +147,18 @@ class MyEmprunts
         }
 
         for ($i = 0; $i < $nbjouremprunt; ++$i) {
-            $d = mktime(0, 0, 0, date('m'), date('d') + $j, date('Y'));
+            $d = mktime(0, 0, 0, (int) date('m'), (int) date('d') + $j, (int) date('Y'));
 
-            if (6 === date('N', $d)) {
-                $d2 = mktime(0, 0, 0, date('m'), date('d') + $j + 1, date('Y'));
+            if (6 === (int) date('N', $d)) {
+                $d2 = mktime(0, 0, 0, (int) date('m'), (int) date('d') + $j + 1, (int) date('Y'));
                 $this->jours[$i]['jour'] = 'WE';
                 $this->jours[$i]['texte'] = date('d/m/Y', $d).'-'.date('d/m/Y', $d2);
                 $this->jours[$i]['date'] = date('Y-m-d', $d);
                 $this->jours[$i]['objDate'] = $d;
                 $this->jours[$i]['i'] = $i;
                 ++$j;
-            } elseif (7 === date('N', $d)) {
-                $d2 = mktime(0, 0, 0, date('m'), date('d') + $j - 1, date('Y'));
+            } elseif (7 === (int) date('N', $d)) {
+                $d2 = mktime(0, 0, 0, (int) date('m'), (int) date('d') + $j - 1, (int) date('Y'));
                 $this->jours[$i]['jour'] = 'WE';
                 $this->jours[$i]['texte'] = date('d/m/Y', $d2).'-'.date('d/m/Y', $d);
                 $this->jours[$i]['date'] = date('Y-m-d', $d);

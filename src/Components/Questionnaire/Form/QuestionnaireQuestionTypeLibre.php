@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/Form/QuestionnaireQuestionTypeLibre.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Form/QuestionnaireQuestionTypeLibre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/11/2021 17:35
+ * @lastUpdate 19/05/2022 14:37
  */
 
 namespace App\Components\Questionnaire\Form;
@@ -14,11 +14,4 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class QuestionnaireQuestionTypeLibre extends QuestionnaireQuestionType
 {
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'data_class' => QuestionnaireQuestion::class,
-            'translation_domain' => 'form',
-        ]);
-    }
 }

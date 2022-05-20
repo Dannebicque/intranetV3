@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/AnneeUniversitaireSemestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 19/05/2022 14:37
  */
 
 namespace App\Entity;
@@ -27,11 +27,6 @@ class AnneeUniversitaireSemestre extends BaseEntity
 
     #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $commentaire = '';
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getAnneeUniversitaire(): ?AnneeUniversitaire
     {

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/AbsenceListeTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/05/2022 14:27
+ * @lastUpdate 18/05/2022 19:14
  */
 
 namespace App\Table;
@@ -177,6 +177,8 @@ class AbsenceListeTableType extends TableType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
+
         $resolver->setDefaults([
             'orderable' => true,
             'semestre' => null,

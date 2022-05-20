@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcCompetenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:53
+ * @lastUpdate 18/05/2022 19:15
  */
 
 namespace App\Controller\administration\apc;
@@ -84,7 +84,7 @@ class ApcCompetenceController extends BaseController
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.competence.edit.success.flash');
 
             return $this->redirectToRoute('administration_apc_competence_index',
-                ['diplome' => $apcCompetence->getDiplome()->getId()]);
+                ['diplome' => $apcCompetence->getDiplome()?->getId()]);
         }
 
         return $this->render('apc/apc_competence/edit.html.twig', [
