@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/DocumentTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/05/2022 08:34
+ * @lastUpdate 21/05/2022 17:54
  */
 
 namespace App\Table;
@@ -94,7 +94,7 @@ class DocumentTableType extends TableType
             ]);
         }
 
-        $builder->setLoadUrl($this->base_url.'index');
+        $builder->setLoadUrl($this->base_url.'index', ['source' => $this->source]);
 
         $builder->addWidget('export', ExportDropdownType::class, [
             'route' => 'administration_document_export',

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/DocumentType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:52
+ * @lastUpdate 21/05/2022 17:21
  */
 
 namespace App\Form;
@@ -54,7 +54,7 @@ class DocumentType extends AbstractType
                 ],
             ]);
 
-        if ('administration' === $options['source']) {
+        if (Document::DOCUMENTS === $options['source']) {
             $builder
                 ->add('typeDestinataire', TypeDestinataireType::class, ['label' => 'label.typedestinataire'])
                 ->add(
@@ -99,7 +99,7 @@ class DocumentType extends AbstractType
             'data_class' => Document::class,
             'departement' => null,
             'translation_domain' => 'form',
-            'source' => 'administration',
+            'source' => Document::DOCUMENTS,
         ]);
     }
 }

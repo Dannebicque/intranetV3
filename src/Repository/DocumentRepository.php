@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/DocumentRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 21/05/2022 17:08
  */
 
 namespace App\Repository;
@@ -56,6 +56,16 @@ class DocumentRepository extends ServiceEntityRepository
             ->innerJoin(TypeDocument::class, 't', 'WITH', 'd.typeDocument = t.id')
             ->where('t.departement = :departement')
             ->setParameter('departement', $departement->getId())
+            ->orderBy('d.libelle', Criteria::ASC)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByOriginaux(): array
+    {
+        return $this->createQueryBuilder('d')
+            ->innerJoin(TypeDocument::class, 't', 'WITH', 'd.typeDocument = t.id')
+            ->where('t.originaux = 1')
             ->orderBy('d.libelle', Criteria::ASC)
             ->getQuery()
             ->getResult();

@@ -8,9 +8,19 @@
 <div class="header-action">
     <div class="header-action">
         {% if is_granted('ROLE_QUALITE') %}
-            {{ include('composants/sadm-buttons-new.html.twig', {elt: 'qualite_documents'}) }}
+            <div class="buttons">
+                    <a href="{{ path('sa_qualite_documents_index', {source:source}) }}" class="btn btn-primary
+                    btn-float"
+                       data-bs-toggle="tooltip" data-bs-placement="bottom"
+                       title="{{ 'atitle.retour_liste'|trans }}"><i class="fas fa-arrow-left"></i></a>
+            </div>
         {% else %}
-            {{ include('composants/adm-buttons-new.html.twig', {elt: 'document'}) }}
+            <div class="buttons">
+                <a href="{{ path('administration_document_index', {source:source}) }}" class="btn btn-primary
+                    btn-float"
+                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+                   title="{{ 'atitle.retour_liste'|trans }}"><i class="fas fa-arrow-left"></i></a>
+            </div>
         {% endif %}
     </div>
     {% endblock %}

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/document/TypeDocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/05/2022 14:40
+ * @lastUpdate 21/05/2022 19:34
  */
 
 namespace App\Controller\document;
@@ -18,16 +18,14 @@ use App\Entity\Document;
 use App\Entity\TypeDocument;
 use App\Form\TypeDocumentType;
 use App\Repository\TypeDocumentRepository;
-use PhpParser\Comment\Doc;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route(path: '/administration/categorie-{source}', name: 'administration_type_document_')]
-#[Route(path: '/administratif/categorie-{source}', name: 'sa_qualite_type_document_')]
 class TypeDocumentController extends BaseController
 {
-    #[Route(path: '/', name: 'index', methods: 'GET')]
+    #[Route(path: '/administration/categorie-{source}/', name: 'administration_type_document_index', methods: 'GET')]
+    #[Route(path: '/administratif/categorie-{source}/', name: 'sa_qualite_type_document_index', methods: 'GET')]
     public function index(TypeDocumentRepository $typeDocumentRepository, string $source): Response
     {
         if (Document::ORIGINAUX === $source) {
@@ -36,6 +34,7 @@ class TypeDocumentController extends BaseController
         } else {
             $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
             $typeDocuments = $typeDocumentRepository->findByDepartement($this->getDepartement());
+            $this->breadcrumbHelper->addItem('Documents', 'administration_type_document_index', ['source' => $source]);
         }
 
         return $this->render(
@@ -47,7 +46,8 @@ class TypeDocumentController extends BaseController
         );
     }
 
-    #[Route(path: '/export.{_format}', name: 'export', requirements: ['_format' => 'pdf|csv|xlsx'], methods: 'GET')]
+    #[Route(path: '/administration/categorie-{source}/export.{_format}', name: 'administration_type_document_export', requirements: ['_format' => 'pdf|csv|xlsx'], methods: 'GET')]
+    #[Route(path: '/administratif/categorie-{source}/export.{_format}', name: 'sa_qualite_type_document_export', requirements: ['_format' => 'pdf|csv|xlsx'], methods: 'GET')]
     public function export(
         MySerializer $mySerializer,
         MyExport $myExport,
@@ -75,16 +75,17 @@ class TypeDocumentController extends BaseController
         return $myExport->genereFichierGeneriqueFromData(
             $_format,
             $data,
-            'type_documents_' . $this->getDepartement()?->getLibelle(),
+            'type_documents_'.$this->getDepartement()?->getLibelle(),
         );
     }
 
-    #[Route(path: '/new', name: 'new', methods: 'GET|POST')]
+    #[Route(path: '/administration/categorie-{source}/ajouter', name: 'administration_type_document_new', methods: 'GET|POST')]
+    #[Route(path: '/administratif/categorie-{source}/ajouter', name: 'sa_qualite_type_document_new', methods: 'GET|POST')]
     public function create(Request $request, string $source): Response
     {
         if (Document::ORIGINAUX === $source) {
             $this->denyAccessUnlessGranted('ROLE_QUALITE');
-            $typeDocument = new TypeDocument();
+            $typeDocument = new TypeDocument(null);
             $typeDocument->setOriginaux(true);
         } else {
             $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
@@ -92,7 +93,7 @@ class TypeDocumentController extends BaseController
         }
 
         $form = $this->createForm(TypeDocumentType::class, $typeDocument, [
-            'action' => $source === Document::ORIGINAUX ? $this->generateUrl('sa_qualite_type_document_new',
+            'action' => Document::ORIGINAUX === $source ? $this->generateUrl('sa_qualite_type_document_new',
                 ['source' => $source]) : $this->generateUrl('administration_type_document_new', ['source' => $source]),
             'attr' => [
                 'data-provide' => 'validation',
@@ -119,7 +120,8 @@ class TypeDocumentController extends BaseController
         ]);
     }
 
-    #[Route(path: '/{id}', name: 'show', methods: 'GET')]
+    #[Route(path: '/administration/categorie-{source}/{id}', name: 'administration_type_document_show', methods: 'GET')]
+    #[Route(path: '/administratif/categorie-{source}/{id}', name: 'sa_qualite_type_document_show', methods: 'GET')]
     public function show(TypeDocument $typeDocument, string $source): Response
     {
         if (Document::ORIGINAUX === $source) {
@@ -131,7 +133,8 @@ class TypeDocumentController extends BaseController
         return $this->render('document/type_document/show.html.twig', ['type_document' => $typeDocument]);
     }
 
-    #[Route(path: '/{id}/edit', name: 'edit', methods: 'GET|POST')]
+    #[Route(path: '/administration/categorie-{source}/{id}/edit', name: 'administration_type_document_edit', methods: 'GET|POST')]
+    #[Route(path: '/administratif/categorie-{source}/{id}/edit', name: 'sa_qualite_type_document_edit', methods: 'GET|POST')]
     public function edit(Request $request, TypeDocument $typeDocument, string $source): Response
     {
         if (Document::ORIGINAUX === $source) {
@@ -154,7 +157,7 @@ class TypeDocumentController extends BaseController
                     return $this->redirectToRoute('sa_qualite_type_document_index', ['source' => Document::ORIGINAUX]);
                 }
 
-                return $this->redirectToRoute('administration_type_document_index', ['source' => Document::DOCUMENT]);
+                return $this->redirectToRoute('administration_type_document_index', ['source' => Document::DOCUMENTS]);
             }
 
             if (Document::ORIGINAUX === $source) {
@@ -163,7 +166,7 @@ class TypeDocumentController extends BaseController
             }
 
             return $this->redirectToRoute('administration_type_document_edit',
-                ['id' => $typeDocument->getId(), 'source' => Document::DOCUMENT]);
+                ['id' => $typeDocument->getId(), 'source' => Document::DOCUMENTS]);
         }
 
         return $this->render('document/type_document/edit.html.twig', [
@@ -172,7 +175,14 @@ class TypeDocumentController extends BaseController
         ]);
     }
 
-    #[Route(path: '/{id}', name: 'delete', methods: 'DELETE')]
+    #[Route(path: '/administration/categorie-{source}/{id}', name: 'administration_type_document_delete', methods: [
+        'DELETE',
+        'POST',
+    ])]
+    #[Route(path: '/administratif/categorie-{source}/{id}', name: 'sa_qualite_type_document_delete', methods: [
+        'DELETE',
+        'POST',
+    ])]
     public function delete(
         DocumentDelete $documentDelete,
         Request $request,
@@ -186,7 +196,7 @@ class TypeDocumentController extends BaseController
         }
 
         $id = $typeDocument->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
             foreach ($typeDocument->getDocuments() as $document) {
                 $documentDelete->deleteDocument($document);
                 if (true !== $documentDelete) {
@@ -206,7 +216,8 @@ class TypeDocumentController extends BaseController
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    #[Route(path: '/{id}/duplicate', name: 'duplicate', methods: 'GET|POST')]
+    #[Route(path: '/administration/categorie-{source}/{id}/duplicate', name: 'administration_type_document_duplicate', methods: 'GET|POST')]
+    #[Route(path: '/administratif/categorie-{source}/{id}/duplicate', name: 'sa_qualite_type_document_duplicate', methods: 'GET|POST')]
     public function duplicate(TypeDocument $typeDocument, string $source): Response
     {
         if (Document::ORIGINAUX === $source) {
@@ -226,6 +237,6 @@ class TypeDocumentController extends BaseController
         }
 
         return $this->redirectToRoute('administration_type_document_edit',
-            ['id' => $newTypeDocument->getId(), 'source' => Document::DOCUMENT]);
+            ['id' => $newTypeDocument->getId(), 'source' => Document::DOCUMENTS]);
     }
 }

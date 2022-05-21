@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/TypeDocumentType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/05/2022 14:37
+ * @lastUpdate 21/05/2022 18:05
  */
 
 namespace App\Form;
@@ -51,7 +51,7 @@ class TypeDocumentType extends AbstractType
         $resolver->setDefaults([
             'data_class' => TypeDocument::class,
             'translation_domain' => 'form',
-            'source' => Document::DOCUMENT,
+            'source' => Document::DOCUMENTS,
             'departement' => null,
         ]);
     }
