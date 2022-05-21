@@ -4,6 +4,14 @@
     Sous <strong>commission live du semestre {{ semestre.libelle }}</strong>
 {% endblock %}
 
+
+{#  todo:
+
+Pour l'APC on a juste besoin du semestre impair si semestre pair. Sinon pas de précédent.
+Ajouter une partie synthèse année avec les UE, les décison/moyenne des deux semestres et la décision de l'année pour
+chaque UE, et pour l'année au global.
+#}
+
 {% block headerright %}
     <div class="right gap-items-2">
         {% for sem in user_data.semestresActifs %}
@@ -57,7 +65,7 @@
                        style="font-size:10px;">
                     <thead>
                     <tr style="position: sticky; top: 0px; background-color:var(--colorIUTComplementaire); color:var(--policeLight)">
-                        <th colspan="4" rowspan="2" style="text-align: right" scope="col">Matière</th>
+                        <th colspan="4" rowspan="2" style="text-align: right" scope="col">Ressources/SAÉ</th>
                         {% for matiere in sousCommission.matieres|filter(matiere => matiere.nbNotes!=0 and matiere
                         .suspendu == false) %}
                             <th scope="col"
@@ -65,17 +73,20 @@
                                 <abbr title="{{ matiere.libelle }}">
                                     {{ matiere.codeMatiere }}</abbr></th>
                         {% endfor %}
-                        <th colspan="{{ (sousCommission.ues|length*2) + 5 }}" class="text-center" scope="col">
+                        <th colspan="{{ (sousCommission.ues|length*2) + 4 }}" class="text-center" scope="col">
                             Semestre {{ semestre.libelle }}</th>
                         {# decision semestre #}
-                        {% for sem in sousCommission.semestresScolarite|filter(sem => sem.id != semestre.id) %}
-                            <th colspan="{{ (sem.ues|length*2)+3 }}" class="text-center" scope="col">
-                                Semestre {{ sem.libelle }}</th>
-                        {% endfor %}
+                        {% if semestre.isPair %}
+                            <!-- Bilan de l'année   -->
+                            <th colspan="{{ (sousCommission.ues|length*6) + 4 }}" class="text-center" scope="col">
+                                Année {{ semestre.annee.ordre }}</th>
+                        {% endif %}
+                        <th scope="col" rowspan="3">Etudiant</th>
                     </tr>
 
-                    <tr style="position: sticky; top: 20px; background-color:var(--colorIUTComplementaire); color:var
-                    (--policeLight)">
+                    <tr style="position: sticky; top: 20px;
+                    background-color:var(--colorIUTComplementaire);
+                    color:var(--policeLight)">
                         {% for matiere in sousCommission.matieres|filter(matiere => matiere.nbNotes!=0 and matiere
                         .suspendu == false) %}
                             <th class="matiere" rowspan="2" scope="col">
@@ -93,12 +104,22 @@
                         {% endfor %}
                         <th rowspan="2" scope="col">Bonif</th>
                         <th rowspan="2" scope="col">Décis.</th>
-                        <th rowspan="2" scope="col">Prop.</th>
                         <th rowspan="2" scope="col">Abs.</th>
                         <th rowspan="2" scope="col">Etudiant</th>
+                        {% if semestre.isPair %}
+                            {% for u in sousCommission.ues %}
+                                <th colspan="6" class="text-center" scope="col">
+                                <span class="badge badge-{{ u.apcCompetence.couleur }}">
+                                    <abbr title="{{ u.apcCompetence.nomCourt }}">UE {{ u.numeroue }}</abbr>
+                                    </span>
+                                </th>
+                            {% endfor %}
+                            <th colspan="4">B.U.T {{ semestre.annee.ordre }}</th>
+                        {% endif %}
                     </tr>
-                    <tr style="position: sticky; top: 40px; background-color:var(--colorIUTComplementaire); color:var
-                    (--policeLight)">
+                    <tr style="position: sticky; top: 40px;
+                    background-color:var(--colorIUTComplementaire);
+                    color:var(--policeLight)">
                         <th scope="col">#</th>
                         <th scope="col">Etudiant</th>
                         <th scope="col">Bac</th>
@@ -108,13 +129,17 @@
                             <th scope="col">Décis.</th>
                         {% endfor %}
 
-                        {% for sem in sousCommission.semestresScolarite|filter(sem => sem.id != semestre.id) %}
-                            {% for ue in sem.ues %}
-                                <th scope="col">UE {{ ue.numeroue }} ({{ ue.coefficient }})</th>
-                                <th scope="col">Décis.</th>
+                        {% if semestre.isPair %}
+                            {% for u in sousCommission.ues %}
+                                <th class="text-center" scope="col" colspan="2">S1</th>
+                                <th class="text-center" scope="col" colspan="2">S2</th>
+                                <th class="text-center" scope="col" colspan="2">Année</th>
                             {% endfor %}
-                            <th scope="col">Décis.</th>
-                        {% endfor %}
+                        {% endif %}
+                        <th class="text-center" scope="col">S1</th>
+                        <th class="text-center" scope="col">S2</th>
+                        <th class="text-center" scope="col">Année</th>
+                        <th class="text-center" scope="col">Prop.</th>
 
                     </tr>
                     </thead>
@@ -187,17 +212,17 @@
                                 {% if semestre.optPenaliteAbsence == true %}
                                     <td>
                                         <a href="#" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                           title="sans pénalité : {{ myEtudiant.moyenneUes[u.id]
-                                           .moyennePac|number_format(3) }}">
+                                           title="sans pénalité : {{ myEtudiant.moyenneUes[u.id].moyennePac|number_format(3) }}">
                                             {{ myEtudiant.moyenneUes[u.id].moyennePacPenalisee|styleMoyenne }}
                                         </a>
                                     </td>
+                                    <td>{{ myEtudiant.moyenneUes[u.id].decisionPenalisee|styleDecision }}</td>
                                 {% else %}
                                     <td>
                                         {{ myEtudiant.moyenneUes[u.id].moyennePac|styleMoyenne }}
                                     </td>
+                                    <td>{{ myEtudiant.moyenneUes[u.id].decision|styleDecision }}</td>
                                 {% endif %}
-                                <td>{{ myEtudiant.moyenneUes[u.id].decision|styleDecision }}</td>
                             {% endfor %}
 
                             <td>{{ myEtudiant.bonification|styleBonification }}</td>
@@ -207,33 +232,62 @@
                                 </a>
                             </td>
 
-                            <td>{{ myEtudiant.proposition }}</td>
                             <td>{{ myEtudiant.nbAbsences|styleAbsences }}</td>
                             <td><a href="{{ path('user_profil',{type:'etudiant', slug:etudiant.slug}) }}"
                                    target="_blank" title="Profil de l'étudiant"
                                    data-bs-toggle="tooltip" data-bs-placement="bottom">{{ etudiant.display }}</a></td>
 
                             {# decisions passées #}
-                            {% for sem in sousCommission.semestresScolarite|filter(sem => sem.id != semestre.id) %}
-                                {% for ue in sem.ues %}
-                                    {% if myEtudiant.scolarite[sem.ordreLmd] is defined %}
-                                        <td>
-                                            {% if myEtudiant.scolarite[sem.ordreLmd].parcoursUe[ue.numeroUe] is
-                                                defined %}
-                                                <span class="{{ myEtudiant.scolarite[sem.ordreLmd].parcoursUe[ue.numeroUe].style }}">
-                                                    {{ myEtudiant.scolarite[sem.ordreLmd].parcoursUe[ue.numeroUe]
-                                                    .moyenne|number_format(3) }}
-                                                    </span>
-                                            {% else %}
-                                                -
-                                            {% endif %}
-                                        </td>
-                                        <td>Dec.</td>
-                                    {% else %}
-                                        <td> -</td>
-                                    {% endif %}
-                                {% endfor %}
-                            {% endfor %}
+                            {% if semestre.isPair %}
+                                {% set sem = semestre.precedent %}
+                                    {# partie année #}
+                                    {% for u in sousCommission.ues %}
+                                        {% if myEtudiant.scolarite[sem.ordreLmd] is defined %}
+                                            <td>
+                                                {% if myEtudiant.scolarite[sem.ordreLmd].moyenneUes[u.numeroUe] is
+                                                    defined %}
+                                                    {{ myEtudiant.scolarite[sem.ordreLmd].moyenneUes[u.numeroUe]
+                                                    .moyenne|styleMoyenne }}
+                                                {% else %}
+                                                    -
+                                                {% endif %}
+                                            </td>
+                                            <td>
+                                                {{ myEtudiant.scolarite[sem.ordreLmd].moyenneUes[u.numeroUe].decision|styleDecision }}
+                                            </td>
+                                        {% else %}
+                                            <td> -</td>
+                                        {% endif %}
+                                        {% if semestre.optPenaliteAbsence == true %}
+                                            <td>
+                                                <a href="#" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                   title="sans pénalité : {{ myEtudiant.moyenneUes[u.id].moyennePac|number_format(3) }}">
+                                                    {{ myEtudiant.moyenneUes[u.id].moyennePacPenalisee|styleMoyenne }}
+                                                </a>
+                                            </td>
+                                            <td>{{ myEtudiant.moyenneUes[u.id].decisionPenalisee|styleDecision }}</td>
+                                        {% else %}
+                                            <td>
+                                                {{ myEtudiant.moyenneUes[u.id].moyennePac|styleMoyenne }}
+                                            </td>
+                                            <td>{{ myEtudiant.moyenneUes[u.id].decision|styleDecision }}</td>
+                                        {% endif %}
+
+                                        <td>{{ myEtudiant.moyenneAnneeUes[u.numeroUe].moyenneAnnee|styleMoyenne }}</td>
+                                        <td>{{ myEtudiant.moyenneAnneeUes[u.numeroUe].decisionAnnee|styleDecision }}</td>
+                                    {% endfor %}
+                                    <td>
+                                        {{ myEtudiant.scolarite[sem.ordreLmd].decision|styleDecision }}
+                                        {# todo: est-ce que la décision peu évoluer  #}
+                                    </td>
+
+                                <td>{{ myEtudiant.decision|styleDecision }}</td>
+                                <td>{{ myEtudiant.decisionAnnee|styleDecision }}</td>
+                                <td>{{ myEtudiant.propositionAnnee }}</td>
+                                <th><a href="{{ path('user_profil',{type:'etudiant', slug:etudiant.slug}) }}"
+                                       target="_blank" title="Profil de l'étudiant"
+                                       data-bs-toggle="tooltip" data-bs-placement="bottom">{{ etudiant.display }}</a></th>
+                            {% endif %}
                         </tr>
                     {% endfor %}
                     </tbody>

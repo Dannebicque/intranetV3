@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/05/2022 14:50
+ * @lastUpdate 20/05/2022 08:24
  */
 
 namespace App\Entity;
@@ -27,7 +27,13 @@ class Semestre extends BaseEntity implements Stringable
     use LifeCycleTrait;
 
     #[ORM\Column(type: Types::STRING, length: 255)]
-    #[Groups(groups: ['article_administration', 'date_administration', 'semestre', 'etudiants_administration', 'document_administration'])]
+    #[Groups(groups: [
+        'article_administration',
+        'date_administration',
+        'semestre',
+        'etudiants_administration',
+        'document_administration'
+    ])]
     private ?string $libelle = null;
 
     #[Deprecated("plus utilisé, centralisé avec l'année")]
@@ -241,7 +247,7 @@ class Semestre extends BaseEntity implements Stringable
     private ?bool $optMailAssistanteJustificatifAbsence = false;
 
     #[ORM\Column(type: Types::BOOLEAN)]
-    private ?bool  $optBilanSemestre = false;
+    private ?bool $optBilanSemestre = false;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\AnneeUniversitaireSemestre>
@@ -497,7 +503,7 @@ class Semestre extends BaseEntity implements Stringable
     public function display(): string
     {
         if (null !== $this->getAnnee()) {
-            return $this->libelle.' | '.$this->getAnnee()->getLibelle();
+            return $this->libelle . ' | ' . $this->getAnnee()->getLibelle();
         }
 
         return $this->libelle;
@@ -516,7 +522,7 @@ class Semestre extends BaseEntity implements Stringable
     public function displayAvecTypeDiplome(): string
     {
         if (null !== $this->getAnnee() && null !== $this->getAnnee()->getDiplome() && null !== $this->getAnnee()->getDiplome()->getTypeDiplome()) {
-            return $this->getAnnee()->getDiplome()->getTypeDiplome()->getSigle().' | '.$this->libelle;
+            return $this->getAnnee()->getDiplome()->getTypeDiplome()->getSigle() . ' | ' . $this->libelle;
         }
 
         return $this->libelle;
@@ -1395,5 +1401,15 @@ class Semestre extends BaseEntity implements Stringable
         }
 
         return $this;
+    }
+
+    public function isPair(): bool
+    {
+        return $this->getOrdreLmd() % 2 === 0;
+    }
+
+    public function isImpair(): bool
+    {
+        return $this->getOrdreLmd() % 2 === 1;
     }
 }

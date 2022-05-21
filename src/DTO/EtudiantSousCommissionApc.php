@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/EtudiantSousCommission.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/EtudiantSousCommissionApc.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 19:44
+ * @lastUpdate 20/05/2022 11:55
  */
 
 namespace App\DTO;
@@ -13,6 +13,7 @@ use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use function count;
+use Doctrine\Common\Collections\Collection;
 
 class EtudiantSousCommissionApc
 {
@@ -22,11 +23,17 @@ class EtudiantSousCommissionApc
     /** @var \App\DTO\MoyenneUeApc[] */
     public array $moyenneUes = [];
 
+    /** @var \App\DTO\MoyenneAnneeUeApc[] */
+    public array $moyenneAnneeUes = [];
+
     public float $bonification = 0;
     public ?string $decision = null;
+    public ?string $decisionAnnee = null;
+    public ?string $propositionAnnee = null;
     public ?string $conseil = null; // todo: information sur les enjeux du S"pair"
     public ?string $proposition = null;
     public array $scolarite = [];
+    protected array $uesSemestrePrecedent = [];
 
     /**
      * EtudiantSousCommissionApc constructor.
@@ -34,8 +41,12 @@ class EtudiantSousCommissionApc
     public function __construct(
         public Etudiant $etudiant,
         public Semestre $semestre,
-        array $ues
+        array $ues,
+        Collection|array $uesSemestrePrecedent = []
     ) {
+        foreach ($uesSemestrePrecedent as $ueP) {
+            $this->uesSemestrePrecedent[$ueP->getId()] = $ueP;
+        }
         foreach ($ues as $ue) {
             $this->moyenneUes[$ue->getId()] = new MoyenneUeApc($ue);
         }
@@ -45,10 +56,12 @@ class EtudiantSousCommissionApc
     {
         $nbUes = count($this->moyenneUes);
         $nbUesValidees = 0;
+
+        //la décision du semestre en cours
         foreach ($this->moyenneUes as $ue) {
-            if (true === $this->semestre->getOptPenaliteAbsence() && Constantes::UE_VALIDE === $ue->decisionPenalisee) {
+            if (Constantes::UE_VALIDE === $ue->decisionPenalisee && true === $this->semestre->getOptPenaliteAbsence()) {
                 ++$nbUesValidees;
-            } elseif (false === $this->semestre->getOptPenaliteAbsence() && Constantes::UE_VALIDE === $ue->decision) {
+            } elseif (Constantes::UE_VALIDE === $ue->decision && false === $this->semestre->getOptPenaliteAbsence()) {
                 ++$nbUesValidees;
             }
         }
@@ -62,6 +75,34 @@ class EtudiantSousCommissionApc
         } elseif ($nbUesValidees < ($nbUes / 2)) {
             $this->decision = Constantes::SEMESTRE_NON_VALIDE;
             $this->conseil = 'Attention, moins de la moitié des UE est validé. Il faut compenser sur le semestre suivant';
+        } else {
+            $this->decision = Constantes::SEMESTRE_NON_VALIDE;
+            $this->conseil = 'La moitié des UE sont validées. Le passage en année suivante sera possible, mais il faudra compenser.';
+        }
+    }
+
+    public function calculDecisionAnnee()
+    {
+        $nbUes = count($this->moyenneUes);
+        $nbUesValidees = 0;
+        if ($this->semestre->isPair()) {
+            // on est sur un semestre pair, on calcule la décision sur l'année et la proposition
+            foreach ($this->moyenneAnneeUes as $ue) {
+                if (Constantes::UE_VALIDE === $ue->decisionAnnee()) {
+                    ++$nbUesValidees;
+                }
+            }
+        }
+
+        if ($nbUes === $nbUesValidees) {
+            $this->decisionAnnee = Constantes::ANNEE_VALIDEE;
+            $this->propositionAnnee = 'Niveau Suivant';
+        } elseif (0 === $nbUesValidees) {
+            $this->decisionAnnee = Constantes::ANNEE_NON_VALIDEE;
+            $this->propositionAnnee = 'REO ou RED';
+        } elseif ($nbUesValidees < ($nbUes / 2)) {
+            $this->decision = Constantes::ANNEE_NON_VALIDEE;
+            $this->propositionAnnee = 'REO ou RED';
         } else {
             $this->decision = Constantes::SEMESTRE_NON_VALIDE;
             $this->conseil = 'La moitié des UE sont validées. Le passage en année suivante sera possible, mais il faudra compenser.';
@@ -93,7 +134,8 @@ class EtudiantSousCommissionApc
         // on ne récupère la scolarité que par rapport au diplôme en cours
         foreach ($this->etudiant->getScolarites() as $scolarite) {
             if ($scolarite->getSemestre()->getDiplome() === $this->etudiant->getDiplome()) {
-                $this->scolarite[$scolarite->getSemestre()->getOrdreLmd()] = new Scolarite($scolarite);
+                $this->scolarite[$scolarite->getSemestre()->getOrdreLmd()] = new ScolariteApc($scolarite,
+                    $this->uesSemestrePrecedent);
             }
         }
     }
@@ -160,6 +202,17 @@ class EtudiantSousCommissionApc
                     }
                 }
             }
+        }
+    }
+
+    public function calculMoyennesAnnee()
+    {
+
+        foreach ($this->moyenneUes as $ue) {
+            $moyUeAnnee = new MoyenneAnneeUeApc();
+            $moyUeAnnee->moyenneSemestreImpair = $this->scolarite[$this->semestre->getPrecedent()->getOrdreLmd()]->moyenneUes[$ue->ue->getNumeroUe()];
+            $moyUeAnnee->moyenneSemestrePair = $ue;
+            $this->moyenneAnneeUes[$ue->ue->getNumeroUe()] = $moyUeAnnee;
         }
     }
 }

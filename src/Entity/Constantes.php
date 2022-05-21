@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Constantes.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Constantes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/10/2021 10:33
+ * @lastUpdate 20/05/2022 11:54
  */
 
 namespace App\Entity;
@@ -200,8 +200,10 @@ class Constantes
 
     final public const SEUIL_UE = 8;
     final public const SEUIL_MOYENNE = 10;
+    final public const ANNEE_VALIDEE = 'V';
     final public const SEMESTRE_VALIDE = 'V';
     final public const SEMESTRE_NON_VALIDE = 'NV';
+    final public const ANNEE_NON_VALIDEE = 'NV';
     final public const SEMESTRE_VCA = 'VCA';
     final public const SEMESTRE_VCJ = 'VCJ';
     final public const PROPOSITION_INDEFINIE = '?';
