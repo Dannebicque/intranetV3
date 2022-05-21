@@ -7,7 +7,9 @@
                 <th>{{ 'table.ordre'|trans }}</th>
                 <th>{{ 'table.semestre'|trans }}</th>
                 <th>{{ 'table.moyenneues'|trans }}</th>
-                <th>{{ 'table.moyenne'|trans }}</th>
+                {% if etudiant.semestre.diplome.typeDiplome.apc == false %}
+                    <th>{{ 'table.moyenne'|trans }}</th>
+                {% endif %}
                 <th>{{ 'table.decision'|trans }}</th>
                 <th>{{ 'table.proposition'|trans }}</th>
                 <th>{{ 'table.infos'|trans }}</th>
@@ -34,7 +36,9 @@
                             {% else %}
                                 EC
                             {% endif %}</td>
-                        <td>{{ parcour.moyenne|styleMoyenne }}</td>
+                        {% if etudiant.semestre.diplome.typeDiplome.apc == false %}
+                            <td>{{ parcour.moyenne|styleMoyenne }}</td>
+                        {% endif %}
                         <td>{{ parcour.decision|styleDecision }}</td>
                         <td>{{ parcour.proposition }}</td>
                         <td><a href="{{ path('app_etudiant_scolarite_detail', {'id': parcour.id}) }}"
