@@ -3,8 +3,9 @@
         <h4 class="card-title" id="changeSemestreNotesTitre">{{ 'bloc.note.apc.etu.heading'|trans({'%semestre%':
                 semestre.display}) }}</h4>
         <div class="card-header-actions">
-            <a class="btn btn-info changeprofil" href="{{ path('profil_etudiant_apc', {slug: etudiant.slug}) }}">Revenir
-                                                                                                              au semestre en cours</a>
+            <a class="btn btn-info changeprofil" href="{{ path('profil_etudiant_apc', {slug: etudiant.slug}) }}"
+               data-id="profil-notes-apc">
+                Revenir au semestre en cours</a>
             <select class="form-select" id="changeSemestreNotes">
                 <option value="">Semestres précédents</option>
                 {% for prec in semestresPrecedents %}

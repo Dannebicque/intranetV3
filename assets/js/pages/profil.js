@@ -1,8 +1,8 @@
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/profil.js
+// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/profil.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/09/2021 09:01
+// @lastUpdate 21/05/2022 08:07
 import {addCallout} from '../util'
 import {get, load, post} from '../fetch'
 
@@ -84,7 +84,7 @@ $(document).on('click', '.changeprofil', function (e) {
         })
       })
     }
-    if ($onglet.attr('id') === 'profil-notes-apc') {
+    if ($onglet.attr('id') === 'profil-notes-apc' || $onglet.data('id') === 'profil-notes-apc') {
       changeSemestreNotes()
     }
     if ($onglet.attr('id') === 'profil-notes') {
