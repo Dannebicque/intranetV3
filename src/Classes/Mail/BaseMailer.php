@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Mail/BaseMailer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/05/2022 17:05
+ * @lastUpdate 22/05/2022 18:20
  */
 
 /*
@@ -71,7 +71,7 @@ class BaseMailer
         return $this->configuration->getExpediteurIntranet();
     }
 
-    private function getReplyTo(array $options, Email|TemplatedEmail $mail): void
+    private function getReplyTo(array $options): void
     {
         if (array_key_exists('replyTo', $options) && '' !== $options['replyTo']) {
             if (is_array($options['replyTo'])) {

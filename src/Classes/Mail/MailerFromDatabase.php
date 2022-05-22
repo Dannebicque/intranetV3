@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Mail/MailerFromDatabase.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/05/2022 17:05
+ * @lastUpdate 22/05/2022 18:20
  */
 
 namespace App\Classes\Mail;
@@ -30,11 +30,6 @@ class MailerFromDatabase extends BaseMailer
     ) {
         parent::__construct($mailer, $translator, $configuration);
     }
-
-//    public function initEmail(): void
-//    {
-//        $this->mail = (new Email()); //pourquoi pas TemplatedEmail ?
-//    }
 
     /**
      * @throws LoaderError
