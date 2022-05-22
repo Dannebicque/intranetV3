@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.stage.fiche_suivi.show.heading'|trans({'%etudiant%':stage_fiche_suivi.stage.etudiant
+        .displayPr}) }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('administration_stage_fiche_suivi_export', {id: stage_fiche_suivi.id}) }}"
+               class="btn btn-primary btn-sm btn-float"
+               title="{{ 'atitle.imprimer_pdf'|trans }}"
+               data-bs-toggle="tooltip"
+               data-bs-placement="bottom">
+                <i class="{{ iconPrint }}"></i>
+                <span class="sr-only">{{ 'atitle.imprimer_pdf'|trans }}</span>
+            </a>
+            <a href="{{ path('administration_stage_fiche_suivi_delete', {id: stage_fiche_suivi.id}) }}"
+               data-csrf="{{ csrf_token('delete' ~ stage_fiche_suivi.id) }}"
+               class="btn btn-danger btn-sm btn-float supprimer"
+               title="{{ 'atitle.supprimer'|trans }}"
+               data-bs-toggle="tooltip"
+               data-bs-placement="bottom">
+                <i class="{{ iconDelete }}"></i>
+                <span class="sr-only">{{ 'atitle.supprimer'|trans }}</span>
+            </a>
+            <a href="{{ path('administration_stage_fiche_suivi_edit', {id: stage_fiche_suivi.id}) }}"
+               class="btn btn-warning btn-sm btn-float"
+               title="{{ 'atitle.modifier'|trans }}"
+               data-bs-toggle="tooltip"
+               data-bs-placement="bottom">
+                <i class="{{ iconEdit }}"></i>
+                <span class="sr-only">{{ 'atitle.modifier'|trans }}</span>
+            </a>
+
+            <a href="{{ path('administration_stage_fiche_suivi_index',{stage:stage_fiche_suivi.stage.id}) }}"
+               class="btn btn-primary btn-float"
+               title="{{ 'atitle.retour.stage.etudiant'|trans }}"
+               data-bs-toggle="tooltip"
+               data-bs-placement="bottom">
+                <i class="fas fa-arrow-left"></i>
+                <span class="sr-only">{{ 'atitle.retour.stage.etudiant'|trans }}</span>
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.stage.fiche_suivi.show.heading'|trans({'%etudiant%':stage_fiche_suivi
+            .stage.etudiant.displayPr}) }}</h4>
+        <div class="card-body">
+
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>Methode</th>
+                    <td>{{ stage_fiche_suivi.methodeLong }}</td>
+                </tr>
+                <tr>
+                    <th>Commentaire</th>
+                    <td>{{ stage_fiche_suivi.commentaire|nl2br }}</td>
+                </tr>
+                <tr>
+                    <th>Missions</th>
+                    <td>{{ stage_fiche_suivi.missions|nl2br }}</td>
+                </tr>
+                <tr>
+                    <th>Integration</th>
+                    <td>{{ stage_fiche_suivi.integrationLong }}</td>
+                </tr>
+                <tr>
+                    <th>Initiative</th>
+                    <td>{{ stage_fiche_suivi.initiativeLong }}</td>
+                </tr>
+                <tr>
+                    <th>Adaptation</th>
+                    <td>{{ stage_fiche_suivi.adaptationLong }}</td>
+                </tr>
+                <tr>
+                    <th>Performance</th>
+                    <td>{{ stage_fiche_suivi.performanceLong }}</td>
+                </tr>
+                <tr>
+                    <th>Delais</th>
+                    <td>{{ stage_fiche_suivi.delaisLong }}</td>
+                </tr>
+                <tr>
+                    <th>Comportement</th>
+                    <td>{{ stage_fiche_suivi.comportementLong }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.created'|trans }}</th>
+                    <td>{{ stage_fiche_suivi.created|format_datetime('medium', 'short') }}</td>
+                </tr>
+                <tr>
+                    <th>{{ 'table.updated'|trans }}</th>
+                    <td>{{ stage_fiche_suivi.updated|format_datetime('medium', 'short') }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

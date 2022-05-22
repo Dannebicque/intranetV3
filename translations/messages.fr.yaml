@@ -403,6 +403,7 @@ adm:
     edit.heading: 'Modification d''une période de stage'
   stage:
     fiche_suivi:
+      index.heading: 'Liste des fiches de suivi de stage'
       edit.heading: 'Modification d''une fiche de suivi de stage'
       new.heading: 'Création d''une fiche de suivi de stage'
       show.heading: 'Détails de la fiche de suivi de stage de %etudiant%'

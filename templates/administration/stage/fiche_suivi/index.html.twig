@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.stage.fiche_suivi.index.heading'|trans }}</h4>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for fiche in fiches %}
+                <tr>
+                    <td>Fiche du {{ fiche.created|format_datetime('long', 'short') }}</td>
+                    <td>
+                        <a href="{{ path('administration_stage_fiche_suivi_show', {id:fiche.id}) }}" class="btn
+                        btn-info"><i class="{{ iconShow }}"></i></a>
+                        <a href="{{ path('administration_stage_fiche_suivi_export', {id:fiche.id}) }}" class="btn
+                        btn-default"><i class="{{ iconPrint }}"></i></a>
+                        <a href="{{ path('administration_stage_fiche_suivi_edit', {id:fiche.id}) }}" class="btn
+                        btn-warning"><i class="{{ iconEdit }}"></i></a>
+                        <a href="{{ path('administration_stage_fiche_suivi_delete', {id:fiche.id}) }}" class="btn
+                        btn-danger supprimer"><i class="{{ iconDelete }}"></i></a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
+
+{% block header %}
+    {{ 'adm.stage.fiche_suivi.index.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+
+        <div class="buttons">
+            <a href="{{ path('administration_stage_fiche_suivi_new', {stage:stage.id}) }}"
+               class="btn btn-info btn-sm btn-float"
+               title="{{ 'atitle.creer_nouveau'|trans }}"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
+                <i class="{{ iconAdd }}"></i>
+                <span class="sr-only">{{ 'atitle.creer_nouveau'|trans }}</span>
+            </a>
+            <a href="{{ path('administration_stage_periode_gestion', {uuid:uuid}) }}"
+               class="btn btn-primary btn-float"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+
+               title="Gestion période de stage">
+                <i class="fas fa-home"></i>
+                <span class="sr-only">Gestion période de stage</span>
+            </a>
+        </div>
+    </div>
+{% endblock %}
+

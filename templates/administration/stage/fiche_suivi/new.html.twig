@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.stage.fiche_suivi.new.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('administration_stage_fiche_suivi_index', {stage:stage.id}) }}"
+               class="btn btn-primary btn-float"
+               title="{{ 'atitle.retour_liste'|trans }}"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
+                <i class="fas fa-arrow-left"></i>
+                <span class="sr-only">{{ 'atitle.retour_liste'|trans }}</span>
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.stage.fiche_suivi.new.heading'|trans }}</h4>
+        <div class="card-body">
+            {{ include('composants/adm-form.html.twig') }}
+        </div>
+    </div>
+{% endblock %}

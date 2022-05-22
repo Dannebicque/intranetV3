@@ -1,6 +1,6 @@
 <div class="buttons">
     {% if retour is defined %}
-        <a href="{{ path(retour.path) }}"
+        <a href="{{ path(retour.path, retour.params is defined ? retour.params : {}) }}"
            class="btn btn-primary btn-float"
            data-bs-toggle="tooltip" data-bs-placement="bottom"
 
