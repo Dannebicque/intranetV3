@@ -6,7 +6,9 @@
 
 {%block headeractions %}
     <div class="header-action">
-        {{ include('composants/adm-buttons-new.html.twig', {elt: 'article'}) }}
+        {{ include('composants/adm-buttons-new.html.twig', {elt: 'alternace_fiche_suivi', retour:
+            {path: 'administration_alternance_show', params: {id:alternance.id}, titre:'Détails de
+            l\'alternance'}}) }}
     </div>
 {% endblock %}
 

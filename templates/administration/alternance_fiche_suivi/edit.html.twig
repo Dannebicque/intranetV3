@@ -6,7 +6,35 @@
 
 {%block headeractions %}
     <div class="header-action">
-        {{ include('composants/adm-buttons-new.html.twig', {elt: 'article'}) }}
+        <div class="buttons">
+            <a href="{{ path('administration_alternance_fiche_suivi_delete', {id: alternance_fiche_suivi.id}) }}"
+               data-csrf="{{ csrf_token('delete' ~ alternance_fiche_suivi.id) }}"
+               class="btn btn-danger btn-sm btn-float supprimer"
+               title="{{ 'atitle.supprimer'|trans }}"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
+                <i class="{{ iconDelete }}"></i>
+                <span class="sr-only">{{ 'atitle.supprimer'|trans }}</span>
+            </a>
+            <a href="{{ path('administration_alternance_fiche_suivi_show', {id: alternance_fiche_suivi.id}) }}"
+               class="btn btn-info btn-sm btn-float"
+               title="{{ 'atitle.voir'|trans }}"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
+                <i class="{{ iconShow }}"></i>
+                <span class="sr-only">{{ 'atitle.voir'|trans }}</span>
+            </a>
+                <a href="{{ path('administration_alternance_show', {id:alternance_fiche_suivi.alternance.id}) }}"
+                   class="btn btn-primary btn-float"
+                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+
+                   title="Détail de l'alternance">
+                    <i class="fas fa-home"></i>
+                    <span class="sr-only">Détail de l'alternance</span>
+                </a>
+
+        </div>
+
     </div>
 {% endblock %}
 

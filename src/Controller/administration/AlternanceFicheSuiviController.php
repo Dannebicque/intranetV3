@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AlternanceFicheSuiviController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 10:31
+ * @lastUpdate 22/05/2022 11:10
  */
 
 namespace App\Controller\administration;
@@ -44,6 +44,7 @@ class AlternanceFicheSuiviController extends BaseController
 
         return $this->render('administration/alternance_fiche_suivi/new.html.twig', [
             'alternance_fiche_suivi' => $alternanceFicheSuivi,
+            'alternance' => $alternance,
             'form' => $form->createView(),
         ]);
     }

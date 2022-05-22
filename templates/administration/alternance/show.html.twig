@@ -43,6 +43,8 @@
                                 </tr>
                             {% endfor %}
                         </table>
+                        <a href="{{ path('administration_alternance_fiche_suivi_new', {alternance:alternance.id})
+                        }}" class="btn btn-success"><i class="{{ iconAdd }}"></i> Ajouter une fiche de suivi</a>
                     </td>
                 </tr>
                 {{ include('composants/entreprise_array.html.twig', {entreprise: alternance.entreprise}) }}
