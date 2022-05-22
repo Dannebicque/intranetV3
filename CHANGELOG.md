@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.7.3](https://github.com/Dannebicque/intranetV3/compare/v3.7.2...v3.7.3) (2022-05-22)
+
+
+### Features
+
+* [Document] Refactoring, corrections et finalisation de l'administration des documents et des catégories ([b54dd6c](https://github.com/Dannebicque/intranetV3/commit/b54dd6caae44fda528059f0ca3cf97e97a7e5885))
+* [Documents] Gestion documentaire Admin/Qualité ([c261ba3](https://github.com/Dannebicque/intranetV3/commit/c261ba33e65a71866a8e2e98aacd65bc98a25d93))
+* [Sous-Comm] Ajout du bilan annuel dans les sous-comm APC ([8fce081](https://github.com/Dannebicque/intranetV3/commit/8fce081e5ec546652eac069d15aaeddfdbc24afb))
+* [Stage] Suivi des stages partie administration ([501c826](https://github.com/Dannebicque/intranetV3/commit/501c826e948453bd32b569a59dcb5ba0a4f11600))
+
+
+### Bug Fixes
+
+* [Alternance] Corrections de liens pour le suivi des alternances ([e1890fc](https://github.com/Dannebicque/intranetV3/commit/e1890fc49e6fdb0acb354c6c462f2db4129c1a56))
+* [Contact] Gestion du champs vide. ([364c088](https://github.com/Dannebicque/intranetV3/commit/364c088d435bff7da2d559c4dc96f488d150b956))
+* [Enquete] Correction request qui récupère un tableau ([7c6dcc4](https://github.com/Dannebicque/intranetV3/commit/7c6dcc417c4e5a539ca217fd8ca2d05725b07d24))
+* [Profil] Navigation semestre pour le bilan APC ([1a70ea0](https://github.com/Dannebicque/intranetV3/commit/1a70ea0827aadd0f83cdc5bc7bd6b9fe8b291543))
+* [Profil] Pas de moyenne générale si APC. Suppression de la colonne qui était vide. ([56b0b24](https://github.com/Dannebicque/intranetV3/commit/56b0b24c5875ec64fe00641f2869af344d53c72a))
+* [Request] Corrections suite passage Sf6 ([ac91af3](https://github.com/Dannebicque/intranetV3/commit/ac91af3db1ac5a54b7473e33484d2f46936780bb))
+* [Request] Corrections suite passage Sf6 ([002ca66](https://github.com/Dannebicque/intranetV3/commit/002ca66381a736da531b6da1979e55653effb9cc))
+* [Security] Corrections suite passage Sf6 ([4540a1e](https://github.com/Dannebicque/intranetV3/commit/4540a1eb883eaeb942037e9976126b49666cfa28))
+
 ### [3.7.2](https://github.com/Dannebicque/intranetV3/compare/v3.7.1...v3.7.2) (2022-05-16)
 
 
