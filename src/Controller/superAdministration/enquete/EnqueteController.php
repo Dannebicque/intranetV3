@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/enquete/EnqueteController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/enquete/EnqueteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/07/2021 09:38
+ * @lastUpdate 22/05/2022 11:35
  */
 
 namespace App\Controller\superAdministration\enquete;
@@ -87,7 +87,7 @@ class EnqueteController extends BaseController
             $request->request->get('dateOuverture')));
         $questionnaireQualite->setDateFermeture(Carbon::createFromFormat('Y-m-d\TH:i',
             $request->request->get('dateFermeture')));
-        $sections = $request->request->get('sections');
+        $sections = $request->request->all()['sections'];
 
         if (null !== $sections) {
             foreach ($sections as $key => $values) {
