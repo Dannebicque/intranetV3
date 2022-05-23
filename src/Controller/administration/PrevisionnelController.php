@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PrevisionnelController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 10:57
+ * @lastUpdate 23/05/2022 21:15
  */
 
 namespace App\Controller\administration;
@@ -44,7 +44,7 @@ class PrevisionnelController extends BaseController
         }
 
         return $this->render('administration/previsionnel/index.html.twig', [
-            'matieres' => $typeMatiereManager->findByDepartement($this->dataUserSession->getDepartement()),
+            'matieres' => $typeMatiereManager->findByDepartement($this->getDepartement()),
             'annee' => $annee,
         ]);
     }
@@ -199,7 +199,7 @@ class PrevisionnelController extends BaseController
         }
 
         return $this->render('administration/previsionnel/new.html.twig', [
-            'matieres' => $typeMatiereManager->findByDepartement($this->dataUserSession->getDepartement()),
+            'matieres' => $typeMatiereManager->findByDepartement($this->getDepartement()),
         ]);
     }
 
@@ -245,7 +245,7 @@ class PrevisionnelController extends BaseController
         $anneeDepart = $request->request->get('annee_depart');
         $annee_destination = $request->request->get('annee_destination');
         $annee_concerver = $request->request->get('annee_concerver');
-        $personnels = $personnelRepository->findByDepartement($this->dataUserSession->getDepartement());
+        $personnels = $personnelRepository->findByDepartement($this->getDepartement());
         $tPersonnels = [];
         foreach ($personnels as $personnel) {
             $tPersonnels[$personnel->getId()] = $personnel;
@@ -296,7 +296,7 @@ class PrevisionnelController extends BaseController
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         if ($this->isCsrfTokenValid('supprimer', $request->request->get('_token'))) {
-            $previsionnelManager->supprimeAnnee($this->dataUserSession->getDepartement(),
+            $previsionnelManager->supprimeAnnee($this->getDepartement(),
                 $request->request->get('annee_supprimer'));
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'previsionnel.delete.success.flash');
         }
