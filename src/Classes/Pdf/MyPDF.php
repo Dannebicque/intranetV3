@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Pdf/MyPDF.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Pdf/MyPDF.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/09/2021 09:08
+ * @lastUpdate 24/05/2022 12:41
  */
 
 /*
@@ -14,6 +14,7 @@
 namespace App\Classes\Pdf;
 
 use App\Entity\Departement;
+use App\Utils\Tools;
 use Carbon\Carbon;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Knp\Snappy\Pdf;
@@ -78,7 +79,7 @@ class MyPDF
     ): void {
         $output = self::genereOutputPdf($template, $data, $name, $departement);
 
-        file_put_contents($dir.$name.'.pdf', $output);
+        file_put_contents($dir.Tools::slug($name).'.pdf', $output);
     }
 
     /**
@@ -88,6 +89,8 @@ class MyPDF
      */
     private static function genereOutputPdf(string $template, array $data, string $name, ?Departement $departement = null): PdfResponse
     {
+        $name = Tools::slug($name);
+
         // todo: est-ce que le département est encore nécessaire sur l'export ???
         $html = self::$templating->render($template, $data);
 
