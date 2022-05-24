@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Utils/Tools.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Utils/Tools.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 19:11
+ * @lastUpdate 24/05/2022 12:41
  */
 
 /*
@@ -19,6 +19,7 @@ use function chr;
 use Exception;
 use function ord;
 use RuntimeException;
+use Symfony\Component\String\Slugger\AsciiSlugger;
 
 abstract class Tools
 {
@@ -99,25 +100,9 @@ abstract class Tools
         return str_replace($search, $replace, $texte);
     }
 
-    public static function slug(string $texte): array|string|null
+    public static function slug(string $texte): string
     {
-        /* Get rid of accented characters */
-        $search = explode(',', 'ç,æ,œ,á,é,í,ó,ú,à,è,ì,ò,ù,ä,ë,ï,ö,ü,ÿ,â,ê,î,ô,û,å,e,i,ø,u');
-        $replace = explode(',', 'c,ae,oe,a,e,i,o,u,a,e,i,o,u,a,e,i,o,u,y,a,e,i,o,u,a,e,i,o,u');
-        $texte = str_replace($search, $replace, $texte);
-
-        /* Lowercase all the characters */
-        $texte = mb_strtolower($texte);
-
-        /* Avoid whitespace at the beginning and the ending */
-        $texte = trim($texte);
-
-        /* Replace all the characters that are not in a-z or 0-9 by a hyphen */
-        $texte = preg_replace('/[^a-z\d]/', '-', $texte);
-
-        /* Remove hyphen anywhere it's more than one */
-
-        return preg_replace("/\-+/", '-', $texte);
+        return (new AsciiSlugger())->slug($texte);
     }
 
     public static function personnaliseTexte(string $texte, array $config): string
