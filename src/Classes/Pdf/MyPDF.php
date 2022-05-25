@@ -4,16 +4,11 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Pdf/MyPDF.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2022 12:41
- */
-
-/*
- * Pull your hearder here, for exemple, Licence header.
+ * @lastUpdate 25/05/2022 21:23
  */
 
 namespace App\Classes\Pdf;
 
-use App\Entity\Departement;
 use App\Utils\Tools;
 use Carbon\Carbon;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
@@ -60,9 +55,9 @@ class MyPDF
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public static function generePdf(string $template, array $data, string $name, ?Departement $departement = null): PdfResponse
+    public static function generePdf(string $template, array $data, string $name): PdfResponse
     {
-        return self::genereOutputPdf($template, $data, $name, $departement);
+        return self::genereOutputPdf($template, $data, $name);
     }
 
     /**
@@ -74,10 +69,9 @@ class MyPDF
         string $template,
         array $data,
         string $name,
-        string $dir,
-        ?Departement $departement = null
+        string $dir
     ): void {
-        $output = self::genereOutputPdf($template, $data, $name, $departement);
+        $output = self::genereOutputPdf($template, $data, $name);
 
         file_put_contents($dir.Tools::slug($name).'.pdf', $output);
     }
@@ -87,11 +81,10 @@ class MyPDF
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    private static function genereOutputPdf(string $template, array $data, string $name, ?Departement $departement = null): PdfResponse
+    private static function genereOutputPdf(string $template, array $data, string $name): PdfResponse
     {
         $name = Tools::slug($name);
 
-        // todo: est-ce que le département est encore nécessaire sur l'export ???
         $html = self::$templating->render($template, $data);
 
         if ('.pdf' !== mb_substr($name, -4)) {

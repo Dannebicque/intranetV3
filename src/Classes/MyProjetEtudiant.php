@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyProjetEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/05/2022 10:16
+ * @lastUpdate 25/05/2022 21:23
  */
 
 /*
@@ -54,7 +54,7 @@ class MyProjetEtudiant
                 break;
             case ProjetEtudiant::ETAT_PROJET_DEPOSE:
                 $this->stageEtudiant->setEtatProjet(ProjetEtudiant::ETAT_PROJET_DEPOSE);
-                $this->stageEtudiant->setDateDepotFormulaire(new Carbon('now'));
+               // $this->stageEtudiant->setDateDepotFormulaire(new Carbon('now'));
                 $eventNotif = ProjetEvent::CHGT_ETAT_PROJET_DEPOSE;
                 break;
             case ProjetEtudiant::ETAT_PROJET_VALIDE:
@@ -64,7 +64,7 @@ class MyProjetEtudiant
                 break;
             case ProjetEtudiant::ETAT_PROJET_IMPRIME:
                 $this->stageEtudiant->setEtatProjet(ProjetEtudiant::ETAT_PROJET_IMPRIME);
-                $this->stageEtudiant->setDateImpression(new Carbon('now'));
+              //  $this->stageEtudiant->setDateImpression(new Carbon('now'));
                 $eventNotif = ProjetEvent::CHGT_ETAT_PROJET_IMPRIME;
                 break;
         }

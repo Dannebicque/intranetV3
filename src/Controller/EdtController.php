@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:53
+ * @lastUpdate 25/05/2022 21:23
  */
 
 namespace App\Controller;
@@ -164,7 +164,7 @@ class EdtController extends BaseController
     {
         $ical = $myEdtExport->export($this->getUser(), 'ics', 'personnel');
 
-        return new Response($ical, \Symfony\Component\HttpFoundation\Response::HTTP_OK, [
+        return new Response($ical, Response::HTTP_OK, [
             'Content-Type' => 'application/force-download',
             'Content-Disposition' => 'attachment; filename="export.ics"',
         ]);
@@ -217,7 +217,7 @@ class EdtController extends BaseController
 
         return $myPDF->generePdf('pdf/edt/edtPersoSemaine.html.twig',
             ['edt' => $edt, 'tabHeures' => Constantes::TAB_HEURES],
-            'export-semaine-edt', $this->dataUserSession->getDepartement()->getLibelle());
+            'export-semaine-edt');
     }
 
     #[Route(path: '/etudiant/export/ical', name: 'edt_etudiant_export_ical')]
@@ -226,7 +226,7 @@ class EdtController extends BaseController
         // Le nombre de semaine selon la configuraiton
         $ical = $myEdtExport->export($this->getUser(), 'ics', 'etudiant');
 
-        return new Response($ical, \Symfony\Component\HttpFoundation\Response::HTTP_OK, [
+        return new Response($ical, Response::HTTP_OK, [
             'Content-Type' => 'application/force-download',
             'Content-Disposition' => 'attachment; filename="export.ics"',
         ]);
