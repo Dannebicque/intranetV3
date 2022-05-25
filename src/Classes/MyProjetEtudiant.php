@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyProjetEtudiant.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyProjetEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/05/2021 19:37
+ * @lastUpdate 25/05/2022 10:16
  */
 
 /*
@@ -69,14 +69,16 @@ class MyProjetEtudiant
                 break;
         }
 
+        $this->entityManger->persist($this->stageEtudiant);
+        $this->entityManger->flush();
+
         $event = new ProjetEvent($this->stageEtudiant);
 
         if ('' !== $eventNotif) {
             $this->eventDispatcher->dispatch($event, $eventNotif);
         }
 
-        $this->entityManger->persist($this->stageEtudiant);
-        $this->entityManger->flush();
+
     }
 
     /**
