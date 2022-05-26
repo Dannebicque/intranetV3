@@ -49,7 +49,7 @@
     "unreleased": true,
     "commitLimit": false
   },
-  "version": "3.7.3",
+  "version": "3.7.4",
   "author": "David Annebicque",
   "name": "intranetv3",
   "repository": {

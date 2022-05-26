@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.7.4](https://github.com/Dannebicque/intranetV3/compare/v3.7.3...v3.7.4) (2022-05-26)
+
+
+### Features
+
+* [Documents] Gestion des niveaux de type de document infini, ajout dans la recherche globale des documents, gestion du breadcrumb et des types de documents dans la navigation. ([3f9eeda](https://github.com/Dannebicque/intranetV3/commit/3f9eeda144628a8fe0e78b975f64f6cfa8cb32dd))
+* [Qualité] Ajout de l'assistant(e) en copie de la synthèse ([b5b6173](https://github.com/Dannebicque/intranetV3/commit/b5b6173134e2d7d376d60caebb40850325ac435a))
+
+
+### Bug Fixes
+
+* [Documents] Modal de détail d'un type de document ([d7a137f](https://github.com/Dannebicque/intranetV3/commit/d7a137f5c2e6ecefb965154da75179f00a111ef6))
+* [Mailer] ReplyTo ([596ea4b](https://github.com/Dannebicque/intranetV3/commit/596ea4b33982967d936d9c132de49ea67bc74ea5))
+* [PDF] noms des fichiers PDF ([16810c1](https://github.com/Dannebicque/intranetV3/commit/16810c172b591f0af79dcbea82b747038fbc2a80))
+* [PDF] Suppression dépendance à département ([0ee07c7](https://github.com/Dannebicque/intranetV3/commit/0ee07c74824647e39da61e667edc8817e9e65779))
+* [Projet] Erreur lors du mailing ([21420de](https://github.com/Dannebicque/intranetV3/commit/21420de1866d4e19382fb5e1cd52884cf0a94efe))
+* [Qualité] Droit sur Originaux ([7e72927](https://github.com/Dannebicque/intranetV3/commit/7e729276a7a7a0ce1546778e11d3029b8e4d8c2d))
+* [recherche] taille croix fermeture. ([3d04b1e](https://github.com/Dannebicque/intranetV3/commit/3d04b1e458440d9a420251012799f91382c4d05e))
+
 ### [3.7.3](https://github.com/Dannebicque/intranetV3/compare/v3.7.2...v3.7.3) (2022-05-22)
 
 
