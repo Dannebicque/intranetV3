@@ -318,7 +318,7 @@
                         <div class="col-md-2"></div>
 
                         <div class="col-md-5 d-grid">
-                            <a href=""
+                            <a href="{{ path('administration_apc_ressource_new', {diplome:diplome.id, ppn: ppn.id}) }}"
                                class="btn btn-success d-block" title="Ajouter une Ressource"
                                data-semestre="{{ semestre.id }}"><i
                                         class="fa fa-plus-circle"></i> Ajouter une Ressource au
@@ -326,7 +326,7 @@
                             </a>
                         </div>
                         <div class="col-md-5 d-grid">
-                            <a href=""
+                            <a href="{{ path('administration_apc_sae_new', {diplome:diplome.id, ppn: ppn.id}) }}"
                                class="btn btn-success d-block" title="Ajouter une SAÉ"
                                data-semestre="{{ semestre.id }}"><i
                                         class="fa fa-plus-circle"></i> Ajouter une SAÉ au
