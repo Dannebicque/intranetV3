@@ -52,11 +52,12 @@ security:
     - { path: '^/[a-z]{2}/connexion', roles: PUBLIC_ACCESS }
     - { path: '^/[a-z]{2}/mentions-legales', roles: PUBLIC_ACCESS }
     - { path: '^/[a-z]{2}/login', roles: PUBLIC_ACCESS }
-    - { path: '^/[a-z]{2}/api', roles: PUBLIC_ACCESS }
+    #- { path: '^/[a-z]{2}/api', roles: PUBLIC_ACCESS }
     - { path: '^/[a-z]{2}/administration', roles: [ROLE_PERMANENT, ROLE_SUPER_ADMIN] }
     - { path: '^/[a-z]{2}/ldap', roles: [ ROLE_PERMANENT, ROLE_SUPER_ADMIN, ROLE_RH ] }
     - { path: '^/[a-z]{2}/administratif', roles: [ ROLE_ADMINISTRATIF ] }
     - { path: '^/[a-z]{2}/', roles: IS_AUTHENTICATED_FULLY }
+    - { path: '^/[a-z]{2}/api', roles: IS_AUTHENTICATED_FULLY }
 
 when@test:
   security:

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/QuestionnaireSectionType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/QuestionnaireSectionType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/11/2021 17:36
+ * @lastUpdate 26/05/2022 11:38
  */
 
 namespace App\Form;
@@ -43,6 +43,7 @@ class QuestionnaireSectionType extends AbstractType
             ->add('sectionAdapter', ChoiceType::class, [
                 'choices' => $listeSectionAdapter,
                 'label' => 'label.sectionAdapter',
+                'required' => false,
                 'expanded' => true,
                 'mapped' => false,
             ])

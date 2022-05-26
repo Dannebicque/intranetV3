@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireQuestion.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/QuestionnaireQuestion.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/11/2021 17:38
+ * @lastUpdate 26/05/2022 11:21
  */
 
 namespace App\Entity;
@@ -41,13 +41,13 @@ class QuestionnaireQuestion extends BaseEntity
         self::QUESTION_TYPE_YESNO => self::QUESTION_TYPE_YESNO,
     ];
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $libelle = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $help = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $type = null;
 
     /**
@@ -78,19 +78,19 @@ class QuestionnaireQuestion extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'questionParent', targetEntity: QuestionnaireQuestion::class)]
     private Collection $questionsEnfants;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $obligatoire = true;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 30)]
+    #[ORM\Column(type: Types::STRING, length: 30)]
     private string $alignement = 'HORIZONTAL_CENTER';
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $parametre = '[]';
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER)]
     private ?int $maxChoix = 1;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $configuration = '[]';
 
     /**
@@ -370,7 +370,7 @@ class QuestionnaireQuestion extends BaseEntity
     public function addQuestionnaireQuestionTag(QuestionnaireQuestionTag $questionnaireQuestionTag): self
     {
         if (!$this->questionnaireQuestionTags->contains($questionnaireQuestionTag)) {
-            $this->questionnaireQuestionTags[] = $questionnaireQuestionTag;
+            $this->questionnaireQuestionTags->add($questionnaireQuestionTag);
             $questionnaireQuestionTag->addQuestion($this);
         }
 

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/questionnaire/administration/QuestionnaireSectionController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/administration/QuestionnaireSectionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/11/2021 17:38
+ * @lastUpdate 26/05/2022 11:48
  */
 
 namespace App\Controller\questionnaire\administration;
@@ -22,7 +22,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/administratif/questionnaire/section', name: 'sadm_questionnaire_section_')]
-// #[Route('/administration/questionnaire/section', name: 'adm_questionnaire_section_')]
 class QuestionnaireSectionController extends BaseController
 {
     /**
@@ -57,8 +56,10 @@ class QuestionnaireSectionController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $t = $request->request->all();
+            $t = array_shift($t);
             $questionnaireSection->setConfig([
-                'sectionAdapter' => $request->request->get('questionnaire_section')['sectionAdapter'],
+                'sectionAdapter' => $t['sectionAdapter'],
             ]);
             $this->entityManager->persist($questionnaireSection);
             $this->entityManager->flush();

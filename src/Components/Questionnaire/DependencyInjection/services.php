@@ -1,14 +1,15 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/DependencyInjection/services.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/DependencyInjection/services.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/11/2021 11:41
+ * @lastUpdate 26/05/2022 11:36
  */
 
 namespace App\Components\Questionnaire\DependencyInjection;
 
+use App\Components\Questionnaire\Section\ConfigurableSection;
 use App\Components\Questionnaire\Section\EndSection;
 use App\Components\Questionnaire\Section\MatiereSectionAdapter;
 use App\Components\Questionnaire\Section\PrevisionnelSectionAdapter;
@@ -41,6 +42,7 @@ return static function (ContainerConfigurator $configurator): void {
     $services->set(TypeChainee::class)->tag('da.questionnaire.typequestion');
 
     $services->set(StartSection::class)->tag('da.questionnaire.typesection');
+    $services->set(ConfigurableSection::class)->tag('da.questionnaire.typesection');
     $services->set(Section::class)->tag('da.questionnaire.typesection');
     $services->set(EndSection::class)->tag('da.questionnaire.typesection');
 

@@ -28,7 +28,7 @@
                             <button data-action="questionnaire-question#changeTypeQuestion" class="btn btn-primary"
                                     data-value="{{ typeQuestion|fqn }}">
                                 <i class=" {{ constant('ICON', typeQuestion) }}"></i><br>
-                                {{ constant('LABEL', typeQuestion) }}
+                                {{ constant('LABEL', typeQuestion)|trans }}
                             </button>
                         </div>
                     {% endfor %}

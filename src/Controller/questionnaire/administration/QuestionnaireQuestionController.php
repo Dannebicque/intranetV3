@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/administration/QuestionnaireQuestionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/05/2022 12:56
+ * @lastUpdate 26/05/2022 11:03
  */
 
 namespace App\Controller\questionnaire\administration;
@@ -63,8 +63,10 @@ class QuestionnaireQuestionController extends BaseController
             if ($form->isSubmitted()) {
                 $this->entityManager->persist($questionnaireQuestion);
                 $this->entityManager->flush();
+                $t = $request->request->all();
+                $t = array_shift($t);
                 $this->traitementTags($questionnaireQuestion,
-                    $request->request->get($request->request->keys()[0])['newQuestionnaireQuestionTags']);//todo: fonctionne ? sinon all(), le request ne retrourannt plus un tableau
+                    $t['newQuestionnaireQuestionTags']);
                 $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'questionnaire_question.add.success.flash');
 
                 return $this->redirectToRoute('sadm_questionnaire_question_index', [], Response::HTTP_SEE_OTHER);
@@ -117,8 +119,10 @@ class QuestionnaireQuestionController extends BaseController
 
         if ($form->isSubmitted()) {
             $this->entityManager->flush();
+            $t = $request->request->all();
+            $t = array_shift($t);
             $this->traitementTags($questionnaireQuestion,
-                $request->request->get($request->request->keys()[0])['newQuestionnaireQuestionTags']);
+                $t['newQuestionnaireQuestionTags']);
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'questionnaire_question.edit.success.flash');
 
             if (null !== $request->request->get('btn_update')) {
@@ -184,15 +188,17 @@ class QuestionnaireQuestionController extends BaseController
         $tabTags = explode(';', $tags);
         foreach ($tabTags as $tag) {
             $tag = mb_strtolower(trim($tag));
-            $t = $this->questionnaireQuestionTagRepository->findOneBy(['libelle' => $tag]);
-            if (null === $t) {
-                $t = new QuestionnaireQuestionTag();
-                $t->setLibelle($tag);
-                $this->entityManager->persist($t);
-            }
+            if ('' !== $tag) {
+                $t = $this->questionnaireQuestionTagRepository->findOneBy(['libelle' => $tag]);
+                if (null === $t) {
+                    $t = new QuestionnaireQuestionTag();
+                    $t->setLibelle($tag);
+                    $this->entityManager->persist($t);
+                }
 
-            $questionnaireQuestion->addQuestionnaireQuestionTag($t);
-            $t->addQuestion($questionnaireQuestion);
+                $questionnaireQuestion->addQuestionnaireQuestionTag($t);
+                $t->addQuestion($questionnaireQuestion);
+            }
         }
         $this->entityManager->flush();
     }

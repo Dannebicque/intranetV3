@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireQuestionTag.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/QuestionnaireQuestionTag.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/11/2021 13:24
+ * @lastUpdate 26/05/2022 11:21
  */
 
 namespace App\Entity;
@@ -18,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: QuestionnaireQuestionTagRepository::class)]
 class QuestionnaireQuestionTag extends BaseEntity
 {
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 100)]
+    #[ORM\Column(type: Types::STRING, length: 100)]
     private ?string $libelle = null;
 
     /**

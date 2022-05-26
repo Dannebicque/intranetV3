@@ -1,37 +1,27 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/Section/ConfigurableSection.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Section/ConfigurableSection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/11/2021 12:20
+ * @lastUpdate 26/05/2022 12:08
  */
 
 namespace App\Components\Questionnaire\Section;
 
-use App\Components\Questionnaire\QuestionnaireRegistry;
 use App\Components\Questionnaire\Questions;
 use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
 use App\Entity\Annee;
 
-class ConfigurableSection
+class ConfigurableSection extends AbstractSection
 {
-    // todo: doit être un type de section... sinon comment créer la section ?
+    final public const LABEL = 'configurable.section';
 
     final public const NB_QUESTIONS_PAR_SECTION = 3;
     public ?AbstractSectionAdapter $sectionAdapter = null;
     public ?array $config = [];
     public string $type_calcul = '';
     public array $sections = []; // en mode configurable, on peut avoir la création de sections
-
-    private \App\Components\Questionnaire\DTO\Section $section;
-    private readonly Questions $questions;
-    private array $options;
-
-    public function __construct(private readonly QuestionnaireRegistry $questionnaireRegistry)
-    {
-        $this->questions = new Questions();
-    }
 
     public function addQuestions(AbstractQuestion $abstractQuestion): void
     {
