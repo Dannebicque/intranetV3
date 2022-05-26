@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/QualiteRelanceSubscriber.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/EventSubscriber/QualiteRelanceSubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/04/2021 10:04
+ * @lastUpdate 26/05/2022 08:35
  */
 
 namespace App\EventSubscriber;
@@ -68,6 +68,7 @@ class QualiteRelanceSubscriber implements EventSubscriberInterface
             if (null !== $questionnaire->getSemestre() && null !== $questionnaire->getSemestre()->getDiplome()) {
                 if (null !== $questionnaire->getSemestre()->getDiplome()->getResponsableDiplome()) {
                     $mails[] = $questionnaire->getSemestre()->getDiplome()->getResponsableDiplome()->getMailUniv();
+                    $mails[] = $questionnaire->getSemestre()->getDiplome()->getAssistantDiplome()?->getMailUniv();
                     $titre = 'Evaluation semestre '.$questionnaire->getSemestre()->getLibelle().', '.$questionnaire->getSemestre()->getDiplome()->getDisplay();
                 }
                 if (null !== $questionnaire->getSemestre()->getDiplome()->getOptResponsableQualite()) {
