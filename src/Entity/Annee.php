@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Annee.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Annee.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 26/05/2022 18:15
  */
 
 namespace App\Entity;
@@ -24,24 +24,24 @@ class Annee extends BaseEntity
 {
     use LifeCycleTrait;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20)]
+    #[ORM\Column(type: Types::STRING, length: 20)]
     private ?string $codeEtape = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 10)]
+    #[ORM\Column(type: Types::STRING, length: 10)]
     private ?string $codeVersion = null;
 
     #[Groups(groups: ['annee'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $libelle = null;
 
-    #[ORM\Column(name: 'ordre', type: \Doctrine\DBAL\Types\Types::INTEGER)]
+    #[ORM\Column(name: 'ordre', type: Types::INTEGER)]
     private int $ordre = 1;
 
     #[Groups(groups: ['annee'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 150, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 150, nullable: true)]
     private ?string $libelleLong = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $optAlternance = false;
 
     #[ORM\ManyToOne(targetEntity: Diplome::class, inversedBy: 'annees')]
@@ -54,7 +54,7 @@ class Annee extends BaseEntity
     #[ORM\OrderBy(value: ['ordreLmd' => 'ASC'])]
     private Collection $semestres;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $actif = true;
 
     /**
@@ -63,7 +63,7 @@ class Annee extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'annee', targetEntity: Alternance::class)]
     private Collection $alternances;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 30)]
+    #[ORM\Column(type: Types::STRING, length: 30)]
     private ?string $couleur = null;
 
     /**

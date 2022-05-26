@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/05/2022 08:24
+ * @lastUpdate 26/05/2022 18:28
  */
 
 namespace App\Entity;
@@ -32,7 +32,7 @@ class Semestre extends BaseEntity implements Stringable
         'date_administration',
         'semestre',
         'etudiants_administration',
-        'document_administration'
+        'document_administration',
     ])]
     private ?string $libelle = null;
 
@@ -503,7 +503,7 @@ class Semestre extends BaseEntity implements Stringable
     public function display(): string
     {
         if (null !== $this->getAnnee()) {
-            return $this->libelle . ' | ' . $this->getAnnee()->getLibelle();
+            return $this->libelle.' | '.$this->getAnnee()->getLibelle();
         }
 
         return $this->libelle;
@@ -522,7 +522,7 @@ class Semestre extends BaseEntity implements Stringable
     public function displayAvecTypeDiplome(): string
     {
         if (null !== $this->getAnnee() && null !== $this->getAnnee()->getDiplome() && null !== $this->getAnnee()->getDiplome()->getTypeDiplome()) {
-            return $this->getAnnee()->getDiplome()->getTypeDiplome()->getSigle() . ' | ' . $this->libelle;
+            return $this->getAnnee()->getDiplome()->getTypeDiplome()->getSigle().' | '.$this->libelle;
         }
 
         return $this->libelle;
@@ -1405,11 +1405,11 @@ class Semestre extends BaseEntity implements Stringable
 
     public function isPair(): bool
     {
-        return $this->getOrdreLmd() % 2 === 0;
+        return 0 === $this->getOrdreLmd() % 2;
     }
 
     public function isImpair(): bool
     {
-        return $this->getOrdreLmd() % 2 === 1;
+        return 1 === $this->getOrdreLmd() % 2;
     }
 }

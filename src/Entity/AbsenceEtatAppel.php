@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/AbsenceEtatAppel.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/AbsenceEtatAppel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/09/2021 20:42
+ * @lastUpdate 26/05/2022 18:15
  */
 
 namespace App\Entity;
@@ -27,10 +27,10 @@ class AbsenceEtatAppel extends BaseEntity
     final public const SAISIE_SANS_ABSENT = 'pas-absent';
     final public const SAISIE_AVEC_ABSENT = 'des-absent';
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?CarbonInterface $date = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TIME_MUTABLE)]
+    #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?CarbonInterface $heure = null;
 
     #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'absenceEtatAppels')]
@@ -39,7 +39,7 @@ class AbsenceEtatAppel extends BaseEntity
     #[ORM\ManyToOne(targetEntity: Groupe::class, inversedBy: 'absenceEtatAppels')]
     private ?Groupe $groupe = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 10)]
+    #[ORM\Column(type: Types::STRING, length: 10)]
     private ?string $typeSaisie = null;
 
     #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'absenceEtatAppels')]

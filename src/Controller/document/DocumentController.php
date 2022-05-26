@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/document/DocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 10:32
+ * @lastUpdate 26/05/2022 18:28
  */
 
 namespace App\Controller\document;
@@ -83,7 +83,7 @@ class DocumentController extends BaseController
         return $myExport->genereFichierGeneriqueFromData(
             $_format,
             $data,
-            'documents_' . $name,
+            'documents_'.$name,
         );
     }
 
@@ -173,7 +173,6 @@ class DocumentController extends BaseController
             $this->breadcrumbHelper->addAdministration()
                 ->addItem('Documents', 'administration_document_index', ['source' => $source])
                 ->addLastItem('Détail du document');
-
         }
 
         return $this->render('document/administration/show.html.twig', ['document' => $document, 'source' => $source]);
@@ -181,7 +180,7 @@ class DocumentController extends BaseController
 
     #[Route('/administration/document/{source}/{id}/edit', name: 'administration_document_edit', methods: [
         'GET',
-        'POST'
+        'POST',
     ])]
     #[Route('/administratif/document/{source}/{id}/edit', name: 'sa_qualite_documents_edit', methods: ['GET', 'POST'])]
     #[ParamConverter('document', options: ['mapping' => ['id' => 'uuid']])]
@@ -256,7 +255,7 @@ class DocumentController extends BaseController
 
     #[Route('/administration/document/{source}/{id}', name: 'administration_document_delete', methods: [
         'DELETE',
-        'POST'
+        'POST',
     ])]
     #[Route('/administratif/document/{source}/{id}', name: 'sa_qualite_documents_delete', methods: ['DELETE', 'POST'])]
     #[ParamConverter('document', options: ['mapping' => ['id' => 'uuid']])]
@@ -274,7 +273,7 @@ class DocumentController extends BaseController
 
         $id = $document->getId();
         $uuid = $document->getUuid();
-        if ($this->isCsrfTokenValid('delete' . $uuid, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$uuid, $request->request->get('_token'))) {
             $docDelete = $documentDelete->deleteDocument($document);
             if (true === $docDelete) {
                 $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'document.delete.success.flash');
@@ -292,11 +291,11 @@ class DocumentController extends BaseController
      */
     #[Route('/administration/document/{source}/{id}/duplicate', name: 'administration_document_duplicate', methods: [
         'GET',
-        'POST'
+        'POST',
     ])]
     #[Route('/administratif/document/{source}/{id}/duplicate', name: 'sa_qualite_documents_duplicate', methods: [
         'GET',
-        'POST'
+        'POST',
     ])]
     #[ParamConverter('document', options: ['mapping' => ['id' => 'uuid']])]
     public function duplicate(Document $document, string $source): Response
@@ -317,6 +316,5 @@ class DocumentController extends BaseController
         }
 
         return $this->redirectToRoute('administration_document_edit', ['id' => $newDocument->getUuidString()]);
-
     }
 }

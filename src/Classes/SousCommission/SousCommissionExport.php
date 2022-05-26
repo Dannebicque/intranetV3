@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:52
+ * @lastUpdate 26/05/2022 18:27
  */
 
 namespace App\Classes\SousCommission;
@@ -733,7 +733,7 @@ class SousCommissionExport
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
      */
-    public function exportApogee(Semestre $semestre, $file, AnneeUniversitaire $anneeUniversitaire)
+    public function exportApogee(Semestre $semestre, $file, AnneeUniversitaire $anneeUniversitaire): StreamedResponse|string|null
     {
         $this->sousCommission = $this->sousCommissionManager->getSousCommission($semestre);
 
@@ -807,7 +807,7 @@ class SousCommissionExport
         return Constantes::PAS_DE_SOUS_COMM;
     }
 
-    public function exportGrandJury(ScolaritePromo $scolaritePromo, AnneeUniversitaire $anneeUniversitaire)
+    public function exportGrandJury(ScolaritePromo $scolaritePromo, AnneeUniversitaire $anneeUniversitaire): StreamedResponse
     {
         $semestre = $scolaritePromo->getSemestre();
 

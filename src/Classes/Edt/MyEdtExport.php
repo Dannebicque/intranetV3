@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtExport.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/10/2021 10:44
+ * @lastUpdate 26/05/2022 18:27
  */
 
 /*
@@ -53,7 +53,7 @@ class MyEdtExport
         $this->dir = $kernel->getProjectDir().'/public/upload/';
     }
 
-    public function export($user, $_format, $type)
+    public function export($user, $_format, $type): bool|string
     {
         $this->calendrier = $this->calendrierRepository->findCalendrierArray();
         $temp = [];

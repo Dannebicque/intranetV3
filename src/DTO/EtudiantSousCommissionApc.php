@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/EtudiantSousCommissionApc.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/05/2022 11:55
+ * @lastUpdate 26/05/2022 18:28
  */
 
 namespace App\DTO;
@@ -57,7 +57,7 @@ class EtudiantSousCommissionApc
         $nbUes = count($this->moyenneUes);
         $nbUesValidees = 0;
 
-        //la décision du semestre en cours
+        // la décision du semestre en cours
         foreach ($this->moyenneUes as $ue) {
             if (Constantes::UE_VALIDE === $ue->decisionPenalisee && true === $this->semestre->getOptPenaliteAbsence()) {
                 ++$nbUesValidees;
@@ -81,7 +81,7 @@ class EtudiantSousCommissionApc
         }
     }
 
-    public function calculDecisionAnnee()
+    public function calculDecisionAnnee(): void
     {
         $nbUes = count($this->moyenneUes);
         $nbUesValidees = 0;
@@ -205,9 +205,8 @@ class EtudiantSousCommissionApc
         }
     }
 
-    public function calculMoyennesAnnee()
+    public function calculMoyennesAnnee(): void
     {
-
         foreach ($this->moyenneUes as $ue) {
             $moyUeAnnee = new MoyenneAnneeUeApc();
             $moyUeAnnee->moyenneSemestreImpair = $this->scolarite[$this->semestre->getPrecedent()->getOrdreLmd()]->moyenneUes[$ue->ue->getNumeroUe()];

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Hrs.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Hrs.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/10/2021 11:16
+ * @lastUpdate 26/05/2022 18:21
  */
 
 namespace App\Entity;
@@ -21,11 +21,11 @@ class Hrs extends BaseEntity
     use LifeCycleTrait;
 
     #[Groups(groups: ['hrs_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
+    #[ORM\Column(type: Types::FLOAT)]
     private ?float $nbHeuresTd = null;
 
     #[Groups(groups: ['hrs_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 150)]
+    #[ORM\Column(type: Types::STRING, length: 150)]
     private ?string $libelle = null;
 
     #[Groups(groups: ['hrs_administration'])]
@@ -43,10 +43,10 @@ class Hrs extends BaseEntity
     #[ORM\ManyToOne(targetEntity: TypeHrs::class, inversedBy: 'hrs')]
     private ?TypeHrs $typeHrs = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $commentaire = null;
 
-    public function __construct(#[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'hrs')] private ?Departement $departement, #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)] private ?int $annee)
+    public function __construct(#[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'hrs')] private ?Departement $departement, #[ORM\Column(type: Types::INTEGER)] private ?int $annee)
     {
     }
 

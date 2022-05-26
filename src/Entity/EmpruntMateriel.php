@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/EmpruntMateriel.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/EmpruntMateriel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 11:05
+ * @lastUpdate 26/05/2022 18:21
  */
 
 namespace App\Entity;
@@ -27,13 +27,13 @@ class EmpruntMateriel extends BaseEntity
     #[ORM\ManyToOne(targetEntity: Materiel::class, inversedBy: 'empruntMateriels')]
     private ?Materiel $materiel = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 5)]
+    #[ORM\Column(type: Types::STRING, length: 5)]
     private ?string $etat = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?DateTimeInterface $datesortie = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?DateTimeInterface $daterentree = null;
 
     public function getEmprunt(): ?Emprunt

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/CodeInsee.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/CodeInsee.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 11:05
+ * @lastUpdate 26/05/2022 18:18
  */
 
 namespace App\Entity;
@@ -16,13 +16,13 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: CodeInseeRepository::class)]
 class CodeInsee extends BaseEntity
 {
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 6)]
+    #[ORM\Column(type: Types::STRING, length: 6)]
     private ?string $codeInsee = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 60)]
+    #[ORM\Column(type: Types::STRING, length: 60)]
     private ?string $codePostal = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $ville = null;
 
     public function getCodeInsee(): ?string

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Evaluation.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Evaluation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/10/2021 10:33
+ * @lastUpdate 26/05/2022 18:21
  */
 
 namespace App\Entity;
@@ -37,21 +37,21 @@ class Evaluation extends BaseEntity
     #[ORM\ManyToMany(targetEntity: Personnel::class, inversedBy: 'evaluationsAutorise')]
     private Collection $personnelAutorise;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?CarbonInterface $dateEvaluation;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $visible = false;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $modifiable = false;
 
     #[Assert\NotBlank]
     #[Assert\Positive]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
+    #[ORM\Column(type: Types::FLOAT)]
     private ?float $coefficient = 1;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $commentaire = '';
 
     /**
@@ -72,7 +72,7 @@ class Evaluation extends BaseEntity
     #[ORM\ManyToOne(targetEntity: TypeGroupe::class)]
     private ?TypeGroupe $typeGroupe = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 100, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 100, nullable: true)]
     private ?string $libelle = null;
 
     #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class, inversedBy: 'evaluations')]

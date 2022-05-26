@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Breadcrumbs/BreadcrumbHelper.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/05/2022 19:41
+ * @lastUpdate 26/05/2022 18:27
  */
 
 namespace App\Components\Breadcrumbs;
@@ -45,7 +45,7 @@ class BreadcrumbHelper
         return $this->breadcrumbs;
     }
 
-    public function addAdministration()
+    public function addAdministration(): BreadcrumbHelper
     {
         $this->breadcrumbs[] = new Breadcrumb('Administration', $this->router->generate('administration_index'));
 

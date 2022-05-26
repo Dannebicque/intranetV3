@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Ue.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Ue.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 09:36
+ * @lastUpdate 26/05/2022 18:24
  */
 
 namespace App\Entity;
@@ -22,16 +22,16 @@ class Ue extends BaseEntity
 {
     use LifeCycleTrait;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private string $libelle;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER)]
     private int $numeroUe = 1;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
+    #[ORM\Column(type: Types::FLOAT)]
     private float $coefficient = 1;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
+    #[ORM\Column(type: Types::FLOAT)]
     private float $nbEcts = 1;
 
     /**
@@ -40,13 +40,13 @@ class Ue extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'ue', targetEntity: Matiere::class)]
     private Collection $matieres;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $actif = true;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $bonification = false;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 15)]
+    #[ORM\Column(type: Types::STRING, length: 15)]
     private string $codeElement;
 
     #[ORM\ManyToOne(targetEntity: ApcCompetence::class, inversedBy: 'ue')]

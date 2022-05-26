@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcSituationProfessionnelle.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcSituationProfessionnelle.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/05/2021 16:58
+ * @lastUpdate 26/05/2022 18:16
  */
 
 namespace App\Entity;
@@ -20,7 +20,7 @@ class ApcSituationProfessionnelle extends BaseEntity
 {
     use LifeCycleTrait;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $libelle = null;
 
     #[ORM\ManyToOne(targetEntity: ApcCompetence::class, inversedBy: 'apcSituationProfessionnelles')]

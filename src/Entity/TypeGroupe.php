@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TypeGroupe.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/TypeGroupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 26/05/2022 18:24
  */
 
 namespace App\Entity;
@@ -29,7 +29,7 @@ class TypeGroupe extends BaseEntity
     final public const TYPE_GROUPE_LV = 'LV';
 
     #[Groups(['type_groupe_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 100)]
+    #[ORM\Column(type: Types::STRING, length: 100)]
     private ?string $libelle = null;
 
     /**
@@ -39,10 +39,10 @@ class TypeGroupe extends BaseEntity
     #[ORM\OrderBy(value: ['ordre' => 'ASC'])]
     private Collection $groupes;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $defaut = false;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 2)]
+    #[ORM\Column(type: Types::STRING, length: 2)]
     private ?string $type = null;
 
     public function __construct(#[Groups(['type_groupe_administration'])] #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'typeGroupes')] private Semestre $semestre)

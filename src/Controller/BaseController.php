@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/BaseController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 11:19
+ * @lastUpdate 26/05/2022 18:18
  */
 
 namespace App\Controller;
@@ -19,7 +19,6 @@ use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
-use App\Interfaces\UtilisateurInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Core\User\UserInterface;

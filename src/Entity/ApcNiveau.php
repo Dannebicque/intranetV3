@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcNiveau.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcNiveau.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 26/05/2022 18:15
  */
 
 namespace App\Entity;
@@ -26,13 +26,13 @@ class ApcNiveau extends BaseEntity
     final public const NIVEAU_2 = 'Intermédiaire';
     final public const NIVEAU_3 = 'Compétent';
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $libelle = null;
 
     #[ORM\ManyToOne(targetEntity: ApcCompetence::class, inversedBy: 'apcNiveaux')]
     private ?ApcCompetence $competence = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER)]
     private ?int $ordre = null;
 
     #[ORM\ManyToOne(targetEntity: Annee::class, inversedBy: 'apcNiveaux')]

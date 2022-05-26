@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/BCFournisseur.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/BCFournisseur.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/09/2021 14:31
+ * @lastUpdate 26/05/2022 18:18
  */
 
 namespace App\Entity;
@@ -18,10 +18,10 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: BCFournisseurRepository::class)]
 class BCFournisseur extends BaseEntity
 {
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 100)]
+    #[ORM\Column(type: Types::STRING, length: 100)]
     private ?string $libelle = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 10)]
+    #[ORM\Column(type: Types::STRING, length: 10)]
     private ?string $numero = null;
 
     /**

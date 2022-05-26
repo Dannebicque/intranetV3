@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Note.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Note.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/06/2021 11:33
+ * @lastUpdate 26/05/2022 18:21
  */
 
 namespace App\Entity;
@@ -33,10 +33,10 @@ class Note extends BaseEntity
     #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'notes')]
     private ?Etudiant $etudiant = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
+    #[ORM\Column(type: Types::FLOAT)]
     private ?float $note = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $commentaire = null;
 
     /**
@@ -45,7 +45,7 @@ class Note extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'note', targetEntity: ModificationNote::class)]
     private Collection $modificationNotes;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $absenceJustifie = false;
 
     /**

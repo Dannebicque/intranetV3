@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ScolaritePromo.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ScolaritePromo.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 09:12
+ * @lastUpdate 26/05/2022 18:23
  */
 
 namespace App\Entity;
@@ -25,16 +25,16 @@ class ScolaritePromo extends BaseEntity
     #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class, inversedBy: 'scolaritePromos')]
     private ?AnneeUniversitaire $anneeUniversitaire = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
+    #[ORM\Column(type: Types::FLOAT)]
     private float $min = -0.01;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
+    #[ORM\Column(type: Types::FLOAT)]
     private float $max = -0.01;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER)]
     private int $nbEtudiants = 0;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
+    #[ORM\Column(type: Types::FLOAT)]
     private float $moyenne = -0.01;
 
     /**
@@ -43,16 +43,16 @@ class ScolaritePromo extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'scolaritePromo', targetEntity: Scolarite::class)]
     private Collection $scolarites;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $datePublication = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $publie = false;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::ARRAY)]
+    #[ORM\Column(type: Types::ARRAY)]
     private array $moyenneUes = [];
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::ARRAY)]
+    #[ORM\Column(type: Types::ARRAY)]
     private array $moyenneMatieres = [];
 
     public function __construct()

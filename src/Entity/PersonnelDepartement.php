@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/PersonnelDepartement.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:52
+ * @lastUpdate 26/05/2022 18:28
  */
 
 namespace App\Entity;
@@ -42,7 +42,7 @@ class PersonnelDepartement extends BaseEntity
 
     public function getRoles(): ?array
     {
-        if ($this->roles === '') {
+        if ('' === $this->roles) {
             return [];
         }
 

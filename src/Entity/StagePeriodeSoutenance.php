@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StagePeriodeSoutenance.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/StagePeriodeSoutenance.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/08/2021 12:37
+ * @lastUpdate 26/05/2022 18:24
  */
 
 namespace App\Entity;
@@ -24,13 +24,13 @@ class StagePeriodeSoutenance extends BaseEntity
     #[ORM\ManyToOne(targetEntity: StagePeriode::class, inversedBy: 'stagePeriodeSoutenances')]
     private ?StagePeriode $stagePeriode = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?CarbonInterface $dateDebut = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?CarbonInterface $dateFin = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateRenduRapport = null;
 
     public function getStagePeriode(): ?StagePeriode

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Table/TableBuilder.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/05/2022 19:04
+ * @lastUpdate 26/05/2022 18:28
  */
 
 namespace App\Components\Table;
@@ -59,7 +59,7 @@ class TableBuilder
         $resolver = new OptionsResolver();
 
         // Configure options from base TableType
-       // TableType::__configureOptions($resolver);
+        // TableType::__configureOptions($resolver);
 
         // Configure options from bundle config
         $resolver

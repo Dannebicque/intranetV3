@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/SalleExamen.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/SalleExamen.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 09:06
+ * @lastUpdate 26/05/2022 18:23
  */
 
 namespace App\Entity;
@@ -26,19 +26,19 @@ class SalleExamen extends BaseEntity
     private ?Salle $salle = null;
 
     #[Groups(groups: ['salle_examen_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER)]
     private ?int $nbColonnes = null;
 
     #[Groups(groups: ['salle_examen_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER)]
     private ?int $nbRangs = null;
 
     #[Groups(groups: ['salle_examen_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER)]
     private ?int $capacite = null;
 
     #[Groups(groups: ['salle_examen_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $placesInterdites = null;
 
     public function __construct(#[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'salleExamens')] private ?Departement $departement)

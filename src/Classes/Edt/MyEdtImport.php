@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/05/2022 15:11
+ * @lastUpdate 26/05/2022 18:26
  */
 
 /*
@@ -24,6 +24,7 @@ use App\Repository\CalendrierRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
+use Carbon\CarbonInterface;
 use function array_key_exists;
 use Carbon\CarbonImmutable;
 use Doctrine\ORM\EntityManagerInterface;
@@ -224,7 +225,7 @@ class MyEdtImport
         $this->entityManager->flush();
     }
 
-    private function convertToDate($jour): CarbonImmutable
+    private function convertToDate($jour): CarbonInterface
     {
         return $this->calendrier->getDateLundi()->addDays($jour - 1);
     }

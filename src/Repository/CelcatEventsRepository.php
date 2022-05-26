@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/CelcatEventsRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 26/05/2022 18:18
  */
 
 namespace App\Repository;
@@ -12,10 +12,8 @@ namespace App\Repository;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\CelcatEvent;
 use App\Entity\Etudiant;
-use App\Entity\Matiere;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
-use App\Entity\Ue;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;

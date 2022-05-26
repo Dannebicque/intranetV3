@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Previsionnel.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Previsionnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/06/2021 20:45
+ * @lastUpdate 26/05/2022 18:21
  */
 
 namespace App\Entity;
@@ -23,28 +23,28 @@ class Previsionnel extends BaseEntity
     use LifeCycleTrait;
     use MatiereTrait;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $referent = false;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
+    #[ORM\Column(type: Types::FLOAT)]
     private ?float $nbHCm = 0;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
+    #[ORM\Column(type: Types::FLOAT)]
     private ?float $nbHTd = 0;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
+    #[ORM\Column(type: Types::FLOAT)]
     private ?float $nbHTp = 0;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER)]
     private int $nbGrCm = 0;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER)]
     private int $nbGrTd = 0;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER)]
     private int $nbGrTp = 0;
 
-    public function __construct(#[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)] private int $annee, #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'previsionnels')] private ?Personnel $personnel = null)
+    public function __construct(#[ORM\Column(type: Types::INTEGER)] private int $annee, #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'previsionnels')] private ?Personnel $personnel = null)
     {
     }
 

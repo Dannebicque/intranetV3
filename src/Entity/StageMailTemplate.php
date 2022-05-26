@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StageMailTemplate.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/StageMailTemplate.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 26/05/2022 18:23
  */
 
 namespace App\Entity;
@@ -42,10 +42,10 @@ class StageMailTemplate extends BaseEntity
     #[ORM\ManyToOne(targetEntity: StagePeriode::class, inversedBy: 'stageMailTemplates')]
     private ?StagePeriode $stagePeriode = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $subject = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50)]
+    #[ORM\Column(type: Types::STRING, length: 50)]
     private ?string $event = null;
 
     #[ORM\OneToOne(targetEntity: TwigTemplate::class, cascade: ['persist', 'remove'])]

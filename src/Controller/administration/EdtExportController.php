@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/05/2022 18:27
+ * @lastUpdate 26/05/2022 18:28
  */
 
 namespace App\Controller\administration;
@@ -72,7 +72,7 @@ class EdtExportController extends BaseController
         $semestre = $semestreRepository->find($request->request->get('semestre'));
         $semaine = $request->request->get('semaine');
 
-        if ($semestre !== null && $semaine !== '') {
+        if (null !== $semestre && '' !== $semaine) {
             $calendrier = $calendrierRepository->findOneBy([
                 'semaineFormation' => $semaine,
                 'anneeUniversitaire' => $this->getAnneeUniversitaire()->getId(),
@@ -121,8 +121,8 @@ class EdtExportController extends BaseController
                 $code[$tg->getType()] = [];
                 $groupes = $groupeRepository->findBy(['typeGroupe' => $tg->getId()], ['ordre' => 'ASC']);
                 foreach ($groupes as $groupe) {
-                    $code[mb_strtoupper($tg->getType())][$groupe->getOrdre()] = 'call sleep 5' . "\n";
-                    $codeGroupe[mb_strtoupper($tg->getType()) . '_' . $groupe->getOrdre()] = $groupe->getLibelle();
+                    $code[mb_strtoupper($tg->getType())][$groupe->getOrdre()] = 'call sleep 5'."\n";
+                    $codeGroupe[mb_strtoupper($tg->getType()).'_'.$groupe->getOrdre()] = $groupe->getLibelle();
                 }
             }
             foreach ($pl as $p) {
@@ -150,37 +150,37 @@ class EdtExportController extends BaseController
 //                   // $codeMatiere = 'W'.$codeMatiere;
 //                    $codeMatiere
 //                }
-                    $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= 'call  ajouter ' . $p->getJour() . ' ' . Constantes::TAB_HEURES[$p->getDebut()] . ' ' . Constantes::TAB_HEURES[$p->getFin()] . ' ' . $codeprof . ' ' . $tabSalles[$p->getSalle()] . ' ' . $codeMatiere . ' ' . $tabType[mb_strtoupper($p->getType())] . "\n";
+                    $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= 'call  ajouter '.$p->getJour().' '.Constantes::TAB_HEURES[$p->getDebut()].' '.Constantes::TAB_HEURES[$p->getFin()].' '.$codeprof.' '.$tabSalles[$p->getSalle()].' '.$codeMatiere.' '.$tabType[mb_strtoupper($p->getType())]."\n";
                 }
                 if (0 !== $p->getIdMatiere() && 'H018' === $p->getSalle()) { // array_key_exists($p->getIntervenant()->getNumeroHarpege(), $tabProf))
                     $codeMatiere = $matieres[$p->getTypeIdMatiere()]->codeElement;
-                    $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= 'call  ajouterh018 ' . $p->getJour() . ' ' . Constantes::TAB_HEURES[$p->getDebut()] . ' ' . Constantes::TAB_HEURES[$p->getFin()] . ' ' . $codeprof . ' 0 ' . $codeMatiere . ' ' . $tabType[mb_strtoupper($p->getType())] . "\n";
+                    $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= 'call  ajouterh018 '.$p->getJour().' '.Constantes::TAB_HEURES[$p->getDebut()].' '.Constantes::TAB_HEURES[$p->getFin()].' '.$codeprof.' 0 '.$codeMatiere.' '.$tabType[mb_strtoupper($p->getType())]."\n";
                 }
             }
             $codeComplet = '';
             $zip = new ZipArchive();
-            $zipName = $kernel->getProjectDir() . '/public/upload/temp/ajouter_S' . $calendrier->getSemaineReelle() . '_' . $semestre->getLibelle() . '.zip';
+            $zipName = $kernel->getProjectDir().'/public/upload/temp/ajouter_S'.$calendrier->getSemaineReelle().'_'.$semestre->getLibelle().'.zip';
             @unlink($zipName);
             $zip->open($zipName, ZipArchive::CREATE);
             $i = 0;
             foreach ($code as $type => $value) {
                 foreach ($value as $groupe => $c) {
-                    $codeComplet .= 'call groupe ' . $i . "\n";
+                    $codeComplet .= 'call groupe '.$i."\n";
 
-                    $n = $semestre->getLibelle() . '_S' . $calendrier->getSemaineReelle() . '_' . $type . '_' . $codeGroupe[$type . '_' . $groupe] . '.bat';
+                    $n = $semestre->getLibelle().'_S'.$calendrier->getSemaineReelle().'_'.$type.'_'.$codeGroupe[$type.'_'.$groupe].'.bat';
 
                     $zip->addFromString($n, $c);
-                    $codeComplet .= 'call ' . $n . " \n";
-                    $codeComplet .= 'call fingroupe ' . "\n";
+                    $codeComplet .= 'call '.$n." \n";
+                    $codeComplet .= 'call fingroupe '."\n";
                     ++$i;
                 }
             }
-            $zip->addFromString('script' . $calendrier->getSemaineReelle() . '.bat', $codeComplet);
+            $zip->addFromString('script'.$calendrier->getSemaineReelle().'.bat', $codeComplet);
             $zip->close();
             $response = new Response(file_get_contents($zipName));
             $response->headers->set('Content-Type', 'application/zip');
             $response->headers->set('Content-Disposition',
-                'attachment;filename="ajouter_S' . $calendrier->getSemaineReelle() . '_' . $semestre->getLibelle() . '.zip"');
+                'attachment;filename="ajouter_S'.$calendrier->getSemaineReelle().'_'.$semestre->getLibelle().'.zip"');
             $response->headers->set('Content-length', filesize($zipName));
 
             return $response;

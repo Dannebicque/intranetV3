@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Structure/DiplomeImport.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Structure/DiplomeImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 14:21
+ * @lastUpdate 26/05/2022 18:27
  */
 
 namespace App\Classes\Structure;
@@ -206,7 +206,7 @@ class DiplomeImport
         $this->entityManager->flush();
     }
 
-    private function deleteFormation(Ppn $ppn)
+    private function deleteFormation(Ppn $ppn): void
     {
         $ressources = $this->entityManager->getRepository(ApcRessource::class)->findByPpn($ppn);
         $saes = $this->entityManager->getRepository(ApcSae::class)->findByPpn($ppn);

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Enquetes/MyEnquete.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:52
+ * @lastUpdate 26/05/2022 18:28
  */
 
 namespace App\Classes\Enquetes;
@@ -67,7 +67,7 @@ class MyEnquete
         $this->previsionnel = $previsionnel;
         // data
         $this->getReponseFromQuestionnaire($questionnaire);
-        $nbEtudiants = $questionnaire->getSemestre()?->getEtudiants() === null ? 0 : count($questionnaire->getSemestre()?->getEtudiants());
+        $nbEtudiants = null === $questionnaire->getSemestre()?->getEtudiants() ? 0 : count($questionnaire->getSemestre()?->getEtudiants());
         $this->nbReponses = count($quizzEtudiants);
         $pourcentageReponses = $this->nbReponses / $nbEtudiants;
         // export

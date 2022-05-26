@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireEtudiantReponse.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/QuestionnaireEtudiantReponse.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 08:50
+ * @lastUpdate 26/05/2022 18:23
  */
 
 namespace App\Entity;
@@ -21,13 +21,13 @@ class QuestionnaireEtudiantReponse extends BaseEntity
 {
     use LifeCycleTrait;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $valeur = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $cleReponse = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 100)]
+    #[ORM\Column(type: Types::STRING, length: 100)]
     private ?string $cleQuestion = null;
 
     #[ORM\ManyToOne(targetEntity: QuestionnaireEtudiant::class, inversedBy: 'questionnaireEtudiantReponses')]

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MySerializer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:52
+ * @lastUpdate 26/05/2022 18:27
  */
 
 /*
@@ -48,7 +48,7 @@ class MySerializer
         return $serializer->serialize($data, 'json', ['enable_max_depth' => true, 'groups' => $groups]);
     }
 
-    public function getDataFromSerialization(array|Collection $data, array $colonne, array $modele, array $options = [])
+    public function getDataFromSerialization(array|Collection $data, array $colonne, array $modele, array $options = []): array
     {
         $this->options = $options;
         $dataArray = [];

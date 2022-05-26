@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionApc.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/05/2022 11:51
+ * @lastUpdate 26/05/2022 18:28
  */
 
 namespace App\Classes\SousCommission;
@@ -45,7 +45,7 @@ class SousCommissionApc extends AbstractSousCommission implements SousCommission
     public function calcul(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): void
     {
         $this->semestre = $semestre;
-        $uesSemestrePrecedent= [];
+        $uesSemestrePrecedent = [];
         $ressources = $this->apcRessourceCompetenceRepository->findBySemestreArray($semestre);
         $saes = $this->apcSaeCompetenceRepository->findBySemestreArray($semestre);
 
@@ -78,7 +78,7 @@ class SousCommissionApc extends AbstractSousCommission implements SousCommission
             $etudiantSousCommission->calculDecision();
 
             if ($semestre->isPair()) {
-                //semestre pair, on calcule le bilan de l'année
+                // semestre pair, on calcule le bilan de l'année
                 $etudiantSousCommission->calculMoyennesAnnee();
                 $etudiantSousCommission->calculDecisionAnnee();
             }

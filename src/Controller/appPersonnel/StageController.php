@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/StageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:44
+ * @lastUpdate 26/05/2022 18:14
  */
 
 namespace App\Controller\appPersonnel;
@@ -114,7 +114,8 @@ class StageController extends BaseController
         return $myExport->genereFichierGeneriqueFromData(
             $_format,
             $data,
-            'alternances_'.$this->getDepartement()->getLibelle(), // todo: pas idéal... afficher le diplôme ?
+            'alternances_'.$this->getDepartement()->getLibelle(),
+        // todo: pas idéal... afficher le diplôme ?
         );
     }
 

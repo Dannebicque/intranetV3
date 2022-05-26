@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/CahierTexte.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/CahierTexte.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/07/2021 11:23
+ * @lastUpdate 26/05/2022 18:18
  */
 
 namespace App\Entity;
@@ -27,15 +27,15 @@ class CahierTexte extends BaseEntity
     use MatiereTrait;
 
     #[Groups(groups: ['carnet_personnel'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 150)]
+    #[ORM\Column(type: Types::STRING, length: 150)]
     private ?string $libelle = null;
 
     #[Groups(groups: ['carnet_personnel'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
     #[Groups(groups: ['carnet_personnel'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?CarbonInterface $dateRetour = null;
 
     #[Groups(groups: ['carnet_personnel'])]

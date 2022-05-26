@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/EventListener/ExceptionListener.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/05/2022 13:15
+ * @lastUpdate 26/05/2022 18:27
  */
 
 // src/EventListener/ExceptionListener.php
@@ -17,7 +17,7 @@ use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 
 class ExceptionListener
 {
-    public function onKernelException(ExceptionEvent $event)
+    public function onKernelException(ExceptionEvent $event): void
     {
         // You get the exception object from the received event
         $exception = $event->getThrowable();

@@ -4,12 +4,11 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Section/ConfigurableSection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 12:08
+ * @lastUpdate 26/05/2022 18:21
  */
 
 namespace App\Components\Questionnaire\Section;
 
-use App\Components\Questionnaire\Questions;
 use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
 use App\Entity\Annee;
 

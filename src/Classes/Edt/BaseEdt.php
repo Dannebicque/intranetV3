@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/BaseEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:52
+ * @lastUpdate 26/05/2022 18:26
  */
 
 namespace App\Classes\Edt;
@@ -241,7 +241,7 @@ abstract class BaseEdt
         };
     }
 
-    protected function convertToDate(int $jour): CarbonImmutable
+    protected function convertToDate(int $jour): CarbonInterface
     {
         return $this->calendrier->getDateLundi()?->addDays($jour - 1);
     }

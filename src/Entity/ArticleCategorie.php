@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ArticleCategorie.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ArticleCategorie.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 11:05
+ * @lastUpdate 26/05/2022 18:16
  */
 
 namespace App\Entity;
@@ -20,7 +20,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class ArticleCategorie extends BaseEntity
 {
     #[Groups(groups: ['article_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $libelle = null;
 
     /**

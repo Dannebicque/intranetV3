@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StageAvenant.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/StageAvenant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/10/2021 12:04
+ * @lastUpdate 26/05/2022 18:23
  */
 
 namespace App\Entity;
@@ -25,34 +25,34 @@ class StageAvenant extends BaseEntity
     final public const CAS3 = 3;
     final public const CAS4 = 4;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER)]
     private ?int $cas = 0;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?CarbonInterface $nouvelleDateFin = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER, nullable: true)]
+    #[ORM\Column(type: Types::INTEGER, nullable: true)]
     private ?int $nouvelleDureeJour = null;
 
     #[ORM\OneToOne(targetEntity: Adresse::class, cascade: ['persist', 'remove'])]
     private ?Adresse $nouvelleAdresse = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateDebutSuspension = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateFinSuspension = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateRepriseStage = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateInterruption = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateDebutAbsence = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateFinAbsence = null;
 
     public function __construct(#[ORM\ManyToOne(targetEntity: StageEtudiant::class, inversedBy: 'stageAvenants')] private ?StageEtudiant $stageEtudiant)

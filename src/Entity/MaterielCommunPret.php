@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/MaterielCommunPret.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/MaterielCommunPret.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/06/2021 21:12
+ * @lastUpdate 26/05/2022 18:21
  */
 
 namespace App\Entity;
@@ -17,7 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: MaterielCommunPretRepository::class)]
 class MaterielCommunPret extends BaseEntity
 {
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?CarbonInterface $dateEmprunt = null;
 
     #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'materielCommunPrets')]
@@ -26,7 +26,7 @@ class MaterielCommunPret extends BaseEntity
     #[ORM\ManyToOne(targetEntity: MaterielCommun::class, inversedBy: 'materielCommunPrets')]
     private ?MaterielCommun $materielCommun = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 100)]
+    #[ORM\Column(type: Types::STRING, length: 100)]
     private ?string $creneau = null;
 
     public function getDateEmprunt(): ?CarbonInterface

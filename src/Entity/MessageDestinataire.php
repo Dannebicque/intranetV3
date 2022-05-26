@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/MessageDestinataire.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/MessageDestinataire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/06/2021 21:12
+ * @lastUpdate 26/05/2022 18:21
  */
 
 namespace App\Entity;
@@ -32,16 +32,16 @@ abstract class MessageDestinataire extends BaseEntity
     public const STARRED = 'S';
     public const DELETED = 'D';
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateLu = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 1)]
+    #[ORM\Column(type: Types::STRING, length: 1)]
     private string $etat = self::UNREAD;
 
     #[ORM\ManyToOne(targetEntity: Message::class, fetch: 'EAGER', inversedBy: 'messageDestinataires')]
     private ?Message $message = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $starred = false;
 
     public function getDateLu(): ?CarbonInterface

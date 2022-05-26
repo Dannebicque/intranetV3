@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Notification.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Notification.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/06/2021 21:20
+ * @lastUpdate 26/05/2022 18:21
  */
 
 namespace App\Entity;
@@ -70,16 +70,16 @@ class Notification extends BaseEntity
     #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'notifications')]
     private ?Etudiant $etudiant = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 100)]
+    #[ORM\Column(type: Types::STRING, length: 100)]
     private ?string $type = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $url = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $lu = false;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 1)]
+    #[ORM\Column(type: Types::STRING, length: 1)]
     private ?string $typeUser = null;
 
     #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'notifications')]

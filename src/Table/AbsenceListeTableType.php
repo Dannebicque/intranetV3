@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/AbsenceListeTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/05/2022 19:14
+ * @lastUpdate 26/05/2022 18:15
  */
 
 namespace App\Table;
@@ -23,13 +23,10 @@ use App\Components\Widget\Type\RowLinkType;
 use App\Components\Widget\WidgetBuilder;
 use App\DTO\AbsencesEtudiant;
 use App\Entity\AnneeUniversitaire;
-use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Form\Type\SearchType;
-use App\Repository\GroupeRepository;
 use App\Table\ColumnType\EtudiantColumnType;
 use App\Table\ColumnType\GroupeEtudiantColumnType;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AbsenceListeTableType extends TableType

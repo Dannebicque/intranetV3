@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcSaeCompetence.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcSaeCompetence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 18:41
+ * @lastUpdate 26/05/2022 18:16
  */
 
 namespace App\Entity;
@@ -20,7 +20,7 @@ class ApcSaeCompetence extends BaseEntity
 {
     use LifeCycleTrait;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
+    #[ORM\Column(type: Types::FLOAT)]
     private float $coefficient = 0;
 
     public function __construct(#[ORM\ManyToOne(targetEntity: ApcSae::class, inversedBy: 'apcSaeCompetences')] private ?ApcSae $sae, #[ORM\ManyToOne(targetEntity: ApcCompetence::class, inversedBy: 'apcSaeCompetences')] private ?ApcCompetence $competence)

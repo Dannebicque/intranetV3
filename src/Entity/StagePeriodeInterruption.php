@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/StagePeriodeInterruption.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/StagePeriodeInterruption.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/08/2021 12:37
+ * @lastUpdate 26/05/2022 18:24
  */
 
 namespace App\Entity;
@@ -24,13 +24,13 @@ class StagePeriodeInterruption extends BaseEntity
     #[ORM\ManyToOne(targetEntity: StagePeriode::class, inversedBy: 'stagePeriodeInterruptions')]
     private ?StagePeriode $stagePeriode = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?CarbonInterface $dateDebut = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?CarbonInterface $dateFin = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $motif = null;
 
     public function getStagePeriode(): ?StagePeriode

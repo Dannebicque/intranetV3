@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/MessagePieceJointe.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/MessagePieceJointe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 11:05
+ * @lastUpdate 26/05/2022 18:21
  */
 
 namespace App\Entity;
@@ -19,10 +19,10 @@ class MessagePieceJointe extends BaseEntity
     #[ORM\ManyToOne(targetEntity: Message::class, inversedBy: 'messagePieceJointes')]
     private ?Message $message = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50)]
+    #[ORM\Column(type: Types::STRING, length: 50)]
     private ?string $fichier = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 5)]
+    #[ORM\Column(type: Types::STRING, length: 5)]
     private ?string $extension = null;
 
     public function getMessage(): ?Message

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ModificationNote.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ModificationNote.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 08:26
+ * @lastUpdate 26/05/2022 18:21
  */
 
 namespace App\Entity;
@@ -26,10 +26,10 @@ class ModificationNote extends BaseEntity
     #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'modificationNotes')]
     private ?Personnel $personnel = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
+    #[ORM\Column(type: Types::FLOAT)]
     private ?float $ancienneNote = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::FLOAT)]
+    #[ORM\Column(type: Types::FLOAT)]
     private ?float $nouvelleNote = null;
 
     public function getNote(): ?Note

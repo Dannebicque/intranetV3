@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Groupe.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Groupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/09/2021 22:20
+ * @lastUpdate 26/05/2022 18:21
  */
 
 namespace App\Entity;
@@ -20,7 +20,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class Groupe extends BaseEntity
 {
     #[Groups(groups: ['groupe_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50)]
+    #[ORM\Column(type: Types::STRING, length: 50)]
     private ?string $libelle = null;
 
     #[Groups(groups: ['groupe_administration'])]
@@ -28,7 +28,7 @@ class Groupe extends BaseEntity
     private ?TypeGroupe $typeGroupe = null;
 
     #[Groups(groups: ['groupe_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 50, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
     private ?string $codeApogee = '';
 
     #[Groups(groups: ['groupe_administration'])]
@@ -46,7 +46,7 @@ class Groupe extends BaseEntity
     private Collection $enfants;
 
     #[Groups(groups: ['groupe_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER)]
     private ?int $ordre = null;
 
     #[Groups(groups: ['groupe_administration'])]

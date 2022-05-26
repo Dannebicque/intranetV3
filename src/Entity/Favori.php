@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Favori.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Favori.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/06/2021 21:10
+ * @lastUpdate 26/05/2022 18:21
  */
 
 namespace App\Entity;
@@ -24,7 +24,7 @@ class Favori extends BaseEntity
     #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'etudiantDemandeur')]
     private ?Etudiant $etudiantDemande = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?CarbonInterface $dateAjout;
 
     public function __construct(Etudiant $etudiantDemandeur, Etudiant $etudiantDemande)

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/TypeDocumentRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/05/2022 21:38
+ * @lastUpdate 26/05/2022 18:28
  */
 
 namespace App\Repository;
@@ -68,7 +68,7 @@ class TypeDocumentRepository extends ServiceEntityRepository
     {
         if (Document::ORIGINAUX === $source) {
             return $this->createQueryBuilder('t')
-                //->where('t.parent IS NULL')
+                // ->where('t.parent IS NULL')
                 ->where('t.originaux = 1')
                 ->orderBy('t.libelle', Criteria::ASC);
         }

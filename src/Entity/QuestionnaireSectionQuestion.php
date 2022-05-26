@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireSectionQuestion.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/QuestionnaireSectionQuestion.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 09:04
+ * @lastUpdate 26/05/2022 18:23
  */
 
 namespace App\Entity;
@@ -26,10 +26,10 @@ class QuestionnaireSectionQuestion extends BaseEntity
     #[ORM\ManyToOne(targetEntity: QuestionnaireQuestion::class, inversedBy: 'qualiteSectionQuestions')]
     private ?QuestionnaireQuestion $question = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER)]
     private ?int $ordre = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $enabled = true;
 
     public function getSection(): ?QuestionnaireSection

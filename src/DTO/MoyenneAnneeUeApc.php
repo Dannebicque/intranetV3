@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/MoyenneAnneeUeApc.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/05/2022 11:41
+ * @lastUpdate 26/05/2022 18:27
  */
 
 namespace App\DTO;
@@ -28,7 +28,7 @@ class MoyenneAnneeUeApc
     }
 
 
-    public function decisionAnnee()
+    public function decisionAnnee(): string
     {
         return $this->moyenneAnnee() < 10 ? Constantes::UE_NON_VALIDE : Constantes::UE_VALIDE;
 

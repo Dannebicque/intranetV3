@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/TypeMateriel.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/TypeMateriel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 09:36
+ * @lastUpdate 26/05/2022 18:24
  */
 
 namespace App\Entity;
@@ -21,7 +21,7 @@ use Doctrine\ORM\Mapping as ORM;
 class TypeMateriel extends BaseEntity
 {
     use LifeCycleTrait;
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 100)]
+    #[ORM\Column(type: Types::STRING, length: 100)]
     private ?string $libelle = null;
 
     /**

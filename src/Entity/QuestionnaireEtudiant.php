@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/QuestionnaireEtudiant.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/QuestionnaireEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/07/2021 10:37
+ * @lastUpdate 26/05/2022 18:23
  */
 
 namespace App\Entity;
@@ -32,7 +32,7 @@ class QuestionnaireEtudiant extends BaseEntity
     #[ORM\ManyToOne(targetEntity: QuestionnaireQuizz::class)]
     private ?QuestionnaireQuizz $questionnaireQuizz = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $termine = false;
 
     /**
@@ -44,7 +44,7 @@ class QuestionnaireEtudiant extends BaseEntity
     ])]
     private Collection $questionnaireEtudiantReponses;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATETIME_MUTABLE, nullable: true)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateTermine = null;
 
     public function __construct(Etudiant $etudiant, QuestionnaireQuizz|QuestionnaireQualite $questionnaire, ?string $typeQuestionnaire)

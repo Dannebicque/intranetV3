@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Message.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Message.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 08:20
+ * @lastUpdate 26/05/2022 18:21
  */
 
 namespace App\Entity;
@@ -29,13 +29,13 @@ class Message extends BaseEntity
     final public const MESSAGE_TYPE_GROUPE = 'g';
     final public const MESSAGE_TYPE_PERMANENT = 'p';
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $sujet = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $message = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private ?bool $important = null;
 
     #[ORM\ManyToOne(targetEntity: Personnel::class, fetch: 'EAGER', inversedBy: 'messages')]
@@ -53,13 +53,13 @@ class Message extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'message', targetEntity: MessagePieceJointe::class, fetch: 'EAGER')]
     private Collection $messagePieceJointes;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 1)]
+    #[ORM\Column(type: Types::STRING, length: 1)]
     private string $etat = self::ETAT_MESSAGE_DRAFT;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $typeDestinataires = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 1)]
+    #[ORM\Column(type: Types::STRING, length: 1)]
     private ?string $type = null;
 
     public function __construct()

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Enquetes/MyEnqueteDiplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:52
+ * @lastUpdate 26/05/2022 18:27
  */
 
 /*
@@ -252,7 +252,7 @@ class MyEnqueteDiplome
         return $this->questionnaire;
     }
 
-    public function getEtudiantsReponses()
+    public function getEtudiantsReponses(): array
     {
         return $this->etudiantsReponses;
     }

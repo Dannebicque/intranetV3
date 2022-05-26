@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MySalleExamen.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:52
+ * @lastUpdate 26/05/2022 18:27
  */
 
 /*
@@ -26,6 +26,7 @@ use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SalleExamenRepository;
 use App\Repository\TypeGroupeRepository;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use function chr;
 use function count;
 use Doctrine\Common\Collections\Collection;
@@ -66,7 +67,7 @@ class MySalleExamen
         int|string $requestenseignant1,
         int|string $requestenseignant2,
         Semestre $semestre,
-    ) {
+    ): ?PdfResponse {
         $this->matiere = $this->typeMatiereManager->getMatiereFromSelect($requestmatiere);
 
         if (null !== $this->salle && null !== $this->matiere) {

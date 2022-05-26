@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Adresse.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Adresse.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/09/2021 09:25
+ * @lastUpdate 26/05/2022 18:15
  */
 
 namespace App\Entity;
@@ -22,27 +22,27 @@ class Adresse extends BaseEntity
     use LifeCycleTrait;
 
     #[Groups(groups: ['adresse'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $adresse1 = '';
 
     #[Groups(groups: ['adresse'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $adresse2 = '';
 
     #[Groups(groups: ['adresse'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $adresse3 = '';
 
     #[Groups(groups: ['adresse'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 10, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 10, nullable: true)]
     private ?string $codePostal = '';
 
     #[Groups(groups: ['adresse'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 100, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 100, nullable: true)]
     private ?string $ville = '';
 
     #[Groups(groups: ['adresse'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 100, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 100, nullable: true)]
     private ?string $pays = 'France';
 
     #[ORM\OneToOne(mappedBy: 'adresseAlternance', targetEntity: Alternance::class, cascade: [

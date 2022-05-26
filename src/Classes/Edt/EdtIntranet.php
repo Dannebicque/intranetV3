@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/EdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/05/2022 18:12
+ * @lastUpdate 26/05/2022 18:27
  */
 
 namespace App\Classes\Edt;
@@ -52,7 +52,7 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
         array $matieres,
         array $groupes,
         AnneeUniversitaire $anneeUniversitaire
-    ) {
+    ): EvenementEdtCollection {
         $evts = $this->edtPlanningRepository->findEdtSemestreSemaine($semestre, $semaine, $anneeUniversitaire);
 
         $tGroupes = [];

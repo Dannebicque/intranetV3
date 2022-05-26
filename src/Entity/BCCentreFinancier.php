@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/BCCentreFinancier.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/BCCentreFinancier.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/09/2021 17:49
+ * @lastUpdate 26/05/2022 18:18
  */
 
 namespace App\Entity;
@@ -20,10 +20,10 @@ class BCCentreFinancier extends BaseEntity
 {
     use LifeCycleTrait;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 100)]
+    #[ORM\Column(type: Types::STRING, length: 100)]
     private ?string $libelle = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 15)]
+    #[ORM\Column(type: Types::STRING, length: 15)]
     private ?string $code = null;
 
     public function getLibelle(): ?string

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/CovidCreneauPresence.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/CovidCreneauPresence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 26/05/2022 18:21
  */
 
 namespace App\Entity;
@@ -20,16 +20,16 @@ class CovidCreneauPresence
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::INTEGER)]
+    #[ORM\Column(type: Types::INTEGER)]
     private ?int $id = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?DateTimeInterface $date;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TIME_MUTABLE)]
+    #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?DateTimeInterface $heureArrivee;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TIME_MUTABLE)]
+    #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?DateTimeInterface $heureDepart;
 
     #[ORM\ManyToOne(targetEntity: CovidAttestationPersonnel::class, inversedBy: 'covidCreneauPresences')]

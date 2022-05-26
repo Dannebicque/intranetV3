@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/ApcParcours.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcParcours.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 17:46
+ * @lastUpdate 26/05/2022 18:16
  */
 
 namespace App\Entity;
@@ -24,10 +24,10 @@ class ApcParcours extends BaseEntity
     use LifeCycleTrait;
     use ApogeeTrait;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $libelle = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 10)]
+    #[ORM\Column(type: Types::STRING, length: 10)]
     private ?string $code = null;
 
     /**
@@ -39,7 +39,7 @@ class ApcParcours extends BaseEntity
     #[ORM\ManyToOne(targetEntity: Diplome::class, inversedBy: 'apcParcours')]
     private ?Diplome $diplome = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::BOOLEAN)]
+    #[ORM\Column(type: Types::BOOLEAN)]
     private bool $actif = true;
 
     public function __construct(Diplome $diplome)

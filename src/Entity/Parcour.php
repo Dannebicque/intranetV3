@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Parcour.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Parcour.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/07/2021 11:23
+ * @lastUpdate 26/05/2022 18:21
  */
 
 namespace App\Entity;
@@ -24,7 +24,7 @@ class Parcour extends BaseEntity
     use LifeCycleTrait;
 
     #[Groups(groups: ['groupe_administration'])]
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 255)]
+    #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $libelle = null;
 
     /**
@@ -33,7 +33,7 @@ class Parcour extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'parcours', targetEntity: Matiere::class)]
     private Collection $matieres;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 20)]
+    #[ORM\Column(type: Types::STRING, length: 20)]
     private ?string $codeElement = null;
 
     /**

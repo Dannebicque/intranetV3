@@ -1,4 +1,11 @@
 <?php
+/*
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/AlternancePlanning.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 26/05/2022 18:15
+ */
 
 namespace App\Entity;
 
@@ -13,10 +20,10 @@ class AlternancePlanning extends BaseEntity
     #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class, inversedBy: 'planningAlternances')]
     private ?AnneeUniversitaire $anneeUniversitaire = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?CarbonInterface $date = null;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::STRING, length: 10)]
+    #[ORM\Column(type: Types::STRING, length: 10)]
     private ?string $etat = null;
 
     #[ORM\ManyToOne(targetEntity: Annee::class, inversedBy: 'alternancePlannings')]

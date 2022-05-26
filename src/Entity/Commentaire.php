@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/Commentaire.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Commentaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 13:04
+ * @lastUpdate 26/05/2022 18:18
  */
 
 namespace App\Entity;
@@ -20,7 +20,7 @@ class Commentaire extends BaseEntity
 {
     use LifeCycleTrait;
 
-    #[ORM\Column(type: \Doctrine\DBAL\Types\Types::TEXT)]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $texte = null;
 
     public function __construct(#[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'commentaires')] private ?Etudiant $etudiant)
