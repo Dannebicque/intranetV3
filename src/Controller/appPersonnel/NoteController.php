@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/NoteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/05/2022 12:36
+ * @lastUpdate 26/05/2022 18:11
  */
 
 namespace App\Controller\appPersonnel;
@@ -126,7 +126,7 @@ class NoteController extends BaseController
     public function import(TypeMatiereManager $typeMatiereManager, Request $request, MyUpload $myUpload, MyEvaluation $myEvaluation, Evaluation $evaluation, Semestre $semestre): Response
     {
         // upload
-        $fichier = $myUpload->upload($request->files->get('fichier_import'), 'temp/');
+        $fichier = $myUpload->upload($request->files->get('fichier_import'));
         $matiere = $typeMatiereManager->getMatiere($evaluation->getIdMatiere(), $evaluation->getTypeMatiere());
         $this->denyAccessUnlessGranted('CAN_ADD_NOTE', ['matiere' => $matiere, 'semestre' => $evaluation->getSemestre()]);
         if (null === $matiere) {

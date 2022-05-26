@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/DocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 08:12
+ * @lastUpdate 26/05/2022 17:03
  */
 
 namespace App\Controller;
@@ -16,6 +16,7 @@ use App\Repository\TypeDocumentRepository;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/', name: 'document_')]
@@ -73,26 +74,28 @@ class DocumentController extends BaseController
         string $source
     ): Response {
         $typedocument = $typeDocumentRepository->find($request->query->get('typedocument'));
-        if ($typedocument !== null) {
-            $documents = $documentRepository->findByTypeDocument($typedocument->getId(), $this->isEtudiant());
-            $idDocuments = $myDocument->idMesDocumentsFavoris($this->getUser());
-            $breadCrumbs=[];
-            $td = $typedocument;
-            while($td->getParent() !== null) {
-                $breadCrumbs[] = $td;
-                $td = $td->getParent();
-            }
-            $breadCrumbs[] = $td;
-            $breadCrumbs = array_reverse($breadCrumbs);
+        if (null === $typedocument) {
+            throw new NotFoundHttpException();
+        }
 
-            return $this->render('document/public/_documents.html.twig', [
+        $documents = $documentRepository->findByTypeDocument($typedocument->getId(), $this->isEtudiant());
+        $idDocuments = $myDocument->idMesDocumentsFavoris($this->getUser());
+        $breadCrumbs = [];
+        $td = $typedocument;
+        while (null !== $td->getParent()) {
+            $breadCrumbs[] = $td;
+            $td = $td->getParent();
+        }
+        $breadCrumbs[] = $td;
+        $breadCrumbs = array_reverse($breadCrumbs);
+
+        return $this->render('document/public/_documents.html.twig', [
                 'breadCrumbs' => $breadCrumbs,
                 'documents' => $documents,
                 'listesFavoris' => $idDocuments,
                 'typeDoc' => $typedocument,
                 'source' => $source,
             ]);
-        }
     }
 
     #[Route(path: '{source}/ajax/add-favori/{document}', name: 'add_favori', requirements: [

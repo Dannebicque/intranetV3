@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/SousComissionController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/SousComissionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 26/05/2022 18:12
  */
 
 namespace App\Controller\administration;
@@ -20,6 +20,7 @@ use App\Entity\Scolarite;
 use App\Entity\ScolaritePromo;
 use App\Entity\Semestre;
 use App\Event\SousCommissionEvent;
+use App\Exception\SemestreNotFoundException;
 use App\Repository\BacRepository;
 use App\Repository\NoteRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
@@ -106,8 +107,13 @@ class SousComissionController extends BaseController
     public function publier(EventDispatcherInterface $eventDispatcher, SousCommissionSauvegarde $sousCommissionSauvegarde, ScolaritePromo $ssComm): Response
     {
         $semestre = $ssComm->getSemestre();
+
+        if (null === $semestre) {
+            throw new SemestreNotFoundException();
+        }
+
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
-        $sousCommissionSauvegarde->visibilite($ssComm, true);
+        $sousCommissionSauvegarde->visibilite($ssComm);
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'scolarite.publiee.success.flash');
         $publication = new SousCommissionEvent($ssComm);
         $eventDispatcher->dispatch($publication, SousCommissionEvent::PUBLISHED);
@@ -119,6 +125,11 @@ class SousComissionController extends BaseController
     public function depublier(SousCommissionSauvegarde $sousCommissionSauvegarde, ScolaritePromo $ssComm): Response
     {
         $semestre = $ssComm->getSemestre();
+
+        if (null === $semestre) {
+            throw new SemestreNotFoundException();
+        }
+
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
         $sousCommissionSauvegarde->visibilite($ssComm, false);
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'scolarite.depubliee.success.flash');

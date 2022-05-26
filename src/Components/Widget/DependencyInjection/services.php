@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Widget/DependencyInjection/services.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Widget/DependencyInjection/services.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/10/2021 11:29
+ * @lastUpdate 26/05/2022 18:11
  */
 
 namespace App\Components\Widget\DependencyInjection;
@@ -31,7 +31,7 @@ return static function (ContainerConfigurator $configurator): void {
     $services = $configurator->services();
     $services->defaults()
         ->private()
-        ->autowire(true)
+        ->autowire()
         ->autoconfigure(false);
 
     $services->set(AddLinkType::class)->tag(WidgetRegistry::TAG_TYPE);

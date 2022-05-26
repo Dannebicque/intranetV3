@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyExportListing.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:52
+ * @lastUpdate 26/05/2022 18:11
  */
 
 /*
@@ -104,7 +104,7 @@ class MyExportListing
         $this->prepareColonnes();
 
         return match ($exportFormat) {
-            Constantes::FORMAT_CSV_POINT_VIRGULE => $this->exportCsv(';'),
+            Constantes::FORMAT_CSV_POINT_VIRGULE => $this->exportCsv(),
             Constantes::FORMAT_CSV_VIRGULE => $this->exportCsv(','),
             Constantes::FORMAT_EXCEL => $this->exportExcel(),
             Constantes::FORMAT_PDF => $this->exportPdf(),

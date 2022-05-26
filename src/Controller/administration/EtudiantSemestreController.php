@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EtudiantSemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 09:56
+ * @lastUpdate 26/05/2022 18:10
  */
 
 namespace App\Controller\administration;
@@ -72,7 +72,7 @@ class EtudiantSemestreController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
         $file = $request->files->get('fichierimport');
-        $fichier = $myUpload->upload($file, 'temp/');
+        $fichier = $myUpload->upload($file);
         $extract = $myUpload->extractZip($fichier, 'ph/');
         if (false === $extract) {
             $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Impossible d\'accéder à l\'archive.');

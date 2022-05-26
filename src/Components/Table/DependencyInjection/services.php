@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Table/DependencyInjection/services.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Table/DependencyInjection/services.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/09/2021 20:37
+ * @lastUpdate 26/05/2022 18:11
  */
 
 namespace App\Components\Table\DependencyInjection;
@@ -31,7 +31,7 @@ return static function (ContainerConfigurator $configurator): void {
     $services = $configurator->services();
     $services->defaults()
         ->private()
-        ->autowire(true)
+        ->autowire()
         ->autoconfigure(false);
 
     $services->set(CallableAdapter::class)->tag(TableRegistry::TAG_ADAPTER);

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/DependencyInjection/services.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 11:36
+ * @lastUpdate 26/05/2022 18:11
  */
 
 namespace App\Components\Questionnaire\DependencyInjection;
@@ -30,7 +30,7 @@ return static function (ContainerConfigurator $configurator): void {
     $services = $configurator->services();
     $services->defaults()
         ->private()
-        ->autowire(true)
+        ->autowire()
         ->autoconfigure(false);
 
     $services->set(TypeQcu::class)->tag('da.questionnaire.typequestion');
