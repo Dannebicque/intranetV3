@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcNiveauController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/05/2022 19:15
+ * @lastUpdate 26/05/2022 14:30
  */
 
 namespace App\Controller\administration\apc;
@@ -26,6 +26,7 @@ class ApcNiveauController extends BaseController
     #[Route(path: '/{diplome}/synchro-niveau-annee', name: 'administration_apc_niveau_annee_synchro', methods: 'GET')]
     public function synchroNiveauAnnee(ApcNiveauRepository $apcNiveauRepository, Diplome $diplome): Response
     {
+        //todo: une année dépend du PN ? La structure dépend du PN ? Comment est-ce codé dans Apogée ? Un nouveau diplôme ?
         $annees = $diplome->getAnnees();
         $t = [];
         foreach ($annees as $annee) {

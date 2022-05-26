@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 26/05/2022 14:11
  */
 
 namespace App\Controller\administration\apc;
@@ -12,23 +12,37 @@ namespace App\Controller\administration\apc;
 use App\Classes\Apc\ApcStructure;
 use App\Controller\BaseController;
 use App\Entity\Diplome;
+use App\Repository\ApcComptenceRepository;
+use App\Repository\PpnRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route(path: '/apc/')]
 class ApcController extends BaseController
 {
-    #[Route(path: 'referentiel/{diplome}', name: 'administration_apc_referentiel_index', methods: ['GET'])]
-    public function referentiel(ApcStructure $apcStructure, Diplome $diplome): Response
+    #[Route(path: 'referentiel/{diplome}', name: 'administration_apc_referentiel_index', options: ['expose' => true], methods: ['GET'])]
+    public function referentiel(
+        Request $request,
+        PpnRepository $ppnRepository,
+        ApcComptenceRepository $apcComptenceRepository,
+        ApcStructure $apcStructure, Diplome $diplome): Response
     {
+        if (null === $request->query->get('ppn')) {
+            $ppn = $diplome->getPpns()->first();
+        } else {
+            $ppn = $ppnRepository->find($request->query->get('ppn'));
+        }
         $tParcours = $apcStructure->parcoursNiveaux($diplome);
+        $competences = $apcComptenceRepository->findByDiplomeAndPn($diplome, $ppn);
 
         return $this->render('apc/referentiel.html.twig', [
             'diplome' => $diplome,
             'ppns' => $diplome->getPpns(),
-            'competences' => $diplome->getApcComptences(),
+            'competences' => $competences,
             'parcours' => $diplome->getApcParcours(),
             'parcoursNiveaux' => $tParcours,
+            'ppn' => $ppn,
         ]);
     }
 }

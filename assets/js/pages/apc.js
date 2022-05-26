@@ -1,8 +1,8 @@
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/apc.js
+// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/apc.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/09/2021 09:01
+// @lastUpdate 26/05/2022 14:02
 import '../../vendor/jquery.collection'
 
 let semestreSae = false
@@ -256,4 +256,11 @@ $(document).on('change', '.checkNiveau', function (e) {
   })
 
 })
+
+if (document.getElementById('ppn')) {
+  document.getElementById('ppn').addEventListener('change', function (e) {
+    console.log('chance')
+    document.location.href = Routing.generate('administration_apc_referentiel_index', {'diplome': e.target.dataset.diplome, 'ppn': e.target.value})
+  })
+}
 

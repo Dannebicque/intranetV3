@@ -40,8 +40,7 @@
                         <div class="form-group">
                             <label for="ppn">PN associé au référentiel de compétences</label>
                             <select class="form-select selectpicker" id="ppn" name="ppn">
-                                <option value="">
-                                    Choisir le PN pour lequel importer le référentiel de compétences
+                                <option value="">Choisir le PN pour lequel importer le référentiel de compétences
                                 </option>
                                 {% for pn in diplome.ppns %}
                                     <option value="{{ pn.id }}">{{ pn.libelle }}</option>

@@ -7,16 +7,16 @@
 {% endif %}
 
 {% block header %}
-    {{ 'adm.referentiel.de.competence.heading'|trans({ '%diplome%': diplome.libelle})|raw }}
+    {{ 'adm.referentiel.de.competence.heading'|trans({ '%diplome%': diplome.libelle, '%ppn%' : ppn.annee})|raw }}
 {% endblock %}
 
  {% block headerright %}
      <div>
          <label for="ppn">Choisir la version du PN</label>
-         <select class="form-select" name="ppn" id="ppn">
+         <select class="form-select" name="ppn" id="ppn" data-diplome="{{ diplome.id }}">
              <option value=""></option>
              {% for pn in ppns %}
-             <option value="{{ pn.id }}">{{ pn.libelle }} ({{ pn.annee }})</option>
+                 <option value="{{ pn.id }}">{{ pn.libelle }} ({{ pn.annee }})</option>
              {% endfor %}
          </select>
      </div>
@@ -64,20 +64,20 @@
             <div class="card">
                 <header class="card-header">
                     <h4 class="card-title">{{ 'adm.referentiel.de.competence.heading'|trans({ '%diplome%': diplome
-                        .libelle})|raw }}</h4>
-                    <div class="card-header-actions" style="">
-                <span>
-                    <a href="{{ path('administration_apc_niveau_annee_synchro', {diplome:diplome.id}) }}" class="btn
-                    btn-sm btn btn-info"
-                       data-bs-toggle="tooltip" data-bs-placement="bottom"
-                       title="Synchroniser les niveaux et les années"><i
-                                class="fas fa-sync"></i></a>
-                    <a href="{{ path('administration_apc_competence_new', {diplome:diplome.id}) }}" class="btn
-                    btn-sm btn btn-info"
-                       data-bs-toggle="tooltip" data-bs-placement="bottom"
-                       title="Ajouter une compétences"><i
-                                class="fas fa-plus"></i></a>
-                </span>
+                        .libelle, '%ppn%' : ppn.annee})|raw }}</h4>
+                    <div class="card-header-actions">
+                        <span>
+                            <a href="{{ path('administration_apc_niveau_annee_synchro', {diplome:diplome.id}) }}" class="btn
+                            btn-sm btn btn-info"
+                               data-bs-toggle="tooltip" data-bs-placement="bottom"
+                               title="Synchroniser les niveaux et les années"><i
+                                        class="fas fa-sync"></i></a>
+                            <a href="{{ path('administration_apc_competence_new', {diplome:diplome.id}) }}" class="btn
+                            btn-sm btn btn-info"
+                               data-bs-toggle="tooltip" data-bs-placement="bottom"
+                               title="Ajouter une compétences"><i
+                                        class="fas fa-plus"></i></a>
+                        </span>
                     </div>
                 </header>
                 <div class="card-body">
@@ -147,11 +147,11 @@
                     <h4 class="card-title">{{ 'adm.apc.annee.heading'|trans({ '%diplome%': diplome.libelle}) }}</h4>
                     <div class="card-header-actions">
                 <span>
-                    <a href="{{ path('administration_apc_parcours_new', {diplome:diplome.id}) }}" class="btn
+                     <a href="{{ path('administration_apc_niveau_annee_synchro', {diplome:diplome.id}) }}" class="btn
                     btn-sm btn btn-info"
-                       data-bs-toggle="tooltip" data-bs-placement="bottom"
-                       title="Ajouter un compétences"><i
-                                class="fas fa-plus"></i></a>
+                        data-bs-toggle="tooltip" data-bs-placement="bottom"
+                        title="Ajouter un compétences"><i
+                                 class="fas fa-sync"></i></a>
                 </span>
                     </div>
                 </header>
@@ -179,9 +179,14 @@
             </div>
         </div>
     </div>
+{% endblock %}
 
-
-
-
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+      sae = {}
+      ressource = {}
+    </script>
+    {{ encore_entry_script_tags('apc') }}
 {% endblock %}
 

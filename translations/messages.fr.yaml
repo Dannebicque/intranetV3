@@ -546,7 +546,7 @@ adm:
     edit.heading: 'Modification d''un parcours'
     show.heading: 'Détails d''un parcours'
     new.heading: 'Création d''un parcours'
-  referentiel.de.competence.heading: 'Référentiel de compétences pour le diplôme :<br> %diplome%'
+  referentiel.de.competence.heading: 'Référentiel de compétences pour le diplôme :<br> %diplome% (PPN %ppn%)'
   apc.parcours.heading: 'Parcours pour le diplôme %diplome%'
   ressources.et.sae.index.heading: 'Ressources et SAÉ'
   apc_parcours_niveau:
@@ -869,6 +869,8 @@ atitle:
   service_chronologique: 'Service Chronologique'
   basculer.sous_comm_live: 'Basculer vers la sous-commission en temps réel'
   referentiel: 'messages'
+  import_referentiel_competence: 'Importer un référentiel de compétences'
+  retour_referentiel: 'Retour au référentiel'
 
 au: au
 aucun: aucun
@@ -1721,6 +1723,10 @@ sadm:
     resultat.heading: Résultats
     synchro.apogee.heading: 'Synchroniser avec Apogée'
   service.previsionnel.heading: 'Services prévisionnels'
+  apc:
+    referentiel:
+      import:
+        heading: 'Import d''un référentiel de compétences'
 
 saisie_par: 'Saisie par'
 saisie.autorise.formulaire.non.completee: 'Saisie autorisée, mais non complétée'
