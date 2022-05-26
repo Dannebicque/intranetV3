@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:28
+ * @lastUpdate 26/05/2022 18:35
  */
 
 namespace App\Entity;
@@ -1366,11 +1366,9 @@ class Semestre extends BaseEntity implements Stringable
 
     public function removeAnneeUniversitaireSemestre(AnneeUniversitaireSemestre $anneeUniversitaireSemestre): self
     {
-        if ($this->anneeUniversitaireSemestres->removeElement($anneeUniversitaireSemestre)) {
-            // set the owning side to null (unless already changed)
-            if ($anneeUniversitaireSemestre->getSemestre() === $this) {
-                $anneeUniversitaireSemestre->setSemestre(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->anneeUniversitaireSemestres->removeElement($anneeUniversitaireSemestre) && $anneeUniversitaireSemestre->getSemestre() === $this) {
+            $anneeUniversitaireSemestre->setSemestre(null);
         }
 
         return $this;

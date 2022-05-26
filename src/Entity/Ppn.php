@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Ppn.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 21:53
+ * @lastUpdate 26/05/2022 18:35
  */
 
 namespace App\Entity;
@@ -183,11 +183,9 @@ class Ppn extends BaseEntity
 
     public function removeApcCompetence(ApcCompetence $apcCompetence): self
     {
-        if ($this->apcCompetences->removeElement($apcCompetence)) {
-            // set the owning side to null (unless already changed)
-            if ($apcCompetence->getPpn() === $this) {
-                $apcCompetence->setPpn(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->apcCompetences->removeElement($apcCompetence) && $apcCompetence->getPpn() === $this) {
+            $apcCompetence->setPpn(null);
         }
 
         return $this;
@@ -213,11 +211,9 @@ class Ppn extends BaseEntity
 
     public function removeAnneeUniversitaireSemestre(AnneeUniversitaireSemestre $anneeUniversitaireSemestre): self
     {
-        if ($this->anneeUniversitaireSemestres->removeElement($anneeUniversitaireSemestre)) {
-            // set the owning side to null (unless already changed)
-            if ($anneeUniversitaireSemestre->getPpn() === $this) {
-                $anneeUniversitaireSemestre->setPpn(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->anneeUniversitaireSemestres->removeElement($anneeUniversitaireSemestre) && $anneeUniversitaireSemestre->getPpn() === $this) {
+            $anneeUniversitaireSemestre->setPpn(null);
         }
 
         return $this;

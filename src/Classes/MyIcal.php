@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyIcal.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 09:49
+ * @lastUpdate 26/05/2022 18:35
  */
 
 namespace App\Classes;
@@ -108,7 +108,7 @@ class MyIcal
 
     public function setDtstart(CarbonInterface $date, $creneau): void
     {
-        $h = explode(':', (string) $this->tabheure[$creneau]);
+        $h = explode(':', $this->tabheure[$creneau]);
 
         $timestamp = mktime($h[0], $h[1], '00', $date->month, $date->day, $date->year);
         $this->dtstart = 'DTSTART:'.$this->calculHeureEte($timestamp);
@@ -169,7 +169,7 @@ class MyIcal
 
     public function setDtend(CarbonInterface $date, $creneau): void
     {
-        $h = explode(':', (string) $this->tabheure[$creneau]);
+        $h = explode(':', $this->tabheure[$creneau]);
 
         $timestamp = mktime($h[0], $h[1], '00', $date->month, $date->day, $date->year);
         $this->dtend = 'DTEND:'.$this->calculHeureEte($timestamp);

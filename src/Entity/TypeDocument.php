@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/TypeDocument.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 08:18
+ * @lastUpdate 26/05/2022 18:35
  */
 
 namespace App\Entity;
@@ -149,11 +149,9 @@ class TypeDocument extends BaseEntity
 
     public function removeEnfant(self $enfant): self
     {
-        if ($this->enfants->removeElement($enfant)) {
-            // set the owning side to null (unless already changed)
-            if ($enfant->getParent() === $this) {
-                $enfant->setParent(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->enfants->removeElement($enfant) && $enfant->getParent() === $this) {
+            $enfant->setParent(null);
         }
 
         return $this;

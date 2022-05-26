@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/StageEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/05/2022 14:54
+ * @lastUpdate 26/05/2022 18:35
  */
 
 namespace App\Entity;
@@ -570,11 +570,9 @@ class StageEtudiant extends BaseEntity
 
     public function removeStageFicheSuivi(StageFicheSuivi $stageFicheSuivi): self
     {
-        if ($this->stageFicheSuivis->removeElement($stageFicheSuivi)) {
-            // set the owning side to null (unless already changed)
-            if ($stageFicheSuivi->getStage() === $this) {
-                $stageFicheSuivi->setStage(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->stageFicheSuivis->removeElement($stageFicheSuivi) && $stageFicheSuivi->getStage() === $this) {
+            $stageFicheSuivi->setStage(null);
         }
 
         return $this;

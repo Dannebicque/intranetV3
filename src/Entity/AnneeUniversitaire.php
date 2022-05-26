@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/AnneeUniversitaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 08:44
+ * @lastUpdate 26/05/2022 18:35
  */
 
 namespace App\Entity;
@@ -507,11 +507,9 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
 
     public function removeAnneeUniversitaireSemestre(AnneeUniversitaireSemestre $anneeUniversitaireSemestre): self
     {
-        if ($this->anneeUniversitaireSemestres->removeElement($anneeUniversitaireSemestre)) {
-            // set the owning side to null (unless already changed)
-            if ($anneeUniversitaireSemestre->getAnneeUniversitaire() === $this) {
-                $anneeUniversitaireSemestre->setAnneeUniversitaire(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->anneeUniversitaireSemestres->removeElement($anneeUniversitaireSemestre) && $anneeUniversitaireSemestre->getAnneeUniversitaire() === $this) {
+            $anneeUniversitaireSemestre->setAnneeUniversitaire(null);
         }
 
         return $this;
