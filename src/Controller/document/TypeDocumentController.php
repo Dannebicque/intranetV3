@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/document/TypeDocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/05/2022 19:34
+ * @lastUpdate 25/05/2022 21:36
  */
 
 namespace App\Controller\document;
@@ -111,7 +111,7 @@ class TypeDocumentController extends BaseController
                 return $this->redirectToRoute('sa_qualite_type_document_index', ['source' => Document::ORIGINAUX]);
             }
 
-            return $this->redirectToRoute('administration_type_document_index', ['source' => Document::DOCUMENT]);
+            return $this->redirectToRoute('administration_type_document_index', ['source' => Document::DOCUMENTS]);
         }
 
         return $this->render('document/type_document/new.html.twig', [

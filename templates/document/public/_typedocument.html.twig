@@ -14,22 +14,8 @@
     </div>
 </div>
 
-{% for typedocument in typedocuments %}
-    <div class="col-md-6 col-xl-4 code code-card code-fold">
-        <div class="code-preview afficheDocuments" data-type="{{ typedocument.id }}" data-action="click->documents#afficheDocuments">
-            <div class="media align-items-center">
-                <span>
-                    <i class="fas fa-folder fs-30 text-info"></i>
-                </span>
-                <div class="media-body">
-                    <h5>{{ typedocument.libelle }}</h5>
-                    <p class="gap-items">
-                        <small>{{ 'nb.documents.categories'|trans }} {{ typedocument.documents|length }} </small>
-                    </p>
-                </div>
-            </div>
-        </div>
-    </div>
+{% for typedocument in typedocuments|filter(typedocument => typedocument.parent == null) %}
+    {{ include('document/public/_typeDocumentElement.html.twig') }}
 {% endfor %}
 
 

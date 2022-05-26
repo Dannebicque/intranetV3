@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/TypeDocument.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/05/2022 08:05
+ * @lastUpdate 26/05/2022 08:18
  */
 
 namespace App\Entity;
@@ -40,10 +40,10 @@ class TypeDocument extends BaseEntity
     private ?bool $originaux = false;
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'enfants')]
-    private $parent;
+    private ?TypeDocument $parent;
 
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
-    private $enfants;
+    private Collection $enfants;
 
     public function __construct(?Departement $departement)
     {

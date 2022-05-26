@@ -13,10 +13,12 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-12 d-grid d-block mb-2">
-                    <a href="{{ path('administration_document_index', {source:'document'}) }}"
+                    <a href="{{ path('administration_document_index', {source: constant
+                        ('App\\Entity\\Document::DOCUMENTS')}) }}"
                        class="btn btn-primary"> {{ 'adm.gerer.les.documents'|trans }}</a></div>
                 <div class="col-12 d-grid d-block mb-2">
-                    <a href="{{ path('administration_type_document_index', {source:'document'}) }}"
+                    <a href="{{ path('administration_type_document_index', {source:constant
+                        ('App\\Entity\\Document::DOCUMENTS')}) }}"
                        class="btn btn-primary"> {{ 'adm.gerer.les.categories.de.document'|trans }}</a>
 
                 </div>

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/DocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 11:59
+ * @lastUpdate 26/05/2022 08:12
  */
 
 namespace App\Controller;
@@ -68,16 +68,31 @@ class DocumentController extends BaseController
     public function documents(
         Request $request,
         MyDocument $myDocument,
-        DocumentRepository $documentRepository
+        TypeDocumentRepository $typeDocumentRepository,
+        DocumentRepository $documentRepository,
+        string $source
     ): Response {
-        $typedocument = $request->query->get('typedocument');
-        $documents = $documentRepository->findByTypeDocument($typedocument, $this->isEtudiant());
-        $idDocuments = $myDocument->idMesDocumentsFavoris($this->getUser());
+        $typedocument = $typeDocumentRepository->find($request->query->get('typedocument'));
+        if ($typedocument !== null) {
+            $documents = $documentRepository->findByTypeDocument($typedocument->getId(), $this->isEtudiant());
+            $idDocuments = $myDocument->idMesDocumentsFavoris($this->getUser());
+            $breadCrumbs=[];
+            $td = $typedocument;
+            while($td->getParent() !== null) {
+                $breadCrumbs[] = $td;
+                $td = $td->getParent();
+            }
+            $breadCrumbs[] = $td;
+            $breadCrumbs = array_reverse($breadCrumbs);
 
-        return $this->render('document/public/_documents.html.twig', [
-            'documents' => $documents,
-            'listesFavoris' => $idDocuments,
-        ]);
+            return $this->render('document/public/_documents.html.twig', [
+                'breadCrumbs' => $breadCrumbs,
+                'documents' => $documents,
+                'listesFavoris' => $idDocuments,
+                'typeDoc' => $typedocument,
+                'source' => $source,
+            ]);
+        }
     }
 
     #[Route(path: '{source}/ajax/add-favori/{document}', name: 'add_favori', requirements: [

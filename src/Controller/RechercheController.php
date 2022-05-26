@@ -1,14 +1,15 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/RechercheController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/RechercheController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 26/05/2022 08:15
  */
 
 namespace App\Controller;
 
+use App\Repository\DocumentRepository;
 use App\Repository\EtudiantRepository;
 use App\Repository\PersonnelDepartementRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,15 +23,21 @@ use Symfony\Component\Routing\Annotation\Route;
 class RechercheController extends BaseController
 {
     #[Route(path: '/', name: 'recherche', options: ['expose' => true], methods: ['GET'])]
-    public function index(Request $request, EtudiantRepository $etudiantRepository, PersonnelDepartementRepository $personnelRepository): Response
+    public function index(
+        Request $request,
+        EtudiantRepository $etudiantRepository,
+        DocumentRepository $documentRepository,
+        PersonnelDepartementRepository $personnelRepository): Response
     {
         $keyword = $request->query->get('q');
         $etudiants = $etudiantRepository->search($keyword, $this->getDepartement());
         $personnels = $personnelRepository->search($keyword, $this->getDepartement());
+        $documents = $documentRepository->search($keyword, $this->getDepartement());
 
         return $this->render('recherche/_reponses.html.twig', [
             'etudiants' => $etudiants,
             'personnels' => $personnels,
+            'documents' => $documents,
             'q' => $keyword,
         ]);
     }

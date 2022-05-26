@@ -1,4 +1,28 @@
-{# arborescence (fil ariane ?) zone de recherche (filtre/tri) #}
+{# zone de recherche (filtre/tri) #}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ path('document_index', {source:source}) }}">Documents</a>
+                    </li>
+                    {% for bread in breadCrumbs %}
+                        <li class="breadcrumb-item {% if loop.last %}active{% endif %}">
+                            <a href="#" data-type="{{ bread.id }}" data-action="click->documents#afficheDocuments">{{ bread.libelle }}</a>
+                        </li>
+                    {% endfor %}
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="col-md-12">
+    {% for typedocument in typeDoc.enfants %}
+        {{ include('document/public/_typeDocumentElement.html.twig') }}
+    {% endfor %}
+</div>
 
 {% for document in documents %}
     <div class="col-md-6 col-xl-4">
@@ -14,12 +38,12 @@
                         <a class="primary" href="{{ asset('upload/documents/'~document.documentName) }}"
                            data-bs-toggle="tooltip" data-bs-placement="bottom" target="_blank"
                            title="{{ 'telecharger'|trans }}">
-                                {{ document.typeFichierIcone|raw }}
+                            {{ document.typeFichierIcone|raw }}
                         </a>
                     </div>
                     <div class="col-8">
                         <p>
-                            {{document.description|raw}}
+                            {{ document.description|raw }}
                         </p>
                     </div>
                 </div>

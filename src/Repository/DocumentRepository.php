@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/DocumentRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/05/2022 17:08
+ * @lastUpdate 26/05/2022 08:18
  */
 
 namespace App\Repository;
@@ -66,6 +66,20 @@ class DocumentRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('d')
             ->innerJoin(TypeDocument::class, 't', 'WITH', 'd.typeDocument = t.id')
             ->where('t.originaux = 1')
+            ->orderBy('d.libelle', Criteria::ASC)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function search(string $needle, ?Departement $departement)
+    {
+        return $this->createQueryBuilder('d')
+            ->innerJoin(TypeDocument::class, 't', 'WITH', 'd.typeDocument = t.id')
+            ->where('d.libelle LIKE :needle')
+            ->andWhere('t.departement = :departement')
+            ->orWhere('t.originaux = 1')
+            ->setParameter('needle', '%'.$needle.'%')
+            ->setParameter('departement', $departement->getId())
             ->orderBy('d.libelle', Criteria::ASC)
             ->getQuery()
             ->getResult();
