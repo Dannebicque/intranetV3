@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/document/DocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/05/2022 19:42
+ * @lastUpdate 26/05/2022 10:32
  */
 
 namespace App\Controller\document;
@@ -32,7 +32,7 @@ class DocumentController extends BaseController
     public function index(Request $request, string $source = Document::DOCUMENTS): Response
     {
         if (Document::ORIGINAUX === $source) {
-            $this->denyAccessUnlessGranted('ROLE_QUALITE');
+            $this->denyAccessUnlessGranted('ROLE_ADMINISTRATIF');
             $table = $this->createTable(DocumentTableType::class, [
                 'source' => Document::ORIGINAUX,
             ]);
@@ -65,7 +65,7 @@ class DocumentController extends BaseController
         string $source = Document::DOCUMENTS
     ): Response {
         if (Document::ORIGINAUX === $source) {
-            $this->denyAccessUnlessGranted('ROLE_QUALITE');
+            $this->denyAccessUnlessGranted('ROLE_ADMINISTRATIF');
             $documents = $documentRepository->findByOriginaux();
             $name = 'originaux';
         } else {
@@ -97,7 +97,7 @@ class DocumentController extends BaseController
         $document = new Document();
 
         if (Document::ORIGINAUX === $source) {
-            $this->denyAccessUnlessGranted('ROLE_QUALITE');
+            $this->denyAccessUnlessGranted('ROLE_ADMINISTRATIF');
             $document->setTypeDestinataire(Constantes::TYPE_DESTINATAIRE_PERSONNEL);
             $form = $this->createForm(
                 DocumentType::class,
@@ -167,7 +167,7 @@ class DocumentController extends BaseController
     public function show(Document $document, string $source = Document::DOCUMENTS): Response
     {
         if (Document::ORIGINAUX === $source) {
-            $this->denyAccessUnlessGranted('ROLE_QUALITE');
+            $this->denyAccessUnlessGranted('ROLE_ADMINISTRATIF');
         } else {
             $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $document->getSemestres()[0]);
             $this->breadcrumbHelper->addAdministration()
@@ -192,7 +192,7 @@ class DocumentController extends BaseController
         string $source = Document::DOCUMENTS
     ): Response {
         if (Document::ORIGINAUX === $source) {
-            $this->denyAccessUnlessGranted('ROLE_QUALITE');
+            $this->denyAccessUnlessGranted('ROLE_ADMINISTRATIF');
             $form = $this->createForm(
                 DocumentType::class,
                 $document,
@@ -267,7 +267,7 @@ class DocumentController extends BaseController
         string $source
     ): Response {
         if (Document::ORIGINAUX === $source) {
-            $this->denyAccessUnlessGranted('ROLE_QUALITE');
+            $this->denyAccessUnlessGranted('ROLE_ADMINISTRATIF');
         } else {
             $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $document->getSemestres()[0]);
         }
@@ -302,7 +302,7 @@ class DocumentController extends BaseController
     public function duplicate(Document $document, string $source): Response
     {
         if (Document::ORIGINAUX === $source) {
-            $this->denyAccessUnlessGranted('ROLE_QUALITE');
+            $this->denyAccessUnlessGranted('ROLE_ADMINISTRATIF');
         } else {
             $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $document->getSemestres()[0]);
         }

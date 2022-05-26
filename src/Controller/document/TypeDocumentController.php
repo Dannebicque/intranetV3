@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/document/TypeDocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/05/2022 21:36
+ * @lastUpdate 26/05/2022 10:32
  */
 
 namespace App\Controller\document;
@@ -29,7 +29,7 @@ class TypeDocumentController extends BaseController
     public function index(TypeDocumentRepository $typeDocumentRepository, string $source): Response
     {
         if (Document::ORIGINAUX === $source) {
-            $this->denyAccessUnlessGranted('ROLE_QUALITE');
+            $this->denyAccessUnlessGranted('ROLE_ADMINISTRATIF');
             $typeDocuments = $typeDocumentRepository->findByOriginaux();
         } else {
             $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
@@ -56,7 +56,7 @@ class TypeDocumentController extends BaseController
         string $source
     ): Response {
         if (Document::ORIGINAUX === $source) {
-            $this->denyAccessUnlessGranted('ROLE_QUALITE');
+            $this->denyAccessUnlessGranted('ROLE_ADMINISTRATIF');
             $typesDocuments = $typeDocumentRepository->findByOriginaux();
         } else {
             $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
@@ -84,7 +84,7 @@ class TypeDocumentController extends BaseController
     public function create(Request $request, string $source): Response
     {
         if (Document::ORIGINAUX === $source) {
-            $this->denyAccessUnlessGranted('ROLE_QUALITE');
+            $this->denyAccessUnlessGranted('ROLE_ADMINISTRATIF');
             $typeDocument = new TypeDocument(null);
             $typeDocument->setOriginaux(true);
         } else {
@@ -125,7 +125,7 @@ class TypeDocumentController extends BaseController
     public function show(TypeDocument $typeDocument, string $source): Response
     {
         if (Document::ORIGINAUX === $source) {
-            $this->denyAccessUnlessGranted('ROLE_QUALITE');
+            $this->denyAccessUnlessGranted('ROLE_ADMINISTRATIF');
         } else {
             $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
         }
@@ -138,7 +138,7 @@ class TypeDocumentController extends BaseController
     public function edit(Request $request, TypeDocument $typeDocument, string $source): Response
     {
         if (Document::ORIGINAUX === $source) {
-            $this->denyAccessUnlessGranted('ROLE_QUALITE');
+            $this->denyAccessUnlessGranted('ROLE_ADMINISTRATIF');
         } else {
             $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
         }
@@ -190,7 +190,7 @@ class TypeDocumentController extends BaseController
         string $source
     ): Response {
         if (Document::ORIGINAUX === $source) {
-            $this->denyAccessUnlessGranted('ROLE_QUALITE');
+            $this->denyAccessUnlessGranted('ROLE_ADMINISTRATIF');
         } else {
             $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
         }
@@ -221,7 +221,7 @@ class TypeDocumentController extends BaseController
     public function duplicate(TypeDocument $typeDocument, string $source): Response
     {
         if (Document::ORIGINAUX === $source) {
-            $this->denyAccessUnlessGranted('ROLE_QUALITE');
+            $this->denyAccessUnlessGranted('ROLE_ADMINISTRATIF');
         } else {
             $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
         }
