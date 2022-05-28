@@ -1,8 +1,8 @@
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/assets/css/app.scss
+// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/Sites/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/10/2021 10:59
+// @lastUpdate 27/05/2022 13:28
 
 @import "./theme-troyes.scss";
 @import "./theme-rcc.scss";
@@ -801,4 +801,8 @@ td.bg-disabled {
 
 .col-odd {
   background-color: #eaeaea !important;
+}
+
+.nav-tabs .nav-link {
+  color: var(--policeDark)
 }
