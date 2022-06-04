@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/QuestionnaireQualiteTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/05/2022 15:13
+ * @lastUpdate 04/06/2022 08:11
  */
 
 namespace App\Table;
@@ -105,7 +105,9 @@ class QuestionnaireQualiteTableType extends TableType
             'query' => function (QueryBuilder $qb, array $formData) {
                 if (isset($formData['search'])) {
                     $qb->andWhere('LOWER(e.titre) LIKE :search');
-                    $qb->orWhere('LOWER(e.texte) LIKE :search');
+                    $qb->orWhere('LOWER(e.libelle) LIKE :search');
+                    $qb->orWhere('LOWER(e.texteDebut) LIKE :search');
+                    $qb->orWhere('LOWER(e.texteFin) LIKE :search');
                     $qb->setParameter('search', '%'.$formData['search'].'%');
                 }
 
