@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Note.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:21
+ * @lastUpdate 04/06/2022 15:44
  */
 
 namespace App\Entity;
@@ -112,7 +112,7 @@ class Note extends BaseEntity
 
     public function setCommentaire(?string $commentaire): self
     {
-        $this->commentaire = $commentaire;
+        $this->commentaire = substr($commentaire, 0, 255);
 
         return $this;
     }
