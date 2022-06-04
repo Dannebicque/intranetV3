@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcRessourceController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcRessourceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/09/2021 20:34
+ * @lastUpdate 04/06/2022 15:21
  */
 
 namespace App\Controller\administration\apc;
@@ -68,7 +68,7 @@ class ApcRessourceController extends BaseController
     public function ajaxAc(SemestreRepository $semestreRepository, ApcRessourceApprentissageCritiqueRepository $apcRessourceApprentissageCritiqueRepository, ApcApprentissageCritiqueRepository $apcApprentissageCritiqueRepository, Request $request): Response
     {
         $semestre = $semestreRepository->find($request->request->get('semestre'));
-        $competences = $request->request->get('competences');
+        $competences = $request->request->all()['competences'];
         if (null !== $semestre && (null === $competences ? 0 : count($competences)) > 0) {
             if (null !== $request->request->get('ressource')) {
                 $tabAcSae = $apcRessourceApprentissageCritiqueRepository->findArrayIdAc($request->request->get('ressource'));
@@ -141,7 +141,7 @@ class ApcRessourceController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($apcRessource);
 
-            $acs = $request->request->get('ac');
+            $acs = $request->request->all()['ac'];
             if (is_array($acs)) {
                 foreach ($acs as $idAc) {
                     $ac = $apcApprentissageCritiqueRepository->find($idAc);
@@ -150,7 +150,7 @@ class ApcRessourceController extends BaseController
                 }
             }
 
-            $saes = $request->request->get('saes');
+            $saes = $request->request->all()['saes'];
             if (is_array($saes)) {
                 foreach ($saes as $idAc) {
                     $apcSae = $apcSaeRepository->find($idAc);
@@ -392,7 +392,7 @@ class ApcRessourceController extends BaseController
                 $this->entityManager->remove($ac);
             }
 
-            $acs = $request->request->get('ac');
+            $acs = $request->request->all()['ac'];
             if (is_array($acs)) {
                 foreach ($acs as $idAc) {
                     $ac = $apcApprentissageCritiqueRepository->find($idAc);
@@ -404,7 +404,7 @@ class ApcRessourceController extends BaseController
             foreach ($apcRessource->getApcSaeRessources() as $ac) {
                 $this->entityManager->remove($ac);
             }
-            $saes = $request->request->get('saes');
+            $saes = $request->request->all()['saes'];
             if (is_array($saes)) {
                 foreach ($saes as $idAc) {
                     $apcSae = $apcSaeRepository->find($idAc);

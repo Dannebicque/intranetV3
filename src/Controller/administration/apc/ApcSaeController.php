@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcSaeController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcSaeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/09/2021 20:34
+ * @lastUpdate 04/06/2022 15:24
  */
 
 namespace App\Controller\administration\apc;
@@ -62,7 +62,7 @@ class ApcSaeController extends BaseController
     public function ajaxAc(SemestreRepository $semestreRepository, ApcSaeApprentissageCritiqueRepository $apcSaeApprentissageCritiqueRepository, ApcApprentissageCritiqueRepository $apcApprentissageCritiqueRepository, Request $request): Response
     {
         $semestre = $semestreRepository->find($request->request->get('semestre'));
-        $competences = $request->request->get('competences');
+        $competences = $request->request->all()['competences'];
         if (null !== $semestre && (null === $competences ? 0 : count($competences)) > 0) {
             if (null !== $request->request->get('sae')) {
                 $tabAcSae = $apcSaeApprentissageCritiqueRepository->findArrayIdAc($request->request->get('sae'));
@@ -133,7 +133,7 @@ class ApcSaeController extends BaseController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($apcSae);
             // sauvegarde des AC
-            $acs = $request->request->get('ac');
+            $acs = $request->request->all()['ac'];
             if (is_array($acs)) {
                 foreach ($acs as $idAc) {
                     $ac = $apcApprentissageCritiqueRepository->find($idAc);
@@ -142,7 +142,7 @@ class ApcSaeController extends BaseController
                 }
             }
 
-            $acs = $request->request->get('ressources');
+            $acs = $request->request->all()['ressources'];
             if (is_array($acs)) {
                 foreach ($acs as $idAc) {
                     $res = $apcRessourceRepository->find($idAc);
@@ -187,7 +187,7 @@ class ApcSaeController extends BaseController
             }
 
             // sauvegarde des AC
-            $acs = $request->request->get('ac');
+            $acs = $request->request->all()['ac'];
             if (is_array($acs)) {
                 foreach ($acs as $idAc) {
                     $ac = $apcApprentissageCritiqueRepository->find($idAc);
@@ -200,7 +200,7 @@ class ApcSaeController extends BaseController
                 $this->entityManager->remove($ac);
             }
 
-            $acs = $request->request->get('ressources');
+            $acs = $request->request->all()['ressources'];
             if (is_array($acs)) {
                 foreach ($acs as $idAc) {
                     $res = $apcRessourceRepository->find($idAc);
