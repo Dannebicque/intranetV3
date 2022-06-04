@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Utils/Tools.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2022 12:41
+ * @lastUpdate 04/06/2022 16:10
  */
 
 /*
@@ -26,8 +26,12 @@ abstract class Tools
     /**
      * @throws Exception
      */
-    public static function convertDateToObject(string $date): CarbonInterface
+    public static function convertDateToObject(?string $date): ?CarbonInterface
     {
+        if (null === $date) {
+            return null;
+        }
+
         $date = trim($date);
         if (!str_contains($date, '/')) {
             $d = Carbon::createFromFormat('Y-m-d', $date);
@@ -41,8 +45,12 @@ abstract class Tools
     /**
      * @throws Exception
      */
-    public static function convertTimeToObject(string $heure): CarbonInterface
+    public static function convertTimeToObject(?string $heure): ?CarbonInterface
     {
+        if (null === $heure) {
+            return null;
+        }
+
         $heure = trim($heure);
 
         return Carbon::createFromTimeString($heure);

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyContact.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/05/2022 16:52
+ * @lastUpdate 04/06/2022 16:10
  */
 
 namespace App\Classes;
@@ -18,8 +18,12 @@ class MyContact
     {
     }
 
-    public function update(Contact $contact, string $name, mixed $value): bool
+    public function update(Contact $contact, ?string $name, mixed $value): bool
     {
+        if (null === $name) {
+            return false;
+        }
+
         $method = 'set'.$name;
         if (method_exists($contact, $method)) {
             $contact->$method($value);
