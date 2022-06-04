@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcRessourceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/06/2022 15:21
+ * @lastUpdate 04/06/2022 15:50
  */
 
 namespace App\Controller\administration\apc;
@@ -382,6 +382,7 @@ class ApcRessourceController extends BaseController
     #[Route(path: '/{id}/{semestre}/edit', name: 'apc_ressource_edit', methods: ['GET', 'POST'])]
     public function edit(ApcApprentissageCritiqueRepository $apcApprentissageCritiqueRepository, ApcSaeRepository $apcSaeRepository, Request $request, ApcRessource $apcRessource, Semestre $semestre): Response
     {
+        //todo: semestre n'est plus dans ApcRessource, il faut le supprimer
         $form = $this->createForm(ApcRessourceType::class, $apcRessource, [
             'diplome' => $apcRessource->getDiplome(),
             'semestre' => $semestre,

@@ -24,7 +24,8 @@
                 <i class="{{ iconDelete }}"></i>
                 <span class="sr-only">{{ 'atitle.supprimer'|trans }}</span>
             </a>
-            <a href="{{ path('administration_apc_ressource_edit', {id: apc_ressource.id}) }}"
+            <a href="{{ path('administration_apc_ressource_edit', {id: apc_ressource.id, semestre: apc_ressource
+            .semestre.id}) }}"
                class="btn btn-warning btn-sm btn-float"
                title="{{ 'atitle.modifier'|trans }}"
                data-bs-toggle="tooltip" data-bs-placement="bottom"
