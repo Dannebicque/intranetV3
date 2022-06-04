@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/ProfilEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:44
+ * @lastUpdate 04/06/2022 07:56
  */
 
 namespace App\Controller;
@@ -183,6 +183,7 @@ class ProfilEtudiantController extends BaseController
     ): Response {
         $semestresPrecedents = $scolariteRepository->findByEtudiant($etudiant);
 
+
         if (null !== $etudiant->getSemestre()) {
             $semestre = $etudiant->getSemestre();
             $ressources = $apcRessourceCompetenceRepository->findBySemestreArray($semestre);
@@ -194,7 +195,7 @@ class ProfilEtudiantController extends BaseController
             $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestre());
             $etudiantSousCommissionApc->moyenneMatieres = $etudiantNotes->getMoyenneParMatiereParSemestresEtAnneeUniversitaire($matieres,
                 $etudiant->getSemestre(),
-                $this->getAnneeUniversitaire());
+                $this->getAnneeUniversitaire(), true);
             $etudiantAbsences->setEtudiant($etudiant);
             $etudiantAbsences->getPenalitesAbsencesParMatiere($matieres, $this->getAnneeUniversitaire(),
                 $etudiantSousCommissionApc->moyenneMatieres);

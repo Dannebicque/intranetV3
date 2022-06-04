@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantNotes.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Etudiant/EtudiantNotes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:30
+ * @lastUpdate 04/06/2022 07:42
  */
 
 namespace App\Classes\Etudiant;
@@ -35,8 +35,11 @@ class EtudiantNotes
     /**
      * EtudiantNotes constructor.
      */
-    public function __construct(private readonly TypeMatiereManager $typeMatiereManager, public NoteRepository $noteRepository, private readonly EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        private readonly TypeMatiereManager $typeMatiereManager,
+        public NoteRepository $noteRepository,
+        private readonly EntityManagerInterface $entityManager
+    ) {
     }
 
     public function setEtudiant(Etudiant $etudiant): void
@@ -115,7 +118,8 @@ class EtudiantNotes
     public function getMoyenneParMatiereParSemestresEtAnneeUniversitaire(
         array $matieres,
         Semestre $semestre,
-        AnneeUniversitaire $anneeUniversitaire
+        AnneeUniversitaire $anneeUniversitaire,
+        bool $affichageEtudiant = false
     ): array {
         $this->getNotesParSemestresEtAnneeUniversitaire($matieres, $anneeUniversitaire);
 
@@ -132,9 +136,11 @@ class EtudiantNotes
         /** @var Note $note */
         foreach ($this->notes as $note) {
             if (null !== $note->getEvaluation() && 0 !== $note->getEvaluation()->getIdMatiere()) {
-                $idMatiere = $note->getEvaluation()->getTypeIdMatiere();
-                if (array_key_exists($idMatiere, $tabMatiere)) {
-                    $tabMatiere[$idMatiere]->addNote($note);
+                if (false === $affichageEtudiant || (true === $affichageEtudiant && true === $note->getEvaluation()->getVisible())) {
+                    $idMatiere = $note->getEvaluation()->getTypeIdMatiere();
+                    if (array_key_exists($idMatiere, $tabMatiere)) {
+                        $tabMatiere[$idMatiere]->addNote($note);
+                    }
                 }
             }
         }
