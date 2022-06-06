@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.7.5](https://github.com/Dannebicque/intranetV3/compare/v3.7.4...v3.7.5) (2022-06-06)
+
+
+### Features
+
+* [APC] erreur sur les liens ([b87a42b](https://github.com/Dannebicque/intranetV3/commit/b87a42b8e93f7577a865d6e306e86954c260877a))
+* [APC] Navigation entre les PN ([81cf347](https://github.com/Dannebicque/intranetV3/commit/81cf34716366a762a096b4bafb0525ad3e43742c))
+
+
+### Bug Fixes
+
+* [Apc] Modification de request ([afe57ec](https://github.com/Dannebicque/intranetV3/commit/afe57ecebf0515146612db78bb0eb9d6b39a4a61))
+* [Apc] Semestre sur les liens d'éditions ([3fee3cc](https://github.com/Dannebicque/intranetV3/commit/3fee3cc34d4c30619eafcf1e289d87a8ea151d3e))
+* [Note] Fix la taille du commentaire ([63d1bb4](https://github.com/Dannebicque/intranetV3/commit/63d1bb43a30ca6eb343456ec3db60fc357e65257))
+* [Notes] Ne pas afficher les notes "masquées" dans le bilan APC ([eeae9c6](https://github.com/Dannebicque/intranetV3/commit/eeae9c61fabbaa121fc999e0b2f0f9f722c695b8))
+* [Qualité] Questionnaires, création, édition. Section configurable. ([6543d0b](https://github.com/Dannebicque/intranetV3/commit/6543d0b5a1ed07571bf4f094b1164f93d9595180))
+* [Questionnaire] Erreur requête sur le tableau ([ed4d0b6](https://github.com/Dannebicque/intranetV3/commit/ed4d0b62a41ab7db2b5cf93ce94fcb63049dcf93))
+* [Security] Synchronisation ical public access ([f2fe6df](https://github.com/Dannebicque/intranetV3/commit/f2fe6dfe0852535a8e3d0683563e1223e66482ac))
+* [Typage] Test si null ([d5d0aa8](https://github.com/Dannebicque/intranetV3/commit/d5d0aa8887a9403f8e9b1a2a45b602e918849d79))
+* Contrastes CSS ([4f8d3dd](https://github.com/Dannebicque/intranetV3/commit/4f8d3dd116e99dbc6fa082450f2f3ea425be4bfa))
+
 ### [3.7.4](https://github.com/Dannebicque/intranetV3/compare/v3.7.3...v3.7.4) (2022-05-26)
 
 
