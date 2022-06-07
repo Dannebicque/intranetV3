@@ -1,14 +1,15 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/StagePeriodeOffreType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/StagePeriodeOffreType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 14:21
+ * @lastUpdate 07/06/2022 11:56
  */
 
 namespace App\Form;
 
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Departement;
 use App\Entity\StagePeriode;
 use App\Entity\StagePeriodeOffre;
@@ -23,7 +24,7 @@ use Vich\UploaderBundle\Form\Type\VichFileType;
 class StagePeriodeOffreType extends AbstractType
 {
     private Departement $departement;
-    private int $annee;
+    private AnneeUniversitaire $annee;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -45,7 +46,7 @@ class StagePeriodeOffreType extends AbstractType
                 'label' => 'stagePeriodes',
                 'choice_label' => 'libelle',
                 'query_builder' => fn (StagePeriodeRepository $stagePeriodeRepository) => $stagePeriodeRepository->findByDepartementBuilder($this->departement,
-                    $this->annee),
+                    $this->annee->getAnnee()),
                 'required' => true,
                 'expanded' => true,
                 'multiple' => true,
