@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.7.6](https://github.com/Dannebicque/intranetV3/compare/v3.7.5...v3.7.6) (2022-06-13)
+
+
+### Bug Fixes
+
+* [SScom APC] UE null ([43f4d2d](https://github.com/Dannebicque/intranetV3/commit/43f4d2dc3d63b28426592ce49ea11fefa7c06068))
+* [SScom] Export APC Sous-commission live ([c1af1d0](https://github.com/Dannebicque/intranetV3/commit/c1af1d03cf1e1470b0daa8aa8e4606d21c993cc4))
+* [SScom] Suppression lien semestre=> matiere ([aeb5988](https://github.com/Dannebicque/intranetV3/commit/aeb5988a565f9b4f405e448e2d3744925f027cb5))
+* [Stage] Erreur année ([d816772](https://github.com/Dannebicque/intranetV3/commit/d8167722e645b7db4615c86a59d5f109224ba4e2))
+
 ### [3.7.5](https://github.com/Dannebicque/intranetV3/compare/v3.7.4...v3.7.5) (2022-06-06)
 
 
