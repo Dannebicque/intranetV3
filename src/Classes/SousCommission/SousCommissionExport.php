@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:27
+ * @lastUpdate 13/06/2022 19:50
  */
 
 namespace App\Classes\SousCommission;
@@ -336,7 +336,7 @@ class SousCommissionExport
     {
         $this->sousCommission = $this->sousCommissionManager->getSousCommission($semestre);
         $this->sousCommission->calcul($semestre, $anneeUniversitaire);
-
+        $semPrec = $semestre->getPrecedent();
         $this->myExcelWriter->createSheet('Sous Commission '.$semestre->getLibelle());
         $this->myExcelWriter->setHeader();
 
@@ -371,7 +371,7 @@ class SousCommissionExport
             }
         }
 
-        $this->myExcelWriter->mergeCellsCaR($colonne, $ligne - 1, $colonne + ($nbUes * 2) + 4, $ligne - 1);
+        $this->myExcelWriter->mergeCellsCaR($colonne, $ligne - 1, $colonne + ($nbUes * 2) + 3, $ligne - 1);
         $this->myExcelWriter->writeCellXY($colonne, $ligne - 1, $semestre->getLibelle(),
             ['style' => 'HORIZONTAL_CENTER']);
 
@@ -398,24 +398,39 @@ class SousCommissionExport
         $this->myExcelWriter->writeCellXY($colonne, $ligne, 'Abs.');
         ++$colonne;
         /* semestres précédent */
-
-        foreach ($this->sousCommission->getSemestresScolarite() as $s) {
-            // titre semestre
-            $this->myExcelWriter->writeCellXY($colonne, $ligne - 1, $s->getLibelle(), ['style' => 'HORIZONTAL_CENTER']);
-            $colFin = $colonne + (is_countable($s->getUes()) ? count($s->getUes()) : 0) + 1;
-            $this->myExcelWriter->mergeCellsCaR($colonne, $ligne - 1, $colFin, $ligne - 1);
-            /** @var Ue $ue */
-            foreach ($s->getUes() as $ue) {
-                $this->myExcelWriter->writeCellXY($colonne, $ligne, 'UE '.$ue->getNumeroUe());
-                $this->myExcelWriter->writeCellXY($colonne, $ligne + 1, $ue->getCoefficient());
-                ++$colonne;
+        if ($semestre->isPair()) {
+            foreach ($this->sousCommission->getUes() as $ue) {
+                // titre semestre
+                $this->myExcelWriter->writeCellXY($colonne, $ligne - 1, 'UE '.$ue->getNumeroUe(),
+                    ['style' => 'HORIZONTAL_CENTER']);
+                $colFin = $colonne + 5;
+                $this->myExcelWriter->mergeCellsCaR($colonne, $ligne - 1, $colFin, $ligne - 1);
+                $this->myExcelWriter->writeCellXY($colonne, $ligne, 'S1', ['style' => 'HORIZONTAL_CENTER']);
+                $this->myExcelWriter->writeCellXY($colonne, $ligne + 1, 'Moy.', ['style' => 'HORIZONTAL_CENTER']);
+                $this->myExcelWriter->writeCellXY($colonne + 1, $ligne + 1, 'Déc.', ['style' => 'HORIZONTAL_CENTER']);
+                $this->myExcelWriter->mergeCellsCaR($colonne, $ligne, $colonne + 1, $ligne);
+                $colonne += 2;
+                $this->myExcelWriter->writeCellXY($colonne, $ligne, 'S2', ['style' => 'HORIZONTAL_CENTER']);
+                $this->myExcelWriter->writeCellXY($colonne, $ligne + 1, 'Moy.', ['style' => 'HORIZONTAL_CENTER']);
+                $this->myExcelWriter->writeCellXY($colonne + 1, $ligne + 1, 'Déc.', ['style' => 'HORIZONTAL_CENTER']);
+                $this->myExcelWriter->mergeCellsCaR($colonne, $ligne, $colonne + 1, $ligne);
+                $colonne += 2;
+                $this->myExcelWriter->writeCellXY($colonne, $ligne, 'Année', ['style' => 'HORIZONTAL_CENTER']);
+                $this->myExcelWriter->writeCellXY($colonne, $ligne + 1, 'Moy.', ['style' => 'HORIZONTAL_CENTER']);
+                $this->myExcelWriter->writeCellXY($colonne + 1, $ligne + 1, 'Déc.', ['style' => 'HORIZONTAL_CENTER']);
+                $this->myExcelWriter->mergeCellsCaR($colonne, $ligne, $colonne + 1, $ligne);
+                $colonne = $colFin + 1;
             }
-
-            $this->myExcelWriter->writeCellXY($colonne, $ligne, 'Décis. ');
-            ++$colonne;
         }
+        $this->myExcelWriter->writeCellXY($colonne, $ligne - 1, 'B.U.T.', ['style' => 'HORIZONTAL_CENTER']);
+        $this->myExcelWriter->writeCellXY($colonne, $ligne + 1, 'S1', ['style' => 'HORIZONTAL_CENTER']);
+        $this->myExcelWriter->writeCellXY($colonne + 1, $ligne + 1, 'S2', ['style' => 'HORIZONTAL_CENTER']);
+        $this->myExcelWriter->writeCellXY($colonne + 2, $ligne + 1, 'Année', ['style' => 'HORIZONTAL_CENTER']);
+        $this->myExcelWriter->writeCellXY($colonne + 3, $ligne + 1, 'Prop.', ['style' => 'HORIZONTAL_CENTER']);
+        $colFin = $colonne + 3;
+        $this->myExcelWriter->mergeCellsCaR($colonne, $ligne - 1, $colFin, $ligne - 1);
 
-        $maxcolonne = $colonne;
+        $maxcolonne = $colonne + 3;
         $colonne = 2;
 
         ++$ligne;
@@ -444,7 +459,8 @@ class SousCommissionExport
             $this->myExcelWriter->getColumnAutoSize($colonne);
             ++$colonne;
 
-            $this->myExcelWriter->writeCellXY($colonne, $ligne, null !== $etudiant->getDatenaissance() ? $etudiant->getDatenaissance()->format('d/m/Y') : 'err');
+            $this->myExcelWriter->writeCellXY($colonne, $ligne,
+                null !== $etudiant->getDatenaissance() ? $etudiant->getDatenaissance()->format('d/m/Y') : 'err');
             $this->myExcelWriter->getColumnAutoSize($colonne);
             ++$colonne;
 
@@ -543,45 +559,54 @@ class SousCommissionExport
                 $sousCommissionEtudiant->nbAbsences());
             ++$colonne;
 
-            /* semestres précédent */
-            foreach ($this->sousCommission->getSemestresScolarite() as $s) {
-                foreach ($s->getUes() as $ue) {
-                    if (isset($sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]) &&
-                        array_key_exists($ue->getNumeroUe(),
-                            $sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->parcoursUe)
-                    ) {
-                        $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                            $sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->parcoursUe[$ue->getNumeroUe()]['moyenne'],
+            if ($semestre->isPair()) {
+                foreach ($this->sousCommission->getUes() as $ue) {
+                    if (array_key_exists($semPrec->getOrdreLmd(), $sousCommissionEtudiant->scolarite) && array_key_exists($ue->getNumeroUe(), $sousCommissionEtudiant->scolarite[$semPrec->getOrdreLmd()]->moyenneUes)) {
+                        // $this->myExcelWriter->writeCellXY($colonne, $ligne, 'S1', ['style' => 'HORIZONTAL_CENTER']);
+                        $this->myExcelWriter->writeCellXY($colonne, $ligne, $sousCommissionEtudiant->scolarite[$semPrec->getOrdreLmd()]->moyenneUes[$ue->getNumeroUe()]['moyenne'],
                             ['style' => 'numerique3']);
-                        $this->myExcelWriter->colorCellRange($colonne, $ligne,
-                            self::COULEURS[$sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->parcoursUe[$ue->getNumeroUe()]['style']]);
+                        $this->myExcelWriter->writeCellXY($colonne + 1, $ligne,  $sousCommissionEtudiant->scolarite[$semPrec->getOrdreLmd()]->moyenneUes[$ue->getNumeroUe()]['decision'],
+                            ['style' => 'HORIZONTAL_CENTER']);
+                        $this->myExcelWriter->colorCellRange($colonne + 1, $ligne,
+                            $this->getStyleDecisionUe($sousCommissionEtudiant->scolarite[$semPrec->getOrdreLmd()]->moyenneUes[$ue->getNumeroUe()]['decision']));
+                        $colonne += 2;
+                        //  $this->myExcelWriter->writeCellXY($colonne, $ligne, 'S2', ['style' => 'HORIZONTAL_CENTER']);
+                        $this->myExcelWriter->writeCellXY($colonne, $ligne, $sousCommissionEtudiant->moyenneUes[$ue->getId()]->moyenne,
+                            ['style' => 'numerique3']);
+                        $this->myExcelWriter->writeCellXY($colonne + 1, $ligne, $sousCommissionEtudiant->moyenneUes[$ue->getId()]->decision,
+                            ['style' => 'HORIZONTAL_CENTER']);
+                        $this->myExcelWriter->colorCellRange($colonne + 1, $ligne,
+                            $this->getStyleDecisionUe($sousCommissionEtudiant->moyenneUes[$ue->getId()]->decision));
+                        $colonne += 2;
+                        // $this->myExcelWriter->writeCellXY($colonne, $ligne, 'Année', ['style' => 'HORIZONTAL_CENTER']);
+                        $this->myExcelWriter->writeCellXY($colonne, $ligne, $sousCommissionEtudiant->moyenneAnneeUes[$ue->getNumeroUe()]->moyenneAnnee(),
+                            ['style' => 'numerique3']);
+                        $this->myExcelWriter->writeCellXY($colonne + 1, $ligne, $sousCommissionEtudiant->moyenneAnneeUes[$ue->getNumeroUe()]->decisionAnnee(),
+                            ['style' => 'HORIZONTAL_CENTER']);
+                        $this->myExcelWriter->colorCellRange($colonne + 1, $ligne,
+                           $this->getStyleDecisionUe($sousCommissionEtudiant->moyenneAnneeUes[$ue->getNumeroUe()]->decisionAnnee()));
+                        $colonne += 2;
                     } else {
-                        $this->myExcelWriter->writeCellXY($colonne, $ligne, ' - ');
+                        $colonne += 5;
                     }
-
-                    ++$colonne;
                 }
-                if (isset($sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()])) {
-                    $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                        $sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->moyenne,
-                        ['style' => 'numerique3']);
-                    ++$colonne;
-                    $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                        $sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->decision);
-                    $this->myExcelWriter->colorCellRange($colonne, $ligne,
-                        Constantes::SS_COMM_DECISION_COULEUR[$sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->decision]);
-                } else {
-                    $this->myExcelWriter->writeCellXY($colonne, $ligne, ' - ');
-                    ++$colonne;
-                    $this->myExcelWriter->writeCellXY($colonne, $ligne, ' - ');
-                }
-                ++$colonne;
             }
-            $this->myExcelWriter->getColumnDimension('H', 6);
+//            $this->myExcelWriter->writeCellXY($colonne, $ligne - 1, 'B.U.T.', ['style' => 'HORIZONTAL_CENTER']);
+            $this->myExcelWriter->writeCellXY($colonne, $ligne, $sousCommissionEtudiant->scolarite[$semPrec->getOrdreLmd()]->decision, ['style' => 'HORIZONTAL_CENTER']);
+            $this->myExcelWriter->colorCellRange($colonne, $ligne,
+                $this->getStyleDecisionUe($sousCommissionEtudiant->scolarite[$semPrec->getOrdreLmd()]->decision));
+            $this->myExcelWriter->writeCellXY($colonne + 1, $ligne, $sousCommissionEtudiant->decision, ['style' => 'HORIZONTAL_CENTER']);
+            $this->myExcelWriter->colorCellRange($colonne + 1, $ligne,
+                $this->getStyleDecisionUe($sousCommissionEtudiant->decision));
+            $this->myExcelWriter->writeCellXY($colonne + 2, $ligne, $sousCommissionEtudiant->decisionAnnee, ['style' => 'HORIZONTAL_CENTER']);
+            $this->myExcelWriter->colorCellRange($colonne + 2, $ligne,
+                $this->getStyleDecisionUe($sousCommissionEtudiant->decisionAnnee));
+            $this->myExcelWriter->writeCellXY($colonne + 3, $ligne, $sousCommissionEtudiant->propositionAnnee, ['style' => 'HORIZONTAL_CENTER']);
 
             $colonne = 2;
             ++$ligne;
         }
+        $this->myExcelWriter->getColumnDimension('H', 6);
 
         $this->myExcelWriter->borderCellsRange(1, 6, $maxcolonne, $ligne);
 
@@ -733,8 +758,11 @@ class SousCommissionExport
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
      */
-    public function exportApogee(Semestre $semestre, $file, AnneeUniversitaire $anneeUniversitaire): StreamedResponse|string|null
-    {
+    public function exportApogee(
+        Semestre $semestre,
+        $file,
+        AnneeUniversitaire $anneeUniversitaire
+    ): StreamedResponse|string|null {
         $this->sousCommission = $this->sousCommissionManager->getSousCommission($semestre);
 
         $fichier = $this->myUpload->upload($file, 'temp');
@@ -807,8 +835,10 @@ class SousCommissionExport
         return Constantes::PAS_DE_SOUS_COMM;
     }
 
-    public function exportGrandJury(ScolaritePromo $scolaritePromo, AnneeUniversitaire $anneeUniversitaire): StreamedResponse
-    {
+    public function exportGrandJury(
+        ScolaritePromo $scolaritePromo,
+        AnneeUniversitaire $anneeUniversitaire
+    ): StreamedResponse {
         $semestre = $scolaritePromo->getSemestre();
 
         if (null === $semestre) {
