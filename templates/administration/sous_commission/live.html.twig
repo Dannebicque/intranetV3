@@ -80,15 +80,14 @@
                         <th>Etudiant</th>
                         <th>Bac</th>
                         <th>Coeff.</th>
-                        {% for matiere in sousCommission.matieres|filter(matiere => matiere.semestre.id ==
-                            semestre.id and matiere.nbNotes!=0 and matiere.suspendu == false) %}
+                        {% for matiere in sousCommission.matieres|filter(matiere => matiere.nbNotes!=0 and matiere.suspendu == false) %}
                             <th style="text-align: center" class="matiere">{{ matiere.coefficient }}</th>
                         {% endfor %}
                         {# #}{# decision semestre #}
                         {% for u in sousCommission.ues %}
-
                             <th>
-                                UE {{ u.numeroue }}</th>
+                                UE {{ u.numeroue }}
+                            </th>
                         {% endfor %}
                         <th>Moy.</th>
                         <th>Bonif</th>
