@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/ScolariteApc.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/05/2022 10:11
+ * @lastUpdate 13/06/2022 09:07
  */
 
 namespace App\DTO;
@@ -19,7 +19,10 @@ class ScolariteApc
         $this->decision = $scolarite->getDecision();
 
         foreach ($scolarite->getMoyennesUes() as $key => $moyenneUe) {
-            $this->moyenneUes[$ues[$key]->getNumeroUe()] = $scolarite->getMoyennesUes()[$key];
+            if (isset($ues[$key])) {
+                $this->moyenneUes[$ues[$key]->getNumeroUe()] = $scolarite->getMoyennesUes()[$key];
+            }
+
         }
     }
 }
