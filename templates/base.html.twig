@@ -141,12 +141,17 @@
                             <span class="title">{{ 'menu.informations'|trans }}</span>
                         </a>
                     </li>
-                    <li class="menu-item" id="menu-originaux">
-                        <a class="menu-link" href="{{ path('document_index', {source: 'originaux'}) }}">
-                            <i class="{{ iconOriginaux }} fa-2x"><span class="sr-only">Originaux</span></i>
-                            <span class="title">{{ 'menu.originaux'|trans }}</span>
-                        </a>
-                    </li>
+                    {% if user_data.isGoodDepartement('ROLE_CDD') or
+                        user_data.isGoodDepartement('ROLE_RP') or
+                        user_data.isGoodDepartement('ROLE_DDE') or
+                        user_data.isGoodDepartement('ROLE_ASS') %}
+                        <li class="menu-item" id="menu-originaux">
+                            <a class="menu-link" href="{{ path('document_index', {source: 'originaux'}) }}">
+                                <i class="{{ iconOriginaux }} fa-2x"><span class="sr-only">Originaux</span></i>
+                                <span class="title">{{ 'menu.originaux'|trans }}</span>
+                            </a>
+                        </li>
+                    {% endif %}
                     {% if user_data.isGoodDepartement('ROLE_CDD') or
                         user_data.isGoodDepartement('ROLE_RP') or
                         user_data.isGoodDepartement('ROLE_DDE') or
@@ -251,8 +256,7 @@
         </div>
 
         <div class="topbar-right">
-            <a class="topbar-btn" href="#qv-global" data-toggle="quickview" data-url="{% block quickViewUrl
-            %}no-url{% endblock %}"><i class="fas fa-align-right"></i><span class="sr-only">
+            <a class="topbar-btn" href="#qv-global" data-toggle="quickview" data-url="{% block quickViewUrl %}no-url{% endblock %}"><i class="fas fa-align-right"></i><span class="sr-only">
                     Informations contextuelles
                 </span></a>
             <div class="topbar-divider"></div>
