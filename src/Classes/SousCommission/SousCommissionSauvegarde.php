@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionSauvegarde.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:35
+ * @lastUpdate 15/06/2022 08:30
  */
 
 /*
@@ -13,6 +13,7 @@
 
 namespace App\Classes\SousCommission;
 
+use App\Classes\Configuration;
 use App\DTO\SousCommissionTravail;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Scolarite;
@@ -29,7 +30,11 @@ class SousCommissionSauvegarde
     /**
      * SousCommissionSauvegarde constructor.
      */
-    public function __construct(private readonly ScolaritePromoRepository $scolaritePromoRepository, private readonly ScolariteRepository $scolariteRepository, private readonly EntityManagerInterface $entityManager)
+    public function __construct(
+        private readonly Configuration $configuration,
+        private readonly ScolaritePromoRepository $scolaritePromoRepository,
+        private readonly ScolariteRepository $scolariteRepository,
+        private readonly EntityManagerInterface $entityManager)
     {
     }
 
@@ -77,7 +82,7 @@ class SousCommissionSauvegarde
                             } else {
                                 $tUe[$ue->getId()]['moyenne'] = $scEtudiant->moyenneUes[$ue->getNumeroUe()]->getMoyennePenalisee();
                             }
-                        } else if ($sousCommission instanceof SousCommissionApc) {
+                        } elseif ($sousCommission instanceof SousCommissionApc) {
                             $tUe[$ue->getId()]['decision'] = $scEtudiant->moyenneUes[$ue->getId()]->decision;
                             $tUe[$ue->getId()]['moyenne'] = $scEtudiant->moyenneUes[$ue->getId()]->moyennePac;
                         } else {
@@ -91,10 +96,14 @@ class SousCommissionSauvegarde
                     foreach ($matieres as $matiere) {
                         if (array_key_exists($matiere->getTypeIdMatiere(), $scEtudiant->moyenneMatieres)) {
                             if (true === $matiere->bonification) {
-                                $tMatiere[$matiere->getTypeIdMatiere()]['moyenne'] = max(0,
-                                    $scEtudiant->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyenne()); // todo: gérer avec une variable de configuration global.
-//                                $tMatiere[$matiere->getTypeIdMatiere()]['moyenne'] = max(0,
-//                                    ($scEtudiant->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyenne() - 10) / 20);
+                                if ('NOTE_SUR_05' === $this->configuration->get('EXPORT_BONIFICATION')) {
+                                    $tMatiere[$matiere->getTypeIdMatiere()]['moyenne'] = max(0,
+                                        ($scEtudiant->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyenne() - 10) / 20);
+                                } else {
+                                    $tMatiere[$matiere->getTypeIdMatiere()]['moyenne'] = max(0,
+                                        $scEtudiant->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyenne());
+
+                                }
                             } elseif (true === $scEtudiant->moyenneMatieres[$matiere->getTypeIdMatiere()]->matiereAAnnuler) {
                                 $tMatiere[$matiere->getTypeIdMatiere()]['matiereAAnnuler'] = true;
                             } elseif (true === $scEtudiant->moyenneMatieres[$matiere->getTypeIdMatiere()]->optionFaite) {
