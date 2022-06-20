@@ -52,13 +52,19 @@
                 <th>&nbsp;</th>
                 {% for ue in ues %}
                     <th class="text-center">
-                        {% if semestre.optPenaliteAbsence == true %}
-                            {{ moyenneSemestre.moyenneUes[ue.id].matieres[matiere.codeElement]
-                            .moyennePenalisee|number_format(2)|styleMatiere }}
-                        {% else %}
-                            {{ moyenneSemestre.moyenneUes[ue.id].matieres[matiere.codeElement]
-                            .moyenne|number_format(2)|styleMatiere }}
-                        {% endif %}
+                        <span style="white-space: nowrap">
+                            {% if moyenneSemestre.moyenneUes[ue.id].matieres[matiere.codeElement].coefficient == 0 %}
+                                -
+                            {% else %}
+                                {% if semestre.optPenaliteAbsence == true %}
+                                    {{ moyenneSemestre.moyenneUes[ue.id].matieres[matiere.codeElement]
+                                    .moyennePenalisee|number_format(2, ',', ' ') }}
+                                {% else %}
+                                    {{ moyenneSemestre.moyenneUes[ue.id].matieres[matiere.codeElement]
+                                    .moyenne|number_format(2) }}
+                                {% endif %}
+                            {% endif %}
+                            </span>
                     </th>
                 {% endfor %}
             </tr>
@@ -78,9 +84,9 @@
         {% for ue in ues %}
             <td class="text-center">
                 {% if semestre.optPenaliteAbsence == true %}
-                    {{ moyenneSemestre.moyenneUes[ue.id].totalMoyennesPenalisee|number_format(2) }}
+                    {{ moyenneSemestre.moyenneUes[ue.id].totalMoyennesPenalisee|number_format(2, ',', ' ') }}
                 {% else %}
-                    {{ moyenneSemestre.moyenneUes[ue.id].totalMoyennes|number_format(2) }}
+                    {{ moyenneSemestre.moyenneUes[ue.id].totalMoyennes|number_format(2, ',', ' ') }}
                 {% endif %}
             </td>
         {% endfor %}
