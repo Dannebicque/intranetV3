@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelWriter.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Excel/MyExcelWriter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/09/2021 16:01
+ * @lastUpdate 21/06/2022 12:19
  */
 
 /*
@@ -176,10 +176,12 @@ class MyExcelWriter
         }
     }
 
-    public function colorCellRange(int $col, int $lig, string $couleur): void
+    public function colorCellRange(int $col, int $lig, ?string $couleur): void
     {
-        $cell = Coordinate::stringFromColumnIndex($col).$lig;
-        $this->colorCells($cell, $couleur);
+        if ($couleur !== null) {
+            $cell = Coordinate::stringFromColumnIndex($col) . $lig;
+            $this->colorCells($cell, $couleur);
+        }
     }
 
     /**
