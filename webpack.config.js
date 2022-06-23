@@ -1,8 +1,8 @@
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/webpack.config.js
+// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/Sites/intranetV3/webpack.config.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/10/2021 16:05
+// @lastUpdate 20/06/2022 19:16
 
 var Encore = require('@symfony/webpack-encore')
 var path = require('path')
@@ -64,6 +64,7 @@ Encore
   .addEntry('adm.absences', './assets/js/pages/adm.absences.js')
   .addEntry('adm.matieres', './assets/js/pages/adm.matieres.js')
   .addEntry('adm.scolarite', './assets/js/pages/adm.scolarite.js')
+  .addEntry('adm.sous-commission', './assets/js/pages/adm.sous-commission.js')
   .addEntry('adm.stage', './assets/js/pages/adm.stage.js')
   .addEntry('adm.qualite', './assets/js/pages/adm.qualite.js')
   .addEntry('creneaux', './assets/js/pages/creneaux.js')

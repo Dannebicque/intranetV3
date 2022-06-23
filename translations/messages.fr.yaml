@@ -137,6 +137,7 @@ actualite:
   liste.heading: 'Liste des actualités'
 
 adm:
+  mise.a.jour.ss.comm: 'Mise à jour d''une sous-commission'
   creneau_cours_menu: 'Créneaux de cours'
   attestation_deplacement: 'Gestion des attestations de déplacement'
   actualite:
@@ -959,6 +960,8 @@ choisir.intervenant: 'Choisir l''intervenant'
 choisir.letudiant: 'Choisir l''étudiant'
 choisir.matiere: 'Choisir matière'
 choisir.un.semestre: 'Choisir un semestre'
+choisir.un.etudiant: 'Choisir un étudiant'
+choisir.une.annee-universitaire: 'Choisir une année universitaire'
 
 chronologique: Chronologique
 Cle: Clé
@@ -1132,7 +1135,10 @@ en.attente: 'En attente'
 enquete:
   create.heading: 'Création d''une enquête qualité'
   edit.heading: 'Modification d''une enquète'
-  index: 'Gérer les enquêtes'
+  personnel:
+    index: 'Gérer les enquêtes "personnels"'
+  etudiant:
+    index: 'Gérer les enquêtes "étudiants"'
   index.heading: 'Liste des enquêtes'
   semestre.heading: 'Enquête pour le semestre %semestre%'
 
@@ -1500,6 +1506,10 @@ messagerie:
   boite.reception: Réception
 
 mettre.a.jour.la.convetion: 'Mettre à jour la convention'
+mise:
+  a:
+    jour:
+      sous-commission: 'Mise à jour de la Sous-commission'
 modifiez.vos.informations: 'Modifiez vos informations'
 mon.profil.heading: 'Mon profil'
 moyenne.promo: 'Moyenne de la promotion'

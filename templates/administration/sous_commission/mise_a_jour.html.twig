@@ -1,0 +1,71 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">Par enseignant</h4>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="ssComEtudiant">{{ 'choisir.un.etudiant'|trans }}</label>
+                        <select class="form-select selectpicker"
+                                id="ssComEtudiant">
+                            <option value="">{{ 'choisir.un.etudiant'|trans }}</option>
+                            {% for etudiant in etudiants %}
+                                <option value="{{ etudiant.id }}">{{ etudiant.display }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="ssComSemestre">{{ 'choisir.un.semestre'|trans }}</label>
+                        <select class="form-select selectpicker"
+                                id="ssComSemestre">
+                            <option value="">{{ 'choisir.un.semestre'|trans }}</option>
+                            {% for semestre in semestres %}
+                                <option value="{{ semestre.id }}">{{ semestre.display }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="form-group">
+                        <label for="ssComAnnee">{{ 'choisir.une.annee-universitaire'|trans }}</label>
+                        <select class="form-select selectpicker"
+                                id="ssComAnnee">
+                            <option value="">{{ 'choisir.une.annee-universitaire'|trans }}</option>
+                            {% for annee in annees %}
+                                <option value="{{ annee.id }}">{{ annee.libelle }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <button class="btn btn-success mt-2" id="btnSsCom">Simuler le semestre</button>
+        </div>
+    </div>
+
+    <div id="ssComContent">
+
+    </div>
+{% endblock %}
+
+{% block header %}
+    {{ 'mise.a.jour.sous-commission'|trans()|raw }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('adm.sous-commission') }}
+{% endblock %}
+

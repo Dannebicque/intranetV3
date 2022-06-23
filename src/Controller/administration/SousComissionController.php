@@ -4,25 +4,35 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/SousComissionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:12
+ * @lastUpdate 21/06/2022 08:23
  */
 
 namespace App\Controller\administration;
 
+use App\Classes\Etudiant\EtudiantAbsences;
+use App\Classes\Etudiant\EtudiantNotes;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\SousCommission\SousCommission;
 use App\Classes\SousCommission\SousCommissionExport;
 use App\Classes\SousCommission\SousCommissionManager;
 use App\Classes\SousCommission\SousCommissionSauvegarde;
 use App\Controller\BaseController;
+use App\DTO\EtudiantSousCommissionApc;
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
+use App\Entity\Etudiant;
 use App\Entity\Scolarite;
 use App\Entity\ScolaritePromo;
 use App\Entity\Semestre;
 use App\Event\SousCommissionEvent;
 use App\Exception\SemestreNotFoundException;
+use App\Repository\AnneeUniversitaireRepository;
+use App\Repository\ApcRessourceCompetenceRepository;
+use App\Repository\ApcSaeCompetenceRepository;
 use App\Repository\BacRepository;
+use App\Repository\EtudiantRepository;
 use App\Repository\NoteRepository;
+use App\Repository\UeRepository;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -36,9 +46,60 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 #[Route(path: '/administration/sous-commission')]
 class SousComissionController extends BaseController
 {
-    #[Route(path: '/live/{semestre}', name: 'administration_sous_commission_live')]
-    public function live(BacRepository $bacRepository, SousCommissionManager $sousCommissionManager, Semestre $semestre): Response
+    #[Route(path: '/mise-a-jour', name: 'administration_sous_commission_mise_a_jour')]
+    public function miseAJour(
+        AnneeUniversitaireRepository $anneeRepository,
+        EtudiantRepository $etudiantRepository): Response
     {
+        return $this->render('administration/sous_commission/mise_a_jour.html.twig', [
+            'semestres' => $this->getDataUserSession()->getSemestres(),
+            'etudiants' => $etudiantRepository->findByDepartementArray($this->getDepartement()),
+            'annees' => $anneeRepository->findAll(),
+        ]);
+    }
+
+    #[Route(path: '/mise-a-jour/calcule/{etudiant}-{semestre}-{anneeUniversitaire}', name: 'administration_sous_commission_mise_a_jour_calcul', options: ['expose' => true])]
+    public function miseAJourCalcul(
+        UeRepository $ueRepository,
+        ApcRessourceCompetenceRepository $apcRessourceCompetenceRepository,
+        ApcSaeCompetenceRepository $apcSaeCompetenceRepository,
+        TypeMatiereManager $typeMatiereManager,
+        EtudiantAbsences $etudiantAbsences,
+        EtudiantNotes $etudiantNotes,
+        Etudiant $etudiant,
+        Semestre $semestre,
+        AnneeUniversitaire $anneeUniversitaire
+    ): Response {
+        $ressources = $apcRessourceCompetenceRepository->findBySemestreArray($semestre);
+        $saes = $apcSaeCompetenceRepository->findBySemestreArray($semestre);
+        $ues = $ueRepository->findBySemestre($semestre);
+
+        $etudiantSousCommissionApc = new EtudiantSousCommissionApc($etudiant, $semestre, $ues);
+        $etudiantNotes->setEtudiant($etudiant);
+        $matieres = $typeMatiereManager->findBySemestreArray($semestre);
+        $etudiantSousCommissionApc->moyenneMatieres = $etudiantNotes->getMoyenneParMatiereParSemestresEtAnneeUniversitaire($matieres,
+            $semestre,
+            $anneeUniversitaire, true);
+        $etudiantAbsences->setEtudiant($etudiant);
+        $etudiantAbsences->getPenalitesAbsencesParMatiere($matieres, $anneeUniversitaire,
+            $etudiantSousCommissionApc->moyenneMatieres);
+        $etudiantSousCommissionApc->calculMoyenneUes($matieres, $ressources, $saes);
+
+        return $this->render('administration/sous_commission/mise_a_jour_calcul.html.twig', [
+            'etudiant' => $etudiant,
+            'semestre' => $semestre,
+            'matieres' => $matieres,
+            'moyenneSemestre' => $etudiantSousCommissionApc,
+            'ues' => $ues,
+        ]);
+    }
+
+    #[Route(path: '/live/{semestre}', name: 'administration_sous_commission_live')]
+    public function live(
+        BacRepository $bacRepository,
+        SousCommissionManager $sousCommissionManager,
+        Semestre $semestre
+    ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
         $sousCommission = $sousCommissionManager->getSousCommission($semestre);
         $sousCommission->calcul($semestre, $this->getAnneeUniversitaire());
@@ -53,8 +114,12 @@ class SousComissionController extends BaseController
     }
 
     #[Route(path: '/travail/{semestre}', name: 'administration_sous_commission_travail')]
-    public function travail(TypeMatiereManager $typeMatiereManager, SousCommissionManager $sousCommissionManager, SousCommissionSauvegarde $sousCommissionSauvegarde, Semestre $semestre): Response
-    {
+    public function travail(
+        TypeMatiereManager $typeMatiereManager,
+        SousCommissionManager $sousCommissionManager,
+        SousCommissionSauvegarde $sousCommissionSauvegarde,
+        Semestre $semestre
+    ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
         $sousCommission = $sousCommissionManager->getSousCommission($semestre);
         $matieres = $typeMatiereManager->findBySemestre($semestre);
@@ -68,8 +133,11 @@ class SousComissionController extends BaseController
     }
 
     #[Route(path: '/purger/{scolaritePromo}', name: 'administration_sous_commission_purger')]
-    public function purger(TypeMatiereManager $typeMatiereManager, NoteRepository $noteRepository, ScolaritePromo $scolaritePromo): Response
-    {
+    public function purger(
+        TypeMatiereManager $typeMatiereManager,
+        NoteRepository $noteRepository,
+        ScolaritePromo $scolaritePromo
+    ): Response {
         $semestre = $scolaritePromo->getSemestre();
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
         if (null !== $semestre) {
@@ -104,8 +172,11 @@ class SousComissionController extends BaseController
     }
 
     #[Route(path: '/publier/{ssComm}', name: 'administration_sous_commission_publier')]
-    public function publier(EventDispatcherInterface $eventDispatcher, SousCommissionSauvegarde $sousCommissionSauvegarde, ScolaritePromo $ssComm): Response
-    {
+    public function publier(
+        EventDispatcherInterface $eventDispatcher,
+        SousCommissionSauvegarde $sousCommissionSauvegarde,
+        ScolaritePromo $ssComm
+    ): Response {
         $semestre = $ssComm->getSemestre();
 
         if (null === $semestre) {
@@ -160,15 +231,20 @@ class SousComissionController extends BaseController
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $scolaritePromo->getSemestre());
 
         if (true === $scolaritePromo->getSemestre()->getDiplome()->getTypeDiplome()->getApc()) {
-            return $sousCommissionExport->exportGrandJuryApc($scolaritePromo, $this->dataUserSession->getAnneeUniversitaire());
+            return $sousCommissionExport->exportGrandJuryApc($scolaritePromo,
+                $this->dataUserSession->getAnneeUniversitaire());
         }
 
         return $sousCommissionExport->exportGrandJury($scolaritePromo, $this->dataUserSession->getAnneeUniversitaire());
     }
 
     #[Route(path: '/ajax/semestre/{id}/{type}', name: 'administration_ss_comm_ajax_edit', options: ['expose' => true])]
-    public function ajaxEditSsComm(SousCommission $sousCommission, Request $request, Scolarite $scolarite, $type): JsonResponse
-    {
+    public function ajaxEditSsComm(
+        SousCommission $sousCommission,
+        Request $request,
+        Scolarite $scolarite,
+        $type
+    ): JsonResponse {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $scolarite->getSemestre());
         $sousCommission->updateScolarite($scolarite,
             $type,

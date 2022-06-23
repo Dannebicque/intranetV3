@@ -2,6 +2,7 @@
     <header class="card-header">
         <h4 class="card-title" id="changeSemestreNotesTitre">{{ 'bloc.note.apc.etu.heading'|trans({'%semestre%':
                 semestre.display}) }}</h4>
+        {% if semestresPrecedents is defined %}
         <div class="card-header-actions">
             <a class="btn btn-info changeprofil" href="{{ path('profil_etudiant_apc', {slug: etudiant.slug}) }}"
                data-id="profil-notes-apc">
@@ -14,6 +15,7 @@
                 {% endfor %}
             </select>
         </div>
+        {% endif %}
     </header>
 
     <div class="card-body" id="changeSemestreNotesZone">

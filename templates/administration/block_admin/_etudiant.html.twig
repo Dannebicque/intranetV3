@@ -10,7 +10,6 @@
         </header>
 
         <div class="card-body">
-
             {{ render_esi(controller(
                 'App\\Controller\\administration\\AbsenceController::listeTempsReel'
             )) }}
@@ -35,16 +34,20 @@
                 {% endfor %}
             </div>
             <div class="row">
-                <div class="col-4 d-grid d-block">
+                <div class="col-3 d-grid d-block">
+                    <a href="{{ path('administration_sous_commission_mise_a_jour') }}"
+                       class="btn btn-primary">{{ 'adm.mise.a.jour.ss.comm'|trans }}</a>
+                </div>
+                <div class="col-3 d-grid d-block">
                     <a href="{{ path('administration_etudiant_index') }}"
                        class="btn btn-primary"> {{ 'adm.tous.les.etudiants'|trans }}</a>
                 </div>
-                <div class="col-4 d-grid d-block">
+                <div class="col-3 d-grid d-block">
                     <a href="{{ path('administration_statistique_index') }}"
                        class="btn btn-primary">
                         {{ 'adm.statistiques.menu'|trans }}</a>
                 </div>
-                <div class="col-4 d-grid d-block">
+                <div class="col-3 d-grid d-block">
                     <a href="{{ path('administration_cohorte_index') }}" class="btn btn-primary">
                         {{ 'adm.cohortes'|trans }}</a>
                 </div>
