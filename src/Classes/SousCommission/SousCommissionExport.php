@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/06/2022 19:50
+ * @lastUpdate 23/06/2022 14:31
  */
 
 namespace App\Classes\SousCommission;
@@ -571,7 +571,8 @@ class SousCommissionExport
                             $this->getStyleDecisionUe($sousCommissionEtudiant->scolarite[$semPrec->getOrdreLmd()]->moyenneUes[$ue->getNumeroUe()]['decision']));
                         $colonne += 2;
                         //  $this->myExcelWriter->writeCellXY($colonne, $ligne, 'S2', ['style' => 'HORIZONTAL_CENTER']);
-                        $this->myExcelWriter->writeCellXY($colonne, $ligne, $sousCommissionEtudiant->moyenneUes[$ue->getId()]->moyenne,
+                        //todo: reprendre moyenne PAC + pénalisé ou pas.
+                        $this->myExcelWriter->writeCellXY($colonne, $ligne, $sousCommissionEtudiant->moyenneUes[$ue->getId()]->moyennePac,
                             ['style' => 'numerique3']);
                         $this->myExcelWriter->writeCellXY($colonne + 1, $ligne, $sousCommissionEtudiant->moyenneUes[$ue->getId()]->decision,
                             ['style' => 'HORIZONTAL_CENTER']);
