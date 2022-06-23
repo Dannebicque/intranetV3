@@ -14,15 +14,16 @@
     "chart.js": "^3.4.1",
     "core-js": "^3.19.0",
     "css-loader": "^6.5.1",
+    "eslint": "^7.32.0 || ^8.2.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.2",
     "file-loader": "^6.0.0",
-    "jquery": "^3.5.1",
     "perfect-scrollbar": "^1.5.0",
     "regenerator-runtime": "^0.13.9",
     "sass-loader": "^12.3.0",
     "stimulus-clipboard": "^1.0.0",
     "stimulus-use": "^0.41.0",
-    "sweetalert2": "^9.17.0",
-    "tinymce": "^5.9.0"
+    "webpack-bundle-analyzer": "^4.4.2"
   },
   "license": "MPL-2.0",
   "private": true,
@@ -30,7 +31,8 @@
     "dev-server": "encore dev-server",
     "dev": "encore dev",
     "watch": "encore dev --watch",
-    "build": "encore production --progress"
+    "build": "encore production --progress",
+    "lint": "eslint assets/js/ "
   },
   "dependencies": {
     "babel-core": "^6.26.3",
@@ -41,15 +43,17 @@
     "node-sass": "^7.0.1",
     "stimulus-notification": "^2.0.0",
     "tom-select": "^2.0.0-rc.5",
-    "webpack-bundle-analyzer": "^4.4.2",
-    "webpack-notifier": "^1.6.0"
+    "webpack-notifier": "^1.6.0",
+    "sweetalert2": "^9.17.0",
+    "tinymce": "^5.9.0",
+    "jquery": "^3.5.1"
   },
   "auto-changelog": {
     "template": "keepachangelog",
     "unreleased": true,
     "commitLimit": false
   },
-  "version": "3.7.6",
+  "version": "3.7.7",
   "author": "David Annebicque",
   "name": "intranetv3",
   "repository": {

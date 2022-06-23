@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.7.7](https://github.com/Dannebicque/intranetV3/compare/v3.7.6...v3.7.7) (2022-06-23)
+
+
+### Bug Fixes
+
+* [API] Sécurisation sauf synchro ical ([4cf7102](https://github.com/Dannebicque/intranetV3/commit/4cf7102f978e6fa77f16706b0d39c56c14e155d2))
+* [Bilan APC] Lisibilité du bilan du semestre sur le profil étudiant ([4f16f7e](https://github.com/Dannebicque/intranetV3/commit/4f16f7ecf993ca997ce78013d0903391eded26e9))
+* [Excel Color] Couleur null ([cdbcbbf](https://github.com/Dannebicque/intranetV3/commit/cdbcbbf0ad10ea652606e4f18c958d79203cd226))
+* [menu] Base, lien vers originaux restreint ([c68b14a](https://github.com/Dannebicque/intranetV3/commit/c68b14ab3cb259e2ee4ee62e57bee68ba144ccfe))
+* [SScom] Export Bonification sur 20 ou 0,5 ([01b93ee](https://github.com/Dannebicque/intranetV3/commit/01b93ee556912a06791585f77e3afffe4097032b))
+* [SsCom] Moyenne PAC ([feabd4f](https://github.com/Dannebicque/intranetV3/commit/feabd4fd3ecf487fca70de7424c72a437fe37e24))
+* [SsCom] Recalul d'un semestre ([455d99c](https://github.com/Dannebicque/intranetV3/commit/455d99ce04830755c3e1261dbe341a1a0850db32))
+
 ### [3.7.6](https://github.com/Dannebicque/intranetV3/compare/v3.7.5...v3.7.6) (2022-06-13)
 
 
