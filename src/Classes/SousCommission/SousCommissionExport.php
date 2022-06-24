@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/06/2022 14:31
+ * @lastUpdate 24/06/2022 07:40
  */
 
 namespace App\Classes\SousCommission;
@@ -530,10 +530,10 @@ class SousCommissionExport
                         $this->getStyleDecisionUe($sousCommissionEtudiant->moyenneUes[$ue->getId()]->decisionPenalisee));
                 } else {
                     $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                        $sousCommissionEtudiant->moyenneUes[$ue->getId()]->moyennePac,
+                        $sousCommissionEtudiant->moyenneUes[$ue->getId()]->moyennePacPenalisee,
                         ['style' => 'numerique3']);
                     $this->myExcelWriter->colorCellRange($colonne, $ligne,
-                        $this->getStyleMoyenneUe($sousCommissionEtudiant->moyenneUes[$ue->getId()]->moyennePac));
+                        $this->getStyleMoyenneUe($sousCommissionEtudiant->moyenneUes[$ue->getId()]->moyennePacPenalisee));
                     ++$colonne;
                     $this->myExcelWriter->writeCellXY($colonne, $ligne,
                         $sousCommissionEtudiant->moyenneUes[$ue->getId()]->decision);
@@ -572,7 +572,7 @@ class SousCommissionExport
                         $colonne += 2;
                         //  $this->myExcelWriter->writeCellXY($colonne, $ligne, 'S2', ['style' => 'HORIZONTAL_CENTER']);
                         //todo: reprendre moyenne PAC + pénalisé ou pas.
-                        $this->myExcelWriter->writeCellXY($colonne, $ligne, $sousCommissionEtudiant->moyenneUes[$ue->getId()]->moyennePac,
+                        $this->myExcelWriter->writeCellXY($colonne, $ligne, $sousCommissionEtudiant->moyenneUes[$ue->getId()]->moyennePacPenalisee,
                             ['style' => 'numerique3']);
                         $this->myExcelWriter->writeCellXY($colonne + 1, $ligne, $sousCommissionEtudiant->moyenneUes[$ue->getId()]->decision,
                             ['style' => 'HORIZONTAL_CENTER']);
