@@ -7,35 +7,30 @@
             <option value="">Choisir une semaine</option>
             {% for sem in semaines %}
                 <option value="{{ filtre }}_{{ valeur }}_{{ sem.semaineReelle }}">
-                    du {{ sem.debut|format_date('short') }} au {{ sem.fin|format_date('short') }} | S{{ sem.semaineIUT }}</option>
+                    du {{ sem.debut|format_date('short') }} au {{ sem.fin|format_date('short') }} |
+                    S{{ sem.semaineIUT }}</option>
             {% endfor %}
 
         </select>
     </div>
-    <div class="col-md-6 col-sm-12 mt-2 d-grid d-block">
-        <div class="btn-group hide-on-large">
+
+    <div class="col-md-4 col-sm-12 mt-2 d-grid d-block">
+        <div class="btn-group">
             <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Semestres
             </button>
             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                 {% for sem in user_data.semestresActifs %}
-                        <a class="dropdown-item" href="{{ path('agenda_index',{filtre:'promo',valeur:sem.id,
-                            semaine:semaine.semaine}) }}">{{ sem.display }}</a>
-                    {% endfor %}
-                </div>
-            <a class="btn {% if filtre=='prof' %} btn-primary{% else %}btn-secondary{% endif %}"
-               href="{{ path('agenda_index',{filtre:'prof',valeur:user_data.user.id,semaine:semaine.semaine}) }}"
-               data-bs-toggle="tooltip" data-bs-placement="bottom" title="Votre emploi du temps">Perso.</a>
+                    <a class="dropdown-item" href="{{ path('agenda_index',{filtre:'promo',valeur:sem.id,
+                        semaine:semaine.semaine}) }}">{{ sem.display }}</a>
+                {% endfor %}
+            </div>
         </div>
-        <div class="btn-group hide-on-small">
-            {% for seme in user_data.semestresActifs %}
-                <a class="btn {% if filtre == 'promo' and semestre.id==seme.id %}btn-primary{% else %}btn-secondary{% endif %}"
-                   href="{{ path('agenda_index',{filtre:'promo',valeur:seme.id,semaine:semaine.semaine}) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Emploi du temps du semestre {{ seme.libelle }}">{{ seme.display }}</a>
-            {% endfor %}
-            <a class="btn {% if filtre=='prof' %} btn-primary{% else %}btn-secondary{% endif %}"
-               href="{{ path('agenda_index',{filtre:'prof',valeur:user_data.user.id,semaine:semaine.semaine}) }}"
-               data-bs-toggle="tooltip" data-bs-placement="bottom" title="Votre emploi du temps">Perso.</a>
-        </div>
+    </div>
+    <div class="col-md-2 col-sm-12 mt-2 d-grid d-block">
+        <a class="btn {% if filtre=='prof' %} btn-primary{% else %}btn-secondary{% endif %}"
+           href="{{ path('agenda_index',{filtre:'prof',valeur:user_data.user.id,semaine:semaine.semaine}) }}"
+           data-bs-toggle="tooltip" data-bs-placement="bottom" title="Votre emploi du temps">Perso.</a>
     </div>
     <div class="col-md-3 col-sm-12 mt-2 d-grid d-block">
         <div class="btn-group">
