@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/06/2022 07:40
+ * @lastUpdate 24/06/2022 07:46
  */
 
 namespace App\Classes\SousCommission;
@@ -530,10 +530,10 @@ class SousCommissionExport
                         $this->getStyleDecisionUe($sousCommissionEtudiant->moyenneUes[$ue->getId()]->decisionPenalisee));
                 } else {
                     $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                        $sousCommissionEtudiant->moyenneUes[$ue->getId()]->moyennePacPenalisee,
+                        $sousCommissionEtudiant->moyenneUes[$ue->getId()]->moyennePac,
                         ['style' => 'numerique3']);
                     $this->myExcelWriter->colorCellRange($colonne, $ligne,
-                        $this->getStyleMoyenneUe($sousCommissionEtudiant->moyenneUes[$ue->getId()]->moyennePacPenalisee));
+                        $this->getStyleMoyenneUe($sousCommissionEtudiant->moyenneUes[$ue->getId()]->moyennePac));
                     ++$colonne;
                     $this->myExcelWriter->writeCellXY($colonne, $ligne,
                         $sousCommissionEtudiant->moyenneUes[$ue->getId()]->decision);

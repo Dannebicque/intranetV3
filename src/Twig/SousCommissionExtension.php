@@ -1,4 +1,11 @@
 <?php
+/*
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Twig/SousCommissionExtension.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 20/06/2022 15:09
+ */
 
 namespace App\Twig;
 
@@ -38,24 +45,24 @@ class SousCommissionExtension extends AbstractExtension
         $value = Tools::convertToFloat($value);
 
         if ($value < 8) {
-            return '<span class="badge bg-danger">'.number_format($value, 3).'</span>';
+            return '<span class="badge bg-danger">'.number_format($value, 3, ',',' ').'</span>';
         }
 
         if ($value < 10) {
-            return '<span class="badge bg-warning">'.number_format($value, 3).'</span>';
+            return '<span class="badge bg-warning">'.number_format($value, 3, ',',' ').'</span>';
         }
 
-        return '<span class="badge bg-success">'.number_format($value, 3).'</span>';
+        return '<span class="badge bg-success">'.number_format($value, 3, ',',' ').'</span>';
     }
 
     public function styleMatiere(mixed $value): string
     {
         $value = Tools::convertToFloat($value);
         if ($value < 10) {
-            return '<span class="badge bg-warning">'.number_format($value, 2).'</span>';
+            return '<span class="badge bg-warning">'.number_format($value, 2, ',',' ').'</span>';
         }
 
-        return '<span class="badge bg-success">'.number_format($value, 2).'</span>';
+        return '<span class="badge bg-success">'.number_format($value, 2, ',',' ').'</span>';
     }
 
     public function styleBonification(mixed $value): string
@@ -63,10 +70,10 @@ class SousCommissionExtension extends AbstractExtension
         $value = Tools::convertToFloat($value);
 
         if ($value > 0) {
-            return '<span class="badge bg-success">'.number_format($value, 2).'</span>';
+            return '<span class="badge bg-success">'.number_format($value, 2, ',',' ').'</span>';
         }
 
-        return '<span class="badge bg-primary">'.number_format($value, 2).'</span>';
+        return '<span class="badge bg-primary">'.number_format($value, 2, ',',' ').'</span>';
     }
 
     public function styleDecision(?string $value): string

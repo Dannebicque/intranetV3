@@ -81,10 +81,10 @@
                                     {% for ue in sc.ues %}
                                         <td>
                                             {% if sc.ue(etudiant.id, ue.id) != null %}
-                                                <a class="myedit"
+                                                <a class="editable"
                                                    data-field="moyenne_{{ ue.id }}"
-                                                   href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'ue'}) }}"
-                                                   data-title="Modifier la moyenne de l'UE">
+                                                   data-href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'ue'}) }}"
+                                                   title="Modifier la moyenne de l'UE">
                                                     {{ sc.ue(etudiant.id, ue.id).moyenne|number_format(3) }}</a>
 
                                             {% else %}
@@ -93,10 +93,10 @@
                                         </td>
                                         <td>
                                             {% if sc.ue(etudiant.id, ue.id) != null %}
-                                                <a class="myedit"
+                                                <a class="editable"
                                                    data-field="decision_{{ ue.id }}"
-                                                   href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'ue'}) }}"
-                                                   data-title="Modifier la décision de l'UE">
+                                                   data-href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'ue'}) }}"
+                                                   title="Modifier la décision de l'UE">
                                                     {{ sc.ue(etudiant.id, ue.id).decision }}</a>
                                             {% else %}
                                                 ??
@@ -104,24 +104,24 @@
                                         </td>
                                     {% endfor %}
                                     <td>
-                                        <a class="myedit"
+                                        <a class="editable"
                                            data-field="decision"
-                                           href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'semestre'}) }}"
-                                           data-title="Modifier la décision">
+                                           data-href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'semestre'}) }}"
+                                           title="Modifier la décision">
                                             {{ sc.etudiant(etudiant.id).decision }}</a>
                                     </td>
                                     <td>
-                                        <a class="myedit"
+                                        <a class="editable"
                                            data-field="proposition"
-                                           href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'semestre'}) }}"
-                                           data-title="Modifier la proposition">
+                                           data-href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'semestre'}) }}"
+                                           title="Modifier la proposition">
                                             {{ sc.etudiant(etudiant.id).proposition }}</a>
                                     </td>
                                     <td>
-                                        <a class="myedit"
+                                        <a class="editable"
                                            data-field="nbAbsences"
-                                           href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'semestre'}) }}"
-                                           data-title="Modifier le nombre d'absence">
+                                           data-href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'semestre'}) }}"
+                                           title="Modifier le nombre d'absence">
                                             {{ sc.etudiant(etudiant.id).nbAbsences }}</a>
                                     </td>
                                     {% for matiere in sc.matieres %}
@@ -133,10 +133,10 @@
                                                     {% elseif sc.matiere(etudiant.id, matiere.typeIdMatiere).matiereAAnnuler is defined %}
                                                         Abs. Just.
                                                     {% else %}
-                                                        <a class="myedit"
+                                                        <a class="editable"
                                                            data-field="moyenne_{{ matiere.id }}"
-                                                           href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'matiere'}) }}"
-                                                           data-title="Modifier la moyenne du module">
+                                                           data-href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'matiere'}) }}"
+                                                           title="Modifier la moyenne du module">
                                                             {{ sc.matiere(etudiant.id, matiere.typeIdMatiere).moyenne|number_format(2) }}
                                                         </a>
                                                     {% endif %}
@@ -161,15 +161,15 @@
                                 <td>{{ sc.etudiant(etudiant.id).nbAbsences }}</td>
                                 {% for matiere in sc.matieres %}
                                     {% if sc.matiere(etudiant.id, matiere.typeIdMatiere) != null %}
-                                        {% if sc.matiere(etudiant.id, matiere.typeIdMatiere).pasoption is defined  %}
+                                        {% if sc.matiere(etudiant.id, matiere.typeIdMatiere).pasoption is defined %}
                                             <td>N.C.</td>
                                         {% else %}
                                             {% if sc.matiere(etudiant.id, matiere.typeIdMatiere).matiereAAnnuler is
                                                 defined %}
                                                 <td>Abs.Just</td>
-                                                {% else %}
-                                            <td>{{ sc.matiere(etudiant.id, matiere.typeIdMatiere).moyenne|number_format(2) }}</td>
-                                        {% endif %}
+                                            {% else %}
+                                                <td>{{ sc.matiere(etudiant.id, matiere.typeIdMatiere).moyenne|number_format(2) }}</td>
+                                            {% endif %}
                                         {% endif %}
                                     {% endif %}
                                 {% endfor %}

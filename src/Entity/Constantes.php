@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Constantes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/05/2022 11:54
+ * @lastUpdate 02/07/2022 09:24
  */
 
 namespace App\Entity;
@@ -311,4 +311,8 @@ class Constantes
     final public const FILTRE_EDT_SALLE = 'salle';
     final public const FILTRE_EDT_ETUDIANT = 'etudiant';
     final public const FILTRE_EDT_JOUR = 'jour';
+
+    final public const APC_TYPE_1 = 'type1';
+    final public const APC_TYPE_2 = 'type2';
+    final public const APC_TYPE_3 = 'type3';
 }

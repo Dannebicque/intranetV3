@@ -79,20 +79,20 @@
                                 <td>{{ etudiant.nom|upper }} {{ etudiant.prenom|capitalize }}</td>
                                 {% if sc.etudiant(etudiant.id) != null %}
                                     <td>
-                                        <a class="myedit"
+                                        <a class="editable"
                                            data-field="moyenne"
-                                           href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id,
+                                           data-href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id,
                                                type:'semestre'}) }}"
-                                           data-title="Modifier la moyenne du semestre">
+                                           title="Modifier la moyenne du semestre">
                                             {{ sc.etudiant(etudiant.id).moyenne|number_format(3) }}</a>
                                     </td>
                                     {% for ue in sc.ues %}
                                         <td>
                                             {% if sc.ue(etudiant.id, ue.id) != null %}
-                                                <a class="myedit"
+                                                <a class="editable"
                                                    data-field="moyenne_{{ ue.id }}"
-                                                   href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'ue'}) }}"
-                                                   data-title="Modifier la moyenne de l'UE">
+                                                   data-href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'ue'}) }}"
+                                                   title="Modifier la moyenne de l'UE">
                                                     {{ sc.ue(etudiant.id, ue.id).moyenne|number_format(3) }}</a>
 
                                             {% else %}
@@ -101,24 +101,24 @@
                                         </td>
                                     {% endfor %}
                                     <td>
-                                        <a class="myedit"
+                                        <a class="editable"
                                            data-field="decision"
-                                           href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'semestre'}) }}"
-                                           data-title="Modifier la décision">
+                                           data-href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'semestre'}) }}"
+                                           title="Modifier la décision">
                                             {{ sc.etudiant(etudiant.id).decision }}</a>
                                     </td>
                                     <td>
-                                        <a class="myedit"
+                                        <a class="editable"
                                            data-field="proposition"
-                                           href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'semestre'}) }}"
-                                           data-title="Modifier la proposition">
+                                           data-href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'semestre'}) }}"
+                                           title="Modifier la proposition">
                                             {{ sc.etudiant(etudiant.id).proposition }}</a>
                                     </td>
                                     <td>
-                                        <a class="myedit"
+                                        <a class="editable"
                                            data-field="nbAbsences"
-                                           href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'semestre'}) }}"
-                                           data-title="Modifier le nombre d'absence">
+                                           data-href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'semestre'}) }}"
+                                           title="Modifier le nombre d'absence">
                                             {{ sc.etudiant(etudiant.id).nbAbsences }}</a>
                                     </td>
                                     {% for matiere in sc.matieres %}
@@ -128,10 +128,10 @@
                                                     {% if sc.matiere(etudiant.id, matiere.typeIdMatiere).pasoption is defined %}
                                                         N.C.
                                                     {% else %}
-                                                        <a class="myedit"
+                                                        <a class="editable"
                                                            data-field="moyenne_{{ matiere.id }}"
-                                                           href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'matiere'}) }}"
-                                                           data-title="Modifier la moyenne du module">
+                                                           data-href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'matiere'}) }}"
+                                                           title="Modifier la moyenne du module">
                                                             {{ sc.matiere(etudiant.id, matiere.typeIdMatiere).moyenne|number_format(2) }}
                                                         </a>
                                                     {% endif %}
