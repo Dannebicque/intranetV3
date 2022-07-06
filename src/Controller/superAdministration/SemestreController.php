@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/SemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:44
+ * @lastUpdate 06/07/2022 16:30
  */
 
 namespace App\Controller\superAdministration;
@@ -14,6 +14,7 @@ use App\Entity\Annee;
 use App\Entity\Constantes;
 use App\Entity\Semestre;
 use App\Form\SemestreType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use function count;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -98,11 +99,27 @@ class SemestreController extends BaseController
         return $this->redirectToRoute('erreur_666');
     }
 
+    #[Route(path: '/{id}/ajax/modifier', name: 'sa_semestre_ajax_edit', options: ['expose' => true], methods: 'GET|POST')]
+    public function ajaxEdit(Request $request, Semestre $semestre): JsonResponse
+    {
+        $field = $request->request->get('field');
+        $value = $request->request->get('value');
+
+        if (null !== $field) {
+            $semestre->update($field, $value);
+            $this->entityManager->flush();
+
+            return new JsonResponse(['success' => true]);
+        }
+
+        return new JsonResponse(['error' => true], Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
     #[Route(path: '/{id}/duplicate', name: 'sa_semestre_duplicate', methods: 'GET|POST')]
     public function duplicate(Semestre $semestre): Response
     {
         $newSemestre = clone $semestre;
-        $newSemestre->setLibelle($newSemestre->getLibelle().' copie');
+        $newSemestre->setLibelle($newSemestre->getLibelle() . ' copie');
         $this->entityManager->persist($newSemestre);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'semestre.duplicate.success.flash');
@@ -114,7 +131,7 @@ class SemestreController extends BaseController
     public function delete(Request $request, Semestre $semestre): Response
     {
         $id = $semestre->getId();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
             if (0 === count($semestre->getUes()) && 0 === count($semestre->getParcours()) && 0 === count($semestre->getEtudiants())) {
                 $this->entityManager->remove($semestre);
                 $this->entityManager->flush();
@@ -141,7 +158,7 @@ class SemestreController extends BaseController
     {
         $semestre->setActif($etat);
         $this->entityManager->flush();
-        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'semestre.activate.'.$etat.'.flash');
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'semestre.activate.' . $etat . '.flash');
 
         return $this->redirectToRoute('super_admin_homepage');
     }

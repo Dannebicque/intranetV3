@@ -1,21 +1,23 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/DiplomeType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/DiplomeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/09/2021 21:20
+ * @lastUpdate 06/07/2022 11:19
  */
 
 namespace App\Form;
 
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
+use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Personnel;
 use App\Entity\TypeDiplome;
 use App\Form\Type\EntityCompleteType;
 use App\Form\Type\YesNoType;
+use App\Repository\DiplomeRepository;
 use App\Repository\PersonnelRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -30,8 +32,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
  */
 class DiplomeType extends AbstractType
 {
+    private Departement $departement;
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+        $this->departement = $options['departement'];
         $builder
             ->add('type_diplome', EntityType::class, [
                 'class' => TypeDiplome::class,
@@ -43,6 +47,13 @@ class DiplomeType extends AbstractType
             ])
             ->add('sigle', TextType::class, [
                 'label' => 'label.sigle',
+            ])
+            ->add('parent', EntityCompleteType::class, [
+                'class' => Diplome::class,
+                'query_builder' => fn (DiplomeRepository $diplomeRepository) => $diplomeRepository->findParentBuilder($this->departement),
+                'choice_label' => 'display',
+                'required' => false,
+                'label' => 'label.diplome_parent',
             ])
             ->add('responsable_diplome', EntityCompleteType::class, [
                 'class' => Personnel::class,
@@ -133,6 +144,7 @@ class DiplomeType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Diplome::class,
+            'departement' => null,
             'translation_domain' => 'form',
         ]);
     }

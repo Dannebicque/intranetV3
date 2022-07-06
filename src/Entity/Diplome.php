@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Diplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:21
+ * @lastUpdate 06/07/2022 11:14
  */
 
 namespace App\Entity;
@@ -130,7 +130,16 @@ class Diplome extends BaseEntity implements Serializable
     #[ORM\Column(type: Types::BOOLEAN)]
     private ?bool $optUpdateCelcat = false;
 
-    public function __construct(#[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'diplomes')] private ?Departement $departement)
+    #[ORM\Column(type: 'string', length: 10, nullable: true)]
+    private ?string $typeStructure;
+
+    #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'enfants')]
+    private ?Diplome $parent;
+
+    #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
+    private Collection $enfants; // structure si diplôme APC
+
+    public function __construct(#[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'diplomes')] private ?Departement $departement, ?Diplome $diplome)
     {
         $this->hrs = new ArrayCollection();
         $this->ppns = new ArrayCollection();
@@ -139,6 +148,8 @@ class Diplome extends BaseEntity implements Serializable
         $this->covidAttestationPersonnels = new ArrayCollection();
         $this->covidAttestationEtudiants = new ArrayCollection();
         $this->apcParcours = new ArrayCollection();
+        $this->enfants = new ArrayCollection();
+        $this->parent = $diplome;
     }
 
     public function getDisplay(): ?string
@@ -679,6 +690,60 @@ class Diplome extends BaseEntity implements Serializable
     public function setOptUpdateCelcat(bool $optUpdateCelcat): self
     {
         $this->optUpdateCelcat = $optUpdateCelcat;
+
+        return $this;
+    }
+
+    public function getTypeStructure(): ?string
+    {
+        return $this->typeStructure;
+    }
+
+    public function setTypeStructure(?string $typeStructure): self
+    {
+        $this->typeStructure = $typeStructure;
+
+        return $this;
+    }
+
+    public function getParent(): ?self
+    {
+        return $this->parent;
+    }
+
+    public function setParent(?self $parent): self
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getEnfants(): Collection
+    {
+        return $this->enfants;
+    }
+
+    public function addEnfant(self $enfant): self
+    {
+        if (!$this->enfants->contains($enfant)) {
+            $this->enfants[] = $enfant;
+            $enfant->setParent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEnfant(self $enfant): self
+    {
+        if ($this->enfants->removeElement($enfant)) {
+            // set the owning side to null (unless already changed)
+            if ($enfant->getParent() === $this) {
+                $enfant->setParent(null);
+            }
+        }
 
         return $this;
     }

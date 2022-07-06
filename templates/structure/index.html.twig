@@ -19,7 +19,7 @@
 {% block headeractions %}
     <div class="header-action">
         <nav class="nav nav-tabs">
-            {% for diplome in departement.diplomes %}
+            {% for diplome in departement.diplomes|filter(diplome => diplome.parent == null) %}
                 <a class="nav-link {% if (diplomeSelect == null and loop.first) or (diplomeSelect != null and diplomeSelect
                 .id==diplome.id) %}active{% endif %} changeDiplome"
                    href="#" data-diplome="{{ diplome.id }}"

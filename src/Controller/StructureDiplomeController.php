@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/StructureDiplomeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 14:47
+ * @lastUpdate 06/07/2022 09:19
  */
 
 namespace App\Controller;
@@ -19,6 +19,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class StructureDiplomeController extends AbstractController
 {
+    /**
+     * @throws \App\Exception\DiplomeNotFoundException
+     */
     #[Route('/structure/diplome/affiche', name: 'structure_diplome_affiche')]
     public function index(
         PpnRepository $ppnRepository,
@@ -28,10 +31,13 @@ class StructureDiplomeController extends AbstractController
         $idDiplome = $request->query->get('diplome');
         $idPpn = $request->query->get('ppn');
         $diplome = $diplomeRepository->find($idDiplome);
-        $ppn = $ppnRepository->find($idPpn);
+        $ppn = null;
 
         if (null === $diplome) {
             throw new DiplomeNotFoundException();
+        }
+        if ('null' !== $idPpn) {
+            $ppn = $ppnRepository->find($idPpn);
         }
 
         if (null === $ppn) {
@@ -41,6 +47,7 @@ class StructureDiplomeController extends AbstractController
         return $this->render('structure_diplome/affiche.html.twig', [
             'diplome' => $diplome,
             'ppn' => $ppn,
+            'diplomes' => $diplome->getEnfants(),
         ]);
     }
 }

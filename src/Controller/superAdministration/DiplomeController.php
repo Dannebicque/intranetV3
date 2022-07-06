@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/DiplomeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:44
+ * @lastUpdate 06/07/2022 11:54
  */
 
 namespace App\Controller\superAdministration;
@@ -15,6 +15,7 @@ use App\Entity\Constantes;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Form\DiplomeType;
+use App\Repository\DiplomeRepository;
 use function count;
 use Exception;
 use RuntimeException;
@@ -29,10 +30,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class DiplomeController extends BaseController
 {
     #[Route(path: '/new/{departement}', name: 'sa_diplome_new', methods: 'GET|POST')]
-    public function create(Request $request, Departement $departement): Response
-    {
-        $diplome = new Diplome($departement);
+    public function create(
+        DiplomeRepository $diplomeRepository,
+        Request $request,
+        Departement $departement
+    ): Response {
+        $dipParent = null;
+        if (null !== $request->query->get('diplome')) {
+            $dipParent = $diplomeRepository->find($request->query->get('diplome'));
+        }
+
+        $diplome = new Diplome($departement, $dipParent);
         $form = $this->createForm(DiplomeType::class, $diplome, [
+            'departement' => $departement,
             'attr' => [
                 'data-provide' => 'validation',
             ],
@@ -85,6 +95,7 @@ class DiplomeController extends BaseController
     {
         if (null !== $diplome->getDepartement()) {
             $form = $this->createForm(DiplomeType::class, $diplome, [
+                'departement' => $diplome->getDepartement(),
                 'attr' => [
                     'data-provide' => 'validation',
                 ],
@@ -126,8 +137,30 @@ class DiplomeController extends BaseController
     public function duplicate(Diplome $diplome): Response
     {
         $newDiplome = clone $diplome;
-        $newDiplome->setLibelle($newDiplome->getLibelle().' copie');
+        $newDiplome->setLibelle($newDiplome->getLibelle() . ' copie');
         $this->entityManager->persist($newDiplome);
+
+        //dupliquer les années
+        foreach ($diplome->getAnnees() as $annee) {
+            $newAnnee = clone $annee;
+            $newAnnee->setDiplome($newDiplome);
+            $this->entityManager->persist($newAnnee);
+
+            //dupliquer les semestres
+            foreach ($annee->getSemestres() as $semestre) {
+                $newSemestre = clone $semestre;
+                $newSemestre->setAnnee($newAnnee);
+                $this->entityManager->persist($newSemestre);
+
+                //dupliquer les UEs
+                foreach ($semestre->getUes() as $ue) {
+                    $newUe = clone $ue;
+                    $newUe->setSemestre($newSemestre);
+                    $this->entityManager->persist($newUe);
+                }
+            }
+        }
+
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'diplome.duplicate.success.flash');
 
@@ -138,7 +171,7 @@ class DiplomeController extends BaseController
     public function delete(Request $request, Diplome $diplome): Response
     {
         $id = $diplome->getId();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
             if (0 === count($diplome->getAnnees())) {
                 $this->entityManager->remove($diplome);
                 $this->entityManager->flush();
@@ -165,7 +198,7 @@ class DiplomeController extends BaseController
     {
         $diplome->setActif($etat);
         $this->entityManager->flush();
-        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'diplome.activate.'.$etat.'.flash');
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'diplome.activate.' . $etat . '.flash');
 
         return $this->redirectToRoute('super_admin_homepage');
     }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/DiplomeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 06/07/2022 11:18
  */
 
 namespace App\Repository;
@@ -82,5 +82,13 @@ class DiplomeRepository extends ServiceEntityRepository
             ->andWhere('d.codeCelcatDepartement <> 0')
             ->getQuery()
             ->getResult();
+    }
+
+    public function findParentBuilder(Departement $departement): QueryBuilder
+    {
+        return $this->createQueryBuilder('d')
+            ->where('d.parent IS NULL')
+            ->andWhere('d.departement = :departement')
+            ->setParameter('departement', $departement->getId());
     }
 }

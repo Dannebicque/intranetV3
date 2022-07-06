@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/AnneeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:44
+ * @lastUpdate 06/07/2022 16:30
  */
 
 namespace App\Controller\superAdministration;
@@ -16,6 +16,7 @@ use App\Entity\Diplome;
 use App\Form\AnneeType;
 use function count;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -96,6 +97,22 @@ class AnneeController extends BaseController
         }
 
         return $this->redirectToRoute('erreur_666');
+    }
+
+    #[Route(path: '/{id}/ajax/modifier', name: 'sa_annee_ajax_edit', options: ['expose' => true], methods: 'GET|POST')]
+    public function ajaxEdit(Request $request, Annee $annee): JsonResponse
+    {
+        $field = $request->request->get('field');
+        $value = $request->request->get('value');
+
+        if (null !== $field) {
+            $annee->update($field, $value);
+            $this->entityManager->flush();
+
+            return new JsonResponse(['success' => true]);
+        }
+
+        return new JsonResponse(['error' => true], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     #[Route(path: '/{id}/duplicate', name: 'sa_annee_duplicate', methods: 'GET|POST')]

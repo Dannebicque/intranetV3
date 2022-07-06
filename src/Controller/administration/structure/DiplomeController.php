@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/structure/DiplomeController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/structure/DiplomeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/09/2021 21:05
+ * @lastUpdate 06/07/2022 11:54
  */
 
 namespace App\Controller\administration\structure;
@@ -24,11 +24,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class DiplomeController extends BaseController
 {
     #[Route(path: '/new/{departement}', name: 'administration_diplome_new', methods: 'GET|POST')]
-    public function create(Request $request, Departement $departement): Response
+    public function create(
+        Request $request, Departement $departement): Response
     {
         $diplome = new Diplome($departement);
         $diplome->setDepartement($this->dataUserSession->getDepartement());
         $form = $this->createForm(DiplomeType::class, $diplome, [
+            'departement' => $departement,
             'attr' => [
                 'data-provide' => 'validation',
             ],
@@ -60,6 +62,7 @@ class DiplomeController extends BaseController
     public function edit(Request $request, Diplome $diplome): Response
     {
         $form = $this->createForm(DiplomeType::class, $diplome, [
+            'departement' => $diplome->getDepartement(),
             'attr' => [
                 'data-provide' => 'validation',
             ],

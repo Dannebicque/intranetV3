@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/UeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:44
+ * @lastUpdate 06/07/2022 16:30
  */
 
 namespace App\Controller\superAdministration;
@@ -14,6 +14,8 @@ use App\Entity\Constantes;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use App\Form\UeType;
+use App\Utils\Tools;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use function count;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -92,6 +94,22 @@ class UeController extends BaseController
         }
 
         return $this->redirectToRoute('erreur_666');
+    }
+
+    #[Route(path: '/{id}/ajax/modifier', name: 'sa_ue_ajax_edit', options: ['expose' => true], methods: 'GET|POST')]
+    public function ajaxEdit(Request $request, Ue $ue): JsonResponse
+    {
+        $field = $request->request->get('field');
+        $value = $request->request->get('value');
+
+        if (null !== $field) {
+            Tools::updateFields($field, $value, $ue);
+            $this->entityManager->flush();
+
+            return new JsonResponse(['success' => true]);
+        }
+
+        return new JsonResponse(['error' => true], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     #[Route(path: '/{id}/duplicate', name: 'sa_ue_duplicate', methods: 'GET|POST')]
