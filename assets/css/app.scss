@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/05/2022 13:28
+// @lastUpdate 06/07/2022 17:20
 
 @import "./theme-troyes.scss";
 @import "./theme-rcc.scss";
@@ -301,7 +301,13 @@ th.th_titre {
 /* Partie Jeditable */
 .editable {
   border-bottom: 1px dashed;
-  color: darkgreen;
+  color: var(--colorIUTComplementaire);
+}
+
+.editable-empty {
+  font-style: italic;
+  border-bottom: 1px dashed;
+  color: #DD1144;
 }
 
 .editable-class input {
@@ -349,23 +355,6 @@ th.th_titre {
   cursor: not-allowed;
   opacity: 0.5;
   text-decoration: none;
-}
-
-.myedit {
-  color: #77808D;
-  text-decoration: none;
-  border-bottom: dotted 1px #77808D;
-}
-
-.myedit:after {
-  content: '\f044';
-  font-family: "Font Awesome 6 Pro", serif;
-  font-style: normal;
-  font-weight: normal;
-  text-decoration: inherit;
-
-  margin-left: 5px;
-  color: #77808D;
 }
 
 .ui-selected {
@@ -744,7 +733,7 @@ td.td-edt.col-new-day {
 .loader-stimulus {
   padding: 5px;
   background-color: var(--colorIUTComplementaire);
-  color:var(--colorIUT);
+  color: var(--colorIUT);
   font-weight: bold;
   font-size: 16px;
   margin-bottom: 10px;

@@ -2,82 +2,79 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/05/2022 22:33
+// @lastUpdate 06/07/2022 14:09
 import '@fortawesome/fontawesome-pro/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-pro/scss/brands.scss'
 import '@fortawesome/fontawesome-pro/scss/solid.scss'
-
 import $ from 'jquery'
-
 import PerfectScrollbar from 'perfect-scrollbar'
-import {getDataOptions, getParentByTagName} from './util'
-
 import * as bootstrap from 'bootstrap'
+import TomSelect from 'tom-select'
+import InPlaceEdit from './inPlaceEdit'
+import flatpickr from 'flatpickr'
+import Routing from './router'
+
+import { getDataOptions, getParentByTagName } from './util'
 
 import '../css/app.scss'
 
-import flatpickr from 'flatpickr'
 import 'flatpickr/dist/l10n/fr.js'
-
 
 import Table from '../components/table'
 import SelectComplete from '../components/SelectComplete'
 import SelectChangeWidget from '../components/SelectChangeWidget'
-import {get, post} from './fetch'
-import TomSelect from 'tom-select'
+import { get, post } from './fetch'
 
 export const LANG = document.querySelector('html').getAttribute('lang')
 
 window.da = {
-  LANG: LANG,
+  LANG,
   loaderStimulus: '<div class="loader-stimulus text-center">... Chargement en cours ...</div>',
   loader: document.getElementById('loader'),
 }
 
 customElements.define('my-table', Table)
-customElements.define('select-complete', SelectComplete, {extends: 'select'})
-customElements.define('select-live-update', SelectChangeWidget, {extends: 'select'})
+customElements.define('select-complete', SelectComplete, { extends: 'select' })
+customElements.define('select-live-update', SelectChangeWidget, { extends: 'select' })
 
-document.querySelectorAll('.selectpicker').forEach(el => {
-    new TomSelect(el, {})
-})
 
-$('input[type="file"]').on('change', function (e) {
-  let filename = e.target.files[0].name
+
+$('input[type="file"]').on('change', (e) => {
+  const filename = e.target.files[0].name
   $('.custom-file-label').html(filename)
 })
 
-window.addEventListener('load', function () { //le dom est chargé
+window.addEventListener('load', () => { // le dom est chargé
   const currentTheme = localStorage.getItem('theme')
   const menuDarkTheme = document.getElementById('darkMode')
 
-  //Regarde si des boutons ont un data-confirm = true
+  // Regarde si des boutons ont un data-confirm = true
   const elements = document.querySelectorAll("[data-confirm='true']");
 
-  elements.forEach(el=>{
+  elements.forEach((el) => {
     console.log(el);
   })
 
-  //menu changement de département
+  // menu changement de département
   if (document.getElementById('changeDepartement')) {
-    document.getElementById('changeDepartement').addEventListener('click', async function (e) {
+    document.getElementById('changeDepartement').addEventListener('click', async (e) => {
       const zone = document.getElementById('listeChangeDepartement')
-      zone.innerHtml = '<a href="#" class="dropdown-item col-12">' + window.da.loaderStimulus + '</a>'//todo: ne s'affiche pas ? faire tout le header avec stimulus ? Avec Turbo?
+      zone.innerHtml = `<a href="#" class="dropdown-item col-12">${window.da.loaderStimulus}</a>`// todo: ne s'affiche pas ? faire tout le header avec stimulus ? Avec Turbo?
 
       await get(Routing.generate('user_get_departements'), {}).then((data) => {
         let html = ''
-        data.forEach(function (departement) {
+        data.forEach((departement) => {
           let isDefault = ''
           if (departement.defaut === true) {
             isDefault = 'is-default'
           }
-          html += '<a class="dropdown-item ' + isDefault + ' col-4"\n' +
-            'href="' + Routing.generate('security_change_departement', {departement: departement.uuid}) + '">\n' +
-            '<div class="avatar-departement"\n' +
-            'style="background-color: ' + departement.couleur + '">\n' +
-            '<span class="initials">' + departement.libelleInitiales + '</span>\n' +
-            '</div>\n' +
-            '</a>'
+          html += `<a class="dropdown-item ${isDefault} col-4"\n`
+            + `href="${Routing.generate('security_change_departement', { departement: departement.uuid })}">\n`
+            + '<div class="avatar-departement"\n'
+            + `style="background-color: ${departement.couleur}">\n`
+            + `<span class="initials">${departement.libelleInitiales}</span>\n`
+            + '</div>\n'
+            + '</a>'
         })
 
         zone.innerHTML = html
@@ -85,9 +82,8 @@ window.addEventListener('load', function () { //le dom est chargé
     })
   }
 
-
   if (menuDarkTheme !== null) {
-    menuDarkTheme.addEventListener('click', function () {
+    menuDarkTheme.addEventListener('click', () => {
       document.body.classList.toggle('dark-theme')
       // Let's say the theme is equal to light
       let theme = 'light'
@@ -117,26 +113,25 @@ window.addEventListener('load', function () { //le dom est chargé
     elem.addEventListener('click', (e) => {
       e.preventDefault()
       const el = getParentByTagName(e.target, 'a')
-      post(Routing.generate('settings_change_annee_universitaire'), {'annee_universitaire': el.dataset.annee}).then(() => {
+      post(Routing.generate('settings_change_annee_universitaire'), { annee_universitaire: el.dataset.annee }).then(() => {
         document.location.reload(true)
       })
     })
   })
-
 }, false)
 
-$(document).ready(function () {
-  var preloader = $('.preloader')
+$(document).ready(() => {
+  const preloader = $('.preloader')
   if (preloader.length) {
-    var speed = preloader.dataAttr('hide-spped', 600)
+    const speed = preloader.dataAttr('hide-spped', 600)
     preloader.fadeOut(speed)
   }
 
-  //tooltip
+  // tooltip
   updateInterface()
 })
 
-$(document).ajaxComplete(function () {
+$(document).ajaxComplete(() => {
   updateInterface()
 })
 
@@ -148,29 +143,36 @@ $(document).on('click', '.card-btn-fullscreen', function () {
 
 // Slide up/down
 $(document).on('click', '.card-btn-slide', function () {
-  $(this).toggleClass('rotate-180').closest('.card').find('.card-content').slideToggle()
+  $(this).toggleClass('rotate-180').closest('.card').find('.card-content')
+    .slideToggle()
 })
 
 $(document).on('click', '.card-btn-slide-text', function () {
   $(this).closest('.card').find('.card-content').slideToggle()
 })
 
-function updateInterface () {
-  var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-  var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
-    return new bootstrap.Tooltip(tooltipTriggerEl)
+function updateInterface() {
+  const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+  const tooltipList = tooltipTriggerList.map((tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl))
+
+  document.querySelectorAll('.selectpicker').forEach((el) => {
+    new TomSelect(el, {})
   })
 
-  if ( document.querySelectorAll('.flatdatepicker').length > 0) {
-    document.querySelectorAll('.flatdatepicker').forEach(function (elem) {
+  document.querySelectorAll('.editable').forEach((el) => {
+    new InPlaceEdit(el, {})
+  })
+
+  if (document.querySelectorAll('.flatdatepicker').length > 0) {
+    document.querySelectorAll('.flatdatepicker').forEach((elem) => {
       let options
       if (elem.dataset.options) {
         options = JSON.parse(elem.dataset.options)
       } else {
         options = []
-        options['dateFormat'] = 'd/m/Y'
+        options.dateFormat = 'd/m/Y'
       }
-      options['locale'] = da.LANG
+      options.locale = da.LANG
       flatpickr(elem, options)
     })
   }
@@ -178,20 +180,20 @@ function updateInterface () {
   if (document.getElementsByClassName('datepicker-range').length > 0) {
     $('.datepicker-range').flatpickr({
       mode: 'range',
-      'locale': da.LANG,
-      dateFormat: 'd/m/Y'
+      locale: da.LANG,
+      dateFormat: 'd/m/Y',
     })
   }
 
-  //notifications
-  $(document).on('click', '#marquerNotificationsRead', function (e) {
+  // notifications
+  $(document).on('click', '#marquerNotificationsRead', (e) => {
     e.preventDefault()
     e.stopPropagation()
     $.ajax({
       url: Routing.generate('notification_marquer_lu'),
-      success: function () {
+      success() {
         $('.notification').removeClass('media-new')
-      }
+      },
     })
   })
 }
@@ -200,7 +202,7 @@ function updateInterface () {
 // Sidebar
 // =====================
 
-var sidebar = {}
+const sidebar = {}
 
 // Scrollable
 if (document.getElementsByClassName('sidebar-navigation').length > 0) {
@@ -209,27 +211,24 @@ if (document.getElementsByClassName('sidebar-navigation').length > 0) {
 
 // Handle sidebar openner
 //
-$(document).on('click', '.sidebar-toggler', function () {
+$(document).on('click', '.sidebar-toggler', () => {
   sidebar.open()
 })
 
-
 // Close sidebar when backdrop touches
 //
-$(document).on('click', '.backdrop-sidebar', function () {
+$(document).on('click', '.backdrop-sidebar', () => {
   sidebar.close()
 })
-
 
 // Slide up/down menu item on click
 //
 $(document).on('click', '.sidebar .menu-link', function () {
-  var $submenu = $(this).next('.menu-submenu')
-  if ($submenu.length < 1)
-    return
+  const $submenu = $(this).next('.menu-submenu')
+  if ($submenu.length < 1) return
 
   if ($submenu.is(':visible')) {
-    $submenu.slideUp(function () {
+    $submenu.slideUp(() => {
       $('.sidebar .menu-item.open').removeClass('open')
     })
     $(this).removeClass('open')
@@ -238,7 +237,7 @@ $(document).on('click', '.sidebar .menu-link', function () {
 
   $('.sidebar .menu-submenu:visible').slideUp()
   $('.sidebar .menu-link').removeClass('open')
-  $submenu.slideToggle(function () {
+  $submenu.slideToggle(() => {
     $('.sidebar .menu-item.open').removeClass('open')
   })
   $(this).addClass('open')
@@ -246,7 +245,7 @@ $(document).on('click', '.sidebar .menu-link', function () {
 
 // Handle fold toggler
 //
-$(document).on('click', '.sidebar-toggle-fold', function () {
+$(document).on('click', '.sidebar-toggle-fold', () => {
   sidebar.toggleFold()
 })
 
@@ -259,7 +258,6 @@ sidebar.fold = function () {
   $('body').addClass('sidebar-folded')
   app.state('sidebar.folded', true)
 }
-
 
 sidebar.unfold = function () {
   $('body').removeClass('sidebar-folded')
@@ -295,16 +293,16 @@ sidebar.close = function () {
 // =====================
 // todo: déplacer dans une classe seule... pour l'import.
 
-let quickview = {}
+const quickview = {}
 let qps = null
 
 // Update scrollbar on tab change
 //
-$(document).on('shown.bs.tab', '.quickview-header a[data-toggle="tab"]', function () {
+$(document).on('shown.bs.tab', '.quickview-header a[data-toggle="tab"]', () => {
   qps.update()
 })
 
-export default function reloadQv () {
+export default function reloadQv() {
   qps.destroy()
   qps = new PerfectScrollbar('.quickview')
 }
@@ -315,12 +313,11 @@ $(document).on('click', '[data-dismiss="quickview"]', function () {
   quickview.close($(this).closest('.quickview'))
 })
 
-
 // Handle quickview openner
 //
 $(document).on('click', '[data-toggle="quickview"]', function (e) {
   e.preventDefault()
-  let target = app.getTarget($(this))
+  const target = app.getTarget($(this))
 
   if (target === false) {
     quickview.close($(this).closest('.quickview'))
@@ -338,18 +335,17 @@ $(document).on('click', '[data-toggle="quickview"]', function (e) {
   }
 })
 
-
 // Close quickview when backdrop touches
 //
 $(document).on('click', '.backdrop-quickview', function () {
-  let qv = $(this).attr('data-target')
+  const qv = $(this).attr('data-target')
   if (!$(qv).is('[data-disable-backdrop-click]')) {
     quickview.close(qv)
   }
 })
 
 $(document).on('click', '.quickview .close, [data-dismiss="quickview"]', function () {
-  let qv = $(this).closest('.quickview')
+  const qv = $(this).closest('.quickview')
   quickview.close(qv)
 })
 
@@ -359,47 +355,43 @@ quickview.toggle = function (e, url) {
   if ($(e).hasClass('reveal')) {
     quickview.close(e)
   } else {
-
     if (url !== '') {
       $(e).html('<div class="spinner-linear"><div class="line"></div></div>')
-      $(e).load(url, function () {
+      $(e).load(url, () => {
         qps = new PerfectScrollbar('.quickview')
       })
     }
-    $(e).addClass('reveal').not('.backdrop-remove').after('<div class="app-backdrop backdrop-quickview" data-target="' + e + '"></div>')
+    $(e).addClass('reveal').not('.backdrop-remove').after(`<div class="app-backdrop backdrop-quickview" data-target="${e}"></div>`)
   }
 }
-
 
 // Open quickview
 //
 quickview.open = function (e) {
-  let quickview = $(e)
+  const quickview = $(e)
   let url = ''
   // Load content from URL if required
-  if (quickview.hasDataAttr('url') && 'true' !== quickview.data('url-has-loaded')) {
+  if (quickview.hasDataAttr('url') && quickview.data('url-has-loaded') !== 'true') {
     if (quickview.data('url') === 'no-url') {
       url = Routing.generate('quick_view')
     } else {
       url = quickview.data('url')
     }
-    quickview.load(url, function () {
+    quickview.load(url, () => {
       qps = new PerfectScrollbar('.quickview')
 
       // Don't load it next time, if don't need to
-      if (quickview.hasDataAttr('always-reload') && 'true' === quickview.data('always-reload')) {
+      if (quickview.hasDataAttr('always-reload') && quickview.data('always-reload') === 'true') {
 
       } else {
         quickview.data('url-has-loaded', 'true')
       }
     })
-
   }
 
-// Open it
-  quickview.addClass('reveal').not('.backdrop-remove').after('<div class="app-backdrop backdrop-quickview" data-target="' + e + '"></div>')
+  // Open it
+  quickview.addClass('reveal').not('.backdrop-remove').after(`<div class="app-backdrop backdrop-quickview" data-target="${e}"></div>`)
 }
-
 
 // Close quickview
 //
@@ -407,7 +399,6 @@ quickview.close = function (e) {
   $(e).removeClass('reveal')
   $('.backdrop-quickview').remove()
 }
-
 
 let app = {}
 
@@ -432,10 +423,10 @@ app.getTarget = function (e) {
   return target
 }
 
-function getColonneActive (colonnes) {
+function getColonneActive(colonnes) {
   let index = -1
 
-  $.each(colonnes, function (key, colonne) {
+  $.each(colonnes, (key, colonne) => {
     if (!$(colonne).hasClass('col-edt-hide')) {
       index = key
     }
@@ -444,50 +435,49 @@ function getColonneActive (colonnes) {
   return index
 }
 
-//navigation EDT
-$(document).on('click', '#jourPrecedent', function (e) {
+// navigation EDT
+$(document).on('click', '#jourPrecedent', (e) => {
   e.stopPropagation()
   e.preventDefault()
-  let colonnes = $('.jour')
-  let index = getColonneActive(colonnes)
+  const colonnes = $('.jour')
+  const index = getColonneActive(colonnes)
   if (index > 0) {
     $(colonnes[index]).addClass('col-edt-hide')
     $(colonnes[index - 1]).removeClass('col-edt-hide')
-    $('.edt-jour-' + index).addClass('col-edt-hide')
-    $('.edt-jour-' + (index - 1)).removeClass('col-edt-hide')
-
+    $(`.edt-jour-${index}`).addClass('col-edt-hide')
+    $(`.edt-jour-${index - 1}`).removeClass('col-edt-hide')
   } else {
     $(colonnes[index]).addClass('col-edt-hide')
     $(colonnes[4]).removeClass('col-edt-hide')
-    $('.edt-jour-' + index).addClass('col-edt-hide')
+    $(`.edt-jour-${index}`).addClass('col-edt-hide')
     $('.edt-jour-4').removeClass('col-edt-hide')
   }
 })
 
-$(document).on('click', '#jourSuivant', function (e) {
+$(document).on('click', '#jourSuivant', (e) => {
   e.stopPropagation()
   e.preventDefault()
-  let colonnes = $('.jour')
-  let index = getColonneActive(colonnes)
+  const colonnes = $('.jour')
+  const index = getColonneActive(colonnes)
   if (index < 4) {
     $(colonnes[index]).addClass('col-edt-hide')
     $(colonnes[index + 1]).removeClass('col-edt-hide')
-    $('.edt-jour-' + index).addClass('col-edt-hide')
-    $('.edt-jour-' + (index + 1)).removeClass('col-edt-hide')
+    $(`.edt-jour-${index}`).addClass('col-edt-hide')
+    $(`.edt-jour-${index + 1}`).removeClass('col-edt-hide')
   } else {
     $(colonnes[index]).addClass('col-edt-hide')
     $(colonnes[0]).removeClass('col-edt-hide')
-    $('.edt-jour-' + index).addClass('col-edt-hide')
+    $(`.edt-jour-${index}`).addClass('col-edt-hide')
     $('.edt-jour-0').removeClass('col-edt-hide')
   }
 })
 
-$(document).on('click', '#jourCourant', function (e) {
+$(document).on('click', '#jourCourant', (e) => {
   e.stopPropagation()
   e.preventDefault()
-  let now = new Date()
-  let colonnes = $('.jour')
-  let index = getColonneActive(colonnes)
+  const now = new Date()
+  const colonnes = $('.jour')
+  const index = getColonneActive(colonnes)
   $(colonnes[index]).addClass('col-edt-hide')
   $(colonnes[now.getDay() - 1]).removeClass('col-edt-hide')
 })
