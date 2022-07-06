@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:44
+ * @lastUpdate 06/07/2022 20:52
  */
 
 namespace App\Controller\administration;
@@ -141,7 +141,7 @@ class EtudiantController extends BaseController
     #[ParamConverter('etudiant', options: ['mapping' => ['uuid' => 'uuid']])]
     public function demissionnaire(EtudiantScolarite $etudiantScolarite, Etudiant $etudiant): RedirectResponse
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $etudiant->getSemestre());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
         $etudiantScolarite->setEtudiant($etudiant);
         $etudiantScolarite->changeEtat(Constantes::SEMESTRE_DEMISSIONNAIRE);
 
