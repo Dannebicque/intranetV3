@@ -3,10 +3,10 @@
         <th>{{ 'table.entreprise'|trans }}</th>
         <td>
             {% if editable is defined and editable == 'true' %}
-                <a class="myedit"
+                <a class="editable"
                    data-field="raisonSociale"
-                   href="{{ path('entreprise_ajax_edit', {id:entreprise.id}) }}"
-                   data-title="Corriger la raison sociale de l'entreprise">
+                   data-href="{{ path('entreprise_ajax_edit', {id:entreprise.id}) }}"
+                   title="Corriger la raison sociale de l'entreprise">
                     {{ entreprise.raisonSociale }}
                 </a>
             {% else %}
@@ -18,10 +18,10 @@
         <th>{{ 'table.siret'|trans }}</th>
         <td>
             {% if editable is defined and editable == 'true' %}
-                <a class="myedit"
+                <a class="editable"
                    data-field="siret"
-                   href="{{ path('entreprise_ajax_edit', {id:entreprise.id}) }}"
-                   data-title="Corriger le numéro de siret de l'entreprise">
+                   data-href="{{ path('entreprise_ajax_edit', {id:entreprise.id}) }}"
+                   title="Corriger le numéro de siret de l'entreprise">
                     {{ entreprise.siret }}
                 </a>
             {% else %}

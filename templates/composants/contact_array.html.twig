@@ -3,16 +3,16 @@
         <th>{{ 'table.prenom_nom'|trans }}</th>
         <td>
             {% if editable is defined and editable == 'true' %}
-                <a class="myedit"
+                <a class="editable"
                    data-field="prenom"
-                   href="{{ path('contact_ajax_edit', {id:contact.id}) }}"
-                   data-title="Corriger le prénom">
+                   data-href="{{ path('contact_ajax_edit', {id:contact.id}) }}"
+                   title="Corriger le prénom">
                     {{ contact.prenom }}
                 </a>
-                <a class="myedit"
+                <a class="editable"
                    data-field="nom"
-                   href="{{ path('contact_ajax_edit', {id:contact.id}) }}"
-                   data-title="Corriger le nom">
+                   data-href="{{ path('contact_ajax_edit', {id:contact.id}) }}"
+                   title="Corriger le nom">
                     {{ contact.nom }}
                 </a>
             {% else %}
@@ -23,10 +23,10 @@
     <tr>
         <th>{{ 'table.fonction'|trans }}</th>
         <td>{% if editable is defined and editable == 'true' %}
-                <a class="myedit"
+                <a class="editable"
                    data-field="fonction"
-                   href="{{ path('contact_ajax_edit', {id:contact.id}) }}"
-                   data-title="Corriger la fonction">
+                   data-href="{{ path('contact_ajax_edit', {id:contact.id}) }}"
+                   title="Corriger la fonction">
                     {{ contact.fonction }}
                 </a>
             {% else %}
@@ -38,10 +38,10 @@
         <th>{{ 'table.email'|trans }}</th>
         <td>
             {% if editable is defined and editable == 'true' %}
-                <a class="myedit"
+                <a class="editable"
                    data-field="email"
-                   href="{{ path('contact_ajax_edit', {id:contact.id}) }}"
-                   data-title="Corriger l'email">
+                   data-href="{{ path('contact_ajax_edit', {id:contact.id}) }}"
+                   title="Corriger l'email">
                     {{ contact.email }}
                 </a>
             {% else %}
@@ -53,10 +53,10 @@
         <th>{{ 'table.telephone'|trans }}</th>
         <td>
             {% if editable is defined and editable == 'true' %}
-                <a class="myedit"
+                <a class="editable"
                    data-field="telephone"
-                   href="{{ path('contact_ajax_edit', {id:contact.id}) }}"
-                   data-title="Corriger le numéro de téléphone">
+                   data-href="{{ path('contact_ajax_edit', {id:contact.id}) }}"
+                   title="Corriger le numéro de téléphone">
                     {{ contact.telephone }}
                 </a>
             {% else %}
@@ -68,10 +68,10 @@
         <th>{{ 'table.portable'|trans }}</th>
         <td>
             {% if editable is defined and editable == 'true' %}
-                <a class="myedit"
+                <a class="editable"
                    data-field="portable"
-                   href="{{ path('contact_ajax_edit', {id:contact.id}) }}"
-                   data-title="Corriger le numéro de portable">
+                   data-href="{{ path('contact_ajax_edit', {id:contact.id}) }}"
+                   title="Corriger le numéro de portable">
                     {{ contact.portable }}
                 </a>
             {% else %}
@@ -83,10 +83,10 @@
         <th>{{ 'table.fax'|trans }}</th>
         <td>
             {% if editable is defined and editable == 'true' %}
-                <a class="myedit"
+                <a class="editable"
                    data-field="fax"
-                   href="{{ path('contact_ajax_edit', {id:contact.id}) }}"
-                   data-title="Corriger le numéro de fax">
+                   data-href="{{ path('contact_ajax_edit', {id:contact.id}) }}"
+                   title="Corriger le numéro de fax">
                     {{ contact.fax }}
                 </a>
             {% else %}

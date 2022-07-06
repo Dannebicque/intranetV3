@@ -30,37 +30,37 @@
             <td>{{ apc_sae.suspendu|badgeYesNo }}</td>
             <td>{{ apc_sae.bonification|badgeYesNo }}</td>
             <td>
-                <a class="myedit"
+                <a class="editable"
                    data-field="CmFormation"
-                   href="{{ path('administration_apc_sae_ajax_edit', {id:apc_sae.id}) }}"
-                   data-title="Corriger le volume horaire">
+                   data-href="{{ path('administration_apc_sae_ajax_edit', {id:apc_sae.id}) }}"
+                   title="Corriger le volume horaire">
                     {{ apc_sae.cmFormation }}</a>
             </td>
             <td>
-                <a class="myedit"
+                <a class="editable"
                    data-field="TdFormation"
-                   href="{{ path('administration_apc_sae_ajax_edit', {id:apc_sae.id}) }}"
-                   data-title="Corriger le volume horaire">
+                   data-href="{{ path('administration_apc_sae_ajax_edit', {id:apc_sae.id}) }}"
+                   title="Corriger le volume horaire">
                     {{ apc_sae.tdFormation }}</a>
             </td>
             <td>
-                <a class="myedit"
+                <a class="editable"
                    data-field="TpFormation"
-                   href="{{ path('administration_apc_sae_ajax_edit', {id:apc_sae.id}) }}"
-                   data-title="Corriger le volume horaire">
+                   data-href="{{ path('administration_apc_sae_ajax_edit', {id:apc_sae.id}) }}"
+                   title="Corriger le volume horaire">
                     {{ apc_sae.tpFormation }}</a>
             </td>
             <td>
-                <a class="myedit"
+                <a class="editable"
                    data-field="ProjetFormation"
-                   href="{{ path('administration_apc_sae_ajax_edit', {id:apc_sae.id}) }}"
-                   data-title="Corriger le volume horaire">
+                   data-href="{{ path('administration_apc_sae_ajax_edit', {id:apc_sae.id}) }}"
+                   title="Corriger le volume horaire">
                     {{ apc_sae.projetFormation }}</a>
             </td>
-            <td><a class="myedit"
+            <td><a class="editable"
                    data-field="NbNotes"
-                   href="{{ path('administration_apc_sae_ajax_edit', {id:apc_sae.id}) }}"
-                   data-title="Corriger le nombre de notes">
+                   data-href="{{ path('administration_apc_sae_ajax_edit', {id:apc_sae.id}) }}"
+                   title="Corriger le nombre de notes">
                     {{ apc_sae.nbNotes }}</a>
             </td>
             <td>

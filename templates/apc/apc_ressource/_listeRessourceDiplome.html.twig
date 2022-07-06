@@ -33,46 +33,46 @@
                 {% endfor %}</td>
             <td>{{ ressource.suspendu|badgeYesNo }}</td>
             <td>
-                <a class="myedit"
+                <a class="editable"
                    data-field="CmPpn"
-                   href="{{ path('administration_apc_ressources_ajax_edit', {id:ressource.id}) }}"
-                   data-title="Corriger le volume horaire">
+                   data-href="{{ path('administration_apc_ressources_ajax_edit', {id:ressource.id}) }}"
+                   title="Corriger le volume horaire">
                     {{ ressource.cmPpn }}</a> |
-                <a class="myedit"
+                <a class="editable"
                    data-field="CmFormation"
-                   href="{{ path('administration_apc_ressources_ajax_edit', {id:ressource.id}) }}"
-                   data-title="Corriger le volume horaire">
+                   data-href="{{ path('administration_apc_ressources_ajax_edit', {id:ressource.id}) }}"
+                   title="Corriger le volume horaire">
                     {{ ressource.cmFormation }}</a>
             </td>
             <td>
-                <a class="myedit"
+                <a class="editable"
                    data-field="TdPpn"
-                   href="{{ path('administration_apc_ressources_ajax_edit', {id:ressource.id}) }}"
-                   data-title="Corriger le volume horaire">
+                   data-href="{{ path('administration_apc_ressources_ajax_edit', {id:ressource.id}) }}"
+                   title="Corriger le volume horaire">
                     {{ ressource.tdPpn }}</a> |
-                <a class="myedit"
+                <a class="editable"
                    data-field="TdFormation"
-                   href="{{ path('administration_apc_ressources_ajax_edit', {id:ressource.id}) }}"
-                   data-title="Corriger le volume horaire">
+                   data-href="{{ path('administration_apc_ressources_ajax_edit', {id:ressource.id}) }}"
+                   title="Corriger le volume horaire">
                     {{ ressource.tdFormation }}</a>
             </td>
             <td>
-                <a class="myedit"
+                <a class="editable"
                    data-field="TpPpn"
-                   href="{{ path('administration_apc_ressources_ajax_edit', {id:ressource.id}) }}"
-                   data-title="Corriger le volume horaire">
+                   data-href="{{ path('administration_apc_ressources_ajax_edit', {id:ressource.id}) }}"
+                   title="Corriger le volume horaire">
                     {{ ressource.tpPpn }}</a> |
-                <a class="myedit"
+                <a class="editable"
                    data-field="TpFormation"
-                   href="{{ path('administration_apc_ressources_ajax_edit', {id:ressource.id}) }}"
-                   data-title="Corriger le volume horaire">
+                   data-href="{{ path('administration_apc_ressources_ajax_edit', {id:ressource.id}) }}"
+                   title="Corriger le volume horaire">
                     {{ ressource.tpFormation }}</a>
             </td>
             <td>
-                <a class="myedit"
+                <a class="editable"
                    data-field="NbNotes"
-                   href="{{ path('administration_apc_ressources_ajax_edit', {id:ressource.id}) }}"
-                   data-title="Corriger le nombre de notes">
+                   data-href="{{ path('administration_apc_ressources_ajax_edit', {id:ressource.id}) }}"
+                   title="Corriger le nombre de notes">
                     {{ ressource.nbNotes }}</a></td>
             <td>
                 {% if settings('MODIFICATION_PPN') == 1 %}

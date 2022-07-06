@@ -3,41 +3,41 @@
         <th>{{ 'table.adresse'|trans }}</th>
         <td>
             {% if editable is defined and editable == 'true' %}
-                <a class="myedit"
+                <a class="editable"
                    data-field="adresse1"
-                   href="{{ path('adresse_ajax_edit', {id:adresse.id}) }}"
-                   data-title="Corriger l'adresse">
+                   data-href="{{ path('adresse_ajax_edit', {id:adresse.id}) }}"
+                   title="Corriger l'adresse">
                     {{ adresse.adresse1 }}
                 </a>
                 <br/>
-                <a class="myedit"
+                <a class="editable"
                    data-field="adresse2"
-                   href="{{ path('adresse_ajax_edit', {id:adresse.id}) }}"
-                   data-title="Corriger l'adresse">
+                   data-href="{{ path('adresse_ajax_edit', {id:adresse.id}) }}"
+                   title="Corriger l'adresse">
                     {{ adresse.adresse2 }}
                 </a>
 
-                <br/> <a class="myedit"
+                <br/> <a class="editable"
                          data-field="adresse3"
-                         href="{{ path('adresse_ajax_edit', {id:adresse.id}) }}"
-                         data-title="Corriger l'adresse">
+                         data-href="{{ path('adresse_ajax_edit', {id:adresse.id}) }}"
+                         title="Corriger l'adresse">
                 {{ adresse.adresse3 }}
             </a>
-                <br/><a class="myedit"
+                <br/><a class="editable"
                         data-field="codepostal"
-                        href="{{ path('adresse_ajax_edit', {id:adresse.id}) }}"
-                        data-title="Corriger l'adresse">
+                        data-href="{{ path('adresse_ajax_edit', {id:adresse.id}) }}"
+                        title="Corriger l'adresse">
                 {{ adresse.codepostal }}
-            </a> <a class="myedit"
+            </a> <a class="editable"
                     data-field="ville"
-                    href="{{ path('adresse_ajax_edit', {id:adresse.id}) }}"
-                    data-title="Corriger l'adresse">
+                    data-href="{{ path('adresse_ajax_edit', {id:adresse.id}) }}"
+                    title="Corriger l'adresse">
                 {{ adresse.ville }}
             </a>
-                <br/><a class="myedit"
+                <br/><a class="editable"
                         data-field="pays"
-                        href="{{ path('adresse_ajax_edit', {id:adresse.id}) }}"
-                        data-title="Corriger l'adresse">
+                        data-href="{{ path('adresse_ajax_edit', {id:adresse.id}) }}"
+                        title="Corriger l'adresse">
                 {{ adresse.pays }}
             </a>
 

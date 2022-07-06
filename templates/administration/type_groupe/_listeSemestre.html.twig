@@ -16,10 +16,10 @@
             <tbody>
             {% for tg in typeGroupes %}
                 <tr>
-                    <td><a class="myedit"
+                    <td><a class="editable"
                            data-field="libelle"
-                           href="{{ path('administration_type_groupe_ajax_edit', {id:tg.id}) }}"
-                           data-title="Corriger le libellé du type de groupe">
+                           data-href="{{ path('administration_type_groupe_ajax_edit', {id:tg.id}) }}"
+                           title="Corriger le libellé du type de groupe">
                             {{ tg.libelle }}</a>
                     </td>
                     <td><label class="sr-only" for="typegroupe_{{ tg.id }}"></label>

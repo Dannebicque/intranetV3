@@ -1,14 +1,14 @@
 <tr id="ligne_{{ groupe.id }}">
     <td>{% if space is defined %}{% for i in 1..space %}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{% endfor %}{% endif %}
-        <a class="myedit"
+        <a class="editable"
            data-field="libelle"
-           href="{{ path('administration_groupe_ajax_edit', {id:groupe.id}) }}"
-           data-title="Corriger le libellé du groupe">
+           data-href="{{ path('administration_groupe_ajax_edit', {id:groupe.id}) }}"
+           title="Corriger le libellé du groupe">
             {{ groupe.libelle }}</a></td>
-    <td><a class="myedit"
+    <td><a class="editable"
            data-field="ordre"
-           href="{{ path('administration_groupe_ajax_edit', {id:groupe.id}) }}"
-           data-title="Corriger l\'ordre du groupe">
+           data-href="{{ path('administration_groupe_ajax_edit', {id:groupe.id}) }}"
+           title="Corriger l\'ordre du groupe">
             {{ groupe.ordre }}</a></td>
     <td>
         <label class="sr-only" for="parent_{{ groupe.id }}"></label>
@@ -22,10 +22,10 @@
             {% endfor %}
         </select>
     </td>
-    <td><a class="myedit"
+    <td><a class="editable"
            data-field="codeapogee"
-           href="{{ path('administration_groupe_ajax_edit', {id:groupe.id}) }}"
-           data-title="Corriger le code apogée du groupe">
+           data-href="{{ path('administration_groupe_ajax_edit', {id:groupe.id}) }}"
+           title="Corriger le code apogée du groupe">
             {{ groupe.codeapogee }}</a></td>
     <td>
         <label class="sr-only" for="typegroupe_{{ groupe.id }}"></label>

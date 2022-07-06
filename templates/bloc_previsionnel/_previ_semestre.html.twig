@@ -63,45 +63,45 @@
         <tr id="ligne_{{ previsionnel.id }}">
             {% if (user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE')) %}
                 <td>
-                    <a class="myedit"
+                    <a class="editable"
                        data-field="NbHCm"
-                       href="{{ path('administration_previsionnel_ajax_edit', {id:previsionnel.id}) }}"
-                       data-title="Corriger le volume horaire">
+                       data-href="{{ path('administration_previsionnel_ajax_edit', {id:previsionnel.id}) }}"
+                       title="Corriger le volume horaire">
                         {{ previsionnel.nbHCm }}</a> h
                 </td>
-                <td><a class="myedit"
+                <td><a class="editable"
                        data-field="NbGrCm"
-                       href="{{ path('administration_previsionnel_ajax_edit', {id:previsionnel.id}) }}"
-                       data-title="Corriger le nombre de groupes">
+                       data-href="{{ path('administration_previsionnel_ajax_edit', {id:previsionnel.id}) }}"
+                       title="Corriger le nombre de groupes">
                     {{ previsionnel.nbGrCm }}</td>
                 <td>{{ previsionnel.nbSeanceCm }}</td>
                 <td class="previtd">
-                    <a class="myedit"
+                    <a class="editable"
                        data-field="NbHTd"
-                       href="{{ path('administration_previsionnel_ajax_edit', {id:previsionnel.id}) }}"
-                       data-title="Corriger le volume horaire">
+                       data-href="{{ path('administration_previsionnel_ajax_edit', {id:previsionnel.id}) }}"
+                       title="Corriger le volume horaire">
                         {{ previsionnel.nbHTd }}</a> h
                 </td>
                 <td class="previtd">
-                    <a class="myedit"
+                    <a class="editable"
                        data-field="NbGrTd"
-                       href="{{ path('administration_previsionnel_ajax_edit', {id:previsionnel.id}) }}"
-                       data-title="Corriger le nombre de groupes">
+                       data-href="{{ path('administration_previsionnel_ajax_edit', {id:previsionnel.id}) }}"
+                       title="Corriger le nombre de groupes">
                         {{ previsionnel.nbGrTd }}</a></td>
                 <td class="previtd">{{ previsionnel.nbSeanceTd }}</td>
 
                 <td class="previtp">
-                    <a class="myedit"
+                    <a class="editable"
                        data-field="NbHTp"
-                       href="{{ path('administration_previsionnel_ajax_edit', {id:previsionnel.id}) }}"
-                       data-title="Corriger le volume horaire">
+                       data-href="{{ path('administration_previsionnel_ajax_edit', {id:previsionnel.id}) }}"
+                       title="Corriger le volume horaire">
                         {{ previsionnel.nbHTp }}</a> h
                 </td>
                 <td class="previtp">
-                    <a class="myedit"
+                    <a class="editable"
                        data-field="NbGrTp"
-                       href="{{ path('administration_previsionnel_ajax_edit', {id:previsionnel.id}) }}"
-                       data-title="Corriger le nombre de groupes">
+                       data-href="{{ path('administration_previsionnel_ajax_edit', {id:previsionnel.id}) }}"
+                       title="Corriger le nombre de groupes">
                         {{ previsionnel.nbGrTp }}</a></td>
                 <td class="previtp">{{ previsionnel.nbSeanceTp }}</a></td>
 

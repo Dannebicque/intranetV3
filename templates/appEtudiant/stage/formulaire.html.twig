@@ -29,10 +29,10 @@
                                                            title="Ce champ est obligatoire">*</span> :
             </div>
             <div class="col-sm-9">
-                <a class="myedit"
+                <a class="editable"
                    data-field="intituleSecuriteSociale"
-                   href="{{ path('etudiant_ajax_edit_uuid', {uuid:stageEtudiant.etudiant.uuidString}) }}"
-                   data-title="Corrigez votre organisme de sécurité social">{{ stageEtudiant.etudiant.intituleSecuriteSociale }}</a>
+                   data-href="{{ path('etudiant_ajax_edit_uuid', {uuid:stageEtudiant.etudiant.uuidString}) }}"
+                   title="Corrigez votre organisme de sécurité social">{{ stageEtudiant.etudiant.intituleSecuriteSociale }}</a>
                 <p>Indiquer "CPAM" pour le régime de sécurité social général ou le nom de votre régime spécial (ou celui
                    de vos parents)</p>
             </div>
@@ -43,10 +43,10 @@
                 <b>Adresse de l'organisme</b> <span class="required" title="Ce champ est obligatoire">*</span> :
             </div>
             <div class="col-sm-9">
-                <a class="myedit"
+                <a class="editable"
                    data-field="adresseSecuriteSociale"
-                   href="{{ path('etudiant_ajax_edit_uuid', {uuid:stageEtudiant.etudiant.uuidString}) }}"
-                   data-title="Corrigez l'adresse de votre organisme de sécurité social">
+                   data-href="{{ path('etudiant_ajax_edit_uuid', {uuid:stageEtudiant.etudiant.uuidString}) }}"
+                   title="Corrigez l'adresse de votre organisme de sécurité social">
                     {{ stageEtudiant.etudiant.adresseSecuriteSociale }}</a>
                 <p>Uniquement si vous n'êtes pas au régime général de la sécurité sociale.</p>
             </div>
@@ -60,30 +60,30 @@
             </div>
             <div class="col-sm-9">
                 {% if stageEtudiant.etudiant.adresse != null %}
-                    <a class="myedit"
+                    <a class="editable"
                        data-field="adresse1"
-                       href="{{ path('adresse_ajax_edit', {id:stageEtudiant.etudiant.adresse.id}) }}"
-                       data-title="Corriger votre adresse">
+                       data-href="{{ path('adresse_ajax_edit', {id:stageEtudiant.etudiant.adresse.id}) }}"
+                       title="Corriger votre adresse">
                         {{ stageEtudiant.etudiant.adresse.adresse1 }}</a><br>
-                    <a class="myedit"
+                    <a class="editable"
                        data-field="adresse2"
-                       href="{{ path('adresse_ajax_edit', {id:stageEtudiant.etudiant.adresse.id}) }}"
-                       data-title="Corriger votre adresse">
+                       data-href="{{ path('adresse_ajax_edit', {id:stageEtudiant.etudiant.adresse.id}) }}"
+                       title="Corriger votre adresse">
                         {{ stageEtudiant.etudiant.adresse.adresse2 }}</a><br>
-                    <a class="myedit"
+                    <a class="editable"
                        data-field="adresse3"
-                       href="{{ path('adresse_ajax_edit', {id:stageEtudiant.etudiant.adresse.id}) }}"
-                       data-title="Corriger votre adresse">
+                       data-href="{{ path('adresse_ajax_edit', {id:stageEtudiant.etudiant.adresse.id}) }}"
+                       title="Corriger votre adresse">
                         {{ stageEtudiant.etudiant.adresse.adresse3 }}</a><br>
-                    <a class="myedit"
+                    <a class="editable"
                        data-field="codePostal"
-                       href="{{ path('adresse_ajax_edit', {id:stageEtudiant.etudiant.adresse.id}) }}"
-                       data-title="Corriger votre code postal">
+                       data-href="{{ path('adresse_ajax_edit', {id:stageEtudiant.etudiant.adresse.id}) }}"
+                       title="Corriger votre code postal">
                         {{ stageEtudiant.etudiant.adresse.codePostal }}</a>
-                    <a class="myedit"
+                    <a class="editable"
                        data-field="ville"
-                       href="{{ path('adresse_ajax_edit', {id:stageEtudiant.etudiant.adresse.id}) }}"
-                       data-title="Corriger votre ville">
+                       data-href="{{ path('adresse_ajax_edit', {id:stageEtudiant.etudiant.adresse.id}) }}"
+                       title="Corriger votre ville">
                         {{ stageEtudiant.etudiant.adresse.ville }}</a>
                 {% else %}
                 {% endif %}
@@ -94,10 +94,10 @@
                 <b>Téléphone portable</b> <span class="required" title="Ce champ est obligatoire">*</span> :
             </div>
             <div class="col-sm-9">
-                <a class="myedit"
+                <a class="editable"
                    data-field="tel1"
-                   href="{{ path('etudiant_ajax_edit_uuid', {uuid:stageEtudiant.etudiant.uuidString}) }}"
-                   data-title="Corriger votre numéro de téléphone">
+                   data-href="{{ path('etudiant_ajax_edit_uuid', {uuid:stageEtudiant.etudiant.uuidString}) }}"
+                   title="Corriger votre numéro de téléphone">
                     {{ stageEtudiant.etudiant.tel1|tel_format }}</a>
             </div>
         </div>
@@ -106,10 +106,10 @@
                 <b>Email personnel</b> <span class="required" title="Ce champ est obligatoire">*</span> :
             </div>
             <div class="col-sm-9">
-                <a class="myedit"
+                <a class="editable"
                    data-field="mailPerso"
-                   href="{{ path('etudiant_ajax_edit_uuid', {uuid:stageEtudiant.etudiant.uuidString}) }}"
-                   data-title="Corriger votre email personnel">
+                   data-href="{{ path('etudiant_ajax_edit_uuid', {uuid:stageEtudiant.etudiant.uuidString}) }}"
+                   title="Corriger votre email personnel">
                     {{ stageEtudiant.etudiant.mailPerso }}</a>
             </div>
         </div>

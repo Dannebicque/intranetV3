@@ -50,10 +50,10 @@
                 <tr>
                     <th>{{ 'table.securite_sociale'|trans }}</th>
                     <td>
-                        <a class="myedit"
+                        <a class="editable"
                            data-field="intituleSecuriteSociale"
-                           href="{{ path('etudiant_ajax_edit', {id:stageEtudiant.etudiant.id}) }}"
-                           data-title="Corriger le régime de sécurité sociale">
+                           data-href="{{ path('etudiant_ajax_edit', {id:stageEtudiant.etudiant.id}) }}"
+                           title="Corriger le régime de sécurité sociale">
                             {{ stageEtudiant.etudiant.intituleSecuriteSociale }}
                         </a> - Indiquer "CPAM" ou le régime spécial
                     </td>
@@ -61,10 +61,10 @@
                 <tr>
                     <th>{{ 'table.adresse_securite_sociale'|trans }}</th>
                     <td>
-                        <a class="myedit"
+                        <a class="editable"
                            data-field="adresseSecuriteSociale"
-                           href="{{ path('etudiant_ajax_edit', {id:stageEtudiant.etudiant.id}) }}"
-                           data-title="Corriger l'adresse de l'organisme de sécurité sociale">
+                           data-href="{{ path('etudiant_ajax_edit', {id:stageEtudiant.etudiant.id}) }}"
+                           title="Corriger l'adresse de l'organisme de sécurité sociale">
                             {{ stageEtudiant.etudiant.adresseSecuriteSociale }}
                         </a>
                     </td>
@@ -77,26 +77,26 @@
                 <tr>
                     <th>{{ 'table.mail_perso'|trans }}</th>
                     <td>
-                        <a class="myedit"
+                        <a class="editable"
                            data-field="mailPerso"
-                           href="{{ path('etudiant_ajax_edit', {id:stageEtudiant.etudiant.id}) }}"
-                           data-title="Corriger le mail personnel">
+                           data-href="{{ path('etudiant_ajax_edit', {id:stageEtudiant.etudiant.id}) }}"
+                           title="Corriger le mail personnel">
                             {{ stageEtudiant.etudiant.mailPerso }}
                         </a>
                     </td>
                 </tr>
                 <tr>
                     <th>{{ 'table.telephone'|trans }}</th>
-                    <td><a class="myedit"
+                    <td><a class="editable"
                            data-field="tel1"
-                           href="{{ path('etudiant_ajax_edit', {id:stageEtudiant.etudiant.id}) }}"
-                           data-title="Corriger le numéro de téléphone">
+                           data-href="{{ path('etudiant_ajax_edit', {id:stageEtudiant.etudiant.id}) }}"
+                           title="Corriger le numéro de téléphone">
                             {{ stageEtudiant.etudiant.tel1|tel_format }}
                         </a>
-                        ou <a class="myedit"
+                        ou <a class="editable"
                               data-field="tel2"
-                              href="{{ path('etudiant_ajax_edit', {id:stageEtudiant.etudiant.id}) }}"
-                              data-title="Corriger le numéro de téléphone">
+                              data-href="{{ path('etudiant_ajax_edit', {id:stageEtudiant.etudiant.id}) }}"
+                              title="Corriger le numéro de téléphone">
                             {{ stageEtudiant.etudiant.tel2|tel_format }}
                         </a>
                     </td>
@@ -118,10 +118,10 @@
                 <tr>
                     <th>{{ 'table.serviceStageEntreprise'|trans }}</th>
                     <td>
-                        <a class="myedit"
+                        <a class="editable"
                            data-field="serviceStageEntreprise"
-                           href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
-                           data-title="Corriger le numéro de fax">
+                           data-href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
+                           title="Corriger le numéro de fax">
                             {{ stageEtudiant.serviceStageEntreprise }}
                         </a>
                     </td>
@@ -130,11 +130,11 @@
                 <tr>
                     <th>{{ 'table.dateDebutStage'|trans }}</th>
                     <td>
-                        <a class="myedit"
+                        <a class="editable"
                            data-field="dateDebutStage"
                            data-type="date"
-                           href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
-                           data-title="Corriger la date de début du stage">
+                           data-href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
+                           title="Corriger la date de début du stage">
                             {{ stageEtudiant.dateDebutStage ? stageEtudiant.dateDebutStage|format_date('short') : '' }}
                         </a>
                     </td>
@@ -142,55 +142,55 @@
                 <tr>
                     <th>{{ 'table.dateFinStage'|trans }}</th>
                     <td>
-                        <a class="myedit"
+                        <a class="editable"
                            data-field="dateFinStage"
                            data-type="date"
-                           href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
-                           data-title="Corriger la date de début du stage">
+                           data-href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
+                           title="Corriger la date de début du stage">
                             {{ stageEtudiant.dateFinStage ? stageEtudiant.dateFinStage|format_date('short') : '' }}
                         </a>
                     </td>
                 </tr>
                 <tr>
                     <th>{{ 'table.dureeHebdomadaire'|trans }}</th>
-                    <td><a class="myedit"
+                    <td><a class="editable"
                            data-field="dureeHebdomadaire"
                            data-type="text"
-                           href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
-                           data-title="Corriger la durée hebdomadaire (en heure)">
+                           data-href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
+                           title="Corriger la durée hebdomadaire (en heure)">
                             {{ stageEtudiant.dureeHebdomadaire }}
                         </a>
                     </td>
                 </tr>
                 <tr>
                     <th>{{ 'table.dureeJoursStage'|trans }}</th>
-                    <td><a class="myedit"
+                    <td><a class="editable"
                            data-field="dureeJoursStage"
                            data-type="text"
-                           href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
-                           data-title="Corriger la durée en jour de stage">
+                           data-href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
+                           title="Corriger la durée en jour de stage">
                             {{ stageEtudiant.dureeJoursStage }}
                         </a>
                     </td>
                 </tr>
                 <tr>
                     <th>{{ 'table.sujetStage'|trans }}</th>
-                    <td><a class="myedit"
+                    <td><a class="editable"
                            data-field="sujetStage"
                            data-type="textarea"
-                           href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
-                           data-title="Corriger le numéro de fax">
+                           data-href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
+                           title="Corriger le numéro de fax">
                             {{ stageEtudiant.sujetStage|raw }}
                         </a>
                     </td>
                 </tr>
                 <tr>
                     <th>{{ 'table.activites'|trans }}</th>
-                    <td><a class="myedit"
+                    <td><a class="editable"
                            data-field="activites"
                            data-type="textarea"
-                           href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
-                           data-title="Corriger le numéro de fax">
+                           data-href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
+                           title="Corriger le numéro de fax">
                             {{ stageEtudiant.activites }}
                         </a>
                     </td>
@@ -198,11 +198,11 @@
                 <tr>
                     <th>{{ 'table.amenagementStage'|trans }}</th>
                     <td>
-                        <a class="myedit"
+                        <a class="editable"
                            data-field="amenagementStage"
                            data-type="textarea"
-                           href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
-                           data-title="Corriger le numéro de fax">
+                           data-href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
+                           title="Corriger le numéro de fax">
                             {{ stageEtudiant.amenagementStage }}
                         </a>
                     </td>
@@ -210,37 +210,37 @@
                 <tr>
                     <th>{{ 'table.gratification'|trans }}</th>
                     <td>
-                        <a class="myedit"
+                        <a class="editable"
                            data-field="gratification"
                            data-type="textarea"
-                           href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
-                           data-title="Corriger la gratification">
+                           data-href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
+                           title="Corriger la gratification">
                             {{ stageEtudiant.gratification|badgeYesNo }}
                         </a>
                 </tr>
                 <tr>
                     <th>{{ 'table.gratificationMontant'|trans }}</th>
                     <td>
-                        <a class="myedit"
+                        <a class="editable"
                            data-field="gratificationMontant"
                            data-type="textarea"
-                           href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
-                           data-title="Corriger le montant de la gratification">
+                           data-href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
+                           title="Corriger le montant de la gratification">
                             {{ stageEtudiant.gratificationMontant|number_format(2) }}
-                        </a> € par <a class="myedit"
+                        </a> € par <a class="editable"
                                       data-field="gratificationPeriode"
-                                      href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
-                                      data-title="Corriger la période de gratification">
+                                      data-href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
+                                      title="Corriger la période de gratification">
                             {{ stageEtudiant.gratificationPeriode|trans }}
                         </a></td>
                 </tr>
                 <tr>
                     <th>{{ 'table.avantages'|trans }}</th>
                     <td>
-                        <a class="myedit"
+                        <a class="editable"
                            data-field="avantages"
-                           href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
-                           data-title="Corriger le numéro de fax">
+                           data-href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
+                           title="Corriger le numéro de fax">
                             {{ stageEtudiant.avantages }}
                         </a></td>
                 </tr>
