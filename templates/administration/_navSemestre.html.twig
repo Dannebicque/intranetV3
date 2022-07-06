@@ -1,0 +1,15 @@
+<div class="btn-group">
+    <button id="btnGroupDrop1"
+            type="button"
+            class="btn btn-secondary dropdown-toggle"
+            title="{{ 'changer.de.semestre'|trans }}"
+            data-bs-placement="bottom"
+            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Changer de Semestre
+    </button>
+    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+        {% for sem in user_data.semestresActifs  %}
+            <a class="dropdown-item" href="{{ path(path_name, {semestre : sem.id}) }}">{{ sem.display }}</a>
+        {% endfor %}
+    </div>
+</div>

@@ -6,14 +6,7 @@
 
 {% block headerright %}
     <div class="right gap-items-2">
-        {% for sem in user_data.semestresActifs %}
-            <a href="{{ path('administration_fin_semestre_index', {semestre:sem.id}) }}"
-               class="btn btn-round {% if sem.id == semestre.id %}btn-primary{% endif %}"
-               title="{{ 'atitle.changer.semestre'|trans }}"
-               data-bs-toggle="tooltip"
-               data-bs-placement="bottom"
-            >{{ sem.libelle }}</a>
-        {% endfor %}
+        {{ include('administration/_navSemestre.html.twig', {path_name: 'administration_fin_semestre_index'}) }}
     </div>
 {% endblock %}
 
@@ -125,7 +118,7 @@
                                            name="etu_{{ etu.id }}"
                                            id="etu_{{ etu.id }}_{{ semestre.precedent.id }}"
                                            value="{{ semestre.precedent.id }}"
-                                            {% if scolarites[etu.id] != null and scolarites[etu.id].proposition == semestre
+                                            {% if scolarites[etu.id] is defined and scolarites[etu.id].proposition == semestre
                                             .precedent.libelle %} checked {% endif %}>
                                 </td>
                             {% endif %}
@@ -139,7 +132,7 @@
                                            id="etu_{{ etu.id }}_{{ semestre.decale.id }}"
                                            name="etu_{{ etu.id }}"
                                            value="{{ semestre.decale.id }}"
-                                            {% if scolarites[etu.id] != null and scolarites[etu.id].proposition ==
+                                            {% if scolarites[etu.id] is defined and scolarites[etu.id].proposition ==
                                                 semestre.decale.libelle %} checked {% endif %}>
                                 </td>
                             {% endif %}
@@ -153,7 +146,8 @@
                                            id="etu_{{ etu.id }}_{{ semestre.suivant.id }}"
                                            name="etu_{{ etu.id }}"
                                            value="{{ semestre.suivant.id }}"
-                                            {% if scolarites[etu.id] != null and scolarites[etu.id].proposition == semestre.suivant.libelle %} checked {% endif %}>
+                                            {% if scolarites[etu.id] is defined and scolarites[etu.id].proposition ==
+                                                semestre.suivant.libelle %} checked {% endif %}>
                                 </td>
                             {% endif %}
                             <td>
@@ -164,7 +158,7 @@
                                        id="etu_{{ etu.id }}_REO"
                                        class="reo"
                                        name="etu_{{ etu.id }}" value="REO"
-                                        {% if scolarites[etu.id] != null and scolarites[etu.id].proposition == 'REO' %} checked {% endif %}>
+                                        {% if scolarites[etu.id] is defined and scolarites[etu.id].proposition == 'REO' %} checked {% endif %}>
                             </td>
                             <td>
                                 <label class="sr-only" for="etu_{{ etu.id }}_DEM">
@@ -175,7 +169,7 @@
                                        id="etu_{{ etu.id }}_DEM"
                                        name="etu_{{ etu.id }}"
                                        value="DEM"
-                                        {% if scolarites[etu.id] != null and scolarites[etu.id].proposition == 'DEM' %} checked {% endif %}>
+                                        {% if scolarites[etu.id] is defined and scolarites[etu.id].proposition == 'DEM' %} checked {% endif %}>
                             </td>
                             <td>
                                 <label class="sr-only" for="etu_{{ etu.id }}_DIPLOME">
@@ -186,7 +180,7 @@
                                        id="etu_{{ etu.id }}_DIPLOME"
                                        name="etu_{{ etu.id }}"
                                        value="DIPLOME"
-                                        {% if scolarites[etu.id] != null and scolarites[etu.id].proposition == 'DUT' %} checked {% endif %} >
+                                        {% if scolarites[etu.id] is defined and scolarites[etu.id].proposition == 'DUT' %} checked {% endif %} >
                             </td>
                             <td><label class="sr-only" for="etu_{{ etu.id }}_TRANSFERT">
                                     {{ etu.display }} Transfert
