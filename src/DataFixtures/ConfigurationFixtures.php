@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DataFixtures/ConfigurationFixtures.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/05/2022 17:01
+ * @lastUpdate 15/06/2022 08:30
  */
 
 namespace App\DataFixtures;
@@ -20,6 +20,11 @@ class ConfigurationFixtures extends Fixture
         $conf = new Configuration();
         $conf->setCle('MAIL_FROM');
         $conf->setValeur('intranet-iut-troyes@univ-reims.fr');
+        $manager->persist($conf);
+
+        $conf = new Configuration();
+        $conf->setCle('EXPORT_BONIFICATION');
+        $conf->setValeur('NOTE_SUR_20'); //ou NOTE_SUR_05
         $manager->persist($conf);
 
         $conf = new Configuration();
