@@ -1,26 +1,32 @@
 {% extends 'base.html.twig' %}
 
 {% block header %}
-    {{ 'adm.groupe.index.heading'|trans }}
+    {{ 'adm.groupe.index.heading'|trans({'%semestre%':semestre.display}) }}
+{% endblock %}
+
+{% block headerright %}
+    <div class="right gap-items-2">
+        {{ include('administration/_navSemestre.html.twig', {path_name: 'administration_semestre_index'}) }}
+    </div>
 {% endblock %}
 
 {% block headeractions %}
     <div class="header-action">
-        <nav class="nav nav-tabs">
-            {% for semestre in user_data.semestres %}
-                {% if (semestre.diplome.responsableDiplome.id == user_data.user.id and user_data.isGoodDepartement('ROLE_RP')) or user_data.isGoodDepartement
-                    ('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %}
-                    <li class="nav-item">
-                        <a class="nav-link {% if (afficheSemestre != null and afficheSemestre == semestre.id) or
-                            (afficheSemestre == null and loop.first) %}active show{% endif %} change-semestre"
-                           data-bs-toggle="tab"
-                           href="#semestre{{ semestre.id }}" role="tab" data-semestre="{{ semestre.id }}">{{ semestre
-                            .display }}
-                        </a>
-                    </li>
-                {% endif %}
-            {% endfor %}
-        </nav>
+        {#        <nav class="nav nav-tabs"> #}
+        {#            {% for semestre in user_data.semestres %} #}
+        {#                {% if (semestre.diplome.responsableDiplome.id == user_data.user.id and user_data.isGoodDepartement('ROLE_RP')) or user_data.isGoodDepartement #}
+        {#                    ('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %} #}
+        {#                    <li class="nav-item"> #}
+        {#                        <a class="nav-link {% if (afficheSemestre != null and afficheSemestre == semestre.id) or #}
+        {#                            (afficheSemestre == null and loop.first) %}active show{% endif %} change-semestre" #}
+        {#                           data-bs-toggle="tab" #}
+        {#                           href="#semestre{{ semestre.id }}" role="tab" data-semestre="{{ semestre.id }}">{{ semestre #}
+        {#                            .display }} #}
+        {#                        </a> #}
+        {#                    </li> #}
+        {#                {% endif %} #}
+        {#            {% endfor %} #}
+        {#        </nav> #}
 
         <div class="buttons">
             <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip"
@@ -30,57 +36,40 @@
 {% endblock %}
 
 {% block content %}
+    {% if (semestre.diplome.responsableDiplome.id == user_data.user.id and user_data.isGoodDepartement('ROLE_RP')) or user_data.isGoodDepartement
+        ('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %}
+        <div id="liste_semestre">
+            {{ render(controller(
+                'App\\Controller\\administration\\GroupeController::listeSemestre', {semestre:semestre.id}
+            )) }}
+        </div>
 
-        {% for semestre in user_data.semestres %}
-            {% if (semestre.diplome.responsableDiplome.id == user_data.user.id and user_data.isGoodDepartement('ROLE_RP')) or user_data.isGoodDepartement
-                ('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %}
-                {% if (afficheSemestre != null and afficheSemestre == semestre.id) or
-                    (afficheSemestre == null and loop.first) %}
-                    <div id="liste_semestre">
-                        {{ render(controller(
-                            'App\\Controller\\administration\\GroupeController::listeSemestre', {semestre:semestre.id}
-                        )) }}
-                    </div>
-
-                    <div id="type_groupes_semestre">
-                        {{ render(controller(
-                            'App\\Controller\\administration\\TypeGroupeController::listeSemestre', {semestre:semestre.id}
-                        )) }}
-                    </div>
-                {% endif %}
-            {% endif %}
-        {% endfor %}
-    </div>
+        <div id="type_groupes_semestre">
+            {{ render(controller(
+                'App\\Controller\\administration\\TypeGroupeController::listeSemestre', {semestre:semestre.id}
+            )) }}
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block fabactions %}
-    {% set semestreExport = 0 %}
-    {% for semestre in user_data.semestres %}
-        {% if (semestre.diplome.responsableDiplome.id == user_data.user.id and user_data.isGoodDepartement('ROLE_RP')) or user_data.isGoodDepartement
-            ('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %}
-            {% if (afficheSemestre != null and afficheSemestre == semestre.id) or
-                (afficheSemestre == null and loop.first) %}
-                {% set semestreExport = semestre.id %}
-            {% endif %}
-        {% endif %}
-    {% endfor %}
     {{ include('composants/fab-buttons.html.twig', {boutons:[
         {type: 'info',
-            href: path('administration_groupe_export', {_format:'pdf', semestre:semestreExport}),
+            href: path('administration_groupe_export', {_format:'pdf', semestre:semestre.id}),
             title: 'exporter.pdf'|trans,
             id: 'export_pdf',
             icone : "fa fa-file-pdf"
         },
         {
             type:'info',
-            href:path('administration_groupe_export', {_format:'csv',semestre:semestreExport}),
+            href:path('administration_groupe_export', {_format:'csv',semestre:semestre.id}),
             title: 'exporter.csv'|trans,
             id: 'export_csv',
             icone: 'fa fa-file-csv'
         },
         {
             type:'info',
-            href:path('administration_groupe_export', {_format:'xlsx',semestre:semestreExport}),
+            href:path('administration_groupe_export', {_format:'xlsx',semestre:semestre.id}),
             title: 'exporter.xls'|trans,
             id: 'export_xlsx',
             icone: 'fa fa-file-excel'

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/GroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 09:55
+ * @lastUpdate 07/07/2022 08:31
  */
 
 namespace App\Controller\administration;
@@ -27,12 +27,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class GroupeController extends BaseController
 {
     #[Route(path: '/{semestre}', name: 'administration_groupe_index', requirements: ['semestre' => '\d+'], methods: ['GET'])]
-    public function index(Semestre $semestre = null): Response
+    public function index(Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         return $this->render('administration/groupe/index.html.twig', [
-            'afficheSemestre' => $semestre?->getId(),
+            'semestre' => $semestre
         ]);
     }
 
