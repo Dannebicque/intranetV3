@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/ImportDiplomeController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/ImportDiplomeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/05/2021 17:05
+ * @lastUpdate 07/07/2022 10:00
  */
 
 namespace App\Controller\superAdministration;
@@ -33,7 +33,7 @@ class ImportDiplomeController extends BaseController
         if ($request->isMethod('POST')) {
             $ppn = $ppnRepository->find($request->request->get('ppn'));
             if (null !== $ppn) {
-                $fichier = $myUpload->upload($request->files->get('fichier'), 'temp/', ['xml']);
+                $fichier = $myUpload->upload($request->files->get('fichier'), 'temp/', ['xml', 'csv']);
                 $diplomeImport->import($diplome, $fichier, $request->request->get('typeFichier'), $ppn);
                 unlink($fichier);
                 $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Maquette importée avec succès');

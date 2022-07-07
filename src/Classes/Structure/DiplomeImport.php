@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Structure/DiplomeImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:27
+ * @lastUpdate 07/07/2022 10:25
  */
 
 namespace App\Classes\Structure;
 
+use App\Entity\Annee;
 use App\Entity\ApcApprentissageCritique;
 use App\Entity\ApcCompetence;
 use App\Entity\ApcComposanteEssentielle;
@@ -23,9 +24,12 @@ use App\Entity\ApcSaeApprentissageCritique;
 use App\Entity\ApcSaeCompetence;
 use App\Entity\ApcSaeRessource;
 use App\Entity\ApcSituationProfessionnelle;
+use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Ppn;
 use App\Entity\Semestre;
+use App\Entity\Ue;
+use App\Repository\TypeDiplomeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use SimpleXMLElement;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
@@ -34,9 +38,16 @@ class DiplomeImport
 {
     private string $fichier;
     private Diplome $diplome;
+    private string $log = '';
+    private array $diplomes = [];
+    private array $annees = [];
+    private array $semestres = [];
+    private array $ues = [];
 
-    public function __construct(private readonly EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly TypeDiplomeRepository $typeDiplomeRepository
+    ) {
     }
 
     public function import(Diplome $diplome, string $fichier, $type, Ppn $ppn): void
@@ -51,6 +62,10 @@ class DiplomeImport
             case 'formation':
                 $this->deleteFormation($ppn);
                 $this->importFormation($ppn);
+                break;
+            case 'structure':
+                // $this->deleteFormation($ppn);
+                $this->importStructure($diplome->getDepartement());
                 break;
         }
     }
@@ -133,8 +148,10 @@ class DiplomeImport
     private function importFormation(Ppn $ppn): void
     {
         $xml = $this->openXmlFile();
-        $tAcs = $this->entityManager->getRepository(ApcApprentissageCritique::class)->findOneByDiplomeAndPnArray($this->diplome, $ppn);
-        $tCompetences = $this->entityManager->getRepository(ApcCompetence::class)->findOneByDiplomeAndPnArray($this->diplome, $ppn);
+        $tAcs = $this->entityManager->getRepository(ApcApprentissageCritique::class)->findOneByDiplomeAndPnArray($this->diplome,
+            $ppn);
+        $tCompetences = $this->entityManager->getRepository(ApcCompetence::class)->findOneByDiplomeAndPnArray($this->diplome,
+            $ppn);
         foreach ($xml->semestre as $sem) {
             $semestre = $this->entityManager->getRepository(Semestre::class)->findOneByDiplomeEtNumero($this->diplome,
                 $sem['numero'], $sem['ordreAnnee']);
@@ -244,5 +261,112 @@ class DiplomeImport
 
             $this->entityManager->remove($sae);
         }
+    }
+
+    private function importStructure(?Departement $departement): string
+    {
+        $handle = fopen($this->fichier, 'rb');
+
+        /* Si on a réussi à ouvrir le fichier */
+        if ($handle) {
+            // on récupère l'en-tête
+            $phrase = fgetcsv($handle, 1024, ';');
+            while (!feof($handle)) {
+                /* On lit la ligne courante */
+                $phrase = fgetcsv($handle, 1024, ';');
+                switch ($phrase[0]) {
+                    case 'DIPLOME':
+                        $this->importDiplome($phrase, $departement);
+                        break;
+                    case 'ANNEE':
+                        $this->importAnnee($phrase);
+                        break;
+                    case 'SEMESTRE':
+                        $this->importSemestre($phrase);
+                        break;
+
+                    case 'UE':
+                        $this->importUe($phrase);
+                        break;
+                }
+            }
+
+            $this->entityManager->flush();
+
+            return $this->log;
+        }
+    }
+
+    private function importDiplome(bool|array $phrase, Departement $departement): void
+    {
+        $typeDiplome = $this->typeDiplomeRepository->findOneBy(['code' => $phrase[7]]);
+
+        $dip = new Diplome($departement);
+        $dip->setLibelle($phrase[1]);
+        $dip->setSigle($phrase[2]);
+        $dip->setCodeDiplome($phrase[3]);
+        $dip->setCodeVersion($phrase[4]);
+        $dip->setCodeDepartement($phrase[5]);
+        $dip->setVolumeHoraire($phrase[6]);
+        $dip->setTypeDiplome($typeDiplome);
+        $this->entityManager->persist($dip);
+        $this->diplomes[$dip->getCodeDiplome().'_'.$dip->getCodeVersion()] = $dip;
+    }
+
+    private function importAnnee(bool|array $phrase): void
+    {
+        if (array_key_exists($phrase[9], $this->diplomes)) {
+            $dip = $this->diplomes[trim($phrase[9])];
+
+            $annee = new Annee();
+            $annee->setDiplome($dip);
+            $annee->setLibelleLong($phrase[1]);
+            $annee->setLibelle($phrase[2]);
+            $annee->setCodeEtape($phrase[3]);
+            $annee->setOrdre($phrase[8]);
+            $this->entityManager->persist($annee);
+            $this->annees[$annee->getCodeEtape()] = $annee;
+        }
+        $this->log .= 'Diplome non trouvé : '.$phrase[9].'<br>';
+    }
+
+    private function importSemestre(bool|array $phrase): void
+    {
+        if (array_key_exists($phrase[9], $this->annees)) {
+            $annee = $this->annees[trim($phrase[9])];
+
+            $semestre = new Semestre();
+            $semestre->setAnnee($annee);
+            $semestre->setLibelle($phrase[1]);
+            $semestre->setLibelle($phrase[2]);
+            $semestre->setCodeElement($phrase[3]);
+            $semestre->setOrdreLmd($phrase[8]);
+            $semestre->setOrdreAnnee($phrase[8] % 2 === 0 ? 2 : 1);
+            $semestre->setNbGroupesCm($phrase[10]);
+            $semestre->setNbGroupesTd($phrase[11]);
+            $semestre->setNbGroupesTp($phrase[12]);
+            $this->entityManager->persist($semestre);
+            $this->semestres[$semestre->getCodeElement()] = $semestre;
+        }
+        $this->log .= 'Année non trouvée : '.$phrase[9].'<br>';
+    }
+
+    private function importUe(bool|array $phrase): void
+    {
+        if (array_key_exists($phrase[9], $this->semestres)) {
+            $semestre = $this->semestres[trim($phrase[9])];
+
+            $ue = new Ue();
+            $ue->setSemestre($semestre);
+            $ue->setLibelle($phrase[1]);
+            // $ue->setSigle($phrase[2]);
+            $ue->setNumeroUe($phrase[8]);
+            $ue->setCodeElement($phrase[3]);
+            $ue->setNbEcts($phrase[13]);
+
+            $this->entityManager->persist($ue);
+            $this->ues[$ue->getCodeElement()] = $ue;
+        }
+        $this->log .= 'Semestre non trouvé : '.$phrase[9].'<br>';
     }
 }

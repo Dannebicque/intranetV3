@@ -22,7 +22,7 @@
             <form enctype="multipart/form-data" method="post" class="form">
                 <div class="form-group">
                     <label for="fichier">Fichier</label>
-                    <input type="file" class="form-control" name="fichier" id="fichier">
+                    <input type="file" class="form-control" name="fichier" id="fichier" accept=".csv,.xml">
                 </div>
                 {% if diplome.typeDiplome.apc == true %}
                     <div class="form-group">
@@ -30,17 +30,30 @@
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="typeFichier" id="typeFichier1"
                                    value="competences">
-                            <label class="form-check-label" for="typeFichier1">Référentiel de compétences</label>
+                            <label class="form-check-label" for="typeFichier1">Référentiel de compétences (xml)</label>
                         </div>
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="radio" name="typeFichier" id="typeFichier2"
                                    value="formation">
-                            <label class="form-check-label" for="typeFichier2">Référentiel de formation (PN)</label>
+                            <label class="form-check-label" for="typeFichier2">Référentiel de formation (PN)
+                                                                               (xml)</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="typeFichier" id="typeFichier3"
+                                   value="structure">
+                            <label class="form-check-label" for="typeFichier3">Structure de diplôme (csv
+                                                                               séparateur ;)</label>
                         </div>
                     </div>
                 {% else %}
                     {# todo: a faire #}
                     Coming Soon...
+                    <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="typeFichier" id="typeFichier3"
+                               value="competences">
+                        <label class="form-check-label" for="typeFichier3">Structure de diplôme (csv
+                                                                           séparateur ;)</label>
+                    </div>
                 {% endif %}
                 <div class="form-group">
                     <label for="ppn" class="required">PPN</label>
