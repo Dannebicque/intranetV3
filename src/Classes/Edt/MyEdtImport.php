@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:26
+ * @lastUpdate 13/07/2022 16:53
  */
 
 /*
@@ -20,6 +20,7 @@ use App\Entity\Calendrier;
 use App\Entity\EdtPlanning;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
+use App\Enums\TypeGroupeEnum;
 use App\Repository\CalendrierRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\PersonnelRepository;
@@ -108,6 +109,9 @@ class MyEdtImport
                     $groupe = $phrase[7];
 
                     if ('Z' === $phrase[8]) {
+                        //todo: traiter groupe TD Exemple TDEH => Implique TD EF et TD GH.
+                        //todo: 3 => Nombre de ligne pour le TD Exemple => 3
+                        //todo: si projet => PRJ + code SAE (PRJ WS...)
                         // prof commence par Z, donc, c'est une zone sans enseignant
                         // && mb_substr($phrase, 16, 4) !== 'PROJ'
                         $salle = mb_substr($phrase, 11, 4);
@@ -123,9 +127,9 @@ class MyEdtImport
                         $pl->setSalle($salle);
                         $pl->setGroupe(1);
                         if ('D' === mb_substr($pl->getSemestre()->getLibelle(), -1)) {
-                            $pl->setType(TypeGroupe::TYPE_GROUPE_TD);
+                            $pl->setType(TypeGroupeEnum::TYPE_GROUPE_TD);
                         } else {
-                            $pl->setType(TypeGroupe::TYPE_GROUPE_CM);
+                            $pl->setType(TypeGroupeEnum::TYPE_GROUPE_CM);
                         }
 
                         $pl->setDebut($tabdebut[$heure]);

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 14:11
+ * @lastUpdate 11/07/2022 12:52
  */
 
 namespace App\Controller\administration\apc;
@@ -18,10 +18,10 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route(path: '/apc/')]
+#[Route(path: '/apc')]
 class ApcController extends BaseController
 {
-    #[Route(path: 'referentiel/{diplome}', name: 'administration_apc_referentiel_index', options: ['expose' => true], methods: ['GET'])]
+    #[Route(path: '/referentiel/{diplome}', name: 'administration_apc_referentiel_index', options: ['expose' => true], methods: ['GET'])]
     public function referentiel(
         Request $request,
         PpnRepository $ppnRepository,
@@ -40,7 +40,7 @@ class ApcController extends BaseController
             'diplome' => $diplome,
             'ppns' => $diplome->getPpns(),
             'competences' => $competences,
-            'parcours' => $diplome->getApcParcours(),
+            'parcours' => $diplome->getReferentiel()?->getApcParcours(),
             'parcoursNiveaux' => $tParcours,
             'ppn' => $ppn,
         ]);

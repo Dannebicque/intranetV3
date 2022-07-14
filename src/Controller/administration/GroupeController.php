@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/GroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/07/2022 08:31
+ * @lastUpdate 08/07/2022 08:30
  */
 
 namespace App\Controller\administration;
@@ -32,7 +32,7 @@ class GroupeController extends BaseController
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         return $this->render('administration/groupe/index.html.twig', [
-            'semestre' => $semestre
+            'semestre' => $semestre,
         ]);
     }
 
@@ -66,7 +66,15 @@ class GroupeController extends BaseController
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
         $typeGroupes = $semestre->getTypeGroupes();
         $groupes = $groupeRepository->findBySemestre($semestre);
-        $parcours = $semestre->getParcours();
+        if (true === $semestre->getDiplome()?->getTypeDiplome()?->getApc()) {
+            if ($semestre->getOrdreLmd() > 2 || Constantes::APC_TYPE_3 === $semestre->getDiplome()?->getTypeStructure()) {
+                $parcours = $semestre->getDiplome()?->getApcParcours();
+            } else {
+                $parcours = null;
+            }
+        } else {
+            $parcours = $semestre->getParcours();
+        }
 
         return $this->render('administration/groupe/_listeSemestre.html.twig', [
             'semestre' => $semestre,

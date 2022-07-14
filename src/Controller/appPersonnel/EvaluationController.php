@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/EvaluationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:53
+ * @lastUpdate 14/07/2022 11:54
  */
 
 namespace App\Controller\appPersonnel;
@@ -47,7 +47,7 @@ class EvaluationController extends BaseController
 
     #[Route(path: '/visible/{uuid}/{etat}', name: 'application_personnel_evaluation_visible', requirements: ['evaluation' => '\d+'])]
     #[ParamConverter('evaluation', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function evaluationVisible(MyEvaluation $myEvaluation, Evaluation $evaluation, $etat): Response
+    public function evaluationVisible(MyEvaluation $myEvaluation, Evaluation $evaluation, string $etat): Response
     {
         // todo: tester au niveau évaluation
         $notes = $myEvaluation->setEvaluation($evaluation)->getNotesTableau();
@@ -76,7 +76,6 @@ class EvaluationController extends BaseController
     }
 
     /**
-     * @return Response|StreamedResponse|null
      *
      * @throws SyntaxError
      * @throws LoaderError
@@ -85,7 +84,7 @@ class EvaluationController extends BaseController
      */
     #[Route(path: '/export/{uuid}/{type}-{semestre}.{_format}', name: 'application_personnel_evaluation_export', requirements: ['evaluation' => '\d+', '_format' => 'csv|xlsx|pdf'])]
     #[ParamConverter('evaluation', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function exportEvaluation(GroupeRepository $groupeRepository, MyEvaluation $myEvaluation, Evaluation $evaluation, $type, $_format, Semestre $semestre): Response
+    public function exportEvaluation(GroupeRepository $groupeRepository, MyEvaluation $myEvaluation, Evaluation $evaluation, string $type, string $_format, Semestre $semestre): Response
     {
         // todo: tester au niveau évaluation
         // todo: supprimer semestre s'il est dans évaluation ensuite...

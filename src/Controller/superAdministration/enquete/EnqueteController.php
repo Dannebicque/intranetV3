@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/enquete/EnqueteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/05/2022 11:35
+ * @lastUpdate 28/05/2022 15:22
  */
 
 namespace App\Controller\superAdministration\enquete;
@@ -22,8 +22,10 @@ use App\Entity\QuestionnaireQualite;
 use App\Entity\QuestionnaireQuestionnaireSection;
 use App\Entity\Semestre;
 use App\Repository\EtudiantRepository;
+use App\Repository\PersonnelRepository;
 use App\Repository\QuestionnaireEtudiantReponseRepository;
-use App\Repository\QuestionnaireEtudiantRepository;
+use App\Repository\QuestionnairePersonnelRepository;
+use App\Repository\QuestionnaireQualiteRepository;
 use App\Repository\QuestionnaireQuestionnaireSectionRepository;
 use App\Table\EnqueteQualiteDiplomesTableType;
 use Carbon\Carbon;
@@ -37,8 +39,8 @@ class EnqueteController extends BaseController
     /**
      * @throws \JsonException
      */
-    #[Route('/', name: 'administratif_enquete_index', options: ['expose' => true])]
-    public function index(Request $request, EtudiantRepository $etudiantRepository): Response
+    #[Route('/etudiant', name: 'administratif_enquete_etudiant_index', options: ['expose' => true])]
+    public function indexEtudiant(Request $request, EtudiantRepository $etudiantRepository): Response
     {
         $effectifs = $etudiantRepository->statistiquesEtudiants();
         $table = $this->createTable(EnqueteQualiteDiplomesTableType::class, [
@@ -52,6 +54,28 @@ class EnqueteController extends BaseController
 
         return $this->render('super-administration/enquete/index.html.twig', [
             'table' => $table,
+        ]);
+    }
+
+    #[Route('/personnel', name: 'administratif_enquete_personnel_index')]
+    public function indexPersonnel(
+    QuestionnaireQualiteRepository $questionnaireQualiteRepository,
+    QuestionnairePersonnelRepository $questionnairePersonnelRepository,
+    PersonnelRepository $personnelRepository,
+    ): Response
+    {
+        $stats = [];
+        $personnels = $personnelRepository->findActifs();
+        $quizzEtudiants = $questionnairePersonnelRepository->findAll();
+        $questionnaires = $questionnaireQualiteRepository->findForPersonnel();
+        foreach ($questionnaires as $questionnaire) {
+            $stats[$questionnaire->getId()]['nbReponses'] = $questionnairePersonnelRepository->compteReponse($questionnaire);
+        }
+
+        return $this->render('super-administration/enquete/indexPersonnel.html.twig', [
+            'nbReponses' => $stats,
+            'personnels' => $personnels,
+            'quizzEtudiant' => $quizzEtudiants,
         ]);
     }
 
@@ -107,7 +131,7 @@ class EnqueteController extends BaseController
     #[Route('/questionnaire/semestre/{semestre}', name: 'administratif_enquete_semestre')]
     public function semestre(
         EtudiantRepository $etudiantRepository,
-        QuestionnaireEtudiantRepository $quizzEtudiantRepository,
+        QuestionnairePersonnelRepository $quizzEtudiantRepository,
         Semestre $semestre
     ): Response {
         $stats = [];

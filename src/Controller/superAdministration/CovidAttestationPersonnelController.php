@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/CovidAttestationPersonnelController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/CovidAttestationPersonnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/10/2021 10:34
+ * @lastUpdate 14/07/2022 11:42
  */
 
 namespace App\Controller\superAdministration;
@@ -42,7 +42,7 @@ class CovidAttestationPersonnelController extends BaseController
     }
 
     #[Route(path: '/change-etat/{id}/{etat}', name: 'covid_attestation_personnel_change_etat', methods: ['GET'])]
-    public function changeEtat(EventDispatcherInterface $eventDispatcher, CovidAttestationPersonnel $covidAttestationPersonnel, $etat): Response
+    public function changeEtat(EventDispatcherInterface $eventDispatcher, CovidAttestationPersonnel $covidAttestationPersonnel, string $etat): Response
     {
         $covidAttestationPersonnel->setValidationDepartement(Tools::convertToBool($etat));
         $covidAttestationPersonnel->setDateValidationDepartement(Carbon::now());

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Security/Voter/AbsenceNoteVoter.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Security/Voter/AbsenceNoteVoter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 06:57
+ * @lastUpdate 13/07/2022 17:06
  */
 
 namespace App\Security\Voter;
@@ -21,13 +21,13 @@ class AbsenceNoteVoter extends Voter
     {
     }
 
-    protected function supports(string $attribute, $subject): bool
+    protected function supports(string $attribute, mixed $subject): bool
     {
         return in_array($attribute, ['CAN_ADD_ABSENCE', 'CAN_ADD_NOTE', 'CAN_EDIT_ABSENCE'])
             && is_array($subject);
     }
 
-    protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
+    protected function voteOnAttribute(string $attribute, mixed $subject, TokenInterface $token): bool
     {
         // vérifier que c'est un prof, qu'il est dans le bon département et qu'il a un prévisionnel associé.
         $user = $token->getUser();

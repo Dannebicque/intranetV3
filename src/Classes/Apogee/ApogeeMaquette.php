@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Apogee/ApogeeMaquette.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/05/2022 21:47
+ * @lastUpdate 14/07/2022 11:56
  */
 
 namespace App\Classes\Apogee;
@@ -86,7 +86,7 @@ class ApogeeMaquette
             $res->setLibelle($elp['LIB_ELP']);
             $res->setCodeMatiere($c[0]);
             $res->setCodeElement($elp['COD_ELP']);
-            $res->setSemestre($semestre);
+            $res->setSemestre($semestre);//todo: gérer mutualisé ?
             $this->entityManager->persist($res);
             $res->setLibelleCourt($elp['LIC_ELP']);
 

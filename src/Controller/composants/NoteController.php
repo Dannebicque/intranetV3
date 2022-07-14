@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/composants/NoteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:44
+ * @lastUpdate 14/07/2022 11:45
  */
 
 namespace App\Controller\composants;
@@ -31,7 +31,7 @@ class NoteController extends BaseController
      * @throws \App\Exception\MatiereNotFoundException
      */
     #[Route(path: '/edit-form-evaluation/{evaluation}/{source}', name: 'composant_edit_form_evaluation')]
-    public function editFormEvaluation(TypeMatiereManager $typeMatiereManager, Request $request, Evaluation $evaluation, $source): Response
+    public function editFormEvaluation(TypeMatiereManager $typeMatiereManager, Request $request, Evaluation $evaluation, string $source): Response
     {
         $matiere = $typeMatiereManager->getMatiere($evaluation->getIdMatiere(), $evaluation->getTypeMatiere());
         if (null === $matiere) {

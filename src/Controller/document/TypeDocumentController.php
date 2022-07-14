@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/document/TypeDocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 10:32
+ * @lastUpdate 14/07/2022 11:44
  */
 
 namespace App\Controller\document;
@@ -52,7 +52,7 @@ class TypeDocumentController extends BaseController
         MySerializer $mySerializer,
         MyExport $myExport,
         TypeDocumentRepository $typeDocumentRepository,
-        $_format,
+        string $_format,
         string $source
     ): Response {
         if (Document::ORIGINAUX === $source) {

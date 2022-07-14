@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyGroupes.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyGroupes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/10/2021 10:36
+ * @lastUpdate 13/07/2022 16:53
  */
 
 /*
@@ -18,6 +18,7 @@ use App\Entity\Departement;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
+use App\Enums\TypeGroupeEnum;
 use App\Exception\SemestreNotFoundException;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
@@ -105,7 +106,7 @@ class MyGroupes
         /** @var Groupe $groupe */
         foreach ($groupes as $groupe) {
             // pas d'enfant c'est le groupe de plus bas  niveau
-            if (0 === count($groupe->getEnfants()) && TypeGroupe::TYPE_GROUPE_LV !== $groupe->getTypeGroupe()->getType()) {
+            if (0 === count($groupe->getEnfants()) && TypeGroupeEnum::TYPE_GROUPE_LV !== $groupe->getTypeGroupe()->getType()) {
                 $groupeParents = [];
                 $g = $groupe;
                 while (null !== $g->getParent()) {

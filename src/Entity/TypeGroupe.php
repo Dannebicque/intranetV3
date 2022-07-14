@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/TypeGroupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:24
+ * @lastUpdate 07/07/2022 17:11
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Enums\TypeGroupeEnum;
 use App\Repository\TypeGroupeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -22,11 +23,11 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class TypeGroupe extends BaseEntity
 {
     use LifeCycleTrait;
-    final public const TYPE_GROUPE_CM = 'CM';
-    final public const TYPE_GROUPE_TD = 'TD';
-    final public const TYPE_GROUPE_TP = 'TP';
-    final public const TYPES = [self::TYPE_GROUPE_CM, self::TYPE_GROUPE_TD, self::TYPE_GROUPE_TP, self::TYPE_GROUPE_LV];
-    final public const TYPE_GROUPE_LV = 'LV';
+//    final public const TYPE_GROUPE_CM = 'CM';
+//    final public const TYPE_GROUPE_TD = 'TD';
+//    final public const TYPE_GROUPE_TP = 'TP';
+//    final public const TYPES = [self::TYPE_GROUPE_CM, self::TYPE_GROUPE_TD, self::TYPE_GROUPE_TP, self::TYPE_GROUPE_LV];
+//    final public const TYPE_GROUPE_LV = 'LV';
 
     #[Groups(['type_groupe_administration'])]
     #[ORM\Column(type: Types::STRING, length: 100)]
@@ -45,9 +46,16 @@ class TypeGroupe extends BaseEntity
     #[ORM\Column(type: Types::STRING, length: 2)]
     private ?string $type = null;
 
+    #[ORM\Column(type: 'boolean')]
+    private bool $mutualise = false;
+
+    #[ORM\ManyToMany(targetEntity: Semestre::class, inversedBy: 'allTypeGroupes')]
+    private Collection $semestres;
+
     public function __construct(#[Groups(['type_groupe_administration'])] #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'typeGroupes')] private Semestre $semestre)
     {
         $this->groupes = new ArrayCollection();
+        $this->semestres = new ArrayCollection();
     }
 
     /**
@@ -116,7 +124,7 @@ class TypeGroupe extends BaseEntity
 
     public function isTD(): bool
     {
-        return self::TYPE_GROUPE_TD === mb_strtoupper($this->getType());
+        return TypeGroupeEnum::TYPE_GROUPE_TD === mb_strtoupper($this->getType());
     }
 
     public function getType(): ?string
@@ -133,12 +141,12 @@ class TypeGroupe extends BaseEntity
 
     public function isTP(): bool
     {
-        return self::TYPE_GROUPE_TP === mb_strtoupper($this->getType());
+        return TypeGroupeEnum::TYPE_GROUPE_TP === mb_strtoupper($this->getType());
     }
 
     public function isCM(): bool
     {
-        return self::TYPE_GROUPE_CM === mb_strtoupper($this->getType());
+        return TypeGroupeEnum::TYPE_GROUPE_CM === mb_strtoupper($this->getType());
     }
 
     public function getDisplay(): string
@@ -154,6 +162,42 @@ class TypeGroupe extends BaseEntity
     public function setSemestre(?Semestre $semestre): self
     {
         $this->semestre = $semestre;
+
+        return $this;
+    }
+
+    public function isMutualise(): ?bool
+    {
+        return $this->mutualise;
+    }
+
+    public function setMutualise(bool $mutualise): self
+    {
+        $this->mutualise = $mutualise;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Semestre>
+     */
+    public function getSemestres(): Collection
+    {
+        return $this->semestres;
+    }
+
+    public function addSemestre(Semestre $semestre): self
+    {
+        if (!$this->semestres->contains($semestre)) {
+            $this->semestres[] = $semestre;
+        }
+
+        return $this;
+    }
+
+    public function removeSemestre(Semestre $semestre): self
+    {
+        $this->semestres->removeElement($semestre);
 
         return $this;
     }

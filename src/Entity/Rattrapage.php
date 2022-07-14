@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Rattrapage.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:23
+ * @lastUpdate 04/06/2022 09:19
  */
 
 namespace App\Entity;
@@ -44,7 +44,7 @@ class Rattrapage extends BaseEntity
 
     #[Groups(groups: ['rattrapage_administration'])]
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?CarbonInterface $dateEval = null;
+    private ?CarbonInterface $dateEval = null; //todo: s'assurer que la date n'est jamais nul dans l'enregistrement de l'entité
 
     #[Groups(groups: ['rattrapage_administration'])]
     #[ORM\Column(type: Types::TIME_MUTABLE, nullable: true)]

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Edt/MyEdtIntranet.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/09/2021 09:26
+ * @lastUpdate 13/07/2022 16:53
  */
 
 namespace App\Classes\Edt;
@@ -19,6 +19,7 @@ use App\Entity\Groupe;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
+use App\Enums\TypeGroupeEnum;
 use App\Exception\MatiereNotFoundException;
 use App\Repository\CalendrierRepository;
 use App\Repository\EdtPlanningRepository;
@@ -209,7 +210,7 @@ class MyEdtIntranet extends BaseEdt
 
         /** @var EdtPlanning $p */
         foreach ($pl as $p) {
-            if ((TypeGroupe::TYPE_GROUPE_CM === $p->getType()) || (TypeGroupe::TYPE_GROUPE_TD === $p->getType() && $p->getGroupe() === $this->groupetd) || (TypeGroupe::TYPE_GROUPE_TP === $p->getType() && $p->getGroupe() === $this->groupetp)) {
+            if ((TypeGroupeEnum::TYPE_GROUPE_CM === $p->getType()) || (TypeGroupeEnum::TYPE_GROUPE_TD === $p->getType() && $p->getGroupe() === $this->groupetd) || (TypeGroupeEnum::TYPE_GROUPE_TP === $p->getType() && $p->getGroupe() === $this->groupetp)) {
                 $dbtEdt = $this->convertEdt($p->getDebut());
                 if (
                     array_key_exists($p->getJour(), $this->tab) &&
@@ -439,14 +440,14 @@ class MyEdtIntranet extends BaseEdt
             $tab[$p->getSemestre()->getId()][$debut][$p->getGroupe()]['planning'] = $p;
             $taille = 0;
             switch ($p->getType()) {
-                case TypeGroupe::TYPE_GROUPE_CM:
+                case TypeGroupeEnum::TYPE_GROUPE_CM:
                     $tab[$p->getSemestre()->getId()][$debut][$p->getGroupe()]['largeur'] = $p->getSemestre()->getNbgroupeTpEdt();
                     break;
-                case TypeGroupe::TYPE_GROUPE_TP:
+                case TypeGroupeEnum::TYPE_GROUPE_TP:
                     $tab[$p->getSemestre()->getId()][$debut][$p->getGroupe()]['largeur'] = 1;
                     $taille = 4;
                     break;
-                case TypeGroupe::TYPE_GROUPE_TD:
+                case TypeGroupeEnum::TYPE_GROUPE_TD:
                     $tab[$p->getSemestre()->getId()][$debut][$p->getGroupe()]['largeur'] = 2;
                     $taille = 8;
                     break;
@@ -492,15 +493,15 @@ class MyEdtIntranet extends BaseEdt
             $t['salle'] = $pl->getSalle();
 
             switch ($pl->getType()) {
-                case TypeGroupe::TYPE_GROUPE_CM:
+                case TypeGroupeEnum::TYPE_GROUPE_CM:
                     $t['type'] = 'Cours Magistral';
                     $t['groupes'] = 'Tous';
                     break;
-                case TypeGroupe::TYPE_GROUPE_TD:
+                case TypeGroupeEnum::TYPE_GROUPE_TD:
                     $t['type'] = 'Travaux Dirigés';
                     $t['groupes'] = chr($pl->getGroupe() + 64).chr($pl->getGroupe() + 65);
                     break;
-                case TypeGroupe::TYPE_GROUPE_TP:
+                case TypeGroupeEnum::TYPE_GROUPE_TP:
                     $t['type'] = 'Travaux Pratiques';
                     $t['groupes'] = chr($pl->getGroupe() + 64);
                     break;
@@ -596,11 +597,11 @@ class MyEdtIntranet extends BaseEdt
         $plann->setType($tc[0]);
 
         switch ($tc[0]) {
-            case TypeGroupe::TYPE_GROUPE_CM:
+            case TypeGroupeEnum::TYPE_GROUPE_CM:
                 $plann->setGroupe(1);
                 break;
-            case TypeGroupe::TYPE_GROUPE_TD:
-            case TypeGroupe::TYPE_GROUPE_TP:
+            case TypeGroupeEnum::TYPE_GROUPE_TD:
+            case TypeGroupeEnum::TYPE_GROUPE_TP:
                 $plann->setGroupe(trim($tc[1]));
                 break;
         }

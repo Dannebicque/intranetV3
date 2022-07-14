@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Groupes/GenereGroupes.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Groupes/GenereGroupes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 13/07/2022 16:53
  */
 
 namespace App\Classes\Groupes;
@@ -12,6 +12,7 @@ namespace App\Classes\Groupes;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
+use App\Enums\TypeGroupeEnum;
 use Doctrine\ORM\EntityManagerInterface;
 
 class GenereGroupes
@@ -56,18 +57,18 @@ class GenereGroupes
     {
         $this->tgCm = new TypeGroupe($this->semestre);
         $this->tgCm->setLibelle('CM');
-        $this->tgCm->setType(TypeGroupe::TYPE_GROUPE_CM);
+        $this->tgCm->setType(TypeGroupeEnum::TYPE_GROUPE_CM);
         $this->entityManager->persist($this->tgCm);
 
         $this->tgTd = new TypeGroupe($this->semestre);
         $this->tgTd->setLibelle('TD');
-        $this->tgTd->setType(TypeGroupe::TYPE_GROUPE_TD);
+        $this->tgTd->setType(TypeGroupeEnum::TYPE_GROUPE_TD);
         $this->tgTd->setDefaut(true);
         $this->entityManager->persist($this->tgTd);
 
         $this->tgTp = new TypeGroupe($this->semestre);
         $this->tgTp->setLibelle('TP');
-        $this->tgTp->setType(TypeGroupe::TYPE_GROUPE_TP);
+        $this->tgTp->setType(TypeGroupeEnum::TYPE_GROUPE_TP);
         $this->entityManager->persist($this->tgTp);
     }
 
