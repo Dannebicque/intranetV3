@@ -18,12 +18,13 @@
 </div>
 
 
-<div class="col-md-12">
+<div class="row">
     {% for typedocument in typeDoc.enfants %}
         {{ include('document/public/_typeDocumentElement.html.twig') }}
     {% endfor %}
 </div>
 
+<div class="row">
 {% for document in documents %}
     <div class="col-md-6 col-xl-4">
         <div class="card">
@@ -81,3 +82,4 @@
         </div>
     </div>
 {% endfor %}
+</div>
