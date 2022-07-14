@@ -136,6 +136,7 @@
 {# Reprise de form_label de bootstrap pour déplacer le message d'erreur #}
 {% block form_label -%}
     {% if label is not same as(false) -%}
+        {%- set label_attr =label_attr|merge({class: (label_attr.class|default('') ~ ' form-label')|trim}) -%}
         {%- if compound is defined and compound -%}
             {%- set element = 'legend' -%}
             {%- set label_attr = label_attr|merge({class: (label_attr.class|default('') ~ ' col-form-label')|trim}) -%}
