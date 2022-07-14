@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/Transformer/CarbonToDateTimeTransformer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:18
+ * @lastUpdate 14/07/2022 14:55
  */
 
 namespace App\Form\Transformer;
@@ -16,12 +16,12 @@ use Symfony\Component\Form\Exception\UnexpectedTypeException;
 
 class CarbonToDateTimeTransformer implements DataTransformerInterface
 {
-    public function transform($value)
+    public function transform($value): mixed
     {
         return $value; // No conversion required
     }
 
-    public function reverseTransform($value)
+    public function reverseTransform($value): mixed
     {
         if (null === $value) {
             return null;

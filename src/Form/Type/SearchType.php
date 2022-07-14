@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/Type/SearchType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 11:13
+ * @lastUpdate 14/07/2022 14:56
  */
 
 namespace App\Form\Type;
@@ -45,12 +45,12 @@ class SearchType extends AbstractType implements DataTransformerInterface
         $builder->addModelTransformer($this);
     }
 
-    public function transform($value)
+    public function transform($value): mixed
     {
         return $value;
     }
 
-    public function reverseTransform($value)
+    public function reverseTransform($value): mixed
     {
         if (!is_string($value)) {
             return null;
