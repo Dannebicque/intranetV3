@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/StatutController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:52
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\superAdministration;
@@ -102,7 +102,7 @@ class StatutController extends BaseController
         Status $statut
     ): Response {
         $id = $statut->getId();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
 //            if (0 === count($statut->getHrs())) {
             $this->entityManager->remove($statut);
             $this->entityManager->flush();

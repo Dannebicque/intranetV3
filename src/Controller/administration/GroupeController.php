@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/GroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/07/2022 08:30
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\administration;
@@ -156,7 +156,7 @@ class GroupeController extends BaseController
     public function delete(Request $request, Groupe $groupe): Response
     {
         $id = $groupe->getId();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $this->entityManager->remove($groupe);
             $this->entityManager->flush();
             $this->addFlashBag(

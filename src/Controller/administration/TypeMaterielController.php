@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/TypeMaterielController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 09:40
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\administration;
@@ -109,7 +109,7 @@ class TypeMaterielController extends BaseController
     public function delete(Request $request, TypeMateriel $type_materiel): Response
     {
         $id = $type_materiel->getId();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $this->entityManager->remove($type_materiel);
             $this->entityManager->flush();
             $this->addFlashBag(

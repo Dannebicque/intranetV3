@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AlternanceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:53
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\administration;
@@ -158,7 +158,7 @@ class AlternanceController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $alternance->getAnnee());
         $id = $alternance->getId();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $this->entityManager->remove($alternance);
             $this->entityManager->flush();
             $this->addFlashBag(

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/CarnetController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:53
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\appPersonnel;
@@ -115,7 +115,7 @@ class CarnetController extends BaseController
     public function delete(Request $request, CahierTexte $cahierTexte): Response
     {
         $id = $cahierTexte->getId();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $this->entityManager->remove($cahierTexte);
             $this->entityManager->flush();
 

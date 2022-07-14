@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/AnneeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/07/2022 16:30
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\superAdministration;
@@ -131,7 +131,7 @@ class AnneeController extends BaseController
     public function delete(Request $request, Annee $annee): Response
     {
         $id = $annee->getId();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             if (0 === count($annee->getSemestres())) {
                 $this->entityManager->remove($annee);
                 $this->entityManager->flush();

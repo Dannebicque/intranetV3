@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/enquete/EnqueteEtudiantController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/enquete/EnqueteEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/08/2021 08:01
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\superAdministration\enquete;
@@ -51,7 +51,7 @@ class EnqueteEtudiantController extends BaseController
         QuestionnaireEtudiant $questionnaire
     ): Response {
         $id = $questionnaire->getId();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             // suppression des réponses
             $reponses = $questionnaire->getQuestionnaireEtudiantReponses();
             foreach ($reponses as $reponse) {

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/document/DocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 11:44
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\document;
@@ -273,7 +273,7 @@ class DocumentController extends BaseController
 
         $id = $document->getId();
         $uuid = $document->getUuid();
-        if ($this->isCsrfTokenValid('delete'.$uuid, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$uuid, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $docDelete = $documentDelete->deleteDocument($document);
             if (true === $docDelete) {
                 $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'document.delete.success.flash');

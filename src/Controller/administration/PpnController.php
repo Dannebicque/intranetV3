@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/PpnController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/PpnController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 10:57
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\administration;
@@ -140,7 +140,7 @@ class PpnController extends BaseController
         // suppression uniquement si vide.
         // feature: gérer une suppression plus complete en super-admin
         $id = $ppn->getId();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $this->entityManager->remove($ppn);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'ppn.delete.success.flash');

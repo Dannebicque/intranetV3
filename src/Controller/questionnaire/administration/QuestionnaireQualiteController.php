@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/questionnaire/administration/QuestionnaireQualiteController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/administration/QuestionnaireQualiteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/11/2021 17:38
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\questionnaire\administration;
@@ -140,7 +140,7 @@ class QuestionnaireQualiteController extends BaseController
     #[Route('/{id}', name: 'delete', methods: ['POST'])]
     public function delete(Request $request, QuestionnaireQualite $questionnaireQualite): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$questionnaireQualite->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$questionnaireQualite->getId(), $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $this->entityManager->remove($questionnaireQualite);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'questionnaire.delete.success.flash');

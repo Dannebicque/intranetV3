@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/HrsController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/HrsController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/10/2021 11:51
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\administration;
@@ -142,7 +142,7 @@ class HrsController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $hrs->getDepartement());
         $id = $hrs->getId();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $this->entityManager->remove($hrs);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'hrs.delete.success.flash');
@@ -158,7 +158,7 @@ class HrsController extends BaseController
     public function supprimer(Request $request, HrsRepository $hrsRepository): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
-        if ($this->isCsrfTokenValid('supprimer', $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('supprimer', $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $hrs = $hrsRepository->findByDepartement($this->getDepartement(),
                 $request->request->get('annee_supprimer'));
             foreach ($hrs as $hr) {

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/stage/StageFicheSuiviController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/05/2022 10:58
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\administration\stage;
@@ -118,7 +118,7 @@ class StageFicheSuiviController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $stageFicheSuivi->getStage()?->getStagePeriode()?->getSemestre()?->getAnnee());
         $stage = $stageFicheSuivi->getStage();
-        if ($this->isCsrfTokenValid('delete'.$stageFicheSuivi->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$stageFicheSuivi->getId(), $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $this->entityManager->remove($stageFicheSuivi);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'fiche_suivi.delete.success.flash');

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/stage/StageAvenantController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/stage/StageAvenantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\administration\stage;
@@ -123,7 +123,7 @@ class StageAvenantController extends BaseController
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE',
             $stageAvenant->getStageEtudiant()?->getStagePeriode()?->getSemestre());
         $id = $stageAvenant->getStageEtudiant()->getId();
-        if ($this->isCsrfTokenValid('delete'.$stageAvenant->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$stageAvenant->getId(), $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $this->entityManager->remove($stageAvenant);
             $this->entityManager->flush();
         }

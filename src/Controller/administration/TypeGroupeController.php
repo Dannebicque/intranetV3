@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/TypeGroupeController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/TypeGroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\administration;
@@ -13,6 +13,8 @@ use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
+use App\Enums\TypeGroupeEnum;
+use App\Utils\JsonRequest;
 use App\Utils\Tools;
 use function in_array;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -32,6 +34,7 @@ class TypeGroupeController extends BaseController
         return $this->render('administration/type_groupe/_listeSemestre.html.twig', [
             'semestre' => $semestre,
             'typeGroupes' => $typeGroupes,
+            'typeGroupeEnum' => TypeGroupeEnum::cases()
         ]);
     }
 
@@ -40,9 +43,10 @@ class TypeGroupeController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
         $typeGroupe = new TypeGroupe($semestre);
-        $typeGroupe->setLibelle($request->request->get('libelle'));
-        $typeGroupe->setType($request->request->get('type'));
-        $typeGroupe->setDefaut(Tools::convertToBool($request->request->get('defaut')));
+        $typeGroupe->setLibelle(JsonRequest::getValueFromRequest($request, 'libelle'));
+        $typeGroupe->setType(JsonRequest::getValueFromRequest($request, 'type'));
+        $typeGroupe->setDefaut(Tools::convertToBool(JsonRequest::getValueFromRequest($request, 'defaut')));
+        $typeGroupe->setMutualise(Tools::convertToBool(JsonRequest::getValueFromRequest($request, 'mutualise')));
         $this->entityManager->persist($typeGroupe);
         $this->entityManager->flush();
 
@@ -74,7 +78,8 @@ class TypeGroupeController extends BaseController
     public function updateDefaut(Request $request, TypeGroupe $typegroupe, Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
-        if (in_array($request->request->get('defaut'), ['on', 'true'], true)) {
+        $etat = Tools::convertToBool(JsonRequest::getValueFromRequest($request, 'defaut'));
+        if ($etat === true) {
             foreach ($semestre->getTypeGroupes() as $tg) {
                 if ($tg->getId() === $typegroupe->getId()) {
                     $tg->setDefaut(true);
@@ -90,12 +95,23 @@ class TypeGroupeController extends BaseController
         return new JsonResponse(true, Response::HTTP_OK);
     }
 
+    #[Route(path: '/update-mutualise/{typegroupe}/{semestre}', name: 'administration_type_groupe_mutualise', options: ['expose' => true], methods: ['POST'])]
+    public function updateMutualise(Request $request, TypeGroupe $typegroupe, Semestre $semestre): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
+        $etat = Tools::convertToBool(JsonRequest::getValueFromRequest($request, 'mutualise'));
+        $typegroupe->setMutualise($etat);
+        $this->entityManager->flush();
+
+        return new JsonResponse(true, Response::HTTP_OK);
+    }
+
     #[Route(path: '/duplicate/{typegroupe}', name: 'administration_type_groupe_duplicate', options: ['expose' => true], methods: ['GET'])]
     public function duplicate(TypeGroupe $typegroupe): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $typegroupe->getSemestre());
         $newGroupe = clone $typegroupe;
-        $newGroupe->setLibelle('Copie_'.$newGroupe->getLibelle());
+        $newGroupe->setLibelle('Copie_' . $newGroupe->getLibelle());
         $this->entityManager->persist($newGroupe);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'type_groupe.duplicate.success.flash');
@@ -108,7 +124,7 @@ class TypeGroupeController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $typeGroupe->getSemestre());
         $id = $typeGroupe->getId();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $this->entityManager->remove($typeGroupe);
             $this->entityManager->flush();
             $this->addFlashBag(

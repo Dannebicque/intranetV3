@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/StageFicheSuiviController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 10:28
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\appPersonnel;
@@ -106,7 +106,7 @@ class StageFicheSuiviController extends BaseController
     public function delete(Request $request, StageFicheSuivi $stageFicheSuivi): Response
     {
         $stage = $stageFicheSuivi->getStage();
-        if ($this->isCsrfTokenValid('delete'.$stageFicheSuivi->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$stageFicheSuivi->getId(), $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $this->entityManager->remove($stageFicheSuivi);
             $this->entityManager->flush();
             $this->addFlashBag(

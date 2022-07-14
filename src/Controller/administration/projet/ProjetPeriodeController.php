@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/projet/ProjetPeriodeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:44
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\administration\projet;
@@ -126,7 +126,7 @@ class ProjetPeriodeController extends BaseController
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestre());
         // la suppression entraine la suppression des offres, des templates et des stages déjà présent.
         $id = $projetPeriode->getUuidString();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $this->entityManager->remove($projetPeriode);
             $this->entityManager->flush();
             $this->addFlashBag(

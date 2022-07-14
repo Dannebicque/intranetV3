@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/CelcatCalendrierController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 08:44
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\superAdministration;
@@ -122,7 +122,7 @@ class CelcatCalendrierController extends BaseController
     public function delete(Request $request, Calendrier $celcatCalendrier): Response
     {
         $id = $celcatCalendrier->getId();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $this->entityManager->remove($celcatCalendrier);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'celcat_calendrier.delete.success.flash');

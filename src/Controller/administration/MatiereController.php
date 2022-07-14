@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/MatiereController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/MatiereController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/10/2021 10:36
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\administration;
@@ -44,7 +44,6 @@ class MatiereController extends BaseController
 
     #[Route('/diplome/{diplome}', name: 'administration_matiere_diplome', options: ['expose' => true], methods: ['GET'])]
     public function diplome(
-        ParcourRepository $parcourRepository,
         MatiereRepository $matiereRepository,
         ApcRessourceRepository $apcRessourceRepository,
         ApcSaeRepository $apcSaeRepository,
@@ -256,7 +255,7 @@ class MatiereController extends BaseController
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $matiere->getSemestre());
 
         $id = $matiere->getId();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $rep = $matiereDelete->delete($matiere);
 
             if (true === $rep) {

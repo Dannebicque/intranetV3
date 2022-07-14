@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/EmpruntController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:53
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\appEtudiant;
@@ -80,7 +80,7 @@ class EmpruntController extends BaseController
     public function delete(MyEmprunts $myEmprunts, Request $request, Emprunt $emprunt): Response
     {
         $id = $emprunt->getId();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $myEmprunts->deleteReservation($emprunt);
             $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'emprunt.delete.error.flash');
 

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/enquete/EnqueteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/05/2022 15:22
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\superAdministration\enquete;
@@ -226,7 +226,7 @@ class EnqueteController extends BaseController
         QuestionnaireQualite $questionnaire
     ): Response {
         $id = $questionnaire->getId();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             // suppression des réponses
             $reponses = $quizzEtudiantReponseRepository->findByQuestionnaire($questionnaire);
             foreach ($reponses as $reponse) {

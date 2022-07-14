@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EmpruntsController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 09:57
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\administration;
@@ -112,7 +112,7 @@ class EmpruntsController extends BaseController
     public function delete(Request $request, Emprunt $emprunt): Response
     {
         $id = $emprunt->getId();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $this->entityManager->remove($emprunt);
             $this->entityManager->flush();
             $this->addFlashBag(

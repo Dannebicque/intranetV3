@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/apc/ButPublicController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 12:15
+ * @lastUpdate 14/07/2022 13:15
  */
 
 namespace App\Controller\apc;
@@ -37,7 +37,7 @@ class ButPublicController extends AbstractController
     public function homePage(): Response
     {
         return $this->render('apc/public/index.html.twig', [
-            'diplomes' => $this->diplomeRepository->findBy(['typeDiplome' => 4]),
+            'diplomes' => $this->diplomeRepository->findBy(['typeDiplome' => 4, 'parent' => null]),
         ]);
     }
 

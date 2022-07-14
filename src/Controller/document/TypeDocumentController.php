@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/document/TypeDocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 11:44
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\document;
@@ -196,7 +196,7 @@ class TypeDocumentController extends BaseController
         }
 
         $id = $typeDocument->getId();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             foreach ($typeDocument->getDocuments() as $document) {
                 $documentDelete->deleteDocument($document);
                 if (true !== $documentDelete) {

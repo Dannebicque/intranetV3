@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/administration/QuestionnaireSectionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 11:48
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\questionnaire\administration;
@@ -129,7 +129,7 @@ class QuestionnaireSectionController extends BaseController
     #[Route('/{id}', name: 'delete', methods: ['POST', 'DELETE'])]
     public function delete(Request $request, QuestionnaireSection $questionnaireSection): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$questionnaireSection->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$questionnaireSection->getId(), $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $id = $questionnaireSection->getId();
             foreach ($questionnaireSection->getQualiteSectionQuestions() as $questionnaire) {
                 $this->entityManager->remove($questionnaire);

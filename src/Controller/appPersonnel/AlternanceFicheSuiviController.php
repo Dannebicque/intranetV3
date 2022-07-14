@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/AlternanceFicheSuiviController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 10:17
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\appPersonnel;
@@ -110,7 +110,7 @@ class AlternanceFicheSuiviController extends BaseController
     public function delete(Request $request, AlternanceFicheSuivi $alternanceFicheSuivi): Response
     {
         $alternance = $alternanceFicheSuivi->getAlternance();
-        if ($this->isCsrfTokenValid('delete'.$alternanceFicheSuivi->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$alternanceFicheSuivi->getId(), $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $this->entityManager->remove($alternanceFicheSuivi);
             $this->entityManager->flush();
             $this->addFlashBag(

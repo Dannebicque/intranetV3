@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EtudiantGroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/05/2022 14:38
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\administration;
@@ -113,7 +113,7 @@ class EtudiantGroupeController extends BaseController
     public function delete(Request $request, Groupe $groupe, Etudiant $etudiant): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $etudiant->getSemestre());
-        if ($this->isCsrfTokenValid('delete'.$groupe->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$groupe->getId(), $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $id = $groupe->getId();
             $etudiant->removeGroupe($groupe);
             $groupe->removeEtudiant($etudiant);

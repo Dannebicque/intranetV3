@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/MaterielCommunController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 21:29
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\superAdministration;
@@ -112,7 +112,7 @@ class MaterielCommunController extends BaseController
     public function delete(Request $request, MaterielCommun $materielCommun): Response
     {
         $id = $materielCommun->getId();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $this->entityManager->remove($materielCommun);
             $this->entityManager->flush();
 

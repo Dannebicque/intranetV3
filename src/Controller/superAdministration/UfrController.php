@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/UfrController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 21:28
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\superAdministration;
@@ -116,7 +116,7 @@ class UfrController extends BaseController
     public function delete(Request $request, Ufr $ufr): Response
     {
         $id = $ufr->getId();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             if (0 === count($ufr->getDepartements())) {
                 $this->entityManager->remove($ufr);
                 $this->entityManager->flush();

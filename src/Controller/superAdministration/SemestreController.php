@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/SemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/07/2022 16:30
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\superAdministration;
@@ -131,7 +131,7 @@ class SemestreController extends BaseController
     public function delete(Request $request, Semestre $semestre): Response
     {
         $id = $semestre->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             if (0 === count($semestre->getUes()) && 0 === count($semestre->getParcours()) && 0 === count($semestre->getEtudiants())) {
                 $this->entityManager->remove($semestre);
                 $this->entityManager->flush();

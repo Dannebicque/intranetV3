@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/TypeCoursController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:52
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\superAdministration;
@@ -120,7 +120,7 @@ class TypeCoursController extends BaseController
     public function delete(Request $request, TypeCours $typeCours): Response
     {
         $id = $typeCours->getId();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
 //            if (0 === count($typeCours->getHrs())) {
 //                $this->entityManager->remove($typeHrs);
 //                $this->entityManager->flush();

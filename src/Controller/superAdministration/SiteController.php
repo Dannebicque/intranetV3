@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/SiteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 21:28
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\superAdministration;
@@ -118,7 +118,7 @@ class SiteController extends BaseController
     public function delete(Request $request, Site $site): Response
     {
         $id = $site->getId();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             if (0 === count($site->getUfrs()) && 0 === count($site->getUfrPrincipales())) {
                 $this->entityManager->remove($site);
                 $this->entityManager->flush();
