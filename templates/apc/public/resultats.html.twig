@@ -8,7 +8,7 @@
     <h2>Ressources</h2>
     <div class="row">
         {% for ressource in ressources %}
-            {{ include('but_mmi/_cardRessource.html.twig') }}
+            {{ include('apc/public/_cardRessource.html.twig') }}
         {% else %}
             <div class="col-sm-12">
                 <div class="alert alert-info">
@@ -20,7 +20,7 @@
     <h2>SAE</h2>
     <div class="row">
         {% for sae in saes %}
-            {{ include('but_mmi/_cardSae.html.twig') }}
+            {{ include('apc/public/_cardSae.html.twig') }}
         {% else %}
             <div class="col-sm-12">
                 <div class="alert alert-info">
