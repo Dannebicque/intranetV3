@@ -14,7 +14,7 @@
 {% endif %}
 
 
-{% if is_granted('ROLE_PERMANENT') %}
+{% if is_granted('ROLE_SUPER_ADMIN') %}
     <div class="d-grid mt-2">
         <a href="{{ path('administration_apc_parcours_niveau_new',
             {parcours:parcour.id}) }}" class="btn d-block btn-warning">
