@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:52
+ * @lastUpdate 28/05/2022 14:50
  */
 
 namespace App\Entity;
@@ -261,6 +261,12 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     private Collection $bcServiceFaitResponsableSignataire;
 
     /**
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\QuestionnairePersonnel>
+     */
+    #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: QuestionnairePersonnel::class)]
+    private Collection $quizzPersonnels;
+
+    /**
      * @throws JsonException
      */
     public function __construct()
@@ -294,6 +300,7 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         $this->bcDemandeSignataireCompta = new ArrayCollection();
         $this->bcServiceFaitReceptionniste = new ArrayCollection();
         $this->bcServiceFaitResponsableSignataire = new ArrayCollection();
+        $this->quizzPersonnels = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -1427,5 +1434,40 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         }
 
         return '';
+    }
+
+    public function isDeleted(): ?bool
+    {
+        return $this->deleted;
+    }
+
+    /**
+     * @return Collection<int, QuestionnairePersonnel>
+     */
+    public function getQuizzPersonnels(): Collection
+    {
+        return $this->quizzPersonnels;
+    }
+
+    public function addQuizzPersonnel(QuestionnairePersonnel $quizzPersonnel): self
+    {
+        if (!$this->quizzPersonnels->contains($quizzPersonnel)) {
+            $this->quizzPersonnels[] = $quizzPersonnel;
+            $quizzPersonnel->setPersonnel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeQuizzPersonnel(QuestionnairePersonnel $quizzPersonnel): self
+    {
+        if ($this->quizzPersonnels->removeElement($quizzPersonnel)) {
+            // set the owning side to null (unless already changed)
+            if ($quizzPersonnel->getPersonnel() === $this) {
+                $quizzPersonnel->setPersonnel(null);
+            }
+        }
+
+        return $this;
     }
 }

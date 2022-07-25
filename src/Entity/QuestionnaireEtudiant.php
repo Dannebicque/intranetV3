@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/QuestionnaireEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:23
+ * @lastUpdate 04/06/2022 09:10
  */
 
 namespace App\Entity;
@@ -19,21 +19,15 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: QuestionnaireEtudiantRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class QuestionnaireEtudiant extends BaseEntity
+class QuestionnaireEtudiant extends QuestionnaireUserAbstract
 {
-    use LifeCycleTrait;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: Types::INTEGER)]
+    private mixed $id;
 
     #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'quizzEtudiants')]
     private ?Etudiant $etudiant = null;
-
-    #[ORM\ManyToOne(targetEntity: QuestionnaireQualite::class)]
-    private ?QuestionnaireQualite $questionnaireQualite = null;
-
-    #[ORM\ManyToOne(targetEntity: QuestionnaireQuizz::class)]
-    private ?QuestionnaireQuizz $questionnaireQuizz = null;
-
-    #[ORM\Column(type: Types::BOOLEAN)]
-    private bool $termine = false;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\QuestionnaireEtudiantReponse>
@@ -44,21 +38,15 @@ class QuestionnaireEtudiant extends BaseEntity
     ])]
     private Collection $questionnaireEtudiantReponses;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?CarbonInterface $dateTermine = null;
+    public function getId(): ?int
+    {
+        return $this->id;
+    }
 
     public function __construct(Etudiant $etudiant, QuestionnaireQuizz|QuestionnaireQualite $questionnaire, ?string $typeQuestionnaire)
     {
+        parent::__construct($questionnaire, $typeQuestionnaire);
         $this->setEtudiant($etudiant);
-        switch ($typeQuestionnaire) {
-            case 'quizz':
-                $this->setQuestionnaireQuizz($questionnaire);
-                break;
-            case 'qualite':
-                $this->setQuestionnaireQualite($questionnaire);
-                break;
-        }
-
         $this->questionnaireEtudiantReponses = new ArrayCollection();
     }
 
@@ -70,18 +58,6 @@ class QuestionnaireEtudiant extends BaseEntity
     public function setEtudiant(?Etudiant $etudiant): self
     {
         $this->etudiant = $etudiant;
-
-        return $this;
-    }
-
-    public function getTermine(): ?bool
-    {
-        return $this->termine;
-    }
-
-    public function setTermine(bool $termine): self
-    {
-        $this->termine = $termine;
 
         return $this;
     }
@@ -113,42 +89,6 @@ class QuestionnaireEtudiant extends BaseEntity
                 $quizzEtudiantReponse->setQuestionnaireEtudiant(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getDateTermine(): ?CarbonInterface
-    {
-        return $this->dateTermine;
-    }
-
-    public function setDateTermine(?CarbonInterface $dateTermine): self
-    {
-        $this->dateTermine = $dateTermine;
-
-        return $this;
-    }
-
-    public function getQuestionnaireQualite(): ?QuestionnaireQualite
-    {
-        return $this->questionnaireQualite;
-    }
-
-    public function setQuestionnaireQualite(?QuestionnaireQualite $questionnaireQualite): self
-    {
-        $this->questionnaireQualite = $questionnaireQualite;
-
-        return $this;
-    }
-
-    public function getQuestionnaireQuizz(): ?QuestionnaireQuizz
-    {
-        return $this->questionnaireQuizz;
-    }
-
-    public function setQuestionnaireQuizz(?QuestionnaireQuizz $questionnaireQuizz): self
-    {
-        $this->questionnaireQuizz = $questionnaireQuizz;
 
         return $this;
     }

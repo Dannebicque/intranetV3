@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:35
+ * @lastUpdate 14/07/2022 11:31
  */
 
 namespace App\Entity;
@@ -36,10 +36,6 @@ class Semestre extends BaseEntity implements Stringable
     ])]
     private ?string $libelle = null;
 
-    #[Deprecated("plus utilisé, centralisé avec l'année")]
-    #[ORM\Column(type: Types::STRING, length: 20, nullable: true)]
-    private ?string $couleur = null;
-
     #[ORM\Column(type: Types::INTEGER)]
     private int $ordreAnnee = 1;
 
@@ -68,7 +64,7 @@ class Semestre extends BaseEntity implements Stringable
     private int $nbGroupesTP = 2;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Etudiant>|\App\Entity\Etudiant[]
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Etudiant>
      */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: Etudiant::class)]
     #[ORM\OrderBy(value: ['nom' => 'ASC', 'prenom' => 'ASC'])]
@@ -195,19 +191,6 @@ class Semestre extends BaseEntity implements Stringable
     private Collection $projetPeriodes;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcRessource>
-     */
-    #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: ApcRessource::class)]
-    #[Deprecated('plus nécessaire, passe par la collection plus bas.')]
-    private Collection $apcRessources;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcSae>
-     */
-    #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: ApcSae::class)]
-    private Collection $apcSaes;
-
-    /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\AbsenceEtatAppel>
      */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: AbsenceEtatAppel::class)]
@@ -258,6 +241,12 @@ class Semestre extends BaseEntity implements Stringable
     #[ORM\ManyToMany(targetEntity: ApcRessource::class, mappedBy: 'semestres', fetch: 'EXTRA_LAZY')]
     private Collection $apcSemestresRessources;
 
+    #[ORM\ManyToMany(targetEntity: TypeGroupe::class, mappedBy: 'semestres')]
+    private Collection $allTypeGroupes;
+
+    #[ORM\ManyToMany(targetEntity: ApcSae::class, mappedBy: 'semestres')]
+    private Collection $apcSemestresSaes;
+
     public function __construct()
     {
         $this->init();
@@ -267,6 +256,8 @@ class Semestre extends BaseEntity implements Stringable
         $this->absences = new ArrayCollection();
         $this->anneeUniversitaireSemestres = new ArrayCollection();
         $this->apcSemestresRessources = new ArrayCollection();
+        $this->allTypeGroupes = new ArrayCollection();
+        $this->apcSemestresSaes = new ArrayCollection();
     }
 
     private function init(): void
@@ -293,16 +284,6 @@ class Semestre extends BaseEntity implements Stringable
     public function __clone()
     {
         $this->init();
-    }
-
-    public function getCouleur(): ?string
-    {
-        return $this->couleur;
-    }
-
-    public function setCouleur(string $couleur): void
-    {
-        $this->couleur = $couleur;
     }
 
     public function getOrdreAnnee(): ?int
@@ -1112,34 +1093,6 @@ class Semestre extends BaseEntity implements Stringable
     }
 
     /**
-     * @return Collection|ApcSae[]
-     */
-    public function getApcSaes(): Collection
-    {
-        return $this->apcSaes;
-    }
-
-    public function addApcSae(ApcSae $apcSae): self
-    {
-        if (!$this->apcSaes->contains($apcSae)) {
-            $this->apcSaes[] = $apcSae;
-            $apcSae->setSemestre($this);
-        }
-
-        return $this;
-    }
-
-    public function removeApcSae(ApcSae $apcSae): self
-    {
-        // set the owning side to null (unless already changed)
-        if ($this->apcSaes->removeElement($apcSae) && $apcSae->getSemestre() === $this) {
-            $apcSae->setSemestre(null);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|AbsenceEtatAppel[]
      */
     public function getAbsenceEtatAppels(): Collection
@@ -1409,5 +1362,59 @@ class Semestre extends BaseEntity implements Stringable
     public function isImpair(): bool
     {
         return 1 === $this->getOrdreLmd() % 2;
+    }
+
+    /**
+     * @return Collection<int, TypeGroupe>
+     */
+    public function getAllTypeGroupes(): Collection
+    {
+        return $this->allTypeGroupes;
+    }
+
+    public function addAllTypeGroupe(TypeGroupe $allTypeGroupe): self
+    {
+        if (!$this->allTypeGroupes->contains($allTypeGroupe)) {
+            $this->allTypeGroupes[] = $allTypeGroupe;
+            $allTypeGroupe->addSemestre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAllTypeGroupe(TypeGroupe $allTypeGroupe): self
+    {
+        if ($this->allTypeGroupes->removeElement($allTypeGroupe)) {
+            $allTypeGroupe->removeSemestre($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ApcSae>
+     */
+    public function getApcSemestresSaes(): Collection
+    {
+        return $this->apcSemestresSaes;
+    }
+
+    public function addApcSemestresSae(ApcSae $apcSemestresSae): self
+    {
+        if (!$this->apcSemestresSaes->contains($apcSemestresSae)) {
+            $this->apcSemestresSaes[] = $apcSemestresSae;
+            $apcSemestresSae->addSemestre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeApcSemestresSae(ApcSae $apcSemestresSae): self
+    {
+        if ($this->apcSemestresSaes->removeElement($apcSemestresSae)) {
+            $apcSemestresSae->removeSemestre($this);
+        }
+
+        return $this;
     }
 }

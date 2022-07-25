@@ -24,9 +24,15 @@
                 </header>
 
                 <div class="card-body">
+                    <div class="row">
                     <div class="col-sm-12 col-md-6 d-grid d-block">
-                        <a href="{{ path('administratif_enquete_index') }}"
-                           class="btn btn-primary"> {{ 'enquete.index'|trans }}</a>
+                        <a href="{{ path('administratif_enquete_etudiant_index') }}"
+                           class="btn btn-primary"> {{ 'enquete.etudiant.index'|trans }}</a>
+                    </div>
+                    <div class="col-sm-12 col-md-6 d-grid d-block">
+                        <a href="{{ path('administratif_enquete_personnel_index') }}"
+                           class="btn btn-primary"> {{ 'enquete.personnel.index'|trans }}</a>
+                    </div>
                     </div>
                 </div>
             </div>
