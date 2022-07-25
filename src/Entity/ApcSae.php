@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcSae.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/05/2022 16:39
+ * @lastUpdate 14/07/2022 14:08
  */
 
 namespace App\Entity;
@@ -17,6 +17,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Deprecated;
 
 #[ORM\Entity(repositoryClass: ApcSaeRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -26,7 +27,17 @@ class ApcSae extends AbstractMatiere implements MatiereEntityInterface
 
     final public const SOURCE = 'sae';
 
-    #[ORM\ManyToOne(targetEntity: Semestre::class, fetch: 'EAGER', inversedBy: 'apcSaes')]
+    /**
+     * @return \App\Entity\Semestre|null
+     * @deprecated
+     */
+    public function getSemestre(): ?Semestre
+    {
+        return $this->semestre;
+    }
+
+    #[Deprecated(reason: 'Une SAE peut être commune  à plusieurs parcours. Le plus simple serait d\'avoir une gestion manytomany')]
+    #[ORM\ManyToOne(targetEntity: Semestre::class, fetch: 'EAGER')]
     private ?Semestre $semestre = null;
 
     #[ORM\Column(type: Types::FLOAT)]
@@ -62,11 +73,15 @@ class ApcSae extends AbstractMatiere implements MatiereEntityInterface
     #[ORM\Column(type: Types::BOOLEAN)]
     private bool $bonification = false;
 
+    #[ORM\ManyToMany(targetEntity: Semestre::class, inversedBy: 'apcSemestresSaes')]
+    private Collection $semestres;
+
     public function __construct()
     {
         $this->apcSaeCompetences = new ArrayCollection();
         $this->apcSaeRessources = new ArrayCollection();
         $this->apcSaeApprentissageCritiques = new ArrayCollection();
+        $this->semestres = new ArrayCollection();
     }
 
     public function getLivrables(): ?string
@@ -121,19 +136,11 @@ class ApcSae extends AbstractMatiere implements MatiereEntityInterface
 
     public function getDiplome(): ?Diplome
     {
-        return $this->getSemestre()?->getDiplome();
-    }
+        if ($this->semestres->count() > 0) {
+            return $this->semestres->first()->getDiplome();
+        }
 
-    public function getSemestre(): ?Semestre
-    {
-        return $this->semestre;
-    }
-
-    public function setSemestre(?Semestre $semestre): self
-    {
-        $this->semestre = $semestre;
-
-        return $this;
+        return null;
     }
 
     /**
@@ -276,5 +283,34 @@ class ApcSae extends AbstractMatiere implements MatiereEntityInterface
         $this->bonification = $bonification;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, Semestre>
+     */
+    public function getSemestres(): Collection
+    {
+        return $this->semestres;
+    }
+
+    public function addSemestre(Semestre $semestre): self
+    {
+        if (!$this->semestres->contains($semestre)) {
+            $this->semestres[] = $semestre;
+        }
+
+        return $this;
+    }
+
+    public function removeSemestre(Semestre $semestre): self
+    {
+        $this->semestres->removeElement($semestre);
+
+        return $this;
+    }
+
+    public function hasSemestre(Semestre $semestre): bool
+    {
+        return $this->getSemestres()->contains($semestre);
     }
 }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcRessource.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/05/2022 16:39
+ * @lastUpdate 14/07/2022 12:15
  */
 
 namespace App\Entity;
@@ -26,8 +26,17 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
 
     final public const SOURCE = 'ressource';
 
+    /**
+     * @return \App\Entity\Semestre|null
+     * @deprecated
+     */
+    public function getSemestre(): ?Semestre
+    {
+        return $this->semestre;
+    }
+
     #[Deprecated(reason: 'Une ressource peut être commune  à plusieurs parcours. Le plus simple serait d\'avoir une gestion manytomany')]
-    #[ORM\ManyToOne(targetEntity: Semestre::class, fetch: 'EAGER', inversedBy: 'apcRessources')]
+    #[ORM\ManyToOne(targetEntity: Semestre::class, fetch: 'EAGER')]
     private ?Semestre $semestre = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -365,10 +374,6 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
 
     public function getDiplome(): ?Diplome
     {
-        if ($this->apcRessourceCompetences->count() > 0) {
-            return $this->apcRessourceCompetences->first()->getCompetence()->getDiplome();
-        }
-
         if ($this->semestres->count() > 0) {
             return $this->semestres->first()->getDiplome();
         }
