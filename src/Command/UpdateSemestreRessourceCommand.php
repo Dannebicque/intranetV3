@@ -1,8 +1,16 @@
 <?php
+/*
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Command/UpdateSemestreRessourceCommand.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 14/07/2022 11:52
+ */
 
 namespace App\Command;
 
 use App\Repository\ApcRessourceRepository;
+use App\Repository\ApcSaeRepository;
 use App\Repository\EvaluationRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -18,6 +26,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class UpdateSemestreRessourceCommand extends Command
 {
     public function __construct(
+        private readonly ApcSaeRepository $apcSaeRepository,
         private readonly ApcRessourceRepository $apcRessourceRepository,
         private readonly EvaluationRepository $evaluationRepository,
         private readonly EntityManagerInterface $entityManager
@@ -35,10 +44,20 @@ class UpdateSemestreRessourceCommand extends Command
             $semestre = $ressource->getSemestre();
             $ressource->addSemestre($semestre);
             $semestre->addApcSemestresRessource($ressource);
-            // $ressource->setSemestre(null);
+            $ressource->setSemestre(null);
         }
         $this->entityManager->flush();
         $io->success('Ressources mises à jour');
+
+        $saes = $this->apcSaeRepository->findAll();
+        foreach ($saes as $sae) {
+            $semestre = $sae->getSemestre();
+            $sae->addSemestre($semestre);
+            $semestre->addApcSemestresSae($sae);
+            $sae->setSemestre(null);
+        }
+        $this->entityManager->flush();
+        $io->success('SAES mises à jour');
 
         $evaluations = $this->evaluationRepository->findAll();
         foreach ($evaluations as $evaluation) {
