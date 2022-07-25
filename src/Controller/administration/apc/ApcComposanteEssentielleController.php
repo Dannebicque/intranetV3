@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcComposanteEssentielleController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcComposanteEssentielleController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\administration\apc;
@@ -63,7 +63,7 @@ class ApcComposanteEssentielleController extends BaseController
     #[Route(path: '/{id}', name: 'administration_apc_composante_essentielle_delete', methods: ['DELETE'])]
     public function delete(Request $request, ApcComposanteEssentielle $apcComposanteEssentielle): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$apcComposanteEssentielle->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$apcComposanteEssentielle->getId(), $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $this->entityManager->remove($apcComposanteEssentielle);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.composanteEssentielle.delete.success.flash');

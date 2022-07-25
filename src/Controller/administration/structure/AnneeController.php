@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/structure/AnneeController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/structure/AnneeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/09/2021 21:05
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\administration\structure;
@@ -110,7 +110,7 @@ class AnneeController extends BaseController
     public function delete(Request $request, Annee $annee): Response
     {
         $id = $annee->getId();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token')) &&
+        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN')) &&
             0 === count($annee->getSemestres()) &&
             0 === count($annee->getAlternances()) &&
             0 === count($annee->getApcNiveaux())) {

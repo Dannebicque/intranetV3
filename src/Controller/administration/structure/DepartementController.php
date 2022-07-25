@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/structure/DepartementController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/structure/DepartementController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:30
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\administration\structure;
@@ -34,7 +34,7 @@ class DepartementController extends BaseController
     public function delete(Request $request, Departement $departement): Response
     {
         $id = $departement->getId();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token')) &&
+        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN')) &&
             0 === count($departement->getDiplomes()) &&
             0 === count($departement->getHrs()) &&
             0 === count($departement->getEtudiants()) &&

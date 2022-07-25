@@ -71,7 +71,8 @@
                         data-diplome="{{ diplome.id }}">
                     <option value="">Choisir un autre PN</option>
                     {% for pn in diplome.ppns %}
-                        <option value="{{ pn.id }}">{{ pn.libelle }} ({{ pn.annee }})</option>
+                        <option value="{{ pn.id }}" {% if ppn.id == pn.id %}selected{% endif %}>{{ pn.libelle }} ({{ pn
+                            .annee }})</option>
                     {% endfor %}
                 </select>
             </div>

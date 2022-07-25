@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcRessourceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/06/2022 15:50
+ * @lastUpdate 25/07/2022 08:05
  */
 
 namespace App\Controller\administration\apc;
@@ -446,7 +446,7 @@ class ApcRessourceController extends BaseController
     public function delete(Request $request, ApcRessource $apcRessource): Response
     {
         $id = $apcRessource->getId();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             // todo: vérifier si pas d'évaluation ou d'absence (idem SAE)
             $this->entityManager->remove($apcRessource);
             $this->entityManager->flush();
@@ -462,7 +462,7 @@ class ApcRessourceController extends BaseController
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    #[Route(path: '/{id}/{semestre}duplicate', name: 'apc_ressource_duplicate', methods: 'GET|POST')]
+    #[Route(path: '/{id}/{semestre}/duplicate', name: 'apc_ressource_duplicate', methods: 'GET|POST')]
     public function duplicate(ApcRessource $apcRessource, Semestre $semestre): Response
     {
         $newApcRessource = clone $apcRessource;

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcApprentissageCritiqueController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcApprentissageCritiqueController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\administration\apc;
@@ -67,7 +67,7 @@ class ApcApprentissageCritiqueController extends BaseController
     #[Route(path: '/{id}', name: 'administration_apc_apprentissage_critique_delete', methods: ['DELETE'])]
     public function delete(Request $request, ApcApprentissageCritique $apcApprentissageCritique): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$apcApprentissageCritique->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$apcApprentissageCritique->getId(), $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $this->entityManager->remove($apcApprentissageCritique);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.apprentissageCritique.delete.success.flash');

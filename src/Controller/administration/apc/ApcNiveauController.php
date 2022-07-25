@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcNiveauController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:28
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\administration\apc;
@@ -90,7 +90,7 @@ class ApcNiveauController extends BaseController
     public function delete(Request $request, ApcNiveau $apcNiveau): Response
     {
         $competence = $apcNiveau->getCompetence();
-        if ($this->isCsrfTokenValid('delete'.$apcNiveau->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$apcNiveau->getId(), $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $this->entityManager->remove($apcNiveau);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.niveau.delete.success.flash');

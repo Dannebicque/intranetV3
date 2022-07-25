@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/structure/DiplomeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/07/2022 11:54
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\administration\structure;
@@ -96,12 +96,12 @@ class DiplomeController extends BaseController
     public function delete(Request $request, Diplome $diplome): Response
     {
         $id = $diplome->getId();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token')) &&
+        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN')) &&
             0 === count($diplome->getAnnees()) &&
             0 === count($diplome->getSemestres()) &&
             0 === count($diplome->getPpns()) &&
             0 === count($diplome->getHrs()) &&
-            0 === count($diplome->getApcComptences())) {
+            0 === count( $diplome->getReferentiel()?->getApcComptences())) {
             $this->entityManager->remove($diplome);
             $this->entityManager->flush();
             $this->addFlashBag(

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcSituationProfessionnelleController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcSituationProfessionnelleController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/03/2021 18:49
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\administration\apc;
@@ -70,7 +70,7 @@ class ApcSituationProfessionnelleController extends BaseController
     #[Route(path: '/{id}', name: 'apc_situation_professionnelle_delete', methods: ['DELETE'])]
     public function delete(Request $request, ApcSituationProfessionnelle $apcSituationProfessionnelle): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$apcSituationProfessionnelle->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$apcSituationProfessionnelle->getId(), $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $this->entityManager->remove($apcSituationProfessionnelle);
             $this->entityManager->flush();
             $this->addFlashBag(

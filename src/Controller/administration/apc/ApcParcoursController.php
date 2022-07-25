@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcParcoursController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcParcoursController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 11/07/2022 11:38
  */
 
 namespace App\Controller\administration\apc;
@@ -15,6 +15,7 @@ use App\Entity\ApcParcours;
 use App\Entity\Constantes;
 use App\Entity\Diplome;
 use App\Form\ApcParcoursType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -73,15 +74,20 @@ class ApcParcoursController extends BaseController
     #[Route(path: '/{id}', name: 'apc_parcours_delete', methods: ['DELETE'])]
     public function delete(Request $request, ApcParcours $apcParcour): Response
     {
-        $diplome = $apcParcour->getDiplome();
-        if ($this->isCsrfTokenValid('delete'.$apcParcour->getId(), $request->request->get('_token'))) {
+        $id = $apcParcour->getId();
+        if ($this->isCsrfTokenValid('delete' . $apcParcour->getId(), $request->server->get('HTTP_X_CSRF_TOKEN'))) {
+            foreach ($apcParcour->getApcParcoursNiveaux() as $apcNiveau) {
+                $this->entityManager->remove($apcNiveau);
+            }
             $this->entityManager->remove($apcParcour);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apcParcours.delete.success.flash');
+
+            return new JsonResponse(['id' => $id], Response::HTTP_OK);
         }
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'apcParcours.delete.error.flash');
 
-        return $this->redirectToRoute('administration_apc_referentiel_index', ['diplome' => $diplome->getId()]);
+        return new JsonResponse(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     #[Route(path: '/{id}/duplicate', name: 'apc_parcours_duplicate', methods: 'GET|POST')]

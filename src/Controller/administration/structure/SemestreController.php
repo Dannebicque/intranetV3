@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/structure/SemestreController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/structure/SemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/09/2021 21:04
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\administration\structure;
@@ -109,7 +109,7 @@ class SemestreController extends BaseController
     public function delete(Request $request, Semestre $semestre): Response
     {
         $id = $semestre->getId();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->request->get('_token')) &&
+        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN')) &&
             0 === count($semestre->getUes()) &&
             0 === count($semestre->getEtudiants()) &&
             0 === count($semestre->getProjetPeriodes()) &&

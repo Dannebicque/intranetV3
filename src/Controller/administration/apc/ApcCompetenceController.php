@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcCompetenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/05/2022 19:15
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\administration\apc;
@@ -97,7 +97,7 @@ class ApcCompetenceController extends BaseController
     public function delete(Request $request, ApcCompetence $apcCompetence): Response
     {
         $diplome = $apcCompetence->getDiplome();
-        if ($this->isCsrfTokenValid('delete'.$apcCompetence->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$apcCompetence->getId(), $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $this->entityManager->remove($apcCompetence);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.competence.delete.success.flash');
