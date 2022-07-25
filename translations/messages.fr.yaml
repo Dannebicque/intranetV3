@@ -273,7 +273,7 @@ adm:
     gestion.des.etudiants.departement: 'Gestion des étudiants du département'
   gestion.des.etudiants.departement: 'Gestion des étudiants de la formation'
   groupe:
-    index.heading: 'Liste des groupes'
+    index.heading: 'Liste des groupes du semestre %semestre%'
     modification.heading: 'Modification d''un groupe'
     new.heading: 'Création d''un groupe'
     semestre.add.heading: 'Ajouter un groupe dans le semestre'
@@ -750,8 +750,11 @@ article:
   edit.success.flash: 'Article modifié avec succès'
 
 assistant.creation.departement: 'Assistant pour la création d''un nouveau département'
+dashboard: Dashboard
+ajouter.sous.diplome: Ajouter un sous diplôme (parcours de B.U.T.)
 
 atitle:
+  nouveau_diplome: Nouveau diplôme
   refuser: 'Refuser'
   valider: 'Valider'
   accepter.la.demande: 'Accepter la demande'
@@ -2386,3 +2389,4 @@ type_oui_non: 'Oui/Non'
 type_qcm: 'QCM'
 type_qcu: 'QCU'
 type_slider: 'Slider'
+updated: 'Dernière mise à jour le '

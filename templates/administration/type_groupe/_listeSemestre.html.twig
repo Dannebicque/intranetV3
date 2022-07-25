@@ -10,6 +10,7 @@
                 <th>Libellé</th>
                 <th>Type</th>
                 <th>Défauts?</th>
+                <th>Mutualisé?</th>
                 <th></th>
             </tr>
             </thead>
@@ -26,10 +27,9 @@
                         <select id="typegroupe_{{ tg.id }}" name="typegroupe_{{ tg.id }}" class="form-select
         change-type_typegroupe" data-typegroupe="{{ tg.id }}">
                             <option value="" selected>Type de type de Groupe</option>
-                            {% for type in constant
-                                ('App\\Entity\\TypeGroupe::TYPES') %}
-                                <option value="{{ type }}" {% if tg.type == type %}selected{% endif %}>
-                                    {{ type }}
+                            {% for type in typeGroupeEnum %}
+                                <option value="{{ type.value }}" {% if tg.type == type.value %}selected{% endif %}>
+                                    {{ type.value }}
                                 </option>
                             {% endfor %}
                         </select></td>
@@ -37,9 +37,22 @@
                         <label class="switch" for="defaut_{{ tg.id }}">
                             <input type="checkbox" {{ tg.defaut ? 'checked': '' }}
                                    class="changeDefaut"
+                                   value="true"
                                    name="defaut_{{ tg.id }}"
                                    id="defaut_{{ tg.id }}"
-                                   data-type-groupe="{{ tg.id }}"
+                                   data-type_groupe="{{ tg.id }}"
+                                   data-semestre="{{ semestre.id }}">
+                            <span class="switch-indicator"></span>
+                        </label>
+                    </td>
+                    <td>
+                        <label class="switch" for="defaut_{{ tg.id }}">
+                            <input type="checkbox" {{ tg.mutualise ? 'checked': '' }}
+                                   class="changeMutualise"
+                                   value="true"
+                                   name="mutualise_{{ tg.id }}"
+                                   id="mutualise_{{ tg.id }}"
+                                   data-type_groupe="{{ tg.id }}"
                                    data-semestre="{{ semestre.id }}">
                             <span class="switch-indicator"></span>
                         </label>
@@ -70,29 +83,42 @@
                     <label class="sr-only" for="typegroupe_libelle">Libellé</label>
                     <input type="text" name="typegroupe_libelle" id="typegroupe_libelle" class="form-control">
                     <div class="invalid-feedback" id="error_typegroupe_libelle">
-                        Libellé du type de groupe obligatoire</div>
+                        Libellé du type de groupe obligatoire
+                    </div>
 
                 </td>
                 <td>
                     <label class="sr-only" for="typegroupe_type">Type</label>
                     <select id="typegroupe_type" name="typegroupe_type" class="form-select">
                         <option value="" selected>Type de type de Groupe</option>
-                        {% for type in constant('App\\Entity\\TypeGroupe::TYPES') %}
-                            <option value="{{ type }}">
-                                {{ type }}
+                        {% for type in typeGroupeEnum %}
+                            <option value="{{ type.value }}">
+                                {{ type.value }}
                             </option>
                         {% endfor %}
                     </select>
                     <div class="invalid-feedback" id="error_typegroupe_type">
-                        Type de type de groupe obligatoire</div>
+                        Type de type de groupe obligatoire
+                    </div>
                 </td>
                 <td>
                     <label class="switch" for="typegroupe_defaut">
                         <input type="checkbox"
                                name="typegroupe_defaut"
+                               value="true"
                                id="typegroupe_defaut">
                         <span class="switch-indicator"></span>
-                    </label></td>
+                    </label>
+                </td>
+                <td>
+                    <label class="switch" for="typegroupe_mutualise">
+                        <input type="checkbox"
+                               name="typegroupe_mutualise"
+                               value="true"
+                               id="typegroupe_mutualise">
+                        <span class="switch-indicator"></span>
+                    </label>
+                </td>
                 <td>
                     <button class="btn btn-success" id="addTypeGroupe" data-semestre="{{ semestre.id }}">{{ button_label|default('label.save'|trans) }}</button>
                 </td>

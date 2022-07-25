@@ -1,4 +1,10 @@
-<div class="mb-2">
+{% if diplome.apcParcours == null %}
+<span class="badge bg-info">Tronc commun ou parcours non précisé</span>
+{% else %}
+<span class="badge bg-warning">Parcours {{ diplome.apcParcours.libelle }} ({{ diplome.apcParcours.code }})</span>
+{% endif %}
+
+<div class="mb-2 mt-2">
     .<a href="{{ path(baseurl ~ 'diplome_duplicate', {'id': diplome.id}) }}"
         class="btn btn-success btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
         title="{{ 'atitle.dupliquer'|trans }}"><i class="{{ iconDuplicate }}"></i></a>
@@ -30,30 +36,28 @@
                         class="{{ iconDelete }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
                         title="{{ 'atitle.supprimer'|trans }}"></i></a>
         {% endif %}
-        {% if is_granted('ROLE_SUPER_ADMIN') %}
-            <span class="dropdown">
-                    <a data-bs-toggle="dropdown" href="#">
-                        <i class="fas fa-ellipsis-h rotate-90"
-                           data-bs-toggle="tooltip" data-bs-placement="bottom"
-                           title="Options d'export ou d'import"></i>
-                        <span class="sr-only">
-                            Options  d'export  ou d'import</span>
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="{{ path(baseurl ~ 'diplome_import_index', {id:
-                            diplome.id}) }}"><i class="fas fa-upload"></i> Importer une maquette</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{ path(baseurl ~ 'diplome_export_referentiel', {id:
-                            diplome
-                            .id}) }}"><i class="fas fa-download"></i> Exporter Référentiel</a>
-                        <a class="dropdown-item" href="{{ path(baseurl ~ 'diplome_export_programme', {id:
-                            diplome.id}) }}"><i class="fas fa-download"></i> Exporter Programme</a>
-                        <a class="dropdown-item" href="{{ path(baseurl ~ 'diplome_export_maquette_apogee',
-                            {id:
-                                diplome.id}) }}"><i class="fas fa-download"></i> Exporter Maquette</a>
-                    </div>
-                </span>
-        {% endif %}
+        <span class="dropdown">
+            <a data-bs-toggle="dropdown" href="#">
+                <i class="fas fa-ellipsis-h rotate-90"
+                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+                   title="Options d'export ou d'import"></i>
+                <span class="sr-only">
+                    Options  d'export  ou d'import</span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" href="{{ path(baseurl ~ 'diplome_import_index', {id:
+                    diplome.id}) }}"><i class="fas fa-upload"></i> Importer une maquette</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{ path(baseurl ~ 'diplome_export_referentiel', {id:
+                    diplome
+                    .id}) }}"><i class="fas fa-download"></i> Exporter Référentiel</a>
+                <a class="dropdown-item" href="{{ path(baseurl ~ 'diplome_export_programme', {id:
+                    diplome.id}) }}"><i class="fas fa-download"></i> Exporter Programme</a>
+                <a class="dropdown-item" href="{{ path(baseurl ~ 'diplome_export_maquette_apogee',
+                    {id:
+                        diplome.id}) }}"><i class="fas fa-download"></i> Exporter Maquette</a>
+            </div>
+        </span>
     {% endif %}
 </div>
 
@@ -179,9 +183,12 @@
                        class="editable"
                        data-field="codeElement">{{ ue.codeElement }}</a> |
                     <a data-href="{{ path('sa_ue_ajax_edit', {id:ue.id}) }}"
-                         class="editable"
-                         data-field="libelle">{{ ue.libelle }}</a>{% if ue
-                    .bonification==true %}(Bonification){% endif %}
+                       class="editable"
+                       data-field="libelle">{{ ue.libelle }}</a>
+                    {% if ue.bonification == true %}(Bonification){% endif %} |
+                    {% if ue.apcCompetence != null %}<span class="badge badge-{{ ue.apcCompetence.couleur }}">{{ ue
+                    .apcCompetence.nomCourt }}</span>{% else %}
+                        <span class="badge bg-danger">non défini</span>{% endif %}
                 </div>
                 <div class="col-md-2">
                     <a href="{{ path(baseurl ~ 'ue_duplicate', {'id': ue.id}) }}"
