@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/DiplomeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/07/2022 11:54
+ * @lastUpdate 14/07/2022 15:08
  */
 
 namespace App\Controller\superAdministration;
@@ -29,6 +29,14 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/administratif/structure/diplome')]
 class DiplomeController extends BaseController
 {
+    #[Route(path: '/liste', name: 'sa_diplome_liste', methods: 'GET|POST')]
+    public function liste(DiplomeRepository $diplomeRepository): Response
+    {
+        return $this->render('super-administration/structure/diplome/liste.html.twig', [
+            'diplomes' => $diplomeRepository->findAll(),
+        ]);
+    }
+
     #[Route(path: '/new/{departement}', name: 'sa_diplome_new', methods: 'GET|POST')]
     public function create(
         DiplomeRepository $diplomeRepository,
@@ -137,22 +145,22 @@ class DiplomeController extends BaseController
     public function duplicate(Diplome $diplome): Response
     {
         $newDiplome = clone $diplome;
-        $newDiplome->setLibelle($newDiplome->getLibelle() . ' copie');
+        $newDiplome->setLibelle($newDiplome->getLibelle().' copie');
         $this->entityManager->persist($newDiplome);
 
-        //dupliquer les années
+        // dupliquer les années
         foreach ($diplome->getAnnees() as $annee) {
             $newAnnee = clone $annee;
             $newAnnee->setDiplome($newDiplome);
             $this->entityManager->persist($newAnnee);
 
-            //dupliquer les semestres
+            // dupliquer les semestres
             foreach ($annee->getSemestres() as $semestre) {
                 $newSemestre = clone $semestre;
                 $newSemestre->setAnnee($newAnnee);
                 $this->entityManager->persist($newSemestre);
 
-                //dupliquer les UEs
+                // dupliquer les UEs
                 foreach ($semestre->getUes() as $ue) {
                     $newUe = clone $ue;
                     $newUe->setSemestre($newSemestre);
@@ -171,7 +179,7 @@ class DiplomeController extends BaseController
     public function delete(Request $request, Diplome $diplome): Response
     {
         $id = $diplome->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             if (0 === count($diplome->getAnnees())) {
                 $this->entityManager->remove($diplome);
                 $this->entityManager->flush();
@@ -198,7 +206,7 @@ class DiplomeController extends BaseController
     {
         $diplome->setActif($etat);
         $this->entityManager->flush();
-        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'diplome.activate.' . $etat . '.flash');
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'diplome.activate.'.$etat.'.flash');
 
         return $this->redirectToRoute('super_admin_homepage');
     }

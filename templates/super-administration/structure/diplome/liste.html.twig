@@ -1,0 +1,52 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+    {{ 'adm.diplome.index.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+{#        {{ include('composants/sadm-buttons-index.html.twig', {elt:'diplome'}) }}#}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.diplome.index.heading'|trans }}</h4>
+        <div class="card-body">
+            <table class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th>{{ 'table.id'|trans }}</th>
+                    <th>{{ 'table.libelle'|trans }}</th>
+                    <th>{{ 'table.sigle'|trans }}</th>
+                    <th>{{ 'table.type_diplome'|trans }}</th>
+                    <th>{{ 'table.type_structure'|trans }}</th>
+                    <th>{{ 'table.referentiel'|trans }}</th>
+                    <th>{{ 'table.actions'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for diplome in diplomes %}
+                    <tr id="ligne_{{ diplome.id }}">
+                        <td>{{ diplome.id }}</td>
+                        <td>{{ diplome.libelle }}</td>
+                        <td>{{ diplome.sigle }}</td>
+                        <td>{{ diplome.typeDiplome.sigle }}</td>
+                        <td>{{ diplome.typeStructure }}</td>
+                        <td>{{ diplome.referentiel != null ? diplome.referentiel.libelle : '-'}}</td>
+                        <td>
+{#                            {{ include('composants/sadm-buttons-table-index.html.twig', {elt:'diplome', id:type_cr#}
+{#                            .id}) }}#}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">{{ 'no.record.found'|trans }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

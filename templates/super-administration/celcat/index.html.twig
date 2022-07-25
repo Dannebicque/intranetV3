@@ -39,10 +39,10 @@
                     <tr>
                         <td>{{ diplome.display }}</td>
                         <td>
-                            <a class="myedit"
+                            <a class="editable"
                                data-field="codeCelcatDepartement"
-                               href="{{ path('sa_diplome_edit_ajax', {id:diplome.id}) }}"
-                               data-title="Corriger le code celcat du diplôme">
+                               data-href="{{ path('sa_diplome_edit_ajax', {id:diplome.id}) }}"
+                               title="Corriger le code celcat du diplôme">
                                 {{ diplome.codeCelcatDepartement }}</a>
                         </td>
                         <td>{{ diplome.departement ? (diplome.departement.optUpdateCelcat == true ? '<span

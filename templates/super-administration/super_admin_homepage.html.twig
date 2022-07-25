@@ -29,10 +29,19 @@
             </div>
         </div>
     {% endif %}
+
     <div class="card">
         <header class="card-header">
             <h4 class="card-title"><strong>{{ 'departements.heading'|trans }}</strong></h4>
             <div class="card-header-actions">
+                <a class="btn btn-sm btn-info"
+                   title="{{ 'liste.diplome'|trans }}"
+                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+                   href="{{ path('sa_diplome_liste') }}"
+                >
+                    <i class="{{ iconShow }}"></i>
+                </a>
+
                 <a class="btn btn-sm btn-primary"
                    title="{{ 'creation.departement.manuellement'|trans }}"
                    data-bs-toggle="tooltip" data-bs-placement="bottom"
