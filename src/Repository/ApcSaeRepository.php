@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcSaeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 14/07/2022 14:10
  */
 
 namespace App\Repository;
@@ -46,14 +46,14 @@ class ApcSaeRepository extends ServiceEntityRepository
     public function findByDiplomeBuilder(Diplome $diplome): QueryBuilder
     {
         return $this->createQueryBuilder('r')
-            ->innerJoin(Semestre::class, 's', 'WITH', 's.id = r.semestre')
+            ->innerJoin('r.semestres', 's')
+            ->addSelect('s')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->where('a.diplome = :diplome')
+            // ->andWhere('s.ppn_actif = m.ppn')
             ->setParameter('diplome', $diplome->getId())
-            ->orderBy('s.ordreLmd', Criteria::ASC)
-            ->addOrderBy('r.codeMatiere', Criteria::ASC)
-            ->addOrderBy('r.libelle', Criteria::ASC)
-            ;
+            ->orderBy('r.codeMatiere', Criteria::ASC)
+            ->addOrderBy('r.libelle', Criteria::ASC);
     }
 
     public function findBySemestre(Semestre $semestre): array

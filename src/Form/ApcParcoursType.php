@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ApcParcoursType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/ApcParcoursType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/06/2021 16:25
+ * @lastUpdate 11/07/2022 11:54
  */
 
 namespace App\Form;
@@ -20,17 +20,18 @@ class ApcParcoursType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('libelle', TextType::class, ['label' => 'libelle'])
-            ->add('code', TextType::class, ['label' => 'code'])
-            ->add('codeDiplome', TextType::class, ['label' => 'code_diplome', 'required' => false])
-            ->add('codeVersion', TextType::class, ['label' => 'code_version', 'required' => false])
-            ->add('codeDepartement', TextType::class, ['label' => 'code_departement', 'required' => false]);
+            ->add('libelle', TextType::class, ['label' => 'label.libelle'])
+            ->add('code', TextType::class, ['label' => 'label.code'])
+            ->add('codeDiplome', TextType::class, ['label' => 'label.code_diplome', 'required' => false])
+            ->add('codeVersion', TextType::class, ['label' => 'label.code_version', 'required' => false])
+            ->add('codeDepartement', TextType::class, ['label' => 'label.code_departement', 'required' => false]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => ApcParcours::class,
+            'translation_domain' => 'form'
         ]);
     }
 }

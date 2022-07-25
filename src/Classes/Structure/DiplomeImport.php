@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Structure/DiplomeImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/07/2022 10:25
+ * @lastUpdate 14/07/2022 14:01
  */
 
 namespace App\Classes\Structure;
@@ -16,6 +16,7 @@ use App\Entity\ApcComposanteEssentielle;
 use App\Entity\ApcNiveau;
 use App\Entity\ApcParcours;
 use App\Entity\ApcParcoursNiveau;
+use App\Entity\ApcReferentiel;
 use App\Entity\ApcRessource;
 use App\Entity\ApcRessourceApprentissageCritique;
 use App\Entity\ApcRessourceCompetence;
@@ -24,6 +25,7 @@ use App\Entity\ApcSaeApprentissageCritique;
 use App\Entity\ApcSaeCompetence;
 use App\Entity\ApcSaeRessource;
 use App\Entity\ApcSituationProfessionnelle;
+use App\Entity\Constantes;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Ppn;
@@ -31,11 +33,13 @@ use App\Entity\Semestre;
 use App\Entity\Ue;
 use App\Repository\TypeDiplomeRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use RuntimeException;
 use SimpleXMLElement;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
 class DiplomeImport
 {
+    protected ?ApcReferentiel $referentiel;
     private string $fichier;
     private Diplome $diplome;
     private string $log = '';
@@ -54,12 +58,16 @@ class DiplomeImport
     {
         $this->fichier = $fichier;
         $this->diplome = $diplome;
+        $this->referentiel = $diplome->getReferentiel();
 
         switch ($type) {
             case 'competences':
                 $this->importCompetence($ppn);
                 break;
             case 'formation':
+                if (null === $this->referentiel) {
+                    throw new RuntimeException('Le référentiel du diplôme n\'est pas défini');
+                }
                 $this->deleteFormation($ppn);
                 $this->importFormation($ppn);
                 break;
@@ -148,20 +156,33 @@ class DiplomeImport
     private function importFormation(Ppn $ppn): void
     {
         $xml = $this->openXmlFile();
-        $tAcs = $this->entityManager->getRepository(ApcApprentissageCritique::class)->findOneByDiplomeAndPnArray($this->diplome,
+
+        $typeStructure = $this->diplome->getTypeStructure();
+        $tSemestres = [];
+
+        $semestres = $this->entityManager->getRepository(Semestre::class)->findAllSemestreByDiplomeApc($this->diplome);
+
+        foreach ($semestres as $semestre) {
+            if (Constantes::APC_TYPE_3 === $typeStructure || $semestre->getOrdreLmd() > 2) {
+                if (null !== $semestre->getDiplome()->getApcParcours()) {
+                    $tSemestres[$semestre->getOrdreLmd()][$semestre->getDiplome()->getApcParcours()->getCode()] = $semestre;
+                }
+            } else {
+                $tSemestres[$semestre->getOrdreLmd()] = $semestre;
+            }
+        }
+
+        $tAcs = $this->entityManager->getRepository(ApcApprentissageCritique::class)->findOneByReferentielAndPnArray($this->referentiel,
             $ppn);
-        $tCompetences = $this->entityManager->getRepository(ApcCompetence::class)->findOneByDiplomeAndPnArray($this->diplome,
+        $tCompetences = $this->entityManager->getRepository(ApcCompetence::class)->findOneByReferentielAndPnArray($this->referentiel,
             $ppn);
         foreach ($xml->semestre as $sem) {
-            $semestre = $this->entityManager->getRepository(Semestre::class)->findOneByDiplomeEtNumero($this->diplome,
-                $sem['numero'], $sem['ordreAnnee']);
-
-            if (null !== $semestre) {
+            $numeroSemestre = (int) $sem['numero'];
+            if (array_key_exists($numeroSemestre, $tSemestres)) {
                 $tRessources = [];
                 foreach ($sem->ressources->ressource as $ressource) {
                     $ar = new ApcRessource();
-                    $ar->addSemestre($semestre);
-                    $semestre->addApcSemestresRessource($ar);
+
                     $ar->setLibelle($ressource->titre);
                     $ar->setCodeMatiere((string) $ressource['code']);
                     $ar->setCodeElement($this->diplome->getSigle().$ressource['code']);
@@ -184,11 +205,21 @@ class DiplomeImport
                         $this->entityManager->persist($rac);
                     }
                     // les saes seront ajoutée par les SAE
+
+                    if (Constantes::APC_TYPE_3 === $typeStructure || $numeroSemestre > 2) {
+                        foreach ($ressource->liste_parcours->parcours as $parcours) {
+                            $ar->addSemestre($tSemestres[$numeroSemestre][trim((string) $parcours)]);
+                            $tSemestres[$numeroSemestre][trim((string) $parcours)]->addApcSemestresRessource($ar);
+                        }
+                    } else {
+                        $ar->addSemestre($tSemestres[$numeroSemestre]);
+                        $tSemestres[$numeroSemestre]->addApcSemestresRessource($ar);
+                    }
                 }
 
                 foreach ($sem->saes->sae as $sae) {
                     $ar = new ApcSae();
-                    $ar->setSemestre($semestre);
+
                     $ar->setLibelle($sae->titre);
                     $ar->setCodeMatiere((string) $sae['code']);
                     $ar->setCodeElement($this->diplome->getSigle().$sae['code']);
@@ -216,6 +247,16 @@ class DiplomeImport
                     foreach ($sae->ressources->ressource as $comp) {
                         $rac = new ApcSaeRessource($ar, $tRessources[trim((string) $comp)]);
                         $this->entityManager->persist($rac);
+                    }
+
+                    if (Constantes::APC_TYPE_3 === $typeStructure || $numeroSemestre > 2) {
+                        foreach ($sae->liste_parcours->parcours as $parcours) {
+                            $ar->addSemestre($tSemestres[$numeroSemestre][trim((string) $parcours)]);
+                            $tSemestres[$numeroSemestre][trim((string) $parcours)]->addApcSemestresSae($ar);
+                        }
+                    } else {
+                        $ar->addSemestre($tSemestres[$numeroSemestre]);
+                        $tSemestres[$numeroSemestre]->addApcSemestresSae($ar);
                     }
                 }
             }
@@ -292,9 +333,11 @@ class DiplomeImport
             }
 
             $this->entityManager->flush();
-
-            return $this->log;
+        } else {
+            $this->log .= 'Erreur lors de l\'ouverture du fichier<br>';
         }
+
+        return $this->log;
     }
 
     private function importDiplome(bool|array $phrase, Departement $departement): void

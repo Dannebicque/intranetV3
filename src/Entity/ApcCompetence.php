@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcCompetence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/05/2022 16:39
+ * @lastUpdate 11/07/2022 12:07
  */
 
 namespace App\Entity;
@@ -31,8 +31,8 @@ class ApcCompetence extends BaseEntity
     #[ORM\Column(type: Types::STRING, length: 20)]
     private ?string $couleur = null;
 
-    #[ORM\ManyToOne(targetEntity: Diplome::class, inversedBy: 'apcComptences')]
-    private ?Diplome $diplome = null;
+    #[ORM\ManyToOne(targetEntity: ApcReferentiel::class, inversedBy: 'apcComptences')]
+    private ?ApcReferentiel $apcReferentiel = null;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcComposanteEssentielle>
@@ -79,11 +79,11 @@ class ApcCompetence extends BaseEntity
     #[ORM\ManyToOne(targetEntity: Ppn::class, inversedBy: 'apcCompetences')]
     private ?Ppn $ppn = null;
 
-    public function __construct(Diplome $diplome)
+    public function __construct(ApcReferentiel $referentiel)
     {
         $this->apcComposanteEssentielles = new ArrayCollection();
         $this->apcNiveaux = new ArrayCollection();
-        $this->setDiplome($diplome);
+        $this->setApcReferentiel($referentiel);
         $this->apcRessourceCompetences = new ArrayCollection();
         $this->apcSaeCompetences = new ArrayCollection();
         $this->apcSituationProfessionnelles = new ArrayCollection();
@@ -126,14 +126,14 @@ class ApcCompetence extends BaseEntity
         return $this;
     }
 
-    public function getDiplome(): ?Diplome
+    public function getApcReferentiel(): ?ApcReferentiel
     {
-        return $this->diplome;
+        return $this->apcReferentiel;
     }
 
-    public function setDiplome(?Diplome $diplome): self
+    public function setApcReferentiel(?ApcReferentiel $apcReferentiel): self
     {
-        $this->diplome = $diplome;
+        $this->apcReferentiel = $apcReferentiel;
 
         return $this;
     }

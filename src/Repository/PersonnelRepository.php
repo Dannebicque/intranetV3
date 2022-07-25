@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/PersonnelRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 11:14
+ * @lastUpdate 28/05/2022 15:25
  */
 
 namespace App\Repository;
@@ -47,10 +47,10 @@ class PersonnelRepository extends ServiceEntityRepository
 
         if ('separation' === $filtreAdm) {
             if ('administratif' === $type) {
-                $query->andWhere('('.$query->expr()->orX('p.statut = '.$query->expr()->literal('TEC')).' OR '.$query->expr()->orX('p.statut = '.$query->expr()->literal('ASS')).')')
+                $query->andWhere('(' . $query->expr()->orX('p.statut = ' . $query->expr()->literal('TEC')) . ' OR ' . $query->expr()->orX('p.statut = ' . $query->expr()->literal('ASS')) . ')')
                     ->setParameter('type', 'permanent');
             } else {
-                $query->andWhere('('.$query->expr()->andX('p.statut <> '.$query->expr()->literal('TEC')).' AND '.$query->expr()->andX('p.statut <> '.$query->expr()->literal('ASS')).')')
+                $query->andWhere('(' . $query->expr()->andX('p.statut <> ' . $query->expr()->literal('TEC')) . ' AND ' . $query->expr()->andX('p.statut <> ' . $query->expr()->literal('ASS')) . ')')
                     ->setParameter('type', $type);
             }
         } else {
@@ -70,7 +70,7 @@ class PersonnelRepository extends ServiceEntityRepository
             ->orWhere('p.prenom LIKE :needle')
             ->orWhere('p.username LIKE :needle')
             ->orWhere('p.mailUniv LIKE :needle')
-            ->setParameter('needle', '%'.$needle.'%')
+            ->setParameter('needle', '%' . $needle . '%')
             ->orderBy('p.nom', Criteria::ASC)
             ->addOrderBy('p.prenom', Criteria::ASC)
             ->getQuery()
@@ -186,5 +186,16 @@ class PersonnelRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('s')
             ->orderBy('s.nom,s.prenom', Criteria::ASC);
+    }
+
+    public function findActifs(): array
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.deleted = :deleted')
+            ->setParameter('deleted', false)
+            ->orderBy('p.nom', Criteria::ASC)
+            ->addOrderBy('p.prenom', Criteria::ASC)
+            ->getQuery()
+            ->getResult();
     }
 }

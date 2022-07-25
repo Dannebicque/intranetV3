@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ApcApprentissageCritiqueRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcApprentissageCritiqueRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/05/2021 17:04
+ * @lastUpdate 11/07/2022 13:59
  */
 
 namespace App\Repository;
@@ -13,7 +13,8 @@ use App\Entity\Annee;
 use App\Entity\ApcApprentissageCritique;
 use App\Entity\ApcCompetence;
 use App\Entity\ApcNiveau;
-use App\Entity\Diplome;
+use App\Entity\ApcReferentiel;
+use App\Entity\Referentiel;
 use App\Entity\Ppn;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -33,20 +34,20 @@ class ApcApprentissageCritiqueRepository extends ServiceEntityRepository
         parent::__construct($registry, ApcApprentissageCritique::class);
     }
 
-    public function findByDiplome(Diplome $diplome): array
+    public function findByReferentiel(ApcReferentiel $referentiel): array
     {
-        return $this->findByDiplomeBuilder($diplome)
+        return $this->findByReferentielBuilder($referentiel)
             ->getQuery()
             ->getResult();
     }
 
-    public function findByDiplomeBuilder(Diplome $diplome): QueryBuilder
+    public function findByReferentielBuilder(ApcReferentiel $referentiel): QueryBuilder
     {
         return $this->createQueryBuilder('a')
             ->innerJoin(ApcNiveau::class, 'n', 'WITH', 'a.niveau = n.id')
             ->innerJoin(ApcCompetence::class, 'c', 'WITH', 'c.id = n.competence')
-            ->where('c.diplome = :diplome')
-            ->setParameter('diplome', $diplome->getId());
+            ->where('c.apcReferentiel = :referentiel')
+            ->setParameter('referentiel', $referentiel->getId());
     }
 
     public function findBySemestreAndCompetences(
@@ -68,9 +69,9 @@ class ApcApprentissageCritiqueRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findOneByDiplomeAndPnArray(Diplome $diplome, Ppn $pn): array
+    public function findOneByReferentielAndPnArray(ApcReferentiel $referentiel, Ppn $pn): array
     {
-        $comps = $this->findByDiplomeAndPn($diplome, $pn);
+        $comps = $this->findByReferentielAndPn($referentiel, $pn);
         $t = [];
         foreach ($comps as $c) {
             $t[$c->getCode()] = $c;
@@ -79,21 +80,21 @@ class ApcApprentissageCritiqueRepository extends ServiceEntityRepository
         return $t;
     }
 
-    public function findByDiplomeAndPn(Diplome $diplome, Ppn $pn): array
+    public function findByReferentielAndPn(ApcReferentiel $referentiel, Ppn $pn): array
     {
-        return $this->findByDiplomeAndPnBuilder($diplome, $pn)
+        return $this->findByReferentielAndPnBuilder($referentiel, $pn)
             ->getQuery()
             ->getResult();
     }
 
-    public function findByDiplomeAndPnBuilder(Diplome $diplome, Ppn $pn): QueryBuilder
+    public function findByReferentielAndPnBuilder(ApcReferentiel $referentiel, Ppn $pn): QueryBuilder
     {
         return $this->createQueryBuilder('a')
             ->innerJoin(ApcNiveau::class, 'n', 'WITH', 'a.niveau = n.id')
             ->innerJoin(ApcCompetence::class, 'c', 'WITH', 'c.id = n.competence')
-            ->where('c.diplome = :diplome')
+            ->where('c.apcReferentiel = :referentiel')
             ->andWhere('c.ppn = :ppn')
-            ->setParameter('diplome', $diplome->getId())
+            ->setParameter('referentiel', $referentiel->getId())
             ->setParameter('ppn', $pn->getId());
     }
 }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcParcours.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:16
+ * @lastUpdate 14/07/2022 12:26
  */
 
 namespace App\Entity;
@@ -24,6 +24,8 @@ class ApcParcours extends BaseEntity
     use LifeCycleTrait;
     use ApogeeTrait;
 
+    //todo: ajouter couleur, et faire une déclinaison de couleur en badge
+
     #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $libelle = null;
 
@@ -36,16 +38,20 @@ class ApcParcours extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'parcours', targetEntity: ApcParcoursNiveau::class)]
     private Collection $apcParcoursNiveaux;
 
-    #[ORM\ManyToOne(targetEntity: Diplome::class, inversedBy: 'apcParcours')]
-    private ?Diplome $diplome = null;
+    #[ORM\ManyToOne(targetEntity: ApcReferentiel::class, inversedBy: 'apcParcours')]
+    private ?ApcReferentiel $apcReferentiel = null;
 
     #[ORM\Column(type: Types::BOOLEAN)]
     private bool $actif = true;
 
-    public function __construct(Diplome $diplome)
+    #[ORM\OneToMany(mappedBy: 'apcParcours', targetEntity: Diplome::class)]
+    private Collection $diplomes;
+
+    public function __construct(ApcReferentiel $apcReferentiel)
     {
-        $this->setDiplome($diplome);
+        $this->setApcReferentiel($apcReferentiel);
         $this->apcParcoursNiveaux = new ArrayCollection();
+        $this->diplomes = new ArrayCollection();
     }
 
     public function getLibelle(): ?string
@@ -100,14 +106,14 @@ class ApcParcours extends BaseEntity
         return $this;
     }
 
-    public function getDiplome(): ?Diplome
+    public function getApcReferentiel(): ?ApcReferentiel
     {
-        return $this->diplome;
+        return $this->apcReferentiel;
     }
 
-    public function setDiplome(?Diplome $diplome): self
+    public function setApcReferentiel(?ApcReferentiel $apcReferentiel): self
     {
-        $this->diplome = $diplome;
+        $this->apcReferentiel = $apcReferentiel;
 
         return $this;
     }
@@ -120,6 +126,36 @@ class ApcParcours extends BaseEntity
     public function setActif(bool $actif): self
     {
         $this->actif = $actif;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Diplome>
+     */
+    public function getDiplomes(): Collection
+    {
+        return $this->diplomes;
+    }
+
+    public function addDiplome(Diplome $diplome): self
+    {
+        if (!$this->diplomes->contains($diplome)) {
+            $this->diplomes[] = $diplome;
+            $diplome->setApcParcours($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDiplome(Diplome $diplome): self
+    {
+        if ($this->diplomes->removeElement($diplome)) {
+            // set the owning side to null (unless already changed)
+            if ($diplome->getApcParcours() === $this) {
+                $diplome->setApcParcours(null);
+            }
+        }
 
         return $this;
     }

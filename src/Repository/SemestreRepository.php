@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/SemestreRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 13/07/2022 14:48
  */
 
 namespace App\Repository;
@@ -144,7 +144,24 @@ class SemestreRepository extends ServiceEntityRepository
             ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
             ->where('s.actif = true')
             ->orderBy('d.sigle', Criteria::ASC)
-            ->addOrderBy('s.ordreLmd', Criteria::ASC)
-            ;
+            ->addOrderBy('s.ordreLmd', Criteria::ASC);
+    }
+
+    public function findAllSemestreByDiplomeApc(Diplome $diplome): array
+    {
+        $query = $this->createQueryBuilder('s')
+            ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
+            ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
+            ->where('d.id = :diplome')
+            ->setParameter('diplome', $diplome->getId());
+
+        $i = 1;
+        foreach ($diplome->getEnfants() as $diplomeEnfant) {
+            $query->orWhere('d.id = :dip'.$i)
+                ->setParameter('dip'.$i, $diplomeEnfant->getId());
+            ++$i;
+        }
+
+        return $query->getQuery()->getResult();
     }
 }

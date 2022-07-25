@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/DocumentRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 08:18
+ * @lastUpdate 13/07/2022 17:06
  */
 
 namespace App\Repository;
@@ -71,7 +71,7 @@ class DocumentRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function search(string $needle, ?Departement $departement)
+    public function search(string $needle, Departement $departement): array
     {
         return $this->createQueryBuilder('d')
             ->innerJoin(TypeDocument::class, 't', 'WITH', 'd.typeDocument = t.id')

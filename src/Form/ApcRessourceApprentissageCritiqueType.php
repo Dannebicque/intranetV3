@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ApcRessourceApprentissageCritiqueType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/ApcRessourceApprentissageCritiqueType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 09:03
+ * @lastUpdate 13/07/2022 17:10
  */
 
 namespace App\Form;
@@ -30,7 +30,7 @@ class ApcRessourceApprentissageCritiqueType extends AbstractType
             ->add('apprentissageCritique', EntityType::class, [
                 'class' => ApcApprentissageCritique::class,
                 'choice_label' => 'libelle',
-                'query_builder' => fn (ApcApprentissageCritiqueRepository $apcApprentissageCritiqueRepository) => $apcApprentissageCritiqueRepository->findByDiplomeBuilder($this->diplome),
+                'query_builder' => fn (ApcApprentissageCritiqueRepository $apcApprentissageCritiqueRepository) => $apcApprentissageCritiqueRepository->findByReferentielBuilder($this->diplome->getReferentiel()),
             ])
         ;
     }

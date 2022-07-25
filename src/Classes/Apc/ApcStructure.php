@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apc/ApcStructure.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Apc/ApcStructure.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 19:44
+ * @lastUpdate 11/07/2022 12:52
  */
 
 /*
@@ -21,7 +21,7 @@ class ApcStructure
     public function parcoursNiveaux(Diplome $diplome): array
     {
         $tParcours = [];
-        foreach ($diplome->getApcParcours() as $parcours) {
+        foreach ($diplome->getReferentiel()?->getApcParcours() as $parcours) {
             $tParcours[$parcours->getId()] = [];
             foreach ($parcours->getApcParcoursNiveaux() as $niveau) {
                 if (null !== $niveau && null !== $niveau->getNiveau()) {

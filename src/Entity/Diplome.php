@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Diplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/07/2022 11:14
+ * @lastUpdate 14/07/2022 11:39
  */
 
 namespace App\Entity;
@@ -104,12 +104,6 @@ class Diplome extends BaseEntity implements Serializable
     private ?Personnel $optResponsableQualite = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcCompetence>
-     */
-    #[ORM\OneToMany(mappedBy: 'diplome', targetEntity: ApcCompetence::class)]
-    private Collection $apcComptences;
-
-    /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\CovidAttestationPersonnel>
      */
     #[ORM\OneToMany(mappedBy: 'diplome', targetEntity: CovidAttestationPersonnel::class)]
@@ -121,33 +115,31 @@ class Diplome extends BaseEntity implements Serializable
     #[ORM\OneToMany(mappedBy: 'diplome', targetEntity: CovidAttestationEtudiant::class)]
     private Collection $covidAttestationEtudiants;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcParcours>
-     */
-    #[ORM\OneToMany(mappedBy: 'diplome', targetEntity: ApcParcours::class)]
-    private Collection $apcParcours;
-
     #[ORM\Column(type: Types::BOOLEAN)]
     private ?bool $optUpdateCelcat = false;
 
     #[ORM\Column(type: 'string', length: 10, nullable: true)]
-    private ?string $typeStructure;
+    private ?string $typeStructure;  // structure si diplôme APC
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'enfants')]
     private ?Diplome $parent;
 
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: self::class)]
-    private Collection $enfants; // structure si diplôme APC
+    private Collection $enfants;
 
-    public function __construct(#[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'diplomes')] private ?Departement $departement, ?Diplome $diplome)
+    #[ORM\ManyToOne(targetEntity: ApcReferentiel::class, inversedBy: 'diplomes')]
+    private ?ApcReferentiel $referentiel;
+
+    #[ORM\ManyToOne(targetEntity: ApcParcours::class, inversedBy: 'diplomes')]
+    private ?ApcParcours $apcParcours = null;
+
+    public function __construct(#[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'diplomes')] private ?Departement $departement, ?Diplome $diplome = null)
     {
         $this->hrs = new ArrayCollection();
         $this->ppns = new ArrayCollection();
         $this->annees = new ArrayCollection();
-        $this->apcComptences = new ArrayCollection();
         $this->covidAttestationPersonnels = new ArrayCollection();
         $this->covidAttestationEtudiants = new ArrayCollection();
-        $this->apcParcours = new ArrayCollection();
         $this->enfants = new ArrayCollection();
         $this->parent = $diplome;
     }
@@ -548,37 +540,6 @@ class Diplome extends BaseEntity implements Serializable
     }
 
     /**
-     * @return Collection|ApcCompetence[]
-     */
-    public function getApcComptences(): Collection
-    {
-        return $this->apcComptences;
-    }
-
-    public function addApcComptence(ApcCompetence $apcComptence): self
-    {
-        if (!$this->apcComptences->contains($apcComptence)) {
-            $this->apcComptences[] = $apcComptence;
-            $apcComptence->setDiplome($this);
-        }
-
-        return $this;
-    }
-
-    public function removeApcComptence(ApcCompetence $apcComptence): self
-    {
-        if ($this->apcComptences->contains($apcComptence)) {
-            $this->apcComptences->removeElement($apcComptence);
-            // set the owning side to null (unless already changed)
-            if ($apcComptence->getDiplome() === $this) {
-                $apcComptence->setDiplome(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|CovidAttestationPersonnel[]
      */
     public function getCovidAttestationPersonnels(): Collection
@@ -654,34 +615,6 @@ class Diplome extends BaseEntity implements Serializable
         return null;
     }
 
-    /**
-     * @return Collection|ApcParcours[]
-     */
-    public function getApcParcours(): Collection
-    {
-        return $this->apcParcours;
-    }
-
-    public function addApcParcour(ApcParcours $apcParcour): self
-    {
-        if (!$this->apcParcours->contains($apcParcour)) {
-            $this->apcParcours[] = $apcParcour;
-            $apcParcour->setDiplome($this);
-        }
-
-        return $this;
-    }
-
-    public function removeApcParcour(ApcParcours $apcParcour): self
-    {
-        // set the owning side to null (unless already changed)
-        if ($this->apcParcours->removeElement($apcParcour) && $apcParcour->getDiplome() === $this) {
-            $apcParcour->setDiplome(null);
-        }
-
-        return $this;
-    }
-
     public function isOptUpdateCelcat(): ?bool
     {
         return $this->optUpdateCelcat;
@@ -744,6 +677,30 @@ class Diplome extends BaseEntity implements Serializable
                 $enfant->setParent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getReferentiel(): ?ApcReferentiel
+    {
+        return $this->referentiel;
+    }
+
+    public function setReferentiel(?ApcReferentiel $referentiel): self
+    {
+        $this->referentiel = $referentiel;
+
+        return $this;
+    }
+
+    public function getApcParcours(): ?ApcParcours
+    {
+        return $this->apcParcours;
+    }
+
+    public function setApcParcours(?ApcParcours $apcParcours): self
+    {
+        $this->apcParcours = $apcParcours;
 
         return $this;
     }

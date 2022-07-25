@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:52
+ * @lastUpdate 13/07/2022 16:53
  */
 
 namespace App\Repository;
@@ -16,6 +16,7 @@ use App\Entity\Etudiant;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
+use App\Enums\TypeGroupeEnum;
 use function array_key_exists;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Criteria;
@@ -370,7 +371,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
         $t = [];
         /** @var EdtPlanning $event */
         foreach ($data as $event) {
-            if ((TypeGroupe::TYPE_GROUPE_CM === $event->getType()) || (TypeGroupe::TYPE_GROUPE_TD === $event->getType() && $event->getGroupe() === $this->groupetd) || (TypeGroupe::TYPE_GROUPE_TP === $event->getType() && $event->getGroupe() === $this->groupetp)) {
+            if ((TypeGroupeEnum::TYPE_GROUPE_CM === $event->getType()) || (TypeGroupeEnum::TYPE_GROUPE_TD === $event->getType() && $event->getGroupe() === $this->groupetd) || (TypeGroupeEnum::TYPE_GROUPE_TP === $event->getType() && $event->getGroupe() === $this->groupetp)) {
                 $matiere = $tabMatieresSemestre[$event->getTypeIdMatiere()] ?? null;
                 $pl = [];
                 $pl['id'] = $event->getId();

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/UeType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/UeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/09/2021 21:15
+ * @lastUpdate 11/07/2022 12:19
  */
 
 namespace App\Form;
@@ -51,12 +51,12 @@ class UeType extends AbstractType
             ->add('coefficient', TextType::class, ['label' => 'label.coefficient'])
             ->add('nbEcts', TextType::class, ['label' => 'label.nb_ects']);
 
-        if (true === $this->diplome->getTypeDiplome()->getApc()) {
+        if (true === $this->diplome->getTypeDiplome()?->getApc()) {
             $builder->add('apcCompetence', EntityType::class, [
                 'class' => ApcCompetence::class,
                 'required' => false,
                 'choice_label' => 'nomCourt',
-                'query_builder' => fn (ApcComptenceRepository $apcComptenceRepository) => $apcComptenceRepository->findByDiplomeBuilder($this->diplome),
+                'query_builder' => fn (ApcComptenceRepository $apcComptenceRepository) => $apcComptenceRepository->findByReferentielBuilder($this->diplome->getReferentiel()),
                 'label' => 'label.apc.competence',
                 'expanded' => true,
                 'help' => 'Le diplôme étant au format APC, vous pouvez attacher une compétence à cette UE',

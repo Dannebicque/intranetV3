@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/CelcatEventsRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:18
+ * @lastUpdate 13/07/2022 17:06
  */
 
 namespace App\Repository;
@@ -161,7 +161,7 @@ class CelcatEventsRepository extends ServiceEntityRepository
         return $t;
     }
 
-    public function findEdtSemestreSemaine(Semestre $semestre, int $semaineFormationIUT, AnneeUniversitaire $anneeUniversitaire)
+    public function findEdtSemestreSemaine(Semestre $semestre, int $semaineFormationIUT, AnneeUniversitaire $anneeUniversitaire): array
     {
         return $this->createQueryBuilder('p')
             ->where('p.semaineFormation = :semaine')

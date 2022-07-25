@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Structure/DiplomeExport.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Structure/DiplomeExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/05/2021 20:35
+ * @lastUpdate 11/07/2022 12:51
  */
 
 namespace App\Classes\Structure;
@@ -30,8 +30,8 @@ class DiplomeExport
         if (true === $diplome->getTypeDiplome()->getApc()) {
             $xmlContent = $this->twig->render('xml/export-referentiel-but.xml.twig', [
                 'diplome' => $diplome,
-                'competences' => $diplome->getApcComptences(),
-                'parcours' => $diplome->getApcParcours(),
+                'competences' => $diplome->getReferentiel()?->getApcComptences(),
+                'parcours' => $diplome->getReferentiel()?->getApcParcours(),
             ]);
             $name = 'but-'.$diplome->getSigle();
         } else {

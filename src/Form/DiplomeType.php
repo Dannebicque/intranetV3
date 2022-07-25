@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/DiplomeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/07/2022 11:19
+ * @lastUpdate 13/07/2022 15:43
  */
 
 namespace App\Form;
 
 use App\Entity\AnneeUniversitaire;
+use App\Entity\ApcParcours;
 use App\Entity\Constantes;
 use App\Entity\Departement;
 use App\Entity\Diplome;
@@ -17,6 +18,7 @@ use App\Entity\Personnel;
 use App\Entity\TypeDiplome;
 use App\Form\Type\EntityCompleteType;
 use App\Form\Type\YesNoType;
+use App\Repository\ApcParcoursRepository;
 use App\Repository\DiplomeRepository;
 use App\Repository\PersonnelRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -61,6 +63,16 @@ class DiplomeType extends AbstractType
                 'choice_label' => 'display',
                 'label' => 'label.responsable_diplome',
             ])
+
+            ->add('apcParcours', EntityCompleteType::class, [
+                'class' => ApcParcours::class,
+                'query_builder' => static fn (ApcParcoursRepository $apcParcoursRepository) => $apcParcoursRepository->findAllBuilder(),
+                'choice_label' => 'libelle',
+                'required' => false,
+                'label' => 'label.parcours',
+                'help' => 'label.parcours_help',
+            ])
+
             ->add('assistant_diplome', EntityCompleteType::class, [
                 'class' => Personnel::class,
                 'query_builder' => static fn (PersonnelRepository $personnelRepository) => $personnelRepository->findAllOrder(),

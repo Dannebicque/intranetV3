@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/TypeDiplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 21:28
+ * @lastUpdate 14/07/2022 11:28
  */
 
 namespace App\Entity;
@@ -52,9 +52,13 @@ class TypeDiplome extends BaseEntity
     #[ORM\Column(type: Types::BOOLEAN)]
     private bool $apc = false;
 
+    #[ORM\OneToMany(mappedBy: 'type_diplome', targetEntity: ApcReferentiel::class)]
+    private Collection $apcReferentiels;
+
     public function __construct()
     {
         $this->diplomes = new ArrayCollection();
+        $this->apcReferentiels = new ArrayCollection();
     }
 
     public function getLibelle(): ?string
@@ -146,6 +150,36 @@ class TypeDiplome extends BaseEntity
     public function setApc(bool $apc): self
     {
         $this->apc = $apc;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ApcReferentiel>
+     */
+    public function getApcReferentiels(): Collection
+    {
+        return $this->apcReferentiels;
+    }
+
+    public function addApcReferentiel(ApcReferentiel $apcReferentiel): self
+    {
+        if (!$this->apcReferentiels->contains($apcReferentiel)) {
+            $this->apcReferentiels[] = $apcReferentiel;
+            $apcReferentiel->setTypeDiplome($this);
+        }
+
+        return $this;
+    }
+
+    public function removeApcReferentiel(ApcReferentiel $apcReferentiel): self
+    {
+        if ($this->apcReferentiels->removeElement($apcReferentiel)) {
+            // set the owning side to null (unless already changed)
+            if ($apcReferentiel->getTypeDiplome() === $this) {
+                $apcReferentiel->setTypeDiplome(null);
+            }
+        }
 
         return $this;
     }
