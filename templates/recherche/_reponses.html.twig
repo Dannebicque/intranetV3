@@ -83,6 +83,7 @@
     <div class="col-sm-12 col-md-4 col-lg-4" id="search_reponse_autre">
         <h5 class="text-uppercase fw-400">{{ 'documents'|trans }} ({{ documents|length }})</h5>
         {% for document in documents %}
+            {% if is_granted('ROLE_ETUDIANT') and document.originaux == false or is_granted('ROLE_PERMANENT') %}
             <div class="row mb-2 h-64px">
                 <div class="col-3">
                     <a href="{{ asset('upload/documents/'~document.documentName) }}" target="_blank">
@@ -97,6 +98,7 @@
                     </a>
                 </div>
             </div>
+            {% endif %}
         {% else %}
             <div class="alert alert-warning">Pas de résultats correspondant à la recherche
                 <strong>{{ q }}</strong></div>

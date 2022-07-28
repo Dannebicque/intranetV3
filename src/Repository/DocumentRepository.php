@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/DocumentRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/07/2022 17:06
+ * @lastUpdate 28/07/2022 16:25
  */
 
 namespace App\Repository;
@@ -78,6 +78,7 @@ class DocumentRepository extends ServiceEntityRepository
             ->where('d.libelle LIKE :needle')
             ->andWhere('t.departement = :departement')
             ->orWhere('t.originaux = 1')
+            ->andWhere('d.libelle LIKE :needle')
             ->setParameter('needle', '%'.$needle.'%')
             ->setParameter('departement', $departement->getId())
             ->orderBy('d.libelle', Criteria::ASC)
