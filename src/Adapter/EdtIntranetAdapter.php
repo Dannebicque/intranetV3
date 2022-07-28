@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Adapter/EdtIntranetAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/05/2022 11:03
+ * @lastUpdate 27/07/2022 17:15
  */
 
 namespace App\Adapter;
@@ -48,16 +48,17 @@ class EdtIntranetAdapter extends AbstractEdtAdapter implements EdtAdapterInterfa
         $event->texte = $evt->getTexte();
         $event->groupeId = $evt->getGroupe();
         $event->salle = $evt->getSalle();
-        $event->groupe = $evt->getDisplayGroupe();
         $event->dateObjet = $evt->getDate();
         $event->gridStart = Constantes::TAB_HEURES_EDT_2[$evt->getDebut() - 1][0];
         $event->gridEnd = Constantes::TAB_HEURES_EDT_2[$evt->getFin() - 1][0];
-
+dump($groupes);
         if (array_key_exists($evt->getGroupe(), $groupes)) {
             $event->ordreGroupe = $groupes[$evt->getGroupe()]->getOrdre();
+            $event->groupeObjet = $groupes[$evt->getGroupe()];
         }
 
         $event->personnel = null !== $evt->getIntervenant() ? $evt->getIntervenant()->getDisplayPr() : '-';
+        $event->personnelObjet = $evt->getIntervenant();
         $event->groupe = $evt->getDisplayGroupe();
         $event->type_cours = $evt->getType();
         $event->semestre = $evt->getSemestre();

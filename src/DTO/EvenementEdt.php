@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/EvenementEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:52
+ * @lastUpdate 28/07/2022 09:41
  */
 
 namespace App\DTO;
@@ -67,19 +67,19 @@ class EvenementEdt
 
     public function getClassCss(): string
     {
-        return strtolower($this->type_cours).'_'.$this->couleur;
+        return strtolower($this->type_cours) . '_' . $this->couleur;
     }
 
     public function getIdMatiere(): int
     {
-        $t = explode('_', (string) $this->typeIdMatiere);
+        $t = explode('_', (string)$this->typeIdMatiere);
 
-        return (int) $t[1];
+        return (int)$t[1];
     }
 
     public function getTypeMatiere(): string
     {
-        $t = explode('_', (string) $this->typeIdMatiere);
+        $t = explode('_', (string)$this->typeIdMatiere);
 
         return $t[0];
     }
@@ -121,7 +121,7 @@ class EvenementEdt
 
     public function couleurEdt(): string
     {
-        return strtolower($this->type_cours).'_'.$this->couleur;
+        return strtolower($this->type_cours) . '_' . $this->couleur;
     }
 
     public function displayEdt(): string
@@ -134,7 +134,7 @@ class EvenementEdt
             $inter = $this->personnelObjet->getNom();
         }
 
-        return $this->isEvaluation().'<br />'.$this->salle.'<br />'.$inter.'<br />'.$this->groupe;
+        return $this->isEvaluation() . '<br />' . $this->salle . '<br />' . $inter . '<br />' . $this->groupe;
     }
 
     public function isEvaluation(): string
@@ -143,6 +143,11 @@ class EvenementEdt
             return $this->matiere;
         }
 
-        return '* '.$this->matiere.' *';
+        return '* ' . $this->matiere . ' *';
+    }
+
+    public function getTypeIdEvent(): string
+    {
+        return $this->source . '_' . $this->id;
     }
 }

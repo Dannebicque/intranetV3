@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/05/2022 21:23
+ * @lastUpdate 28/07/2022 10:14
  */
 
 namespace App\Controller;
@@ -18,6 +18,7 @@ use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\Pdf\MyPDF;
 use App\Entity\Constantes;
 use App\Entity\Semestre;
+use App\Repository\AbsenceEtatAppelRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\GroupeRepository;
 use Exception;
@@ -49,13 +50,16 @@ class EdtController extends BaseController
     /**
      * @throws Exception
      */
-    public function dashboardPersonnel(int $semaine = 0): Response
+    public function dashboardPersonnel(
+        AbsenceEtatAppelRepository $absenceEtatAppelRepository,
+        int $semaine = 0): Response
     {
         // todo: fusionner les deux et passer par le manager
         if (null !== $this->dataUserSession->getDepartement() && $this->dataUserSession->getDepartement()->isOptUpdateCelcat()) {
             $matieres = $this->typeMatiereManager->tableauMatieresCodeApogee($this->getDepartement());
             $this->myEdtCelcat->initPersonnel($this->getUser(),
                 $this->dataUserSession->getAnneeUniversitaire(), $semaine, $matieres);
+            $suiviAppel = $absenceEtatAppelRepository->findBySemaineAndUserArray($this->myEdtIntranet->getSemaineFormationLundi(), $this->getUser());
 
             return $this->render('edt/_intervenant2.html.twig', [
                 'edt' => $this->myEdtCelcat,
@@ -63,6 +67,7 @@ class EdtController extends BaseController
                 'semaine' => $semaine,
                 'valeur' => $this->getUser()->getId(),
                 'tabHeures' => Constantes::TAB_HEURES_EDT_2,
+                'suiviAppel' => $suiviAppel
             ]);
         }
 
@@ -70,6 +75,7 @@ class EdtController extends BaseController
         $this->myEdtIntranet->initPersonnel($this->getUser(),
             $this->dataUserSession->getAnneeUniversitaire(),
             $semaine, $matieres);
+        $suiviAppel = $absenceEtatAppelRepository->findBySemaineAndUserArray($this->myEdtIntranet->getSemaineFormationLundi(), $this->getUser());
 
         return $this->render('edt/_intervenant2.html.twig', [
             'edt' => $this->myEdtIntranet,
@@ -77,6 +83,7 @@ class EdtController extends BaseController
             'semaine' => $semaine,
             'valeur' => $this->getUser()->getId(),
             'tabHeures' => Constantes::TAB_HEURES_EDT_2,
+            'suiviAppel' => $suiviAppel
         ]);
     }
 

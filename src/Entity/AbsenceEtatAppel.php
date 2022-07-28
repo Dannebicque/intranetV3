@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/AbsenceEtatAppel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:15
+ * @lastUpdate 28/07/2022 09:41
  */
 
 namespace App\Entity;
@@ -44,6 +44,9 @@ class AbsenceEtatAppel extends BaseEntity
 
     #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'absenceEtatAppels')]
     private ?Semestre $semestre = null;
+
+    #[ORM\Column(length: 40, nullable: true)]
+    private ?string $typeIdEvent = null;
 
     public function getPersonnel(): ?Personnel
     {
@@ -132,6 +135,19 @@ class AbsenceEtatAppel extends BaseEntity
         $this->setPersonnel($event->personnelObjet);
         $this->setTypeSaisie($typeSaisie);
         $this->setTypeMatiere($event->getTypeMatiere());
+        $this->setTypeIdEvent($event->getTypeIdEvent());
+
+        return $this;
+    }
+
+    public function getTypeIdEvent(): ?string
+    {
+        return $this->typeIdEvent;
+    }
+
+    public function setTypeIdEvent(?string $typeIdEvent): self
+    {
+        $this->typeIdEvent = $typeIdEvent;
 
         return $this;
     }
