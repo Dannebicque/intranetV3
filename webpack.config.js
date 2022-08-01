@@ -2,10 +2,12 @@
 // @file /Users/davidannebicque/Sites/intranetV3/webpack.config.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/06/2022 19:16
+// @lastUpdate 01/08/2022 12:16
 
 var Encore = require('@symfony/webpack-encore')
 var path = require('path')
+const FosRouting = require('fos-router/webpack/FosRouting');
+
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
@@ -100,7 +102,7 @@ Encore
     config.useBuiltIns = 'usage'
     config.corejs = 3
   })
-
+  .addPlugin(new FosRouting())
   .enableSassLoader()
 
   .autoProvidejQuery()
@@ -119,7 +121,7 @@ if (!Encore.isProduction()) {
       /* Host that will be used in `server` mode to start HTTP server. */
       analyzerHost: '127.0.0.1',
       /* Port that will be used in `server` mode to start HTTP server. */
-      analyzerPort: 3000,
+      analyzerPort: 3002,
       /* Path to bundle report file that will be generated in `static` mode. */
       /* Relative to bundles output directory. */
       reportFilename: 'report.html',
