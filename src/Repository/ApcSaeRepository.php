@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcSaeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 14:10
+ * @lastUpdate 08/08/2022 17:53
  */
 
 namespace App\Repository;
@@ -58,10 +58,22 @@ class ApcSaeRepository extends ServiceEntityRepository
 
     public function findBySemestre(Semestre $semestre): array
     {
+//        return $this->createQueryBuilder('r')
+//            ->leftJoin('r.apcSaeCompetences', 'apcSaeCompetences')
+//            ->addSelect('apcSaeCompetences')
+//            ->where('r.semestre = :semestre')
+//            ->setParameter('semestre', $semestre->getId())
+//            ->orderBy('r.codeMatiere', Criteria::ASC)
+//            ->addOrderBy('r.libelle', Criteria::ASC)
+//            ->getQuery()
+//            ->getResult();
         return $this->createQueryBuilder('r')
+            ->innerJoin('r.semestres', 's')
+            ->addSelect('s')
+            ->where('s.id = :semestre')
             ->leftJoin('r.apcSaeCompetences', 'apcSaeCompetences')
             ->addSelect('apcSaeCompetences')
-            ->where('r.semestre = :semestre')
+            // ->andWhere('s.ppn_actif = m.ppn')
             ->setParameter('semestre', $semestre->getId())
             ->orderBy('r.codeMatiere', Criteria::ASC)
             ->addOrderBy('r.libelle', Criteria::ASC)
