@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/05/2022 22:05
+ * @lastUpdate 10/08/2022 17:45
  */
 
 namespace App\Classes\Celcat;
@@ -58,8 +58,13 @@ class MyCelcat
             $cal = new Calendrier();
             $cal->setAnneeUniversitaire($anneeUniversitaire);
             $cal->setSemaineFormation((int) odbc_result($result, 'week_no'));
-            $cal->setSemaineReelle((int) date('W', strtotime($date)));
-            $cal->setDateLundi(Tools::convertDateToObject($date));
+
+            $td = explode(' ', $date);
+
+            /** @var \Carbon\CarbonInterface $objDate */
+            $objDate = Tools::convertDateToObject($td[0]);
+            $cal->setDateLundi($objDate);
+            $cal->setSemaineReelle($objDate->weekOfYear);
             $this->entityManger->persist($cal);
         }
         $this->entityManger->flush();
