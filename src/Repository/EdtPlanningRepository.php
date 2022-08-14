@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/07/2022 16:53
+ * @lastUpdate 11/08/2022 16:53
  */
 
 namespace App\Repository;
@@ -39,10 +39,12 @@ class EdtPlanningRepository extends ServiceEntityRepository
         parent::__construct($registry, EdtPlanning::class);
     }
 
-    public function findEdtProf(int $prof, int $semaine = 0): array
+    public function findEdtProf(int $prof, AnneeUniversitaire $anneeUniversitaire, int $semaine = 0): array
     {
         $query = $this->createQueryBuilder('p')
             ->where('p.intervenant = :idprof')
+            ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
+            ->setParameter('anneeUniversitaire', $anneeUniversitaire->getId())
             ->setParameter('idprof', $prof);
 
         if (0 !== $semaine) {
@@ -427,12 +429,12 @@ class EdtPlanningRepository extends ServiceEntityRepository
     public function findEdtSemestreSemaine(Semestre $semestre, int $semaine, AnneeUniversitaire $anneeUniversitaire): array
     {
         return $this->createQueryBuilder('p')
-            ->where('p.semestre = :semestre')
+            ->where('p.ordreSemestre = :semestre')
             ->andWhere('p.semaine = :semaine')
-            // ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
-            ->setParameter('semestre', $semestre->getId())
+            ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
+            ->setParameter('semestre', $semestre->getOrdreLmd())
             ->setParameter('semaine', $semaine)
-            // ->setParameter('anneeUniversitaire', $anneeUniversitaire->getId())
+            ->setParameter('anneeUniversitaire', $anneeUniversitaire->getId())
             ->addOrderBy('p.jour', Criteria::ASC)
             ->addOrderBy('p.debut', Criteria::ASC)
             ->addOrderBy('p.groupe', Criteria::ASC)

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/07/2022 10:14
+ * @lastUpdate 11/08/2022 16:53
  */
 
 namespace App\Controller;
@@ -55,10 +55,11 @@ class EdtController extends BaseController
         int $semaine = 0): Response
     {
         // todo: fusionner les deux et passer par le manager
-        if (null !== $this->dataUserSession->getDepartement() && $this->dataUserSession->getDepartement()->isOptUpdateCelcat()) {
+        // todo: il faut récupérer toutes les données de Celcat et de la base Intranet (MMI) pour le prof, peut importe si l'option est activée ou non
+        if (null !== $this->getDepartement() && $this->getDepartement()->isOptUpdateCelcat()) {
             $matieres = $this->typeMatiereManager->tableauMatieresCodeApogee($this->getDepartement());
             $this->myEdtCelcat->initPersonnel($this->getUser(),
-                $this->dataUserSession->getAnneeUniversitaire(), $semaine, $matieres);
+                $this->getAnneeUniversitaire(), $semaine, $matieres);
             $suiviAppel = $absenceEtatAppelRepository->findBySemaineAndUserArray($this->myEdtIntranet->getSemaineFormationLundi(), $this->getUser());
 
             return $this->render('edt/_intervenant2.html.twig', [
@@ -73,7 +74,7 @@ class EdtController extends BaseController
 
         $matieres = $this->typeMatiereManager->findByDepartementArray($this->getDepartement());
         $this->myEdtIntranet->initPersonnel($this->getUser(),
-            $this->dataUserSession->getAnneeUniversitaire(),
+            $this->getAnneeUniversitaire(),
             $semaine, $matieres);
         $suiviAppel = $absenceEtatAppelRepository->findBySemaineAndUserArray($this->myEdtIntranet->getSemaineFormationLundi(), $this->getUser());
 
@@ -125,7 +126,7 @@ class EdtController extends BaseController
     public function dashboardEtudiant(int $semaine = 0): Response
     {
         $matieres = $this->typeMatiereManager->tableauMatieresSemestreCodeApogee($this->getUser()->getSemestre());
-
+//todo: passer pour l'edt manager
         if (null !== $this->getUser()->getDiplome() && $this->getUser()->getDiplome()?->isOptUpdateCelcat()) {
             $this->myEdtCelcat->initEtudiant($this->getUser(),
                 $this->getAnneeUniversitaire(), $semaine, $matieres);

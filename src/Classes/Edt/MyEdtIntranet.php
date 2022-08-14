@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/07/2022 16:53
+ * @lastUpdate 11/08/2022 07:19
  */
 
 namespace App\Classes\Edt;
@@ -35,6 +35,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class MyEdtIntranet extends BaseEdt
 {
+    protected AnneeUniversitaire $anneeUniversitaire;
     private array $tab = [];
     private array $matieres = [];
 
@@ -60,6 +61,7 @@ class MyEdtIntranet extends BaseEdt
         array $matieres = []
     ): self {
         $this->matieres = $matieres;
+        $this->anneeUniversitaire = $anneeUniversitaire;
         $this->user = $personnel;
         $this->init($anneeUniversitaire, Constantes::FILTRE_EDT_PROF, $personnel->getId(), $semaine);
         $this->semaines = $this->calculSemaines();
@@ -90,7 +92,7 @@ class MyEdtIntranet extends BaseEdt
                 $this->planning = $this->transformePromo($pl);
                 break;
             case Constantes::FILTRE_EDT_PROF:
-                $pl = $this->edtPlanningRepository->findEdtProf($this->valeur, $this->semaineFormationIUT);
+                $pl = $this->edtPlanningRepository->findEdtProf($this->valeur, $this->anneeUniversitaire, $this->semaineFormationIUT);
                 $this->planning = $this->transformeIndividuel($pl);
                 break;
             case Constantes::FILTRE_EDT_ETUDIANT:
@@ -157,6 +159,7 @@ class MyEdtIntranet extends BaseEdt
     {
         // prof ou étudiant
         $tab = [];
+        dump($pl);
 
         /** @var EdtPlanning $p */
         foreach ($pl as $p) {
@@ -193,7 +196,8 @@ class MyEdtIntranet extends BaseEdt
             if (null !== $matiere) {
                 $evt->matiere = $matiere->display;
                 $evt->semestre = $p->getSemestre();
-                $annee = $evt->semestre->getAnnee();
+                $evt->semestreOrdre = $p->getOrdreSemestre();
+                $annee = $matiere->getSemestres()->first()->getAnnee();
                 if (null !== $annee) {
                     $evt->couleur = $annee->getCouleur();
                 }

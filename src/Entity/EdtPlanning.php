@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/EdtPlanning.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/05/2022 15:46
+ * @lastUpdate 03/08/2022 15:21
  */
 
 namespace App\Entity;
 
+use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\MatiereTrait;
 use App\Repository\EdtPlanningRepository;
 use Carbon\CarbonInterface;
@@ -17,9 +18,11 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: EdtPlanningRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class EdtPlanning extends BaseEntity
 {
     use MatiereTrait;
+    use LifeCycleTrait;
 
     #[ORM\Column(type: Types::INTEGER)]
     private ?int $jour = null;
@@ -62,6 +65,12 @@ class EdtPlanning extends BaseEntity
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $date = null;
+
+    #[ORM\ManyToOne(inversedBy: 'edtPlannings')]
+    private ?AnneeUniversitaire $anneeUniversitaire = null;
+
+    #[ORM\Column]
+    private ?int $ordreSemestre = null;
 
     public function getOrdre(): ?string
     {
@@ -319,6 +328,30 @@ class EdtPlanning extends BaseEntity
     public function setGroupe(int $groupe): self
     {
         $this->groupe = $groupe;
+
+        return $this;
+    }
+
+    public function getAnneeUniversitaire(): ?AnneeUniversitaire
+    {
+        return $this->anneeUniversitaire;
+    }
+
+    public function setAnneeUniversitaire(?AnneeUniversitaire $anneeUniversitaire): self
+    {
+        $this->anneeUniversitaire = $anneeUniversitaire;
+
+        return $this;
+    }
+
+    public function getOrdreSemestre(): ?int
+    {
+        return $this->ordreSemestre;
+    }
+
+    public function setOrdreSemestre(int $ordreSemestre): self
+    {
+        $this->ordreSemestre = $ordreSemestre;
 
         return $this;
     }

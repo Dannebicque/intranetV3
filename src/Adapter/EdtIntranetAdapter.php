@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Adapter/EdtIntranetAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/07/2022 17:15
+ * @lastUpdate 11/08/2022 16:55
  */
 
 namespace App\Adapter;
@@ -33,10 +33,14 @@ class EdtIntranetAdapter extends AbstractEdtAdapter implements EdtAdapterInterfa
         $event = new EvenementEdt();
 
         if (array_key_exists($evt->getTypeIdMatiere(), $matieres)) {
-            $event->matiere = $matieres[$evt->getTypeIdMatiere()]->display;
-            $event->code_matiere = $matieres[$evt->getTypeIdMatiere()]->codeMatiere;
+            $matiere = $matieres[$evt->getTypeIdMatiere()];
+            $event->matiere = $matiere->display;
+            $event->code_matiere = $matiere->codeMatiere;
+            $event->semestre = $matiere->getSemestres()->first();
+            $event->couleur = $event->semestre->getAnnee()?->getCouleur();
         } else {
             $event->matiere = 'Inconnue';
+            $event->couleur = '#cccccc';
         }
         $event->source = EdtManager::EDT_INTRANET;
         $event->id = $evt->getId();
@@ -61,8 +65,7 @@ dump($groupes);
         $event->personnelObjet = $evt->getIntervenant();
         $event->groupe = $evt->getDisplayGroupe();
         $event->type_cours = $evt->getType();
-        $event->semestre = $evt->getSemestre();
-        $event->couleur = $evt->getSemestre()->getAnnee()->getCouleur();
+
 
         return $event;
     }

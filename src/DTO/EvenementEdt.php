@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/EvenementEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/07/2022 09:41
+ * @lastUpdate 11/08/2022 07:16
  */
 
 namespace App\DTO;
@@ -54,6 +54,7 @@ class EvenementEdt
 
     public ?string $codeelement = '';
     public ?int $ordreGroupe = 1;
+    public ?int $semestreOrdre;
 
     public function getDisplay(): void
     {

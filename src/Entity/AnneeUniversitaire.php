@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/AnneeUniversitaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:35
+ * @lastUpdate 03/08/2022 15:17
  */
 
 namespace App\Entity;
@@ -107,6 +107,9 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
     #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: AnneeUniversitaireSemestre::class)]
     private Collection $anneeUniversitaireSemestres;
 
+    #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: EdtPlanning::class)]
+    private Collection $edtPlannings;
+
     public function __construct()
     {
         $this->departements = new ArrayCollection();
@@ -121,6 +124,7 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
         $this->personnels = new ArrayCollection();
         $this->planningAlternances = new ArrayCollection();
         $this->anneeUniversitaireSemestres = new ArrayCollection();
+        $this->edtPlannings = new ArrayCollection();
     }
 
     public function getLibelle(): ?string
@@ -510,6 +514,36 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
         // set the owning side to null (unless already changed)
         if ($this->anneeUniversitaireSemestres->removeElement($anneeUniversitaireSemestre) && $anneeUniversitaireSemestre->getAnneeUniversitaire() === $this) {
             $anneeUniversitaireSemestre->setAnneeUniversitaire(null);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, EdtPlanning>
+     */
+    public function getEdtPlannings(): Collection
+    {
+        return $this->edtPlannings;
+    }
+
+    public function addEdtPlanning(EdtPlanning $edtPlanning): self
+    {
+        if (!$this->edtPlannings->contains($edtPlanning)) {
+            $this->edtPlannings[] = $edtPlanning;
+            $edtPlanning->setAnneeUniversitaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEdtPlanning(EdtPlanning $edtPlanning): self
+    {
+        if ($this->edtPlannings->removeElement($edtPlanning)) {
+            // set the owning side to null (unless already changed)
+            if ($edtPlanning->getAnneeUniversitaire() === $this) {
+                $edtPlanning->setAnneeUniversitaire(null);
+            }
         }
 
         return $this;
