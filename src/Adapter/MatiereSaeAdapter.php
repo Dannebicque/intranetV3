@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Adapter/MatiereSaeAdapter.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Adapter/MatiereSaeAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/10/2021 10:36
+ * @lastUpdate 11/08/2022 16:49
  */
 
 namespace App\Adapter;
@@ -42,12 +42,15 @@ class MatiereSaeAdapter extends AbstractMatiereAdapter implements MatiereAdapter
 
             foreach ($matiere->getApcSaeCompetences() as $competence) {
                 $ue = new Ue();
+                $ue->ue_apc_id = $competence->getCompetence()->getId();
                 foreach ($competence->getCompetence()->getUe() as $ueCompetence) {
-                    if ($ueCompetence->getSemestre()->getId() === $matiere->getSemestre()->getId()) {
-                        $ue->ue_id = $ueCompetence->getId();
+                    foreach ($matiere->getSemestres() as $semestre) {
+                        if ($ueCompetence->getSemestre()->getId() === $semestre->getId()) {
+                            $ue->ue_id = $ueCompetence->getId();
+                        }
                     }
                 }
-                $ue->ue_apc_id = $competence->getCompetence()->getId();
+
                 $ue->ue_display = $competence->getCompetence()->getNomCourt();
                 $ue->ue_coefficient = $competence->getCoefficient();
                 $ue->ue_numero = (int) $competence->getCompetence()->getCouleur()[1];
