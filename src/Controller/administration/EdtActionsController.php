@@ -1,16 +1,17 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtActionsController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtActionsController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 08/08/2022 18:17
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\Edt\MyEdtImport;
 use App\Classes\Edt\MyEdtIntranet;
+use App\Classes\MyUpload;
 use App\Controller\BaseController;
 use App\Entity\EdtPlanning;
 use App\Repository\EdtPlanningRepository;
@@ -33,16 +34,19 @@ class EdtActionsController extends BaseController
      * @throws Exception
      */
     #[Route(path: '/uploadsemaine', name: 'administration_edt_action_upload')]
-    public function uploadSemaine(Request $request, MyEdtImport $myEdtImport): ?RedirectResponse
+    public function uploadSemaine(
+        MyUpload $upload,
+        Request $request, MyEdtImport $myEdtImport): ?RedirectResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_EDT', $this->getDepartement());
         // récupérer le fichier
-        $myEdtImport->init($request->files->get('fichieredt'), $this->dataUserSession)->traite();
+        $fichier = $upload->upload($request->files->get('fichieredt'));
+        $myEdtImport->init($fichier, $this->getDepartement(), $this->getAnneeUniversitaire())->traite();
         /* fin necessaire ? */
         $s = $myEdtImport->getCalendrier();
         if ($s) {
             return $this->redirectToRoute('administration_edt_index',
-                ['semaine' => $s->getSemaineReelle(), 'valeur' => $myEdtImport->getSemestre(), 'filtre' => 'promo']);
+                ['semaine' => $s->getSemaineReelle(), 'valeur' => $myEdtImport->getSemestre()?->getId(), 'filtre' => 'promo']);
         }
         // pas de semaine trouvée
         return $this->redirectToRoute('administration_edt_index');
