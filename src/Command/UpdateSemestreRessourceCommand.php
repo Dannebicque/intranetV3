@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Command/UpdateSemestreRessourceCommand.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 11:52
+ * @lastUpdate 14/08/2022 14:34
  */
 
 namespace App\Command;
@@ -40,24 +40,24 @@ class UpdateSemestreRessourceCommand extends Command
     ): int {
         $io = new SymfonyStyle($input, $output);
         $ressources = $this->apcRessourceRepository->findAll();
-        foreach ($ressources as $ressource) {
-            $semestre = $ressource->getSemestre();
-            $ressource->addSemestre($semestre);
-            $semestre->addApcSemestresRessource($ressource);
-            $ressource->setSemestre(null);
-        }
-        $this->entityManager->flush();
-        $io->success('Ressources mises à jour');
-
-        $saes = $this->apcSaeRepository->findAll();
-        foreach ($saes as $sae) {
-            $semestre = $sae->getSemestre();
-            $sae->addSemestre($semestre);
-            $semestre->addApcSemestresSae($sae);
-            $sae->setSemestre(null);
-        }
-        $this->entityManager->flush();
-        $io->success('SAES mises à jour');
+//        foreach ($ressources as $ressource) {
+//            $semestre = $ressource->getSemestre();
+//            $ressource->addSemestre($semestre);
+//            $semestre->addApcSemestresRessource($ressource);
+//            $ressource->setSemestre(null);
+//        }
+//        $this->entityManager->flush();
+//        $io->success('Ressources mises à jour');
+//
+//        $saes = $this->apcSaeRepository->findAll();
+//        foreach ($saes as $sae) {
+//            $semestre = $sae->getSemestre();
+//            $sae->addSemestre($semestre);
+//            $semestre->addApcSemestresSae($sae);
+//            $sae->setSemestre(null);
+//        }
+//        $this->entityManager->flush();
+//        $io->success('SAES mises à jour');
 
         $evaluations = $this->evaluationRepository->findAll();
         foreach ($evaluations as $evaluation) {
