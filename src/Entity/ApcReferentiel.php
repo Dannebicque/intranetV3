@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcReferentiel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 11:38
+ * @lastUpdate 14/08/2022 15:08
  */
 
 namespace App\Entity;
@@ -49,6 +49,9 @@ class ApcReferentiel extends BaseEntity
 
     #[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'diplomes')]
     private ?Departement $departement;
+
+    #[ORM\Column(length: 10)]
+    private ?string $type_structure = null;
 
     public function __construct()
     {
@@ -207,6 +210,18 @@ class ApcReferentiel extends BaseEntity
                 $diplome->setReferentiel(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTypeStructure(): ?string
+    {
+        return $this->type_structure;
+    }
+
+    public function setTypeStructure(string $type_structure): self
+    {
+        $this->type_structure = $type_structure;
 
         return $this;
     }

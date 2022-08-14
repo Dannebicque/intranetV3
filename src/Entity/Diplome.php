@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Diplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 11:39
+ * @lastUpdate 14/08/2022 15:18
  */
 
 namespace App\Entity;
@@ -117,9 +117,6 @@ class Diplome extends BaseEntity implements Serializable
 
     #[ORM\Column(type: Types::BOOLEAN)]
     private ?bool $optUpdateCelcat = false;
-
-    #[ORM\Column(type: 'string', length: 10, nullable: true)]
-    private ?string $typeStructure;  // structure si diplôme APC
 
     #[ORM\ManyToOne(targetEntity: self::class, inversedBy: 'enfants')]
     private ?Diplome $parent;
@@ -629,14 +626,7 @@ class Diplome extends BaseEntity implements Serializable
 
     public function getTypeStructure(): ?string
     {
-        return $this->typeStructure;
-    }
-
-    public function setTypeStructure(?string $typeStructure): self
-    {
-        $this->typeStructure = $typeStructure;
-
-        return $this;
+        return $this->getReferentiel()?->getTypeStructure();
     }
 
     public function getParent(): ?self
