@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/08/2022 07:19
+ * @lastUpdate 14/08/2022 15:24
  */
 
 namespace App\Classes\Edt;
@@ -159,7 +159,6 @@ class MyEdtIntranet extends BaseEdt
     {
         // prof ou étudiant
         $tab = [];
-        dump($pl);
 
         /** @var EdtPlanning $p */
         foreach ($pl as $p) {

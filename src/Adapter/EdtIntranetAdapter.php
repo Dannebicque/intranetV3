@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Adapter/EdtIntranetAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/08/2022 16:55
+ * @lastUpdate 14/08/2022 15:24
  */
 
 namespace App\Adapter;
@@ -55,7 +55,7 @@ class EdtIntranetAdapter extends AbstractEdtAdapter implements EdtAdapterInterfa
         $event->dateObjet = $evt->getDate();
         $event->gridStart = Constantes::TAB_HEURES_EDT_2[$evt->getDebut() - 1][0];
         $event->gridEnd = Constantes::TAB_HEURES_EDT_2[$evt->getFin() - 1][0];
-dump($groupes);
+
         if (array_key_exists($evt->getGroupe(), $groupes)) {
             $event->ordreGroupe = $groupes[$evt->getGroupe()]->getOrdre();
             $event->groupeObjet = $groupes[$evt->getGroupe()];
