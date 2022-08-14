@@ -1,23 +1,22 @@
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/assets/controllers/modal_controller.js
+// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/plan-cours-adm_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/10/2021 21:49
+// @lastUpdate 30/06/2022 22:19
 
-import {Controller} from '@hotwired/stimulus'
-import {post} from '../js/fetch'
-import {addCallout} from '../js/util'
+import { Controller} from '@hotwired/stimulus'
 
 export default class extends Controller {
   static targets = ['content']
+
   static values = {
     urlDiplome: String,
-    urlRecherche: String
+    urlRecherche: String,
   }
 
   connect() {
     let diplome = null
-    document.querySelectorAll('.changeDiplome').forEach(element => {
+    document.querySelectorAll('.changeDiplome').forEach((element) => {
       if (element.classList.contains('active')) {
         diplome = element.dataset.diplome
       }
@@ -38,10 +37,9 @@ export default class extends Controller {
     this.contentTarget.innerHTML = window.da.loaderStimulus
     const params = new URLSearchParams({
       diplome: diplomeId,
-      ppn: ppn
+      ppn,
     })
     const response = await fetch(`${this.urlDiplomeValue}?${params.toString()}`)
     this.contentTarget.innerHTML = await response.text()
   }
-
 }

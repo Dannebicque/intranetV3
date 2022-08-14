@@ -1,8 +1,10 @@
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/informations.js
+// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/informations.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/07/2020 13:46
+// @lastUpdate 07/07/2022 13:30
+import $ from 'jquery'
+import Routing from 'fos-router'
 
 $(document).on('click', '.changeinformation', function (e) {
   e.preventDefault()
@@ -14,15 +16,15 @@ $(document).on('click', '.changeinformation', function (e) {
 })
 
 $(document).on('click', '.addLike', function () {
-  let $call = $(this).parent().find('span')
+  const $call = $(this).parent().find('span')
   $.ajax({
-    url: Routing.generate('information_like', {slug: $(this).data('article')}),
+    url: Routing.generate('information_like', { slug: $(this).data('article') }),
     method: 'post',
-    success: function (data) {
+    success(data) {
       $call.text(data)
     },
-    error: function () {
+    error() {
       addCallout('Erreur lors de la gestion de vos articles favoris', 'danger')
-    }
+    },
   })
 })

@@ -1,30 +1,32 @@
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/sadm.personnels.js
+// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/sadm.personnels.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/09/2021 09:58
+// @lastUpdate 07/07/2022 13:30
+import $ from 'jquery'
+import Routing from 'fos-router'
 
 $(document).on('keyup', '#sa_login_urca', function () {
   const departement = $(this).data('departement')
   const $val = $(this).val()
   if ($val.length > 2) {
     $.ajax({
-      url: Routing.generate('api_personnel_recherche', {needle: $val}),
+      url: Routing.generate('api_personnel_recherche', { needle: $val }),
       dataType: 'json',
-      success: function (data) {
+      success(data) {
         $('#result').empty()
-        jQuery.each(data, function (index, pers) {
-          const html = '<tr>' +
-            '<td>' + pers.nom + '</td>' +
-            '<td>' + pers.prenom + '</td>' +
-            '<td>' + pers.numeroHarpege + '</td>' +
-            '<td>' + pers.username + '</td>' +
-            '<td>' + pers.mail_univ + '</td>' +
-            '<td><a href="#" class="btn btn-success btn-outline btn-square sa_addpersonnel" data-provide="tooltip" data-placement="bottom" title="Ajouter au departement" data-slug="' + pers.slug + '" data-departement="' + departement + '"><i class="fas fa-plus"></i></a></td>' +
-            '</tr>'
+        jQuery.each(data, (index, pers) => {
+          const html = '<tr>'
+            + `<td>${pers.nom}</td>`
+            + `<td>${pers.prenom}</td>`
+            + `<td>${pers.numeroHarpege}</td>`
+            + `<td>${pers.username}</td>`
+            + `<td>${pers.mail_univ}</td>`
+            + `<td><a href="#" class="btn btn-success btn-outline btn-square sa_addpersonnel" data-provide="tooltip" data-placement="bottom" title="Ajouter au departement" data-slug="${pers.slug}" data-departement="${departement}"><i class="fas fa-plus"></i></a></td>`
+            + '</tr>'
           $('#result').append(html)
         })
-      }
+      },
     })
   }
 })
@@ -33,13 +35,12 @@ $(document).on('click', '.sa_addpersonnel', function () {
   $.ajax({
     url: Routing.generate('api_personnel_add_to_departement', {
       slug: $(this).data('slug'),
-      departement: $(this).data('departement')
+      departement: $(this).data('departement'),
     }),
     dataType: 'json',
-    success: function (data) {
+    success(data) {
       addCallout('Personnel ajouté au departement !', 'success')
-
-    }
+    },
   })
 })
 
@@ -79,30 +80,29 @@ $(document).on('click', '.sa_addpersonnel', function () {
 
 $(document).on('change', '.change_droit_pf', function () {
   $.ajax({
-    url: Routing.generate('sa_personnel_departement_modifier_droit', {pf: $(this).data('pf')}),
+    url: Routing.generate('sa_personnel_departement_modifier_droit', { pf: $(this).data('pf') }),
     method: 'POST',
-    data: {'droit': $(this).val()},
-    success: function (data) {
+    data: { droit: $(this).val() },
+    success(data) {
       addCallout('Droits modifiés !', 'success')
-
-    }
+    },
   })
 })
 
-$(document).on('click', '#searchLdap', function (e) {
+$(document).on('click', '#searchLdap', (e) => {
   e.preventDefault()
   $.ajax({
     url: Routing.generate('ldap_search'),
     method: 'POST',
     data: {
-      'numero': $('#personnel_numero_harpege').val()
+      numero: $('#personnel_numero_harpege').val(),
     },
-    success: function (data) {
+    success(data) {
       $('#personnel_mail_univ').val(data.mail)
       $('#personnel_username').val(data.login)
       $('#personnel_nom').val(data.nom)
       $('#personnel_prenom').val(data.prenom)
       $('#personnel_date_naissance').val(data.dateNaissance)
-    }
+    },
   })
 })

@@ -14,6 +14,15 @@
                     "@symfony/ux-dropzone/src/style.css": true
                 }
             }
+        },
+        "@symfony/ux-live-component": {
+            "typed": {
+                "enabled": true,
+                "fetch": "eager",
+                "autoimport": {
+                    "@symfony/ux-live-component/styles/live.css": true
+                }
+            }
         }
     },
     "entrypoints": []

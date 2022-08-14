@@ -1,17 +1,19 @@
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.notes.js
+// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/adm.notes.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/09/2021 09:01
-import {addCallout} from '../util'
+// @lastUpdate 07/07/2022 13:30
+import $ from 'jquery'
+import { addCallout } from '../util'
+import Routing from 'fos-router'
 
 $(document).on('click', '.optAfficher', function () {
   const evaluation = $(this).data('id')
   const $child = $(this).children('i')
   const $a = $(this)
   $.ajax({
-    url: Routing.generate('administration_evaluation_visibilite', {uuid: evaluation}),
-    success: function () {
+    url: Routing.generate('administration_evaluation_visibilite', { uuid: evaluation }),
+    success() {
       if ($child.hasClass('fa-eye')) {
         $a.addClass('btn-danger')
         $a.removeClass('btn-info').removeClass('btn-outline')
@@ -28,9 +30,9 @@ $(document).on('click', '.optAfficher', function () {
       }
       addCallout('Visibilité de l\'évaluation modifiée !', 'success')
     },
-    error: function () {
+    error() {
       addCallout('Une erreur est survenue !', 'danger')
-    }
+    },
   })
 })
 
@@ -39,8 +41,8 @@ $(document).on('click', '.optVerrouiller', function () {
   const $child = $(this).children('i')
   const $a = $(this)
   $.ajax({
-    url: Routing.generate('administration_evaluation_modifiable', {uuid: evaluation}),
-    success: function () {
+    url: Routing.generate('administration_evaluation_modifiable', { uuid: evaluation }),
+    success() {
       if ($child.hasClass('fa-lock-open')) {
         $a.addClass('btn-danger')
         $a.removeClass('btn-warning').removeClass('btn-outline')
@@ -56,19 +58,19 @@ $(document).on('click', '.optVerrouiller', function () {
       }
       addCallout('Vérouillage de l\'évaluation modifiée !', 'success')
     },
-    error: function () {
+    error() {
       addCallout('Une erreur est survenue !', 'danger')
-    }
+    },
   })
 })
 
-$(document).on('click', '#voirDetailAbsent', function (e) {
+$(document).on('click', '#voirDetailAbsent', (e) => {
   e.preventDefault()
   $('#detailIncoherent').hide()
   $('#detailAbsent').toggle()
 })
 
-$(document).on('click', '#voirDetailIncoherent', function (e) {
+$(document).on('click', '#voirDetailIncoherent', (e) => {
   e.preventDefault()
   $('#detailIncoherent').toggle()
   $('#detailAbsent').hide()
@@ -77,18 +79,18 @@ $(document).on('click', '#voirDetailIncoherent', function (e) {
 $(document).on('click', '.remplacerParZero', function (e) {
   e.preventDefault()
   updateNote($(this).data('note'), 'zero').then(
-    data => {
-      $('#note_' + data).text(0)
-    }
+    (data) => {
+      $(`#note_${data}`).text(0)
+    },
   )
 })
 
 $(document).on('click', '.marquerAbsent', function (e) {
   e.preventDefault()
   updateNote($(this).data('note'), 'absent').then(
-    data => {
-      $('#note_' + data).text('Absence justifiée')
-    }
+    (data) => {
+      $(`#note_${data}`).text('Absence justifiée')
+    },
   )
 })
 
@@ -97,12 +99,12 @@ $(document).on('click', '#supprAbsent', function (e) {
   updateNote($(this).data('note'), 'suppr-absence')
 })
 
-function updateNote (id, action) {
+function updateNote(id, action) {
   return $.ajax({
-    url: Routing.generate('administration_note_corrige_ajax', {note: id, action: action}),
+    url: Routing.generate('administration_note_corrige_ajax', { note: id, action }),
     method: 'POST',
-    success: function (data) {
+    success(data) {
       return data
-    }
+    },
   })
 }

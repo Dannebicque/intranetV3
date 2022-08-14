@@ -1,10 +1,10 @@
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/assets/components/table.js
+// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/Sites/intranetV3/assets/components/table.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/10/2021 16:15
+// @lastUpdate 25/07/2022 08:36
 
-import {post} from '../js/fetch'
+import { post } from '../js/fetch'
 
 const ASC = 'ASC'
 const DESC = 'DESC'
@@ -14,9 +14,7 @@ const ICON_ASC = '&#9650;'
 const ICON_NONE = '&#9650;&#9660;'
 
 export default class Table extends HTMLElement {
-
-
-  constructor () {
+  constructor() {
     super()
     this.div = this
 
@@ -25,7 +23,7 @@ export default class Table extends HTMLElement {
 
     this.table = this.querySelector('table.datable')
     this.tableBody = this.table.querySelector('tbody')
-    this.pageActive = this.options.pageActive //par défaut on récupère
+    this.pageActive = this.options.pageActive // par défaut on récupère
     this.nbElementPerPage = this.options.pageLength
     this.order = []
     this.filter = {}
@@ -38,7 +36,7 @@ export default class Table extends HTMLElement {
         if (column.order != null) {
           this.order = [{
             column: column.id,
-            order: column.order
+            order: column.order,
           }]
         }
 
@@ -46,9 +44,10 @@ export default class Table extends HTMLElement {
         document.getElementById(column.id).addEventListener('click', (elem) => {
           this.order = [{
             column: elem.target.id,
-            order: elem.target.dataset.order//todo: ordre actuel... a inverser dans la requete? Mettre les deux fleches si pas trié ? si defaultorder = false?
+            order: elem.target.dataset.order,
+            // todo: ordre actuel... a inverser dans la requete? Mettre les deux fleches si pas trié ? si defaultorder = false?
           }]
-          //todo: mettre à jour le sens de la fleche...
+          // todo: mettre à jour le sens de la fleche...
           this._updateHeader()
           this._buildArray()
         })
@@ -57,14 +56,14 @@ export default class Table extends HTMLElement {
 
     this.form = this.getElementsByTagName('form')
 
-    //ajout des events sur le form
-    let inputs = this.form[0].getElementsByTagName('input')
-    let selects = this.form[0].getElementsByTagName('select')
+    // ajout des events sur le form
+    const inputs = this.form[0].getElementsByTagName('input')
+    const selects = this.form[0].getElementsByTagName('select')
     Array.from(inputs).forEach((input) => {
       if (input.type === 'text') {
         input.addEventListener('keyup', (event) => {
           if (event.target.type === 'text' && event.target.value.length < 3) {
-            //on ne déclenche rien si moins de 3 caractères
+            // on ne déclenche rien si moins de 3 caractères
             return
           }
 
@@ -89,7 +88,7 @@ export default class Table extends HTMLElement {
     })
 
     if (this.options.paging === true) {
-      const select = document.getElementById(this.options.paging_id + '_select')
+      const select = document.getElementById(`${this.options.paging_id}_select`)
       select.addEventListener('change', (e) => {
         e.preventDefault()
         this.nbElementPerPage = e.target.value
@@ -101,36 +100,36 @@ export default class Table extends HTMLElement {
     this._buildArray()
   }
 
-  _filterArray (event) {
+  _filterArray() {
     this._buildArray()
   }
 
   _updateHeader() {
-    //mise à jour du header après un tri
+    // mise à jour du header après un tri
     this.order.forEach((order) => {
       const column = document.getElementById(order.column)
       if (order.order === ASC) {
-        column.innerHTML =  column.dataset.originalName + ' ' + ICON_ASC
+        column.innerHTML = `${column.dataset.originalName} ${ICON_ASC}`
         column.dataset.order = 'DESC'
       } else if (order.order === DESC) {
-        column.innerHTML = column.dataset.originalName + ' ' + ICON_DESC
+        column.innerHTML = `${column.dataset.originalName} ${ICON_DESC}`
         column.dataset.order = 'ASC'
       } else {
-        column.innerHTML = column.dataset.originalName + ' ' + ICON_NONE
+        column.innerHTML = `${column.dataset.originalName} ${ICON_NONE}`
         column.dataset.order = 'ASC'
       }
     })
   }
 
-  _buildArray () {
+  _buildArray() {
     this.tableBody.innerHTML = ''
     post(this.base_url, {
       paging: {
         pageLength: this.nbElementPerPage,
-        pageActive: this.pageActive
+        pageActive: this.pageActive,
       },
       order: this.order,
-      filter: this.filter
+      filter: this.filter,
     }).then((data) => {
       if (data.data.length > 0) {
         data.data.forEach((item) => {
@@ -143,7 +142,7 @@ export default class Table extends HTMLElement {
         })
       } else {
         let html = '<tr>'
-        html += '<td colspan="' + this.options.columns.length + '" class="text-center">Pas de données.</td>'
+        html += `<td colspan="${this.options.columns.length}" class="text-center">Pas de données.</td>`
         html += '</tr>'
         this.tableBody.innerHTML = html
       }
@@ -151,30 +150,27 @@ export default class Table extends HTMLElement {
     })
   }
 
-
-  _initHeader () {
+  _initHeader() {
     this.options.columns.forEach((column) => {
-      let texte = document.getElementById(column.id).innerText
+      const texte = document.getElementById(column.id).innerText
       document.getElementById(column.id).dataset.originalName = texte
       if (column.orderable === true) {
-
         if (column.order === DESC) {
-          document.getElementById(column.id).innerHTML = texte + ' ' + ICON_DESC
+          document.getElementById(column.id).innerHTML = `${texte} ${ICON_DESC}`
           document.getElementById(column.id).dataset.order = DESC
-
         } else if (column.order === ASC) {
-          document.getElementById(column.id).innerHTML = texte + ' ' + ICON_ASC
+          document.getElementById(column.id).innerHTML = `${texte} ${ICON_ASC}`
           document.getElementById(column.id).dataset.order = ASC
         } else {
-          document.getElementById(column.id).innerHTML = texte + ' ' + ICON_NONE
+          document.getElementById(column.id).innerHTML = `${texte} ${ICON_NONE}`
           document.getElementById(column.id).dataset.order = ASC
         }
       }
     })
   }
 
-  _updatePagination (paging) {
-    const nav = document.getElementById(this.options.paging_id + '_nav')
+  _updatePagination(paging) {
+    const nav = document.getElementById(`${this.options.paging_id}_nav`)
     const previousDisabled = paging.firstPage === true ? 'disabled' : ''
     const nextDisabled = paging.lastPage === true ? 'disabled' : ''
     let pageCutLow = paging.numActivePage - 1
@@ -189,7 +185,7 @@ export default class Table extends HTMLElement {
     // 10 pages, on affiche tout
     if (paging.nbPages <= 10) {
       for (let i = 1; i <= paging.nbPages; i++) {
-        let pageActive = i === paging.numActivePage ? 'active' : ''
+        const pageActive = i === paging.numActivePage ? 'active' : ''
         html += `<li class="page-item ${pageActive}">
                   <a class="page-link" href="#">${i}</a>
                </li>`
@@ -201,7 +197,7 @@ export default class Table extends HTMLElement {
         html += '<li class="page-item"><a class="page-link" href="#">1</a></li>'
         if (paging.numActivePage > 3) {
           const pag = paging.numActivePage - 2
-          html += '<li class="page-item"><a class="page-link" href="#" data-page="' + pag + '">...</a></li>'
+          html += `<li class="page-item"><a class="page-link" href="#" data-page="${pag}">...</a></li>`
         }
       }
       // Determine how many pages to show after the current page index
@@ -225,8 +221,8 @@ export default class Table extends HTMLElement {
         if (p > paging.nbPages) {
           continue
         }
-        let pageActive = p === paging.numActivePage ? 'active' : ''
-        html += '<li class="page-item ' + pageActive + '"><a class="page-link" href="#">' + p + '</a></li>'
+        const pageActive = p === paging.numActivePage ? 'active' : ''
+        html += `<li class="page-item ${pageActive}"><a class="page-link" href="#">${p}</a></li>`
       }
       // Show the very last page preceded by a "..." at the end of the pagination
       // section (before the Next button)
@@ -238,9 +234,9 @@ export default class Table extends HTMLElement {
           } else {
             pag = paging.numActivePage + 2
           }
-          html += '<li class="page-item"><a class="page-link" href="#" data-page="' + pag + '">...</a></li>'
+          html += `<li class="page-item"><a class="page-link" href="#" data-page="${pag}">...</a></li>`
         }
-        html += '<li class="page-item"><a class="page-link" href="#">' + paging.nbPages + '</a></li>'
+        html += `<li class="page-item"><a class="page-link" href="#">${paging.nbPages}</a></li>`
       }
     }
     html += `<li class="page-item ${nextDisabled}">
@@ -264,12 +260,12 @@ export default class Table extends HTMLElement {
     })
   }
 
-  _extractNameFromForm (name) {
-    let t = name.split('[')
+  _extractNameFromForm(name) {
+    const t = name.split('[')
     return t[1].substr(0, t[1].length - 1)
   }
 
-  _getFilterFromField (input) {
+  _getFilterFromField(input) {
     const name = this._extractNameFromForm(input.name)
     switch (input.type) {
       case 'text':
@@ -283,7 +279,8 @@ export default class Table extends HTMLElement {
             this.filter[name] = []
           }
           this.filter[name].push(
-            input.value)
+            input.value,
+          )
         }
         break
     }

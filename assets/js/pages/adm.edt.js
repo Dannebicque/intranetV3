@@ -1,73 +1,62 @@
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.edt.js
+// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/adm.edt.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/09/2021 09:01
-
+// @lastUpdate 07/07/2022 13:30
+import $ from 'jquery'
 import '../../vendor/jqueryui/jquery-ui.min'
+import Routing from 'fos-router'
 
 let Cells = []
 let Ind = 0
 
-let $rowClicked
-
-//select
-function updateBloc (id) {
+// select
+function updateBloc(id) {
   $.ajax({
-    url: Routing.generate('administration_edt_get_event', {id: id}),
-    success: function (data) {
-      // $('#hdbt').selectpicker('val', data.heureDbtInt)
-      // $('#hfin').selectpicker('val', data.heureFinInt)
+    url: Routing.generate('administration_edt_get_event', { id }),
+    success(data) {
       $('#hdbt').val(data.heureDbtInt)
       $('#hfin').val(data.heureFinInt)
-      $('#jourc' + data.jour).prop('checked', true)
-      // $('#typecours').selectpicker('val', data.typecours + '-' + data.groupe)
-      $('#typecours').val(data.typecours + '-' + data.groupe)
+      $(`#jourc${data.jour}`).prop('checked', true)
+      $('#typecours').val(`${data.typecours}-${data.groupe}`)
       $('#salle').val(data.salle)
       $('#texte').val(data.texte)
-      // $('#selectmatiere').selectpicker('val', data.typeIdMatiere)
-      // $('#selectenseignant').selectpicker('val', data.personnelId)
       $('#selectmatiere').val(data.typeIdMatiere)
       $('#selectenseignant').val(data.personnelId)
       $('#idEdtUpdate').val(data.id)
       $('#btnAddEDT').empty().append('Modifier le créneau')
-      $('#btnDelete').prop('href', Routing.generate('administration_edt_delete', {'id': data.id}))
+      $('#btnDelete').prop('href', Routing.generate('administration_edt_delete', { id: data.id }))
 
       $('#blocadd').show()
-    }
+    },
   })
 }
 
-//une fois la selection terminée
-function selectfin () {
+// une fois la selection terminée
+function selectfin() {
   let valeur
 
-  let tabdbt = Cells[0].split('_')
-  // $('#hdbt').selectpicker('val', tabdbt[1])
+  const tabdbt = Cells[0].split('_')
   $('#hdbt').val(tabdbt[1])
 
-  let tabfin = Cells[Cells.length - 1].split('_')
+  const tabfin = Cells[Cells.length - 1].split('_')
 
-  let fin = parseInt(tabfin[1]) + 1
-  //$('#hfin').selectpicker('val', fin)
+  const fin = parseInt(tabfin[1]) + 1
   $('#hfin').val(fin)
 
-  $('#jourc' + tabdbt[2]).prop('checked', true)
+  $(`#jourc${tabdbt[2]}`).prop('checked', true)
 
-  let diff = parseInt(tabfin[3]) - parseInt(tabdbt[3])
-  if (diff === 0)//donc sur la même colonne
+  const diff = parseInt(tabfin[3]) - parseInt(tabdbt[3])
+  if (diff === 0)// donc sur la même colonne
   {
-    valeur = 'TP-' + tabdbt[3]
-  } else if (diff === 1)//donc sur 2 colonnes)
+    valeur = `TP-${tabdbt[3]}`
+  } else if (diff === 1)// donc sur 2 colonnes)
   {
-    valeur = 'TD-' + tabdbt[3]
+    valeur = `TD-${tabdbt[3]}`
   } else {
     valeur = 'CM-1'
   }
 
-  // $('#typecours').selectpicker('val', valeur)
-  // $('#salle').selectpicker('val', '')
-  // $('#texte').selectpicker('val', '')
   $('#typecours').val(valeur)
   $('#salle').val('')
   $('#texte').val('')
@@ -76,47 +65,45 @@ function selectfin () {
   $('#blocadd').show()
 }
 
-//au debut de la selection
-function debut () {
+// au debut de la selection
+function debut() {
   Cells = []
   Ind = 0
 }
 
-
-//mémoriser les celulles selectionnées
+// mémoriser les celulles selectionnées
 $('#selectable').selectable({
   filter: 'th,td:not(.edt_cours)',
-  start: function (event, ui) {
+  start(event, ui) {
     if (!$(event.originalEvent.target).hasClass('edt_cours')) {
       debut()
     }
   },
-  stop: function (event, ui) {
+  stop(event, ui) {
     if ($(event.originalEvent.target).hasClass('edt_cours')) {
       updateBloc($(event.originalEvent.target).data('edt'))
     } else {
       selectfin()
     }
   },
-  selected: function (event, ui) {
-    let s = $(this).find('.ui-selected')
+  selected(event, ui) {
+    const s = $(this).find('.ui-selected')
     Cells[Ind] = $(ui.selected).attr('id')
-    Ind = Ind + 1
-  }
+    Ind += 1
+  },
 })
-
 
 $('#foc').scroll()
 
-//importer semaine
-$(document).on('click', '#idimportsemaine', function () {
+// importer semaine
+$(document).on('click', '#idimportsemaine', () => {
   const za = $('#zoneaction')
   za.empty()
   za.load(Routing.generate('administration_edt_za_importsemaine'))
   za.fadeIn(1000)
 })
 
-//changement d'heure de début
+// changement d'heure de début
 $(document).on('change', '#hdbt', function () {
   const t = parseInt($(this).val()) + 3
   $('#hfin').val(t)
@@ -131,13 +118,12 @@ $(document).on('change', '#affichepersonnel', function () {
   tabetu.load(Routing.generate('administration_edt_ajax_update', {
     filtre: 'prof',
     valeur: $(this).val(),
-    semaine: $sem
+    semaine: $sem,
   }))
   tabetu.fadeIn(2000)
-
 })
 
-//affiche par prof
+// affiche par prof
 $(document).on('change', '#affichesalle', function () {
   const tabetu = $('#zone_edt')
   const $sem = $('#semaine2').val()
@@ -145,11 +131,10 @@ $(document).on('change', '#affichesalle', function () {
   tabetu.load(Routing.generate('administration_edt_ajax_update', {
     filtre: 'salle',
     valeur: $(this).val(),
-    semaine: $sem
+    semaine: $sem,
   }))
   tabetu.fadeIn(2000)
 })
-
 
 // //affiche de tous les groupes de toutes les promos
 // $(document).on('change', '#affichejour', function () {
@@ -166,21 +151,21 @@ $(document).on('change', '#affichesalle', function () {
 //
 // });
 
-//affichage d'une promo sur une semaine précise
+// affichage d'une promo sur une semaine précise
 $(document).on('change', '#affichesemaine', function () {
   const tabetu = $('#zone_edt')
   const $sem = $('#semaine2').val()
-  let $val = $(this).val().split('_')
+  const $val = $(this).val().split('_')
   tabetu.empty()
   tabetu.load(Routing.generate('administration_edt_ajax_update', {
     filtre: $val[0],
     valeur: $val[1],
-    semaine: $val[2]
+    semaine: $val[2],
   }))
   tabetu.fadeIn(2000)
 })
 
-//affichage par matière
+// affichage par matière
 $(document).on('change', '#affichematiere', function () {
   const tabetu = $('#zone_edt')
   const $sem = $('#semaine2').val()
@@ -189,22 +174,19 @@ $(document).on('change', '#affichematiere', function () {
   tabetu.load(Routing.generate('administration_edt_ajax_update', {
     filtre: 'module',
     valeur: $(this).val(),
-    semaine: $sem
+    semaine: $sem,
   }))
   tabetu.fadeIn(2000)
 })
 
-
-/***************/
+/** ************ */
 /* EDT REALISE */
-/***************/
+/** ************ */
 
-
-$(document).on('change', '#selectpersonnel', function () {
+$(document).on('change', '#selectpersonnel', () => {
   const selectMatiere = $('#selectmatiere')
-  //selectMatiere.selectpicker('val', '0')
+  // selectMatiere.selectpicker('val', '0')
   selectMatiere.val(0)
-
 })
 
 // $(document).on('change', '#edtSelectSemestre', function () {
@@ -233,12 +215,12 @@ $(document).on('change', '#selectpersonnel', function () {
 //     })
 // })
 
-$(document).on('click', '#btnafficheRealise', function (e) {
+$(document).on('click', '#btnafficheRealise', (e) => {
   e.preventDefault()
   const $bloc = $('#blocchrono')
   $bloc.empty()
   $bloc.load(Routing.generate('administration_edt_service_realise_affiche', {
     personnel: $('#selectpersonnel').val(),
-    matiere: $('#selectmatiere').val()
+    matiere: $('#selectmatiere').val(),
   }))
 })

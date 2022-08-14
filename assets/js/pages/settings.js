@@ -1,28 +1,30 @@
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/settings.js
+// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/settings.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/03/2021 21:05
-import {addCallout, getParentByTagName} from '../util'
-import {post} from '../fetch'
+// @lastUpdate 07/07/2022 13:30
+import $ from 'jquery'
+import { addCallout } from '../util'
+import { post } from '../fetch'
+import Routing from 'fos-router'
 
-$(document).on('change', '.departementParDefaut', function (e) {
+$(document).on('change', '.departementParDefaut', function () {
   $.ajax({
-    url: Routing.generate('user_change_departement_defaut', {departement: $(this).val()}),
+    url: Routing.generate('user_change_departement_defaut', { departement: $(this).val() }),
     method: 'POST',
-    success: function (e) {
+    success() {
       addCallout('Mofification enregistrée !', 'success')
     },
-    error: function (e) {
+    error() {
       addCallout('Erreur lors de la sauvegarde de la modification !', 'danger')
-    }
+    },
   })
 })
 
 document.querySelectorAll('.changeConfigurationPersonne').forEach((elem) => {
   elem.addEventListener('change', (e) => {
     e.preventDefault()
-    post(Routing.generate('settings_configuration_personnel'), {'field' : elem.name, 'value': elem.checked}).then(() => {
+    post(Routing.generate('settings_configuration_personnel'), { field: elem.name, value: elem.checked }).then(() => {
       addCallout('Mofification enregistrée !', 'success')
     }).catch(() => {
       addCallout('Erreur lors de la sauvegarde de la modification !', 'danger')
@@ -30,7 +32,7 @@ document.querySelectorAll('.changeConfigurationPersonne').forEach((elem) => {
   })
 })
 
-$(document).on('click', '#valideNewpassword', function (e) {
+$(document).on('click', '#valideNewpassword', (e) => {
   e.preventDefault()
   const passwd1 = $('#password_1').val().trim()
   const passwd2 = $('#password_2').val().trim()
@@ -43,21 +45,20 @@ $(document).on('click', '#valideNewpassword', function (e) {
       $.ajax({
         url: Routing.generate('user_change_password'),
         data: {
-          passwd1: passwd1,
-          passwd2: passwd2,
-          passwdactuel: passwdactuel
+          passwd1,
+          passwd2,
+          passwdactuel,
         },
         method: 'POST',
-        success: function (e) {
+        success() {
           addCallout('Mofification de votre mot de passe effectuée !', 'success')
         },
-        error: function (e) {
+        error() {
           addCallout('Erreur lors de la modification du mot de passe !', 'danger')
-        }
+        },
       })
     }
   } else {
     addCallout('Tous les champs sont obligatoires pour la modification du mot de passe!', 'danger')
   }
 })
-

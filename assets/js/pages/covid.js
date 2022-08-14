@@ -1,29 +1,29 @@
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/covid.js
+// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/covid.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/09/2021 12:08
+// @lastUpdate 22/06/2022 17:34
+import $ from 'jquery'
 import '../../vendor/jquery.collection.min'
 
-$(document).ready(function () {
-  let stagePeriodeSoutenances = $('.selector-covidCreneauPresence')
+$(document).ready(() => {
+  const stagePeriodeSoutenances = $('.selector-covidCreneauPresence')
   if (stagePeriodeSoutenances.length > 0) {
     stagePeriodeSoutenances.collection()
-    $(document).on('click', '.covid_attestation_personnel_covidCreneauPresences-collection-action', function () {
+    $(document).on('click', '.covid_attestation_personnel_covidCreneauPresences-collection-action', () => {
       updateDatePicker()
     })
   }
 })
 
-function updateDatePicker () {
+function updateDatePicker() {
   $('[data-provide~="datepicker"]').each(function () {
-    let options = {
+    const options = {
       multidateSeparator: ', ',
       language: 'fr',
       daysOfWeekHighlighted: '06',
-      format: 'dd/mm/yyyy'
+      format: 'dd/mm/yyyy',
     }
     $(this).datepicker(options)
   })
 }
-

@@ -1,15 +1,16 @@
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/assets/controllers/modal_controller.js
+// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/apc-enfant_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/10/2021 21:49
+// @lastUpdate 30/06/2022 22:19
 
-import {Controller} from '@hotwired/stimulus'
-import {post} from '../js/fetch'
-import {addCallout} from '../js/util'
+import { Controller } from '@hotwired/stimulus'
+import { post } from '../js/fetch'
+import { addCallout } from '../js/util'
 
 export default class extends Controller {
-  static targets = ['content','contentDiplome']
+  static targets = ['content', 'contentDiplome']
+
   static values = {
     urlListe: String,
     urlPost: String,
@@ -20,33 +21,33 @@ export default class extends Controller {
     urlUpdateGroupe: String,
   }
 
-  changeGroupe (e) {
+  changeGroupe(e) {
     post(this.urlUpdateGroupeValue, {
       enfant: e.target.dataset.enfant,
-      groupes: this._getSelectedOptions(e.target)
-    }).then(async (data) => {
+      groupes: this._getSelectedOptions(e.target),
+    }).then(async () => {
       addCallout('success', 'Groupe mis à jour')
-    }).catch((error) => {
+    }).catch(() => {
       addCallout('danger', 'Erreur lors de la mise à jour')
     })
   }
 
-  async removeEnfant (e) {
+  async removeEnfant(e) {
     post(this.urlDeleteValue, {
-      enfant: e.target.dataset.enfant
-    }).then(async (data) => {
+      enfant: e.target.dataset.enfant,
+    }).then(async () => {
       addCallout('success', 'Enfant supprimé')
       this._updateContent()
-    }).catch((error) => {
+    }).catch(() => {
       addCallout('danger', 'Erreur lors de la suppression')
     })
   }
 
   _getSelectedOptions(sel) {
-    var opts = [],
-      opt;
-    var len = sel.options.length;
-    for (var i = 0; i < len; i++) {
+    const opts = [];
+    let opt;
+    const len = sel.options.length;
+    for (let i = 0; i < len; i++) {
       opt = sel.options[i];
 
       if (opt.selected) {
@@ -57,52 +58,51 @@ export default class extends Controller {
     return opts;
   }
 
-  async addEnfant (e) {
+  async addEnfant(e) {
     post(this.urlPostValue, {
       enfant: document.getElementById('ressourceEnfant').value,
-      groupes: this._getSelectedOptions(document.getElementById('groupeAdd'))
-    }).then(async (data) => {
+      groupes: this._getSelectedOptions(document.getElementById('groupeAdd')),
+    }).then(async () => {
       addCallout('success', 'Enfant ajouté')
       this._updateContent()
-    }).catch((error) => {
+    }).catch(() => {
       addCallout('danger', 'Erreur lors de l\'ajout')
     })
   }
 
-  async _updateContent () {
+  async _updateContent() {
     this.contentTarget.innerHTML = window.da.loaderStimulus
 
     const response = await fetch(`${this.urlListeValue}`)
     this.contentTarget.innerHTML = await response.text()
   }
 
-  async removeDiplome (e) {
+  async removeDiplome(e) {
     post(this.urlDeleteDiplomeValue, {
-      diplome: e.target.dataset.semestre
-    }).then(async (data) => {
+      diplome: e.target.dataset.semestre,
+    }).then(async () => {
       addCallout('success', 'Diplôme supprimé')
       this._updateContentDiplome()
-    }).catch((error) => {
+    }).catch(() => {
       addCallout('danger', 'Erreur lors de la suppression')
     })
   }
 
-  async addDiplome (e) {
+  async addDiplome(e) {
     post(this.urlPostDiplomeValue, {
-      diplome: document.getElementById('semestreAdd').value
-    }).then(async (data) => {
+      diplome: document.getElementById('semestreAdd').value,
+    }).then(async () => {
       addCallout('success', 'Diplôme ajouté')
       this._updateContentDiplome()
-    }).catch((error) => {
+    }).catch(() => {
       addCallout('danger', 'Erreur lors de l\'ajout')
     })
   }
 
-  async _updateContentDiplome () {
+  async _updateContentDiplome() {
     this.contentDiplomeTarget.innerHTML = window.da.loaderStimulus
 
     const response = await fetch(`${this.urlListeDiplomeValue}`)
     this.contentDiplomeTarget.innerHTML = await response.text()
   }
-
 }

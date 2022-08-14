@@ -1,8 +1,10 @@
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/planning.js
+// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/planning.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/07/2020 16:44
+// @lastUpdate 07/07/2022 13:30
+import $ from 'jquery'
+import Routing from 'fos-router'
 
 $(document).on('click', '.filtreTypeDate', function (e) {
   const btn = $(this)
@@ -13,7 +15,6 @@ $(document).on('click', '.filtreTypeDate', function (e) {
   } else {
     btn.addClass('btn-outline')
     removeType(type)
-
   }
 })
 
@@ -26,12 +27,11 @@ $(document).on('click', '.filtreUtilisateurDate', function (e) {
   } else {
     btn.addClass('btn-outline')
     removeUtilisateur(type)
-
   }
 })
 
-//todo: croiser les filtres.
-function removeType (type) {
+// todo: croiser les filtres.
+function removeType(type) {
   $('.event').each(function (e) {
     if ($(this).data('type-event') === type) {
       $(this).hide()
@@ -39,7 +39,7 @@ function removeType (type) {
   })
 }
 
-function afficheType (type) {
+function afficheType(type) {
   $('.event').each(function (e) {
     if ($(this).data('type-event') === type) {
       $(this).show()
@@ -47,7 +47,7 @@ function afficheType (type) {
   })
 }
 
-function removeUtilisateur (type) {
+function removeUtilisateur(type) {
   if (type === 'E') {
     $('.event').each(function (e) {
       if ($(this).data('qui-event') === type) {
@@ -63,7 +63,7 @@ function removeUtilisateur (type) {
   }
 }
 
-function afficheUtilisateur (type) {
+function afficheUtilisateur(type) {
   if (type === 'E') {
     $('.event').each(function (e) {
       if ($(this).data('qui-event') === type) {
@@ -79,9 +79,9 @@ function afficheUtilisateur (type) {
   }
 }
 
-$(document).on('change', '#semaine', function(e){
+$(document).on('change', '#semaine', function (e) {
   e.preventDefault()
-  //{{ edt.filtre }}_{{ edt.valeur }}_{{ sem.semaineReelle}}
-  let tab = $(this).val().split('_')
-  location.href = Routing.generate('agenda_index', {semaine: tab[2] ,valeur: tab[1],  filtre: tab[0]});
+  // {{ edt.filtre }}_{{ edt.valeur }}_{{ sem.semaineReelle}}
+  const tab = $(this).val().split('_')
+  location.href = Routing.generate('agenda_index', { semaine: tab[2], valeur: tab[1], filtre: tab[0] });
 })

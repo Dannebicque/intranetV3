@@ -2,17 +2,16 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/structure-diplome_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/05/2022 22:04
+// @lastUpdate 06/07/2022 16:21
 
 import {Controller} from '@hotwired/stimulus'
+import InPlaceEdit from '../js/inPlaceEdit'
 
 export default class extends Controller {
   static targets = ['content']
   static values = {
-    urlDiplome: String
+    urlDiplome: String,
   }
-
-
 
   connect() {
     let diplome = null
@@ -45,5 +44,9 @@ export default class extends Controller {
     })
     const response = await fetch(`${this.urlDiplomeValue}?${params.toString()}`)
     this.contentTarget.innerHTML = await response.text()
+    document.querySelectorAll('.editable').forEach((el) => {
+      // eslint-disable-next-line no-new
+      new InPlaceEdit(el, {})
+    })
   }
 }

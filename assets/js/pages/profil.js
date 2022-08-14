@@ -2,11 +2,13 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/profil.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 21/05/2022 08:07
-import {addCallout} from '../util'
-import {get, load, post} from '../fetch'
+// @lastUpdate 07/07/2022 13:30
+import $ from 'jquery'
+import { addCallout } from '../util'
+import { post } from '../fetch'
+import Routing from 'fos-router'
 
-if(document.getElementById("changeSemestreNotes")) {
+if (document.getElementById('changeSemestreNotes')) {
   changeSemestreNotes()
 }
 
@@ -15,9 +17,9 @@ function changeSemestreNotes() {
     const scolarite = elem.target.value
     if (scolarite !== '') {
       const element = elem.target
-      document.getElementById('changeSemestreNotesTitre').innerHTML = 'Résultats du semestre ' + element.options[element.selectedIndex].text
+      document.getElementById('changeSemestreNotesTitre').innerHTML = `Résultats du semestre ${element.options[element.selectedIndex].text}`
       const response = await fetch(Routing.generate('profil_etudiant_apc_ancien_semestre', {
-        scolarite: scolarite
+        scolarite,
       }))
       document.getElementById('changeSemestreNotesZone').innerHTML = await response.text()
     }
@@ -26,62 +28,60 @@ function changeSemestreNotes() {
 
 $(document).on('change', '#chgt_etudiant_departement', function () {
   $.ajax({
-    url: Routing.generate('user_change_departement', {etudiant: $(this).data('etudiant'), departement: $(this).val()}),
+    url: Routing.generate('user_change_departement', { etudiant: $(this).data('etudiant'), departement: $(this).val() }),
     method: 'POST',
-    success: function (e) {
+    success(e) {
       $('#liste_groupes').empty().append('<tr><td colspan="3">Aucun groupe</td></tr>')
       addCallout('Mofification enregistrée !', 'success')
     },
-    error: function (e) {
+    error(e) {
       addCallout('Erreur lors de la sauvegarde de la modification !', 'danger')
-    }
+    },
 
   })
 })
 
 $(document).on('change', '#chgt_etudiant_fin', function () {
   $.ajax({
-    url: Routing.generate('user_change_annee_sortie', {etudiant: $(this).data('etudiant'), annee: $(this).val()}),
+    url: Routing.generate('user_change_annee_sortie', { etudiant: $(this).data('etudiant'), annee: $(this).val() }),
     method: 'POST',
-    success: function (e) {
+    success(e) {
       addCallout('Mofification enregistrée !', 'success')
     },
-    error: function (e) {
+    error(e) {
       addCallout('Erreur lors de la sauvegarde de la modification !', 'danger')
-    }
+    },
 
   })
 })
 
-
 $(document).on('click', '.changeprofil', function (e) {
   e.preventDefault()
   e.stopPropagation()
-  let $onglet = $(this)
+  const $onglet = $(this)
   $('.changeprofil').removeClass('active show')
   $(this).addClass('active show')
-  $('#profilContent').empty().load($(this).attr('href'), function () {
+  $('#profilContent').empty().load($(this).attr('href'), () => {
     if ($onglet.attr('id') === 'profil-about') {
       const obj = document.querySelector('#valideCommentaire')
       obj.addEventListener('click', (e) => {
         e.preventDefault()
         e.stopPropagation()
-        post(Routing.generate('profil_etudiant_ajout_commentaire', {slug: obj.getAttribute('data-slug')}), {
-          commentaire: document.querySelector('#texteCommentaire').value
+        post(Routing.generate('profil_etudiant_ajout_commentaire', { slug: obj.getAttribute('data-slug') }), {
+          commentaire: document.querySelector('#texteCommentaire').value,
         })
-          .then(data => {
+          .then((data) => {
             // Handle data
-            let html = document.createElement('p')
+            const html = document.createElement('p')
             html.textContent = data.commentaire
 
             document.querySelector('#listeCommentaire').appendChild(html)
             addCallout('Commentaire ajouté avec succès.', 'success')
             document.querySelector('#texteCommentaire').value = ''
-          }).catch(error => {
+          }).catch((error) => {
           // Handle error
-          addCallout('Erreur lors de l\'ajout du commentaire.', 'error')
-
-        })
+            addCallout('Erreur lors de l\'ajout du commentaire.', 'error')
+          })
       })
     }
     if ($onglet.attr('id') === 'profil-notes-apc' || $onglet.data('id') === 'profil-notes-apc') {
@@ -114,8 +114,6 @@ $(document).on('click', '.changeprofil', function (e) {
 
     }
   })
-
-
 })
 
 $(document).on('change', '.addfavori', function (e) {
@@ -126,9 +124,9 @@ $(document).on('change', '.addfavori', function (e) {
     url: Routing.generate('user_add_favori'),
     method: 'POST',
     data: {
-      'user': $(this).val(),
-      'etat': $(this).prop('checked')
-    }
+      user: $(this).val(),
+      etat: $(this).prop('checked'),
+    },
   })
 })
 
@@ -136,15 +134,15 @@ $(document).on('click', '#btnabs', function (e) {
   $.ajax({
     url: Routing.generate('administration_absences_ajax_add'),
     data: {
-      'etudiant': $(this).data('etudiant'),
-      'date': $('#jourabs').val(),
-      'matiere': $('#moduleabs').val(),
-      'heure': $('#heureabs').val(),
-      'justif': $('input[type=radio][name=justifabs]:checked').val()
+      etudiant: $(this).data('etudiant'),
+      date: $('#jourabs').val(),
+      matiere: $('#moduleabs').val(),
+      heure: $('#heureabs').val(),
+      justif: $('input[type=radio][name=justifabs]:checked').val(),
     },
     method: 'POST',
-    success: function (data) {
-      //ajout de la ligne
+    success(data) {
+      // ajout de la ligne
       let classe = ''
       let texte = ''
       let checked = ''
@@ -158,38 +156,38 @@ $(document).on('click', '#btnabs', function (e) {
         checked = ''
       }
 
-      let html = '<tr class="' + classe + '" id="ligne_' + data.id + '">\n' +
-        '                    <td>' + data.date + ' à ' + data.heure + '</td>\n' +
-        '                    <td>' + data.codeMatiere + '</td>\n' +
-        '                    <td>' + texte + '</td>\n' +
-        '                    <td class="hide">' + data.personnel + '</td>\n' +
-        '                    <td>\n' +
-        '                        <button data-provide="modaler tooltip"\n' +
-        '                                data-url="' + Routing.generate('app_etudiant_absence_detail', {'uuid': data.uuidString}) + '"\n' +
-        '                                class="btn btn-info btn-outline btn-square btn-xs"\n' +
-        '                                data-placement="bottom"\n' +
-        '                                title="Détails"\n' +
-        '                                data-title="Détails de l\'absence"\n' +
-        '                        >\n' +
-        '                            <i class="fas fa-info"></i>\n' +
-        '                        </button>\n' +
-        '                    </td>\n' +
-        '                        <td>\n' +
-        '                            <div class="custom-control custom-control-lg custom-checkbox">\n' +
-        '                                <input type="checkbox" class="custom-control-input checkAbsence" id="check_' + data.id + '"\n' +
-        '                                       data-absence="' + data.id + '" ' + checked + '>\n' +
-        '                                <label class="custom-control-label" for="check_' + data.id + '">Justifiée*</label>\n' +
-        '                            </div>\n' +
-        '                        </td>\n' +
-        '                </tr>'
+      const html = `<tr class="${classe}" id="ligne_${data.id}">\n`
+        + `                    <td>${data.date} à ${data.heure}</td>\n`
+        + `                    <td>${data.codeMatiere}</td>\n`
+        + `                    <td>${texte}</td>\n`
+        + `                    <td class="hide">${data.personnel}</td>\n`
+        + '                    <td>\n'
+        + '                        <button data-provide="modaler tooltip"\n'
+        + `                                data-url="${Routing.generate('app_etudiant_absence_detail', { uuid: data.uuidString })}"\n`
+        + '                                class="btn btn-info btn-outline btn-square btn-xs"\n'
+        + '                                data-placement="bottom"\n'
+        + '                                title="Détails"\n'
+        + '                                data-title="Détails de l\'absence"\n'
+        + '                        >\n'
+        + '                            <i class="fas fa-info"></i>\n'
+        + '                        </button>\n'
+        + '                    </td>\n'
+        + '                        <td>\n'
+        + '                            <div class="custom-control custom-control-lg custom-checkbox">\n'
+        + `                                <input type="checkbox" class="custom-control-input checkAbsence" id="check_${data.id}"\n`
+        + `                                       data-absence="${data.id}" ${checked}>\n`
+        + `                                <label class="custom-control-label" for="check_${data.id}">Justifiée*</label>\n`
+        + '                            </div>\n'
+        + '                        </td>\n'
+        + '                </tr>'
 
       $('#tableAbsence > tbody:last').append(html)
-    }
+    },
   })
 })
 
 $(document).on('click', '.checkAbsence', function (e) {
-  let absence = $(this).data('absence')
+  const absence = $(this).data('absence')
   let etat = 0
 
   if (($(this).is(':checked'))) {
@@ -197,48 +195,46 @@ $(document).on('click', '.checkAbsence', function (e) {
   }
 
   $.ajax({
-    url: Routing.generate('administration_absences_justifie', {'absence': absence, 'etat': etat}),
+    url: Routing.generate('administration_absences_justifie', { absence, etat }),
     type: 'GET',
-    success: function (data) {
+    success(data) {
       if (data) {
-        $('#ligne_' + absence).removeClass('bg-pale-warning').addClass('bg-pale-success')
+        $(`#ligne_${absence}`).removeClass('bg-pale-warning').addClass('bg-pale-success')
       } else {
-        $('#ligne_' + absence).removeClass('bg-pale-success').addClass('bg-pale-warning')
+        $(`#ligne_${absence}`).removeClass('bg-pale-success').addClass('bg-pale-warning')
       }
-    }
+    },
   })
 })
 
 $(document).on('click', '#btnInit', function () {
   $.ajax({
-    url: Routing.generate('security_password_init', {user: $(this).data('personnel')}),
+    url: Routing.generate('security_password_init', { user: $(this).data('personnel') }),
     method: 'POST',
-    success: function (e) {
+    success(e) {
       addCallout('Mot de passe initialisé !', 'success')
     },
-    error: function (e) {
+    error(e) {
       addCallout('Erreur lors l\'initialisation du mot de passe !', 'danger')
-    }
+    },
 
   })
 })
 
 $(document).on('change', '#chgt_etudiant_semestre', function () {
   $.ajax({
-    url: Routing.generate('user_change_semestre', {etudiant: $(this).data('etudiant'), semestre: $(this).val()}),
+    url: Routing.generate('user_change_semestre', { etudiant: $(this).data('etudiant'), semestre: $(this).val() }),
     method: 'POST',
-    success: function (e) {
+    success(e) {
       $('#liste_groupes').empty().append('<tr><td colspan="3">Aucun groupe</td></tr>')
       addCallout('Mofification enregistrée !', 'success')
     },
-    error: function (e) {
+    error(e) {
       addCallout('Erreur lors de la sauvegarde de la modification !', 'danger')
-    }
+    },
 
   })
 })
-
-
 
 /*        {% for semestre in semestres %}
   {

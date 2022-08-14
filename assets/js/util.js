@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/util.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/07/2022 17:20
+// @lastUpdate 28/07/2022 10:45
 
 import Swal from 'sweetalert2'
 import $ from 'jquery'
@@ -44,6 +44,7 @@ $(document).on('click', '.supprimer', function (e) {
   e.preventDefault()
   const url = $(this).attr('href')
   const csrf = $(this).data('csrf')
+  console.log(url)
   Swal.fire({
     title: 'Confirmer la suppression ?',
     text: 'L\'opération ne pourra pas être annulée.',
@@ -60,34 +61,16 @@ $(document).on('click', '.supprimer', function (e) {
     buttonsStyling: false,
   }).then((result) => {
     if (result.value) {
-      $.ajax({
-        url,
-        type: 'DELETE',
-        data: {
-          _token: csrf,
+      fetch(url, {
+        method: 'DELETE',
+        headers: {
+          'X-CSRF-TOKEN': csrf,
         },
-        success(id) {
-          if (id.hasOwnProperty('redirect') && id.hasOwnProperty('url')) {
-            document.location.href = id.url
-          } else {
-            const ligne = getParentByTagName(e.target, 'tr')
-            ligne.parentNode.removeChild(ligne)
-
-            addCallout('Suppression effectuée avec succès', 'success')
-            Swal.fire({
-              title: 'Supprimé!',
-              text: 'L\'enregistrement a été supprimé.',
-              icon: 'success',
-              confirmButtonText: 'OK',
-              customClass: {
-                confirmButton: 'btn btn-primary',
-                cancelButton: 'btn btn-secondary',
-              },
-              buttonsStyling: false,
-            })
-          }
-        },
-        error() {
+      }).then((response) => {
+        console.log(response)
+        if (response.status === 200) {
+          return response.json()
+        } else {
           Swal.fire({
             title: 'Erreur lors de la suppression!',
             text: 'Merci de renouveler l\'opération',
@@ -100,8 +83,73 @@ $(document).on('click', '.supprimer', function (e) {
             buttonsStyling: false,
           })
           addCallout('Erreur lors de la tentative de suppression', 'danger')
-        },
+        }
+      }).then((body) => {
+        console.log(body.id)
+        const id = body.id
+        if (id.hasOwnProperty('redirect') && id.hasOwnProperty('url')) {
+          document.location.href = id.url
+        } else {
+          const ligne = getParentByTagName(e.target, 'tr')
+          ligne.parentNode.removeChild(ligne)
+
+          addCallout('Suppression effectuée avec succès', 'success')
+          Swal.fire({
+            title: 'Supprimé!',
+            text: 'L\'enregistrement a été supprimé.',
+            icon: 'success',
+            confirmButtonText: 'OK',
+            customClass: {
+              confirmButton: 'btn btn-primary',
+              cancelButton: 'btn btn-secondary',
+            },
+            buttonsStyling: false,
+          })
+        }
       })
+
+      // $.ajax({
+      //   url,
+      //   type: 'DELETE',
+      //   data: {
+      //     _token: csrf,
+      //   },
+      //   success(id) {
+      //     if (id.hasOwnProperty('redirect') && id.hasOwnProperty('url')) {
+      //       document.location.href = id.url
+      //     } else {
+      //       const ligne = getParentByTagName(e.target, 'tr')
+      //       ligne.parentNode.removeChild(ligne)
+      //
+      //       addCallout('Suppression effectuée avec succès', 'success')
+      //       Swal.fire({
+      //         title: 'Supprimé!',
+      //         text: 'L\'enregistrement a été supprimé.',
+      //         icon: 'success',
+      //         confirmButtonText: 'OK',
+      //         customClass: {
+      //           confirmButton: 'btn btn-primary',
+      //           cancelButton: 'btn btn-secondary',
+      //         },
+      //         buttonsStyling: false,
+      //       })
+      //     }
+      //   },
+      //   error() {
+      //     Swal.fire({
+      //       title: 'Erreur lors de la suppression!',
+      //       text: 'Merci de renouveler l\'opération',
+      //       icon: 'error',
+      //       confirmButtonText: 'OK',
+      //       customClass: {
+      //         confirmButton: 'btn btn-primary',
+      //         cancelButton: 'btn btn-secondary',
+      //       },
+      //       buttonsStyling: false,
+      //     })
+      //     addCallout('Erreur lors de la tentative de suppression', 'danger')
+      //   },
+      // })
     } else if (
       // Read more about handling dismissals
       result.dismiss === 'cancel'
@@ -135,6 +183,7 @@ export function addCallout(message, label) {
       Toast.success(message)
       break
     case 'danger':
+    case 'error':
       Toast.error(message)
       break
     case 'warning':

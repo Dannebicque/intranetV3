@@ -1,10 +1,11 @@
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.matieres.js
+// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/adm.matieres.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/09/2021 22:16
-
-import {addCallout} from '../util'
+// @lastUpdate 07/07/2022 13:30
+import $ from 'jquery'
+import { addCallout } from '../util'
+import Routing from 'fos-router'
 
 $('#matiere_semestre').change(function () {
   const semestreSelector = $(this)
@@ -15,25 +16,24 @@ $('#matiere_semestre').change(function () {
     dataType: 'JSON',
     type: 'POST',
     data: {
-      semestreid: semestreSelector.val()
+      semestreid: semestreSelector.val(),
     },
-    success: function (ues) {
+    success(ues) {
       const matiereSelector = $('#matiere_ue')
 
       // Remove current options
       matiereSelector.html('')
 
       // Empty value ...
-      matiereSelector.append('<option value> Choisir une UE dans le semestre ' + semestreSelector.find('option:selected').text() + ' ...</option>')
+      matiereSelector.append(`<option value> Choisir une UE dans le semestre ${semestreSelector.find('option:selected').text()} ...</option>`)
 
-
-      $.each(ues, function (key, ue) {
-        matiereSelector.append('<option value="' + ue.id + '">' + ue.numeroUe + ' ' + ue.libelle + '</option>')
+      $.each(ues, (key, ue) => {
+        matiereSelector.append(`<option value="${ue.id}">${ue.numeroUe} ${ue.libelle}</option>`)
       })
     },
-    error: function (err) {
+    error(err) {
       alert('An error ocurred while loading data ...')
-    }
+    },
   })
 
   $.ajax({
@@ -41,48 +41,46 @@ $('#matiere_semestre').change(function () {
     dataType: 'JSON',
     type: 'POST',
     data: {
-      semestreid: semestreSelector.val()
+      semestreid: semestreSelector.val(),
     },
-    success: function (parcours) {
+    success(parcours) {
       const parcourSelector = $('#matiere_parcours')
 
       // Remove current options
       parcourSelector.html('')
 
       // Empty value ...
-      parcourSelector.append('<option value> Choisir (optionnel) un parcour pour le semestre ' + semestreSelector.find('option:selected').text() + ' ...</option>')
+      parcourSelector.append(`<option value> Choisir (optionnel) un parcour pour le semestre ${semestreSelector.find('option:selected').text()} ...</option>`)
 
-
-      $.each(parcours, function (key, parcour) {
-        parcourSelector.append('<option value="' + parcour.id + '">' + parcour.libelle + '</option>')
+      $.each(parcours, (key, parcour) => {
+        parcourSelector.append(`<option value="${parcour.id}">${parcour.libelle}</option>`)
       })
     },
-    error: function (err) {
+    error(err) {
       alert('An error ocurred while loading data ...')
-    }
+    },
   })
 
   $.ajax({
-    url: Routing.generate('api_matieres_semestre', {semestre: semestreSelector.val()}),
+    url: Routing.generate('api_matieres_semestre', { semestre: semestreSelector.val() }),
     dataType: 'JSON',
     type: 'GET',
-    success: function (matieres) {
+    success(matieres) {
       const parentSelector = $('#matiere_matiereParent')
 
       // Remove current options
       parentSelector.html('')
 
       // Empty value ...
-      parentSelector.append('<option value> Choisir (optionnel) une matière parent pour ' + $('#matiere_libelle').val() + ' ...</option>')
+      parentSelector.append(`<option value> Choisir (optionnel) une matière parent pour ${$('#matiere_libelle').val()} ...</option>`)
 
-
-      $.each(matieres, function (key, matiere) {
-        parentSelector.append('<option value="' + matiere.id + '">' + matiere.display + '</option>')
+      $.each(matieres, (key, matiere) => {
+        parentSelector.append(`<option value="${matiere.id}">${matiere.display}</option>`)
       })
     },
-    error: function (err) {
+    error(err) {
       alert('An error ocurred while loading data ...')
-    }
+    },
   })
 })
 
@@ -90,55 +88,55 @@ $(document).on('click', '.change-diplome', function (e) {
   e.preventDefault()
   $('.change-diplome').removeClass('active show')
   $(this).addClass('active show')
-  let $diplome = $(this).data('diplome')
+  const $diplome = $(this).data('diplome')
   $.ajax({
-    url: Routing.generate('administration_matiere_diplome', {diplome: $diplome}),
+    url: Routing.generate('administration_matiere_diplome', { diplome: $diplome }),
     dataType: 'HTML',
     type: 'GET',
-    success: function (data) {
-      $('#content_diplome').slideUp().empty().append(data).slideDown()
+    success(data) {
+      $('#content_diplome').slideUp().empty().append(data)
+        .slideDown()
       $('#export_csv').attr('href', Routing.generate('administration_matiere_export', {
         diplome: $diplome,
-        '_format': 'csv'
+        _format: 'csv',
       }))
       $('#export_xlsx').attr('href', Routing.generate('administration_matiere_export', {
         diplome: $diplome,
-        '_format': 'xlsx'
+        _format: 'xlsx',
       }))
       $('#export_pdf').attr('href', Routing.generate('administration_matiere_export', {
         diplome: $diplome,
-        '_format': 'pdf'
+        _format: 'pdf',
       }))
-    }
+    },
   })
-
 })
 
 $(document).on('change', '.changeParcours', function () {
   $.ajax({
     url: Routing.generate('administration_matiere_change_parcours', {
       id: $(this).data('matiere'),
-      parcours: $(this).val()
+      parcours: $(this).val(),
     }),
     method: 'POST',
-    success: function (data) {
+    success(data) {
       addCallout('Modification enregistrée', 'success')
-    }, error: function (e) {
+    },
+    error(e) {
       addCallout('Erreur lors de l\'enregistrement de la modification', 'danger')
-    }
+    },
   })
 })
 
 $(document).on('change', '.changeUe', function () {
   $.ajax({
-    url: Routing.generate('administration_matiere_change_ue', {id: $(this).data('matiere'), ue: $(this).val()}),
+    url: Routing.generate('administration_matiere_change_ue', { id: $(this).data('matiere'), ue: $(this).val() }),
     method: 'POST',
-    success: function (data) {
+    success(data) {
       addCallout('Modification enregistrée', 'success')
-    }, error: function (e) {
+    },
+    error(e) {
       addCallout('Erreur lors de l\'enregistrement de la modification', 'danger')
-    }
+    },
   })
 })
-
-

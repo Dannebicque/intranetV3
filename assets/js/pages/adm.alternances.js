@@ -1,11 +1,12 @@
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.alternances.js
+// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/adm.alternances.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 28/09/2020 19:45
-import {addCallout} from '../util'
+// @lastUpdate 07/07/2022 13:30
+import $ from 'jquery'
 import Swal from 'sweetalert2'
-
+import { addCallout } from '../util'
+import Routing from 'fos-router'
 
 $(document).on('change', '.tuteurUniversitaireAlternance', function (e) {
   e.preventDefault()
@@ -13,14 +14,14 @@ $(document).on('change', '.tuteurUniversitaireAlternance', function (e) {
   $.ajax({
     url: Routing.generate('administration_alternance_update_tuteur_universitaire', {
       alternance: $(this).data('alternance'),
-      personnel: $(this).val()
+      personnel: $(this).val(),
     }),
-    success: function () {
+    success() {
       addCallout('Tuteur universitaire enregistré !', 'success')
     },
-    error: function () {
+    error() {
       addCallout('Une erreur est survenue !', 'danger')
-    }
+    },
   })
 })
 
@@ -38,15 +39,15 @@ $(document).on('click', '.initAllAlternance', function (e) {
     cancelButtonText: 'Non, Annuler',
     customClass: {
       confirmButton: 'btn btn-primary',
-      cancelButton: 'btn btn-secondary'
+      cancelButton: 'btn btn-secondary',
     },
-    buttonsStyling: false
-  }).then(function (result) {
+    buttonsStyling: false,
+  }).then((result) => {
     if (result.value) {
       $.ajax({
-        url: url,
+        url,
         type: 'POST',
-        success: function () {
+        success() {
           addCallout('Initialisation effectuée avec succès', 'success')
           Swal.fire({
             title: 'Alternances initialisées!',
@@ -55,12 +56,12 @@ $(document).on('click', '.initAllAlternance', function (e) {
             confirmButtonText: 'OK',
             customClass: {
               confirmButton: 'btn btn-primary',
-              cancelButton: 'btn btn-secondary'
+              cancelButton: 'btn btn-secondary',
             },
-            buttonsStyling: false
+            buttonsStyling: false,
           })
         },
-        error: function () {
+        error() {
           Swal.fire({
             title: 'Erreur lors de la tentative d\'initialisation!',
             text: 'Merci de renouveler l\'opération',
@@ -68,14 +69,13 @@ $(document).on('click', '.initAllAlternance', function (e) {
             confirmButtonText: 'OK',
             customClass: {
               confirmButton: 'btn btn-primary',
-              cancelButton: 'btn btn-secondary'
+              cancelButton: 'btn btn-secondary',
             },
-            buttonsStyling: false
+            buttonsStyling: false,
           })
           addCallout('Erreur lors de la tentative d\'initialisation', 'danger')
-        }
+        },
       })
-
     } else if (
       // Read more about handling dismissals
       result.dismiss === 'cancel'
@@ -87,9 +87,9 @@ $(document).on('click', '.initAllAlternance', function (e) {
         confirmButtonText: 'OK',
         customClass: {
           confirmButton: 'btn btn-primary',
-          cancelButton: 'btn btn-secondary'
+          cancelButton: 'btn btn-secondary',
         },
-        buttonsStyling: false
+        buttonsStyling: false,
       })
     }
   })

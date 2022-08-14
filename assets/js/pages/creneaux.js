@@ -1,37 +1,39 @@
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/creneaux.js
+// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/creneaux.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/09/2020 16:14
-import {addCallout} from '../util'
+// @lastUpdate 07/07/2022 13:30
+import $ from 'jquery'
+import { addCallout } from '../util'
+import Routing from 'fos-router'
 
-$(document).on('click', '#btn_creneau_add', function(){
+$(document).on('click', '#btn_creneau_add', () => {
   const $annee = $('#change_annee_universitiare_temp').val()
   $.ajax({
-    method:'POST',
+    method: 'POST',
     data: {
       anneeUniversitaire: $annee,
-      jour:$('#creneau_jour').val(),
-      debut:$('#creneau_debut').val(),
-      fin:$('#creneau_fin').val()
+      jour: $('#creneau_jour').val(),
+      debut: $('#creneau_debut').val(),
+      fin: $('#creneau_fin').val(),
     },
     url: Routing.generate('administration_creneau_cours_new'),
-    success: function () {
-      $('#liste_creneaux').empty().load(Routing.generate('administration_creneau_cours_liste', {annee_universitaire: $annee}))
+    success() {
+      $('#liste_creneaux').empty().load(Routing.generate('administration_creneau_cours_liste', { annee_universitaire: $annee }))
       addCallout('Créneau ajouté avec succès', 'success')
     },
-    error: function () {
+    error() {
       addCallout('Erreur lors de l\'ajout du créneau', 'danger')
-    }
+    },
   })
 })
 
-$(document).on('click', '.bloquercreneau', function(){
+$(document).on('click', '.bloquercreneau', function () {
   const $cr = $(this)
   if ($cr.hasClass('bloquercreneau_eviter')) {
     updateCreneau('dispo', $cr.data('creneau'), $cr.data('semaine'))
     $cr.removeClass('bloquercreneau_eviter')
-  } else if($cr.hasClass('bloquercreneau_interdit')) {
+  } else if ($cr.hasClass('bloquercreneau_interdit')) {
     $cr.removeClass('bloquercreneau_interdit')
     $cr.addClass('bloquercreneau_eviter')
     updateCreneau('au', $cr.data('creneau'), $cr.data('semaine'))
@@ -57,18 +59,17 @@ $(document).on('click', '.creneau', function () {
     $(this).addClass('bloquercreneau_eviter')
     nb_interdit--
     nb_eviter++
-    updateDisponibilite(jour, heure,'E')
+    updateDisponibilite(jour, heure, 'E')
   } else if ($(this).hasClass('bloquercreneau_eviter')) {
     $(this).removeClass('bloquercreneau_eviter')
     nb_eviter--
     nb_dispo++
-    updateDisponibilite(jour, heure,'D')
+    updateDisponibilite(jour, heure, 'D')
   } else {
-
     $(this).addClass('bloquercreneau_interdit')
     nb_interdit++
     nb_dispo--
-    updateDisponibilite(jour, heure,'I')
+    updateDisponibilite(jour, heure, 'I')
   }
 
   interdit.text(nb_interdit)
@@ -76,26 +77,26 @@ $(document).on('click', '.creneau', function () {
   dispo.text(nb_dispo)
 })
 
-function updateDisponibilite($jour, $heure, $etat){
+function updateDisponibilite($jour, $heure, $etat) {
   $.ajax({
     url: Routing.generate('application_personnel_disponibilite_update'),
-    data:{
+    data: {
       jour: $jour,
       heure: $heure,
-      etat: $etat
+      etat: $etat,
     },
-    method: 'POST'
+    method: 'POST',
   })
 }
 
-function updateCreneau($type, $cr, $semaine){
+function updateCreneau($type, $cr, $semaine) {
   $.ajax({
     url: Routing.generate('administration_creneau_bloque_modifie_etat'),
-    data:{
+    data: {
       creneau: $cr,
       type: $type,
-      semaine: $semaine
+      semaine: $semaine,
     },
-    method: 'POST'
+    method: 'POST',
   })
 }

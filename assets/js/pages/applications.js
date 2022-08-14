@@ -1,10 +1,12 @@
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/applications.js
+// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/applications.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 27/09/2021 17:09
-import {addCallout} from '../util'
+// @lastUpdate 07/07/2022 13:30
+import $ from 'jquery'
+import { addCallout } from '../util'
 import './messagerie'
+import Routing from 'fos-router'
 
 $(document).on('click', '.changeapplication', function (e) {
   e.preventDefault()
@@ -16,83 +18,84 @@ $(document).on('click', '.changeapplication', function (e) {
 })
 
 $(document).on('change', '#selectsemestre', function () {
-  //matieres
+  // matieres
   $('#listegroupe').empty()
   const selectMatiere = $('#selectmatiere')
   const selectGroupes = $('#selectgroupes')
   $.ajax(
     {
-      url: Routing.generate('api_matieres_semestre', {semestre: $(this).val()}),
-      dataType: "json", //Return data type (what we expect).
-      success: function (data) {
+      url: Routing.generate('api_matieres_semestre', { semestre: $(this).val() }),
+      dataType: 'json', // Return data type (what we expect).
+      success(data) {
         selectMatiere.empty()
         selectMatiere.append($('<option></option>')
           .attr('value', '')
           .text('Choisir une matière'))
-        jQuery.each(data, function (index, matiere) {
+        jQuery.each(data, (index, matiere) => {
           selectMatiere.append($('<option></option>')
-            .attr('value', matiere.typeMatiere + '_' + matiere.id)
+            .attr('value', `${matiere.typeMatiere}_${matiere.id}`)
             .text(matiere.display))
         })
         console.log(selectMatiere)
-        //todo: a remplacer
+        // todo: a remplacer
         // selectMatiere.attr('data-provide', 'selectpicker')
         // selectMatiere.attr('data-live-search', 'true')
       },
-      error: function () {
+      error() {
         addCallout('Erreur lors de la tentative d\'affichage des matières du semestres. Veuillez contacter le responsable de l\'intranet si le problème persiste !', 'danger')
-      }
-    })
-  //groupes
+      },
+    },
+  )
+  // groupes
   $.ajax(
     {
-      url: Routing.generate('api_type_groupe_semestre', {semestre: $(this).val()}),
+      url: Routing.generate('api_type_groupe_semestre', { semestre: $(this).val() }),
 
-      dataType: "json", //Return data type (what we expect).
-      success: function (data) {
+      dataType: 'json', // Return data type (what we expect).
+      success(data) {
         selectGroupes.empty()
         selectGroupes.append($('<option></option>')
           .attr('value', '')
           .text('Choisir un type de groupe'))
-        jQuery.each(data, function (index, typeGroupe) {
-
+        jQuery.each(data, (index, typeGroupe) => {
           selectGroupes.append($('<option></option>')
             .attr('value', typeGroupe.id)
             .text(typeGroupe.libelle))
         })
       },
-      error: function () {
+      error() {
         addCallout('Erreur lors de la tentative d\'affichage des groupes du semestres. Veuillez contacter le responsable de l\'intranet si le problème persiste !', 'danger')
-      }
-    })
+      },
+    },
+  )
 })
 
 $(document).on('change', '#selectgroupes', function () {
-
   const $lgr = $('#listegroupe')
-  //matieres
+  // matieres
   $.ajax(
     {
-      url: Routing.generate('api_groupe_type_groupe', {typeGroupe: $(this).val()}),
-      dataType: "json", //Return data type (what we expect).
-      success: function (data) {
+      url: Routing.generate('api_groupe_type_groupe', { typeGroupe: $(this).val() }),
+      dataType: 'json', // Return data type (what we expect).
+      success(data) {
         $lgr.empty()
         let $html = ''
-        jQuery.each(data, function (index, groupe) {
-          $html += '<input type="checkbox" checked name="detail_groupes[]" value="' + groupe.id + '"> ' + groupe.libelle + ' | '
+        jQuery.each(data, (index, groupe) => {
+          $html += `<input type="checkbox" checked name="detail_groupes[]" value="${groupe.id}"> ${groupe.libelle} | `
         })
         $lgr.html($html)
       },
-      error: function () {
+      error() {
         addCallout('Erreur lors de la tentative d\'affichage des groupes du semestres. Veuillez contacter le responsable de l\'intranet si le problème persiste !', 'danger')
-      }
-    })
+      },
+    },
+  )
 })
 
-$(document).on('click','#add_rattrapage', function(){
+$(document).on('click', '#add_rattrapage', () => {
   $('#bloc_add_rattrapage').toggle()
 })
 
-$(document).on('click','#add_carnet', function(){
+$(document).on('click', '#add_carnet', () => {
   $('#bloc_add_carnet').toggle()
 })

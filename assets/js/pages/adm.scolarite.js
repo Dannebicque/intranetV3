@@ -1,12 +1,13 @@
-// Copyright (c) 2020. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.scolarite.js
+// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/adm.scolarite.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/12/2020 22:04
-import {invalidChamps, validChamps, completeChamps} from '../util'
+// @lastUpdate 07/07/2022 13:30
+import $ from 'jquery'
+import { invalidChamps, validChamps, completeChamps } from '../util'
+import Routing from 'fos-router'
 
-
-$(document).on('click', '#afficheEtudiants', function (e) {
+$(document).on('click', '#afficheEtudiants', (e) => {
   e.preventDefault()
   e.stopPropagation()
   const semestre = $('#semestre')
@@ -17,7 +18,7 @@ $(document).on('click', '#afficheEtudiants', function (e) {
     validChamps(semestre)
     $('#zone').empty().load(Routing.generate('administration_scolarite_saisie_promo_ajax', {
       semestre: semestre.val(),
-      anneeUniversitaire: anneeUniversitaire.val()
+      anneeUniversitaire: anneeUniversitaire.val(),
     }))
   } else {
     invalidChamps(anneeUniversitaire)
@@ -25,7 +26,7 @@ $(document).on('click', '#afficheEtudiants', function (e) {
   }
 })
 
-$(document).on('click', '#importEtudiants', function (e) {
+$(document).on('click', '#importEtudiants', (e) => {
   e.preventDefault()
   e.stopPropagation()
   const semestre = $('#semestre')
@@ -36,7 +37,7 @@ $(document).on('click', '#importEtudiants', function (e) {
     validChamps(semestre)
     $('#zone').empty().load(Routing.generate('administration_scolarite_saisie_promo_import_ajax', {
       semestre: semestre.val(),
-      anneeUniversitaire: anneeUniversitaire.val()
+      anneeUniversitaire: anneeUniversitaire.val(),
     }))
   } else {
     invalidChamps(anneeUniversitaire)

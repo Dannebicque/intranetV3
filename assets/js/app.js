@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/07/2022 14:09
+// @lastUpdate 25/07/2022 08:39
 import '@fortawesome/fontawesome-pro/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-pro/scss/brands.scss'
 import '@fortawesome/fontawesome-pro/scss/solid.scss'
@@ -12,7 +12,7 @@ import * as bootstrap from 'bootstrap'
 import TomSelect from 'tom-select'
 import InPlaceEdit from './inPlaceEdit'
 import flatpickr from 'flatpickr'
-import Routing from './router'
+import Routing from 'fos-router'
 
 import { getDataOptions, getParentByTagName } from './util'
 
@@ -37,8 +37,6 @@ customElements.define('my-table', Table)
 customElements.define('select-complete', SelectComplete, { extends: 'select' })
 customElements.define('select-live-update', SelectChangeWidget, { extends: 'select' })
 
-
-
 $('input[type="file"]').on('change', (e) => {
   const filename = e.target.files[0].name
   $('.custom-file-label').html(filename)
@@ -47,13 +45,6 @@ $('input[type="file"]').on('change', (e) => {
 window.addEventListener('load', () => { // le dom est chargé
   const currentTheme = localStorage.getItem('theme')
   const menuDarkTheme = document.getElementById('darkMode')
-
-  // Regarde si des boutons ont un data-confirm = true
-  const elements = document.querySelectorAll("[data-confirm='true']");
-
-  elements.forEach((el) => {
-    console.log(el);
-  })
 
   // menu changement de département
   if (document.getElementById('changeDepartement')) {
@@ -76,7 +67,6 @@ window.addEventListener('load', () => { // le dom est chargé
             + '</div>\n'
             + '</a>'
         })
-
         zone.innerHTML = html
       })
     })

@@ -1,16 +1,17 @@
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/assets/js/pages/adm.absences.js
+// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/adm.absences.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/09/2021 12:08
-import {addCallout} from '../util'
+// @lastUpdate 07/07/2022 13:30
+import $ from 'jquery'
+import Routing from 'fos-router'
 
 $(document).on('change', '#justifier_etudiant', function () {
-  $('#listeJustifie').empty().load(Routing.generate('administration_absences_liste_absence_etudiant', {etudiant: $(this).val()}))
+  $('#listeJustifie').empty().load(Routing.generate('administration_absences_liste_absence_etudiant', { etudiant: $(this).val() }))
 })
 
-$(document).on('click', '.checkAbsence', function (e) {
-  let absence = $(this).data('absence')
+$(document).on('click', '.checkAbsence', function () {
+  const absence = $(this).data('absence')
 
   let etat = 0
 
@@ -19,16 +20,14 @@ $(document).on('click', '.checkAbsence', function (e) {
   }
 
   $.ajax({
-    url: Routing.generate('administration_absences_justifie', {'absence': absence, 'etat': etat}),
+    url: Routing.generate('administration_absences_justifie', { absence, etat }),
     type: 'GET',
-    success: function (data) {
+    success(data) {
       if (data) {
-        $('#ligne_' + absence).removeClass('bg-pale-warning').addClass('bg-pale-success')
+        $(`#ligne_${absence}`).removeClass('bg-pale-warning').addClass('bg-pale-success')
       } else {
-        $('#ligne_' + absence).removeClass('bg-pale-success').addClass('bg-pale-warning')
+        $(`#ligne_${absence}`).removeClass('bg-pale-success').addClass('bg-pale-warning')
       }
-    }
+    },
   })
-
 })
-
