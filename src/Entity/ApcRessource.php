@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcRessource.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 12:15
+ * @lastUpdate 14/08/2022 14:30
  */
 
 namespace App\Entity;
@@ -380,4 +380,15 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
 
         return null;
     }
+
+    /**
+     * @param \App\Entity\Semestre|null $semestre
+     * @deprecated("a supprimer")
+     */
+    public function setSemestre(?Semestre $semestre): void
+    {
+        $this->semestre = $semestre;
+    }
+
+
 }
