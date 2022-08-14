@@ -2,6 +2,53 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.8.0](https://github.com/Dannebicque/intranetV3/compare/v3.7.7...v3.8.0) (2022-08-14)
+
+
+### Features
+
+* [APC] Page pour renommer ressources et SAE d'un semestre directement ([c8c90e4](https://github.com/Dannebicque/intranetV3/commit/c8c90e4b40bc0e662093bfdb1d8e71e9a04a32da))
+* [Edt] Commande pour mettre à jour la table avec la modification de structure. ([3387bba](https://github.com/Dannebicque/intranetV3/commit/3387bbaba8e71fb2f2db43ea7c799fea5987ebbe))
+* [Edt] Gestion de l'Edt avec les parcours du BUT. Tri par numéro de semestre et plus par semestre ([214bfd6](https://github.com/Dannebicque/intranetV3/commit/214bfd6f1edf027ee7012ace089ef0549f3d1dfe))
+* [Edt] Import avec la gestion des parcours du BUT. Refonte complète du traitement du fichier d'import ([023d7f2](https://github.com/Dannebicque/intranetV3/commit/023d7f29d959042dae881eb6915dea0c49fe8b41))
+* [logger] Composant pour la gestion des logs lors de l'upload de fichier et son traitement ([1962706](https://github.com/Dannebicque/intranetV3/commit/1962706c085291f8474532c859446da7a17253ea))
+* [Plan Cours] Bouton et modal sur l'EDT ([d2d895a](https://github.com/Dannebicque/intranetV3/commit/d2d895a281ccec377dc573fe1ecb51b49e607f0a))
+
+
+### Bug Fixes
+
+* [Administration] Modification du menu pour le choix du semestre ([b756556](https://github.com/Dannebicque/intranetV3/commit/b756556c1e95db831086c4ef7ee073c062e72b8e))
+* [APC] Suppression de la ligne suite suppression dans les tableaux ([0038b00](https://github.com/Dannebicque/intranetV3/commit/0038b008cf037d31497657f3740ec1e274726f0f))
+* [base] Correctifs mineurs ([920bd40](https://github.com/Dannebicque/intranetV3/commit/920bd40e227cd0da52360c94d09609b82d0f58f0))
+* [BUT] Ajout d'un parcours uniquement en super admin ([2d47ec1](https://github.com/Dannebicque/intranetV3/commit/2d47ec1b59dce9e1c3876bcf775552024fc14c52))
+* [Celcat] Convertion date avec Carbon et gestion numéro de semaine ([7011a44](https://github.com/Dannebicque/intranetV3/commit/7011a4415c8aaaf2da4c21c04e90f4b2f4aeb228))
+* [CSS/JS] Lint des premiers fichiers ([68382cb](https://github.com/Dannebicque/intranetV3/commit/68382cb94dfa55de537dfd4d19279849cc349589))
+* [Delete] Changement de manière de récupérer le token csrf lors de suppressions ([a97c045](https://github.com/Dannebicque/intranetV3/commit/a97c045368b4f9fdeba6db1f9814b2f8b356065b))
+* [Delete] Utilisation de fetch, récupération du CSRF token avec HTTP ([c19d931](https://github.com/Dannebicque/intranetV3/commit/c19d9316103622be78c9566e4bc4ea78984747c5))
+* [Deprecation] Fix deprecation symfony avec typage ([1474a79](https://github.com/Dannebicque/intranetV3/commit/1474a79cf0a3ad9e59069eb0b50740814a03726f))
+* [Diplome] Affichage tronc commun/parcours ([957fb51](https://github.com/Dannebicque/intranetV3/commit/957fb51fcfdea1105233287e394ad55fc797d686))
+* [Diplome] Liste des diplômes en SA ([6cbfea4](https://github.com/Dannebicque/intranetV3/commit/6cbfea415b7eb466c55faa5501bde1f41918de88))
+* [Document] Mise en page ([01831b1](https://github.com/Dannebicque/intranetV3/commit/01831b14c9b2e150b7d53dca4ef0c9c45afe4004))
+* [Editable JS] Composant Editable JS repensé. ([67d789b](https://github.com/Dannebicque/intranetV3/commit/67d789bbc6a51e989c14d581aebf52ecc80b9732))
+* [Editable] Changement de composant pour le in-line editable ([8bd5893](https://github.com/Dannebicque/intranetV3/commit/8bd58932eb84e7ae437a220593cbf4c6a66e435e))
+* [Edt] Modification du menu pour le choix du semestre ([21284a0](https://github.com/Dannebicque/intranetV3/commit/21284a03b776aa1841bcc9a8fa3c4450e770aecd))
+* [Etudiant] Correction des droits sur la gestion de l'étudiant. ([46ca87c](https://github.com/Dannebicque/intranetV3/commit/46ca87c3433dc2c58c049491f418274093ba0b05))
+* [Fixture] Ajout d'une fixture pour la gestion de la bonification ([a2016bc](https://github.com/Dannebicque/intranetV3/commit/a2016bc98a0203dd3458bb5f3ed6ed6f2a3b81cd))
+* [Form] ajout de la class form-label (BS5) ([fd14a9a](https://github.com/Dannebicque/intranetV3/commit/fd14a9aac9486e898fdeb597a01d03a853cf2431))
+* [Groupe] Déplacement de la gestion des groupes dans le semestre (simplification du menu) ([b84d0b4](https://github.com/Dannebicque/intranetV3/commit/b84d0b4155dfb46c4bf52f55fa2200373e1bd1b5))
+* [Import Diplome] Fichier CSV pour structure ([df94d18](https://github.com/Dannebicque/intranetV3/commit/df94d187f94267cedd1b053826c3f72299b744ca))
+* [JS] Update depedencies ([7f6fca3](https://github.com/Dannebicque/intranetV3/commit/7f6fca3ffac5e5b2c5ef8eeae5acf52aa73f7cee))
+* [Questionnaire] Gestion des questionnaires pour les personnels ([63e9fe8](https://github.com/Dannebicque/intranetV3/commit/63e9fe860fe1aa3a147e5349a6de3766e3451217))
+* [Recherche] Filtre sur les documents ([2812c27](https://github.com/Dannebicque/intranetV3/commit/2812c27b26becf6e3f1fccc9d384854e6382af8a))
+* [Référentiel] Ajout d'une notion de référentiel pour attacher l'APC. ([ed45aa5](https://github.com/Dannebicque/intranetV3/commit/ed45aa5e662cd27061b7cb2375329b83ee6097c4))
+* [Ressources/SAE] Commande pour mettre à jour les semestres des Ressources/SAE ([8914687](https://github.com/Dannebicque/intranetV3/commit/891468774ed8c3921e783d40c1b954a905b60c77))
+* [Ressources/SAE] Suppression de la dépendance unique à un seul semestre ([262fd1f](https://github.com/Dannebicque/intranetV3/commit/262fd1f3f1f3379f206cc94c0bc000a9d7ca758b))
+* [SAE] Gestion des SAE sur plusieurs semestres (mutualisé) ([1049b21](https://github.com/Dannebicque/intranetV3/commit/1049b2112971ed5aeacacaef4303264ce3b14dcb))
+* [SS Comm] Amélioration mise en page ([fe93e09](https://github.com/Dannebicque/intranetV3/commit/fe93e094c154331ca71e0439cb9ab9d1b93e66cf))
+* [SsCom] Recalul d'un semestre ([e0bd6db](https://github.com/Dannebicque/intranetV3/commit/e0bd6db009b68075780ce57a6aef5d463c7156e7))
+* [Structure] Affichage de la structure d'un diplôme avec prise en compte du BUT ([a580107](https://github.com/Dannebicque/intranetV3/commit/a580107ef4430002a6d1d0286fdafca8ccacae03))
+* [Suivi Appel] Correction depuis l'EDT, et mise à jour de l'affichage en conséquence. ([283d250](https://github.com/Dannebicque/intranetV3/commit/283d25095e214a041d6f66a48d35a0da7041eda2))
+
 ### [3.7.7](https://github.com/Dannebicque/intranetV3/compare/v3.7.6...v3.7.7) (2022-06-23)
 
 
