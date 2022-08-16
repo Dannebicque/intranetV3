@@ -21,10 +21,11 @@
                     <select class="form-select" id="changePn" data-action="change->structure-diplome#changePn"
                             data-diplome="{{ diplome.id }}">
                         <option value="">Choisir un autre PN</option>
-                        {% for pn in diplome.ppns %}
-                            <option value="{{ pn.id }}" {% if ppn.id == pn.id %}selected{% endif %}>{{ pn.libelle }} ({{
-                                pn.annee
-                                }})</option>
+                        {% for ref in referentiels %}
+                            <option value="{{ ref.id }}" {% if referentiel.id
+                                == ref.id %}selected{% endif %}>{{ ref.libelle }}
+                                ({{ ref.anneePublication }})
+                            </option>
                         {% endfor %}
                     </select>
                 </div>
@@ -40,34 +41,34 @@
                     Aucun référentiel de compétence n'est associé à ce diplôme.
                 </div>
             {% else %}
-            {% for parcour in diplome.referentiel.apcParcours %}
-                <div class="row gap-y lignehover">
-                    <div class="col-md-1">&nbsp;</div>
-                    <div class="col-md-9">Parcours {{ parcour.libelle }}
-                                          | {{ parcour.code }}</div>
-                    <div class="col-md-2">
-                        <a href="{{ path('administration_apc_parcours_duplicate', {'id': parcour.id}) }}"
-                           class="btn btn-success btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                           title="{{ 'atitle.dupliquer'|trans }}"><i
-                                    class="{{ iconDuplicate }}"></i></a>
-                        <a href="{{ path('administration_apc_parcours_show', {'id': parcour.id}) }}"
-                           class="btn btn-info btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                           title="{{ 'atitle.details'|trans }}"><i
-                                    class="{{ iconShow }}"></i></a>
+                {% for parcour in parcours %}
+                    <div class="row gap-y lignehover">
+                        <div class="col-md-1">&nbsp;</div>
+                        <div class="col-md-9">Parcours {{ parcour.libelle }}
+                                              | {{ parcour.code }}</div>
+                        <div class="col-md-2">
+                            <a href="{{ path('administration_apc_parcours_duplicate', {'id': parcour.id}) }}"
+                               class="btn btn-success btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                               title="{{ 'atitle.dupliquer'|trans }}"><i
+                                        class="{{ iconDuplicate }}"></i></a>
+                            <a href="{{ path('administration_apc_parcours_show', {'id': parcour.id}) }}"
+                               class="btn btn-info btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                               title="{{ 'atitle.details'|trans }}"><i
+                                        class="{{ iconShow }}"></i></a>
 
-                        <a href="{{ path('administration_apc_parcours_edit', {'id': parcour.id}) }}"
-                           class="btn btn-warning btn-outline btn-square btn-xs"><i class="{{ iconEdit }}"
-                                                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            <a href="{{ path('administration_apc_parcours_edit', {'id': parcour.id}) }}"
+                               class="btn btn-warning btn-outline btn-square btn-xs"><i class="{{ iconEdit }}"
+                                                                                        data-bs-toggle="tooltip" data-bs-placement="bottom"
 
-                                                                                    title="{{ 'atitle.modifier'|trans }}"></i></a>
-                        <a href="{{ path('administration_apc_parcours_delete', {id: parcour.id}) }}"
-                           data-csrf="{{ csrf_token('delete' ~ parcour.id) }}"
-                           class="btn btn-danger btn-outline btn-square btn-xs supprimer" data-id="id"><i
-                                    class="{{ iconDelete }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                    title="{{ 'atitle.supprimer'|trans }}"></i></a>
+                                                                                        title="{{ 'atitle.modifier'|trans }}"></i></a>
+                            <a href="{{ path('administration_apc_parcours_delete', {id: parcour.id}) }}"
+                               data-csrf="{{ csrf_token('delete' ~ parcour.id) }}"
+                               class="btn btn-danger btn-outline btn-square btn-xs supprimer" data-id="id"><i
+                                        class="{{ iconDelete }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                        title="{{ 'atitle.supprimer'|trans }}"></i></a>
+                        </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
             {% endif %}
             <div class="row gap-y lignehover">
                 <div class="col-md-1"></div>

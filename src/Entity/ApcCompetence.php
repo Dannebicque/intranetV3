@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcCompetence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/07/2022 12:07
+ * @lastUpdate 14/08/2022 17:55
  */
 
 namespace App\Entity;
@@ -15,6 +15,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Deprecated;
 
 #[ORM\Entity(repositoryClass: ApcComptenceRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -75,9 +76,6 @@ class ApcCompetence extends BaseEntity
      */
     #[ORM\OneToMany(mappedBy: 'apcCompetence', targetEntity: Ue::class)]
     private Collection $ue;
-
-    #[ORM\ManyToOne(targetEntity: Ppn::class, inversedBy: 'apcCompetences')]
-    private ?Ppn $ppn = null;
 
     public function __construct(ApcReferentiel $referentiel)
     {
@@ -308,18 +306,6 @@ class ApcCompetence extends BaseEntity
         if ($this->ue->removeElement($ue) && $ue->getApcCompetence() === $this) {
             $ue->setApcCompetence(null);
         }
-
-        return $this;
-    }
-
-    public function getPpn(): ?Ppn
-    {
-        return $this->ppn;
-    }
-
-    public function setPpn(?Ppn $ppn): self
-    {
-        $this->ppn = $ppn;
 
         return $this;
     }

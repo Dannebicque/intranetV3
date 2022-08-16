@@ -1,7 +1,7 @@
 {% if diplome.apcParcours == null %}
-<span class="badge bg-info">Tronc commun ou parcours non précisé</span>
+    <span class="badge bg-info">Tronc commun ou parcours non précisé</span>
 {% else %}
-<span class="badge bg-warning">Parcours {{ diplome.apcParcours.libelle }} ({{ diplome.apcParcours.code }})</span>
+    <span class="badge bg-warning">Parcours {{ diplome.apcParcours.libelle }} ({{ diplome.apcParcours.code }})</span>
 {% endif %}
 
 <div class="mb-2 mt-2">
@@ -15,7 +15,6 @@
     <a href="{{ path(baseurl ~ 'diplome_edit', {'id': diplome.id}) }}"
        class="btn btn-warning btn-outline btn-square btn-xs"><i class="{{ iconEdit }}"
                                                                 data-bs-toggle="tooltip" data-bs-placement="bottom"
-
                                                                 title="{{ 'atitle.modifier'|trans }}"></i></a>
     {% if is_granted('ROLE_SUPER_ADMIN') %}
         {% if diplome.actif == true %}
@@ -275,7 +274,7 @@
             {#                        </div> #}
             {#                    </div> #}
             {#                {% endfor %} #}
-            {% if diplome.ppns|length == 0 and (diplome.parent is defined and diplome.parent.ppns|length == 0) %}
+            {% if diplome.ppns|length == 0 and (diplome.parent != null and diplome.parent.ppns|length == 0) %}
                 <div class="row gap-y lignehover">
                     <div class="col-md-2"></div>
 
@@ -291,22 +290,23 @@
         {% endfor %}
         <div class="row gap-y lignehover">
             <div class="col-md-2"></div>
-
-            <div class="col-md-3 d-grid">
-                <a href="{{ path('administration_apc_ressource_new', {diplome:diplome.id, ppn: ppn.id}) }}"
-                   class="btn btn-success d-block" title="Ajouter une Ressource"
-                   data-semestre="{{ semestre.id }}"><i
-                            class="fa fa-plus-circle"></i> Ajouter une Ressource au
-                                                           semestre {{ semestre.libelle }}
-                </a>
-            </div>
-            <div class="col-md-3 d-grid">
-                <a href="{{ path('administration_apc_sae_new', {diplome:diplome.id, ppn: ppn.id}) }}"
-                   class="btn btn-success d-block" title="Ajouter une SAÉ"
-                   data-semestre="{{ semestre.id }}"><i
-                            class="fa fa-plus-circle"></i> Ajouter une SAÉ au
-                                                           semestre {{ semestre.libelle }}</a>
-            </div>
+            {% if referentiel != null %}
+                <div class="col-md-3 d-grid">
+                    <a href="{{ path('administration_apc_ressource_new', {diplome:diplome.id, referentiel: referentiel.id}) }}"
+                       class="btn btn-success d-block" title="Ajouter une Ressource"
+                       data-semestre="{{ semestre.id }}"><i
+                                class="fa fa-plus-circle"></i> Ajouter une Ressource au
+                                                               semestre {{ semestre.libelle }}
+                    </a>
+                </div>
+                <div class="col-md-3 d-grid">
+                    <a href="{{ path('administration_apc_sae_new', {diplome:diplome.id, referentiel: referentiel.id}) }}"
+                       class="btn btn-success d-block" title="Ajouter une SAÉ"
+                       data-semestre="{{ semestre.id }}"><i
+                                class="fa fa-plus-circle"></i> Ajouter une SAÉ au
+                                                               semestre {{ semestre.libelle }}</a>
+                </div>
+            {% endif %}
             <div class="col-md-4 d-grid">
                 <a href="{{ path('sa_apc_codification_index', {semestre:semestre.id}) }}"
                    class="btn btn-warning d-block" title="Gérer codification {{ semestre.libelle }}"><i

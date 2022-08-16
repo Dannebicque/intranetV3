@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Ppn.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:35
+ * @lastUpdate 14/08/2022 18:41
  */
 
 namespace App\Entity;
@@ -46,23 +46,19 @@ class Ppn extends BaseEntity
     private Collection $semestres;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcCompetence>
-     */
-    #[ORM\OneToMany(mappedBy: 'ppn', targetEntity: ApcCompetence::class)]
-    private Collection $apcCompetences;
-
-    /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\AnneeUniversitaireSemestre>
      */
     #[ORM\OneToMany(mappedBy: 'ppn', targetEntity: AnneeUniversitaireSemestre::class)]
     private Collection $anneeUniversitaireSemestres;
+
+    #[ORM\ManyToOne(inversedBy: 'ppns')]
+    private ?ApcReferentiel $apcReferentiel = null;
 
     public function __construct()
     {
         $this->annee = (int) date('Y');
         $this->matieres = new ArrayCollection();
         $this->semestres = new ArrayCollection();
-        $this->apcCompetences = new ArrayCollection();
         $this->anneeUniversitaireSemestres = new ArrayCollection();
     }
 
@@ -164,34 +160,6 @@ class Ppn extends BaseEntity
     }
 
     /**
-     * @return Collection<int, ApcCompetence>
-     */
-    public function getApcCompetences(): Collection
-    {
-        return $this->apcCompetences;
-    }
-
-    public function addApcCompetence(ApcCompetence $apcCompetence): self
-    {
-        if (!$this->apcCompetences->contains($apcCompetence)) {
-            $this->apcCompetences[] = $apcCompetence;
-            $apcCompetence->setPpn($this);
-        }
-
-        return $this;
-    }
-
-    public function removeApcCompetence(ApcCompetence $apcCompetence): self
-    {
-        // set the owning side to null (unless already changed)
-        if ($this->apcCompetences->removeElement($apcCompetence) && $apcCompetence->getPpn() === $this) {
-            $apcCompetence->setPpn(null);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, AnneeUniversitaireSemestre>
      */
     public function getAnneeUniversitaireSemestres(): Collection
@@ -215,6 +183,18 @@ class Ppn extends BaseEntity
         if ($this->anneeUniversitaireSemestres->removeElement($anneeUniversitaireSemestre) && $anneeUniversitaireSemestre->getPpn() === $this) {
             $anneeUniversitaireSemestre->setPpn(null);
         }
+
+        return $this;
+    }
+
+    public function getApcReferentiel(): ?ApcReferentiel
+    {
+        return $this->apcReferentiel;
+    }
+
+    public function setApcReferentiel(?ApcReferentiel $apcReferentiel): self
+    {
+        $this->apcReferentiel = $apcReferentiel;
 
         return $this;
     }

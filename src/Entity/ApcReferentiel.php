@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcReferentiel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/08/2022 15:08
+ * @lastUpdate 14/08/2022 16:43
  */
 
 namespace App\Entity;
@@ -53,11 +53,15 @@ class ApcReferentiel extends BaseEntity
     #[ORM\Column(length: 10)]
     private ?string $type_structure = null;
 
+    #[ORM\OneToMany(mappedBy: 'apcReferentiel', targetEntity: Ppn::class)]
+    private Collection $ppns;
+
     public function __construct()
     {
         $this->apcComptences = new ArrayCollection();
         $this->apcParcours = new ArrayCollection();
         $this->diplomes = new ArrayCollection();
+        $this->ppns = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -222,6 +226,36 @@ class ApcReferentiel extends BaseEntity
     public function setTypeStructure(string $type_structure): self
     {
         $this->type_structure = $type_structure;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Ppn>
+     */
+    public function getPpns(): Collection
+    {
+        return $this->ppns;
+    }
+
+    public function addPpn(Ppn $ppn): self
+    {
+        if (!$this->ppns->contains($ppn)) {
+            $this->ppns[] = $ppn;
+            $ppn->setApcReferentiel($this);
+        }
+
+        return $this;
+    }
+
+    public function removePpn(Ppn $ppn): self
+    {
+        if ($this->ppns->removeElement($ppn)) {
+            // set the owning side to null (unless already changed)
+            if ($ppn->getApcReferentiel() === $this) {
+                $ppn->setApcReferentiel(null);
+            }
+        }
 
         return $this;
     }
