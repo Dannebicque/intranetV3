@@ -1,13 +1,13 @@
-# Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-# @file /Users/davidannebicque/htdocs/intranetV3/update.sh
+# Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+# @file /Users/davidannebicque/Sites/intranetV3/update.sh
 # @author davidannebicque
 # @project intranetV3
-# @lastUpdate 12/10/2021 09:08
+# @lastUpdate 16/08/2022 15:52
 
 touch maintenance.lock
 echo "Début mise à jour"
 echo "Git Pull"
-git pull origin master
+git pull origin main
 echo "end git pull"
 echo "generation des assets"
 yarn build
