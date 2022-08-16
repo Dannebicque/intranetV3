@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.8.1](https://github.com/Dannebicque/intranetV3/compare/v3.8.0...v3.8.1) (2022-08-16)
+
+
+### Bug Fixes
+
+* [Apc] SetSemestre ([8a2deff](https://github.com/Dannebicque/intranetV3/commit/8a2deffcf57b3cc681b4b80e1129ae2248927178))
+* [Apc] SetSemestre ([06ba7d2](https://github.com/Dannebicque/intranetV3/commit/06ba7d2af976ca62677554fb6b92f381aba4900d))
+* [Diplome/APC] Type de Structure stocké au niveau du référentiel et plus du diplôme ([9616122](https://github.com/Dannebicque/intranetV3/commit/9616122c6e584c960238a3144bfc6b759c17fac2))
+* [EDT] suppression des dumps et nettoyage de code ([99cf2eb](https://github.com/Dannebicque/intranetV3/commit/99cf2eb9c94855512e4e32d277f2d3a5ef25a1d5))
+* [Structure] correctifs sur entity et suppressions des champs inutiles ([adcb486](https://github.com/Dannebicque/intranetV3/commit/adcb4868431a59d029b963806fd9ea0caebdc056))
+
 ## [3.8.0](https://github.com/Dannebicque/intranetV3/compare/v3.7.7...v3.8.0) (2022-08-14)
 
 
