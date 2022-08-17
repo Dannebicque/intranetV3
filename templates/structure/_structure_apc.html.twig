@@ -21,10 +21,10 @@
                     <select class="form-select" id="changePn" data-action="change->structure-diplome#changePn"
                             data-diplome="{{ diplome.id }}">
                         <option value="">Choisir un autre PN</option>
-                        {% for ref in referentiels %}
-                            <option value="{{ ref.id }}" {% if referentiel.id
-                                == ref.id %}selected{% endif %}>{{ ref.libelle }}
-                                ({{ ref.anneePublication }})
+                        {% for pn in diplome.ppns %}
+                            <option value="{{ pn.id }}" {% if ppn.id
+                                == pn.id %}selected{% endif %}>{{ pn.libelle }}
+                                ({{ pn.annee }})
                             </option>
                         {% endfor %}
                     </select>
@@ -36,9 +36,9 @@
             </div>
 
             <h4>Les parcours</h4>
-            {% if diplome.referentiel == null %}
+            {% if referentiel == null %}
                 <div class="alert alert-warning">
-                    Aucun référentiel de compétence n'est associé à ce diplôme.
+                    Aucun référentiel de compétence n'est associé à ce diplôme/PPN.
                 </div>
             {% else %}
                 {% for parcour in parcours %}

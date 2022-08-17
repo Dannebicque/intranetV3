@@ -4,13 +4,12 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/StructureDiplomeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/08/2022 18:22
+ * @lastUpdate 16/08/2022 16:57
  */
 
 namespace App\Controller;
 
 use App\Exception\DiplomeNotFoundException;
-use App\Repository\ApcReferentielRepository;
 use App\Repository\DiplomeRepository;
 use App\Repository\PpnRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -26,7 +25,6 @@ class StructureDiplomeController extends AbstractController
     #[Route('/structure/diplome/affiche', name: 'structure_diplome_affiche')]
     public function index(
         PpnRepository $ppnRepository,
-        ApcReferentielRepository $apcReferentielRepository,
         DiplomeRepository $diplomeRepository,
         Request $request
     ): Response {
@@ -41,23 +39,17 @@ class StructureDiplomeController extends AbstractController
             throw new DiplomeNotFoundException();
         }
 
-        if ($diplome->getTypeDiplome()?->getApc() === true) {
-            if ('null' !== $idPpn) {
-                $referentiel = $apcReferentielRepository->find($idPpn);
-            }
+        if ('null' !== $idPpn) {
+            $ppn = $ppnRepository->find($idPpn);
+        }
 
-            if (null === $referentiel) {
-                $referentiel = $diplome->getReferentiel();
-            }
+        if (null === $ppn) {
+            $ppn = $diplome->getPpns()->first();
+        }
+
+        if (true === $diplome->getTypeDiplome()?->getApc()) {
+            $referentiel = $ppn->getApcReferentiel();
             $parcours = $referentiel->getApcParcours();
-        } else {
-            if ('null' !== $idPpn) {
-                $ppn = $ppnRepository->find($idPpn);
-            }
-
-            if (null === $ppn) {
-                $ppn = $diplome->getPpns()->first();
-            }
         }
 
         return $this->render('structure_diplome/affiche.html.twig', [
@@ -65,7 +57,6 @@ class StructureDiplomeController extends AbstractController
             'ppn' => $ppn,
             'referentiel' => $referentiel,
             'parcours' => $parcours,
-            'referentiels' => $apcReferentielRepository->findBy(['departement' => $diplome->getDepartement()?->getId()]),
             'diplomes' => $diplome->getEnfants(),
         ]);
     }
