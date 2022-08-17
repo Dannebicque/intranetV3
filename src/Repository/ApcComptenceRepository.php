@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcComptenceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/07/2022 17:06
+ * @lastUpdate 17/08/2022 18:25
  */
 
 namespace App\Repository;
@@ -69,5 +69,10 @@ class ApcComptenceRepository extends ServiceEntityRepository
         return null !== $referentiel ? $this->createQueryBuilder('c')
             ->where('c.apcReferentiel = :referentiel')
             ->setParameter('referentiel', $referentiel->getId()) : null;
+    }
+
+    public function findByReferentiel(ApcReferentiel $referentiel): array
+    {
+        return $this->findByReferentielBuilder($referentiel) ? $this->findByReferentielBuilder($referentiel)->getQuery()->getResult() : [];
     }
 }

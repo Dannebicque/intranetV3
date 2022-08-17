@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcNiveau.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:15
+ * @lastUpdate 17/08/2022 19:30
  */
 
 namespace App\Entity;
@@ -15,6 +15,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Deprecated;
 
 #[ORM\Entity(repositoryClass: ApcNiveauRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -36,6 +37,7 @@ class ApcNiveau extends BaseEntity
     private ?int $ordre = null;
 
     #[ORM\ManyToOne(targetEntity: Annee::class, inversedBy: 'apcNiveaux')]
+    #[Deprecated("Ne pas utiliser ici. Eviter les liens APC/Structure et pas de sens avec la structiure en plusieurs diplôme => impliquerait plusieurs années. Filter par numéro d'ordre...")]
     private ?Annee $annee = null;
 
     /**
@@ -47,8 +49,11 @@ class ApcNiveau extends BaseEntity
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcParcoursNiveau>
      */
-    #[ORM\OneToMany(mappedBy: 'niveau', targetEntity: ApcParcoursNiveau::class)]
+    #[ORM\OneToMany(mappedBy: 'niveau', targetEntity: ApcParcoursNiveau::class, cascade: ['persist', 'remove'] )]
     private Collection $apcParcoursNiveaux;
+
+    #[ORM\Column]
+    private ?int $ordreAnnee = null;
 
     public function __construct(ApcCompetence $competence = null)
     {
@@ -81,11 +86,13 @@ class ApcNiveau extends BaseEntity
         return $this;
     }
 
+    #[Deprecated("Ne pas utiliser ici. Eviter les liens APC/Structure et pas de sens avec la structiure en plusieurs diplôme => impliquerait plusieurs années. Filter par numéro d'ordre...")]
     public function getAnnee(): ?Annee
     {
         return $this->annee;
     }
 
+    #[Deprecated("Ne pas utiliser ici. Eviter les liens APC/Structure et pas de sens avec la structiure en plusieurs diplôme => impliquerait plusieurs années. Filter par numéro d'ordre...")]
     public function setAnnee(?Annee $annee): self
     {
         $this->annee = $annee;
@@ -172,6 +179,18 @@ class ApcNiveau extends BaseEntity
     public function setCompetence(?ApcCompetence $competence): self
     {
         $this->competence = $competence;
+
+        return $this;
+    }
+
+    public function getOrdreAnnee(): ?int
+    {
+        return $this->ordreAnnee;
+    }
+
+    public function setOrdreAnnee(int $ordreAnnee): self
+    {
+        $this->ordreAnnee = $ordreAnnee;
 
         return $this;
     }

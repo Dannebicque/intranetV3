@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcApprentissageCritique.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:15
+ * @lastUpdate 17/08/2022 18:41
  */
 
 namespace App\Entity;
@@ -22,7 +22,7 @@ class ApcApprentissageCritique extends BaseEntity
 {
     use LifeCycleTrait;
 
-    #[ORM\Column(type: Types::STRING, length: 255)]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $libelle = null;
 
     #[ORM\Column(type: Types::STRING, length: 20)]

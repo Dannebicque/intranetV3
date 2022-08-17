@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcParcours.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 12:26
+ * @lastUpdate 16/08/2022 17:54
  */
 
 namespace App\Entity;
@@ -35,7 +35,7 @@ class ApcParcours extends BaseEntity
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcParcoursNiveau>
      */
-    #[ORM\OneToMany(mappedBy: 'parcours', targetEntity: ApcParcoursNiveau::class)]
+    #[ORM\OneToMany(mappedBy: 'parcours', targetEntity: ApcParcoursNiveau::class, cascade: ['persist', 'remove'])]
     private Collection $apcParcoursNiveaux;
 
     #[ORM\ManyToOne(targetEntity: ApcReferentiel::class, inversedBy: 'apcParcours')]

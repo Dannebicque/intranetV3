@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcRessourceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 16/08/2022 17:42
  */
 
 namespace App\Repository;
 
 use App\Entity\Annee;
 use App\Entity\ApcCompetence;
+use App\Entity\ApcReferentiel;
 use App\Entity\ApcRessource;
 use App\Entity\ApcRessourceCompetence;
 use App\Entity\Departement;
@@ -117,13 +118,13 @@ class ApcRessourceRepository extends ServiceEntityRepository
         return $tab;
     }
 
-    public function findByPpn(Ppn $ppn): array
+    public function findByReferentiel(ApcReferentiel $referentiel): array
     {
         return $this->createQueryBuilder('r')
             ->innerJoin(ApcRessourceCompetence::class, 'cr', 'WITH', 'cr.ressource = r.id')
             ->innerJoin(ApcCompetence::class, 'c', 'WITH', 'cr.competence = c.id')
-            ->where('c.ppn = :ppn')
-            ->setParameter('ppn', $ppn->getId())
+            ->where('c.apcReferentiel = :referentiel')
+            ->setParameter('referentiel', $referentiel->getId())
             ->getQuery()
             ->getResult();
     }

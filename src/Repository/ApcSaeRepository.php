@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcSaeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/08/2022 17:53
+ * @lastUpdate 16/08/2022 17:42
  */
 
 namespace App\Repository;
 
 use App\Entity\Annee;
 use App\Entity\ApcCompetence;
+use App\Entity\ApcReferentiel;
 use App\Entity\ApcSae;
 use App\Entity\ApcSaeCompetence;
 use App\Entity\Departement;
@@ -123,13 +124,13 @@ class ApcSaeRepository extends ServiceEntityRepository
         return $tab;
     }
 
-    public function findByPpn(Ppn $ppn): array
+    public function findByReferentiel(ApcReferentiel $referentiel): array
     {
         return $this->createQueryBuilder('r')
             ->innerJoin(ApcSaeCompetence::class, 'cs', 'WITH', 'cs.sae = r.id')
             ->innerJoin(ApcCompetence::class, 'c', 'WITH', 'cs.competence = c.id')
-            ->where('c.ppn = :ppn')
-            ->setParameter('ppn', $ppn->getId())
+            ->where('c.apcReferentiel = :referentiel')
+            ->setParameter('referentiel', $referentiel->getId())
             ->getQuery()
             ->getResult();
     }
