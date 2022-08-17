@@ -1,8 +1,8 @@
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/assets/css/apc.scss
+// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/Sites/intranetV3/assets/css/apc.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/03/2021 11:11
+// @lastUpdate 17/08/2022 19:17
 @use "sass:map";
 
 $colorsApc: (
@@ -31,6 +31,34 @@ $colorsApcMedium: (
         c5: rgba(43, 76, 118, 0.6),
         c6: rgba(127, 31, 83, 0.6)
 );
+
+$textColorsApc: (
+        c1:rgb(255, 255, 255),
+        c2: rgb(43, 38, 38),
+        c3: rgb(43, 38, 38),
+        c4: rgb(255, 255, 255),
+        c5: rgb(255, 255, 255),
+        c6: rgb(77, 82, 89)
+);
+
+$textColorsApcLight: (
+        c1:rgb(77, 82, 89),
+        c2: rgb(77, 82, 89),
+        c3: rgb(77, 82, 89),
+        c4: rgb(77, 82, 89),
+        c5: rgb(77, 82, 89),
+        c6: rgb(77, 82, 89)
+);
+
+$textColorsApcMedium: (
+        c1:rgb(255, 255, 255),
+        c2: rgb(77, 82, 89),
+        c3: rgb(77, 82, 89),
+        c4: rgb(255, 255, 255),
+        c5: rgb(255, 255, 255),
+        c6: rgb(77, 82, 89)
+);
+
 //todo: gérer la déclinaison de couleur. Le jaune à 50% disparait ? définir les 3 nuances dans 3 tableaux
 .comp {
   display: flex;
@@ -153,7 +181,6 @@ $colorsApcMedium: (
 
   .niveau3#{$color-key} {
     background-color: $color-value;
-    color: white;
   }
 
   .badge-#{$color-key} {
@@ -167,6 +194,25 @@ $colorsApcMedium: (
     height: 10px;
     background-color: $color-value;
     color: white;
+  }
+}
+
+@each $color-key, $color-value in $textColorsApcMedium {
+  .niveau2#{$color-key} {
+    color: $color-value;
+  }
+
+}
+
+@each $color-key, $color-value in $textColorsApcLight {
+  .niveau1#{$color-key} {
+    color: $color-value;
+  }
+}
+
+@each $color-key, $color-value in $textColorsApc {
+  .niveau3#{$color-key} {
+    color:  $color-value;
   }
 }
 
