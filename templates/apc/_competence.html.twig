@@ -64,8 +64,26 @@
 </div>
 
 {% for niveau in competence.apcNiveaux %}
+
+        {% if loop.first and niveau.ordreAnnee > 1 %}
+            <div class="d-flex align-items-stretch mt-3">
+                <div class="col-flex-3 niveau  niveau1{{ competence.couleur }}">
+                    <div class="p-3 niveaucourt ">
+                    &nbsp;
+                    </div>
+                    <div class="p-3 niveaulong">
+                        &nbsp;
+                    </div>
+                </div>
+                <div class="col-flex-9 ms-3" style="padding-right:15px;">
+                    <div class="p-3 niveauliste niveau1{{ competence.couleur }}">
+                        &nbsp;
+                    </div>
+                </div>
+            </div>
+        {% endif %}
     <div class="d-flex align-items-stretch mt-3">
-        <div class="col-flex-3 niveau  niveau{{ niveau.ordre }}{{ competence.couleur }}">
+        <div class="col-flex-3 niveau  niveau{{ niveau.ordreAnnee }}{{ competence.couleur }}">
             <div class="p-3 niveaucourt ">
                 {% if niveau.ordre == 1 %}
                 Novice
@@ -84,7 +102,7 @@
             </div>
         </div>
         <div class="col-flex-9 ms-3" style="padding-right:15px;">
-            <div class="p-3 niveauliste niveau{{ niveau.ordre }}{{ competence.couleur }}">
+            <div class="p-3 niveauliste niveau{{ niveau.ordreAnnee }}{{ competence.couleur }}">
                 <ul>
                     {% for ac in niveau.apcApprentissageCritiques %}
                         <li>{{ ac.code }} | {{ ac.libelle }}
@@ -109,6 +127,6 @@
     </div>
 {% endfor %}
 {% if is_granted('ROLE_PERMANENT') %}
-<a href="{{ path('administration_apc_niveau_new', {competence:competence.id}) }}"><i class="fas fa-plus-circle"></i>
-    Ajouter un niveau</a>
+    <a href="{{ path('administration_apc_niveau_new', {competence:competence.id}) }}"><i class="fas fa-plus-circle"></i>
+        Ajouter un niveau</a>
 {% endif %}

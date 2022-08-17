@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/apc/ButPublicController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 13:15
+ * @lastUpdate 17/08/2022 18:31
  */
 
 namespace App\Controller\apc;
@@ -14,6 +14,7 @@ use App\Classes\Apc\ApcStructure;
 use App\Entity\ApcRessource;
 use App\Entity\ApcSae;
 use App\Entity\Semestre;
+use App\Exception\DiplomeNotFoundException;
 use App\Repository\ApcNiveauRepository;
 use App\Repository\ApcRessourceRepository;
 use App\Repository\ApcSaeRepository;
@@ -45,12 +46,19 @@ class ButPublicController extends AbstractController
     public function referentielCompetences(ApcStructure $apcStructure, $diplome): Response
     {
         $diplome = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
-        $tParcours = $apcStructure->parcoursNiveaux($diplome);
+        $referentiel = $diplome->getReferentiel();
+
+        if ($referentiel === null) {
+            throw new DiplomeNotFoundException();
+        }
+
+        $tParcours = $apcStructure->parcoursNiveaux($referentiel);
 
         return $this->render('apc/public/referentielCompetences.html.twig', [
             'diplome' => $diplome,
-            'competences' =>  $diplome->getReferentiel()?->getApcComptences(),
-            'parcours' =>  $diplome->getReferentiel()?->getApcParcours(),
+            'referentiel' => $referentiel,
+            'competences' => $referentiel->getApcComptences(),
+            'parcours' => $referentiel->getApcParcours(),
             'parcoursNiveaux' => $tParcours,
         ]);
     }

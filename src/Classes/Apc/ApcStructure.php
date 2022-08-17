@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Apc/ApcStructure.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/07/2022 12:52
+ * @lastUpdate 17/08/2022 18:42
  */
 
 /*
@@ -13,26 +13,23 @@
 
 namespace App\Classes\Apc;
 
-use App\Entity\Diplome;
+use App\Entity\ApcReferentiel;
 use function array_key_exists;
 
 class ApcStructure
 {
-    public function parcoursNiveaux(Diplome $diplome): array
+    public function parcoursNiveaux(ApcReferentiel $referentiel): array
     {
         $tParcours = [];
-        foreach ($diplome->getReferentiel()?->getApcParcours() as $parcours) {
+        foreach ($referentiel->getApcParcours() as $parcours) {
             $tParcours[$parcours->getId()] = [];
             foreach ($parcours->getApcParcoursNiveaux() as $niveau) {
-                if (null !== $niveau && null !== $niveau->getNiveau()) {
-                    $niv = $niveau->getNiveau();
+                if (null !== $niveau && null !== $niv = $niveau->getNiveau()) {
                     if (null !== $niv->getCompetence() && !array_key_exists($niv->getCompetence()->getId(),
                             $tParcours[$parcours->getId()])) {
                         $tParcours[$parcours->getId()][$niv->getCompetence()->getId()] = [];
                     }
-                    if (null !== $niv->getAnnee()) {
-                        $tParcours[$parcours->getId()][$niv->getCompetence()->getId()][$niv->getAnnee()->getOrdre()] = $niv;
-                    }
+                    $tParcours[$parcours->getId()][$niv->getCompetence()->getId()][$niv->getOrdreAnnee()] = $niv;
                 }
             }
         }

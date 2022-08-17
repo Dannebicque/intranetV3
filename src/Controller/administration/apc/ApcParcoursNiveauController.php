@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcParcoursNiveauController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcParcoursNiveauController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 16:35
+ * @lastUpdate 17/08/2022 18:25
  */
 
 namespace App\Controller\administration\apc;
@@ -48,7 +48,7 @@ class ApcParcoursNiveauController extends BaseController
     #[Route(path: '/configuration/{parcours}', name: 'apc_parcours_niveau_new', methods: ['GET', 'POST'])]
     public function new(ApcParcoursNiveauRepository $apcParcoursNiveauRepository, ApcComptenceRepository $apcComptenceRepository, ApcParcours $parcours): Response
     {
-        $competences = $apcComptenceRepository->findByDiplome($parcours->getDiplome());
+        $competences = $apcComptenceRepository->findByReferentiel($parcours->getApcReferentiel());
         $tabNiveaux = $apcParcoursNiveauRepository->findNiveauByParcoursArray($parcours);
 
         return $this->render('apc/apc_parcours_niveau/new.html.twig', [

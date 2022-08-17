@@ -547,7 +547,7 @@ adm:
     edit.heading: 'Modification d''un parcours'
     show.heading: 'Détails d''un parcours'
     new.heading: 'Création d''un parcours'
-  referentiel.de.competence.heading: 'Référentiel de compétences pour le diplôme :<br> %diplome% (PPN %ppn%)'
+  referentiel.de.competence.heading: 'Référentiel de compétences pour le diplôme : <strong>%diplome% (Année référentiel %ppn%)</strong>'
   apc.parcours.heading: 'Parcours pour le diplôme %diplome%'
   ressources.et.sae.index.heading: 'Ressources et SAÉ'
   apc_parcours_niveau:

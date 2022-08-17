@@ -16,7 +16,8 @@
         <div class="tab-pane active" id="complet" role="tabpanel">
             <div class="card">
                 <header class="card-header">
-                    <h4 class="card-title">{{ 'adm.referentiel.de.competence.heading'|trans({ '%diplome%': diplome.libelle}) }}</h4>
+                    <h4 class="card-title">{{ 'adm.referentiel.de.competence.heading'|trans({ '%diplome%': diplome
+                        .libelle, '%ppn%': diplome.referentiel.anneePublication})|raw }}</h4>
                 </header>
                 <div class="card-body">
                     <div class="tabs">
@@ -44,7 +45,8 @@
         <div class="tab-pane" id="parcours" role="tabpanel">
             <div class="card">
                 <header class="card-header">
-                    <h4 class="card-title">{{ 'adm.apc.parcours.heading'|trans({ '%diplome%': diplome.libelle}) }}</h4>
+                    <h4 class="card-title">{{ 'adm.apc.parcours.heading'|trans({ '%diplome%': diplome.libelle})|raw
+                        }}</h4>
                 </header>
 
                 <div class="card-body">

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Structure/DiplomeImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 14:01
+ * @lastUpdate 17/08/2022 18:40
  */
 
 namespace App\Classes\Structure;
@@ -58,18 +58,23 @@ class DiplomeImport
     {
         $this->fichier = $fichier;
         $this->diplome = $diplome;
-        $this->referentiel = $diplome->getReferentiel();
+        $this->referentiel = $ppn->getApcReferentiel();
 
         switch ($type) {
             case 'competences':
-                $this->importCompetence($ppn);
+                if (null === $this->referentiel) {
+                    throw new RuntimeException('Le référentiel du diplôme n\'est pas défini');
+                }
+                $this->deleteFormation($this->referentiel);
+                $this->deleteCompetences();
+                $this->importCompetence();
                 break;
             case 'formation':
                 if (null === $this->referentiel) {
                     throw new RuntimeException('Le référentiel du diplôme n\'est pas défini');
                 }
-                $this->deleteFormation($ppn);
-                $this->importFormation($ppn);
+                $this->deleteFormation($this->referentiel);
+                $this->importFormation($this->referentiel);
                 break;
             case 'structure':
                 // $this->deleteFormation($ppn);
@@ -78,13 +83,16 @@ class DiplomeImport
         }
     }
 
-    private function importCompetence(Ppn $ppn): void
+    private function importCompetence(): void
     {
         $xml = $this->openXmlFile();
         $tCompetences = [];
+
+        $this->referentiel->setTypeStructure($xml['type_structure']);
+
         foreach ($xml->competences->competence as $competence) {
-            $comp = new ApcCompetence($this->diplome);
-            $comp->setPpn($ppn);
+            $comp = new ApcCompetence($this->referentiel);
+            $comp->setApcReferentiel($this->referentiel);
             $id = $competence['id'];
             $comp->setCouleur($competence['couleur']);
             $comp->setLibelle($competence['libelle_long']);
@@ -110,9 +118,10 @@ class DiplomeImport
 
             foreach ($competence->niveaux->niveau as $niveau) {
                 $niv = new ApcNiveau();
-                // todo: ajouter l'année
-                $niv->setLibelle($niveau['libelle']);
+
+                $niv->setLibelle(substr($niveau['libelle'],0,255));
                 $niv->setOrdre((int) $niveau['ordre']);
+                $niv->setOrdreAnnee((int) substr($niveau['annee'], 3));
                 $niv->setCompetence($comp);
                 $tCompetences[(string) $id][$niv->getOrdre()] = $niv;
                 $this->entityManager->persist($niv);
@@ -128,9 +137,10 @@ class DiplomeImport
         }
 
         foreach ($xml->parcours->parcour as $parcour) {
-            $parc = new ApcParcours($this->diplome);
+            $parc = new ApcParcours($this->referentiel);
             $parc->setCode($parcour['code']);
             $parc->setLibelle($parcour['libelle']);
+            $parc->setApcReferentiel($this->referentiel);
             $this->entityManager->persist($parc);
             foreach ($parcour->annee as $annee) {
                 foreach ($annee->competence as $parcNiveau) {
@@ -264,10 +274,10 @@ class DiplomeImport
         $this->entityManager->flush();
     }
 
-    private function deleteFormation(Ppn $ppn): void
+    private function deleteFormation(ApcReferentiel $referentiel): void
     {
-        $ressources = $this->entityManager->getRepository(ApcRessource::class)->findByPpn($ppn);
-        $saes = $this->entityManager->getRepository(ApcSae::class)->findByPpn($ppn);
+        $ressources = $this->entityManager->getRepository(ApcRessource::class)->findByReferentiel($referentiel);
+        $saes = $this->entityManager->getRepository(ApcSae::class)->findByReferentiel($referentiel);
 
         foreach ($ressources as $ressource) {
             foreach ($ressource->getApcRessourceCompetences() as $ac) {
@@ -411,5 +421,38 @@ class DiplomeImport
             $this->ues[$ue->getCodeElement()] = $ue;
         }
         $this->log .= 'Semestre non trouvé : '.$phrase[9].'<br>';
+    }
+
+    private function deleteCompetences()
+    {
+        // suppression du référentiel de compétences associé au référentiel de compétences
+        foreach ($this->referentiel->getApcComptences() as $competence) {
+            foreach ($competence->getApcComposanteEssentielles() as $ce) {
+                $this->entityManager->remove($ce);
+            }
+
+            foreach ($competence->getApcSituationProfessionnelles() as $situationProfessionnelle) {
+                $this->entityManager->remove($situationProfessionnelle);
+            }
+
+            foreach ($competence->getApcNiveaux() as $niveau) {
+                foreach ($niveau->getApcApprentissageCritiques() as $ac) {
+                    $this->entityManager->remove($ac);
+                }
+
+                $this->entityManager->remove($niveau);
+            }
+
+            $this->entityManager->remove($competence);
+        }
+
+        foreach ($this->referentiel->getApcParcours() as $parcours) {
+            foreach ($parcours->getDiplomes() as $dip) {
+                $dip->setApcParcours(null);
+            }
+            $this->entityManager->remove($parcours);
+        }
+
+        $this->entityManager->flush();
     }
 }
