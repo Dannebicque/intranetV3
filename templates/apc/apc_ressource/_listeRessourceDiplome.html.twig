@@ -27,7 +27,7 @@
             <td>{{ ressource.libelle }}</td>
             <td>
                 {% for competence in ressource.apcRessourceCompetences %}
-                    <span class="badge badge-{{ competence.competence.couleur }}">
+                    <span class="badge bg-{{ competence.competence.couleur }}">
                         {{ competence.competence.nomCourt }} ({{ competence.coefficient }})
                     </span>
                 {% endfor %}</td>

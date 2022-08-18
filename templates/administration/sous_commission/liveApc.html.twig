@@ -91,7 +91,7 @@ chaque UE, et pour l'année au global.
                         {% endfor %}
                         {% for u in sousCommission.ues %}
                             <th colspan="2" class="text-center" scope="col">
-                                <span class="badge badge-{{ u.apcCompetence.couleur }}">
+                                <span class="badge bg-{{ u.apcCompetence.couleur }}">
                                     <abbr title="{{ u.apcCompetence.nomCourt }}">UE {{ u.numeroue }}</abbr>
                                     </span>
                             </th>
@@ -103,7 +103,7 @@ chaque UE, et pour l'année au global.
                         {% if semestre.isPair %}
                             {% for u in sousCommission.ues %}
                                 <th colspan="6" class="text-center" scope="col">
-                                <span class="badge badge-{{ u.apcCompetence.couleur }}">
+                                <span class="badge bg-{{ u.apcCompetence.couleur }}">
                                     <abbr title="{{ u.apcCompetence.nomCourt }}">UE {{ u.numeroue }}</abbr>
                                     </span>
                                 </th>

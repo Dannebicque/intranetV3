@@ -8,7 +8,7 @@
             <dt class="col-md-5 col-sm-12">{{ 'ue'|trans }} :</dt>
             <dd class="col-md-7 col-sm-12">
                 {% for ue in matiere.tab_ues %}
-                <span class="badge badge-{{ ue.ue_couleur }}">{{ ue.ue_display }}</span>
+                <span class="badge bg-{{ ue.ue_couleur }}">{{ ue.ue_display }}</span>
                 {% endfor %}
             </dd>
     {% endif %}

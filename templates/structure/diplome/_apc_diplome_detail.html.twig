@@ -185,7 +185,7 @@
                        class="editable"
                        data-field="libelle">{{ ue.libelle }}</a>
                     {% if ue.bonification == true %}(Bonification){% endif %} |
-                    {% if ue.apcCompetence != null %}<span class="badge badge-{{ ue.apcCompetence.couleur }}">{{ ue
+                    {% if ue.apcCompetence != null %}<span class="badge bg-{{ ue.apcCompetence.couleur }}">{{ ue
                     .apcCompetence.nomCourt }}</span>{% else %}
                         <span class="badge bg-danger">non défini</span>{% endif %}
                 </div>
