@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.8.2](https://github.com/Dannebicque/intranetV3/compare/v3.8.1...v3.8.2) (2022-08-18)
+
+
+### Bug Fixes
+
+* [APC] Découplage année/Parcours + gestion ordre année dans le niveau. ([3a55178](https://github.com/Dannebicque/intranetV3/commit/3a55178bc6ed52c458f706c2ed5ca4ca38cebd03))
+* [Apc] Import + affichage public amélioré ([20c8013](https://github.com/Dannebicque/intranetV3/commit/20c8013577d8b296e03a0b3771e95469976f781f))
+* [APC] Modification import pour gérer ordre année + affichage du référentiel de compétences corrigé ([668ea7a](https://github.com/Dannebicque/intranetV3/commit/668ea7a9794f7e9ea1cfcab91be55e087cedb7fc))
+* [css] Correctifs contrastes sur référentiel APC ([e44c03c](https://github.com/Dannebicque/intranetV3/commit/e44c03cdb91fbfa377039af2de9dbc9ef5069b86))
+* [css] Correctifs contrastes sur référentiel APC ([5868e51](https://github.com/Dannebicque/intranetV3/commit/5868e518e4aac5fd8b6e9494323514369c5c46a6))
+* [css] renommage de badge en bg pour cohérence avec BS5 ([080cd7e](https://github.com/Dannebicque/intranetV3/commit/080cd7e487a586b084d4e1a3f5910b713627f519))
+* [Structure] Modification notion référentiel/pn pour les diplômes de B.U.T. ([db8f2b8](https://github.com/Dannebicque/intranetV3/commit/db8f2b8a977fa3eb4d5fd4abc326c3658306449f))
+
 ### [3.8.1](https://github.com/Dannebicque/intranetV3/compare/v3.8.0...v3.8.1) (2022-08-16)
 
 
