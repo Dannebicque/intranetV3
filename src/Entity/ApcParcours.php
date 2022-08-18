@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcParcours.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/08/2022 17:54
+ * @lastUpdate 18/08/2022 12:15
  */
 
 namespace App\Entity;
@@ -46,6 +46,9 @@ class ApcParcours extends BaseEntity
 
     #[ORM\OneToMany(mappedBy: 'apcParcours', targetEntity: Diplome::class)]
     private Collection $diplomes;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $couleur = null;
 
     public function __construct(ApcReferentiel $apcReferentiel)
     {
@@ -156,6 +159,18 @@ class ApcParcours extends BaseEntity
                 $diplome->setApcParcours(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCouleur(): ?string
+    {
+        return $this->couleur;
+    }
+
+    public function setCouleur(?string $couleur): self
+    {
+        $this->couleur = $couleur;
 
         return $this;
     }

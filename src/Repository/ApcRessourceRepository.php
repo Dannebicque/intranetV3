@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcRessourceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/08/2022 17:42
+ * @lastUpdate 18/08/2022 14:58
  */
 
 namespace App\Repository;
@@ -16,7 +16,6 @@ use App\Entity\ApcRessource;
 use App\Entity\ApcRessourceCompetence;
 use App\Entity\Departement;
 use App\Entity\Diplome;
-use App\Entity\Ppn;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Criteria;
@@ -125,6 +124,23 @@ class ApcRessourceRepository extends ServiceEntityRepository
             ->innerJoin(ApcCompetence::class, 'c', 'WITH', 'cr.competence = c.id')
             ->where('c.apcReferentiel = :referentiel')
             ->setParameter('referentiel', $referentiel->getId())
+            ->getQuery()
+            ->getResult();
+    }
+
+
+    public function findByReferentielSemestre(ApcReferentiel $referentiel, int $semestre): array
+    {
+        return $this->createQueryBuilder('r')
+            ->innerJoin('r.semestres', 's')
+            ->addSelect('s')
+            ->where('s.ordreLmd = :semestre')
+            ->innerJoin(ApcRessourceCompetence::class, 'cs', 'WITH', 'cs.ressource = r.id')
+            ->innerJoin(ApcCompetence::class, 'c', 'WITH', 'cs.competence = c.id')
+            ->andWhere('c.apcReferentiel = :referentiel')
+            ->setParameter('referentiel', $referentiel->getId())
+            ->setParameter('semestre', $semestre)
+            ->orderBy('r.codeMatiere', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

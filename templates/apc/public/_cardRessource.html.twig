@@ -1,6 +1,11 @@
 <div class="col-md-4 col-sm-12">
     <div class="card">
-        <h4 class="card-title">{{ ressource.display }}</h4>
+        <h4 class="card-title">{{ ressource.display }}<br>
+            {% for competence in ressource.apcRessourceCompetences %}
+                <span class="badge bg-{{ competence.competence.couleur }}">
+                        {{ competence.competence.nomCourt }}</span>
+            {% endfor %}
+        </h4>
         <div class="card-body">
             <p>{{ ressource.motsCles|keyWords }}</p>
             <p>
@@ -8,8 +13,9 @@
                     {'apcRessource': ressource.id, diplome:diplome.sigle|lower}) }}"
                    class="btn btn-info stretched-link"
                    target="_blank"
+                   title="Voir la fiche de la ressource (nouvelle fenetre)"
                 >
-                    Voir la fiche ressource
+                    Voir la fiche ressource <i class="fas fa-arrow-up-right-from-square"></i>
                 </a>
             </p>
             <h5>Heures ressources (Référentiel national)</h5>
@@ -30,10 +36,20 @@
             </table>
         </div>
         <div class="card-footer">
-            {% for competence in ressource.apcRessourceCompetences %}
-                <span class="badge badge-{{ competence.competence.couleur }}">
-                        {{ competence.competence.nomCourt }}</span>
-            {% endfor %}
+            {% if ressource.mutualisee == true %}
+                <span class="badge bg-info">
+                Ressource mutualisée
+            </span>
+            {% else %}
+                {% for parcour in ressource.parcours|filter(parcour => parcour != null) %}
+                    <span class="badge bg-{{ parcour.couleur }}">
+                        {{ parcour.libelle }}</span>
+                {% else %}
+                    <span class="badge bg-info">
+                        Tronc commun ou pas de parcours spécifié sur ce semestre
+                        </span>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 </div>

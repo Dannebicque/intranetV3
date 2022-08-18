@@ -1,8 +1,11 @@
 <div class="col-md-4 col-sm-12">
     <div class="card">
-        <h4 class="card-title">{{ sae.display }}
-            <span class="badge badge-primary">{{ sae
-                .semestre.libelle }}</span></h4>
+        <h4 class="card-title">{{ sae.display }}<br>
+            {% for competence in sae.apcSaeCompetences %}
+                <span class="badge bg-{{ competence.competence.couleur }}">
+                        {{ competence.competence.nomCourt }}</span>
+            {% endfor %}
+        </h4>
         <div class="card-body">
             <p>{{ sae.description != null ? sae.description|markdown_to_html : '' }}</p>
             <p>
@@ -10,35 +13,29 @@
                    href="{{ path('but_fiche_sae',
                        {'apcSae': sae.id, diplome:diplome.sigle|lower}) }}"
                    class="btn btn-info"
-
                    title="Voir la fiche SAE"
                    target="_blank"
                 >
-                    Voir la fiche SAE
+                    Voir la fiche SAE  <i class="fas fa-arrow-up-right-from-square"></i>
                 </a>
             </p>
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>CM/TD</th>
-                    <th>TP</th>
-                    <th>Projet</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>{{ sae.cmPpn + sae.tdPpn }} heure(s)</td>
-                    <td>{{ sae.tpPpn }} heure(s)</td>
-                    <td>{{ sae.projetPpn }} heure(s)</td>
-                </tr>
-                </tbody>
-            </table>
         </div>
         <div class="card-footer">
-            {% for competence in sae.apcSaeCompetences %}
-                <span class="badge badge-{{ competence.competence.couleur }}">
-                        {{ competence.competence.nomCourt }}</span>
-            {% endfor %}
+            {% if sae.mutualisee == true %}
+                <span class="badge bg-info">
+                SAE mutualisée
+            </span>
+            {% else %}
+                {% for parcour in sae.parcours|filter(parcour => parcour != null) %}
+                    <span class="badge bg-{{ parcour.couleur }}">
+                        {{ parcour.libelle }}</span>
+                {% else %}
+                    <span class="badge bg-info">
+                        Tronc commun ou pas de parcours spécifié sur ce semestre
+                        </span>
+                {% endfor %}
+            {% endif %}
         </div>
     </div>
 </div>
+

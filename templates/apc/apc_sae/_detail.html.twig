@@ -6,16 +6,40 @@
         <th style="width: 25%">Code de la SAÉ</th>
         <td>{{ apc_sae.codeMatiere }}</td>
     </tr>
+    <tr>
+        <th>Parcours</th>
+        <td>
+            {% if apc_sae.mutualisee == true %}
+                <span class="badge bg-info">
+                SAE mutualisée
+            </span>
+            {% else %}
+                {% for parcour in apc_sae.parcours|filter(parcour => parcour != null) %}
+                    <span class="badge bg-{{ parcour.couleur }}">
+                        {{ parcour.libelle }}</span>
+                {% else %}
+                    <span class="badge bg-info">
+                        Tronc commun ou pas de parcours spécifié sur ce semestre
+                        </span>
+                {% endfor %}
+            {% endif %}
+        </td>
+    </tr>
+
 
     <tr>
-        <th>Description des objectifs de la SAÉ et de la problèmatique professionnelle associée</th>
+        <th>Description de la SAÉ</th>
         <td colspan="3">{{ apc_sae.description != null ? apc_sae.description|markdown_to_html : '' }}</td>
+    </tr>
+    <tr>
+        <th>Objectifs et problèmatique professionnelle associée</th>
+        <td colspan="3">{{ apc_sae.objectifs != null ? apc_sae.objectifs|markdown_to_html : '' }}</td>
     </tr>
     <tr>
         <th>Compétence(s) ciblée(s)</th>
         <td colspan="3">
             {% for competence in apc_sae.apcSaeCompetences %}
-                <span class="badge badge-lg badge-{{ competence.competence.couleur }}"
+                <span class="badge badge-lg bg-{{ competence.competence.couleur }}"
                       data-bs-toggle="tooltip" data-bs-placement="bottom"
                       title="{{ competence.competence.libelle }}">
                     {{ competence.competence.nomCourt }}
@@ -29,7 +53,7 @@
         <td colspan="3">
 
             {% for ac in apc_sae.apcSaeApprentissageCritiques %}
-                <span class="badge badge-{{ ac.apprentissageCritique.competence.couleur }}"
+                <span class="badge bg-{{ ac.apprentissageCritique.competence.couleur }}"
                       data-bs-toggle="tooltip" data-bs-placement="bottom"
                       title="{{ ac.apprentissageCritique.libelle }}">
                     {{ ac.apprentissageCritique.code }}
@@ -39,41 +63,45 @@
     </tr>
 
     <tr>
-        <th rowspan="2" style="width:25%">Heures Programme National</th>
-        <th class="text-center" style="width:25%">CM/TD</th>
-        <th class="text-center" style="width:25%">TP</th>
-        <th class="text-center" style="width:25%">Projet Tutoré</th>
+        <th rowspan="2" style="width:20%">Heures Programme National</th>
+        <th class="text-center" style="width:40%" colspan="2">CM/TD</th>
+        <th class="text-center" style="width:20%">TP</th>
+        <th class="text-center" style="width:20%">Projet Tutoré</th>
     </tr>
     <tr>
-        <td class="text-center">{{ apc_sae.cmPpn + apc_sae.tdPpn }} heure(s)</td>
-        <td class="text-center">{{ apc_sae.tpPpn }} heure(s)</td>
-        <td class="text-center">{{ apc_sae.projetPpn }} heure(s)</td>
+        <td class="text-center" colspan="4">Le volume horaire des SAE n'est pas défini nationalement</td>
     </tr>
 
     <tr>
-        <th rowspan="2" style="width:25%">Heures de formation ({{ settings('NOM_IUT') }}*)</th>
-        <th class="text-center" style="width:25%">CM</th>
-        <th class="text-center" style="width:25%">TD</th>
-        <th class="text-center" style="width:25%">TP</th>
+        <th rowspan="2" style="width:20%">Heures de formation ({{ settings('NOM_IUT') }}*)</th>
+        <th class="text-center" style="width:20%">CM</th>
+        <th class="text-center" style="width:20%">TD</th>
+        <th class="text-center" style="width:20%">TP</th>
+        <th class="text-center" style="width:20%">Heures Projets</th>
     </tr>
     <tr>
         <td class="text-center">{{ apc_sae.cmFormation }} heure(s)</td>
         <td class="text-center">{{ apc_sae.tdFormation }} heure(s)</td>
         <td class="text-center">{{ apc_sae.tpFormation }} heure(s)</td>
+        <td class="text-center">{{ apc_sae.projetFormation }} heure(s)</td>
     </tr>
+
     <tr>
-        <th>Heures "projet tutoré"</th>
-        <td colspan="3">{{ apc_sae.projetFormation }} heure(s)</td>
-    </tr>
-    <tr>
-        <th>Liste des ressources mobilisées et combinées</th>
+        <th>Liste des ressources mobilisées et combinées <br><small>(cliquez pour ouvrir dans une nouvelle fenêtre)
+            </small></th>
         <td colspan="3">
             {% for ressource in apc_sae.apcSaeRessources %}
+                <a href="{{ path('but_fiche_ressource',
+                    {'apcRessource': ressource.ressource.id, diplome:diplome.sigle|lower}) }}"
+                   target="_blank"
+                   title="Voir la fiche de la ressource (nouvelle fenetre)"
+                >
                 <span class="badge bg-primary"
                       data-bs-toggle="tooltip" data-bs-placement="bottom"
                       title="{{ ressource.ressource.libelle }}">
                     {{ ressource.ressource.display }}
                     </span>
+                </a>
             {% endfor %}
         </td>
     </tr>

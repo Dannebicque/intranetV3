@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcComptenceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/08/2022 18:25
+ * @lastUpdate 18/08/2022 11:01
  */
 
 namespace App\Repository;
@@ -34,28 +34,9 @@ class ApcComptenceRepository extends ServiceEntityRepository
     /**
      * @return ApcCompetence[]
      */
-    public function findByReferentielAndPn(ApcReferentiel $diplome, Ppn $pn): array
+    public function findOneByReferentielArray(ApcReferentiel $referentiel): array
     {
-        return $this->findByReferentielAndPnBuilder($diplome, $pn)
-            ->getQuery()
-            ->getResult();
-    }
-
-    public function findByReferentielAndPnBuilder(ApcReferentiel $referentiel, Ppn $pn): QueryBuilder
-    {
-        return $this->createQueryBuilder('c')
-            ->where('c.apcReferentiel = :referentiel')
-            ->andWhere('c.ppn = :pn')
-            ->setParameter('referentiel', $referentiel->getId())
-            ->setParameter('pn', $pn->getId());
-    }
-
-    /**
-     * @return ApcCompetence[]
-     */
-    public function findOneByReferentielAndPnArray(ApcReferentiel $referentiel, Ppn $pn): array
-    {
-        $comps = $this->findByReferentielAndPn($referentiel, $pn);
+        $comps = $this->findByReferentiel($referentiel);
         $t = [];
         foreach ($comps as $c) {
             $t[$c->getNomCourt()] = $c;

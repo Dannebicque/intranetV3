@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Structure/DiplomeImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/08/2022 18:40
+ * @lastUpdate 18/08/2022 14:57
  */
 
 namespace App\Classes\Structure;
@@ -97,7 +97,7 @@ class DiplomeImport
             $comp->setCouleur($competence['couleur']);
             $comp->setLibelle($competence['libelle_long']);
             $comp->setNomCourt($competence['nom_court']);
-            $tCompetences[(string) $id] = [];
+            $tCompetences[(string)$id] = [];
 
             $this->entityManager->persist($comp);
 
@@ -119,11 +119,11 @@ class DiplomeImport
             foreach ($competence->niveaux->niveau as $niveau) {
                 $niv = new ApcNiveau();
 
-                $niv->setLibelle(substr($niveau['libelle'],0,255));
-                $niv->setOrdre((int) $niveau['ordre']);
-                $niv->setOrdreAnnee((int) substr($niveau['annee'], 3));
+                $niv->setLibelle(substr($niveau['libelle'], 0, 255));
+                $niv->setOrdre((int)$niveau['ordre']);
+                $niv->setOrdreAnnee((int)substr($niveau['annee'], 3));
                 $niv->setCompetence($comp);
-                $tCompetences[(string) $id][$niv->getOrdre()] = $niv;
+                $tCompetences[(string)$id][$niv->getOrdre()] = $niv;
                 $this->entityManager->persist($niv);
 
                 foreach ($niveau->acs->ac as $ac) {
@@ -135,17 +135,19 @@ class DiplomeImport
                 }
             }
         }
-
+        $numParcours = 1;
         foreach ($xml->parcours->parcour as $parcour) {
             $parc = new ApcParcours($this->referentiel);
             $parc->setCode($parcour['code']);
             $parc->setLibelle($parcour['libelle']);
             $parc->setApcReferentiel($this->referentiel);
+            $parc->setCouleur('c' . $numParcours);
+            ++$numParcours;
             $this->entityManager->persist($parc);
             foreach ($parcour->annee as $annee) {
                 foreach ($annee->competence as $parcNiveau) {
                     $pn = new ApcParcoursNiveau();
-                    $pn->setNiveau($tCompetences[trim((string) $parcNiveau['id'])][(int) trim($parcNiveau['niveau'])]);
+                    $pn->setNiveau($tCompetences[trim((string)$parcNiveau['id'])][(int)trim($parcNiveau['niveau'])]);
                     $pn->setParcours($parc);
                     $this->entityManager->persist($pn);
                 }
@@ -163,7 +165,7 @@ class DiplomeImport
         throw new FileNotFoundException();
     }
 
-    private function importFormation(Ppn $ppn): void
+    private function importFormation(ApcReferentiel $referentiel): void
     {
         $xml = $this->openXmlFile();
 
@@ -171,6 +173,7 @@ class DiplomeImport
         $tSemestres = [];
 
         $semestres = $this->entityManager->getRepository(Semestre::class)->findAllSemestreByDiplomeApc($this->diplome);
+
 
         foreach ($semestres as $semestre) {
             if (Constantes::APC_TYPE_3 === $typeStructure || $semestre->getOrdreLmd() > 2) {
@@ -182,44 +185,53 @@ class DiplomeImport
             }
         }
 
-        $tAcs = $this->entityManager->getRepository(ApcApprentissageCritique::class)->findOneByReferentielAndPnArray($this->referentiel,
-            $ppn);
-        $tCompetences = $this->entityManager->getRepository(ApcCompetence::class)->findOneByReferentielAndPnArray($this->referentiel,
-            $ppn);
+        $tAcs = $this->entityManager->getRepository(ApcApprentissageCritique::class)->findOneByReferentielArray($this->referentiel);
+        $tCompetences = $this->entityManager->getRepository(ApcCompetence::class)->findOneByReferentielArray($this->referentiel);
         foreach ($xml->semestre as $sem) {
-            $numeroSemestre = (int) $sem['numero'];
+            $numeroSemestre = (int)$sem['numero'];
             if (array_key_exists($numeroSemestre, $tSemestres)) {
                 $tRessources = [];
+                $prerequis = [];
                 foreach ($sem->ressources->ressource as $ressource) {
                     $ar = new ApcRessource();
 
                     $ar->setLibelle($ressource->titre);
-                    $ar->setCodeMatiere((string) $ressource['code']);
-                    $ar->setCodeElement($this->diplome->getSigle().$ressource['code']);
-                    $ar->setTdPpn((float) $ressource['heuresCMTD']);
-                    $ar->setTpPpn((float) $ressource['heuresTP']);
-                    $ar->setDescription((string) $ressource->description);
-                    $ar->setMotsCles((string) $ressource->motsCles);
+                    $ar->setCodeMatiere((string)$ressource['code']);
+                    $ar->setCodeElement($this->diplome->getSigle() . $ressource['code']);
+                    $ar->setTdPpn((float)$ressource['heuresCMTD']);
+                    $ar->setTpPpn((float)$ressource['heuresTP']);
+                    $ar->setDescription((string)$ressource->description);
+                    $ar->setMotsCles((string)$ressource->{'mots-cles'});
                     $this->entityManager->persist($ar);
                     $tRessources[$ar->getCodeMatiere()] = $ar;
 
                     // acs
                     foreach ($ressource->acs->ac as $ac) {
-                        $rac = new ApcRessourceApprentissageCritique($ar, $tAcs[trim((string) $ac)]);
+                        $rac = new ApcRessourceApprentissageCritique($ar, $tAcs[trim((string)$ac)]);
                         $this->entityManager->persist($rac);
                     }
+
+                    foreach ($ressource->prerequis->ressource as $res) {
+                        $prerequis[$ar->getCodeMatiere()][] = (string)$res;
+                    }
+
                     // competences
                     foreach ($ressource->competences->competence as $comp) {
-                        $rac = new ApcRessourceCompetence($ar, $tCompetences[trim((string) $comp['nom'])]);
-                        $rac->setCoefficient((float) $comp['coefficient']);
+                        $rac = new ApcRessourceCompetence($ar, $tCompetences[trim((string)$comp['nom'])]);
+                        $rac->setCoefficient((float)$comp['coefficient']);
                         $this->entityManager->persist($rac);
                     }
                     // les saes seront ajoutée par les SAE
 
                     if (Constantes::APC_TYPE_3 === $typeStructure || $numeroSemestre > 2) {
                         foreach ($ressource->liste_parcours->parcours as $parcours) {
-                            $ar->addSemestre($tSemestres[$numeroSemestre][trim((string) $parcours)]);
-                            $tSemestres[$numeroSemestre][trim((string) $parcours)]->addApcSemestresRessource($ar);
+                            if (array_key_exists(trim((string)$parcours), $tSemestres[$numeroSemestre])) {
+                                $ar->addSemestre($tSemestres[$numeroSemestre][trim((string)$parcours)]);
+                                $tSemestres[$numeroSemestre][trim((string)$parcours)]->addApcSemestresRessource($ar);
+                            }
+                        }
+                        if ($ar->getSemestres()->count() > 1) {
+                            $ar->setMutualisee(true);
                         }
                     } else {
                         $ar->addSemestre($tSemestres[$numeroSemestre]);
@@ -231,42 +243,52 @@ class DiplomeImport
                     $ar = new ApcSae();
 
                     $ar->setLibelle($sae->titre);
-                    $ar->setCodeMatiere((string) $sae['code']);
-                    $ar->setCodeElement($this->diplome->getSigle().$sae['code']);
-                    $ar->setTdPpn((float) $sae['heuresCMTD']);
-                    $ar->setTpPpn((float) $sae['heuresTP']);
-                    $ar->setProjetPpn((float) $sae['heuresProjet']);
-                    $ar->setDescription((string) $sae->description);
-                    $ar->setExemples((string) $sae->exemples);
-                    $ar->setLivrables((string) $sae->livrables);
+                    $ar->setCodeMatiere((string)$sae['code']);
+                    $ar->setCodeElement($this->diplome->getSigle() . $sae['code']);
+                    $ar->setDescription((string)$sae->description);
+                    $ar->setObjectifs((string)$sae->objectifs);
                     $this->entityManager->persist($ar);
 
                     // acs
                     foreach ($sae->acs->ac as $ac) {
-                        $rac = new ApcSaeApprentissageCritique($ar, $tAcs[trim((string) $ac)]);
+                        $rac = new ApcSaeApprentissageCritique($ar, $tAcs[trim((string)$ac)]);
                         $this->entityManager->persist($rac);
                     }
 
                     // competences
                     foreach ($sae->competences->competence as $comp) {
-                        $rac = new ApcSaeCompetence($ar, $tCompetences[trim((string) $comp['nom'])]);
-                        $rac->setCoefficient((float) $comp['coefficient']);
+                        $rac = new ApcSaeCompetence($ar, $tCompetences[trim((string)$comp['nom'])]);
+                        $rac->setCoefficient((float)$comp['coefficient']);
                         $this->entityManager->persist($rac);
                     }
                     // Ressources
                     foreach ($sae->ressources->ressource as $comp) {
-                        $rac = new ApcSaeRessource($ar, $tRessources[trim((string) $comp)]);
+                        $rac = new ApcSaeRessource($ar, $tRessources[trim((string)$comp)]);
                         $this->entityManager->persist($rac);
                     }
 
                     if (Constantes::APC_TYPE_3 === $typeStructure || $numeroSemestre > 2) {
                         foreach ($sae->liste_parcours->parcours as $parcours) {
-                            $ar->addSemestre($tSemestres[$numeroSemestre][trim((string) $parcours)]);
-                            $tSemestres[$numeroSemestre][trim((string) $parcours)]->addApcSemestresSae($ar);
+                            if (array_key_exists(trim((string)$parcours), $tSemestres[$numeroSemestre])) {
+                                $ar->addSemestre($tSemestres[$numeroSemestre][trim((string)$parcours)]);
+                                $tSemestres[$numeroSemestre][trim((string)$parcours)]->addApcSemestresSae($ar);
+                            }
+                        }
+                        if ($ar->getSemestres()->count() > 1) {
+                            $ar->setMutualisee(true);
                         }
                     } else {
                         $ar->addSemestre($tSemestres[$numeroSemestre]);
                         $tSemestres[$numeroSemestre]->addApcSemestresSae($ar);
+                    }
+                }
+                foreach ($prerequis as $key => $ressources) {
+                    $ar = $tRessources[$key];
+                    foreach ($ressources as $ressource) {
+                        if (array_key_exists($ressource, $tRessources)) {
+                            $ar->addRessourcesPreRequise($tRessources[$ressource]);
+                            $tRessources[$ressource]->addRessourcesAvecPreRequi($ar);
+                        }
                     }
                 }
             }
@@ -363,7 +385,7 @@ class DiplomeImport
         $dip->setVolumeHoraire($phrase[6]);
         $dip->setTypeDiplome($typeDiplome);
         $this->entityManager->persist($dip);
-        $this->diplomes[$dip->getCodeDiplome().'_'.$dip->getCodeVersion()] = $dip;
+        $this->diplomes[$dip->getCodeDiplome() . '_' . $dip->getCodeVersion()] = $dip;
     }
 
     private function importAnnee(bool|array $phrase): void
@@ -380,7 +402,7 @@ class DiplomeImport
             $this->entityManager->persist($annee);
             $this->annees[$annee->getCodeEtape()] = $annee;
         }
-        $this->log .= 'Diplome non trouvé : '.$phrase[9].'<br>';
+        $this->log .= 'Diplome non trouvé : ' . $phrase[9] . '<br>';
     }
 
     private function importSemestre(bool|array $phrase): void
@@ -401,7 +423,7 @@ class DiplomeImport
             $this->entityManager->persist($semestre);
             $this->semestres[$semestre->getCodeElement()] = $semestre;
         }
-        $this->log .= 'Année non trouvée : '.$phrase[9].'<br>';
+        $this->log .= 'Année non trouvée : ' . $phrase[9] . '<br>';
     }
 
     private function importUe(bool|array $phrase): void
@@ -420,7 +442,7 @@ class DiplomeImport
             $this->entityManager->persist($ue);
             $this->ues[$ue->getCodeElement()] = $ue;
         }
-        $this->log .= 'Semestre non trouvé : '.$phrase[9].'<br>';
+        $this->log .= 'Semestre non trouvé : ' . $phrase[9] . '<br>';
     }
 
     private function deleteCompetences()

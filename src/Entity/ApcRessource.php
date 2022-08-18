@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcRessource.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/08/2022 14:30
+ * @lastUpdate 18/08/2022 14:38
  */
 
 namespace App\Entity;
@@ -81,6 +81,12 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
     #[ORM\ManyToMany(targetEntity: Semestre::class, inversedBy: 'apcSemestresRessources', fetch: 'EXTRA_LAZY')]
     private Collection $semestres;
 
+    #[ORM\ManyToMany(targetEntity: self::class, inversedBy: 'ressourcesAvecPreRequis')]
+    private Collection $ressourcesPreRequises;
+
+    #[ORM\ManyToMany(targetEntity: self::class, mappedBy: 'ressourcesPreRequises')]
+    private Collection $ressourcesAvecPreRequis;
+
     public function __construct()
     {
         $this->apcRessourceCompetences = new ArrayCollection();
@@ -89,7 +95,10 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
         $this->apcRessourceParentEnfants = new ArrayCollection();
         $this->apcRessourceEnfantEnfants = new ArrayCollection();
         $this->semestres = new ArrayCollection();
+        $this->ressourcesPreRequises = new ArrayCollection();
+        $this->ressourcesAvecPreRequis = new ArrayCollection();
     }
+
 
     public function getPreRequis(): ?string
     {
@@ -390,5 +399,66 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
         $this->semestre = $semestre;
     }
 
+    public function getParcours(): array
+    {
+        $parcours = [];
+        foreach ($this->getSemestres() as $semestre) {
+            if (null !== $semestre->getDiplome()) {
+                $parcours[] = $semestre->getDiplome()->getApcParcours();
+            }
+        }
 
+        return $parcours;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getRessourcesPreRequises(): Collection
+    {
+        return $this->ressourcesPreRequises;
+    }
+
+    public function addRessourcesPreRequise(self $ressourcesPreRequise): self
+    {
+        if (!$this->ressourcesPreRequises->contains($ressourcesPreRequise)) {
+            $this->ressourcesPreRequises[] = $ressourcesPreRequise;
+        }
+
+        return $this;
+    }
+
+    public function removeRessourcesPreRequise(self $ressourcesPreRequise): self
+    {
+        $this->ressourcesPreRequises->removeElement($ressourcesPreRequise);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getRessourcesAvecPreRequis(): Collection
+    {
+        return $this->ressourcesAvecPreRequis;
+    }
+
+    public function addRessourcesAvecPreRequi(self $ressourcesAvecPreRequi): self
+    {
+        if (!$this->ressourcesAvecPreRequis->contains($ressourcesAvecPreRequi)) {
+            $this->ressourcesAvecPreRequis[] = $ressourcesAvecPreRequi;
+            $ressourcesAvecPreRequi->addRessourcesPreRequise($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRessourcesAvecPreRequi(self $ressourcesAvecPreRequi): self
+    {
+        if ($this->ressourcesAvecPreRequis->removeElement($ressourcesAvecPreRequi)) {
+            $ressourcesAvecPreRequi->removeRessourcesPreRequise($this);
+        }
+
+        return $this;
+    }
 }

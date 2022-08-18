@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/apc/ButPublicController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/08/2022 18:31
+ * @lastUpdate 18/08/2022 11:57
  */
 
 namespace App\Controller\apc;
@@ -48,7 +48,7 @@ class ButPublicController extends AbstractController
         $diplome = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
         $referentiel = $diplome->getReferentiel();
 
-        if ($referentiel === null) {
+        if (null === $referentiel) {
             throw new DiplomeNotFoundException();
         }
 
@@ -90,6 +90,22 @@ class ButPublicController extends AbstractController
         return $this->render('apc/public/ficheSae.html.twig', [
             'apc_sae' => $apcSae,
             'diplome' => $diplome,
+        ]);
+    }
+
+    #[Route(path: '/{diplome}/semestre-{semestre}', name: 'but_ressources_saes')]
+    public function ressourcesSaes(ApcSaeRepository $apcSaeRepository, ApcRessourceRepository $apcRessourceRepository, string $diplome, int $semestre): Response
+    {
+        $dip = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
+
+        if (null === $dip || null === $dip->getReferentiel()) {
+            throw new DiplomeNotFoundException();
+        }
+
+        return $this->render('apc/public/ressources_sae.html.twig', [
+            'saes' => $apcSaeRepository->findByReferentielSemestre($dip->getReferentiel(), $semestre),
+            'ressources' => $apcRessourceRepository->findByReferentielSemestre($dip->getReferentiel(), $semestre),
+            'diplome' => $dip,
         ]);
     }
 

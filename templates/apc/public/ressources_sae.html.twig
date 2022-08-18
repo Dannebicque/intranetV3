@@ -1,0 +1,19 @@
+{% extends 'base-but.html.twig' %}
+
+{% block content %}
+    <div class="row">
+        {% for sae in saes %}
+            {{ include('apc/public/_cardSae.html.twig') }}
+        {% endfor %}
+    </div>
+    <div class="row">
+        {% for ressource in ressources %}
+            {{ include('apc/public/_cardRessource.html.twig') }}
+        {% endfor %}
+    </div>
+{% endblock %}
+
+{% block header %}
+Ressources et SAE pour le B.U.T {{ diplome.sigle }}
+{% endblock %}
+

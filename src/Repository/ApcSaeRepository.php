@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcSaeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/08/2022 17:42
+ * @lastUpdate 18/08/2022 14:58
  */
 
 namespace App\Repository;
@@ -85,7 +85,7 @@ class ApcSaeRepository extends ServiceEntityRepository
     public function search(?string $search, Diplome $diplome): array
     {
         return $this->createQueryBuilder('a')
-            ->innerJoin(Semestre::class, 's', 'WITH', 'a.semestre=s.id')
+            ->innerJoin(Semestre::class, 's', 'WITH', 'a.semestre=s.id')//todo: ne fonctionne plus... semestre va être supprimé
             ->innerJoin(Annee::class, 'an', 'WITH', 's.annee=an.id')
             ->where('a.libelle LIKE :search')
             ->orWhere('a.livrables LIKE :search')
@@ -131,6 +131,22 @@ class ApcSaeRepository extends ServiceEntityRepository
             ->innerJoin(ApcCompetence::class, 'c', 'WITH', 'cs.competence = c.id')
             ->where('c.apcReferentiel = :referentiel')
             ->setParameter('referentiel', $referentiel->getId())
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByReferentielSemestre(ApcReferentiel $referentiel, int $semestre): array
+    {
+        return $this->createQueryBuilder('r')
+            ->innerJoin('r.semestres', 's')
+            ->addSelect('s')
+            ->where('s.ordreLmd = :semestre')
+            ->innerJoin(ApcSaeCompetence::class, 'cs', 'WITH', 'cs.sae = r.id')
+            ->innerJoin(ApcCompetence::class, 'c', 'WITH', 'cs.competence = c.id')
+            ->andWhere('c.apcReferentiel = :referentiel')
+            ->setParameter('referentiel', $referentiel->getId())
+            ->setParameter('semestre', $semestre)
+            ->orderBy('r.codeMatiere', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcApprentissageCritiqueRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/07/2022 13:59
+ * @lastUpdate 18/08/2022 11:01
  */
 
 namespace App\Repository;
@@ -69,32 +69,14 @@ class ApcApprentissageCritiqueRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findOneByReferentielAndPnArray(ApcReferentiel $referentiel, Ppn $pn): array
+    public function findOneByReferentielArray(ApcReferentiel $referentiel): array
     {
-        $comps = $this->findByReferentielAndPn($referentiel, $pn);
+        $comps = $this->findByReferentiel($referentiel);
         $t = [];
         foreach ($comps as $c) {
             $t[$c->getCode()] = $c;
         }
 
         return $t;
-    }
-
-    public function findByReferentielAndPn(ApcReferentiel $referentiel, Ppn $pn): array
-    {
-        return $this->findByReferentielAndPnBuilder($referentiel, $pn)
-            ->getQuery()
-            ->getResult();
-    }
-
-    public function findByReferentielAndPnBuilder(ApcReferentiel $referentiel, Ppn $pn): QueryBuilder
-    {
-        return $this->createQueryBuilder('a')
-            ->innerJoin(ApcNiveau::class, 'n', 'WITH', 'a.niveau = n.id')
-            ->innerJoin(ApcCompetence::class, 'c', 'WITH', 'c.id = n.competence')
-            ->where('c.apcReferentiel = :referentiel')
-            ->andWhere('c.ppn = :ppn')
-            ->setParameter('referentiel', $referentiel->getId())
-            ->setParameter('ppn', $pn->getId());
     }
 }

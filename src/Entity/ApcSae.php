@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcSae.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/08/2022 14:30
+ * @lastUpdate 18/08/2022 14:16
  */
 
 namespace App\Entity;
@@ -29,6 +29,7 @@ class ApcSae extends AbstractMatiere implements MatiereEntityInterface
 
     /**
      * @return \App\Entity\Semestre|null
+     *
      * @deprecated
      */
     public function getSemestre(): ?Semestre
@@ -75,6 +76,9 @@ class ApcSae extends AbstractMatiere implements MatiereEntityInterface
 
     #[ORM\ManyToMany(targetEntity: Semestre::class, inversedBy: 'apcSemestresSaes')]
     private Collection $semestres;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $objectifs = null;
 
     public function __construct()
     {
@@ -321,5 +325,29 @@ class ApcSae extends AbstractMatiere implements MatiereEntityInterface
     public function setSemestre(?Semestre $semestre): void
     {
         $this->semestre = $semestre;
+    }
+
+    public function getParcours(): array
+    {
+        $parcours = [];
+        foreach ($this->getSemestres() as $semestre) {
+            if (null !== $semestre->getDiplome()) {
+                $parcours[] = $semestre->getDiplome()->getApcParcours();
+            }
+        }
+
+        return $parcours;
+    }
+
+    public function getObjectifs(): ?string
+    {
+        return $this->objectifs;
+    }
+
+    public function setObjectifs(?string $objectifs): self
+    {
+        $this->objectifs = $objectifs;
+
+        return $this;
     }
 }
