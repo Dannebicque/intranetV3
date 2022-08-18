@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/apc.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 17/08/2022 19:17
+// @lastUpdate 18/08/2022 12:18
 @use "sass:map";
 
 $colorsApc: (
@@ -183,7 +183,7 @@ $textColorsApcMedium: (
     background-color: $color-value;
   }
 
-  .badge-#{$color-key} {
+  .bg-#{$color-key} {
     background-color: $color-value;
     color: white;
   }
