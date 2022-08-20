@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.8.3](https://github.com/Dannebicque/intranetV3/compare/v3.8.2...v3.8.3) (2022-08-20)
+
+
+### Features
+
+* [Command] Commande pour générer la structure d'un diplôme rapidement, sans les codes apogées ([c10a5f1](https://github.com/Dannebicque/intranetV3/commit/c10a5f1ac6f2668a5f7722f06df7ab15072a6775))
+
+
+### Bug Fixes
+
+* [Structure] Ordre des années ([d494ea9](https://github.com/Dannebicque/intranetV3/commit/d494ea9661d1ab052852fef7820ab024467aea43))
+
 ### [3.8.2](https://github.com/Dannebicque/intranetV3/compare/v3.8.1...v3.8.2) (2022-08-18)
 
 
