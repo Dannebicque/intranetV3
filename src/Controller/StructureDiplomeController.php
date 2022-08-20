@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/StructureDiplomeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/08/2022 11:09
+ * @lastUpdate 20/08/2022 17:26
  */
 
 namespace App\Controller;
@@ -43,7 +43,7 @@ class StructureDiplomeController extends AbstractController
             $ppn = $ppnRepository->find($idPpn);
         }
 
-        if (true === $diplome->getTypeDiplome()?->getApc()) {
+        if (true === $diplome->isApc()) {
             $referentiel = $diplome->getReferentiel();
             $ppn = $referentiel->getPpns()->first();
             $parcours = $referentiel->getApcParcours();

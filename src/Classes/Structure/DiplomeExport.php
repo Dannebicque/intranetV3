@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Structure/DiplomeExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/07/2022 12:51
+ * @lastUpdate 20/08/2022 17:24
  */
 
 namespace App\Classes\Structure;
@@ -27,7 +27,7 @@ class DiplomeExport
      */
     public function exportRefentiel(Diplome $diplome): Response
     {
-        if (true === $diplome->getTypeDiplome()->getApc()) {
+        if (true === $diplome->isApc()) {
             $xmlContent = $this->twig->render('xml/export-referentiel-but.xml.twig', [
                 'diplome' => $diplome,
                 'competences' => $diplome->getReferentiel()?->getApcComptences(),
@@ -59,7 +59,7 @@ class DiplomeExport
      */
     public function exportProgramme(Diplome $diplome): Response
     {
-        if (true === $diplome->getTypeDiplome()->getApc()) {
+        if (true === $diplome->isApc()) {
             $xmlContent = $this->twig->render('xml/export-programme-but.xml.twig', [
                 'semestres' => $diplome->getSemestres(),
             ]);
@@ -75,7 +75,7 @@ class DiplomeExport
 
     public function exportMaquetteApogee(Diplome $diplome): ?StreamedResponse
     {
-        if (true === $diplome->getTypeDiplome()->getApc()) {
+        if (true === $diplome->isApc()) {
             $this->apogeeExport->setDiplome($diplome);
             $name = 'but-maquette-'.$diplome->getSigle().'.xlsx';
 

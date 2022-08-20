@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/ApogeeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:44
+ * @lastUpdate 20/08/2022 17:26
  */
 
 namespace App\Controller\superAdministration;
@@ -149,7 +149,7 @@ class ApogeeController extends BaseController
         }
         $this->entityManager->persist($pn);
         $t = [];
-        if (true === $annee->getDiplome()?->getTypeDiplome()?->getApc()) {
+        if (true === $annee->getDiplome()?->isApc()) {
             // BUT
             $elementsAnnee = $apogeeImport->getElementsFromAnnee($annee);
             while ($elpAnnee = $elementsAnnee->fetch()) {
@@ -225,7 +225,7 @@ class ApogeeController extends BaseController
         // création d'un PN
         $pn = $semestre->getPpnActif();
         $t = [];
-        if (true === $semestre->getDiplome()?->getTypeDiplome()?->getApc()) {
+        if (true === $semestre->getDiplome()?->isApc()) {
             // BUT
 
             $elementsSemestre = $apogeeImport->getElementsFromSemestre($semestre->getCodeElement());
@@ -279,7 +279,7 @@ class ApogeeController extends BaseController
     {
         // création d'un PN
         $pn = $ue->getSemestre()?->getPpnActif();
-        if (true === $ue->getDiplome()?->getTypeDiplome()?->getApc()) {
+        if (true === $ue->getDiplome()?->isApc()) {
             // BUT
             // todo: a définir.
         } else {

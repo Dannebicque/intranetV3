@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/SousComissionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/06/2022 08:23
+ * @lastUpdate 20/08/2022 17:24
  */
 
 namespace App\Controller\administration;
@@ -215,7 +215,7 @@ class SousComissionController extends BaseController
     public function exporter(SousCommissionExport $sousCommission, Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
-        if (true === $semestre->getDiplome()->getTypeDiplome()->getApc()) {
+        if (true === $semestre->getDiplome()?->isApc()) {
             return $sousCommission->exportApc($semestre, $this->dataUserSession->getAnneeUniversitaire());
         }
 
@@ -230,7 +230,7 @@ class SousComissionController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $scolaritePromo->getSemestre());
 
-        if (true === $scolaritePromo->getSemestre()->getDiplome()->getTypeDiplome()->getApc()) {
+        if (true === $scolaritePromo->getSemestre()?->getDiplome()?->isApc()) {
             return $sousCommissionExport->exportGrandJuryApc($scolaritePromo,
                 $this->dataUserSession->getAnneeUniversitaire());
         }

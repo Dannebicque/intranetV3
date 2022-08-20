@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/MatiereController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 20/08/2022 17:24
  */
 
 namespace App\Controller\administration;
@@ -52,7 +52,7 @@ class MatiereController extends BaseController
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $diplome);
 
         // feature: A optimiser pour pas dépendre des repository??
-        if (null !== $diplome->getTypeDiplome() && true === $diplome->getTypeDiplome()->getApc()) {
+        if (true === $diplome->isApc()) {
             return $this->render('administration/matiere/_tableauApc.html.twig', [
                 'diplome' => $diplome,
                 'ressources' => $apcRessourceRepository->findByDiplome($diplome),

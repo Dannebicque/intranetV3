@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/UeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/07/2022 12:19
+ * @lastUpdate 20/08/2022 17:26
  */
 
 namespace App\Form;
@@ -51,7 +51,7 @@ class UeType extends AbstractType
             ->add('coefficient', TextType::class, ['label' => 'label.coefficient'])
             ->add('nbEcts', TextType::class, ['label' => 'label.nb_ects']);
 
-        if (true === $this->diplome->getTypeDiplome()?->getApc()) {
+        if (true === $this->diplome->isApc()) {
             $builder->add('apcCompetence', EntityType::class, [
                 'class' => ApcCompetence::class,
                 'required' => false,

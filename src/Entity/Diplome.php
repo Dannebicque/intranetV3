@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Diplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/08/2022 15:48
+ * @lastUpdate 20/08/2022 16:58
  */
 
 namespace App\Entity;
@@ -130,6 +130,9 @@ class Diplome extends BaseEntity implements Serializable
     #[ORM\ManyToOne(targetEntity: ApcParcours::class, inversedBy: 'diplomes')]
     private ?ApcParcours $apcParcours = null;
 
+    #[ORM\OneToMany(mappedBy: 'diplome', targetEntity: TypeGroupe::class)]
+    private Collection $typeGroupes;
+
     public function __construct(#[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'diplomes')] private ?Departement $departement, ?Diplome $diplome = null)
     {
         $this->hrs = new ArrayCollection();
@@ -139,6 +142,7 @@ class Diplome extends BaseEntity implements Serializable
         $this->covidAttestationEtudiants = new ArrayCollection();
         $this->enfants = new ArrayCollection();
         $this->parent = $diplome;
+        $this->typeGroupes = new ArrayCollection();
     }
 
     public function getDisplay(): ?string
@@ -693,5 +697,40 @@ class Diplome extends BaseEntity implements Serializable
         $this->apcParcours = $apcParcours;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, TypeGroupe>
+     */
+    public function getTypeGroupes(): Collection
+    {
+        return $this->typeGroupes;
+    }
+
+    public function addTypeGroupe(TypeGroupe $typeGroupe): self
+    {
+        if (!$this->typeGroupes->contains($typeGroupe)) {
+            $this->typeGroupes[] = $typeGroupe;
+            $typeGroupe->setDiplome($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTypeGroupe(TypeGroupe $typeGroupe): self
+    {
+        if ($this->typeGroupes->removeElement($typeGroupe)) {
+            // set the owning side to null (unless already changed)
+            if ($typeGroupe->getDiplome() === $this) {
+                $typeGroupe->setDiplome(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function isApc(): bool
+    {
+        return null !== $this->getTypeDiplome() ? $this->getTypeDiplome()->getApc() : false;
     }
 }

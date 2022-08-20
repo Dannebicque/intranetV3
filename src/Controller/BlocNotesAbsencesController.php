@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/BlocNotesAbsencesController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/BlocNotesAbsencesController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/10/2021 10:36
+ * @lastUpdate 20/08/2022 17:26
  */
 
 namespace App\Controller;
@@ -75,7 +75,7 @@ class BlocNotesAbsencesController extends BaseController
     {
         return $this->render('bloc_notes_absences/mcc.html.twig', [
             'matieres' => $typeMatiereManager->findBySemestre($this->getEtudiantSemestre()),
-            'apc' => $this->getUser()?->getSemestre()?->getDiplome()?->getTypeDiplome()?->getApc(),
+            'apc' => $this->getUser()?->getSemestre()?->getDiplome()?->isApc(),
         ]);
     }
 }

@@ -7,6 +7,7 @@
         <th>{{ 'table.code_element'|trans }}</th>
         <th>{{ 'table.libelle'|trans }}</th>
         <th>{{ 'table.competence'|trans }}</th>
+        <th>Mutualisée ?</th>
         <th>{{ 'table.suspendu'|trans }}</th>
         <th>{{ 'table.cm'|trans }}</th>
         <th>{{ 'table.td'|trans }}</th>
@@ -31,6 +32,7 @@
                         {{ competence.competence.nomCourt }} ({{ competence.coefficient }})
                     </span>
                 {% endfor %}</td>
+            <td>{{ ressource.mutualisee|badgeYesNo }}</td>
             <td>{{ ressource.suspendu|badgeYesNo }}</td>
             <td>
                 <a class="editable"

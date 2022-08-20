@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block header %}
-    {{ 'gestion.du.semestre.heading'|trans({'%libelle%':semestre.displayAvecTypeDiplome})|raw }}
+    {{ 'gestion.du.semestre.heading'|trans({'%libelle%':semestre.displayLong})|raw }}
 {% endblock %}
 
 {% block headerright %}
