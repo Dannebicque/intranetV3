@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Diplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/08/2022 15:18
+ * @lastUpdate 18/08/2022 15:48
  */
 
 namespace App\Entity;
@@ -82,7 +82,7 @@ class Diplome extends BaseEntity implements Serializable
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Annee>
      */
     #[ORM\OneToMany(mappedBy: 'diplome', targetEntity: Annee::class)]
-    #[ORM\OrderBy(value: ['libelle' => 'ASC'])]
+    #[ORM\OrderBy(value: ['ordre' => 'ASC', 'libelle' => 'ASC'])]
     private Collection $annees;
 
     #[ORM\Column(type: Types::STRING, length: 40)]
