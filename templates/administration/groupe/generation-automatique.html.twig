@@ -38,13 +38,15 @@
                 <div class="row">
                     <div class="col-sm-12 col-md-4">
                         <label for="groupe_cm" class="form-label">Nb groupes CM</label>
-                        <input type="text" class="form-control" id="groupe_cm" value="{{ semestre.nbGroupesCm }}"></div>
+                        <input type="text" class="form-control" id="groupe_cm" name="groupe_cm" value="{{ semestre.nbGroupesCm
+                        }}"></div>
                     <div class="col-sm-12 col-md-4">
                         <label for="groupe_td" class="form-label">Nb groupes TD</label>
-                        <input type="text" class="form-control" id="groupe_td" value="{{ semestre.nbGroupesTd }}"></div>
+                        <input type="text" class="form-control" id="groupe_td" name="groupe_td" value="{{ semestre.nbGroupesTd }}"></div>
                     <div class="col-sm-12 col-md-4">
                         <label for="groupe_tp" class="form-label">Nb groupes TP</label>
-                        <input type="text" class="form-control" id="groupe_tp" value="{{ semestre.nbGroupesTp }}"></div>
+                        <input type="text" class="form-control" id="groupe_tp" name="groupe_tp" value="{{ semestre
+                        .nbGroupesTp }}"></div>
                     <div class="col-sm-12 col-md-4">
                         <fieldset>
                             <legend>Appelation de vos groupes</legend>

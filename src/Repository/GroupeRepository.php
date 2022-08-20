@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/GroupeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 20/08/2022 16:14
  */
 
 namespace App\Repository;
@@ -200,5 +200,19 @@ class GroupeRepository extends ServiceEntityRepository
         }
 
         return $t;
+    }
+
+    public function findByDiplomeAndOrdreSemestre(Diplome $diplome, int $ordreSemestre): array
+    {
+        return $this->createQueryBuilder('g')
+            ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')
+            ->where('t.diplome = :diplome')
+            ->andWhere('t.ordreSemestre = :ordreSemestre')
+            ->setParameter('diplome', $diplome->getId())
+            ->setParameter('ordreSemestre', $ordreSemestre)
+            ->orderBy('t.libelle', Criteria::ASC)
+            ->addOrderBy('g.libelle', Criteria::ASC)
+            ->getQuery()
+            ->getResult();
     }
 }

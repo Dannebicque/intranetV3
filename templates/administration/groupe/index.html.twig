@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block header %}
-    {{ 'adm.groupe.index.heading'|trans({'%semestre%':semestre.display}) }}
+    {{ 'adm.groupe.index.heading'|trans({'%semestre%':semestre.libelle, '%diplome%': diplome.displayCourt}) }}
 {% endblock %}
 
 {% block headerright %}
@@ -12,22 +12,6 @@
 
 {% block headeractions %}
     <div class="header-action">
-        {#        <nav class="nav nav-tabs"> #}
-        {#            {% for semestre in user_data.semestres %} #}
-        {#                {% if (semestre.diplome.responsableDiplome.id == user_data.user.id and user_data.isGoodDepartement('ROLE_RP')) or user_data.isGoodDepartement #}
-        {#                    ('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %} #}
-        {#                    <li class="nav-item"> #}
-        {#                        <a class="nav-link {% if (afficheSemestre != null and afficheSemestre == semestre.id) or #}
-        {#                            (afficheSemestre == null and loop.first) %}active show{% endif %} change-semestre" #}
-        {#                           data-bs-toggle="tab" #}
-        {#                           href="#semestre{{ semestre.id }}" role="tab" data-semestre="{{ semestre.id }}">{{ semestre #}
-        {#                            .display }} #}
-        {#                        </a> #}
-        {#                    </li> #}
-        {#                {% endif %} #}
-        {#            {% endfor %} #}
-        {#        </nav> #}
-
         <div class="buttons">
             <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip"
                data-bs-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>

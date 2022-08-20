@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/TypeGroupeRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/TypeGroupeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/09/2021 18:34
+ * @lastUpdate 20/08/2022 16:39
  */
 
 namespace App\Repository;
@@ -14,6 +14,7 @@ use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
+use Doctrine\Common\Collections\Criteria;
 use function array_key_exists;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
@@ -90,5 +91,17 @@ class TypeGroupeRepository extends ServiceEntityRepository
         }
 
         return $t;
+    }
+
+    public function findByDiplomeAndOrdreSemestre(Diplome $diplome, int $ordreSemestre): array
+    {
+        return $this->createQueryBuilder('t')
+            ->where('t.diplome = :diplome')
+            ->andWhere('t.ordreSemestre = :ordreSemestre')
+            ->setParameter('diplome', $diplome->getId())
+            ->setParameter('ordreSemestre', $ordreSemestre)
+            ->orderBy('t.libelle', Criteria::ASC)
+            ->getQuery()
+            ->getResult();
     }
 }

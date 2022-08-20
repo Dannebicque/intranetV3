@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/GroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 20/08/2022 17:26
  */
 
 namespace App\Controller\administration;
@@ -14,8 +14,10 @@ use App\Classes\MyExport;
 use App\Classes\MySerializer;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
+use App\Entity\Diplome;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
+use App\Exception\DiplomeNotFoundException;
 use App\Form\GroupeType;
 use App\Repository\GroupeRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -33,6 +35,7 @@ class GroupeController extends BaseController
 
         return $this->render('administration/groupe/index.html.twig', [
             'semestre' => $semestre,
+            'diplome' => $this->getDiplomeFromSemestre($semestre),
         ]);
     }
 
@@ -47,13 +50,21 @@ class GroupeController extends BaseController
     }
 
     #[Route(path: '/genere-groupes/{semestre}', name: 'administration_groupe_semestre_genere', requirements: ['semestre' => '\d+'], methods: ['POST'])]
-    public function genereGroupes(Request $request, Semestre $semestre): Response
+    public function genereGroupes(
+        GenereGroupes $genereGroupes,
+        Request $request, Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
-        // sauvegarde du nombre de groupe de semestre ?
-        // génére les groupes
-        $genereGroupes = new GenereGroupes($this->entityManager);
-        $genereGroupes->genereGroupesSemestre($semestre, $request->request->get('appelation'));
+        $diplome = $this->getDiplomeFromSemestre($semestre);
+
+        $genereGroupes->genereGroupesSemestre(
+            $semestre,
+            $diplome,
+            $request->request->get('appelation'),
+            (int) $request->request->get('groupe_cm'),
+            (int) $request->request->get('groupe_td'),
+            (int) $request->request->get('groupe_tp'),
+        );
 
         return $this->redirectToRoute('administration_groupe_index', [
             'semestre' => $semestre->getId(),
@@ -64,11 +75,18 @@ class GroupeController extends BaseController
     public function listeSemestre(GroupeRepository $groupeRepository, Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
+        $diplome = $this->getDiplomeFromSemestre($semestre);
+
         $typeGroupes = $semestre->getTypeGroupes();
-        $groupes = $groupeRepository->findBySemestre($semestre);
-        if (true === $semestre->getDiplome()?->getTypeDiplome()?->getApc()) {
+        if (true === $diplome->isApc()) {
+            // todo: fusionner, mais implique de mettre à jour table avec les groupes existants, et de ne plus avoir le "semestr" dans typeGroupe
+            $groupes = $groupeRepository->findByDiplomeAndOrdreSemestre($diplome, $semestre->getOrdreLmd());
+        } else {
+            $groupes = $groupeRepository->findBySemestre($semestre);
+        }
+        if (true === $semestre->getDiplome()?->isApc()) {
             if ($semestre->getOrdreLmd() > 2 || Constantes::APC_TYPE_3 === $semestre->getDiplome()?->getTypeStructure()) {
-                $parcours = $semestre->getDiplome()?->getApcParcours();
+                $parcours = $semestre->getDiplome()?->getReferentiel()?->getApcParcours();
             } else {
                 $parcours = null;
             }
@@ -78,6 +96,7 @@ class GroupeController extends BaseController
 
         return $this->render('administration/groupe/_listeSemestre.html.twig', [
             'semestre' => $semestre,
+            'diplome' => $diplome,
             'groupes' => $groupes,
             'typeGroupes' => $typeGroupes,
             'parcours' => $parcours,
@@ -120,6 +139,7 @@ class GroupeController extends BaseController
     ])]
     public function new(Request $request, Semestre $semestre): Response
     {
+        $diplome = $this->getDiplomeFromSemestre($semestre);
         $groupe = new Groupe();
         $form = $this->createForm(GroupeType::class, $groupe,
             ['semestre' => $semestre, 'attr' => ['id' => 'form_groupe']]);
@@ -135,6 +155,7 @@ class GroupeController extends BaseController
         return $this->render('administration/groupe/_new.html.twig', [
             'groupe' => $groupe,
             'semestre' => $semestre,
+            'diplome' => $diplome,
             'form' => $form->createView(),
         ]);
     }
@@ -169,5 +190,14 @@ class GroupeController extends BaseController
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'groupe.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    private function getDiplomeFromSemestre(Semestre $semestre): Diplome
+    {
+        if (null === $semestre->getDiplome()) {
+            throw new DiplomeNotFoundException();
+        }
+
+        return null === $semestre->getDiplome()->getParent() ? $semestre->getDiplome() : $semestre->getDiplome()->getParent();
     }
 }

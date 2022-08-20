@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Enums/BacEnum.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:52
+ * @lastUpdate 20/08/2022 17:05
  */
 
 namespace App\Enums;
@@ -16,6 +16,7 @@ enum BacEnum: string implements BadgeEnumInterface
     case SERIE_BAC_PRO = 'p';
     case SERIE_BAC_ETRANGER = 'e';
     case SERIE_BAC_AUTRE = 'a';
+
     public function badge(): string
     {
         return match ($this) {

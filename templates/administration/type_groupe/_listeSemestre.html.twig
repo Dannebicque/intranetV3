@@ -1,7 +1,17 @@
 <div class="card">
     <header class="card-header">
-        <h4 class="card-title">{{ 'adm.typegroupe.semestre.index.heading'|trans }} | {{ semestre.display }}</h4>
-        <div class="card-header-actions" style=""></div>
+        <h4 class="card-title">{{ 'adm.typegroupe.semestre.index.heading'|trans }} {{ semestre.libelle }} |
+            {{ diplome.displayCourt }}</h4>
+        <div class="card-header-actions" style="">
+            <a class="btn btn-sm btn-primary"
+               title="{{ 'generation.automatique'|trans }}"
+               data-bs-toggle="tooltip"
+               data-bs-placement="bottom"
+               href="{{ path('administration_type_groupe_semestre_generation_auto', {semestre:semestre.id}) }}"
+            >
+                <i class="fas fa-hat-wizard"></i>
+            </a>
+        </div>
     </header>
     <div class="card-body">
         <table class="table">
@@ -28,7 +38,8 @@
         change-type_typegroupe" data-typegroupe="{{ tg.id }}">
                             <option value="" selected>Type de type de Groupe</option>
                             {% for type in typeGroupeEnum %}
-                                <option value="{{ type.value }}" {% if tg.type == type.value %}selected{% endif %}>
+                                <option value="{{ type.value }}" {% if tg.type.value == type.value %}selected{% endif
+                                %}>
                                     {{ type.value }}
                                 </option>
                             {% endfor %}

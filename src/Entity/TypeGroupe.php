@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/TypeGroupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/07/2022 17:11
+ * @lastUpdate 20/08/2022 17:24
  */
 
 namespace App\Entity;
@@ -16,6 +16,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Deprecated;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: TypeGroupeRepository::class)]
@@ -23,11 +24,6 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class TypeGroupe extends BaseEntity
 {
     use LifeCycleTrait;
-//    final public const TYPE_GROUPE_CM = 'CM';
-//    final public const TYPE_GROUPE_TD = 'TD';
-//    final public const TYPE_GROUPE_TP = 'TP';
-//    final public const TYPES = [self::TYPE_GROUPE_CM, self::TYPE_GROUPE_TD, self::TYPE_GROUPE_TP, self::TYPE_GROUPE_LV];
-//    final public const TYPE_GROUPE_LV = 'LV';
 
     #[Groups(['type_groupe_administration'])]
     #[ORM\Column(type: Types::STRING, length: 100)]
@@ -43,19 +39,22 @@ class TypeGroupe extends BaseEntity
     #[ORM\Column(type: Types::BOOLEAN)]
     private bool $defaut = false;
 
-    #[ORM\Column(type: Types::STRING, length: 2)]
-    private ?string $type = null;
+    #[ORM\Column(type: Types::STRING, length: 2, enumType: TypeGroupeEnum::class)]
+    private ?TypeGroupeEnum $type = null;
 
     #[ORM\Column(type: 'boolean')]
     private bool $mutualise = false;
 
-    #[ORM\ManyToMany(targetEntity: Semestre::class, inversedBy: 'allTypeGroupes')]
-    private Collection $semestres;
+    #[ORM\ManyToOne(inversedBy: 'typeGroupes')]
+    private ?Diplome $diplome = null;
 
-    public function __construct(#[Groups(['type_groupe_administration'])] #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'typeGroupes')] private Semestre $semestre)
-    {
+    #[ORM\Column(nullable: true)]
+    private ?int $ordreSemestre = null;
+
+    public function __construct(
+        #[Groups(['type_groupe_administration'])] #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'typeGroupes')] #[Deprecated("ne plus utiliser, et avoir Diplome + semestre")] private Semestre $semestre
+    ) {
         $this->groupes = new ArrayCollection();
-        $this->semestres = new ArrayCollection();
     }
 
     /**
@@ -127,12 +126,12 @@ class TypeGroupe extends BaseEntity
         return TypeGroupeEnum::TYPE_GROUPE_TD === mb_strtoupper($this->getType());
     }
 
-    public function getType(): ?string
+    public function getType(): ?TypeGroupeEnum
     {
         return $this->type;
     }
 
-    public function setType(string $type): self
+    public function setType(TypeGroupeEnum $type): self
     {
         $this->type = $type;
 
@@ -151,6 +150,11 @@ class TypeGroupe extends BaseEntity
 
     public function getDisplay(): string
     {
+        if ($this->getDiplome()?->isApc()) {
+            // todo: fusionner dès que semestre ne sera plus utilisé
+            return 'S'.$this->ordreSemestre.' | '.$this->getLibelle();
+        }
+
         return null !== $this->getSemestre() ? $this->getSemestre()->getLibelle().' | '.$this->getLibelle() : $this->getLibelle();
     }
 
@@ -178,26 +182,26 @@ class TypeGroupe extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Collection<int, Semestre>
-     */
-    public function getSemestres(): Collection
+    public function getDiplome(): ?Diplome
     {
-        return $this->semestres;
+        return $this->diplome;
     }
 
-    public function addSemestre(Semestre $semestre): self
+    public function setDiplome(?Diplome $diplome): self
     {
-        if (!$this->semestres->contains($semestre)) {
-            $this->semestres[] = $semestre;
-        }
+        $this->diplome = $diplome;
 
         return $this;
     }
 
-    public function removeSemestre(Semestre $semestre): self
+    public function getOrdreSemestre(): ?int
     {
-        $this->semestres->removeElement($semestre);
+        return $this->ordreSemestre;
+    }
+
+    public function setOrdreSemestre(?int $ordreSemestre): self
+    {
+        $this->ordreSemestre = $ordreSemestre;
 
         return $this;
     }

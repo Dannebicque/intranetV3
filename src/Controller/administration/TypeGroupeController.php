@@ -4,19 +4,22 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/TypeGroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 20/08/2022 17:24
  */
 
 namespace App\Controller\administration;
 
+use App\Classes\Groupes\GenereTypeGroupe;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
+use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use App\Enums\TypeGroupeEnum;
+use App\Exception\DiplomeNotFoundException;
+use App\Repository\TypeGroupeRepository;
 use App\Utils\JsonRequest;
 use App\Utils\Tools;
-use function in_array;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,16 +29,40 @@ use Symfony\Component\Routing\Annotation\Route;
 class TypeGroupeController extends BaseController
 {
     #[Route(path: '/liste/{semestre}', name: 'administration_type_groupe_liste_semestre', options: ['expose' => true], methods: ['GET'])]
-    public function listeSemestre(Semestre $semestre): Response
+    public function listeSemestre(
+        TypeGroupeRepository $typeGroupeRepository,
+        Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
-        $typeGroupes = $semestre->getTypeGroupes();
+        $diplome = $this->getDiplomeFromSemestre($semestre);
+        if ($diplome->isApc() === true) {
+         //todo: fusionner dès la suppression de semestre et la mise à jour des données.
+            $typeGroupes = $typeGroupeRepository->findByDiplomeAndOrdreSemestre($diplome, $semestre->getOrdreLmd());
+        } else {
+            $typeGroupes = $semestre->getTypeGroupes();
+        }
 
         return $this->render('administration/type_groupe/_listeSemestre.html.twig', [
             'semestre' => $semestre,
+            'diplome' => $diplome,
             'typeGroupes' => $typeGroupes,
             'typeGroupeEnum' => TypeGroupeEnum::cases()
         ]);
+    }
+
+    /**
+     * @throws \App\Exception\DiplomeNotFoundException
+     */
+    #[Route(path: '/generation-automatique/{semestre}', name: 'administration_type_groupe_semestre_generation_auto', requirements: ['semestre' => '\d+'], methods: ['GET'])]
+    public function generationAutomatique(
+        GenereTypeGroupe $genereTypeGroupe,
+        Semestre $semestre): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
+
+        $genereTypeGroupe->generer($semestre, $this->getDiplomeFromSemestre($semestre));
+
+        return $this->redirectToRoute('administration_groupe_index', ['semestre' => $semestre->getId()]);
     }
 
     #[Route(path: '/new/{semestre}', name: 'administration_type_groupe_new', options: ['expose' => true], methods: ['POST'])]
@@ -137,5 +164,14 @@ class TypeGroupeController extends BaseController
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'type_groupe.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    private function getDiplomeFromSemestre(Semestre $semestre): Diplome
+    {
+        if (null === $semestre->getDiplome()) {
+            throw new DiplomeNotFoundException();
+        }
+
+        return $semestre->getDiplome()->getParent() ?? $semestre->getDiplome();
     }
 }

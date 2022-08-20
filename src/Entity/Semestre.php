@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 11:31
+ * @lastUpdate 20/08/2022 17:00
  */
 
 namespace App\Entity;
@@ -16,7 +16,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use JetBrains\PhpStorm\Deprecated;
 use Stringable;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -241,9 +240,6 @@ class Semestre extends BaseEntity implements Stringable
     #[ORM\ManyToMany(targetEntity: ApcRessource::class, mappedBy: 'semestres', fetch: 'EXTRA_LAZY')]
     private Collection $apcSemestresRessources;
 
-    #[ORM\ManyToMany(targetEntity: TypeGroupe::class, mappedBy: 'semestres')]
-    private Collection $allTypeGroupes;
-
     #[ORM\ManyToMany(targetEntity: ApcSae::class, mappedBy: 'semestres')]
     private Collection $apcSemestresSaes;
 
@@ -256,7 +252,6 @@ class Semestre extends BaseEntity implements Stringable
         $this->absences = new ArrayCollection();
         $this->anneeUniversitaireSemestres = new ArrayCollection();
         $this->apcSemestresRessources = new ArrayCollection();
-        $this->allTypeGroupes = new ArrayCollection();
         $this->apcSemestresSaes = new ArrayCollection();
     }
 
@@ -507,6 +502,11 @@ class Semestre extends BaseEntity implements Stringable
         }
 
         return $this->libelle;
+    }
+
+    public function displayLong(): string
+    {
+        return $this->getDiplome()->getDisplayCourt() . ' | '.$this->getLibelle();
     }
 
     /**
@@ -1362,33 +1362,6 @@ class Semestre extends BaseEntity implements Stringable
     public function isImpair(): bool
     {
         return 1 === $this->getOrdreLmd() % 2;
-    }
-
-    /**
-     * @return Collection<int, TypeGroupe>
-     */
-    public function getAllTypeGroupes(): Collection
-    {
-        return $this->allTypeGroupes;
-    }
-
-    public function addAllTypeGroupe(TypeGroupe $allTypeGroupe): self
-    {
-        if (!$this->allTypeGroupes->contains($allTypeGroupe)) {
-            $this->allTypeGroupes[] = $allTypeGroupe;
-            $allTypeGroupe->addSemestre($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAllTypeGroupe(TypeGroupe $allTypeGroupe): self
-    {
-        if ($this->allTypeGroupes->removeElement($allTypeGroupe)) {
-            $allTypeGroupe->removeSemestre($this);
-        }
-
-        return $this;
     }
 
     /**
