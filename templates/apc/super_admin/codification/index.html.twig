@@ -12,118 +12,161 @@
         </div>
         <div class="card-body">
             <form action="{{ path('sa_apc_codification_mise_a_jour', {semestre:semestre.id}) }}" method="post">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Code Département</th>
-                    <th>Code Apogée</th>
-                    <th>Libellé long</th>
-                    <th>Libellé court</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td colspan="4" class="bg-cyan">
-                        Ressources
-                    </td>
-                </tr>
-                {% for ressource in ressources %}
+                <div class="d-grid d-block">
+                    <button class="btn btn-warning mb-2" id="majCodification">Générer la codification</button>
+                </div>
+                <table class="table">
+                    <thead>
                     <tr>
-                        <td>
-                            <label class="sr-only" for="codeMatiere_res_{{ ressource.id }}">
-                                Code matière de {{ ressource.libelle }}
-                            </label>
-                            <input type="text" value="{{ ressource.codeMatiere }}"
-                                   id="codeMatiere_res_{{ ressource.id }}"
-                                   name="codeMatiere_res_{{ ressource.id }}"
-                                   class="form-control">
-                        </td>
-                        <td>
-                            <label class="sr-only" for="codeApogee_res_{{ ressource.id }}">
-                                Code Apogée de {{ ressource.libelle }}
-                            </label>
-                            <input type="text" value="{{ ressource.codeElement }}"
-                                   id="codeApogee_res_{{ ressource.id }}"
-                                   name="codeApogee_res_{{ ressource.id }}"
-                                   class="form-control">
-                        </td>
-                        <td>
-                            <label class="sr-only" for="libelleLong_res_{{ ressource.id }}">
-                                Libellé long de {{ ressource.libelleCourt }}
-                            </label>
-                            <input type="text" value="{{ ressource.libelle }}"
-                                   id="libelleLong_res_{{ ressource.id }}"
-                                   name="libelleLong_res_{{ ressource.id }}"
-                                   class="form-control">
-                        </td>
-                        <td>
-                            <label class="sr-only" for="libelleCourt_res_{{ ressource.id }}">
-                                Libellé court de {{ ressource.libelleCourt }}
-                            </label>
-                            <input type="text" value="{{ ressource.libelleCourt }}"
-                                   id="libelleCourt_res_{{ ressource.id }}"
-                                   name="libelleCourt_res_{{ ressource.id }}"
-                                   class="form-control">
+                        <th>Code Département</th>
+                        <th>Code Apogée</th>
+                        <th>Libellé long</th>
+                        <th>Libellé court</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td colspan="4" class="bg-cyan">
+                            Ressources
                         </td>
                     </tr>
-                {% endfor %}
-                <tr>
-                    <td colspan="4" class="bg-cyan">
-                        SAÉ
-                    </td>
-                </tr>
-                {% for sae in saes %}
+                    {% for ressource in ressources %}
+                        <tr>
+                            <td>
+                                <label class="sr-only" for="codeMatiere_res_{{ ressource.id }}">
+                                    Code matière de {{ ressource.libelle }}
+                                </label>
+                                <input type="text" value="{{ ressource.codeMatiere }}"
+                                       id="codeMatiere_res_{{ ressource.id }}"
+                                       name="codeMatiere_res_{{ ressource.id }}"
+                                       class="form-control">
+                            </td>
+                            <td>
+                                <label class="sr-only" for="codeApogee_res_{{ ressource.id }}">
+                                    Code Apogée de {{ ressource.libelle }}
+                                </label>
+                                <input type="text" value="{{ ressource.codeElement }}"
+                                       id="codeApogee_res_{{ ressource.id }}"
+                                       name="codeApogee_res_{{ ressource.id }}"
+                                       class="form-control">
+                            </td>
+                            <td>
+                                <label class="sr-only" for="libelleLong_res_{{ ressource.id }}">
+                                    Libellé long de {{ ressource.libelleCourt }}
+                                </label>
+                                <input type="text" value="{{ ressource.libelle }}"
+                                       id="libelleLong_res_{{ ressource.id }}"
+                                       name="libelleLong_res_{{ ressource.id }}"
+                                       class="form-control">
+                            </td>
+                            <td>
+                                <label class="sr-only" for="libelleCourt_res_{{ ressource.id }}">
+                                    Libellé court de {{ ressource.libelleCourt }}
+                                </label>
+                                <input type="text" value="{{ ressource.libelleCourt }}"
+                                       id="libelleCourt_res_{{ ressource.id }}"
+                                       name="libelleCourt_res_{{ ressource.id }}"
+                                       class="form-control">
+                            </td>
+                        </tr>
+                    {% endfor %}
                     <tr>
-                        <td>
-                            <label class="sr-only" for="codeMatiere_sae_{{ sae.id }}">
-                                Code matière de {{ sae.libelle }}
-                            </label>
-                            <input type="text" value="{{ sae.codeMatiere }}"
-                                   id="codeMatiere_sae_{{ sae.id }}"
-                                   name="codeMatiere_sae_{{ sae.id }}"
-                                   class="form-control">
-                        </td>
-                        <td>
-                            <label class="sr-only" for="codeApogee_sae_{{ sae.id }}">
-                                Code Apogée de {{ sae.libelle }}
-                            </label>
-                            <input type="text" value="{{ sae.codeElement }}"
-                                   id="codeApogee_sae_{{ sae.id }}"
-                                   name="codeApogee_sae_{{ sae.id }}"
-                                   class="form-control">
-                        </td>
-                        <td>
-                            <label class="sr-only" for="libelleLong_sae_{{ sae.id }}">
-                                Libellé long de {{ sae.libelleCourt }}
-                            </label>
-                            <input type="text" value="{{ sae.libelle }}"
-                                   id="libelleLong_sae_{{ sae.id }}"
-                                   name="libelleLong_sae_{{ sae.id }}"
-                                   class="form-control">
-                        </td>
-                        <td>
-                            <label class="sr-only" for="libelleCourt_sae_{{ sae.id }}">
-                                Libellé court de {{ sae.libelleCourt }}
-                            </label>
-                            <input type="text" value="{{ sae.libelleCourt }}"
-                                   id="libelleCourt_sae_{{ sae.id }}"
-                                   name="libelleCourt_sae_{{ sae.id }}"
-                                   class="form-control">
+                        <td colspan="4" class="bg-cyan">
+                            SAÉ
                         </td>
                     </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-            <div class="alert alert-warning mt-2">
-                <strong>Attention !</strong> Les codes apogées doivent correspondre aux matières de la base de
-                                             données d'APOGEE. Sinon, les extractions de fin de semestre, les emplois
-                                             du temps, ... ne seront pas correctement affichés.
-            </div>
-            <button type="submit" class="btn btn-success mt-2">
-                <i class="fas fa-save"></i>
-                Enregistrer les modifications
-            </button>
-        </form>
+                    {% for sae in saes %}
+                        <tr>
+                            <td>
+                                <label class="sr-only" for="codeMatiere_sae_{{ sae.id }}">
+                                    Code matière de {{ sae.libelle }}
+                                </label>
+                                <input type="text" value="{{ sae.codeMatiere }}"
+                                       id="codeMatiere_sae_{{ sae.id }}"
+                                       name="codeMatiere_sae_{{ sae.id }}"
+                                       class="form-control">
+                            </td>
+                            <td>
+                                <label class="sr-only" for="codeApogee_sae_{{ sae.id }}">
+                                    Code Apogée de {{ sae.libelle }}
+                                </label>
+                                <input type="text" value="{{ sae.codeElement }}"
+                                       id="codeApogee_sae_{{ sae.id }}"
+                                       name="codeApogee_sae_{{ sae.id }}"
+                                       class="form-control">
+                            </td>
+                            <td>
+                                <label class="sr-only" for="libelleLong_sae_{{ sae.id }}">
+                                    Libellé long de {{ sae.libelleCourt }}
+                                </label>
+                                <input type="text" value="{{ sae.libelle }}"
+                                       id="libelleLong_sae_{{ sae.id }}"
+                                       name="libelleLong_sae_{{ sae.id }}"
+                                       class="form-control">
+                            </td>
+                            <td>
+                                <label class="sr-only" for="libelleCourt_sae_{{ sae.id }}">
+                                    Libellé court de {{ sae.libelleCourt }}
+                                </label>
+                                <input type="text" value="{{ sae.libelleCourt }}"
+                                       id="libelleCourt_sae_{{ sae.id }}"
+                                       name="libelleCourt_sae_{{ sae.id }}"
+                                       class="form-control">
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <div class="alert alert-warning mt-2">
+                    <strong>Attention !</strong> Les codes apogées doivent correspondre aux matières de la base de
+                                                 données d'APOGEE. Sinon, les extractions de fin de semestre, les
+                                                 emplois
+                                                 du temps, ... ne seront pas correctement affichés.
+                </div>
+                <button type="submit" class="btn btn-success mt-2">
+                    <i class="fas fa-save"></i>
+                    Enregistrer les modifications
+                </button>
+            </form>
         </div>
     </div>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script defer>
+      let ressources = []
+      let saes = []
+      {% for ressource in ressources %}
+      ressources.push({{ ressource.id }})
+      {% endfor %}
+
+      {% for sae in saes %}
+      saes.push({{ sae.id }})
+      {% endfor %}
+
+      const lettreDiplome = "{{ semestre.diplome.referentiel.lettreDiplome }}"
+      const codeSemestre = "{{ semestre.codeElement }}"
+
+      window.addEventListener('load', () => { // le dom est chargé
+        document.getElementById('majCodification').addEventListener('click', function (e) {
+          e.preventDefault()
+
+          ressources.forEach(function (ressource) {
+            const codeMatiere = document.getElementById('codeMatiere_res_' + ressource)
+            const codeElement = document.getElementById('codeApogee_res_' + ressource)
+            codeMatiere.value = lettreDiplome + codeMatiere.value.replace('.', '')
+            codeElement.value = codeSemestre.substring(0,3) + "Z" + codeMatiere.value.substring(2) + "0"
+          })
+
+          saes.forEach(function (sae) {
+            const codeMatiere = document.getElementById('codeMatiere_sae_' + sae)
+            const codeElement = document.getElementById('codeApogee_rsae_' + sae)
+            codeMatiere.value = lettreDiplome + codeMatiere.value.replace('.', '')
+            codeElement.value = codeSemestre.substring(0,3) + "Z" + codeMatiere.value.substring(2) + "0"
+          })
+        })
+      })
+    </script>
+{% endblock %}
+
