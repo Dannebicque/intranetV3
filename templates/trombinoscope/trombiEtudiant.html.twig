@@ -3,7 +3,7 @@
         <h4 class="card-title">{{ semestre.display }} ({{ semestre.etudiants|length }})</h4>
         <div class="card-header-actions" style="">
                 <span id="trombifiltre">
-                    {% for typegr in semestre.typeGroupes %}
+                    {% for typegr in typeGroupes %}
                         <a href="#"
                            class="btn btn-sm btn {% if (selectedTypeGroupe == null and typegr.defaut == false) or (selectedTypeGroupe != null and selectedTypeGroupe.id != typegr.id) %}btn-flat{% endif %} btn-info"
                            data-action="click->trombinoscope#changementTypegroupe"
@@ -122,12 +122,6 @@
                                                                 <i class="fa fa-heart"></i>
                                                             </label>
                                                         {% endif %}
-{#                                                        {% if is_granted('ROLE_PERMANENT') and user_data.user.id == 1 %}#}
-{#                                                            <button class="removeEtudiantDepartement btn#}
-{#                                                        btn-danger" data-etudiant="{{ etudiant.id }}">#}
-{#                                                                Effacer département#}
-{#                                                            </button>#}
-{#                                                        {% endif %}#}
                                                     </div>
                                                 </div>
                                                 <h4>

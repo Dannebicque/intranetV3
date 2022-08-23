@@ -6,7 +6,6 @@
 {{ stimulus_controller('trombinoscope') }}
 {% endblock %}
 
-
 {% block header %}
     {{ 'trombinoscope.heading'|trans }}
 {% endblock %}
@@ -51,7 +50,6 @@
 {% endblock %}
 
 {% block content %}
-
     <div data-trombinoscope-target="contentSemestre">
         {% if user_data.semestres|length > 0 %}
             {% for semestre in user_data.semestresActifs %}
@@ -70,12 +68,3 @@
     </div>
 {% endblock %}
 
-{#{% block stylesheets %}#}
-{#    {{ parent() }}#}
-{#    {{ encore_entry_link_tags('trombinoscope') }}#}
-{#{% endblock %}#}
-
-{#{% block javascripts %}#}
-{#    {{ parent() }}#}
-{#    {{ encore_entry_script_tags('trombinoscope') }}#}
-{#{% endblock %}#}
