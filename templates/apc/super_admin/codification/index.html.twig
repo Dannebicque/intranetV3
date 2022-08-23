@@ -162,7 +162,7 @@
           saes.forEach(function (sae) {
             const codeMatiere = document.getElementById('codeMatiere_sae_' + sae)
             const codeElement = document.getElementById('codeApogee_sae_' + sae)
-            codeMatiere.value = lettreDiplome + codeMatiere.value.substring(3).trim().replace('.', '')
+            codeMatiere.value = lettreDiplome + "S" + codeMatiere.value.substring(3).trim().replace('.', '')
             codeElement.value = codeSemestre.substring(0,3) + "Z" + codeMatiere.value.substring(2) + "0"
           })
         })
