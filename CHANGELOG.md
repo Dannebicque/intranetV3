@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.8.4](https://github.com/Dannebicque/intranetV3/compare/v3.8.3...v3.8.4) (2022-08-23)
+
+
+### Features
+
+* [Apogée] Génération des codes et mise à jour en "masse" de la codification d'un diplôme ([794092a](https://github.com/Dannebicque/intranetV3/commit/794092a345851ee6a6ecd7b9a08753a4f04bc469))
+* [Groupes] Commande pour la mise à jour de type de groupe ([de63c1e](https://github.com/Dannebicque/intranetV3/commit/de63c1e8f158ddc8196282e3f01d42ee622fa5e5))
+* [Groupes] Generation des groupes et types de groupes automatiquement + gestion des types de groupes par diplome + ordre semestre et non plus par semestre (refactoring à faire pour supprimer la dépendance) ([6c04da2](https://github.com/Dannebicque/intranetV3/commit/6c04da2d5c0d2f0864df5edbbc1310a2cc0088e7))
+
+
+### Bug Fixes
+
+* [Trombi] Correctifs mineurs ([2ddd34b](https://github.com/Dannebicque/intranetV3/commit/2ddd34b65e431e6514f79ddaff3c0c387f080017))
+
 ### [3.8.3](https://github.com/Dannebicque/intranetV3/compare/v3.8.2...v3.8.3) (2022-08-20)
 
 
