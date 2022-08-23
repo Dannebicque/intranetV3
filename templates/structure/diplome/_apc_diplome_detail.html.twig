@@ -5,7 +5,7 @@
 {% endif %}
 
 <div class="mb-2 mt-2">
-    .<a href="{{ path(baseurl ~ 'diplome_duplicate', {'id': diplome.id}) }}"
+    <a href="{{ path(baseurl ~ 'diplome_duplicate', {'id': diplome.id}) }}"
         class="btn btn-success btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
         title="{{ 'atitle.dupliquer'|trans }}"><i class="{{ iconDuplicate }}"></i></a>
     <a href="{{ path(baseurl ~ 'diplome_show', {'id': diplome.id}) }}"
@@ -35,6 +35,9 @@
                         class="{{ iconDelete }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
                         title="{{ 'atitle.supprimer'|trans }}"></i></a>
         {% endif %}
+        <a href="{{ path('sa_diplome_codification_index', {'diplome': diplome.id}) }}"
+           class="btn btn-warning btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
+           title="{{ 'atitle.codification'|trans }}"><i class="fas fa-wrench"></i></a>
         <span class="dropdown">
             <a data-bs-toggle="dropdown" href="#">
                 <i class="fas fa-ellipsis-h rotate-90"

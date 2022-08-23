@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcReferentiel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/08/2022 16:43
+ * @lastUpdate 22/08/2022 09:32
  */
 
 namespace App\Entity;
@@ -55,6 +55,9 @@ class ApcReferentiel extends BaseEntity
 
     #[ORM\OneToMany(mappedBy: 'apcReferentiel', targetEntity: Ppn::class)]
     private Collection $ppns;
+
+    #[ORM\Column(length: 2, nullable: true)]
+    private ?string $lettreDiplome = null;
 
     public function __construct()
     {
@@ -256,6 +259,18 @@ class ApcReferentiel extends BaseEntity
                 $ppn->setApcReferentiel(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLettreDiplome(): ?string
+    {
+        return $this->lettreDiplome;
+    }
+
+    public function setLettreDiplome(?string $lettreDiplome): self
+    {
+        $this->lettreDiplome = $lettreDiplome;
 
         return $this;
     }

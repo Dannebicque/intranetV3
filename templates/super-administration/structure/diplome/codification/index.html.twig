@@ -1,0 +1,159 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+    Codification du diplôme {{ diplome.libelle }}
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">
+            Codification du diplôme {{ diplome.libelle }}
+        </h4>
+        <div class="card-body">
+            <form method="post" action="{{ path('sa_diplome_codification_maj_codification', {diplome: diplome.id}) }}">
+                <div class="d-block d-grid">
+                    <button id="majCodes" class="btn btn-warning">Générer la codification à partir du diplôme</button>
+                </div>
+                <table class="table">
+                    <tr>
+                        <th>Libellé</th>
+                        <th>Code Apogée</th>
+                        <th>Code version</th>
+                        <th>Lettre</th>
+                    </tr>
+                    <tr>
+                        <td>
+                            Diplome {% if diplome.apcParcours == null %}Tronc Commun{% else %}Parc. {{ diplome.apcParcours.code }}{% endif %}</td>
+                        <td><input type="text" name="codeDiplome" id="codeDiplome" value="{{ diplome.codeDiplome }}">
+                        </td>
+                        <td><input type="text" name="codeVersion" id="codeVersion" value="{{ diplome.codeVersion }}">
+                        </td>
+                        <td><input type="text" name="lettreDiplome" id="lettreDiplome" value="{{ diplome.referentiel
+                            .lettreDiplome }}"></td>
+                    </tr>
+
+                    {% for annee in diplome.annees %}
+                        <tr>
+                            <th>Libellé</th>
+                            <th>Code Etape</th>
+                            <th>Version</th>
+                            <th>Ordre</th>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;Année {{ annee.libelle }}</td>
+                            <td><input type="text" name="codeEtape_{{ annee.id }}" id="codeEtape_{{ annee.id }}"
+                                       value="{{ annee.codeEtape }}"></td>
+                            <td>
+                                <input type="text" name="codeVersion_{{ annee.id }}" id="codeVersion_{{ annee.id }}" value="{{ annee.codeVersion }}">
+                            </td>
+                            <td>
+                                <input type="text" name="ordreAnnee_{{ annee.id }}" id="ordreAnnee_{{ annee.id }}"
+                                       value="{{ annee.ordre }}">
+                            </td>
+                        </tr>
+
+                        {% for semestre in annee.semestres %}
+                            <tr>
+                                <th>Libellé</th>
+                                <th>Code Element</th>
+                                <th></th>
+                                <th>Ordre LMD</th>
+                            </tr>
+                            <tr>
+                                <td>&nbsp;&nbsp;Semestre {{ semestre.libelle }}</td>
+                                <td>
+                                    <input type="text" name="codeElement_{{ semestre.id }}"
+                                           id="codeElement_{{ semestre.id }}" value="{{ semestre.codeElement }}">
+                                </td>
+                                <td></td>
+                                <td>
+                                    <input type="text" name="ordreLmd_{{ semestre.id }}" id="ordreLmd_{{ semestre
+                                    .id }}" value="{{ semestre.ordreLmd }}">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Libellé</th>
+                                <th>Code Element</th>
+                                <th>Numéro UE</th>
+                                <th>ECTS</th>
+                            </tr>
+                            {% for ue in semestre.ues %}
+                                <tr>
+                                    <td>&nbsp;&nbsp;&nbsp;UE {{ ue.libelle }}</td>
+                                    <td><input type="text" name="codeElement_{{ ue.id }}" id="codeElement_{{ ue.id
+                                        }}" value="{{ ue.codeElement }}">
+                                    </td>
+                                    <td><input type="text" name="numeroUe_{{ ue.id }}" id="numeroUe_{{ ue.id }}"
+                                               value="{{ ue.numeroUe }}"></td>
+                                    <td><input type="text" name="ects_{{ ue.id }}" id="ects_{{ ue.id }}" value="{{
+                                        ue.nbEcts }}"></td>
+                                </tr>
+                            {% endfor %}
+                        {% endfor %}
+                    {% endfor %}
+                </table>
+                <div class="d-block d-grid">
+                    <button type="submit" class="btn btn-success">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script defer>
+      let annees = []
+      let semestres = []
+      let ues = []
+      {% for annee in diplome.annees %}
+      annees.push({{ annee.id }})
+      semestres[{{ annee.id }}] = []
+          {% for semestre in annee.semestres %}
+          semestres[{{ annee.id }}].push({{ semestre.id }})
+          ues[{{ semestre.id }}] = []
+              {% for ue in semestre.ues %}
+                ues[{{ semestre.id }}].push({{ ue.id }})
+              {% endfor %}
+          {% endfor %}
+      {% endfor %}
+
+      window.addEventListener('load', () => { // le dom est chargé
+        console.log(semestres)
+        document.getElementById('majCodes').addEventListener('click', function (e) {
+          e.preventDefault()
+          const codeDiplome = document.getElementById('codeDiplome')
+          const lettreDiplome = document.getElementById('lettreDiplome')
+
+          annees.forEach(function (annee) {
+            const codeEtape = document.getElementById('codeEtape_' + annee)
+            const ordreAnnee = document.getElementById('ordreAnnee_' + annee)
+            codeEtape.value = codeDiplome.value + ordreAnnee.value
+          })
+
+          semestres.forEach(function (semestre, annee) {
+            semestre.forEach(function (sem) {
+              const codeEtape = document.getElementById('codeEtape_' + annee)
+
+              const codeElement = document.getElementById('codeElement_' + sem)
+              const ordreLmd = document.getElementById('ordreLmd_' + sem)
+              codeElement.value = codeEtape.value.substring(1, codeEtape.value.length - 1) + ordreLmd.value
+            })
+          })
+
+          ues.forEach(function (ue, semestre) {
+            ue.forEach(function (u) {
+              const codeElementSemestre = document.getElementById('codeElement_' + semestre)
+
+              const codeElementUe = document.getElementById('codeElement_' + u)
+              const numeroUe = document.getElementById('numeroUe_' + u)
+
+              codeElementUe.value = codeElementSemestre.value + numeroUe.value
+            })
+          })
+
+        })
+      })
+    </script>
+{% endblock %}
