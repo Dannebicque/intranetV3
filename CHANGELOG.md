@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.8.5](https://github.com/Dannebicque/intranetV3/compare/v3.8.4...v3.8.5) (2022-08-24)
+
+
+### Bug Fixes
+
+* [Apogee] Codification des ressources/SAE ([56457e7](https://github.com/Dannebicque/intranetV3/commit/56457e7b67357847d848ff0bebaca04012dd9c87))
+* [Apogee] Codification des ressources/SAE ([5b1999e](https://github.com/Dannebicque/intranetV3/commit/5b1999e06913d957054f317fc691580d075ab2a4))
+* [Apogee] Codification des ressources/SAE ([20b2028](https://github.com/Dannebicque/intranetV3/commit/20b20288065184db9a2af7d89ae32ed2248322e3))
+* [Apogee] Codification des ressources/SAE ([5156d3c](https://github.com/Dannebicque/intranetV3/commit/5156d3c1d1424b13bf437f72f951023c425aa4b3))
+* [Apogee] Codification des ressources/SAE ([ba5aeae](https://github.com/Dannebicque/intranetV3/commit/ba5aeaeef431d44a0d6a48084c3e61f2d0661109))
+* [Apogee] Codification des ressources/SAE ([c2a5d68](https://github.com/Dannebicque/intranetV3/commit/c2a5d68ee6659884ca2b595882dd8138845b7cd0))
+* [Previsionnel] Correctifs suite mise en place BUT ([8cf29af](https://github.com/Dannebicque/intranetV3/commit/8cf29af4f0a3cde5a214b9c4d90f1964175cd272))
+
 ### [3.8.4](https://github.com/Dannebicque/intranetV3/compare/v3.8.3...v3.8.4) (2022-08-23)
 
 
