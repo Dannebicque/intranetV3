@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/PrevisionnelSaeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 24/08/2022 14:21
  */
 
 namespace App\Repository;
@@ -43,7 +43,7 @@ class PrevisionnelSaeRepository extends PrevisionnelRepository
             ->innerJoin(Personnel::class, 'pers', 'WITH', 'p.personnel = pers.id')
             ->innerJoin(ApcSae::class, 'm', 'WITH', 'p.idMatiere = m.id')
             ->select('p.id as id_previsionnel, p.annee, p.referent, p.nbHCm, p.nbHTd, p.nbHTp, p.nbGrCm, p.nbGrTd, p.nbGrTp, m.id as id_sae, m.libelle, m.codeMatiere, m.codeElement as matiere_code_element, pers.id as id_personnel, pers.nom, pers.prenom, pers.numeroHarpege, pers.mailUniv, pers.nbHeuresService, s.id as id_semestre, s.libelle as libelle_semestre, a.id as id_annee, a.libelle as libelle_annee, d.id as id_diplome, d.libelle as libelle_diplome')
-            ->innerJoin(Semestre::class, 's', 'WITH', 'm.semestre = s.id')
+            ->leftJoin('m.semestres', 's')
             ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
             ->andWhere('p.personnel = :personnel')
