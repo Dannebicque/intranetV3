@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcRessourceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/08/2022 14:58
+ * @lastUpdate 24/08/2022 11:18
  */
 
 namespace App\Repository;
@@ -99,7 +99,7 @@ class ApcRessourceRepository extends ServiceEntityRepository
             ->leftJoin('r.apcRessourceCompetences', 'apcRessourceCompetences')
             ->addSelect('apcRessourceCompetences')
             ->where('d.departement = :departement')
-            // ->andWhere('s.ppn_actif = m.ppn')
+            ->andWhere('a.actif = 1')
             ->setParameter('departement', $departement->getId())
             ->orderBy('r.codeMatiere', Criteria::ASC)
             ->addOrderBy('r.libelle', Criteria::ASC)

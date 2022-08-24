@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcSaeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/08/2022 14:58
+ * @lastUpdate 24/08/2022 14:13
  */
 
 namespace App\Repository;
@@ -59,15 +59,6 @@ class ApcSaeRepository extends ServiceEntityRepository
 
     public function findBySemestre(Semestre $semestre): array
     {
-//        return $this->createQueryBuilder('r')
-//            ->leftJoin('r.apcSaeCompetences', 'apcSaeCompetences')
-//            ->addSelect('apcSaeCompetences')
-//            ->where('r.semestre = :semestre')
-//            ->setParameter('semestre', $semestre->getId())
-//            ->orderBy('r.codeMatiere', Criteria::ASC)
-//            ->addOrderBy('r.libelle', Criteria::ASC)
-//            ->getQuery()
-//            ->getResult();
         return $this->createQueryBuilder('r')
             ->innerJoin('r.semestres', 's')
             ->addSelect('s')
@@ -92,6 +83,7 @@ class ApcSaeRepository extends ServiceEntityRepository
             ->orWhere('a.description LIKE :search')
             ->orWhere('a.libelle LIKE :search')
             ->andWhere('an.diplome = :diplome')
+            ->andWhere('a.actif = 1')
             ->setParameter('diplome', $diplome->getId())
             ->setParameter('search', '%'.$search.'%')
             ->getQuery()
@@ -101,12 +93,14 @@ class ApcSaeRepository extends ServiceEntityRepository
     public function findByDepartement(Departement $departement): array
     {
         return $this->createQueryBuilder('r')
-            ->innerJoin(Semestre::class, 's', 'WITH', 's.id = r.semestre')
+            ->innerJoin('r.semestres', 's')
+            ->addSelect('s')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
             ->leftJoin('r.apcSaeCompetences', 'apcSaeCompetences')
             ->addSelect('apcSaeCompetences')
             ->where('d.departement = :departement')
+            ->andWhere('a.actif = 1')
             ->setParameter('departement', $departement->getId())
             ->orderBy('r.codeMatiere', Criteria::ASC)
             ->addOrderBy('r.libelle', Criteria::ASC)

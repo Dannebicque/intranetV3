@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 24/08/2022 11:46
  */
 
 namespace App\Controller\administration;
@@ -251,8 +251,17 @@ class PrevisionnelController extends BaseController
             $tPersonnels[$personnel->getId()] = $personnel;
         }
 
+        $listeAnneesActives = [];
+        foreach ($this->getDepartement()?->getDiplomes() as $diplome) {
+            foreach ($diplome->getAnnees() as $annee) {
+                if (true === $annee->getActif()) {
+                    $listeAnneesActives[] = $annee->getId();
+                }
+            }
+        }
+
         $previsionnelManager->dupliqueAnnee($this->getDepartement(), $anneeDepart, $annee_destination,
-             $tPersonnels, $annee_concerver);
+            $tPersonnels, $annee_concerver, $listeAnneesActives);
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'previsionnel.duplicate_annee.success.flash');
 
         return $this->redirectToRoute('administration_previsionnel_index', ['annee' => $annee_destination]);

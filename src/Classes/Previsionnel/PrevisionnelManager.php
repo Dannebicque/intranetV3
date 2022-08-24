@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Previsionnel/PrevisionnelManager.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Previsionnel/PrevisionnelManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/09/2021 11:13
+ * @lastUpdate 24/08/2022 14:06
  */
 
 namespace App\Classes\Previsionnel;
@@ -194,7 +194,8 @@ class PrevisionnelManager
         int $anneeDepart,
         int $annee_destination,
         array $personnels,
-        ?string $annee_concerver = 'false'
+        ?string $annee_concerver = 'false',
+        array $listeAnneesActives = []
     ): void {
         // on efface, sauf si la case est cochée.
         if ('true' !== $annee_concerver) {
@@ -205,20 +206,23 @@ class PrevisionnelManager
 
         /** @var \App\DTO\Previsionnel $previsionnel */
         foreach ($previsionnels as $previsionnel) {
-            $newPrevisonnel = new Previsionnel($annee_destination, null);
-            $newPrevisonnel->setIdMatiere($previsionnel->matiere_id);
-            $newPrevisonnel->setTypeMatiere($previsionnel->type_matiere);
-            $newPrevisonnel->setNbGrCm($previsionnel->nbGrCm);
-            $newPrevisonnel->setNbGrTd($previsionnel->nbGrTd);
-            $newPrevisonnel->setNbGrTp($previsionnel->nbGrTp);
-            $newPrevisonnel->setNbHCm($previsionnel->nbHCm);
-            $newPrevisonnel->setNbHTd($previsionnel->nbHTd);
-            $newPrevisonnel->setNbHTp($previsionnel->nbHTp);
-            if (array_key_exists($previsionnel->personnel_id, $personnels)) {
-                $newPrevisonnel->setPersonnel($personnels[$previsionnel->personnel_id]);
-            }
+            if (in_array($previsionnel->annee_id, $listeAnneesActives, true)) {
+                // on ne duplique que pour les années actives
+                $newPrevisonnel = new Previsionnel($annee_destination, null);
+                $newPrevisonnel->setIdMatiere($previsionnel->matiere_id);
+                $newPrevisonnel->setTypeMatiere($previsionnel->type_matiere);
+                $newPrevisonnel->setNbGrCm($previsionnel->nbGrCm);
+                $newPrevisonnel->setNbGrTd($previsionnel->nbGrTd);
+                $newPrevisonnel->setNbGrTp($previsionnel->nbGrTp);
+                $newPrevisonnel->setNbHCm($previsionnel->nbHCm);
+                $newPrevisonnel->setNbHTd($previsionnel->nbHTd);
+                $newPrevisonnel->setNbHTp($previsionnel->nbHTp);
+                if (array_key_exists($previsionnel->personnel_id, $personnels)) {
+                    $newPrevisonnel->setPersonnel($personnels[$previsionnel->personnel_id]);
+                }
 
-            $this->entityManager->persist($newPrevisonnel);
+                $this->entityManager->persist($newPrevisonnel);
+            }
         }
         $this->entityManager->flush();
     }

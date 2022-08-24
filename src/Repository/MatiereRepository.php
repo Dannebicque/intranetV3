@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/MatiereRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/05/2022 08:49
+ * @lastUpdate 24/08/2022 11:20
  */
 
 namespace App\Repository;
@@ -53,6 +53,7 @@ class MatiereRepository extends ServiceEntityRepository
             ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
             ->where('d.departement = :departement')
             ->andWhere('s.ppnActif = m.ppn')
+            ->andWhere('a.actif = 1')
             ->setParameter('departement', $departement->getId())
             ->orderBy('m.codeMatiere', Criteria::ASC)
             ->addOrderBy('m.libelle', Criteria::ASC);
