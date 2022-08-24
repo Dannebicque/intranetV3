@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 10:26
+ * @lastUpdate 24/08/2022 17:06
  */
 
 namespace App\Controller\administration;
@@ -66,24 +66,24 @@ class EdtController extends BaseController
             Constantes::FILTRE_EDT_MODULE => $this->render('administration/edt/_edt-matiere.html.twig', [
                 'matiere' => $typeMatiereManager->getMatiereFromSelect($valeur), // todo: manque le type?
                 'filtre' => $filtre,
-                'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
+                'personnels' => $personnelRepository->findByDepartement($this->getDepartement()),
                 'salles' => $salleRepository->findAll(),
-                'matieres' => $typeMatiereManager->findByDepartement($this->dataUserSession->getDepartement()),
+                'matieres' => $typeMatiereManager->findByDepartement($this->getDepartement()),
                 'edt' => $edt,
             ]),
             Constantes::FILTRE_EDT_SALLE => $this->render('administration/edt/_edt-salle.html.twig', [
                 'salle' => $valeur,
                 'filtre' => $filtre,
-                'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
+                'personnels' => $personnelRepository->findByDepartement($this->getDepartement()),
                 'salles' => $salleRepository->findAll(),
-                'matieres' => $typeMatiereManager->findByDepartement($this->dataUserSession->getDepartement()),
+                'matieres' => $typeMatiereManager->findByDepartement($this->getDepartement()),
                 'edt' => $edt,
             ]),
             default => $this->render('administration/edt/_edt-intranet.html.twig', [
                 'filtre' => $filtre,
-                'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
+                'personnels' => $personnelRepository->findByDepartement($this->getDepartement()),
                 'salles' => $salleRepository->findAll(),
-                'matieres' => $typeMatiereManager->findByDepartement($this->dataUserSession->getDepartement()),
+                'matieres' => $typeMatiereManager->findByDepartement($this->getDepartement()),
                 'edt' => $edt,
                 'groupes' => $groupeRepository->findGroupeSemestreEdt($edt->getSemestre()),
             ]),

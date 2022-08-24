@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/08/2022 15:24
+ * @lastUpdate 24/08/2022 20:07
  */
 
 namespace App\Classes\Edt;
@@ -18,7 +18,6 @@ use App\Entity\Etudiant;
 use App\Entity\Groupe;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
-use App\Entity\TypeGroupe;
 use App\Enums\TypeGroupeEnum;
 use App\Exception\MatiereNotFoundException;
 use App\Repository\CalendrierRepository;
@@ -38,6 +37,7 @@ class MyEdtIntranet extends BaseEdt
     protected AnneeUniversitaire $anneeUniversitaire;
     private array $tab = [];
     private array $matieres = [];
+    private array $tabCouleur = [];
 
     /**
      * MyEdt constructor.
@@ -87,7 +87,7 @@ class MyEdtIntranet extends BaseEdt
         switch ($this->filtre) {
             case Constantes::FILTRE_EDT_PROMO:
                 $this->semestre = $this->semestreRepository->find($this->valeur);
-                $this->groupes = $this->groupeRepository->findAllGroupes($this->semestre);
+                $this->groupes = $this->groupeRepository->findAllGroupesOrdreSemestre($this->semestre);
                 $pl = $this->edtPlanningRepository->findEdtSemestre($this->semestre, $this->semaineFormationIUT);
                 $this->planning = $this->transformePromo($pl);
                 break;
@@ -140,12 +140,16 @@ class MyEdtIntranet extends BaseEdt
         AnneeUniversitaire $anneeUniversitaire,
         array $matieres
     ): self {
+        $semestres = $this->semestreRepository->findByDepartementActif($departement);
         if ('' === $valeur) {
-            $semestres = $this->semestreRepository->findByDepartementActif($departement);
             if ((is_countable($semestres) ? count($semestres) : 0) > 0) {
                 $valeur = $semestres[0]->getId();
             }
             // erreur
+        }
+
+        foreach ($semestres as $semestre) {
+            $this->tabCouleur[$semestre->getOrdreLmd()] = $semestre->getAnnee()->getCouleur();
         }
         $this->matieres = $matieres;
         $this->init($anneeUniversitaire, $filtre, $valeur, $semaine);
@@ -298,14 +302,14 @@ class MyEdtIntranet extends BaseEdt
     private function getCouleur(EdtPlanning $p): ?string
     {
         return match (mb_strtolower($p->getType())) {
-            'cm', 'td', 'tp' => mb_strtolower($p->getType()).'_'.$p->getSemestre()->getAnnee()->getCouleur(),
+            'cm', 'td', 'tp' => mb_strtolower($p->getType()).'_'.$this->tabCouleur[$p->getOrdreSemestre()], // todo: passer par DTO...
             default => 'CCCCCC',
         };
     }
 
     private function getCouleurTexte(EdtPlanning $p): string
     {
-        return match ($p->getSemestre()->getAnnee()->getCouleur()) {
+        return match ($this->tabCouleur[$p->getOrdreSemestre()]) {// todo: passer par DTO...
             'pink', 'red', 'orange' => 'black',
             default => 'white',
         };

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/08/2022 15:24
+ * @lastUpdate 24/08/2022 20:03
  */
 
 /*
@@ -117,7 +117,7 @@ class MyEdtImport
         // erreur lors de l'ouverture du fichier
     }
 
-    private function traiteLigne(string $phrase)
+    private function traiteLigne(string $phrase): void
     {
         $this->semaine = mb_substr($phrase, 1, 2); // on ne récupère pas le S
 
