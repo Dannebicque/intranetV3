@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/07/2022 08:39
+// @lastUpdate 24/08/2022 16:05
 import '@fortawesome/fontawesome-pro/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-pro/scss/brands.scss'
 import '@fortawesome/fontawesome-pro/scss/solid.scss'
@@ -141,12 +141,22 @@ $(document).on('click', '.card-btn-slide-text', function () {
   $(this).closest('.card').find('.card-content').slideToggle()
 })
 
+let listeTom = [];
+
 function updateInterface() {
   const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
   const tooltipList = tooltipTriggerList.map((tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl))
 
+  listeTom.forEach((tom) => {
+    tom.destroy()
+  })
+
   document.querySelectorAll('.selectpicker').forEach((el) => {
-    new TomSelect(el, {})
+    let obj = new TomSelect(el, {
+      maxOptions: null,
+    })
+
+    listeTom.push(obj)
   })
 
   document.querySelectorAll('.editable').forEach((el) => {

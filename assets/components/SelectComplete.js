@@ -2,14 +2,16 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/components/SelectComplete.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/07/2022 08:34
+// @lastUpdate 24/08/2022 15:55
 
 import TomSelect from 'tom-select'
 
 export default class SelectComplete extends HTMLSelectElement {
 
   constructor() {
-    let options = {}
+    let options = {
+      maxOptions: null
+    }
     super()
     if (this.dataset.options) {
       options = JSON.parse(this.dataset.options)
