@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/08/2022 16:53
+ * @lastUpdate 24/08/2022 16:26
  */
 
 namespace App\Controller;
@@ -60,7 +60,7 @@ class EdtController extends BaseController
             $matieres = $this->typeMatiereManager->tableauMatieresCodeApogee($this->getDepartement());
             $this->myEdtCelcat->initPersonnel($this->getUser(),
                 $this->getAnneeUniversitaire(), $semaine, $matieres);
-            $suiviAppel = $absenceEtatAppelRepository->findBySemaineAndUserArray($this->myEdtIntranet->getSemaineFormationLundi(), $this->getUser());
+            $suiviAppel = $absenceEtatAppelRepository->findBySemaineAndUserArray($this->myEdtCelcat->getSemaineFormationLundi(), $this->getUser());
 
             return $this->render('edt/_intervenant2.html.twig', [
                 'edt' => $this->myEdtCelcat,
