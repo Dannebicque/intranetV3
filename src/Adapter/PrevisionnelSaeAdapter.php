@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Adapter/PrevisionnelSaeAdapter.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Adapter/PrevisionnelSaeAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/09/2021 11:09
+ * @lastUpdate 25/08/2022 16:05
  */
 
 namespace App\Adapter;
@@ -17,10 +17,14 @@ class PrevisionnelSaeAdapter extends AbstractPrevisionnelAdapter implements Prev
 {
     public function collection(array $previsionnels): PrevisionnelCollection
     {
+        $listeKey = [];
         $collection = new PrevisionnelCollection();
 
         foreach ($previsionnels as $previ) {
-            $collection->add($this->single($previ));
+            if (!in_array($previ['id_previsionnel'], $listeKey, true)) {
+                $collection->add($this->single($previ));
+                $listeKey[] = $previ['id_previsionnel'];
+            }
         }
 
         return $collection;
