@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/08/2022 11:46
+ * @lastUpdate 25/08/2022 09:31
  */
 
 namespace App\Controller\administration;
@@ -165,7 +165,6 @@ class PrevisionnelController extends BaseController
             // $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $matiere->semestre); //todo: faire avec l'année ?
 
             $annee = '' !== $request->request->get('previsionnel_annee_previsionnel') ? $request->request->get('previsionnel_annee_previsionnel') : $this->dataUserSession->getAnneePrevisionnel();
-
             if (null !== $matiere) {
                 $nbLignes = $request->request->get('nbLignes');
                 for ($i = 1; $i <= $nbLignes; ++$i) {
@@ -189,11 +188,10 @@ class PrevisionnelController extends BaseController
                 }
                 $this->entityManager->flush();
                 $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'previsionnel.add.success.flash');
-
                 return $this->redirectToRoute('administration_previsionnel_new');
             }
 
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'previsionnel.add.error.flash');
+            $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'previsionnel.add.error.flash');
 
             return $this->redirectToRoute('administration_previsionnel_new');
         }
