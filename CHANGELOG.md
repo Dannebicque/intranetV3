@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.8.6](https://github.com/Dannebicque/intranetV3/compare/v3.8.5...v3.8.6) (2022-08-25)
+
+
+### Bug Fixes
+
+* [Edt] Correctifs suite mise en place BUT ([d8dc5d8](https://github.com/Dannebicque/intranetV3/commit/d8dc5d8e24924332fab97c127ccef75de298a9d0))
+* [Edt] Correctifs suite mise en place BUT ([8900eaa](https://github.com/Dannebicque/intranetV3/commit/8900eaaf8ad5ce8f85d558ee3ca183a274c8008d))
+* [Edt] Import et affichage des groupes ([3394fb3](https://github.com/Dannebicque/intranetV3/commit/3394fb3c597475291c91b30c9a4670c3a458cc67))
+* [Edt] Import et affichage des groupes ([afa0913](https://github.com/Dannebicque/intranetV3/commit/afa091357f3c0d334f31328c5e3da5451da6503c))
+* [Previsionnel] Correctifs suite mise en place BUT ([1f905c1](https://github.com/Dannebicque/intranetV3/commit/1f905c15e4f2eea3af7653d2ae8767fb160fac34))
+* [Previsionnel] Correctifs suite mise en place BUT ([1da2340](https://github.com/Dannebicque/intranetV3/commit/1da2340cfacfde24e5ff33b041cc6611af060982))
+* [Previsionnel] Correctifs suite mise en place BUT ([045cb01](https://github.com/Dannebicque/intranetV3/commit/045cb0169285072b7946c1841925e6cc72320780))
+
 ### [3.8.5](https://github.com/Dannebicque/intranetV3/compare/v3.8.4...v3.8.5) (2022-08-24)
 
 
