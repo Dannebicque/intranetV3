@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/PersonnelTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/08/2022 12:01
+ * @lastUpdate 25/08/2022 14:26
  */
 
 namespace App\Table;
@@ -59,7 +59,7 @@ class PersonnelTableType extends TableType
             ],
             'required' => true,
             'placeholder' => 'Filtrer par Type',
-            'expanded' => true,
+            'expanded' => false,
             'multiple' => false,
         ]);
 
@@ -82,6 +82,19 @@ class PersonnelTableType extends TableType
             ['label' => 'table.mail_univ']);
 
         if ('qualite' === $typeAccess) {
+            $builder->addFilter('droit', ChoiceType::class, [
+                'choices' => [
+                    'Tous' => '',
+                    'Autorisé' => true,
+                    'Sans accès' => false,
+                ],
+                'required' => true,
+                'placeholder' => 'Filtrer par droits',
+                'expanded' => false,
+                'multiple' => false,
+            ]);
+
+
             $builder->setLoadUrl('sa_qualite_originaux_acces_index');
 
             $builder->addColumn('links', WidgetColumnType::class, [
@@ -184,6 +197,11 @@ class PersonnelTableType extends TableType
                     $qb->innerJoin(PersonnelDepartement::class, 'd', 'WITH', 'e.id = d.personnel');
                     $qb->andWhere('d.departement = :departement');
                     $qb->setParameter('departement', $formData['departement']);
+                }
+
+                if (isset($formData['droit'])) {
+                    $qb->andWhere('e.accessOriginaux = :droit');
+                    $qb->setParameter('droit', $formData['droit']);
                 }
 
                 if (isset($formData['type']) && '' !== $formData['type']) {
