@@ -273,7 +273,7 @@ adm:
     gestion.des.etudiants.departement: 'Gestion des étudiants du département'
   gestion.des.etudiants.departement: 'Gestion des étudiants de la formation'
   groupe:
-    index.heading: 'Liste des groupes du semestre %semestre%'
+    index.heading: 'Liste des groupes du semestre %semestre% | %diplome%'
     modification.heading: 'Modification d''un groupe'
     new.heading: 'Création d''un groupe'
     semestre.add.heading: 'Ajouter un groupe dans le semestre'

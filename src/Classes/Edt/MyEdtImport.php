@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/08/2022 20:03
+ * @lastUpdate 24/08/2022 20:36
  */
 
 /*
@@ -123,7 +123,6 @@ class MyEdtImport
 
         $semestre = mb_substr($phrase, 5, 2);
         $this->verifieSiSemaineDoitEtreEffacee($semestre);
-
         switch ($phrase[12]) {
             case 'Z':
                 // prof commence par Z, donc, c'est une zone sans enseignant
@@ -181,22 +180,21 @@ class MyEdtImport
         }
     }
 
-    private function addZoneSansProf(string $phrase, string $semestre)
+    private function addZoneSansProf(string $phrase, string $semestre): void
     {
+        //S055403ETDEHZ04****3ALTERNANCE
+
         $jour = $phrase[3];
         $heure = $phrase[4]; // a convertir
         $date = $this->convertToDate($jour);
-        $salle = mb_substr($phrase, 11, 4);
-        $fin = $phrase[15];
-        $texte = mb_substr($phrase, 16);
+        $salle = mb_substr($phrase, 15, 4);
+        $fin = $phrase[19];
+        $texte = mb_substr($phrase, 20);
 //        // todo: traiter groupe TD Exemple TDEH => Implique TD EF et TD GH.
 //        // todo: 3 => Nombre de ligne pour le TD Exemple => 3
 //        // todo: si projet => PRJ + code SAE (PRJ WS...)
 //
-//        // && mb_substr($phrase, 16, 4) !== 'PROJ'
-
         $pl = new EdtPlanning();
-//        $pl->setSemestre($tabSemestre[$semestre]); //todo: pas nécessaire ??
         $pl->setOrdreSemestre((int) $semestre);
         $pl->setIdMatiere(0);
         $pl->setIntervenant(null);
@@ -204,11 +202,10 @@ class MyEdtImport
         $pl->setDate($date);
         $pl->setSalle($salle);
 
-        $pl->setGroupe(1);
-        $pl->setType(TypeGroupeEnum::TYPE_GROUPE_CM); // todo: implique que la zone est toujours sur tout le CM?
+        $this->addGroupe($pl, mb_substr($phrase, 8, 4));
 
         $pl->setDebut($this->tabdebut[$heure]);
-        $pl->setFin($this->tabdebut[$heure] + (3 * $fin));
+        $pl->setFin($this->tabdebut[$heure] + (3 * (int)$fin));
         $pl->setSemaine($this->semaine);
         $pl->setEvaluation(false);
         $pl->setTexte($texte);
@@ -267,8 +264,7 @@ class MyEdtImport
             $pl->setSalle($salle);
             $pl->setOrdre($ordre);
             $pl->setDate($date);
-            $pl->setGroupe(ord($groupe) - 64);
-            $pl->setType(mb_strtoupper($typecours));
+            $this->addGroupe($pl, mb_substr($phrase, 8, 4));
             $pl->setDebut($this->tabdebut[$heure]);
             $pl->setFin($this->tabdebut[$heure] + 3);
             $pl->setSemaine($this->semaine);
@@ -285,5 +281,21 @@ class MyEdtImport
 
     private function addGroupe(EdtPlanning $pl, string $phrase)
     {
+        $typecours = mb_substr($phrase, 0, 2);
+        $pl->setType(mb_strtoupper($typecours));
+
+        $groupe = mb_substr($phrase, 2, 2);
+        if ($groupe === 'CM') {
+            $pl->setGroupe(1);
+        }
+        else if ('-' === $groupe[0]) {
+            $pl->setGroupe(ord($groupe[1]) - 64);
+        } else {
+            if (ord($groupe[0]) === ord($groupe[1]) - 1) {
+                $pl->setGroupe(ord($groupe[0]) - 64); // deux lettre qui se suivent, donc TD classique
+            } else {
+                $pl->setGroupe(40 + ord($groupe[0]) - 64); // on ajoute 40 pour indiquer que c'est sur 4 ?
+            }
+        }
     }
 }

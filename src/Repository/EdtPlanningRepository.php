@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/08/2022 16:24
+ * @lastUpdate 24/08/2022 17:02
  */
 
 namespace App\Repository;
@@ -15,7 +15,6 @@ use App\Entity\EdtPlanning;
 use App\Entity\Etudiant;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
-use App\Entity\TypeGroupe;
 use App\Enums\TypeGroupeEnum;
 use function array_key_exists;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -328,7 +327,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
         foreach ($departement->getDiplomes() as $diplome) {
             foreach ($diplome->getSemestres() as $semestre) {
                 if (true === $semestre->isActif()) {
-                    $ors[] = '(' . $query->expr()->orx('p.ordreSemestre = ' . $query->expr()->literal($semestre->getOrdreLmd())) . ')';
+                    $ors[] = '('.$query->expr()->orx('p.ordreSemestre = '.$query->expr()->literal($semestre->getOrdreLmd())).')';
                 }
             }
         }
@@ -350,7 +349,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
             $pl['fin'] = $event->getFin();
             $pl['commentaire'] = $event->getCommentaire();
             if (null !== $matiere) {
-                $pl['ical'] = $matiere->libelle . ' (' . $matiere->codeMatiere . ') ' . $event->getDisplayGroupe();
+                $pl['ical'] = $matiere->libelle.' ('.$matiere->codeMatiere.') '.$event->getDisplayGroupe();
             } else {
                 $pl['ical'] = '';
             }
@@ -385,7 +384,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
                 $pl['fin'] = $event->getFin();
                 $pl['commentaire'] = '';
                 if (null !== $matiere) {
-                    $pl['ical'] = $matiere->libelle . ' (' . $matiere->codeMatiere . ') ' . $event->getDisplayGroupe();
+                    $pl['ical'] = $matiere->libelle.' ('.$matiere->codeMatiere.') '.$event->getDisplayGroupe();
                 } else {
                     $pl['ical'] = $event->getTexte();
                 }
@@ -404,8 +403,8 @@ class EdtPlanningRepository extends ServiceEntityRepository
         $i = 0;
         foreach ($departement->getDiplomes() as $diplome) {
             foreach ($diplome->getSemestres() as $semestre) {
-                $quer = $quer->orWhere('p.ordreSemestre = :semestre' . $i)
-                    ->setParameter('semestre' . $i, $semestre->getOrdreLmd());
+                $quer = $quer->orWhere('p.ordreSemestre = :semestre'.$i)
+                    ->setParameter('semestre'.$i, $semestre->getOrdreLmd());
                 ++$i;
             }
         }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/GroupeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/08/2022 16:14
+ * @lastUpdate 24/08/2022 20:12
  */
 
 namespace App\Repository;
@@ -90,6 +90,54 @@ class GroupeRepository extends ServiceEntityRepository
 
         return $groupes;
     }
+
+    public function findAllGroupesOrdreSemestre(Semestre $semestre): array
+    {
+        $groupes = [];
+        $gtp = $this->getGroupesTPOrdreSemestre($semestre);
+
+        $i = 1;
+        /** @var Groupe $g */
+        foreach ($gtp as $g) {
+            $groupes[$i] = $g->getLibelle();
+            ++$i;
+        }
+
+        for ($j = $i; $j <= $semestre->getNbgroupeTpEdt() + 1; ++$j) {
+            $groupes[$j] = '';
+        }
+
+        return $groupes;
+    }
+
+    public function getGroupesTPOrdreSemestre(Semestre $semestre): array
+    {
+        //todo: typegroupe ne doit plus contenir de semestre... mais un numéro et un diplome
+        return $this->createQueryBuilder('g')
+            ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')
+            ->where('t.type = :type')
+            ->andWhere('t.ordreSemestre = :semestre')
+            ->andWhere('t.diplome = :diplome')
+            ->setParameters(['type' => 'TP', 'semestre' => $semestre->getOrdreLmd(), 'diplome' => $semestre->getDiplome()->getId()])
+            ->orderBy('g.libelle', Criteria::ASC)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getGroupesTDOrdreSemestre(Semestre $semestre): array
+    {
+        return $this->createQueryBuilder('g')
+            ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')
+            ->where('t.type = :type')
+            ->andWhere('t.ordreSemestre = :semestre')
+            ->andWhere('t.diplome = :diplome')
+            ->setParameters(['type' => 'TD', 'semestre' => $semestre->getOrdreLmd(), 'diplome' => $semestre->getDiplome()->getId()])
+            ->orderBy('g.libelle', Criteria::ASC)
+            ->getQuery()
+            ->getResult();
+    }
+
+
 
     public function getGroupesTP(Semestre $semestre): array
     {
