@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/inPlaceEdit.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/07/2022 17:01
+// @lastUpdate 25/08/2022 10:22
 
 import { Popover } from 'bootstrap'
 import { addCallout } from './util'
@@ -21,6 +21,8 @@ export default class InPlaceEdit {
     this.title = this.element.dataset.title ?? this.element.title ?? 'titre'
     this.type = this.element.dataset.type ?? 'text'
     this.required = this.element.dataset.required ?? false
+
+    element.classList.add('editable-active')
 
     this.init_text()
     this.showPopover()

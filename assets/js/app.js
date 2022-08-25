@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/08/2022 09:45
+// @lastUpdate 25/08/2022 10:22
 import '@fortawesome/fontawesome-pro/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-pro/scss/brands.scss'
 import '@fortawesome/fontawesome-pro/scss/solid.scss'
@@ -154,7 +154,10 @@ function updateInterface() {
   })
 
   document.querySelectorAll('.editable').forEach((el) => {
-    new InPlaceEdit(el, {})
+    if (!el.classList.contains('editable-active')) {
+      console.log('edit')
+      new InPlaceEdit(el, {})
+    }
   })
 
   if (document.querySelectorAll('.flatdatepicker').length > 0) {
