@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.8.7](https://github.com/Dannebicque/intranetV3/compare/v3.8.6...v3.8.7) (2022-08-25)
+
+
+### Features
+
+* [Originaux] Gestion des accès individualisé ([d491ca8](https://github.com/Dannebicque/intranetV3/commit/d491ca84b20b2377cc9871a3b3a4efd530d0b06e))
+
+
+### Bug Fixes
+
+* [Js] Editable ([0dedc90](https://github.com/Dannebicque/intranetV3/commit/0dedc9053d392211b1e6713749bb76919161eb7d))
+* [Previsionnel] Bug export avec nouvelle structure ([76eb548](https://github.com/Dannebicque/intranetV3/commit/76eb548d2873377ba73d666403197313c6cd5cd2))
+* [Previsionnel] Bug export avec nouvelle structure ([5d0922e](https://github.com/Dannebicque/intranetV3/commit/5d0922e9d9efa9957a02557afe67f88d6e86cc0c))
+
 ### [3.8.6](https://github.com/Dannebicque/intranetV3/compare/v3.8.5...v3.8.6) (2022-08-25)
 
 
