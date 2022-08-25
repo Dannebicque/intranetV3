@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/TypeGroupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/08/2022 17:24
+ * @lastUpdate 25/08/2022 12:28
  */
 
 namespace App\Entity;
@@ -123,7 +123,7 @@ class TypeGroupe extends BaseEntity
 
     public function isTD(): bool
     {
-        return TypeGroupeEnum::TYPE_GROUPE_TD === mb_strtoupper($this->getType());
+        return TypeGroupeEnum::TYPE_GROUPE_TD === $this->getType();
     }
 
     public function getType(): ?TypeGroupeEnum
@@ -140,12 +140,12 @@ class TypeGroupe extends BaseEntity
 
     public function isTP(): bool
     {
-        return TypeGroupeEnum::TYPE_GROUPE_TP === mb_strtoupper($this->getType());
+        return TypeGroupeEnum::TYPE_GROUPE_TP === $this->getType();
     }
 
     public function isCM(): bool
     {
-        return TypeGroupeEnum::TYPE_GROUPE_CM === mb_strtoupper($this->getType());
+        return TypeGroupeEnum::TYPE_GROUPE_CM === $this->getType();
     }
 
     public function getDisplay(): string
