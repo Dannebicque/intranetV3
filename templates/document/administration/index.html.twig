@@ -1,4 +1,5 @@
-{% extends is_granted('ROLE_QUALITE') ? 'base-super_admin.html.twig' : 'base.html.twig' %}
+{% extends is_granted('ROLE_ADMINISTRATIF') ? 'base-super_admin.html.twig' : 'base.html
+.twig' %}
 
 {% block header %}
     {{ 'adm.document.index.heading'|trans }}
@@ -6,9 +7,20 @@
 
 {% block headeractions %}
     <div class="header-action">
-        {% if is_granted('ROLE_QUALITE') %}
-            {{ include('composants/sadm-buttons-index.html.twig', {elt:'qualite_documents', params:
-                {source:'originaux'}}) }}
+        {% if is_granted('ROLE_ADMINISTRATIF') %}
+            <div class="buttons">
+                <a href="{{ path('sa_qualite_originaux_acces_index') }}" class="btn btn-warning
+                btn-sm
+                btn-float" title="{{ 'atitle.gestion.access.originaux'|trans }}" data-bs-toggle="tooltip"
+                   data-bs-placement="bottom"><i class="fas fa-key"></i></a>
+                <a href="{{ path('sa_qualite_documents_new', {source:'originaux'}) }}" class="btn btn-info btn-sm btn-float" title="{{ 'atitle
+    .creer_nouveau'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="{{ iconAdd }}"></i></a>
+                <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                   title="{{ 'atitle.retour_administration'|trans }}">
+                    <i class="{{ iconDashboard }}"><span class="sr-only">dashboard</span></i>
+                </a>
+
+            </div>
         {% else %}
             {{ include('composants/adm-buttons-index.html.twig', {elt:'document'}) }}
         {% endif %}

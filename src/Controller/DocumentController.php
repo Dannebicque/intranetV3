@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/DocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 17:03
+ * @lastUpdate 25/08/2022 10:54
  */
 
 namespace App\Controller;
@@ -27,6 +27,10 @@ class DocumentController extends BaseController
     ], methods: ['GET'])]
     public function index(string $source): Response
     {
+        if (Document::ORIGINAUX === $source && !$this->hasAccessOriginaux()) {
+            throw new NotFoundHttpException();
+        }
+
         return $this->render('document/public/index.html.twig', [
             'source' => $source,
         ]);
@@ -37,6 +41,10 @@ class DocumentController extends BaseController
     ], options: ['expose' => true])]
     public function typeDocument(TypeDocumentRepository $typeDocumentRepository, string $source): Response
     {
+        if (Document::ORIGINAUX === $source && !$this->hasAccessOriginaux()) {
+            throw new NotFoundHttpException();
+        }
+
         if (Document::ORIGINAUX === $source) {
             $typeDocuments = $typeDocumentRepository->findByOriginaux();
         } else {
@@ -52,8 +60,12 @@ class DocumentController extends BaseController
     #[Route('{source}/ajax/document/favori', name: 'ajax_favori', requirements: [
         'source' => 'document|originaux',
     ], options: ['expose' => true])]
-    public function documentsFavoris(MyDocument $myDocument): Response
+    public function documentsFavoris(MyDocument $myDocument, string $source): Response
     {
+        if (Document::ORIGINAUX === $source && !$this->hasAccessOriginaux()) {
+            throw new NotFoundHttpException();
+        }
+
         $documents = $myDocument->mesDocumentsFavoris($this->getUser());
         $idDocuments = $myDocument->idMesDocumentsFavoris($this->getUser());
 
@@ -73,6 +85,10 @@ class DocumentController extends BaseController
         DocumentRepository $documentRepository,
         string $source
     ): Response {
+        if (Document::ORIGINAUX === $source && !$this->hasAccessOriginaux()) {
+            throw new NotFoundHttpException();
+        }
+
         $typedocument = $typeDocumentRepository->find($request->query->get('typedocument'));
         if (null === $typedocument) {
             throw new NotFoundHttpException();

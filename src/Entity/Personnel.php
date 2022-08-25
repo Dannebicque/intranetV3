@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/05/2022 14:50
+ * @lastUpdate 25/08/2022 12:03
  */
 
 namespace App\Entity;
@@ -266,6 +266,12 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: QuestionnairePersonnel::class)]
     private Collection $quizzPersonnels;
 
+//    #[ORM\OneToMany(mappedBy: 'intervenant', targetEntity: PlanCours::class)]
+//    private Collection $planCours;
+
+    #[ORM\Column]
+    private ?bool $accessOriginaux = false;
+
     /**
      * @throws JsonException
      */
@@ -301,6 +307,7 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         $this->bcServiceFaitReceptionniste = new ArrayCollection();
         $this->bcServiceFaitResponsableSignataire = new ArrayCollection();
         $this->quizzPersonnels = new ArrayCollection();
+        $this->planCours = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -1467,6 +1474,48 @@ class Personnel extends Utilisateur implements UtilisateurInterface
                 $quizzPersonnel->setPersonnel(null);
             }
         }
+
+        return $this;
+    }
+
+//    /**
+//     * @return Collection<int, PlanCours>
+//     */
+//    public function getPlanCours(): Collection
+//    {
+//        return $this->planCours;
+//    }
+//
+//    public function addPlanCour(PlanCours $planCour): self
+//    {
+//        if (!$this->planCours->contains($planCour)) {
+//            $this->planCours[] = $planCour;
+//            $planCour->setIntervenant($this);
+//        }
+//
+//        return $this;
+//    }
+//
+//    public function removePlanCour(PlanCours $planCour): self
+//    {
+//        if ($this->planCours->removeElement($planCour)) {
+//            // set the owning side to null (unless already changed)
+//            if ($planCour->getIntervenant() === $this) {
+//                $planCour->setIntervenant(null);
+//            }
+//        }
+//
+//        return $this;
+//    }
+
+    public function isAccessOriginaux(): ?bool
+    {
+        return $this->accessOriginaux;
+    }
+
+    public function setAccessOriginaux(bool $accessOriginaux): self
+    {
+        $this->accessOriginaux = $accessOriginaux;
 
         return $this;
     }

@@ -141,10 +141,7 @@
                             <span class="title">{{ 'menu.informations'|trans }}</span>
                         </a>
                     </li>
-                    {% if user_data.isGoodDepartement('ROLE_CDD') or
-                        user_data.isGoodDepartement('ROLE_RP') or
-                        user_data.isGoodDepartement('ROLE_DDE') or
-                        user_data.isGoodDepartement('ROLE_ASS') %}
+                    {% if is_granted('ROLE_PERMANENT') and user_data.user.accessOriginaux == true %}
                         <li class="menu-item" id="menu-originaux">
                             <a class="menu-link" href="{{ path('document_index', {source: 'originaux'}) }}">
                                 <i class="{{ iconOriginaux }} fa-2x"><span class="sr-only">Originaux</span></i>

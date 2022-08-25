@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/BaseController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:18
+ * @lastUpdate 25/08/2022 11:39
  */
 
 namespace App\Controller;
@@ -148,5 +148,14 @@ class BaseController extends AbstractController
             'text' => $text instanceof TranslatableMessage ? $text->trans($this->translator) : $text,
             'title' => $title instanceof TranslatableMessage ? $title->trans($this->translator) : $title,
         ]);
+    }
+
+    protected function hasAccessOriginaux(): bool
+    {
+        if (!$this->isEtudiant() && true == $this->getUser()->isAccessOriginaux()) {
+            return true;
+        }
+
+        return false;
     }
 }

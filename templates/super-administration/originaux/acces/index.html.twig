@@ -1,0 +1,30 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+Gestion des personnels
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">Gestion des personnels</h4>
+        <div class="card-body">
+            {{ table_render(table) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block fabactions %}
+    {{ include('composants/fab-button-help.html.twig', {
+        href:path('help_article', {sujet: 'administration_personnel'})}
+    ) }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('sadm.originaux') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('sadm.originaux') }}
+{% endblock %}

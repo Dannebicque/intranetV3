@@ -1488,6 +1488,11 @@ menu:
   trombinoscope: Trombinoscope
   originaux: Originaux
 
+originaux:
+  acces:
+    autorise: 'Accès à Originaux autorisé'
+  pas.access: 'Aucun accès à Originaux'
+
 mes_cours.heading: 'Mes cours'
 message.404: 'Hum. Il semblerait que vous recherchiez quelque chose qui n''existe pas.'
 message.500: "On dirait qu'on a un petit problème interne. Merci de réessayer dans quelques minutes ou de\n signaler\n ce problème.\n"
