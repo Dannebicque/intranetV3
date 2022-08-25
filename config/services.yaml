@@ -19,6 +19,7 @@ parameters:
     CAS_PORT: '%env(resolve:CAS_PORT)%'
     CAS_CONTEXT: '%env(resolve:CAS_CONTEXT)%'
     iconShow: '%env(resolve:ICON_SHOW)%'
+    iconRetour: '%env(resolve:ICON_RETOUR)%'
     iconEdit: '%env(resolve:ICON_EDIT)%'
     iconDelete: '%env(resolve:ICON_DELETE)%'
     iconPrint: '%env(resolve:ICON_PRINT)%'

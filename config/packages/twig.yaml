@@ -15,6 +15,7 @@ twig:
         iconAdd: '%env(resolve:ICON_ADD)%'
         iconHelp: '%env(resolve:ICON_HELP)%'
         iconAdmin: '%env(resolve:ICON_ADMINISTRATION)%' #'fas fa-wrench'
+        iconRetour: '%env(resolve:ICON_RETOUR)%' #'fas fa-wrench'
         iconDashboard: '%env(resolve:ICON_DASHBOARD)%' #fas fa-home'
         iconTrombi: '%env(resolve:ICON_TROMBINOSCOPE)%' #fa-user-friends
         iconAgenda: '%env(resolve:ICON_AGENDA)%' #ffa-calendar-alt

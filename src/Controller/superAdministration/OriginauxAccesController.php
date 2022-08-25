@@ -4,15 +4,13 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/OriginauxAccesController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/08/2022 11:49
+ * @lastUpdate 25/08/2022 12:10
  */
 
 namespace App\Controller\superAdministration;
 
 use App\Controller\BaseController;
 use App\Entity\Personnel;
-use App\Entity\Rattrapage;
-use App\Event\RattrapageEvent;
 use App\Table\PersonnelTableType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,14 +20,12 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 #[Route('/administratif/qualite/originaux/acces', name: 'sa_qualite_originaux_acces_')]
 class OriginauxAccesController extends BaseController
 {
-    #[Route('/', name: 'index', methods: ['GET','POST'])]
+    #[Route('/', name: 'index', methods: ['GET', 'POST'])]
     public function index(
         Request $request,
-    ): Response
-    {
-
+    ): Response {
         $table = $this->createTable(PersonnelTableType::class, [
-            'typeAccess' => 'qualite'
+            'typeAccess' => 'qualite',
         ]);
 
         $table->handleRequest($request);
@@ -39,7 +35,7 @@ class OriginauxAccesController extends BaseController
         }
 
         return $this->render('super-administration/originaux/acces/index.html.twig', [
-            'table' => $table
+            'table' => $table,
         ]);
     }
 
@@ -47,7 +43,7 @@ class OriginauxAccesController extends BaseController
     public function changeEtat(EventDispatcherInterface $eventDispatcher, Personnel $personnel, $etat): Response
     {
         if ('a' === $etat || 'r' === $etat) {
-            $personnel->setAccessOriginaux($etat === 'a');
+            $personnel->setAccessOriginaux('a' === $etat);
             $this->entityManager->flush();
 
 //            $event = new RattrapageEvent($rattrapage);
