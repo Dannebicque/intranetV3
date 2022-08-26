@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/08/2022 10:00
+ * @lastUpdate 26/08/2022 21:48
  */
 
 namespace App\Controller;
@@ -232,7 +232,7 @@ class EdtController extends BaseController
     public function exportEtudiantIcal(MyEdtExport $myEdtExport): Response
     {
         // Le nombre de semaine selon la configuraiton
-        $ical = $myEdtExport->export($this->getUser(), 'ics', 'etudiant');
+        $ical = $myEdtExport->export($this->getUser(), 'ics', 'etudiant', $this->getAnneeUniversitaire());
 
         return new Response($ical, Response::HTTP_OK, [
             'Content-Type' => 'application/force-download',

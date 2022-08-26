@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/BaseEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/07/2022 10:02
+ * @lastUpdate 26/08/2022 21:46
  */
 
 namespace App\Classes\Edt;
@@ -49,7 +49,7 @@ abstract class BaseEdt
     protected int $groupetd = 0;
     protected int $groupetp = 0;
 
-    private AnneeUniversitaire $anneeUniversitaire;
+    private ?AnneeUniversitaire $anneeUniversitaire = null;
 
     public function __construct(
         protected CalendrierRepository $calendrierRepository

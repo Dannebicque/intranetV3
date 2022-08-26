@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/SynchroIcalController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/SynchroIcalController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/06/2021 21:20
+ * @lastUpdate 26/08/2022 21:48
  */
 
 namespace App\Controller;
@@ -33,10 +33,10 @@ class SynchroIcalController extends AbstractController
         // Toutes les semaines
         $personnel = $personnelRepository->findByCode($code);
         if (null !== $personnel) {
-            $ical = $myEdtExport->export($personnel, $_format, 'Personnel');
+            $ical = $myEdtExport->export($personnel, $_format, 'Personnel', $personnel->getAnneeUniversitaire());
             $timestamp = Carbon::now();
 
-            return new Response($ical, \Symfony\Component\HttpFoundation\Response::HTTP_OK, [
+            return new Response($ical, Response::HTTP_OK, [
                 'Content-Type' => 'text/calendar; charset=utf-8',
                 'Content-Disposition' => 'inline; filename="ical'.$timestamp->format('YmdHis').'.ics"',
             ]);
@@ -53,10 +53,10 @@ class SynchroIcalController extends AbstractController
     {
         $etudiant = $etudiantRepository->findByCode($code);
         if (null !== $etudiant) {
-            $ical = $myEdtExport->export($etudiant, $_format, 'Etudiant');
+            $ical = $myEdtExport->export($etudiant, $_format, 'Etudiant', $etudiant->getAnneeUniversitaire());
             $timestamp = Carbon::now();
 
-            return new Response($ical, \Symfony\Component\HttpFoundation\Response::HTTP_OK, [
+            return new Response($ical, Response::HTTP_OK, [
                 'Content-Type' => 'text/calendar; charset=utf-8',
                 'Content-Disposition' => 'inline; filename="ical'.$timestamp->format('YmdHis').'.ics"',
             ]);

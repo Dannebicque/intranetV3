@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/08/2022 21:42
+ * @lastUpdate 26/08/2022 21:45
  */
 
 namespace App\Classes\Edt;
@@ -140,6 +140,7 @@ class MyEdtIntranet extends BaseEdt
         AnneeUniversitaire $anneeUniversitaire,
         array $matieres
     ): self {
+        $this->anneeUniversitaire = $anneeUniversitaire;
         $semestres = $this->semestreRepository->findByDepartementActif($departement);
         if ('' === $valeur) {
             if ((is_countable($semestres) ? count($semestres) : 0) > 0) {
