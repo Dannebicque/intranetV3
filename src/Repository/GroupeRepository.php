@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/GroupeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/08/2022 21:22
+ * @lastUpdate 26/08/2022 21:33
  */
 
 namespace App\Repository;
@@ -213,7 +213,6 @@ class GroupeRepository extends ServiceEntityRepository
             $groupes[$i]['display'] = 'TD'.$g->getLibelle().' | TD '.$g->getLibelle();
             ++$i;
         }
-        dump($groupes);
 
         return $groupes;
     }
