@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/FinSemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 09:53
+ * @lastUpdate 26/08/2022 09:47
  */
 
 namespace App\Controller\administration;
@@ -17,6 +17,7 @@ use App\Entity\Semestre;
 use App\Repository\DepartementRepository;
 use App\Repository\EtudiantRepository;
 use App\Repository\ScolariteRepository;
+use App\Repository\SemestreLienRepository;
 use App\Repository\SemestreRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,15 +30,24 @@ use Symfony\Component\Routing\Annotation\Route;
 class FinSemestreController extends BaseController
 {
     #[Route(path: '/{semestre}', name: 'administration_fin_semestre_index', requirements: ['semestre' => '\d+'])]
-    public function index(DepartementRepository $departementRepository, EtudiantRepository $etudiantRepository, ScolariteRepository $scolariteRepository, Semestre $semestre): Response
+    public function index(
+        SemestreLienRepository $semestreLienRepository,
+        DepartementRepository $departementRepository, EtudiantRepository $etudiantRepository, ScolariteRepository $scolariteRepository, Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
         $etudiants = $etudiantRepository->findBySemestre($semestre);
         $scolarites = $scolariteRepository->findBySemestreArray($semestre,
             $this->dataUserSession->getAnneeUniversitaire());
 
+        $semestresSuivants = $semestreLienRepository->findSuivants($semestre);
+        $semestresPrecedents = $semestreLienRepository->findPrecedents($semestre);
+        $semestresDecales = $semestreLienRepository->findDecales($semestre);
+
         return $this->render('administration/fin_semestre/index.html.twig', [
             'semestre' => $semestre,
+            'semestresSuivants' => $semestresSuivants,
+            'semestresPrecedents' => $semestresPrecedents,
+            'semestresDecales' => $semestresDecales,
             'etudiants' => $etudiants,
             'scolarites' => $scolarites,
             'departements' => $departementRepository->findAll(),

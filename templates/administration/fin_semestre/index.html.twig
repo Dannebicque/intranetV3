@@ -36,17 +36,17 @@
                         <th rowspan="2">N°</th>
                         <th rowspan="2">Etudiant</th>
                         <th>Attente</th>
-                        {% if semestre.precedent != null %}
-                            <th>{{ semestre.precedent.libelle }}</th>
-                        {% endif %}
+                            {% for sem in semestresPrecedents %}
+                            <th>{{ sem.semestreArrive.libelle }}</th>
+                            {% endfor %}
                         {# semestre décalé #}
-                        {% if semestre.decale != null %}
-                            <th>{{ semestre.decale.libelle }}</th>
-                        {% endif %}
+                        {% for sem in semestresDecales %}
+                            <th>{{ sem.semestreArrive.libelle }}</th>
+                        {% endfor %}
                         {# fin semestre decalé #}
-                        {% if semestre.suivant != null %}
-                            <th>{{ semestre.suivant.libelle }}</th>
-                        {% endif %}
+                        {% for sem in semestresSuivants %}
+                            <th>{{ sem.semestreArrive.libelle }}</th>
+                        {% endfor %}
                         <th>Réo.</th>
                         <th>Dem.</th>
                         <th>Diplôme</th>
@@ -57,29 +57,30 @@
                             <a href="#" class="btn btn-primary checkAll" data-col="attente" title="Tout selectionner"><i
                                         class="fas fa-check-double"></i></a>
                         </th>
-                        {% if semestre.precedent != null %}
+                        {% for sem in semestresPrecedents %}
                             <th>
-                                <a href="#" class="btn btn-primary checkAll" data-col="sem_{{ semestre.precendent.id }}"
+                                <a href="#" class="btn btn-primary checkAll" data-col="sem_{{ sem.semestreArrive.id
+                                }}"
                                    title="Tout selectionner"><i
                                             class="fas fa-check-double"></i></a>
                             </th>
-                        {% endif %}
+                        {% endfor %}
                         {# semestre décalé #}
-                        {% if semestre.decale != null %}
+                        {% for sem in semestresDecales %}
                             <th>
-                                <a href="#" class="btn btn-primary checkAll" data-col="sem_{{ semestre.decale.id }}"
+                                <a href="#" class="btn btn-primary checkAll" data-col="sem_{{ sem.semestreArrive.id }}"
                                    title="Tout selectionner"><i
                                             class="fas fa-check-double"></i></a>
                             </th>
-                        {% endif %}
+                        {% endfor %}
                         {# fin semestre decalé #}
-                        {% if semestre.suivant != null %}
+                        {% for sem in semestresSuivants %}
                             <th>
-                                <a href="#" class="btn btn-primary checkAll" data-col="sem_{{ semestre.suivant.id }}"
+                                <a href="#" class="btn btn-primary checkAll" data-col="sem_{{ sem.semestreArrive.id }}"
                                    title="Tout selectionner"><i
                                             class="fas fa-check-double"></i></a>
                             </th>
-                        {% endif %}
+                        {% endfor %}
                         <th>
                             <a href="#" class="btn btn-primary checkAll" data-col="reo"
                                title="Tout selectionner"><i
@@ -108,48 +109,48 @@
                                        checked class="attente">
                             </td>
 
-                            {% if semestre.precedent != null %}
+                            {% for sem in semestresPrecedents %}
                                 <td>
-                                    <label class="sr-only" for="etu_{{ etu.id }}_{{ semestre.precedent.id }}">
-                                        {{ etu.display }} {{ semestre.precedent.libelle }}
+                                    <label class="sr-only" for="etu_{{ etu.id }}_{{ sem.semestreArrive.id }}">
+                                        {{ etu.display }} {{ sem.semestreArrive.libelle }}
                                     </label>
                                     <input type="radio"
-                                           class="sem_{{ semestre.precedent.id }}"
+                                           class="sem_{{ sem.semestreArrive.id }}"
                                            name="etu_{{ etu.id }}"
-                                           id="etu_{{ etu.id }}_{{ semestre.precedent.id }}"
-                                           value="{{ semestre.precedent.id }}"
-                                            {% if scolarites[etu.id] is defined and scolarites[etu.id].proposition == semestre
-                                            .precedent.libelle %} checked {% endif %}>
-                                </td>
-                            {% endif %}
-                            {% if semestre.decale != null %}
-                                <td>
-                                    <label class="sr-only" for="etu_{{ etu.id }}_{{ semestre.decale.id }}">
-                                        {{ etu.display }} {{ semestre.decale.libelle }}
-                                    </label>
-                                    <input type="radio"
-                                           class="sem_{{ semestre.decale.id }}"
-                                           id="etu_{{ etu.id }}_{{ semestre.decale.id }}"
-                                           name="etu_{{ etu.id }}"
-                                           value="{{ semestre.decale.id }}"
+                                           id="etu_{{ etu.id }}_{{ sem.semestreArrive.id }}"
+                                           value="{{ sem.semestreArrive.id }}"
                                             {% if scolarites[etu.id] is defined and scolarites[etu.id].proposition ==
-                                                semestre.decale.libelle %} checked {% endif %}>
+                                                sem.semestreArrive.libelle %} checked {% endif %}>
                                 </td>
-                            {% endif %}
-                            {% if semestre.suivant != null %}
+                            {% endfor %}
+                            {% for sem in semestresDecales %}
                                 <td>
-                                    <label class="sr-only" for="etu_{{ etu.id }}_{{ semestre.suivant.id }}">
-                                        {{ etu.display }} {{ semestre.suivant.libelle }}
+                                    <label class="sr-only" for="etu_{{ etu.id }}_{{ sem.semestreArrive.id }}">
+                                        {{ etu.display }} {{ sem.semestreArrive.libelle }}
                                     </label>
                                     <input type="radio"
-                                           class="sem_{{ semestre.suivant.id }}"
-                                           id="etu_{{ etu.id }}_{{ semestre.suivant.id }}"
+                                           class="sem_{{ sem.semestreArrive.id }}"
+                                           id="etu_{{ etu.id }}_{{ sem.semestreArrive.id }}"
                                            name="etu_{{ etu.id }}"
-                                           value="{{ semestre.suivant.id }}"
+                                           value="{{ sem.semestreArrive.id }}"
                                             {% if scolarites[etu.id] is defined and scolarites[etu.id].proposition ==
-                                                semestre.suivant.libelle %} checked {% endif %}>
+                                                sem.semestreArrive.libelle %} checked {% endif %}>
                                 </td>
-                            {% endif %}
+                            {% endfor %}
+                            {% for sem in semestresSuivants %}
+                                <td>
+                                    <label class="sr-only" for="etu_{{ etu.id }}_{{ sem.semestreArrive.id }}">
+                                        {{ etu.display }} {{ sem.semestreArrive.libelle }}
+                                    </label>
+                                    <input type="radio"
+                                           class="sem_{{ sem.semestreArrive.id }}"
+                                           id="etu_{{ etu.id }}_{{ sem.semestreArrive.id }}"
+                                           name="etu_{{ etu.id }}"
+                                           value="{{ sem.semestreArrive.id }}"
+                                            {% if scolarites[etu.id] is defined and scolarites[etu.id].proposition ==
+                                                sem.semestreArrive.libelle %} checked {% endif %}>
+                                </td>
+                            {% endfor %}
                             <td>
                                 <label class="sr-only" for="etu_{{ etu.id }}_REO">
                                     {{ etu.display }} Réorientation

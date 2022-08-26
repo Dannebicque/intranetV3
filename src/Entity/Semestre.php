@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/08/2022 17:00
+ * @lastUpdate 26/08/2022 09:27
  */
 
 namespace App\Entity;
@@ -16,6 +16,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Deprecated;
 use Stringable;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -45,12 +46,15 @@ class Semestre extends BaseEntity implements Stringable
     private bool $actif = false;
 
     #[ORM\ManyToOne(targetEntity: Semestre::class)]
+    #[Deprecated]
     private ?Semestre $precedent = null;
 
     #[ORM\ManyToOne(targetEntity: Semestre::class)]
+    #[Deprecated]
     private ?Semestre $suivant = null;
 
     #[ORM\ManyToOne(targetEntity: Semestre::class)]
+    #[Deprecated]
     private ?Semestre $decale = null;
 
     #[ORM\Column(type: Types::INTEGER)]
@@ -243,6 +247,12 @@ class Semestre extends BaseEntity implements Stringable
     #[ORM\ManyToMany(targetEntity: ApcSae::class, mappedBy: 'semestres')]
     private Collection $apcSemestresSaes;
 
+    #[ORM\OneToMany(mappedBy: 'semestre_depart', targetEntity: SemestreLien::class)]
+    private Collection $semestreLienDepart;
+
+    #[ORM\OneToMany(mappedBy: 'semestre_arrive', targetEntity: SemestreLien::class)]
+    private Collection $semestreLienArrive;
+
     public function __construct()
     {
         $this->init();
@@ -253,6 +263,8 @@ class Semestre extends BaseEntity implements Stringable
         $this->anneeUniversitaireSemestres = new ArrayCollection();
         $this->apcSemestresRessources = new ArrayCollection();
         $this->apcSemestresSaes = new ArrayCollection();
+        $this->semestreLienDepart = new ArrayCollection();
+        $this->semestreLienArrive = new ArrayCollection();
     }
 
     private function init(): void
@@ -301,31 +313,37 @@ class Semestre extends BaseEntity implements Stringable
         $this->ordreLmd = $ordreLmd;
     }
 
+    #[Deprecated]
     public function getPrecedent(): ?self
     {
         return $this->precedent;
     }
 
+    #[Deprecated]
     public function setPrecedent(?self $precedent): void
     {
         $this->precedent = $precedent;
     }
 
+    #[Deprecated]
     public function getSuivant(): ?self
     {
         return $this->suivant;
     }
 
+    #[Deprecated]
     public function setSuivant(?self $suivant): void
     {
         $this->suivant = $suivant;
     }
 
+    #[Deprecated]
     public function getDecale(): ?self
     {
         return $this->decale;
     }
 
+    #[Deprecated]
     public function setDecale(?self $decale): void
     {
         $this->decale = $decale;
@@ -1386,6 +1404,66 @@ class Semestre extends BaseEntity implements Stringable
     {
         if ($this->apcSemestresSaes->removeElement($apcSemestresSae)) {
             $apcSemestresSae->removeSemestre($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SemestreLien>
+     */
+    public function getSemestreLienDepart(): Collection
+    {
+        return $this->semestreLienDepart;
+    }
+
+    public function addSemestreLienDepart(SemestreLien $semestreLienDepart): self
+    {
+        if (!$this->semestreLienDepart->contains($semestreLienDepart)) {
+            $this->semestreLienDepart[] = $semestreLienDepart;
+            $semestreLienDepart->setSemestreDepart($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSemestreLienDepart(SemestreLien $semestreLienDepart): self
+    {
+        if ($this->semestreLienDepart->removeElement($semestreLienDepart)) {
+            // set the owning side to null (unless already changed)
+            if ($semestreLienDepart->getSemestreDepart() === $this) {
+                $semestreLienDepart->setSemestreDepart(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, SemestreLien>
+     */
+    public function getSemestreLienArrive(): Collection
+    {
+        return $this->semestreLienArrive;
+    }
+
+    public function addSemestreLienArrive(SemestreLien $semestreLienArrive): self
+    {
+        if (!$this->semestreLienArrive->contains($semestreLienArrive)) {
+            $this->semestreLienArrive[] = $semestreLienArrive;
+            $semestreLienArrive->setSemestreArrive($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSemestreLienArrive(SemestreLien $semestreLienArrive): self
+    {
+        if ($this->semestreLienArrive->removeElement($semestreLienArrive)) {
+            // set the owning side to null (unless already changed)
+            if ($semestreLienArrive->getSemestreArrive() === $this) {
+                $semestreLienArrive->setSemestreArrive(null);
+            }
         }
 
         return $this;
