@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/08/2022 16:26
+ * @lastUpdate 26/08/2022 10:00
  */
 
 namespace App\Controller;
@@ -170,7 +170,7 @@ class EdtController extends BaseController
     #[Route(path: '/intervenant/export/ical', name: 'edt_intervenant_export_ical')]
     public function exportIntervenantIcal(MyEdtExport $myEdtExport): Response
     {
-        $ical = $myEdtExport->export($this->getUser(), 'ics', 'personnel');
+        $ical = $myEdtExport->export($this->getUser(), 'ics', 'personnel', $this->getAnneeUniversitaire());
 
         return new Response($ical, Response::HTTP_OK, [
             'Content-Type' => 'application/force-download',

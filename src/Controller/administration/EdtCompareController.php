@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtCompareController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtCompareController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 09:57
+ * @lastUpdate 26/08/2022 10:17
  */
 
 namespace App\Controller\administration;
@@ -74,7 +74,7 @@ class EdtCompareController extends BaseController
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_EDT', $mat->semestre);
         // tester si celcat ou intranet
         $planning = $this->edtPlanningRepository->findBy(['idMatiere' => $mat->id, 'typeMatiere' => $mat->typeMatiere]);
-        $calendrier = $this->calendrierRepository->findCalendrierArray();
+        $calendrier = $this->calendrierRepository->findCalendrierArray($this->getAnneeUniversitaire());
 
         return $this->render('administration/edtCompare/_plusInfo.html.twig', [
             'planning' => $planning,

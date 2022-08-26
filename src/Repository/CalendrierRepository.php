@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/CalendrierRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/CalendrierRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:08
+ * @lastUpdate 26/08/2022 10:13
  */
 
 namespace App\Repository;
@@ -37,9 +37,9 @@ class CalendrierRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findCalendrierArray(): array
+    public function findCalendrierArray(AnneeUniversitaire $anneeUniversitaire): array
     {
-        $all = $this->findAll();
+        $all = $this->findByAnneeUniversitaire($anneeUniversitaire);
 
         $t = [];
 

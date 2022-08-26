@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/08/2022 19:14
+ * @lastUpdate 26/08/2022 10:13
  */
 
 /*
@@ -16,6 +16,7 @@ namespace App\Classes\Edt;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyIcal;
 use App\Classes\Pdf\MyPDF;
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Departement;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
@@ -53,9 +54,9 @@ class MyEdtExport
         $this->dir = $kernel->getProjectDir().'/public/upload/';
     }
 
-    public function export($user, $_format, $type): bool|string
+    public function export($user, $_format, $type, AnneeUniversitaire $anneeUniversitaire): bool|string
     {
-        $this->calendrier = $this->calendrierRepository->findCalendrierArray();
+        $this->calendrier = $this->calendrierRepository->findCalendrierArray($anneeUniversitaire);
         $temp = [];
 
         if ('Personnel' === $type) {
