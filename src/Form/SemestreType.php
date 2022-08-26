@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/SemestreType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/SemestreType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/09/2021 21:13
+ * @lastUpdate 26/08/2022 14:15
  */
 
 namespace App\Form;
@@ -14,16 +14,15 @@ use App\Entity\Diplome;
 use App\Entity\Personnel;
 use App\Entity\Ppn;
 use App\Entity\Semestre;
+use App\Form\Type\CollectionStimulusType;
 use App\Form\Type\EntityCompleteType;
 use App\Form\Type\YesNoType;
 use App\Repository\AnneeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\PpnRepository;
-use App\Repository\SemestreRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\Exception\AccessException;
@@ -56,9 +55,6 @@ class SemestreType extends AbstractType
                 'label' => 'label.annee',
             ])
 
-            ->add('couleur', ColorType::class, [
-                'label' => 'label.couleur',
-            ])
             ->add('ordreAnnee', ChoiceType::class, [
                 'label' => 'label.ordre_annee',
                 'choices' => [1 => 1, 2 => 2],
@@ -199,32 +195,19 @@ class SemestreType extends AbstractType
                 'query_builder' => fn (PpnRepository $ppnRepository) => $ppnRepository->findByDiplomeBuilder($this->diplome),
                 'label' => 'label.ppn_actif',
             ])
-            ->add('precedent', EntityType::class, [
-                'placeholder' => 'Choisir le semestre',
-                'class' => Semestre::class,
-                'required' => false,
-                'choice_label' => 'display',
-                'query_builder' => fn (SemestreRepository $semestreRepository) => $semestreRepository->findByDiplomeBuilder($this->diplome),
-                'label' => 'label.semestre_precedent',
-            ])
-            ->add('suivant', EntityType::class, [
-                'placeholder' => 'Choisir le semestre',
-                'class' => Semestre::class,
-                'required' => false,
-                'choice_label' => 'display',
-                'query_builder' => fn (SemestreRepository $semestreRepository) => $semestreRepository->findByDiplomeBuilder($this->diplome),
-                'label' => 'label.semestre_suivant',
-            ]);
-        if ($this->diplome->isOptDilpomeDecale()) {
-            $builder->add('decale', EntityType::class, [
-                'placeholder' => 'Choisir le semestre',
-                'class' => Semestre::class,
-                'required' => false,
-                'choice_label' => 'display',
-                'query_builder' => fn (SemestreRepository $semestreRepository) => $semestreRepository->findByDiplomeBuilder($this->diplome),
-                'label' => 'label.semestre_decale',
-            ]);
-        }
+            ->add('semestreLienDepart', CollectionStimulusType::class, [
+                'entry_type' => SemestreLienType::class,
+                'entry_options' => [
+                    'label' => false,
+                    'diplome' => $this->diplome, ],
+                'allow_add' => true,
+                'prototype' => true,
+                'allow_delete' => true,
+                'label' => 'Questions pour la question',
+                'by_reference' => false,
+                'max_items' => 0,
+                'help' => 'Il est possible d\'ajouter les questions plus tard', ]
+            );
     }
 
     /**

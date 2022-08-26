@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Command/UpdateSemestreLiensCommand.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/08/2022 09:24
+ * @lastUpdate 26/08/2022 14:19
  */
 
 namespace App\Command;
@@ -44,17 +44,20 @@ class UpdateSemestreLiensCommand extends Command
 
         foreach ($semestres as $semestre) {
             if (null !== $semestre->getPrecedent()) {
-                $sl = new SemestreLien($semestre, $semestre->getPrecedent(), SemestreLienEnum::PRECEDENT);
+                $sl = new SemestreLien();
+                $sl->init($semestre, $semestre->getPrecedent(), SemestreLienEnum::PRECEDENT);
                 $this->entityManager->persist($sl);
             }
 
             if (null !== $semestre->getSuivant()) {
-                $sl = new SemestreLien($semestre, $semestre->getSuivant(), SemestreLienEnum::SUIVANT);
+                $sl = new SemestreLien();
+                $sl->init($semestre, $semestre->getSuivant(), SemestreLienEnum::SUIVANT);
                 $this->entityManager->persist($sl);
             }
 
             if (null !== $semestre->getDecale()) {
-                $sl = new SemestreLien($semestre, $semestre->getDecale(), SemestreLienEnum::DECALE);
+                $sl = new SemestreLien();
+                $sl->init($semestre, $semestre->getDecale(), SemestreLienEnum::DECALE);
                 $this->entityManager->persist($sl);
             }
         }

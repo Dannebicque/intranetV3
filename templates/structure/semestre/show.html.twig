@@ -38,10 +38,6 @@
                 <td>{{ semestre.codeElement }}</td>
             </tr>
             <tr>
-                <th>{{ 'table.couleur'|trans }}</th>
-                <td>{{ semestre.couleur }}</td>
-            </tr>
-            <tr>
                 <th>{{ 'table.ordre_annee'|trans }}</th>
                 <td>{{ semestre.ordreAnnee }}</td>
             </tr>
@@ -108,12 +104,14 @@
             </tr>
 
             <tr>
-                <th>{{ 'table.semestre_suivant'|trans }}</th>
-                <td>{{ semestre.suivant ? semestre.suivant.display : 'non.defini'|trans }}</td>
-            </tr>
-            <tr>
-              <th>{{ 'table.semestre_precedent'|trans }}</th>
-              <td>{{ semestre.precedent ? semestre.precedent.display : 'non.defini'|trans }}</td>
+                <td>Liens avec les autres semestres</td>
+                <td>
+                    <ul>
+                    {% for semestre in semestre.semestreLienDepart %}
+                    <li>{{ semestre.semestreArrive.displayLong }}</li>
+                    {% endfor %}
+                    </ul>
+                </td>
             </tr>
             <tr>
               <th>{{ 'semestre.semestre_decale'|trans }}</th>

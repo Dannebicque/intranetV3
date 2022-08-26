@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/08/2022 09:27
+ * @lastUpdate 26/08/2022 14:08
  */
 
 namespace App\Entity;
@@ -247,7 +247,7 @@ class Semestre extends BaseEntity implements Stringable
     #[ORM\ManyToMany(targetEntity: ApcSae::class, mappedBy: 'semestres')]
     private Collection $apcSemestresSaes;
 
-    #[ORM\OneToMany(mappedBy: 'semestre_depart', targetEntity: SemestreLien::class)]
+    #[ORM\OneToMany(mappedBy: 'semestre_depart', targetEntity: SemestreLien::class, cascade: ['persist'])]
     private Collection $semestreLienDepart;
 
     #[ORM\OneToMany(mappedBy: 'semestre_arrive', targetEntity: SemestreLien::class)]
@@ -524,7 +524,7 @@ class Semestre extends BaseEntity implements Stringable
 
     public function displayLong(): string
     {
-        return $this->getDiplome()->getDisplayCourt() . ' | '.$this->getLibelle();
+        return $this->getDiplome()->getDisplayCourt().' | '.$this->getLibelle();
     }
 
     /**

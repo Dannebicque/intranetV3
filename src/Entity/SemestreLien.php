@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/SemestreLien.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/08/2022 09:26
+ * @lastUpdate 26/08/2022 14:05
  */
 
 namespace App\Entity;
@@ -27,7 +27,7 @@ class SemestreLien extends BaseEntity
     #[ORM\Column(type: Types::STRING, length: 10, nullable: true, enumType: SemestreLienEnum::class)]
     private ?SemestreLienEnum $sens;
 
-    public function __construct(?Semestre $semestre_depart, ?Semestre $semestre_arrive, SemestreLienEnum $sens)
+    public function init(?Semestre $semestre_depart, ?Semestre $semestre_arrive, SemestreLienEnum $sens)
     {
         $this->semestre_depart = $semestre_depart;
         $this->semestre_arrive = $semestre_arrive;
@@ -59,12 +59,12 @@ class SemestreLien extends BaseEntity
         return $this;
     }
 
-    public function getSens(): ?string
+    public function getSens(): ?SemestreLienEnum
     {
         return $this->sens;
     }
 
-    public function setSens(string $sens): self
+    public function setSens(SemestreLienEnum $sens): self
     {
         $this->sens = $sens;
 
