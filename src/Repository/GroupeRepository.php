@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/GroupeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/08/2022 20:12
+ * @lastUpdate 26/08/2022 21:22
  */
 
 namespace App\Repository;
@@ -15,6 +15,7 @@ use App\Entity\Diplome;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
+use App\Enums\TypeGroupeEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\QueryBuilder;
@@ -94,7 +95,7 @@ class GroupeRepository extends ServiceEntityRepository
     public function findAllGroupesOrdreSemestre(Semestre $semestre): array
     {
         $groupes = [];
-        $gtp = $this->getGroupesTPOrdreSemestre($semestre);
+        $gtp = $this->getGroupesTP($semestre);
 
         $i = 1;
         /** @var Groupe $g */
@@ -110,42 +111,47 @@ class GroupeRepository extends ServiceEntityRepository
         return $groupes;
     }
 
-    public function getGroupesTPOrdreSemestre(Semestre $semestre): array
-    {
-        //todo: typegroupe ne doit plus contenir de semestre... mais un numéro et un diplome
-        return $this->createQueryBuilder('g')
-            ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')
-            ->where('t.type = :type')
-            ->andWhere('t.ordreSemestre = :semestre')
-            ->andWhere('t.diplome = :diplome')
-            ->setParameters(['type' => 'TP', 'semestre' => $semestre->getOrdreLmd(), 'diplome' => $semestre->getDiplome()->getId()])
-            ->orderBy('g.libelle', Criteria::ASC)
-            ->getQuery()
-            ->getResult();
-    }
+//    public function getGroupesTPOrdreSemestre(Semestre $semestre): array
+//    {
+//        // todo: typegroupe ne doit plus contenir de semestre... mais un numéro et un diplome
+//        return $this->createQueryBuilder('g')
+//            ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')
+//            ->where('t.type = :type')
+//            ->andWhere('t.ordreSemestre = :semestre')
+//            ->andWhere('t.diplome = :diplome')
+//            ->setParameters(['type' => 'TP', 'semestre' => $semestre->getOrdreLmd(), 'diplome' => $semestre->getDiplome()->getId()])
+//            ->orderBy('g.libelle', Criteria::ASC)
+//            ->getQuery()
+//            ->getResult();
+//    }
 
-    public function getGroupesTDOrdreSemestre(Semestre $semestre): array
-    {
-        return $this->createQueryBuilder('g')
-            ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')
-            ->where('t.type = :type')
-            ->andWhere('t.ordreSemestre = :semestre')
-            ->andWhere('t.diplome = :diplome')
-            ->setParameters(['type' => 'TD', 'semestre' => $semestre->getOrdreLmd(), 'diplome' => $semestre->getDiplome()->getId()])
-            ->orderBy('g.libelle', Criteria::ASC)
-            ->getQuery()
-            ->getResult();
-    }
-
-
+//    public function getGroupesTDOrdreSemestre(Semestre $semestre): array
+//    {
+//        return $this->createQueryBuilder('g')
+//            ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')
+//            ->where('t.type = :type')
+//            ->andWhere('t.ordreSemestre = :semestre')
+//            ->andWhere('t.diplome = :diplome')
+//            ->setParameters(['type' => 'TD', 'semestre' => $semestre->getOrdreLmd(), 'diplome' => $semestre->getDiplome()->getId()])
+//            ->orderBy('g.libelle', Criteria::ASC)
+//            ->getQuery()
+//            ->getResult();
+//    }
 
     public function getGroupesTP(Semestre $semestre): array
     {
+        if (null === $semestre->getDiplome()->getParent()) {
+            $diplome = $semestre->getDiplome();
+        } else {
+            $diplome = $semestre->getDiplome()->getParent();
+        }
+
         return $this->createQueryBuilder('g')
             ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')
             ->where('t.type = :type')
-            ->andWhere('t.semestre = :semestre')
-            ->setParameters(['type' => 'TP', 'semestre' => $semestre])
+            ->andWhere('t.ordreSemestre = :semestre')
+            ->andWhere('t.diplome = :diplome')
+            ->setParameters(['type' => TypeGroupeEnum::TYPE_GROUPE_TP, 'semestre' => $semestre->getOrdreLmd(), 'diplome' => $diplome->getId()])
             ->orderBy('g.libelle', Criteria::ASC)
             ->getQuery()
             ->getResult();
@@ -153,11 +159,18 @@ class GroupeRepository extends ServiceEntityRepository
 
     public function getGroupesTD(Semestre $semestre): array
     {
+        if (null === $semestre->getDiplome()->getParent()) {
+            $diplome = $semestre->getDiplome();
+        } else {
+            $diplome = $semestre->getDiplome()->getParent();
+        }
+
         return $this->createQueryBuilder('g')
             ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')
             ->where('t.type = :type')
-            ->andWhere('t.semestre = :semestre')
-            ->setParameters(['type' => 'TD', 'semestre' => $semestre])
+            ->andWhere('t.ordreSemestre = :semestre')
+            ->andWhere('t.diplome = :diplome')
+            ->setParameters(['type' => TypeGroupeEnum::TYPE_GROUPE_TD, 'semestre' => $semestre->getOrdreLmd(), 'diplome' => $diplome->getId()])
             ->orderBy('g.libelle', Criteria::ASC)
             ->getQuery()
             ->getResult();
@@ -200,6 +213,7 @@ class GroupeRepository extends ServiceEntityRepository
             $groupes[$i]['display'] = 'TD'.$g->getLibelle().' | TD '.$g->getLibelle();
             ++$i;
         }
+        dump($groupes);
 
         return $groupes;
     }

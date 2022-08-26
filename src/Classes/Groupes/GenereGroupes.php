@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Groupes/GenereGroupes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/08/2022 17:04
+ * @lastUpdate 26/08/2022 21:11
  */
 
 namespace App\Classes\Groupes;
@@ -143,7 +143,6 @@ class GenereGroupes
     private function getTypeGroupe(Diplome $diplome): void
     {
         $tgs = $this->typeGroupeRepository->findByDiplomeAndOrdreSemestre($diplome, $this->semestre->getOrdreLmd());
-        dump($tgs);
         foreach ($tgs as $tg) {
             if (TypeGroupeEnum::TYPE_GROUPE_CM === $tg->getType()) {
                 $this->tgCm = $tg;
