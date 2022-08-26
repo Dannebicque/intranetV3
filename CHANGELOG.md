@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.8.8](https://github.com/Dannebicque/intranetV3/compare/v3.8.7...v3.8.8) (2022-08-26)
+
+
+### Features
+
+* [Originaux] Ajout d'un filtre pour les droits ([6ded249](https://github.com/Dannebicque/intranetV3/commit/6ded2496e8e95c03e12bdae3982e321077ca833d))
+* [Originaux] Gestion des accès individualisé ([9341eef](https://github.com/Dannebicque/intranetV3/commit/9341eefcb13c888ff8cfea2810b69f7a4b9db565))
+* [Previsionnel] Retirer les doublons avec les ressources/SAE sur plusieurs semestres ([a09acf7](https://github.com/Dannebicque/intranetV3/commit/a09acf74386ab9a965536d47b2cfd594521e6b31))
+* [Semestre] Gestion des liens entre semestres avec les parcours ([ee99757](https://github.com/Dannebicque/intranetV3/commit/ee997579350a03294892ef3379a4212a1349655d))
+
+
+### Bug Fixes
+
+* [Edt] Utilisation d'un Enum ([ed4e9d6](https://github.com/Dannebicque/intranetV3/commit/ed4e9d6b8e314c0dc1b8df7d6a88a7bc94677792))
+* [Export Edt] Gestion de l'année universitaire pour le calendrier et les exports ICAL ([0d55fbe](https://github.com/Dannebicque/intranetV3/commit/0d55fbe669eef2db31a32069acba223c153cecb5))
+* [Semestre] Liens entre semestre (modification des formulaires et affichages) ([0d2c793](https://github.com/Dannebicque/intranetV3/commit/0d2c7938f9b9751894fa4e704fa76d59d4b300b6))
+
 ### [3.8.7](https://github.com/Dannebicque/intranetV3/compare/v3.8.6...v3.8.7) (2022-08-25)
 
 
