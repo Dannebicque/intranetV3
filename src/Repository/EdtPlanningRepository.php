@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/08/2022 22:29
+ * @lastUpdate 26/08/2022 22:40
  */
 
 namespace App\Repository;
@@ -333,7 +333,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
         foreach ($departement->getDiplomes() as $diplome) {
             foreach ($diplome->getSemestres() as $semestre) {
                 if (true === $semestre->isActif()) {
-                    $ors[] = '('.$query->expr()->orx('p.ordreSemestre = '.$query->expr()->literal($semestre->getOrdreLmd())).')';
+                    $ors[] = '('.$query->expr()->orx('(p.ordreSemestre = '.$query->expr()->literal($semestre->getOrdreLmd()).' AND p.diplome = '.$query->expr()->literal($diplome->getId()).')').')';
                 }
             }
         }
@@ -361,7 +361,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
                 $pl['ical'] = '';
             }
             $pl['salle'] = $event->getSalle();
-            $t[] = $pl;
+            $t[$event->getId()] = $pl;
         }
 
         return $t;
@@ -397,7 +397,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
                 }
                 $pl['date'] = $event->getDate();
                 $pl['salle'] = $event->getSalle();
-                $t[] = $pl;
+                $t[$event->getId()] = $pl;
             }
         }
 

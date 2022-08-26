@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/EdtPlanning.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/08/2022 15:21
+ * @lastUpdate 26/08/2022 22:41
  */
 
 namespace App\Entity;
@@ -71,6 +71,9 @@ class EdtPlanning extends BaseEntity
 
     #[ORM\Column]
     private ?int $ordreSemestre = null;
+
+    #[ORM\ManyToOne(inversedBy: 'edtPlannings')]
+    private ?Diplome $diplome = null;
 
     public function getOrdre(): ?string
     {
@@ -352,6 +355,18 @@ class EdtPlanning extends BaseEntity
     public function setOrdreSemestre(int $ordreSemestre): self
     {
         $this->ordreSemestre = $ordreSemestre;
+
+        return $this;
+    }
+
+    public function getDiplome(): ?Diplome
+    {
+        return $this->diplome;
+    }
+
+    public function setDiplome(?Diplome $diplome): self
+    {
+        $this->diplome = $diplome;
 
         return $this;
     }

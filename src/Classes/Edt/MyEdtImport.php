@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/08/2022 21:39
+ * @lastUpdate 26/08/2022 22:50
  */
 
 /*
@@ -18,10 +18,11 @@ use App\Components\Logger\LogHelper;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Calendrier;
 use App\Entity\Departement;
+use App\Entity\Diplome;
 use App\Entity\EdtPlanning;
 use App\Entity\Semestre;
-use App\Enums\TypeGroupeEnum;
 use App\Repository\CalendrierRepository;
+use App\Repository\DiplomeRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
@@ -40,6 +41,7 @@ class MyEdtImport
     protected ?Departement $departement;
 
     protected AnneeUniversitaire $anneeUniversitaire;
+    protected ?Diplome $diplome = null;
     private ?string $nomfile = null;
 
     private mixed $semaine;
@@ -59,7 +61,9 @@ class MyEdtImport
         private readonly TypeMatiereManager $typeMatiereManager,
         private readonly SemestreRepository $semestreRepository,
         private readonly EntityManagerInterface $entityManager,
+        DiplomeRepository $diplomeRepository,
     ) {
+        $this->diplome = $diplomeRepository->find(27);
     }
 
     /**
@@ -182,7 +186,7 @@ class MyEdtImport
 
     private function addZoneSansProf(string $phrase, string $semestre): void
     {
-        //S055403ETDEHZ04****3ALTERNANCE
+        // S055403ETDEHZ04****3ALTERNANCE
 
         $jour = $phrase[3];
         $heure = $phrase[4]; // a convertir
@@ -202,11 +206,11 @@ class MyEdtImport
         $pl->setDate($date);
         $pl->setSalle($salle);
         $pl->setAnneeUniversitaire($this->anneeUniversitaire);
-
+        $pl->setDiplome($this->diplome);
         $this->addGroupe($pl, mb_substr($phrase, 8, 4));
 
         $pl->setDebut($this->tabdebut[$heure]);
-        $pl->setFin($this->tabdebut[$heure] + (3 * (int)$fin));
+        $pl->setFin($this->tabdebut[$heure] + (3 * (int) $fin));
         $pl->setSemaine($this->semaine);
         $pl->setEvaluation(false);
         $pl->setTexte($texte);
@@ -265,6 +269,7 @@ class MyEdtImport
             $pl->setSalle($salle);
             $pl->setOrdre($ordre);
             $pl->setDate($date);
+            $pl->setDiplome($this->diplome);
             $this->addGroupe($pl, mb_substr($phrase, 8, 4));
             $pl->setDebut($this->tabdebut[$heure]);
             $pl->setFin($this->tabdebut[$heure] + 3);
@@ -286,10 +291,9 @@ class MyEdtImport
         $pl->setType(mb_strtoupper($typecours));
 
         $groupe = mb_substr($phrase, 2, 2);
-        if ($groupe === 'CM') {
+        if ('CM' === $groupe) {
             $pl->setGroupe(1);
-        }
-        else if ('-' === $groupe[0]) {
+        } elseif ('-' === $groupe[0]) {
             $pl->setGroupe(ord($groupe[1]) - 64);
         } else {
             if (ord($groupe[0]) === ord($groupe[1]) - 1) {

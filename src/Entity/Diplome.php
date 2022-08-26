@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Diplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/08/2022 16:58
+ * @lastUpdate 26/08/2022 22:41
  */
 
 namespace App\Entity;
@@ -133,6 +133,9 @@ class Diplome extends BaseEntity implements Serializable
     #[ORM\OneToMany(mappedBy: 'diplome', targetEntity: TypeGroupe::class)]
     private Collection $typeGroupes;
 
+    #[ORM\OneToMany(mappedBy: 'diplome', targetEntity: EdtPlanning::class)]
+    private Collection $edtPlannings;
+
     public function __construct(#[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'diplomes')] private ?Departement $departement, ?Diplome $diplome = null)
     {
         $this->hrs = new ArrayCollection();
@@ -143,6 +146,7 @@ class Diplome extends BaseEntity implements Serializable
         $this->enfants = new ArrayCollection();
         $this->parent = $diplome;
         $this->typeGroupes = new ArrayCollection();
+        $this->edtPlannings = new ArrayCollection();
     }
 
     public function getDisplay(): ?string
@@ -732,5 +736,35 @@ class Diplome extends BaseEntity implements Serializable
     public function isApc(): bool
     {
         return null !== $this->getTypeDiplome() ? $this->getTypeDiplome()->getApc() : false;
+    }
+
+    /**
+     * @return Collection<int, EdtPlanning>
+     */
+    public function getEdtPlannings(): Collection
+    {
+        return $this->edtPlannings;
+    }
+
+    public function addEdtPlanning(EdtPlanning $edtPlanning): self
+    {
+        if (!$this->edtPlannings->contains($edtPlanning)) {
+            $this->edtPlannings[] = $edtPlanning;
+            $edtPlanning->setDiplome($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEdtPlanning(EdtPlanning $edtPlanning): self
+    {
+        if ($this->edtPlannings->removeElement($edtPlanning)) {
+            // set the owning side to null (unless already changed)
+            if ($edtPlanning->getDiplome() === $this) {
+                $edtPlanning->setDiplome(null);
+            }
+        }
+
+        return $this;
     }
 }
