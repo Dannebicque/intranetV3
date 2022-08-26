@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/08/2022 20:07
+ * @lastUpdate 26/08/2022 21:42
  */
 
 namespace App\Classes\Edt;
@@ -88,7 +88,7 @@ class MyEdtIntranet extends BaseEdt
             case Constantes::FILTRE_EDT_PROMO:
                 $this->semestre = $this->semestreRepository->find($this->valeur);
                 $this->groupes = $this->groupeRepository->findAllGroupesOrdreSemestre($this->semestre);
-                $pl = $this->edtPlanningRepository->findEdtSemestre($this->semestre, $this->semaineFormationIUT);
+                $pl = $this->edtPlanningRepository->findEdtSemestre($this->semestre, $this->semaineFormationIUT, $this->anneeUniversitaire);
                 $this->planning = $this->transformePromo($pl);
                 break;
             case Constantes::FILTRE_EDT_PROF:
@@ -97,7 +97,7 @@ class MyEdtIntranet extends BaseEdt
                 break;
             case Constantes::FILTRE_EDT_ETUDIANT:
                 $this->groupes();
-                $pl = $this->edtPlanningRepository->findEdtEtu($this->user, $this->semaineFormationIUT);
+                $pl = $this->edtPlanningRepository->findEdtEtu($this->user, $this->semaineFormationIUT, $this->anneeUniversitaire);
                 if (null !== $pl) {
                     $this->planning = $this->transformeEtudiant($pl);
                     $this->semestre = $this->user->getSemestre();
@@ -111,18 +111,18 @@ class MyEdtIntranet extends BaseEdt
                 $this->groupes = $this->groupeRepository->findAllGroupes($this->semestre);
 
                 $pl = $this->edtPlanningRepository->findEdtModule($this->module->id, $this->module->typeMatiere,
-                    $this->semaineFormationIUT);
+                    $this->semaineFormationIUT, $this->anneeUniversitaire);
                 $this->planning = $this->transformeModule($pl);
                 break;
             case Constantes::FILTRE_EDT_SALLE:
-                $pl = $this->edtPlanningRepository->findEdtSalle($this->valeur, $this->semaineFormationIUT);
+                $pl = $this->edtPlanningRepository->findEdtSalle($this->valeur, $this->semaineFormationIUT, $this->anneeUniversitaire);
                 $this->salle = $this->valeur;
                 $this->planning = $this->transformeSalle($pl);
                 break;
 
             case Constantes::FILTRE_EDT_JOUR:
                 $pl = $this->edtPlanningRepository->findEdtJour($this->valeur,
-                    $this->semaineFormationIUT);
+                    $this->semaineFormationIUT, $this->anneeUniversitaire);
 
                 $this->jour = $this->valeur;
                 $this->planning = $this->transformeJour($pl);

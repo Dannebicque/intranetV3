@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/08/2022 17:02
+ * @lastUpdate 26/08/2022 21:42
  */
 
 namespace App\Repository;
@@ -59,12 +59,13 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findEdtSemestre(Semestre $semestre, int $semaine): array
+    public function findEdtSemestre(Semestre $semestre, int $semaine, AnneeUniversitaire $anneeUniversitaire): array
     {
         return $this->createQueryBuilder('p')
             ->where('p.semaine = :semaine')
             ->andWhere('p.ordreSemestre = :semestre')
-            ->setParameters(['semaine' => $semaine, 'semestre' => $semestre->getOrdreLmd()])
+            ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
+            ->setParameters(['semaine' => $semaine, 'semestre' => $semestre->getOrdreLmd(), 'anneeUniversitaire' => $anneeUniversitaire->getId()])
             ->orderBy('p.jour', Criteria::ASC)
             ->addOrderBy('p.debut', Criteria::ASC)
             ->addOrderBy('p.groupe', Criteria::ASC)
@@ -72,13 +73,14 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findEdtModule(int $idModule, string $typeModule, int $semaine): array
+    public function findEdtModule(int $idModule, string $typeModule, int $semaine, AnneeUniversitaire $anneeUniversitaire): array
     {
         return $this->createQueryBuilder('p')
             ->where('p.semaine = :semaine')
             ->andWhere('p.idMatiere = :idMatiere')
             ->andWhere('p.typeMatiere = :typeMatiere')
-            ->setParameters(['semaine' => $semaine, 'idMatiere' => $idModule, 'typeMatiere' => $typeModule])
+            ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
+            ->setParameters(['semaine' => $semaine, 'idMatiere' => $idModule, 'typeMatiere' => $typeModule, 'annneeUniversitaire' => $anneeUniversitaire->getId()])
             ->orderBy('p.jour', Criteria::ASC)
             ->addOrderBy('p.debut', Criteria::ASC)
             ->addOrderBy('p.groupe', Criteria::ASC)
@@ -86,12 +88,13 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findEdtJour(int $jour, int $semaine): array
+    public function findEdtJour(int $jour, int $semaine, AnneeUniversitaire $anneeUniversitaire): array
     {
         return $this->createQueryBuilder('p')
             ->where('p.semaine = :semaine')
             ->andWhere('p.jour = :jour')
-            ->setParameters(['semaine' => $semaine, 'jour' => $jour])
+            ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
+            ->setParameters(['semaine' => $semaine, 'jour' => $jour, 'anneeUniversitaire' => $anneeUniversitaire->getId()])
             ->orderBy('p.annee', Criteria::ASC)
             ->addOrderBy('p.debut', Criteria::ASC)
             ->addOrderBy('p.groupe', Criteria::ASC)
@@ -99,12 +102,13 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findEdtSalle(string $salle, int $semaine): array
+    public function findEdtSalle(string $salle, int $semaine, AnneeUniversitaire $anneeUniversitaire): array
     {
         return $this->createQueryBuilder('p')
             ->where('p.semaine = :semaine')
             ->andWhere('p.salle = :salle')
-            ->setParameters(['semaine' => $semaine, 'salle' => $salle])
+            ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
+            ->setParameters(['semaine' => $semaine, 'salle' => $salle, 'anneeUniversitaire' => $anneeUniversitaire->getId()])
             ->orderBy('p.ordreSemestre', Criteria::ASC)
             ->addOrderBy('p.debut', Criteria::ASC)
             ->addOrderBy('p.groupe', Criteria::ASC)
@@ -139,7 +143,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findEdtEtu(Etudiant $user, int $semaine): ?array
+    public function findEdtEtu(Etudiant $user, int $semaine, AnneeUniversitaire $anneeUniversitaire): ?array
     {
         if (null !== $user->getSemestre()) {
             $this->groupes($user);
@@ -147,12 +151,14 @@ class EdtPlanningRepository extends ServiceEntityRepository
             return $this->createQueryBuilder('p')
                 ->where('p.semaine = :semaine')
                 ->andWhere('p.ordreSemestre = :promo')
+                ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
                 ->andWhere('p.groupe = 1 OR p.groupe = :groupetd OR p.groupe = :groupetp')
                 ->setParameters([
                     'semaine' => $semaine,
                     'promo' => $user->getSemestre()->getOrdreLmd(),
                     'groupetd' => $this->groupetd,
                     'groupetp' => $this->groupetp,
+                    'anneeUniversitaire' => $anneeUniversitaire->getId(),
                 ])
                 ->orderBy('p.jour', Criteria::ASC)
                 ->addOrderBy('p.debut', Criteria::ASC)

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/08/2022 20:36
+ * @lastUpdate 26/08/2022 21:39
  */
 
 /*
@@ -201,6 +201,7 @@ class MyEdtImport
         $pl->setJour($jour);
         $pl->setDate($date);
         $pl->setSalle($salle);
+        $pl->setAnneeUniversitaire($this->anneeUniversitaire);
 
         $this->addGroupe($pl, mb_substr($phrase, 8, 4));
 
