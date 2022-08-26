@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/08/2022 22:20
+ * @lastUpdate 26/08/2022 22:29
  */
 
 namespace App\Repository;
@@ -339,7 +339,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
         }
 
         $query = $query->andWhere(implode(' OR ', $ors))
-            ->groupBy('p.id')
+            ->distinct('p.id')
             ->getQuery()
             ->getResult();
 
