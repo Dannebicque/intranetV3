@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/08/2022 21:45
+ * @lastUpdate 27/08/2022 15:33
  */
 
 namespace App\Classes\Edt;
@@ -34,7 +34,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 class MyEdtIntranet extends BaseEdt
 {
-    protected AnneeUniversitaire $anneeUniversitaire;
+    protected ?AnneeUniversitaire $anneeUniversitaire = null;
     private array $tab = [];
     private array $matieres = [];
     private array $tabCouleur = [];

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/08/2022 10:13
+ * @lastUpdate 27/08/2022 15:39
  */
 
 /*
@@ -83,7 +83,7 @@ class MyEdtExport
                 } else {
                     for ($i = $emaineActuelle->getSemaineFormation(); $i < $max; ++$i) {
                         $temp[] = $this->edtPlanningRepository->getByEtudiantArray($user, $i,
-                            $this->typeMatiereManager->findBySemestreArray($user->getSemestre()));
+                            $this->typeMatiereManager->findBySemestreArray($user->getSemestre()), $user->getAnneeUniversitaire());
                     }
                 }
             }
