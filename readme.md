@@ -205,4 +205,6 @@ que j'y pense) dans le [changelog](CHANGELOG.md)
 
 # Suivi des bugs
 
-Les bugs sont géré par Bugsnag : [Bugsnag.com](https://bugsnag.com/) ![Bugsnag.com](https://assets-global.website-files.com/607f4f6df411bd01527dc7d5/60d35f24400da06aade716c8_bugsnag-sb-logo-color.svg)
+Les bugs sont gérés par Bugsnag : [Bugsnag.com](https://bugsnag.com/) ![Bugsnag.com](https://assets-global.website-files.com/607f4f6df411bd01527dc7d5/60d35f24400da06aade716c8_bugsnag-sb-logo-color.svg)
+
+Bugs are tracked by : [Bugsnag.com](https://bugsnag.com/) ![Bugsnag.com](https://assets-global.website-files.com/607f4f6df411bd01527dc7d5/60d35f24400da06aade716c8_bugsnag-sb-logo-color.svg)
