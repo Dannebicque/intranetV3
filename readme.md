@@ -202,3 +202,7 @@ que j'y pense) dans le [changelog](CHANGELOG.md)
   module).
   * Répondre à une demande étudiante
   * Possibilité pour l’équipe d’interagir sur ces forums
+
+# Suivi des bugs
+
+Les bugs sont géré par Bugsnag : [Bugsnag.com](https://bugsnag.com/) ![Bugsnag.com](https://assets-global.website-files.com/607f4f6df411bd01527dc7d5/60d35f24400da06aade716c8_bugsnag-sb-logo-color.svg)
