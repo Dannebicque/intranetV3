@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/08/2022 18:10
+ * @lastUpdate 27/08/2022 18:44
  */
 
 namespace App\Controller;
@@ -126,24 +126,29 @@ class EdtController extends BaseController
      */
     public function dashboardEtudiant(int $semaine = 0): Response
     {
-        $matieres = $this->typeMatiereManager->tableauMatieresSemestreCodeApogee($this->getUser()->getSemestre());
+        if ($this->getAnneeUniversitaire() === null) {
+            $matieres = $this->typeMatiereManager->tableauMatieresSemestreCodeApogee($this->getUser()->getSemestre());
 //todo: passer pour l'edt manager
-        if (null !== $this->getUser()->getDiplome() && $this->getUser()->getDiplome()?->isOptUpdateCelcat()) {
-            $this->myEdtCelcat->initEtudiant($this->getUser(),
-                $this->getAnneeUniversitaire(), $semaine, $matieres);
+            if (null !== $this->getUser()->getDiplome() && $this->getUser()->getDiplome()?->isOptUpdateCelcat()) {
+                $this->myEdtCelcat->initEtudiant($this->getUser(),
+                    $this->getAnneeUniversitaire(), $semaine, $matieres);
 
-            return $this->render('edt/_etudiant2.html.twig', [
-                'edt' => $this->myEdtCelcat,
-                'tabHeures' => Constantes::TAB_HEURES_EDT_2,
+                return $this->render('edt/_etudiant2.html.twig', [
+                    'edt' => $this->myEdtCelcat,
+                    'tabHeures' => Constantes::TAB_HEURES_EDT_2,
+                ]);
+            }
+            $this->myEdtIntranet->initEtudiant($this->getUser(),
+                $this->getAnneeUniversitaire(),
+                $semaine);
+
+            return $this->render('edt/_etudiant.html.twig', [
+                'edt' => $this->myEdtIntranet,
+                'tabHeures' => Constantes::TAB_HEURES_EDT,
             ]);
         }
-        $this->myEdtIntranet->initEtudiant($this->getUser(),
-            $this->getAnneeUniversitaire(),
-            $semaine);
 
-        return $this->render('edt/_etudiant.html.twig', [
-            'edt' => $this->myEdtIntranet,
-            'tabHeures' => Constantes::TAB_HEURES_EDT,
+        return $this->render('edt/_error.html.twig', [
         ]);
     }
 
