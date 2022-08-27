@@ -9,9 +9,12 @@
 
 # IntranetV3
 
-Actuelle version de l'intranet des IUT de Troyes et de Reims-Châlons-Charleville
+*The intranet is a tool developed for monitoring the schooling of students in IUT and professional license (monitoring of absences, management of grades, schooling, administrative procedures, etc.). It can be used freely, and all contributions are welcome.*
 
-basé sur Symfony 5.2
+
+Actuelle version de l'intranet des IUT de Troyes et de Reims-Châlons-Charleville, et du DU GOL (IUT d'Aix-en-Provence).
+
+basé sur Symfony 6.1
 
 # Installation
 
