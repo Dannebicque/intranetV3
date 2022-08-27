@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/SynchroIcalController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/08/2022 21:48
+ * @lastUpdate 27/08/2022 18:20
  */
 
 namespace App\Controller;
@@ -52,7 +52,7 @@ class SynchroIcalController extends AbstractController
     public function synchroEtudiantIcal(MyEdtExport $myEdtExport, EtudiantRepository $etudiantRepository, $code, $_format): Response
     {
         $etudiant = $etudiantRepository->findByCode($code);
-        if (null !== $etudiant) {
+        if (null !== $etudiant && null !== $etudiant->getAnneeUniversitaire()) {
             $ical = $myEdtExport->export($etudiant, $_format, 'Etudiant', $etudiant->getAnneeUniversitaire());
             $timestamp = Carbon::now();
 
