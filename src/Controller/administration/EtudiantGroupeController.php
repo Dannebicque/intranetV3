@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EtudiantGroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 29/08/2022 19:00
  */
 
 namespace App\Controller\administration;
@@ -18,6 +18,7 @@ use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
+use App\Repository\TypeGroupeRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,12 +30,13 @@ use Symfony\Component\Routing\Annotation\Route;
 class EtudiantGroupeController extends BaseController
 {
     #[Route(path: '/semestre/{semestre}', name: 'administration_etudiant_groupe_semestre_index')]
-    public function index(Semestre $semestre): Response
+    public function index(Semestre $semestre, TypeGroupeRepository $typeGroupeRepository): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
 
         return $this->render('administration/etudiant_groupe/index.html.twig', [
             'semestre' => $semestre,
+            'typeGroupes' => $typeGroupeRepository->findByDiplomeAndOrdreSemestre($semestre->getDiplome(), $semestre->getOrdreLmd()),
         ]);
     }
 

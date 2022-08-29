@@ -35,7 +35,7 @@
         <h4 class="card-title">Choisir</h4>
         <div class="card-body">
             <div class="row">
-                {% for typeGroupe in semestre.typeGroupes %}
+                {% for typeGroupe in typeGroupes %}
                     <div class="col-sm-2 d-grid">
                         <button data-typegroupe="{{ typeGroupe.id }}"
                                 class="btn d-block {% if selectedTypeGroupe is defined and selectedTypeGroupe.id ==
@@ -44,8 +44,10 @@
                 {% else %}
                     <div class="col-md-12">
                         <div class="alert alert-warning">
-                            Aucun groupe n'existe dans ce semestre. <a href="{{ path('administration_groupe_index') }}">Veuillez
-                                d'abord ajouter des types de groupe et des groupes.</a>
+                            Aucun groupe n'existe dans ce semestre. <a href="{{ path('administration_groupe_index',
+                                {semestre:semestre.id}) }}">
+                                Veuillez d'abord ajouter des types de groupe et des groupes.
+                            </a>
                         </div>
                     </div>
                 {% endfor %}
@@ -60,7 +62,7 @@
         </div>
     </div>
 
-    {% if semestre.typeGroupes|length > 0 %}
+    {% if typeGroupes|length > 0 %}
         <div class="card">
             <h4 class="card-title">Gérer les groupes des étudiants</h4>
             <div class="card-body" id="listeEtudiantsGroupes">

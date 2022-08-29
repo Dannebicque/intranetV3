@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/TypeGroupeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/08/2022 16:39
+ * @lastUpdate 29/08/2022 19:03
  */
 
 namespace App\Repository;
@@ -95,6 +95,10 @@ class TypeGroupeRepository extends ServiceEntityRepository
 
     public function findByDiplomeAndOrdreSemestre(Diplome $diplome, int $ordreSemestre): array
     {
+        if ($diplome->getParent() !== null) {
+            $diplome = $diplome->getParent();
+        }
+
         return $this->createQueryBuilder('t')
             ->where('t.diplome = :diplome')
             ->andWhere('t.ordreSemestre = :ordreSemestre')

@@ -101,7 +101,8 @@
                                         {% if user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement
                                             ('ROLE_DDE') %}
                                             Aucun groupe n'existe dans ce semestre. <a
-                                                href="{{ path('administration_groupe_index') }}">Veuillez
+                                                href="{{ path('administration_groupe_index', {semestre:semestre.id})
+                                                }}">Veuillez
                                                                                                  d'abord ajouter des
                                                                                                  types de groupe et
                                                                                                  des groupes.</a>
