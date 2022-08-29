@@ -19,7 +19,8 @@
     "sass-loader": "^12.3.0",
     "stimulus-clipboard": "^1.0.0",
     "stimulus-use": "^0.41.0",
-    "webpack-bundle-analyzer": "^4.4.2"
+    "webpack-bundle-analyzer": "^4.4.2",
+    "node-sass": "^7.0.1"
   },
   "license": "MPL-2.0",
   "private": true,
@@ -42,7 +43,7 @@
     "fos-router": "./vendor/friendsofsymfony/jsrouting-bundle/Resources/",
     "html-loader": "^3.0.1",
     "jquery": "^3.5.1",
-    "node-sass": "^7.0.1",
+
     "stimulus-notification": "^2.0.0",
     "sweetalert2": "^9.17.0",
     "tinymce": "^5.9.0",
