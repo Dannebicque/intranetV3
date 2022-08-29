@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/Apogee.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Apogee/Apogee.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2021 08:41
+ * @lastUpdate 29/08/2022 19:37
  */
 
 namespace App\Classes\Apogee;
@@ -35,7 +35,7 @@ abstract class Apogee
 
             return $this->conn;
         } catch (PDOException $e) {
-            trigger_error(htmlentities('Connexion échouée : '.$e->getMessage()), E_USER_ERROR);
+            trigger_error(htmlentities('Connexion échouée : '.$e->getMessage().' '.$this->parameterBag->get('apogee.string')), E_USER_ERROR);
         }
     }
 }
