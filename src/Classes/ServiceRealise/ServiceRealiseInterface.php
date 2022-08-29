@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ServiceRealise/ServiceRealiseInterface.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/ServiceRealise/ServiceRealiseInterface.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 16:35
+ * @lastUpdate 29/08/2022 08:31
  */
 
 /*
@@ -14,6 +14,7 @@
 namespace App\Classes\ServiceRealise;
 
 use App\DTO\EvenementEdt;
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Personnel;
 
 interface ServiceRealiseInterface
@@ -23,7 +24,8 @@ interface ServiceRealiseInterface
     public function getServiceRealiseParPersonnelMatiere(Personnel $personnel, int $idMatiere, string $type): array;
 
     public function getServiceRealiserParEnseignant(
-        Personnel $personnel
+        Personnel $personnel,
+        AnneeUniversitaire $anneeUniversitaire
     ): array;
 
     public function convertToEvenementEdt($event): EvenementEdt;

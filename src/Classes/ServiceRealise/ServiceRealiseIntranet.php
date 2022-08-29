@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ServiceRealise/ServiceRealiseIntranet.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/ServiceRealise/ServiceRealiseIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2021 18:54
+ * @lastUpdate 29/08/2022 08:32
  */
 
 /*
@@ -14,6 +14,7 @@
 namespace App\Classes\ServiceRealise;
 
 use App\DTO\EvenementEdt;
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
 use App\Entity\EdtPlanning;
 use App\Interfaces\UtilisateurInterface;
@@ -53,9 +54,9 @@ class ServiceRealiseIntranet implements ServiceRealiseInterface
         return $tabEvent;
     }
 
-    public function getServiceRealiserParEnseignant(UtilisateurInterface $personnel): array
+    public function getServiceRealiserParEnseignant(UtilisateurInterface $personnel, AnneeUniversitaire $anneeUniversitaire): array
     {
-        $events = $this->edtPlanningRepository->findBy(['intervenant' => $personnel->getId()],
+        $events = $this->edtPlanningRepository->findBy(['intervenant' => $personnel->getId(), 'anneeUniversitaire' => $anneeUniversitaire->getId()],
             ['semaine' => 'ASC', 'jour' => 'ASC', 'debut' => 'ASC']);
         $tabEvent = [];
         foreach ($events as $event) {
@@ -72,7 +73,7 @@ class ServiceRealiseIntranet implements ServiceRealiseInterface
     {
         $date = $event->getDate();
         $date->locale('fr');
-
+//todo: DTO ?
         $ev = new EvenementEdt();
         $ev->groupe = $event->getDisplayGroupe();
         $ev->jour = $date->dayName;

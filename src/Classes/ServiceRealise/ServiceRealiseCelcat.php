@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ServiceRealise/ServiceRealiseCelcat.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/ServiceRealise/ServiceRealiseCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/05/2021 16:35
+ * @lastUpdate 29/08/2022 08:31
  */
 
 /*
@@ -15,6 +15,7 @@ namespace App\Classes\ServiceRealise;
 
 use App\Classes\Matieres\TypeMatiereManager;
 use App\DTO\EvenementEdt;
+use App\Entity\AnneeUniversitaire;
 use App\Entity\CelcatEvent;
 use App\Entity\Personnel;
 use App\Exception\MatiereNotFoundException;
@@ -49,7 +50,7 @@ class ServiceRealiseCelcat implements ServiceRealiseInterface
         return $tabEvent;
     }
 
-    public function getServiceRealiserParEnseignant(Personnel $personnel): array
+    public function getServiceRealiserParEnseignant(Personnel $personnel, AnneeUniversitaire $anneeUniversitaire): array
     {
         $events = $this->celcatEventsRepository->findBy(['codePersonnel' => $personnel->getNumeroHarpege()],
             ['matiere' => 'ASC', 'semaine' => 'ASC', 'jour' => 'ASC', 'debut' => 'ASC']);
