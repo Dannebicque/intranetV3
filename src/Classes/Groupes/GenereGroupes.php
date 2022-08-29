@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Groupes/GenereGroupes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/08/2022 21:11
+ * @lastUpdate 29/08/2022 15:35
  */
 
 namespace App\Classes\Groupes;
@@ -19,6 +19,10 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class GenereGroupes
 {
+    /**
+     * @var \App\Entity\Diplome
+     */
+    protected Diplome $diplome;
     private Semestre $semestre;
 
     private ?TypeGroupe $tgCm;
@@ -42,6 +46,7 @@ class GenereGroupes
     ): void {
         $this->semestre = $semestre;
         $this->format = $format;
+        $this->diplome = $diplome;
         $cms = [];
         $this->getTypeGroupe($diplome);
         // On génére les types de groupes
@@ -66,10 +71,12 @@ class GenereGroupes
     private function genereCm(int $i): Groupe
     {
         $cm = new Groupe();
+        $code = substr($this->diplome->getSigle(), 0, 2).'-S'.$this->semestre->getOrdreLmd().'-CM'.$i;
+        $codeApogee = 'R'.substr($this->diplome->getSigle(), 0, 2).$this->semestre->getOrdreLmd().'CM'.$i;
         $cm->setTypeGroupe($this->tgCm);
-        $cm->setLibelle('CM '.$this->semestre->getLibelle());
+        $cm->setLibelle($code);
         $cm->setOrdre($i);
-        $cm->setCodeApogee($this->semestre->getCodeElement().'CM');
+        $cm->setCodeApogee($codeApogee);
         $this->entityManager->persist($cm);
 
         return $cm;
@@ -79,10 +86,14 @@ class GenereGroupes
     {
         $cm = $cms[0];
         $td = new Groupe();
+        $code = substr($this->diplome->getSigle(), 0, 2).'-S'.$this->semestre->getOrdreLmd().'-TD'.$ordre;
+        $codeApogee = 'R'.substr($this->diplome->getSigle(), 0, 2).$this->semestre->getOrdreLmd().'TD'.$ordre;
         $td->setTypeGroupe($this->tgTd);
-        $td->setLibelle($this->genereCodeTd($ordre));
+        $td->setLibelle($code);
+        //$td->setLibelle($this->genereCodeTd($ordre));
         $td->setOrdre($ordre);
-        $td->setCodeApogee($this->semestre->getCodeElement().'TD0'.$ordre);
+        //$td->setCodeApogee($this->semestre->getCodeElement().'TD0'.$ordre);
+        $td->setCodeApogee($codeApogee);
         $td->setParent($cm);
         $this->entityManager->persist($td);
 
@@ -93,12 +104,20 @@ class GenereGroupes
     {
         $idTd = (int) ($ordre - floor($ordre / 2));
 
-        $libelle = $this->genereCodeTp($idTd, $ordre);
+        //$libelle = $this->genereCodeTp($idTd, $ordre);
+        if (0 === $ordre % 2) {
+            $ordreTp = 'B';
+        } else {
+            $ordreTp = 'A';
+        }
         $tp = new Groupe();
+        $code = substr($this->diplome->getSigle(), 0, 2).'-S'.$this->semestre->getOrdreLmd().'-TP'.$idTd.$ordreTp;
+        $codeApogee = 'R'.substr($this->diplome->getSigle(), 0, 2).$this->semestre->getOrdreLmd().'TP'.$idTd.$ordreTp;
+
         $tp->setTypeGroupe($this->tgTp);
-        $tp->setLibelle('TP'.$libelle);
+        $tp->setLibelle($code);
         $tp->setOrdre($ordre);
-        $tp->setCodeApogee($this->semestre->getCodeElement().'TP'.$libelle);
+        $tp->setCodeApogee($codeApogee);
         $tp->setParent($tds[$idTd]);
         $this->entityManager->persist($tp);
 
