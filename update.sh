@@ -2,16 +2,21 @@
 # @file /Users/davidannebicque/Sites/intranetV3/update.sh
 # @author davidannebicque
 # @project intranetV3
-# @lastUpdate 16/08/2022 15:52
+# @lastUpdate 29/08/2022 08:37
 
 touch maintenance.lock
 echo "Début mise à jour"
 echo "Git Pull"
 git pull origin main
 echo "end git pull"
+
+if [$1 = "--assets"]
+then
 echo "generation des assets"
 yarn build
 echo "fin génératation des assets"
+fi
+
 echo "Nettoyage cache"
 #rm -R var/cache/prod
 #mkdir var/cache/prod
