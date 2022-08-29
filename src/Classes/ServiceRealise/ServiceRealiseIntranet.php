@@ -4,11 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/ServiceRealise/ServiceRealiseIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2022 08:32
- */
-
-/*
- * Pull your hearder here, for exemple, Licence header.
+ * @lastUpdate 29/08/2022 08:47
  */
 
 namespace App\Classes\ServiceRealise;
@@ -26,9 +22,9 @@ class ServiceRealiseIntranet implements ServiceRealiseInterface
     {
     }
 
-    public function getServiceRealiseParMatiere(int $idMatiere, string $type): array
+    public function getServiceRealiseParMatiere(int $idMatiere, string $type, AnneeUniversitaire $anneeUniversitaire): array
     {
-        $events = $this->edtPlanningRepository->findBy(['idMatiere' => $idMatiere, 'typeMatiere' => $type],
+        $events = $this->edtPlanningRepository->findBy(['idMatiere' => $idMatiere, 'typeMatiere' => $type, 'anneeUniversitaire' => $anneeUniversitaire->getId()],
             ['semaine' => 'ASC', 'jour' => 'ASC', 'debut' => 'ASC']);
         $tabEvent = [];
         foreach ($events as $event) {
@@ -38,12 +34,13 @@ class ServiceRealiseIntranet implements ServiceRealiseInterface
         return $tabEvent;
     }
 
-    public function getServiceRealiseParPersonnelMatiere(UtilisateurInterface $personnel, int $idMatiere, string $type): array
+    public function getServiceRealiseParPersonnelMatiere(UtilisateurInterface $personnel, int $idMatiere, string $type, AnneeUniversitaire $anneeUniversitaire): array
     {
         $events = $this->edtPlanningRepository->findBy([
             'intervenant' => $personnel->getId(),
             'idMatiere' => $idMatiere,
             'typeMatiere' => $type,
+            'anneeUniversitaire' => $anneeUniversitaire->getId(),
         ],
             ['semaine' => 'ASC', 'jour' => 'ASC', 'debut' => 'ASC']);
         $tabEvent = [];
@@ -79,7 +76,7 @@ class ServiceRealiseIntranet implements ServiceRealiseInterface
         $ev->jour = $date->dayName;
         $ev->duree = $event->getDureeInt();
         $ev->date = $date->isoFormat('L');
-        $ev->heure = Constantes::TAB_HEURES[$event->getDebut()].' à '.Constantes::TAB_HEURES[$event->getFin()]; // todo: gérer la convesion... et pas l'affichage ici. Vérifier le template
+        $ev->heureTexte = Constantes::TAB_HEURES[$event->getDebut()].' à '.Constantes::TAB_HEURES[$event->getFin()]; // todo: gérer la convesion... et pas l'affichage ici. Vérifier le template
         // $ev->matiere = null !== $event->getMatiere() ? $event->getMatiere()->getDisplay() : $event->getTexte();
         $ev->typeIdMatiere = $event->getTypeIdMatiere();
         $ev->type_cours = $event->getType();

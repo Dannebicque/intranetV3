@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/ServiceRealise/ServiceRealiseCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2022 08:31
+ * @lastUpdate 29/08/2022 08:44
  */
 
 /*
@@ -33,7 +33,7 @@ class ServiceRealiseCelcat implements ServiceRealiseInterface
     /**
      * @throws \App\Exception\MatiereNotFoundException
      */
-    public function getServiceRealiseParMatiere(int $idMatiere, string $type): array
+    public function getServiceRealiseParMatiere(int $idMatiere, string $type, AnneeUniversitaire $anneeUniversitaire): array
     {
         $matiere = $this->typeMatiereManager->getMatiere($idMatiere, $type);
         if (null === $matiere) {
@@ -81,7 +81,7 @@ class ServiceRealiseCelcat implements ServiceRealiseInterface
         return $ev;
     }
 
-    public function getServiceRealiseParPersonnelMatiere(UtilisateurInterface $personnel, int $idMatiere, string $type): array
+    public function getServiceRealiseParPersonnelMatiere(UtilisateurInterface $personnel, int $idMatiere, string $type, AnneeUniversitaire $anneeUniversitaire): array
     {
         // TODO: Implement getServiceRealiseParPersonnelMatiere() method.
         return [];

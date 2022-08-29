@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/AgendaController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/AgendaController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 19:11
+ * @lastUpdate 29/08/2022 08:47
  */
 
 namespace App\Controller;
@@ -16,9 +16,6 @@ use App\Entity\Previsionnel;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * Class AgendaController.
- */
 #[Route(path: '/agenda')]
 class AgendaController extends BaseController
 {
@@ -45,7 +42,7 @@ class AgendaController extends BaseController
                 $previ->getIdMatiere(), $previ->getTypeMatiere());
         } else {
             $chronologique = $serviceRealiseIntranet->getServiceRealiseParPersonnelMatiere($this->getUser(),
-                $previ->getIdMatiere(), $previ->getTypeMatiere());
+                $previ->getIdMatiere(), $previ->getTypeMatiere(), $this->getAnneeUniversitaire());
         }
         $statistiques = $serviceRealiseIntranet->statistiques($chronologique);
 

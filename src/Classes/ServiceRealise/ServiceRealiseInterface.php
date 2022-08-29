@@ -4,11 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/ServiceRealise/ServiceRealiseInterface.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2022 08:31
- */
-
-/*
- * Pull your hearder here, for exemple, Licence header.
+ * @lastUpdate 29/08/2022 08:47
  */
 
 namespace App\Classes\ServiceRealise;
@@ -19,9 +15,9 @@ use App\Entity\Personnel;
 
 interface ServiceRealiseInterface
 {
-    public function getServiceRealiseParMatiere(int $idMatiere, string $type): array;
+    public function getServiceRealiseParMatiere(int $idMatiere, string $type, AnneeUniversitaire $anneeUniversitaire): array;
 
-    public function getServiceRealiseParPersonnelMatiere(Personnel $personnel, int $idMatiere, string $type): array;
+    public function getServiceRealiseParPersonnelMatiere(Personnel $personnel, int $idMatiere, string $type, AnneeUniversitaire $anneeUniversitaire): array;
 
     public function getServiceRealiserParEnseignant(
         Personnel $personnel,
