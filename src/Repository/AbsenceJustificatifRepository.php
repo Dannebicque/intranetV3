@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/AbsenceJustificatifRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:52
+ * @lastUpdate 30/08/2022 09:25
  */
 
 namespace App\Repository;
@@ -51,20 +51,15 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
      * @throws \Doctrine\ORM\NonUniqueResultException
      * @throws \Doctrine\ORM\NoResultException
      */
-    public function findBySemestreCount(Semestre $semestre, ?int $annee = 0): ?int
+    public function findBySemestreCount(Semestre $semestre, AnneeUniversitaire $annee): ?int
     {
-        if (0 === $annee) {
-            $annee = null !== $semestre->getAnneeUniversitaire() ? $semestre->getAnneeUniversitaire()->getAnnee() : (int) date('Y');
-        }
-
         return $this->createQueryBuilder('j')
             ->select('count(j.id)')
-            ->innerJoin(AnneeUniversitaire::class, 'u', 'WITH', 'j.anneeUniversitaire = u.id')
             ->where('j.semestre = :semestre')
-            ->andWhere('u.annee = :annee')
+            ->andWhere('j.anneeUniversitaire = :annee')
             ->andWhere('j.etat = :etat')
             ->setParameter('semestre', $semestre->getId())
-            ->setParameter('annee', $annee)
+            ->setParameter('annee', $annee->getId())
             ->setParameter('etat', AbsenceJustificatif::DEPOSE)
             ->getQuery()
             ->getSingleScalarResult()

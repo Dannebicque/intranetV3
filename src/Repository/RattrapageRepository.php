@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/RattrapageRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 30/08/2022 09:25
  */
 
 namespace App\Repository;
@@ -67,19 +67,14 @@ class RattrapageRepository extends ServiceEntityRepository
      * @throws NonUniqueResultException
      * @throws NoResultException
      */
-    public function findBySemestreCount(Semestre $semestre, ?int $annee = 0): ?int
+    public function findBySemestreCount(Semestre $semestre, AnneeUniversitaire $annee): ?int
     {
-        if (0 === $annee) {
-            $annee = null !== $semestre->getAnneeUniversitaire() ? $semestre->getAnneeUniversitaire()->getAnnee() : (int) date('Y');
-        }
-
         return $this->createQueryBuilder('r')
             ->select('COUNT(r.id)')
-            ->innerJoin(AnneeUniversitaire::class, 'u', 'WITH', 'r.anneeUniversitaire = u.id')
             ->where('r.semestre = :semestre')
-            ->andWhere('u.annee = :anneeuniversitaire')
+            ->andWhere('r.anneeUniversitaire = :anneeuniversitaire')
             ->setParameter('semestre', $semestre->getId())
-            ->setParameter('anneeuniversitaire', $annee)
+            ->setParameter('anneeuniversitaire', $annee->getId())
             ->getQuery()
             ->getSingleScalarResult();
     }

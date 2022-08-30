@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/SemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 09:53
+ * @lastUpdate 30/08/2022 09:25
  */
 
 namespace App\Controller\administration;
@@ -47,8 +47,8 @@ class SemestreController extends BaseController
 
         return $this->render('administration/semestre/index.html.twig', [
             'semestre' => $semestre,
-            'nbJustificatifs' => $absenceJustificatifRepository->findBySemestreCount($semestre),
-            'nbRattrapages' => $rattrapageRepository->findBySemestreCount($semestre),
+            'nbJustificatifs' => $absenceJustificatifRepository->findBySemestreCount($semestre, $this->getAnneeUniversitaire()),
+            'nbRattrapages' => $rattrapageRepository->findBySemestreCount($semestre, $this->getAnneeUniversitaire()),
         ]);
     }
 }
