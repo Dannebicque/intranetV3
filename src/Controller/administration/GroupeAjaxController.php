@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/GroupeAjaxController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2022 10:19
+ * @lastUpdate 30/08/2022 14:33
  */
 
 namespace App\Controller\administration;
@@ -12,6 +12,7 @@ namespace App\Controller\administration;
 use App\Classes\MyGroupes;
 use App\Controller\BaseController;
 use App\Entity\Groupe;
+use App\Repository\ApcParcoursRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\ParcourRepository;
 use App\Repository\TypeGroupeRepository;
@@ -42,8 +43,8 @@ class GroupeAjaxController extends BaseController
     #[Route(path: '/update-parent', name: 'administration_groupe_change_parent', options: ['expose' => true], methods: ['POST'])]
     public function updateParent(GroupeRepository $groupeRepository, Request $request): ?JsonResponse
     {
-        $groupe = $groupeRepository->find(JsonRequest::getValueFromRequest($request,'groupe'));
-        $parent = $groupeRepository->find(JsonRequest::getValueFromRequest($request,'parent'));
+        $groupe = $groupeRepository->find(JsonRequest::getValueFromRequest($request, 'groupe'));
+        $parent = $groupeRepository->find(JsonRequest::getValueFromRequest($request, 'parent'));
         if (null !== $groupe && null !== $parent) {
             $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $groupe->getTypeGroupe()?->getSemestre());
 
@@ -57,10 +58,13 @@ class GroupeAjaxController extends BaseController
     }
 
     #[Route(path: '/update-typegroupe', name: 'administration_groupe_change_typegroupe', options: ['expose' => true], methods: ['POST'])]
-    public function updateTypeGroupe(TypeGroupeRepository $typeGroupeRepository, GroupeRepository $groupeRepository, Request $request): ?JsonResponse
-    {
-        $groupe = $groupeRepository->find(JsonRequest::getValueFromRequest($request,'groupe'));
-        $typegroupe = $typeGroupeRepository->find(JsonRequest::getValueFromRequest($request,'typegroupe'));
+    public function updateTypeGroupe(
+        TypeGroupeRepository $typeGroupeRepository,
+        GroupeRepository $groupeRepository,
+        Request $request
+    ): ?JsonResponse {
+        $groupe = $groupeRepository->find(JsonRequest::getValueFromRequest($request, 'groupe'));
+        $typegroupe = $typeGroupeRepository->find(JsonRequest::getValueFromRequest($request, 'typegroupe'));
         if (null !== $groupe && null !== $typegroupe) {
             $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $typegroupe->getSemestre());
 
@@ -74,18 +78,39 @@ class GroupeAjaxController extends BaseController
     }
 
     #[Route(path: '/update-parcours', name: 'administration_groupe_change_parcours', options: ['expose' => true], methods: ['POST'])]
-    public function updateParcours(ParcourRepository $parcourRepository, GroupeRepository $groupeRepository, Request $request): ?JsonResponse
-    {
-        $groupe = $groupeRepository->find(JsonRequest::getValueFromRequest($request,'groupe'));
-        $parcours = $parcourRepository->find(JsonRequest::getValueFromRequest($request,'parcours'));
-        if (null !== $groupe && null !== $parcours) {
+    public function updateParcours(
+        ApcParcoursRepository $apcParcoursRepository,
+        ParcourRepository $parcourRepository,
+        GroupeRepository $groupeRepository,
+        Request $request
+    ): ?JsonResponse {
+        $groupe = $groupeRepository->find(JsonRequest::getValueFromRequest($request, 'groupe'));
+        $diplome = $groupe->getTypeGroupe()->getDiplome();
+
+        if ($diplome === null && $groupe !== null) {
+            $diplome = $groupe->getTypeGroupe()->getSemestre()->getDiplome();
+        }
+
+        if ($diplome->isApc()) {
+            $parcours = $apcParcoursRepository->find(JsonRequest::getValueFromRequest($request, 'parcours'));
+        } else {
+            $parcours = $parcourRepository->find(JsonRequest::getValueFromRequest($request, 'parcours'));
+        }
+
+        if (null !== $parcours) {
             $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $groupe->getTypeGroupe()->getSemestre());
 
-            $groupe->setParcours($parcours);
+
+            if ($diplome->isApc()) {
+                $groupe->setApcParcours($parcours);
+            } else {
+                $groupe->setParcours($parcours);
+            }
             $this->entityManager->flush();
 
             return new JsonResponse(true, Response::HTTP_OK);
         }
+
 
         return new JsonResponse(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }

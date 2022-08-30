@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcParcours.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/08/2022 09:31
+ * @lastUpdate 30/08/2022 14:27
  */
 
 namespace App\Entity;
@@ -53,11 +53,15 @@ class ApcParcours extends BaseEntity
     #[ORM\Column(length: 2, nullable: true)]
     private ?string $lettreParcours = null;
 
+    #[ORM\OneToMany(mappedBy: 'apcParcours', targetEntity: Groupe::class)]
+    private Collection $groupes;
+
     public function __construct(ApcReferentiel $apcReferentiel)
     {
         $this->setApcReferentiel($apcReferentiel);
         $this->apcParcoursNiveaux = new ArrayCollection();
         $this->diplomes = new ArrayCollection();
+        $this->groupes = new ArrayCollection();
     }
 
     public function getLibelle(): ?string
@@ -186,6 +190,36 @@ class ApcParcours extends BaseEntity
     public function setLettreParcours(?string $lettreParcours): self
     {
         $this->lettreParcours = $lettreParcours;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Groupe>
+     */
+    public function getGroupes(): Collection
+    {
+        return $this->groupes;
+    }
+
+    public function addGroupe(Groupe $groupe): self
+    {
+        if (!$this->groupes->contains($groupe)) {
+            $this->groupes[] = $groupe;
+            $groupe->setApcParcours($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGroupe(Groupe $groupe): self
+    {
+        if ($this->groupes->removeElement($groupe)) {
+            // set the owning side to null (unless already changed)
+            if ($groupe->getApcParcours() === $this) {
+                $groupe->setApcParcours(null);
+            }
+        }
 
         return $this;
     }

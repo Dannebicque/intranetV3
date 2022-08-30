@@ -46,7 +46,9 @@
             change-parcours" data-groupe="{{ groupe.id }}" data-semestre="{{ semestre.id }}">
                 <option value="">Indiquer l'option</option>
                 {% for option in parcours %}
-                    <option value="{{ option.id }}" {% if groupe.parcours != null and  groupe.parcours.id == option.id %}selected{% endif %}>{{ option.libelle }}</option>
+                    <option value="{{ option.id }}" {% if (groupe.parcours != null and  groupe.parcours.id == option
+                    .id) or (groupe.apcParcours != null and  groupe.apcParcours.id == option
+                    .id) %}selected{% endif %}>{{ option.libelle }}</option>
                 {% endfor %}
             </select>
         {% else %}

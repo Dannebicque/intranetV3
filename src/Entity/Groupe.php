@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Groupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:21
+ * @lastUpdate 30/08/2022 14:27
  */
 
 namespace App\Entity;
@@ -66,7 +66,10 @@ class Groupe extends BaseEntity
      * @var \Doctrine\Common\Collections\Collection<\App\Entity\ApcRessourceEnfants>
      */
     #[ORM\ManyToMany(targetEntity: ApcRessourceEnfants::class, mappedBy: 'groupes')]
-    private \Doctrine\Common\Collections\Collection $apcRessourceEnfants;
+    private Collection $apcRessourceEnfants;
+
+    #[ORM\ManyToOne(inversedBy: 'groupes')]
+    private ?ApcParcours $apcParcours = null;
 
     public function __construct()
     {
@@ -328,6 +331,18 @@ class Groupe extends BaseEntity
         if ($this->apcRessourceEnfants->removeElement($apcRessourceEnfant)) {
             $apcRessourceEnfant->removeGroupe($this);
         }
+
+        return $this;
+    }
+
+    public function getApcParcours(): ?ApcParcours
+    {
+        return $this->apcParcours;
+    }
+
+    public function setApcParcours(?ApcParcours $apcParcours): self
+    {
+        $this->apcParcours = $apcParcours;
 
         return $this;
     }

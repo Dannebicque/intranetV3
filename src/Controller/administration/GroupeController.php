@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/GroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2022 10:38
+ * @lastUpdate 30/08/2022 14:52
  */
 
 namespace App\Controller\administration;
@@ -20,6 +20,7 @@ use App\Entity\Semestre;
 use App\Exception\DiplomeNotFoundException;
 use App\Form\GroupeType;
 use App\Repository\GroupeRepository;
+use App\Repository\TypeGroupeRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -81,16 +82,19 @@ class GroupeController extends BaseController
      * @throws \App\Exception\DiplomeNotFoundException
      */
     #[Route(path: '/liste/{semestre}', name: 'administration_groupe_liste_semestre', options: ['expose' => true], methods: ['GET'])]
-    public function listeSemestre(GroupeRepository $groupeRepository, Semestre $semestre): Response
+    public function listeSemestre(
+        TypeGroupeRepository $typeGroupeRepository,
+        GroupeRepository $groupeRepository, Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
         $diplome = $this->getDiplomeFromSemestre($semestre);
 
-        $typeGroupes = $semestre->getTypeGroupes();
         if (true === $diplome->isApc()) {
             // todo: fusionner, mais implique de mettre à jour table avec les groupes existants, et de ne plus avoir le "semestr" dans typeGroupe
+            $typeGroupes = $typeGroupeRepository->findByDiplomeAndOrdreSemestre($diplome, $semestre->getOrdreLmd());
             $groupes = $groupeRepository->findByDiplomeAndOrdreSemestre($diplome, $semestre->getOrdreLmd());
         } else {
+            $typeGroupes = $semestre->getTypeGroupes();
             $groupes = $groupeRepository->findBySemestre($semestre);
         }
         if (true === $semestre->getDiplome()?->isApc()) {
@@ -159,6 +163,7 @@ class GroupeController extends BaseController
         $form = $this->createForm(GroupeType::class, $groupe,
             ['semestre' => $semestre, 'attr' => ['id' => 'form_groupe']]);
         $form->handleRequest($request);
+        // todo: gérer les parcours APC...
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($groupe);
             $this->entityManager->flush();
