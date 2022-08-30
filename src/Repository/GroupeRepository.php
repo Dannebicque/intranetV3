@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/GroupeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/08/2022 21:33
+ * @lastUpdate 30/08/2022 09:47
  */
 
 namespace App\Repository;
@@ -265,6 +265,16 @@ class GroupeRepository extends ServiceEntityRepository
 
     public function findByDiplomeAndOrdreSemestre(Diplome $diplome, int $ordreSemestre): array
     {
+        return $this->findByDiplomeAndOrdreSemestreBuilder($diplome, $ordreSemestre)->getQuery()
+            ->getResult();
+    }
+
+    public function findByDiplomeAndOrdreSemestreBuilder(Diplome $diplome, int $ordreSemestre): QueryBuilder
+    {
+        if (null !== $diplome->getParent()) {
+            $diplome = $diplome->getParent();
+        }
+
         return $this->createQueryBuilder('g')
             ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')
             ->where('t.diplome = :diplome')
@@ -272,8 +282,6 @@ class GroupeRepository extends ServiceEntityRepository
             ->setParameter('diplome', $diplome->getId())
             ->setParameter('ordreSemestre', $ordreSemestre)
             ->orderBy('t.libelle', Criteria::ASC)
-            ->addOrderBy('g.libelle', Criteria::ASC)
-            ->getQuery()
-            ->getResult();
+            ->addOrderBy('g.libelle', Criteria::ASC);
     }
 }

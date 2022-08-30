@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/GroupeType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/GroupeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/09/2021 22:29
+ * @lastUpdate 30/08/2022 09:46
  */
 
 namespace App\Form;
@@ -46,7 +46,7 @@ class GroupeType extends AbstractType
                 'class' => TypeGroupe::class,
                 'label' => 'label.typeGroupe',
                 'choice_label' => 'libelle',
-                'query_builder' => fn (TypeGroupeRepository $typeGroupeRepository) => $typeGroupeRepository->findBySemestreBuilder($this->semestre),
+                'query_builder' => fn (TypeGroupeRepository $typeGroupeRepository) => $typeGroupeRepository->findByDiplomeAndOrdreSemestreBuilder($this->semestre->getDiplome(), $this->semestre->getOrdreLmd()),
                 'required' => true,
                 'expanded' => false,
                 'multiple' => false,
@@ -55,7 +55,7 @@ class GroupeType extends AbstractType
                 'class' => Groupe::class,
                 'label' => 'label.groupe_parent',
                 'choice_label' => 'libelle',
-                'query_builder' => fn (GroupeRepository $groupeRepository) => $groupeRepository->findBySemestreBuilder($this->semestre),
+                'query_builder' => fn (GroupeRepository $groupeRepository) => $groupeRepository->findByDiplomeAndOrdreSemestreBuilder($this->semestre->getDiplome(), $this->semestre->getOrdreLmd()),
                 'required' => false,
                 'expanded' => false,
                 'multiple' => false,

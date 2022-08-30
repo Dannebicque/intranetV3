@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/TypeGroupeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2022 19:03
+ * @lastUpdate 30/08/2022 09:47
  */
 
 namespace App\Repository;
@@ -14,9 +14,9 @@ use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
-use Doctrine\Common\Collections\Criteria;
 use function array_key_exists;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -95,7 +95,12 @@ class TypeGroupeRepository extends ServiceEntityRepository
 
     public function findByDiplomeAndOrdreSemestre(Diplome $diplome, int $ordreSemestre): array
     {
-        if ($diplome->getParent() !== null) {
+        return $this->findByDiplomeAndOrdreSemestreBuilder($diplome, $ordreSemestre)->getQuery()->getResult();
+    }
+
+    public function findByDiplomeAndOrdreSemestreBuilder(Diplome $diplome, int $ordreSemestre): QueryBuilder
+    {
+        if (null !== $diplome->getParent()) {
             $diplome = $diplome->getParent();
         }
 
@@ -105,7 +110,6 @@ class TypeGroupeRepository extends ServiceEntityRepository
             ->setParameter('diplome', $diplome->getId())
             ->setParameter('ordreSemestre', $ordreSemestre)
             ->orderBy('t.libelle', Criteria::ASC)
-            ->getQuery()
-            ->getResult();
+           ;
     }
 }
