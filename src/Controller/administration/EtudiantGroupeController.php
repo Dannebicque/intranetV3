@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EtudiantGroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2022 19:00
+ * @lastUpdate 30/08/2022 11:35
  */
 
 namespace App\Controller\administration;
@@ -44,7 +44,7 @@ class EtudiantGroupeController extends BaseController
     public function affecte(GroupeRepository $groupeRepository, EtudiantRepository $etudiantRepository, TypeGroupe $typeGroupe): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $typeGroupe->getSemestre());
-        $etudiants = $etudiantRepository->findBySemestre($typeGroupe->getSemestre());
+        $etudiants = $etudiantRepository->findByOrdreSemestreAndDiplome($typeGroupe->getSemestre()->getOrdreLmd(), $typeGroupe->getSemestre()->getDiplome());
         $groupes = $groupeRepository->findByTypeGroupe($typeGroupe);
 
         return $this->render('administration/etudiant_groupe/affecte.html.twig', [

@@ -5,6 +5,7 @@
         <th>Nom</th>
         <th>Prénom</th>
         <th>Bac</th>
+        <th>Parcours</th>
         {% for groupe in groupes %}
             <th>GR. {{ groupe.libelle }}</th>
         {% endfor %}
@@ -20,6 +21,13 @@
             <td>{{ etudiant.numetudiant }}</td>
             <td>{{ etudiant.nom|upper }}</td>
             <td>{{ etudiant.prenom|capitalize }}</td>
+            <td>{% if etudiant.semestre.diplome.apcParcours is defined %}
+                    <span class="badge bg-{{ etudiant.semestre.diplome
+                    .apcParcours.couleur }}">{{ etudiant.semestre.diplome
+                    .apcParcours.code }}</span>
+                {% else %}
+                    <span class="badge bg-info">Sans</span>
+                {% endif %}</td>
             <td>{{ etudiant.bac != null ? etudiant.bac.libelle : 'non.defini'|trans }}</td>
             {% for groupe in groupes %}
                 <td><label class="sr-only" for="etu_{{ etudiant.id }}_{{ groupe.id }}">{{ etudiant.displayPr }}

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EtudiantRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:52
+ * @lastUpdate 30/08/2022 11:47
  */
 
 namespace App\Repository;
@@ -293,5 +293,27 @@ class EtudiantRepository extends ServiceEntityRepository
         }
 
         return $t;
+    }
+
+    public function findByOrdreSemestreAndDiplome(int $ordreLmd, Diplome $diplome)
+    {
+        if (null !== $diplome->getParent()) {
+            $diplome = $diplome->getParent();
+        }
+
+        return $this->createQueryBuilder('e')
+            ->innerJoin(Semestre::class, 's', 'WITH', 'e.semestre=s.id')
+            ->innerJoin(Annee::class, 'a', 'WITH', 'a.id=s.annee')
+            ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id=a.diplome')
+
+            ->where('d.id = :diplome')
+            ->orWhere('d.parent = :diplome')
+            ->andWhere('s.ordreLmd = :ordreLmd')
+            ->setParameter('ordreLmd', $ordreLmd)
+            ->setParameter('diplome', $diplome->getid())
+            ->orderBy('e.nom', Criteria::ASC)
+            ->addOrderBy('e.prenom', Criteria::ASC)
+            ->getQuery()
+            ->getResult();
     }
 }
