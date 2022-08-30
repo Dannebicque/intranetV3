@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/TypeGroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/08/2022 17:24
+ * @lastUpdate 30/08/2022 09:33
  */
 
 namespace App\Controller\administration;
@@ -35,8 +35,8 @@ class TypeGroupeController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
         $diplome = $this->getDiplomeFromSemestre($semestre);
-        if ($diplome->isApc() === true) {
-         //todo: fusionner dès la suppression de semestre et la mise à jour des données.
+        if (true === $diplome->isApc()) {
+            // todo: fusionner dès la suppression de semestre et la mise à jour des données.
             $typeGroupes = $typeGroupeRepository->findByDiplomeAndOrdreSemestre($diplome, $semestre->getOrdreLmd());
         } else {
             $typeGroupes = $semestre->getTypeGroupes();
@@ -46,7 +46,7 @@ class TypeGroupeController extends BaseController
             'semestre' => $semestre,
             'diplome' => $diplome,
             'typeGroupes' => $typeGroupes,
-            'typeGroupeEnum' => TypeGroupeEnum::cases()
+            'typeGroupeEnum' => TypeGroupeEnum::cases(),
         ]);
     }
 
@@ -71,7 +71,7 @@ class TypeGroupeController extends BaseController
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
         $typeGroupe = new TypeGroupe($semestre);
         $typeGroupe->setLibelle(JsonRequest::getValueFromRequest($request, 'libelle'));
-        $typeGroupe->setType(JsonRequest::getValueFromRequest($request, 'type'));
+        $typeGroupe->setType(TypeGroupeEnum::from(JsonRequest::getValueFromRequest($request, 'type')));
         $typeGroupe->setDefaut(Tools::convertToBool(JsonRequest::getValueFromRequest($request, 'defaut')));
         $typeGroupe->setMutualise(Tools::convertToBool(JsonRequest::getValueFromRequest($request, 'mutualise')));
         $this->entityManager->persist($typeGroupe);
@@ -106,7 +106,7 @@ class TypeGroupeController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
         $etat = Tools::convertToBool(JsonRequest::getValueFromRequest($request, 'defaut'));
-        if ($etat === true) {
+        if (true === $etat) {
             foreach ($semestre->getTypeGroupes() as $tg) {
                 if ($tg->getId() === $typegroupe->getId()) {
                     $tg->setDefaut(true);
@@ -138,7 +138,7 @@ class TypeGroupeController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $typegroupe->getSemestre());
         $newGroupe = clone $typegroupe;
-        $newGroupe->setLibelle('Copie_' . $newGroupe->getLibelle());
+        $newGroupe->setLibelle('Copie_'.$newGroupe->getLibelle());
         $this->entityManager->persist($newGroupe);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'type_groupe.duplicate.success.flash');
@@ -151,7 +151,7 @@ class TypeGroupeController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $typeGroupe->getSemestre());
         $id = $typeGroupe->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $this->entityManager->remove($typeGroupe);
             $this->entityManager->flush();
             $this->addFlashBag(

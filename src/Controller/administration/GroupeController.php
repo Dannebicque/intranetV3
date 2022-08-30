@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/GroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/08/2022 17:26
+ * @lastUpdate 30/08/2022 09:35
  */
 
 namespace App\Controller\administration;
@@ -28,6 +28,9 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/administration/groupe')]
 class GroupeController extends BaseController
 {
+    /**
+     * @throws \App\Exception\DiplomeNotFoundException
+     */
     #[Route(path: '/{semestre}', name: 'administration_groupe_index', requirements: ['semestre' => '\d+'], methods: ['GET'])]
     public function index(Semestre $semestre): Response
     {

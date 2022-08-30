@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/TypeGroupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/08/2022 12:28
+ * @lastUpdate 30/08/2022 09:33
  */
 
 namespace App\Entity;
@@ -46,15 +46,17 @@ class TypeGroupe extends BaseEntity
     private bool $mutualise = false;
 
     #[ORM\ManyToOne(inversedBy: 'typeGroupes')]
-    private ?Diplome $diplome = null;
+    private ?Diplome $diplome;
 
     #[ORM\Column(nullable: true)]
-    private ?int $ordreSemestre = null;
+    private ?int $ordreSemestre;
 
     public function __construct(
-        #[Groups(['type_groupe_administration'])] #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'typeGroupes')] #[Deprecated("ne plus utiliser, et avoir Diplome + semestre")] private Semestre $semestre
+        #[Groups(['type_groupe_administration'])] #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'typeGroupes')] #[Deprecated('ne plus utiliser, et avoir Diplome + semestre')] private Semestre $semestre
     ) {
         $this->groupes = new ArrayCollection();
+        $this->ordreSemestre = $semestre->getOrdreLmd();
+        $this->diplome = $semestre->getDiplome()->getParent() ?? $semestre->getDiplome();
     }
 
     /**
