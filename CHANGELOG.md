@@ -2,6 +2,45 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.8.9](https://github.com/Dannebicque/intranetV3/compare/v3.8.8...v3.8.9) (2022-08-30)
+
+
+### Features
+
+* [Previsionnel] Correctifs et harmonistion des appels ([54c0224](https://github.com/Dannebicque/intranetV3/commit/54c0224725debb3314a039dccb5ed7381d0b7bf6))
+* [script] Condition pour les assets ([5c2bcac](https://github.com/Dannebicque/intranetV3/commit/5c2bcac951cb9ecac98ccff002655853a79b69bf))
+
+
+### Bug Fixes
+
+* [APogée] Codification pour IUT RCC ([6cd09f3](https://github.com/Dannebicque/intranetV3/commit/6cd09f38be46d2e9f0a7a37f6940d261ec520931))
+* [dep.] core-js ([c1d6b47](https://github.com/Dannebicque/intranetV3/commit/c1d6b477511c0097a4e573e6ae9309246fd941a8))
+* [dep.] core-js ([79f2d75](https://github.com/Dannebicque/intranetV3/commit/79f2d75dd2f3997839c638ef3f6da2112576cb0f))
+* [dep.] core-js ([6a1ff3e](https://github.com/Dannebicque/intranetV3/commit/6a1ff3e99537aa82c947d3c99a2a094d60519f0d))
+* [Edt] Affichage étudiant, si pas de semestre ou d'année universitaire. ([ac231c0](https://github.com/Dannebicque/intranetV3/commit/ac231c038c5023eeaee8d8aff70a53abb82c5a4b))
+* [Edt] Affichage promo ([4c6ef56](https://github.com/Dannebicque/intranetV3/commit/4c6ef56f10bb2208fc3bd29ff1d6a723c522910e))
+* [Edt] Groupes et types groupes ([b45ea78](https://github.com/Dannebicque/intranetV3/commit/b45ea7884313fdb9b26e439d610b3a80961134b0))
+* [Edt] Groupes et types groupes ([810040e](https://github.com/Dannebicque/intranetV3/commit/810040e408cd59ea3f3c509ca22db41de6842405))
+* [Edt] Groupes et types groupes ([e8ada09](https://github.com/Dannebicque/intranetV3/commit/e8ada090bc509cb26b872d692cb0ffb40b1bac35))
+* [Edt] Groupes et types groupes ([856cc19](https://github.com/Dannebicque/intranetV3/commit/856cc19a8bce712f0b370e29591fea984b7da8e3))
+* [Edt] Groupes et types groupes ([df2507c](https://github.com/Dannebicque/intranetV3/commit/df2507c197a3089550ec40279393e3354e692a7f))
+* [Edt] Groupes et types groupes ([9c158b2](https://github.com/Dannebicque/intranetV3/commit/9c158b2878f0e46b6d07a4e3fe74e96ac4ce74aa))
+* [Edt] Groupes et types groupes ([8c917dd](https://github.com/Dannebicque/intranetV3/commit/8c917dd68e019c75cf27526489d795b42ed6b163))
+* [Edt] Ical ([a62f5d8](https://github.com/Dannebicque/intranetV3/commit/a62f5d817088e2db6558644713f3380e8c96461c))
+* [Edt] Ical ([6c82766](https://github.com/Dannebicque/intranetV3/commit/6c82766b3f81e90b382faf0eb4d37a09071418a8))
+* [Edt] Ical ([2496179](https://github.com/Dannebicque/intranetV3/commit/2496179eb19687e8b72c83af2c74f8750c0af5fd))
+* [Edt] Ical ([88db31e](https://github.com/Dannebicque/intranetV3/commit/88db31e717346c261e1cf6c0f1d266009a6fa8ea))
+* [Edt] Ical ([4df8973](https://github.com/Dannebicque/intranetV3/commit/4df8973abdbb831c70fc35940703b38f891539f8))
+* [Edt/Ical] Affichage promo ([f765995](https://github.com/Dannebicque/intranetV3/commit/f7659953b5cfb9b99761f059b315ba366273bc57))
+* [Groupe] Affichage des groupes ([91a18cf](https://github.com/Dannebicque/intranetV3/commit/91a18cfcf25b5ac136c858bfebd6676a9a4d5847))
+* [Groupe] Affichage des groupes ([7b278e5](https://github.com/Dannebicque/intranetV3/commit/7b278e55f466148553f89fec0722c5d9ce4dd687))
+* [Groupe] Créations des types de groupes ([7da5605](https://github.com/Dannebicque/intranetV3/commit/7da5605491a6fbf7762bb7bdb2ae26a7341df331))
+* [Groupe] génération pour RCC ([505e694](https://github.com/Dannebicque/intranetV3/commit/505e6945a425e261c272e5dd7b0fb1fdc4bb542d))
+* [Previsionnel] Chronologique en fonction de l'année universitaire. ([1b1316a](https://github.com/Dannebicque/intranetV3/commit/1b1316a8570bae34352dd770d1e99c1fc52b9b1b))
+* [readme] mise à jour ([668488d](https://github.com/Dannebicque/intranetV3/commit/668488d3ae98b2ac74c415765643979ec895edd4))
+* [readme] mise à jour ([7fb4e95](https://github.com/Dannebicque/intranetV3/commit/7fb4e95f41b0ff3f4fed673ad95ec13a1b127548))
+* [Semestre Etudiants] Compteurs selon l'année universitaire ([70303f9](https://github.com/Dannebicque/intranetV3/commit/70303f929e29e64d74435190e54efc843c4223b5))
+
 ### [3.8.8](https://github.com/Dannebicque/intranetV3/compare/v3.8.7...v3.8.8) (2022-08-26)
 
 

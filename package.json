@@ -43,7 +43,6 @@
     "fos-router": "./vendor/friendsofsymfony/jsrouting-bundle/Resources/",
     "html-loader": "^3.0.1",
     "jquery": "^3.5.1",
-
     "stimulus-notification": "^2.0.0",
     "sweetalert2": "^9.17.0",
     "tinymce": "^5.9.0",
@@ -55,7 +54,7 @@
     "unreleased": true,
     "commitLimit": false
   },
-  "version": "3.8.8",
+  "version": "3.8.9",
   "author": "David Annebicque",
   "name": "intranetv3",
   "repository": {
