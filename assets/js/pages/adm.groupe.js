@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/adm.groupe.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/07/2022 17:36
+// @lastUpdate 30/08/2022 10:19
 import $ from 'jquery'
 import Routing from 'fos-router'
 import { addCallout } from '../util'
@@ -12,8 +12,8 @@ document.querySelectorAll('.change-parent').forEach((el) => {
   el.addEventListener('change', ((e) => {
     const { semestre } = e.currentTarget.dataset
     post(Routing.generate('administration_groupe_change_parent'), {
-      groupe: $(this).data('groupe'),
-      parent: $(this).val(),
+      groupe: e.currentTarget.dataset.groupe,
+      parent: e.currentTarget.value,
     }).then(() => {
       load(Routing.generate('administration_groupe_liste_semestre', { semestre }), document.getElementById('groupes_semestre'))
       addCallout('Mise à jour du parent', 'success')
@@ -25,8 +25,8 @@ document.querySelectorAll('.change-typegroupe').forEach((el) => {
   el.addEventListener('change', ((e) => {
     const { semestre } = e.currentTarget.dataset
     post(Routing.generate('administration_groupe_change_typegroupe'), {
-      groupe: $(this).data('groupe'),
-      typegroupe: $(this).val(),
+      groupe: e.currentTarget.dataset.groupe,
+      typegroupe: e.currentTarget.value,
     }).then(() => {
       load(Routing.generate('administration_groupe_liste_semestre', { semestre }), document.getElementById('groupes_semestre'))
       addCallout('Mise à jour du type de groupe', 'success')
@@ -38,8 +38,8 @@ document.querySelectorAll('.change-parcours').forEach((el) => {
   el.addEventListener('change', ((e) => {
     const { semestre } = e.currentTarget.dataset
     post(Routing.generate('administration_groupe_change_parcours'), {
-      groupe: $(this).data('groupe'),
-      parcours: $(this).val(),
+      groupe: e.currentTarget.dataset.groupe,
+      parcours: e.currentTarget.value,
     }).then(() => {
       load(Routing.generate('administration_groupe_liste_semestre', { semestre }), document.getElementById('groupes_semestre'))
       addCallout('Mise à jour du parcours associé au groupe', 'success')

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/GroupeAjaxController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/GroupeAjaxController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 10:23
+ * @lastUpdate 30/08/2022 10:19
  */
 
 namespace App\Controller\administration;
@@ -15,6 +15,7 @@ use App\Entity\Groupe;
 use App\Repository\GroupeRepository;
 use App\Repository\ParcourRepository;
 use App\Repository\TypeGroupeRepository;
+use App\Utils\JsonRequest;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,11 +36,14 @@ class GroupeAjaxController extends BaseController
             Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
+    /**
+     * @throws \JsonException
+     */
     #[Route(path: '/update-parent', name: 'administration_groupe_change_parent', options: ['expose' => true], methods: ['POST'])]
     public function updateParent(GroupeRepository $groupeRepository, Request $request): ?JsonResponse
     {
-        $groupe = $groupeRepository->find($request->request->get('groupe'));
-        $parent = $groupeRepository->find($request->request->get('parent'));
+        $groupe = $groupeRepository->find(JsonRequest::getValueFromRequest($request,'groupe'));
+        $parent = $groupeRepository->find(JsonRequest::getValueFromRequest($request,'parent'));
         if (null !== $groupe && null !== $parent) {
             $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $groupe->getTypeGroupe()?->getSemestre());
 
@@ -55,8 +59,8 @@ class GroupeAjaxController extends BaseController
     #[Route(path: '/update-typegroupe', name: 'administration_groupe_change_typegroupe', options: ['expose' => true], methods: ['POST'])]
     public function updateTypeGroupe(TypeGroupeRepository $typeGroupeRepository, GroupeRepository $groupeRepository, Request $request): ?JsonResponse
     {
-        $groupe = $groupeRepository->find($request->request->get('groupe'));
-        $typegroupe = $typeGroupeRepository->find($request->request->get('typegroupe'));
+        $groupe = $groupeRepository->find(JsonRequest::getValueFromRequest($request,'groupe'));
+        $typegroupe = $typeGroupeRepository->find(JsonRequest::getValueFromRequest($request,'typegroupe'));
         if (null !== $groupe && null !== $typegroupe) {
             $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $typegroupe->getSemestre());
 
@@ -72,8 +76,8 @@ class GroupeAjaxController extends BaseController
     #[Route(path: '/update-parcours', name: 'administration_groupe_change_parcours', options: ['expose' => true], methods: ['POST'])]
     public function updateParcours(ParcourRepository $parcourRepository, GroupeRepository $groupeRepository, Request $request): ?JsonResponse
     {
-        $groupe = $groupeRepository->find($request->request->get('groupe'));
-        $parcours = $parcourRepository->find($request->request->get('parcours'));
+        $groupe = $groupeRepository->find(JsonRequest::getValueFromRequest($request,'groupe'));
+        $parcours = $parcourRepository->find(JsonRequest::getValueFromRequest($request,'parcours'));
         if (null !== $groupe && null !== $parcours) {
             $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $groupe->getTypeGroupe()->getSemestre());
 

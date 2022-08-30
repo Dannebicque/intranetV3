@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/GroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2022 09:35
+ * @lastUpdate 30/08/2022 10:38
  */
 
 namespace App\Controller\administration;
@@ -31,7 +31,7 @@ class GroupeController extends BaseController
     /**
      * @throws \App\Exception\DiplomeNotFoundException
      */
-    #[Route(path: '/{semestre}', name: 'administration_groupe_index', requirements: ['semestre' => '\d+'], methods: ['GET'])]
+    #[Route(path: '/{semestre}', name: 'administration_groupe_index', requirements: ['semestre' => '\d+'], methods: ['GET', 'POST'])]
     public function index(Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
@@ -52,6 +52,9 @@ class GroupeController extends BaseController
         ]);
     }
 
+    /**
+     * @throws \App\Exception\DiplomeNotFoundException
+     */
     #[Route(path: '/genere-groupes/{semestre}', name: 'administration_groupe_semestre_genere', requirements: ['semestre' => '\d+'], methods: ['POST'])]
     public function genereGroupes(
         GenereGroupes $genereGroupes,
@@ -74,6 +77,9 @@ class GroupeController extends BaseController
         ]);
     }
 
+    /**
+     * @throws \App\Exception\DiplomeNotFoundException
+     */
     #[Route(path: '/liste/{semestre}', name: 'administration_groupe_liste_semestre', options: ['expose' => true], methods: ['GET'])]
     public function listeSemestre(GroupeRepository $groupeRepository, Semestre $semestre): Response
     {
@@ -106,6 +112,9 @@ class GroupeController extends BaseController
         ]);
     }
 
+    /**
+     * @throws \JsonException
+     */
     #[Route(path: '/{semestre}/export.{_format}', name: 'administration_groupe_export', requirements: ['_format' => 'csv|xlsx|pdf'], options: ['expose' => true], methods: 'GET')]
     public function export(
         MySerializer $mySerializer,
@@ -136,6 +145,9 @@ class GroupeController extends BaseController
         );
     }
 
+    /**
+     * @throws \App\Exception\DiplomeNotFoundException
+     */
     #[Route(path: '/new/{semestre}', name: 'administration_groupe_new', options: ['expose' => true], methods: [
         'GET',
         'POST',
@@ -195,12 +207,15 @@ class GroupeController extends BaseController
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
+    /**
+     * @throws \App\Exception\DiplomeNotFoundException
+     */
     private function getDiplomeFromSemestre(Semestre $semestre): Diplome
     {
         if (null === $semestre->getDiplome()) {
             throw new DiplomeNotFoundException();
         }
 
-        return null === $semestre->getDiplome()->getParent() ? $semestre->getDiplome() : $semestre->getDiplome()->getParent();
+        return $semestre->getDiplome()->getParent() ?? $semestre->getDiplome();
     }
 }
