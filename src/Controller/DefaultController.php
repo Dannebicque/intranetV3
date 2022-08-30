@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/DefaultController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/DefaultController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 07:01
+ * @lastUpdate 30/08/2022 18:06
  */
 
 namespace App\Controller;
@@ -35,16 +35,17 @@ class DefaultController extends BaseController
         }
         if ($this->getUser() instanceof Etudiant) {
             $dates = $dateRepository->findByDateForEtudiant($this->getUser(), 2);
-            $typesGroupes = $typeGroupeRepository->findBySemestre($this->getUser()->getSemestre());
+            $typeGroupes = $typeGroupeRepository->findBySemestre($this->getUser()->getSemestre());//todo: filtrer selon le type de diplome APC ou pas.
         } else {
             $dates = $dateRepository->findByDateForPersonnel($this->getDepartement(), 2);
-            $typesGroupes = $typeGroupeRepository->findByDepartementSemestresActifs($this->getDepartement());
+            $semestre = $this->getDataUserSession()->getSemestresActifs()[0];
+            $typeGroupes = $typeGroupeRepository->findByDiplomeAndOrdreSemestre($semestre->getDiplome(), $semestre->getOrdreLmd());
         }
 
         return $this->render('default/index.html.twig', [
             'actualites' => $actualiteRepository->getByDepartement($this->getDepartement(), 3),
             'dates' => $dates,
-            'typegroupes' => $typesGroupes,
+            'typeGroupes' => $typeGroupes,
         ]);
     }
 }
