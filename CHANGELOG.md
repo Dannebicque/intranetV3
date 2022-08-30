@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.8.11](https://github.com/Dannebicque/intranetV3/compare/v3.8.10...v3.8.11) (2022-08-30)
+
+
+### Features
+
+* [Listings] Refonte avec LiveComponent et gestion des parcours APC ([3b6e58e](https://github.com/Dannebicque/intranetV3/commit/3b6e58e6c56088beeae0f38779a8b4d3cdc12d70))
+
+
+### Bug Fixes
+
+* [Edt] Durée dans l'adapter ([1ead1d2](https://github.com/Dannebicque/intranetV3/commit/1ead1d2e00d8ee11904fce98332e893557d9f73f))
+* [Groupe] Gestion du parcours APC ([018a71f](https://github.com/Dannebicque/intranetV3/commit/018a71fbf188c4cf180a5911d5f8d4bdaa19b599))
+
 ### [3.8.10](https://github.com/Dannebicque/intranetV3/compare/v3.8.9...v3.8.10) (2022-08-30)
 
 
