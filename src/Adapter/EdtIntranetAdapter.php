@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Adapter/EdtIntranetAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/08/2022 15:24
+ * @lastUpdate 30/08/2022 15:25
  */
 
 namespace App\Adapter;
@@ -65,6 +65,7 @@ class EdtIntranetAdapter extends AbstractEdtAdapter implements EdtAdapterInterfa
         $event->personnelObjet = $evt->getIntervenant();
         $event->groupe = $evt->getDisplayGroupe();
         $event->type_cours = $evt->getType();
+        $event->duree = $evt->getFin() - $evt->getDebut();
 
 
         return $event;
