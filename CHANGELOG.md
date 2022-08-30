@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.8.10](https://github.com/Dannebicque/intranetV3/compare/v3.8.9...v3.8.10) (2022-08-30)
+
+
+### Bug Fixes
+
+* [Groupe Etudiant] Gestion des parcours ([bf4f564](https://github.com/Dannebicque/intranetV3/commit/bf4f564fb66d9646047171863a1b7cb2a4fbabc0))
+* [Groupe] Bugs JS ([6dea5b3](https://github.com/Dannebicque/intranetV3/commit/6dea5b3ddde072efc2070a5e1dee4fdae78500cd))
+* [Groupe] Créations des types de groupes ([cb132d3](https://github.com/Dannebicque/intranetV3/commit/cb132d3e50d9c4392b92823da390b891d1544be0))
+
 ### [3.8.9](https://github.com/Dannebicque/intranetV3/compare/v3.8.8...v3.8.9) (2022-08-30)
 
 
