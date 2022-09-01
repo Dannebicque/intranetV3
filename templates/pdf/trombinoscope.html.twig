@@ -4,7 +4,7 @@
     {% for groupe in groupes %}
         {{include('pdf/_headerPdf.html.twig', {
             departement: user_data.departement,
-            titre: '<h2>'~typeGroupe.semestre.display ~' | '~ user_data.displayAnneeUniversitaire~'</h2>',
+            titre: '<h2>'~typeGroupe.displaySemestreDiplome ~' | '~ user_data.displayAnneeUniversitaire~'</h2>',
             qualite: typeGroupe.semestre.diplome.optCertifieQualite
         }) }}
 

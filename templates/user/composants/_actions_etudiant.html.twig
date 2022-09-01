@@ -14,7 +14,7 @@
             {% for gr in etudiant.groupes %}
                 <tr id="ligne_{{ gr.id }}">
                     <td>#{{ gr.id }}</td>
-                    <td>{{ gr.typegroupe.libelle }} | {{ gr.libelle }} | {{ gr.typegroupe.semestre.libelle }}</td>
+                    <td>{{ gr.typegroupe.libelle }} | {{ gr.libelle }} | {{ gr.typegroupe.displaySemestreDiplome }}</td>
                     <td>
                         <a href="{{ path('administration_etudiant_groupe_delete', {id: gr.id, etudiant:etudiant.id}) }}"
                            data-csrf="{{ csrf_token('delete' ~ gr.id) }}"
