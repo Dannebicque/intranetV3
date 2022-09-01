@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.8.12](https://github.com/Dannebicque/intranetV3/compare/v3.8.11...v3.8.12) (2022-09-01)
+
+
+### Bug Fixes
+
+* [Document] typo sur le template de base. ([f9373b7](https://github.com/Dannebicque/intranetV3/commit/f9373b7691514067cc91597a4b505f68643c18d8))
+* [Groupe] Correction de la synchronisation Parent avec les parcours ([28f8d09](https://github.com/Dannebicque/intranetV3/commit/28f8d0960bafd63438b651c7ebb76fa52ef1cb99))
+
 ### [3.8.11](https://github.com/Dannebicque/intranetV3/compare/v3.8.10...v3.8.11) (2022-08-30)
 
 
