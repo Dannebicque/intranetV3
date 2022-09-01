@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/08/2022 15:40
+ * @lastUpdate 01/09/2022 10:51
  */
 
 namespace App\Repository;
@@ -80,7 +80,10 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->andWhere('p.idMatiere = :idMatiere')
             ->andWhere('p.typeMatiere = :typeMatiere')
             ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
-            ->setParameters(['semaine' => $semaine, 'idMatiere' => $idModule, 'typeMatiere' => $typeModule, 'annneeUniversitaire' => $anneeUniversitaire->getId()])
+            ->setParameters(['semaine' => $semaine,
+                'idMatiere' => $idModule,
+                'typeMatiere' => $typeModule,
+                'anneeUniversitaire' => $anneeUniversitaire->getId(), ])
             ->orderBy('p.jour', Criteria::ASC)
             ->addOrderBy('p.debut', Criteria::ASC)
             ->addOrderBy('p.groupe', Criteria::ASC)
