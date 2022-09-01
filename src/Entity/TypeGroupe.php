@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/TypeGroupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2022 09:33
+ * @lastUpdate 01/09/2022 16:30
  */
 
 namespace App\Entity;
@@ -158,6 +158,11 @@ class TypeGroupe extends BaseEntity
         }
 
         return null !== $this->getSemestre() ? $this->getSemestre()->getLibelle().' | '.$this->getLibelle() : $this->getLibelle();
+    }
+
+    public function getDisplaySemestreDiplome(): string
+    {
+            return 'S'.$this->ordreSemestre.' | '.$this->getDiplome()?->getDisplayCourt();
     }
 
     public function getSemestre(): ?Semestre
