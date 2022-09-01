@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends is_granted('ROLE_ADMINISTRATIF') ? 'base-super_admin.html.twig' : 'base.html.twig' %}
 
 {% block header %}
     {{ 'adm.apc_ressource.edit.heading'|trans }}
