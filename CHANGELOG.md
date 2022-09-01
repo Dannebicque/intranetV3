@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.8.13](https://github.com/Dannebicque/intranetV3/compare/v3.8.12...v3.8.13) (2022-09-01)
+
+
+### Bug Fixes
+
+* [Document] Type de retour ([c34fb9c](https://github.com/Dannebicque/intranetV3/commit/c34fb9cc87ddcc04dba11b532b80ee90a18f2c1f))
+* [Edt] Filtrage par matière ([9fba0ea](https://github.com/Dannebicque/intranetV3/commit/9fba0eae775a2dcca25e6007f38de00c53ae6b44))
+* [Notes] Type de retour ([7d3c8da](https://github.com/Dannebicque/intranetV3/commit/7d3c8da0180bf6b856a30f4ec5a6cdc9920f36eb))
+
 ### [3.8.12](https://github.com/Dannebicque/intranetV3/compare/v3.8.11...v3.8.12) (2022-09-01)
 
 
