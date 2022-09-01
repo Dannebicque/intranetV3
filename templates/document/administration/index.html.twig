@@ -1,5 +1,4 @@
-{% extends is_granted('ROLE_ADMINISTRATIF') ? 'base-super_admin.html.twig' : 'base.html
-.twig' %}
+{% extends is_granted('ROLE_ADMINISTRATIF') ? 'base-super_admin.html.twig' : 'base.html.twig' %}
 
 {% block header %}
     {{ 'adm.document.index.heading'|trans }}
@@ -13,8 +12,7 @@
                 btn-sm
                 btn-float" title="{{ 'atitle.gestion.access.originaux'|trans }}" data-bs-toggle="tooltip"
                    data-bs-placement="bottom"><i class="fas fa-hippo"></i></a>
-                <a href="{{ path('sa_qualite_documents_new', {source:'originaux'}) }}" class="btn btn-info btn-sm btn-float" title="{{ 'atitle
-    .creer_nouveau'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="{{ iconAdd }}"></i></a>
+                <a href="{{ path('sa_qualite_documents_new', {source:'originaux'}) }}" class="btn btn-info btn-sm btn-float" title="{{ 'atitle.creer_nouveau'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="{{ iconAdd }}"></i></a>
                 <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
                    title="{{ 'atitle.retour_administration'|trans }}">
                     <i class="{{ iconDashboard }}"><span class="sr-only">dashboard</span></i>
