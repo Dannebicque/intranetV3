@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyGroupes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/07/2022 16:53
+ * @lastUpdate 01/09/2022 09:12
  */
 
 /*
@@ -102,7 +102,7 @@ class MyGroupes
 
     public function updateParent(Semestre $semestre): void
     {
-        $groupes = $this->groupeRepository->findBySemestre($semestre);
+        $groupes = $this->groupeRepository->findByDiplomeAndOrdreSemestre($semestre->getDiplome(), $semestre->getOrdreLmd());
         /** @var Groupe $groupe */
         foreach ($groupes as $groupe) {
             // pas d'enfant c'est le groupe de plus bas  niveau
