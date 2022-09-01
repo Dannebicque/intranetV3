@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Etudiant/EtudiantNotes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/06/2022 07:42
+ * @lastUpdate 01/09/2022 16:06
  */
 
 namespace App\Classes\Etudiant;
@@ -50,7 +50,7 @@ class EtudiantNotes
     public function getNotesParSemestresEtAnneeUniversitaire(
         array $matieres,
         ?AnneeUniversitaire $anneeUniversitaire
-    ): array {
+    ): ?array {
         if (null !== $anneeUniversitaire) {
             $this->notes = $this->noteRepository->findByEtudiantSemestre($this->etudiant, $matieres,
                 $anneeUniversitaire);
