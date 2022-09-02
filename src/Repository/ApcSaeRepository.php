@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcSaeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/08/2022 14:13
+ * @lastUpdate 02/09/2022 16:07
  */
 
 namespace App\Repository;
@@ -97,9 +97,10 @@ class ApcSaeRepository extends ServiceEntityRepository
             ->addSelect('s')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
-            ->leftJoin('r.apcSaeCompetences', 'apcSaeCompetences')
-            ->addSelect('apcSaeCompetences')
+            ->innerJoin(ApcSaeCompetence::class, 'cs', 'WITH', 'cs.sae = r.id')
+            ->innerJoin(ApcCompetence::class, 'c', 'WITH', 'cs.competence = c.id')
             ->where('d.departement = :departement')
+            ->andWhere('d.referentiel = c.apcReferentiel')
             ->andWhere('a.actif = 1')
             ->setParameter('departement', $departement->getId())
             ->orderBy('r.codeMatiere', Criteria::ASC)

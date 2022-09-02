@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcRessourceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/08/2022 11:18
+ * @lastUpdate 02/09/2022 16:08
  */
 
 namespace App\Repository;
@@ -50,7 +50,6 @@ class ApcRessourceRepository extends ServiceEntityRepository
             ->addSelect('s')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->where('a.diplome = :diplome')
-            // ->andWhere('s.ppn_actif = m.ppn')
             ->setParameter('diplome', $diplome->getId())
             ->orderBy('r.codeMatiere', Criteria::ASC)
             ->addOrderBy('r.libelle', Criteria::ASC);
@@ -64,7 +63,6 @@ class ApcRessourceRepository extends ServiceEntityRepository
             ->where('s.id = :semestre')
             ->leftJoin('r.apcRessourceCompetences', 'apcRessourceCompetences')
             ->addSelect('apcRessourceCompetences')
-            // ->andWhere('s.ppn_actif = m.ppn')
             ->setParameter('semestre', $semestre->getId())
             ->orderBy('r.codeMatiere', Criteria::ASC)
             ->addOrderBy('r.libelle', Criteria::ASC)
@@ -96,9 +94,10 @@ class ApcRessourceRepository extends ServiceEntityRepository
             ->addSelect('s')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
-            ->leftJoin('r.apcRessourceCompetences', 'apcRessourceCompetences')
-            ->addSelect('apcRessourceCompetences')
-            ->where('d.departement = :departement')
+            ->innerJoin(ApcRessourceCompetence::class, 'cr', 'WITH', 'cr.ressource = r.id')
+            ->innerJoin(ApcCompetence::class, 'c', 'WITH', 'cr.competence = c.id')
+            ->where('c.apcReferentiel = d.referentiel')
+            ->andWhere('d.departement = :departement')
             ->andWhere('a.actif = 1')
             ->setParameter('departement', $departement->getId())
             ->orderBy('r.codeMatiere', Criteria::ASC)

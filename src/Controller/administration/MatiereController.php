@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/MatiereController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/08/2022 17:24
+ * @lastUpdate 02/09/2022 15:52
  */
 
 namespace App\Controller\administration;
@@ -22,7 +22,6 @@ use App\Form\MatiereType;
 use App\Repository\ApcRessourceRepository;
 use App\Repository\ApcSaeRepository;
 use App\Repository\MatiereRepository;
-use App\Repository\ParcourRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -53,10 +52,13 @@ class MatiereController extends BaseController
 
         // feature: A optimiser pour pas dépendre des repository??
         if (true === $diplome->isApc()) {
+            if (null === $diplome->getReferentiel()) {
+                $this->addFlash('danger', 'Le référentiel n\'est pas défini pour ce diplôme');
+            }
             return $this->render('administration/matiere/_tableauApc.html.twig', [
                 'diplome' => $diplome,
-                'ressources' => $apcRessourceRepository->findByDiplome($diplome),
-                'saes' => $apcSaeRepository->findByDiplome($diplome),
+                'ressources' => $apcRessourceRepository->findByReferentiel($diplome->getReferentiel()),
+                'saes' => $apcSaeRepository->findByReferentiel($diplome->getReferentiel()),
             ]);
         }
 

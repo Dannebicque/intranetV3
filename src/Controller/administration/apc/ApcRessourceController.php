@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcRessourceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/07/2022 08:05
+ * @lastUpdate 01/09/2022 16:32
  */
 
 namespace App\Controller\administration\apc;
@@ -67,11 +67,11 @@ class ApcRessourceController extends BaseController
     #[Route(path: '/ajax-ac', name: 'apc_ressources_ajax_ac', options: ['expose' => true], methods: ['POST'])]
     public function ajaxAc(SemestreRepository $semestreRepository, ApcRessourceApprentissageCritiqueRepository $apcRessourceApprentissageCritiqueRepository, ApcApprentissageCritiqueRepository $apcApprentissageCritiqueRepository, Request $request): Response
     {
-        $semestre = $semestreRepository->find($request->request->get('semestre'));
+        $semestre = $semestreRepository->find($request->request->all()['semestre']);
         $competences = $request->request->all()['competences'];
         if (null !== $semestre && (null === $competences ? 0 : count($competences)) > 0) {
-            if (null !== $request->request->get('ressource')) {
-                $tabAcSae = $apcRessourceApprentissageCritiqueRepository->findArrayIdAc($request->request->get('ressource'));
+            if (null !== $request->request->all()['ressource']) {
+                $tabAcSae = $apcRessourceApprentissageCritiqueRepository->findArrayIdAc((int)$request->request->all()['ressource']);
             } else {
                 $tabAcSae = [];
             }
