@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/08/2022 15:33
+ * @lastUpdate 02/09/2022 16:32
  */
 
 namespace App\Classes\Edt;
@@ -548,6 +548,8 @@ class MyEdtIntranet extends BaseEdt
         $pl = new EdtPlanning();
         $semestre = $this->semestreRepository->find($request->request->get('promo'));
         $pl->setSemestre($semestre);
+        $pl->setAnneeUniversitaire($anneeUniversitaire);
+        $pl->setOrdreSemestre($semestre->getOrdreLmd());
         $pl->setSemaine($request->request->get('semaine'));
 
         return $this->updatePl($request, $pl, $anneeUniversitaire);
@@ -604,7 +606,7 @@ class MyEdtIntranet extends BaseEdt
         $tc = explode('-', (string) $request->request->get('typecours'));
         $plann->setType($tc[0]);
 
-        switch ($tc[0]) {
+        switch (TypeGroupeEnum::from($tc[0])) {
             case TypeGroupeEnum::TYPE_GROUPE_CM:
                 $plann->setGroupe(1);
                 break;
