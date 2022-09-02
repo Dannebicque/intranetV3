@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/ProfilEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/06/2022 07:56
+ * @lastUpdate 02/09/2022 18:30
  */
 
 namespace App\Controller;
@@ -87,7 +87,10 @@ class ProfilEtudiantController extends BaseController
                 $etudiant->getAnneeUniversitaire());
             $etudiantNotes->calculGraphique();
 
-            $notes = $notesTri->tri($notes, $matieres);
+            if (null !== $notes) {
+                // todo: à revoir, qu'est ce que cela donne si pas trié.
+                $notes = $notesTri->tri($notes, $matieres);
+            }
 
             $chart = $chartBuilder->createChart(Chart::TYPE_RADAR);
             $chart->setData([
@@ -182,7 +185,6 @@ class ProfilEtudiantController extends BaseController
         Etudiant $etudiant
     ): Response {
         $semestresPrecedents = $scolariteRepository->findByEtudiant($etudiant);
-
 
         if (null !== $etudiant->getSemestre()) {
             $semestre = $etudiant->getSemestre();
