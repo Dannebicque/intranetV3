@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/QuestionnaireQuestion.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/06/2022 15:04
+ * @lastUpdate 02/09/2022 18:25
  */
 
 namespace App\Entity;
@@ -88,7 +88,7 @@ class QuestionnaireQuestion extends BaseEntity
     private ?string $parametre = '[]';
 
     #[ORM\Column(type: Types::INTEGER, nullable: true)]
-    private int $maxChoix = 1;
+    private ?int $maxChoix = 1;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $configuration = '[]';
