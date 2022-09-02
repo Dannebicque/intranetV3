@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.8.14](https://github.com/Dannebicque/intranetV3/compare/v3.8.13...v3.8.14) (2022-09-02)
+
+
+### Bug Fixes
+
+* [APC] Gestion des ressources/SAE depuis le super Admin ([ad8f288](https://github.com/Dannebicque/intranetV3/commit/ad8f28829171d73f264425203fc89efb4c8308ad))
+* [Edt] Saisie EDT ([d264e56](https://github.com/Dannebicque/intranetV3/commit/d264e56f1b5e6b7c05e4f6df30e3bd7479fb7e45))
+* [Export] Corrections Exports Etudiants et listings ([4fe74ee](https://github.com/Dannebicque/intranetV3/commit/4fe74ee512380a16955e528bc9691a2feb3c6ca9))
+* [Export] Corrections Exports Etudiants et listings ([080c6b4](https://github.com/Dannebicque/intranetV3/commit/080c6b4c16d956914a599a54db01d4734cd916f1))
+* [Groupe] Ordre des colonnes ([cb0f858](https://github.com/Dannebicque/intranetV3/commit/cb0f858ad9e168ced0251c9b0cbca87c25d7f595))
+* [Matière] Filtre par référentiel ([f0c4ac5](https://github.com/Dannebicque/intranetV3/commit/f0c4ac55983086ab65c33f696e7b6880d0a6a3a2))
+
 ### [3.8.13](https://github.com/Dannebicque/intranetV3/compare/v3.8.12...v3.8.13) (2022-09-01)
 
 
