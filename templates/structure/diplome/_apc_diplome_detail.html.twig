@@ -1,7 +1,8 @@
 {% if diplome.apcParcours == null %}
-    <span class="badge bg-info">Tronc commun ou parcours non précisé</span>
+    <h2><span class="badge bg-info">Tronc commun ou parcours non précisé</span></h2>
 {% else %}
-    <span class="badge bg-warning">Parcours {{ diplome.apcParcours.libelle }} ({{ diplome.apcParcours.code }})</span>
+    <h2><span class="badge bg-warning">Parcours {{ diplome.apcParcours.libelle }} ({{ diplome.apcParcours.code
+    }})</span></h2>
 {% endif %}
 
 <div class="mb-2 mt-2">
@@ -75,6 +76,9 @@
             <a data-href="{{ path('sa_annee_ajax_edit', {id:annee.id}) }}"
                class="editable"
                data-field="codeVersion">{{ annee.codeVersion }}</a>
+            {% if annee.actif == false %}
+            <span class="badge bg-danger">Année inactive</span>
+            {% endif %}
         </div>
         <div class="col-md-2">
             <a href="{{ path(baseurl ~ 'annee_duplicate', {'id': annee.id}) }}"
@@ -127,6 +131,9 @@
                 <a data-href="{{ path('sa_semestre_ajax_edit', {id:semestre.id}) }}"
                    class="editable"
                    data-field="codeElement">{{ semestre.codeElement }}</a>
+                {% if semestre.actif == false %}
+                    <span class="badge bg-danger">Semestre inactif</span>
+                {% endif %}
             </div>
             <div class="col-md-2">
                 <a href="{{ path(baseurl ~ 'semestre_duplicate', {'id': semestre.id}) }}"
