@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.8.15](https://github.com/Dannebicque/intranetV3/compare/v3.8.14...v3.8.15) (2022-09-03)
+
+
+### Bug Fixes
+
+* [Apc] Dupliquer ressources/SAE d'un semestre ([27a4326](https://github.com/Dannebicque/intranetV3/commit/27a4326d1a5fc8544c1fc8559a8044ac6e01f28a))
+* [Profil] Bug typage ([e84ad22](https://github.com/Dannebicque/intranetV3/commit/e84ad22ec479dcc506352917f2e036e90cc2bb92))
+* [Questions] Bug typage ([ecaf96c](https://github.com/Dannebicque/intranetV3/commit/ecaf96c62a98fa0432c3a81dd89bb42a9c41cf82))
+
 ### [3.8.14](https://github.com/Dannebicque/intranetV3/compare/v3.8.13...v3.8.14) (2022-09-02)
 
 
