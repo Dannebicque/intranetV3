@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcSaeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/09/2022 11:58
+ * @lastUpdate 03/09/2022 14:23
  */
 
 namespace App\Repository;
@@ -150,7 +150,7 @@ class ApcSaeRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('r')
             ->innerJoin('r.semestres', 's')
-            ->addSelect('s')
+           // ->addSelect('s')
             ->where('s.id = :semestre')
             ->innerJoin(ApcSaeCompetence::class, 'cs', 'WITH', 'cs.sae = r.id')
             ->innerJoin(ApcCompetence::class, 'c', 'WITH', 'cs.competence = c.id')

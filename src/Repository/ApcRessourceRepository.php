@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcRessourceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/09/2022 11:58
+ * @lastUpdate 03/09/2022 14:18
  */
 
 namespace App\Repository;
@@ -148,7 +148,7 @@ class ApcRessourceRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('r')
             ->innerJoin('r.semestres', 's')
-            ->addSelect('s')
+            //->addSelect('s')
             ->where('s.id = :semestre')
             ->innerJoin(ApcRessourceCompetence::class, 'cs', 'WITH', 'cs.ressource = r.id')
             ->innerJoin(ApcCompetence::class, 'c', 'WITH', 'cs.competence = c.id')

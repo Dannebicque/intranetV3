@@ -1,14 +1,14 @@
 {% extends 'base-super_admin.html.twig' %}
 
 {% block header %}
-    Gestion codification des Ressources/SAE pour le semestre {{ semestre.libelle }}
+    Gestion codification des Ressources/SAE pour le semestre {{ semestre.display }}
 {% endblock %}
 
 {% block content %}
 
     <div class="card">
         <div class="card-header">
-            <h4>Gestion codification des Ressources/SAE pour le semestre {{ semestre.libelle }}</h4>
+            <h4>Gestion codification des Ressources/SAE pour le semestre {{ semestre.display }}</h4>
         </div>
         <div class="card-body">
             <form action="{{ path('sa_apc_codification_mise_a_jour', {semestre:semestre.id}) }}" method="post">
@@ -20,13 +20,14 @@
                     <tr>
                         <th>Code Département</th>
                         <th>Code Apogée</th>
+                        <th>Semestres</th>
                         <th>Libellé long</th>
                         <th>Libellé court</th>
                     </tr>
                     </thead>
                     <tbody>
                     <tr>
-                        <td colspan="4" class="bg-cyan">
+                        <td colspan="5" class="bg-cyan">
                             Ressources
                         </td>
                     </tr>
@@ -51,6 +52,15 @@
                                        class="form-control">
                             </td>
                             <td>
+                                {% for sem in semestres|filter(sem => sem.ordreLmd == semestre.ordreLmd) %}
+                                    <input type="checkbox"
+                                           name="semestre_res_{{ ressource.id }}[]"
+                                           {% if ressource.semestres.contains(sem) %}checked{% endif %}
+                                           value="{{ sem.id }}">
+                                {{ sem.display }}<br>
+                                {% endfor %}
+                            </td>
+                            <td>
                                 <label class="sr-only" for="libelleLong_res_{{ ressource.id }}">
                                     Libellé long de {{ ressource.libelleCourt }}
                                 </label>
@@ -71,7 +81,7 @@
                         </tr>
                     {% endfor %}
                     <tr>
-                        <td colspan="4" class="bg-cyan">
+                        <td colspan="5" class="bg-cyan">
                             SAÉ
                         </td>
                     </tr>
@@ -94,6 +104,15 @@
                                        id="codeApogee_sae_{{ sae.id }}"
                                        name="codeApogee_sae_{{ sae.id }}"
                                        class="form-control">
+                            </td>
+                            <td>
+                                {% for sem in semestres|filter(sem => sem.ordreLmd == semestre.ordreLmd) %}
+                                    <input type="checkbox"
+                                           name="semestre_sae_{{ sae.id }}[]"
+                                           {% if sae.semestres.contains(sem) %}checked{% endif %}
+                                           value="{{ sem.id }}">
+                                    {{ sem.display }}<br>
+                                {% endfor %}
                             </td>
                             <td>
                                 <label class="sr-only" for="libelleLong_sae_{{ sae.id }}">
