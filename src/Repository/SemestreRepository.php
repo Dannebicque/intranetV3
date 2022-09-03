@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/SemestreRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/07/2022 14:48
+ * @lastUpdate 03/09/2022 11:11
  */
 
 namespace App\Repository;
@@ -149,6 +149,10 @@ class SemestreRepository extends ServiceEntityRepository
 
     public function findAllSemestreByDiplomeApc(Diplome $diplome): array
     {
+        if ($diplome->getParent() !== null) {
+            $diplome = $diplome->getParent();
+        }
+
         $query = $this->createQueryBuilder('s')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
