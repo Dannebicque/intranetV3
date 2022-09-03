@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcRessource.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/08/2022 14:38
+ * @lastUpdate 03/09/2022 11:55
  */
 
 namespace App\Entity;
@@ -99,6 +99,10 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
         $this->ressourcesAvecPreRequis = new ArrayCollection();
     }
 
+    public function __clone()
+    {
+        $this->semestres = new ArrayCollection();
+    }
 
     public function getPreRequis(): ?string
     {

@@ -1,0 +1,25 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">Dupliquer les Ressources du semestre {{ semestre.displayLong }} vers ...</h4>
+        <div class="card-body">
+            <form action="{{ path('administration_apc_pn_duplique_ressource_semestre', {'semestre': semestre.id}) }}"
+                  method="post">
+                <label for="semestre_destination">Semestre de destination</label>
+                <select class="form-control" name="semestre_destination" id="semestre_destination">
+                    <option>Choisir un semestre</option>
+                    {% for sem in semestres|filter(sem => sem.ordreLmd == semestre.ordreLmd) %}
+                        <option value="{{ sem.id }}">{{ sem.displayLong }}</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-primary">Dupliquer</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block headeractions %}
+
+{% endblock %}
+

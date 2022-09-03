@@ -6,8 +6,8 @@
 
 <div class="mb-2 mt-2">
     <a href="{{ path(baseurl ~ 'diplome_duplicate', {'id': diplome.id}) }}"
-        class="btn btn-success btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
-        title="{{ 'atitle.dupliquer'|trans }}"><i class="{{ iconDuplicate }}"></i></a>
+       class="btn btn-success btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
+       title="{{ 'atitle.dupliquer'|trans }}"><i class="{{ iconDuplicate }}"></i></a>
     <a href="{{ path(baseurl ~ 'diplome_show', {'id': diplome.id}) }}"
        class="btn btn-info btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
        title="{{ 'atitle.details'|trans }}"><i class="{{ iconShow }}"></i></a>
@@ -233,50 +233,6 @@
                     {% endif %}
                 </div>
             </div>
-            {# todo: ressources et SAE  #}
-            {#                {% for matiere in ue.matieres %} #}
-            {#                    <div class="row gap-y matiere_{{ ue.id }} lignehover"> #}
-            {#                        <div class="col-md-3"></div> #}
-            {#                        <div class="col-md-7">{{ matiere.codeMatiere }} | {{ matiere.codeElement }} #}
-            {#                                                                        | {{ matiere.libelle }}</div> #}
-            {#                        <div class="col-md-2"> #}
-            {#                            <a href="{{ path(baseurl ~ 'matiere_duplicate', {'id': matiere.id}) }}" #}
-            {#                               class="btn btn-success btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom" #}
-            {#                               title="{{ 'atitle.dupliquer'|trans }}"><i #}
-            {#                                        class="{{ iconDuplicate }}"></i></a> #}
-            {#                            <a href="{{ path(baseurl ~ 'matiere_show', {'id': matiere.id}) }}" #}
-            {#                               class="btn btn-info btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom" #}
-            {#                               title="{{ 'atitle.details'|trans }}"><i #}
-            {#                                        class="{{ iconShow }}"></i></a> #}
-
-            {#                            <a href="{{ path(baseurl ~ 'matiere_edit', {'id': matiere.id}) }}" #}
-            {#                               class="btn btn-warning btn-outline btn-square btn-xs"><i class="{{ iconEdit }}" #}
-            {#                                                                                        data-bs-toggle="tooltip" data-bs-placement="bottom" #}
-
-            {#                                                                                        title="{{ 'atitle.modifier'|trans }}"></i></a> #}
-            {#                            {% if is_granted('ROLE_SUPER_ADMIN') %} #}
-            {#                                {% if semestre.actif == true %} #}
-            {#                                    <a href="{{ path(baseurl ~ 'matiere_activate', {'matiere': matiere #}
-            {#                                    .id, etat:1}) }}" #}
-            {#                                       class="btn btn-secondary btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom" #}
-            {#                                       title="{{ 'atitle.desactiver'|trans }}"><i class="fa #}
-            {#                       fa-eye-slash"></i></a> #}
-            {#                                {% else %} #}
-            {#                                    <a href="{{ path(baseurl ~ 'matiere_activate', {'matiere': matiere #}
-            {#                                    .id, etat:0}) }}" #}
-            {#                                       class="btn btn-secondary btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom" #}
-            {#                                       title="{{ 'atitle.active'|trans }}"><i class="fa #}
-            {#                       fa-eye"></i></a> #}
-            {#                                {% endif %} #}
-            {#                                <a href="{{ path(baseurl ~ 'matiere_delete', {id: matiere.id}) }}" #}
-            {#                                   data-csrf="{{ csrf_token('delete' ~ matiere.id) }}" #}
-            {#                                   class="btn btn-danger btn-outline btn-square btn-xs supprimer" data-id="id"><i #}
-            {#                                            class="{{ iconDelete }}" data-bs-toggle="tooltip" data-bs-placement="bottom" #}
-            {#                                            title="{{ 'atitle.supprimer'|trans }}"></i></a> #}
-            {#                            {% endif %} #}
-            {#                        </div> #}
-            {#                    </div> #}
-            {#                {% endfor %} #}
             {% if diplome.ppns|length == 0 and (diplome.parent != null and diplome.parent.ppns|length == 0) %}
                 <div class="row gap-y lignehover">
                     <div class="col-md-2"></div>
@@ -310,11 +266,24 @@
                                                                semestre {{ semestre.libelle }}</a>
                 </div>
             {% endif %}
-            <div class="col-md-4 d-grid">
-                <a href="{{ path('sa_apc_codification_index', {semestre:semestre.id}) }}"
-                   class="btn btn-warning d-block" title="Gérer codification {{ semestre.libelle }}"><i
-                            class="fa fa-binary"></i> Gérer codification {{ semestre.libelle }}</a>
-            </div>
+            {% if is_granted('ROLE_ADMINISTRATIF') %}
+                <div class="col-md-4 d-grid">
+                    <a href="{{ path('sa_apc_codification_index', {semestre:semestre.id}) }}"
+                       class="btn btn-warning d-block" title="Gérer codification {{ semestre.libelle }}"><i
+                                class="fa fa-binary"></i> Gérer codification {{ semestre.libelle }}</a>
+                </div>
+                <div class="col-md-2"></div>
+                <div class="col-md-4 d-grid">
+                    <a href="{{ path('administration_apc_pn_duplique_ressource_semestre', {semestre:semestre.id}) }}"
+                       class="btn btn-warning d-block" title="Dupliquer les ressources du {{ semestre.displayLong }}"><i
+                                class="fa fa-copy"></i> Dupliquer les ressources du {{ semestre.displayLong }}</a>
+                </div>
+                <div class="col-md-4 d-grid">
+                    <a href="{{ path('administration_apc_pn_duplique_sae_semestre', {semestre:semestre.id}) }}"
+                       class="btn btn-warning d-block" title="Dupliquer les SAE du {{ semestre.displayLong }}"><i
+                                class="fa fa-copy"></i> Dupliquer les SAE du {{ semestre.displayLong }}</a>
+                </div>
+            {% endif %}
         </div>
         <div class="row gap-y lignehover" id="ue_new_{{ semestre.id }}">
             <div class="col-md-2"></div>

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/apc/superAdmin/ApcCodificationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/08/2022 21:52
+ * @lastUpdate 03/09/2022 11:58
  */
 
 namespace App\Controller\apc\superAdmin;
@@ -33,10 +33,8 @@ class ApcCodificationController extends BaseController
     ): Response {
         return $this->render('apc/super_admin/codification/index.html.twig', [
             'semestre' => $semestre,
-            'ressources' => $this->apcRessourceRepository->findByReferentielSemestre($semestre->getDiplome()?->getReferentiel(),
-                $semestre->getOrdreLmd()),
-            'saes' => $this->apcSaeRepository->findByReferentielSemestre($semestre->getDiplome()?->getReferentiel(),
-                $semestre->getOrdreLmd()),
+            'ressources' => $this->apcRessourceRepository->findBySemestreReferentiel($semestre, $semestre->getDiplome()?->getReferentiel()),
+            'saes' => $this->apcSaeRepository->findBySemestreReferentiel($semestre, $semestre->getDiplome()?->getReferentiel()),
         ]);
     }
 
@@ -45,10 +43,8 @@ class ApcCodificationController extends BaseController
         Request $request,
         Semestre $semestre
     ): RedirectResponse {
-        $ressources = $this->apcRessourceRepository->findByReferentielSemestre($semestre->getDiplome()?->getReferentiel(),
-            $semestre->getOrdreLmd());
-        $saes = $this->apcSaeRepository->findByReferentielSemestre($semestre->getDiplome()?->getReferentiel(),
-            $semestre->getOrdreLmd());
+        $ressources = $this->apcRessourceRepository->findBySemestreReferentiel($semestre, $semestre->getDiplome()?->getReferentiel());
+        $saes = $this->apcSaeRepository->findBySemestreReferentiel($semestre, $semestre->getDiplome()?->getReferentiel());
 
         foreach ($ressources as $ressource) {
             if ($request->request->has('codeApogee_res_'.$ressource->getId())) {

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcSae.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/08/2022 14:16
+ * @lastUpdate 03/09/2022 11:51
  */
 
 namespace App\Entity;
@@ -85,6 +85,11 @@ class ApcSae extends AbstractMatiere implements MatiereEntityInterface
         $this->apcSaeCompetences = new ArrayCollection();
         $this->apcSaeRessources = new ArrayCollection();
         $this->apcSaeApprentissageCritiques = new ArrayCollection();
+        $this->semestres = new ArrayCollection();
+    }
+
+    public function __clone()
+    {
         $this->semestres = new ArrayCollection();
     }
 

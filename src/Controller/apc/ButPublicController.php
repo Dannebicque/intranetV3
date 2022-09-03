@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/apc/ButPublicController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/08/2022 11:57
+ * @lastUpdate 03/09/2022 11:58
  */
 
 namespace App\Controller\apc;
@@ -103,8 +103,8 @@ class ButPublicController extends AbstractController
         }
 
         return $this->render('apc/public/ressources_sae.html.twig', [
-            'saes' => $apcSaeRepository->findByReferentielSemestre($dip->getReferentiel(), $semestre),
-            'ressources' => $apcRessourceRepository->findByReferentielSemestre($dip->getReferentiel(), $semestre),
+            'saes' => $apcSaeRepository->findByReferentielOrdreSemestre($dip->getReferentiel(), $semestre),
+            'ressources' => $apcRessourceRepository->findByReferentielOrdreSemestre($dip->getReferentiel(), $semestre),
             'diplome' => $dip,
         ]);
     }

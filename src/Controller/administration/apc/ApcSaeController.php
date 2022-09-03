@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcSaeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 14:52
+ * @lastUpdate 03/09/2022 12:12
  */
 
 namespace App\Controller\administration\apc;
@@ -14,13 +14,16 @@ use App\Classes\Pdf\MyPDF;
 use App\Controller\BaseController;
 use App\Entity\ApcSae;
 use App\Entity\ApcSaeApprentissageCritique;
+use App\Entity\ApcSaeCompetence;
 use App\Entity\ApcSaeRessource;
 use App\Entity\Constantes;
 use App\Entity\Diplome;
+use App\Entity\Semestre;
 use App\Form\ApcSaeType;
 use App\Repository\ApcApprentissageCritiqueRepository;
 use App\Repository\ApcRessourceRepository;
 use App\Repository\ApcSaeApprentissageCritiqueRepository;
+use App\Repository\ApcSaeRepository;
 use App\Repository\ApcSaeRessourceRepository;
 use App\Repository\SemestreRepository;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
@@ -259,5 +262,52 @@ class ApcSaeController extends BaseController
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.sae.duplicate.success.flash');
 
         return $this->redirectToRoute('administration_apc_sae_edit', ['id' => $newApcSae->getId()]);
+    }
+
+    #[Route(path: '/{semestre}/dupliquer/semestre', name: 'apc_pn_duplique_sae_semestre', methods: 'GET|POST')]
+    public function duplicateSemestre(
+        ApcSaeRepository $apcSaeRepository,
+        SemestreRepository $semestreRepository,
+        Request $request, Semestre $semestre): Response
+    {
+        if ($request->isMethod('POST')) {
+            $semestreCible = $semestreRepository->find($request->request->get('semestre_destination'));
+            if (null !== $semestreCible) {
+                $saes = $apcSaeRepository->findBySemestreReferentiel($semestre, $semestre->getDiplome()->getReferentiel());
+                foreach ($saes as $sae) {
+                    $newApcSae = clone $sae;
+                    foreach ($newApcSae->getSemestres() as $sem) {
+                        $newApcSae->removeSemestre($sem);
+                        $sem->removeApcSemestresSae($newApcSae);
+                    }
+                    $newApcSae->addSemestre($semestreCible);
+                    $semestreCible->addApcSemestresSae($newApcSae);
+
+                    foreach ($sae->getApcSaeApprentissageCritiques() as $ac) {
+                        $newAc = new ApcSaeApprentissageCritique($newApcSae, $ac->getApprentissageCritique());
+                        $this->entityManager->persist($newAc);
+                    }
+
+                    foreach ($sae->getApcSaeCompetences() as $comp) {
+                        $newComp = new ApcSaeCompetence($newApcSae, $comp->getCompetence());
+                        $newComp->setCoefficient($comp->getCoefficient());
+                        $this->entityManager->persist($newComp);
+                    }
+
+                    $this->entityManager->persist($newApcSae);
+                }
+                $this->entityManager->flush();
+                $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.sae.duplicate.success.flash');
+
+                return $this->redirectToRoute('sa_apc_codification_mise_a_jour', ['semestre' => $semestreCible->getId()]);
+            }
+
+            $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'apc.sae.duplicate.error.flash');
+        }
+
+        return $this->render('apc/apc_sae/duplicate_semestre.html.twig', [
+            'semestre' => $semestre,
+            'semestres' => $semestreRepository->findAllSemestreByDiplomeApc($semestre->getDiplome()),
+        ]);
     }
 }

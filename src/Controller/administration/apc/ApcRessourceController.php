@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcRessourceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/09/2022 16:32
+ * @lastUpdate 03/09/2022 12:15
  */
 
 namespace App\Controller\administration\apc;
@@ -14,7 +14,10 @@ use App\Classes\Pdf\MyPDF;
 use App\Controller\BaseController;
 use App\Entity\ApcRessource;
 use App\Entity\ApcRessourceApprentissageCritique;
+use App\Entity\ApcRessourceCompetence;
 use App\Entity\ApcRessourceEnfants;
+use App\Entity\ApcSaeApprentissageCritique;
+use App\Entity\ApcSaeCompetence;
 use App\Entity\ApcSaeRessource;
 use App\Entity\Constantes;
 use App\Entity\Diplome;
@@ -478,5 +481,51 @@ class ApcRessourceController extends BaseController
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.ressource.duplicate.success.flash');
 
         return $this->redirectToRoute('administration_apc_ressource_edit', ['id' => $newApcRessource->getId(), 'semestre' => $semestre->getId()]);
+    }
+
+    #[Route(path: '/{semestre}/dupliquer/semestre', name: 'apc_pn_duplique_ressource_semestre', methods: 'GET|POST')]
+    public function duplicateSemestre(
+        ApcRessourceRepository $apcRessourceRepository,
+        SemestreRepository $semestreRepository,
+        Request $request, Semestre $semestre): Response
+    {
+        if ($request->isMethod('POST')) {
+            $semestreCible = $semestreRepository->find($request->request->get('semestre_destination'));
+            if (null !== $semestreCible) {
+                $ressources = $apcRessourceRepository->findBySemestreReferentiel($semestre, $semestre->getDiplome()->getReferentiel());
+                foreach ($ressources as $ressource) {
+                    $newApcRessource = clone $ressource;
+                    foreach ($newApcRessource->getSemestres() as $sem) {
+                        $newApcRessource->removeSemestre($sem);
+                        $sem->removeApcSemestresRessource($newApcRessource);
+                    }
+                    $newApcRessource->addSemestre($semestreCible);
+                    $semestreCible->addApcSemestresRessource($newApcRessource);
+
+                    foreach ($ressource->getApcRessourceApprentissageCritiques() as $ac) {
+                        $newAc = new ApcRessourceApprentissageCritique($newApcRessource, $ac->getApprentissageCritique());
+                        $this->entityManager->persist($newAc);
+                    }
+
+                    foreach ($ressource->getApcRessourceCompetences() as $comp) {
+                        $newComp = new ApcRessourceCompetence($newApcRessource, $comp->getCompetence());
+                        $newComp->setCoefficient($comp->getCoefficient());
+                        $this->entityManager->persist($newComp);
+                    }
+                    $this->entityManager->persist($newApcRessource);
+                }
+                $this->entityManager->flush();
+                $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.ressource.duplicate.success.flash');
+
+                return $this->redirectToRoute('sa_apc_codification_mise_a_jour', ['semestre' => $semestreCible->getId()]);
+            }
+
+            $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'apc.sae.duplicate.error.flash');
+        }
+
+        return $this->render('apc/apc_ressource/duplicate_semestre.html.twig', [
+            'semestre' => $semestre,
+            'semestres' => $semestreRepository->findAllSemestreByDiplomeApc($semestre->getDiplome()),
+        ]);
     }
 }
