@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/08/2022 17:06
+ * @lastUpdate 04/09/2022 17:01
  */
 
 namespace App\Controller\administration;
@@ -50,6 +50,7 @@ class EdtController extends BaseController
         $filtre = '' === $filtre ? Constantes::FILTRE_EDT_PROMO : $filtre;
         $matieres = $typeMatiereManager->findByDepartementArray($this->getDepartement());
         // todo: codeApogee si depuis Celcat. Trouverune solution, si Edt récupère depuis touues les tables pour la conversion...
+
         $edt = $myEdt->initAdministration($this->getDepartement(), $semaine, $filtre,
             $valeur, $this->getAnneeUniversitaire(), $matieres);
 

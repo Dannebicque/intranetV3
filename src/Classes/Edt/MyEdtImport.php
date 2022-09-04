@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/08/2022 22:50
+ * @lastUpdate 04/09/2022 17:15
  */
 
 /*
@@ -297,7 +297,7 @@ class MyEdtImport
             $pl->setGroupe(ord($groupe[1]) - 64);
         } else {
             if (ord($groupe[0]) === ord($groupe[1]) - 1) {
-                $pl->setGroupe(ord($groupe[0]) - 64); // deux lettre qui se suivent, donc TD classique
+                $pl->setGroupe(ord($groupe[0]) - 64); // deux lettre qui se suivent, donc TD classique ou CM particulier
             } else {
                 $pl->setGroupe(40 + ord($groupe[0]) - 64); // on ajoute 40 pour indiquer que c'est sur 4 ?
             }

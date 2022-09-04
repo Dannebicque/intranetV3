@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/09/2022 16:32
+ * @lastUpdate 04/09/2022 17:07
  */
 
 namespace App\Classes\Edt;
@@ -88,7 +88,9 @@ class MyEdtIntranet extends BaseEdt
             case Constantes::FILTRE_EDT_PROMO:
                 $this->semestre = $this->semestreRepository->find($this->valeur);
                 $this->groupes = $this->groupeRepository->findAllGroupesOrdreSemestre($this->semestre);
+
                 $pl = $this->edtPlanningRepository->findEdtSemestre($this->semestre, $this->semaineFormationIUT, $this->anneeUniversitaire);
+
                 $this->planning = $this->transformePromo($pl);
                 break;
             case Constantes::FILTRE_EDT_PROF:
@@ -153,8 +155,11 @@ class MyEdtIntranet extends BaseEdt
             $this->tabCouleur[$semestre->getOrdreLmd()] = $semestre->getAnnee()->getCouleur();
         }
         $this->matieres = $matieres;
+
         $this->init($anneeUniversitaire, $filtre, $valeur, $semaine);
+
         $this->semaines = $this->calculSemaines();
+
         $this->calculEdt();
 
         return $this;
@@ -254,31 +259,43 @@ class MyEdtIntranet extends BaseEdt
             $debut = $p->getDebut();
             $fin = $p->getFin();
 
-            $tab[$p->getJour()][$debut][$p->getGroupe()]['duree'] = $fin - $debut;
+            if ($p->getGroupe() > 40) {
+                $groupe = $p->getGroupe() - 40;
+                $specialGroupe = true;
+            } else {
+                $groupe = $p->getGroupe();
+                $specialGroupe = false;
+            }
 
-            $tab[$p->getJour()][$debut][$p->getGroupe()]['couleur'] = $this->getCouleur($p);
-            $tab[$p->getJour()][$debut][$p->getGroupe()]['couleurTexte'] = $this->getCouleurTexte($p);
-            $tab[$p->getJour()][$debut][$p->getGroupe()]['planning'] = $p;
+
+            $tab[$p->getJour()][$debut][$groupe]['duree'] = $fin - $debut;
+
+            $tab[$p->getJour()][$debut][$groupe]['couleur'] = $this->getCouleur($p);
+            $tab[$p->getJour()][$debut][$groupe]['couleurTexte'] = $this->getCouleurTexte($p);
+            $tab[$p->getJour()][$debut][$groupe]['planning'] = $p;
             $taille = 0;
             switch ($p->getType()) {
                 case 'CM':
                 case 'cm':
-                    $tab[$p->getJour()][$debut][$p->getGroupe()]['largeur'] = $this->semestre->getNbgroupeTPEDT();
+                    $tab[$p->getJour()][$debut][$groupe]['largeur'] = $this->semestre->getNbgroupeTPEDT();
                     break;
                 case 'TP':
                 case 'tp':
-                    $tab[$p->getJour()][$debut][$p->getGroupe()]['largeur'] = 1;
+                    $tab[$p->getJour()][$debut][$groupe]['largeur'] = 1;
                     $taille = 4;
                     break;
                 case 'TD':
                 case 'td':
-                    $tab[$p->getJour()][$debut][$p->getGroupe()]['largeur'] = 2;
+                    $tab[$p->getJour()][$debut][$groupe]['largeur'] = 2;
                     $taille = 12;
                     break;
             }
 
-            $groupe = $p->getGroupe();
-            $groupefin = $groupe + $tab[$p->getJour()][$debut][$p->getGroupe()]['largeur'];
+            if ($specialGroupe) {
+                $tab[$p->getJour()][$debut][$groupe]['largeur'] = 4;
+            }
+
+            $groupefin = $groupe + $tab[$p->getJour()][$debut][$groupe]['largeur'];
             for ($i = $debut; $i < $fin; ++$i) {
                 for ($j = $groupe; $j < $groupefin; ++$j) {
                     $tab[$p->getJour()][$i][$j]['texte'] = 'xx';
@@ -293,8 +310,8 @@ class MyEdtIntranet extends BaseEdt
                 $inter = mb_substr($p->getIntervenant()->getNom(), 0, $taille);
             }
 
-            $tab[$p->getJour()][$debut][$p->getGroupe()]['texte'] = $this->isEvaluation($p).'<br />'.$p->getSalle().'<br />'.$inter.'<br />'.$p->getDisplayGroupe();
-            $tab[$p->getJour()][$debut][$p->getGroupe()]['commentaire'] = $this->hasCommentaire($p);
+            $tab[$p->getJour()][$debut][$groupe]['texte'] = $this->isEvaluation($p).'<br />'.$p->getSalle().'<br />'.$inter.'<br />'.$p->getDisplayGroupe();
+            $tab[$p->getJour()][$debut][$groupe]['commentaire'] = $this->hasCommentaire($p);
         }
 
         return $tab;

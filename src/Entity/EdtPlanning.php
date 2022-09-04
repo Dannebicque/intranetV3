@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/EdtPlanning.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/08/2022 22:41
+ * @lastUpdate 04/09/2022 17:16
  */
 
 namespace App\Entity;
@@ -138,15 +138,26 @@ class EdtPlanning extends BaseEntity
         switch ($this->type) {
             case 'cm':
             case 'CM':
-                return 'CM TOUS';
+                if (1 === $this->groupe) {
+                    return 'CM TOUS';
+                }
+                $tab = ['', 'AB', '', 'CD', '', 'EF', '', 'GH'];
+                if ($this->groupe > 40) {
+                    return 'TD EH';
+                }
+
+                return 'CM '.$tab[$this->groupe];
             case 'TD':
             case 'td':
                 $tab = ['', 'AB', '', 'CD', '', 'EF', '', 'GH'];
+                if ($this->groupe > 40) {
+                    return 'TD EH';
+                }
 
                 return 'TD '.$tab[$this->groupe];
             case 'TP':
             case 'tp':
-                return 'TP '.chr($this->groupe + 64);
+                return 'TP '.chr($this->groupe > 40 ? $this->groupe - 40 + 64 : $this->groupe + 64);
             default:
                 return '';
         }
