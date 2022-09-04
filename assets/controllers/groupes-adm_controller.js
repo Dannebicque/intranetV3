@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/groupes-adm_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 04/09/2022 11:01
+// @lastUpdate 04/09/2022 11:09
 
 import { Controller } from '@hotwired/stimulus'
 import Routing from 'fos-router'
@@ -72,7 +72,9 @@ export default class extends Controller {
       value: e.currentTarget.value,
     }).then(() => {
       addCallout('Mise à jour des informations du groupe', 'success')
-      this._listeGroupe()
+      if (e.params.field === 'ordre') {
+        this._listeGroupe()
+      }
     })
   }
 
