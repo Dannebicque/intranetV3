@@ -8,16 +8,22 @@
     <div class="header-action">
         <div class="buttons">
 
-                <a href="{{ path('administration_matiere_index', {diplome:diplome.id}) }}"
-                   class="btn btn-primary btn-float"
-                   title="{{ 'atitle.retour_liste'|trans }}"
-                   data-bs-toggle="tooltip" data-bs-placement="bottom"
-                >
-                    <i class="fas fa-arrow-left"></i>
-                    <span class="sr-only">{{ 'atitle.retour_liste'|trans }}</span>
-                </a>
+            <a href="{{ path('administration_matiere_index', {diplome:diplome.id}) }}"
+               class="btn btn-primary btn-float"
+               title="{{ 'atitle.retour_liste'|trans }}"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
+                <i class="fas fa-arrow-left"></i>
+                <span class="sr-only">{{ 'atitle.retour_liste'|trans }}</span>
+            </a>
         </div>
     </div>
+{% endblock %}
+
+{% block stimulus %}
+    {{ stimulus_controller('apc_sae_form', {
+        sae: null
+    }) }}
 {% endblock %}
 
 {% block content %}
@@ -34,17 +40,4 @@
     </div>
 {% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('apc') }}
-{% endblock %}
-
-{% block javascripts %}
-    <script>
-      let sae = null
-      let ressource = null
-    </script>
-    {{ parent() }}
-    {{ encore_entry_script_tags('apc') }}
-{% endblock %}
 

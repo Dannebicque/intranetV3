@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/SemestreRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/09/2022 11:11
+ * @lastUpdate 04/09/2022 15:24
  */
 
 namespace App\Repository;
@@ -70,6 +70,7 @@ class SemestreRepository extends ServiceEntityRepository
 
     public function findByDiplome(Diplome $diplome): array
     {
+        //utiliser findByDiplomeApc pour avoir tous les semestres sans dépendance du diplôme
         return $this->findByDiplomeBuilder($diplome)->getQuery()->getResult();
     }
 
@@ -97,7 +98,7 @@ class SemestreRepository extends ServiceEntityRepository
             $index = mb_substr($semestre->getLibelle(), 1);
 
             if (1 === mb_strlen($index)) {
-                $index = '0'.$index;
+                $index = '0' . $index;
             }
             $tabsemestre[$index] = $semestre;
         }
@@ -149,7 +150,12 @@ class SemestreRepository extends ServiceEntityRepository
 
     public function findAllSemestreByDiplomeApc(Diplome $diplome): array
     {
-        if ($diplome->getParent() !== null) {
+        return $this->findAllSemestreByDiplomeApcBuilder($diplome)->getQuery()->getResult();
+    }
+
+    public function findAllSemestreByDiplomeApcBuilder(Diplome $diplome): QueryBuilder
+    {
+        if (null !== $diplome->getParent()) {
             $diplome = $diplome->getParent();
         }
 
@@ -157,15 +163,16 @@ class SemestreRepository extends ServiceEntityRepository
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
             ->where('d.id = :diplome')
-            ->setParameter('diplome', $diplome->getId());
+            ->setParameter('diplome', $diplome->getId())
+            ->orderBy('s.ordreLmd', Criteria::ASC);
 
         $i = 1;
         foreach ($diplome->getEnfants() as $diplomeEnfant) {
-            $query->orWhere('d.id = :dip'.$i)
-                ->setParameter('dip'.$i, $diplomeEnfant->getId());
+            $query->orWhere('d.id = :dip' . $i)
+                ->setParameter('dip' . $i, $diplomeEnfant->getId());
             ++$i;
         }
 
-        return $query->getQuery()->getResult();
+        return $query;
     }
 }

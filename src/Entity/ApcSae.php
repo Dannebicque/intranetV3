@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcSae.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/09/2022 11:51
+ * @lastUpdate 04/09/2022 16:15
  */
 
 namespace App\Entity;
@@ -30,8 +30,8 @@ class ApcSae extends AbstractMatiere implements MatiereEntityInterface
     /**
      * @return \App\Entity\Semestre|null
      *
-     * @deprecated
      */
+    #[Deprecated('supprimer')]
     public function getSemestre(): ?Semestre
     {
         return $this->semestre;
@@ -325,8 +325,8 @@ class ApcSae extends AbstractMatiere implements MatiereEntityInterface
 
     /**
      * @param \App\Entity\Semestre|null $semestre
-     * @deprecated("a supprimer")
      */
+    #[Deprecated('supprimer')]
     public function setSemestre(?Semestre $semestre): void
     {
         $this->semestre = $semestre;

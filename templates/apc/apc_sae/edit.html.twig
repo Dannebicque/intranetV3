@@ -36,6 +36,12 @@
     </div>
 {% endblock %}
 
+{% block stimulus %}
+    {{ stimulus_controller('apc_sae_form', {
+        sae: apc_sae
+    }) }}
+{% endblock %}
+
 {% block content %}
     <div class="card">
         <h4 class="card-title">{{ 'adm.apc_sae.edit.heading'|trans }}</h4>
@@ -51,17 +57,3 @@
     </div>
 {% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('apc') }}
-{% endblock %}
-
-{% block javascripts %}
-    <script>
-      let sae = {{ apc_sae.id }}
-        let
-      ressource = null
-    </script>
-    {{ parent() }}
-    {{ encore_entry_script_tags('apc') }}
-{% endblock %}

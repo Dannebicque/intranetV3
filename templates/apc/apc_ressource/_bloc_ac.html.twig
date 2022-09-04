@@ -1,0 +1,16 @@
+{% for competence, ac in acs %}
+    <h4>{{ competence }}</h4>
+    <div class="row">
+        {% for a in ac %}
+            <div class="col-md-6">
+                <div class="form-check">
+                    <input type="checkbox" id="ac_{{ a.id }}" name="ac[]" class="form-check-input" value="{{ a.id }}"
+                            {% if a.checked %}checked{% endif %}>
+                    <label class="form-check-label" for="ac_{{ a.id }}">{{ a.code }} : {{ a.libelle }}</label>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="alert alert-warning">Indiquer un semestre et au moins une compétence</div>
+{% endfor %}

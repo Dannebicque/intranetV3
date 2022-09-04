@@ -25,14 +25,14 @@
                 <i class="fas fa-eye"></i>
                 <span class="sr-only">{{ 'atitle.voir'|trans }}</span>
             </a>
-{#            <a href="{{ path('administration_matiere_index', {diplome:apcRessource.semestre.diplome.id}) }}"#}
-{#               class="btn btn-primary btn-float"#}
-{#               title="{{ 'atitle.retour_liste'|trans }}"#}
-{#               data-bs-toggle="tooltip" data-bs-placement="bottom"#}
-{#            >#}
-{#                <i class="fas fa-arrow-left"></i>#}
-{#                <span class="sr-only">{{ 'atitle.retour_liste'|trans }}</span>#}
-{#            </a>#}
+            {#            <a href="{{ path('administration_matiere_index', {diplome:apcRessource.semestre.diplome.id}) }}" #}
+            {#               class="btn btn-primary btn-float" #}
+            {#               title="{{ 'atitle.retour_liste'|trans }}" #}
+            {#               data-bs-toggle="tooltip" data-bs-placement="bottom" #}
+            {#            > #}
+            {#                <i class="fas fa-arrow-left"></i> #}
+            {#                <span class="sr-only">{{ 'atitle.retour_liste'|trans }}</span> #}
+            {#            </a> #}
         </div>
     </div>
 {% endblock %}
@@ -47,73 +47,112 @@
         urlPostDiplome: path('administration_apc_ressource_add_diplome', { 'id': apcRessource.id }),
         urlDeleteDiplome: path('administration_apc_ressource_delete_diplome', { 'id': apcRessource.id }),
     }) }}>
-    {% if apcRessource.isParent == true %}
-    <div class="card">
-        <h4 class="card-title">Gestion des ressources enfants de {{ apcRessource.display }}</h4>
-        <div class="card-body" >
-            <div data-apc-enfant-target="content">
-                {{ include('apc/apc_ressource/_liste_enfants.html.twig') }}
-            </div>
-            <div class="row">
-                <div class="col-md-5">
-                    <select class="form-select" id="ressourceEnfant" >
-                        <option value="">Choisir une ressource</option>
-                        {% for ressource in ressources %}
-                            <option value="{{ ressource.id }}">{{ ressource.display }}</option>
-                        {% endfor %}
-                    </select>
+        {% if apcRessource.isParent == true %}
+            <div class="card">
+                <h4 class="card-title">Gestion des ressources enfants de {{ apcRessource.display }}</h4>
+                <div class="card-body">
+                    <div data-apc-enfant-target="content">
+                        {{ include('apc/apc_ressource/_liste_enfants.html.twig') }}
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <select class="form-select" id="ressourceEnfant">
+                                <option value="">Choisir une ressource</option>
+                                {% for ressource in ressources %}
+                                    <option value="{{ ressource.id }}">{{ ressource.display }}</option>
+                                {% endfor %}
+                            </select>
 
-                </div>
-                <div class="col-md-5">
-                    <select class="form-select" id="groupeAdd" multiple>
-                        <option value="">Choisir un groupe particulier (laisser vide pour tous les groupes)</option>
-                        {% for groupe in groupes %}
-                            <option value="{{ groupe.id }}">
-                                {{ groupe.display }}
-                            </option>
-                        {% endfor %}
-                    </select>
-                    <p class="text-small">Possibilité de selectionner plusieurs groupes</p>
-                </div>
-                <div class="col-md-2 d-grid">
-                    <button class="btn btn-primary d-block" data-action="click->apc-enfant#addEnfant">Ajouter</button>
+                        </div>
+                        <div class="col-md-5">
+                            <select class="form-select" id="groupeAdd" multiple>
+                                <option value="">Choisir un groupe particulier (laisser vide pour tous les groupes)
+                                </option>
+                                {% for groupe in groupes %}
+                                    <option value="{{ groupe.id }}">
+                                        {{ groupe.display }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                            <p class="text-small">Possibilité de selectionner plusieurs groupes</p>
+                        </div>
+                        <div class="col-md-2 d-grid">
+                            <button class="btn btn-primary d-block" data-action="click->apc-enfant#addEnfant">Ajouter
+                            </button>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-    {% endif %}
+        {% endif %}
 
-    {% if apcRessource.mutualisee == true %}
+        {% if apcRessource.mutualisee == true %}
+            <div class="card">
+                <h4 class="card-title">
+                    Ressource {{ apcRessource.display }} mutualisée. Choix des autres diplôme
+                </h4>
+                <div class="card-body">
+                    <div data-apc-enfant-target="contentDiplome">
+                        {{ include('apc/apc_ressource/_liste_diplomes.html.twig') }}
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <select class="form-select" id="semestreAdd">
+                                <option value="">Choisir un semestre</option>
+                                {% for semestre in semestres %}
+                                    <option value="{{ semestre.id }}">
+                                        {{ semestre.display }}, {{ semestre.diplome.display }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-5">
+
+                        </div>
+                        <div class="col-md-2 d-grid">
+                            <button class="btn btn-primary d-block"
+                                    data-action="click->apc-enfant#addDiplome">Ajouter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+
         <div class="card">
             <h4 class="card-title">
-                Ressource {{ apcRessource.display }} mutualisée. Choix des autres diplôme
+                Dupliquer la Ressource {{ apcRessource.display }}. Choisir le semestre pour configurer
             </h4>
             <div class="card-body">
-                <div data-apc-enfant-target="contentDiplome">
-                    {{ include('apc/apc_ressource/_liste_diplomes.html.twig') }}
-                </div>
-                <div class="row">
-                    <div class="col-md-5">
-                        <select class="form-select" id="semestreAdd">
-                            <option value="">Choisir un semestre</option>
-                            {% for semestre in semestres %}
-                                <option value="{{ semestre.id }}">
-                                    {{ semestre.display }}, {{ semestre.diplome.display }}
-                                </option>
-                            {% endfor %}
-                        </select>
+                <form action="{{ path('administration_apc_duplique_move_ressource', {ressource:apcRessource.id}) }}"
+                      method="post">
+                    <div class="row">
+                        <div class="col-md-10">
+                            <select class="form-select" id="semestre_destination" name="semestre_destination">
+                                <option value="">Choisir le semestre de destination</option>
+                                {% for semestre in semestres %}
+                                    <option value="{{ semestre.id }}">
+                                        {{ semestre.display }}, {{ semestre.diplome.display }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-2 d-grid">
+                            <button class="btn btn-primary d-block"
+                                    type="submit">Dupliquer
+                            </button>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="alert alert-info mt-2">
+                                Une nouvelle ressourse sera créée avec les mêmes paramètres que la ressource
+                                {{ apcRessource.display }} et associé au semestre que vous avez selectionné. Vous
+                                pourrez ensuite la configurer pour la mutualiser avec d'autres semestres. (Exemple
+                                copier une ressource de FI vers FC).
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-5">
-
-                    </div>
-                    <div class="col-md-2 d-grid">
-                        <button class="btn btn-primary d-block"
-                                data-action="click->apc-enfant#addDiplome">Ajouter</button>
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
-    {% endif %}
     </div>
 {% endblock %}
 

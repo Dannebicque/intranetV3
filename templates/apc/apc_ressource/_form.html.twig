@@ -53,7 +53,7 @@
             <legend class="col-form-label required">
                 Apprentissage(s) critique(s) couvert(s)
             </legend>
-            <div id="acRessources">
+            <div {{ stimulus_target('apc-ressource-form', 'acRessources') }}>
                 <div class="alert alert-warning">Indiquer un semestre et au moins une compétence</div>
             </div>
             <small id="apc_sae_competences_help" class="form-text text-muted">Ajoutez les compétences couvertes par
@@ -64,7 +64,7 @@
             <legend class="col-form-label required">
                 SAE concernée(s)
             </legend>
-            <div id="saeRessource">
+            <div {{ stimulus_target('apc-ressource-form', 'saeRessource') }}>
                 <div class="alert alert-warning">Indiquer un semestre</div>
             </div>
             <small id="apc_sae_ressource_help" class="form-text text-muted">Ajoutez les SAÉ concernées par la ressource

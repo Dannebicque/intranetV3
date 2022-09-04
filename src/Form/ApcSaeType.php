@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/ApcSaeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/07/2022 13:43
+ * @lastUpdate 04/09/2022 16:28
  */
 
 namespace App\Form;
@@ -26,10 +26,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class ApcSaeType extends AbstractType
 {
     protected ?Diplome $diplome = null;
+    protected ?Semestre $semestre = null;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->diplome = $options['diplome'];
+        $this->semestre = $options['semestre'];
+
 
         $builder
             ->add('mutualisee', YesNoType::class, ['label' => 'label.mutualisee'])
@@ -61,18 +64,20 @@ class ApcSaeType extends AbstractType
                 ])
             ->add('semestre', EntityType::class, [
                 'class' => Semestre::class,
-                'attr' => ['class' => 'semestreSae'],
+                'attr' => ['data-action' => 'change->apc-sae-form#changeSemestre'],
                 'required' => true,
+                'data' => $this->semestre,
                 'choice_label' => 'display',
-                'query_builder' => fn (SemestreRepository $semestreRepository) => $semestreRepository->findByDiplomeBuilder($this->diplome),
+                'query_builder' => fn (SemestreRepository $semestreRepository) => $semestreRepository->findAllSemestreByDiplomeApcBuilder($this->diplome),
                 'label' => 'label.semestre',
                 'expanded' => true,
+
             ])
             ->add('competences', EntityType::class, [
                 'class' => ApcCompetence::class,
                 'choice_label' => 'nomCourt',
                 'label' => 'label.nomCourt.competence',
-                'attr' => ['class' => 'competencesSae'],
+                'attr' => ['data-action' => 'change->apc-sae-form#changeCompetence'],
                 'expanded' => true,
                 'multiple' => true,
                 'query_builder' => fn (ApcComptenceRepository $apcComptenceRepository) => $apcComptenceRepository->findByReferentielBuilder($this->diplome?->getReferentiel()),
@@ -101,6 +106,7 @@ class ApcSaeType extends AbstractType
         $resolver->setDefaults([
             'data_class' => ApcSae::class,
             'diplome' => null,
+            'semestre' => null,
             'translation_domain' => 'form',
         ]);
     }

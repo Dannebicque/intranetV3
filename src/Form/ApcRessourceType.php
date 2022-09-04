@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/ApcRessourceType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/07/2022 13:40
+ * @lastUpdate 04/09/2022 15:08
  */
 
 namespace App\Form;
@@ -65,10 +65,11 @@ class ApcRessourceType extends AbstractType
                 'data' => $this->semestre,
                 'required' => true,
                 'choice_label' => 'display',
-                'query_builder' => fn (SemestreRepository $semestreRepository) => $semestreRepository->findByDiplomeBuilder($this->diplome),
+                'query_builder' => fn (SemestreRepository $semestreRepository) => $semestreRepository->findAllSemestreByDiplomeApcBuilder($this->diplome),
                 'label' => 'label.semestre',
                 'expanded' => true,
                 'mapped' => false,
+                'attr' => ['data-action' => 'change->apc-ressource-form#changeSemestre'],
             ])
             ->add('competences', EntityType::class, [
                 'class' => ApcCompetence::class,
@@ -78,6 +79,7 @@ class ApcRessourceType extends AbstractType
                 'multiple' => true,
                 'query_builder' => fn (ApcComptenceRepository $apcComptenceRepository) => $apcComptenceRepository->findByReferentielBuilder($this->diplome?->getReferentiel()),
                 'help' => 'Ajoutez les compétences couvertes par la ressource.',
+                'attr' => ['data-action' => 'change->apc-ressource-form#changeCompetence'],
             ])
             ->add('suspendu', YesNoType::class, ['label' => 'label.suspendu', 'help' => 'Une matière suspendue n\'entre pas dans le calcul des moyennes.'])
         ;

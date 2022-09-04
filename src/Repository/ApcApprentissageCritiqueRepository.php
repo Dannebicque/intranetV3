@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcApprentissageCritiqueRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/08/2022 11:01
+ * @lastUpdate 04/09/2022 15:14
  */
 
 namespace App\Repository;
@@ -56,8 +56,11 @@ class ApcApprentissageCritiqueRepository extends ServiceEntityRepository
     ): array {
         $query = $this->createQueryBuilder('a')
             ->innerJoin(ApcNiveau::class, 'n', 'WITH', 'a.niveau = n.id')
-            ->where('n.annee = :annee')
-            ->setParameter('annee', $annee->getId());
+            ->innerJoin(ApcCompetence::class, 'c', 'WITH', 'c.id = n.competence')
+            ->where('c.apcReferentiel = :referentiel')
+            ->andWhere('n.ordreAnnee = :ordre')
+            ->setParameter('referentiel', $annee->getDiplome()->getReferentiel()->getId())
+            ->setParameter('ordre', $annee->getOrdre());
 
         $ors = [];
         foreach ($idCompetences as $comp) {

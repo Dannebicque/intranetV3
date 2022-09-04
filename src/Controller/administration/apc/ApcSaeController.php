@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcSaeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/09/2022 12:12
+ * @lastUpdate 04/09/2022 16:32
  */
 
 namespace App\Controller\administration\apc;
@@ -26,6 +26,7 @@ use App\Repository\ApcSaeApprentissageCritiqueRepository;
 use App\Repository\ApcSaeRepository;
 use App\Repository\ApcSaeRessourceRepository;
 use App\Repository\SemestreRepository;
+use App\Utils\JsonRequest;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -64,11 +65,12 @@ class ApcSaeController extends BaseController
     #[Route(path: '/ajax-ac', name: 'apc_sae_ajax_ac', options: ['expose' => true], methods: ['POST'])]
     public function ajaxAc(SemestreRepository $semestreRepository, ApcSaeApprentissageCritiqueRepository $apcSaeApprentissageCritiqueRepository, ApcApprentissageCritiqueRepository $apcApprentissageCritiqueRepository, Request $request): Response
     {
-        $semestre = $semestreRepository->find($request->request->get('semestre'));
-        $competences = $request->request->all()['competences'];
+        $semestre = $semestreRepository->find(JsonRequest::getValueFromRequest($request, 'semestre'));
+        $competences = JsonRequest::getValueFromRequest($request, 'competences');
+        $t = [];
         if (null !== $semestre && (null === $competences ? 0 : count($competences)) > 0) {
             if (null !== $request->request->get('sae')) {
-                $tabAcSae = $apcSaeApprentissageCritiqueRepository->findArrayIdAc($request->request->get('sae'));
+                $tabAcSae = $apcSaeApprentissageCritiqueRepository->findArrayIdAc(JsonRequest::getValueFromRequest($request, 'sae'));
             } else {
                 $tabAcSae = [];
             }
@@ -76,55 +78,75 @@ class ApcSaeController extends BaseController
             $datas = $apcApprentissageCritiqueRepository->findBySemestreAndCompetences($semestre->getAnnee(),
                 $competences);
 
-            $t = [];
             foreach ($datas as $d) {
                 $b = [];
 
                 $b['id'] = $d->getId();
                 $b['libelle'] = $d->getLibelle();
                 $b['code'] = $d->getCode();
-                $b['checked'] = true === in_array($d->getId(), $tabAcSae) ? 'checked="checked"' : '';
+                $b['checked'] = in_array($d->getId(), $tabAcSae);
                 if (null !== $d->getNiveau() && null !== $d->getNiveau()->getCompetence() && !array_key_exists($d->getNiveau()->getCompetence()->getNomCourt(),
                         $t)) {
                     $t[$d->getNiveau()->getCompetence()->getNomCourt()] = [];
                 }
                 $t[$d->getNiveau()->getCompetence()->getNomCourt()][] = $b;
             }
-
-            return $this->json($t);
         }
 
-        return $this->json(false);
+        return $this->render('apc/apc_sae/_bloc_ac.html.twig', [
+            'acs' => $t,
+        ]);
     }
 
     #[Route(path: '/ajax-ressources', name: 'apc_ressources_ajax', options: ['expose' => true], methods: ['POST'])]
     public function ajaxRessources(SemestreRepository $semestreRepository, ApcSaeRessourceRepository $apcSaeRessourceRepository, ApcRessourceRepository $apcRessourceRepository, Request $request): Response
     {
-        $semestre = $semestreRepository->find($request->request->get('semestre'));
+        $semestre = $semestreRepository->find(JsonRequest::getValueFromRequest($request, 'semestre'));
+        $t = [];
         if (null !== $semestre) {
-            if (null !== $request->request->get('sae') || '' !== trim($request->request->get('sae'))) {
-                $tabAcSae = $apcSaeRessourceRepository->findArrayIdRessources($request->request->get('sae'));
+            if (null !== JsonRequest::getValueFromRequest($request, 'sae') || '' !== trim(JsonRequest::getValueFromRequest($request, 'sae'))) {
+                $tabAcSae = $apcSaeRessourceRepository->findArrayIdRessources(JsonRequest::getValueFromRequest($request, 'sae'));
             } else {
                 $tabAcSae = [];
             }
 
-            $datas = $apcRessourceRepository->findBySemestre($semestre);
+            $datas = $apcRessourceRepository->findBySemestreReferentiel($semestre,
+                $semestre->getDiplome()?->getReferentiel());
 
-            $t = [];
             foreach ($datas as $d) {
                 $b = [];
 
                 $b['id'] = $d->getId();
                 $b['libelle'] = $d->getLibelle();
                 $b['code'] = $d->getCodeMatiere();
-                $b['checked'] = true === in_array($d->getId(), $tabAcSae) ? 'checked="checked"' : '';
+                $b['checked'] = in_array($d->getId(), $tabAcSae);
                 $t[] = $b;
             }
-
-            return $this->json($t);
         }
 
-        return $this->json(false);
+        return $this->render('apc/apc_sae/_bloc_ressources.html.twig', [
+            'ressources' => $t,
+        ]);
+    }
+
+    #[Route(path: '/{id}/enfants', name: 'apc_sae_enfants', methods: ['GET'])]
+    public function enfants(
+        ApcSaeRepository $apcSaeRepository,
+        ApcSae $apcSae
+    ): Response {
+        $saes = [];
+        foreach ($apcSae->getSemestres() as $semestre) {
+            $saes[] = $apcSaeRepository->findBySemestre($semestre);
+        }
+
+        $saes = array_merge(...$saes);
+
+        return $this->render('apc/apc_sae/enfants.html.twig', [
+            'apcSae' => $apcSae,
+            'saes' => $saes,
+            'saeSemestres' => $apcSae->getSemestres(),
+            'semestres' => $this->dataUserSession->getSemestres(),
+        ]);
     }
 
     #[Route(path: '/new/{diplome}', name: 'apc_sae_new', methods: ['GET', 'POST'])]
@@ -134,31 +156,52 @@ class ApcSaeController extends BaseController
         $form = $this->createForm(ApcSaeType::class, $apcSae, ['diplome' => $diplome]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->persist($apcSae);
-            // sauvegarde des AC
-            $acs = $request->request->all()['ac'];
-            if (is_array($acs)) {
-                foreach ($acs as $idAc) {
-                    $ac = $apcApprentissageCritiqueRepository->find($idAc);
-                    $saeAc = new ApcSaeApprentissageCritique($apcSae, $ac);
-                    $this->entityManager->persist($saeAc);
+            $semestre = $semestreRepository->find($request->request->all()['apc_ressource']['semestre']);
+            if (null !== $semestre) {
+                $apcRessource->addSemestre($semestre);
+                $semestre->addApcSemestresRessource($apcRessource);
+                $this->entityManager->persist($apcSae);
+                // sauvegarde des AC
+                $acs = $request->request->all()['ac'];
+                if (is_array($acs)) {
+                    foreach ($acs as $idAc) {
+                        $ac = $apcApprentissageCritiqueRepository->find($idAc);
+                        $saeAc = new ApcSaeApprentissageCritique($apcSae, $ac);
+                        $this->entityManager->persist($saeAc);
+                    }
                 }
+
+                $acs = $request->request->all()['ressources'];
+                if (is_array($acs)) {
+                    foreach ($acs as $idAc) {
+                        $res = $apcRessourceRepository->find($idAc);
+                        $saeRes = new ApcSaeRessource($apcSae, $res);
+                        $this->entityManager->persist($saeRes);
+                    }
+                }
+
+                $this->entityManager->flush();
+                $this->addFlashBag(
+                    Constantes::FLASHBAG_SUCCESS,
+                    'apc.sae.new.success.flash'
+                );
+            } else {
+                $this->addFlashBag(
+                    Constantes::FLASHBAG_SUCCESS,
+                    'apc.sae.new.error.flash'
+                );
+
+                return $this->render('apc/apc_sae/new.html.twig', [
+                    'apc_sae' => $apcSae,
+                    'diplome' => $diplome,
+                    'form' => $form->createView(),
+                ]);
             }
 
-            $acs = $request->request->all()['ressources'];
-            if (is_array($acs)) {
-                foreach ($acs as $idAc) {
-                    $res = $apcRessourceRepository->find($idAc);
-                    $saeRes = new ApcSaeRessource($apcSae, $res);
-                    $this->entityManager->persist($saeRes);
-                }
+            if (true === $apcSae->getMutualisee()) {
+                // si c'est défini comme une ressource parente, on redirige vers la page de gestion des ressources "enfants"
+                return $this->redirectToRoute('administration_apc_sae_enfants', ['id' => $apcSae->getId()]);
             }
-
-            $this->entityManager->flush();
-            $this->addFlashBag(
-                Constantes::FLASHBAG_SUCCESS,
-                'apc.sae.new.success.flash'
-            );
 
             return $this->redirectToRoute('administration_matiere_index', ['diplome' => $diplome->getId()]);
         }
@@ -178,10 +221,10 @@ class ApcSaeController extends BaseController
         ]);
     }
 
-    #[Route(path: '/{id}/edit', name: 'apc_sae_edit', methods: ['GET', 'POST'])]
-    public function edit(ApcRessourceRepository $apcRessourceRepository, ApcApprentissageCritiqueRepository $apcApprentissageCritiqueRepository, Request $request, ApcSae $apcSae): Response
+    #[Route(path: '/{id}/{semestre}/edit', name: 'apc_sae_edit', methods: ['GET', 'POST'])]
+    public function edit(ApcRessourceRepository $apcRessourceRepository, ApcApprentissageCritiqueRepository $apcApprentissageCritiqueRepository, Request $request, ApcSae $apcSae, Semestre $semestre): Response
     {
-        $form = $this->createForm(ApcSaeType::class, $apcSae, ['diplome' => $apcSae->getDiplome()]);
+        $form = $this->createForm(ApcSaeType::class, $apcSae, ['diplome' => $apcSae->getDiplome(),'semestre' => $semestre,]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             // on supprimer ceux présent
@@ -224,7 +267,7 @@ class ApcSaeController extends BaseController
             }
 
             return $this->redirectToRoute('administration_apc_sae_edit',
-                ['id' => $apcSae->getId()]);
+                ['id' => $apcSae->getId(), 'semestre' => $semestre->getId()]);
         }
 
         return $this->render('apc/apc_sae/edit.html.twig', [
@@ -253,7 +296,7 @@ class ApcSaeController extends BaseController
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    #[Route(path: '/{id}/duplicate', name: 'apc_sae_duplicate', methods: 'GET|POST')]
+    #[Route(path: '/{id}/{semestre}/duplicate', name: 'apc_sae_duplicate', methods: 'GET|POST')]
     public function duplicate(ApcSae $apcSae): Response
     {
         $newApcSae = clone $apcSae;
@@ -261,7 +304,35 @@ class ApcSaeController extends BaseController
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.sae.duplicate.success.flash');
 
-        return $this->redirectToRoute('administration_apc_sae_edit', ['id' => $newApcSae->getId()]);
+        return $this->redirectToRoute('administration_apc_sae_edit', ['id' => $newApcSae->getId(), 'semestre' => $semestre->getId()]);
+    }
+
+    #[Route(path: '/{sae}/dupliquer/semestre', name: 'apc_duplique_move_sae', methods: 'POST')]
+    public function duplicateAndMove(
+        ApcSae $sae,
+        SemestreRepository $semestreRepository,
+        Request $request
+    ): Response {
+        if ($request->isMethod('POST')) {
+            $semestreCible = $semestreRepository->find($request->request->get('semestre_destination'));
+            if (null !== $semestreCible) {
+                $newSae = $this->duplicateSae($sae, $semestreCible);
+
+                $this->entityManager->flush();
+                $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.sae.duplicate.success.flash');
+
+                return $this->redirectToRoute('administration_apc_sae_edit',
+                    [
+                        'id' => $newSae->getId(),
+                        'semestre' => $semestreCible->getId(),
+                    ]);
+            }
+        }
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'apc.sae.duplicate.error.flash');
+
+        return $this->redirectToRoute('administration_apc_sae_enfants', [
+            'sae' => $sae->getId(),
+        ]);
     }
 
     #[Route(path: '/{semestre}/dupliquer/semestre', name: 'apc_pn_duplique_sae_semestre', methods: 'GET|POST')]
@@ -275,26 +346,7 @@ class ApcSaeController extends BaseController
             if (null !== $semestreCible) {
                 $saes = $apcSaeRepository->findBySemestreReferentiel($semestre, $semestre->getDiplome()->getReferentiel());
                 foreach ($saes as $sae) {
-                    $newApcSae = clone $sae;
-                    foreach ($newApcSae->getSemestres() as $sem) {
-                        $newApcSae->removeSemestre($sem);
-                        $sem->removeApcSemestresSae($newApcSae);
-                    }
-                    $newApcSae->addSemestre($semestreCible);
-                    $semestreCible->addApcSemestresSae($newApcSae);
-
-                    foreach ($sae->getApcSaeApprentissageCritiques() as $ac) {
-                        $newAc = new ApcSaeApprentissageCritique($newApcSae, $ac->getApprentissageCritique());
-                        $this->entityManager->persist($newAc);
-                    }
-
-                    foreach ($sae->getApcSaeCompetences() as $comp) {
-                        $newComp = new ApcSaeCompetence($newApcSae, $comp->getCompetence());
-                        $newComp->setCoefficient($comp->getCoefficient());
-                        $this->entityManager->persist($newComp);
-                    }
-
-                    $this->entityManager->persist($newApcSae);
+                    $this->duplicateSae($sae, $semestreCible);
                 }
                 $this->entityManager->flush();
                 $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.sae.duplicate.success.flash');
@@ -309,5 +361,31 @@ class ApcSaeController extends BaseController
             'semestre' => $semestre,
             'semestres' => $semestreRepository->findAllSemestreByDiplomeApc($semestre->getDiplome()),
         ]);
+    }
+
+    private function duplicateSae(mixed $sae, Semestre $semestreCible)
+    {
+        $newApcSae = clone $sae;
+        foreach ($newApcSae->getSemestres() as $sem) {
+            $newApcSae->removeSemestre($sem);
+            $sem->removeApcSemestresSae($newApcSae);
+        }
+        $newApcSae->addSemestre($semestreCible);
+        $semestreCible->addApcSemestresSae($newApcSae);
+
+        foreach ($sae->getApcSaeApprentissageCritiques() as $ac) {
+            $newAc = new ApcSaeApprentissageCritique($newApcSae, $ac->getApprentissageCritique());
+            $this->entityManager->persist($newAc);
+        }
+
+        foreach ($sae->getApcSaeCompetences() as $comp) {
+            $newComp = new ApcSaeCompetence($newApcSae, $comp->getCompetence());
+            $newComp->setCoefficient($comp->getCoefficient());
+            $this->entityManager->persist($newComp);
+        }
+
+        $this->entityManager->persist($newApcSae);
+
+        return $newApcSae;
     }
 }

@@ -1,0 +1,16 @@
+<div class="row">
+    {% for sae in saes %}
+        <div class="col-md-6">
+            <div class="form-check">
+                <input type="checkbox" id="sae_{{ sae.id }}" name="saes[]" class="form-check-input"
+                       value="{{ sae.id }}" {% if sae.checked %}checked{% endif %}>
+                <label class="form-check-label" for="sae_{{ sae.id }}">{{ sae.code }} : {{ sae.libelle }}</label></div>
+        </div>
+    {% else %}
+        <div class="col-md-12">
+            <div class="alert alert-info">
+                <p>Aucun SAE n'est disponible</p>
+            </div>
+        </div>
+    {% endfor %}
+</div>

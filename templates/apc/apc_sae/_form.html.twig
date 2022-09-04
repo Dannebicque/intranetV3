@@ -41,9 +41,7 @@
     <div class="col-sm-6">
         {{ form_row(form.mutualisee) }}
     </div>
-    <div class="col-sm-6">
-        ... choix des autres diplômes ...
-    </div>
+
     <div class="col-sm-12">
         {{ form_row(form.description) }}
     </div>
@@ -60,7 +58,7 @@
             <legend class="col-form-label required">
                 Apprentissage(s) critique(s) couvert(s)
             </legend>
-            <div id="acSae">
+            <div {{ stimulus_target('apc-sae-form', 'acSae') }}>
                 <div class="alert alert-warning">Indiquer un semestre et au moins une compétence</div>
             </div>
             <small id="apc_sae_competences_help" class="form-text text-muted">Ajoutez les compétences couvertes par la
@@ -71,7 +69,7 @@
             <legend class="col-form-label required">
                 Ressources combinées
             </legend>
-            <div id="ressourcesSae">
+            <div {{ stimulus_target('apc-sae-form', 'ressourcesSae') }}>
                 <div class="alert alert-warning">Indiquer un semestre</div>
             </div>
             <small id="apc_sae_ressource_help" class="form-text text-muted">Ajoutez les ressources couvertes par la SAÉ
