@@ -34,8 +34,9 @@
                             {{ tg.libelle }}</a>
                     </td>
                     <td><label class="sr-only" for="typegroupe_{{ tg.id }}"></label>
-                        <select id="typegroupe_{{ tg.id }}" name="typegroupe_{{ tg.id }}" class="form-select
-        change-type_typegroupe" data-typegroupe="{{ tg.id }}">
+                        <select id="typegroupe_{{ tg.id }}" name="typegroupe_{{ tg.id }}" class="form-select"
+                                data-action="change->groupes-adm#changeTypeTypeGroupe"
+                                data-typegroupe="{{ tg.id }}">
                             <option value="" selected>Type de type de Groupe</option>
                             {% for type in typeGroupeEnum %}
                                 <option value="{{ type.value }}" {% if tg.type.value == type.value %}selected{% endif
@@ -47,8 +48,8 @@
                     <td>
                         <label class="switch" for="defaut_{{ tg.id }}">
                             <input type="checkbox" {{ tg.defaut ? 'checked': '' }}
-                                   class="changeDefaut"
                                    value="true"
+                                   data-action="change->groupes-adm#changeDefaut"
                                    name="defaut_{{ tg.id }}"
                                    id="defaut_{{ tg.id }}"
                                    data-type_groupe="{{ tg.id }}"
@@ -57,9 +58,9 @@
                         </label>
                     </td>
                     <td>
-                        <label class="switch" for="defaut_{{ tg.id }}">
+                        <label class="switch" for="mutualise_{{ tg.id }}">
                             <input type="checkbox" {{ tg.mutualise ? 'checked': '' }}
-                                   class="changeMutualise"
+                                   data-action="change->groupes-adm#changeMutualise"
                                    value="true"
                                    name="mutualise_{{ tg.id }}"
                                    id="mutualise_{{ tg.id }}"
@@ -131,7 +132,9 @@
                     </label>
                 </td>
                 <td>
-                    <button class="btn btn-success" id="addTypeGroupe" data-semestre="{{ semestre.id }}">{{ button_label|default('label.save'|trans) }}</button>
+                    <button class="btn btn-success"
+                            data-action="click->groupes-adm#addTypeGroupe"
+                            data-semestre="{{ semestre.id }}">{{ button_label|default('label.save'|trans) }}</button>
                 </td>
             </tr>
             </tbody>

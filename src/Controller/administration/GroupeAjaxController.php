@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/GroupeAjaxController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2022 14:33
+ * @lastUpdate 04/09/2022 08:14
  */
 
 namespace App\Controller\administration;
@@ -29,8 +29,8 @@ class GroupeAjaxController extends BaseController
     public function update(MyGroupes $myGroupes, Request $request, Groupe $groupe): ?JsonResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $groupe->getTypeGroupe()?->getSemestre());
-        $name = $request->request->get('field');
-        $value = $request->request->get('value');
+        $name = JsonRequest::getValueFromRequest($request, 'field');
+        $value =JsonRequest::getValueFromRequest($request, 'value');
         $update = $myGroupes->update($groupe, $name, $value);
 
         return $update ? new JsonResponse('', Response::HTTP_OK) : new JsonResponse('erreur',

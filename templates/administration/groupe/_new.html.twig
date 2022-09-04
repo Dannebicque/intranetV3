@@ -27,7 +27,9 @@
             <tr>
                 <td colspan="6">
                     <div class="d-grid">
-                    <button class="btn btn-success d-block" id="addGroupe" data-semestre="{{ semestre.id }}">{{
+                    <button class="btn btn-success d-block"
+                            data-action="click->groupes-adm#addGroupe"
+                            data-semestre="{{ semestre.id }}">{{
                         button_label|default('label.save'|trans) }}</button>
                     </div>
                 </td>

@@ -10,6 +10,13 @@
     </div>
 {% endblock %}
 
+{% block stimulus %}
+    {{ stimulus_controller('groupes-adm', {
+        'urlListeGroupes': path('administration_groupe_liste_semestre', {'semestre': semestre.id}),
+        'urlListeTypeGroupes': path('administration_type_groupe_liste_semestre', {'semestre': semestre.id}),
+    }) }}
+{% endblock %}
+
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
@@ -28,16 +35,16 @@
 
     {% if (semestre.diplome.responsableDiplome.id == user_data.user.id and user_data.isGoodDepartement('ROLE_RP')) or user_data.isGoodDepartement
         ('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %}
-        <div id="liste_semestre">
-            {{ render(controller(
-                'App\\Controller\\administration\\GroupeController::listeSemestre', {semestre:semestre.id}
-            )) }}
+        <div id="liste_semestre" data-groupes-adm-target="contentGroupe">
+{#            {{ render(controller(#}
+{#                'App\\Controller\\administration\\GroupeController::listeSemestre', {semestre:semestre.id}#}
+{#            )) }}#}
         </div>
 
-        <div id="type_groupes_semestre">
-            {{ render(controller(
-                'App\\Controller\\administration\\TypeGroupeController::listeSemestre', {semestre:semestre.id}
-            )) }}
+        <div id="type_groupes_semestre" data-groupes-adm-target="contentTypeGroupe">
+{#            {{ render(controller(#}
+{#                'App\\Controller\\administration\\TypeGroupeController::listeSemestre', {semestre:semestre.id}#}
+{#            )) }}#}
         </div>
     {% endif %}
 {% endblock %}
@@ -74,12 +81,12 @@
     ]}) }}
 {% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('adm.groupe') }}
-{% endblock %}
+{#{% block stylesheets %}#}
+{#    {{ parent() }}#}
+{#    {{ encore_entry_link_tags('adm.groupe') }}#}
+{#{% endblock %}#}
 
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('adm.groupe') }}
-{% endblock %}
+{#{% block javascripts %}#}
+{#    {{ parent() }}#}
+{#    {{ encore_entry_script_tags('adm.groupe') }}#}
+{#{% endblock %}#}

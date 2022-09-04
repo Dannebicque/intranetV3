@@ -1,19 +1,31 @@
 <tr id="ligne_{{ groupe.id }}">
-    <td>{% if space is defined %}{% for i in 1..space %}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{% endfor %}{% endif %}
-        <a class="editable"
-           data-field="libelle"
-           data-href="{{ path('administration_groupe_ajax_edit', {id:groupe.id}) }}"
-           title="Corriger le libellé du groupe">
-            {{ groupe.libelle }}</a></td>
-    <td><a class="editable"
-           data-field="ordre"
-           data-href="{{ path('administration_groupe_ajax_edit', {id:groupe.id}) }}"
-           title="Corriger l\'ordre du groupe">
-            {{ groupe.ordre }}</a></td>
+    <td>
+        <label class="sr-only" for="libelle_groupe_{{ groupe.id }}">Modifier le libellé du groupe</label>
+        <input type="text"
+               id="libelle_groupe_{{ groupe.id }}"
+               data-action="change->groupes-adm#updateGroupe"
+               data-groupes-adm-id-param="{{ groupe.id }}"
+               data-groupes-adm-field-param="libelle"
+               class="form-control {% if space is defined %}ms-{{ space }}{% endif %}"
+               value="{{ groupe.libelle }}"/>
+    </td>
+    <td>
+        <div class="col-3">
+            <label class="sr-only" for="ordre_groupe_{{ groupe.id }}">Modifier l'ordre du groupe</label>
+            <input type="text"
+                   id="ordre_groupe_{{ groupe.id }}"
+                   data-action="change->groupes-adm#updateGroupe"
+                   data-groupes-adm-id-param="{{ groupe.id }}"
+                   data-groupes-adm-field-param="ordre"
+                   class="form-control"
+                   value="{{ groupe.ordre }}"/>
+        </div>
+    </td>
     <td>
         <label class="sr-only" for="parent_{{ groupe.id }}"></label>
-        <select id="parent_{{ groupe.id }}" name="parent_{{ groupe.id }}" class="form-select change-parent"
-                data-groupe="{{ groupe.id }}" data-semestre="{{ semestre.id }}">
+        <select id="parent_{{ groupe.id }}" name="parent_{{ groupe.id }}" class="form-select"
+                data-groupe="{{ groupe.id }}"
+                data-action="change->groupes-adm#changeParent">
             <option value="" selected>Groupe Parent</option>
             {% for gr in groupes|filter(gr => gr.typegroupe.id != groupe.typegroupe.id) %}
                 <option value="{{ gr.id }}" {% if groupe.parent != null and groupe.parent.id == gr.id %}selected{% endif %}>
@@ -22,15 +34,21 @@
             {% endfor %}
         </select>
     </td>
-    <td><a class="editable"
-           data-field="codeapogee"
-           data-href="{{ path('administration_groupe_ajax_edit', {id:groupe.id}) }}"
-           title="Corriger le code apogée du groupe">
-            {{ groupe.codeapogee }}</a></td>
+    <td>
+        <input type="text"
+               data-action="change->groupes-adm#updateGroupe"
+               data-groupes-adm-id-param="{{ groupe.id }}"
+               data-groupes-adm-field-param="codeapogee"
+               class="form-control"
+               value="{{ groupe.codeapogee }}"/>
+    </td>
     <td>
         <label class="sr-only" for="typegroupe_{{ groupe.id }}"></label>
-        <select id="typegroupe_{{ groupe.id }}" name="typegroupe_{{ groupe.id }}" class="form-select
-        change-typegroupe" data-groupe="{{ groupe.id }}" data-semestre="{{ semestre.id }}">
+        <select id="typegroupe_{{ groupe.id }}"
+                name="typegroupe_{{ groupe.id }}"
+                class="form-select"
+                data-groupe="{{ groupe.id }}"
+                data-action="change->groupes-adm#changeTypeGroupe">
             <option value="" selected>Type de Groupe</option>
             {% for tg in typeGroupes %}
                 <option value="{{ tg.id }}" {% if groupe.typegroupe != null and  groupe.typegroupe.id == tg.id %}selected{% endif %}>
@@ -42,8 +60,12 @@
     <td>
         {% if parcours is defined and parcours|length > 0 %}
             <label class="sr-only" for="parcours_{{ groupe.id }}"></label>
-            <select id="parcours_{{ groupe.id }}" name="parcours_{{ groupe.id }}" class="form-select
-            change-parcours" data-groupe="{{ groupe.id }}" data-semestre="{{ semestre.id }}">
+            <select id="parcours_{{ groupe.id }}"
+                    name="parcours_{{ groupe.id }}"
+                    class="form-select"
+                    data-groupe="{{ groupe.id }}"
+                    data-action="change->groupes-adm#changeParcours"
+            >
                 <option value="">Indiquer l'option</option>
                 {% for option in parcours %}
                     <option value="{{ option.id }}" {% if (groupe.parcours != null and  groupe.parcours.id == option
@@ -56,12 +78,12 @@
         {% endif %}
     </td>
     <td class="text-right table-actions">
-        <a class="table-action hover-primary duplicate-groupe"
+        <a class="table-action hover-primary"
            href="#"
            data-bs-toggle="tooltip"
            data-bs-placement="bottom"
            data-groupe="{{ groupe.id }}"
-           data-semestre="{{ semestre.id }}"
+           data-action="change->groupes-adm#duplicateGroupe"
            title="{{ 'atitle.dupliquer'|trans }}">
             <span class="{{ iconDuplicate }}"></span>
             <span class="sr-only">Dupliquer le groupe</span>

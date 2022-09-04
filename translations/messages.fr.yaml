@@ -2395,3 +2395,5 @@ type_qcm: 'QCM'
 type_qcu: 'QCU'
 type_slider: 'Slider'
 updated: 'Dernière mise à jour le '
+structure:
+  groupes: 'Structure des groupes'
