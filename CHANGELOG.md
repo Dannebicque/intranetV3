@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.9.0](https://github.com/Dannebicque/intranetV3/compare/v3.8.16...v3.9.0) (2022-09-04)
+
+
+### Features
+
+* [Apc] refonte ApcRessource et SAE avec Stimulus + gestion dupliquer par semestre ([2bad875](https://github.com/Dannebicque/intranetV3/commit/2bad875d3cb6427dedc35ad6084ed8aed6b653a1))
+
+
+### Bug Fixes
+
+* [Groupes] Gestion des parcours de B.U.T. ([fd2b4bd](https://github.com/Dannebicque/intranetV3/commit/fd2b4bddb261b19fd345065b7a86ec82a1ec0aab))
+* [Groupes] Gestion des parcours de B.U.T. ([3c0c5de](https://github.com/Dannebicque/intranetV3/commit/3c0c5dee4871ac138d9595bef3230e19e9cb9d1e))
+
 ### [3.8.16](https://github.com/Dannebicque/intranetV3/compare/v3.8.15...v3.8.16) (2022-09-04)
 
 
