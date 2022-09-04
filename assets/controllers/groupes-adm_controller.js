@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/groupes-adm_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 04/09/2022 09:52
+// @lastUpdate 04/09/2022 11:01
 
 import { Controller } from '@hotwired/stimulus'
 import Routing from 'fos-router'
@@ -77,9 +77,10 @@ export default class extends Controller {
   }
 
   async duplicateGroupe(e) {
+    e.preventDefault()
     get(Routing.generate('administration_groupe_duplicate', { groupe: e.currentTarget.dataset.groupe })).then(() => {
-      addCallout('Groupe dupliqué', 'success')
       this._listeGroupe()
+      addCallout('Groupe dupliqué', 'success')
     })
   }
 
@@ -105,10 +106,10 @@ export default class extends Controller {
         processData: false,
         contentType: false,
         method: 'POST',
-        success() {
-          addCallout('Mise à jour du parcours associé au groupe', 'success')
-        },
-      }).then(this._listeGroupe())
+      }).done(() => {
+        addCallout('Mise à jour du parcours associé au groupe', 'success')
+        this._listeGroupe()
+      })
     } else {
       addCallout('Veuillez remplir tous les champs obligatoires', 'danger')
       if (document.getElementById('groupe_libelle').value.trim() === '') {

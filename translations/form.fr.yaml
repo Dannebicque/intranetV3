@@ -151,6 +151,7 @@ initiales: Initiales
 j: Jour
 Jour: Jour
 label:
+  parcours.but: Parcours de B.U.T.
   typeBac: Type de bac
   sujet_alternance: Sujet de l'alternance
   adresse_lieu_alternance: Adresse du lieu de l'alternance
