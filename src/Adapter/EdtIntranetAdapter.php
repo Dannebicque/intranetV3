@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Adapter/EdtIntranetAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2022 15:25
+ * @lastUpdate 04/09/2022 17:41
  */
 
 namespace App\Adapter;
@@ -38,14 +38,15 @@ class EdtIntranetAdapter extends AbstractEdtAdapter implements EdtAdapterInterfa
             $event->code_matiere = $matiere->codeMatiere;
             $event->semestre = $matiere->getSemestres()->first();
             $event->couleur = $event->semestre->getAnnee()?->getCouleur();
-        } else {
+        } elseif ($evt->getTexte() === null) {
             $event->matiere = 'Inconnue';
             $event->couleur = '#cccccc';
         }
+        $event->largeur = $this->getLargeur($evt);
         $event->source = EdtManager::EDT_INTRANET;
         $event->id = $evt->getId();
         $event->date = $evt->getDate();
-        $event->jour = (string) $evt->getJour();
+        $event->jour = (string)$evt->getJour();
         $event->heureDebut = Carbon::createFromTimeString($evt->getDebutTexte());
         $event->heureFin = Carbon::createFromTimeString($evt->getFinTexte());
         $event->typeIdMatiere = $evt->getTypeIdMatiere();
@@ -67,7 +68,28 @@ class EdtIntranetAdapter extends AbstractEdtAdapter implements EdtAdapterInterfa
         $event->type_cours = $evt->getType();
         $event->duree = $evt->getFin() - $evt->getDebut();
 
-
         return $event;
+    }
+
+    private function getLargeur(mixed $evt)
+    {
+        switch ($evt->getType()) {
+            case 'cm':
+            case 'CM':
+                if ($evt->getGroupe() > 40) {
+                    return 4;
+                }
+
+                return 0;
+            case 'TD':
+            case 'td':
+                if ($evt->getGroupe() > 40) {
+                    return 4;
+                }
+
+                return 2;
+            default:
+                return 1;
+        }
     }
 }

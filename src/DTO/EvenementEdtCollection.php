@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/EvenementEdtCollection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/05/2022 14:11
+ * @lastUpdate 04/09/2022 17:42
  */
 
 namespace App\DTO;
@@ -29,20 +29,18 @@ class EvenementEdtCollection
         return $this->evenements;
     }
 
-    public function toArray(int $maxGroupe = 8): array
+    public function toArray(int $maxGroupe = 8, ?string $couleur = '#000000'): array
     {
         $planning = [];
         foreach ($this->evenements as $evenement) {
             // [jour][ligne][groupe]
+            $evenement->couleur = $couleur;
             $debut = Constantes::TAB_HEURES_INDEX[$evenement->heureDebut->format('H:i:s')];
             $fin = Constantes::TAB_HEURES_INDEX[$evenement->heureFin->format('H:i:s')];
-            $planning[$evenement->jour][$debut][$evenement->ordreGroupe] = $evenement;
-            $groupe = $evenement->ordreGroupe;
-            if ('CM' === strtoupper($evenement->type_cours)) {
-                $groupefin = $groupe + $maxGroupe; // todo: nb groupes du semestre ??
-            } else {
-                $groupefin = $groupe + $evenement->largeur();
-            }
+            $groupe = $evenement->groupeId > 40 ? $evenement->groupeId - 40 : $evenement->groupeId;
+            $planning[$evenement->jour][$debut][$groupe] = $evenement;
+
+            $groupefin = $groupe + (0 === $evenement->largeur ? $maxGroupe : $evenement->largeur);
 
             for ($i = $debut; $i < $fin; ++$i) {
                 for ($j = $groupe; $j < $groupefin; ++$j) {
@@ -52,7 +50,6 @@ class EvenementEdtCollection
                 }
             }
         }
-
         return $planning;
     }
 }
