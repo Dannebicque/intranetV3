@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.8.16](https://github.com/Dannebicque/intranetV3/compare/v3.8.15...v3.8.16) (2022-09-04)
+
+
+### Bug Fixes
+
+* [Apc] Dupliquer ressources/SAE d'un semestre ([4a702cc](https://github.com/Dannebicque/intranetV3/commit/4a702cca92aac28062e335f89ba24db6e063bf91))
+* [Apc] Gestion semestres ([2f69285](https://github.com/Dannebicque/intranetV3/commit/2f692852515d7e15acfe5ff1b576c3fcb2d25a2a))
+* [Apc] lisibilité de la page des diplômes ([fd48704](https://github.com/Dannebicque/intranetV3/commit/fd4870453a0a0047143ef8c9044581af7cae83e1))
+* [Groupes] Gestion des parcours de B.U.T. ([833e837](https://github.com/Dannebicque/intranetV3/commit/833e8374330cbe9724ae574fe196491b95593c8e))
+* [Groupes] Refonte avec Stimulus de la gestion de la structure des groupes ([79b6fe0](https://github.com/Dannebicque/intranetV3/commit/79b6fe01b670710e739460844ee0772fc95a7cbc))
+
 ### [3.8.15](https://github.com/Dannebicque/intranetV3/compare/v3.8.14...v3.8.15) (2022-09-03)
 
 
