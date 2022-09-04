@@ -2,11 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-## [](https://github.com/Dannebicque/intranetV3/compare/v3.9.0...v) (2022-09-04)
+### [3.9.1](https://github.com/Dannebicque/intranetV3/compare/v3.9.0...v3.9.1) (2022-09-04)
 
 
 ### Features
 
+* [Edt] Affichage des TD alternance et des CM sur une partie des groupes ([873b4df](https://github.com/Dannebicque/intranetV3/commit/873b4df7915c52e0a1033a01027d9d508b19b697))
 * [Edt] Affichage des TD alternance et des CM sur une partie des groupes ([c69d9f9](https://github.com/Dannebicque/intranetV3/commit/c69d9f90beed1a8e3290d167c8dd7f8ef2d72794))
 * [Edt] Affichage des TD alternance et des CM sur une partie des groupes ([f0c2888](https://github.com/Dannebicque/intranetV3/commit/f0c28881f21ad423b4e0e884709550d736a8fdfe))
 
