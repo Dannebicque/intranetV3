@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcParcoursRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/07/2022 15:42
+ * @lastUpdate 04/09/2022 10:40
  */
 
 namespace App\Repository;
 
 use App\Entity\ApcParcours;
+use App\Entity\Diplome;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -31,6 +32,14 @@ class ApcParcoursRepository extends ServiceEntityRepository
     public function findAllBuilder(): QueryBuilder
     {
         return $this->createQueryBuilder('apc')
+            ->orderBy('apc.libelle', 'ASC');
+    }
+
+    public function findByDiplomeBuilder(Diplome $diplome): QueryBuilder
+    {
+        return $this->createQueryBuilder('apc')
+            ->where('apc.apcReferentiel = :referentiel')
+            ->setParameter('referentiel', $diplome->getReferentiel()->getId())
             ->orderBy('apc.libelle', 'ASC');
     }
 }

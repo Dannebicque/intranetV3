@@ -4,15 +4,17 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/GroupeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2022 09:46
+ * @lastUpdate 04/09/2022 10:40
  */
 
 namespace App\Form;
 
+use App\Entity\ApcParcours;
 use App\Entity\Groupe;
 use App\Entity\Parcour;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
+use App\Repository\ApcParcoursRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\ParcourRepository;
 use App\Repository\TypeGroupeRepository;
@@ -32,6 +34,10 @@ class GroupeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->semestre = $options['semestre'];
+        $diplome = $this->semestre->getDiplome();
+        if (null !== $diplome && null !== $diplome->getParent()) {
+            $diplome = $diplome->getParent();
+        }
 
         $builder
             ->add('libelle', TextType::class, ['label' => 'label.libelle', 'help' => 'Libellé du groupe. Obligatoire.'])
@@ -46,7 +52,7 @@ class GroupeType extends AbstractType
                 'class' => TypeGroupe::class,
                 'label' => 'label.typeGroupe',
                 'choice_label' => 'libelle',
-                'query_builder' => fn (TypeGroupeRepository $typeGroupeRepository) => $typeGroupeRepository->findByDiplomeAndOrdreSemestreBuilder($this->semestre->getDiplome(), $this->semestre->getOrdreLmd()),
+                'query_builder' => fn (TypeGroupeRepository $typeGroupeRepository) => $typeGroupeRepository->findByDiplomeAndOrdreSemestreBuilder($diplome, $this->semestre->getOrdreLmd()),
                 'required' => true,
                 'expanded' => false,
                 'multiple' => false,
@@ -59,16 +65,31 @@ class GroupeType extends AbstractType
                 'required' => false,
                 'expanded' => false,
                 'multiple' => false,
-            ])
-            ->add('parcours', EntityType::class, [
-                'class' => Parcour::class,
-                'label' => 'label.parcours',
+            ]);
+
+        if ($diplome !== null && $diplome->isApc()) {
+            $builder->add('apcParcours', EntityType::class, [
+                'class' => ApcParcours::class,
+                'label' => 'label.parcours.but',
                 'choice_label' => 'libelle',
-                'query_builder' => fn (ParcourRepository $parcourRepository) => $parcourRepository->findBySemestreBuilder($this->semestre),
+                'query_builder' => fn(ApcParcoursRepository $parcourRepository
+                ) => $parcourRepository->findByDiplomeBuilder($diplome),
                 'required' => false,
                 'expanded' => false,
                 'multiple' => false,
             ]);
+        } else {
+            $builder->add('parcours', EntityType::class, [
+                'class' => Parcour::class,
+                'label' => 'label.parcours',
+                'choice_label' => 'libelle',
+                'query_builder' => fn(ParcourRepository $parcourRepository
+                ) => $parcourRepository->findBySemestreBuilder($this->semestre),
+                'required' => false,
+                'expanded' => false,
+                'multiple' => false,
+            ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void

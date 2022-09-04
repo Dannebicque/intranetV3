@@ -22,7 +22,13 @@
                 <td>{{ form_row(form.codeApogee) }}
                 </td>
                 <td>{{ form_row(form.typeGroupe) }}</td>
-                <td>{{ form_row(form.parcours) }}</td>
+                <td>
+                    {% if diplome.apc == true %}
+                    {{ form_row(form.apcParcours) }}
+                    {% else %}
+                        {{ form_row(form.parcours) }}
+                    {% endif %}
+                </td>
             </tr>
             <tr>
                 <td colspan="6">

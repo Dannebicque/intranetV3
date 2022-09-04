@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/GroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2022 14:52
+ * @lastUpdate 04/09/2022 10:40
  */
 
 namespace App\Controller\administration;
@@ -163,7 +163,6 @@ class GroupeController extends BaseController
         $form = $this->createForm(GroupeType::class, $groupe,
             ['semestre' => $semestre, 'attr' => ['id' => 'form_groupe']]);
         $form->handleRequest($request);
-        // todo: gérer les parcours APC...
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($groupe);
             $this->entityManager->flush();
