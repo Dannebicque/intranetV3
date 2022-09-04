@@ -7,6 +7,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Features
 
+* [Edt] Affichage des TD alternance et des CM sur une partie des groupes ([c69d9f9](https://github.com/Dannebicque/intranetV3/commit/c69d9f90beed1a8e3290d167c8dd7f8ef2d72794))
 * [Edt] Affichage des TD alternance et des CM sur une partie des groupes ([f0c2888](https://github.com/Dannebicque/intranetV3/commit/f0c28881f21ad423b4e0e884709550d736a8fdfe))
 
 ## [3.9.0](https://github.com/Dannebicque/intranetV3/compare/v3.8.16...v3.9.0) (2022-09-04)
