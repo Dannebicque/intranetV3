@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apogee/GenereCodeApogee.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Apogee/GenereCodeApogee.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 01/09/2022 16:32
  */
 
 namespace App\Classes\Apogee;
@@ -38,7 +38,7 @@ class GenereCodeApogee
         $annees = $this->diplome->getAnnees();
         foreach ($annees as $annee) {
             $debut = substr($annee->getCodeEtape(), 1,
-                4); // je récupère le code étape de l'année, et je retire le 5 et le nuéro.
+                4); // je récupère le code étape de l'année, et je retire le 5 et le numéro.
             $semestres = $annee->getSemestres();
             foreach ($semestres as $semestre) {
                 $semestre->setCodeElement($debut.$semestre->getOrdreLmd());
