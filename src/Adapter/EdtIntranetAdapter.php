@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Adapter/EdtIntranetAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2022 17:41
+ * @lastUpdate 05/09/2022 11:03
  */
 
 namespace App\Adapter;
@@ -47,6 +47,8 @@ class EdtIntranetAdapter extends AbstractEdtAdapter implements EdtAdapterInterfa
         $event->id = $evt->getId();
         $event->date = $evt->getDate();
         $event->jour = (string)$evt->getJour();
+        $event->diplome = $evt->getDiplome();
+        $event->ordreSemestre = $evt->getOrdreSemestre();
         $event->heureDebut = Carbon::createFromTimeString($evt->getDebutTexte());
         $event->heureFin = Carbon::createFromTimeString($evt->getFinTexte());
         $event->typeIdMatiere = $evt->getTypeIdMatiere();

@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/EvenementEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2022 17:28
+ * @lastUpdate 05/09/2022 11:03
  */
 
 namespace App\DTO;
 
 use App\Entity\Constantes;
+use App\Entity\Diplome;
 use App\Entity\Groupe;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
@@ -58,6 +59,8 @@ class EvenementEdt
     public ?int $semestreOrdre;
     public int|float $duree = 0;
     public string $heureTexte = '';
+    public ?Diplome $diplome;
+    public ?int $ordreSemestre;
 
     public function getDisplay(): void
     {

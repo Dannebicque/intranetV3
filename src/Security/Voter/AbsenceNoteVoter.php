@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Security/Voter/AbsenceNoteVoter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/07/2022 17:06
+ * @lastUpdate 05/09/2022 10:55
  */
 
 namespace App\Security\Voter;
@@ -37,12 +37,25 @@ class AbsenceNoteVoter extends Voter
         }
         // todo: tester éventuellement des droits supplémentaire, et donc pas besoin de prévisionnel?
 
-        if (!$this->abstractVoter->userInGoodDepartement($subject['semestre']->getDiplome()?->getDepartement())) {
-            throw new AccessDeniedException('Vous n\'êtes pas dans le département associé à cette matière/ressource/SAÉ');
+
+        if (array_key_exists('semestre', $subject)) {
+            if (!$this->abstractVoter->userInGoodDepartement($subject['semestre']->getDiplome()?->getDepartement())) {
+                throw new AccessDeniedException('Vous n\'êtes pas dans le département associé à cette matière/ressource/SAÉ');
+            }
+
+            if ($this->abstractVoter->isResponsableDepartement($subject['semestre']->getDiplome()?->getDepartement())) {
+                return true;
+            }
         }
 
-        if ($this->abstractVoter->isResponsableDepartement($subject['semestre']->getDiplome()?->getDepartement())) {
-            return true;
+        if (array_key_exists('diplome', $subject)) {
+            if (!$this->abstractVoter->userInGoodDepartement($subject['diplome']->getDepartement())) {
+                throw new AccessDeniedException('Vous n\'êtes pas dans le département associé à cette matière/ressource/SAÉ');
+            }
+
+            if ($this->abstractVoter->isResponsableDepartement($subject['diplome']->getDepartement())) {
+                return true;
+            }
         }
 
         switch ($attribute) {

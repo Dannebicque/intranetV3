@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyGroupes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/09/2022 09:12
+ * @lastUpdate 05/09/2022 11:02
  */
 
 /*
@@ -15,6 +15,7 @@ namespace App\Classes;
 
 use App\Classes\Apogee\ApogeeGroupe;
 use App\Entity\Departement;
+use App\Entity\Diplome;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
@@ -58,13 +59,9 @@ class MyGroupes
     /**
      * @throws \App\Exception\SemestreNotFoundException
      */
-    public function getGroupesSemestre(?Semestre $semestre, ?string $defaut = null): self
+    public function getGroupesSemestre(int $ordreSemestre, Diplome $diplome, ?string $defaut = null): self
     {
-        if (null === $semestre) {
-            throw new SemestreNotFoundException();
-        }
-
-        $this->typeGroupes = $this->typeGroupeRepository->findBySemestre($semestre);
+        $this->typeGroupes = $this->typeGroupeRepository->findByDiplomeAndOrdreSemestre($diplome, $ordreSemestre);
 
         foreach ($this->typeGroupes as $tg) {
             if (null === $defaut && true === $tg->getDefaut()) {

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/07/2022 09:40
+ * @lastUpdate 05/09/2022 11:05
  */
 
 namespace App\Controller\appPersonnel;
@@ -90,14 +90,14 @@ class AbsenceController extends BaseController
         if (null === $matiere) {
             throw new MatiereNotFoundException();
         }
-        $this->denyAccessUnlessGranted('CAN_ADD_ABSENCE', ['matiere' => $matiere, 'semestre' => $planning->semestre]);
+        $this->denyAccessUnlessGranted('CAN_ADD_ABSENCE', ['matiere' => $matiere, 'diplome' => $planning->diplome]);
         if (null !== $planning) {
             return $this->render('appPersonnel/absence/index.html.twig', [
-                'semestre' => $planning?->semestre,
+                'semestre' => $matiere->getSemestres()[0],
                 'matiere' => $matiere,
                 'event' => $planning,
-                'groupes' => $myGroupes->getGroupesSemestre($planning->semestre ?? $matiere->semestre,
-                    $planning->type_cours),
+                'groupes' => $myGroupes->getGroupesSemestre($planning->ordreSemestre,
+                    $planning->diplome, $planning->type_cours),
                 'heure' => $planning->heureDebut,
                 'date' => $planning->dateObjet,
             ]);
