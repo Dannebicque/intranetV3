@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.2](https://github.com/Dannebicque/intranetV3/compare/v3.9.1...v3.9.2) (2022-09-06)
+
+
+### Bug Fixes
+
+* [Absence] Bug sur la saisie des absences et affichages des types de groupes ([940048f](https://github.com/Dannebicque/intranetV3/commit/940048fd9d956ea73144df5b763440d585d4eec0))
+* [Chronologique] affichage heure ([33eb694](https://github.com/Dannebicque/intranetV3/commit/33eb694911ad031e0eb649b6d2732843f076b4ae))
+* [Edt] Affichage des TD alternance et des CM sur une partie des groupes ([21dedcc](https://github.com/Dannebicque/intranetV3/commit/21dedccbe59380722350255046a0621341176b03))
+* [Edt] Requête avec diplôme ([1649b4d](https://github.com/Dannebicque/intranetV3/commit/1649b4d7b18625ce8df7ed0be33bdbe64ea53501))
+* [Export] Groupes avec novuelle structure ([e840cac](https://github.com/Dannebicque/intranetV3/commit/e840cacb8ebcb8a3113aa05d8af7d10aa645a882))
+
 ### [3.9.1](https://github.com/Dannebicque/intranetV3/compare/v3.9.0...v3.9.1) (2022-09-04)
 
 
