@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/09/2022 11:51
+ * @lastUpdate 06/09/2022 12:39
  */
 
 /*
@@ -129,7 +129,7 @@ class MyEdtExport
         $t = [];
         while ($fichier = readdir($dossier)) {
             if ('.' !== $fichier && '..' !== $fichier) {
-                $id = explode('_', $fichier);
+                $id = explode('-', $fichier);
                 $t[$id[0]] = $fichier;
             }
         }
