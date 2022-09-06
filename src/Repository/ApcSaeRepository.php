@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcSaeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/09/2022 14:23
+ * @lastUpdate 06/09/2022 22:31
  */
 
 namespace App\Repository;
@@ -126,6 +126,7 @@ class ApcSaeRepository extends ServiceEntityRepository
             ->innerJoin(ApcCompetence::class, 'c', 'WITH', 'cs.competence = c.id')
             ->where('c.apcReferentiel = :referentiel')
             ->setParameter('referentiel', $referentiel->getId())
+            ->orderBy('r.codeMatiere', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

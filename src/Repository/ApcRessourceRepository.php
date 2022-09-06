@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcRessourceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/09/2022 14:57
+ * @lastUpdate 06/09/2022 22:31
  */
 
 namespace App\Repository;
@@ -123,6 +123,7 @@ class ApcRessourceRepository extends ServiceEntityRepository
             ->innerJoin(ApcCompetence::class, 'c', 'WITH', 'cr.competence = c.id')
             ->where('c.apcReferentiel = :referentiel')
             ->setParameter('referentiel', $referentiel->getId())
+            ->orderBy('r.codeMatiere', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
