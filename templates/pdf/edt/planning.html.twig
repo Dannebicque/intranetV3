@@ -2,7 +2,7 @@
 
 {% block content %}
     {{include('pdf/_headerPdf.html.twig', {
-        departement: semestre.diplome.departement,
+        departement: departement,
         titre: '<h2>Planning | '~personnel.display~' | '~user_data.displayAnneeUniversitaire~'</h2>',
         qualite: false
     }) }}

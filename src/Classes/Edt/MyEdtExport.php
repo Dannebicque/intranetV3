@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/08/2022 15:39
+ * @lastUpdate 06/09/2022 11:51
  */
 
 /*
@@ -172,11 +172,12 @@ class MyEdtExport
         // todo: passer par le DTO Evenement, comme ca compatible avec celcat
         // todo: gérer l'année universitaire d'export
         if ('intranet' === $source) {
-            $planning = $this->edtPlanningRepository->findEdtProf($personnel->getId(),5);
+            $planning = $this->edtPlanningRepository->findEdtProf($personnel->getId(),$personnel->getAnneeUniversitaire());
             $this->myPDF::genereAndSavePdf('pdf/edt/planning.html.twig',
                 [
                     'planning' => $planning,
                     'personnel' => $personnel,
+                    'departement' => $departement,
                     'matieres' => $this->typeMatiereManager->findByDepartementArray($departement),
                 ],
                 $personnel->getId().'_'.$personnel->getInitiales(),

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:28
+ * @lastUpdate 06/09/2022 11:15
  */
 
 namespace App\Controller\administration;
@@ -213,7 +213,7 @@ class EdtExportController extends BaseController
     #[Route(path: '/profs/{source}.pdf', name: 'administration_edt_export_profs', requirements: ['source' => 'intranet|celcat'])]
     public function exportProfs(Request $request, PersonnelRepository $personnelRepository, MyEdtExport $myEdtExport, $source): Response
     {
-        $profs = $request->request->get('personnels');
+        $profs = $request->request->all()['personnels'];
         foreach ($profs as $prof) {
             $personnel = $personnelRepository->find($prof);
             if (null !== $personnel) {

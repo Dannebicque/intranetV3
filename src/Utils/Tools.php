@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Utils/Tools.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/09/2022 11:28
+ * @lastUpdate 06/09/2022 11:49
  */
 
 /*
@@ -148,7 +148,7 @@ abstract class Tools
 
     public static function checkDirectoryExist(string $dir): bool
     {
-        if (!mkdir($dir) && !is_dir($dir)) {
+        if (!is_dir($dir) && !mkdir($dir)) {
             throw new RuntimeException(sprintf('Directory "%s" was not created', $dir));
         }
 
