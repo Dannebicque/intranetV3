@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyAbsences.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 06/09/2022 14:54
  */
 
 namespace App\Classes;
@@ -128,7 +128,7 @@ class MyAbsences
             $abs->etudiant = $etudiant;
             $this->etudiantAbsences->setEtudiant($etudiant);
             $absencesEtudiant = $this->etudiantAbsences->getAbsencesParSemestresEtAnneeUniversitaire($matieres,
-                $semestre->getAnneeUniversitaire());
+                $anneeUniversitaire);
             $statistiques = new StatsAbsences();
             $stats = $statistiques->calculStatistiquesAbsencesEtudiant($absencesEtudiant);
             $abs->setStatisques($stats);
