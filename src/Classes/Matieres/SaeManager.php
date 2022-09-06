@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Matieres/SaeManager.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Matieres/SaeManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/10/2021 11:36
+ * @lastUpdate 06/09/2022 11:37
  */
 
 namespace App\Classes\Matieres;
@@ -12,6 +12,7 @@ namespace App\Classes\Matieres;
 use App\Adapter\MatiereSaeAdapter;
 use App\DTO\Matiere;
 use App\DTO\MatiereCollection;
+use App\Entity\ApcReferentiel;
 use App\Entity\ApcSae;
 use App\Entity\Departement;
 use App\Entity\Diplome;
@@ -50,6 +51,13 @@ class SaeManager extends AbstractMatiereManager implements MatiereInterface
     public function findByDiplome(Diplome $diplome): MatiereCollection
     {
         $data = $this->apcSaeRepository->findByDiplome($diplome);
+
+        return $this->saeAdapter->collection($data);
+    }
+
+    public function findByReferentiel(ApcReferentiel $referentiel): MatiereCollection
+    {
+        $data = $this->apcSaeRepository->findByReferentiel($referentiel);
 
         return $this->saeAdapter->collection($data);
     }

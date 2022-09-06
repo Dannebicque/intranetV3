@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Utils/Tools.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/06/2022 16:10
+ * @lastUpdate 06/09/2022 11:28
  */
 
 /*
@@ -155,14 +155,14 @@ abstract class Tools
         return true;
     }
 
-    public static function convertToInt(mixed $int): int|string
+    public static function convertToInt(mixed $int): int
     {
         $int = trim($int);
         if ('' === $int) {
             $int = 0;
         }
 
-        return $int;
+        return (int) $int;
     }
 
     public static function convertApogeeDateToObject(string $date): CarbonInterface

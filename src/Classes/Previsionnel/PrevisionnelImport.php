@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Previsionnel/PrevisionnelImport.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Previsionnel/PrevisionnelImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2021 23:00
+ * @lastUpdate 06/09/2022 11:45
  */
 
 namespace App\Classes\Previsionnel;
@@ -57,7 +57,8 @@ class PrevisionnelImport
                 while (!feof($handle)) {
                     /* On lit la ligne courante */
                     $ligne = fgetcsv($handle, 1024, ';');
-                    if (array_key_exists($ligne[2], $matieres)) {
+
+                    if (is_array($ligne) && array_key_exists($ligne[2], $matieres)) {
                         $personnel = $personnels[$ligne[4]] ?? null;
                         $pr = new Previsionnel($annee, $personnel);
                         $pr->setNbHCm($ligne[6]);

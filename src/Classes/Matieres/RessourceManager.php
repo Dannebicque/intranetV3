@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Matieres/RessourceManager.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Matieres/RessourceManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/10/2021 11:36
+ * @lastUpdate 06/09/2022 11:36
  */
 
 namespace App\Classes\Matieres;
@@ -12,6 +12,7 @@ namespace App\Classes\Matieres;
 use App\Adapter\MatiereRessourceAdapter;
 use App\DTO\Matiere;
 use App\DTO\MatiereCollection;
+use App\Entity\ApcReferentiel;
 use App\Entity\ApcRessource;
 use App\Entity\Departement;
 use App\Entity\Diplome;
@@ -50,6 +51,13 @@ class RessourceManager extends AbstractMatiereManager implements MatiereInterfac
     public function findByDiplome(Diplome $diplome): MatiereCollection
     {
         $data = $this->apcRessourceRepository->findByDiplome($diplome);
+
+        return $this->ressourceAdapter->collection($data);
+    }
+
+    public function findByReferentiel(ApcReferentiel $referentiel): MatiereCollection
+    {
+        $data = $this->apcRessourceRepository->findByReferentiel($referentiel);
 
         return $this->ressourceAdapter->collection($data);
     }

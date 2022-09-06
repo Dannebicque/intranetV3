@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Matieres/TypeMatiereManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2022 09:55
+ * @lastUpdate 06/09/2022 11:34
  */
 
 namespace App\Classes\Matieres;
 
 use App\Classes\Edt\EdtManager;
 use App\DTO\EvenementEdt;
+use App\Entity\ApcReferentiel;
 use App\Entity\ApcRessource;
 use App\Entity\ApcSae;
 use App\Entity\Departement;
@@ -164,7 +165,11 @@ class TypeMatiereManager
     {
         $t = [];
         foreach ($this->managers as $manager) {
-            $matieres = $manager->findByDiplome($diplome);
+            if ($diplome->isApc() && !$manager instanceof MatiereManager) {
+                $matieres = $manager->findByReferentiel($diplome->getReferentiel());
+            } else {
+                $matieres = $manager->findByDiplome($diplome);
+            }
             $t[] = $matieres->toArray();
         }
 
