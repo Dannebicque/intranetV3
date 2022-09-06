@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/09/2022 10:51
+ * @lastUpdate 06/09/2022 10:55
  */
 
 namespace App\Repository;
@@ -64,6 +64,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->where('p.semaine = :semaine')
             ->andWhere('p.ordreSemestre = :semestre')
+            ->setParameter('diplome', null !== $semestre->getDiplome()->getParent() ? $semestre->getDiplome()->getParent()->getId() : $semestre->getDiplome()->getId())
             ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
             ->setParameters(['semaine' => $semaine, 'semestre' => $semestre->getOrdreLmd(), 'anneeUniversitaire' => $anneeUniversitaire->getId()])
             ->orderBy('p.jour', Criteria::ASC)
@@ -154,6 +155,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
             return $this->createQueryBuilder('p')
                 ->where('p.semaine = :semaine')
                 ->andWhere('p.ordreSemestre = :promo')
+                ->setParameter('diplome', null !== $user->getDiplome()->getParent() ? $user->getDiplome()->getParent()->getId() : $user->getDiplome()->getId())
                 ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
                 ->andWhere('p.groupe = 1 OR p.groupe = :groupetd OR p.groupe = :groupetp')
                 ->setParameters([
@@ -197,6 +199,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->where('p.semaine = :semaine')
             ->andWhere('p.jour = :jour ')
             ->andWhere('p.ordreSemestre = :semestre')
+            ->setParameter('diplome', null !== $semestre->getDiplome()->getParent() ? $semestre->getDiplome()->getParent()->getId() : $semestre->getDiplome()->getId())
             ->setParameters([
                 'semaine' => $numSemaine,
                 'jour' => $jour,
@@ -310,6 +313,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->where('p.semaine = :semaine')
             ->andWhere('p.jour = :jour ')
             ->andWhere('p.ordreSemestre = :semestre')
+            ->setParameter('diplome', null !== $semestre->getDiplome()->getParent() ? $semestre->getDiplome()->getParent()->getId() : $semestre->getDiplome()->getId())
             ->setParameters([
                 'semaine' => $numSemaine,
                 'jour' => $jour,
@@ -434,6 +438,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
             ->setParameter('semestre', $semestre->getOrdreLmd())
             ->setParameter('anneeUniversitaire', $anneeUniversitaire->getId())
+            ->setParameter('diplome', null !== $semestre->getDiplome()->getParent() ? $semestre->getDiplome()->getParent()->getId() : $semestre->getDiplome()->getId())
             ->orderBy('p.semaine', Criteria::ASC)
             ->addOrderBy('p.jour', Criteria::ASC)
             ->addOrderBy('p.debut', Criteria::ASC)
@@ -451,7 +456,9 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->where('p.ordreSemestre = :semestre')
             ->andWhere('p.semaine = :semaine')
             ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
+            ->andWhere('p.diplome = :diplome')
             ->setParameter('semestre', $semestre->getOrdreLmd())
+            ->setParameter('diplome', null !== $semestre->getDiplome()->getParent() ? $semestre->getDiplome()->getParent()->getId() : $semestre->getDiplome()->getId())
             ->setParameter('semaine', $semaine)
             ->setParameter('anneeUniversitaire', $anneeUniversitaire->getId())
             ->addOrderBy('p.jour', Criteria::ASC)
