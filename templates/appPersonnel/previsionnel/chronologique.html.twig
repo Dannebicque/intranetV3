@@ -54,7 +54,7 @@
                     <tr class="previ{{ cours.type_cours|lower }}">
                         <td>{{ cours.date }}</td>
                         <td>{{ cours.jour }}</td>
-                        <td>{{ cours.heure }}</td>
+                        <td>{{ cours.heureTexte }}</td>
                         <td>
                             {{ matieres[cours.typeIdMatiere] is defined ? matieres[cours.typeIdMatiere].display :
                             '-Matière inconnue-' }}
