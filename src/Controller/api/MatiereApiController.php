@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/api/MatiereApiController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/api/MatiereApiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/05/2021 08:58
+ * @lastUpdate 06/09/2022 10:45
  */
 
 namespace App\Controller\api;
@@ -15,6 +15,7 @@ use App\Entity\Parcour;
 use App\Entity\Semestre;
 use App\Repository\ParcourRepository;
 use App\Repository\SemestreRepository;
+use App\Repository\TypeGroupeRepository;
 use App\Repository\UeRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -60,10 +61,17 @@ class MatiereApiController extends BaseController
     }
 
     #[Route(path: '/document/export/personnalise/{semestre}', name: 'api_export_document_personnalise', options: ['expose' => true])]
-    public function exportDocumentPersonnalise(Semestre $semestre): Response
+    public function exportDocumentPersonnalise(
+        TypeGroupeRepository $typeGroupeRepository,
+        Semestre $semestre): Response
     {
+        if ($semestre->getDiplome()->isApc()) {
+            $typeGroupes = $typeGroupeRepository->findByDiplomeAndOrdreSemestre($semestre->getDiplome(), $semestre->getOrdreLmd());
+        } else {
+            $typeGroupes = $semestre->getTypeGroupes();
+        }
         return $this->render('api/matiere/document/export.html.twig', [
-            'typeGroupes' => $semestre->getTypeGroupes(),
+            'typeGroupes' => $typeGroupes,
         ]);
     }
 
