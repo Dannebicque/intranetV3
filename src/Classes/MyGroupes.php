@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyGroupes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/09/2022 15:37
+ * @lastUpdate 07/09/2022 16:49
  */
 
 /*
@@ -133,11 +133,11 @@ class MyGroupes
         $this->removeGroupeFromSemestre($semestre);
         $tGroupes = $this->groupeRepository->findBySemestreArray($semestre);
         $tEtudiants = $this->etudiantRepository->findBySemestreArray($semestre);
-
         $semestres = $this->semestreRepository->findByDiplomeEtNumero($semestre->getDiplome(),
             $semestre->getOrdreLmd());
 
         foreach ($semestres as $sem) {
+
             $groupes = $this->apogeeGroupe->getEtudiantsGroupesSemestre($sem);
             while ($groupe = $groupes->fetch()) {
                 if (array_key_exists($groupe['COD_ETU'], $tEtudiants) && array_key_exists($groupe['COD_EXT_GPE'],

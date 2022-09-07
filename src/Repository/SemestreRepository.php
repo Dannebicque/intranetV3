@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/SemestreRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/09/2022 15:37
+ * @lastUpdate 07/09/2022 16:48
  */
 
 namespace App\Repository;
@@ -129,15 +129,23 @@ class SemestreRepository extends ServiceEntityRepository
             $diplome = $diplome->getParent();
         }
 
-        return $this->createQueryBuilder('s')
+        $query = $this->createQueryBuilder('s')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
-            ->where('a.diplome = :diplome')
             ->andWhere('s.ordreLmd = :numero')
-            ->setParameter('diplome', $diplome->getId())
             ->setParameter('numero', $ordreSemestre)
-            ->orderBy('s.ordreLmd', Criteria::ASC)
+            ->orderBy('s.ordreLmd', Criteria::ASC);
+
+        $ors = [];
+        foreach ($diplome->getEnfants() as $dip) {
+            $ors[] = '('.$query->expr()->orx('a.diplome = '.$query->expr()->literal($dip->getId())).')';
+        }
+        $ors[] = '('.$query->expr()->orx('a.diplome = '.$query->expr()->literal($diplome->getId())).')';
+
+        return $query->andWhere(implode(' OR ', $ors))
             ->getQuery()
             ->getResult();
+
+
     }
 
     public function findSemestresActifBuilder(): QueryBuilder
