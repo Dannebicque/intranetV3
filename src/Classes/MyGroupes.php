@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyGroupes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/09/2022 17:23
+ * @lastUpdate 07/09/2022 17:57
  */
 
 /*
@@ -146,7 +146,6 @@ class MyGroupes
                 }
             }
             $this->entityManager->flush();
-            die();
         }
     }
 
