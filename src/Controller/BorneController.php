@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/BorneController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/BorneController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/10/2021 11:36
+ * @lastUpdate 07/09/2022 11:11
  */
 
 namespace App\Controller;
@@ -55,12 +55,12 @@ class BorneController extends AbstractController
     {
         $nbBornes = [
             1 => [
-                'zone1' => ['type' => 'semestre', 'valeur' => 80],
+                'zone1' => ['type' => 'semestre', 'valeur' => 79],
                // 'zone2' => ['type' => 'semestre', 'valeur' => 10],
                 'zone3' => ['type' => 'message', 'valeur' => Borne::class],
             ],
             2 => [
-                'zone1' => ['type' => 'semestre', 'valeur' => 6],
+                'zone1' => ['type' => 'semestre', 'valeur' => 93],
                // 'zone2' => ['type' => 'semestre', 'valeur' => 5],
                 // 'zone2' => ['type' => 'message', 'valeur' => Message::class],
                 'zone3' => ['type' => 'message', 'valeur' => Borne::class],
