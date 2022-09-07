@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/GroupeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2022 09:47
+ * @lastUpdate 07/09/2022 15:32
  */
 
 namespace App\Repository;
@@ -178,7 +178,7 @@ class GroupeRepository extends ServiceEntityRepository
 
     public function findBySemestreArray(Semestre $semestre): array
     {
-        $groupes = $this->findBySemestre($semestre);
+        $groupes = $this->findByDiplomeAndOrdreSemestre($semestre->getDiplome(), $semestre->getOrdreLmd());
         $t = [];
 
         /** @var Groupe $groupe */

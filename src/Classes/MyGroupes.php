@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyGroupes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/09/2022 11:02
+ * @lastUpdate 07/09/2022 15:37
  */
 
 /*
@@ -20,7 +20,6 @@ use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use App\Enums\TypeGroupeEnum;
-use App\Exception\SemestreNotFoundException;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\ParcourRepository;
@@ -99,7 +98,8 @@ class MyGroupes
 
     public function updateParent(Semestre $semestre): void
     {
-        $groupes = $this->groupeRepository->findByDiplomeAndOrdreSemestre($semestre->getDiplome(), $semestre->getOrdreLmd());
+        $groupes = $this->groupeRepository->findByDiplomeAndOrdreSemestre($semestre->getDiplome(),
+            $semestre->getOrdreLmd());
         /** @var Groupe $groupe */
         foreach ($groupes as $groupe) {
             // pas d'enfant c'est le groupe de plus bas  niveau
@@ -133,15 +133,21 @@ class MyGroupes
         $this->removeGroupeFromSemestre($semestre);
         $tGroupes = $this->groupeRepository->findBySemestreArray($semestre);
         $tEtudiants = $this->etudiantRepository->findBySemestreArray($semestre);
-        $groupes = $this->apogeeGroupe->getEtudiantsGroupesSemestre($semestre);
-        while ($groupe = $groupes->fetch()) {
-            if (array_key_exists($groupe['COD_ETU'], $tEtudiants) && array_key_exists($groupe['COD_EXT_GPE'],
-                    $tGroupes)) {
-                $tEtudiants[$groupe['COD_ETU']]->addGroupe($tGroupes[$groupe['COD_EXT_GPE']]);
-                $tGroupes[$groupe['COD_EXT_GPE']]->addEtudiant($tEtudiants[$groupe['COD_ETU']]);
+
+        $semestres = $this->semestreRepository->findByDiplomeEtNumero($semestre->getDiplome(),
+            $semestre->getOrdreLmd());
+
+        foreach ($semestres as $sem) {
+            $groupes = $this->apogeeGroupe->getEtudiantsGroupesSemestre($sem);
+            while ($groupe = $groupes->fetch()) {
+                if (array_key_exists($groupe['COD_ETU'], $tEtudiants) && array_key_exists($groupe['COD_EXT_GPE'],
+                        $tGroupes)) {
+                    $tEtudiants[$groupe['COD_ETU']]->addGroupe($tGroupes[$groupe['COD_EXT_GPE']]);
+                    $tGroupes[$groupe['COD_EXT_GPE']]->addEtudiant($tEtudiants[$groupe['COD_ETU']]);
+                }
             }
+            $this->entityManager->flush();
         }
-        $this->entityManager->flush();
     }
 
     private function removeGroupeFromSemestre(Semestre $semestre): void

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EtudiantRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2022 11:47
+ * @lastUpdate 07/09/2022 15:35
  */
 
 namespace App\Repository;
@@ -193,7 +193,7 @@ class EtudiantRepository extends ServiceEntityRepository
 
     public function findBySemestreArray(Semestre $semestre): array
     {
-        $etudiants = $this->findBySemestre($semestre);
+        $etudiants = $this->findByOrdreSemestreAndDiplome($semestre->getOrdreLmd(), $semestre->getDiplome());
         $t = [];
 
         /** @var Etudiant $etudiant */
