@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.5](https://github.com/Dannebicque/intranetV3/compare/v3.9.4...v3.9.5) (2022-09-07)
+
+
+### Bug Fixes
+
+* [Apogée Groupe] Synchronisation des groupes ([85c6f40](https://github.com/Dannebicque/intranetV3/commit/85c6f401ea61cc52f29d1608946f704fdefb1159))
+
 ### [3.9.4](https://github.com/Dannebicque/intranetV3/compare/v3.9.3...v3.9.4) (2022-09-07)
 
 
