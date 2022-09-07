@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/SemestreRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/09/2022 16:48
+ * @lastUpdate 07/09/2022 17:17
  */
 
 namespace App\Repository;
@@ -132,8 +132,7 @@ class SemestreRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('s')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->andWhere('s.ordreLmd = :numero')
-            ->setParameter('numero', $ordreSemestre)
-            ->orderBy('s.ordreLmd', Criteria::ASC);
+            ->setParameter('numero', $ordreSemestre);
 
         $ors = [];
         foreach ($diplome->getEnfants() as $dip) {

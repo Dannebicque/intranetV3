@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Apogee/ApogeeGroupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/09/2022 16:44
+ * @lastUpdate 07/09/2022 17:17
  */
 
 namespace App\Classes\Apogee;
@@ -44,14 +44,10 @@ class ApogeeGroupe extends Apogee
         $stid = $this->conn->prepare(
             'SELECT INDIVIDU.COD_ETU, GROUPE.COD_EXT_GPE FROM IND_AFFECTE_GPE INNER JOIN GROUPE ON GROUPE.COD_GPE=IND_AFFECTE_GPE.COD_GPE INNER JOIN INDIVIDU ON INDIVIDU.COD_IND=IND_AFFECTE_GPE.COD_IND INNER JOIN GPE_OBJ ON GPE_OBJ.COD_GPE=IND_AFFECTE_GPE.COD_GPE INNER JOIN INS_ADM_ETP ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND WHERE INS_ADM_ETP.COD_ETP=:semestre AND INS_ADM_ETP.COD_VRS_VET=:version');
 
-        dump('SELECT INDIVIDU.COD_ETU, GROUPE.COD_EXT_GPE FROM IND_AFFECTE_GPE INNER JOIN GROUPE ON GROUPE.COD_GPE=IND_AFFECTE_GPE.COD_GPE INNER JOIN INDIVIDU ON INDIVIDU.COD_IND=IND_AFFECTE_GPE.COD_IND INNER JOIN GPE_OBJ ON GPE_OBJ.COD_GPE=IND_AFFECTE_GPE.COD_GPE INNER JOIN INS_ADM_ETP ON INDIVIDU.COD_IND = INS_ADM_ETP.COD_IND WHERE INS_ADM_ETP.COD_ETP=:semestre AND INS_ADM_ETP.COD_VRS_VET=:version');
-
-        dump($semestre->getAnnee()->getCodeEtape());
-        dump($semestre->getAnnee()->getCodeVersion());
-//        $stid->execute([
-//            ':semestre' => $semestre->getAnnee()->getCodeEtape(),
-//            ':version' => $semestre->getAnnee()->getCodeVersion(),
-//        ]);
+        $stid->execute([
+            ':semestre' => $semestre->getAnnee()->getCodeEtape(),
+            ':version' => $semestre->getAnnee()->getCodeVersion(),
+        ]);
 
         return $stid;
     }
