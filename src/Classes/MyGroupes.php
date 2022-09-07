@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyGroupes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/09/2022 17:17
+ * @lastUpdate 07/09/2022 17:18
  */
 
 /*
@@ -135,10 +135,12 @@ class MyGroupes
         $tEtudiants = $this->etudiantRepository->findBySemestreArray($semestre);
         $semestres = $this->semestreRepository->findByDiplomeEtNumero($semestre->getDiplome(),
             $semestre->getOrdreLmd());
-
+dump($tEtudiants);
+dump($tGroupes);
         foreach ($semestres as $sem) {
             $groupes = $this->apogeeGroupe->getEtudiantsGroupesSemestre($sem);
             while ($groupe = $groupes->fetch()) {
+                dump($groupe);
                 if (array_key_exists($groupe['COD_ETU'], $tEtudiants) && array_key_exists($groupe['COD_EXT_GPE'],
                         $tGroupes)) {
                     $tEtudiants[$groupe['COD_ETU']]->addGroupe($tGroupes[$groupe['COD_EXT_GPE']]);
@@ -146,6 +148,7 @@ class MyGroupes
                 }
             }
             $this->entityManager->flush();
+            die();
         }
     }
 
