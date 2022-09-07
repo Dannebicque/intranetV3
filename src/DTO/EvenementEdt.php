@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/EvenementEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/09/2022 11:03
+ * @lastUpdate 07/09/2022 11:53
  */
 
 namespace App\DTO;
@@ -47,7 +47,7 @@ class EvenementEdt
     public ?string $gridStart = '';
     public ?string $gridEnd = '';
 
-    public ?string $couleur = '';
+    public ?string $couleur = null;
     public bool $evaluation = false;
 
     /** @deprecated */

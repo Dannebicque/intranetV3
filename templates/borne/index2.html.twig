@@ -53,7 +53,10 @@
                                     <h2 class="time-slot" style="grid-row: time-{{ tabHeures[ligne][0] }};">{{ tabHeures[ligne][1] }}</h2>
                                     {% for j in 1..zone.data.semestre.nbgroupeTPEDT %}
                                         {% if zone.data.planning[j][tabHeures[ligne][0]] is defined %}
-                                            <div class="session {{ zone.data.planning[j][tabHeures[ligne][0]].classCss }}"
+                                            <div class="session {% if zone.data.planning[j][tabHeures[ligne][0]]
+                                            .couleur == null %}{{ zone.data.planning[j][tabHeures[ligne][0]].type_cours|lower }}_{{ zone.data.semestre.annee.couleur }}{% else %}{{ zone.data
+                                            .planning[j][tabHeures[ligne][0]]
+                                            .classCss }}{% endif %}"
                                                     {% if zone.data.planning[j][tabHeures[ligne][0]].type_cours == 'TP' %}
                                                         style="grid-column: track-{{ zone.data.planning[j][tabHeures[ligne][0]]
                                                         .ordreGroupe }}-start / track-{{ zone.data.planning[j][tabHeures[ligne][0]]
@@ -67,7 +70,6 @@
                                                                 grid-row: time-{{ zone.data.planning[j][tabHeures[ligne][0]]
                                                         .gridStart }} / time-{{ zone.data.planning[j][tabHeures[ligne][0]].gridEnd }};"
                                                     {% else %}
-
                                                         style="grid-column: track-1-start / track-{{ zone.data.semestre.nbgroupeTPEDT }}-end;
                                                                 grid-row: time-{{ zone.data.planning[j][tabHeures[ligne][0]]
                                                         .gridStart }} / time-{{ zone.data.planning[j][tabHeures[ligne][0]].gridEnd }};"
@@ -75,15 +77,14 @@
                                             >
 
                                                 <div class="session-body">
-                                                    <a href="{{ path('application_personnel_absence_from_planning',{
-                                                        'event':zone.data.planning[j][tabHeures[ligne][0]].id,
-                                                        'source': zone.data.planning[j][tabHeures[ligne][0]].source }) }}">
-                                                        <span class="session-title">{{ zone.data
-                                                            .planning[j][tabHeures[ligne][0]].code_matiere }}</span>
-                                                        <span class="session-presenter">{{ zone.data
-                                                            .planning[j][tabHeures[ligne][0]].personnel }}</span>
-                                                        <span class="session-room">{{ zone.data.planning[j][tabHeures[ligne][0]].salle }}</span>
-                                                    </a>
+
+                                                        <span class="session-title">
+                                                                {{ zone.data.planning[j][tabHeures[ligne][0]].texteEvt }}
+                                                                    </span>
+                                                    <span class="session-presenter">{{ zone.data
+                                                        .planning[j][tabHeures[ligne][0]].personnel }}</span>
+                                                    <span class="session-room">{{ zone.data.planning[j][tabHeures[ligne][0]].salle }}</span>
+
                                                 </div>
                                             </div>
                                         {% endif %}
