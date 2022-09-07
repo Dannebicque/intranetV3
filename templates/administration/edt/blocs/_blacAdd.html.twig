@@ -42,7 +42,7 @@
                         <div class="col-sm-4">
                             <div class="form-group">
                                 <label for="typecours" class="form-label">Type de cours</label>
-                                <select name="typecours" id="typecours" class="form-select selectpicker"
+                                <select name="typecours" id="typecours" class="form-select"
                                 >
                                     {% for groupe in groupes %}
                                         <option value="{{ groupe.id }}">{{ groupe.display }}</option>
@@ -63,7 +63,7 @@
                             <div class="form-group">
                                 <label for="hdbt" class="form-label">Heure de début</label>
 
-                                <select name="hdbt" id="hdbt" class="form-select selectpicker">
+                                <select name="hdbt" id="hdbt" class="form-select">
                                     {% set k=1 %}
                                     {% for i in 8..20 %}
                                         <option value="{{ k }}">{{ i }}h00</option>
@@ -78,7 +78,7 @@
                             <div class="form-group">
                                 <label for="hfin" class="form-label">Heure de fin</label>
 
-                                <select name="hfin" id="hfin" class="form-select selectpicker">
+                                <select name="hfin" id="hfin" class="form-select">
                                     {% set k=2 %}
                                     {% for i in 8..20 %}
                                         {% if i==8 %}
