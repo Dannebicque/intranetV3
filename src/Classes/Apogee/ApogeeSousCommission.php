@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Apogee/ApogeeSousCommission.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/05/2022 21:56
+ * @lastUpdate 07/09/2022 10:57
  */
 
 namespace App\Classes\Apogee;
@@ -73,8 +73,9 @@ class ApogeeSousCommission extends Apogee
         $i = 1;
         // 2ème ligne
         $j = 2;
+
         foreach ($G_tab_apoC_Coord as $key => $name) {
-            $val = $maquetteSheet->getCell($name)->getValue();
+            $val = $maquetteSheet->getCell(str_replace('$','',$name))->getValue();
             $notesSheet->setCellValueByColumnAndRow($i, $j, $G_tab_apoC[$key]);
             $notesSheet->setCellValueByColumnAndRow(($i + 1), $j, $val);
             ++$j;
@@ -88,7 +89,7 @@ class ApogeeSousCommission extends Apogee
         // tableau des libelles
         foreach ($G_tab_apoL_Coord as $key => $name) {
             // recupere les coordonnees de la cellule dont le nom est $name
-            $deb = $maquetteSheet->getCell($name)->getCoordinate();
+            $deb = $maquetteSheet->getCell(str_replace('$','',$name))->getCoordinate();
 
             // fin = calcul du décalage vertical de 11 lignes à partir de la cellule ci-dessus
             $fin = $this->getNewCoordinates($deb, 0, 11);
@@ -152,7 +153,7 @@ class ApogeeSousCommission extends Apogee
             ++$j;
         }
 
-        $celluleFin = $maquetteSheet->getCell($v_cell_apo_col_val_fin)->getCoordinate();
+        $celluleFin = $maquetteSheet->getCell(str_replace('$','',$v_cell_apo_col_val_fin))->getCoordinate();
 
         ++$j;
         ++$j;
@@ -166,11 +167,11 @@ class ApogeeSousCommission extends Apogee
         // tableau des codes
         foreach ($G_tab_apoL_Coord as $key => $name) {
             // recupere les coordonnees de la cellule qui porte le label $name
-            $titre = $maquetteSheet->getCell($name)->getCoordinate();
+            $titre = $maquetteSheet->getCell(str_replace('$','',$name))->getCoordinate();
 
             // cellule debut pour la copie
             $deb = $this->getNewCoordinates($titre, 0, 12);
-            $numLigne = $maquetteSheet->getCell($name)->getRow();
+            $numLigne = $maquetteSheet->getCell(str_replace('$','',$name))->getRow();
 
             // cellule de fin
             $fin = $this->getNewCoordinates($titre, 0, $v_nb_lig - $numLigne);
