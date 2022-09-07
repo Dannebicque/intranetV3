@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/PrevisionnelMatiereRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 07/09/2022 15:08
  */
 
 namespace App\Repository;
@@ -100,7 +100,7 @@ class PrevisionnelMatiereRepository extends PrevisionnelRepository
             ->setParameter('type', self::TYPE)
             ->setParameter('matiere', $matiere)
             ->orderBy('pers.nom', Criteria::ASC)
-            ->orderBy('pers.prenom', Criteria::ASC)
+            ->addOrderBy('pers.prenom', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -160,7 +160,7 @@ class PrevisionnelMatiereRepository extends PrevisionnelRepository
             ->setParameter('type', self::TYPE)
             ->setParameter('matiere', $matiere)
             ->orderBy('pers.nom', Criteria::ASC)
-            ->orderBy('pers.prenom', Criteria::ASC)
+            ->addOrderBy('pers.prenom', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }

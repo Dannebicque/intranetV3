@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Adapter/EdtCelcatAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/05/2022 19:18
+ * @lastUpdate 07/09/2022 15:15
  */
 
 namespace App\Adapter;
@@ -12,6 +12,7 @@ namespace App\Adapter;
 use App\Classes\Edt\EdtManager;
 use App\DTO\EvenementEdt;
 use App\DTO\EvenementEdtCollection;
+use App\Entity\Constantes;
 use Carbon\Carbon;
 
 class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
@@ -38,7 +39,7 @@ class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
         $evt->jour = (string) ($event->getJour() + 1);
         $evt->heureDebut = Carbon::createFromTimeString($event->getDebut());
         $evt->heureFin = Carbon::createFromTimeString($event->getFin());
-        $evt->matiere = $event->getLibModule();
+        $evt->matiere = utf8_decode($event->getLibModule());
         if (array_key_exists($event->getCodeModule(), $matieres)) {
             $matiere = $matieres[$event->getCodeModule()];
             $event->matiere = $matiere->display;
@@ -49,7 +50,7 @@ class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
         }
 
         $evt->salle = $event->getLibSalle();
-        $evt->personnel = $event->getLibPersonnel();
+        $evt->personnel = utf8_decode($event->getLibPersonnel());
         if (array_key_exists($event->getCodeGroupe(), $groupes)) {
             $evt->ordreGroupe = $groupes[$event->getCodeGroupe()]->getOrdre();
             $evt->groupeId = $groupes[$event->getCodeGroupe()]->getId();
@@ -64,7 +65,23 @@ class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
         $evt->date = $event->getDateCours();
         $evt->gridStart = $event->getDebut()?->format('Hi');
         $evt->gridEnd = $event->getFin()?->format('Hi');
+        $evt->largeur = $this->getLargeur($evt);
+        $evt->duree = Constantes::TAB_HEURES_INDEX[$event->getFin()->format('H:i:s')] - Constantes::TAB_HEURES_INDEX[$event->getDebut()->format('H:i:s')];
 
         return $evt;
+    }
+
+    private function getLargeur(mixed $evt)
+    {
+        switch (trim($evt->type_cours)) {
+            case 'cm':
+            case 'CM':
+                return $evt->semestre->getNbgroupeTpEdt();
+            case 'TD':
+            case 'td':
+                return 2;
+            default:
+                return 1;
+        }
     }
 }

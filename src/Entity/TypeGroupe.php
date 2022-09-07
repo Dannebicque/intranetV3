@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/TypeGroupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/09/2022 16:30
+ * @lastUpdate 06/09/2022 14:46
  */
 
 namespace App\Entity;
@@ -23,6 +23,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 #[ORM\HasLifecycleCallbacks]
 class TypeGroupe extends BaseEntity
 {
+    //todo: repasser par une table type_groupe_semestre pour les liens, et adapter les requetes pour filter par semestre et son ordre et diplome identique ? PLus fiable ?
     use LifeCycleTrait;
 
     #[Groups(['type_groupe_administration'])]

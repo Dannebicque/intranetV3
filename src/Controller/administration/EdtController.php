@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2022 17:01
+ * @lastUpdate 07/09/2022 12:18
  */
 
 namespace App\Controller\administration;
@@ -69,7 +69,7 @@ class EdtController extends BaseController
                 'filtre' => $filtre,
                 'personnels' => $personnelRepository->findByDepartement($this->getDepartement()),
                 'salles' => $salleRepository->findAll(),
-                'matieres' => $typeMatiereManager->findByDepartement($this->getDepartement()),
+                'matieres' => $matieres,
                 'edt' => $edt,
             ]),
             Constantes::FILTRE_EDT_SALLE => $this->render('administration/edt/_edt-salle.html.twig', [
@@ -77,14 +77,14 @@ class EdtController extends BaseController
                 'filtre' => $filtre,
                 'personnels' => $personnelRepository->findByDepartement($this->getDepartement()),
                 'salles' => $salleRepository->findAll(),
-                'matieres' => $typeMatiereManager->findByDepartement($this->getDepartement()),
+                'matieres' => $matieres,
                 'edt' => $edt,
             ]),
             default => $this->render('administration/edt/_edt-intranet.html.twig', [
                 'filtre' => $filtre,
                 'personnels' => $personnelRepository->findByDepartement($this->getDepartement()),
                 'salles' => $salleRepository->findAll(),
-                'matieres' => $typeMatiereManager->findByDepartement($this->getDepartement()),
+                'matieres' => $typeMatiereManager->findBySemestre($edt->getSemestre()),
                 'edt' => $edt,
                 'groupes' => $groupeRepository->findGroupeSemestreEdt($edt->getSemestre()),
             ]),

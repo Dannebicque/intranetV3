@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/CelcatEventsRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/07/2022 17:06
+ * @lastUpdate 07/09/2022 15:11
  */
 
 namespace App\Repository;
 
+use App\Entity\Annee;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\CelcatEvent;
 use App\Entity\Etudiant;
@@ -163,13 +164,28 @@ class CelcatEventsRepository extends ServiceEntityRepository
 
     public function findEdtSemestreSemaine(Semestre $semestre, int $semaineFormationIUT, AnneeUniversitaire $anneeUniversitaire): array
     {
-        return $this->createQueryBuilder('p')
+        $query = $this->createQueryBuilder('p')
+            ->innerJoin(Semestre::class, 's', 'WITH', 'p.semestre = s.id')
+            ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
             ->where('p.semaineFormation = :semaine')
-            ->andWhere('p.semestre = :semestre')
-            ->setParameters(['semaine' => $semaineFormationIUT, 'semestre' => $semestre->getId()])
+            ->andWhere('s.ordreLmd = :semestre')
+            ->andWhere('p.anneeUniversitaire = :annee')
+            ->setParameters([
+                'semaine' => $semaineFormationIUT,
+                'semestre' => $semestre->getOrdreLmd(),
+                'annee' => $anneeUniversitaire->getId()])
             ->orderBy('p.jour', Criteria::ASC)
             ->addOrderBy('p.debut', Criteria::ASC)
-            ->addOrderBy('p.codeGroupe', Criteria::ASC)
+            ->addOrderBy('p.codeGroupe', Criteria::ASC);
+
+        $ors = [];
+        $diplome = $semestre->getDiplome()->getParent() === null ? $semestre->getDiplome() : $semestre->getDiplome()->getParent();
+        foreach ($diplome->getEnfants() as $dip) {
+            $ors[] = '('.$query->expr()->orx('a.diplome = '.$query->expr()->literal($dip->getId())).')';
+        }
+        $ors[] = '('.$query->expr()->orx('a.diplome = '.$query->expr()->literal($diplome->getId())).')';
+
+        return $query->andWhere(implode(' OR ', $ors))
             ->getQuery()
             ->getResult();
     }

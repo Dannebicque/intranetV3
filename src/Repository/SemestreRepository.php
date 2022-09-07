@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/SemestreRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2022 15:24
+ * @lastUpdate 07/09/2022 15:37
  */
 
 namespace App\Repository;
@@ -70,7 +70,7 @@ class SemestreRepository extends ServiceEntityRepository
 
     public function findByDiplome(Diplome $diplome): array
     {
-        //utiliser findByDiplomeApc pour avoir tous les semestres sans dépendance du diplôme
+        // utiliser findByDiplomeApc pour avoir tous les semestres sans dépendance du diplôme
         return $this->findByDiplomeBuilder($diplome)->getQuery()->getResult();
     }
 
@@ -98,7 +98,7 @@ class SemestreRepository extends ServiceEntityRepository
             $index = mb_substr($semestre->getLibelle(), 1);
 
             if (1 === mb_strlen($index)) {
-                $index = '0' . $index;
+                $index = '0'.$index;
             }
             $tabsemestre[$index] = $semestre;
         }
@@ -123,19 +123,21 @@ class SemestreRepository extends ServiceEntityRepository
     /**
      * @throws \Doctrine\ORM\NonUniqueResultException
      */
-    public function findOneByDiplomeEtNumero(Diplome $diplome, string $numero, string $ordreAnnee): ?Semestre
+    public function findByDiplomeEtNumero(Diplome $diplome, int $ordreSemestre): array
     {
+        if (null !== $diplome->getParent()) {
+            $diplome = $diplome->getParent();
+        }
+
         return $this->createQueryBuilder('s')
             ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
             ->where('a.diplome = :diplome')
-            ->andWhere('s.ordreAnnee = :ordreAnnee')
             ->andWhere('s.ordreLmd = :numero')
             ->setParameter('diplome', $diplome->getId())
-            ->setParameter('numero', $numero)
-            ->setParameter('ordreAnnee', $ordreAnnee)
+            ->setParameter('numero', $ordreSemestre)
             ->orderBy('s.ordreLmd', Criteria::ASC)
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getResult();
     }
 
     public function findSemestresActifBuilder(): QueryBuilder
@@ -168,8 +170,8 @@ class SemestreRepository extends ServiceEntityRepository
 
         $i = 1;
         foreach ($diplome->getEnfants() as $diplomeEnfant) {
-            $query->orWhere('d.id = :dip' . $i)
-                ->setParameter('dip' . $i, $diplomeEnfant->getId());
+            $query->orWhere('d.id = :dip'.$i)
+                ->setParameter('dip'.$i, $diplomeEnfant->getId());
             ++$i;
         }
 

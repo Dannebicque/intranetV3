@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/EvenementEdtCollection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2022 17:42
+ * @lastUpdate 07/09/2022 14:59
  */
 
 namespace App\DTO;
@@ -37,7 +37,7 @@ class EvenementEdtCollection
             $evenement->couleur = $couleur;
             $debut = Constantes::TAB_HEURES_INDEX[$evenement->heureDebut->format('H:i:s')];
             $fin = Constantes::TAB_HEURES_INDEX[$evenement->heureFin->format('H:i:s')];
-            $groupe = $evenement->groupeId > 40 ? $evenement->groupeId - 40 : $evenement->groupeId;
+            $groupe = $evenement->ordreGroupe > 40 ? $evenement->ordreGroupe - 40 : $evenement->ordreGroupe;
             $planning[$evenement->jour][$debut][$groupe] = $evenement;
 
             $groupefin = $groupe + (0 === $evenement->largeur ? $maxGroupe : $evenement->largeur);
@@ -50,6 +50,8 @@ class EvenementEdtCollection
                 }
             }
         }
+
+        dump($planning);
         return $planning;
     }
 }
