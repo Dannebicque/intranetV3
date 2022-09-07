@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.4](https://github.com/Dannebicque/intranetV3/compare/v3.9.3...v3.9.4) (2022-09-07)
+
+
+### Bug Fixes
+
+* [Bornes] Config semestre ([ce4500a](https://github.com/Dannebicque/intranetV3/commit/ce4500a78efa067934e3d4c02db2766c50cb5b3d))
+* [Bornes] Config semestre ([512f6ba](https://github.com/Dannebicque/intranetV3/commit/512f6ba9b557421280d62d71c98e9e413552c10e))
+* [Css] Liste item ([81dd284](https://github.com/Dannebicque/intranetV3/commit/81dd284a3eedfb299872cec8a4738fbbc16e5a2f))
+* [Edt Celcat] Synchronisation et affichage EDT ([18d5d10](https://github.com/Dannebicque/intranetV3/commit/18d5d107ee458e9202c2651a67e680a25dbc2e6a))
+* [Edt] Filtre des matières et pré-remplissage des champs ([f24b68d](https://github.com/Dannebicque/intranetV3/commit/f24b68de5474c7b3a73ad676a4cb2746c73c8c00))
+* [Listing absence] Correctifs avec la structure ([ccea772](https://github.com/Dannebicque/intranetV3/commit/ccea772db86e5aab9c104f6b5a24973381da088a))
+* [Matieres] Tri ([90a1519](https://github.com/Dannebicque/intranetV3/commit/90a15199d3c482d2b91845079612e0665645765d))
+* [PDF EDT] Correctifs sur export EDT ([877c9d6](https://github.com/Dannebicque/intranetV3/commit/877c9d6cfb9211233b6fbf9ce234ee96be18d83c))
+* [Scolarité] Ajout d'une extension ([cc1bb53](https://github.com/Dannebicque/intranetV3/commit/cc1bb539c41ec8c00877db0394efcee6effbfe11))
+* [Scolarité] Bug phpspreeadsheet ([304236a](https://github.com/Dannebicque/intranetV3/commit/304236aae50650d0470ef7f5336f7bdc8121084a))
+* [Synchro Apogée] Synchronisation des groupes ([ed5cd7f](https://github.com/Dannebicque/intranetV3/commit/ed5cd7f7a16b1ef9718361a3f5923d606a8f3b33))
+
 ### [3.9.3](https://github.com/Dannebicque/intranetV3/compare/v3.9.2...v3.9.3) (2022-09-06)
 
 
