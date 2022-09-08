@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/DataFixtures/DepartementFixtures.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/DataFixtures/DepartementFixtures.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:40
+ * @lastUpdate 08/09/2022 19:05
  */
 
 namespace App\DataFixtures;
@@ -20,6 +20,7 @@ use App\Entity\Previsionnel;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use App\Entity\Ue;
+use App\Enums\TypeGroupeEnum;
 use Carbon\Carbon;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -86,7 +87,6 @@ class DepartementFixtures extends Fixture implements DependentFixtureInterface
 
         // Semestre
         $semestre = new Semestre();
-        $semestre->setCouleur('red');
         $semestre->setLibelle('S1');
         $semestre->setAnnee($annee);
         $semestre->setActif(true);
@@ -149,7 +149,7 @@ class DepartementFixtures extends Fixture implements DependentFixtureInterface
 
         $tg = new TypeGroupe($semestre);
         $tg->setLibelle('TD');
-        $tg->setType('TD');
+        $tg->setType(TypeGroupeEnum::TYPE_GROUPE_TD);
         $tg->setDefaut(true);
         $tg->setCreated(Carbon::now());
         $tg->setUpdated(Carbon::now());
