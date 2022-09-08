@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/EvenementEdtCollection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/09/2022 14:59
+ * @lastUpdate 08/09/2022 21:31
  */
 
 namespace App\DTO;
@@ -51,7 +51,6 @@ class EvenementEdtCollection
             }
         }
 
-        dump($planning);
         return $planning;
     }
 }
