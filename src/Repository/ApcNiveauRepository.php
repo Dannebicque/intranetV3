@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ApcNiveauRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcNiveauRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/06/2021 17:40
+ * @lastUpdate 08/09/2022 20:27
  */
 
 namespace App\Repository;
@@ -12,6 +12,7 @@ namespace App\Repository;
 use App\Entity\Annee;
 use App\Entity\ApcCompetence;
 use App\Entity\ApcNiveau;
+use App\Entity\ApcReferentiel;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -29,6 +30,18 @@ class ApcNiveauRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, ApcNiveau::class);
+    }
+
+    public function findByOrdreAnneAndReferentiel(int $ordreAnnee, ApcReferentiel $apcReferentiel): mixed
+    {
+        return $this->createQueryBuilder('n')
+            ->innerJoin('n.competence', 'c')
+            ->where('n.ordreAnnee = :annee')
+            ->andWhere('c.apcReferentiel = :referentiel')
+            ->setParameter('annee', $ordreAnnee)
+            ->setParameter('referentiel', $apcReferentiel->getId())
+            ->getQuery()
+            ->getResult();
     }
 
     public function findBySemestre(Semestre $semestre): mixed

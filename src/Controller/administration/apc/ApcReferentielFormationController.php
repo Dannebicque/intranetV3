@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/apc/ApcReferentielFormationController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcReferentielFormationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/10/2021 10:34
+ * @lastUpdate 08/09/2022 20:39
  */
 
 namespace App\Controller\administration\apc;
@@ -48,13 +48,13 @@ class ApcReferentielFormationController extends BaseController
         ApcRessourceRepository $apcRessourceRepository,
         Semestre $semestre
     ): Response {
-        $saes = $apcSaeRepository->findBySemestre($semestre);
-        $ressources = $apcRessourceRepository->findBySemestre($semestre);
+        $saes = $apcSaeRepository->findBySemestreReferentiel($semestre, $semestre->getDiplome()->getReferentiel());
+        $ressources = $apcRessourceRepository->findBySemestreReferentiel($semestre, $semestre->getDiplome()->getReferentiel());
 
         return $this->render('apc/referentiel-formation/_grilleCoefficientsSemestre.html.twig',
             [
                 'semestre' => $semestre,
-                'niveaux' => $apcNiveauRepository->findBySemestre($semestre),
+                'niveaux' => $apcNiveauRepository->findByOrdreAnneAndReferentiel($semestre->getAnnee()->getOrdre(), $semestre->getDiplome()->getReferentiel()),
                 'saes' => $saes,
                 'ressources' => $ressources,
                 'coefficients' => $apcCoefficient->calculsCoefficients($saes, $ressources),
