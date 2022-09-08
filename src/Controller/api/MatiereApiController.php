@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/api/MatiereApiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/09/2022 10:45
+ * @lastUpdate 08/09/2022 20:45
  */
 
 namespace App\Controller\api;
@@ -76,13 +76,19 @@ class MatiereApiController extends BaseController
     }
 
     #[Route(path: '/document/export/{matiere}/{typeMatiere}/{semestre}', name: 'api_export_document_matiere', options: ['expose' => true])]
-    public function exportDocument(int $matiere, string $typeMatiere, Semestre $semestre): Response
+    public function exportDocument(TypeGroupeRepository $typeGroupeRepository, int $matiere, string $typeMatiere, Semestre $semestre): Response
     {
+        //todo: fusionne ? TypeGroupe pas nécessaire si table avec semestres
         $mat = $this->typeMatiereManager->getMatiere($matiere, $typeMatiere);
+        if ($semestre->getDiplome()->isApc()) {
+            $typeGroupes = $typeGroupeRepository->findByDiplomeAndOrdreSemestre($semestre->getDiplome(), $semestre->getOrdreLmd());
+        } else {
+            $typeGroupes = $semestre->getTypeGroupes();
+        }
 
         return $this->render('api/matiere/document/export.html.twig', [
             'matiere' => $mat,
-            'typeGroupes' => $semestre->getTypeGroupes(),
+            'typeGroupes' => $typeGroupes,
         ]);
     }
 
