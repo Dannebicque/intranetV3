@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.6](https://github.com/Dannebicque/intranetV3/compare/v3.9.5...v3.9.6) (2022-09-08)
+
+
+### Bug Fixes
+
+* [Apogée Groupe] Synchronisation des groupes ([459b7bc](https://github.com/Dannebicque/intranetV3/commit/459b7bcc98ace47cbdd4db4cbabb25c50c61088f))
+* [Apogée Groupe] Synchronisation des groupes ([ea9e854](https://github.com/Dannebicque/intranetV3/commit/ea9e854a37bd3c2873435e42e2ed4c568ab86bc7))
+* [Apogée Groupe] Synchronisation des groupes ([096028c](https://github.com/Dannebicque/intranetV3/commit/096028c82b5c8052a099879fe8d37ec6ef3708cc))
+* [Apogée Groupe] Synchronisation des groupes ([1c8944c](https://github.com/Dannebicque/intranetV3/commit/1c8944c83f1b9efa255b221fbc2a119064a9be31))
+* [Coeff APC] Affichage des compétences ([b4d3a6d](https://github.com/Dannebicque/intranetV3/commit/b4d3a6de56298f1b9fa17ec7c0a97f495d21e463))
+* [Fixtures] Type de groupe ([f9cdd2f](https://github.com/Dannebicque/intranetV3/commit/f9cdd2f579194006b5f771e01171294a7b78dbe5))
+
 ### [3.9.5](https://github.com/Dannebicque/intranetV3/compare/v3.9.4...v3.9.5) (2022-09-07)
 
 
