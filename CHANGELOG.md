@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.8](https://github.com/Dannebicque/intranetV3/compare/v3.9.7...v3.9.8) (2022-09-09)
+
+
+### Bug Fixes
+
+* [Apc] Bug SAE ([833d250](https://github.com/Dannebicque/intranetV3/commit/833d2509281eab88cd6abb10fbc8b7cb4fe58271))
+* [Export] Export ([8e555a5](https://github.com/Dannebicque/intranetV3/commit/8e555a557dcd41b007887d614ea20d0c36d6a651))
+* [Mail] Type mail stage ([7060d57](https://github.com/Dannebicque/intranetV3/commit/7060d57e6201e29dfc64f5b80c8fb0f618d41d86))
+
 ### [3.9.7](https://github.com/Dannebicque/intranetV3/compare/v3.9.6...v3.9.7) (2022-09-08)
 
 
