@@ -118,15 +118,14 @@
         </div>
 
         {% if is_granted('ROLE_PERMANENT') %}
-            {{ render_esi(controller(
-                'App\\Controller\\BlocNotesAbsencesController::personnel'
-            )) }}
+            {{ component('personnel_mes_cours',{ semestre:  user_data.semestresActifs[0] }) }}
         {% elseif is_granted('ROLE_ETUDIANT') %}
             <div class="col-12">
                 {{ render_esi(controller(
                     'App\\Controller\\BlocNotesAbsencesController::etudiantAbsences'
                 )) }}
             </div>
+
             <div class="col-12">
                 {{ render_esi(controller(
                     'App\\Controller\\BlocNotesAbsencesController::etudiantNotes'
