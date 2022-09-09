@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/HrsController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 09/09/2022 12:25
  */
 
 namespace App\Controller\administration;
@@ -28,6 +28,7 @@ class HrsController extends BaseController
     #[Route(path: '/{annee}', name: 'administration_hrs_index', requirements: ['annee' => '\d+'], options: ['expose' => true], methods: 'GET|POST')]
     public function index(Request $request, ?int $annee = 0): Response
     {
+        //todo: faire avec Stimulus ?
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
         if (0 === $annee && null !== $this->getAnneeUniversitaire() && 0 !== $this->getAnneeUniversitaire()->getAnnee()) {
             $annee = $this->getAnneeUniversitaire()->getAnnee();
@@ -43,11 +44,34 @@ class HrsController extends BaseController
             'attr' => [
                 'data-provide' => 'validation',
             ],
+            'action' => $this->generateUrl('administration_hrs_post_index', ['annee' => $annee]),
         ]);
+
+
         $table->handleRequest($request);
         if ($table->isCallback()) {
             return $table->getCallbackResponse();
         }
+
+
+        return $this->render('administration/hrs/index.html.twig', [
+            'annee' => $annee,
+            'table' => $table,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    #[Route(path: '/{annee}/post', name: 'administration_hrs_post_index', requirements: ['annee' => '\d+'], options: ['expose' => true], methods: 'POST')]
+    public function addHrs(Request $request, int $annee): Response
+    {
+        $hrs = new Hrs($this->getDepartement(), $annee);
+        $form = $this->createForm(HrsType::class, $hrs, [
+            'departement' => $this->getDepartement(),
+            'attr' => [
+                'data-provide' => 'validation',
+            ],
+        ]);
+
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->persist($hrs);
@@ -55,11 +79,7 @@ class HrsController extends BaseController
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'hrs.add.success.flash');
         }
 
-        return $this->render('administration/hrs/index.html.twig', [
-            'annee' => $annee,
-            'table' => $table,
-            'form' => $form->createView(),
-        ]);
+        return $this->redirectToRoute('administration_hrs_index', ['annee' => $annee]);
     }
 
     #[Route(path: '/{id}/edit', name: 'administration_hrs_edit', methods: 'GET|POST')]
