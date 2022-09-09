@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/09/2022 10:47
+ * @lastUpdate 09/09/2022 12:14
  */
 
 namespace App\Classes\Edt;
@@ -76,6 +76,7 @@ class MyEdtIntranet extends BaseEdt
         int $semaine = 0
     ): self {
         $this->user = $etudiant;
+        $this->anneeUniversitaire = $anneeUniversitaire;
         $this->init($anneeUniversitaire, Constantes::FILTRE_EDT_ETUDIANT, $etudiant->getId(), $semaine);
         $this->calculEdt();
 
