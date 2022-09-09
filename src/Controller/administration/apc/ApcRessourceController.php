@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcRessourceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/09/2022 08:41
+ * @lastUpdate 09/09/2022 09:07
  */
 
 namespace App\Controller\administration\apc;
@@ -431,7 +431,7 @@ class ApcRessourceController extends BaseController
     ): Response {
         // todo: semestre n'est plus dans ApcRessource, il faut le supprimer
         $form = $this->createForm(ApcRessourceType::class, $apcRessource, [
-            'diplome' => $apcRessource->getDiplome(),
+            'diplome' => $semestre->getDiplome(),
             'semestre' => $semestre,
         ]);
         $form->handleRequest($request);
@@ -470,7 +470,7 @@ class ApcRessourceController extends BaseController
 
             if (null !== $request->request->get('btn_update') && null !== $apcRessource->getDiplome()) {
                 return $this->redirectToRoute('administration_matiere_index',
-                    ['diplome' => $apcRessource->getDiplome()->getId()]);
+                    ['diplome' => $semestre->getDiplome()->getId()]);
             }
 
             if (null !== $request->request->get('btn_update_enfants') && (true === $apcRessource->getRessourceParent() || true === $apcRessource->getMutualisee())) {
@@ -485,7 +485,7 @@ class ApcRessourceController extends BaseController
         return $this->render('apc/apc_ressource/edit.html.twig', [
             'apc_ressource' => $apcRessource,
             'form' => $form->createView(),
-            'diplome' => $apcRessource->getDiplome(),
+            'diplome' => $semestre->getDiplome(),
         ]);
     }
 

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcSaeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/09/2022 08:41
+ * @lastUpdate 09/09/2022 09:07
  */
 
 namespace App\Controller\administration\apc;
@@ -226,7 +226,9 @@ class ApcSaeController extends BaseController
     #[Route(path: '/{id}/{semestre}/edit', name: 'apc_sae_edit', methods: ['GET', 'POST'])]
     public function edit(ApcRessourceRepository $apcRessourceRepository, ApcApprentissageCritiqueRepository $apcApprentissageCritiqueRepository, Request $request, ApcSae $apcSae, Semestre $semestre): Response
     {
-        $form = $this->createForm(ApcSaeType::class, $apcSae, ['diplome' => $apcSae->getDiplome(),'semestre' => $semestre,]);
+        $form = $this->createForm(ApcSaeType::class, $apcSae, [
+            'diplome' => $semestre->getDiplome(),
+            'semestre' => $semestre,]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             // on supprimer ceux présent
@@ -265,7 +267,7 @@ class ApcSaeController extends BaseController
 
             if (null !== $request->request->get('btn_update')) {
                 return $this->redirectToRoute('administration_matiere_index',
-                    ['diplome' => $apcSae->getDiplome()->getId()]);
+                    ['diplome' => $semestre->getDiplome()->getId()]);
             }
 
             return $this->redirectToRoute('administration_apc_sae_edit',
@@ -275,7 +277,7 @@ class ApcSaeController extends BaseController
         return $this->render('apc/apc_sae/edit.html.twig', [
             'apc_sae' => $apcSae,
             'form' => $form->createView(),
-            'diplome' => $apcSae->getDiplome(),
+            'diplome' => $semestre->getDiplome(),
         ]);
     }
 
@@ -299,7 +301,7 @@ class ApcSaeController extends BaseController
     }
 
     #[Route(path: '/{id}/{semestre}/duplicate', name: 'apc_sae_duplicate', methods: 'GET|POST')]
-    public function duplicate(ApcSae $apcSae): Response
+    public function duplicate(ApcSae $apcSae, Semestre $semestre): Response
     {
         $newApcSae = clone $apcSae;
         $this->entityManager->persist($newApcSae);
