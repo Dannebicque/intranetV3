@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.9](https://github.com/Dannebicque/intranetV3/compare/v3.9.8...v3.9.9) (2022-09-09)
+
+
+### Bug Fixes
+
+* [Edt] Etudiant ([94a8483](https://github.com/Dannebicque/intranetV3/commit/94a848383ac1d1444c8c9dfc8211991146eda3ae))
+* [Edt] Etudiant ([0db90a1](https://github.com/Dannebicque/intranetV3/commit/0db90a1cc4665ba213a979ff218570ca5d64a7c4))
+* [Hrs] Conflit entre formtype et tabletype ([f0af165](https://github.com/Dannebicque/intranetV3/commit/f0af1659395764c6c819b40dd66da40ec7d65e69))
+* [Sae] dupliquer une sae ([438a8a4](https://github.com/Dannebicque/intranetV3/commit/438a8a46359216e35160339d73c2b9e4ba9b8fa4))
+
 ### [3.9.8](https://github.com/Dannebicque/intranetV3/compare/v3.9.7...v3.9.8) (2022-09-09)
 
 
