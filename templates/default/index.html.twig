@@ -140,143 +140,8 @@
 
         {% if is_granted('ROLE_PERMANENT') %}
             {{ component('listings_etudiants',{ semestre:  user_data.semestresActifs[0], typeGroupes:typeGroupes }) }}
-
-
-
-{#            <div class="col-sm-12">#}
-{#                <div class="card">#}
-{#                    <h3 class="card-title">Listing Etudiants</h3>#}
-{#                    <div class="card-body">#}
-{#                        <!-- 1 onglets par promo -->#}
-{#                        <div class="tabs">#}
-{#                            <ul class="nav nav-tabs">#}
-{#                                {% for semestre in user_data.semestresActifs %}#}
-{#                                    <li class="nav-item">#}
-{#                                        <a class="nav-link {% if loop.first %} active{% endif %}" data-bs-toggle="tab"#}
-{#                                           href="#semgr_{{ semestre.id }}">{{ semestre.display }}</a>#}
-{#                                    </li>#}
-{#                                {% endfor %}#}
-{#                            </ul>#}
-{#                        </div>#}
-{#                        <div class="tab-content">#}
-{#                            {% for semestre in user_data.semestresActifs %}#}
-{#                                <div class="tab-pane {% if loop.first %}fade active show{% endif %}" id="semgr_{{ semestre.id }}">#}
-{#                                    <h4>Les listings du semestre {{ semestre.libelle }}</h4>#}
-{#                                    <div class="row">#}
-{#                                        <div class="col-12">#}
-{#                                            <div class="row">#}
-{#                                                {% for typeGroupe in typegroupes|filter(typeGroupe => (typeGroupe.defaut#}
-{#                                                    == true) and (typeGroupe.ordreSemestre == semestre.ordreLmd)) %}#}
-{#                                                    {% for groupe in typeGroupe.groupes %}#}
-{#                                                        <div class="col-md-3 col-sm-12 d-grid d-block mb-2">#}
-{#                                                            <a href="{{ path('trombinoscope_etudiant_export_groupe',#}
-{#                                                                {_format:'pdf', groupe:groupe.id}) }}"#}
-{#                                                               class="btn btn-cyan">#}
-{#                                                                {{ groupe.libelle }}#}
-{#                                                            </a>#}
-{#                                                        </div>#}
-{#                                                    {% endfor %}#}
-{#                                                {% else %}#}
-{#                                                    <div class="alert alert-info">#}
-{#                                                        Aucun ensemble de groupe par défaut de défini.#}
-{#                                                    </div>#}
-{#                                                {% endfor %}#}
-{#                                            </div>#}
-{#                                        </div>#}
-{#                                    </div>#}
-{#                                    {% if not is_granted("ROLE_ETUDIANT") %}#}
-{#                                        <div class="row">#}
-{#                                            <div class="col-sm-12 col-md-2">#}
-{#                                                <div class="dropdown d-grid d-block">#}
-{#                                                    <button class="btn btn-primary dropdown-toggle"#}
-{#                                                            data-bs-toggle="dropdown">Format PDF#}
-{#                                                    </button>#}
-{#                                                    <div class="dropdown-menu">#}
-{#                                                        {% for typegroupe in typegroupes|filter(typegroupe => typegroupe#}
-{#                                                        .ordreSemestre == semestre.ordreLmd) %}#}
-{#                                                            <li>#}
-{#                                                                <a class="dropdown-item" href="{{ path('trombinoscope_etudiant_export', {_format:'pdf', typeGroupe: typegroupe.id}) }}">{{ typegroupe.libelle }}</a>#}
-{#                                                            </li>#}
-{#                                                        {% endfor %}#}
-{#                                                    </div>#}
-{#                                                </div>#}
-{#                                            </div>#}
-{#                                            <div class="col-sm-12 col-md-2">#}
-{#                                                <div class="dropdown d-grid d-block">#}
-{#                                                    <button class="btn btn-primary dropdown-toggle"#}
-{#                                                            data-bs-toggle="dropdown">Format Excel#}
-{#                                                    </button>#}
-{#                                                    <div class="dropdown-menu">#}
-{#                                                        {% for typegroupe in typegroupes|filter(typegroupe => typegroupe#}
-{#                                                        .semestre == semestre) %}#}
-{#                                                            <li>#}
-{#                                                                <a class="dropdown-item" href="{{ path('trombinoscope_etudiant_export',#}
-{#                                                                    {_format:'xlsx', typeGroupe: typegroupe.id}) }}">{{ typegroupe.libelle }}</a>#}
-{#                                                            </li>#}
-{#                                                        {% endfor %}#}
-{#                                                    </div>#}
-{#                                                </div>#}
-{#                                            </div>#}
-{#                                            <div class="col-sm-12 col-md-2">#}
-{#                                                <div class="dropdown d-grid d-block">#}
-{#                                                    <button class="btn btn-primary dropdown-toggle"#}
-{#                                                            data-bs-toggle="dropdown">Format Csv#}
-{#                                                    </button>#}
-{#                                                    <div class="dropdown-menu">#}
-{#                                                        {% for typegroupe in typegroupes|filter(typegroupe => typegroupe#}
-{#                                                        .semestre == semestre) %}#}
-{#                                                            <li>#}
-{#                                                                <a class="dropdown-item" href="{{ path('trombinoscope_etudiant_export',#}
-{#                                                                    {_format:'csv', typeGroupe: typegroupe.id}) }}">{{ typegroupe.libelle }}</a>#}
-{#                                                            </li>#}
-{#                                                        {% endfor %}#}
-{#                                                    </div>#}
-{#                                                </div>#}
-{#                                            </div>#}
-{#                                            <div class="col-sm-12 col-md-2">#}
-{#                                                <div class="dropdown d-grid d-block">#}
-{#                                                    <button class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown">#}
-{#                                                        Trombi. (PDF)#}
-{#                                                    </button>#}
-
-{#                                                    <div class="dropdown-menu">#}
-{#                                                        {% for typegroupe in typegroupes|filter(typegroupe => typegroupe#}
-{#                                                        .semestre == semestre) %}#}
-{#                                                            <li>#}
-{#                                                                <a class="dropdown-item" href="{{ path#}
-{#                                                                    ('trombinoscope_etudiant_image',#}
-{#                                                                    {typeGroupe: typegroupe.id}) }}">{{ typegroupe.libelle }}</a>#}
-{#                                                            </li>#}
-{#                                                        {% endfor %}#}
-{#                                                    </div>#}
-{#                                                </div>#}
-{#                                            </div>#}
-{#                                            <div class="col-sm-12 col-md-4 d-grid d-block">#}
-{#                                                <button#}
-{#                                                        {{ stimulus_controller('modal', {#}
-{#                                                            size: 'lg',#}
-{#                                                            form: true,#}
-{#                                                            formAction: path('export_listing'),#}
-{#                                                            modalTitle: 'export.heading'|trans,#}
-{#                                                            modalUrl:  path('api_export_document_personnalise',#}
-{#                                                                {semestre:semestre.id}) }) }}#}
-{#                                                        data-action="click->modal#openModal"#}
-{#                                                        class="btn btn-primary"#}
-{#                                                        data-bs-toggle="tooltip" data-bs-placement="bottom"#}
-{#                                                        title="{{ 'atitle.export'|trans }}"#}
-{#                                                >#}
-{#                                                    Export personnalisé#}
-{#                                                </button>#}
-{#                                            </div>#}
-{#                                        </div>#}
-{#                                    {% endif %}#}
-{#                                </div>#}
-{#                            {% endfor %}#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
         {% endif %}
+
         <div class="col-md-6 col-sm-12">
             <div class="card">
                 <h4 class="card-title">{{ 'liens.utiles.heading'|trans }}</h4>
@@ -317,9 +182,10 @@
         </div>
         <div class="col-md-6 col-sm-12">
             <div class="card">
+                {# todo: notion d'organigramme ? #}
                 <h4 class="card-title">{{ 'contacts.heading'|trans }}</h4>
                 <div class="card-body">
-                    {% for diplome in user_data.diplomes %}
+                    {% for diplome in user_data.diplomes|filter(diplome => diplome.actif == true) %}
                         <h5>{{ diplome.typeDiplome.sigle }} {{ diplome.libelle }} ({{ diplome.sigle }})</h5>
                         <dl class="row">
                             {% if diplome.responsableDiplome != null %}
