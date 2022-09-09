@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/09/2022 12:14
+ * @lastUpdate 09/09/2022 12:56
  */
 
 namespace App\Classes\Edt;
@@ -35,6 +35,7 @@ use Symfony\Component\HttpFoundation\Request;
 class MyEdtIntranet extends BaseEdt
 {
     protected ?AnneeUniversitaire $anneeUniversitaire = null;
+    protected string $couleur;
     private array $tab = [];
     private array $matieres = [];
     private array $tabCouleur = [];
@@ -90,20 +91,24 @@ class MyEdtIntranet extends BaseEdt
                 $this->semestre = $this->semestreRepository->find($this->valeur);
                 $this->groupes = $this->groupeRepository->findAllGroupesOrdreSemestre($this->semestre);
 
-                $pl = $this->edtPlanningRepository->findEdtSemestre($this->semestre, $this->semaineFormationIUT, $this->anneeUniversitaire);
+                $pl = $this->edtPlanningRepository->findEdtSemestre($this->semestre, $this->semaineFormationIUT,
+                    $this->anneeUniversitaire);
 
                 $this->planning = $this->transformePromo($pl);
                 break;
             case Constantes::FILTRE_EDT_PROF:
-                $pl = $this->edtPlanningRepository->findEdtProf($this->valeur, $this->anneeUniversitaire, $this->semaineFormationIUT);
+                $pl = $this->edtPlanningRepository->findEdtProf($this->valeur, $this->anneeUniversitaire,
+                    $this->semaineFormationIUT);
                 $this->planning = $this->transformeIndividuel($pl);
                 break;
             case Constantes::FILTRE_EDT_ETUDIANT:
                 $this->groupes();
-                $pl = $this->edtPlanningRepository->findEdtEtu($this->user, $this->semaineFormationIUT, $this->anneeUniversitaire);
+                $pl = $this->edtPlanningRepository->findEdtEtu($this->user, $this->semaineFormationIUT,
+                    $this->anneeUniversitaire);
+
                 if (null !== $pl) {
-                    $this->planning = $this->transformeEtudiant($pl);
                     $this->semestre = $this->user->getSemestre();
+                    $this->planning = $this->transformeEtudiant($pl, $this->semestre->getAnnee()->getCouleur());
                 } else {
                     return false;
                 }
@@ -118,7 +123,8 @@ class MyEdtIntranet extends BaseEdt
                 $this->planning = $this->transformeModule($pl);
                 break;
             case Constantes::FILTRE_EDT_SALLE:
-                $pl = $this->edtPlanningRepository->findEdtSalle($this->valeur, $this->semaineFormationIUT, $this->anneeUniversitaire);
+                $pl = $this->edtPlanningRepository->findEdtSalle($this->valeur, $this->semaineFormationIUT,
+                    $this->anneeUniversitaire);
                 $this->salle = $this->valeur;
                 $this->planning = $this->transformeSalle($pl);
                 break;
@@ -217,18 +223,22 @@ class MyEdtIntranet extends BaseEdt
         return $evt;
     }
 
-    private function transformeEtudiant($pl): array
+    private function transformeEtudiant($pl, string $couleur): array
     {
         $this->tab = [];
         $this->groupes();
+        $this->couleur = $couleur;
 
         /** @var EdtPlanning $p */
         foreach ($pl as $p) {
-            if ((TypeGroupeEnum::TYPE_GROUPE_CM === $p->getType()) || (TypeGroupeEnum::TYPE_GROUPE_TD === $p->getType() && $p->getGroupe() === $this->groupetd) || (TypeGroupeEnum::TYPE_GROUPE_TP === $p->getType() && $p->getGroupe() === $this->groupetp)) {
+            if ((TypeGroupeEnum::TYPE_GROUPE_CM->value === $p->getType()) || (TypeGroupeEnum::TYPE_GROUPE_TD->value === $p->getType() && $p->getGroupe() === $this->groupetd) || (TypeGroupeEnum::TYPE_GROUPE_TP->value === $p->getType() && $p->getGroupe() === $this->groupetp)) {
                 $dbtEdt = $this->convertEdt($p->getDebut());
-                if (
-                    array_key_exists($p->getJour(), $this->tab) &&
-                    array_key_exists($dbtEdt, $this->tab[$p->getJour()])) {
+
+                if (!array_key_exists($p->getJour(), $this->tab)) {
+                    $this->tab[$p->getJour()] = [];
+                }
+
+                if (array_key_exists($dbtEdt, $this->tab[$p->getJour()])) {
                     // le créneau est déjà utilisé on utilise le suivant
                     ++$dbtEdt;
                 }
@@ -245,6 +255,7 @@ class MyEdtIntranet extends BaseEdt
                 $this->tab[$p->getJour()][$dbtEdt]['id'] = $p->getId();
                 $this->tab[$p->getJour()][$dbtEdt]['couleurTexte'] = $this->getCouleurTexte($p);
                 $this->tab[$p->getJour()][$dbtEdt]['commentaire'] = $this->hasCommentaire($p);
+
                 $this->valideFormat($p, $dbtEdt);
             }
         }
@@ -267,7 +278,6 @@ class MyEdtIntranet extends BaseEdt
                 $groupe = $p->getGroupe();
                 $specialGroupe = false;
             }
-
 
             $tab[$p->getJour()][$debut][$groupe]['duree'] = $fin - $debut;
 
@@ -320,15 +330,27 @@ class MyEdtIntranet extends BaseEdt
 
     private function getCouleur(EdtPlanning $p): ?string
     {
+        if (array_key_exists($p->getOrdreSemestre(), $this->tabCouleur)) {
+            $couleur = $this->tabCouleur[$p->getOrdreSemestre()];
+        } else {
+            $couleur = $this->couleur;
+        }
+
         return match (mb_strtolower($p->getType())) {
-            'cm', 'td', 'tp' => mb_strtolower($p->getType()).'_'.$this->tabCouleur[$p->getOrdreSemestre()], // todo: passer par DTO...
+            'cm', 'td', 'tp' => mb_strtolower($p->getType()).'_'.$couleur, // todo: passer par DTO...
             default => 'CCCCCC',
         };
     }
 
     private function getCouleurTexte(EdtPlanning $p): string
     {
-        return match ($this->tabCouleur[$p->getOrdreSemestre()]) {// todo: passer par DTO...
+        if (array_key_exists($p->getOrdreSemestre(), $this->tabCouleur)) {
+            $couleur = $this->tabCouleur[$p->getOrdreSemestre()];
+        } else {
+            $couleur = $this->couleur;
+        }
+
+        return match ($couleur) {// todo: passer par DTO...
             'pink', 'red', 'orange' => 'black',
             default => 'white',
         };
@@ -577,8 +599,11 @@ class MyEdtIntranet extends BaseEdt
     /**
      * @throws \App\Exception\MatiereNotFoundException
      */
-    public function updateCours(Request $request, EdtPlanning $plann, AnneeUniversitaire $anneeUniversitaire): EdtPlanning
-    {
+    public function updateCours(
+        Request $request,
+        EdtPlanning $plann,
+        AnneeUniversitaire $anneeUniversitaire
+    ): EdtPlanning {
         return $this->updatePl($request, $plann, $anneeUniversitaire);
     }
 
