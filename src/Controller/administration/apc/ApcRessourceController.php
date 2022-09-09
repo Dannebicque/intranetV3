@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcRessourceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2022 16:30
+ * @lastUpdate 09/09/2022 08:41
  */
 
 namespace App\Controller\administration\apc;
@@ -166,7 +166,7 @@ class ApcRessourceController extends BaseController
 
                 $this->entityManager->persist($apcRessource);
 
-                $acs = $request->request->all()['ac'];
+                $acs = $request->request->has('ac') ? $request->request->all()['ac'] : [];;
                 if (is_array($acs)) {
                     foreach ($acs as $idAc) {
                         $ac = $apcApprentissageCritiqueRepository->find($idAc);

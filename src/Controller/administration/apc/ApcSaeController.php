@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcSaeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2022 16:32
+ * @lastUpdate 09/09/2022 08:41
  */
 
 namespace App\Controller\administration\apc;
@@ -150,19 +150,21 @@ class ApcSaeController extends BaseController
     }
 
     #[Route(path: '/new/{diplome}', name: 'apc_sae_new', methods: ['GET', 'POST'])]
-    public function new(ApcApprentissageCritiqueRepository $apcApprentissageCritiqueRepository, ApcRessourceRepository $apcRessourceRepository, Request $request, Diplome $diplome): Response
+    public function new(
+        SemestreRepository $semestreRepository,
+        ApcApprentissageCritiqueRepository $apcApprentissageCritiqueRepository, ApcRessourceRepository $apcRessourceRepository, Request $request, Diplome $diplome): Response
     {
         $apcSae = new ApcSae();
         $form = $this->createForm(ApcSaeType::class, $apcSae, ['diplome' => $diplome]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $semestre = $semestreRepository->find($request->request->all()['apc_ressource']['semestre']);
+            $semestre = $semestreRepository->find($request->request->all()['apc_sae']['semestre']);
             if (null !== $semestre) {
-                $apcRessource->addSemestre($semestre);
-                $semestre->addApcSemestresRessource($apcRessource);
+                $apcSae->addSemestre($semestre);
+                $semestre->addApcSemestresSae($apcSae);
                 $this->entityManager->persist($apcSae);
                 // sauvegarde des AC
-                $acs = $request->request->all()['ac'];
+                $acs = $request->request->has('ac') ? $request->request->all()['ac'] : [];
                 if (is_array($acs)) {
                     foreach ($acs as $idAc) {
                         $ac = $apcApprentissageCritiqueRepository->find($idAc);
@@ -171,7 +173,7 @@ class ApcSaeController extends BaseController
                     }
                 }
 
-                $acs = $request->request->all()['ressources'];
+                $acs = $request->request->has('ressources') ? $request->request->all()['ressources'] : [];
                 if (is_array($acs)) {
                     foreach ($acs as $idAc) {
                         $res = $apcRessourceRepository->find($idAc);
