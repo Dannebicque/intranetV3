@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/DefaultController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2022 18:06
+ * @lastUpdate 09/09/2022 16:14
  */
 
 namespace App\Controller;
@@ -23,7 +23,6 @@ class DefaultController extends BaseController
 {
     #[Route(path: '/tableau-de-bord', name: 'default_homepage')]
     public function index(
-        TypeGroupeRepository $typeGroupeRepository,
         ActualiteRepository $actualiteRepository,
         DateRepository $dateRepository
     ): Response {
@@ -35,17 +34,13 @@ class DefaultController extends BaseController
         }
         if ($this->getUser() instanceof Etudiant) {
             $dates = $dateRepository->findByDateForEtudiant($this->getUser(), 2);
-            $typeGroupes = $typeGroupeRepository->findBySemestre($this->getUser()->getSemestre());//todo: filtrer selon le type de diplome APC ou pas.
         } else {
             $dates = $dateRepository->findByDateForPersonnel($this->getDepartement(), 2);
-            $semestre = $this->getDataUserSession()->getSemestresActifs()[0];
-            $typeGroupes = $typeGroupeRepository->findByDiplomeAndOrdreSemestre($semestre->getDiplome(), $semestre->getOrdreLmd());
         }
 
         return $this->render('default/index.html.twig', [
             'actualites' => $actualiteRepository->getByDepartement($this->getDepartement(), 3),
             'dates' => $dates,
-            'typeGroupes' => $typeGroupes,
         ]);
     }
 }

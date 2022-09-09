@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/BlocNotesAbsencesController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/08/2022 17:26
+ * @lastUpdate 09/09/2022 15:29
  */
 
 namespace App\Controller;
@@ -22,20 +22,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class BlocNotesAbsencesController extends BaseController
 {
-    public function personnel(PrevisionnelManager $myPrevisionnel): Response
-    {
-        $previsionnels = [];
-
-        foreach ($this->getDataUserSession()->getSemestresActifs() as $semestre) {
-            $previsionnels[$semestre->getId()] = $myPrevisionnel->getPrevisionnelPersonnelSemestre($this->getUser(),
-                $semestre, $this->dataUserSession->getAnneePrevisionnel());
-        }
-
-        return $this->render('bloc_notes_absences/personnel.html.twig', [
-            'previsionnels' => $previsionnels,
-        ]);
-    }
-
     /**
      * @throws Exception
      */

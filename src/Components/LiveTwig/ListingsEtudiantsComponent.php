@@ -4,11 +4,13 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/LiveTwig/ListingsEtudiantsComponent.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2022 18:01
+ * @lastUpdate 09/09/2022 16:13
  */
 
 namespace App\Components\LiveTwig;
 
+use App\Classes\DataUserSession;
+use App\Controller\BaseController;
 use App\Entity\Semestre;
 use App\Exception\DiplomeNotFoundException;
 use App\Repository\SemestreRepository;
@@ -31,10 +33,14 @@ class ListingsEtudiantsComponent
     public ?array $typeGroupes = [];
 
     public function __construct(
+        Protected DataUserSession $dataUserSession,
         protected SemestreRepository $semestreRepository,
         protected TypeGroupeRepository $typeGroupeRepository
     ) {
-        // $this->findTypeGroupes();
+       if ($this->semestre === null) {
+           $this->semestre = $dataUserSession->getSemestresActifs()[0];
+           $this->findTypeGroupes();
+       }
     }
 
     #[LiveAction]

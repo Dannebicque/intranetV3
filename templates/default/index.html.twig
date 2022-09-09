@@ -138,7 +138,7 @@
         {% endif %}
 
         {% if is_granted('ROLE_PERMANENT') %}
-            {{ component('listings_etudiants',{ semestre:  user_data.semestresActifs[0], typeGroupes:typeGroupes }) }}
+            {{ component('listings_etudiants') }}
         {% endif %}
 
         <div class="col-md-6 col-sm-12">
