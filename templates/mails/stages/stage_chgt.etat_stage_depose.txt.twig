@@ -14,16 +14,16 @@ Récapitulatif des infos du stage.
 * Date de fin du stage : {{ stageEtudiant.dateFinStage|format_date('long') }}
 * Sujet du stage : {{ stageEtudiant.sujetStage }}
 * Activités : {{ stageEtudiant.activites }}
-* Amménagements : {{ stageEtudiant.amenagementStage }}
+* Aménagements : {{ stageEtudiant.amenagementStage }}
 * Gratification : {{ stageEtudiant.gratification == true ? 'Oui' : 'Non' }}
 * Gratification montant : {{ stageEtudiant.gratificationMontant }}
 * Gratification période : {{ stageEtudiant.gratificationPeriode }}
 * Autres avantages : {{ stageEtudiant.avantages }}
 * Durée hebdomadaire : {{ stageEtudiant.dureeHebdomadaire }}
 * Nb de jours : {{ stageEtudiant.dureeJoursStage }}
-* Période(s) d'interuptions : {{ stageEtudiant.periodesInterruptions }}
+* Période(s) d'interruptions : {{ stageEtudiant.periodesInterruptions }}
 
-Si les informations ci-dessous sont erronés, contactez au plus vite le responsable des stages
+Si les informations ci-dessus sont erronées, contacter au plus vite le responsable des stages
 
 Le(s) responsable(s) de la période de stage
 {% for resp in stageEtudiant.stagePeriode.Responsables %}

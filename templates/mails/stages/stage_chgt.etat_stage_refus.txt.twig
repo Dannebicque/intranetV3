@@ -1,7 +1,7 @@
 Bonjour {{ stageEtudiant.etudiant.prenom|capitalize }},
 
-Ta proposition de stage au sein de l'entreprise {% if stageEtudiant
-.entreprise != null %}{{ stageEtudiant.entreprise.raisonSociale }}{% else%} "non précisé"{% endif%} est refusée car ne correspondant pas aux objectifs pédagogiques de la formation.
+Ta proposition de stage au sein de l'entreprise {% if stageEtudiant.entreprise != null %}{{ stageEtudiant.entreprise.raisonSociale }}{% else%} "non précisé"{% endif%} est refusée car ne correspondant pas aux objectifs pédagogiques de la formation.
+
 Merci de trouver un autre terrain de stage plus approprié.
 
 Bien cordialement
