@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/Form/QuestionnaireQuestionTypeEchelle.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Form/QuestionnaireQuestionTypeEchelle.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/11/2021 17:35
+ * @lastUpdate 09/09/2022 16:48
  */
 
 namespace App\Components\Questionnaire\Form;
@@ -20,18 +20,34 @@ class QuestionnaireQuestionTypeEchelle extends QuestionnaireQuestionType
     {
         parent::buildForm($builder, $options);
         $builder
-            ->addEventListener(FormEvents::PRE_SET_DATA, static function (FormEvent $event) {
+            ->addEventListener(FormEvents::PRE_SET_DATA, static function(FormEvent $event) {
                 $question = $event->getData();
+
                 $config = $question->getConfiguration();
                 $form = $event->getForm();
                 $form->add('min', TextType::class,
-                    ['mapped' => false, 'label' => 'label.question.min', 'help' => 'help.question.min', 'data' => $config['min']])
+                    [
+                        'mapped' => false,
+                        'label' => 'label.question.min',
+                        'help' => 'help.question.min',
+                        'data' => $config['min'] ?? 0,
+                    ])
                     ->add('max', TextType::class,
-                        ['mapped' => false, 'label' => 'label.question.max', 'help' => 'help.question.max', 'data' => $config['max']])
+                        [
+                            'mapped' => false,
+                            'label' => 'label.question.max',
+                            'help' => 'help.question.max',
+                            'data' => $config['max'] ?? 10,
+                        ])
                     ->add('pas', TextType::class,
-                        ['mapped' => false, 'label' => 'label.question.pas', 'help' => 'help.question.pas', 'data' => $config['pas']]);
+                        [
+                            'mapped' => false,
+                            'label' => 'label.question.pas',
+                            'help' => 'help.question.pas',
+                            'data' => $config['pas'] ?? 1,
+                        ]);
             })
-            ->addEventListener(FormEvents::POST_SUBMIT, static function (FormEvent $event) {
+            ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
                 $question = $event->getData();
                 $form = $event->getForm();
                 $t = $question->getConfiguration();

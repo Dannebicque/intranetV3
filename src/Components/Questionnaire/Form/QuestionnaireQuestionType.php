@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/Form/QuestionnaireQuestionType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Form/QuestionnaireQuestionType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/11/2021 17:35
+ * @lastUpdate 11/09/2022 08:17
  */
 
 namespace App\Components\Questionnaire\Form;
@@ -52,15 +52,15 @@ abstract class QuestionnaireQuestionType extends AbstractType
             ->add('obligatoire', YesNoType::class, [
                 'label' => 'label.obligatoire',
                 'translation_domain' => 'form',
-            ])
-            ->add('questionParent', EntityCompleteType::class, [
-                'class' => QuestionnaireQuestion::class,
-                'label' => 'label.question_parent',
-                'required' => false,
-                'translation_domain' => 'form',
-                'help' => 'Vous pouvez indiquez une question "parent". Dans ce cas cette question sera située sous la question parent.',
-                'choice_label' => 'libelle',
             ]);
+//           //todo:ici ou dans type chainée ? ->add('questionParent', EntityCompleteType::class, [
+//                'class' => QuestionnaireQuestion::class,
+//                'label' => 'label.question_parent',
+//                'required' => false,
+//                'translation_domain' => 'form',
+//                'help' => 'Vous pouvez indiquez une question "parent". Dans ce cas cette question sera située sous la question parent.',
+//                'choice_label' => 'libelle',
+//            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

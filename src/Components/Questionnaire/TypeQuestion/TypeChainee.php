@@ -1,24 +1,25 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/TypeQuestion/TypeQcu.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeQuestion/TypeChainee.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/10/2021 07:59
+ * @lastUpdate 10/09/2022 14:07
  */
 
 namespace App\Components\Questionnaire\TypeQuestion;
 
 use App\Components\Questionnaire\Adapter\ReponseEntityAdapter;
+use App\Components\Questionnaire\Form\QuestionnaireQuestionTypeChainee;
 use App\Entity\QuestionnaireQuestion;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TypeChainee extends AbstractQuestion
 {
     final public const LABEL = 'type_chainee';
-    final public const BADGE = 'bg-pink';
+    final public const BADGE = 'bg-info';
     final public const ICON = 'fas fa-link';
-    // public const FORM = QuestionnaireQuestionTypeQcu::class;
+    public const FORM = QuestionnaireQuestionTypeChainee::class;
 
     public array $questions = [];
 

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/TypeQuestion/TypeSlider.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeQuestion/TypeSlider.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/10/2021 07:50
+ * @lastUpdate 10/09/2022 14:07
  */
 
 namespace App\Components\Questionnaire\TypeQuestion;
@@ -15,7 +15,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class TypeSlider extends TypeEchelle
 {
     final public const LABEL = 'type_slider';
-    final public const BADGE = 'bg-yellow'; // ajouter constante de couleur et de nom de template ?
+    final public const BADGE = 'bg-brown'; // ajouter constante de couleur et de nom de template ?
     final public const ICON = 'fas fa-slider'; // ajouter constante de couleur et de nom de template ?
 
     public function configureOptions(OptionsResolver $resolver): void

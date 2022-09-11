@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Form/QuestionnaireQuestionTypeYesNo.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:23
+ * @lastUpdate 09/09/2022 16:46
  */
 
 namespace App\Components\Questionnaire\Form;
@@ -19,6 +19,7 @@ class QuestionnaireQuestionTypeYesNo extends QuestionnaireQuestionType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         parent::buildForm($builder, $options);
+
         $builder
             ->addEventListener(FormEvents::PRE_SET_DATA, static function (FormEvent $event) {
                 $question = $event->getData();
