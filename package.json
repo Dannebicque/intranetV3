@@ -4,6 +4,7 @@
     "@babel/preset-env": "^7.14.2",
     "@popperjs/core": "^2.10.2",
     "@symfony/stimulus-bridge": "^3.0",
+    "@symfony/ux-autocomplete": "file:vendor/symfony/ux-autocomplete/assets",
     "@symfony/ux-chartjs": "file:vendor/symfony/ux-chartjs/Resources/assets",
     "@symfony/ux-dropzone": "file:vendor/symfony/ux-dropzone/Resources/assets",
     "@symfony/ux-live-component": "file:vendor/symfony/ux-live-component/assets",
@@ -14,13 +15,13 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.25.2",
     "file-loader": "^6.0.0",
+    "node-sass": "^7.0.1",
     "perfect-scrollbar": "^1.5.0",
     "regenerator-runtime": "^0.13.9",
     "sass-loader": "^12.3.0",
     "stimulus-clipboard": "^1.0.0",
     "stimulus-use": "^0.41.0",
-    "webpack-bundle-analyzer": "^4.4.2",
-    "node-sass": "^7.0.1"
+    "webpack-bundle-analyzer": "^4.4.2"
   },
   "license": "MPL-2.0",
   "private": true,
@@ -46,7 +47,7 @@
     "stimulus-notification": "^2.0.0",
     "sweetalert2": "^9.17.0",
     "tinymce": "^5.9.0",
-    "tom-select": "^2.0.0-rc.5",
+    "tom-select": "^2.0.1",
     "webpack-notifier": "^1.6.0"
   },
   "auto-changelog": {
@@ -54,7 +55,7 @@
     "unreleased": true,
     "commitLimit": false
   },
-  "version": "3.9.9",
+  "version": "3.9.10",
   "author": "David Annebicque",
   "name": "intranetv3",
   "repository": {

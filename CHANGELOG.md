@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.10](https://github.com/Dannebicque/intranetV3/compare/v3.9.9...v3.9.10) (2022-09-12)
+
+
+### Features
+
+* [MesCours] Avec LiveTwig ([17f7bdb](https://github.com/Dannebicque/intranetV3/commit/17f7bdb03c7f32ccc77390d1bc0fe35ff5e6fe87))
+* [MesCours] Avec LiveTwig ([d50c7e7](https://github.com/Dannebicque/intranetV3/commit/d50c7e73bada4ccef9aee246b0ddd29dacc958cc))
+
+
+### Bug Fixes
+
+* [Edt] Edt étudiant ([bc69282](https://github.com/Dannebicque/intranetV3/commit/bc69282d991097820d02494dde9c145ff8455046))
+* [homepage] Filtre sur les diplômes actifs ([eaf2122](https://github.com/Dannebicque/intranetV3/commit/eaf212217988b1b81efeae95bcf140ef8cbd0da2))
+* [Mails] typos ([d4acdf3](https://github.com/Dannebicque/intranetV3/commit/d4acdf3dcd8c30533cf5c618f6a79fba941c9962))
+* [Questionnaire] Corrections formulaires ([dc934b3](https://github.com/Dannebicque/intranetV3/commit/dc934b3bb25c0a3b551aa7fecdcf01219a6683e1))
+* [Security] Fix choix du département uniquement pour les personnels ([111a0a9](https://github.com/Dannebicque/intranetV3/commit/111a0a93b29a9e81ba63281f53b0fe19b07233f6))
+
 ### [3.9.9](https://github.com/Dannebicque/intranetV3/compare/v3.9.8...v3.9.9) (2022-09-09)
 
 
