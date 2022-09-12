@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/LiveTwig/PersonnelMesCoursComponent.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/09/2022 16:17
+ * @lastUpdate 12/09/2022 11:50
  */
 
 namespace App\Components\LiveTwig;
@@ -19,15 +19,15 @@ use Symfony\UX\LiveComponent\Attribute\LiveArg;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
-#[AsLiveComponent('personnel_mes_cours')]
+#[AsLiveComponent('personnel_mes_cours', csrf: false)]
 class PersonnelMesCoursComponent
 {
     use DefaultActionTrait;
 
-    #[LiveProp]
+    #[LiveProp(writable: true)]
     public ?Semestre $semestre = null;
 
-    #[LiveProp]
+    #[LiveProp(writable: true)]
     public ?array $previsionnels = [];
 
     public function __construct(
@@ -54,4 +54,23 @@ class PersonnelMesCoursComponent
         $this->previsionnels = $this->myPrevisionnel->getPrevisionnelPersonnelSemestre($this->dataUserSession->getUser(),
             $this->semestre, $this->dataUserSession->getAnneePrevisionnel());
     }
+
+//    public function dehydrateAddress(array $addressDto)
+//    {
+//        // NOTE: should the user be forced to json_encode() to return a scalar
+//        // SEE BELOW
+//        return [
+//            'street1' => $addressDto->street1,
+//            'street2' => $addressDto->street2,
+//            'city' => $addressDto->city,
+//        ];
+//    }
+//    public function hydrateAddress(array $address)
+//    {
+//        return new AddressDto(
+//            $address['street1'],
+//            $address['street2'],
+//            $address['city']
+//        );
+//    }
 }
