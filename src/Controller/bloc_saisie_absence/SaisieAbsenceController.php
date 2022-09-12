@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/bloc_saisie_absence/SaisieAbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/09/2022 11:10
+ * @lastUpdate 12/09/2022 12:13
  */
 
 namespace App\Controller\bloc_saisie_absence;
@@ -44,7 +44,8 @@ class SaisieAbsenceController extends BaseController
     ): Response {
         if (null !== $event) {
             $groupes = $typeGroupeRepository->findOneBy([
-                'semestre' => $semestre->getId(),
+                'ordreSemestre' => $semestre->getOrdreLmd(),
+                'diplome' => null === $semestre->getDiplome()->getParent() ? $semestre->getDiplome()->getId() : $semestre->getDiplome()->getParent()->getId(),
                 'type' => $event->type_cours,
             ]);
         } else {

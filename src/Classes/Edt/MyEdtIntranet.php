@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/09/2022 12:56
+ * @lastUpdate 12/09/2022 12:18
  */
 
 namespace App\Classes\Edt;
@@ -212,7 +212,7 @@ class MyEdtIntranet extends BaseEdt
             if (null !== $matiere) {
                 $evt->matiere = $matiere->display;
                 $evt->semestre = $p->getSemestre();
-                $evt->semestreOrdre = $p->getOrdreSemestre();
+                $evt->ordreSemestre = $p->getOrdreSemestre();
                 $annee = $matiere->getSemestres()->first()->getAnnee();
                 if (null !== $annee) {
                     $evt->couleur = $annee->getCouleur();
