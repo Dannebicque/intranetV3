@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Matieres/TypeMatiereManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/09/2022 11:34
+ * @lastUpdate 13/09/2022 11:45
  */
 
 namespace App\Classes\Matieres;
@@ -209,5 +209,21 @@ class TypeMatiereManager
             EdtManager::EDT_INTRANET => $this->getMatiereFromSelect($planning->typeIdMatiere),
             default => null,
         };
+    }
+
+    public function findBySemestreAndReferentiel(Semestre $semestre, ?ApcReferentiel $referentiel): array
+    {
+        $t = [];
+        foreach ($this->managers as $manager) {
+            if ($manager instanceof MatiereManager) {
+                $matieres = $manager->findBySemestre($semestre);
+            } else {
+                $matieres = $manager->findBySemestreAndReferentiel($semestre, $referentiel);
+            }
+
+            $t[] = $matieres->toArray();
+        }
+
+        return array_merge(...$t);
     }
 }

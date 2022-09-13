@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EvaluationInitialisationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/05/2022 12:54
+ * @lastUpdate 13/09/2022 13:53
  */
 
 namespace App\Controller\administration;
@@ -14,6 +14,7 @@ use App\Controller\BaseController;
 use App\Entity\Evaluation;
 use App\Entity\Semestre;
 use App\Repository\EvaluationRepository;
+use App\Repository\TypeGroupeRepository;
 use function count;
 use Exception;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,12 +33,21 @@ class EvaluationInitialisationController extends BaseController
     #[Route(path: '/{semestre}', name: 'administration_evaluation_initialisation_index', methods: 'GET|POST')]
     public function index(
         Request $request,
+        TypeGroupeRepository $typeGroupeRepository,
         TypeMatiereManager $typeMatiereManager,
         EvaluationRepository $evaluationRepository,
         Semestre $semestre
     ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
-        $matieres = $typeMatiereManager->findBySemestre($semestre);
+
+        if (true === $semestre->getDiplome()->isApc()) {
+            $matieres = $typeMatiereManager->findBySemestreAndReferentiel($semestre, $semestre->getDiplome()?->getReferentiel());
+            $typeGroupes = $typeGroupeRepository->findByDiplomeAndOrdreSemestre($semestre->getDiplome(), $semestre->getOrdreLmd());
+        } else {
+            $matieres = $typeMatiereManager->findBySemestre($semestre);
+            $typeGroupes = $typeGroupeRepository->findBySemestre($semestre);
+        }
+
         $evaluations = $evaluationRepository->findBySemestre($semestre,
             $this->dataUserSession->getAnneeUniversitaire());
         if ('POST' === $request->getMethod()) {
@@ -85,6 +95,7 @@ class EvaluationInitialisationController extends BaseController
             'semestre' => $semestre,
             'matieres' => $matieres,
             'evaluations' => $evaluations,
+            'typeGroupes' => $typeGroupes,
         ]);
     }
 }

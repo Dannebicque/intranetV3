@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/EvaluationType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/EvaluationType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/09/2021 15:53
+ * @lastUpdate 13/09/2022 11:35
  */
 
 namespace App\Form;
@@ -62,7 +62,8 @@ class EvaluationType extends AbstractType
                     'disabled' => $personnelDisabled,
                     'class' => Personnel::class,
                     'choice_label' => 'displayPr',
-                    'query_builder' => fn (PersonnelRepository $personnelRepository) => $personnelRepository->findByDepartementBuilder($this->semestre->getAnnee()->getDiplome()->getDepartement()),
+                    'query_builder' => fn (PersonnelRepository $personnelRepository
+                    ) => $personnelRepository->findByDepartementBuilder($this->semestre->getAnnee()->getDiplome()->getDepartement()),
                 ])
             ->add('libelle', TextType::class,
                 [
@@ -94,14 +95,21 @@ class EvaluationType extends AbstractType
                 ])
             ->add('visible', YesNoType::class,
                 ['label' => 'label.evaluation.visible', 'help' => 'help.evaluation.visible'])
-
             ->add('typeGroupe', EntityType::class, [
-                'data' => true === $options['enfant'] ? ($options['groupeEnfant']?->first()->getTypeGroupe()) : null, // todo: en attendant mieux. Car peut y avoir plusieurs groupes, et donc plusieurs types groupes.)
+                'data' => true === $options['enfant'] ? ($options['groupeEnfant']?->first()->getTypeGroupe()) : null,
+                // todo: en attendant mieux. Car peut y avoir plusieurs groupes, et donc plusieurs types groupes.)
                 'class' => TypeGroupe::class,
                 'label' => 'label.evaluation_type_groupe',
                 'choice_label' => 'libelle',
                 'disabled' => $autorise || ($options['enfant'] && null !== $options['groupeEnfant']),
-                'query_builder' => fn (TypeGroupeRepository $typeGroupeRepository) => $typeGroupeRepository->findBySemestreBuilder($this->semestre),
+                'query_builder' => function (TypeGroupeRepository $typeGroupeRepository) {
+                    if (true === $this->semestre->getDiplome()?->isApc()) {
+                        return $typeGroupeRepository->findByDiplomeAndOrdreSemestreBuilder($this->semestre->getDiplome(),
+                            $this->semestre->getOrdreLmd()); // todo: fusionner quand gestion par semestres
+                    }
+
+                    return $typeGroupeRepository->findBySemestreBuilder($this->semestre);
+                },
                 'required' => true,
                 'expanded' => true,
                 'multiple' => false,
@@ -113,12 +121,12 @@ class EvaluationType extends AbstractType
                 'disabled' => $autorise,
                 'choice_label' => 'display',
                 'attr' => ['class' => ''],
-                'query_builder' => fn (PersonnelRepository $personnelRepository) => $personnelRepository->findByDepartementBuilder($this->departement),
+                'query_builder' => fn (PersonnelRepository $personnelRepository
+                ) => $personnelRepository->findByDepartementBuilder($this->departement),
                 'required' => true,
                 'expanded' => true,
                 'multiple' => true,
-            ])
-        ;
+            ]);
 
         if (($matiereDisabled && $autorise)) {
             $builder->add('matiere', ChoiceType::class, [

@@ -40,6 +40,11 @@
                     <tbody>
                     {% for matiere in matieres %}
                         {% if matiere.nbNotes>0 %}
+                            <tr>
+                                <td colspan="5" class="table-primary">
+                                    <strong>{{ matiere.display }}</strong>
+                                </td>
+                            </tr>
                             {% set nbeval=1 %}
 
                             {% for eval in evaluations|filter(eval =>  eval.typeIdMatiere==matiere.typeIdMatiere) %}
@@ -63,7 +68,7 @@
                                         </td>
                                         <td>
                                             <select class="form-select" name="typeGroupe_{{ matiere.typeIdMatiere }}_{{ i }}">
-                                                {% for tg in semestre.typeGroupes %}
+                                                {% for tg in typeGroupes %}
                                                     <option value="{{ tg.id }}">{{ tg.libelle }}</option>
                                                 {% endfor %}
                                             </select>

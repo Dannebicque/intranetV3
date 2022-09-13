@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/NoteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:11
+ * @lastUpdate 13/09/2022 11:31
  */
 
 namespace App\Controller\appPersonnel;
@@ -50,7 +50,7 @@ class NoteController extends BaseController
             EvaluationType::class,
             $evaluation,
             [
-                'departement' => $this->dataUserSession->getDepartement(),
+                'departement' => $this->getDepartement(),
                 'semestre' => $semestre,
                 'matiereDisabled' => false,
                 'personnelDisabled' => true,

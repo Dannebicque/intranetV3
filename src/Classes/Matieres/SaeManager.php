@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Matieres/SaeManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/09/2022 11:37
+ * @lastUpdate 13/09/2022 11:43
  */
 
 namespace App\Classes\Matieres;
@@ -58,6 +58,13 @@ class SaeManager extends AbstractMatiereManager implements MatiereInterface
     public function findByReferentiel(ApcReferentiel $referentiel): MatiereCollection
     {
         $data = $this->apcSaeRepository->findByReferentiel($referentiel);
+
+        return $this->saeAdapter->collection($data);
+    }
+
+    public function findBySemestreAndReferentiel(Semestre $semestre, ApcReferentiel $referentiel): MatiereCollection
+    {
+        $data = $this->apcSaeRepository->findBySemestreReferentiel($semestre, $referentiel);
 
         return $this->saeAdapter->collection($data);
     }
