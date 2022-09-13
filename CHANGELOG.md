@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.12](https://github.com/Dannebicque/intranetV3/compare/v3.9.11...v3.9.12) (2022-09-13)
+
+
+### Bug Fixes
+
+* [Apc Coeff] MCC en APC ([b7c25c0](https://github.com/Dannebicque/intranetV3/commit/b7c25c00857dac9cb2908f7d83509c1151a497ee))
+* [Evaluation] Filtre par rapport au prévisionnel ([398dc46](https://github.com/Dannebicque/intranetV3/commit/398dc46690df003ff49d405095518a3a2a05212b))
+* [Script] Corrections dans le script ([096aef1](https://github.com/Dannebicque/intranetV3/commit/096aef12fc0ef6c0e038268825e025ddbb1e5708))
+
 ### [3.9.11](https://github.com/Dannebicque/intranetV3/compare/v3.9.10...v3.9.11) (2022-09-13)
 
 
