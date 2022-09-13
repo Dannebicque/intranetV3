@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EvaluationInitialisationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/09/2022 13:53
+ * @lastUpdate 13/09/2022 20:46
  */
 
 namespace App\Controller\administration;
 
 use App\Classes\Matieres\TypeMatiereManager;
+use App\Classes\Previsionnel\PrevisionnelManager;
 use App\Controller\BaseController;
 use App\Entity\Evaluation;
 use App\Entity\Semestre;
@@ -33,6 +34,7 @@ class EvaluationInitialisationController extends BaseController
     #[Route(path: '/{semestre}', name: 'administration_evaluation_initialisation_index', methods: 'GET|POST')]
     public function index(
         Request $request,
+        PrevisionnelManager $previsionnelManager,
         TypeGroupeRepository $typeGroupeRepository,
         TypeMatiereManager $typeMatiereManager,
         EvaluationRepository $evaluationRepository,
@@ -48,8 +50,19 @@ class EvaluationInitialisationController extends BaseController
             $typeGroupes = $typeGroupeRepository->findBySemestre($semestre);
         }
 
+        $previsionnels = $previsionnelManager->getPrevisionnelSemestre($semestre, $this->getAnneeUniversitaire()->getAnnee());
+
+        $tabprevi = [];
+        foreach ($previsionnels as $previsionnel) {
+            if (!array_key_exists($previsionnel->getTypeIdMatiere(), $tabprevi)) {
+                $tabprevi[$previsionnel->getTypeIdMatiere()] = [];
+            }
+            $tabprevi[$previsionnel->getTypeIdMatiere()][$previsionnel->personnel_id]['id'] = $previsionnel->personnel_id;
+            $tabprevi[$previsionnel->getTypeIdMatiere()][$previsionnel->personnel_id]['display'] = $previsionnel->personnelDisplay();
+        }
+
         $evaluations = $evaluationRepository->findBySemestre($semestre,
-            $this->dataUserSession->getAnneeUniversitaire());
+            $this->getAnneeUniversitaire());
         if ('POST' === $request->getMethod()) {
             $tGroupes = [];
             foreach ($semestre->getTypeGroupes() as $tg) {
@@ -94,6 +107,7 @@ class EvaluationInitialisationController extends BaseController
         return $this->render('administration/evaluationInitialisation/index.html.twig', [
             'semestre' => $semestre,
             'matieres' => $matieres,
+            'tabPrevi' => $tabprevi,
             'evaluations' => $evaluations,
             'typeGroupes' => $typeGroupes,
         ]);
