@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.11](https://github.com/Dannebicque/intranetV3/compare/v3.9.10...v3.9.11) (2022-09-13)
+
+
+### Bug Fixes
+
+* [Edt] Bug affichage du groupe depuis EDT absence ([340f86a](https://github.com/Dannebicque/intranetV3/commit/340f86a726bdbcf8d3663efc4086eddd01c1d2b1))
+* [Edt] Filtre par diplôme ([c8ed508](https://github.com/Dannebicque/intranetV3/commit/c8ed50876073c69d73654a531a2660c3917a21c7))
+* [Evaluations] Filtre par type de groupe +doublons matières dans init ([b96daf0](https://github.com/Dannebicque/intranetV3/commit/b96daf0773f06b63450ad61a1b8ee8751921eca8))
+* [LiveComponnent] Writable true sur le prévisionnel pour erreur checksum ([7047260](https://github.com/Dannebicque/intranetV3/commit/70472601e7c8ce51dd300b512fcd7374f5a14788))
+
 ### [3.9.10](https://github.com/Dannebicque/intranetV3/compare/v3.9.9...v3.9.10) (2022-09-12)
 
 
