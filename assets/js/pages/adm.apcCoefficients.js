@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/adm.apcCoefficients.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/07/2022 13:30
+// @lastUpdate 13/09/2022 20:54
 
 import { post } from '../fetch'
 import Routing from 'fos-router'
@@ -75,6 +75,28 @@ document.querySelectorAll('.changeCoefficientRessource').forEach((element) => {
       value: element.value,
     }).then(() => {
       updateRapportsSaeRessource(element.dataset.competence, element.dataset.semestre)
+    })
+  })
+})
+
+document.querySelectorAll('.changeNbNotesSae').forEach((element) => {
+  element.addEventListener('blur', (elem) => {
+    post(Routing.generate('administration_apc_referentiel_formation_nb_notes_ajax', {
+      id: element.dataset.matiere,
+      type: 'sae',
+    }), {
+      value: element.value,
+    })
+  })
+})
+
+document.querySelectorAll('.changeNbNotesRessource').forEach((element) => {
+  element.addEventListener('blur', (elem) => {
+    post(Routing.generate('administration_apc_referentiel_formation_nb_notes_ajax', {
+      id: element.dataset.matiere,
+      type: 'ressource',
+    }), {
+      value: element.value,
     })
   })
 })
