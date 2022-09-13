@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/09/2022 10:55
+ * @lastUpdate 13/09/2022 20:08
  */
 
 namespace App\Repository;
@@ -64,6 +64,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->where('p.semaine = :semaine')
             ->andWhere('p.ordreSemestre = :semestre')
+            ->andWhere('p.diplome = :diplome')
             ->setParameter('diplome', null !== $semestre->getDiplome()->getParent() ? $semestre->getDiplome()->getParent()->getId() : $semestre->getDiplome()->getId())
             ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
             ->setParameters(['semaine' => $semaine, 'semestre' => $semestre->getOrdreLmd(), 'anneeUniversitaire' => $anneeUniversitaire->getId()])

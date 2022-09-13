@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/09/2022 11:15
+ * @lastUpdate 13/09/2022 20:00
  */
 
 namespace App\Controller\administration;
@@ -192,7 +192,7 @@ class EdtExportController extends BaseController
     #[Route(path: '/one/{personnel}/{source}.{_format}', name: 'administration_edt_export_one', requirements: ['source' => 'intranet|celcat'])]
     public function exportOne(MyEdtExport $myEdtExport, Personnel $personnel, $source, $_format): Response
     {
-        $myEdtExport->genereOneDocument($source, $_format, $personnel, $this->dataUserSession->getDepartement());
+        $myEdtExport->genereOneDocument($source, $_format, $personnel, $this->getDepartement());
 
         return $this->redirectToRoute('administration_edt_export_voir');
     }
@@ -200,7 +200,7 @@ class EdtExportController extends BaseController
     #[Route(path: '/tous/{source}.{_format}', name: 'administration_edt_export_all', requirements: ['source' => 'intranet|celcat'])]
     public function exportAll(MyEdtExport $myEdtExport, $source, $_format): Response
     {
-        $myEdtExport->genereAllDocument($source, $_format, $this->dataUserSession->getDepartement());
+        $myEdtExport->genereAllDocument($source, $_format, $this->getDepartement());
 
         return $this->redirectToRoute('administration_edt_export_voir');
     }
