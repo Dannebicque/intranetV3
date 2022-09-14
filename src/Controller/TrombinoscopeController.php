@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/TrombinoscopeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/08/2022 18:27
+ * @lastUpdate 14/09/2022 09:23
  */
 
 namespace App\Controller;
@@ -51,7 +51,7 @@ class TrombinoscopeController extends BaseController
      * @throws SyntaxError
      */
     #[Route(path: '/etudiant/export/{typeGroupe<\d+>}.{_format}', name: 'trombinoscope_etudiant_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function trombiEtudiantExport(MyExportListing $myExportListing, TypeGroupe $typeGroupe, $_format): Response
+    public function trombiEtudiantExport(MyExportListing $myExportListing, TypeGroupe $typeGroupe, string $_format): Response
     {
         return $myExportListing->genereFichier(
             Constantes::TYPEDOCUMENT_EMARGEMENT,
@@ -68,7 +68,7 @@ class TrombinoscopeController extends BaseController
      * @throws SyntaxError
      */
     #[Route(path: '/etudiant/export-groupe/{groupe<\d+>}.{_format}', name: 'trombinoscope_etudiant_export_groupe', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function trombiEtudiantExportGroupe(MyExportListing $myExportListing, Groupe $groupe, $_format): Response
+    public function trombiEtudiantExportGroupe(MyExportListing $myExportListing, Groupe $groupe, string $_format): Response
     {
         return $myExportListing->genereFichier(
             Constantes::TYPEDOCUMENT_EMARGEMENT,
@@ -151,7 +151,7 @@ class TrombinoscopeController extends BaseController
     public function trombiPersonnel(
         Configuration $configuration,
         PersonnelRepository $personnelRepository,
-        $type
+        string $type
     ): Response {
         $personnels = $personnelRepository->findByType(
             $type,
@@ -173,8 +173,8 @@ class TrombinoscopeController extends BaseController
         MySerializer $mySerializer,
         MyExport $myExport,
         PersonnelRepository $personnelRepository,
-        $type,
-        $_format
+        string $type,
+        string $_format
     ): Response {
         $personnels = $personnelRepository->findByType($type, $this->dataUserSession->getDepartement());
 

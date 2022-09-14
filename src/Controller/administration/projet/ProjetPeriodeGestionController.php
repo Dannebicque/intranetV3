@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/projet/ProjetPeriodeGestionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:44
+ * @lastUpdate 14/09/2022 09:23
  */
 
 namespace App\Controller\administration\projet;
@@ -29,7 +29,7 @@ class ProjetPeriodeGestionController extends BaseController
     #[ParamConverter('stagePeriode', options: ['mapping' => ['uuid' => 'uuid']])]
     public function export(
         MySerializer $mySerializer,
-        MyExport $myExport, ProjetPeriode $projetPeriode, $_format): Response
+        MyExport $myExport, ProjetPeriode $projetPeriode, string $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestre());
         $projetEtudiants = $projetPeriode->getProjetEtudiants();

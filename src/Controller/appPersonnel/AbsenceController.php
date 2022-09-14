@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/09/2022 11:05
+ * @lastUpdate 14/09/2022 09:23
  */
 
 namespace App\Controller\appPersonnel;
@@ -185,7 +185,7 @@ class AbsenceController extends BaseController
         TypeMatiereManager $typeMatiereManager,
         string $matiere,
         Semestre $semestre,
-        $_format
+        string $_format
     ): ?Response {
         $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
         if (null === $mat) {

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/stage/StagePeriodeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 14/09/2022 09:23
  */
 
 namespace App\Controller\administration\stage;
@@ -39,7 +39,7 @@ class StagePeriodeController extends BaseController
     #[Route(path: '/export.{_format}', name: 'administration_stage_periode_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
     public function export(
         MySerializer $mySerializer,
-        MyExport $myExport, StagePeriodeRepository $stagePeriodeRepository, $_format): Response
+        MyExport $myExport, StagePeriodeRepository $stagePeriodeRepository, string $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $this->getDepartement());
         $stagePeriodes = $stagePeriodeRepository->findByDepartement($this->dataUserSession->getDepartement());

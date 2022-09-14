@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EtudiantSemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:10
+ * @lastUpdate 14/09/2022 09:13
  */
 
 namespace App\Controller\administration;
@@ -109,7 +109,7 @@ class EtudiantSemestreController extends BaseController
     }
 
     #[Route(path: '/export/{semestre}.{_format}', name: 'administration_etudiant_semestre_export', requirements: ['semestre' => '\d+', '_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function exportEtudiantsSemestre(MySerializer $mySerializer, MyExport $myExport, EtudiantRepository $etudiantRepository, Semestre $semestre, $_format): Response
+    public function exportEtudiantsSemestre(MySerializer $mySerializer, MyExport $myExport, EtudiantRepository $etudiantRepository, Semestre $semestre, string $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
         $etudiants = $etudiantRepository->findBySemestre($semestre);

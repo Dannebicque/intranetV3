@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtCompareController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/08/2022 10:17
+ * @lastUpdate 14/09/2022 09:04
  */
 
 namespace App\Controller\administration;
@@ -33,7 +33,7 @@ class EdtCompareController extends BaseController
     }
 
     #[Route(path: '/personnels/{source}', name: 'administration_edt_compare_personnels', methods: ['GET'])]
-    public function comparePersonnel(ComparePrevisionnelPersonnel $comparePrevisionnelPersonnel, $source): Response
+    public function comparePersonnel(ComparePrevisionnelPersonnel $comparePrevisionnelPersonnel, string $source): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_EDT', $this->getDepartement());
         $comparatif = $comparePrevisionnelPersonnel->compareEdtPreviPersonnels($this->getDepartement(),
@@ -47,7 +47,7 @@ class EdtCompareController extends BaseController
     }
 
     #[Route(path: '/matieres/{source}', name: 'administration_edt_compare_matiere', methods: ['GET'])]
-    public function compareMatiereAction(ComparePrevisonnelMatiere $comparePrevisonnelMatiere, $source): Response
+    public function compareMatiereAction(ComparePrevisonnelMatiere $comparePrevisonnelMatiere, string $source): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_EDT', $this->getDepartement());
         $comparatif = $comparePrevisonnelMatiere->compareEdtPreviMatiere($this->dataUserSession->getDepartement(),

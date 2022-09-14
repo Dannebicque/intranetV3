@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/SynchroIcalController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/08/2022 18:20
+ * @lastUpdate 14/09/2022 09:23
  */
 
 namespace App\Controller;
@@ -28,7 +28,7 @@ class SynchroIcalController extends AbstractController
      * @throws NonUniqueResultException
      */
     #[Route(path: '/intervenant/{code}.{_format}', name: 'edt_intervenant_synchro_ical')]
-    public function synchroIntervenantIcal(MyEdtExport $myEdtExport, PersonnelRepository $personnelRepository, $code, $_format): Response
+    public function synchroIntervenantIcal(MyEdtExport $myEdtExport, PersonnelRepository $personnelRepository, string $code, string $_format): Response
     {
         // Toutes les semaines
         $personnel = $personnelRepository->findByCode($code);
@@ -49,7 +49,7 @@ class SynchroIcalController extends AbstractController
      * @throws NonUniqueResultException
      */
     #[Route(path: '/etudiant/{code}.{_format}', name: 'edt_etudiant_synchro_ical')]
-    public function synchroEtudiantIcal(MyEdtExport $myEdtExport, EtudiantRepository $etudiantRepository, $code, $_format): Response
+    public function synchroEtudiantIcal(MyEdtExport $myEdtExport, EtudiantRepository $etudiantRepository, string $code,string  $_format): Response
     {
         $etudiant = $etudiantRepository->findByCode($code);
         if (null !== $etudiant && null !== $etudiant->getAnneeUniversitaire()) {

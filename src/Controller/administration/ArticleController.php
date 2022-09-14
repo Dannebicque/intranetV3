@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/ArticleController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 14/09/2022 09:23
  */
 
 namespace App\Controller\administration;
@@ -51,7 +51,7 @@ class ArticleController extends BaseController
     #[Route(path: '/export.{_format}', name: 'administration_article_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
     public function export(
         MySerializer $mySerializer,
-        MyExport $myExport, ArticleRepository $articleRepository, $_format): Response
+        MyExport $myExport, ArticleRepository $articleRepository, string $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
         $articles = $articleRepository->findByDepartement($this->getDepartement());

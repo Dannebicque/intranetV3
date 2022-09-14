@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EvaluationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 14/09/2022 09:13
  */
 
 namespace App\Controller\administration;
@@ -60,7 +60,7 @@ class EvaluationController extends BaseController
      */
     #[Route(path: '/export/{semestre}/{uuid}.{_format}', name: 'administration_evaluation_export', methods: 'GET')]
     #[ParamConverter('evaluation', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function exportEvaluation(MyEvaluation $myEvaluation, Evaluation $evaluation, $_format, Semestre $semestre): StreamedResponse|PdfResponse|null
+    public function exportEvaluation(MyEvaluation $myEvaluation, Evaluation $evaluation, string $_format, Semestre $semestre): StreamedResponse|PdfResponse|null
     {
         // todo: $semestre pourrait être supprimé s'il est dans évaluation
         $data = $evaluation->getTypeGroupe()->getGroupes();
@@ -148,7 +148,7 @@ class EvaluationController extends BaseController
     }
 
     #[Route(path: '/visibilite/semestre/{semestre}/{etat}', name: 'administration_evaluation_visibilite_all', methods: ['GET'])]
-    public function visibiliteAll(TypeMatiereManager $typeMatiereManager, EvaluationRepository $evaluationRepository, $etat, Semestre $semestre): RedirectResponse
+    public function visibiliteAll(EvaluationRepository $evaluationRepository, string $etat, Semestre $semestre): RedirectResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
         $evals = $evaluationRepository->findBySemestre($semestre, $this->dataUserSession->getAnneeUniversitaire());
@@ -164,7 +164,7 @@ class EvaluationController extends BaseController
     }
 
     #[Route(path: '/modifiable/semestre/{semestre}/{etat}', name: 'administration_evaluation_modifiable_all', methods: ['GET'])]
-    public function modifiableAll(TypeMatiereManager $typeMatiereManager, EvaluationRepository $evaluationRepository, $etat, Semestre $semestre): RedirectResponse
+    public function modifiableAll(EvaluationRepository $evaluationRepository, string $etat, Semestre $semestre): RedirectResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
         $evals = $evaluationRepository->findBySemestre($semestre, $this->dataUserSession->getAnneeUniversitaire());

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/09/2022 20:00
+ * @lastUpdate 14/09/2022 09:04
  */
 
 namespace App\Controller\administration;
@@ -45,7 +45,7 @@ class EdtExportController extends BaseController
     }
 
     #[Route(path: '/{source}', name: 'administration_edt_export_index', requirements: ['source' => 'intranet|celcat'])]
-    public function index($source): Response
+    public function index(string $source): Response
     {
         return $this->render('administration/edtExport/index.html.twig', [
             'source' => $source,
@@ -53,7 +53,7 @@ class EdtExportController extends BaseController
     }
 
     #[Route(path: '/script/{source}', name: 'administration_edt_export_script', requirements: ['source' => 'intranet|celcat'])]
-    public function exportScript(SemestreRepository $semestreRepository, GroupeRepository $groupeRepository, CalendrierRepository $calendrierRepository, $source): Response
+    public function exportScript(SemestreRepository $semestreRepository, GroupeRepository $groupeRepository, CalendrierRepository $calendrierRepository, string $source): Response
     {
         $semestres = $semestreRepository->findByDepartementActif($this->getDepartement());
         $groupes = $groupeRepository->findByDepartementSemestreActif($this->getDepartement());
@@ -113,7 +113,7 @@ class EdtExportController extends BaseController
                 'DISLP',
             ];
             $tabSalles = array_flip($tabSalles);
-            $pl = $edtPlanningRepository->findEdtSemestre($semestre, $semaine);
+            $pl = $edtPlanningRepository->findEdtSemestre($semestre, $semaine, $this->getAnneeUniversitaire());
             $matieres = $typeMatiereManager->findBySemestreArray($semestre);
             $code = [];
             $codeGroupe = [];
@@ -121,8 +121,8 @@ class EdtExportController extends BaseController
                 $code[$tg->getType()] = [];
                 $groupes = $groupeRepository->findBy(['typeGroupe' => $tg->getId()], ['ordre' => 'ASC']);
                 foreach ($groupes as $groupe) {
-                    $code[mb_strtoupper($tg->getType())][$groupe->getOrdre()] = 'call sleep 5'."\n";
-                    $codeGroupe[mb_strtoupper($tg->getType()).'_'.$groupe->getOrdre()] = $groupe->getLibelle();
+                    $code[mb_strtoupper($tg->getType()->value)][$groupe->getOrdre()] = 'call sleep 5'."\n";
+                    $codeGroupe[mb_strtoupper($tg->getType()->value).'_'.$groupe->getOrdre()] = $groupe->getLibelle();
                 }
             }
             foreach ($pl as $p) {
@@ -181,7 +181,7 @@ class EdtExportController extends BaseController
             $response->headers->set('Content-Type', 'application/zip');
             $response->headers->set('Content-Disposition',
                 'attachment;filename="ajouter_S'.$calendrier->getSemaineReelle().'_'.$semestre->getLibelle().'.zip"');
-            $response->headers->set('Content-length', filesize($zipName));
+            $response->headers->set('Content-length', (string) filesize($zipName));
 
             return $response;
         }
@@ -190,7 +190,7 @@ class EdtExportController extends BaseController
     }
 
     #[Route(path: '/one/{personnel}/{source}.{_format}', name: 'administration_edt_export_one', requirements: ['source' => 'intranet|celcat'])]
-    public function exportOne(MyEdtExport $myEdtExport, Personnel $personnel, $source, $_format): Response
+    public function exportOne(MyEdtExport $myEdtExport, Personnel $personnel, string $source, string $_format): Response
     {
         $myEdtExport->genereOneDocument($source, $_format, $personnel, $this->getDepartement());
 
@@ -198,7 +198,7 @@ class EdtExportController extends BaseController
     }
 
     #[Route(path: '/tous/{source}.{_format}', name: 'administration_edt_export_all', requirements: ['source' => 'intranet|celcat'])]
-    public function exportAll(MyEdtExport $myEdtExport, $source, $_format): Response
+    public function exportAll(MyEdtExport $myEdtExport, string $source, string $_format): Response
     {
         $myEdtExport->genereAllDocument($source, $_format, $this->getDepartement());
 
@@ -211,7 +211,7 @@ class EdtExportController extends BaseController
      * @throws SyntaxError
      */
     #[Route(path: '/profs/{source}.pdf', name: 'administration_edt_export_profs', requirements: ['source' => 'intranet|celcat'])]
-    public function exportProfs(Request $request, PersonnelRepository $personnelRepository, MyEdtExport $myEdtExport, $source): Response
+    public function exportProfs(Request $request, PersonnelRepository $personnelRepository, MyEdtExport $myEdtExport, string $source): Response
     {
         $profs = $request->request->all()['personnels'];
         foreach ($profs as $prof) {

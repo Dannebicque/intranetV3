@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AbsenceJustificatifController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 14/09/2022 09:23
  */
 
 namespace App\Controller\administration;
@@ -91,7 +91,7 @@ class AbsenceJustificatifController extends BaseController
         MyExport $myExport,
         AbsenceJustificatifRepository $absenceJustificatifRepository,
         Semestre $semestre,
-        $_format
+        string $_format
     ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
 
@@ -168,7 +168,7 @@ class AbsenceJustificatifController extends BaseController
 
     #[Route(path: '/change-etat/{uuid}/{etat}', name: 'administration_absence_justificatif_change_etat', requirements: ['etat' => 'A|R|D'], options: ['expose' => true], methods: 'GET')]
     #[ParamConverter('absenceJustificatif', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function accepte(EventDispatcherInterface $eventDispatcher, AbsenceJustificatif $absenceJustificatif, $etat): Response
+    public function accepte(EventDispatcherInterface $eventDispatcher, AbsenceJustificatif $absenceJustificatif, string $etat): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $absenceJustificatif->getEtudiant()?->getSemestre());
         $absenceJustificatif->setEtat($etat);
@@ -179,7 +179,7 @@ class AbsenceJustificatifController extends BaseController
     }
 
     private function gereEtat(
-        $etat,
+        string $etat,
         AbsenceJustificatif $absenceJustificatif,
         EventDispatcherInterface $eventDispatcher
     ): void {

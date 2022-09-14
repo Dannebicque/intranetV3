@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/GroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2022 10:40
+ * @lastUpdate 14/09/2022 09:13
  */
 
 namespace App\Controller\administration;
@@ -125,7 +125,7 @@ class GroupeController extends BaseController
         MyExport $myExport,
         GroupeRepository $groupeRepository,
         Semestre $semestre,
-        $_format
+        string $_format
     ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
         $groupes = $groupeRepository->findBySemestre($semestre);

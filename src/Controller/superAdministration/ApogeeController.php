@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/ApogeeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/08/2022 17:26
+ * @lastUpdate 14/09/2022 09:28
  */
 
 namespace App\Controller\superAdministration;
@@ -49,7 +49,7 @@ class ApogeeController extends BaseController
      */
     #[Route(path: '/import/diplome/{type}', name: 'sa_apogee_maj', methods: ['POST'])]
     #[IsGranted('ROLE_SUPER_ADMIN')]
-    public function importMaj(ApogeeEtudiant $apogeeEtudiant, EtudiantImport $etudiantImport, Request $request, SemestreRepository $semestreRepository, EtudiantRepository $etudiantRepository, AnneeUniversitaireRepository $anneeUniversitaireRepository, BacRepository $bacRepository, $type): Response
+    public function importMaj(ApogeeEtudiant $apogeeEtudiant, EtudiantImport $etudiantImport, Request $request, SemestreRepository $semestreRepository, EtudiantRepository $etudiantRepository, AnneeUniversitaireRepository $anneeUniversitaireRepository, BacRepository $bacRepository, string $type): Response
     {
         $semestre = $semestreRepository->find($request->request->get('semestreforce'));
         $anneeUniversitaire = $anneeUniversitaireRepository->find($request->request->get('anneeuniversitaire'));
