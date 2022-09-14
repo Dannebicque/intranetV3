@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/BorneController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 14/09/2022 08:58
  */
 
 namespace App\Controller\administration;
@@ -50,7 +50,7 @@ class BorneController extends BaseController
     #[Route(path: '/export.{_format}', name: 'administration_borne_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
     public function export(
         MySerializer $mySerializer,
-        MyExport $myExport, BorneRepository $borneRepository, $_format): Response
+        MyExport $myExport, BorneRepository $borneRepository, string $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
         $bornes = $borneRepository->findByDepartement($this->dataUserSession->getDepartement());
