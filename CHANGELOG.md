@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.13](https://github.com/Dannebicque/intranetV3/compare/v3.9.12...v3.9.13) (2022-09-14)
+
+
+### Bug Fixes
+
+* [Edt] Typo ([257befe](https://github.com/Dannebicque/intranetV3/commit/257befe3e47d831a9bd120130bc5580e10d2105d))
+* [Stage] Semestres suivants ([cdf913a](https://github.com/Dannebicque/intranetV3/commit/cdf913a72b8f10272f3db811295bf9ec30ae5c26))
+
 ### [3.9.12](https://github.com/Dannebicque/intranetV3/compare/v3.9.11...v3.9.12) (2022-09-13)
 
 
