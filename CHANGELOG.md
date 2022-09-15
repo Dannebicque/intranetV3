@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.15](https://github.com/Dannebicque/intranetV3/compare/v3.9.14...v3.9.15) (2022-09-15)
+
+
+### Bug Fixes
+
+* [PeriodeStage] Filtre par année universitaire ([e7fdf3c](https://github.com/Dannebicque/intranetV3/commit/e7fdf3cee97041d051f8a519100fe355c7552662))
+
 ### [3.9.14](https://github.com/Dannebicque/intranetV3/compare/v3.9.13...v3.9.14) (2022-09-15)
 
 
