@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcRessourceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/09/2022 09:07
+ * @lastUpdate 15/09/2022 10:05
  */
 
 namespace App\Controller\administration\apc;
@@ -452,7 +452,8 @@ class ApcRessourceController extends BaseController
             foreach ($apcRessource->getApcSaeRessources() as $ac) {
                 $this->entityManager->remove($ac);
             }
-            $saes = $request->request->all()['saes'];
+
+            $saes = $request->request->has('saes') ? $request->request->all()['saes'] : null;
             if (is_array($saes)) {
                 foreach ($saes as $idAc) {
                     $apcSae = $apcSaeRepository->find($idAc);
