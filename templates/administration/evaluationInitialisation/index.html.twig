@@ -43,7 +43,7 @@
                     </thead>
                     <tbody>
                     {% for matiere in matieres %}
-                        {% if matiere.nbNotes>0 %}
+                        {% if matiere.nbNotes>0 and matiere.isParent == false %}
                             <tr>
                                 <td colspan="5" class="table-primary">
                                     <strong>{{ matiere.display }}</strong>

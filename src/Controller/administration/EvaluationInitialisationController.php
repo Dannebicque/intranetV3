@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EvaluationInitialisationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/09/2022 20:46
+ * @lastUpdate 15/09/2022 10:08
  */
 
 namespace App\Controller\administration;
@@ -77,10 +77,9 @@ class EvaluationInitialisationController extends BaseController
             /** @var \App\DTO\Matiere $matiere */
             foreach ($matieres as $matiere) {
                 $nbNotes = $matiere->nbNotes;
-                // todo: attention les array ne sont plus possivle sur le request... Revoir pour filter les enseignants selon le prévisionnel.
                 for ($i = 1; $i <= $nbNotes; ++$i) {
                     if (!empty($request->request->get('commentaire_'.$matiere->getTypeIdMatiere().'_'.$i))) {
-                        $nbEnseignant = null === $request->request->all['enseignant_'.$matiere->getTypeIdMatiere().'_'.$i] ? 0 : count($request->request->all()['enseignant_'.$matiere->getTypeIdMatiere().'_'.$i]);
+                        $nbEnseignant = false === $request->request->has('enseignant_'.$matiere->getTypeIdMatiere().'_'.$i) ? 0 : count($request->request->all()['enseignant_'.$matiere->getTypeIdMatiere().'_'.$i]);
                         if ($nbEnseignant > 0) {
                             $pers = $tPersonnels[$request->request->all()['enseignant_'.$matiere->getTypeIdMatiere().'_'.$i][0]];
                         } else {
@@ -92,7 +91,7 @@ class EvaluationInitialisationController extends BaseController
                         $eval->setTypegroupe($tGroupes[$request->request->get('typeGroupe_'.$matiere->getTypeIdMatiere().'_'.$i)]);
 
                         for ($j = 1; $j < $nbEnseignant; ++$j) {
-                            $eval->addPersonnelAutorise($tPersonnels[$request->request->get('enseignant_'.$matiere->getTypeIdMatiere().'_'.$i)[$j]]);
+                            $eval->addPersonnelAutorise($tPersonnels[$request->request->all()['enseignant_'.$matiere->getTypeIdMatiere().'_'.$i][$j]]);
                         }
                         $this->entityManager->persist($eval);
                     }
