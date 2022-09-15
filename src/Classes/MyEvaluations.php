@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyEvaluations.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 17:27
+ * @lastUpdate 15/09/2022 09:51
  */
 
 /*
@@ -40,8 +40,11 @@ class MyEvaluations
     /**
      * MyEvaluations constructor.
      */
-    public function __construct(private readonly MyEvaluation $myEvaluation, private readonly TypeMatiereManager $typeMatiereManager, private readonly EvaluationRepository $evaluationRespository)
-    {
+    public function __construct(
+        private readonly MyEvaluation $myEvaluation,
+        private readonly TypeMatiereManager $typeMatiereManager,
+        private readonly EvaluationRepository $evaluationRespository
+    ) {
     }
 
     public function setSemestre(Semestre $semestre): self
@@ -58,7 +61,13 @@ class MyEvaluations
 
     public function getMatieresSemestre(): array
     {
+        if ($this->semestre->getDiplome()->isApc()) {
+            return $this->typeMatiereManager->findBySemestreAndReferentiel($this->semestre,
+                $this->semestre->getDiplome()->getReferentiel());
+        }
+
         return $this->typeMatiereManager->findBySemestre($this->semestre);
+
     }
 
     public function getEvaluationsSemestre(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): array
