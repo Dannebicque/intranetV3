@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.14](https://github.com/Dannebicque/intranetV3/compare/v3.9.13...v3.9.14) (2022-09-15)
+
+
+### Bug Fixes
+
+* [Apc] Fix bug edition ressource ([185040e](https://github.com/Dannebicque/intranetV3/commit/185040e51859c9ecb027e66b53f89b34fa58f37e))
+* [Evaluation] Doublons avec les semestres précédents ([85ba6ae](https://github.com/Dannebicque/intranetV3/commit/85ba6aef91dbdca768f9c01107b35ef5e425721b))
+* [Evaluation] Initialisation ([abe20db](https://github.com/Dannebicque/intranetV3/commit/abe20db4ca11e0e9f4aa5972ae194837a9189c3a))
+* [Questionnaire] Fix bug création d'un questionnaire (tinyMce) ([e03a5a1](https://github.com/Dannebicque/intranetV3/commit/e03a5a1baeabd3e1900e62805391f0bf9749e9bc))
+* [Readme] Update ([7c0afb9](https://github.com/Dannebicque/intranetV3/commit/7c0afb936c07cbbf7d590f38f664e44cfdb7514a))
+
 ### [3.9.13](https://github.com/Dannebicque/intranetV3/compare/v3.9.12...v3.9.13) (2022-09-14)
 
 
