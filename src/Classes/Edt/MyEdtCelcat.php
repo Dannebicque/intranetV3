@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:52
+ * @lastUpdate 17/09/2022 18:49
  */
 
 /*
@@ -170,6 +170,8 @@ class MyEdtCelcat extends BaseEdt
             $evt->couleur = $p->getSemestre()?->getAnnee()?->getCouleur();
             $evt->gridStart = $p->getDebut()?->format('Hi');
             $evt->gridEnd = $p->getFin()?->format('Hi');
+            $evt->ordreSemestre = $p->getSemestre()?->getOrdreLmd();
+            $evt->diplome = $p->getSemestre()?->getDiplome();
 
             $dbtEdt = Constantes::TAB_HEURES_EDT_LIGNE_2[$p->getDebut()->format('Hi')];
             $tab[$evt->jour][$dbtEdt] = $evt;

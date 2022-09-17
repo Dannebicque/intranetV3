@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Adapter/EdtCelcatAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/09/2022 15:15
+ * @lastUpdate 17/09/2022 18:50
  */
 
 namespace App\Adapter;
@@ -59,6 +59,8 @@ class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
             $evt->groupeId = 0;
         }
         $evt->semestre = $event->getSemestre();
+        $evt->diplome = $event->getSemestre()?->getDiplome();
+        $evt->ordreSemestre = $event->getSemestre()->getOrdreLmd();
         $evt->groupe = $event->getLibGroupe();
         $evt->codeelement = $event->getCodeModule();
         $evt->type_cours = $event->getType();
