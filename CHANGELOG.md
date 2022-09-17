@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.16](https://github.com/Dannebicque/intranetV3/compare/v3.9.15...v3.9.16) (2022-09-17)
+
+
+### Bug Fixes
+
+* [Edt] Script export Celcat ([ab75f6f](https://github.com/Dannebicque/intranetV3/commit/ab75f6f591ec7f1c250348725ca8a71b0e260c2a))
+* [Edt] Synchro Celcat, message de warning ([5d2669b](https://github.com/Dannebicque/intranetV3/commit/5d2669b437c19d26f06a8840974ea33d656e4f97))
+* [Questionnaire] Configurable avec SAE ([4fbbd87](https://github.com/Dannebicque/intranetV3/commit/4fbbd8793fcc82164face7956e4ebede0e9d780b))
+* [Questionnaire] GEstion quesitonnaire Externe ([4dbade9](https://github.com/Dannebicque/intranetV3/commit/4dbade9914336b80e783bf7e49caa2a9d69ae704))
+
 ### [3.9.15](https://github.com/Dannebicque/intranetV3/compare/v3.9.14...v3.9.15) (2022-09-15)
 
 
