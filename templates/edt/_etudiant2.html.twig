@@ -47,6 +47,11 @@
         </div>
     </header>
     <div class="card-body">
+        {% if source == 'celcat' %}
+            <div class="alert alert-warning mb-2">
+                L'emploi du temps est récupéré depuis Celcat. Cette fonctionnalité est encore en cours de développement.
+            </div>
+        {% endif %}
         <div class="row justify-content-end">
             <div class="col-md-3 col-sm-12 mt-2 d-grid d-block">
                 <div class="btn-group">

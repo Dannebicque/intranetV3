@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/09/2022 12:18
+ * @lastUpdate 15/09/2022 17:07
  */
 
 namespace App\Classes\Edt;
@@ -192,6 +192,7 @@ class MyEdtIntranet extends BaseEdt
             $evt->groupe = $p->getDisplayGroupe();
             $evt->typeIdMatiere = $p->getTypeIdMatiere();
             $evt->type_cours = $p->getType();
+            $evt->ordreSemestre = $p->getOrdreSemestre();
 
             $evt->gridStart = Constantes::TAB_HEURES_EDT_2[$p->getDebut() - 1][0];
             $evt->gridEnd = Constantes::TAB_HEURES_EDT_2[$p->getFin() - 1][0];
@@ -209,6 +210,7 @@ class MyEdtIntranet extends BaseEdt
         // todo: utuliser un transformer/adapter ? et ne plus dépenedre de EdtPlanning
         if (array_key_exists($p->getTypeIdMatiere(), $this->matieres)) {
             $matiere = $this->matieres[$p->getTypeIdMatiere()];
+
             if (null !== $matiere) {
                 $evt->matiere = $matiere->display;
                 $evt->semestre = $p->getSemestre();

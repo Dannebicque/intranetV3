@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/09/2022 12:11
+ * @lastUpdate 17/09/2022 18:00
  */
 
 namespace App\Controller;
@@ -68,7 +68,8 @@ class EdtController extends BaseController
                 'semaine' => $semaine,
                 'valeur' => $this->getUser()->getId(),
                 'tabHeures' => Constantes::TAB_HEURES_EDT_2,
-                'suiviAppel' => $suiviAppel
+                'suiviAppel' => $suiviAppel,
+                'source' => 'celcat',
             ]);
         }
 
@@ -84,7 +85,8 @@ class EdtController extends BaseController
             'semaine' => $semaine,
             'valeur' => $this->getUser()->getId(),
             'tabHeures' => Constantes::TAB_HEURES_EDT_2,
-            'suiviAppel' => $suiviAppel
+            'suiviAppel' => $suiviAppel,
+            'source' => 'intranet',
         ]);
     }
 
@@ -114,6 +116,7 @@ class EdtController extends BaseController
                 'edt' => $edt->toArray($semestre->getNbgroupeTpEdt(), $semestre->getAnnee()?->getCouleur()),
                 'sem' => $sem,
                 'semaine' => $semaine,
+                'source' => $this->edtManager->getSource(),
                 'semestre' => $semestre,
                 'filtre' => 'promo',
                 'valeur' => $semestre->getId(),
@@ -135,6 +138,7 @@ class EdtController extends BaseController
 
                 return $this->render('edt/_etudiant2.html.twig', [
                     'edt' => $this->myEdtCelcat,
+                    'source' => 'celcat',
                     'tabHeures' => Constantes::TAB_HEURES_EDT_2,
                 ]);
             }
@@ -144,6 +148,7 @@ class EdtController extends BaseController
 
             return $this->render('edt/_etudiant.html.twig', [
                 'edt' => $this->myEdtIntranet,
+                'source' => 'intranet',
                 'tabHeures' => Constantes::TAB_HEURES_EDT,
             ]);
         }
