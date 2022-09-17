@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Previsionnel/PrevisionnelManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/08/2022 14:06
+ * @lastUpdate 14/09/2022 15:13
  */
 
 namespace App\Classes\Previsionnel;
@@ -243,6 +243,17 @@ class PrevisionnelManager
         $t = [];
         foreach ($this->managers as $manager) {
             $previs = $manager->findByDepartement($departement, $anneeUniversitaire);
+            $t[] = $previs->toArray();
+        }
+
+        return array_merge(...$t);
+    }
+
+    public function getPrevisionnelSaeAnnee(Annee $annee, ?int $anneeUniversitaire): array
+    {
+        $t = [];
+        foreach ($annee->getSemestres() as $semestre) {
+            $previs = $this->managers[PrevisionnelSaeManager::TYPE]->getPrevisionnelSemestre($semestre, $anneeUniversitaire);
             $t[] = $previs->toArray();
         }
 
