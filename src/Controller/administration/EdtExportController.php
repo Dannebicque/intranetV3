@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/09/2022 09:04
+ * @lastUpdate 17/09/2022 18:11
  */
 
 namespace App\Controller\administration;
@@ -20,6 +20,7 @@ use App\Repository\EdtPlanningRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
+use App\Repository\TypeGroupeRepository;
 use function array_key_exists;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -67,7 +68,9 @@ class EdtExportController extends BaseController
     }
 
     #[Route(path: '/script-ajax', name: 'administration_edt_export_script_ajax')]
-    public function exportScriptAjax(TypeMatiereManager $typeMatiereManager, KernelInterface $kernel, Request $request, GroupeRepository $groupeRepository, CalendrierRepository $calendrierRepository, EdtPlanningRepository $edtPlanningRepository, SemestreRepository $semestreRepository): Response
+    public function exportScriptAjax(
+        TypeGroupeRepository $typeGroupeRepository,
+        TypeMatiereManager $typeMatiereManager, KernelInterface $kernel, Request $request, GroupeRepository $groupeRepository, CalendrierRepository $calendrierRepository, EdtPlanningRepository $edtPlanningRepository, SemestreRepository $semestreRepository): Response
     {
         $semestre = $semestreRepository->find($request->request->get('semestre'));
         $semaine = $request->request->get('semaine');
@@ -114,11 +117,12 @@ class EdtExportController extends BaseController
             ];
             $tabSalles = array_flip($tabSalles);
             $pl = $edtPlanningRepository->findEdtSemestre($semestre, $semaine, $this->getAnneeUniversitaire());
-            $matieres = $typeMatiereManager->findBySemestreArray($semestre);
+            $matieres = $typeMatiereManager->findBySemestreAndReferentiel($semestre, $semestre->getDiplome()->getReferentiel());
+            $typeGroupes = $typeGroupeRepository->findByDiplomeAndOrdreSemestre($semestre->getDiplome(), $semestre->getOrdreLmd());
             $code = [];
             $codeGroupe = [];
-            foreach ($semestre->getTypeGroupes() as $tg) {
-                $code[$tg->getType()] = [];
+            foreach ($typeGroupes as $tg) {
+                $code[$tg->getType()->value] = [];
                 $groupes = $groupeRepository->findBy(['typeGroupe' => $tg->getId()], ['ordre' => 'ASC']);
                 foreach ($groupes as $groupe) {
                     $code[mb_strtoupper($tg->getType()->value)][$groupe->getOrdre()] = 'call sleep 5'."\n";
