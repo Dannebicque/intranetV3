@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/09/2022 12:43
+ * @lastUpdate 18/09/2022 13:42
  */
 
 namespace App\Classes\Celcat;
@@ -180,7 +180,7 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
                 $semaine = $i;
                 $jour = odbc_result($result, 2);
                 $codeGroupe = odbc_result($result, 13);
-                $event = new CelcatEvent();
+                $event = new EdtCelcat();
                 $event->setAnneeUniversitaire($anneeUniversitaire);
                 $event->setEventId($eventId);
                 $event->setJour((int) $jour);
