@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/08/2022 14:08
+ * @lastUpdate 18/09/2022 12:07
  */
 
 namespace App\Entity;
@@ -200,10 +200,10 @@ class Semestre extends BaseEntity implements Stringable
     private Collection $absenceEtatAppels;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\CelcatEvent>
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\EdtCelcat>
      */
-    #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: CelcatEvent::class)]
-    private Collection $celcatEvents;
+    #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: EdtCelcat::class)]
+    private Collection $edtCelcats;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Evaluation>
@@ -1139,28 +1139,28 @@ class Semestre extends BaseEntity implements Stringable
     }
 
     /**
-     * @return Collection|CelcatEvent[]
+     * @return Collection|\App\Entity\EdtCelcat[]
      */
-    public function getCelcatEvents(): Collection
+    public function getEdtCelcats(): Collection
     {
-        return $this->celcatEvents;
+        return $this->edtCelcats;
     }
 
-    public function addCelcatEvent(CelcatEvent $celcatEvent): self
+    public function addEdtCelcat(EdtCelcat $edtCelcat): self
     {
-        if (!$this->celcatEvents->contains($celcatEvent)) {
-            $this->celcatEvents[] = $celcatEvent;
-            $celcatEvent->setSemestre($this);
+        if (!$this->edtCelcats->contains($edtCelcat)) {
+            $this->edtCelcats[] = $edtCelcat;
+            $edtCelcat->setSemestre($this);
         }
 
         return $this;
     }
 
-    public function removeCelcatEvent(CelcatEvent $celcatEvent): self
+    public function removeEdtCelcat(EdtCelcat $edtCelcat): self
     {
         // set the owning side to null (unless already changed)
-        if ($this->celcatEvents->removeElement($celcatEvent) && $celcatEvent->getSemestre() === $this) {
-            $celcatEvent->setSemestre(null);
+        if ($this->edtCelcats->removeElement($edtCelcat) && $edtCelcat->getSemestre() === $this) {
+            $edtCelcat->setSemestre(null);
         }
 
         return $this;

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/08/2022 12:03
+ * @lastUpdate 18/09/2022 13:23
  */
 
 namespace App\Entity;
@@ -272,6 +272,12 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     #[ORM\Column]
     private ?bool $accessOriginaux = false;
 
+    #[ORM\OneToMany(mappedBy: 'enseignant', targetEntity: PlanCoursHistoriqueEdt::class)]
+    private Collection $planCoursHistoriqueEdts;
+
+    #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: EdtCelcat::class)]
+    private Collection $edtCelcats;
+
     /**
      * @throws JsonException
      */
@@ -307,7 +313,9 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         $this->bcServiceFaitReceptionniste = new ArrayCollection();
         $this->bcServiceFaitResponsableSignataire = new ArrayCollection();
         $this->quizzPersonnels = new ArrayCollection();
-        $this->planCours = new ArrayCollection();
+      //  $this->planCours = new ArrayCollection();
+       // $this->planCoursHistoriqueEdts = new ArrayCollection();
+        $this->edtCelcats = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -1516,6 +1524,64 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     public function setAccessOriginaux(bool $accessOriginaux): self
     {
         $this->accessOriginaux = $accessOriginaux;
+
+        return $this;
+    }
+/*
+
+    public function getPlanCoursHistoriqueEdts(): Collection
+    {
+        return $this->planCoursHistoriqueEdts;
+    }
+
+    public function addPlanCoursHistoriqueEdt(PlanCoursHistoriqueEdt $planCoursHistoriqueEdt): self
+    {
+        if (!$this->planCoursHistoriqueEdts->contains($planCoursHistoriqueEdt)) {
+            $this->planCoursHistoriqueEdts->add($planCoursHistoriqueEdt);
+            $planCoursHistoriqueEdt->setEnseignant($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlanCoursHistoriqueEdt(PlanCoursHistoriqueEdt $planCoursHistoriqueEdt): self
+    {
+        if ($this->planCoursHistoriqueEdts->removeElement($planCoursHistoriqueEdt)) {
+            // set the owning side to null (unless already changed)
+            if ($planCoursHistoriqueEdt->getEnseignant() === $this) {
+                $planCoursHistoriqueEdt->setEnseignant(null);
+            }
+        }
+
+        return $this;
+    }
+*/
+    /**
+     * @return Collection<int, EdtCelcat>
+     */
+    public function getEdtCelcats(): Collection
+    {
+        return $this->edtCelcats;
+    }
+
+    public function addEdtCelcat(EdtCelcat $edtCelcat): self
+    {
+        if (!$this->edtCelcats->contains($edtCelcat)) {
+            $this->edtCelcats->add($edtCelcat);
+            $edtCelcat->setPersonnel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEdtCelcat(EdtCelcat $edtCelcat): self
+    {
+        if ($this->edtCelcats->removeElement($edtCelcat)) {
+            // set the owning side to null (unless already changed)
+            if ($edtCelcat->getPersonnel() === $this) {
+                $edtCelcat->setPersonnel(null);
+            }
+        }
 
         return $this;
     }
