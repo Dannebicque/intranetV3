@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/09/2022 13:23
+ * @lastUpdate 18/09/2022 13:38
  */
 
 namespace App\Entity;
@@ -314,7 +314,7 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         $this->bcServiceFaitResponsableSignataire = new ArrayCollection();
         $this->quizzPersonnels = new ArrayCollection();
       //  $this->planCours = new ArrayCollection();
-       // $this->planCoursHistoriqueEdts = new ArrayCollection();
+        $this->planCoursHistoriqueEdts = new ArrayCollection();
         $this->edtCelcats = new ArrayCollection();
     }
 
@@ -1527,7 +1527,7 @@ class Personnel extends Utilisateur implements UtilisateurInterface
 
         return $this;
     }
-/*
+
 
     public function getPlanCoursHistoriqueEdts(): Collection
     {
@@ -1555,7 +1555,7 @@ class Personnel extends Utilisateur implements UtilisateurInterface
 
         return $this;
     }
-*/
+
     /**
      * @return Collection<int, EdtCelcat>
      */
