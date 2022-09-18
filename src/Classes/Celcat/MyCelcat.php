@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/09/2022 13:42
+ * @lastUpdate 18/09/2022 15:05
  */
 
 namespace App\Classes\Celcat;
@@ -15,6 +15,7 @@ use App\Entity\Calendrier;
 use App\Entity\EdtCelcat;
 use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
+use App\Repository\DepartementRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use App\Utils\Tools;
@@ -28,10 +29,12 @@ class MyCelcat
     protected array $tGroupes;
     protected array $tPersonnels;
     protected array $tCalendrier;
+    protected array $tMatieres;
     private mixed $conn;
 
     public function __construct(
         private readonly TypeMatiereManager $typeMatiereManager,
+        private readonly DepartementRepository $departementRepository,
         private readonly PersonnelRepository $personnelRepository,
         private readonly EntityManagerInterface $entityManger,
         private readonly ParameterBagInterface $parameterBag,
@@ -97,7 +100,9 @@ class MyCelcat
         int $codeCelcatDepartement,
         ?AnneeUniversitaire $anneeUniversitaire
     ): void {
-        if (null !== $anneeUniversitaire) {
+        $departement = $this->departementRepository->findOneBy(['codeCelcat' => $codeCelcatDepartement]);
+
+        if (null !== $anneeUniversitaire && $departement !== null) {
             $this->connect();
 
             $query = 'SELECT CT_EVENT.event_id, CT_EVENT.day_of_week, CT_EVENT.start_time, CT_EVENT.end_time, CT_EVENT.weeks, CT_EVENT_CAT.name, CT_VIEW_EVENT_MODULE001.resourcecode, CT_VIEW_EVENT_MODULE001.resourcename, CT_VIEW_EVENT_STAFF001.resourcecode, CT_VIEW_EVENT_STAFF001.resourcename, CT_VIEW_EVENT_ROOM001.resourcecode, CT_VIEW_EVENT_ROOM001.resourcename, CT_VIEW_EVENT_GROUP001.resourcecode, CT_VIEW_EVENT_GROUP001.resourcename, CT_EVENT.date_change FROM CT_EVENT INNER JOIN CT_EVENT_CAT ON CT_EVENT_CAT.event_cat_id = CT_EVENT.event_cat_id INNER JOIN CT_VIEW_EVENT_STAFF001 ON CT_VIEW_EVENT_STAFF001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_GROUP001 ON CT_VIEW_EVENT_GROUP001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_MODULE001 ON CT_VIEW_EVENT_MODULE001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_ROOM001 ON CT_VIEW_EVENT_ROOM001.eid=CT_EVENT.event_id WHERE dept_id='.$codeCelcatDepartement.' ORDER BY CT_EVENT.date_change DESC, CT_EVENT.event_id DESC';
@@ -115,6 +120,8 @@ class MyCelcat
             foreach ($personnels as $personnel) {
                 $this->tPersonnels[$personnel->getNumeroHarpege()] = $personnel;
             }
+
+            $this->tMatieres = $this->typeMatiereManager->tableauMatieresCodeApogee($departement);
 
             $groupes = $this->groupeRepository->findAll();
             $this->tGroupes = [];
@@ -192,6 +199,10 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
 
                 $event->setCodeModule(odbc_result($result, 7));
                 $event->setLibModule(utf8_encode(odbc_result($result, 8)));
+                if (array_key_exists($event->getCodeModule(), $this->tMatieres)) {
+                    $event->setTypeMatiere($this->tMatieres[$event->getCodeModule()]->getTypeMatiere());
+                    $event->setIdMatiere($this->tMatieres[$event->getCodeModule()]->getId());
+                }
 
                 $event->setCodePersonnel(odbc_result($result, 9));
                 $event->setLibPersonnel(utf8_encode(odbc_result($result, 10)));
@@ -207,7 +218,7 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
                 $event->setCodeSalle(odbc_result($result, 11));
                 $event->setLibSalle(utf8_encode(odbc_result($result, 12)));
                 $event->setDateCours($this->tCalendrier[$semaine]->addDays($jour));
-                $event->setSemestre($groupes[$codeGroupe] ?? null); // todo: ajouter une commande pour mettre à jour si erreur lors de l'import ,
+                $event->setSemestre($groupes[$codeGroupe] ?? null);
                 $dt = explode(' ', (string) odbc_result($result, 15));
                 $event->setUpdateEvent(Tools::convertDateHeureToObject($dt[0], $dt[1]));
 
