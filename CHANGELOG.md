@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.19](https://github.com/Dannebicque/intranetV3/compare/v3.9.18...v3.9.19) (2022-09-18)
+
+
+### Bug Fixes
+
+* [Edt Celcat] Correctif avec la nouvelle entité ([4d4387c](https://github.com/Dannebicque/intranetV3/commit/4d4387caaf9d32887871b98ed69c146ada34313f))
+* [Edt Celcat] lien celcat / Ressource/SAE/Matiere ([9fee7ff](https://github.com/Dannebicque/intranetV3/commit/9fee7ffd0fecb51764d4523aeb2d8da144b3fd0d))
+* [Edt Celcat] Super Admin / Synchro ([af4c6eb](https://github.com/Dannebicque/intranetV3/commit/af4c6ebaba7ed1986b6a081f3dca528da1499302))
+* [Edt Celcat] Super Admin / Synchro ([8af188d](https://github.com/Dannebicque/intranetV3/commit/8af188de2c7b8ab4135820ade000cb0d17d369ea))
+* [PlanCours] Réalisé depuis EDT ([18a52bf](https://github.com/Dannebicque/intranetV3/commit/18a52bfabff1801fc2b997610dc9cccaddce3ced))
+* [PlanCours] Réalisé depuis EDT ([83b8b26](https://github.com/Dannebicque/intranetV3/commit/83b8b263858cfa4787aed8fe7ebf32a6c0932834))
+
 ### [3.9.18](https://github.com/Dannebicque/intranetV3/compare/v3.9.17...v3.9.18) (2022-09-18)
 
 
