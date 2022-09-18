@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/09/2022 12:07
+ * @lastUpdate 18/09/2022 13:34
  */
 
 namespace App\Entity;
@@ -283,9 +283,8 @@ class Semestre extends BaseEntity implements Stringable
         $this->etudiants = new ArrayCollection();
         $this->qualiteQuestionnaires = new ArrayCollection();
         $this->projetPeriodes = new ArrayCollection();
-        $this->apcSaes = new ArrayCollection();
         $this->absenceEtatAppels = new ArrayCollection();
-        $this->celcatEvents = new ArrayCollection();
+        $this->edtCelcats = new ArrayCollection();
     }
 
     public function __clone()
