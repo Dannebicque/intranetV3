@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/EdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:52
+ * @lastUpdate 18/09/2022 12:07
  */
 
 namespace App\Classes\Edt;
@@ -14,12 +14,12 @@ use App\DTO\EvenementEdt;
 use App\DTO\EvenementEdtCollection;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Semestre;
-use App\Repository\CelcatEventsRepository;
+use App\Repository\EdtCelcatRepository;
 
 class EdtCelcat extends AbstractEdt implements EdtInterface
 {
     public function __construct(
-        private readonly CelcatEventsRepository $celcatEventsRepository,
+        private readonly EdtCelcatRepository $celcatEventsRepository,
         private readonly EdtCelcatAdapter $edtCelcatAdapter)
     {
     }

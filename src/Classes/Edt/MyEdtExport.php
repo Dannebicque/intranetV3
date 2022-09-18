@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/09/2022 09:23
+ * @lastUpdate 18/09/2022 12:07
  */
 
 /*
@@ -21,7 +21,7 @@ use App\Entity\Departement;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
-use App\Repository\CelcatEventsRepository;
+use App\Repository\EdtCelcatRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Utils\Tools;
 use Symfony\Component\HttpFoundation\Response;
@@ -43,7 +43,7 @@ class MyEdtExport
      */
     public function __construct(
         protected EdtPlanningRepository $edtPlanningRepository,
-        protected CelcatEventsRepository $celcatEventsRepository,
+        protected EdtCelcatRepository $celcatEventsRepository,
         protected CalendrierRepository $calendrierRepository,
         private readonly MyEdtIntranet $myEdtIntranet,
         private readonly MyEdtCelcat $myEdtCelcat,

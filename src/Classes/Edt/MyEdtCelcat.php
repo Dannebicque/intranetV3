@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/09/2022 18:49
+ * @lastUpdate 18/09/2022 12:59
  */
 
 /*
@@ -23,19 +23,23 @@ use App\Entity\Groupe;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
-use App\Repository\CelcatEventsRepository;
+use App\Repository\EdtCelcatRepository;
 use App\Repository\GroupeRepository;
 use function array_key_exists;
 
 class MyEdtCelcat extends BaseEdt
 {
+    /**
+     * @var \App\Entity\AnneeUniversitaire
+     */
+    protected AnneeUniversitaire $anneeUniversitaire;
     private ?Annee $annee = null;
 
     private array $matieres;
 
     public function __construct(
         CalendrierRepository $celcatCalendrierRepository,
-        protected CelcatEventsRepository $celcatEventsRepository,
+        protected EdtCelcatRepository $celcatEventsRepository,
         private readonly GroupeRepository $groupeRepository
     ) {
         parent::__construct($celcatCalendrierRepository);
@@ -62,6 +66,7 @@ class MyEdtCelcat extends BaseEdt
         int $semaine = 0,
         array $matieres = []
     ): self {
+        $this->anneeUniversitaire = $anneeUniversitaire;
         $this->matieres = $matieres; // todo: vériifer que pas vide
         $this->user = $etudiant;
         $this->init($anneeUniversitaire, 'etudiant', $etudiant->getId(), $semaine);
@@ -80,16 +85,16 @@ class MyEdtCelcat extends BaseEdt
         switch ($this->filtre) {
             case Constantes::FILTRE_EDT_PROMO:
                 $this->groupes = $this->groupeRepository->findAllGroupes($this->semestre);
-                $pl = $this->celcatEventsRepository->findEdtSemestre($this->semestre, $this->semaineFormationIUT);
+                $pl = $this->celcatEventsRepository->findEdtSemestre($this->semestre, $this->semaineFormationIUT, $this->anneeUniversitaire);
                 $this->planning = $this->transformePromo($pl);
                 break;
             case Constantes::FILTRE_EDT_PROF:
-                $pl = $this->celcatEventsRepository->findEdtProf($this->user->getNumeroHarpege(),
-                    $this->semaineFormationIUT);
+                $pl = $this->celcatEventsRepository->findEdtProf($this->user,
+                    $this->semaineFormationIUT, $this->anneeUniversitaire);
                 $this->planning = $this->transformeIndividuel($pl);
                 break;
             case Constantes::FILTRE_EDT_ETUDIANT:
-                $pl = $this->celcatEventsRepository->findEdtEtu($this->user, $this->semaineFormationIUT);
+                $pl = $this->celcatEventsRepository->findEdtEtu($this->user, $this->semaineFormationIUT, $this->anneeUniversitaire);
                 if (null !== $pl) {
                     $this->planning = $this->transformeIndividuel($pl);
                 } else {
@@ -160,6 +165,7 @@ class MyEdtCelcat extends BaseEdt
             $evt->jour = $p->getJour() + 1;
             $evt->heureDebut = $p->getDebut();
             $evt->heureFin = $p->getFin();
+            $evt->dateObjet = $p->getDateCours();
             $evt->matiere = $p->getLibModule();
             $evt->salle = $p->getLibSalle();
             $evt->personnel = $p->getLibPersonnel();
