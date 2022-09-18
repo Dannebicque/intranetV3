@@ -36,6 +36,7 @@
                     <select class="form-select selectpicker"
                             id="absence-matiere"
                     >
+
                         {% for mati in matieres %}
                             <option value="{{ mati.typeIdMatiere }}"
                                     {% if matiere != null and mati.typeIdMatiere == matiere.typeIdMatiere %}selected{% endif %}>

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/09/2022 09:23
+ * @lastUpdate 18/09/2022 18:47
  */
 
 namespace App\Controller\appPersonnel;
@@ -85,7 +85,7 @@ class AbsenceController extends BaseController
         string $source = EdtManager::EDT_INTRANET
     ): Response {
         $planning = $edtManager->getManager($source)?->find($event);
-        $matiere = $typeMatiereManager->findByCodeApogeeOrId($planning);
+        $matiere = $typeMatiereManager->getMatiereFromSelect($planning->typeIdMatiere);
 
         if (null === $matiere) {
             throw new MatiereNotFoundException();
@@ -147,12 +147,19 @@ class AbsenceController extends BaseController
 
         $semestre = $semestreRepository->find($idSemestre);
         if (null !== $semestre) {
-            $groupes = $groupeRepository->findBySemestre($semestre);
-            $matieres = $typeMatiereManager->findBySemestreArray($semestre);
-            $event = $edtManager->getEvent($idEvent, $matieres, $groupes);
+            if ($semestre->getDiplome()->isApc()) {
+                $groupes = $groupeRepository->findByDiplomeAndOrdreSemestre($semestre->getDiplome(), $semestre->getOrdreLmd());
+                $matieres = $typeMatiereManager->findBySemestreAndReferentiel($semestre, $semestre->getDiplome()->getReferentiel());
+            } else {
+                $groupes = $groupeRepository->findBySemestre($semestre);
+                $matieres = $typeMatiereManager->findBySemestreArray($semestre);
+            }
+
+            $event = $edtManager->getEvent($idEvent, $edtManager->transformeMatieres($semestre, $matieres), $edtManager->transformeGroupe($semestre, $groupes));
+
             if (null !== $event) {
                 $etatAbsence = $absenceEtatAppelRepository->findOneBy([
-                    'personnel' => $event->personnelObjet->getId(),
+                    'personnel' => null !== $event->personnelObjet ? $event->personnelObjet->getId() : $this->getUser()->getId(),
                     'groupe' => $event->groupeObjet->getId(),
                     'date' => $event->dateObjet,
                     'heure' => $event->heureDebut,

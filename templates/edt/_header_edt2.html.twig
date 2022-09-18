@@ -5,21 +5,21 @@
 {% endfor %}
 <span class="track-slot col-edt-header jour {% if 'now'|date('N') != 1 %}col-edt-hide{% endif %}"
       aria-hidden="true" style="grid-column: track-1; grid-row: tracks;">
-        Lundi {{ edt.tabJour.lundi|date('d/m') }}
+        Lundi {{ calendrier.tabJour.lundi|date('d/m') }}
     </span>
 <span class="track-slot col-edt-header jour {% if 'now'|date('N') != 2 %}col-edt-hide{% endif %}"
       aria-hidden="true" style="grid-column: track-2; grid-row: tracks;">
-        Mardi {{ edt.tabJour.mardi|date('d/m') }}
+        Mardi {{ calendrier.tabJour.mardi|date('d/m') }}
     </span>
 <span class="track-slot col-edt-header jour {% if 'now'|date('N') != 3 %}col-edt-hide{% endif %}"
       aria-hidden="true" style="grid-column: track-3; grid-row: tracks;">
-        Mercredi {{ edt.tabJour.mercredi|date('d/m') }}
+        Mercredi {{ calendrier.tabJour.mercredi|date('d/m') }}
     </span>
 <span class="track-slot col-edt-header jour {% if 'now'|date('N') != 4 %}col-edt-hide{% endif %}"
       aria-hidden="true" style="grid-column: track-4; grid-row: tracks;">
-        Jeudi {{ edt.tabJour.jeudi|date('d/m') }}
+        Jeudi {{ calendrier.tabJour.jeudi|date('d/m') }}
     </span>
 <span class="track-slot col-edt-header jour {% if 'now'|date('N') != 5 %}col-edt-hide{% endif %}"
       aria-hidden="true" style="grid-column: track-5; grid-row: tracks;">
-        Vendredi {{ edt.tabJour.vendredi|date('d/m') }}
+        Vendredi {{ calendrier.tabJour.vendredi|date('d/m') }}
     </span>

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Adapter/EdtIntranetAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/09/2022 12:20
+ * @lastUpdate 18/09/2022 18:31
  */
 
 namespace App\Adapter;
@@ -50,17 +50,19 @@ class EdtIntranetAdapter extends AbstractEdtAdapter implements EdtAdapterInterfa
         $event->diplome = $evt->getDiplome();
         $event->ordreSemestre = $evt->getOrdreSemestre();
         $event->heureDebut = Carbon::createFromTimeString($evt->getDebutTexte());
+        $event->indexDebut = $evt->getDebut() - 1;
         $event->heureFin = Carbon::createFromTimeString($evt->getFinTexte());
         $event->typeIdMatiere = $evt->getTypeIdMatiere();
         $event->texte = $evt->getTexte();
-        $event->groupeId = $evt->getGroupe();
+
         $event->salle = $evt->getSalle();
         $event->dateObjet = $evt->getDate();
         $event->gridStart = Constantes::TAB_HEURES_EDT_2[$evt->getDebut() - 1][0];
         $event->gridEnd = Constantes::TAB_HEURES_EDT_2[$evt->getFin() - 1][0];
         $event->ordreGroupe = $evt->getGroupe();
-        if (array_key_exists($evt->getGroupe(), $groupes)) {
 
+        if (array_key_exists($evt->getGroupe(), $groupes)) {
+            $event->groupeId = $groupes[$evt->getGroupe()]->getId();
             $event->groupeObjet = $groupes[$evt->getGroupe()];
         }
 

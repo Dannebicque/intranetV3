@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/bloc_saisie_absence/SaisieAbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/09/2022 12:13
+ * @lastUpdate 17/09/2022 19:47
  */
 
 namespace App\Controller\bloc_saisie_absence;
@@ -55,14 +55,16 @@ class SaisieAbsenceController extends BaseController
         if (true === $semestre->getDiplome()?->isApc()) {
             // todo: fusionner
             $typeGroupes = $typeGroupeRepository->findByDiplomeAndOrdreSemestre($semestre->getDiplome(), $semestre->getOrdreLmd());
+            $matieres = $typeMatiereManager->findBySemestreAndReferentiel($semestre, $semestre->getDiplome()?->getReferentiel());
         } else {
             $typeGroupes = $typeGroupeRepository->find($semestre);
+            $matieres = $typeMatiereManager->findBySemestre($semestre);
         }
 
         return $this->render('bloc_saisie_absence/_saisie_absence.html.twig', [
             'matiere' => $matiere,
             'semestre' => $semestre,
-            'matieres' => $typeMatiereManager->findBySemestre($semestre),
+            'matieres' => $matieres,
             'typeGroupes' => $typeGroupes,
             'event' => $event,
             'groupes' => $groupes,

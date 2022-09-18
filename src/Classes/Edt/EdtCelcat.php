@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/EdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/09/2022 12:07
+ * @lastUpdate 18/09/2022 17:44
  */
 
 namespace App\Classes\Edt;
@@ -13,13 +13,16 @@ use App\Adapter\EdtCelcatAdapter;
 use App\DTO\EvenementEdt;
 use App\DTO\EvenementEdtCollection;
 use App\Entity\AnneeUniversitaire;
+use App\Entity\Constantes;
+use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Repository\EdtCelcatRepository;
 
 class EdtCelcat extends AbstractEdt implements EdtInterface
 {
+
     public function __construct(
-        private readonly EdtCelcatRepository $celcatEventsRepository,
+        private readonly EdtCelcatRepository $edtCelcatRepository,
         private readonly EdtCelcatAdapter $edtCelcatAdapter)
     {
     }
@@ -31,7 +34,7 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
 
     public function find(int $event, array $matieres = [], array $groupes = []): EvenementEdt
     {
-        $evt = $this->celcatEventsRepository->find($event);
+        $evt = $this->edtCelcatRepository->find($event);
 
         return $this->edtCelcatAdapter->single($evt, $matieres, $groupes);
     }
@@ -50,11 +53,12 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
     public function getPlanningSemestreSemaine(
         Semestre $semestre,
         int $semaine,
+        AnneeUniversitaire $anneeUniversitaire,
         array $matieres,
-        array $groupes,
-        AnneeUniversitaire $anneeUniversitaire
+        array $groupes
+
     ): EvenementEdtCollection {
-        $evts = $this->celcatEventsRepository->findEdtSemestreSemaine($semestre, $semaine, $anneeUniversitaire);
+        $evts = $this->edtCelcatRepository->findEdtSemestreSemaine($semestre, $semaine, $anneeUniversitaire);
 
         $tGroupes = [];
         foreach ($groupes as $groupe) {
@@ -63,9 +67,78 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
 
         $tMatieres = [];
         foreach ($matieres as $matiere) {
-            $tMatieres[$matiere->codeElement] = $matiere;
+            $tMatieres[$matiere->getTypeIdMatiere()] = $matiere;
         }
 
         return $this->edtCelcatAdapter->collection($evts, $tMatieres, $tGroupes);
     }
+
+    public function findEdtProf(Personnel $personnel, int $semaineFormation, AnneeUniversitaire $anneeUniversitaire, array $matieres = [], array $groupes = []): EvenementEdtCollection
+    {
+        $evts = $this->edtCelcatRepository->findEdtProf($personnel, $semaineFormation, $anneeUniversitaire);
+
+        $tGroupes = [];
+        foreach ($groupes as $groupe) {
+            $tGroupes[$groupe->getCodeApogee()] = $groupe;
+        }
+
+        return $this->edtCelcatAdapter->collection($evts, $this->matieres, $tGroupes);
+    }
+
+    public function initPersonnel(
+        Personnel $personnel,
+        Calendrier $calendrier,
+        AnneeUniversitaire $anneeUniversitaire,
+        array $matieres = []
+    ): array {
+        $this->calendrier = $calendrier;
+        $this->user = $personnel;
+        $this->matieres = $matieres;
+        $this->init($anneeUniversitaire, Constantes::FILTRE_EDT_PROF, $personnel->getId(), $calendrier->semaine);
+        $this->calculEdt();
+
+        return $this->getEvenementsAsArray();
+    }
+
+    public function initSemestre(
+        Semestre $semestre,
+        Calendrier $calendrier,
+        AnneeUniversitaire $anneeUniversitaire,
+        array $matieres = [],
+        array $groupes = [],
+    ): EvenementEdtCollection {
+        $this->calendrier = $calendrier;
+        $this->semestre = $semestre;
+        $this->matieres = $matieres;
+        $this->groupes = $groupes;
+        $this->init($anneeUniversitaire, Constantes::FILTRE_EDT_PROMO, $semestre->getId(), $calendrier->semaine);
+        $this->calculEdt();
+
+        return $this->evenements;
+    }
+
+    public function calculEdt(): bool
+    {
+        switch ($this->filtre) {
+            case Constantes::FILTRE_EDT_PROMO:
+                $this->evenements = $this->getPlanningSemestreSemaine($this->semestre, $this->calendrier->semaineFormationIUT, $this->anneeUniversitaire, $this->matieres, $this->groupes);
+                break;
+            case Constantes::FILTRE_EDT_PROF:
+                $this->evenements = $this->findEdtProf($this->user, $this->calendrier->semaineFormationIUT, $this->anneeUniversitaire);
+
+                break;
+//            case Constantes::FILTRE_EDT_ETUDIANT:
+//                $pl = $this->celcatEventsRepository->findEdtEtu($this->user, $this->semaineFormationIUT, $this->anneeUniversitaire);
+//                if (null !== $pl) {
+//                    $this->planning = $this->transformeIndividuel($pl);
+//                } else {
+//                    return false;
+//                }
+//                break;
+        }
+
+        return false;
+    }
+
+
 }

@@ -2,7 +2,7 @@
     <header class="card-header">
         <h4 class="card-title">
             {{ 'heading.edt.dashboard'|trans }} | {{ semestre.display }} | Semaine
-            {{ sem.semaine }} (semaine formation {{ sem.semaineFormationIUT }})
+            {{ calendrier.semaine }} (semaine formation {{ calendrier.semaineFormationIUT }})
         </h4>
         <div class="card-header-actions">
             <ul class="card-controls">
@@ -11,7 +11,7 @@
                                 class="fas fa-ellipsis-h rotate-90" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Options d'export ou de
                                 synchronisation"></i><span class="sr-only">Options d'export ou de synchronisation</span></a>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a href="{{ path('edt_semestre_export_semaine_courante', {semaine:sem.semaineFormationIUT,
+                        <a href="{{ path('edt_semestre_export_semaine_courante', {semaine:calendrier.semaineFormationIUT,
                             semestre:semestre.id}) }}"
                            class="dropdown-item"><i
                                     class="fa fa-file-pdf"></i>{{ 'exporter.semaine.courante.pdf'|trans }}</a>
@@ -52,16 +52,16 @@
                     <thead>
                     <tr>
                         <th>&nbsp;</th>
-                        <th class="center" colspan="{{ semestre.nbgroupeTPEDT }}" style="padding:0;">Lundi {{ sem
+                        <th class="center" colspan="{{ semestre.nbgroupeTPEDT }}" style="padding:0;">Lundi {{ calendrier
                             .tabJour.lundi|format_date('short') }}</th>
                         <th class="center" colspan="{{ semestre.nbgroupeTPEDT }}" style="padding:0;">
-                            Mardi {{ sem.tabJour.mardi|format_date('short') }}</th>
+                            Mardi {{ calendrier.tabJour.mardi|format_date('short') }}</th>
                         <th class="center" colspan="{{ semestre.nbgroupeTPEDT }}" style="padding:0;">
-                            Mercredi {{ sem.tabJour.mercredi|format_date('short') }}</th>
+                            Mercredi {{ calendrier.tabJour.mercredi|format_date('short') }}</th>
                         <th class="center" colspan="{{ semestre.nbgroupeTPEDT }}" style="padding:0;">
-                            Jeudi {{ sem.tabJour.jeudi|format_date('short') }}</th>
+                            Jeudi {{ calendrier.tabJour.jeudi|format_date('short') }}</th>
                         <th class="center" colspan="{{ semestre.nbgroupeTPEDT }}" style="padding:0;">
-                            Vendredi {{ sem.tabJour.vendredi|format_date('short') }}</th>
+                            Vendredi {{ calendrier.tabJour.vendredi|format_date('short') }}</th>
                     </tr>
                     <tr>
                         <th>&nbsp;</th>

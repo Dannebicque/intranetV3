@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/AbsenceEtatAppelRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/07/2022 10:12
+ * @lastUpdate 17/09/2022 20:40
  */
 
 namespace App\Repository;
@@ -55,8 +55,15 @@ class AbsenceEtatAppelRepository extends ServiceEntityRepository
         $data = $this->findBySemaineAndUser($dateLundi, $personnel);
         $t = [];
         foreach ($data as $value) {
-            if ($value->getTypeIdEvent() !== null) {
-                $t[$value->getTypeIdEvent()] = $value;
+            if (null !== $value->getTypeIdMatiere()) {
+                if (!array_key_exists($value->getTypeIdMatiere(), $t)) {
+                    $t[$value->getTypeIdMatiere()] = [];
+                }
+
+                if (!array_key_exists($value->getDate()->format('Y-m-d'), $t[$value->getTypeIdMatiere()])) {
+                    $t[$value->getTypeIdMatiere()][$value->getDate()->format('Y-m-d')] = [];
+                }
+                $t[$value->getTypeIdMatiere()][$value->getDate()->format('Y-m-d')][$value->getHeure()->format('H:i')] = $value;
             }
         }
 
