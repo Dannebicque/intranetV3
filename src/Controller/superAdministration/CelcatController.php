@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/CelcatController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:44
+ * @lastUpdate 18/09/2022 12:27
  */
 
 namespace App\Controller\superAdministration;
@@ -12,7 +12,7 @@ namespace App\Controller\superAdministration;
 use App\Classes\Celcat\MyCelcat;
 use App\Controller\BaseController;
 use App\Entity\Diplome;
-use App\Repository\CelcatEventsRepository;
+use App\Repository\EdtCelcatRepository;
 use App\Repository\DiplomeRepository;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -53,13 +53,13 @@ class CelcatController extends BaseController
      */
     #[Route(path: '/update/{id}', name: 'sa_celcat_update_events', methods: ['GET'])]
     #[IsGranted('ROLE_SUPER_ADMIN')]
-    public function update(CelcatEventsRepository $celcatEventsRepository, Diplome $diplome): RedirectResponse
+    public function update(EdtCelcatRepository $celcatEventsRepository, Diplome $diplome): RedirectResponse
     {
         // suppression des events existants pour le département
         $celcatEventsRepository->deleteDepartement($diplome->getCodeCelcatDepartement(),
-            $diplome->getAnneeUniversitaire());
+            $this->getAnneeUniversitaire());
         // récupération et ajouts des events.
-        $this->myCelcat->getEvents($diplome->getCodeCelcatDepartement(), $diplome->getAnneeUniversitaire());
+        $this->myCelcat->getEvents($diplome->getCodeCelcatDepartement(), $this->getAnneeUniversitaire());
 
         return $this->redirectToRoute('sa_celcat_index');
     }
