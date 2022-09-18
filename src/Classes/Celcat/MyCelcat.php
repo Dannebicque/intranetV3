@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/09/2022 15:05
+ * @lastUpdate 18/09/2022 15:11
  */
 
 namespace App\Classes\Celcat;
@@ -16,6 +16,7 @@ use App\Entity\EdtCelcat;
 use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
 use App\Repository\DepartementRepository;
+use App\Repository\DiplomeRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use App\Utils\Tools;
@@ -34,7 +35,7 @@ class MyCelcat
 
     public function __construct(
         private readonly TypeMatiereManager $typeMatiereManager,
-        private readonly DepartementRepository $departementRepository,
+        private readonly DiplomeRepository $diplomeRepository,
         private readonly PersonnelRepository $personnelRepository,
         private readonly EntityManagerInterface $entityManger,
         private readonly ParameterBagInterface $parameterBag,
@@ -100,8 +101,8 @@ class MyCelcat
         int $codeCelcatDepartement,
         ?AnneeUniversitaire $anneeUniversitaire
     ): void {
-        $departement = $this->departementRepository->findOneBy(['codeCelcat' => $codeCelcatDepartement]);
-
+        $diplome = $this->diplomeRepository->findOneBy(['codeCelcatDepartement' => $codeCelcatDepartement]);
+        $departement = $diplome?->getDepartement();
         if (null !== $anneeUniversitaire && $departement !== null) {
             $this->connect();
 
