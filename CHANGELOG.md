@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.18](https://github.com/Dannebicque/intranetV3/compare/v3.9.17...v3.9.18) (2022-09-18)
+
+
+### Bug Fixes
+
+* [Edt Celcat] Correctif avec la nouvelle entité ([c67fdb8](https://github.com/Dannebicque/intranetV3/commit/c67fdb8f0106d8dbf984b50d4560db0737fe1510))
+* [Edt Celcat] Modification classe import pour gérer personnel et matière ([448878a](https://github.com/Dannebicque/intranetV3/commit/448878a882e98ed5bd453bc16afb5781b2520aca))
+* [Edt Celcat] refactoring + liaisons matières et personnel ([454bd1a](https://github.com/Dannebicque/intranetV3/commit/454bd1ac35f02c0247918944a5953a1a284e3324))
+* [Edt Celcat] refactoring repository + liaison année universitaire ([253dae4](https://github.com/Dannebicque/intranetV3/commit/253dae4d90e39e40f568ed81e6b2628566e4b3b6))
+
 ### [3.9.17](https://github.com/Dannebicque/intranetV3/compare/v3.9.16...v3.9.17) (2022-09-17)
 
 
