@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/EdtManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/09/2022 18:39
+ * @lastUpdate 19/09/2022 13:43
  */
 
 namespace App\Classes\Edt;
@@ -70,12 +70,10 @@ class EdtManager
         switch ($this->getSourceEdt($semestre)) {
             case self::EDT_CELCAT:
                 $this->source = self::EDT_CELCAT;
-
                 return $this->edtCelcat->initSemestre($semestre, $semaine, $anneeUniversitaire, $matieres, $groupes,
                 );
             case self::EDT_INTRANET:
                 $this->source = self::EDT_INTRANET;
-
                 return $this->edtIntranet->initSemestre($semestre, $semaine, $anneeUniversitaire, $matieres,
                     $groupes);
             case self::EDT_ADE:

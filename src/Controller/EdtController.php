@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/09/2022 18:13
+ * @lastUpdate 19/09/2022 13:45
  */
 
 namespace App\Controller;
@@ -94,7 +94,7 @@ class EdtController extends BaseController
         $groupes = $groupeRepository->findByDiplomeAndOrdreSemestre($diplome, $semestre->getOrdreLmd());
 
         $calendrier = $this->calendrier->calculSemaine($semaine, $this->getAnneeUniversitaire());
-        $edt = $this->edtManager->initSemestre($semestre, $calendrier, $this->getAnneeUniversitaire(), $matieres, $groupes);
+        $edt = $this->edtManager->initSemestre($semestre, $calendrier, $this->getAnneeUniversitaire(), $this->edtManager->transformeMatieres($semestre, $matieres), $this->edtManager->transformeGroupe($semestre, $groupes));
 
         return $this->render('edt/_semestre.html.twig', [
                 'edt' => $edt->toArray($semestre->getNbgroupeTpEdt(), $semestre->getAnnee()?->getCouleur()),
