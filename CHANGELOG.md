@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.23](https://github.com/Dannebicque/intranetV3/compare/v3.9.22...v3.9.23) (2022-09-19)
+
+
+### Bug Fixes
+
+* [Absence] Groupe si pas APC ([4fe2cbf](https://github.com/Dannebicque/intranetV3/commit/4fe2cbfba0ae7d38ba2508a47a55d54052106aa5))
+
 ### [3.9.22](https://github.com/Dannebicque/intranetV3/compare/v3.9.21...v3.9.22) (2022-09-19)
 
 
