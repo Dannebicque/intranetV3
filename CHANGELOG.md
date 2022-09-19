@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.22](https://github.com/Dannebicque/intranetV3/compare/v3.9.21...v3.9.22) (2022-09-19)
+
+
+### Bug Fixes
+
+* [Edt Borne] Affichage des bornes ([35df713](https://github.com/Dannebicque/intranetV3/commit/35df713bcd552bd0a26288a90a25b366e6f59438))
+* [Edt Ical] Bug Export ([0bdf982](https://github.com/Dannebicque/intranetV3/commit/0bdf9820d850014a32ed502b68b3344f11cce8b0))
+* [Edt Intranet] Affichage ([22e6399](https://github.com/Dannebicque/intranetV3/commit/22e6399e58bb2b74eadd47232f9c4e63798c919c))
+* [Edt Intranet] Affichage ([d0e1532](https://github.com/Dannebicque/intranetV3/commit/d0e1532e1f877de8648b2b5f586b706fbc9ca5ad))
+* [Edt Script] Espace dans le nom du fichier bat ([cc7e84d](https://github.com/Dannebicque/intranetV3/commit/cc7e84d5f94594dc6c873b0d13950dc53e6bcc90))
+* [Edt Semestre] Correctif pour prendre tous les semestres quelque soit le parcours ([4817415](https://github.com/Dannebicque/intranetV3/commit/4817415208448e616c5cd87bd526f306bcd5afd0))
+
 ### [3.9.21](https://github.com/Dannebicque/intranetV3/compare/v3.9.20...v3.9.21) (2022-09-19)
 
 
