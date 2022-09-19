@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/ServiceRealise/ServiceRealiseCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2022 08:44
+ * @lastUpdate 18/09/2022 12:07
  */
 
 /*
@@ -20,12 +20,12 @@ use App\Entity\CelcatEvent;
 use App\Entity\Personnel;
 use App\Exception\MatiereNotFoundException;
 use App\Interfaces\UtilisateurInterface;
-use App\Repository\CelcatEventsRepository;
+use App\Repository\EdtCelcatRepository;
 
 class ServiceRealiseCelcat implements ServiceRealiseInterface
 {
     public function __construct(
-        private readonly CelcatEventsRepository $celcatEventsRepository,
+        private readonly EdtCelcatRepository $celcatEventsRepository,
         private readonly TypeMatiereManager $typeMatiereManager
     ) {
     }
