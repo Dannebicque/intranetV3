@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/09/2022 13:45
+ * @lastUpdate 19/09/2022 16:06
  */
 
 namespace App\Controller;
@@ -90,7 +90,13 @@ class EdtController extends BaseController
         Semestre $semestre, $semaine = 0): Response
     {
         $diplome = $semestre->getDiplome()->getParent() ?? $semestre->getDiplome();
-        $matieres = $this->typeMatiereManager->findBySemestreAndReferentiel($semestre, $diplome->getReferentiel());
+
+        if ($semestre->getDiplome()->isApc()) {
+            $matieres = $this->typeMatiereManager->findByReferentielOrdreSemestre($semestre, $diplome->getReferentiel());
+        } else {
+            $matieres = $this->typeMatiereManager->findBySemestre($semestre);
+        }
+
         $groupes = $groupeRepository->findByDiplomeAndOrdreSemestre($diplome, $semestre->getOrdreLmd());
 
         $calendrier = $this->calendrier->calculSemaine($semaine, $this->getAnneeUniversitaire());

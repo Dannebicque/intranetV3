@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Matieres/RessourceManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/09/2022 18:52
+ * @lastUpdate 19/09/2022 16:08
  */
 
 namespace App\Classes\Matieres;
@@ -65,6 +65,13 @@ class RessourceManager extends AbstractMatiereManager implements MatiereInterfac
     public function findBySemestreAndReferentiel(Semestre $semestre, ApcReferentiel $referentiel): MatiereCollection
     {
         $data = $this->apcRessourceRepository->findBySemestreReferentiel($semestre, $referentiel);
+
+        return $this->ressourceAdapter->collection($data);
+    }
+
+    public function findByReferentielOrdreSemestre(ApcReferentiel $referentiel, int $semestre): MatiereCollection
+    {
+        $data = $this->apcRessourceRepository->findByReferentielOrdreSemestre($referentiel, $semestre);
 
         return $this->ressourceAdapter->collection($data);
     }
