@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/09/2022 12:07
+ * @lastUpdate 19/09/2022 15:57
  */
 
 /*
@@ -82,9 +82,21 @@ class MyEdtExport
                         $temp[] = $this->celcatEventsRepository->getByEtudiantArray($user, $i);
                     }
                 } else {
+                    if ($user->getSemestre()->getDiplome()->isApc()) {
+                        $matieres = $this->typeMatiereManager->findBySemestreAndReferentiel($user->getSemestre(),
+                            $user->getSemestre()->getDiplome()->getReferentiel());
+                    } else {
+                        $matieres = $this->typeMatiereManager->findBySemestre($user->getSemestre());
+                    }
+
+                    $tMatieres = [];
+                    foreach ($matieres as $matiere) {
+                        $tMatieres[$matiere->getTypeIdMatiere()] = $matiere;
+                    }
+
                     for ($i = $emaineActuelle->getSemaineFormation(); $i < $max; ++$i) {
                         $temp[] = $this->edtPlanningRepository->getByEtudiantArray($user, $i,
-                            $this->typeMatiereManager->findBySemestreArray($user->getSemestre()), $user->getAnneeUniversitaire());
+                            $tMatieres, $user->getAnneeUniversitaire());
                     }
                 }
             }
@@ -93,7 +105,7 @@ class MyEdtExport
         $edt = array_merge(...$temp);
 
         return match ($_format) {
-            'ics' => $this->genereIcal($edt),
+            'ics' => $this->genereIcal($edt),// todo: gérer avec le EvenementCollection
             default => false,
         };
     }
@@ -173,7 +185,7 @@ class MyEdtExport
         // todo: passer par le DTO Evenement, comme ca compatible avec celcat
         // todo: gérer l'année universitaire d'export
         if ('intranet' === $source) {
-            $planning = $this->edtPlanningRepository->findEdtProf($personnel->getId(),$personnel->getAnneeUniversitaire());
+            $planning = $this->edtPlanningRepository->findEdtProf($personnel->getId(), $personnel->getAnneeUniversitaire());
             $this->myPDF::genereAndSavePdf('pdf/edt/planning.html.twig',
                 [
                     'planning' => $planning,
