@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/09/2022 12:59
+ * @lastUpdate 19/09/2022 09:11
  */
 
 /*
@@ -117,7 +117,7 @@ class MyEdtCelcat extends BaseEdt
         }
 
         $tab = [];
-        /** @var CelcatEvent $p */
+        /** @var \App\Entity\EdtCelcat $p */
         foreach ($pl as $p) {
             // todo: passer par le DTO???
             if (array_key_exists($p->getCodeGroupe(), $gr)) {
@@ -156,7 +156,7 @@ class MyEdtCelcat extends BaseEdt
         // prof ou étudiant
         $tab = [];
 
-        /** @var CelcatEvent $p */
+        /** @var \App\Entity\EdtCelcat $p */
         foreach ($pl as $p) {
             // todo: passer en partie par le manager ?
             $evt = new EvenementEdt();
@@ -196,7 +196,7 @@ class MyEdtCelcat extends BaseEdt
         return $this;
     }
 
-    private function getTypeIdMatiere(CelcatEvent $p)
+    private function getTypeIdMatiere(\App\Entity\EdtCelcat $p)
     {
         if (array_key_exists($p->getCodeModule(), $this->matieres)) {
             return $this->matieres[$p->getCodeModule()]->getTypeIdMatiere();
