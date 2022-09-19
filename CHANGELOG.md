@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.24](https://github.com/Dannebicque/intranetV3/compare/v3.9.23...v3.9.24) (2022-09-19)
+
+
+### Bug Fixes
+
+* [Absence] Marquage des absences au premier chargement de la page. ([2eb4849](https://github.com/Dannebicque/intranetV3/commit/2eb4849de19357d2dd13b3e0fca9c15166fdb8be))
+* [Absence] Mise à jour EDT si appel fait avec des absences ([e6210da](https://github.com/Dannebicque/intranetV3/commit/e6210dab9adbfb2a2bd3d6ca6a3089d8ad2e7e3f))
+* [Ical] Tous les semestres ([7cdf08e](https://github.com/Dannebicque/intranetV3/commit/7cdf08e0b6722091b9a17043587eac7a7c08a369))
+
 ### [3.9.23](https://github.com/Dannebicque/intranetV3/compare/v3.9.22...v3.9.23) (2022-09-19)
 
 
