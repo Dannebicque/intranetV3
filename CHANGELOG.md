@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.21](https://github.com/Dannebicque/intranetV3/compare/v3.9.20...v3.9.21) (2022-09-19)
+
+
+### Bug Fixes
+
+* [Edt Script] Espace dans le nom du fichier bat ([13f479f](https://github.com/Dannebicque/intranetV3/commit/13f479f11c7b89360ab630a4e6cebf7d191390d4))
+
 ### [3.9.20](https://github.com/Dannebicque/intranetV3/compare/v3.9.19...v3.9.20) (2022-09-19)
 
 
