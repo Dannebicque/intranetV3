@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Previsionnel/PrevisionnelManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/09/2022 15:13
+ * @lastUpdate 19/09/2022 20:29
  */
 
 namespace App\Classes\Previsionnel;
@@ -229,10 +229,11 @@ class PrevisionnelManager
 
     public function supprimeAnnee(Departement $departement, int $annee_destination): void
     {
-        $previsionnels = $this->getPrevisionnelDepartement($departement, $annee_destination);
+
         foreach ($previsionnels as $previsionnel) {
+            dump($previsionnel->objPrevisionnel);
             if (null !== $previsionnel->objPrevisionnel) {
-                $this->entityManager->remove($previsionnel->objPrevisionnel);
+                $this->entityManager->remove($this->$previsionnel->objPrevisionnel);
             }
         }
         $this->entityManager->flush();
