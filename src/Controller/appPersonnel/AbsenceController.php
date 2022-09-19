@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/09/2022 09:10
+ * @lastUpdate 19/09/2022 20:02
  */
 
 namespace App\Controller\appPersonnel;
@@ -278,7 +278,7 @@ class AbsenceController extends BaseController
                 return $this->json($absences);
             }
 
-            return new response('out', \Symfony\Component\HttpFoundation\Response::HTTP_INTERNAL_SERVER_ERROR);
+            return new response('out', Response::HTTP_INTERNAL_SERVER_ERROR);
         }
         if (1 === count($absence)) {
             // un tableau, donc une absence ?
@@ -292,7 +292,7 @@ class AbsenceController extends BaseController
             return $this->json($absences);
         }
 
-        return new response('nok', \Symfony\Component\HttpFoundation\Response::HTTP_INTERNAL_SERVER_ERROR);
+        return new response('nok', Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     private function saisieAutorise(int $nbjour, CarbonInterface $datesymfony): bool

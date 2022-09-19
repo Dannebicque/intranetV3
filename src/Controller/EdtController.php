@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/09/2022 16:06
+ * @lastUpdate 19/09/2022 20:06
  */
 
 namespace App\Controller;
@@ -19,6 +19,7 @@ use App\Classes\Pdf\MyPDF;
 use App\Entity\Constantes;
 use App\Entity\Semestre;
 use App\Repository\AbsenceEtatAppelRepository;
+use App\Repository\AbsenceRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\GroupeRepository;
 use Exception;
@@ -53,14 +54,21 @@ class EdtController extends BaseController
     public function dashboardPersonnel(
         EdtManager $edtManager,
         AbsenceEtatAppelRepository $absenceEtatAppelRepository,
-        int $semaine = 0): Response
-    {
+        AbsenceRepository $absenceRepository,
+        int $semaine = 0
+    ): Response {
         $source = null !== $this->getDepartement() && $this->getDepartement()->isOptUpdateCelcat() ? 'celcat' : 'intranet';
         $calendrier = $this->calendrier->calculSemaine($semaine, $this->getAnneeUniversitaire());
         $matieres = $this->typeMatiereManager->findByDepartementArray($this->getDepartement());
         $edt = $edtManager->initPersonnel($source, $calendrier, $this->getUser(),
             $this->getAnneeUniversitaire(), $matieres);
-        $suiviAppel = $absenceEtatAppelRepository->findBySemaineAndUserArray($calendrier->semaineFormationLundi, $this->getUser());
+        //récupération des absences ou des marquages de "pas d'absence"
+        $suiviAppel[] = $absenceEtatAppelRepository->findBySemaineAndUserArray($calendrier->semaineFormationLundi,
+            $this->getUser());
+        //todo: stocker dans AppelSuivi même les cas où l'appel est fait avec des absences ? Du coup une seul requête ?
+        $suiviAppel[] = $absenceRepository->findBySemaineAndUserArray($calendrier->semaineFormationLundi,
+            $this->getUser());
+        $suiviAppel = array_merge(...$suiviAppel);
 
         return $this->render('edt/_intervenant2.html.twig', [
             'edt' => $edt,
@@ -74,8 +82,12 @@ class EdtController extends BaseController
         ]);
     }
 
-    public function navPersonnel(string $filtre, string $valeur, Calendrier $calendrier, ?Semestre $semestre = null): Response
-    {
+    public function navPersonnel(
+        string $filtre,
+        string $valeur,
+        Calendrier $calendrier,
+        ?Semestre $semestre = null
+    ): Response {
         return $this->render('edt/_navPersonnel.html.twig', [
             'semaines' => $this->calendrier->calculSemaines($this->getAnneeUniversitaire()),
             'filtre' => $filtre,
@@ -87,12 +99,14 @@ class EdtController extends BaseController
 
     public function personnelSemestre(
         GroupeRepository $groupeRepository,
-        Semestre $semestre, $semaine = 0): Response
-    {
+        Semestre $semestre,
+        $semaine = 0
+    ): Response {
         $diplome = $semestre->getDiplome()->getParent() ?? $semestre->getDiplome();
 
         if ($semestre->getDiplome()->isApc()) {
-            $matieres = $this->typeMatiereManager->findByReferentielOrdreSemestre($semestre, $diplome->getReferentiel());
+            $matieres = $this->typeMatiereManager->findByReferentielOrdreSemestre($semestre,
+                $diplome->getReferentiel());
         } else {
             $matieres = $this->typeMatiereManager->findBySemestre($semestre);
         }
@@ -100,18 +114,20 @@ class EdtController extends BaseController
         $groupes = $groupeRepository->findByDiplomeAndOrdreSemestre($diplome, $semestre->getOrdreLmd());
 
         $calendrier = $this->calendrier->calculSemaine($semaine, $this->getAnneeUniversitaire());
-        $edt = $this->edtManager->initSemestre($semestre, $calendrier, $this->getAnneeUniversitaire(), $this->edtManager->transformeMatieres($semestre, $matieres), $this->edtManager->transformeGroupe($semestre, $groupes));
+        $edt = $this->edtManager->initSemestre($semestre, $calendrier, $this->getAnneeUniversitaire(),
+            $this->edtManager->transformeMatieres($semestre, $matieres),
+            $this->edtManager->transformeGroupe($semestre, $groupes));
 
         return $this->render('edt/_semestre.html.twig', [
-                'edt' => $edt->toArray($semestre->getNbgroupeTpEdt(), $semestre->getAnnee()?->getCouleur()),
-                'calendrier' => $calendrier,
-                'semaine' => $semaine,
-                'source' => $this->edtManager->getSource(),
-                'semestre' => $semestre,
-                'filtre' => 'promo',
-                'valeur' => $semestre->getId(),
-                'groupes' => $groupeRepository->findAllGroupes($semestre), // todo: fusionner avec $groupes?
-            ]);
+            'edt' => $edt->toArray($semestre->getNbgroupeTpEdt(), $semestre->getAnnee()?->getCouleur()),
+            'calendrier' => $calendrier,
+            'semaine' => $semaine,
+            'source' => $this->edtManager->getSource(),
+            'semestre' => $semestre,
+            'filtre' => 'promo',
+            'valeur' => $semestre->getId(),
+            'groupes' => $groupeRepository->findAllGroupes($semestre), // todo: fusionner avec $groupes?
+        ]);
     }
 
     /**
@@ -211,9 +227,9 @@ class EdtController extends BaseController
     public function exportEtudiantSemaine(MyPDF $myPDF, int $semaine = 0): RedirectResponse|StreamedResponse|PdfResponse
     {
         if (0 === $semaine) {
-            $semaine = (int) date('W');
+            $semaine = (int)date('W');
         }
-        if ($semaine !== (int) date('W') && $semaine !== ((int) date('W') + 1)) {
+        if ($semaine !== (int)date('W') && $semaine !== ((int)date('W') + 1)) {
             return $this->redirectToRoute('erreur_666');
         }
         if (null !== $this->getUser()->getDiplome() && $this->getUser()->getDiplome()->isOptUpdateCelcat()) {
