@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Matieres/TypeMatiereManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/09/2022 18:52
+ * @lastUpdate 19/09/2022 09:14
  */
 
 namespace App\Classes\Matieres;
@@ -206,7 +206,9 @@ class TypeMatiereManager
             if ($manager instanceof MatiereManager) {
                 $matieres = $manager->findBySemestre($semestre);
             } else {
-                $matieres = $manager->findBySemestreAndReferentiel($semestre, $referentiel);
+                if (null !== $referentiel) {
+                    $matieres = $manager->findBySemestreAndReferentiel($semestre, $referentiel);
+                }
             }
 
             $t[] = $matieres->toArray();
