@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.20](https://github.com/Dannebicque/intranetV3/compare/v3.9.19...v3.9.20) (2022-09-19)
+
+
+### Bug Fixes
+
+* [Edt Celcat] lien celcat / Ressource/SAE/Matiere ([3f6cc38](https://github.com/Dannebicque/intranetV3/commit/3f6cc3870f98ead8f0ede8380b2fc66dd0bfa031))
+* [Edt Celcat] lien celcat / Ressource/SAE/Matiere ([e8508d6](https://github.com/Dannebicque/intranetV3/commit/e8508d69097d495d4b31e15b97f73645337257fc))
+* [Edt Celcat] Récupération semestre ([293065b](https://github.com/Dannebicque/intranetV3/commit/293065b342dbad2fce7e2097fc88627a964ec7df))
+* [Edt Celcat] Refacotring et utilisation du manager pour la partie public (reste la partie admin). ([63b5b1a](https://github.com/Dannebicque/intranetV3/commit/63b5b1a5e0a742c01cc1c867ab1e73b7c7d95cf9))
+* [Edt Script] Espace dans le nom du fichier bat ([492bf86](https://github.com/Dannebicque/intranetV3/commit/492bf866c0ac1f115af85e76b2ad2b4bee559c1f))
+* [Edt Script] Espace dans le nom du fichier bat ([c549cdf](https://github.com/Dannebicque/intranetV3/commit/c549cdfdc0165834610b01e41dcef070023bfaaf))
+
 ### [3.9.19](https://github.com/Dannebicque/intranetV3/compare/v3.9.18...v3.9.19) (2022-09-18)
 
 
