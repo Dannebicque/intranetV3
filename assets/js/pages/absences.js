@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/absences.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/07/2022 13:30
+// @lastUpdate 19/09/2022 19:28
 import $ from 'jquery'
 import { addCallout } from '../util'
 import Routing from 'fos-router'
@@ -137,6 +137,7 @@ $(document).on('click', '.etudiant', function () {
 })
 
 window.addEventListener('load', () => { // le dom est chargé
+  updateAffichage($('#absence-date').val(), $('#absence-heure').val())
   document.querySelectorAll('.pasabsent').forEach((elem) => {
     elem.addEventListener('click', (e) => {
       post(Routing.generate('app_personnel_absence_etat_appel'), {
