@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.25](https://github.com/Dannebicque/intranetV3/compare/v3.9.24...v3.9.25) (2022-09-19)
+
+
+### Bug Fixes
+
+* [Prévisionnel] Suppression d'une année. ([e385ba3](https://github.com/Dannebicque/intranetV3/commit/e385ba35d0445cf84adae0c070cbf9e4ab475325))
+
 ### [3.9.24](https://github.com/Dannebicque/intranetV3/compare/v3.9.23...v3.9.24) (2022-09-19)
 
 
