@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/borne.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/09/2022 09:42
+// @lastUpdate 20/09/2022 10:15
 
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/bootstrap";
@@ -95,8 +95,8 @@ html, body {
   line-height: 50px;
   border-radius: 5px;
   margin-bottom: 10px;
-  background-color: #f7b000; //var(--colorIUT);
-  color: #4d3677; //var(--colorIUTComplementaire);
+  background-color: var(--colorIUT, #f7b000);
+  color: var(--colorIUTComplementaire, #4d3677);
   font-size: 20px;
   font-weight: bolder;
   text-align: center;

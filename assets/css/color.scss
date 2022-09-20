@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/color.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/05/2022 15:47
+// @lastUpdate 01/09/2022 16:32
 @use "sass:map";
 
 
@@ -30,6 +30,13 @@ $colors: (
         lime: #66a80f
 );
 
+$colorsTypesGroupes: (
+        cm:#1971c2,
+        td: #2f9e44,
+        tp: #f08c00,
+        lv: #c2255c,
+);
+
 
 @each $color-key, $color-value in $colors {
   .cm_#{$color-key} {
@@ -52,8 +59,22 @@ $colors: (
     color: text-clr(lighten($color-value, 30%));
   }
 
+  .projet_#{$color-key} {
+    background-color: lighten($color-value, 30%);
+    color: text-clr(lighten($color-value, 30%));
+  }
+
   .carre_#{$color-key} {
     background-color: $color-value;
   }
 }
+
+@each $color-key, $color-value in $colorsTypesGroupes {
+  .bg-#{$color-key} {
+    background-color: $color-value;
+    color: text-clr($color-value);
+  }
+}
+
+
 

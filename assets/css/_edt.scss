@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/_edt.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/09/2022 09:42
+// @lastUpdate 20/09/2022 10:15
 
 //.semestre_borne {
 //  max-height: 80vh;
@@ -170,14 +170,14 @@
   @each $lettre in a, c, e, g, i, k, m, o, q, s, u, w, y {
     .jour#{$i}#{$lettre} {
       grid-area: jour#{$i}#{$lettre};
-      background-color: #f4f4f4; //var(--backgroundEdtVide);
+      background-color: var(--backgroundEdtVide, #f4f4f4);
     }
   }
 
   @each $lettre in b, d, f, h, j, l, n, p, r, t, v, x {
     .jour#{$i}#{$lettre} {
       grid-area: jour#{$i}#{$lettre};
-      background-color: #f4f4f4; //var(--backgroundEdtVidePair);
+      background-color: var(--backgroundEdtVidePair, #f4f4f4);
     }
   }
 }
@@ -191,7 +191,7 @@
     .track-slot {
       display: block;
       padding: 10px 5px 5px;
-      background-color: #4d3677; //var(--colorIUTComplementaire);
+      background-color: var(--colorIUTComplementaire, #4d3677);
       color: white;
       text-align: center;
       box-shadow: 0 2px 3px rgba(0, 0, 0, 0.03);
@@ -254,7 +254,7 @@
 
 .time-slot {
   margin: 0;
-  background-color: #4d3677; //var(--colorIUTComplementaire);
+  background-color: var(--colorIUTComplementaire, #4d3677);
   padding: .25em;
   color: white;
   text-align: center;
