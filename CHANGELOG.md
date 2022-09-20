@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.27](https://github.com/Dannebicque/intranetV3/compare/v3.9.26...v3.9.27) (2022-09-20)
+
+
+### Bug Fixes
+
+* [Borne] Css ([4c4049d](https://github.com/Dannebicque/intranetV3/commit/4c4049d6e39ee9034fd698547bb4d483a2e19465))
+
 ### [3.9.26](https://github.com/Dannebicque/intranetV3/compare/v3.9.25...v3.9.26) (2022-09-20)
 
 
