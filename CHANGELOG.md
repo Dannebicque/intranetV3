@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.26](https://github.com/Dannebicque/intranetV3/compare/v3.9.25...v3.9.26) (2022-09-20)
+
+
+### Bug Fixes
+
+* [Absences] Méthode pour récupérer les données des absences ([c0fc3c0](https://github.com/Dannebicque/intranetV3/commit/c0fc3c04c46d59d3a8e03f1cb15ed9cd458344cc))
+* [Borne] Lisibilité ([57db51b](https://github.com/Dannebicque/intranetV3/commit/57db51b302feb640399aab3f7826e764e6145e0f))
+* [Init Eval] Amélioration lisibilité tableau ([e4cea56](https://github.com/Dannebicque/intranetV3/commit/e4cea56861afb82289c169837f348fac494a0e8b))
+
 ### [3.9.25](https://github.com/Dannebicque/intranetV3/compare/v3.9.24...v3.9.25) (2022-09-19)
 
 
