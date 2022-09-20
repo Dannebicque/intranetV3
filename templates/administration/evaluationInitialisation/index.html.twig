@@ -45,8 +45,20 @@
                     {% for matiere in matieres %}
                         {% if matiere.nbNotes>0 and matiere.isParent == false %}
                             <tr>
-                                <td colspan="5" class="table-primary">
+                                <td class="table-primary">
                                     <strong>{{ matiere.display }}</strong>
+                                </td>
+                                <td class="table-primary">
+                                    <i>Commentaire</i>
+                                </td>
+                                <td class="table-primary">
+                                    <i>Coefficient</i>
+                                </td>
+                                <td class="table-primary">
+                                    <i>Groupe</i>
+                                </td>
+                                <td class="table-primary">
+                                    <i>Intervenants</i>
                                 </td>
                             </tr>
                             {% set nbeval=1 %}
