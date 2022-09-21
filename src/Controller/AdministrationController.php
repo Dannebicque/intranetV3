@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/AdministrationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/09/2022 12:03
+ * @lastUpdate 21/09/2022 09:06
  */
 
 namespace App\Controller;
@@ -36,7 +36,7 @@ class AdministrationController extends BaseController
         foreach ($this->dataUserSession->getDiplomes() as $diplome) {
             $periodes = $projetPeriodeRepository->findByDiplome($diplome, $this->getAnneeUniversitaire());
             foreach ($periodes as $periode) {
-                $projetPeriodes[] = $periode;
+                $projetPeriodes[$periode->getId()] = $periode;
             }
         }
 

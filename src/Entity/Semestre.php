@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/09/2022 13:34
+ * @lastUpdate 21/09/2022 08:53
  */
 
 namespace App\Entity;
@@ -253,6 +253,9 @@ class Semestre extends BaseEntity implements Stringable
     #[ORM\OneToMany(mappedBy: 'semestre_arrive', targetEntity: SemestreLien::class)]
     private Collection $semestreLienArrive;
 
+    #[ORM\ManyToMany(targetEntity: ProjetPeriode::class, mappedBy: 'semestres')]
+    private Collection $projetPeriodeSemestres;
+
     public function __construct()
     {
         $this->init();
@@ -265,6 +268,7 @@ class Semestre extends BaseEntity implements Stringable
         $this->apcSemestresSaes = new ArrayCollection();
         $this->semestreLienDepart = new ArrayCollection();
         $this->semestreLienArrive = new ArrayCollection();
+        $this->projetPeriodeSemestres = new ArrayCollection();
     }
 
     private function init(): void
@@ -1463,6 +1467,33 @@ class Semestre extends BaseEntity implements Stringable
             if ($semestreLienArrive->getSemestreArrive() === $this) {
                 $semestreLienArrive->setSemestreArrive(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProjetPeriode>
+     */
+    public function getProjetPeriodeSemestres(): Collection
+    {
+        return $this->projetPeriodeSemestres;
+    }
+
+    public function addProjetPeriodeSemestre(ProjetPeriode $projetPeriodeSemestre): self
+    {
+        if (!$this->projetPeriodeSemestres->contains($projetPeriodeSemestre)) {
+            $this->projetPeriodeSemestres->add($projetPeriodeSemestre);
+            $projetPeriodeSemestre->addSemestre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProjetPeriodeSemestre(ProjetPeriode $projetPeriodeSemestre): self
+    {
+        if ($this->projetPeriodeSemestres->removeElement($projetPeriodeSemestre)) {
+            $projetPeriodeSemestre->removeSemestre($this);
         }
 
         return $this;

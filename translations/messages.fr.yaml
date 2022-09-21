@@ -1144,6 +1144,8 @@ enquete:
     index: 'Gérer les enquêtes "étudiants"'
   index.heading: 'Liste des enquêtes'
   semestre.heading: 'Enquête pour le semestre %semestre%'
+  nomminatif:
+    index: 'Gérer les enquêtes "nomminatives" (entreprises, ...)'
 
 entreprise: Entreprise
 envoyer: Envoyer
@@ -1346,6 +1348,7 @@ label:
   type_libre: 'Libre'
   type_oui_non: 'Oui/Non'
   type_qcm: 'QCM'
+  type_chainee: 'Chainée'
   type_qcu: 'QCU'
   type_slider: 'Slider / curseur'
   annee_previsionnel: 'Année du prévisionnel'

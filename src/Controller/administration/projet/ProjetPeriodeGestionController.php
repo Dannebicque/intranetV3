@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/projet/ProjetPeriodeGestionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/09/2022 09:23
+ * @lastUpdate 21/09/2022 09:17
  */
 
 namespace App\Controller\administration\projet;
@@ -31,7 +31,7 @@ class ProjetPeriodeGestionController extends BaseController
         MySerializer $mySerializer,
         MyExport $myExport, ProjetPeriode $projetPeriode, string $_format): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestre());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestres()->first());
         $projetEtudiants = $projetPeriode->getProjetEtudiants();
 
         $data = $mySerializer->getDataFromSerialization(
@@ -59,10 +59,10 @@ class ProjetPeriodeGestionController extends BaseController
     #[ParamConverter('projetPeriode', options: ['mapping' => ['uuid' => 'uuid']])]
     public function periode(ProjetPeriodeRepository $projetPeriodeRepository, MyProjet $myProjet, ProjetPeriode $projetPeriode): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestre());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestres()->first());
         $periodes = [];
         foreach ($this->dataUserSession->getDiplomes() as $diplome) {
-            $pers = $projetPeriodeRepository->findByDiplome($diplome, $diplome->getAnneeUniversitaire());
+            $pers = $projetPeriodeRepository->findByDiplome($diplome, $this->getAnneeUniversitaire());
             foreach ($pers as $periode) {
                 $periodes[] = $periode;
             }

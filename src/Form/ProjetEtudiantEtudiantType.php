@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/ProjetEtudiantEtudiantType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 18:37
+ * @lastUpdate 21/09/2022 09:47
  */
 
 namespace App\Form;
@@ -14,6 +14,7 @@ use App\Entity\ProjetEtudiant;
 use App\Entity\Semestre;
 use App\Form\Type\YesNoType;
 use App\Repository\EtudiantRepository;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -24,11 +25,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProjetEtudiantEtudiantType extends AbstractType
 {
-    protected ?Semestre $semestre = null;
+    protected Collection $semestres;
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->semestre = $options['semestre'];
+        $this->semestres = $options['semestres'];
 
         $builder
             ->add('organisme', EntrepriseType::class)
@@ -37,7 +38,7 @@ class ProjetEtudiantEtudiantType extends AbstractType
             ->add('etudiants', EntityType::class, [
                 'class' => Etudiant::class,
                 'choice_label' => 'displayPr',
-                'query_builder' => fn (EtudiantRepository $etudiantRepository) => $etudiantRepository->findBySemestreBuilder($this->semestre),
+                'query_builder' => fn (EtudiantRepository $etudiantRepository) => $etudiantRepository->findBySemestresBuilder($this->semestres),
                 'multiple' => true,
                 'expanded' => true,
             ])
@@ -60,7 +61,7 @@ class ProjetEtudiantEtudiantType extends AbstractType
         $resolver->setDefaults([
             'data_class' => ProjetEtudiant::class,
             'translation_domain' => 'form',
-            'semestre' => null,
+            'semestres' => null,
         ]);
     }
 }

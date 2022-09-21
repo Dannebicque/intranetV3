@@ -17,7 +17,7 @@
             <table class="table table-striped table-bordered">
                 <thead>
                 <tr>
-                    <th>{{ 'table.semestre'|trans }}</th>
+                    <th>{{ 'table.semestres'|trans }}</th>
                     <th>{{ 'table.libelle'|trans }}</th>
                     <th>{{ 'table.anneeUniversitaire'|trans }}</th>
                     <th>{{ 'table.dateDebut'|trans }}</th>
@@ -30,7 +30,9 @@
                 {% for projet_periode in projet_periodes %}
                     <tr>
 
-                        <td>{{ projet_periode.semestre ? projet_periode.semestre.display : 'non.defini'|trans }}</td>
+                        <td>{% for semestre in projet_periode.semestres %}<span class="badge bg-primary me-2">{{
+                            semestre
+                            .display }}</span>{% endfor %}</td>
                         <td>{{ projet_periode.libelle }} </td>
                         <td>{{ projet_periode.anneeUniversitaire ? projet_periode.anneeUniversitaire
                             .displayAnneeUniversitaire : 'non.defini'|trans }}</td>

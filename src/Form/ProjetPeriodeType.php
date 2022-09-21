@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ProjetPeriodeType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/ProjetPeriodeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 14:21
+ * @lastUpdate 21/09/2022 08:56
  */
 
 namespace App\Form;
@@ -35,17 +35,17 @@ class ProjetPeriodeType extends AbstractType
             ->add('libelle')
             ->add('dateRange', DateRangeType::class,
                 ['label' => 'dateRange.periode', 'mapped' => false, 'required' => true])
-            ->add('semestre', EntityType::class, [
+            ->add('semestres', EntityType::class, [
                 'class' => Semestre::class,
-                'label' => 'semestre_stage_periode',
+                'label' => 'label.semestre_projet_periode',
                 'choice_label' => 'libelle',
                 'query_builder' => fn (SemestreRepository $semestreRepository) => $semestreRepository->findByDepartementBuilder($this->departement),
                 'required' => true,
                 'expanded' => true,
-                'multiple' => false,
+                'multiple' => true,
             ])
             ->add('responsables', EntityType::class, [
-                'label' => 'responsables',
+                'label' => 'label.responsables_projet',
                 'expanded' => true,
                 'multiple' => true,
                 'class' => Personnel::class,
@@ -54,7 +54,7 @@ class ProjetPeriodeType extends AbstractType
                 'query_builder' => fn (PersonnelRepository $personnelRepository) => $personnelRepository->findByDepartementBuilder($this->departement),
             ])
             ->add('anneeUniversitaire', EntityType::class, [
-                'label' => 'anneeUniversitaire',
+                'label' => 'label.anneeUniversitaire',
                 'choice_label' => 'displayAnneeUniversitaire',
                 'class' => AnneeUniversitaire::class,
             ])
@@ -69,7 +69,7 @@ class ProjetPeriodeType extends AbstractType
                 $stagePeriode = $event->getData();
                 $form = $event->getForm();
                 $form->add('dateRange', DateRangeType::class, [
-                    'label' => 'dateRange.periode',
+                    'label' => 'dateRange.periode.projet',
                     'mapped' => false,
                     'date_data' => ['from' => $stagePeriode->getDateDebut(), 'to' => $stagePeriode->getDateFin()],
                 ]);
