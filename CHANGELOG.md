@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.28](https://github.com/Dannebicque/intranetV3/compare/v3.9.27...v3.9.28) (2022-09-21)
+
+
+### Bug Fixes
+
+* [Borne] Css ([c369f02](https://github.com/Dannebicque/intranetV3/commit/c369f02a1a9f00006cc9b36a3338936b1c1b2119))
+* [Projet] Correction pour gérer plusieurs semestres sur une période ([ea79b1a](https://github.com/Dannebicque/intranetV3/commit/ea79b1acfbe9b3f2cb65024340047829c3931ea8))
+
 ### [3.9.27](https://github.com/Dannebicque/intranetV3/compare/v3.9.26...v3.9.27) (2022-09-20)
 
 
