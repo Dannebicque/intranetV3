@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EtudiantRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/09/2022 15:35
+ * @lastUpdate 21/09/2022 09:48
  */
 
 namespace App\Repository;
@@ -16,6 +16,7 @@ use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use Carbon\CarbonInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
@@ -315,5 +316,15 @@ class EtudiantRepository extends ServiceEntityRepository
             ->addOrderBy('e.prenom', Criteria::ASC)
             ->getQuery()
             ->getResult();
+    }
+
+    public function findBySemestresBuilder(Collection $semestres): QueryBuilder
+    {
+        return $this->createQueryBuilder('e')
+            ->innerJoin(Semestre::class, 's', 'WITH', 'e.semestre=s.id')
+            ->where('s IN (:semestres)')
+            ->setParameter('semestres', $semestres)
+            ->orderBy('e.nom', Criteria::ASC)
+            ->addOrderBy('e.prenom', Criteria::ASC);
     }
 }
