@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/09/2022 17:07
+ * @lastUpdate 23/09/2022 07:08
  */
 
 namespace App\Classes\Edt;
@@ -617,6 +617,8 @@ class MyEdtIntranet extends BaseEdt
         EdtPlanning $plann,
         AnneeUniversitaire $anneeUniversitaire
     ): EdtPlanning {
+        $semestre = $this->semestreRepository->find($request->request->get('promo'));
+        $plann->setSemestre($semestre);
         $this->calendrier = $this->calendrierRepository->findOneBy([
             'semaineFormation' => $plann->getSemaine(),
             'anneeUniversitaire' => $anneeUniversitaire->getId(),
