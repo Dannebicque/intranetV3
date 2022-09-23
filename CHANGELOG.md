@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.30](https://github.com/Dannebicque/intranetV3/compare/v3.9.29...v3.9.30) (2022-09-23)
+
+
+### Bug Fixes
+
+* [Api] Salle examen : matières et groupes ([442d6d6](https://github.com/Dannebicque/intranetV3/commit/442d6d63447912aa13cfb607bc6ed2701676b520))
+* [Edt] Matieère selon semestre ([669d99b](https://github.com/Dannebicque/intranetV3/commit/669d99bd45f89cd34c9bfdc9b566522dec4308a4))
+* [Edt] Matieère selon semestre ([b927361](https://github.com/Dannebicque/intranetV3/commit/b927361b3b519a2710b1ade75c66b3e46f498ac0))
+* [Projet] Etudiant par semestres ([e26efc5](https://github.com/Dannebicque/intranetV3/commit/e26efc51a1f0f903f2c2ea5790599ee96485a2df))
+
 ### [3.9.29](https://github.com/Dannebicque/intranetV3/compare/v3.9.28...v3.9.29) (2022-09-21)
 
 
