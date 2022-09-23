@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/api/GroupesApiController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/api/GroupesApiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:36
+ * @lastUpdate 23/09/2022 10:39
  */
 
 namespace App\Controller\api;
@@ -13,6 +13,7 @@ use App\Controller\BaseController;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
+use App\Repository\TypeGroupeRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -22,12 +23,24 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/api/groupe')]
 class GroupesApiController extends BaseController
 {
-    #[Route(path: '/type-groupe/{semestre}', name: 'api_type_groupe_semestre', options: ['expose' => true])]
-    public function typeGroupeSemestreAjax(Semestre $semestre): Response
+    public function __construct(
+        protected TypeGroupeRepository $typeGroupeRepository
+    )
     {
+    }
+
+    #[Route(path: '/type-groupe/{semestre}', name: 'api_type_groupe_semestre', options: ['expose' => true])]
+    public function typeGroupeSemestreAjax(
+        Semestre $semestre): Response
+    {
+        if ($semestre->getDiplome()->isApc()) {
+            $typeGroupes = $this->typeGroupeRepository->findByDiplomeAndOrdreSemestre($semestre->getDiplome(), $semestre->getOrdreLmd());
+        } else {
+            $typeGroupes = $semestre->getTypeGroupes();
+        }
+
         $json = [];
-        /** @var TypeGroupe $typeGroupe */
-        foreach ($semestre->getTypeGroupes() as $typeGroupe) {
+        foreach ($typeGroupes as $typeGroupe) {
             $json[] = ['libelle' => $typeGroupe->getLibelle(), 'id' => $typeGroupe->getId()];
         }
 

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/api/MatiereApiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/09/2022 20:45
+ * @lastUpdate 23/09/2022 10:39
  */
 
 namespace App\Controller\api;
@@ -38,7 +38,12 @@ class MatiereApiController extends BaseController
     #[Route(path: '/semestre/{semestre}', name: 'api_matieres_semestre', options: ['expose' => true])]
     public function matieresSemestreAjax(Semestre $semestre): JsonResponse
     {
-        $matieres = $this->typeMatiereManager->findBySemestre($semestre);
+        if ($semestre->getDiplome()->isApc()) {
+            $matieres = $this->typeMatiereManager->findBySemestreAndReferentiel($semestre, $semestre->getDiplome()->getReferentiel());
+        } else {
+            $matieres = $this->typeMatiereManager->findBySemestre($semestre);
+        }
+
         $tmatieres = [];
         foreach ($matieres as $m) {
             $t = [];
