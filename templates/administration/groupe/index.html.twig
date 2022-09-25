@@ -6,7 +6,7 @@
 
 {% block headerright %}
     <div class="right gap-items-2">
-        {{ include('administration/_navSemestre.html.twig', {path_name: 'administration_semestre_index'}) }}
+        {{ include('administration/_navSemestre.html.twig', {path_name: 'administration_groupe_index'}) }}
     </div>
 {% endblock %}
 
@@ -36,15 +36,9 @@
     {% if (semestre.diplome.responsableDiplome.id == user_data.user.id and user_data.isGoodDepartement('ROLE_RP')) or user_data.isGoodDepartement
         ('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %}
         <div id="liste_semestre" data-groupes-adm-target="contentGroupe">
-{#            {{ render(controller(#}
-{#                'App\\Controller\\administration\\GroupeController::listeSemestre', {semestre:semestre.id}#}
-{#            )) }}#}
         </div>
 
         <div id="type_groupes_semestre" data-groupes-adm-target="contentTypeGroupe">
-{#            {{ render(controller(#}
-{#                'App\\Controller\\administration\\TypeGroupeController::listeSemestre', {semestre:semestre.id}#}
-{#            )) }}#}
         </div>
     {% endif %}
 {% endblock %}
@@ -81,12 +75,3 @@
     ]}) }}
 {% endblock %}
 
-{#{% block stylesheets %}#}
-{#    {{ parent() }}#}
-{#    {{ encore_entry_link_tags('adm.groupe') }}#}
-{#{% endblock %}#}
-
-{#{% block javascripts %}#}
-{#    {{ parent() }}#}
-{#    {{ encore_entry_script_tags('adm.groupe') }}#}
-{#{% endblock %}#}
