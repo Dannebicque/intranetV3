@@ -4,11 +4,16 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/EdtManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/09/2022 13:43
+ * @lastUpdate 23/09/2022 20:20
  */
 
 namespace App\Classes\Edt;
 
+use App\Components\SourceEdt\Source\EdtAde;
+use App\Components\SourceEdt\Source\EdtCelcat;
+use App\Components\SourceEdt\Source\EdtInterface;
+use App\Components\SourceEdt\Source\EdtIntranet;
+use App\Components\SourceEdt\SourceEdtRegistry;
 use App\DTO\EvenementEdt;
 use App\DTO\EvenementEdtCollection;
 use App\Entity\AnneeUniversitaire;
@@ -28,11 +33,10 @@ class EdtManager
     public function __construct(
         private readonly EdtIntranet $edtIntranet,
         private readonly EdtCelcat $edtCelcat,
-        private readonly EdtAde $edtAde
+        private readonly EdtAde $edtAde,
+        private SourceEdtRegistry $sourceEdtRegistry
     ) {
-        $this->tabSources[self::EDT_CELCAT] = $edtCelcat;
-        $this->tabSources[self::EDT_ADE] = $edtAde;
-        $this->tabSources[self::EDT_INTRANET] = $edtIntranet;
+        $this->tabSources = $this->sourceEdtRegistry->getSourcesEdt();
     }
 
     public function getPlanningSemestre(
