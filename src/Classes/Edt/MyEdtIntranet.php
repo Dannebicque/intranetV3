@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/09/2022 07:08
+ * @lastUpdate 25/09/2022 14:47
  */
 
 namespace App\Classes\Edt;
@@ -593,7 +593,7 @@ class MyEdtIntranet extends BaseEdt
         $pl->setAnneeUniversitaire($anneeUniversitaire);
         $pl->setOrdreSemestre($semestre->getOrdreLmd());
         $pl->setSemaine($request->request->get('semaine'));
-        $pl->setDiplome($semestre->getDiplome());
+        $pl->setDiplome($semestre->getDiplome()->getParent() === null ? $semestre->getDiplome() : $semestre->getDiplome()->getParent());
 
         return $this->updatePl($request, $pl, $anneeUniversitaire);
     }
