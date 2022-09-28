@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/09/2022 18:38
+ * @lastUpdate 28/09/2022 19:33
  */
 
 namespace App\Controller\administration;
@@ -117,7 +117,12 @@ class EdtExportController extends BaseController
             ];
             $tabSalles = array_flip($tabSalles);
             $pl = $edtPlanningRepository->findEdtSemestre($semestre, $semaine, $this->getAnneeUniversitaire());
-            $matieres = $typeMatiereManager->findBySemestreAndReferentiel($semestre, $semestre->getDiplome()->getReferentiel());
+            $tempMatieres = $typeMatiereManager->findByReferentielOrdreSemestre($semestre, $semestre->getDiplome()->getReferentiel());
+
+            foreach ($tempMatieres as $matiere) {
+                $matieres[$matiere->getTypeIdMatiere()] = $matiere;
+            }
+
             $typeGroupes = $typeGroupeRepository->findByDiplomeAndOrdreSemestre($semestre->getDiplome(), $semestre->getOrdreLmd());
             $code = [];
             $codeGroupe = [];
