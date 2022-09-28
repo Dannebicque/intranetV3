@@ -1,15 +1,16 @@
 <?php
 /*
  * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/EdtCelcat.php
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Source/EdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/09/2022 17:44
+ * @lastUpdate 23/09/2022 18:52
  */
 
-namespace App\Classes\Edt;
+namespace App\Components\SourceEdt\Source;
 
-use App\Adapter\EdtCelcatAdapter;
+use App\Classes\Edt\Calendrier;
+use App\Components\SourceEdt\Adapter\EdtCelcatAdapter;
 use App\DTO\EvenementEdt;
 use App\DTO\EvenementEdtCollection;
 use App\Entity\AnneeUniversitaire;

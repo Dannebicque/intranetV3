@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/09/2022 20:06
+ * @lastUpdate 21/09/2022 15:36
  */
 
 namespace App\Controller;
@@ -62,10 +62,9 @@ class EdtController extends BaseController
         $matieres = $this->typeMatiereManager->findByDepartementArray($this->getDepartement());
         $edt = $edtManager->initPersonnel($source, $calendrier, $this->getUser(),
             $this->getAnneeUniversitaire(), $matieres);
-        //récupération des absences ou des marquages de "pas d'absence"
+        // récupération des absences ou des marquages de "pas d'absence"
         $suiviAppel[] = $absenceEtatAppelRepository->findBySemaineAndUserArray($calendrier->semaineFormationLundi,
             $this->getUser());
-        //todo: stocker dans AppelSuivi même les cas où l'appel est fait avec des absences ? Du coup une seul requête ?
         $suiviAppel[] = $absenceRepository->findBySemaineAndUserArray($calendrier->semaineFormationLundi,
             $this->getUser());
         $suiviAppel = array_merge(...$suiviAppel);
@@ -135,6 +134,8 @@ class EdtController extends BaseController
      */
     public function dashboardEtudiant(int $semaine = 0): Response
     {
+        $calendrier = $this->calendrier->calculSemaine($semaine, $this->getAnneeUniversitaire());
+
         if (null !== $this->getAnneeUniversitaire()) {
             $matieres = $this->typeMatiereManager->tableauMatieresSemestreCodeApogee($this->getUser()->getSemestre());
             // todo: passer pour l'edt manager
@@ -145,6 +146,7 @@ class EdtController extends BaseController
                 return $this->render('edt/_etudiant2.html.twig', [
                     'edt' => $this->myEdtCelcat,
                     'source' => 'celcat',
+                    'calendrier' => $calendrier,
                     'tabHeures' => Constantes::TAB_HEURES_EDT_2,
                 ]);
             }
@@ -155,6 +157,7 @@ class EdtController extends BaseController
             return $this->render('edt/_etudiant.html.twig', [
                 'edt' => $this->myEdtIntranet,
                 'source' => 'intranet',
+                'calendrier' => $calendrier,
                 'tabHeures' => Constantes::TAB_HEURES_EDT,
             ]);
         }
@@ -227,9 +230,9 @@ class EdtController extends BaseController
     public function exportEtudiantSemaine(MyPDF $myPDF, int $semaine = 0): RedirectResponse|StreamedResponse|PdfResponse
     {
         if (0 === $semaine) {
-            $semaine = (int)date('W');
+            $semaine = (int) date('W');
         }
-        if ($semaine !== (int)date('W') && $semaine !== ((int)date('W') + 1)) {
+        if ($semaine !== (int) date('W') && $semaine !== ((int) date('W') + 1)) {
             return $this->redirectToRoute('erreur_666');
         }
         if (null !== $this->getUser()->getDiplome() && $this->getUser()->getDiplome()->isOptUpdateCelcat()) {

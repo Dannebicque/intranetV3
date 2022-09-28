@@ -1,13 +1,13 @@
 <?php
 /*
  * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/Sites/intranetV3/src/Adapter/EdtAdapterInterface.php
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Adapter/EdtAdapterInterface.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/05/2022 21:35
+ * @lastUpdate 23/09/2022 18:31
  */
 
-namespace App\Adapter;
+namespace App\Components\SourceEdt\Adapter;
 
 use App\DTO\EvenementEdt;
 use App\DTO\EvenementEdtCollection;

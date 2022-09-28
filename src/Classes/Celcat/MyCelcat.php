@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/09/2022 17:27
+ * @lastUpdate 21/09/2022 12:24
  */
 
 namespace App\Classes\Celcat;
@@ -12,10 +12,10 @@ namespace App\Classes\Celcat;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Calendrier;
+use App\Entity\Diplome;
 use App\Entity\EdtCelcat;
 use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
-use App\Repository\DepartementRepository;
 use App\Repository\DiplomeRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
@@ -40,8 +40,8 @@ class MyCelcat
         private readonly EntityManagerInterface $entityManger,
         private readonly ParameterBagInterface $parameterBag,
         private readonly GroupeRepository $groupeRepository,
-        private readonly CalendrierRepository $calendrierRepository)
-    {
+        private readonly CalendrierRepository $calendrierRepository
+    ) {
     }
 
     private function connect(): void
@@ -102,37 +102,32 @@ class MyCelcat
         ?AnneeUniversitaire $anneeUniversitaire
     ): void {
         $diplome = $this->diplomeRepository->findOneBy(['codeCelcatDepartement' => $codeCelcatDepartement]);
-        $departement = $diplome?->getDepartement();
-        if (null !== $anneeUniversitaire && $departement !== null) {
-            $this->connect();
 
-            $query = 'SELECT CT_EVENT.event_id, CT_EVENT.day_of_week, CT_EVENT.start_time, CT_EVENT.end_time, CT_EVENT.weeks, CT_EVENT_CAT.name, CT_VIEW_EVENT_MODULE001.resourcecode, CT_VIEW_EVENT_MODULE001.resourcename, CT_VIEW_EVENT_STAFF001.resourcecode, CT_VIEW_EVENT_STAFF001.resourcename, CT_VIEW_EVENT_ROOM001.resourcecode, CT_VIEW_EVENT_ROOM001.resourcename, CT_VIEW_EVENT_GROUP001.resourcecode, CT_VIEW_EVENT_GROUP001.resourcename, CT_EVENT.date_change FROM CT_EVENT INNER JOIN CT_EVENT_CAT ON CT_EVENT_CAT.event_cat_id = CT_EVENT.event_cat_id INNER JOIN CT_VIEW_EVENT_STAFF001 ON CT_VIEW_EVENT_STAFF001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_GROUP001 ON CT_VIEW_EVENT_GROUP001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_MODULE001 ON CT_VIEW_EVENT_MODULE001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_ROOM001 ON CT_VIEW_EVENT_ROOM001.eid=CT_EVENT.event_id WHERE dept_id='.$codeCelcatDepartement.' ORDER BY CT_EVENT.date_change DESC, CT_EVENT.event_id DESC';
+        if (null !== $anneeUniversitaire && null !== $diplome) {
+            $this->getData($anneeUniversitaire);
+            $this->addEvents($diplome, $anneeUniversitaire);
+        }
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function addEvents(Diplome $diplome, AnneeUniversitaire $anneeUniversitaire): void
+    {
+        $this->connect();
+
+        $departement = $diplome->getDepartement();
+
+        if (null !== $departement) {
+            $query = 'SELECT CT_EVENT.event_id, CT_EVENT.day_of_week, CT_EVENT.start_time, CT_EVENT.end_time, CT_EVENT.weeks, CT_EVENT_CAT.name, CT_VIEW_EVENT_MODULE001.resourcecode, CT_VIEW_EVENT_MODULE001.resourcename, CT_VIEW_EVENT_STAFF001.resourcecode, CT_VIEW_EVENT_STAFF001.resourcename, CT_VIEW_EVENT_ROOM001.resourcecode, CT_VIEW_EVENT_ROOM001.resourcename, CT_VIEW_EVENT_GROUP001.resourcecode, CT_VIEW_EVENT_GROUP001.resourcename, CT_EVENT.date_change FROM CT_EVENT INNER JOIN CT_EVENT_CAT ON CT_EVENT_CAT.event_cat_id = CT_EVENT.event_cat_id INNER JOIN CT_VIEW_EVENT_STAFF001 ON CT_VIEW_EVENT_STAFF001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_GROUP001 ON CT_VIEW_EVENT_GROUP001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_MODULE001 ON CT_VIEW_EVENT_MODULE001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_ROOM001 ON CT_VIEW_EVENT_ROOM001.eid=CT_EVENT.event_id WHERE dept_id='.$diplome->getCodeCelcatDepartement().' ORDER BY CT_EVENT.date_change DESC, CT_EVENT.event_id DESC';
 
             $result = odbc_exec($this->conn, $query);
 
-            $calendriers = $this->calendrierRepository->findBy(['anneeUniversitaire' => $anneeUniversitaire->getId()]);
-            $this->tCalendrier = [];
-            foreach ($calendriers as $calendrier) {
-                $this->tCalendrier[$calendrier->getSemaineFormation()] = $calendrier->getDateLundi();
-            }
-
-            $personnels = $this->personnelRepository->findAll();
-            $this->tPersonnels = [];
-            foreach ($personnels as $personnel) {
-                $this->tPersonnels[$personnel->getNumeroHarpege()] = $personnel;
-            }
-
             $this->tMatieres = $this->typeMatiereManager->tableauMatieresCodeApogee($departement);
-
-            $groupes = $this->groupeRepository->findAll();
-            $this->tGroupes = [];
-            foreach ($groupes as $groupe) {
-                $this->tGroupes[$groupe->getCodeApogee()] = $groupe->getTypeGroupe()?->getSemestre();
-            }
 
             while (odbc_fetch_row($result)) {
                 $eventId = odbc_result($result, 1);
-                $this->createEvent($result, $anneeUniversitaire, $codeCelcatDepartement, $eventId);
+                $this->createEvent($result, $anneeUniversitaire, $diplome->getCodeCelcatDepartement(), $eventId);
             }
 
             $this->entityManger->flush();
@@ -152,8 +147,6 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
         $result = odbc_exec($this->conn, $query);
 
         while (odbc_fetch_row($result)) {
-            // Vérifier si l'event est déjà dans l'intranet
-
             $gr = odbc_result($result, 1);
             $etu = odbc_result($result, 2);
 
@@ -174,8 +167,7 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
         AnneeUniversitaire $anneeUniversitaire,
         int $codeDepartement,
         mixed $eventId
-    ): EdtCelcat {
-        $event = null;
+    ): void {
         // Et on ecrit la nouvelle version ou la nouvelle ligne
         $debut = explode(' ', (string) odbc_result($result, 3));
         $fin = explode(' ', (string) odbc_result($result, 4));
@@ -196,7 +188,6 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
                 $event->setFin(Tools::convertTimeToObject($fin[1]));
                 $event->setSemaineFormation($semaine);
                 $event->setType(utf8_encode($type));
-
 
                 $event->setCodeModule(odbc_result($result, 7));
                 $event->setLibModule(utf8_encode(odbc_result($result, 8)));
@@ -225,8 +216,45 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
 
                 $this->entityManger->persist($event);
             } // endif
+        } // endfor
+    }
+
+    public function getData(AnneeUniversitaire $anneeUniversitaire): void
+    {
+        $calendriers = $this->calendrierRepository->findBy(['anneeUniversitaire' => $anneeUniversitaire->getId()]);
+        $this->tCalendrier = [];
+        foreach ($calendriers as $calendrier) {
+            $this->tCalendrier[$calendrier->getSemaineFormation()] = $calendrier->getDateLundi();
         }
 
-        return $event; // todo: plusieurs event potentiellement ?
+        $personnels = $this->personnelRepository->findAll();
+        $this->tPersonnels = [];
+        foreach ($personnels as $personnel) {
+            $this->tPersonnels[$personnel->getNumeroHarpege()] = $personnel;
+        }
+
+        $groupes = $this->groupeRepository->findAll();
+        $this->tGroupes = [];
+        foreach ($groupes as $groupe) {
+            $this->tGroupes[$groupe->getCodeApogee()] = $groupe->getTypeGroupe()?->getSemestre();
+        }
+    }
+
+    /**
+     * @throws \Doctrine\DBAL\Exception
+     */
+    public function truncateTableEdtCelcat(): void
+    {
+        $cmd = $this->entityManger->getClassMetadata(EdtCelcat::class);
+        $connection = $this->entityManger->getConnection();
+        $connection->beginTransaction();
+
+        try {
+            $connection->executeQuery('DELETE FROM '.$cmd->getTableName());
+            $connection->commit();
+            $connection->executeQuery('ALTER TABLE '.$cmd->getTableName().' AUTO_INCREMENT = 1');
+        } catch (Exception $e) {
+            $connection->rollback();
+        }
     }
 }
