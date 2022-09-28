@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Source/EdtAde.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/09/2022 18:52
+ * @lastUpdate 28/09/2022 18:34
  */
 
 namespace App\Components\SourceEdt\Source;
@@ -16,6 +16,8 @@ use App\Entity\Semestre;
 
 class EdtAde extends AbstractEdt implements EdtInterface
 {
+    public const SOURCE = 'ade';
+
     public function getPlanningSemestre(Semestre $semestre, array $matieres, AnneeUniversitaire $anneeUniversitaire, array $groupes): EvenementEdtCollection
     {
         return new EvenementEdtCollection();

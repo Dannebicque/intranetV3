@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/SourceEdtRegistry.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/09/2022 19:17
+ * @lastUpdate 28/09/2022 18:34
  */
 
 namespace App\Components\SourceEdt;
@@ -21,7 +21,7 @@ class SourceEdtRegistry
 
     public function registerSourceEdt(string $name, AbstractEdt $abstractEdt): void
     {
-        $this->sourcesEdt[$name] = $abstractEdt;
+        $this->sourcesEdt[$abstractEdt::SOURCE] = $abstractEdt;
     }
 
     /**

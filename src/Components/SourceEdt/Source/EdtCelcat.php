@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Source/EdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/09/2022 18:52
+ * @lastUpdate 28/09/2022 18:34
  */
 
 namespace App\Components\SourceEdt\Source;
@@ -21,6 +21,7 @@ use App\Repository\EdtCelcatRepository;
 
 class EdtCelcat extends AbstractEdt implements EdtInterface
 {
+    public const SOURCE = 'celcat';
 
     public function __construct(
         private readonly EdtCelcatRepository $edtCelcatRepository,

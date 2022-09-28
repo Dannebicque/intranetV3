@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/09/2022 19:00
+ * @lastUpdate 28/09/2022 18:38
  */
 
 namespace App\Controller\administration;
@@ -154,7 +154,7 @@ class EdtExportController extends BaseController
 //                   // $codeMatiere = 'W'.$codeMatiere;
 //                    $codeMatiere
 //                }
-                    $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= 'call  ajouter '.$p->getJour().' '.Constantes::TAB_HEURES[$p->getDebut()].' '.Constantes::TAB_HEURES[$p->getFin()].' '.$codeprof.' '.$tabSalles[$p->getSalle()].' '.$codeMatiere.' '.$tabType[mb_strtoupper($p->getType())]."\n";
+                    $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= 'call  ajouter '.$p->getJour().' '.Constantes::TAB_HEURES[$p->getDebut()].' '.Constantes::TAB_HEURES[$p->getFin()].' '.$codeprof.' '.$tabSalles[$p->getSalle()].' '.$codeMatiere.' '.$tabType[mb_strtoupper($p->getType())].' '.$p->getSalle()."\n";
                 }
                 if (0 !== $p->getIdMatiere() && 'H018' === $p->getSalle()) { // array_key_exists($p->getIntervenant()->getNumeroHarpege(), $tabProf))
                     $codeMatiere = $matieres[$p->getTypeIdMatiere()]->codeElement;

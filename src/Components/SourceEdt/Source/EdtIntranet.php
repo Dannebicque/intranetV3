@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Source/EdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/09/2022 18:52
+ * @lastUpdate 28/09/2022 18:35
  */
 
 namespace App\Components\SourceEdt\Source;
@@ -21,6 +21,8 @@ use App\Repository\EdtPlanningRepository;
 
 class EdtIntranet extends AbstractEdt implements EdtInterface
 {
+    public const SOURCE = 'intranet';
+
     public function __construct(
         private readonly EdtIntranetAdapter $adapter,
         private readonly EdtPlanningRepository $edtPlanningRepository,
