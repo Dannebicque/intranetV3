@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/09/2022 09:13
+ * @lastUpdate 28/09/2022 14:42
  */
 
 namespace App\Controller\administration;
@@ -165,7 +165,7 @@ class EtudiantController extends BaseController
     #[Route('/edit-ajax/{id}', name: 'adm_etudiant_edit_ajax', options: ['expose' => true], methods: ['POST'])]
     public function editAjax(EtudiantUpdate $etudiantUpdate, Request $request, Etudiant $etudiant): JsonResponse
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $etudiant->getSemestre());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $etudiant->getDepartement());
         $parametersAsArray = JsonRequest::getFromRequest($request);
         if (array_key_exists('field', $parametersAsArray) && array_key_exists('value', $parametersAsArray)) {
             $etudiantUpdate->update($etudiant, $parametersAsArray['field'], $parametersAsArray['value']);

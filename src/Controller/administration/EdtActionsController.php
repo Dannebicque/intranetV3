@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtActionsController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/09/2022 14:04
+ * @lastUpdate 23/09/2022 07:06
  */
 
 namespace App\Controller\administration;
@@ -60,7 +60,7 @@ class EdtActionsController extends BaseController
         if ('' !== $request->request->get('idEdtUpdate')) {
             $plann = $edtPlanningRepository->find($request->request->get('idEdtUpdate'));
             if (null !== $plann) {
-                $pl = $myEdt->updateCours($request, $plann, $this->dataUserSession->getAnneeUniversitaire());
+                $pl = $myEdt->updateCours($request, $plann, $this->getAnneeUniversitaire());
             }
         } else {
             $pl = $myEdt->addCours($request, $this->getAnneeUniversitaire());
