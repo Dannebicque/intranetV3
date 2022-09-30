@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 30/09/2022 14:20
  */
 
 namespace App\Controller\administration;
@@ -49,7 +49,17 @@ class AbsenceController extends BaseController
     ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $etudiant->getSemestre());
 
-        $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestre());
+        if ($etudiant->getDiplome()->isApc() === false) {
+            $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestre());
+        } else {
+            $mats = $typeMatiereManager->findByReferentielOrdreSemestre($etudiant->getSemestre(), $etudiant->getDiplome()->getReferentiel());
+
+            $matieres = [];
+            foreach ($mats as $mat) {
+                $matieres[$mat->getTypeIdMatiere()] = $mat;
+            }
+        }
+
         $etudiantAbsences->setEtudiant($etudiant);
 
         $absences = $etudiantAbsences->getAbsencesParSemestresEtAnneeUniversitaire($matieres,
