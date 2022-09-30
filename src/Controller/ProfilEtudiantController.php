@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/ProfilEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/09/2022 18:30
+ * @lastUpdate 30/09/2022 14:12
  */
 
 namespace App\Controller;
@@ -231,7 +231,17 @@ class ProfilEtudiantController extends BaseController
         if (null !== $etudiant->getSemestre()) {
             Calendrier::calculPlanning($this->dataUserSession->getAnneeUniversitaire()->getAnnee(), 2,
                 Constantes::DUREE_SEMESTRE);
-            $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestre());
+
+            if ($etudiant->getDiplome()->isApc()) {
+                $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestre());
+            } else {
+                $mats = $typeMatiereManager->findBySemestreAndReferentiel($etudiant->getSemestre(), $etudiant->getDiplome()->getReferentiel());
+
+                $matieres = [];
+                foreach ($mats as $mat) {
+                    $matieres[$mat->getTypeIdMatiere()] = $mat;
+                }
+            }
             $etudiantAbsences->setEtudiant($etudiant);
             $absences = $etudiantAbsences->getAbsencesParSemestresEtAnneeUniversitaire($matieres,
                 $this->dataUserSession->getAnneeUniversitaire());
