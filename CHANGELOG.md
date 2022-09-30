@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.31](https://github.com/Dannebicque/intranetV3/compare/v3.9.30...v3.9.31) (2022-09-30)
+
+
+### Bug Fixes
+
+* [Appel] Décalage avec la coche réalisée ([ac8bc79](https://github.com/Dannebicque/intranetV3/commit/ac8bc798f16c8efc5304ed1fe6dc91128e753327))
+* [Command] Tâche Cron de mise à jour de l'emploi du temps ([116b580](https://github.com/Dannebicque/intranetV3/commit/116b580dd6c37357ef481bc2eac9f3f82a4c0602))
+* [Edt] Ajout sur le bon diplôme si diplôme parent ([5d39300](https://github.com/Dannebicque/intranetV3/commit/5d39300f09fca854b0167ee662c9beda7e78a9f3))
+* [Edt] Componnent ([a257009](https://github.com/Dannebicque/intranetV3/commit/a2570097846b4a8b2a9f62c73117101885d128e7))
+* [Edt] Export ([abd5414](https://github.com/Dannebicque/intranetV3/commit/abd54143fec5e61325012769cc57399290427bf4))
+* [Edt] Mise à jour semestre ([c905dbd](https://github.com/Dannebicque/intranetV3/commit/c905dbd3890f15f6dfa699fc26ce1ce8127aae9d))
+* [Etudiant] Mise à jour semestre ([b18c51c](https://github.com/Dannebicque/intranetV3/commit/b18c51c0e157c4c15301e4f5f6923c717fb92ede))
+* [Etudiant] Mise à jour semestre ([5a68a1b](https://github.com/Dannebicque/intranetV3/commit/5a68a1bf6a1433d3db2ce64b77806c2fe6e478ee))
+* [Groupe] Redirection vers la même page sur un autre semestre + nettoyage code inutilisé ([90a8f01](https://github.com/Dannebicque/intranetV3/commit/90a8f0126b55a31dbd73f005a0cdb502cd02b3a4))
+* [JS InPlaceEdit] Correction si champ vide. Ne fonctionnait pas avec des espaces. ([de15d63](https://github.com/Dannebicque/intranetV3/commit/de15d6366008586905d4e7b13aad317df5cc2e1b))
+
 ### [3.9.30](https://github.com/Dannebicque/intranetV3/compare/v3.9.29...v3.9.30) (2022-09-23)
 
 
