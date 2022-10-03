@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/TypeGroupeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2022 09:47
+ * @lastUpdate 03/10/2022 18:22
  */
 
 namespace App\Repository;
@@ -52,6 +52,7 @@ class TypeGroupeRepository extends ServiceEntityRepository
 
     public function findByDepartement(Departement $departement): array
     {
+        // todo: à revoir, le semestre n'est pas forcément présent pour le moment
         return $this->createQueryBuilder('t')
             ->innerJoin(Semestre::class, 's', 'WITH', 't.semestre = s.id')
             ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
@@ -64,13 +65,14 @@ class TypeGroupeRepository extends ServiceEntityRepository
 
     public function findByDepartementSemestresActifs(Departement $departement): array
     {
+        // todo: à revoir, le semestre n'est pas forcément présent pour le moment. Rustine pour que ca fonctionne en attenand de reprendre typegroupe...
         return $this->createQueryBuilder('t')
-            ->innerJoin(Semestre::class, 's', 'WITH', 't.semestre = s.id')
-            ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
-            ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
+          //  ->innerJoin(Semestre::class, 's', 'WITH', 't.semestre = s.id')
+           // ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
+            ->innerJoin(Diplome::class, 'd', 'WITH', 't.diplome = d.id')
             ->where('d.departement = :departement')
-            ->andWhere('a.actif = true')
-            ->andWhere('s.actif = true')
+            // ->andWhere('a.actif = true')
+           // ->andWhere('s.actif = true')
             ->setParameter('departement', $departement->getId())
             ->getQuery()
             ->getResult();
