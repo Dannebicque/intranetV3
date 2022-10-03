@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.33](https://github.com/Dannebicque/intranetV3/compare/v3.9.32...v3.9.33) (2022-10-03)
+
+
+### Bug Fixes
+
+* [Celcat] Horodatage du script de mise à jour ([530ac58](https://github.com/Dannebicque/intranetV3/commit/530ac581f4075dea861832104d0c4b257572a01f))
+* [Messagerie] Types de groupes ([eb497b6](https://github.com/Dannebicque/intranetV3/commit/eb497b61830da692be59aad49c986b057d450ca3))
+* [UX-Autocomplete] Installation et utilisation à la place de tom-select seul ([a33984d](https://github.com/Dannebicque/intranetV3/commit/a33984da78e37a4753f394279c17f9301f22be7a))
+
 ### [3.9.32](https://github.com/Dannebicque/intranetV3/compare/v3.9.31...v3.9.32) (2022-10-03)
 
 
