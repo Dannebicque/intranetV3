@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.32](https://github.com/Dannebicque/intranetV3/compare/v3.9.31...v3.9.32) (2022-10-03)
+
+
+### Bug Fixes
+
+* [Absences] Affichage erronée sur le profil ([39c5538](https://github.com/Dannebicque/intranetV3/commit/39c553812e3ed281876b5d5491cf8b2fd53d4dca))
+* [Absences] Affichage erronée sur le profil ([4428962](https://github.com/Dannebicque/intranetV3/commit/442896215a6bdb3f31249c3eb030a656b92e6dab))
+* [Absences] Affichage erronée sur le profil ([f12f1d6](https://github.com/Dannebicque/intranetV3/commit/f12f1d6f4338f1ad31c9b6c73f43c8b86728a6ce))
+* [Absences] Liste des étudiants ([77ed892](https://github.com/Dannebicque/intranetV3/commit/77ed892fdeb76b2e5f8d6f9356c3511c8e205de3))
+* [Absences] Liste des étudiants ([40d6e17](https://github.com/Dannebicque/intranetV3/commit/40d6e17125638fe4922d351ab721d31b846c58a6))
+* [Celcat] Requete sur diplomes sans parents uniquement ([2edbe15](https://github.com/Dannebicque/intranetV3/commit/2edbe1570d172afc4a13b491f2888b81011f144a))
+
 ### [3.9.31](https://github.com/Dannebicque/intranetV3/compare/v3.9.30...v3.9.31) (2022-09-30)
 
 
