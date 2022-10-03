@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Command/UpdateEdtCommand.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/09/2022 17:44
+ * @lastUpdate 03/10/2022 14:36
  */
 
 namespace App\Command;
@@ -45,7 +45,8 @@ class UpdateEdtCommand extends Command
             $this->myCelcat->truncateTableEdtCelcat();
             /** @var \App\Entity\Diplome $diplome */
             foreach ($diplomes as $diplome) {
-                $io->text('Mise à jour du diplome '.$diplome->getLibelle());
+                $date = new \DateTime();
+                $io->text($date->format('d/m/Y H:i:s').' | Mise à jour du diplome '.$diplome->getLibelle());
                 $this->myCelcat->addEvents($diplome, $annee);
             }
 
