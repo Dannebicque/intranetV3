@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/BorneType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/BorneType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/08/2021 11:50
+ * @lastUpdate 11/09/2022 09:22
  */
 
 namespace App\Form;
@@ -12,12 +12,12 @@ namespace App\Form;
 use App\Entity\Borne;
 use App\Entity\Departement;
 use App\Entity\Semestre;
-use App\Form\Type\ChoiceCompleteType;
 use App\Form\Type\DateRangeType;
 use App\Form\Type\YesNoType;
 use App\Repository\SemestreRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -37,13 +37,21 @@ class BorneType extends AbstractType
         $this->departement = $options['departement'];
 
         $builder
-            ->add('icone', ChoiceCompleteType::class, [
+            ->add('icone', ChoiceType::class, [
                 'label' => 'label.icone',
-                'choices' => Borne::ICONES,
+                'choices' => Borne::ICONES, // todo: Créer un IconeEnum ? (peut servir ailleur)
+                'autocomplete' => true,
+                'attr' => [
+                    'placeholder' => 'label.veuillez_choisir',
+                ],
             ])
-            ->add('couleur', ChoiceCompleteType::class, [
+            ->add('couleur', ChoiceType::class, [
                 'label' => 'label.couleur',
-                'choices' => Borne::COULEURS,
+                'choices' => Borne::COULEURS, // todo: Créer un CouleurEnum ? (peut servir ailleur: année par exemple)
+                'autocomplete' => true,
+                'attr' => [
+                    'placeholder' => 'label.veuillez_choisir',
+                ],
             ])
             ->add('message', TextareaType::class, [
                 'label' => 'label.message',

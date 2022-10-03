@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/RattrapageType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/RattrapageType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/10/2021 10:37
+ * @lastUpdate 11/09/2022 09:34
  */
 
 namespace App\Form;
@@ -13,12 +13,13 @@ use App\Classes\Matieres\TypeMatiereManager;
 use App\Entity\Personnel;
 use App\Entity\Rattrapage;
 use App\Entity\Semestre;
-use App\Form\Type\ChoiceCompleteType;
 use App\Form\Type\DatePickerType;
 use App\Form\Type\EntityCompleteType;
 use App\Form\Type\TimePickerType;
 use App\Repository\PersonnelRepository;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -52,13 +53,19 @@ class RattrapageType extends AbstractType
                 'required' => false,
                 'attr' => ['maxlength' => 20, 'placeholder' => 'Par ex. 1h30'],
                 'help' => 'help.duree_evaluation', ])
-            ->add('typeIdMatiere', ChoiceCompleteType::class, [
+            ->add('typeIdMatiere', ChoiceType::class, [
                 'choices' => $this->typeMatiereManager->findBySemestreChoiceType($this->semestre),
                 'label' => 'label.matiere',
                 'required' => true,
                 'expanded' => false,
                 'multiple' => false,
                 'mapped' => false,
+                'autocomplete' => true,
+                'attr' => [
+                    'placeholder' => 'label.veuillez_choisir',
+                ],
+                'help' => 'help.matiere_rattrapage',
+
             ])
             ->add('personnel', EntityCompleteType::class, [
                 'class' => Personnel::class,
@@ -66,8 +73,11 @@ class RattrapageType extends AbstractType
                 'choice_label' => 'displayPr',
                 'query_builder' => fn (PersonnelRepository $personnelRepository) => $personnelRepository->findBySemestreBuilder($this->semestre),
                 'required' => true,
+                'data' => null,
                 'expanded' => false,
                 'multiple' => false,
+                'help' => 'help.enseignant_rattrapage',
+
             ]);
     }
 
