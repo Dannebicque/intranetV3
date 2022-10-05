@@ -648,7 +648,9 @@
                 référent) {{ proposition.tuteurUniversitaire.displayPr }}<br>
                 4) <u>Modalités d’évaluation pédagogiques</u> : le stagiaire devra rendre <br>
                 {{ proposition.stagePeriode.documentRendre }}.<br>
-                <u>NOMBRE D’ECTS (le cas échéant)</u>: {{ proposition.stagePeriode.nbEcts }}.<br>
+                <u>NOMBRE D’ECTS (le cas échéant)</u>: {{ proposition.stagePeriode.nbEcts == 0 ? 'Le stage ne donne
+                pas lieu à des ECTS mais une note comptant dans différentes UE' : proposition.stagePeriode.nbEcts }}
+                .<br>
                 5) Le tuteur de l’organisme d’accueil ou tout membre de l’organisme d’accueil appelé à se rendre dans
                 l’établissement d’enseignement dans le cadre de la préparation, du déroulement et de la validation du
                 stage ne peut prétendre à une quelconque prise en charge ou indemnisation de la part de l’établissement
