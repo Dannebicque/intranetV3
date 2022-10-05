@@ -132,7 +132,7 @@ help:
   modaliteEncadrement: 'Précisez comment sera effectué l''encadrement par le tuteur universitaire'
   modaliteEvaluation: 'Modalité d''évaluation du stagiraire par l''entreprise'
   modaliteEvaluationPedagogique: 'Indiquez la manière dont sera évalué le stage par l''équipe pédagogique'
-  nbEcts: 'Nombre d''ECTS attribués pour la réalisation et la validation du stage'
+  nbEcts: 'Nombre d''ECTS attribués pour la réalisation et la validation du stage. Indiquer 0, si pas d''ECTS pour le stage'
   nbJours: "Indiquez le nombre de jours de stage sur la période (nécessaire pour la convention de stage)\n        "
   nbSemaines: "Indiquez le nombre de semaine où l'étudiant sera en stage (nécessaire pour la convention)\n        "
   periodesInterruptions: 'En complément des périodes déjà prévues'
