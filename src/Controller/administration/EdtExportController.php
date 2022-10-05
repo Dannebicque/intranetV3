@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/09/2022 19:33
+ * @lastUpdate 05/10/2022 17:45
  */
 
 namespace App\Controller\administration;
@@ -21,6 +21,7 @@ use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use App\Repository\TypeGroupeRepository;
+use App\Utils\Tools;
 use function array_key_exists;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -149,10 +150,11 @@ class EdtExportController extends BaseController
                      * # 1= jour de la semaine (ex: 1 pour lundi)
     # 2= heure de debut (ex: 11:00)
     # 3= heure de fin (ex: 12:30)
-    # 4= indice du prof (ex: 1 Annebicque)
+    # 4= code harpège du prof (ex: 1 Annebicque)
     # 5= indice de la salle (ex:1 premiere salle de la liste bat H)
-    # 6= indice de la matiere (ex:1 premiere matiere de la liste des matieres)
+    # 6= code élément de la matiere
     # 7= type de cours (CM=1, TD=4, TP=6)
+    # 8= libellé de la salle (ex: H006)
                      */
                     $codeMatiere = $matieres[$p->getTypeIdMatiere()]->codeElement;
 //                if (2 === $semestre->getOrdreLmd()) {
@@ -176,7 +178,7 @@ class EdtExportController extends BaseController
                 foreach ($value as $groupe => $c) {
                     $codeComplet .= 'call groupe '.$i."\n";
 
-                    $n = $semestre->getLibelle().'_S'.$calendrier->getSemaineReelle().'_'.$type.'_'.str_replace(' ', '_',$codeGroupe[$type.'_'.$groupe]).'.bat';
+                    $n = Tools::slug($semestre->getLibelle()).'_S'.$calendrier->getSemaineReelle().'_'.$type.'_'.str_replace(' ', '_',$codeGroupe[$type.'_'.$groupe]).'.bat';
 
                     $zip->addFromString($n, $c);
                     $codeComplet .= 'call '.$n." \n";
