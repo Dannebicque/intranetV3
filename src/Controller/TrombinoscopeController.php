@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/TrombinoscopeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/09/2022 09:23
+ * @lastUpdate 25/09/2022 15:52
  */
 
 namespace App\Controller;
@@ -138,6 +138,7 @@ class TrombinoscopeController extends BaseController
         }
 
         return $this->render('trombinoscope/trombiEtudiant.html.twig', [
+            'parcours' => $semestre->getDiplome()->getApcParcours(),
             'semestre' => $semestre,
             'selectedTypeGroupe' => $typegroupe,
             'typeGroupes' => $typeGroupes,

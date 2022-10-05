@@ -40,21 +40,27 @@
             {% if selectedTypeGroupe != null and groupes|length >0 %}
                 <div class="tabs">
                     <ul class="nav nav-tabs">
-                        {% for groupe in groupes %}
+                        {% for groupe in groupes|filter(groupe => (parcours != null and groupe.typeGroupe.type.value != 'CM'
+                            and groupe.apcParcours.id == parcours.id) or (parcours == null) or (groupe.typeGroupe
+                            .type.value == 'CM' and groupe.apcParcours == null)
+                            ) %}
                             <li class="nav-item">
                                 <a class="nav-link {% if loop.first %}active{% endif %}" data-bs-toggle="tab"
-                                   href="#groupe_{{ groupe.id }}">{{ groupe.libelle }} ({{ groupe.etudiants|length }}
-                                                                                       )</a>
+                                   href="#groupe_{{ groupe.id }}">{{ groupe.libelle }} ({{ groupe.etudiants|length }})</a>
                             </li>
                         {% endfor %}
                     </ul>
                 </div>
 
                 <div class="tab-content">
-                    {% for groupe in groupes %}
+                    {% for groupe in groupes|filter(groupe => (parcours != null and groupe.typeGroupe.type.value != 'CM'
+                        and groupe.apcParcours.id == parcours.id) or (parcours == null) or (groupe.typeGroupe
+                    .type.value == 'CM' and groupe.apcParcours == null)
+                        ) %}
                         <div class="tab-pane {% if loop.first %}fade active show{% endif %}" id="groupe_{{ groupe.id }}">
                             <div class="row">
-                                {% if etudiants|length > 0 and etudiants[groupe.id]|length >0 %}
+                                {% if etudiants|length > 0 and etudiants[groupe.id] is defined and etudiants[groupe
+                                .id]|length >0 %}
                                     {% for etudiant in etudiants[groupe.id] %}
                                         <div class="col-sm-6 col-md-4 col-lg-3 mb-30">
                                             <div class="text-white card-body bg-cyan py-20"
