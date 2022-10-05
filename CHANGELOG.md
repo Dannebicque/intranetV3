@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.34](https://github.com/Dannebicque/intranetV3/compare/v3.9.33...v3.9.34) (2022-10-05)
+
+
+### Bug Fixes
+
+* [Bilan APC] Modification de la selection du semestre avec ManyToMany ([0fef84e](https://github.com/Dannebicque/intranetV3/commit/0fef84e16a71ea357768c71dd68a1efc9c9d7aa6))
+* [Script Celcat] Script d'export avec nom sans accents ([7190f76](https://github.com/Dannebicque/intranetV3/commit/7190f766f022b4b78aa70ee4c4652365edd0fac2))
+* [Stage] Modification convention. ([aa6d806](https://github.com/Dannebicque/intranetV3/commit/aa6d8067ae7df29dbf1f76ba1a558c6cf21262c3))
+* [Stage] Modification convention. ([486093c](https://github.com/Dannebicque/intranetV3/commit/486093c6ba8b682c62f64155395473dd9206d8a5))
+* [Trombinoscope] Filtre par parcours des trombis ([2e65cbf](https://github.com/Dannebicque/intranetV3/commit/2e65cbffa8d052367558a553d943904a68f71acb))
+* [UX-Autocomplete] Installation et utilisation à la place de tom-select seul ([6780cc9](https://github.com/Dannebicque/intranetV3/commit/6780cc90aa866a6ff5b4dc78aefbb18e71cc9be8))
+
 ### [3.9.33](https://github.com/Dannebicque/intranetV3/compare/v3.9.32...v3.9.33) (2022-10-03)
 
 
