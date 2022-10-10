@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/EvenementEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/09/2022 16:39
+ * @lastUpdate 10/10/2022 09:19
  */
 
 namespace App\DTO;
@@ -104,6 +104,13 @@ class EvenementEdt
         return $h / 30;
     }
 
+    public function dureeObjet(): \DateInterval
+    {
+        $d = $this->heureDebut;
+
+        return $d->diff($this->heureFin);
+    }
+
     public function texteEvt(): ?string
     {
         if (null !== $this->texte) {
@@ -137,15 +144,30 @@ class EvenementEdt
 
     public function isEvaluation(): string
     {
-        if (false === $this->evaluation) {
-            return $this->matiere;
+        if (null === $this->typeIdMatiere) {
+            $matiere = $this->texte;
+        } else {
+            $matiere = $this->matiere;
         }
 
-        return '* '.$this->matiere.' *';
+        if (false === $this->evaluation) {
+            return $matiere;
+        }
+
+        return '* '.$matiere.' *';
     }
 
     public function getTypeIdEvent(): string
     {
         return $this->source.'_'.$this->id;
+    }
+
+    public function appelFait(): ?string
+    {
+        if (null !== $this->dateObjet && null !== $this->heureDebut) {
+            return $this->dateObjet->format('Ymd').'_'.$this->heureDebut->format('Hi').'_'.$this->getTypeMatiere();
+        }
+
+        return null;
     }
 }
