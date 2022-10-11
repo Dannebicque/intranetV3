@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/09/2022 15:36
+ * @lastUpdate 11/10/2022 20:25
  */
 
 namespace App\Controller;
@@ -68,6 +68,8 @@ class EdtController extends BaseController
         $suiviAppel[] = $absenceRepository->findBySemaineAndUserArray($calendrier->semaineFormationLundi,
             $this->getUser());
         $suiviAppel = array_merge(...$suiviAppel);
+
+        dump($suiviAppel);
 
         return $this->render('edt/_intervenant2.html.twig', [
             'edt' => $edt,
