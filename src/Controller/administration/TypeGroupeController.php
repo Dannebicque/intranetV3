@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/TypeGroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2022 09:33
+ * @lastUpdate 05/10/2022 17:51
  */
 
 namespace App\Controller\administration;
@@ -17,7 +17,6 @@ use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use App\Enums\TypeGroupeEnum;
 use App\Exception\DiplomeNotFoundException;
-use App\Repository\TypeGroupeRepository;
 use App\Utils\JsonRequest;
 use App\Utils\Tools;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -30,22 +29,16 @@ class TypeGroupeController extends BaseController
 {
     #[Route(path: '/liste/{semestre}', name: 'administration_type_groupe_liste_semestre', options: ['expose' => true], methods: ['GET'])]
     public function listeSemestre(
-        TypeGroupeRepository $typeGroupeRepository,
         Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
         $diplome = $this->getDiplomeFromSemestre($semestre);
-        if (true === $diplome->isApc()) {
-            // todo: fusionner dès la suppression de semestre et la mise à jour des données.
-            $typeGroupes = $typeGroupeRepository->findByDiplomeAndOrdreSemestre($diplome, $semestre->getOrdreLmd());
-        } else {
-            $typeGroupes = $semestre->getTypeGroupes();
-        }
+
 
         return $this->render('administration/type_groupe/_listeSemestre.html.twig', [
             'semestre' => $semestre,
             'diplome' => $diplome,
-            'typeGroupes' => $typeGroupes,
+            'typeGroupes' => $semestre->getTypeGroupess(),
             'typeGroupeEnum' => TypeGroupeEnum::cases(),
         ]);
     }

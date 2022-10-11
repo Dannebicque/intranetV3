@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyGroupes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/09/2022 17:57
+ * @lastUpdate 04/10/2022 21:21
  */
 
 /*
@@ -73,9 +73,7 @@ class MyGroupes
         if (null === $this->groupedefaut && count($this->typeGroupes) > 0) {
             $this->groupedefaut = $this->typeGroupes[0];
         }
-//        else {
-//            throw new Exception('Aucun groupe par défaut trouvé');
-//        }
+
         $this->groupes = $this->groupeRepository->findBy(['typeGroupe' => $this->groupedefaut->getId()]);
 
         return $this;

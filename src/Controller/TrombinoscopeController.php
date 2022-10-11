@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/TrombinoscopeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/09/2022 15:52
+ * @lastUpdate 05/10/2022 17:36
  */
 
 namespace App\Controller;
@@ -22,7 +22,6 @@ use App\Exception\DiplomeNotFoundException;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
-use App\Repository\TypeGroupeRepository;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -103,7 +102,6 @@ class TrombinoscopeController extends BaseController
     #[Route(path: '/etudiant/{semestre<\d+>}/{typegroupe<\d+>}', name: 'trombinoscope_etudiant_semestre_type_groupe', options: ['expose' => true])]
     #[ParamConverter('typegroupe', options: ['id' => 'typegroupe'])]
     public function trombiEtudiantSemestre(
-        TypeGroupeRepository $typeGroupeRepository,
         EtudiantRepository $etudiantRepository,
         GroupeRepository $groupeRepository,
         Semestre $semestre,
@@ -119,7 +117,8 @@ class TrombinoscopeController extends BaseController
             throw new DiplomeNotFoundException();
         }
 
-        $typeGroupes = $typeGroupeRepository->findByDiplomeAndOrdreSemestre($dip, $semestre->getOrdreLmd());
+        $typeGroupes = $semestre->getTypeGroupess();
+
         $groupes = null;
         if (null !== $typegroupe) {
             $groupes = $groupeRepository->findByTypeGroupe($typegroupe);

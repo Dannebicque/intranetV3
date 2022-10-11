@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/api/GroupesApiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/09/2022 10:39
+ * @lastUpdate 05/10/2022 17:51
  */
 
 namespace App\Controller\api;
@@ -13,7 +13,6 @@ use App\Controller\BaseController;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
-use App\Repository\TypeGroupeRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -23,22 +22,11 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/api/groupe')]
 class GroupesApiController extends BaseController
 {
-    public function __construct(
-        protected TypeGroupeRepository $typeGroupeRepository
-    )
-    {
-    }
-
     #[Route(path: '/type-groupe/{semestre}', name: 'api_type_groupe_semestre', options: ['expose' => true])]
     public function typeGroupeSemestreAjax(
         Semestre $semestre): Response
     {
-        if ($semestre->getDiplome()->isApc()) {
-            $typeGroupes = $this->typeGroupeRepository->findByDiplomeAndOrdreSemestre($semestre->getDiplome(), $semestre->getOrdreLmd());
-        } else {
-            $typeGroupes = $semestre->getTypeGroupes();
-        }
-
+        $typeGroupes = $semestre->getTypeGroupess();
         $json = [];
         foreach ($typeGroupes as $typeGroupe) {
             $json[] = ['libelle' => $typeGroupe->getLibelle(), 'id' => $typeGroupe->getId()];

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/DocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/08/2022 10:54
+ * @lastUpdate 03/10/2022 20:23
  */
 
 namespace App\Controller;
@@ -95,6 +95,7 @@ class DocumentController extends BaseController
         }
 
         $documents = $documentRepository->findByTypeDocument($typedocument->getId(), $this->isEtudiant());
+        //todo: filtre par semestre ???
         $idDocuments = $myDocument->idMesDocumentsFavoris($this->getUser());
         $breadCrumbs = [];
         $td = $typedocument;

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/09/2022 08:53
+ * @lastUpdate 04/10/2022 09:25
  */
 
 namespace App\Entity;
@@ -145,7 +145,9 @@ class Semestre extends BaseEntity implements Stringable
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\TypeGroupe>
+     *
      */
+    #[Deprecated]
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: TypeGroupe::class)]
     #[ORM\OrderBy(value: ['libelle' => 'ASC'])]
     private Collection $typeGroupes;
@@ -256,6 +258,9 @@ class Semestre extends BaseEntity implements Stringable
     #[ORM\ManyToMany(targetEntity: ProjetPeriode::class, mappedBy: 'semestres')]
     private Collection $projetPeriodeSemestres;
 
+    #[ORM\ManyToMany(targetEntity: TypeGroupe::class, mappedBy: 'semestres')]
+    private Collection $typeGroupess;
+
     public function __construct()
     {
         $this->init();
@@ -269,6 +274,7 @@ class Semestre extends BaseEntity implements Stringable
         $this->semestreLienDepart = new ArrayCollection();
         $this->semestreLienArrive = new ArrayCollection();
         $this->projetPeriodeSemestres = new ArrayCollection();
+        $this->typeGroupess = new ArrayCollection();
     }
 
     private function init(): void
@@ -768,14 +774,13 @@ class Semestre extends BaseEntity implements Stringable
         return $this;
     }
 
-    /**
-     * @return Collection|TypeGroupe[]
-     */
+    #[Deprecated]
     public function getTypeGroupes(): Collection
     {
         return $this->typeGroupes;
     }
 
+    #[Deprecated]
     public function addTypeGroupe(TypeGroupe $typeGroupe): self
     {
         if (!$this->typeGroupes->contains($typeGroupe)) {
@@ -786,6 +791,7 @@ class Semestre extends BaseEntity implements Stringable
         return $this;
     }
 
+    #[Deprecated]
     public function removeTypeGroupe(TypeGroupe $typeGroupe): self
     {
         if ($this->typeGroupes->contains($typeGroupe)) {
@@ -1494,6 +1500,33 @@ class Semestre extends BaseEntity implements Stringable
     {
         if ($this->projetPeriodeSemestres->removeElement($projetPeriodeSemestre)) {
             $projetPeriodeSemestre->removeSemestre($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TypeGroupe>
+     */
+    public function getTypeGroupess(): Collection
+    {
+        return $this->typeGroupess;
+    }
+
+    public function addTypeGroupess(TypeGroupe $typeGroupess): self
+    {
+        if (!$this->typeGroupess->contains($typeGroupess)) {
+            $this->typeGroupess->add($typeGroupess);
+            $typeGroupess->addSemestre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTypeGroupess(TypeGroupe $typeGroupess): self
+    {
+        if ($this->typeGroupess->removeElement($typeGroupess)) {
+            $typeGroupess->removeSemestre($this);
         }
 
         return $this;

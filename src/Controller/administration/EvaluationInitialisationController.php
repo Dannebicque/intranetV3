@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EvaluationInitialisationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/09/2022 10:08
+ * @lastUpdate 05/10/2022 19:15
  */
 
 namespace App\Controller\administration;
@@ -35,7 +35,6 @@ class EvaluationInitialisationController extends BaseController
     public function index(
         Request $request,
         PrevisionnelManager $previsionnelManager,
-        TypeGroupeRepository $typeGroupeRepository,
         TypeMatiereManager $typeMatiereManager,
         EvaluationRepository $evaluationRepository,
         Semestre $semestre
@@ -44,12 +43,11 @@ class EvaluationInitialisationController extends BaseController
 
         if (true === $semestre->getDiplome()->isApc()) {
             $matieres = $typeMatiereManager->findBySemestreAndReferentiel($semestre, $semestre->getDiplome()?->getReferentiel());
-            $typeGroupes = $typeGroupeRepository->findByDiplomeAndOrdreSemestre($semestre->getDiplome(), $semestre->getOrdreLmd());
         } else {
             $matieres = $typeMatiereManager->findBySemestre($semestre);
-            $typeGroupes = $typeGroupeRepository->findBySemestre($semestre);
         }
 
+        $typeGroupes = $semestre->getTypeGroupess();
         $previsionnels = $previsionnelManager->getPrevisionnelSemestre($semestre, $this->getAnneeUniversitaire()->getAnnee());
 
         $tabprevi = [];

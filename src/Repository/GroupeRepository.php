@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/GroupeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/09/2022 15:32
+ * @lastUpdate 05/10/2022 17:29
  */
 
 namespace App\Repository;
@@ -110,33 +110,6 @@ class GroupeRepository extends ServiceEntityRepository
 
         return $groupes;
     }
-
-//    public function getGroupesTPOrdreSemestre(Semestre $semestre): array
-//    {
-//        // todo: typegroupe ne doit plus contenir de semestre... mais un numéro et un diplome
-//        return $this->createQueryBuilder('g')
-//            ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')
-//            ->where('t.type = :type')
-//            ->andWhere('t.ordreSemestre = :semestre')
-//            ->andWhere('t.diplome = :diplome')
-//            ->setParameters(['type' => 'TP', 'semestre' => $semestre->getOrdreLmd(), 'diplome' => $semestre->getDiplome()->getId()])
-//            ->orderBy('g.libelle', Criteria::ASC)
-//            ->getQuery()
-//            ->getResult();
-//    }
-
-//    public function getGroupesTDOrdreSemestre(Semestre $semestre): array
-//    {
-//        return $this->createQueryBuilder('g')
-//            ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')
-//            ->where('t.type = :type')
-//            ->andWhere('t.ordreSemestre = :semestre')
-//            ->andWhere('t.diplome = :diplome')
-//            ->setParameters(['type' => 'TD', 'semestre' => $semestre->getOrdreLmd(), 'diplome' => $semestre->getDiplome()->getId()])
-//            ->orderBy('g.libelle', Criteria::ASC)
-//            ->getQuery()
-//            ->getResult();
-//    }
 
     public function getGroupesTP(Semestre $semestre): array
     {
@@ -277,8 +250,15 @@ class GroupeRepository extends ServiceEntityRepository
 
         return $this->createQueryBuilder('g')
             ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')
-            ->where('t.diplome = :diplome')
-            ->andWhere('t.ordreSemestre = :ordreSemestre')
+//            ->addSelect('g')
+//            ->addSelect('t')
+            ->innerJoin('t.semestres', 's')
+          //  ->addSelect('s')
+            ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
+            ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
+            ->where('d.id = :diplome')
+            ->orWhere('d.parent = :diplome')
+            ->andWhere('s.ordreLmd = :ordreSemestre')
             ->setParameter('diplome', $diplome->getId())
             ->setParameter('ordreSemestre', $ordreSemestre)
             ->orderBy('t.libelle', Criteria::ASC)

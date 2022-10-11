@@ -2400,3 +2400,5 @@ type_slider: 'Slider'
 updated: 'Dernière mise à jour le '
 structure:
   groupes: 'Structure des groupes'
+ddn.etudiant: 'Date de naissance'
+age.etudiant: 'Age'
