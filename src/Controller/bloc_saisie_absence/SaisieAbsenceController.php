@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/bloc_saisie_absence/SaisieAbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/09/2022 16:37
+ * @lastUpdate 05/10/2022 20:40
  */
 
 namespace App\Controller\bloc_saisie_absence;
@@ -28,9 +28,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * Class AbsenceController.
- */
 #[Route(path: '/application/personnel/absence/ajax')]
 #[IsGranted('ROLE_PERMANENT')]
 class SaisieAbsenceController extends BaseController
@@ -53,13 +50,12 @@ class SaisieAbsenceController extends BaseController
         }
 
         if (true === $semestre->getDiplome()?->isApc()) {
-            // todo: fusionner
-            $typeGroupes = $typeGroupeRepository->findByDiplomeAndOrdreSemestre($semestre->getDiplome(), $semestre->getOrdreLmd());
             $matieres = $typeMatiereManager->findBySemestreAndReferentiel($semestre, $semestre->getDiplome()?->getReferentiel());
         } else {
-            $typeGroupes = $semestre->getTypeGroupes();
-            $matieres = $typeMatiereManager->findBySemestre($semestre);
+            $matieres = $typeMatiereManager->findBySemestre($semestre); // todo: devrait être géré par le manager ?
         }
+
+        $typeGroupes = $semestre->getTypeGroupess();
 
         return $this->render('bloc_saisie_absence/_saisie_absence.html.twig', [
             'matiere' => $matiere,
@@ -82,6 +78,7 @@ class SaisieAbsenceController extends BaseController
     #[Route(path: '/saisie/{matiere}/{etudiant}', name: 'application_personnel_absence_saisie_ajax', options: ['expose' => true], methods: 'POST')]
     public function ajaxSaisie(TypeMatiereManager $typeMatiereManager, EtudiantAbsences $etudiantAbsences, AbsenceRepository $absenceRepository, Request $request, string $matiere, Etudiant $etudiant): JsonResponse|Response
     {
+        //todo: dupliqué avec app et Admin??
         $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
         $semestre = $etudiant->getSemestre();
         if (null !== $mat && null !== $semestre) {
@@ -101,7 +98,9 @@ class SaisieAbsenceController extends BaseController
                     $etudiantAbsences->addAbsence(
                         $dateHeure,
                         $mat,
-                        $this->getUser()
+                        $this->getUser(),
+                        false,
+                        $request->request->get('duree')
                     );
 
                     $absences = $absenceRepository->getByMatiereArray(
@@ -112,7 +111,7 @@ class SaisieAbsenceController extends BaseController
                     return $this->json($absences);
                 }
 
-                return new response('out', \Symfony\Component\HttpFoundation\Response::HTTP_INTERNAL_SERVER_ERROR);
+                return new response('out', Response::HTTP_INTERNAL_SERVER_ERROR);
             }
 
             if (1 === count($absence)) {
@@ -128,7 +127,7 @@ class SaisieAbsenceController extends BaseController
             }
         }
 
-        return new response('nok', \Symfony\Component\HttpFoundation\Response::HTTP_INTERNAL_SERVER_ERROR);
+        return new response('nok', Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     private function saisieAutorise(int $nbjour, CarbonInterface $datesymfony): bool
