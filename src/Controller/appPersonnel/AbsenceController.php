@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/09/2022 20:02
+ * @lastUpdate 11/10/2022 21:14
  */
 
 namespace App\Controller\appPersonnel;
@@ -18,19 +18,12 @@ use App\Controller\BaseController;
 use App\Entity\Absence;
 use App\Entity\AbsenceEtatAppel;
 use App\Entity\Constantes;
-use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use App\Exception\MatiereNotFoundException;
-use App\Repository\AbsenceEtatAppelRepository;
 use App\Repository\AbsenceRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\SemestreRepository;
 use App\Utils\JsonRequest;
-use App\Utils\Tools;
-use Carbon\Carbon;
-use Carbon\CarbonInterface;
-use function count;
-use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -73,23 +66,34 @@ class AbsenceController extends BaseController
      * @throws \App\Exception\MatiereNotFoundException
      * @throws \App\Exception\SemestreNotFoundException
      */
-    #[Route('/edt/{event}/{source}',
+    #[Route('/edt/{event}/{source}/{semestre}',
         name: 'application_personnel_absence_from_planning',
         requirements: ['event' => "\d+"],
         methods: ['GET'])]
     public function saisieFromEdt(
+        GroupeRepository $groupeRepository,
         TypeMatiereManager $typeMatiereManager,
         EdtManager $edtManager,
         MyGroupes $myGroupes,
         $event,
-        string $source = EdtManager::EDT_INTRANET
+        string $source = EdtManager::EDT_INTRANET,
+        Semestre $semestre
     ): Response {
-        $planning = $edtManager->getManager($source)?->find($event);
+        if ($semestre->getDiplome()->isApc()) {
+            $groupes = $groupeRepository->findByDiplomeAndOrdreSemestre($semestre->getDiplome(), $semestre->getOrdreLmd());
+            $matieres = $typeMatiereManager->findBySemestreAndReferentiel($semestre, $semestre->getDiplome()->getReferentiel());
+        } else {
+            $groupes = $groupeRepository->findBySemestre($semestre);
+            $matieres = $typeMatiereManager->findBySemestreArray($semestre);
+        }
+
+        $planning = $edtManager->getManager($source)?->find($event, $edtManager->transformeMatieres($semestre, $matieres), $edtManager->transformeGroupe($semestre, $groupes));
         $matiere = $typeMatiereManager->getMatiereFromSelect($planning->typeIdMatiere);
 
         if (null === $matiere) {
             throw new MatiereNotFoundException();
         }
+
         $this->denyAccessUnlessGranted('CAN_ADD_ABSENCE', ['matiere' => $matiere, 'semestre' => $matiere->getSemestres()[0]]);
         if (null !== $planning) {
             return $this->render('appPersonnel/absence/index.html.twig', [
@@ -97,7 +101,7 @@ class AbsenceController extends BaseController
                 'matiere' => $matiere,
                 'event' => $planning,
                 'groupes' => $myGroupes->getGroupesSemestre($planning->ordreSemestre,
-                    $planning->diplome, $planning->type_cours),
+                    $semestre->getDiplome(), $planning->type_cours),
                 'heure' => $planning->heureDebut,
                 'date' => $planning->dateObjet,
             ]);
@@ -135,7 +139,7 @@ class AbsenceController extends BaseController
     #[Route('/ajax/pas-absent/', name: 'application_personnel_absence_ajax_pas_absent', options: ['expose' => true], methods: ['POST'])]
     public function pasAbsentEvent(
         Request $request,
-        AbsenceEtatAppelRepository $absenceEtatAppelRepository,
+        \App\Classes\Absences\AbsenceEtatAppel $absenceEtatAppel,
         SemestreRepository $semestreRepository,
         GroupeRepository $groupeRepository,
         TypeMatiereManager $typeMatiereManager,
@@ -158,24 +162,15 @@ class AbsenceController extends BaseController
             $event = $edtManager->getEvent($idEvent, $edtManager->transformeMatieres($semestre, $matieres), $edtManager->transformeGroupe($semestre, $groupes));
 
             if (null !== $event) {
-                $etatAbsence = $absenceEtatAppelRepository->findOneBy([
+                $absenceEtatAppel->enregistreAppelFait([
                     'personnel' => null !== $event->personnelObjet ? $event->personnelObjet->getId() : $this->getUser()->getId(),
                     'groupe' => $event->groupeObjet->getId(),
-                    'date' => $event->dateObjet,
-                    'heure' => $event->heureDebut,
-                    'typeMatiere' => $event->getTypeMatiere(),
-                    'idMatiere' => $event->getIdMatiere(),
+                    'date' => $event->dateObjet->format('d/m/Y'),
+                    'heure' => $event->heureDebut->format('H:i'),
+                    'matiere' => $event->typeIdMatiere,
                     'semestre' => $semestre->getId(),
+                    'type_saisie' => AbsenceEtatAppel::SAISIE_SANS_ABSENT,
                 ]);
-
-                if (null === $etatAbsence) {
-                    $appelFait = new AbsenceEtatAppel();
-
-                    $appelFait->setEvent($event, AbsenceEtatAppel::SAISIE_SANS_ABSENT);
-
-                    $this->entityManager->persist($appelFait);
-                    $this->entityManager->flush();
-                }
 
                 return $this->json(true);
             }
@@ -237,66 +232,5 @@ class AbsenceController extends BaseController
         }
 
         return $this->json(null);
-    }
-
-    /**
-     * @throws Exception
-     */
-    #[Route(path: '/ajax/saisie/{matiere}/{etudiant}', name: 'application_personnel_absence_saisie_ajax', options: ['expose' => true], methods: 'POST')]
-    public function ajaxSaisie(
-        TypeMatiereManager $typeMatiereManager,
-        EtudiantAbsences $etudiantAbsences,
-        AbsenceRepository $absenceRepository,
-        Request $request,
-        string $matiere,
-        Etudiant $etudiant
-    ): JsonResponse|Response {
-        $dateHeure = Tools::convertDateHeureToObject($request->request->get('date'), $request->request->get('heure'));
-        $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
-        $this->denyAccessUnlessGranted('CAN_ADD_ABSENCE', ['matiere' => $mat, 'semestre' => $etudiant->getSemestre()]);
-        $absence = $absenceRepository->findBy([
-            'matiere' => $matiere,
-            'etudiant' => $etudiant->getId(),
-            'dateHeure' => $dateHeure,
-            'anneeUniversitaire' => $etudiant->getSemestre() ? $etudiant->getSemestre()->getAnneeUniversitaire()?->getId() : 0,
-        ]);
-        if (null !== $mat && 'saisie' === $request->get('action') && 0 === count($absence)) {
-            if ($this->saisieAutorise($mat->semestre->getOptNbJoursSaisieAbsence(), $dateHeure)) {
-                $etudiantAbsences->setEtudiant($etudiant);
-
-                $etudiantAbsences->addAbsence(
-                    $dateHeure,
-                    $mat,
-                    $this->getUser()
-                );
-
-                $absences = $absenceRepository->getByMatiereArray(
-                    $mat,
-                    $mat->semestre?->getAnneeUniversitaire()
-                );
-
-                return $this->json($absences);
-            }
-
-            return new response('out', Response::HTTP_INTERNAL_SERVER_ERROR);
-        }
-        if (1 === count($absence)) {
-            // un tableau, donc une absence ?
-            $etudiantAbsences->removeAbsence($absence[0]);
-
-            $absences = $absenceRepository->getByMatiereArray(
-                $mat,
-                $mat->semestre->getAnneeUniversitaire()
-            );
-
-            return $this->json($absences);
-        }
-
-        return new response('nok', Response::HTTP_INTERNAL_SERVER_ERROR);
-    }
-
-    private function saisieAutorise(int $nbjour, CarbonInterface $datesymfony): bool
-    {
-        return 0 === $nbjour || $datesymfony->diffInDays(Carbon::now()) <= $nbjour;
     }
 }
