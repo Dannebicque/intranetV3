@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/DefaultController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/09/2022 16:14
+ * @lastUpdate 05/10/2022 17:42
  */
 
 namespace App\Controller;
@@ -12,7 +12,6 @@ namespace App\Controller;
 use App\Entity\Etudiant;
 use App\Repository\ActualiteRepository;
 use App\Repository\DateRepository;
-use App\Repository\TypeGroupeRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
