@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.35](https://github.com/Dannebicque/intranetV3/compare/v3.9.34...v3.9.35) (2022-10-11)
+
+
+### Bug Fixes
+
+* [Add etudiant] Ajout de required ([bcf68f9](https://github.com/Dannebicque/intranetV3/commit/bcf68f9dbf309d8b452ddb911aa9924f0986fe6b))
+* [Connexion] Bouton d'aide sur page de connexion + background sur les liens ([6d40944](https://github.com/Dannebicque/intranetV3/commit/6d409443bfe5f23a48c9655287110c10d507883e))
+* [Edt] Affichage teste en mode semestre ([e69cf76](https://github.com/Dannebicque/intranetV3/commit/e69cf76a2701bcba1f54d75eed37d4c946c1986e))
+* [Edt] Suivi d'appel ([54ea7dd](https://github.com/Dannebicque/intranetV3/commit/54ea7dd39ff89a5c84074be43bc14bbadb60a3ee))
+* [Edt] Suivi d'appel ([adbfa92](https://github.com/Dannebicque/intranetV3/commit/adbfa9264d6d07585de754d8fcb995c2851fd8d2))
+* [Edt] Suivi d'appel ([0b7e33e](https://github.com/Dannebicque/intranetV3/commit/0b7e33e21be82a1f2ed60cd9ebf52627a0cfa094))
+* [Edt] Suppression d'un lien inutile pour étudiant ([f62440e](https://github.com/Dannebicque/intranetV3/commit/f62440ea7b663d9d3385fbd47b6016ae70ec11d6))
+* [Script] correction script ([994cb05](https://github.com/Dannebicque/intranetV3/commit/994cb054ebfacc13d50ea275e6a0d51ee9807c29))
+
 ### [3.9.34](https://github.com/Dannebicque/intranetV3/compare/v3.9.33...v3.9.34) (2022-10-05)
 
 
