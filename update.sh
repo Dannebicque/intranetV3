@@ -2,7 +2,7 @@
 # @file /Users/davidannebicque/Sites/intranetV3/update.sh
 # @author davidannebicque
 # @project intranetV3
-# @lastUpdate 11/09/2022 14:11
+# @lastUpdate 09/10/2022 16:43
 
 touch maintenance.lock
 echo "Début mise à jour"
@@ -10,7 +10,7 @@ echo "Git Pull"
 git pull origin main
 echo "end git pull"
 
-if [ $1 = "--assets" ]
+if test "$1" = "--assets"
 then
   echo "generation des assets"
   yarn build
