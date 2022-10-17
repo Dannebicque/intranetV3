@@ -1,14 +1,14 @@
 {
   "devDependencies": {
-    "@babel/core": "^7.12.3",
-    "@babel/preset-env": "^7.14.2",
+    "@babel/core": "^7.19.3",
+    "@babel/preset-env": "^7.19.4",
     "@popperjs/core": "^2.10.2",
     "@symfony/stimulus-bridge": "^3.0",
     "@symfony/ux-autocomplete": "file:vendor/symfony/ux-autocomplete/assets",
     "@symfony/ux-chartjs": "file:vendor/symfony/ux-chartjs/Resources/assets",
     "@symfony/ux-dropzone": "file:vendor/symfony/ux-dropzone/Resources/assets",
     "@symfony/ux-live-component": "file:vendor/symfony/ux-live-component/assets",
-    "@symfony/webpack-encore": "^1.7",
+    "@symfony/webpack-encore": "^4.1.0",
     "core-js": "^3.23.0",
     "css-loader": "^6.5.1",
     "cypress": "^10.9.0",
@@ -20,10 +20,12 @@
     "node-sass": "^7.0.1",
     "perfect-scrollbar": "^1.5.0",
     "regenerator-runtime": "^0.13.9",
-    "sass-loader": "^12.3.0",
+    "sass-loader": "^13.0.0",
     "stimulus-clipboard": "^1.0.0",
     "stimulus-use": "^0.50.0",
-    "webpack-bundle-analyzer": "^4.4.2"
+    "webpack": "^5.74.0",
+    "webpack-bundle-analyzer": "^4.4.2",
+    "webpack-cli": "^4.10.0"
   },
   "license": "MPL-2.0",
   "private": true,

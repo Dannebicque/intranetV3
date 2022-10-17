@@ -13,7 +13,7 @@
     "doctrine/annotations": "^1.13",
     "doctrine/doctrine-bundle": "^2.6",
     "doctrine/doctrine-migrations-bundle": "^3.1",
-    "doctrine/orm": "2.13.0",
+    "doctrine/orm": "^2.13.3",
     "endroid/qr-code-bundle": "^4.0",
     "erusev/parsedown": "^1.7",
     "friendsofsymfony/jsrouting-bundle": "^3.1",

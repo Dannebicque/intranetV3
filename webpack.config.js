@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/webpack.config.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/08/2022 11:49
+// @lastUpdate 17/10/2022 21:25
 
 var Encore = require('@symfony/webpack-encore')
 var path = require('path')
@@ -23,7 +23,7 @@ Encore
   // only needed for CDN's or sub-directory deploy
   .copyFiles({
     from: 'node_modules/tinymce/skins',
-    to: 'skins/[path]/[name].[ext]'
+    to: 'skins/[path]/[name].[ext]',
   })
   /*
    * ENTRY CONFIG
@@ -80,9 +80,6 @@ Encore
   .addEntry('sadm.anneeuniversitaire', './assets/js/pages/sadm.anneeuniversitaire.js')
   .addEntry('adm.reservation.materiel_commun', './assets/js/pages/adm.reservation.materiel_commun.js')
 
-
-  //VueJs
-  //.enableVueLoader()
   .enableStimulusBridge('./assets/controllers.json')
 
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
