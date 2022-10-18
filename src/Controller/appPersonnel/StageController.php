@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/StageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/09/2022 09:23
+ * @lastUpdate 11/10/2022 13:42
  */
 
 namespace App\Controller\appPersonnel;
@@ -34,13 +34,13 @@ class StageController extends BaseController
         if (null !== $this->getUser()) {
             return $this->render('appPersonnel/stage/index.html.twig', [
                 'stagesEnCours' => $stageEtudiantRepository->findByPersonnelAnnee($this->getUser(),
-                    $this->dataUserSession->getAnneeUniversitaire()),
+                    $this->getAnneeUniversitaire()),
                 'stagesHistorique' => $stageEtudiantRepository->findByPersonnelHistorique($this->getUser(),
-                    $this->dataUserSession->getAnneeUniversitaire()),
+                    $this->getAnneeUniversitaire()),
                 'alternancesEnCours' => $alternanceRepository->getByPersonnelAndAnneeUniversitaire($this->getUser(),
-                    $this->dataUserSession->getAnneeUniversitaire()),
+                    $this->getAnneeUniversitaire()),
                 'alternancesHistorique' => $alternanceRepository->getHistoriqueByPersonnelAndAnneeUniversitaire($this->getUser(),
-                    $this->dataUserSession->getAnneeUniversitaire()),
+                    $this->getAnneeUniversitaire()),
             ]);
         }
 

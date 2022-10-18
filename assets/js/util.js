@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/util.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 28/07/2022 10:45
+// @lastUpdate 17/10/2022 21:57
 
 import Swal from 'sweetalert2'
 import $ from 'jquery'
@@ -44,7 +44,6 @@ $(document).on('click', '.supprimer', function (e) {
   e.preventDefault()
   const url = $(this).attr('href')
   const csrf = $(this).data('csrf')
-  console.log(url)
   Swal.fire({
     title: 'Confirmer la suppression ?',
     text: 'L\'opération ne pourra pas être annulée.',
@@ -67,9 +66,30 @@ $(document).on('click', '.supprimer', function (e) {
           'X-CSRF-TOKEN': csrf,
         },
       }).then((response) => {
-        console.log(response)
         if (response.status === 200) {
-          return response.json()
+          return response.json().then((body) => {
+            console.log(body.id)
+            const id = body.id
+            if (id.hasOwnProperty('redirect') && id.hasOwnProperty('url')) {
+              document.location.href = id.url
+            } else {
+              const ligne = getParentByTagName(e.target, 'tr')
+              ligne.parentNode.removeChild(ligne)
+
+              addCallout('Suppression effectuée avec succès', 'success')
+              Swal.fire({
+                title: 'Supprimé!',
+                text: 'L\'enregistrement a été supprimé.',
+                icon: 'success',
+                confirmButtonText: 'OK',
+                customClass: {
+                  confirmButton: 'btn btn-primary',
+                  cancelButton: 'btn btn-secondary',
+                },
+                buttonsStyling: false,
+              })
+            }
+          })
         } else {
           Swal.fire({
             title: 'Erreur lors de la suppression!',
@@ -83,28 +103,6 @@ $(document).on('click', '.supprimer', function (e) {
             buttonsStyling: false,
           })
           addCallout('Erreur lors de la tentative de suppression', 'danger')
-        }
-      }).then((body) => {
-        console.log(body.id)
-        const id = body.id
-        if (id.hasOwnProperty('redirect') && id.hasOwnProperty('url')) {
-          document.location.href = id.url
-        } else {
-          const ligne = getParentByTagName(e.target, 'tr')
-          ligne.parentNode.removeChild(ligne)
-
-          addCallout('Suppression effectuée avec succès', 'success')
-          Swal.fire({
-            title: 'Supprimé!',
-            text: 'L\'enregistrement a été supprimé.',
-            icon: 'success',
-            confirmButtonText: 'OK',
-            customClass: {
-              confirmButton: 'btn btn-primary',
-              cancelButton: 'btn btn-secondary',
-            },
-            buttonsStyling: false,
-          })
         }
       })
 

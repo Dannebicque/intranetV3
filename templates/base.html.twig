@@ -41,6 +41,9 @@
     <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
     {% block javascripts %}
+        <script>
+        let toasts = {{ app.session.flashbag.get('toast')|json_encode|raw }};
+        </script>
         {{ encore_entry_script_tags('app') }}
     {% endblock %}
     <script data-provide="sweetalert"></script>
@@ -67,7 +70,9 @@
     {% endif %}
 </head>
 
-<body class="{{ settings('CODE_IUT') }}">
+<body class="{{ settings('CODE_IUT') }}"
+        {{ stimulus_controller('global') }}
+>
 {% block full_body %}
     <!-- Preloader -->
     <div class="preloader" id="loader">
@@ -354,29 +359,6 @@
                     liste déroulante.
                 </div>
             {% endif %}
-            {% for toast in app.session.flashbag.get('toast') %}
-                <div class="position-fixed top-0 end-0 p-3" style="z-index:1000">
-                    <div class="align-items-center text-white bg-{{ toast.type }} border-0 transition transform duration-1000 hidden" role="alert"
-                         aria-live="assertive"
-                         aria-atomic="true"
-                         data-controller="notification"
-                         data-notification-delay-value="4000"
-                         data-transition-enter-from="opacity-0 translate-x-6"
-                         data-transition-enter-to="opacity-100 translate-x-0"
-                         data-transition-leave-from="opacity-100 translate-x-0"
-                         data-transition-leave-to="opacity-0 translate-x-6"
-                    >
-                        <div class="d-flex">
-                            <div class="toast-body">
-                                <strong>{{ toast.title|trans }}</strong> : {{ toast.text }}
-                            </div>
-                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close">
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-
             {% block content %}
 
             {% endblock %}

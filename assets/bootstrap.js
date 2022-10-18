@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/bootstrap.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/09/2022 22:08
+// @lastUpdate 18/10/2022 18:18
 
 import {startStimulusApp} from '@symfony/stimulus-bridge'
 import LiveController from '@symfony/ux-live-component';
@@ -15,12 +15,7 @@ export const app = startStimulusApp(require.context(
   /\.(j|t)sx?$/
 ))
 
-// register any custom, 3rd party controllers here
-// app.register('some_controller_name', SomeImportedController);
-/* Stimulus controller */
 import Clipboard from 'stimulus-clipboard'
-//import Notification from "stimulus-notification"
 
 app.register('clipboard', Clipboard)
-//app.register('notification', Notification)
 app.register('live', LiveController);
