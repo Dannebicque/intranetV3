@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/absences.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/09/2022 19:28
+// @lastUpdate 05/10/2022 20:18
 import $ from 'jquery'
 import { addCallout } from '../util'
 import Routing from 'fos-router'
@@ -93,6 +93,7 @@ $(document).on('click', '.etudiant', function () {
         dataType: 'json',
         data: {
           date: $('#absence-date').val(),
+          duree: $('#absence-duree').val(),
           heure: $('#absence-heure').val(),
           action: 'suppr',
         },
@@ -117,6 +118,7 @@ $(document).on('click', '.etudiant', function () {
         dataType: 'json',
         data: {
           date: $('#absence-date').val(),
+          duree: $('#absence-duree').val(),
           heure: $('#absence-heure').val(),
           action: 'saisie',
         },
