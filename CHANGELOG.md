@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.36](https://github.com/Dannebicque/intranetV3/compare/v3.9.35...v3.9.36) (2022-10-18)
+
+
+### Bug Fixes
+
+* [Absence Appel] Suivi de l'appel ([479c3ae](https://github.com/Dannebicque/intranetV3/commit/479c3ae37d9943981c1de93767363a967ccfcb88))
+* [Absence] Gestion de la durée avec Celcat ([4a1e4c0](https://github.com/Dannebicque/intranetV3/commit/4a1e4c0cb413e4bfbbe29ec62b40f598d8e335fc))
+* [Appel] refactoring pour doublons de code ([301bf97](https://github.com/Dannebicque/intranetV3/commit/301bf9798b8a9d55c1fb2d9dd974c4b7bc47f51c))
+* [Default] refactoring ([401864d](https://github.com/Dannebicque/intranetV3/commit/401864d24f5d67ee149d276ca51ad98dafb7c165))
+* [Import Notes] Modification mise en page + gestion de l'écrasement des notes déjà présentent ([c6ed9b8](https://github.com/Dannebicque/intranetV3/commit/c6ed9b814f2bd244b7f6f981cbfadcbbab8e5c1c))
+* [Login] typo ([74eff1a](https://github.com/Dannebicque/intranetV3/commit/74eff1a321bb72c79a72350b965fb6a8a8fa2501))
+* [Previsionnel] Comparaison des services/EDT ([847f43a](https://github.com/Dannebicque/intranetV3/commit/847f43a18683926cf54eaef5e0e82890fbe84120))
+* [Toast] JS, gestion des toasts sans stimulus ([ed5447a](https://github.com/Dannebicque/intranetV3/commit/ed5447afcf16e934f66b8382355b166688c0bccc))
+* [Trombinscope] gestion des groupes mutualisés ([5a3169a](https://github.com/Dannebicque/intranetV3/commit/5a3169a16db5bb89cdd3191dfb0c8b8a51a2bcfc))
+* [TypeGroupe] Gestion avec une relation n-n avec semestre ([2c65c1b](https://github.com/Dannebicque/intranetV3/commit/2c65c1bacfb1e06f31aa2c2899e9f3ce2aa0d1db))
+
 ### [3.9.35](https://github.com/Dannebicque/intranetV3/compare/v3.9.34...v3.9.35) (2022-10-11)
 
 
