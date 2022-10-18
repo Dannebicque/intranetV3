@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtCompareController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/09/2022 09:04
+ * @lastUpdate 18/10/2022 18:54
  */
 
 namespace App\Controller\administration;
@@ -19,15 +19,9 @@ use App\Repository\EdtPlanningRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-/**
- * Class EdtController.
- */
 #[Route(path: '/administration/emploi-du-temps/compare')]
 class EdtCompareController extends BaseController
 {
-    /**
-     * EdtRealiseController constructor.
-     */
     public function __construct(protected EdtPlanningRepository $edtPlanningRepository, protected CalendrierRepository $calendrierRepository)
     {
     }
@@ -47,7 +41,7 @@ class EdtCompareController extends BaseController
     }
 
     #[Route(path: '/matieres/{source}', name: 'administration_edt_compare_matiere', methods: ['GET'])]
-    public function compareMatiereAction(ComparePrevisonnelMatiere $comparePrevisonnelMatiere, string $source): Response
+    public function compareMatiere(ComparePrevisonnelMatiere $comparePrevisonnelMatiere, string $source): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_EDT', $this->getDepartement());
         $comparatif = $comparePrevisonnelMatiere->compareEdtPreviMatiere($this->dataUserSession->getDepartement(),
@@ -64,7 +58,7 @@ class EdtCompareController extends BaseController
      * @throws \App\Exception\MatiereNotFoundException
      */
     #[Route(path: '/ajax/enseignants/plusinfo/{matiere}', name: 'administration_edt_compare_plus_info')]
-    public function comparePlusInfoAction(TypeMatiereManager $typeMatiereManager, string $matiere): Response
+    public function comparePlusInfo(TypeMatiereManager $typeMatiereManager, string $matiere): Response
     {
         // todo: a gérer le cas des mutualisés et des prévisionnels
         $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
