@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.37](https://github.com/Dannebicque/intranetV3/compare/v3.9.36...v3.9.37) (2022-10-19)
+
+
+### Bug Fixes
+
+* [Edt] Modificatioin EDT ([5d38b0f](https://github.com/Dannebicque/intranetV3/commit/5d38b0fcb4c1e7b42f0d85d324ef86fc657ae9e1))
+* [Edt] Modification EDT ([ab54102](https://github.com/Dannebicque/intranetV3/commit/ab541027ae3b781679de52e3cebea75bc60b1c69))
+* [Edt] Modification EDT ([cc90892](https://github.com/Dannebicque/intranetV3/commit/cc90892466f391dd477bdd421fe7a427dbd42df0))
+
 ### [3.9.36](https://github.com/Dannebicque/intranetV3/compare/v3.9.35...v3.9.36) (2022-10-18)
 
 
