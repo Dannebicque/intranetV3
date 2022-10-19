@@ -65,7 +65,8 @@
                                     <div class="session-body">
                                         <a href="{{ path('application_personnel_absence_from_planning',{
                                             'event':edt[j][ligne].id,
-                                            'source': edt[j][ligne].source }) }}">
+                                            'source': edt[j][ligne].source,
+                                            'semestre': edt[j][ligne].semestre.id}) }}">
                                             <span class="session-title">{{ edt[j][ligne].matiere|raw }}</span>
                                             <span class="session-time">{{ edt[j][ligne].heureDebut|format_time('short') }} - {{ edt
                                                 [j][ligne].heureFin|format_time('short') }}</span>
