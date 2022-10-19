@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/10/2022 21:14
+ * @lastUpdate 19/10/2022 10:12
  */
 
 namespace App\Controller\appPersonnel;
@@ -163,7 +163,7 @@ class AbsenceController extends BaseController
 
             if (null !== $event) {
                 $absenceEtatAppel->enregistreAppelFait([
-                    'personnel' => null !== $event->personnelObjet ? $event->personnelObjet->getId() : $this->getUser()->getId(),
+                    'personnel' => null !== $event->personnelObjet ? $event->personnelObjet : $this->getUser(),
                     'groupe' => $event->groupeObjet->getId(),
                     'date' => $event->dateObjet->format('d/m/Y'),
                     'heure' => $event->heureDebut->format('H:i'),
