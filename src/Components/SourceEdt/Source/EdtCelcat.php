@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Source/EdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/09/2022 18:34
+ * @lastUpdate 08/10/2022 19:17
  */
 
 namespace App\Components\SourceEdt\Source;
@@ -31,7 +31,9 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
 
     public function getPlanningSemestre(Semestre $semestre, array $matieres, AnneeUniversitaire $anneeUniversitaire, array $groupes): EvenementEdtCollection
     {
-        return new EvenementEdtCollection();
+        $evts = $this->edtCelcatRepository->findEdtSemestre($semestre, $anneeUniversitaire);
+
+        return $this->edtCelcatAdapter->collection($evts, $matieres, $groupes);
     }
 
     public function find(int $event, array $matieres = [], array $groupes = []): EvenementEdt
@@ -58,7 +60,6 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
         AnneeUniversitaire $anneeUniversitaire,
         array $matieres,
         array $groupes
-
     ): EvenementEdtCollection {
         $evts = $this->edtCelcatRepository->findEdtSemestreSemaine($semestre, $semaine, $anneeUniversitaire);
 
@@ -115,6 +116,7 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
         $this->groupes = $groupes;
         $this->init($anneeUniversitaire, Constantes::FILTRE_EDT_PROMO, $semestre->getId(), $calendrier->semaine);
         $this->calculEdt();
+        dump($this->evenements);
 
         return $this->evenements;
     }
@@ -141,6 +143,4 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
 
         return false;
     }
-
-
 }

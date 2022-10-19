@@ -4,28 +4,11 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/DependencyInjection/services.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/09/2022 18:52
+ * @lastUpdate 29/09/2022 17:04
  */
 
 namespace App\Components\Questionnaire\DependencyInjection;
 
-use App\Components\Questionnaire\Section\ConfigurableSection;
-use App\Components\Questionnaire\Section\EndSection;
-use App\Components\Questionnaire\Section\MatiereSectionAdapter;
-use App\Components\Questionnaire\Section\PrevisionnelSectionAdapter;
-use App\Components\Questionnaire\Section\RessourceSectionAdapter;
-use App\Components\Questionnaire\Section\SaeSectionAdapter;
-use App\Components\Questionnaire\Section\Section;
-use App\Components\Questionnaire\Section\StartSection;
-use App\Components\Questionnaire\TypeQuestion\TypeChainee;
-use App\Components\Questionnaire\TypeQuestion\TypeEchelle;
-use App\Components\Questionnaire\TypeQuestion\TypeLibre;
-use App\Components\Questionnaire\TypeQuestion\TypeOuiNon;
-use App\Components\Questionnaire\TypeQuestion\TypeQcm;
-use App\Components\Questionnaire\TypeQuestion\TypeQcu;
-use App\Components\Questionnaire\TypeQuestion\TypeSlider;
-use App\Components\SourceEdt\Adapter\EdtCelcatAdapter;
-use App\Components\SourceEdt\Adapter\EdtIntranetAdapter;
 use App\Components\SourceEdt\Source\EdtAde;
 use App\Components\SourceEdt\Source\EdtCelcat;
 use App\Components\SourceEdt\Source\EdtIntranet;
