@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/09/2022 09:11
+ * @lastUpdate 08/10/2022 19:15
  */
 
 /*
@@ -85,7 +85,7 @@ class MyEdtCelcat extends BaseEdt
         switch ($this->filtre) {
             case Constantes::FILTRE_EDT_PROMO:
                 $this->groupes = $this->groupeRepository->findAllGroupes($this->semestre);
-                $pl = $this->celcatEventsRepository->findEdtSemestre($this->semestre, $this->semaineFormationIUT, $this->anneeUniversitaire);
+                $pl = $this->celcatEventsRepository->findEdtSemestreSemaine($this->semestre, $this->semaineFormationIUT, $this->anneeUniversitaire);
                 $this->planning = $this->transformePromo($pl);
                 break;
             case Constantes::FILTRE_EDT_PROF:

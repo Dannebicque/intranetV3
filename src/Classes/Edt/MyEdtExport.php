@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/09/2022 16:50
+ * @lastUpdate 08/10/2022 19:15
  */
 
 /*
@@ -207,7 +207,7 @@ class MyEdtExport
     {
         $departement = $semestre->getDiplome()->getDepartement();
         if (null !== $departement && true === $departement->getOptUpdateCelcat()) {
-            $edt = $this->celcatEventsRepository->findEdtSemestre($semestre, $semaine);
+            $edt = $this->celcatEventsRepository->findEdtSemestreSemaine($semestre, $semaine, $semestre->getAnneeUniversitaire());
         } else {
             $edt = $this->myEdtIntranet->initSemestre($semaine, $semestre, $semestre->getAnneeUniversitaire());
         }
