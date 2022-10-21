@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/EtudiantSemestreTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/05/2022 15:13
+ * @lastUpdate 21/10/2022 09:55
  */
 
 namespace App\Table;
@@ -65,7 +65,7 @@ class EtudiantSemestreTableType extends TableType
         ]);
 
         $builder->addWidget('export', ExportDropdownType::class, [
-            'route' => 'administration_absence_appel_export',
+            'route' => 'administration_etudiant_semestre_export',
             'route_params' => [
                 'semestre' => $this->semestre->getId(),
             ],
