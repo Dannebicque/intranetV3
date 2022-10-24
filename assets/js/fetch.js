@@ -2,8 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/fetch.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/07/2022 17:34
-import Routing from 'fos-router'
+// @lastUpdate 27/09/2022 10:25
 
 const request = (_url, params = {}, method = 'GET') => {
   let url = _url

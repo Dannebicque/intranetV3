@@ -1,26 +1,28 @@
 <?php
 /*
  * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/CelcatEvent.php
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/EdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:18
+ * @lastUpdate 18/09/2022 12:44
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
-use App\Repository\CelcatEventsRepository;
+use App\Entity\Traits\MatiereTrait;
+use App\Repository\EdtCelcatRepository;
 use Carbon\CarbonInterface;
 use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: CelcatEventsRepository::class)]
+#[ORM\Entity(repositoryClass: EdtCelcatRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class CelcatEvent extends BaseEntity
+class EdtCelcat extends BaseEntity
 {
     use LifeCycleTrait;
+    use MatiereTrait;
 
     #[ORM\Column(type: Types::INTEGER)]
     private ?int $eventId = null;
@@ -76,8 +78,11 @@ class CelcatEvent extends BaseEntity
     #[ORM\Column(type: Types::DATE_MUTABLE, nullable: true)]
     private ?DateTimeInterface $dateCours = null;
 
-    #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'celcatEvents')]
+    #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'edtCelcats')]
     private ?Semestre $semestre = null;
+
+    #[ORM\ManyToOne(inversedBy: 'edtCelcats')]
+    private ?Personnel $personnel = null;
 
     public function getEventId(): ?int
     {
@@ -308,6 +313,18 @@ class CelcatEvent extends BaseEntity
     public function setSemestre(?Semestre $semestre): self
     {
         $this->semestre = $semestre;
+
+        return $this;
+    }
+
+    public function getPersonnel(): ?Personnel
+    {
+        return $this->personnel;
+    }
+
+    public function setPersonnel(?Personnel $personnel): self
+    {
+        $this->personnel = $personnel;
 
         return $this;
     }

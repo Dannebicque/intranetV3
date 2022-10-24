@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/DateController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 14/09/2022 09:04
  */
 
 namespace App\Controller\administration;
@@ -52,7 +52,7 @@ class DateController extends BaseController
         MySerializer $mySerializer,
         MyExport $myExport,
         DateRepository $dateRepository,
-        $_format
+        string $_format
     ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
         $dates = $dateRepository->findByDepartement($this->getDepartement());

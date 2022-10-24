@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/09/2022 10:55
+ * @lastUpdate 19/09/2022 15:57
  */
 
 namespace App\Repository;
@@ -64,9 +64,9 @@ class EdtPlanningRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->where('p.semaine = :semaine')
             ->andWhere('p.ordreSemestre = :semestre')
-            ->setParameter('diplome', null !== $semestre->getDiplome()->getParent() ? $semestre->getDiplome()->getParent()->getId() : $semestre->getDiplome()->getId())
+            ->andWhere('p.diplome = :diplome')
             ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
-            ->setParameters(['semaine' => $semaine, 'semestre' => $semestre->getOrdreLmd(), 'anneeUniversitaire' => $anneeUniversitaire->getId()])
+            ->setParameters(['semaine' => $semaine, 'semestre' => $semestre->getOrdreLmd(), 'anneeUniversitaire' => $anneeUniversitaire->getId(), 'diplome' => null !== $semestre->getDiplome()->getParent() ? $semestre->getDiplome()->getParent()->getId() : $semestre->getDiplome()->getId()])
             ->orderBy('p.jour', Criteria::ASC)
             ->addOrderBy('p.debut', Criteria::ASC)
             ->addOrderBy('p.groupe', Criteria::ASC)
@@ -155,7 +155,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
             return $this->createQueryBuilder('p')
                 ->where('p.semaine = :semaine')
                 ->andWhere('p.ordreSemestre = :promo')
-                ->setParameter('diplome', null !== $user->getDiplome()->getParent() ? $user->getDiplome()->getParent()->getId() : $user->getDiplome()->getId())
+                ->andWhere('p.diplome = :diplome')
                 ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
                 ->andWhere('p.groupe = 1 OR p.groupe = :groupetd OR p.groupe = :groupetp')
                 ->setParameters([
@@ -163,6 +163,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
                     'promo' => $user->getSemestre()->getOrdreLmd(),
                     'groupetd' => $this->groupetd,
                     'groupetp' => $this->groupetp,
+                    'diplome' => null !== $user->getDiplome()->getParent() ? $user->getDiplome()->getParent()->getId() : $user->getDiplome()->getId(),
                     'anneeUniversitaire' => $anneeUniversitaire->getId(),
                 ])
                 ->orderBy('p.jour', Criteria::ASC)
@@ -313,8 +314,9 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->where('p.semaine = :semaine')
             ->andWhere('p.jour = :jour ')
             ->andWhere('p.ordreSemestre = :semestre')
-            ->setParameter('diplome', null !== $semestre->getDiplome()->getParent() ? $semestre->getDiplome()->getParent()->getId() : $semestre->getDiplome()->getId())
+            ->andWhere('p.diplome = :diplome')
             ->setParameters([
+                'diplome' => null !== $semestre->getDiplome()->getParent() ? $semestre->getDiplome()->getParent()->getId() : $semestre->getDiplome(),
                 'semaine' => $numSemaine,
                 'jour' => $jour,
                 'semestre' => $semestre->getOrdreLmd(),
@@ -382,7 +384,6 @@ class EdtPlanningRepository extends ServiceEntityRepository
     public function getByEtudiantArray(Etudiant $user, int $semaine, array $tabMatieresSemestre, AnneeUniversitaire $anneeUniversitaire): array
     {
         $query = $this->findEdtEtu($user, $semaine, $anneeUniversitaire);
-
         return $this->transformeArray($query, $tabMatieresSemestre);
     }
 
@@ -393,7 +394,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
         $t = [];
         /** @var EdtPlanning $event */
         foreach ($data as $event) {
-            if ((TypeGroupeEnum::TYPE_GROUPE_CM === $event->getType()) || (TypeGroupeEnum::TYPE_GROUPE_TD === $event->getType() && $event->getGroupe() === $this->groupetd) || (TypeGroupeEnum::TYPE_GROUPE_TP === $event->getType() && $event->getGroupe() === $this->groupetp)) {
+            if ((TypeGroupeEnum::TYPE_GROUPE_CM->value === $event->getType()) || (TypeGroupeEnum::TYPE_GROUPE_TD->value === $event->getType() && $event->getGroupe() === $this->groupetd) || (TypeGroupeEnum::TYPE_GROUPE_TP->value === $event->getType() && $event->getGroupe() === $this->groupetp)) {
                 $matiere = $tabMatieresSemestre[$event->getTypeIdMatiere()] ?? null;
                 $pl = [];
                 $pl['id'] = $event->getId();

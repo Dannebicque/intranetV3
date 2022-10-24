@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/projet/ProjetEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 21/09/2022 09:51
  */
 
 namespace App\Controller\administration\projet;
@@ -36,9 +36,9 @@ class ProjetEtudiantController extends BaseController
     #[Route(path: '/{id}/edit', name: 'administration_projet_etudiant_edit', methods: 'GET|POST')]
     public function edit(Request $request, ProjetEtudiant $projetEtudiant): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetEtudiant->getProjetPeriode()?->getSemestre());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetEtudiant->getProjetPeriode()?->getSemestres()->first());
         $form = $this->createForm(ProjetEtudiantType::class, $projetEtudiant, [
-            'semestre' => $projetEtudiant->getProjetPeriode()->getSemestre(),
+            'semestres' => $projetEtudiant->getProjetPeriode()->getSemestres(),
         ]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -87,7 +87,7 @@ class ProjetEtudiantController extends BaseController
     #[ParamConverter('projetPeriode', options: ['mapping' => ['projetPeriode' => 'uuid']])]
     public function changeEtat(MyProjetEtudiant $myProjetEtudiant, ProjetPeriode $projetPeriode, Etudiant $etudiant, $etat): RedirectResponse
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestre());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestres()->first());
         $myProjetEtudiant->changeEtat($projetPeriode, $etudiant, $etat);
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'projet_etudiant.change_etat.success.flash');
 
@@ -103,7 +103,7 @@ class ProjetEtudiantController extends BaseController
     #[Route(path: '/convention/pdf/{id}', name: 'administration_projet_etudiant_convention_pdf', methods: 'GET')]
     public function conventionPdf(MyPDF $myPDF, ProjetEtudiant $projetEtudiant): PdfResponse
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetEtudiant->getProjetPeriode()?->getSemestre());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetEtudiant->getProjetPeriode()?->getSemestres()->first());
 
         return $myPDF::generePdf('pdf/projetTutore/conventionProjet.html.twig',
             [

@@ -22,24 +22,24 @@
             <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
                 {% for sem in user_data.semestresActifs %}
                     <a class="dropdown-item" href="{{ path('agenda_index',{filtre:'promo',valeur:sem.id,
-                        semaine:semaine.semaine}) }}">{{ sem.display }}</a>
+                        semaine:calendrier.semaine}) }}">{{ sem.display }}</a>
                 {% endfor %}
             </div>
         </div>
     </div>
     <div class="col-md-2 col-sm-12 mt-2 d-grid d-block">
         <a class="btn {% if filtre=='prof' %} btn-primary{% else %}btn-secondary{% endif %}"
-           href="{{ path('agenda_index',{filtre:'prof',valeur:user_data.user.id,semaine:semaine.semaine}) }}"
+           href="{{ path('agenda_index',{filtre:'prof',valeur:user_data.user.id,semaine:calendrier.semaine}) }}"
            data-bs-toggle="tooltip" data-bs-placement="bottom" title="Votre emploi du temps">Perso.</a>
     </div>
     <div class="col-md-3 col-sm-12 mt-2 d-grid d-block">
         <div class="btn-group">
-            <a class="btn btn-primary w-25" href="{{ path('agenda_index',{filtre:filtre,valeur:valeur,semaine:semaine
+            <a class="btn btn-primary w-25" href="{{ path('agenda_index',{filtre:filtre,valeur:valeur,semaine:calendrier
             .semainePrecedente}) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Semaine précédente"><i
                         class="fa fa-caret-left"></i><span class="sr-only">Semaine précédente</span></a>
             <a class="btn btn-secondary" href="{{ path('agenda_index', {semaine:'now'|date('W')}) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cette semaine"><i class="fa
 	fa-calendar"></i> Semaine</a>
-            <a class="btn btn-primary w-25" href="{{ path('agenda_index',{filtre:filtre,valeur:valeur,semaine:semaine
+            <a class="btn btn-primary w-25" href="{{ path('agenda_index',{filtre:filtre,valeur:valeur,semaine:calendrier
             .semaineSuivante}) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Semaine suivante"><i
                         class="fa fa-caret-right"></i><span class="sr-only">Semaine suivante</span></a>
         </div>

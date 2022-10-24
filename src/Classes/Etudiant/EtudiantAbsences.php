@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantAbsences.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Etudiant/EtudiantAbsences.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 19:11
+ * @lastUpdate 05/10/2022 20:27
  */
 
 namespace App\Classes\Etudiant;
@@ -54,15 +54,17 @@ class EtudiantAbsences
         CarbonInterface $dateHeure,
         Matiere $matiere,
         Personnel $personnel,
-        bool $justifie = false
+        bool $justifie = false,
+        string $duree = '01:30'
     ): Absence {
+
         $absence = new Absence();
         $absence->setEtudiant($this->etudiant);
         $absence->setSemestre($this->etudiant->getSemestre());
         $absence->setPersonnel($personnel);
         $absence->setDateHeure($dateHeure);
         $absence->setAnneeUniversitaire($personnel->getAnneeUniversitaire());
-        $absence->setDuree(new Carbon('01:30'));
+        $absence->setDuree(Carbon::createFromFormat('H:i', $duree));
         $absence->setIdMatiere($matiere->id);
         $absence->setTypeMatiere($matiere->typeMatiere);
         $absence->setJustifie($justifie);

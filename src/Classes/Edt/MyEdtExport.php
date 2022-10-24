@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/09/2022 12:39
+ * @lastUpdate 08/10/2022 19:15
  */
 
 /*
@@ -21,11 +21,12 @@ use App\Entity\Departement;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
-use App\Repository\CelcatEventsRepository;
+use App\Repository\EdtCelcatRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Utils\Tools;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -42,7 +43,7 @@ class MyEdtExport
      */
     public function __construct(
         protected EdtPlanningRepository $edtPlanningRepository,
-        protected CelcatEventsRepository $celcatEventsRepository,
+        protected EdtCelcatRepository $celcatEventsRepository,
         protected CalendrierRepository $calendrierRepository,
         private readonly MyEdtIntranet $myEdtIntranet,
         private readonly MyEdtCelcat $myEdtCelcat,
@@ -54,7 +55,7 @@ class MyEdtExport
         $this->dir = $kernel->getProjectDir().'/public/upload/';
     }
 
-    public function export($user, $_format, $type, AnneeUniversitaire $anneeUniversitaire): bool|string
+    public function export(UserInterface $user, string $_format, string $type, AnneeUniversitaire $anneeUniversitaire): bool|string
     {
         $this->calendrier = $this->calendrierRepository->findCalendrierArray($anneeUniversitaire);
         $temp = [];
@@ -81,9 +82,21 @@ class MyEdtExport
                         $temp[] = $this->celcatEventsRepository->getByEtudiantArray($user, $i);
                     }
                 } else {
+                    if ($user->getSemestre()->getDiplome()->isApc()) {
+                        $matieres = $this->typeMatiereManager->findByReferentielOrdreSemestre(
+                            $user->getSemestre(),$user->getSemestre()->getDiplome()->getReferentiel());
+                    } else {
+                        $matieres = $this->typeMatiereManager->findBySemestre($user->getSemestre());
+                    }
+
+                    $tMatieres = [];
+                    foreach ($matieres as $matiere) {
+                        $tMatieres[$matiere->getTypeIdMatiere()] = $matiere;
+                    }
+
                     for ($i = $emaineActuelle->getSemaineFormation(); $i < $max; ++$i) {
                         $temp[] = $this->edtPlanningRepository->getByEtudiantArray($user, $i,
-                            $this->typeMatiereManager->findBySemestreArray($user->getSemestre()), $user->getAnneeUniversitaire());
+                            $tMatieres, $user->getAnneeUniversitaire());
                     }
                 }
             }
@@ -92,12 +105,12 @@ class MyEdtExport
         $edt = array_merge(...$temp);
 
         return match ($_format) {
-            'ics' => $this->genereIcal($edt),
+            'ics' => $this->genereIcal($edt),// todo: gérer avec le EvenementCollection
             default => false,
         };
     }
 
-    private function genereIcal($edt): bool|string
+    private function genereIcal(mixed $edt): bool|string
     {
         foreach ($edt as $pl) {
             if (null !== $pl['date']) {
@@ -139,7 +152,7 @@ class MyEdtExport
         return $t;
     }
 
-    public function genereAllDocument($source, $_format, ?Departement $departement): void
+    public function genereAllDocument(string $source, string $_format, ?Departement $departement): void
     {
         if ('pdf' === $_format) {
             $this->genereaAllPdf($source, $departement);
@@ -152,7 +165,7 @@ class MyEdtExport
      * @throws \Twig\Error\SyntaxError
      * @throws \Twig\Error\LoaderError
      */
-    private function genereaAllPdf($source, ?Departement $departement): void
+    private function genereaAllPdf(string $source, ?Departement $departement): void
     {
         set_time_limit(120);
         foreach ($departement->getPersonnelDepartements() as $personnelDepartement) {
@@ -165,14 +178,14 @@ class MyEdtExport
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function generePdf(Personnel $personnel, $source, Departement $departement): void
+    public function generePdf(Personnel $personnel, string $source, Departement $departement): void
     {
         $dir = $this->dir.'pdfedt/'.$departement->getId().'/';
         Tools::checkDirectoryExist($dir);
         // todo: passer par le DTO Evenement, comme ca compatible avec celcat
         // todo: gérer l'année universitaire d'export
         if ('intranet' === $source) {
-            $planning = $this->edtPlanningRepository->findEdtProf($personnel->getId(),$personnel->getAnneeUniversitaire());
+            $planning = $this->edtPlanningRepository->findEdtProf($personnel->getId(), $personnel->getAnneeUniversitaire());
             $this->myPDF::genereAndSavePdf('pdf/edt/planning.html.twig',
                 [
                     'planning' => $planning,
@@ -190,11 +203,11 @@ class MyEdtExport
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function exportSemestre($semaine, Semestre $semestre): void
+    public function exportSemestre(int $semaine, Semestre $semestre): void
     {
         $departement = $semestre->getDiplome()->getDepartement();
         if (null !== $departement && true === $departement->getOptUpdateCelcat()) {
-            $edt = $this->celcatEventsRepository->findEdtSemestre($semestre, $semaine);
+            $edt = $this->celcatEventsRepository->findEdtSemestreSemaine($semestre, $semaine, $semestre->getAnneeUniversitaire());
         } else {
             $edt = $this->myEdtIntranet->initSemestre($semaine, $semestre, $semestre->getAnneeUniversitaire());
         }
@@ -246,7 +259,7 @@ class MyEdtExport
      * @throws \Twig\Error\SyntaxError
      * @throws \Twig\Error\LoaderError
      */
-    public function genereOneDocument($source, $_format, Personnel $personnel, Departement $departement): void
+    public function genereOneDocument(string $source, string $_format, Personnel $personnel, Departement $departement): void
     {
         $this->generePdf($personnel, $source, $departement);
     }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/TypeGroupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/09/2022 14:46
+ * @lastUpdate 04/10/2022 09:26
  */
 
 namespace App\Entity;
@@ -52,12 +52,16 @@ class TypeGroupe extends BaseEntity
     #[ORM\Column(nullable: true)]
     private ?int $ordreSemestre;
 
+    #[ORM\ManyToMany(targetEntity: Semestre::class, inversedBy: 'typeGroupess')]
+    private Collection $semestres;
+
     public function __construct(
         #[Groups(['type_groupe_administration'])] #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'typeGroupes')] #[Deprecated('ne plus utiliser, et avoir Diplome + semestre')] private Semestre $semestre
     ) {
         $this->groupes = new ArrayCollection();
         $this->ordreSemestre = $semestre->getOrdreLmd();
         $this->diplome = $semestre->getDiplome()->getParent() ?? $semestre->getDiplome();
+        $this->semestres = new ArrayCollection();
     }
 
     /**
@@ -166,11 +170,13 @@ class TypeGroupe extends BaseEntity
             return 'S'.$this->ordreSemestre.' | '.$this->getDiplome()?->getDisplayCourt();
     }
 
+    #[Deprecated]
     public function getSemestre(): ?Semestre
     {
         return $this->semestre;
     }
 
+    #[Deprecated]
     public function setSemestre(?Semestre $semestre): self
     {
         $this->semestre = $semestre;
@@ -210,6 +216,30 @@ class TypeGroupe extends BaseEntity
     public function setOrdreSemestre(?int $ordreSemestre): self
     {
         $this->ordreSemestre = $ordreSemestre;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Semestre>
+     */
+    public function getSemestres(): Collection
+    {
+        return $this->semestres;
+    }
+
+    public function addSemestre(Semestre $semestre): self
+    {
+        if (!$this->semestres->contains($semestre)) {
+            $this->semestres->add($semestre);
+        }
+
+        return $this;
+    }
+
+    public function removeSemestre(Semestre $semestre): self
+    {
+        $this->semestres->removeElement($semestre);
 
         return $this;
     }

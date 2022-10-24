@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/SalleExamenController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 14/09/2022 09:13
  */
 
 namespace App\Controller\administration;
@@ -33,7 +33,7 @@ class SalleExamenController extends BaseController
     #[Route(path: '/export.{_format}', name: 'administration_salle_examen_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
     public function export(
         MySerializer $mySerializer,
-        MyExport $myExport, SalleExamenRepository $salleExamenRepository, $_format): Response
+        MyExport $myExport, SalleExamenRepository $salleExamenRepository, string $_format): Response
     {
         $salles_examen = $salleExamenRepository->findByDepartement($this->dataUserSession->getDepartement());
 

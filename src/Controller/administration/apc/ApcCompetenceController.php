@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcCompetenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 14/09/2022 09:23
  */
 
 namespace App\Controller\administration\apc;
@@ -27,7 +27,7 @@ class ApcCompetenceController extends BaseController
     #[Route(path: '/{diplome}/export.{_format}', name: 'administration_apc_competence_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
     public function export(
         MySerializer $mySerializer,
-        MyExport $myExport, ApcComptenceRepository $apcComptenceRepository, Diplome $diplome, $_format): Response
+        MyExport $myExport, ApcComptenceRepository $apcComptenceRepository, Diplome $diplome, string $_format): Response
     {
         $apcCompetences = $apcComptenceRepository->findByDiplome($diplome);
         // todo: a faire.
@@ -84,7 +84,7 @@ class ApcCompetenceController extends BaseController
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.competence.edit.success.flash');
 
             return $this->redirectToRoute('administration_apc_competence_index',
-                ['diplome' => $apcCompetence->getDiplome()?->getId()]);
+                ['diplome' => $apcCompetence->getDiplome()?->getId()]);//Todo: a revoir, pas de diplome
         }
 
         return $this->render('apc/apc_competence/edit.html.twig', [

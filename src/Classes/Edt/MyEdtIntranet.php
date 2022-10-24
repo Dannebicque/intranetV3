@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/09/2022 12:18
+ * @lastUpdate 25/09/2022 14:47
  */
 
 namespace App\Classes\Edt;
@@ -192,6 +192,7 @@ class MyEdtIntranet extends BaseEdt
             $evt->groupe = $p->getDisplayGroupe();
             $evt->typeIdMatiere = $p->getTypeIdMatiere();
             $evt->type_cours = $p->getType();
+            $evt->ordreSemestre = $p->getOrdreSemestre();
 
             $evt->gridStart = Constantes::TAB_HEURES_EDT_2[$p->getDebut() - 1][0];
             $evt->gridEnd = Constantes::TAB_HEURES_EDT_2[$p->getFin() - 1][0];
@@ -209,6 +210,7 @@ class MyEdtIntranet extends BaseEdt
         // todo: utuliser un transformer/adapter ? et ne plus dépenedre de EdtPlanning
         if (array_key_exists($p->getTypeIdMatiere(), $this->matieres)) {
             $matiere = $this->matieres[$p->getTypeIdMatiere()];
+
             if (null !== $matiere) {
                 $evt->matiere = $matiere->display;
                 $evt->semestre = $p->getSemestre();
@@ -591,7 +593,7 @@ class MyEdtIntranet extends BaseEdt
         $pl->setAnneeUniversitaire($anneeUniversitaire);
         $pl->setOrdreSemestre($semestre->getOrdreLmd());
         $pl->setSemaine($request->request->get('semaine'));
-        $pl->setDiplome($semestre->getDiplome());
+        $pl->setDiplome($semestre->getDiplome()->getParent() === null ? $semestre->getDiplome() : $semestre->getDiplome()->getParent());
 
         return $this->updatePl($request, $pl, $anneeUniversitaire);
     }
@@ -615,6 +617,8 @@ class MyEdtIntranet extends BaseEdt
         EdtPlanning $plann,
         AnneeUniversitaire $anneeUniversitaire
     ): EdtPlanning {
+        $semestre = $this->semestreRepository->find($request->request->get('promo'));
+        $plann->setSemestre($semestre);
         $this->calendrier = $this->calendrierRepository->findOneBy([
             'semaineFormation' => $plann->getSemaine(),
             'anneeUniversitaire' => $anneeUniversitaire->getId(),

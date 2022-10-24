@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/MessagerieController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/05/2022 13:05
+ * @lastUpdate 03/10/2022 18:20
  */
 
 namespace App\Controller;
@@ -49,7 +49,7 @@ class MessagerieController extends BaseController
     public function nouveauMessage(TypeGroupeRepository $typeGroupeRepository, ?Message $message = null): Response
     {
         return $this->render('messagerie/nouveauMessage.html.twig', [
-            'type_groupes' => $typeGroupeRepository->findByDepartementSemestresActifs($this->dataUserSession->getDepartement()),
+            'type_groupes' => $typeGroupeRepository->findByDepartementSemestresActifs($this->getDepartement()),
             'message' => $message,
         ]);
     }
@@ -141,7 +141,7 @@ class MessagerieController extends BaseController
         $typeDestinataire = $request->request->get('messageDestinataireType');
         $destinataires = $this->getDestinataires($request, $typeDestinataire);
         $sujet = $request->request->get('messageSubject');
-        $copie = $request->request->all()['messageCopy'];
+        $copie = $request->request->has('messageCopy') ? $request->request->all()['messageCopy'] : [];
         $message = $request->request->get('messageMessage');
         foreach ($request->files as $file) {
             if (null !== $file) {

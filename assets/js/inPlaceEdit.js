@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/inPlaceEdit.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/08/2022 10:22
+// @lastUpdate 29/09/2022 14:28
 
 import { Popover } from 'bootstrap'
 import { addCallout } from './util'
@@ -23,6 +23,9 @@ export default class InPlaceEdit {
     this.required = this.element.dataset.required ?? false
 
     element.classList.add('editable-active')
+    // if (this.value.trim() === '') {
+    //
+    // }
 
     this.init_text()
     this.showPopover()
@@ -201,8 +204,8 @@ export default class InPlaceEdit {
     let empty = true
     switch (this.type) {
       default:
-        if (this.value === '') {
-          this.element.innerHTML = '--'
+        if (this.value.trim() === '') {
+          this.element.innerHTML = '-vide-'
         } else {
           this.element.innerHTML = this.value
           empty = false

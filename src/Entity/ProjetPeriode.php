@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ProjetPeriode.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 09:36
+ * @lastUpdate 21/09/2022 08:54
  */
 
 namespace App\Entity;
@@ -17,6 +17,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Deprecated;
 use Ramsey\Uuid\Uuid;
 
 #[ORM\Entity(repositoryClass: ProjetPeriodeRepository::class)]
@@ -30,6 +31,7 @@ class ProjetPeriode extends BaseEntity
     private ?string $libelle = null;
 
     #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'projetPeriodes')]
+    #[Deprecated]
     private ?Semestre $semestre = null;
 
     #[ORM\ManyToMany(targetEntity: Personnel::class, inversedBy: 'projetPeriodes')]
@@ -53,11 +55,15 @@ class ProjetPeriode extends BaseEntity
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $texteLibre = null;
 
+    #[ORM\ManyToMany(targetEntity: Semestre::class, inversedBy: 'projetPeriodeSemestres')]
+    private Collection $semestres;
+
     public function __construct()
     {
         $this->responsables = new ArrayCollection();
         $this->setUuid(Uuid::uuid4());
         $this->projetEtudiants = new ArrayCollection();
+        $this->semestres = new ArrayCollection();
     }
 
     public function __clone()
@@ -77,11 +83,13 @@ class ProjetPeriode extends BaseEntity
         return $this;
     }
 
+    #[Deprecated]
     public function getSemestre(): ?Semestre
     {
         return $this->semestre;
     }
 
+    #[Deprecated]
     public function setSemestre(?Semestre $semestre): self
     {
         $this->semestre = $semestre;
@@ -190,6 +198,30 @@ class ProjetPeriode extends BaseEntity
     public function setTexteLibre(?string $texteLibre): self
     {
         $this->texteLibre = $texteLibre;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Semestre>
+     */
+    public function getSemestres(): Collection
+    {
+        return $this->semestres;
+    }
+
+    public function addSemestre(Semestre $semestre): self
+    {
+        if (!$this->semestres->contains($semestre)) {
+            $this->semestres->add($semestre);
+        }
+
+        return $this;
+    }
+
+    public function removeSemestre(Semestre $semestre): self
+    {
+        $this->semestres->removeElement($semestre);
 
         return $this;
     }

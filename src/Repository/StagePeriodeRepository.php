@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/StagePeriodeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 14/09/2022 11:30
  */
 
 namespace App\Repository;
@@ -15,6 +15,7 @@ use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Entity\StagePeriode;
+use App\Enums\SemestreLienEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\QueryBuilder;
@@ -59,9 +60,13 @@ class StagePeriodeRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('s')
             ->where('s.semestre = :semestreCourant');
 
-        if (null !== $semestre->getSuivant()) {
-            $query->orWhere('s.semestre = :semestreSuivant')
-                ->setParameter('semestreSuivant', $semestre->getSuivant()->getId());
+
+        foreach ($semestre->getSemestreLienDepart() as $semestreLienDepart) {
+            if (SemestreLienEnum::SUIVANT === $semestreLienDepart->getSens() && $semestre->getDiplome()->getId() === $semestreLienDepart->getSemestreArrive()->getDiplome()->getId()) {
+                $query->orWhere('s.semestre = :semestreSuivant'.$semestreLienDepart->getSemestreArrive()->getId())
+                        ->setParameter('semestreSuivant'.$semestreLienDepart->getSemestreArrive()->getId(),
+                            $semestreLienDepart->getSemestreArrive()->getId());
+            }
         }
 
         $query->andWhere('s.anneeUniversitaire = :annee')

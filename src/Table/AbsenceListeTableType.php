@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/AbsenceListeTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/09/2022 14:54
+ * @lastUpdate 30/09/2022 14:23
  */
 
 namespace App\Table;
@@ -141,7 +141,12 @@ class AbsenceListeTableType extends TableType
             $orders = $state->getOrderBy();
             $t = [];
 
-            $matieres = $this->typeMatiereManager->findBySemestre($this->semestre);
+            if (false === $this->semestre->getDiplome()->isApc()) {
+                $matieres = $this->typeMatiereManager->findBySemestre($this->semestre);
+            } else {
+                $matieres = $this->typeMatiereManager->findByReferentielOrdreSemestre($this->semestre, $this->semestre->getDiplome()->getReferentiel());
+            }
+
             $data = $this->myAbsences->getAbsencesSemestreDto($matieres, $this->semestre, $this->anneeUniversitaire);
 
             if (count($orders) > 0) {

@@ -21,7 +21,7 @@
         </li>
     </ul>
 
-        Pour modidier ce comportement par défaut, <a href="{{ path('settings_configuration_personnel') }}" target="_blank">
+    Pour modidier ce comportement par défaut, <a href="{{ path('settings_configuration_personnel') }}" target="_blank">
         vous devez aller dans vos paramètres et actualiser cette page une fois les modifications faites</a>
 </div>
 
@@ -36,6 +36,7 @@
                     <select class="form-select selectpicker"
                             id="absence-matiere"
                     >
+
                         {% for mati in matieres %}
                             <option value="{{ mati.typeIdMatiere }}"
                                     {% if matiere != null and mati.typeIdMatiere == matiere.typeIdMatiere %}selected{% endif %}>
@@ -58,6 +59,11 @@
                     </div>
                 </div>
             </div>
+
+            <input type="hidden" class="form-control"
+                   id="absence-duree"
+                   value="{%- if event != null -%}{{- event.dureeObjet|date('%H:%I') -}}
+{%- else -%}01:30{%- endif -%}">
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label for="absence-heure">Heure</label>
@@ -101,11 +107,16 @@
                                         {% if user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement
                                             ('ROLE_DDE') %}
                                             Aucun groupe n'existe dans ce semestre. <a
-                                                href="{{ path('administration_groupe_index', {semestre:semestre.id})
-                                                }}">Veuillez
-                                                                                                 d'abord ajouter des
-                                                                                                 types de groupe et
-                                                                                                 des groupes.</a>
+                                                href="{{ path('administration_groupe_index', {semestre:semestre.id}) }}">Veuillez
+                                                                                                                         d'abord
+                                                                                                                         ajouter
+                                                                                                                         des
+                                                                                                                         types
+                                                                                                                         de
+                                                                                                                         groupe
+                                                                                                                         et
+                                                                                                                         des
+                                                                                                                         groupes.</a>
                                         {% else %}
                                             Aucun groupe n'existe dans ce semestre. Contactez les responsables du
                                             département.

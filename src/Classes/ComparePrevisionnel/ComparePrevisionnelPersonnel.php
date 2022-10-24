@@ -4,14 +4,14 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/ComparePrevisionnel/ComparePrevisionnelPersonnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 22:50
+ * @lastUpdate 23/09/2022 18:52
  */
 
 namespace App\Classes\ComparePrevisionnel;
 
-use App\Classes\Edt\AbstractEdt;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\Previsionnel\PrevisionnelManager;
+use App\Components\SourceEdt\Source\AbstractEdt;
 use App\Entity\Departement;
 use App\Entity\Personnel;
 use App\Repository\EdtPlanningRepository;

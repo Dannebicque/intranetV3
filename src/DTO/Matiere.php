@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/Matiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:52
+ * @lastUpdate 09/10/2022 17:28
  */
 
 namespace App\DTO;
@@ -232,5 +232,16 @@ class Matiere
         }
 
         return null;
+    }
+
+    public function getDiplomeDisplay()
+    {
+        if ($this->getSemestres()->count() > 0) {
+            if ($this->getSemestres()->first()->getDiplome()->getParent() !== null) {
+                return $this->getSemestres()->first()->getDiplome()->getParent()->getDisplay();
+            }
+
+            return $this->getSemestres()->first()->getDiplome()->getDisplay();
+        }
     }
 }

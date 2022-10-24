@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Enquetes/MyEnquete.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:28
+ * @lastUpdate 14/09/2022 14:28
  */
 
 namespace App\Classes\Enquetes;
@@ -346,7 +346,8 @@ class MyEnquete
                     }
                 }
             }
-            if ('echelle' === $question->getConfiguration()['type'] || TypeEchelle::class === $question->getType()) {
+
+            if ((array_key_exists('type', $question->getConfiguration()) && 'echelle' === $question->getConfiguration()['type']) || TypeEchelle::class === $question->getType()) {
                 // si échelle ... tôt de satisfaction
                 $div = ($nbProps * ($nbTotalReponseQuestion - $retire));
                 if (0 !== $div) {

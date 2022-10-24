@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyProjet.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyProjet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 21/09/2022 09:18
  */
 
 /*
@@ -41,7 +41,11 @@ class MyProjet
             $anneeUniversitaire = null !== $projetPeriode->getAnneeUniversitaire() ? $projetPeriode->getAnneeUniversitaire()->getAnnee() : (int) date('Y');
         }
 
-        $etudiants = $this->etudiantRepository->findBySemestre($projetPeriode->getSemestre());
+        $etudiants = [];
+        foreach ($projetPeriode->getSemestres() as $semestre) {
+            $etudiants[] = $this->etudiantRepository->findBySemestre($semestre);
+        }
+        $etudiants = array_merge(...$etudiants);
 
         /** @var Etudiant $etudiant */
         foreach ($etudiants as $etudiant) {

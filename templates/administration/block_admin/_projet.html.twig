@@ -15,7 +15,8 @@
                     <div class="col-6 d-grid d-block  mb-2">
                         <a href="{{ path('administration_projet_periode_gestion', {uuid:periode.uuidString}) }}"
                            class="btn btn-primary"> Période : <strong>{{ periode.libelle }}
-                                ({{ periode.semestre.display }})</strong></a>
+                                ({% for semestre in periode.semestres %}{{ semestre.display }}{% endfor
+                                %})</strong></a>
                     </div>
                 {% else %}
                     <div class="col-sm-12">

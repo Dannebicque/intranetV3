@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/ComparePrevisionnel/ComparePrevisonnelMatiere.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/ComparePrevisionnel/ComparePrevisonnelMatiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/10/2021 11:43
+ * @lastUpdate 18/09/2022 12:07
  */
 
 namespace App\Classes\ComparePrevisionnel;
@@ -12,7 +12,7 @@ namespace App\Classes\ComparePrevisionnel;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\Previsionnel\PrevisionnelManager;
 use App\Entity\Departement;
-use App\Repository\CelcatEventsRepository;
+use App\Repository\EdtCelcatRepository;
 use App\Repository\EdtPlanningRepository;
 use function array_key_exists;
 
@@ -20,7 +20,7 @@ class ComparePrevisonnelMatiere extends ComparePrevisionnel
 {
     private array $matieres;
 
-    public function __construct(private readonly EdtPlanningRepository $edtPlanningRepository, private readonly CelcatEventsRepository $celcatEventsRepository, private readonly TypeMatiereManager $typeMatiereManager, private readonly PrevisionnelManager $previsionnelManager)
+    public function __construct(private readonly EdtPlanningRepository $edtPlanningRepository, private readonly EdtCelcatRepository $celcatEventsRepository, private readonly TypeMatiereManager $typeMatiereManager, private readonly PrevisionnelManager $previsionnelManager)
     {
     }
 

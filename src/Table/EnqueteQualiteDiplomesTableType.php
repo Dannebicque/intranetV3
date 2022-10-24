@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/EnqueteQualiteDiplomesTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/05/2022 15:13
+ * @lastUpdate 14/09/2022 08:51
  */
 
 namespace App\Table;
@@ -37,7 +37,7 @@ class EnqueteQualiteDiplomesTableType extends TableType
         $builder->addColumn('id', NbEtudiantsColumnType::class, ['label' => 'table.nbEtudiants', 'effectifs' => $options['effectifs']]);
         $builder->addColumn('semestres', SemestresAvecActifColumnType::class, ['label' => 'table.semestre']);
 
-        $builder->setLoadUrl('administratif_enquete_index');
+        $builder->setLoadUrl('administratif_enquete_etudiant_index');
 
         $builder->useAdapter(EntityAdapter::class, [
             'class' => Diplome::class,

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EmpruntsController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 14/09/2022 09:13
  */
 
 namespace App\Controller\administration;
@@ -82,7 +82,7 @@ class EmpruntsController extends BaseController
     #[Route(path: '/export.{_format}', name: 'administration_emprunts_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
     public function export(
         MySerializer $mySerializer,
-        MyExport $myExport, MyEmprunts $myEmprunts, $_format): Response
+        MyExport $myExport, MyEmprunts $myEmprunts, string $_format): Response
     {
         $myEmprunts->listeEmprunts($this->dataUserSession->getDepartement());
         $data = $mySerializer->getDataFromSerialization(

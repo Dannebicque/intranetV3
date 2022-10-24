@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/TrombinoscopeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/08/2022 18:27
+ * @lastUpdate 05/10/2022 17:36
  */
 
 namespace App\Controller;
@@ -22,7 +22,6 @@ use App\Exception\DiplomeNotFoundException;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
-use App\Repository\TypeGroupeRepository;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -51,7 +50,7 @@ class TrombinoscopeController extends BaseController
      * @throws SyntaxError
      */
     #[Route(path: '/etudiant/export/{typeGroupe<\d+>}.{_format}', name: 'trombinoscope_etudiant_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function trombiEtudiantExport(MyExportListing $myExportListing, TypeGroupe $typeGroupe, $_format): Response
+    public function trombiEtudiantExport(MyExportListing $myExportListing, TypeGroupe $typeGroupe, string $_format): Response
     {
         return $myExportListing->genereFichier(
             Constantes::TYPEDOCUMENT_EMARGEMENT,
@@ -68,7 +67,7 @@ class TrombinoscopeController extends BaseController
      * @throws SyntaxError
      */
     #[Route(path: '/etudiant/export-groupe/{groupe<\d+>}.{_format}', name: 'trombinoscope_etudiant_export_groupe', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function trombiEtudiantExportGroupe(MyExportListing $myExportListing, Groupe $groupe, $_format): Response
+    public function trombiEtudiantExportGroupe(MyExportListing $myExportListing, Groupe $groupe, string $_format): Response
     {
         return $myExportListing->genereFichier(
             Constantes::TYPEDOCUMENT_EMARGEMENT,
@@ -103,7 +102,6 @@ class TrombinoscopeController extends BaseController
     #[Route(path: '/etudiant/{semestre<\d+>}/{typegroupe<\d+>}', name: 'trombinoscope_etudiant_semestre_type_groupe', options: ['expose' => true])]
     #[ParamConverter('typegroupe', options: ['id' => 'typegroupe'])]
     public function trombiEtudiantSemestre(
-        TypeGroupeRepository $typeGroupeRepository,
         EtudiantRepository $etudiantRepository,
         GroupeRepository $groupeRepository,
         Semestre $semestre,
@@ -119,7 +117,8 @@ class TrombinoscopeController extends BaseController
             throw new DiplomeNotFoundException();
         }
 
-        $typeGroupes = $typeGroupeRepository->findByDiplomeAndOrdreSemestre($dip, $semestre->getOrdreLmd());
+        $typeGroupes = $semestre->getTypeGroupess();
+
         $groupes = null;
         if (null !== $typegroupe) {
             $groupes = $groupeRepository->findByTypeGroupe($typegroupe);
@@ -138,6 +137,7 @@ class TrombinoscopeController extends BaseController
         }
 
         return $this->render('trombinoscope/trombiEtudiant.html.twig', [
+            'parcours' => $semestre->getDiplome()->getApcParcours(),
             'semestre' => $semestre,
             'selectedTypeGroupe' => $typegroupe,
             'typeGroupes' => $typeGroupes,
@@ -151,7 +151,7 @@ class TrombinoscopeController extends BaseController
     public function trombiPersonnel(
         Configuration $configuration,
         PersonnelRepository $personnelRepository,
-        $type
+        string $type
     ): Response {
         $personnels = $personnelRepository->findByType(
             $type,
@@ -173,8 +173,8 @@ class TrombinoscopeController extends BaseController
         MySerializer $mySerializer,
         MyExport $myExport,
         PersonnelRepository $personnelRepository,
-        $type,
-        $_format
+        string $type,
+        string $_format
     ): Response {
         $personnels = $personnelRepository->findByType($type, $this->dataUserSession->getDepartement());
 

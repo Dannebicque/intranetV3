@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEvaluation.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyEvaluation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/10/2021 11:21
+ * @lastUpdate 18/10/2022 20:57
  */
 
 /*
@@ -48,8 +48,13 @@ class MyEvaluation
     /**
      * MyEvaluation constructor.
      */
-    public function __construct(private readonly TypeMatiereManager $typeMatiereManager, protected EntityManagerInterface $entityManager, private readonly MyPDF $myPdf, private readonly MyExcelMultiExport $myExcelMultiExport, private readonly EtudiantRepository $etudiantRepository)
-    {
+    public function __construct(
+        private readonly TypeMatiereManager $typeMatiereManager,
+        protected EntityManagerInterface $entityManager,
+        private readonly MyPDF $myPdf,
+        private readonly MyExcelMultiExport $myExcelMultiExport,
+        private readonly EtudiantRepository $etudiantRepository
+    ) {
     }
 
     public function setEvaluation(Evaluation $evaluation): self
@@ -216,8 +221,11 @@ class MyEvaluation
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\SyntaxError
      */
-    public function exportReleve(string $_format, Collection|array $groupes, Semestre $semestre): StreamedResponse|PdfResponse|null
-    {
+    public function exportReleve(
+        string $_format,
+        Collection|array $groupes,
+        Semestre $semestre
+    ): StreamedResponse|PdfResponse|null {
         $notes = $this->getNotesTableau();
         $matiere = $this->typeMatiereManager->getMatiereFromSelect($this->evaluation->getTypeIdMatiere());
 
@@ -225,7 +233,7 @@ class MyEvaluation
             throw new MatiereNotFoundException();
         }
 
-        $name = 'releve-'.$matiere->codeMatiere;
+        $name = 'releve-' . $matiere->codeMatiere;
         switch ($_format) {
             case Constantes::FORMAT_PDF:
                 return $this->myPdf::generePdf('pdf/releveEvaluation.html.twig', [
@@ -263,7 +271,7 @@ class MyEvaluation
     /**
      * @throws Exception
      */
-    public function importEvaluation(Evaluation $evaluation, string $fichier, Semestre $semestre): bool
+    public function importEvaluation(Evaluation $evaluation, string $fichier, Semestre $semestre, bool $ecrase = false): bool
     {
         $t = explode('.', $fichier);
         $extension = $t[count($t) - 1];
@@ -272,11 +280,11 @@ class MyEvaluation
             case 'xlsx':
                 $data = $this->importXlsx($fichier);
 
-                return $this->insertNotes($evaluation, $data, $semestre);
+                return $this->insertNotes($evaluation, $data, $semestre, $ecrase);
             case 'csv':
                 $data = $this->importCsv($fichier);
 
-                return $this->insertNotes($evaluation, $data, $semestre);
+                return $this->insertNotes($evaluation, $data, $semestre, $ecrase);
             default:
                 return false; // erreur
         }
@@ -285,7 +293,7 @@ class MyEvaluation
     /**
      * @throws Exception
      */
-    private function insertNotes(Evaluation $evaluation, array $data, Semestre $semestre): bool
+    private function insertNotes(Evaluation $evaluation, array $data, Semestre $semestre, bool $ecrase = false): bool
     {
         $evaluation->setVisible(false); // on masque l'évaluation le temps de l'import et de la vérification
         $notes = [];
@@ -302,29 +310,32 @@ class MyEvaluation
 
         foreach ($data as $note) {
             if (array_key_exists($note['num_etudiant'], $etudiants)) {
-                if (array_key_exists($note['num_etudiant'],
-                        $notes) && -0.01 === $notes[$note['num_etudiant']]->getNote()) {
-                    // une note = -0.01, on met à jour...
-                    $notes[$note['num_etudiant']]->setNote(Tools::convertToFloat($note['note']));
-                    $notes[$note['num_etudiant']]->setCommentaire($note['commentaire']);
-                } elseif (!array_key_exists($note['num_etudiant'], $notes)) {
-                    // pas de note, on ajoute
-                    $nnnote = new Note();
-                    $nnnote->setEvaluation($evaluation);
-                    $nnnote->setEtudiant($etudiants[$note['num_etudiant']]);
-                    $nnnote->setCommentaire($note['commentaire']);
-                    $nnnote->setNote(Tools::convertToFloat($note['note']));
-                    $this->entityManager->persist($nnnote);
+                if (array_key_exists($note['num_etudiant'], $notes)) {
+                    if ($ecrase === true || -0.01 === $notes[$note['num_etudiant']]->getNote()) {
+                        // une note = -0.01, ou on force l'écriture on met à jour...
+                        $notes[$note['num_etudiant']]->setNote(Tools::convertToFloat($note['note']));
+                        $notes[$note['num_etudiant']]->setCommentaire($note['commentaire']);
+                    }
                 }
+            } elseif (!array_key_exists($note['num_etudiant'], $notes)) {
+                // pas de note, on ajoute
+                $nnnote = new Note();
+                $nnnote->setEvaluation($evaluation);
+                $nnnote->setEtudiant($etudiants[$note['num_etudiant']]);
+                $nnnote->setCommentaire($note['commentaire']);
+                $nnnote->setNote(Tools::convertToFloat($note['note']));
+                $this->entityManager->persist($nnnote);
             }
         }
+
         $this->entityManager->flush();
 
         return true;
     }
 
-    private function importXlsx(string $fichier): array
-    {
+    private function importXlsx(
+        string $fichier
+    ): array {
         $t = [];
         $excel = IOFactory::load($fichier);
         $sheetData = $excel->getActiveSheet()->toArray(null, true, true, true);
@@ -349,8 +360,9 @@ class MyEvaluation
         return $data;
     }
 
-    private function importCsv(string $fichier): array
-    {
+    private function importCsv(
+        string $fichier
+    ): array {
         $t = [];
         $handle = fopen($fichier, 'rb');
         $data = [];

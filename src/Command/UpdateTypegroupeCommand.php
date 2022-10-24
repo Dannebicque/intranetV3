@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Command/UpdateTypegroupeCommand.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/08/2022 18:20
+ * @lastUpdate 04/10/2022 10:14
  */
 
 namespace App\Command;
 
+use App\Repository\SemestreRepository;
 use App\Repository\TypeGroupeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -25,7 +26,8 @@ class UpdateTypegroupeCommand extends Command
 {
     public function __construct(
         protected EntityManagerInterface $entityManager,
-        protected TypeGroupeRepository $typeGroupeRepository
+        protected TypeGroupeRepository $typeGroupeRepository,
+        protected SemestreRepository $semestreRepository
     ) {
         parent::__construct();
     }
@@ -37,9 +39,19 @@ class UpdateTypegroupeCommand extends Command
         $tgs = $this->typeGroupeRepository->findAll();
 
         foreach ($tgs as $tg) {
-            if (null === $tg->getDiplome() && null !== $tg->getSemestre()) {
-                $tg->setDiplome($tg->getSemestre()->getDiplome());
-                $tg->setOrdreSemestre($tg->getSemestre()->getOrdreLmd());
+            if ($tg->getDiplome() === null && $tg->getSemestre() !== null) {
+                $tg->addSemestre($tg->getSemestre());
+                $tg->getSemestre()->addTypeGroupess($tg);
+                $this->entityManager->persist($tg);
+            } else {
+                $semestres = $this->semestreRepository->findByDiplomeEtNumero($tg->getDiplome(), $tg->getOrdreSemestre());
+                // nouveau système temporaire... récupérer tous les semestre des diplomes...
+                //ajouter les semestres
+                foreach ($semestres as $semestre) {
+                    $tg->addSemestre($semestre);
+                    $semestre->addTypeGroupess($tg);
+                    $this->entityManager->persist($tg);
+                }
             }
         }
 

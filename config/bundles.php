@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/config/bundles.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 07:56
+ * @lastUpdate 11/09/2022 08:21
  */
 
 return [
@@ -30,4 +30,5 @@ return [
     Symfony\UX\TwigComponent\TwigComponentBundle::class => ['all' => true],
     Symfony\UX\LiveComponent\LiveComponentBundle::class => ['all' => true],
     Symfony\UX\Dropzone\DropzoneBundle::class => ['all' => true],
+    Symfony\UX\Autocomplete\AutocompleteBundle::class => ['all' => true],
 ];

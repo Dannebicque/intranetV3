@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ApcSaeCompetenceRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcSaeCompetenceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/05/2021 16:46
+ * @lastUpdate 05/10/2022 16:52
  */
 
 namespace App\Repository;
@@ -33,7 +33,8 @@ class ApcSaeCompetenceRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('a')
             ->innerJoin(ApcSae::class, 'r', 'WITH', 'a.sae = r.id')
-            ->where('r.semestre = :semestre')
+            ->innerJoin('r.semestres', 's')
+            ->where('s.id = :semestre')
             ->setParameter('semestre', $semestre)
             ->getQuery()
             ->getResult();

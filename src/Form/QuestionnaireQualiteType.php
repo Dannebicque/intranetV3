@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/QuestionnaireQualiteType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/QuestionnaireQualiteType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/11/2021 17:36
+ * @lastUpdate 14/09/2022 14:55
  */
 
 namespace App\Form;
@@ -37,16 +37,19 @@ class QuestionnaireQualiteType extends AbstractType
             ->add('texteExplication', TextareaType::class, [
                 'attr' => ['class' => 'tinyMce', 'rows' => 10],
                 'label' => 'label.texteExplication',
+                'required' => false,
                 'help' => 'Texte d\'explication du questionnaire. Affiché dans la liste des questionnaires.',
             ])
             ->add('texteDebut', TextareaType::class, [
                 'attr' => ['class' => 'tinyMce', 'rows' => 10],
                 'label' => 'label.texteDebut',
+                'required' => false,
                 'help' => 'Texte introductif du questionnaire, affiché au début de l\'enquête',
             ])
             ->add('textFin', TextareaType::class, [
                 'attr' => ['class' => 'tinyMce', 'rows' => 10],
                 'label' => 'label.texteFin',
+                'required' => false,
                 'help' => 'Texte affiché à la fin du questionnaire, une fois l\'ensemble des sections complétées.',
             ])
             ->add('semestre', EntityCompleteType::class, [

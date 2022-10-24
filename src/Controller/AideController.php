@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/AideController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/AideController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/11/2021 12:28
+ * @lastUpdate 08/10/2022 21:53
  */
 
 namespace App\Controller;
@@ -22,6 +22,7 @@ class AideController extends AbstractController
         string $sujet
     ): Response {
         $tab = [
+            'login' => '01-etudiant/01-etudiant',
             'administration_stage_periode' => 'url',
             'application_personnel_carnet' => 'url',
             'administration_absence_liste' => 'url',

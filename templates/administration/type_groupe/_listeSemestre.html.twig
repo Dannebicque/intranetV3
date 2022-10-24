@@ -61,7 +61,7 @@
                         <label class="switch" for="mutualise_{{ tg.id }}">
                             <input type="checkbox" {{ tg.mutualise ? 'checked': '' }}
                                    data-action="change->groupes-adm#changeMutualise"
-                                   value="true"
+                                   value="{{ tg.mutualise ? false : true }}"
                                    name="mutualise_{{ tg.id }}"
                                    id="mutualise_{{ tg.id }}"
                                    data-type_groupe="{{ tg.id }}"

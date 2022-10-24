@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/ProfilEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/09/2022 18:30
+ * @lastUpdate 05/10/2022 16:38
  */
 
 namespace App\Controller;
@@ -191,10 +191,9 @@ class ProfilEtudiantController extends BaseController
             $ressources = $apcRessourceCompetenceRepository->findBySemestreArray($semestre);
             $saes = $apcSaeCompetenceRepository->findBySemestreArray($semestre);
             $ues = $ueRepository->findBySemestre($semestre);
-
             $etudiantSousCommissionApc = new EtudiantSousCommissionApc($etudiant, $semestre, $ues);
             $etudiantNotes->setEtudiant($etudiant);
-            $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestre());
+            $matieres = $typeMatiereManager->findBySemestreAndReferentiel($etudiant->getSemestre(), $etudiant->getSemestre()->getDiplome()->getReferentiel());
             $etudiantSousCommissionApc->moyenneMatieres = $etudiantNotes->getMoyenneParMatiereParSemestresEtAnneeUniversitaire($matieres,
                 $etudiant->getSemestre(),
                 $this->getAnneeUniversitaire(), true);
@@ -231,10 +230,20 @@ class ProfilEtudiantController extends BaseController
         if (null !== $etudiant->getSemestre()) {
             Calendrier::calculPlanning($this->dataUserSession->getAnneeUniversitaire()->getAnnee(), 2,
                 Constantes::DUREE_SEMESTRE);
-            $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestre());
+
+            if ($etudiant->getDiplome()->isApc() === false) {
+                $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestre());
+            } else {
+                $mats = $typeMatiereManager->findByReferentielOrdreSemestre($etudiant->getSemestre(), $etudiant->getDiplome()->getReferentiel());
+
+                $matieres = [];
+                foreach ($mats as $mat) {
+                    $matieres[$mat->getTypeIdMatiere()] = $mat;
+                }
+            }
             $etudiantAbsences->setEtudiant($etudiant);
             $absences = $etudiantAbsences->getAbsencesParSemestresEtAnneeUniversitaire($matieres,
-                $this->dataUserSession->getAnneeUniversitaire());
+                $this->getAnneeUniversitaire());
             $statistiquesAbsences = $statsAbsences->calculStatistiquesAbsencesEtudiant($absences);
 
             // todo: gérer les mois, selon le semestre ?

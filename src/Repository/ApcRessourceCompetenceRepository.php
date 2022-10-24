@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/ApcRessourceCompetenceRepository.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcRessourceCompetenceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/03/2021 18:49
+ * @lastUpdate 05/10/2022 16:51
  */
 
 namespace App\Repository;
@@ -33,7 +33,8 @@ class ApcRessourceCompetenceRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('a')
             ->innerJoin(ApcRessource::class, 'r', 'WITH', 'a.ressource = r.id')
-            ->where('r.semestre = :semestre')
+            ->innerJoin('r.semestres', 's')
+            ->where('s.id = :semestre')
             ->setParameter('semestre', $semestre)
             ->getQuery()
             ->getResult();
