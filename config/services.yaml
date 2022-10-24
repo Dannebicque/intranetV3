@@ -4,75 +4,83 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-    locale: fr
-    BASE_URL: '%env(resolve:BASE_URL)%'
-    apogee.login: '%env(resolve:APOGEE_LOGIN)%'
-    apogee.password: '%env(resolve:APOGEE_PASSWORD)%'
-    apogee.string: '%env(resolve:APOGEE_STRING)%'
-    MSSQL_PASS: '%env(resolve:MSSQL_PASS)%'
-    MSSQL_USER: '%env(resolve:MSSQL_USER)%'
-    LDAP_HOST: '%env(resolve:LDAP_HOST)%'
-    LDAP_LOGIN: '%env(resolve:LDAP_LOGIN)%'
-    LDAP_PASSWORD: '%env(resolve:LDAP_PASSWORD)%'
-    LDAP_BASE_DN: '%env(resolve:LDAP_BASE_DN)%'
-    CAS_HOST: '%env(resolve:CAS_HOST)%'
-    CAS_PORT: '%env(resolve:CAS_PORT)%'
-    CAS_CONTEXT: '%env(resolve:CAS_CONTEXT)%'
-    iconShow: '%env(resolve:ICON_SHOW)%'
-    iconRetour: '%env(resolve:ICON_RETOUR)%'
-    iconEdit: '%env(resolve:ICON_EDIT)%'
-    iconDelete: '%env(resolve:ICON_DELETE)%'
-    iconPrint: '%env(resolve:ICON_PRINT)%'
-    iconDuplicate: '%env(resolve:ICON_DUPLICATE)%'
-    iconAdd: '%env(resolve:ICON_ADD)%'
-    iconHelp: '%env(resolve:ICON_HELP)%'
-    iconAdmin: '%env(resolve:ICON_ADMINISTRATION)%' #'fas fa-wrench'
-    iconDashboard: '%env(resolve:ICON_DASHBOARD)%' #fas fa-home'
-    iconTrombi: '%env(resolve:ICON_TROMBINOSCOPE)%' #fa-user-friends
-    iconAgenda: '%env(resolve:ICON_AGENDA)%' #ffa-calendar-alt
-    iconApplications: '%env(resolve:ICON_APPLICATIONS)%' #ffa-toolbox
-    iconDocuments: '%env(resolve:ICON_DOCUMENTS)%' #fa-folder
-    iconInformation: '%env(resolve:ICON_INFORMATION)%' #fa-file-alt
-    iconMessage: '%env(resolve:ICON_MESSAGE)%' #fas fa-home'
-    iconNotification: '%env(resolve:ICON_NOTIFCATION)%' #fas fa-home'
-    iconOriginaux: '%env(resolve:ICON_ORIGINAUX)%' #fas fa-books'
+  locale: fr
+  BASE_URL: '%env(resolve:BASE_URL)%'
+  apogee.login: '%env(resolve:APOGEE_LOGIN)%'
+  apogee.password: '%env(resolve:APOGEE_PASSWORD)%'
+  apogee.string: '%env(resolve:APOGEE_STRING)%'
+  MSSQL_PASS: '%env(resolve:MSSQL_PASS)%'
+  MSSQL_USER: '%env(resolve:MSSQL_USER)%'
+  LDAP_HOST: '%env(resolve:LDAP_HOST)%'
+  LDAP_LOGIN: '%env(resolve:LDAP_LOGIN)%'
+  LDAP_PASSWORD: '%env(resolve:LDAP_PASSWORD)%'
+  LDAP_BASE_DN: '%env(resolve:LDAP_BASE_DN)%'
+  CAS_HOST: '%env(resolve:CAS_HOST)%'
+  CAS_PORT: '%env(resolve:CAS_PORT)%'
+  CAS_CONTEXT: '%env(resolve:CAS_CONTEXT)%'
+  iconShow: '%env(resolve:ICON_SHOW)%'
+  iconRetour: '%env(resolve:ICON_RETOUR)%'
+  iconEdit: '%env(resolve:ICON_EDIT)%'
+  iconDelete: '%env(resolve:ICON_DELETE)%'
+  iconPrint: '%env(resolve:ICON_PRINT)%'
+  iconDuplicate: '%env(resolve:ICON_DUPLICATE)%'
+  iconAdd: '%env(resolve:ICON_ADD)%'
+  iconHelp: '%env(resolve:ICON_HELP)%'
+  iconAdmin: '%env(resolve:ICON_ADMINISTRATION)%' #'fas fa-wrench'
+  iconDashboard: '%env(resolve:ICON_DASHBOARD)%' #fas fa-home'
+  iconTrombi: '%env(resolve:ICON_TROMBINOSCOPE)%' #fa-user-friends
+  iconAgenda: '%env(resolve:ICON_AGENDA)%' #ffa-calendar-alt
+  iconApplications: '%env(resolve:ICON_APPLICATIONS)%' #ffa-toolbox
+  iconDocuments: '%env(resolve:ICON_DOCUMENTS)%' #fa-folder
+  iconInformation: '%env(resolve:ICON_INFORMATION)%' #fa-file-alt
+  iconMessage: '%env(resolve:ICON_MESSAGE)%' #fas fa-home'
+  iconNotification: '%env(resolve:ICON_NOTIFCATION)%' #fas fa-home'
+  iconOriginaux: '%env(resolve:ICON_ORIGINAUX)%' #fas fa-books | fas fa-otter'
+  iconStudent: '%env(resolve:ICON_STUDENT)%' #fas fa-user-graduate'
+  iconQualite: '%env(resolve:ICON_QUALITE)%' #fas fa-diagnoses'
+  iconPersonnel: '%env(resolve:ICON_PERSONNEL)%' #fas fa-users'
+  iconScolarite: '%env(resolve:ICON_SCOLARITE)%' #fas fa-school'
+  iconPrevi: '%env(resolve:ICON_PREVI)%' #fas fa-clock'
+  iconApogee: '%env(resolve:ICON_APOGEE)%' #fas fa-chart-pie'
+  iconCompta: '%env(resolve:ICON_COMPTA)%' #fas fa-comments-dollar'
+
 
 services:
-    # default configuration for services in *this* file
-    _defaults:
-        autowire: true      # Automatically injects dependencies in your services.
-        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
-        bind:
-            $bugsnag: '@bugsnag'
+  # default configuration for services in *this* file
+  _defaults:
+    autowire: true      # Automatically injects dependencies in your services.
+    autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+    bind:
+      $bugsnag: '@bugsnag'
 
-    # makes classes in src/ available to be used as services
-    # this creates a service per class whose id is the fully-qualified class name
-    App\:
-        resource: '../src/'
-        exclude:
-            - '../src/DependencyInjection/'
-            - '../src/Entity/'
-            - '../src/Kernel.php'
-            - '../src/Tests/'
-            - '../src/Components/*/DependencyInjection/'
+  # makes classes in src/ available to be used as services
+  # this creates a service per class whose id is the fully-qualified class name
+  App\:
+    resource: '../src/'
+    exclude:
+      - '../src/DependencyInjection/'
+      - '../src/Entity/'
+      - '../src/Kernel.php'
+      - '../src/Tests/'
+      - '../src/Components/*/DependencyInjection/'
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+  # add more service definitions when explicit configuration is needed
+  # please note that last definitions always *replace* previous ones
 
-#    App\EventListener\ExceptionListener:
-#        tags:
-#            - { name: kernel.event_listener, event: kernel.exception }
+  #    App\EventListener\ExceptionListener:
+  #        tags:
+  #            - { name: kernel.event_listener, event: kernel.exception }
 
-    App\Twig\AppExtension:
-        calls:
-            - method: setConfig
-              arguments:
-                  - '@App\Classes\Configuration'
-
-    breadcrumbs_bundle.helper.breadcrumbs:
-        class: App\Components\Breadcrumbs\BreadcrumbHelper
+  App\Twig\AppExtension:
+    calls:
+      - method: setConfig
         arguments:
-            - "@router"
+          - '@App\Classes\Configuration'
 
-    App\Components\Breadcrumbs\BreadcrumbHelper:
-        alias: breadcrumbs_bundle.helper.breadcrumbs
+  breadcrumbs_bundle.helper.breadcrumbs:
+    class: App\Components\Breadcrumbs\BreadcrumbHelper
+    arguments:
+      - "@router"
+
+  App\Components\Breadcrumbs\BreadcrumbHelper:
+    alias: breadcrumbs_bundle.helper.breadcrumbs
