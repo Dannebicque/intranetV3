@@ -69,6 +69,7 @@
 
 <body class="{{ settings('CODE_IUT') }}">
 {% block full_body %}
+
     <!-- Preloader -->
     <div class="preloader" id="loader">
         <div class="spinner-dots">
@@ -180,7 +181,21 @@
     <!-- END Sidebar -->
 
     <!-- Topbar -->
+
+
     <header class="topbar">
+    <!-- ------------------------------ANIM HALLOWEEN----------------------------- -->
+
+    <img src="{{ asset('spiderweb.webp') }}" style="position:absolute; left: -30px; top: -30px; z-index: 1000; opacity: 15%; width: 150px"/>
+
+
+    <div class="anim_spider" id="spider"
+         style="position: absolute; top: -80px; left: 60%; display: flex; flex-direction: column; align-items: center; z-index: 999">
+        <span style="background-color: black; height: 100px; width: .5px"></span>
+        <i class="fa-solid fa-spider" style="position: absolute; top: 90px; color: var(--colorIUTComplementaire)"></i>
+    </div>
+
+
         <div class="topbar-left">
             <span class="topbar-btn sidebar-toggler"><i>&#9776;</i></span>
             {% if is_granted('ROLE_PERMANENT') or is_granted('ROLE_ETUDIANT') %}
@@ -454,6 +469,52 @@
     <div {{ stimulus_controller('base') }} data-action="modal:openModal@window->base#openModal">
         {{ include('_modal.html.twig') }}
     </div>
+
+
+    <script>
+        //-----------------------------------------ANIMATION HALLOWEEN-----------------------------------------//
+        //----------------------------------------------------------------------------------------------------//
+        //----------------------------------------------------------------------------------------------------//
+
+        setTimeout(function myMove() {
+            var id = null;
+            var elem = document.getElementById("spider");
+            var pos = -80;
+            clearInterval(id);
+            id = setInterval(frame, 10);
+
+            function frame() {
+                if (pos === 0) {
+                    clearInterval(id);
+                    setTimeout(function myMoveUp() {
+                        var id = null;
+                        var elem = document.getElementById("spider");
+                        var pos = 0;
+                        clearInterval(id);
+                        id = setInterval(frame, 10);
+
+                        function frame() {
+                            if (pos === -80) {
+                                clearInterval(id);
+                            }
+                            else {
+                                pos--;
+                                elem.style.top = pos + 'px';
+                            }
+                        }
+                    }, 2000)
+                }
+                else {
+                    pos++;
+                    elem.style.top = pos + 'px';
+                }
+            }
+        }, 1000)
+
+        window.onload = function () {
+            myMove();
+        };
+    </script>
 {% endblock %}{# fin du block full body #}
 </body>
 </html>
