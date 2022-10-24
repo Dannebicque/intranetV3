@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.38](https://github.com/Dannebicque/intranetV3/compare/v3.9.37...v3.9.38) (2022-10-24)
+
+
+### Features
+
+* [css] mise en place du thème halloween ([e1dab1b](https://github.com/Dannebicque/intranetV3/commit/e1dab1b433d2d86f1e373d8692531356df1ae93e))
+
+
+### Bug Fixes
+
+* [aide] Exclusion des routes d'aides de la sécurité ([422e06c](https://github.com/Dannebicque/intranetV3/commit/422e06c85ae35de9c8016a70131dda7bc18cf3f5))
+* [Appel] Modification de la structure ([e790613](https://github.com/Dannebicque/intranetV3/commit/e790613b2a5d21c4938c2c84a6ff2fe5ac46b9b3))
+* [css] Mise en place du thème halloween | Accès menu sur téléphone ([fb962d5](https://github.com/Dannebicque/intranetV3/commit/fb962d5e3891cb657f3540164852252539bdf67f))
+* [css] Mise en place du thème halloween | Accès menu sur téléphone ([a1e001b](https://github.com/Dannebicque/intranetV3/commit/a1e001b6d26024006f5d0c4e0764ebde80eec1d5))
+* [Edt] Modification EDT ([64ed301](https://github.com/Dannebicque/intranetV3/commit/64ed301782e2171c9c75683257e56051b8009289))
+* [Etudiant] Export des données ([8b2eaf9](https://github.com/Dannebicque/intranetV3/commit/8b2eaf99fbdbfdcad89b76b5bd6d74c50af4bbe7))
+* [TableType] Ajout d'un bouton pour effacer les filtres ([0527de9](https://github.com/Dannebicque/intranetV3/commit/0527de9c452016b45cf752d616315062cf1aacab))
+* [Toast] Css et amélioration des toasts messages ([75da4d0](https://github.com/Dannebicque/intranetV3/commit/75da4d0e6bf6ad4d2d9f8a7ecda2a216bf678647))
+* [Toast] Css et amélioration des toasts messages ([5026285](https://github.com/Dannebicque/intranetV3/commit/5026285cd6f565efbd4c026afcfc8c89f77d3976))
+
 ### [3.9.37](https://github.com/Dannebicque/intranetV3/compare/v3.9.36...v3.9.37) (2022-10-19)
 
 
