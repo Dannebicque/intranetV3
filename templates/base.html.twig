@@ -51,20 +51,20 @@
     {% if app.environment == 'prod' %}
         <!-- Matomo -->
         <script type="text/javascript" defer>
-          var _paq = window._paq = window._paq || []
-          /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-          _paq.push(['trackPageView'])
-          _paq.push(['enableLinkTracking']);
-          (function () {
-            var u = '//intranetv3.iut-troyes.univ-reims.fr/matomo/'
-            _paq.push(['setTrackerUrl', u + 'matomo.php'])
-            _paq.push(['setSiteId', '1'])
-            var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0]
-            g.type = 'text/javascript'
-            g.async = true
-            g.src = u + 'matomo.js'
-            s.parentNode.insertBefore(g, s)
-          })()
+            var _paq = window._paq = window._paq || []
+            /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
+            _paq.push(['trackPageView'])
+            _paq.push(['enableLinkTracking']);
+            (function () {
+                var u = '//intranetv3.iut-troyes.univ-reims.fr/matomo/'
+                _paq.push(['setTrackerUrl', u + 'matomo.php'])
+                _paq.push(['setSiteId', '1'])
+                var d = document, g = d.createElement('script'), s = d.getElementsByTagName('script')[0]
+                g.type = 'text/javascript'
+                g.async = true
+                g.src = u + 'matomo.js'
+                s.parentNode.insertBefore(g, s)
+            })()
         </script>
         <!-- End Matomo Code -->
     {% endif %}
@@ -189,16 +189,14 @@
 
 
     <header class="topbar">
-    <!-- ------------------------------ANIM HALLOWEEN----------------------------- -->
+        <!-- ------------------------------ANIM HALLOWEEN----------------------------- -->
 
-    <img src="{{ asset('spiderweb.webp') }}" style="position:absolute; left: -30px; top: -30px; z-index: 1000; opacity: 15%; width: 150px"/>
-
-
-    <div class="anim_spider" id="spider"
-         style="position: absolute; top: -80px; left: 60%; display: flex; flex-direction: column; align-items: center; z-index: 999">
-        <span style="background-color: black; height: 100px; width: .5px"></span>
-        <i class="fa-solid fa-spider" style="position: absolute; top: 90px; color: var(--colorIUTComplementaire)"></i>
-    </div>
+        <div class="anim_spider" id="spider"
+             style="position: absolute; top: -80px; left: 60%; display: flex; flex-direction: column; align-items: center; z-index: 999">
+            <span style="background-color: darkgrey; height: 100px; width: .5px"></span>
+            <i class="fa-solid fa-spider"
+               style="position: absolute; top: 90px; color: darkgrey"></i>
+        </div>
 
 
         <div class="topbar-left">
@@ -273,7 +271,9 @@
         </div>
 
         <div class="topbar-right">
-            <a class="topbar-btn" href="#qv-global" data-toggle="quickview" data-url="{% block quickViewUrl %}no-url{% endblock %}"><i class="fas fa-align-right"></i><span class="sr-only">
+            <a class="topbar-btn" href="#qv-global" data-toggle="quickview"
+               data-url="{% block quickViewUrl %}no-url{% endblock %}"><i class="fas fa-align-right"></i><span
+                        class="sr-only">
                     Informations contextuelles
                 </span></a>
             <div class="topbar-divider"></div>
@@ -290,13 +290,16 @@
                         {% endif %}
                     </span>
                     <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="{{ path('user_mon_profil') }}"><i class="fas fa-user"></i> {{ 'profil'|trans }}
+                        <a class="dropdown-item" href="{{ path('user_mon_profil') }}"><i
+                                    class="fas fa-user"></i> {{ 'profil'|trans }}
                         </a>
-                        <a class="dropdown-item" href="{{ path('user_settings') }}"><i class="fas fa-cogs"></i> {{ 'parametres'|trans }}
+                        <a class="dropdown-item" href="{{ path('user_settings') }}"><i
+                                    class="fas fa-cogs"></i> {{ 'parametres'|trans }}
                         </a>
                         <a class="dropdown-item" href="#" id="darkMode"><i class="fas fa-adjust"></i> Dark Mode On</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{ path('security_logout') }}"><i class="fas fa-sign-out-alt"></i>
+                        <a class="dropdown-item" href="{{ path('security_logout') }}"><i
+                                    class="fas fa-sign-out-alt"></i>
                             {{ 'déconnexion'|trans }}</a>
                     </div>
                 </li>
@@ -347,6 +350,10 @@
         <header class="header">
             <div class="header-info">
                 <div class="left">
+
+                    <img src="{{ asset('spiderweb.webp') }}"
+                         style="position:absolute; left: -30px; top: -30px; z-index: 1000; opacity: 15%; width: 150px"/>
+
                     <h1 class="header-title" id="header-title">
                         {% block header %}
                             <strong>No title</strong>
@@ -374,6 +381,7 @@
                     liste déroulante.
                 </div>
             {% endif %}
+            
             {% block content %}
 
             {% endblock %}
@@ -385,13 +393,13 @@
             <!-- fin du bouton fab -->
         </div><!--/.main-content -->
 
-              <!-- Footer -->
+        <!-- Footer -->
         <footer class="site-footer">
             <div class="row">
                 <div class="col-md-6">
                     <p class="text-md-left">Copyright © 2018-{{ 'now'|date('Y') }}
                         <a href="https://www.davidannebicque.fr" target="_blank">@DavidAnnebicque</a>. All rights
-                                            reserved. | Version {{ version.version }}</p>
+                        reserved. | Version {{ version.version }}</p>
                 </div>
 
                 <div class="col-md-6">
@@ -402,13 +410,16 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" target="_blank" href="{{ path('rgpd_index') }}">{{ 'menu.rgpd'|trans }}</a>
+                            <a class="nav-link" target="_blank"
+                               href="{{ path('rgpd_index') }}">{{ 'menu.rgpd'|trans }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" target="_blank" href="{{ path('mentions_about') }}">{{ 'menu.about'|trans }}</a>
+                            <a class="nav-link" target="_blank"
+                               href="{{ path('mentions_about') }}">{{ 'menu.about'|trans }}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" target="_blank" href="{{ path('mentions_index') }}">{{ 'menu.mentions_legales'|trans }}</a>
+                            <a class="nav-link" target="_blank"
+                               href="{{ path('mentions_index') }}">{{ 'menu.mentions_legales'|trans }}</a>
                         </li>
                     </ul>
                 </div>
@@ -478,15 +489,13 @@
                         function frame() {
                             if (pos === -80) {
                                 clearInterval(id);
-                            }
-                            else {
+                            } else {
                                 pos--;
                                 elem.style.top = pos + 'px';
                             }
                         }
                     }, 2000)
-                }
-                else {
+                } else {
                     pos++;
                     elem.style.top = pos + 'px';
                 }
