@@ -2,20 +2,29 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/components/Toast.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/07/2022 08:38
+// @lastUpdate 24/10/2022 17:35
 
 import { Toast as ToastBs } from 'bootstrap'
 
 class Toast {
-  createAndShow(type, text, title = null, options = {}) {
+  createAndShow(type, text, icone, title = null, options = {}) {
+    // const html = `<div class="position-fixed top-0 end-0 p-3" style="z-index:1000">
+    //   <div class="toast align-items-center text-white bg-${type} border-0" role="alert" aria-live="assertive" aria-atomic="true">
+    //     <div class="d-flex">
+    //       <div class="toast-body">${text}</div>
+    //       <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close">X</button>
+    //     </div>
+    //   </div>
+    // </div>`
+
     const html = `<div class="position-fixed top-0 end-0 p-3" style="z-index:1000">
-      <div class="toast align-items-center text-white bg-${type} border-0" role="alert" aria-live="assertive" aria-atomic="true">
-        <div class="d-flex">
-          <div class="toast-body">${text}</div>
-          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close">X</button>
-        </div>
-      </div>
-    </div>`
+                      <div class="alert alert-${type} border-2 d-flex align-items-center" role="alert">
+                        <div class="bg-${type} me-3 icon-item"><span class="fas ${icone} text-white fs-3"></span></div>
+                            <p class="mb-0 flex-1">${text}</p>
+                            <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                       </div>
+                     </div>
+                  </div>`
 
     const div = document.createElement('div')
     div.innerHTML = html
@@ -40,19 +49,19 @@ class Toast {
   }
 
   error(text, title = null, options = {}) {
-    this.createAndShow('danger', text, title, options)
+    this.createAndShow('danger', text, 'fas fa-times-circle', title, options)
   }
 
   warning(text, title = null, options = {}) {
-    this.createAndShow('warning', text, title, options)
+    this.createAndShow('warning', text, 'fa-exclamation-circle', title, options)
   }
 
   success(text, title = null, options = {}) {
-    this.createAndShow('success', text, title, options)
+    this.createAndShow('success', text, 'fas fa-check-circle', title, options)
   }
 
   info(text, title = null, options = {}) {
-    this.createAndShow('info', text, title, options)
+    this.createAndShow('info', text, 'fas fa-info-circle', title, options)
   }
 }
 
