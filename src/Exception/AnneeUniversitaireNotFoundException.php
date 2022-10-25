@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Exception/MatiereNotFoundException.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Exception/AnneeUniversitaireNotFoundException.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/05/2021 12:26
+ * @lastUpdate 25/10/2022 12:49
  */
 
 namespace App\Exception;
@@ -13,5 +13,8 @@ use Exception;
 
 class AnneeUniversitaireNotFoundException extends Exception
 {
-    protected $message = 'Année universitiare non trouvée';
+    public function __construct()
+    {
+        parent::__construct('Année universitiare non trouvée');
+    }
 }

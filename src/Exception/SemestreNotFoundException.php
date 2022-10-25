@@ -4,16 +4,15 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Exception/SemestreNotFoundException.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/07/2022 17:13
+ * @lastUpdate 25/10/2022 12:49
  */
 
 namespace App\Exception;
 
-use Doctrine\ORM\EntityNotFoundException;
-use Exception;
-
-class SemestreNotFoundException extends Exception
+class SemestreNotFoundException extends \Exception
 {
-    //todo: tester avec EntityNotFoundException
-    protected $message = 'Semestre non trouvée';
+    public function __construct()
+    {
+        parent::__construct('Semestre non trouvé');
+    }
 }
