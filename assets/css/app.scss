@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/10/2022 18:24
+// @lastUpdate 24/10/2022 18:51
 
 @import "./theme-troyes.scss";
 @import "./theme-rcc.scss";
@@ -767,17 +767,13 @@ td.bg-disabled {
   background-color: #eaeaea !important;
 }
 
-//.nav-tabs .nav-link {
-//  color: var(--policeDark)
-//}
-
 .my_toast {
   width: 350px;
   max-width: 100%;
 }
 
 .btn-close {
-  margin-right: calc(-.5 * var(--#{$prefix}toast-padding-x)); // stylelint-disable-line function-disallowed-list
+  margin-right: calc(-.5 * var(--#{$prefix}toast-padding-x));
   margin-left: var(--#{$prefix}toast-padding-x);
 }
 
@@ -805,4 +801,9 @@ td.bg-disabled {
 
 .flex-1 {
   flex:1
+}
+
+.card {
+  -webkit-box-shadow:0 7px 14px 0 rgba(65, 69, 88, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.07);
+  box-shadow:0 7px 14px 0 rgba(65, 69, 88, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.07);
 }
