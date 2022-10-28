@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.39](https://github.com/Dannebicque/intranetV3/compare/v3.9.38...v3.9.39) (2022-10-28)
+
+
+### Features
+
+* [CSS] Augmentation bordure shadow card ([00cf35c](https://github.com/Dannebicque/intranetV3/commit/00cf35c34ffa0e14afc1017e70e89d9d4308e008))
+* [Logo Partenaire] Possibilité d'ajouter un logo partenaire sur les documents de l'intranet par diplôme ([7912791](https://github.com/Dannebicque/intranetV3/commit/7912791a78d42d5b67baaa7434dd7f35bbd2ce23))
+
+
+### Bug Fixes
+
+* [TEmp. Erreur] Ajout du message sur 500 + corrections CSS ([bcf6dc5](https://github.com/Dannebicque/intranetV3/commit/bcf6dc531c7bf0d4a8184b470bc162ff91b7841d))
+
 ### [3.9.38](https://github.com/Dannebicque/intranetV3/compare/v3.9.37...v3.9.38) (2022-10-24)
 
 
