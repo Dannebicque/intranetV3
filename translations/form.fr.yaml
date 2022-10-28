@@ -359,6 +359,7 @@ label:
   type_document_parent: Catégorie de document parent
   lieu_date: 'Lieu de l''événement'
   logoFile: 'Fichier du logo'
+  logoFilePartenaire: 'Fichier du logo du/des partenaire(s)'
   mail_perso: 'Email personnel'
   mail_univ: 'Email université (ou professionnel)'
   matiere.parent: 'Matière parente'

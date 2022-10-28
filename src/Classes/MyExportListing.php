@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyExportListing.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:11
+ * @lastUpdate 28/10/2022 15:34
  */
 
 /*
@@ -327,7 +327,17 @@ class MyExportListing
             $objDrawing->setDescription('Logo certification qualité');
             $objDrawing->setPath($base.'logo/'.$this->configuration->get('LOGO_QUALITE'));
             $objDrawing->setHeight(120);
-            $objDrawing->setCoordinates('C1');
+            $objDrawing->setCoordinates('B1');
+            $objDrawing->setWorksheet($this->myExcelWriter->getSheet());
+        }
+
+        if ($diplome->getLogoPartenaire() !== null) {
+            $objDrawing = new Drawing();
+            $objDrawing->setName('Logo partenaires');
+            $objDrawing->setDescription('Logo partenaires');
+            $objDrawing->setPath($base.'logo/'.$diplome->getLogoPartenaire());
+            $objDrawing->setHeight(120);
+            $objDrawing->setCoordinates('D1');
             $objDrawing->setWorksheet($this->myExcelWriter->getSheet());
         }
 
@@ -471,6 +481,7 @@ class MyExportListing
                 'matiere' => $this->matiere,
                 'personnel' => $this->personnel,
                 'groupes' => $this->groupes,
+                'diplome' => null !== $this->matiere ? $this->matiere->getDiplome() : ($this->typeGroupe->getSemestres()->first()->getDiplome()->getParent() ?? $this->typeGroupe->getSemestres()->first()->getDiplome()),
             ],
             $this->name.'.pdf');
     }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/DiplomeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/07/2022 15:43
+ * @lastUpdate 28/10/2022 15:14
  */
 
 namespace App\Form;
@@ -28,6 +28,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\Exception\AccessException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichFileType;
 
 /**
  * Class DiplomeType.
@@ -49,6 +50,13 @@ class DiplomeType extends AbstractType
             ])
             ->add('sigle', TextType::class, [
                 'label' => 'label.sigle',
+            ])
+            ->add('logoFile', VichFileType::class, [
+                'label' => 'label.logoFilePartenaire',
+                'help' => 'Si le diplôme est porté par plusieurs partenaire, vous pouvez ajouter son logo pour qu\'il apparaisse sur les documents.',
+                'download_label' => 'apercu',
+                'allow_delete' => false,
+                'required' => false,
             ])
             ->add('parent', EntityCompleteType::class, [
                 'class' => Diplome::class,

@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/Matiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/10/2022 17:28
+ * @lastUpdate 28/10/2022 15:23
  */
 
 namespace App\DTO;
 
 use App\Entity\Constantes;
+use App\Entity\Diplome;
 use App\Entity\Groupe;
 use App\Entity\Parcour;
 use App\Entity\Semestre;
@@ -234,14 +235,19 @@ class Matiere
         return null;
     }
 
-    public function getDiplomeDisplay()
+    public function getDiplome(): Diplome
     {
         if ($this->getSemestres()->count() > 0) {
             if ($this->getSemestres()->first()->getDiplome()->getParent() !== null) {
-                return $this->getSemestres()->first()->getDiplome()->getParent()->getDisplay();
+                return $this->getSemestres()->first()->getDiplome()->getParent();
             }
 
-            return $this->getSemestres()->first()->getDiplome()->getDisplay();
+            return $this->getSemestres()->first()->getDiplome();
         }
+    }
+
+    public function getDiplomeDisplay(): ?string
+    {
+        return $this->getDiplome()?->getDisplay();
     }
 }
