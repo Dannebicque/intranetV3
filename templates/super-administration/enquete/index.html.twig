@@ -7,7 +7,14 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-
+            <a href="{{ path('sa_qualite_index') }}"
+               class="btn btn-primary btn-float"
+               title="{{ 'atitle.retour_enquete'|trans }}"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
+                <i class="fas fa-arrow-left"></i>
+                <span class="sr-only">{{ 'atitle.retour_enquete'|trans }}</span>
+            </a>
         </div>
     </div>
 {% endblock %}

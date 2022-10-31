@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/administration/QuestionnaireQualiteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 24/10/2022 14:54
  */
 
 namespace App\Controller\questionnaire\administration;
@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/administratif/questionnaire/qualite', name: 'sadm_questionnaire_qualite_')]
+#[Route('/{type}/questionnaire/qualite', name: 'adm_questionnaire_qualite_', requirements: ['type' => 'administratif|administration'], defaults: ['type' => 'administratif'])]
 class QuestionnaireQualiteController extends BaseController
 {
     /**
@@ -30,7 +30,10 @@ class QuestionnaireQualiteController extends BaseController
     #[Route('/', name: 'index', options: ['expose' => true], methods: ['GET', 'POST'])]
     public function index(Request $request): Response
     {
-        $table = $this->createTable(QuestionnaireQualiteTableType::class);
+        $table = $this->createTable(QuestionnaireQualiteTableType::class, [
+            'type' => $request->get('type'),
+            'departement' => 'administration' === $request->get('type') ? $this->getDepartement() : null,
+        ]);
         $table->handleRequest($request);
 
         if ($table->isCallback()) {
@@ -39,6 +42,7 @@ class QuestionnaireQualiteController extends BaseController
 
         return $this->render('questionnaire/administration/questionnaire_qualite/index.html.twig', [
             'table' => $table,
+            'type' => $request->get('type'),
         ]);
     }
 
@@ -60,23 +64,26 @@ class QuestionnaireQualiteController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'questionnaire.add.success.flash');
 
-            return $this->redirectToRoute('sadm_questionnaire_qualite_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('adm_questionnaire_qualite_index', ['type' => $request->get('type')], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('questionnaire/administration/questionnaire_qualite/new.html.twig', [
             'questionnaire_qualite' => $questionnaireQualite,
             'form' => $form,
+            'type' => $request->get('type'),
         ]);
     }
 
     #[Route('/{id}', name: 'show', methods: ['GET'])]
     public function show(
+        Request $request,
         QuestionnaireSectionRepository $questionnaireSectionRepository,
         QuestionnaireQualite $questionnaireQualite
     ): Response {
         return $this->render('questionnaire/administration/questionnaire_qualite/show.html.twig', [
             'questionnaire_qualite' => $questionnaireQualite,
             'sections' => $questionnaireSectionRepository->findAll(),
+            'type' => $request->get('type'),
         ]);
     }
 
@@ -93,6 +100,7 @@ class QuestionnaireQualiteController extends BaseController
         return $this->render('questionnaire/administration/questionnaire_qualite/_tableauSection.html.twig', [
             'qualiteSections' => $questionnaireSection->getSections(),
             'sections' => $questionnaireSectionRepository->findAll(),
+            'type' => $request->get('type'),
         ]);
     }
 
@@ -106,17 +114,19 @@ class QuestionnaireQualiteController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'questionnaire.edit.success.flash');
 
-            return $this->redirectToRoute('sadm_questionnaire_qualite_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('adm_questionnaire_qualite_index', ['type' => $request->get('type')], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('questionnaire/administration/questionnaire_qualite/edit.html.twig', [
             'questionnaire_qualite' => $questionnaireQualite,
             'form' => $form,
+            'type' => $request->get('type'),
         ]);
     }
 
     #[Route('/{id}/duplicate', name: 'duplicate', methods: ['GET', 'POST'])]
-    public function duplicate(QuestionnaireQualite $questionnaire): Response
+    public function duplicate(
+        Request $request, QuestionnaireQualite $questionnaire): Response
     {
         $newQuestionnaireQualite = clone $questionnaire;
         $this->entityManager->persist($newQuestionnaireQualite);
@@ -133,8 +143,8 @@ class QuestionnaireQualiteController extends BaseController
         $this->entityManager->flush();
         $this->addFlash(Constantes::FLASHBAG_SUCCESS, 'questionnaire.duplicate.success.flashbag');
 
-        return $this->redirectToRoute('administratif_enquete_edit',
-            ['questionnaire' => $newQuestionnaireQualite->getId()]);
+        return $this->redirectToRoute('adm_questionnaire_qualite_edit',
+            ['questionnaire' => $newQuestionnaireQualite->getId(), 'type' => $request->get('type')]);
     }
 
     #[Route('/{id}', name: 'delete', methods: ['POST'])]
@@ -146,7 +156,7 @@ class QuestionnaireQualiteController extends BaseController
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'questionnaire.delete.success.flash');
         }
 
-        return $this->redirectToRoute('sadm_questionnaire_qualite_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('adm_questionnaire_qualite_index', ['type' => $request->get('type')], Response::HTTP_SEE_OTHER);
     }
 
     // todo: duplicate, export

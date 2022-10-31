@@ -52,15 +52,15 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-12 col-md-4 d-grid mb-2">
-                            <a href="{{ path('sadm_questionnaire_qualite_index') }}"
+                            <a href="{{ path('adm_questionnaire_qualite_index', {type: 'administratif'}) }}"
                                class="btn d-block btn-primary"> Gérer les questionnaires</a>
                         </div>
                         <div class="col-sm-12 col-md-4 d-grid mb-2">
-                            <a href="{{ path('sadm_questionnaire_section_index') }}"
+                            <a href="{{ path('adm_questionnaire_section_index', {type: 'administratif'}) }}"
                                class="btn d-block btn-primary"> Gérer les sections</a>
                         </div>
                         <div class="col-sm-12 col-md-4 d-grid mb-2">
-                            <a href="{{ path('sadm_questionnaire_question_index') }}"
+                            <a href="{{ path('adm_questionnaire_question_index', {type: 'administratif'}) }}"
                                class="btn d-block btn-primary"> Gérer les questions</a>
                         </div>
                     </div>

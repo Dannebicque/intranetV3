@@ -7,7 +7,7 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-            <a href="{{ path('sadm_questionnaire_question_delete', {id: questionnaire_question.id}) }}"
+            <a href="{{ path('adm_questionnaire_question_delete', {id: questionnaire_question.id, type:type}) }}"
                data-csrf="{{ csrf_token('delete' ~ questionnaire_question.id) }}"
                class="btn btn-danger btn-sm btn-float supprimer"
                title="{{ 'atitle.supprimer'|trans }}"
@@ -16,7 +16,7 @@
                 <i class="{{ iconDelete }}"></i>
                 <span class="sr-only">{{ 'atitle.supprimer'|trans }}</span>
             </a>
-            <a href="{{ path('sadm_questionnaire_question_show', {id: questionnaire_question.id}) }}"
+            <a href="{{ path('adm_questionnaire_question_show', {id: questionnaire_question.id, type:type}) }}"
                class="btn btn-info btn-sm btn-float"
                title="{{ 'atitle.voir'|trans }}"
                data-bs-toggle="tooltip" data-bs-placement="bottom"
@@ -24,7 +24,7 @@
                 <i class="{{ iconShow }}"></i>
                 <span class="sr-only">{{ 'atitle.voir'|trans }}</span>
             </a>
-            <a href="{{ path('sadm_questionnaire_question_index') }}"
+            <a href="{{ path('adm_questionnaire_question_index', {type:type}) }}"
                class="btn btn-primary btn-float"
                title="{{ 'atitle.retour_liste'|trans }}"
                data-bs-toggle="tooltip" data-bs-placement="bottom"

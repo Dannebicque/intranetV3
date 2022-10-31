@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/enquete/EnqueteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/09/2022 09:39
+ * @lastUpdate 31/10/2022 10:26
  */
 
 namespace App\Controller\superAdministration\enquete;
@@ -37,6 +37,7 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/administratif/enquete')]
 class EnqueteController extends BaseController
 {
+    //todo: à centraliser ??? commun avec personnel?
     /**
      * @throws \JsonException
      */
@@ -147,6 +148,7 @@ class EnqueteController extends BaseController
             'nbReponses' => $stats,
             'etudiants' => $etudiants,
             'quizzEtudiant' => $quizzEtudiants,
+            'type' => 'administratif'
         ]);
     }
 
