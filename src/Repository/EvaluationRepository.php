@@ -4,12 +4,17 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EvaluationRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 17:29
+ * @lastUpdate 03/11/2022 10:25
  */
 
 namespace App\Repository;
 
+use App\Entity\Annee;
 use App\Entity\AnneeUniversitaire;
+use App\Entity\ApcCompetence;
+use App\Entity\ApcReferentiel;
+use App\Entity\ApcSaeCompetence;
+use App\Entity\Diplome;
 use App\Entity\Evaluation;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -41,6 +46,24 @@ class EvaluationRepository extends ServiceEntityRepository
             ->andWhere('e.semestre = :semestre')
             ->setParameter('annee', $annee->getAnnee())
             ->setParameter('semestre', $semestre->getId())
+            ->orderBy('e.dateEvaluation', Criteria::ASC)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByReferentielOrdreSemestre(ApcReferentiel $referentiel, int $semestre, AnneeUniversitaire $annee): array
+    {
+        return $this->createQueryBuilder('e')
+            ->innerJoin(AnneeUniversitaire::class, 'n', 'WITH', 'e.anneeUniversitaire = n.id')
+            ->innerJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
+            ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
+            ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
+            ->where('s.ordreLmd = :semestre')
+            ->andWhere('d.referentiel = :referentiel')
+            ->andWhere('n.annee = :annee')
+            ->setParameter('referentiel', $referentiel->getId())
+            ->setParameter('semestre', $semestre)
+            ->setParameter('annee', $annee->getAnnee())
             ->orderBy('e.dateEvaluation', Criteria::ASC)
             ->getQuery()
             ->getResult();

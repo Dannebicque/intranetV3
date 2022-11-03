@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Semestre/NotesExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:52
+ * @lastUpdate 03/11/2022 10:40
  */
 
 /*
@@ -36,10 +36,10 @@ class NotesExport
     public function exportXlsToutesLesNotes(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): StreamedResponse
     {
         $this->myExcel->createSheet('semestre '.$semestre->getLibelle());
-        $matieres = $this->typeMatiereManager->findBySemestreArray($semestre);
+        $matieres = $this->typeMatiereManager->findByReferentielOrdreSemestre($semestre, $semestre->getDiplome()?->getReferentiel());
         // todo: filtrer si option faite ou pas
         $etudiants = $semestre->getEtudiants();
-        $evaluations = $this->evaluationRepository->findBySemestre($semestre, $anneeUniversitaire);
+        $evaluations = $this->evaluationRepository->findByReferentielOrdreSemestre($semestre->getDiplome()?->getReferentiel(), $semestre->getOrdreLmd(), $anneeUniversitaire);
         $notes = $this->noteRepository->findByEtudiantSemestreArray($matieres, $anneeUniversitaire, $etudiants);
 
         $ligne = 2;
