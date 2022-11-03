@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Semestre/NotesExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/11/2022 11:19
+ * @lastUpdate 03/11/2022 11:32
  */
 
 /*
@@ -36,11 +36,8 @@ class NotesExport
     public function exportXlsToutesLesNotes(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): StreamedResponse
     {
         $this->myExcel->createSheet('semestre '.$semestre->getLibelle());
-        $tmatieres = $this->typeMatiereManager->findByReferentielOrdreSemestre($semestre, $semestre->getDiplome()?->getReferentiel());
-        $matieres = [];
-        foreach ($tmatieres as $tmatiere) {
-            $matieres[$tmatiere->getTypeIdMatiere()] = $tmatiere;
-        }
+        $matieres = $this->typeMatiereManager->findBySemestreArray($semestre, $semestre->getDiplome()?->getReferentiel());
+
         // todo: filtrer si option faite ou pas
         $etudiants = $semestre->getEtudiants();
         $evaluations = $this->evaluationRepository->findByReferentielOrdreSemestre($semestre->getDiplome()?->getReferentiel(), $semestre->getOrdreLmd(), $anneeUniversitaire);
@@ -56,7 +53,7 @@ class NotesExport
         $this->myExcel->writeCellName('C7', 'Coefficient');
 
         foreach ($evaluations as $eval) {
-            if (0 !== $eval->getIdMatiere()) {
+            if (0 !== $eval->getIdMatiere() && isset($matieres[$eval->getTypeIdMatiere()])) {
                 $matiere = $matieres[$eval->getTypeIdMatiere()];
                 if (null !== $matiere) {
                     $this->myExcel->writeCellXY($colonne, $ligne, $matiere->codeMatiere);
