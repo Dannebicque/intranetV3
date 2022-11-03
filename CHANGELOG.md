@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.40](https://github.com/Dannebicque/intranetV3/compare/v3.9.39...v3.9.40) (2022-11-03)
+
+
+### Features
+
+* [Qualite] Mise en place des interfaces pour les départements + Gestion qualité ([2e71c2b](https://github.com/Dannebicque/intranetV3/commit/2e71c2b0bfe19636333d380a39bea45bb3fe4c44))
+
+
+### Bug Fixes
+
+* [Notes] Export des notes avec les parcours ([15cc372](https://github.com/Dannebicque/intranetV3/commit/15cc3725cdf42f129810aa65b6bd48eec2388f88))
+
 ### [3.9.39](https://github.com/Dannebicque/intranetV3/compare/v3.9.38...v3.9.39) (2022-10-28)
 
 
