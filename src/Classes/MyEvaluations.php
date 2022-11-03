@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyEvaluations.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/09/2022 09:51
+ * @lastUpdate 03/11/2022 11:06
  */
 
 /*
@@ -72,7 +72,7 @@ class MyEvaluations
 
     public function getEvaluationsSemestre(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): array
     {
-        $evaluations = $this->evaluationRespository->findBySemestre($semestre,
+        $evaluations = $this->evaluationRespository->findByReferentielOrdreSemestre($semestre->getDiplome()?->getReferentiel(), $semestre->getOrdreLmd(),
             $anneeUniversitaire);
         $tab = [];
         /** @var Evaluation $eval */
