@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/BorneController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/09/2022 11:11
+ * @lastUpdate 07/11/2022 15:08
  */
 
 namespace App\Controller;
@@ -85,7 +85,6 @@ class BorneController extends AbstractController
                     break;
             }
         }
-
         $response = new Response();
         $response->headers->set('Access-Control-Allow-Origin', '*');
         $content = $this->renderView('borne/index2.html.twig', [
