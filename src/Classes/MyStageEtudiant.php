@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStageEtudiant.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyStageEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 19:44
+ * @lastUpdate 07/11/2022 12:13
  */
 
 namespace App\Classes;
@@ -121,7 +121,12 @@ class MyStageEtudiant
      */
     private function createStageEtudiant(StagePeriode $stagePeriode, Etudiant $etudiant): StageEtudiant
     {
-        $stageEtudiant = new StageEtudiant($this->configuration->get('GRATIFICATION_HEURE_STAGE'));
+        if ($stagePeriode->getNbSemaines() <= 8) {
+            $gratif = 0;
+        } else {
+            $gratif = $this->configuration->get('GRATIFICATION_HEURE_STAGE');
+        }
+        $stageEtudiant = new StageEtudiant($gratif);
         $stageEtudiant->setEtudiant($etudiant);
         $stageEtudiant->setStagePeriode($stagePeriode);
         $stageEtudiant->setDateDebutStage($stagePeriode->getDateDebut());
