@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/TrombinoscopeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/10/2022 17:36
+ * @lastUpdate 03/11/2022 17:29
  */
 
 namespace App\Controller;
@@ -39,7 +39,17 @@ class TrombinoscopeController extends BaseController
     {
         $this->breadcrumbHelper->addItem('trombinoscope', 'trombinoscope_index');
 
+        $semestres = [];
+        foreach ($this->dataUserSession->getSemestresActifs() as $semestre) {
+            if (!array_key_exists($semestre->getOrdreLmd(), $semestres))
+            {
+                $semestres[$semestre->getOrdreLmd()] = [];
+            }
+            $semestres[$semestre->getOrdreLmd()][] = $semestre;
+        }
+
         return $this->render('trombinoscope/index.html.twig', [
+            'semestres' => $semestres
         ]);
     }
 

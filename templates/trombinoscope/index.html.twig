@@ -3,7 +3,7 @@
 {% set semestreActif = 0 %}
 
 {% block stimulus %}
-{{ stimulus_controller('trombinoscope') }}
+    {{ stimulus_controller('trombinoscope') }}
 {% endblock %}
 
 {% block header %}
@@ -13,15 +13,34 @@
 {% block headeractions %}
     <div class="header-action">
         <ul class="nav nav-tabs" role="tablist">
-            {% for semestre in user_data.semestresActifs %}
-                <li class="nav-item">
-                    <a class="nav-link {% if loop.first %}active show{% endif %} semestretrombi" data-bs-toggle="tab"
-                       href="#" data-sem="{{ semestre.id }}" role="tab"
-                       data-action="click->trombinoscope#changementSemestre"
-                    >{{ semestre.display }}
-                        <small>({{ semestre.etudiants|length }})</small>
-                    </a>
-                </li>
+            {% for num, semestre in semestres %}
+                {% if semestre|length == 1 %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if loop.first %}active show{% endif %} semestretrombi" data-bs-toggle="tab"
+                           href="#" data-sem="{{ semestre[0].id }}" role="tab"
+                           data-action="click->trombinoscope#changementSemestre"
+                        >{{ semestre[0].display }}
+                            <small>({{ semestre[0].etudiants|length }})</small>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                           aria-expanded="false">S{{ num }}</a>
+                        <ul class="dropdown-menu">
+                            {% for sem in semestre %}
+                                <li>
+                                    <a class="dropdown-item semestretrombi" data-bs-toggle="tab"
+                                       href="#" data-sem="{{ sem.id }}" role="tab"
+                                       data-action="click->trombinoscope#changementSemestre"
+                                    >{{ sem.display }}
+                                        <small>({{ sem.etudiants|length }})</small>
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </li>
+                {% endif %}
             {% endfor %}
             <li class="nav-item">
                 <a class="nav-link" data-bs-toggle="tab" href="#" data-type="permanent"
@@ -40,6 +59,7 @@
                 </li>
             {% endif %}
         </ul>
+
         <div class="buttons">
             <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
                title="{{ 'atitle.retour_dashboard'|trans }}">
