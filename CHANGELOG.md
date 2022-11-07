@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.41](https://github.com/Dannebicque/intranetV3/compare/v3.9.40...v3.9.41) (2022-11-07)
+
+
+### Bug Fixes
+
+* [Notes] Export des notes avec les parcours ([37c03db](https://github.com/Dannebicque/intranetV3/commit/37c03dbe2308bdb21f241a5034bab9e08839db9b))
+* [Notes] Export des notes avec les parcours ([06927e2](https://github.com/Dannebicque/intranetV3/commit/06927e2d27e69d2e8315ab2783d0756ff62994f2))
+* [Notes] Export des notes avec les parcours ([70288d1](https://github.com/Dannebicque/intranetV3/commit/70288d16e8124aee1c1f9b4aecd1d924498b87c1))
+* [Trombinoscope] Gestion des trop nombreux onglets, affichage par semestre ([8ba08fb](https://github.com/Dannebicque/intranetV3/commit/8ba08fb34730404868ed416f92f7d84ea5d91660))
+
 ### [3.9.40](https://github.com/Dannebicque/intranetV3/compare/v3.9.39...v3.9.40) (2022-11-03)
 
 
