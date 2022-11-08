@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/09/2022 15:57
+ * @lastUpdate 08/11/2022 13:51
  */
 
 namespace App\Repository;
@@ -353,7 +353,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
         }
 
         $query = $query->andWhere(implode(' OR ', $ors))
-            ->distinct('p.id')
+            ->distinct()
             ->getQuery()
             ->getResult();
 
@@ -437,9 +437,10 @@ class EdtPlanningRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->where('p.ordreSemestre = :semestre')
             ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
+            ->andWhere('p.diplome = :diplome')
             ->setParameter('semestre', $semestre->getOrdreLmd())
             ->setParameter('anneeUniversitaire', $anneeUniversitaire->getId())
-            ->setParameter('diplome', null !== $semestre->getDiplome()->getParent() ? $semestre->getDiplome()->getParent()->getId() : $semestre->getDiplome()->getId())
+            ->setParameter('diplome', null !== $semestre->getDiplome()?->getParent() ? $semestre->getDiplome()?->getParent()?->getId() : $semestre->getDiplome()?->getId())
             ->orderBy('p.semaine', Criteria::ASC)
             ->addOrderBy('p.jour', Criteria::ASC)
             ->addOrderBy('p.debut', Criteria::ASC)
