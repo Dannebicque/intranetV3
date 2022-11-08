@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.45](https://github.com/Dannebicque/intranetV3/compare/v3.9.44...v3.9.45) (2022-11-08)
+
+
+### Features
+
+* [Alternance] Ajout de données dans l'export ([a21b811](https://github.com/Dannebicque/intranetV3/commit/a21b811df11923a117e0004aadee1e235a31acbc))
+
+
+### Bug Fixes
+
+* [Borne] Bug des semestres des parcours ([d908266](https://github.com/Dannebicque/intranetV3/commit/d908266afe94df4a3b05bae4758df94da65922db))
+
 ### [3.9.44](https://github.com/Dannebicque/intranetV3/compare/v3.9.43...v3.9.44) (2022-11-07)
 
 
