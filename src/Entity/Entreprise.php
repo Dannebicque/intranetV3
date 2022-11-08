@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Entreprise.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 09:24
+ * @lastUpdate 08/11/2022 07:46
  */
 
 namespace App\Entity;
@@ -28,15 +28,15 @@ class Entreprise extends BaseEntity
     #[ORM\Column(type: Types::STRING, length: 30, nullable: true)]
     private ?string $siret = null;
 
-    #[Groups(groups: ['stage_entreprise_administration'])]
+    #[Groups(groups: ['stage_entreprise_administration', 'alternance_administration'])]
     #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $raisonSociale = null;
 
-    #[Groups(groups: ['stage_entreprise_administration'])]
+    #[Groups(groups: ['stage_entreprise_administration', 'alternance_administration'])]
     #[ORM\OneToOne(targetEntity: Adresse::class, cascade: ['persist', 'remove'], fetch: 'EAGER')]
     private ?Adresse $adresse = null;
 
-    #[Groups(groups: ['stage_entreprise_administration'])]
+    #[Groups(groups: ['stage_entreprise_administration', 'alternance_administration'])]
     #[ORM\OneToOne(targetEntity: Contact::class, cascade: ['persist', 'remove'])]
     private ?Contact $responsable = null;
 
