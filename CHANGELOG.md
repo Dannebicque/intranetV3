@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.46](https://github.com/Dannebicque/intranetV3/compare/v3.9.45...v3.9.46) (2022-11-08)
+
+
+### Features
+
+* [Alternance] Ajout de données dans l'export ([32925b6](https://github.com/Dannebicque/intranetV3/commit/32925b6ac1c390d36b20344145801c43585dae49))
+
+
+### Bug Fixes
+
+* [Evaluations] Fix si LP ou BUT ([8944248](https://github.com/Dannebicque/intranetV3/commit/8944248ce0ee9a39262841627f35c936efce4f1e))
+
 ### [3.9.45](https://github.com/Dannebicque/intranetV3/compare/v3.9.44...v3.9.45) (2022-11-08)
 
 
