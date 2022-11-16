@@ -1,122 +1,85 @@
-<div class="card">
-    <header class="card-header">
-        <h4 class="card-title">
-            {{ 'heading.edt.dashboard'|trans }} | {{ semestre.display }} | Semaine
-            {{ calendrier.semaine }} (semaine formation {{ calendrier.semaineFormationIUT }})
-        </h4>
-        <div class="card-header-actions">
-            <ul class="card-controls">
-                <li class="dropdown">
-                    <a data-bs-toggle="dropdown" href="#"><i
-                                class="fas fa-ellipsis-h rotate-90" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Options d'export ou de
-                                synchronisation"></i><span class="sr-only">Options d'export ou de synchronisation</span></a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a href="{{ path('edt_semestre_export_semaine_courante', {semaine:calendrier.semaineFormationIUT,
-                            semestre:semestre.id}) }}"
-                           class="dropdown-item"><i
-                                    class="fa fa-file-pdf"></i>{{ 'exporter.semaine.courante.pdf'|trans }}</a>
-                        {# <a href="{{ path('edt_intervenant_export_annee') }}" #}
-                        {# class="dropdown-item"><i #}
-                        {# class="ti-export"></i>{{ 'edt.intervenant.export.annee'|trans }}</a> #}
-                        {# <a href="{{ path('edt_intervenant_export_ical') }}" #}
-                        {# class="dropdown-item"><i #}
-                        {# class="ti-export"></i>{{ 'edt.intervenant.export.ical'|trans }}</a> #}
-                        {# <a href="#" #}
-                        {# data-provide="modaler tooltip" #}
-                        {# data-url="{{ path('edt_affiche_ical') }}" #}
-                        {# #}
-{#                           title="{{ 'atitle.lien_ical'|trans }}"#}
-{#                           data-title="{{ 'edt.intervenant.synchro.ical.heading'|trans }}"#}
-{#                           class="dropdown-item"><i#}
-{#                                    class="ti-export"></i>{{ 'edt.intervenant.synchro.ical'|trans }}</a>#}
-                    </div>
-                </li>
-            </ul>
-        </div>
+<h4>Semestre {{ semestre.display }} | Semaine {{ calendrier.semaine }} (semaine formation {{ calendrier
+    .semaineFormationIUT }})</h4>
 
-    </header>
-    <div class="card-body">
-        {% if source == 'celcat' %}
-        <div class="alert alert-warning mb-2">
-            L'emploi du temps est récupéré depuis Celcat. Cette fonctionnalité est encore en cours de développement.
-        </div>
-        {% endif %}
+{% if source == 'celcat' %}
+    <div class="alert alert-warning mb-2">
+        L'emploi du temps est récupéré depuis Celcat. Cette fonctionnalité est encore en cours de développement.
+    </div>
+{% endif %}
         {{ render_esi(controller(
             'App\\Controller\\EdtController::navPersonnel', {filtre:filtre, valeur:valeur, semaine:semaine,
                 semestre:semestre.id}
         )) }}
-        <br>
-        <div class="row">
-            <div class="col-sm-12">
-                <table class="table-edt" style="width:100%;">
-                    <thead>
-                    <tr>
-                        <th>&nbsp;</th>
-                        <th class="center" colspan="{{ semestre.nbgroupeTPEDT }}" style="padding:0;">Lundi {{ calendrier
-                            .tabJour.lundi|format_date('short') }}</th>
-                        <th class="center" colspan="{{ semestre.nbgroupeTPEDT }}" style="padding:0;">
-                            Mardi {{ calendrier.tabJour.mardi|format_date('short') }}</th>
-                        <th class="center" colspan="{{ semestre.nbgroupeTPEDT }}" style="padding:0;">
-                            Mercredi {{ calendrier.tabJour.mercredi|format_date('short') }}</th>
-                        <th class="center" colspan="{{ semestre.nbgroupeTPEDT }}" style="padding:0;">
-                            Jeudi {{ calendrier.tabJour.jeudi|format_date('short') }}</th>
-                        <th class="center" colspan="{{ semestre.nbgroupeTPEDT }}" style="padding:0;">
-                            Vendredi {{ calendrier.tabJour.vendredi|format_date('short') }}</th>
-                    </tr>
-                    <tr>
-                        <th>&nbsp;</th>
-                        {% for jour in 1..5 %}
-                            {% for groupe in 1..semestre.nbgroupeTPEDT %}{#todo: pourrait dépendre de groupes ?#}
-                                <td style="padding:0;min-width:10px;">{{ groupes[groupe] }}</td>
-                            {% endfor %}
-                        {% endfor %}
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for ligne in 1..27 %}
-                        {% set heure=(ligne/2+7.5)|number_format(0) %}
-                        <tr>
-                            <td class="heures" style="padding:0;">
-                                {% if(ligne/2+7.5)-heure!=0 %}
-                                    {{ heure-1 }}h30
-                                {% else %}
-                                    {{ heure }}h00
-                                {% endif %}</td>
-                            {% for jour in 1..5 %}
-                                {% if edt[jour][ligne] is defined %}
-                                    {% for groupe in 1..semestre.nbgroupeTPEDT %}
-                                        {% if edt[jour][ligne][groupe] is defined %}
-                                            {% if edt[jour][ligne][groupe] !='xx' %}
-                                                <td class="center td-edt {{ edt[jour][ligne][groupe].couleurEdt }} {% if
-                                                    groupe == 1 %} col-new-day{% endif %}
+<br>
+<div class="row">
+    <div class="col-sm-12">
+        <table class="table-edt" style="width:100%;">
+            <thead>
+            <tr>
+                <th>&nbsp;</th>
+                <th class="center" colspan="{{ semestre.nbgroupeTPEDT }}" style="padding:0;">Lundi {{ calendrier
+                    .tabJour.lundi|format_date('short') }}</th>
+                <th class="center" colspan="{{ semestre.nbgroupeTPEDT }}" style="padding:0;">
+                    Mardi {{ calendrier.tabJour.mardi|format_date('short') }}</th>
+                <th class="center" colspan="{{ semestre.nbgroupeTPEDT }}" style="padding:0;">
+                    Mercredi {{ calendrier.tabJour.mercredi|format_date('short') }}</th>
+                <th class="center" colspan="{{ semestre.nbgroupeTPEDT }}" style="padding:0;">
+                    Jeudi {{ calendrier.tabJour.jeudi|format_date('short') }}</th>
+                <th class="center" colspan="{{ semestre.nbgroupeTPEDT }}" style="padding:0;">
+                    Vendredi {{ calendrier.tabJour.vendredi|format_date('short') }}</th>
+            </tr>
+            <tr>
+                <th>&nbsp;</th>
+                {% for jour in 1..5 %}
+                    {% for groupe in 1..semestre.nbgroupeTPEDT %}{# todo: pourrait dépendre de groupes ? #}
+                        <td style="padding:0;min-width:10px;">{{ groupes[groupe] }}</td>
+                    {% endfor %}
+                {% endfor %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for ligne in 1..27 %}
+                {% set heure=(ligne/2+7.5)|number_format(0) %}
+                <tr>
+                    <td class="heures" style="padding:0;">
+                        {% if(ligne/2+7.5)-heure!=0 %}
+                            {{ heure-1 }}h30
+                        {% else %}
+                            {{ heure }}h00
+                        {% endif %}</td>
+                    {% for jour in 1..5 %}
+                        {% if edt[jour][ligne] is defined %}
+                            {% for groupe in 1..semestre.nbgroupeTPEDT %}
+                                {% if edt[jour][ligne][groupe] is defined %}
+                                    {% if edt[jour][ligne][groupe] !='xx' %}
+                                        <td class="center td-edt {{ edt[jour][ligne][groupe].couleurEdt }} {% if
+                                            groupe == 1 %} col-new-day{% endif %}
 {{ edt[jour][ligne][groupe].couleur }}"
-                                                    colspan="{{ edt[jour][ligne][groupe].largeur == 0 ? semestre
-                                                    .nbgroupeTPEDT : edt[jour][ligne][groupe].largeur }}"
-                                                    rowspan="{{ edt[jour][ligne][groupe].duree }}"
-                                                >
-                                                    {{ edt[jour][ligne][groupe].displayEdt|raw }}
-                                                </td>
-                                            {% endif %}
-                                        {% else %}
-                                            <td style="padding:0;" {% if groupe == 1 %}class="td-edt col-new-day"{% endif %}>
-                                                &nbsp;
-                                            </td>
-                                        {% endif %}
-                                    {% endfor %}
-                                {% else %}
-                                    {% for groupe in 1..semestre.nbgroupeTPEDT %}
-                                        <td style="padding:0;" {% if groupe == 1 %}class="td-edt col-new-day"{% endif %}>
-                                            &nbsp;
+                                            colspan="{{ edt[jour][ligne][groupe].largeur == 0 ? semestre
+                                            .nbgroupeTPEDT : edt[jour][ligne][groupe].largeur }}"
+                                            rowspan="{{ edt[jour][ligne][groupe].duree }}"
+                                        >
+                                            {{ edt[jour][ligne][groupe].displayEdt|raw }}
                                         </td>
-                                    {% endfor %}
+                                    {% endif %}
+                                {% else %}
+                                    <td style="padding:0;" {% if groupe == 1 %}class="td-edt col-new-day"{% endif %}>
+                                        &nbsp;
+                                    </td>
                                 {% endif %}
                             {% endfor %}
-                        </tr>
+                        {% else %}
+                            {% for groupe in 1..semestre.nbgroupeTPEDT %}
+                                <td style="padding:0;" {% if groupe == 1 %}class="td-edt col-new-day"{% endif %}>
+                                    &nbsp;
+                                </td>
+                            {% endfor %}
+                        {% endif %}
                     {% endfor %}
-                    </tbody>
-                </table>
-            </div>
-        </div>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
 </div>
 

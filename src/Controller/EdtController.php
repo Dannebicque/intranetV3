@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/10/2022 20:32
+ * @lastUpdate 16/11/2022 21:05
  */
 
 namespace App\Controller;
@@ -22,9 +22,11 @@ use App\Repository\AbsenceEtatAppelRepository;
 use App\Repository\AbsenceRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\GroupeRepository;
+use App\Repository\SemestreRepository;
 use Exception;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -52,11 +54,27 @@ class EdtController extends BaseController
      * @throws Exception
      */
     public function dashboardPersonnel(
+        int $semaine = 0
+    ): Response {
+        return $this->render('edt/_intervenant2.html.twig', [
+            'filtre' => 'prof',
+            'semaine' => $semaine,
+            'valeur' => $this->getUser()->getId(),
+            'source' => 'intranet',
+        ]);
+    }
+
+    #[Route(path: '/ajax/edt-personnel', name: 'edt_personnel_ajax')]
+    public function edtPersonnel(
         EdtManager $edtManager,
         AbsenceEtatAppelRepository $absenceEtatAppelRepository,
         AbsenceRepository $absenceRepository,
-        int $semaine = 0
+        Request $request,
     ): Response {
+        $semaine = (int) $request->query->get('semaine');
+        $filtre = $request->query->get('filtre');
+        $valeur = $request->query->get('valeur');
+
         $source = null !== $this->getDepartement() && $this->getDepartement()->isOptUpdateCelcat() ? 'celcat' : 'intranet';
         $calendrier = $this->calendrier->calculSemaine($semaine, $this->getAnneeUniversitaire());
         $matieres = $this->typeMatiereManager->findByDepartementArray($this->getDepartement());
@@ -69,12 +87,12 @@ class EdtController extends BaseController
             $this->getUser());
         $suiviAppel = array_merge_recursive(...$suiviAppel);
 
-        return $this->render('edt/_intervenant2.html.twig', [
+        return $this->render('edt/_edt_intervenant.html.twig', [
             'edt' => $edt,
-            'filtre' => 'prof',
+            'filtre' => $filtre,
             'calendrier' => $calendrier,
             'semaine' => $semaine,
-            'valeur' => $this->getUser()->getId(),
+            'valeur' => $valeur,
             'tabHeures' => Constantes::TAB_HEURES_EDT_2,
             'suiviAppel' => $suiviAppel,
             'source' => 'intranet',
@@ -88,7 +106,6 @@ class EdtController extends BaseController
         ?Semestre $semestre = null
     ): Response {
         return $this->render('edt/_navPersonnel.html.twig', [
-            'semaines' => $this->calendrier->calculSemaines($this->getAnneeUniversitaire()),
             'filtre' => $filtre,
             'valeur' => $valeur,
             'semestre' => $semestre,
@@ -96,11 +113,16 @@ class EdtController extends BaseController
         ]);
     }
 
+    #[Route(path: '/ajax/edt-personnel-semestre', name: 'edt_personnel_semestre_ajax')]
     public function personnelSemestre(
+        Request $request,
         GroupeRepository $groupeRepository,
-        Semestre $semestre,
-        $semaine = 0
+        SemestreRepository $semestreRepository,
     ): Response {
+        $semaine = (int) $request->query->get('semaine');
+        $valeur = $request->query->get('valeur');
+        $semestre = $semestreRepository->find($valeur);
+
         $diplome = $semestre->getDiplome()->getParent() ?? $semestre->getDiplome();
 
         if ($semestre->getDiplome()->isApc()) {
