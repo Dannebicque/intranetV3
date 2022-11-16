@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.47](https://github.com/Dannebicque/intranetV3/compare/v3.9.46...v3.9.47) (2022-11-16)
+
+
+### Features
+
+* [Edt] Navigation avec Stimulus + Navigation semaine corrigé avec picker ([c3b0aa7](https://github.com/Dannebicque/intranetV3/commit/c3b0aa7bda2473a10cf176e585fd9f4308c17f02))
+* [Edt] Navigation avec Stimulus + Navigation semaine corrigé avec picker ([119decb](https://github.com/Dannebicque/intranetV3/commit/119decbf9b4c676fa7ed6da3767ef3782f91516a))
+
+
+### Bug Fixes
+
+* [Edt] Comparaiso appel fait ([8f01407](https://github.com/Dannebicque/intranetV3/commit/8f01407a1d50f995d44d59cb956f31083b46010b))
+
 ### [3.9.46](https://github.com/Dannebicque/intranetV3/compare/v3.9.45...v3.9.46) (2022-11-08)
 
 
