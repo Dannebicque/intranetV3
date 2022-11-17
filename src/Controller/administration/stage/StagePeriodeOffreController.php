@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/stage/StagePeriodeOffreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 14/09/2022 09:23
  */
 
 namespace App\Controller\administration\stage;
@@ -43,7 +43,7 @@ class StagePeriodeOffreController extends BaseController
     #[ParamConverter('stagePeriode', options: ['mapping' => ['stagePeriode' => 'uuid']])]
     public function export(
         MySerializer $mySerializer,
-        MyExport $myExport, StagePeriode $stagePeriode, $_format): Response
+        MyExport $myExport, StagePeriode $stagePeriode, string $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
         $offres = $stagePeriode->getStagePeriodeOffres();

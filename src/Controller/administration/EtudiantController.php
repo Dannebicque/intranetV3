@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/07/2022 20:52
+ * @lastUpdate 28/09/2022 14:42
  */
 
 namespace App\Controller\administration;
@@ -128,7 +128,7 @@ class EtudiantController extends BaseController
 
     #[Route(path: '/change-etat/{uuid}/{etat}', name: 'adm_etudiant_change_etat', options: ['expose' => true], methods: 'POST')]
     #[ParamConverter('etudiant', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function changeEtat(EtudiantScolarite $etudiantScolarite, Etudiant $etudiant, $etat): JsonResponse
+    public function changeEtat(EtudiantScolarite $etudiantScolarite, Etudiant $etudiant, string $etat): JsonResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $etudiant->getSemestre());
         $etudiantScolarite->setEtudiant($etudiant);
@@ -165,7 +165,7 @@ class EtudiantController extends BaseController
     #[Route('/edit-ajax/{id}', name: 'adm_etudiant_edit_ajax', options: ['expose' => true], methods: ['POST'])]
     public function editAjax(EtudiantUpdate $etudiantUpdate, Request $request, Etudiant $etudiant): JsonResponse
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $etudiant->getSemestre());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $etudiant->getDepartement());
         $parametersAsArray = JsonRequest::getFromRequest($request);
         if (array_key_exists('field', $parametersAsArray) && array_key_exists('value', $parametersAsArray)) {
             $etudiantUpdate->update($etudiant, $parametersAsArray['field'], $parametersAsArray['value']);
@@ -178,7 +178,7 @@ class EtudiantController extends BaseController
 
     #[Route('/export.{_format}', name: 'administration_all_etudiant_export', requirements: ['_format' => 'csv|xlsx|pdf'],
         methods: ['GET'])]
-    public function export(MySerializer $mySerializer, MyExport $myExport, EtudiantRepository $etudiantRepository, $_format): Response
+    public function export(MySerializer $mySerializer, MyExport $myExport, EtudiantRepository $etudiantRepository, string $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
         $etudiants = $etudiantRepository->getByDepartement($this->getDepartement());

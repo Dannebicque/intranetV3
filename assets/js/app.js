@@ -2,19 +2,18 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/08/2022 10:22
+// @lastUpdate 18/10/2022 18:17
 import '@fortawesome/fontawesome-pro/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-pro/scss/brands.scss'
 import '@fortawesome/fontawesome-pro/scss/solid.scss'
 import $ from 'jquery'
 import PerfectScrollbar from 'perfect-scrollbar'
 import * as bootstrap from 'bootstrap'
-import TomSelect from 'tom-select'
 import InPlaceEdit from './inPlaceEdit'
 import flatpickr from 'flatpickr'
 import Routing from 'fos-router'
 
-import { getDataOptions, getParentByTagName } from './util'
+import { addCallout, getParentByTagName } from './util'
 
 import '../css/app.scss'
 
@@ -45,6 +44,11 @@ $('input[type="file"]').on('change', (e) => {
 window.addEventListener('load', () => { // le dom est chargé
   const currentTheme = localStorage.getItem('theme')
   const menuDarkTheme = document.getElementById('darkMode')
+
+  //toast
+  toasts.forEach((toast) => {
+    addCallout(toast.text, toast.type)
+  })
 
   // menu changement de département
   if (document.getElementById('changeDepartement')) {
@@ -145,17 +149,8 @@ function updateInterface() {
   const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
   const tooltipList = tooltipTriggerList.map((tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl))
 
-  document.querySelectorAll('.selectpicker').forEach((el) => {
-    if (!el.classList.contains('tomselected') && !el.classList.contains('ts-wrapper')) {
-      new TomSelect(el, {
-        maxOptions: null,
-      })
-    }
-  })
-
   document.querySelectorAll('.editable').forEach((el) => {
     if (!el.classList.contains('editable-active')) {
-      console.log('edit')
       new InPlaceEdit(el, {})
     }
   })

@@ -70,6 +70,7 @@ date_naissance: 'Date de naissance'
 dateRange: 'Période d''affichage'
 dateRange.interruption: 'Périodes d''interruption du stage'
 dateRange.periode: 'Période de stage (début / fin)'
+dateRange.periode.projet: 'Période de projet (début / fin)'
 dateRange.soutenance: 'Dates de Soutenance'
 Day: Jour
 Décembre: Décembre
@@ -98,7 +99,9 @@ help:
     pas: Définir le pas de l'échelle, c'est à dire l'évolution entre le minimum et le maximum.
   ressourceParent: 'Définissez cette ressource comme parent, si vous souhaitez pouvoir créer des "sous-ressources" pour la saisie et l''affichage des notes. Exemple pour la LV2.'
   mutualisee: 'Cocher si la matière/ressource/SAE est mutualisée entre plusieurs parcours ou diplômes'
-  duree_evaluation: 'Durée de l''évaluation, en heures (ex: 1h30)'
+  duree_evaluation: 'Durée de l''évaluation, en heure (ex: 1h30)'
+  matiere_rattrapage: 'Selectionner la ressource, la SAE ou la matière concernée. La demande sera refusée en cas de mauvaise information.'
+  enseignant_rattrapage: 'Selectionner l''enseignant avec qui vous avez passé l''évaluation. La demande sera refusée en cas de mauvaise information.'
   ficheRenseignement: 'Vous pouvez joindre un document à pré-remplir. Ce document sera accessible aux étudiants dans la partie Applications > Stages'
   personnel:
     entreprise: 'Nom de l''entreprise pour les intervenants professionnels. Information visible des étudiants'
@@ -129,7 +132,7 @@ help:
   modaliteEncadrement: 'Précisez comment sera effectué l''encadrement par le tuteur universitaire'
   modaliteEvaluation: 'Modalité d''évaluation du stagiraire par l''entreprise'
   modaliteEvaluationPedagogique: 'Indiquez la manière dont sera évalué le stage par l''équipe pédagogique'
-  nbEcts: 'Nombre d''ECTS attribués pour la réalisation et la validation du stage'
+  nbEcts: 'Nombre d''ECTS attribués pour la réalisation et la validation du stage. Indiquer 0, si pas d''ECTS pour le stage'
   nbJours: "Indiquez le nombre de jours de stage sur la période (nécessaire pour la convention de stage)\n        "
   nbSemaines: "Indiquez le nombre de semaine où l'étudiant sera en stage (nécessaire pour la convention)\n        "
   periodesInterruptions: 'En complément des périodes déjà prévues'
@@ -151,6 +154,9 @@ initiales: Initiales
 j: Jour
 Jour: Jour
 label:
+  semestre_projet_periode: 'Semestre(s) du projet'
+  responsables_projet: 'Responsable(s) du projet'
+  veuillez_choisir: Veuillez choisir ...
   parcours.but: Parcours de B.U.T.
   typeBac: Type de bac
   sujet_alternance: Sujet de l'alternance

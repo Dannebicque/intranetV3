@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/AbsenceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:52
+ * @lastUpdate 19/09/2022 20:03
  */
 
 namespace App\Repository;
@@ -15,7 +15,9 @@ use App\Entity\AbsenceJustificatif;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Departement;
 use App\Entity\Etudiant;
+use App\Entity\Personnel;
 use App\Entity\Semestre;
+use Carbon\CarbonImmutable;
 use function array_key_exists;
 use Carbon\Carbon;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -218,5 +220,45 @@ class AbsenceRepository extends ServiceEntityRepository
             ->addOrderBy('e.nom', Criteria::ASC)
             ->getQuery()
             ->getResult();
+    }
+
+    public function findBySemaineAndUser(
+        CarbonImmutable $dateLundi,
+        Personnel $personnel
+    ): array {
+        $dateFin = $dateLundi->copy()->addDays(5);
+
+        return $this->createQueryBuilder('a')
+            ->where('a.dateHeure BETWEEN :dateLundi AND :dateFin')
+            ->andWhere('a.personnel = :personnel')
+            ->setParameters([
+                'dateLundi' => $dateLundi,
+                'dateFin' => $dateFin,
+                'personnel' => $personnel,
+            ])
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findBySemaineAndUserArray(
+        CarbonImmutable $dateLundi,
+        Personnel $personnel
+    ): array {
+        $data = $this->findBySemaineAndUser($dateLundi, $personnel);
+        $t = [];
+        foreach ($data as $value) {
+            if (null !== $value->getTypeIdMatiere()) {
+                if (!array_key_exists($value->getTypeIdMatiere(), $t)) {
+                    $t[$value->getTypeIdMatiere()] = [];
+                }
+
+                if (!array_key_exists($value->getDateHeure()->format('Y-m-d'), $t[$value->getTypeIdMatiere()])) {
+                    $t[$value->getTypeIdMatiere()][$value->getDateHeure()->format('Y-m-d')] = [];
+                }
+                $t[$value->getTypeIdMatiere()][$value->getDateHeure()->format('Y-m-d')][$value->getDateHeure()->format('H:i')] = $value;
+            }
+        }
+
+        return $t;
     }
 }

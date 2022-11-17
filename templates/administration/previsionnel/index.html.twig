@@ -47,7 +47,8 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label class="sr-only" for="previPersonnel">{{ 'choisir.intervenant'|trans }}</label>
-                        <select class="form-select selectpicker" data-annee="{{ annee }}"
+                        <select class="form-select" data-annee="{{ annee }}"
+                                {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
                                 id="previPersonnel">
                             <option value="">{{ 'choisir.intervenant'|trans }}</option>
                             {% for personnel in user_data.personnels %}
@@ -63,7 +64,9 @@
                 <h4 class="card-title">Par matière</h4>
                 <div class="card-body">
                     <label class="sr-only" for="previMatiere">{{ 'choisir.matiere'|trans }}</label>
-                    <select class="form-select selectpicker" id="previMatiere" data-annee="{{ annee }}">
+                    <select class="form-select" id="previMatiere" data-annee="{{ annee }}"
+                            {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
+                    >
                         <option value="">{{ 'choisir.matiere'|trans }}</option>
                         {% for key, matiere in matieres %}
                             <option value="{{ matieres[key].typeIdMatiere }}">{{ matieres[key].display }}</option>
@@ -78,7 +81,9 @@
                 <h4 class="card-title">Par semestre</h4>
                 <div class="card-body">
                     <label class="sr-only" for="previSemestre">{{ 'choisir.un.semestre'|trans }}</label>
-                    <select class="form-select selectpicker" id="previSemestre" data-annee="{{ annee }}">
+                    <select class="form-select" id="previSemestre" data-annee="{{ annee }}"
+                            {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
+                    >
                         <option value="">{{ 'choisir.un.semestre'|trans }}</option>
                         {% for semestre in user_data.semestres %}
                             <option value="{{ semestre.id }}">{{ semestre.display }}</option>
@@ -146,8 +151,9 @@
     <div class="card card-danger">
         <h4 class="card-title">{{ 'adm.previsionnel.supprimer.annee.heading'|trans }}</h4>
         <div class="card-body">
-            <form action="{{ path('administration_previsionnel_supprimer_annee') }}" method="POST" class="form">
-                {# todo: petite confirmation avant la suppression... #}
+            <form action="{{ path('administration_previsionnel_supprimer_annee') }}" method="POST" class="form"
+                  onsubmit="return confirm('Vous allez supprimer les données du prévisionnel pour l\'année ' +
+                   'selectionnée. Veuillez confirmer ?');">
                 <div class="row">
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">

@@ -2,6 +2,7 @@
     <thead>
     <tr>
         <th></th>
+        <th>Nb. Notes</th>
         {% for niveau in niveaux %}
             <th>{{ niveau.competence.nomCourt }}</th>
         {% endfor %}
@@ -13,6 +14,10 @@
         <tr>
             <td>
                 <a href="#" title="{{ sae.display }}" data-bs-toggle="tooltip" data-bs-placement="bottom">{{ sae.codeMatiere }}</a>
+            </td>
+            <td>
+                <input type="number" value="{{ sae.nbNotes }}" class="form-control form-control-sm changeNbNotesSae"
+                       min="0" max="20" data-matiere="{{ sae.id }}">
             </td>
 
             {% for niveau in niveaux %}
@@ -31,6 +36,11 @@
         <tr>
             <td>
                 <a href="#" title="{{ ressource.display }}" data-bs-toggle="tooltip" data-bs-placement="bottom">{{ ressource.codeMatiere }}</a>
+            </td>
+            <td>
+                <input type="number" value="{{ ressource.nbNotes }}" class="form-control form-control-sm
+                changeNbNotesRessource" data-matiere="{{ ressource.id }}"
+                       min="0" max="20">
             </td>
             {% for niveau in niveaux %}
                 <td>

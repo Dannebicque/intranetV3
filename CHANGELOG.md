@@ -2,6 +2,273 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.37](https://github.com/Dannebicque/intranetV3/compare/v3.9.36...v3.9.37) (2022-10-19)
+
+
+### Bug Fixes
+
+* [Edt] Modificatioin EDT ([5d38b0f](https://github.com/Dannebicque/intranetV3/commit/5d38b0fcb4c1e7b42f0d85d324ef86fc657ae9e1))
+* [Edt] Modification EDT ([ab54102](https://github.com/Dannebicque/intranetV3/commit/ab541027ae3b781679de52e3cebea75bc60b1c69))
+* [Edt] Modification EDT ([cc90892](https://github.com/Dannebicque/intranetV3/commit/cc90892466f391dd477bdd421fe7a427dbd42df0))
+
+### [3.9.36](https://github.com/Dannebicque/intranetV3/compare/v3.9.35...v3.9.36) (2022-10-18)
+
+
+### Bug Fixes
+
+* [Absence Appel] Suivi de l'appel ([479c3ae](https://github.com/Dannebicque/intranetV3/commit/479c3ae37d9943981c1de93767363a967ccfcb88))
+* [Absence] Gestion de la durée avec Celcat ([4a1e4c0](https://github.com/Dannebicque/intranetV3/commit/4a1e4c0cb413e4bfbbe29ec62b40f598d8e335fc))
+* [Appel] refactoring pour doublons de code ([301bf97](https://github.com/Dannebicque/intranetV3/commit/301bf9798b8a9d55c1fb2d9dd974c4b7bc47f51c))
+* [Default] refactoring ([401864d](https://github.com/Dannebicque/intranetV3/commit/401864d24f5d67ee149d276ca51ad98dafb7c165))
+* [Import Notes] Modification mise en page + gestion de l'écrasement des notes déjà présentent ([c6ed9b8](https://github.com/Dannebicque/intranetV3/commit/c6ed9b814f2bd244b7f6f981cbfadcbbab8e5c1c))
+* [Login] typo ([74eff1a](https://github.com/Dannebicque/intranetV3/commit/74eff1a321bb72c79a72350b965fb6a8a8fa2501))
+* [Previsionnel] Comparaison des services/EDT ([847f43a](https://github.com/Dannebicque/intranetV3/commit/847f43a18683926cf54eaef5e0e82890fbe84120))
+* [Toast] JS, gestion des toasts sans stimulus ([ed5447a](https://github.com/Dannebicque/intranetV3/commit/ed5447afcf16e934f66b8382355b166688c0bccc))
+* [Trombinscope] gestion des groupes mutualisés ([5a3169a](https://github.com/Dannebicque/intranetV3/commit/5a3169a16db5bb89cdd3191dfb0c8b8a51a2bcfc))
+* [TypeGroupe] Gestion avec une relation n-n avec semestre ([2c65c1b](https://github.com/Dannebicque/intranetV3/commit/2c65c1bacfb1e06f31aa2c2899e9f3ce2aa0d1db))
+
+### [3.9.35](https://github.com/Dannebicque/intranetV3/compare/v3.9.34...v3.9.35) (2022-10-11)
+
+
+### Bug Fixes
+
+* [Add etudiant] Ajout de required ([bcf68f9](https://github.com/Dannebicque/intranetV3/commit/bcf68f9dbf309d8b452ddb911aa9924f0986fe6b))
+* [Connexion] Bouton d'aide sur page de connexion + background sur les liens ([6d40944](https://github.com/Dannebicque/intranetV3/commit/6d409443bfe5f23a48c9655287110c10d507883e))
+* [Edt] Affichage teste en mode semestre ([e69cf76](https://github.com/Dannebicque/intranetV3/commit/e69cf76a2701bcba1f54d75eed37d4c946c1986e))
+* [Edt] Suivi d'appel ([54ea7dd](https://github.com/Dannebicque/intranetV3/commit/54ea7dd39ff89a5c84074be43bc14bbadb60a3ee))
+* [Edt] Suivi d'appel ([adbfa92](https://github.com/Dannebicque/intranetV3/commit/adbfa9264d6d07585de754d8fcb995c2851fd8d2))
+* [Edt] Suivi d'appel ([0b7e33e](https://github.com/Dannebicque/intranetV3/commit/0b7e33e21be82a1f2ed60cd9ebf52627a0cfa094))
+* [Edt] Suppression d'un lien inutile pour étudiant ([f62440e](https://github.com/Dannebicque/intranetV3/commit/f62440ea7b663d9d3385fbd47b6016ae70ec11d6))
+* [Script] correction script ([994cb05](https://github.com/Dannebicque/intranetV3/commit/994cb054ebfacc13d50ea275e6a0d51ee9807c29))
+
+### [3.9.34](https://github.com/Dannebicque/intranetV3/compare/v3.9.33...v3.9.34) (2022-10-05)
+
+
+### Bug Fixes
+
+* [Bilan APC] Modification de la selection du semestre avec ManyToMany ([0fef84e](https://github.com/Dannebicque/intranetV3/commit/0fef84e16a71ea357768c71dd68a1efc9c9d7aa6))
+* [Script Celcat] Script d'export avec nom sans accents ([7190f76](https://github.com/Dannebicque/intranetV3/commit/7190f766f022b4b78aa70ee4c4652365edd0fac2))
+* [Stage] Modification convention. ([aa6d806](https://github.com/Dannebicque/intranetV3/commit/aa6d8067ae7df29dbf1f76ba1a558c6cf21262c3))
+* [Stage] Modification convention. ([486093c](https://github.com/Dannebicque/intranetV3/commit/486093c6ba8b682c62f64155395473dd9206d8a5))
+* [Trombinoscope] Filtre par parcours des trombis ([2e65cbf](https://github.com/Dannebicque/intranetV3/commit/2e65cbffa8d052367558a553d943904a68f71acb))
+* [UX-Autocomplete] Installation et utilisation à la place de tom-select seul ([6780cc9](https://github.com/Dannebicque/intranetV3/commit/6780cc90aa866a6ff5b4dc78aefbb18e71cc9be8))
+
+### [3.9.33](https://github.com/Dannebicque/intranetV3/compare/v3.9.32...v3.9.33) (2022-10-03)
+
+
+### Bug Fixes
+
+* [Celcat] Horodatage du script de mise à jour ([530ac58](https://github.com/Dannebicque/intranetV3/commit/530ac581f4075dea861832104d0c4b257572a01f))
+* [Messagerie] Types de groupes ([eb497b6](https://github.com/Dannebicque/intranetV3/commit/eb497b61830da692be59aad49c986b057d450ca3))
+* [UX-Autocomplete] Installation et utilisation à la place de tom-select seul ([a33984d](https://github.com/Dannebicque/intranetV3/commit/a33984da78e37a4753f394279c17f9301f22be7a))
+
+### [3.9.32](https://github.com/Dannebicque/intranetV3/compare/v3.9.31...v3.9.32) (2022-10-03)
+
+
+### Bug Fixes
+
+* [Absences] Affichage erronée sur le profil ([39c5538](https://github.com/Dannebicque/intranetV3/commit/39c553812e3ed281876b5d5491cf8b2fd53d4dca))
+* [Absences] Affichage erronée sur le profil ([4428962](https://github.com/Dannebicque/intranetV3/commit/442896215a6bdb3f31249c3eb030a656b92e6dab))
+* [Absences] Affichage erronée sur le profil ([f12f1d6](https://github.com/Dannebicque/intranetV3/commit/f12f1d6f4338f1ad31c9b6c73f43c8b86728a6ce))
+* [Absences] Liste des étudiants ([77ed892](https://github.com/Dannebicque/intranetV3/commit/77ed892fdeb76b2e5f8d6f9356c3511c8e205de3))
+* [Absences] Liste des étudiants ([40d6e17](https://github.com/Dannebicque/intranetV3/commit/40d6e17125638fe4922d351ab721d31b846c58a6))
+* [Celcat] Requete sur diplomes sans parents uniquement ([2edbe15](https://github.com/Dannebicque/intranetV3/commit/2edbe1570d172afc4a13b491f2888b81011f144a))
+
+### [3.9.31](https://github.com/Dannebicque/intranetV3/compare/v3.9.30...v3.9.31) (2022-09-30)
+
+
+### Bug Fixes
+
+* [Appel] Décalage avec la coche réalisée ([ac8bc79](https://github.com/Dannebicque/intranetV3/commit/ac8bc798f16c8efc5304ed1fe6dc91128e753327))
+* [Command] Tâche Cron de mise à jour de l'emploi du temps ([116b580](https://github.com/Dannebicque/intranetV3/commit/116b580dd6c37357ef481bc2eac9f3f82a4c0602))
+* [Edt] Ajout sur le bon diplôme si diplôme parent ([5d39300](https://github.com/Dannebicque/intranetV3/commit/5d39300f09fca854b0167ee662c9beda7e78a9f3))
+* [Edt] Componnent ([a257009](https://github.com/Dannebicque/intranetV3/commit/a2570097846b4a8b2a9f62c73117101885d128e7))
+* [Edt] Export ([abd5414](https://github.com/Dannebicque/intranetV3/commit/abd54143fec5e61325012769cc57399290427bf4))
+* [Edt] Mise à jour semestre ([c905dbd](https://github.com/Dannebicque/intranetV3/commit/c905dbd3890f15f6dfa699fc26ce1ce8127aae9d))
+* [Etudiant] Mise à jour semestre ([b18c51c](https://github.com/Dannebicque/intranetV3/commit/b18c51c0e157c4c15301e4f5f6923c717fb92ede))
+* [Etudiant] Mise à jour semestre ([5a68a1b](https://github.com/Dannebicque/intranetV3/commit/5a68a1bf6a1433d3db2ce64b77806c2fe6e478ee))
+* [Groupe] Redirection vers la même page sur un autre semestre + nettoyage code inutilisé ([90a8f01](https://github.com/Dannebicque/intranetV3/commit/90a8f0126b55a31dbd73f005a0cdb502cd02b3a4))
+* [JS InPlaceEdit] Correction si champ vide. Ne fonctionnait pas avec des espaces. ([de15d63](https://github.com/Dannebicque/intranetV3/commit/de15d6366008586905d4e7b13aad317df5cc2e1b))
+
+### [3.9.30](https://github.com/Dannebicque/intranetV3/compare/v3.9.29...v3.9.30) (2022-09-23)
+
+
+### Bug Fixes
+
+* [Api] Salle examen : matières et groupes ([442d6d6](https://github.com/Dannebicque/intranetV3/commit/442d6d63447912aa13cfb607bc6ed2701676b520))
+* [Edt] Matieère selon semestre ([669d99b](https://github.com/Dannebicque/intranetV3/commit/669d99bd45f89cd34c9bfdc9b566522dec4308a4))
+* [Edt] Matieère selon semestre ([b927361](https://github.com/Dannebicque/intranetV3/commit/b927361b3b519a2710b1ade75c66b3e46f498ac0))
+* [Projet] Etudiant par semestres ([e26efc5](https://github.com/Dannebicque/intranetV3/commit/e26efc51a1f0f903f2c2ea5790599ee96485a2df))
+
+### [3.9.29](https://github.com/Dannebicque/intranetV3/compare/v3.9.28...v3.9.29) (2022-09-21)
+
+
+### Bug Fixes
+
+* [Edt] Modification en admin. ([93df202](https://github.com/Dannebicque/intranetV3/commit/93df20202d11f98a32f50a83be2b8f336c9cdbdb))
+
+### [3.9.28](https://github.com/Dannebicque/intranetV3/compare/v3.9.27...v3.9.28) (2022-09-21)
+
+
+### Bug Fixes
+
+* [Borne] Css ([c369f02](https://github.com/Dannebicque/intranetV3/commit/c369f02a1a9f00006cc9b36a3338936b1c1b2119))
+* [Projet] Correction pour gérer plusieurs semestres sur une période ([ea79b1a](https://github.com/Dannebicque/intranetV3/commit/ea79b1acfbe9b3f2cb65024340047829c3931ea8))
+
+### [3.9.27](https://github.com/Dannebicque/intranetV3/compare/v3.9.26...v3.9.27) (2022-09-20)
+
+
+### Bug Fixes
+
+* [Borne] Css ([4c4049d](https://github.com/Dannebicque/intranetV3/commit/4c4049d6e39ee9034fd698547bb4d483a2e19465))
+
+### [3.9.26](https://github.com/Dannebicque/intranetV3/compare/v3.9.25...v3.9.26) (2022-09-20)
+
+
+### Bug Fixes
+
+* [Absences] Méthode pour récupérer les données des absences ([c0fc3c0](https://github.com/Dannebicque/intranetV3/commit/c0fc3c04c46d59d3a8e03f1cb15ed9cd458344cc))
+* [Borne] Lisibilité ([57db51b](https://github.com/Dannebicque/intranetV3/commit/57db51b302feb640399aab3f7826e764e6145e0f))
+* [Init Eval] Amélioration lisibilité tableau ([e4cea56](https://github.com/Dannebicque/intranetV3/commit/e4cea56861afb82289c169837f348fac494a0e8b))
+
+### [3.9.25](https://github.com/Dannebicque/intranetV3/compare/v3.9.24...v3.9.25) (2022-09-19)
+
+
+### Bug Fixes
+
+* [Prévisionnel] Suppression d'une année. ([e385ba3](https://github.com/Dannebicque/intranetV3/commit/e385ba35d0445cf84adae0c070cbf9e4ab475325))
+
+### [3.9.24](https://github.com/Dannebicque/intranetV3/compare/v3.9.23...v3.9.24) (2022-09-19)
+
+
+### Bug Fixes
+
+* [Absence] Marquage des absences au premier chargement de la page. ([2eb4849](https://github.com/Dannebicque/intranetV3/commit/2eb4849de19357d2dd13b3e0fca9c15166fdb8be))
+* [Absence] Mise à jour EDT si appel fait avec des absences ([e6210da](https://github.com/Dannebicque/intranetV3/commit/e6210dab9adbfb2a2bd3d6ca6a3089d8ad2e7e3f))
+* [Ical] Tous les semestres ([7cdf08e](https://github.com/Dannebicque/intranetV3/commit/7cdf08e0b6722091b9a17043587eac7a7c08a369))
+
+### [3.9.23](https://github.com/Dannebicque/intranetV3/compare/v3.9.22...v3.9.23) (2022-09-19)
+
+
+### Bug Fixes
+
+* [Absence] Groupe si pas APC ([4fe2cbf](https://github.com/Dannebicque/intranetV3/commit/4fe2cbfba0ae7d38ba2508a47a55d54052106aa5))
+
+### [3.9.22](https://github.com/Dannebicque/intranetV3/compare/v3.9.21...v3.9.22) (2022-09-19)
+
+
+### Bug Fixes
+
+* [Edt Borne] Affichage des bornes ([35df713](https://github.com/Dannebicque/intranetV3/commit/35df713bcd552bd0a26288a90a25b366e6f59438))
+* [Edt Ical] Bug Export ([0bdf982](https://github.com/Dannebicque/intranetV3/commit/0bdf9820d850014a32ed502b68b3344f11cce8b0))
+* [Edt Intranet] Affichage ([22e6399](https://github.com/Dannebicque/intranetV3/commit/22e6399e58bb2b74eadd47232f9c4e63798c919c))
+* [Edt Intranet] Affichage ([d0e1532](https://github.com/Dannebicque/intranetV3/commit/d0e1532e1f877de8648b2b5f586b706fbc9ca5ad))
+* [Edt Script] Espace dans le nom du fichier bat ([cc7e84d](https://github.com/Dannebicque/intranetV3/commit/cc7e84d5f94594dc6c873b0d13950dc53e6bcc90))
+* [Edt Semestre] Correctif pour prendre tous les semestres quelque soit le parcours ([4817415](https://github.com/Dannebicque/intranetV3/commit/4817415208448e616c5cd87bd526f306bcd5afd0))
+
+### [3.9.21](https://github.com/Dannebicque/intranetV3/compare/v3.9.20...v3.9.21) (2022-09-19)
+
+
+### Bug Fixes
+
+* [Edt Script] Espace dans le nom du fichier bat ([13f479f](https://github.com/Dannebicque/intranetV3/commit/13f479f11c7b89360ab630a4e6cebf7d191390d4))
+
+### [3.9.20](https://github.com/Dannebicque/intranetV3/compare/v3.9.19...v3.9.20) (2022-09-19)
+
+
+### Bug Fixes
+
+* [Edt Celcat] lien celcat / Ressource/SAE/Matiere ([3f6cc38](https://github.com/Dannebicque/intranetV3/commit/3f6cc3870f98ead8f0ede8380b2fc66dd0bfa031))
+* [Edt Celcat] lien celcat / Ressource/SAE/Matiere ([e8508d6](https://github.com/Dannebicque/intranetV3/commit/e8508d69097d495d4b31e15b97f73645337257fc))
+* [Edt Celcat] Récupération semestre ([293065b](https://github.com/Dannebicque/intranetV3/commit/293065b342dbad2fce7e2097fc88627a964ec7df))
+* [Edt Celcat] Refacotring et utilisation du manager pour la partie public (reste la partie admin). ([63b5b1a](https://github.com/Dannebicque/intranetV3/commit/63b5b1a5e0a742c01cc1c867ab1e73b7c7d95cf9))
+* [Edt Script] Espace dans le nom du fichier bat ([492bf86](https://github.com/Dannebicque/intranetV3/commit/492bf866c0ac1f115af85e76b2ad2b4bee559c1f))
+* [Edt Script] Espace dans le nom du fichier bat ([c549cdf](https://github.com/Dannebicque/intranetV3/commit/c549cdfdc0165834610b01e41dcef070023bfaaf))
+
+### [3.9.19](https://github.com/Dannebicque/intranetV3/compare/v3.9.18...v3.9.19) (2022-09-18)
+
+
+### Bug Fixes
+
+* [Edt Celcat] Correctif avec la nouvelle entité ([4d4387c](https://github.com/Dannebicque/intranetV3/commit/4d4387caaf9d32887871b98ed69c146ada34313f))
+* [Edt Celcat] lien celcat / Ressource/SAE/Matiere ([9fee7ff](https://github.com/Dannebicque/intranetV3/commit/9fee7ffd0fecb51764d4523aeb2d8da144b3fd0d))
+* [Edt Celcat] Super Admin / Synchro ([af4c6eb](https://github.com/Dannebicque/intranetV3/commit/af4c6ebaba7ed1986b6a081f3dca528da1499302))
+* [Edt Celcat] Super Admin / Synchro ([8af188d](https://github.com/Dannebicque/intranetV3/commit/8af188de2c7b8ab4135820ade000cb0d17d369ea))
+* [PlanCours] Réalisé depuis EDT ([18a52bf](https://github.com/Dannebicque/intranetV3/commit/18a52bfabff1801fc2b997610dc9cccaddce3ced))
+* [PlanCours] Réalisé depuis EDT ([83b8b26](https://github.com/Dannebicque/intranetV3/commit/83b8b263858cfa4787aed8fe7ebf32a6c0932834))
+
+### [3.9.18](https://github.com/Dannebicque/intranetV3/compare/v3.9.17...v3.9.18) (2022-09-18)
+
+
+### Bug Fixes
+
+* [Edt Celcat] Correctif avec la nouvelle entité ([c67fdb8](https://github.com/Dannebicque/intranetV3/commit/c67fdb8f0106d8dbf984b50d4560db0737fe1510))
+* [Edt Celcat] Modification classe import pour gérer personnel et matière ([448878a](https://github.com/Dannebicque/intranetV3/commit/448878a882e98ed5bd453bc16afb5781b2520aca))
+* [Edt Celcat] refactoring + liaisons matières et personnel ([454bd1a](https://github.com/Dannebicque/intranetV3/commit/454bd1ac35f02c0247918944a5953a1a284e3324))
+* [Edt Celcat] refactoring repository + liaison année universitaire ([253dae4](https://github.com/Dannebicque/intranetV3/commit/253dae4d90e39e40f568ed81e6b2628566e4b3b6))
+
+### [3.9.17](https://github.com/Dannebicque/intranetV3/compare/v3.9.16...v3.9.17) (2022-09-17)
+
+
+### Bug Fixes
+
+* [Edt] bug diplome ([95829af](https://github.com/Dannebicque/intranetV3/commit/95829af2f68c2f0379f36bd1845ddb2c9432c6be))
+
+### [3.9.16](https://github.com/Dannebicque/intranetV3/compare/v3.9.15...v3.9.16) (2022-09-17)
+
+
+### Bug Fixes
+
+* [Edt] Script export Celcat ([ab75f6f](https://github.com/Dannebicque/intranetV3/commit/ab75f6f591ec7f1c250348725ca8a71b0e260c2a))
+* [Edt] Synchro Celcat, message de warning ([5d2669b](https://github.com/Dannebicque/intranetV3/commit/5d2669b437c19d26f06a8840974ea33d656e4f97))
+* [Questionnaire] Configurable avec SAE ([4fbbd87](https://github.com/Dannebicque/intranetV3/commit/4fbbd8793fcc82164face7956e4ebede0e9d780b))
+* [Questionnaire] GEstion quesitonnaire Externe ([4dbade9](https://github.com/Dannebicque/intranetV3/commit/4dbade9914336b80e783bf7e49caa2a9d69ae704))
+
+### [3.9.15](https://github.com/Dannebicque/intranetV3/compare/v3.9.14...v3.9.15) (2022-09-15)
+
+
+### Bug Fixes
+
+* [PeriodeStage] Filtre par année universitaire ([e7fdf3c](https://github.com/Dannebicque/intranetV3/commit/e7fdf3cee97041d051f8a519100fe355c7552662))
+
+### [3.9.14](https://github.com/Dannebicque/intranetV3/compare/v3.9.13...v3.9.14) (2022-09-15)
+
+
+### Bug Fixes
+
+* [Apc] Fix bug edition ressource ([185040e](https://github.com/Dannebicque/intranetV3/commit/185040e51859c9ecb027e66b53f89b34fa58f37e))
+* [Evaluation] Doublons avec les semestres précédents ([85ba6ae](https://github.com/Dannebicque/intranetV3/commit/85ba6aef91dbdca768f9c01107b35ef5e425721b))
+* [Evaluation] Initialisation ([abe20db](https://github.com/Dannebicque/intranetV3/commit/abe20db4ca11e0e9f4aa5972ae194837a9189c3a))
+* [Questionnaire] Fix bug création d'un questionnaire (tinyMce) ([e03a5a1](https://github.com/Dannebicque/intranetV3/commit/e03a5a1baeabd3e1900e62805391f0bf9749e9bc))
+* [Readme] Update ([7c0afb9](https://github.com/Dannebicque/intranetV3/commit/7c0afb936c07cbbf7d590f38f664e44cfdb7514a))
+
+### [3.9.13](https://github.com/Dannebicque/intranetV3/compare/v3.9.12...v3.9.13) (2022-09-14)
+
+
+### Bug Fixes
+
+* [Edt] Typo ([257befe](https://github.com/Dannebicque/intranetV3/commit/257befe3e47d831a9bd120130bc5580e10d2105d))
+* [Stage] Semestres suivants ([cdf913a](https://github.com/Dannebicque/intranetV3/commit/cdf913a72b8f10272f3db811295bf9ec30ae5c26))
+
+### [3.9.12](https://github.com/Dannebicque/intranetV3/compare/v3.9.11...v3.9.12) (2022-09-13)
+
+
+### Bug Fixes
+
+* [Apc Coeff] MCC en APC ([b7c25c0](https://github.com/Dannebicque/intranetV3/commit/b7c25c00857dac9cb2908f7d83509c1151a497ee))
+* [Evaluation] Filtre par rapport au prévisionnel ([398dc46](https://github.com/Dannebicque/intranetV3/commit/398dc46690df003ff49d405095518a3a2a05212b))
+* [Script] Corrections dans le script ([096aef1](https://github.com/Dannebicque/intranetV3/commit/096aef12fc0ef6c0e038268825e025ddbb1e5708))
+
+### [3.9.11](https://github.com/Dannebicque/intranetV3/compare/v3.9.10...v3.9.11) (2022-09-13)
+
+
+### Bug Fixes
+
+* [Edt] Bug affichage du groupe depuis EDT absence ([340f86a](https://github.com/Dannebicque/intranetV3/commit/340f86a726bdbcf8d3663efc4086eddd01c1d2b1))
+* [Edt] Filtre par diplôme ([c8ed508](https://github.com/Dannebicque/intranetV3/commit/c8ed50876073c69d73654a531a2660c3917a21c7))
+* [Evaluations] Filtre par type de groupe +doublons matières dans init ([b96daf0](https://github.com/Dannebicque/intranetV3/commit/b96daf0773f06b63450ad61a1b8ee8751921eca8))
+* [LiveComponnent] Writable true sur le prévisionnel pour erreur checksum ([7047260](https://github.com/Dannebicque/intranetV3/commit/70472601e7c8ce51dd300b512fcd7374f5a14788))
+
 ### [3.9.10](https://github.com/Dannebicque/intranetV3/compare/v3.9.9...v3.9.10) (2022-09-12)
 
 

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantUpdate.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Etudiant/EtudiantUpdate.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/10/2021 15:29
+ * @lastUpdate 28/09/2022 14:42
  */
 
 /*
@@ -38,6 +38,7 @@ class EtudiantUpdate
                     $semestre = $this->semestreRepository->find($value);
                     if (null !== $semestre) {
                         $etudiant->setSemestre($semestre);
+                        $etudiant->setAnneeSortie(0);
                         $etudiant->setDepartement($semestre->getDiplome()?->getDepartement());
                     }
                 }

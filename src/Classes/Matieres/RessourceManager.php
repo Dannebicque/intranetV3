@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Matieres/RessourceManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/09/2022 11:36
+ * @lastUpdate 19/09/2022 16:08
  */
 
 namespace App\Classes\Matieres;
@@ -62,11 +62,18 @@ class RessourceManager extends AbstractMatiereManager implements MatiereInterfac
         return $this->ressourceAdapter->collection($data);
     }
 
-    public function findByCodeApogee(string $code): ?Matiere
+    public function findBySemestreAndReferentiel(Semestre $semestre, ApcReferentiel $referentiel): MatiereCollection
     {
-        $matiere = $this->apcRessourceRepository->findOneBy(['codeElement' => $code]);
+        $data = $this->apcRessourceRepository->findBySemestreReferentiel($semestre, $referentiel);
 
-        return $this->ressourceAdapter->single($matiere);
+        return $this->ressourceAdapter->collection($data);
+    }
+
+    public function findByReferentielOrdreSemestre(ApcReferentiel $referentiel, int $semestre): MatiereCollection
+    {
+        $data = $this->apcRessourceRepository->findByReferentielOrdreSemestre($referentiel, $semestre);
+
+        return $this->ressourceAdapter->collection($data);
     }
 
     public function update(string $name, mixed $value, ApcRessource $apcRessource): bool

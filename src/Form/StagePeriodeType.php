@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/StagePeriodeType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/StagePeriodeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/09/2021 10:28
+ * @lastUpdate 14/09/2022 10:37
  */
 
 namespace App\Form;
@@ -100,7 +100,7 @@ class StagePeriodeType extends AbstractType
             ->add('copieAssistant', YesNoType::class,
                 ['label' => 'label.copieAssistant', 'help' => 'help.copieAssistant'])
             ->add('documentFile', VichFileType::class, [
-                'required' => true,
+                'required' => false,
                 'label' => 'label.fichier',
                 'download_label' => 'apercu',
                 'allow_delete' => true,

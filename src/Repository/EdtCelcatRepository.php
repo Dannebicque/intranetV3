@@ -1,17 +1,17 @@
 <?php
 /*
  * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/CelcatEventsRepository.php
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtCelcatRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/09/2022 15:11
+ * @lastUpdate 18/09/2022 12:59
  */
 
 namespace App\Repository;
 
 use App\Entity\Annee;
 use App\Entity\AnneeUniversitaire;
-use App\Entity\CelcatEvent;
+use App\Entity\EdtCelcat;
 use App\Entity\Etudiant;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
@@ -21,28 +21,29 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\String\Exception\InvalidArgumentException;
 
 /**
- * @method CelcatEvent|null find($id, $lockMode = null, $lockVersion = null)
- * @method CelcatEvent|null findOneBy(array $criteria, array $orderBy = null)
- * @method CelcatEvent[]    findAll()
- * @method CelcatEvent[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
- * @extends ServiceEntityRepository<CelcatEvent>
+ * @method EdtCelcat|null find($id, $lockMode = null, $lockVersion = null)
+ * @method EdtCelcat|null findOneBy(array $criteria, array $orderBy = null)
+ * @method EdtCelcat[]    findAll()
+ * @method EdtCelcat[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @extends ServiceEntityRepository<EdtCelcat>
  */
-class CelcatEventsRepository extends ServiceEntityRepository
+class EdtCelcatRepository extends ServiceEntityRepository
 {
     private string $chaine = '';
     private array $params = [];
 
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, CelcatEvent::class);
+        parent::__construct($registry, EdtCelcat::class);
     }
 
-    public function findEdtProf(string $numeroHarpege, int $semaine): array|int
+    public function findEdtProf(Personnel $personnel, int $semaine, AnneeUniversitaire $anneeUniversitaire): array|int
     {
         return $this->createQueryBuilder('p')
             ->where('p.semaineFormation = :semaine')
-            ->andWhere('p.codePersonnel = :idprof')
-            ->setParameters(['semaine' => $semaine, 'idprof' => $numeroHarpege])
+            ->andWhere('p.personnel = :idprof')
+            ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
+            ->setParameters(['semaine' => $semaine, 'idprof' => $personnel->getId(), 'anneeUniversitaire' => $anneeUniversitaire])
             ->orderBy('p.jour', Criteria::ASC)
             ->addOrderBy('p.debut', Criteria::ASC)
             ->addOrderBy('p.codeGroupe', Criteria::ASC)
@@ -50,13 +51,15 @@ class CelcatEventsRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findEdtEtu(Etudiant $user, int $semaine): null|array|int
+    public function findEdtEtu(Etudiant $user, int $semaine, AnneeUniversitaire $anneeUniversitaire): null|array|int
     {
         if (null !== $user->getSemestre()) {
             $this->groupes($user);
             $this->params['semaine'] = $semaine;
+            $this->params['anneeUniversitaire'] = $anneeUniversitaire->getId();
             $query = $this->createQueryBuilder('p')
-                ->where('p.semaineFormation = :semaine');
+                ->where('p.semaineFormation = :semaine')
+                ->andWhere('p.anneeUniversitaire = :anneeUniversitaire');
 
             if ('' !== $this->chaine) {
                 $query->andWhere($this->chaine);
@@ -97,7 +100,7 @@ class CelcatEventsRepository extends ServiceEntityRepository
         }
 
         return $this->createQueryBuilder('c')
-            ->delete(CelcatEvent::class, 'c')
+            ->delete(EdtCelcat::class, 'c')
             ->where('c.anneeUniversitaire = :annee')
             ->andWhere('c.departementId = :departement')
             ->setParameter('annee', $anneeUniversitaire->getId())
@@ -106,14 +109,15 @@ class CelcatEventsRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findEdtSemestre(Semestre $semestre, ?int $semaineFormationIUT): array|int
+    public function findEdtSemestre(Semestre $semestre, ?int $semaineFormationIUT, AnneeUniversitaire $anneeUniversitaire): array|int
     {
         return $this->createQueryBuilder('p')
            // ->innerJoin(Matiere::class, 'm', 'WITH', 'p.codeModule = m.codeElement')
            // ->innerJoin(Ue::class, 'u', 'WITH', 'u.id = m.ue')
             ->where('p.semaineFormation = :semaine')
             ->andWhere('p.semestre = :semestre')
-            ->setParameters(['semaine' => $semaineFormationIUT, 'semestre' => $semestre->getId()])
+            ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
+            ->setParameters(['semaine' => $semaineFormationIUT, 'semestre' => $semestre->getId(), 'anneeUniversitaire' => $anneeUniversitaire->getId()])
             ->orderBy('p.jour', Criteria::ASC)
             ->addOrderBy('p.debut', Criteria::ASC)
             ->addOrderBy('p.codeGroupe', Criteria::ASC)
@@ -145,7 +149,7 @@ class CelcatEventsRepository extends ServiceEntityRepository
     private function transformeArray(array $data): array
     {
         $t = [];
-        /** @var CelcatEvent $event */
+        /** @var EdtCelcat $event */
         foreach ($data as $event) {
             $pl = [];
             $pl['id'] = $event->getId();
@@ -173,13 +177,13 @@ class CelcatEventsRepository extends ServiceEntityRepository
             ->setParameters([
                 'semaine' => $semaineFormationIUT,
                 'semestre' => $semestre->getOrdreLmd(),
-                'annee' => $anneeUniversitaire->getId()])
+                'annee' => $anneeUniversitaire->getId(), ])
             ->orderBy('p.jour', Criteria::ASC)
             ->addOrderBy('p.debut', Criteria::ASC)
             ->addOrderBy('p.codeGroupe', Criteria::ASC);
 
         $ors = [];
-        $diplome = $semestre->getDiplome()->getParent() === null ? $semestre->getDiplome() : $semestre->getDiplome()->getParent();
+        $diplome = null === $semestre->getDiplome()->getParent() ? $semestre->getDiplome() : $semestre->getDiplome()->getParent();
         foreach ($diplome->getEnfants() as $dip) {
             $ors[] = '('.$query->expr()->orx('a.diplome = '.$query->expr()->literal($dip->getId())).')';
         }

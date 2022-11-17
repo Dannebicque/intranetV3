@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ProjetPeriodeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 21/09/2022 09:46
  */
 
 namespace App\Repository;
@@ -37,13 +37,14 @@ class ProjetPeriodeRepository extends ServiceEntityRepository
     public function findByDepartement(Departement $departement): array
     {
         $query = $this->createQueryBuilder('p')
-            ->innerJoin(Semestre::class, 's', 'WITH', 'p.semestre = s.id')
+            ->innerJoin('p.semestres', 's')
+            ->addSelect('s')
             ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
             ->where('d.departement = :departement')
             ->setParameter('departement', $departement->getId())
             ->orderBy('p.anneeUniversitaire', Criteria::DESC)
-            ->orderBy('p.libelle', Criteria::ASC);
+            ->addOrderBy('p.libelle', Criteria::ASC);
 
         return $query->getQuery()->getResult();
     }
@@ -57,20 +58,24 @@ class ProjetPeriodeRepository extends ServiceEntityRepository
     public function findByDiplomeBuilder(Diplome $diplome, AnneeUniversitaire $anneeUniversitaire): QueryBuilder
     {
         return $this->createQueryBuilder('p')
-            ->innerJoin(Semestre::class, 's', 'WITH', 'p.semestre = s.id')
+            ->innerJoin('p.semestres', 's')
+            ->addSelect('s')
             ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
             ->where('a.diplome = :diplome')
             ->andWhere('p.anneeUniversitaire = :annee')
             ->setParameter('annee', $anneeUniversitaire->getId())
             ->setParameter('diplome', $diplome->getId())
             ->orderBy('p.anneeUniversitaire', Criteria::DESC)
-            ->addOrderBy('p.libelle', Criteria::ASC);
+            ->addOrderBy('p.libelle', Criteria::ASC)
+            ;
     }
 
     public function findBySemestre(Semestre $semestre): array
     {
         return $this->createQueryBuilder('p')
-            ->where('p.semestre = :semestre')
+            ->innerJoin('p.semestres', 's')
+            ->addSelect('s')
+            ->where('s.id = :semestre')
             ->setParameter('semestre', $semestre->getId())
             ->orderBy('p.libelle', Criteria::ASC)
             ->getQuery()

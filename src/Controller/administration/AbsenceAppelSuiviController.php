@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AbsenceAppelSuiviController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:53
+ * @lastUpdate 08/10/2022 19:09
  */
 
 namespace App\Controller\administration;
@@ -46,6 +46,7 @@ class AbsenceAppelSuiviController extends BaseController
             'matieres' => $matieres,
             'statsAppel' => $statsAppel,
             'semestre' => $semestre,
+            'anneeUniversitaire' => $this->getAnneeUniversitaire(),
         ]);
 
         $table->handleRequest($request);

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtBorne.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/05/2022 18:13
+ * @lastUpdate 19/09/2022 15:21
  */
 
 /*
@@ -90,7 +90,7 @@ class MyEdtBorne
             'anneeUniversitaire' => $semestre->getAnneeUniversitaire()?->getId(),
         ]);
 
-        $groupes = $this->groupeRepository->findBySemestre($semestre);
+        $groupes = $this->groupeRepository->findByDiplomeAndOrdreSemestre($semestre->getDiplome(), $semestre->getOrdreLmd());
 
         $this->data['semestre'] = $semestre;
         if (null !== $semaine) {

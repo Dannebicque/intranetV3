@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/PersonnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 14/09/2022 09:11
  */
 
 namespace App\Controller\administration;
@@ -58,7 +58,7 @@ class PersonnelController extends BaseController
         requirements: ['_format' => 'csv|xlsx|pdf'],
         options: ['expose' => true],
         methods: 'GET')]
-    public function export(MySerializer $mySerializer, MyExport $myExport, PersonnelRepository $personnelRepository, $_format): Response
+    public function export(MySerializer $mySerializer, MyExport $myExport, PersonnelRepository $personnelRepository, string $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
@@ -260,7 +260,7 @@ class PersonnelController extends BaseController
             // etrangement pas dans un département, on ajoute.
             $pf = new PersonnelDepartement($personnel, $this->getDepartement());
             $pf->setDepartement($this->getDepartement());
-            $pf->setAnnee(date('Y'));
+            $pf->setAnnee((int) date('Y'));
             $pf->addRole($droit);
         }
 

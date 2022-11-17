@@ -1,22 +1,17 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Command/UpdateEdtCommand.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Command/UpdateEdtCommand.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:26
- */
-
-/*
- * Pull your hearder here, for exemple, Licence header.
+ * @lastUpdate 03/10/2022 14:36
  */
 
 namespace App\Command;
 
 use App\Classes\Celcat\MyCelcat;
-use App\Repository\CalendrierRepository;
+use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\DiplomeRepository;
-use App\Repository\GroupeRepository;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -29,8 +24,11 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class UpdateEdtCommand extends Command
 {
-    public function __construct(protected DiplomeRepository $diplomeRepository, protected MyCelcat $myCelcat, private readonly CalendrierRepository $calendrierRepository, private readonly GroupeRepository $groupeRepository)
-    {
+    public function __construct(
+        protected AnneeUniversitaireRepository $anneeUniversitaireRepository,
+        protected DiplomeRepository $diplomeRepository,
+        protected MyCelcat $myCelcat
+    ) {
         parent::__construct();
     }
 
@@ -39,25 +37,26 @@ class UpdateEdtCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $diplomes = $this->diplomeRepository->findAllWithCelcat();
-        $calendriers = $this->calendrierRepository->findBy(['anneeUniversitaire' => 4]); // todo: en argument
-        $tCalendrier = [];
-        foreach ($calendriers as $calendrier) {
-            $tCalendrier[$calendrier->getSemaineFormation()] = $calendrier->getDateLundi();
+        $annee = $this->anneeUniversitaireRepository->find(5); // todo: en argument
+
+
+        if (null !== $annee) {
+            $this->myCelcat->getData($annee);
+            $this->myCelcat->truncateTableEdtCelcat();
+            /** @var \App\Entity\Diplome $diplome */
+            foreach ($diplomes as $diplome) {
+                $date = new \DateTime();
+                $io->text($date->format('d/m/Y H:i:s').' | Mise à jour du diplome '.$diplome->getLibelle());
+                $this->myCelcat->addEvents($diplome, $annee);
+            }
+
+            $io->success('Emplois du temps synchronisés avec Celcat');
+
+            return 0;
         }
 
-        $groupes = $this->groupeRepository->findAll();
-        $tgroupes = [];
-        foreach ($groupes as $groupe) {
-            $tgroupes[$groupe->getCodeApogee()] = $groupe->getTypeGroupe()?->getSemestre();
-        }
+        $io->error('Aucune année universitaire trouvée');
 
-        foreach ($diplomes as $diplome) {
-            $io->text('Mise à jour du diplome '.$diplome->getLibelle());
-            $this->myCelcat->updateEventsDiplome($diplome, $tCalendrier, $tgroupes);
-        }
-
-        $io->success('Emplois du temps synchronisés avec Celcat');
-
-        return 0;
+        return 1;
     }
 }

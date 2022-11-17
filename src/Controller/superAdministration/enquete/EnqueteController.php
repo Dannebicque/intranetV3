@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/enquete/EnqueteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 14/09/2022 09:39
  */
 
 namespace App\Controller\superAdministration\enquete;
@@ -24,6 +24,7 @@ use App\Entity\Semestre;
 use App\Repository\EtudiantRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\QuestionnaireEtudiantReponseRepository;
+use App\Repository\QuestionnaireEtudiantRepository;
 use App\Repository\QuestionnairePersonnelRepository;
 use App\Repository\QuestionnaireQualiteRepository;
 use App\Repository\QuestionnaireQuestionnaireSectionRepository;
@@ -131,7 +132,7 @@ class EnqueteController extends BaseController
     #[Route('/questionnaire/semestre/{semestre}', name: 'administratif_enquete_semestre')]
     public function semestre(
         EtudiantRepository $etudiantRepository,
-        QuestionnairePersonnelRepository $quizzEtudiantRepository,
+        QuestionnaireEtudiantRepository $quizzEtudiantRepository,
         Semestre $semestre
     ): Response {
         $stats = [];

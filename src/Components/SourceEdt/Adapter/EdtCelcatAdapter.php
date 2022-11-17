@@ -1,19 +1,19 @@
 <?php
 /*
  * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/Sites/intranetV3/src/Adapter/EdtCelcatAdapter.php
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Adapter/EdtCelcatAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/09/2022 15:15
+ * @lastUpdate 12/10/2022 15:33
  */
 
-namespace App\Adapter;
+namespace App\Components\SourceEdt\Adapter;
 
+use App\Adapter\AbstractEdtAdapter;
 use App\Classes\Edt\EdtManager;
 use App\DTO\EvenementEdt;
 use App\DTO\EvenementEdtCollection;
 use App\Entity\Constantes;
-use Carbon\Carbon;
 
 class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
 {
@@ -32,37 +32,55 @@ class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
     public function single(mixed $event, array $matieres, array $groupes): ?EvenementEdt
     {
         $evt = new EvenementEdt();
+        $matiere = null;
         $event->texte = null;
         $evt->source = EdtManager::EDT_CELCAT;
         $evt->id = $event->getId();
-        $evt->couleur = $event->getSemestre()->getAnnee()->getCouleur();
+
         $evt->jour = (string) ($event->getJour() + 1);
-        $evt->heureDebut = Carbon::createFromTimeString($event->getDebut());
-        $evt->heureFin = Carbon::createFromTimeString($event->getFin());
+        $evt->heureDebut = $event->getDebut();
+        $evt->indexDebut = Constantes::TAB_HEURES_EDT_LIGNE_2[$event->getDebut()->roundMinute(10)->format('Hi')];
+        $evt->heureFin = $event->getFin();
         $evt->matiere = utf8_decode($event->getLibModule());
-        if (array_key_exists($event->getCodeModule(), $matieres)) {
-            $matiere = $matieres[$event->getCodeModule()];
-            $event->matiere = $matiere->display;
-            $event->typeIdMatiere = $matiere->getTypeIdMatiere();
+        $evt->typeIdMatiere = $event->getTypeIdMatiere();
+        if (array_key_exists($event->getTypeIdMatiere(), $matieres)) {
+            $matiere = $matieres[$event->getTypeIdMatiere()];
+            $evt->matiere = $matiere->display;
         } else {
-            $event->matiere = 'Inconnue';
-            $event->typeIdMatiere = null;
+            $evt->matiere = 'Inconnue';
         }
 
         $evt->salle = $event->getLibSalle();
         $evt->personnel = utf8_decode($event->getLibPersonnel());
+        $evt->personnelObjet = $event->getPersonnel();
+
         if (array_key_exists($event->getCodeGroupe(), $groupes)) {
             $evt->ordreGroupe = $groupes[$event->getCodeGroupe()]->getOrdre();
+            $evt->groupeObjet = $groupes[$event->getCodeGroupe()];
             $evt->groupeId = $groupes[$event->getCodeGroupe()]->getId();
         } else {
             $evt->ordreGroupe = 0;
             $evt->groupeId = 0;
         }
-        $evt->semestre = $event->getSemestre();
+
+        if (null !== $event->getSemestre()) {
+            $evt->semestre = $event->getSemestre();
+        } else {
+            if (null !== $matiere) {
+                $evt->semestre = $matiere->getSemestres()[0];
+            }
+        }
+
+        $evt->couleur = $evt->semestre?->getAnnee()->getCouleur();
+        $evt->ordreSemestre = $evt->semestre?->getOrdreLmd();
+
+        $evt->diplome = $event->getSemestre()?->getDiplome();
+
         $evt->groupe = $event->getLibGroupe();
         $evt->codeelement = $event->getCodeModule();
         $evt->type_cours = $event->getType();
         $evt->date = $event->getDateCours();
+        $evt->dateObjet = $event->getDateCours();
         $evt->gridStart = $event->getDebut()?->format('Hi');
         $evt->gridEnd = $event->getFin()?->format('Hi');
         $evt->largeur = $this->getLargeur($evt);

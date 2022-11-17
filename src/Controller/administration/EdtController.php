@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/09/2022 12:18
+ * @lastUpdate 23/09/2022 07:03
  */
 
 namespace App\Controller\administration;
@@ -84,7 +84,7 @@ class EdtController extends BaseController
                 'filtre' => $filtre,
                 'personnels' => $personnelRepository->findByDepartement($this->getDepartement()),
                 'salles' => $salleRepository->findAll(),
-                'matieres' => $typeMatiereManager->findBySemestre($edt->getSemestre()),
+                'matieres' => $edt->getSemestre()->getDiplome()->isApc() ? $typeMatiereManager->findByReferentielOrdreSemestre($edt->getSemestre(), $edt->getSemestre()->getDiplome()->getReferentiel()) : $typeMatiereManager->findBySemestre($edt->getSemestre()),
                 'edt' => $edt,
                 'groupes' => $groupeRepository->findGroupeSemestreEdt($edt->getSemestre()),
             ]),

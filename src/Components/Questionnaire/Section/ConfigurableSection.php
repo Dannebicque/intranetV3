@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Section/ConfigurableSection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:21
+ * @lastUpdate 14/09/2022 15:16
  */
 
 namespace App\Components\Questionnaire\Section;
@@ -102,6 +102,10 @@ class ConfigurableSection extends AbstractSection
 
     public function getDataPourConfiguration(Annee $annee): array
     {
+        if (null !== $this->config) {
+            $this->config['valeurs'] = [];
+        }
+
         return $this->sectionAdapter->getAllDataAnnee($annee, $this->config['valeurs']);
     }
 }

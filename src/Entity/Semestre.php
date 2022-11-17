@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/08/2022 14:08
+ * @lastUpdate 04/10/2022 09:25
  */
 
 namespace App\Entity;
@@ -145,7 +145,9 @@ class Semestre extends BaseEntity implements Stringable
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\TypeGroupe>
+     *
      */
+    #[Deprecated]
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: TypeGroupe::class)]
     #[ORM\OrderBy(value: ['libelle' => 'ASC'])]
     private Collection $typeGroupes;
@@ -200,10 +202,10 @@ class Semestre extends BaseEntity implements Stringable
     private Collection $absenceEtatAppels;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\CelcatEvent>
+     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\EdtCelcat>
      */
-    #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: CelcatEvent::class)]
-    private Collection $celcatEvents;
+    #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: EdtCelcat::class)]
+    private Collection $edtCelcats;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Evaluation>
@@ -253,6 +255,12 @@ class Semestre extends BaseEntity implements Stringable
     #[ORM\OneToMany(mappedBy: 'semestre_arrive', targetEntity: SemestreLien::class)]
     private Collection $semestreLienArrive;
 
+    #[ORM\ManyToMany(targetEntity: ProjetPeriode::class, mappedBy: 'semestres')]
+    private Collection $projetPeriodeSemestres;
+
+    #[ORM\ManyToMany(targetEntity: TypeGroupe::class, mappedBy: 'semestres')]
+    private Collection $typeGroupess;
+
     public function __construct()
     {
         $this->init();
@@ -265,6 +273,8 @@ class Semestre extends BaseEntity implements Stringable
         $this->apcSemestresSaes = new ArrayCollection();
         $this->semestreLienDepart = new ArrayCollection();
         $this->semestreLienArrive = new ArrayCollection();
+        $this->projetPeriodeSemestres = new ArrayCollection();
+        $this->typeGroupess = new ArrayCollection();
     }
 
     private function init(): void
@@ -283,9 +293,8 @@ class Semestre extends BaseEntity implements Stringable
         $this->etudiants = new ArrayCollection();
         $this->qualiteQuestionnaires = new ArrayCollection();
         $this->projetPeriodes = new ArrayCollection();
-        $this->apcSaes = new ArrayCollection();
         $this->absenceEtatAppels = new ArrayCollection();
-        $this->celcatEvents = new ArrayCollection();
+        $this->edtCelcats = new ArrayCollection();
     }
 
     public function __clone()
@@ -765,14 +774,13 @@ class Semestre extends BaseEntity implements Stringable
         return $this;
     }
 
-    /**
-     * @return Collection|TypeGroupe[]
-     */
+    #[Deprecated]
     public function getTypeGroupes(): Collection
     {
         return $this->typeGroupes;
     }
 
+    #[Deprecated]
     public function addTypeGroupe(TypeGroupe $typeGroupe): self
     {
         if (!$this->typeGroupes->contains($typeGroupe)) {
@@ -783,6 +791,7 @@ class Semestre extends BaseEntity implements Stringable
         return $this;
     }
 
+    #[Deprecated]
     public function removeTypeGroupe(TypeGroupe $typeGroupe): self
     {
         if ($this->typeGroupes->contains($typeGroupe)) {
@@ -1139,28 +1148,28 @@ class Semestre extends BaseEntity implements Stringable
     }
 
     /**
-     * @return Collection|CelcatEvent[]
+     * @return Collection|\App\Entity\EdtCelcat[]
      */
-    public function getCelcatEvents(): Collection
+    public function getEdtCelcats(): Collection
     {
-        return $this->celcatEvents;
+        return $this->edtCelcats;
     }
 
-    public function addCelcatEvent(CelcatEvent $celcatEvent): self
+    public function addEdtCelcat(EdtCelcat $edtCelcat): self
     {
-        if (!$this->celcatEvents->contains($celcatEvent)) {
-            $this->celcatEvents[] = $celcatEvent;
-            $celcatEvent->setSemestre($this);
+        if (!$this->edtCelcats->contains($edtCelcat)) {
+            $this->edtCelcats[] = $edtCelcat;
+            $edtCelcat->setSemestre($this);
         }
 
         return $this;
     }
 
-    public function removeCelcatEvent(CelcatEvent $celcatEvent): self
+    public function removeEdtCelcat(EdtCelcat $edtCelcat): self
     {
         // set the owning side to null (unless already changed)
-        if ($this->celcatEvents->removeElement($celcatEvent) && $celcatEvent->getSemestre() === $this) {
-            $celcatEvent->setSemestre(null);
+        if ($this->edtCelcats->removeElement($edtCelcat) && $edtCelcat->getSemestre() === $this) {
+            $edtCelcat->setSemestre(null);
         }
 
         return $this;
@@ -1464,6 +1473,60 @@ class Semestre extends BaseEntity implements Stringable
             if ($semestreLienArrive->getSemestreArrive() === $this) {
                 $semestreLienArrive->setSemestreArrive(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ProjetPeriode>
+     */
+    public function getProjetPeriodeSemestres(): Collection
+    {
+        return $this->projetPeriodeSemestres;
+    }
+
+    public function addProjetPeriodeSemestre(ProjetPeriode $projetPeriodeSemestre): self
+    {
+        if (!$this->projetPeriodeSemestres->contains($projetPeriodeSemestre)) {
+            $this->projetPeriodeSemestres->add($projetPeriodeSemestre);
+            $projetPeriodeSemestre->addSemestre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProjetPeriodeSemestre(ProjetPeriode $projetPeriodeSemestre): self
+    {
+        if ($this->projetPeriodeSemestres->removeElement($projetPeriodeSemestre)) {
+            $projetPeriodeSemestre->removeSemestre($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, TypeGroupe>
+     */
+    public function getTypeGroupess(): Collection
+    {
+        return $this->typeGroupess;
+    }
+
+    public function addTypeGroupess(TypeGroupe $typeGroupess): self
+    {
+        if (!$this->typeGroupess->contains($typeGroupess)) {
+            $this->typeGroupess->add($typeGroupess);
+            $typeGroupess->addSemestre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTypeGroupess(TypeGroupe $typeGroupess): self
+    {
+        if ($this->typeGroupess->removeElement($typeGroupess)) {
+            $typeGroupess->removeSemestre($this);
         }
 
         return $this;

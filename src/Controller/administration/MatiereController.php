@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/MatiereController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/09/2022 15:52
+ * @lastUpdate 14/09/2022 09:13
  */
 
 namespace App\Controller\administration;
@@ -76,7 +76,7 @@ class MatiereController extends BaseController
     public function export(
         TypeMatiereManager $typeMatiereManager,
         Diplome $diplome,
-        $_format
+        string $_format
     ): ?Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $diplome);
 

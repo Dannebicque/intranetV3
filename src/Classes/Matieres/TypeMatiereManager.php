@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Matieres/TypeMatiereManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/09/2022 11:34
+ * @lastUpdate 19/09/2022 16:06
  */
 
 namespace App\Classes\Matieres;
@@ -59,18 +59,6 @@ class TypeMatiereManager
     public function getMatiere(int|string $id, string $type): ?\App\DTO\Matiere
     {
         return $this->typeDeMatiere($type)->find($id);
-    }
-
-    public function findByCodeApogee(string $code): ?\App\DTO\Matiere
-    {
-        foreach ($this->managers as $manager) {
-            $matiere = $manager->findByCodeApogee($code);
-            if (null !== $matiere) {
-                return $matiere;
-            }
-        }
-
-        return null;
     }
 
     public function tableauMatieres(Departement $departement): array
@@ -198,16 +186,52 @@ class TypeMatiereManager
         return $t;
     }
 
-    public function findByCodeApogeeOrId(?EvenementEdt $planning): ?\App\DTO\Matiere
+//    public function findByCodeApogeeOrId(?EvenementEdt $planning, ?ApcReferentiel $referentiel): ?\App\DTO\Matiere
+//    {
+//        if (null === $planning) {
+//            return null;
+//        }
+//
+//        return match ($planning->source) {
+//            EdtManager::EDT_CELCAT => $this->findByCodeApogee($planning->codeelement, $referentiel),
+//            EdtManager::EDT_INTRANET => $this->getMatiereFromSelect($planning->typeIdMatiere),
+//            default => null,
+//        };
+//    }
+
+    public function findBySemestreAndReferentiel(Semestre $semestre, ?ApcReferentiel $referentiel): array
     {
-        if (null === $planning) {
-            return null;
+        $t = [];
+        foreach ($this->managers as $manager) {
+            if ($manager instanceof MatiereManager) {
+                $matieres = $manager->findBySemestre($semestre);
+            } else {
+                if (null !== $referentiel) {
+                    $matieres = $manager->findBySemestreAndReferentiel($semestre, $referentiel);
+                }
+            }
+
+            $t[] = $matieres->toArray();
         }
 
-        return match ($planning->source) {
-            EdtManager::EDT_CELCAT => $this->findByCodeApogee($planning->codeelement),
-            EdtManager::EDT_INTRANET => $this->getMatiereFromSelect($planning->typeIdMatiere),
-            default => null,
-        };
+        return array_merge(...$t);
+    }
+
+    public function findByReferentielOrdreSemestre(Semestre $semestre, ?ApcReferentiel $referentiel): array
+    {
+        $t = [];
+        foreach ($this->managers as $manager) {
+            if ($manager instanceof MatiereManager) {
+                $matieres = $manager->findBySemestre($semestre);
+            } else {
+                if (null !== $referentiel) {
+                    $matieres = $manager->findByReferentielOrdreSemestre($referentiel, $semestre->getOrdreLmd());
+                }
+            }
+
+            $t[] = $matieres->toArray();
+        }
+
+        return array_merge(...$t);
     }
 }

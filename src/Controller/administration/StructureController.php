@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/StructureController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/StructureController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 10:52
+ * @lastUpdate 14/09/2022 09:13
  */
 
 namespace App\Controller\administration;
@@ -41,7 +41,7 @@ class StructureController extends BaseController
      * @throws SyntaxError
      */
     #[Route(path: '/{departement}/export.{_format}', name: 'administration_structure_export', requirements: ['_format' => 'xlsx|pdf'], methods: 'GET')]
-    public function export(MyStructure $myStructure, Departement $departement, $_format): void
+    public function export(MyStructure $myStructure, Departement $departement, string $_format): void
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $departement);
         $myStructure->export($departement, $_format);

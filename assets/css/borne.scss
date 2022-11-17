@@ -1,8 +1,8 @@
-// Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/htdocs/intranetV3/assets/css/borne.scss
+// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/Sites/intranetV3/assets/css/borne.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/10/2021 16:10
+// @lastUpdate 20/09/2022 10:15
 
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/bootstrap";
@@ -95,8 +95,8 @@ html, body {
   line-height: 50px;
   border-radius: 5px;
   margin-bottom: 10px;
-  background-color: var(--colorIUT);
-  color: var(--colorIUTComplementaire);
+  background-color: var(--colorIUT, #f7b000);
+  color: var(--colorIUTComplementaire, #4d3677);
   font-size: 20px;
   font-weight: bolder;
   text-align: center;

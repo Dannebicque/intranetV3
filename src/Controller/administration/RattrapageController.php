@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/RattrapageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 14/09/2022 08:55
  */
 
 namespace App\Controller\administration;
@@ -107,7 +107,7 @@ class RattrapageController extends BaseController
 
     #[Route(path: '/change-etat/{uuid}/{etat}', name: 'administration_rattrapage_change_etat', options: ['expose' => true], methods: 'GET')]
     #[ParamConverter('rattrapage', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function accepte(EventDispatcherInterface $eventDispatcher, Rattrapage $rattrapage, $etat): Response
+    public function accepte(EventDispatcherInterface $eventDispatcher, Rattrapage $rattrapage, string $etat): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $rattrapage->getEtudiant()?->getSemestre());
         if (Rattrapage::DEMANDE_ACCEPTEE === $etat || Rattrapage::DEMANDE_REFUSEE === $etat) {

@@ -41,6 +41,9 @@
     <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}"></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
     {% block javascripts %}
+        <script>
+        let toasts = {{ app.session.flashbag.get('toast')|json_encode|raw }};
+        </script>
         {{ encore_entry_script_tags('app') }}
     {% endblock %}
     <script data-provide="sweetalert"></script>
@@ -67,7 +70,9 @@
     {% endif %}
 </head>
 
-<body class="{{ settings('CODE_IUT') }}">
+<body class="{{ settings('CODE_IUT') }}"
+        {{ stimulus_controller('global') }}
+>
 {% block full_body %}
 
     <!-- Preloader -->
@@ -364,7 +369,7 @@
                     liste déroulante.
                 </div>
             {% endif %}
-
+            
             {% block content %}
 
             {% endblock %}

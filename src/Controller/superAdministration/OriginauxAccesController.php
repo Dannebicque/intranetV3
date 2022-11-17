@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/OriginauxAccesController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/08/2022 12:10
+ * @lastUpdate 14/09/2022 09:32
  */
 
 namespace App\Controller\superAdministration;
@@ -15,7 +15,6 @@ use App\Table\PersonnelTableType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 #[Route('/administratif/qualite/originaux/acces', name: 'sa_qualite_originaux_acces_')]
 class OriginauxAccesController extends BaseController
@@ -40,14 +39,11 @@ class OriginauxAccesController extends BaseController
     }
 
     #[Route(path: '/change-etat/{personnel}/{etat}', name: 'change_etat', options: ['expose' => true], methods: 'GET')]
-    public function changeEtat(EventDispatcherInterface $eventDispatcher, Personnel $personnel, $etat): Response
+    public function changeEtat(Personnel $personnel, string $etat): Response
     {
         if ('a' === $etat || 'r' === $etat) {
             $personnel->setAccessOriginaux('a' === $etat);
             $this->entityManager->flush();
-
-//            $event = new RattrapageEvent($rattrapage);
-//            $eventDispatcher->dispatch($event, RattrapageEvent::DECISION);
 
             return new Response('', Response::HTTP_OK);
         }

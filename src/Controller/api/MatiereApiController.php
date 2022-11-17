@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/api/MatiereApiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/09/2022 20:45
+ * @lastUpdate 05/10/2022 19:15
  */
 
 namespace App\Controller\api;
@@ -15,7 +15,6 @@ use App\Entity\Parcour;
 use App\Entity\Semestre;
 use App\Repository\ParcourRepository;
 use App\Repository\SemestreRepository;
-use App\Repository\TypeGroupeRepository;
 use App\Repository\UeRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -38,7 +37,12 @@ class MatiereApiController extends BaseController
     #[Route(path: '/semestre/{semestre}', name: 'api_matieres_semestre', options: ['expose' => true])]
     public function matieresSemestreAjax(Semestre $semestre): JsonResponse
     {
-        $matieres = $this->typeMatiereManager->findBySemestre($semestre);
+        if ($semestre->getDiplome()->isApc()) {
+            $matieres = $this->typeMatiereManager->findBySemestreAndReferentiel($semestre, $semestre->getDiplome()->getReferentiel());
+        } else {
+            $matieres = $this->typeMatiereManager->findBySemestre($semestre);
+        }
+
         $tmatieres = [];
         foreach ($matieres as $m) {
             $t = [];
@@ -62,29 +66,22 @@ class MatiereApiController extends BaseController
 
     #[Route(path: '/document/export/personnalise/{semestre}', name: 'api_export_document_personnalise', options: ['expose' => true])]
     public function exportDocumentPersonnalise(
-        TypeGroupeRepository $typeGroupeRepository,
         Semestre $semestre): Response
     {
-        if ($semestre->getDiplome()->isApc()) {
-            $typeGroupes = $typeGroupeRepository->findByDiplomeAndOrdreSemestre($semestre->getDiplome(), $semestre->getOrdreLmd());
-        } else {
-            $typeGroupes = $semestre->getTypeGroupes();
-        }
+        $typeGroupes = $semestre->getTypeGroupess();
+
         return $this->render('api/matiere/document/export.html.twig', [
             'typeGroupes' => $typeGroupes,
         ]);
     }
 
     #[Route(path: '/document/export/{matiere}/{typeMatiere}/{semestre}', name: 'api_export_document_matiere', options: ['expose' => true])]
-    public function exportDocument(TypeGroupeRepository $typeGroupeRepository, int $matiere, string $typeMatiere, Semestre $semestre): Response
+    public function exportDocument(int $matiere, string $typeMatiere, Semestre $semestre): Response
     {
         //todo: fusionne ? TypeGroupe pas nécessaire si table avec semestres
         $mat = $this->typeMatiereManager->getMatiere($matiere, $typeMatiere);
-        if ($semestre->getDiplome()->isApc()) {
-            $typeGroupes = $typeGroupeRepository->findByDiplomeAndOrdreSemestre($semestre->getDiplome(), $semestre->getOrdreLmd());
-        } else {
-            $typeGroupes = $semestre->getTypeGroupes();
-        }
+
+        $typeGroupes = $semestre->getTypeGroupess();
 
         return $this->render('api/matiere/document/export.html.twig', [
             'matiere' => $mat,

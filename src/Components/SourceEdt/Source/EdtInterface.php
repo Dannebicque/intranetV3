@@ -1,17 +1,17 @@
 <?php
 /*
  * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/EdtInterface.php
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Source/EdtInterface.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/05/2022 18:12
+ * @lastUpdate 23/09/2022 18:52
  */
 
 /*
  * Pull your hearder here, for exemple, Licence header.
  */
 
-namespace App\Classes\Edt;
+namespace App\Components\SourceEdt\Source;
 
 use App\DTO\EvenementEdt;
 use App\DTO\EvenementEdtCollection;

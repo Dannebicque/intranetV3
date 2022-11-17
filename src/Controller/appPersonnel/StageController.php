@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/StageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:14
+ * @lastUpdate 11/10/2022 13:42
  */
 
 namespace App\Controller\appPersonnel;
@@ -34,13 +34,13 @@ class StageController extends BaseController
         if (null !== $this->getUser()) {
             return $this->render('appPersonnel/stage/index.html.twig', [
                 'stagesEnCours' => $stageEtudiantRepository->findByPersonnelAnnee($this->getUser(),
-                    $this->dataUserSession->getAnneeUniversitaire()),
+                    $this->getAnneeUniversitaire()),
                 'stagesHistorique' => $stageEtudiantRepository->findByPersonnelHistorique($this->getUser(),
-                    $this->dataUserSession->getAnneeUniversitaire()),
+                    $this->getAnneeUniversitaire()),
                 'alternancesEnCours' => $alternanceRepository->getByPersonnelAndAnneeUniversitaire($this->getUser(),
-                    $this->dataUserSession->getAnneeUniversitaire()),
+                    $this->getAnneeUniversitaire()),
                 'alternancesHistorique' => $alternanceRepository->getHistoriqueByPersonnelAndAnneeUniversitaire($this->getUser(),
-                    $this->dataUserSession->getAnneeUniversitaire()),
+                    $this->getAnneeUniversitaire()),
             ]);
         }
 
@@ -50,14 +50,14 @@ class StageController extends BaseController
     #[Route(path: '/stage/export/{periode}.{_format}', name: 'application_personnel_stage_export')]
     public function exportStage(
         MySerializer $mySerializer,
-        MyExport $myExport, StageEtudiantRepository $stageEtudiantRepository, $periode, $_format): Response
+        MyExport $myExport, StageEtudiantRepository $stageEtudiantRepository, string $periode, string $_format): Response
     {
         if ('courant' === $periode) {
             $stages = $stageEtudiantRepository->findByPersonnelAnnee($this->getUser(),
-                $this->dataUserSession->getAnneeUniversitaire());
+                $this->getAnneeUniversitaire());
         } else {
             $stages = $stageEtudiantRepository->findByPersonnelHistorique($this->getUser(),
-                $this->dataUserSession->getAnneeUniversitaire());
+                $this->getAnneeUniversitaire());
         }
 
         $data = $mySerializer->getDataFromSerialization(
@@ -86,7 +86,7 @@ class StageController extends BaseController
     #[Route(path: '/alternance/export/{periode}.{_format}', name: 'application_personnel_alternance_export')]
     public function exportAlternance(
         MySerializer $mySerializer,
-        MyExport $myExport, AlternanceRepository $alternanceRepository, $periode, $_format): Response
+        MyExport $myExport, AlternanceRepository $alternanceRepository, string $periode, string $_format): Response
     {
         // todo: séparer Stage et Alternance...
         if ('courant' === $periode) {

@@ -29,13 +29,9 @@ très prochainement (rentrée 2021) de type B.U.T. (Bachelor Universitaire de Te
 Il propose de nombreuses gestions comme le suivi des notes, des absences, des rattrapages, des services prévisionnels
 des enseignants, des trombinoscopes et des groupes d'étudiants et beaucoup d'autres fonctionnalités.
 
-Cette nouvelle version apporte une refonte ergonomique complète, et une optimisation du code, pour prendre en compte les
-standard de SF 5.2 et PHP 7.4.
-
 # Mises à jours
 
-Les améliorations sont régulières, tout comme des ajustements et des correctifs. Toutes les informations seront (autant
-que j'y pense) dans le [changelog](CHANGELOG.md)
+Les améliorations sont régulières, tout comme des ajustements et des correctifs. Toutes les informations sont dans le [changelog](CHANGELOG.md)
 
 # Détails des fonctionnalités
 
@@ -47,27 +43,32 @@ que j'y pense) dans le [changelog](CHANGELOG.md)
 * Paramétrage de la visibilité de l’emploi du temps, par les gestionnaires (nombre de
   semaines) ![Nouveauté V3](https://img.shields.io/badge/Nouveauté-V3-brightgreen.svg)
 * Visibilité de leurs notes et leurs absences (en temps réel ou non)
+* Consultation du bilan du semestre en cours, avec le B.U.T.
+* Consultation des notes/moyennes des semestres précédents
 * Consultation de leur parcours scolaire (au sein de
   l’établissement) ![Optimisation V3](https://img.shields.io/badge/Optimisation-V3-orange.svg)
 * Consultation des Modalités de Contrôle des Connaissances (MCC)
 * Consultation de documents
 * Système de blog pour les relations internationales, C2I, infos
-  pratiques ![Optimisation V3](https://img.shields.io/badge/Optimisation-V3-orange.svg)
+  pratiques, ... ![Optimisation V3](https://img.shields.io/badge/Optimisation-V3-orange.svg)
 * Dates importantes
 * Demandes de rattrapages
 * Suivi de leur stage
   * Offres de stage
   * Données pour la convention
+  * Génération des conventions
+    * Projet de lien avec Yousign ?![Features Vxx](https://img.shields.io/badge/Features-Vxx-brightgreen.svg)
   * Tuteur
 * Suivi de leur projets tutorés ![Nouveauté V3](https://img.shields.io/badge/Nouveauté-V3-brightgreen.svg)
   * Edition des conventions
 * Suivi de l'alternance
   * Informations sur l'alternance
+  * Fiches de suivi des visites d'alternants
 * Système d’emprunt de matériel (MMI) ![Optimisation V3](https://img.shields.io/badge/Optimisation-V3-orange.svg)
-* Système (basique) de quizz/sondage ![Optimisation V3](https://img.shields.io/badge/Optimisation-V3-orange.svg)
 * Système de notification ![Nouveauté V3](https://img.shields.io/badge/Nouveauté-V3-brightgreen.svg)
 * Possibiltié de déposer un justificatif d'absence en
   ligne ![Nouveauté V3](https://img.shields.io/badge/Nouveauté-V3-brightgreen.svg)
+* Gestion des demandes de rattrapages
 
 ## Fonctionnalités pour les enseignants/intervenants
 
@@ -76,20 +77,21 @@ que j'y pense) dans le [changelog](CHANGELOG.md)
 * Graphique de répartition des notes sur une
   évaluation. ![Nouveauté V3](https://img.shields.io/badge/Nouveauté-V3-brightgreen.svg)
 * Visualisation du service prévisionnel
-* Sollicitation des étudiants pour un quizz/sondage
 * Messagerie vers les étudiants (par promo, groupe ou individuel), mail officiel, mail perso si disponible et message interne de l’intranet
-* Liste des étudiants à suivre en stage ![Optimisation V3](https://img.shields.io/badge/Optimisation-V3-orange.svg)
+* Liste des étudiants à suivre en stage, en alternance ![Optimisation V3](https://img.shields.io/badge/Optimisation-V3-orange.svg)
 * Formlaire de suivi d’alternance ![Nouveauté V3](https://img.shields.io/badge/Nouveauté-V3-brightgreen.svg)
 * Historique des absences et des notes des
   étudiants ![Nouveauté V3](https://img.shields.io/badge/Nouveauté-V3-brightgreen.svg)
 * Outils de recherche ![Optimisation V3](https://img.shields.io/badge/Optimisation-V3-orange.svg)
+* Consultation du bilan des semestres des étudiants (B.U.T.)
+* Suivi de la scolarité des étudiants
 
 ## Fonctionnalités pour les responsables des stages
 
 * Suivi des étudiants par période de stage ![Optimisation V3](https://img.shields.io/badge/Optimisation-V3-orange.svg)
 * Edition automatisée des conventions et des courriers
 * Edition des plannings de soutenance et des courriers de
-  convocation ![Optimisation V3](https://img.shields.io/badge/Optimisation-V3-orange.svg)
+  convocation ![Features Vxx](https://img.shields.io/badge/Features-Vxx-brightgreen.svg)
 * Affectation d’un tuteur universitaire
 * Statistiques ![Nouveauté V3](https://img.shields.io/badge/Nouveauté-V3-brightgreen.svg)
 * Gestion des avenants ![Nouveauté V3](https://img.shields.io/badge/Nouveauté-V3-brightgreen.svg)
@@ -111,6 +113,7 @@ que j'y pense) dans le [changelog](CHANGELOG.md)
 * Gestion des notes et des sous-commissions (calculs des moyennes, proposition de décision)
   * Possibilité d’ajuster toutes les
     informations ![Optimisation V3](https://img.shields.io/badge/Optimisation-V3-orange.svg)
+  * Bilan de semestre et de fin d'année en B.U.T.
 * Publication des sous-commissions aux
   étudiants ![Optimisation V3](https://img.shields.io/badge/Optimisation-V3-orange.svg)
 * Exports pour les fichiers de grand jury
@@ -127,6 +130,8 @@ que j'y pense) dans le [changelog](CHANGELOG.md)
 * les scolarités sont sauvegardées à partir de 2020, et possibilité de revenir sur une année antérieure.
 * Export d'un document de situation (bilan de semestre ou de formation) pour les étudiants : avis de poursuite
   d'études ![Nouveauté V3](https://img.shields.io/badge/Nouveauté-V3-brightgreen.svg)
+* Suivi de l'appel fait (pour la FC)
+* Création des quesitonnaires pour les évaluations des enseignements (SAE en B.U.T.) ![Nouveauté V3](https://img.shields.io/badge/Nouveauté-V3-brightgreen.svg)
 
 ## Fonctionnalités pour le responsable des absences
 
@@ -135,6 +140,7 @@ que j'y pense) dans le [changelog](CHANGELOG.md)
 * suivi des justificatifs d'absences ![Nouveauté V3](https://img.shields.io/badge/Nouveauté-V3-brightgreen.svg)
 * Rattrapages ![Optimisation V3](https://img.shields.io/badge/Optimisation-V3-orange.svg)
 * Commission des absences ![Optimisation V3](https://img.shields.io/badge/Optimisation-V3-orange.svg)
+* Bilan des absences par mois, au format FC ![Features Vxx](https://img.shields.io/badge/Features-Vxx-brightgreen.svg)
 
 ## Fonctionnalités pour le responsable des notes
 
@@ -160,10 +166,13 @@ que j'y pense) dans le [changelog](CHANGELOG.md)
 ## Fonctionnalités pour la partie "Qualité / ISO 9001" ![Nouveauté V3](https://img.shields.io/badge/Nouveauté-V3-brightgreen.svg)
 * Mise en place d'un "lime-survey" interne pour la création des questions qualités
 * Export des résultats des enquêtes au formation qualité
+* Création de questionnaire à destination des étudiants, 
+  * des entreprises, des enseignants ![Features Vxx](https://img.shields.io/badge/Features-Vxx-brightgreen.svg)
+* Export de document de synthèse des absences pour la FC ![Features V3.xx](https://img.shields.io/badge/Features-Vxx-brightgreen.svg)
 
 # Nouveautés globales à toutes les fonctionnalités ![Nouveauté V3](https://img.shields.io/badge/Nouveauté-V3-brightgreen.svg)
 
-* Version multilangue (Français et Anglais pour le moment)
+* [désactivé pour le moment] Version multilangue (Français et Anglais pour le moment)
 * Historisation des données (retrouver d'anciens semestre, d'anciennes notes)
 * Horadatage systèmatique
 * Suivi plus précis
@@ -175,7 +184,7 @@ que j'y pense) dans le [changelog](CHANGELOG.md)
 * Celcat pour la récupération des emplois du temps ![Optimisation V3](https://img.shields.io/badge/Optimisation-V3-orange.svg)
 * Apogée pour la synchornisation des maquettes et la récupération des listes. ![Nouveauté V3](https://img.shields.io/badge/Nouveauté-V3-brightgreen.svg)
 
-# Features sur la version 3.1 (premier semestre 2021) ![Nouveauté V3.1 premier semestre 2021](https://img.shields.io/badge/Nouveauté-V3.1-brightgreen.svg)
+# Version 3.xx (septembre 2021) ![Nouveauté V3.1 premier semestre 2021](https://img.shields.io/badge/Nouveauté-V3.1-brightgreen.svg)
 
 * Prise en compte de l'évaluation en compétences
 * Dimension "sociale" et "participative" de l’intranet
@@ -198,14 +207,17 @@ que j'y pense) dans le [changelog](CHANGELOG.md)
 * Suivi des services prévisionnels de manière globale par l’administration
 * Accès RH pour gérer les vacataires et nouveaux recrutements
 
-# Features sur la version 3.2 (deuxième semestre 2021) ![Nouveauté V3.2 deuxième semestre 2021](https://img.shields.io/badge/Nouveauté-V3.2-brightgreen.svg)
+# Version 3.xx (deuxième semestre 2021) ![Nouveauté V3.2 deuxième semestre 2021](https://img.shields.io/badge/Nouveauté-V3.2-brightgreen.svg)
 
 * Notion de "sous-évaluations" pour permettre la saisie de l'intérgalité des notes.
 * Mise en place d'un "cahier de texte", auto-alimenté par les étudiants
-* Mise en place d’un « forum » d’échange sur les modules de la formation, avec différents niveaux (groupes TD/TP,
-  module).
+
+# Features (2023)
+
+* Mise en place d’un « forum » d’échange sur les modules de la formation, avec différents niveaux (groupes TD/TP, module).
   * Répondre à une demande étudiante
   * Possibilité pour l’équipe d’interagir sur ces forums
+  * "Cahier de texte"
 
 # Suivi des bugs
 

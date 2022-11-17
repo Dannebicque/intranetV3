@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/TypeMaterielController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 14/09/2022 09:13
  */
 
 namespace App\Controller\administration;
@@ -33,7 +33,7 @@ class TypeMaterielController extends BaseController
     #[Route(path: '/export.{_format}', name: 'administration_type_materiel_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
     public function export(
         MySerializer $mySerializer,
-        MyExport $myExport, TypeMaterielRepository $type_materielRepository, $_format): Response
+        MyExport $myExport, TypeMaterielRepository $type_materielRepository, string $_format): Response
     {
         $type_materiels = $type_materielRepository->findByDepartement($this->dataUserSession->getDepartement());
 

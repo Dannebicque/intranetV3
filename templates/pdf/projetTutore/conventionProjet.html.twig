@@ -38,7 +38,8 @@
 
     <p>Le projet tuteuré obligatoire en vue de la délivrance du diplôme :</p>
     <p>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ projetEtudiant.projetPeriode.semestre.diplome.libelle }}
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ projetEtudiant.projetPeriode.semestres[0].diplome
+        .libelle }}
     </p>
 
     <p>Le projet tuteuré ne constitue en aucun cas un stage. Il est placé sous la responsabilité unique de
@@ -88,7 +89,7 @@
        dans le cadre de la formation encadrée.<br>
        Le projet tuteuré est une des épreuves du diplôme :</p>
     <p>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ projetEtudiant.projetPeriode.semestre.diplome.libelle }}
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{ projetEtudiant.projetPeriode.semestres[0].diplome.libelle }}
     </p>
 
     <p><strong>Article 4 :</strong> Contenu du projet</p>
@@ -187,7 +188,7 @@
             </td>
         </tr>
         <tr>
-            <td><p>Pour le département {{ projetEtudiant.projetPeriode.semestre.diplome.departement.libelle }},<br>
+            <td><p>Pour le département {{ projetEtudiant.projetPeriode.semestres[0].diplome.departement.libelle }},<br>
                    Le responsable des projets :</p>
                 <br><br><br><br>
                 {{ projetEtudiant.projetPeriode.responsables[0].displayPr }}</td>

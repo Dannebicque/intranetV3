@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/StageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:44
+ * @lastUpdate 14/09/2022 11:30
  */
 
 namespace App\Controller\appEtudiant;
@@ -38,6 +38,7 @@ class StageController extends BaseController
     {
         $stagePeriodes = $stagePeriodeRepository->findStageEtudiant($this->getUser()->getSemestre(),
             $this->getAnneeUniversitaire());
+
         $stageEtudiants = [];
         foreach ($this->getUser()->getStageEtudiants() as $stage) {
             if (null !== $stage->getStagePeriode()) {

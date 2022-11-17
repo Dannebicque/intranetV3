@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcReferentielFormationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/09/2022 20:39
+ * @lastUpdate 13/09/2022 21:02
  */
 
 namespace App\Controller\administration\apc;
@@ -61,6 +61,43 @@ class ApcReferentielFormationController extends BaseController
             ]);
     }
 
+    #[Route(path: '/ajax-edit/{id}/nb-notes/{type}', name: 'apc_referentiel_formation_nb_notes_ajax', options: ['expose' => true], methods: ['POST'])]
+    public function ajaxEditNbNotes(ApcSaeRepository $apcSaeRepository, ApcRessourceRepository $apcRessourceRepository, Request $request, int $id, string $type): Response
+    {
+        $value = JsonRequest::getValueFromRequest($request, 'value');
+        if ('ressource' === $type) {
+            $ressource = $apcRessourceRepository->find($id);
+            if (null !== $ressource) {
+                $ressource->setNbNotes(Tools::convertToInt($value));
+                $this->entityManager->flush();
+            } else {
+                $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Erreur lors de la modification du nombre de notes');
+
+                return new JsonResponse(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Nombre de notes modifié');
+
+            return new JsonResponse(true, Response::HTTP_OK);
+        }
+        if ('sae' === $type) {
+            $sae = $apcSaeRepository->find($id);
+            if (null !== $sae) {
+                $sae->setNbNotes(Tools::convertToInt($value));
+                $this->entityManager->flush();
+            } else {
+                $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Erreur lors de la modification du nombre de notes');
+
+                return new JsonResponse(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+            }
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Nombre de notes modifié');
+
+            return new JsonResponse(true, Response::HTTP_OK);
+        }
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'Type inexistant');
+
+        return new JsonResponse(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
     #[Route(path: '/ajax-edit/{id}/{competence}/{type}', name: 'apc_referentiel_formation_ajax', options: ['expose' => true], methods: ['POST'])]
     public function ajaxEdit(ApcSaeCompetenceRepository $apcSaeCompetenceRepository, ApcSaeRepository $apcSaeRepository, ApcRessourceRepository $apcRessourceRepository, ApcRessourceCompetenceRepository $apcRessourceCompetenceRepository, Request $request, int $id, ApcCompetence $competence, string $type): Response
     {
@@ -79,7 +116,9 @@ class ApcReferentielFormationController extends BaseController
                 } elseif (Tools::convertToFloat($value) > 0) { // existe et > 0 on met à jour
                     $obj->setCoefficient(Tools::convertToFloat($value));
                 } else { // existe et <=0 on supprime
-                    $this->entityManager->remove($obj);
+                    if ($obj !== null) {
+                        $this->entityManager->remove($obj);
+                    }
                 }
                 $this->entityManager->flush();
             } else {
@@ -95,14 +134,16 @@ class ApcReferentielFormationController extends BaseController
             $sae = $apcSaeRepository->find($id);
             if (null !== $sae) {
                 $obj = $apcSaeCompetenceRepository->findOneBy(['sae' => $id, 'competence' => $competence->getId()]);
-                if (null === $obj && Tools::convertToFloat($value)) {
+                if (null === $obj && Tools::convertToFloat($value) > 0) {
                     $obj = new ApcSaeCompetence($sae, $competence);
                     $obj->setCoefficient(Tools::convertToFloat($value));
                     $this->entityManager->persist($obj);
                 } elseif (Tools::convertToFloat($value) > 0) {
                     $obj->setCoefficient(Tools::convertToFloat($value));
                 } else {
-                    $this->entityManager->remove($obj);
+                    if ($obj !== null) {
+                        $this->entityManager->remove($obj);
+                    }
                 }
                 $this->entityManager->flush();
             } else {

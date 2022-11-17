@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/NoteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:11
+ * @lastUpdate 18/10/2022 20:57
  */
 
 namespace App\Controller\appPersonnel;
@@ -50,7 +50,7 @@ class NoteController extends BaseController
             EvaluationType::class,
             $evaluation,
             [
-                'departement' => $this->dataUserSession->getDepartement(),
+                'departement' => $this->getDepartement(),
                 'semestre' => $semestre,
                 'matiereDisabled' => false,
                 'personnelDisabled' => true,
@@ -123,7 +123,13 @@ class NoteController extends BaseController
      * @throws Exception
      */
     #[Route(path: '/import/{evaluation}/{semestre}', name: 'application_personnel_note_import', requirements: ['evaluation' => '\d+'])]
-    public function import(TypeMatiereManager $typeMatiereManager, Request $request, MyUpload $myUpload, MyEvaluation $myEvaluation, Evaluation $evaluation, Semestre $semestre): Response
+    public function import(
+        TypeMatiereManager $typeMatiereManager,
+        Request $request,
+        MyUpload $myUpload,
+        MyEvaluation $myEvaluation,
+        Evaluation $evaluation,
+        Semestre $semestre): Response
     {
         // upload
         $fichier = $myUpload->upload($request->files->get('fichier_import'));
@@ -133,7 +139,8 @@ class NoteController extends BaseController
             throw new MatiereNotFoundException();
         }
         // traitement de l'import des notes.
-        $myEvaluation->importEvaluation($evaluation, $fichier, $semestre);
+        $myEvaluation->importEvaluation($evaluation, $fichier, $semestre,
+            $request->request->has('ecrase_notes') && 'true' === $request->request->get('ecrase_notes'));
         $this->addFlashBag('success', 'import_note_a_verifier');
 
         return $this->redirectToRoute('administration_evaluation_show', ['uuid' => $evaluation->getUuidString()]);

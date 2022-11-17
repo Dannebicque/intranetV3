@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/AdministrationController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/AdministrationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 07:01
+ * @lastUpdate 21/09/2022 09:06
  */
 
 namespace App\Controller;
@@ -27,16 +27,16 @@ class AdministrationController extends BaseController
     ): Response {
         $tperiodes = [];
         foreach ($this->dataUserSession->getDiplomes() as $diplome) {
-            $periodes = $stagePeriodeRepository->findByDiplome($diplome, $diplome->getAnneeUniversitaire());
+            $periodes = $stagePeriodeRepository->findByDiplome($diplome, $this->getAnneeUniversitaire());
             foreach ($periodes as $periode) {
                 $tperiodes[] = $periode;
             }
         }
         $projetPeriodes = [];
         foreach ($this->dataUserSession->getDiplomes() as $diplome) {
-            $periodes = $projetPeriodeRepository->findByDiplome($diplome, $diplome->getAnneeUniversitaire());
+            $periodes = $projetPeriodeRepository->findByDiplome($diplome, $this->getAnneeUniversitaire());
             foreach ($periodes as $periode) {
-                $projetPeriodes[] = $periode;
+                $projetPeriodes[$periode->getId()] = $periode;
             }
         }
 

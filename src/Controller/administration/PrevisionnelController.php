@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/08/2022 09:31
+ * @lastUpdate 19/09/2022 20:29
  */
 
 namespace App\Controller\administration;
@@ -22,6 +22,7 @@ use App\Entity\Semestre;
 use App\Exception\AnneeUniversitaireNotFoundException;
 use App\Form\ImportPrevisionnelType;
 use App\Repository\PersonnelRepository;
+use App\Repository\PrevisionnelRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -168,7 +169,7 @@ class PrevisionnelController extends BaseController
             if (null !== $matiere) {
                 $nbLignes = $request->request->get('nbLignes');
                 for ($i = 1; $i <= $nbLignes; ++$i) {
-                    $idPersonnel = $request->request->get('intervenant_'.$i);
+                    $idPersonnel = $request->request->get('intervenant_' . $i);
                     if (isset($idPersonnel)) {
                         $personnel = $personnelRepository->find($idPersonnel);
                     } else {
@@ -176,18 +177,19 @@ class PrevisionnelController extends BaseController
                     }
 
                     $previsionnel = new Previsionnel($annee, $personnel);
-                    $previsionnel->setNbHCm($request->request->get('cm_'.$i));
-                    $previsionnel->setNbHTd($request->request->get('td_'.$i));
-                    $previsionnel->setNbHTp($request->request->get('tp_'.$i));
-                    $previsionnel->setNbGrCm($request->request->get('gr_cm_'.$i));
-                    $previsionnel->setNbGrTd($request->request->get('gr_td_'.$i));
-                    $previsionnel->setNbGrTp($request->request->get('gr_tp_'.$i));
+                    $previsionnel->setNbHCm($request->request->get('cm_' . $i));
+                    $previsionnel->setNbHTd($request->request->get('td_' . $i));
+                    $previsionnel->setNbHTp($request->request->get('tp_' . $i));
+                    $previsionnel->setNbGrCm($request->request->get('gr_cm_' . $i));
+                    $previsionnel->setNbGrTd($request->request->get('gr_td_' . $i));
+                    $previsionnel->setNbGrTp($request->request->get('gr_tp_' . $i));
                     $previsionnel->setIdMatiere($matiere->id);
                     $previsionnel->setTypeMatiere($matiere->typeMatiere);
                     $this->entityManager->persist($previsionnel);
                 }
                 $this->entityManager->flush();
                 $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'previsionnel.add.success.flash');
+
                 return $this->redirectToRoute('administration_previsionnel_new');
             }
 
@@ -287,7 +289,7 @@ class PrevisionnelController extends BaseController
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         $id = $previsionnel->getId();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
+        if ($this->isCsrfTokenValid('delete' . $id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $this->entityManager->remove($previsionnel);
             $this->entityManager->flush();
 
@@ -298,17 +300,22 @@ class PrevisionnelController extends BaseController
     }
 
     #[Route('/supprimer/annee', name: 'administration_previsionnel_supprimer_annee', methods: ['POST'])]
-    public function supprimer(Request $request, PrevisionnelManager $previsionnelManager): Response
+    public function supprimer(
+        PrevisionnelRepository $previsionnelRepository,
+        Request $request, PrevisionnelManager $previsionnelManager): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
-        if ($this->isCsrfTokenValid('supprimer', $request->server->get('HTTP_X_CSRF_TOKEN'))) {
-            $previsionnelManager->supprimeAnnee($this->getDepartement(),
-                $request->request->get('annee_supprimer'));
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'previsionnel.delete.success.flash');
-        }
+        $previsionnels = $previsionnelManager->getPrevisionnelDepartement($this->getDepartement(),
+            $request->request->get('annee_supprimer'));
 
-        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'previsionnel.delete.error.flash');
+        foreach ($previsionnels as $previsionnel) {
+            $p = $previsionnelRepository->find($previsionnel->id);
+            $this->entityManager->remove($p);
+        }
+        $this->entityManager->flush();
+
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'previsionnel.delete.success.flash');
 
         return $this->redirectToRoute('administration_previsionnel_index');
     }

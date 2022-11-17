@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/api/GroupesApiController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/api/GroupesApiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:36
+ * @lastUpdate 05/10/2022 17:51
  */
 
 namespace App\Controller\api;
@@ -23,11 +23,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class GroupesApiController extends BaseController
 {
     #[Route(path: '/type-groupe/{semestre}', name: 'api_type_groupe_semestre', options: ['expose' => true])]
-    public function typeGroupeSemestreAjax(Semestre $semestre): Response
+    public function typeGroupeSemestreAjax(
+        Semestre $semestre): Response
     {
+        $typeGroupes = $semestre->getTypeGroupess();
         $json = [];
-        /** @var TypeGroupe $typeGroupe */
-        foreach ($semestre->getTypeGroupes() as $typeGroupe) {
+        foreach ($typeGroupes as $typeGroupe) {
             $json[] = ['libelle' => $typeGroupe->getLibelle(), 'id' => $typeGroupe->getId()];
         }
 

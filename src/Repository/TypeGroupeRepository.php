@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/TypeGroupeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2022 09:47
+ * @lastUpdate 05/10/2022 16:22
  */
 
 namespace App\Repository;
@@ -40,7 +40,9 @@ class TypeGroupeRepository extends ServiceEntityRepository
     public function findBySemestreBuilder(Semestre $semestre): QueryBuilder
     {
         return $this->createQueryBuilder('t')
-            ->where('t.semestre = :semestre')
+            ->innerJoin('t.semestres', 's')
+            ->addSelect('s')
+            ->where('s.id = :semestre')
             ->setParameter('semestre', $semestre)
             ->orderBy('t.libelle');
     }
@@ -53,7 +55,8 @@ class TypeGroupeRepository extends ServiceEntityRepository
     public function findByDepartement(Departement $departement): array
     {
         return $this->createQueryBuilder('t')
-            ->innerJoin(Semestre::class, 's', 'WITH', 't.semestre = s.id')
+            ->innerJoin('t.semestres', 's')
+            ->addSelect('s')
             ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
             ->where('d.departement = :departement')
@@ -65,9 +68,10 @@ class TypeGroupeRepository extends ServiceEntityRepository
     public function findByDepartementSemestresActifs(Departement $departement): array
     {
         return $this->createQueryBuilder('t')
-            ->innerJoin(Semestre::class, 's', 'WITH', 't.semestre = s.id')
+            ->innerJoin('t.semestres', 's')
+            ->addSelect('s')
             ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
-            ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
+            ->innerJoin(Diplome::class, 'd', 'WITH', 't.diplome = d.id')
             ->where('d.departement = :departement')
             ->andWhere('a.actif = true')
             ->andWhere('s.actif = true')
@@ -82,34 +86,42 @@ class TypeGroupeRepository extends ServiceEntityRepository
         $t = [];
         /** @var TypeGroupe $tg */
         foreach ($req as $tg) {
-            if (null !== $tg->getSemestre()) {
-                if (!array_key_exists($tg->getSemestre()->getCodeElement(), $t)) {
-                    $t[$tg->getSemestre()->getCodeElement()] = [];
+            foreach ($tg->getSemestres() as $semestre) {
+                if (!array_key_exists($semestre->getCodeElement(), $t)) {
+                    $t[$semestre->getCodeElement()] = [];
                 }
-                $t[$tg->getSemestre()->getCodeElement()][$tg->getLibelle()] = $tg;
+                $t[$semestre->getCodeElement()][$tg->getLibelle()] = $tg;
             }
         }
 
         return $t;
     }
 
-    public function findByDiplomeAndOrdreSemestre(Diplome $diplome, int $ordreSemestre): array
-    {
+    public function findByDiplomeAndOrdreSemestre(
+        Diplome $diplome,
+        int $ordreSemestre
+    ): array {
         return $this->findByDiplomeAndOrdreSemestreBuilder($diplome, $ordreSemestre)->getQuery()->getResult();
     }
 
-    public function findByDiplomeAndOrdreSemestreBuilder(Diplome $diplome, int $ordreSemestre): QueryBuilder
-    {
+    public function findByDiplomeAndOrdreSemestreBuilder(
+        Diplome $diplome,
+        int $ordreSemestre
+    ): QueryBuilder {
         if (null !== $diplome->getParent()) {
             $diplome = $diplome->getParent();
         }
 
         return $this->createQueryBuilder('t')
-            ->where('t.diplome = :diplome')
-            ->andWhere('t.ordreSemestre = :ordreSemestre')
+            ->innerJoin('t.semestres', 's')
+            ->addSelect('s')
+            ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
+            ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
+            ->where('d.id = :diplome')
+            ->orWhere('d.parent = :diplome')
+            ->andWhere('s.ordreLmd = :ordreSemestre')
             ->setParameter('diplome', $diplome->getId())
             ->setParameter('ordreSemestre', $ordreSemestre)
-            ->orderBy('t.libelle', Criteria::ASC)
-           ;
+            ->orderBy('t.libelle', Criteria::ASC);
     }
 }

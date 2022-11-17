@@ -1,4 +1,6 @@
 {% if evaluation.modifiable == true %}
+    <div class="divider">Importer les notes</div>
+
     <form action="{{ path('application_personnel_note_import',{evaluation:evaluation.id, semestre:evaluation.semestre
     .id}) }}"
           method="post"
@@ -8,17 +10,24 @@
             <input type="file" id="fichier_import" name="fichier_import" class="form-control" required="required"
                    accept=".csv,.xlsx">
         </div>
+        <div class="form-check mb-2">
+            <input class="form-check-input" type="checkbox" value="true" id="ecrase_notes" name="ecrase_notes">
+            <label class="form-check-label" for="ecrase_notes">
+                Ecraser les notes déjà présentent
+            </label>
+        </div>
+
         <div class="alert alert-info">L'import doit se faire au format xlsx ou csv (séparateur ; (point-virgule)). Le
                                       fichier doit contenir les <strong>colonnes suivantes</strong> : Numéro
                                       étudiant (<i>num_etudiant</i>)
                                       , la note (<i>note</i>), le commentaire éventuel (<i>commentaire</i>). Les
                                       colonnes doivent être nommées (première ligne) ou
-                                      respecter l'odre précédent.
-            <a href="{{ path('application_personnel_note_import_modele',{evaluation:evaluation.id,
-                semestre:evaluation.semestre.id}) }}">
-                Vous pouvez récupérer le fichier type pour le semestre ici
-            </a>
+                                      respecter l'ordre précédent.
         </div>
+        <a href="{{ path('application_personnel_note_import_modele',{evaluation:evaluation.id,
+            semestre:evaluation.semestre.id}) }}" class="btn btn-info">
+            Récupérer le fichier type pour le semestre
+        </a>
         <button class="btn btn-success">{{ button_label|default('label.importer.les.notes'|trans) }}</button>
     </form>
 {% else %}
@@ -32,17 +41,20 @@
 <div class="alert alert-info">Dans le cas des modules optionnels (ou de parcours) seul les groupes ayant
                               suivis cette option sont affichés.
 </div>
-<br/>
+{% if evaluation.modifiable == true %}
+    <div class="divider">Ou, saisir les notes ci-dessous</div>
+{% endif %}
+
 <ul class="nav nav-tabs">
     {% for groupe in evaluation.typeGroupe.groupes %} {# if matiere.option == null or groupe.options == matiere.option #}
         {% if matiere.isEnfant == false or (matiere.isEnfant == true and
             matiere.containsGroupesEnfant(groupe) ) %}
 
-        <li class="nav-item"><a href="#gr{{ groupe.id }}"
-                                class="nav-link {% if loop.index == 1 %} active show{% endif %}"
-                                data-bs-toggle="tab" role="tab">{{ groupe.libelle }}</a>
-        </li>
-        {% endif%}
+            <li class="nav-item"><a href="#gr{{ groupe.id }}"
+                                    class="nav-link {% if loop.index == 1 %} active show{% endif %}"
+                                    data-bs-toggle="tab" role="tab">{{ groupe.libelle }}</a>
+            </li>
+        {% endif %}
     {% endfor %}
 </ul>
 

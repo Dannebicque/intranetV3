@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/edt-personnel-controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 28/07/2022 10:45
+// @lastUpdate 29/09/2022 15:48
 
 import { Controller } from '@hotwired/stimulus'
 import { post } from '../js/fetch'
@@ -18,12 +18,14 @@ export default class extends Controller {
 
   btnPasAbsent(e) {
     e.preventDefault()
-    post(this.urlPasDAbsentValue, { event: e.currentTarget.dataset.event, semestre: e.currentTarget.dataset.semestre }).then((data) => {
+    const event = e.currentTarget.dataset.event
+    post(this.urlPasDAbsentValue, { event: event, semestre: e.currentTarget.dataset.semestre }).then((data) => {
       if (data === true) {
-        this.etatAppelTarget.classList.remove('btn-danger')
-        this.etatAppelTarget.firstElementChild.classList.remove('fa-times')
-        this.etatAppelTarget.firstElementChild.classList.add('fa-check')
-        this.etatAppelTarget.classList.add('btn-success')
+        const element = document.getElementById('pointage' + event)
+        element.classList.remove('btn-danger')
+        element.firstElementChild.classList.remove('fa-times')
+        element.firstElementChild.classList.add('fa-check')
+        element.classList.add('btn-success')
         addCallout( 'Pas d\'absence enregistrée','success')
       } else {
         addCallout('Erreur lors de l\'enregistrement de l\'absence', 'danger')

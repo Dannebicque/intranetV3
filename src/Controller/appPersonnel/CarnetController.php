@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/CarnetController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 14/09/2022 09:23
  */
 
 namespace App\Controller\appPersonnel;
@@ -39,7 +39,7 @@ class CarnetController extends BaseController
     }
 
     #[Route(path: '/export.{_format}', name: 'application_personnel_carnet_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    public function export(MyExport $myExport, CahierTexteRepository $cahierTexteRepository, $_format): Response
+    public function export(MyExport $myExport, CahierTexteRepository $cahierTexteRepository, string $_format): Response
     {
         $actualites = $cahierTexteRepository->findByPersonnel($this->getUser());
 

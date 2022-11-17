@@ -4,37 +4,44 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/08/2022 17:45
+ * @lastUpdate 21/09/2022 12:24
  */
 
 namespace App\Classes\Celcat;
 
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Calendrier;
-use App\Entity\CelcatEvent;
 use App\Entity\Diplome;
+use App\Entity\EdtCelcat;
 use App\Entity\Semestre;
 use App\Repository\CalendrierRepository;
-use App\Repository\CelcatEventsRepository;
+use App\Repository\DiplomeRepository;
 use App\Repository\GroupeRepository;
+use App\Repository\PersonnelRepository;
 use App\Utils\Tools;
 use function array_key_exists;
-use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class MyCelcat
 {
+    protected array $tGroupes;
+    protected array $tPersonnels;
+    protected array $tCalendrier;
+    protected array $tMatieres;
     private mixed $conn;
 
     public function __construct(
+        private readonly TypeMatiereManager $typeMatiereManager,
+        private readonly DiplomeRepository $diplomeRepository,
+        private readonly PersonnelRepository $personnelRepository,
         private readonly EntityManagerInterface $entityManger,
         private readonly ParameterBagInterface $parameterBag,
         private readonly GroupeRepository $groupeRepository,
-        private readonly CelcatEventsRepository $celcatEventsRepository,
-        private readonly CalendrierRepository $calendrierRepository)
-    {
+        private readonly CalendrierRepository $calendrierRepository
+    ) {
     }
 
     private function connect(): void
@@ -94,60 +101,37 @@ class MyCelcat
         int $codeCelcatDepartement,
         ?AnneeUniversitaire $anneeUniversitaire
     ): void {
-        if (null !== $anneeUniversitaire) {
-            $this->connect();
+        $diplome = $this->diplomeRepository->findOneBy(['codeCelcatDepartement' => $codeCelcatDepartement]);
 
-            $query = 'SELECT CT_EVENT.event_id, CT_EVENT.day_of_week, CT_EVENT.start_time, CT_EVENT.end_time, CT_EVENT.weeks, CT_EVENT_CAT.name, CT_VIEW_EVENT_MODULE001.resourcecode, CT_VIEW_EVENT_MODULE001.resourcename, CT_VIEW_EVENT_STAFF001.resourcecode, CT_VIEW_EVENT_STAFF001.resourcename, CT_VIEW_EVENT_ROOM001.resourcecode, CT_VIEW_EVENT_ROOM001.resourcename, CT_VIEW_EVENT_GROUP001.resourcecode, CT_VIEW_EVENT_GROUP001.resourcename, CT_EVENT.date_change FROM CT_EVENT INNER JOIN CT_EVENT_CAT ON CT_EVENT_CAT.event_cat_id = CT_EVENT.event_cat_id INNER JOIN CT_VIEW_EVENT_STAFF001 ON CT_VIEW_EVENT_STAFF001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_GROUP001 ON CT_VIEW_EVENT_GROUP001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_MODULE001 ON CT_VIEW_EVENT_MODULE001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_ROOM001 ON CT_VIEW_EVENT_ROOM001.eid=CT_EVENT.event_id WHERE dept_id='.$codeCelcatDepartement.' ORDER BY CT_EVENT.date_change DESC, CT_EVENT.event_id DESC';
+        if (null !== $anneeUniversitaire && null !== $diplome) {
+            $this->getData($anneeUniversitaire);
+            $this->addEvents($diplome, $anneeUniversitaire);
+        }
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function addEvents(Diplome $diplome, AnneeUniversitaire $anneeUniversitaire): void
+    {
+        $this->connect();
+
+        $departement = $diplome->getDepartement();
+
+        if (null !== $departement) {
+            $query = 'SELECT CT_EVENT.event_id, CT_EVENT.day_of_week, CT_EVENT.start_time, CT_EVENT.end_time, CT_EVENT.weeks, CT_EVENT_CAT.name, CT_VIEW_EVENT_MODULE001.resourcecode, CT_VIEW_EVENT_MODULE001.resourcename, CT_VIEW_EVENT_STAFF001.resourcecode, CT_VIEW_EVENT_STAFF001.resourcename, CT_VIEW_EVENT_ROOM001.resourcecode, CT_VIEW_EVENT_ROOM001.resourcename, CT_VIEW_EVENT_GROUP001.resourcecode, CT_VIEW_EVENT_GROUP001.resourcename, CT_EVENT.date_change FROM CT_EVENT INNER JOIN CT_EVENT_CAT ON CT_EVENT_CAT.event_cat_id = CT_EVENT.event_cat_id INNER JOIN CT_VIEW_EVENT_STAFF001 ON CT_VIEW_EVENT_STAFF001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_GROUP001 ON CT_VIEW_EVENT_GROUP001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_MODULE001 ON CT_VIEW_EVENT_MODULE001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_ROOM001 ON CT_VIEW_EVENT_ROOM001.eid=CT_EVENT.event_id WHERE dept_id='.$diplome->getCodeCelcatDepartement().' ORDER BY CT_EVENT.date_change DESC, CT_EVENT.event_id DESC';
 
             $result = odbc_exec($this->conn, $query);
 
-            $calendriers = $this->calendrierRepository->findBy(['anneeUniversitaire' => $anneeUniversitaire->getId()]);
-            $t = [];
-            foreach ($calendriers as $calendrier) {
-                $t[$calendrier->getSemaineFormation()] = $calendrier->getDateLundi();
-            }
-
-            $groupes = $this->groupeRepository->findAll();
-            $tgroupes = [];
-            foreach ($groupes as $groupe) {
-                $tgroupes[$groupe->getCodeApogee()] = $groupe->getTypeGroupe()?->getSemestre();
-            }
+            $this->tMatieres = $this->typeMatiereManager->tableauMatieresCodeApogee($departement);
 
             while (odbc_fetch_row($result)) {
                 $eventId = odbc_result($result, 1);
-
-                $this->createEvent($result, $anneeUniversitaire, $codeCelcatDepartement, $eventId, $t, $tgroupes);
+                $this->createEvent($result, $anneeUniversitaire, $diplome->getCodeCelcatDepartement(), $eventId);
             }
 
             $this->entityManger->flush();
         }
-    }
-
-    public function updateEventsDiplome(
-        Diplome $diplome,
-        array $calendriers,
-        array $groupes
-    ): void {
-        $this->connect();
-        $date = Carbon::now()->modify('-1 day');
-        $query = 'SELECT CT_EVENT.event_id, CT_EVENT.day_of_week, CT_EVENT.start_time, CT_EVENT.end_time, CT_EVENT.weeks, CT_EVENT_CAT.name, CT_VIEW_EVENT_MODULE001.resourcecode, CT_VIEW_EVENT_MODULE001.resourcename, CT_VIEW_EVENT_STAFF001.resourcecode, CT_VIEW_EVENT_STAFF001.resourcename, CT_VIEW_EVENT_ROOM001.resourcecode, CT_VIEW_EVENT_ROOM001.resourcename, CT_VIEW_EVENT_GROUP001.resourcecode, CT_VIEW_EVENT_GROUP001.resourcename, CT_EVENT.date_change FROM CT_EVENT INNER JOIN CT_EVENT_CAT ON CT_EVENT_CAT.event_cat_id = CT_EVENT.event_cat_id INNER JOIN CT_VIEW_EVENT_STAFF001 ON CT_VIEW_EVENT_STAFF001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_GROUP001 ON CT_VIEW_EVENT_GROUP001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_MODULE001 ON CT_VIEW_EVENT_MODULE001.eid=CT_EVENT.event_id INNER JOIN CT_VIEW_EVENT_ROOM001 ON CT_VIEW_EVENT_ROOM001.eid=CT_EVENT.event_id WHERE dept_id='.$diplome->getCodeCelcatDepartement().' AND CT_EVENT.date_change >= '.$date.' ORDER BY CT_EVENT.date_change DESC, CT_EVENT.event_id DESC';
-
-        $result = odbc_exec($this->conn, $query);
-
-        while (odbc_fetch_row($result)) {
-            $eventId = odbc_result($result, 1);
-
-            // Recherche si déjà présent
-            $events = $this->celcatEventsRepository->findBy(['eventId' => $eventId]);
-            // On supprimer ce qui existe déjà, parce que potentiellement plusieurs.
-            foreach ($events as $event) {
-                $this->entityManger->remove($event);
-            }
-            $this->createEvent($result, $diplome->getAnneeUniversitaire(), $diplome->getCodeCelcatDepartement(),
-                $eventId, $calendriers, $groupes);
-        }
-
-        $this->entityManger->flush();
     }
 
     public function updateGroupeBySemestre(
@@ -163,8 +147,6 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
         $result = odbc_exec($this->conn, $query);
 
         while (odbc_fetch_row($result)) {
-            // Vérifier si l'event est déjà dans l'intranet
-
             $gr = odbc_result($result, 1);
             $etu = odbc_result($result, 2);
 
@@ -184,11 +166,8 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
         mixed $result,
         AnneeUniversitaire $anneeUniversitaire,
         int $codeDepartement,
-        mixed $eventId,
-        array $calendriers,
-        array $groupes
-    ): CelcatEvent {
-        $event = null;
+        mixed $eventId
+    ): void {
         // Et on ecrit la nouvelle version ou la nouvelle ligne
         $debut = explode(' ', (string) odbc_result($result, 3));
         $fin = explode(' ', (string) odbc_result($result, 4));
@@ -201,7 +180,7 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
                 $semaine = $i;
                 $jour = odbc_result($result, 2);
                 $codeGroupe = odbc_result($result, 13);
-                $event = new CelcatEvent();
+                $event = new EdtCelcat();
                 $event->setAnneeUniversitaire($anneeUniversitaire);
                 $event->setEventId($eventId);
                 $event->setJour((int) $jour);
@@ -209,24 +188,73 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
                 $event->setFin(Tools::convertTimeToObject($fin[1]));
                 $event->setSemaineFormation($semaine);
                 $event->setType(utf8_encode($type));
+
                 $event->setCodeModule(odbc_result($result, 7));
                 $event->setLibModule(utf8_encode(odbc_result($result, 8)));
+                if (array_key_exists($event->getCodeModule(), $this->tMatieres)) {
+                    $event->setTypeMatiere($this->tMatieres[$event->getCodeModule()]->typeMatiere);
+                    $event->setIdMatiere($this->tMatieres[$event->getCodeModule()]->id);
+                }
+
                 $event->setCodePersonnel(odbc_result($result, 9));
                 $event->setLibPersonnel(utf8_encode(odbc_result($result, 10)));
+                if (array_key_exists($event->getCodePersonnel(), $this->tPersonnels)) {
+                    $event->setPersonnel($this->tPersonnels[$event->getCodePersonnel()]);
+                } else {
+                    $event->setPersonnel(null);
+                }
+
                 $event->setDepartementId($codeDepartement);
                 $event->setCodeGroupe($codeGroupe);
                 $event->setLibGroupe(utf8_encode(odbc_result($result, 14)));
                 $event->setCodeSalle(odbc_result($result, 11));
                 $event->setLibSalle(utf8_encode(odbc_result($result, 12)));
-                $event->setDateCours($calendriers[$semaine]->addDays($jour));
-                $event->setSemestre($groupes[$codeGroupe] ?? null); // todo: ajouter une commande pour mettre à jour si erreur lors de l'import ,
+                $event->setDateCours($this->tCalendrier[$semaine]->addDays($jour));
+                $event->setSemestre($this->tGroupes[$codeGroupe] ?? null);
                 $dt = explode(' ', (string) odbc_result($result, 15));
                 $event->setUpdateEvent(Tools::convertDateHeureToObject($dt[0], $dt[1]));
 
                 $this->entityManger->persist($event);
             } // endif
+        } // endfor
+    }
+
+    public function getData(AnneeUniversitaire $anneeUniversitaire): void
+    {
+        $calendriers = $this->calendrierRepository->findBy(['anneeUniversitaire' => $anneeUniversitaire->getId()]);
+        $this->tCalendrier = [];
+        foreach ($calendriers as $calendrier) {
+            $this->tCalendrier[$calendrier->getSemaineFormation()] = $calendrier->getDateLundi();
         }
 
-        return $event; // todo: plusieurs event potentiellement ?
+        $personnels = $this->personnelRepository->findAll();
+        $this->tPersonnels = [];
+        foreach ($personnels as $personnel) {
+            $this->tPersonnels[$personnel->getNumeroHarpege()] = $personnel;
+        }
+
+        $groupes = $this->groupeRepository->findAll();
+        $this->tGroupes = [];
+        foreach ($groupes as $groupe) {
+            $this->tGroupes[$groupe->getCodeApogee()] = $groupe->getTypeGroupe()?->getSemestre();
+        }
+    }
+
+    /**
+     * @throws \Doctrine\DBAL\Exception
+     */
+    public function truncateTableEdtCelcat(): void
+    {
+        $cmd = $this->entityManger->getClassMetadata(EdtCelcat::class);
+        $connection = $this->entityManger->getConnection();
+        $connection->beginTransaction();
+
+        try {
+            $connection->executeQuery('DELETE FROM '.$cmd->getTableName());
+            $connection->commit();
+            $connection->executeQuery('ALTER TABLE '.$cmd->getTableName().' AUTO_INCREMENT = 1');
+        } catch (Exception $e) {
+            $connection->rollback();
+        }
     }
 }

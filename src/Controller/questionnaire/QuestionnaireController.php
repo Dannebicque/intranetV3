@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/questionnaire/QuestionnaireController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/QuestionnaireController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/09/2021 07:59
+ * @lastUpdate 14/09/2022 09:28
  */
 
 namespace App\Controller\questionnaire;
@@ -17,8 +17,10 @@ use App\Components\Questionnaire\TypeQuestion\TypeQcu;
 use App\Entity\Etudiant;
 use App\Entity\QuestionnaireEtudiant;
 use App\Entity\QuestionnaireEtudiantReponse;
+use App\Entity\QuestionnaireQualite;
 use App\Entity\QuestionnaireQuestion;
 use App\Entity\QuestionnaireQuestionnaireSection;
+use App\Entity\QuestionnaireQuizz;
 use App\Repository\EtudiantRepository;
 use App\Repository\QuestionnaireEtudiantReponseRepository;
 use App\Repository\QuestionnaireEtudiantRepository;
@@ -49,7 +51,7 @@ class QuestionnaireController extends AbstractController
         QuestionnaireEtudiantRepository $quizzEtudiantRepository,
         QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository,
         QuestionnaireQuestionnaireSection $questionnaireSection,
-        $type,
+        string $type,
         Etudiant $etudiant,
         int $onglet = 1,
         bool $apercu = false
@@ -97,7 +99,7 @@ class QuestionnaireController extends AbstractController
      * @throws \JsonException
      */
     #[Route(path: '/api/ajax/reponse/{questionnaire}/{typeQuestionnaire}', name: 'app_etudiant_qualite_ajax_reponse', options: ['expose' => true])]
-    public function sauvegardeReponse(EtudiantRepository $etudiantRepository, QuestionnaireQuestionRepository $quizzQuestionRepository, QuestionnaireReponseRepository $quizzReponseRepository, QuestionnaireEtudiantRepository $quizzEtudiantRepository, QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository, Request $request, $questionnaire, $typeQuestionnaire): JsonResponse
+    public function sauvegardeReponse(EtudiantRepository $etudiantRepository, QuestionnaireQuestionRepository $quizzQuestionRepository, QuestionnaireReponseRepository $quizzReponseRepository, QuestionnaireEtudiantRepository $quizzEtudiantRepository, QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository, Request $request, mixed $questionnaire, string $typeQuestionnaire): JsonResponse
     {
         $quizzEtudiant = null;
         $donnees = JsonRequest::getFromRequest($request);
@@ -192,7 +194,7 @@ class QuestionnaireController extends AbstractController
      * @throws \JsonException
      */
     #[Route(path: '/api/ajax/reponse-txt/{questionnaire}/{typeQuestionnaire}', name: 'app_etudiant_qualite_ajax_reponse_txt', options: ['expose' => true])]
-    public function sauvegardeReponseTxt(EtudiantRepository $etudiantRepository, QuestionnaireQuestionRepository $quizzQuestionRepository, QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository, QuestionnaireEtudiantRepository $quizzEtudiantRepository, Request $request, $questionnaire, $typeQuestionnaire): JsonResponse
+    public function sauvegardeReponseTxt(EtudiantRepository $etudiantRepository, QuestionnaireQuestionRepository $quizzQuestionRepository, QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository, QuestionnaireEtudiantRepository $quizzEtudiantRepository, Request $request, mixed $questionnaire, string $typeQuestionnaire): JsonResponse
     {
         $quizzEtudiant = null;
         $donnees = JsonRequest::getFromRequest($request);

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AlternanceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 14/09/2022 09:23
  */
 
 namespace App\Controller\administration;
@@ -61,7 +61,7 @@ class AlternanceController extends BaseController
     }
 
     #[Route(path: '/init/{annee}/{action}/{etudiant}', name: 'administration_alternance_init')]
-    public function init(Etudiant $etudiant, $action, Annee $annee): RedirectResponse
+    public function init(Etudiant $etudiant, string $action, Annee $annee): RedirectResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $annee);
         $alternance = new Alternance();
@@ -83,7 +83,7 @@ class AlternanceController extends BaseController
     #[Route(path: '/export/{annee}.{_format}', name: 'administration_alternance_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
     public function export(
         MySerializer $mySerializer,
-        MyExport $myExport, AlternanceRepository $alternanceRepository, Annee $annee, $_format): Response
+        MyExport $myExport, AlternanceRepository $alternanceRepository, Annee $annee, string $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $annee);
         $alternances = $alternanceRepository->getByAnneeAndAnneeUniversitaire($annee,

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/GroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2022 10:40
+ * @lastUpdate 05/10/2022 17:51
  */
 
 namespace App\Controller\administration;
@@ -20,7 +20,6 @@ use App\Entity\Semestre;
 use App\Exception\DiplomeNotFoundException;
 use App\Form\GroupeType;
 use App\Repository\GroupeRepository;
-use App\Repository\TypeGroupeRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -83,20 +82,19 @@ class GroupeController extends BaseController
      */
     #[Route(path: '/liste/{semestre}', name: 'administration_groupe_liste_semestre', options: ['expose' => true], methods: ['GET'])]
     public function listeSemestre(
-        TypeGroupeRepository $typeGroupeRepository,
         GroupeRepository $groupeRepository, Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
         $diplome = $this->getDiplomeFromSemestre($semestre);
 
         if (true === $diplome->isApc()) {
-            // todo: fusionner, mais implique de mettre à jour table avec les groupes existants, et de ne plus avoir le "semestr" dans typeGroupe
-            $typeGroupes = $typeGroupeRepository->findByDiplomeAndOrdreSemestre($diplome, $semestre->getOrdreLmd());
             $groupes = $groupeRepository->findByDiplomeAndOrdreSemestre($diplome, $semestre->getOrdreLmd());
         } else {
-            $typeGroupes = $semestre->getTypeGroupes();
             $groupes = $groupeRepository->findBySemestre($semestre);
         }
+
+        $typeGroupes = $semestre->getTypeGroupess();
+
         if (true === $semestre->getDiplome()?->isApc()) {
             if ($semestre->getOrdreLmd() > 2 || Constantes::APC_TYPE_3 === $semestre->getDiplome()?->getTypeStructure()) {
                 $parcours = $semestre->getDiplome()?->getReferentiel()?->getApcParcours();
@@ -125,7 +123,7 @@ class GroupeController extends BaseController
         MyExport $myExport,
         GroupeRepository $groupeRepository,
         Semestre $semestre,
-        $_format
+        string $_format
     ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
         $groupes = $groupeRepository->findBySemestre($semestre);
