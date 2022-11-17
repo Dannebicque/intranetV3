@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/theme.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/07/2022 15:47
+// @lastUpdate 24/10/2022 18:11
 /* @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme.css */
 /* @author davidannebicque */
 /* @project intranetV3 */
@@ -1843,56 +1843,6 @@ table tbody tr {
 .popover-body {
   font-weight: 300;
 }
-
-//.toast {
-//    padding: 14px 24px;
-//    line-height: 20px;
-//    color: #fff;
-//    background: #323232;
-//    display: -webkit-box;
-//    display: flex;
-//    -webkit-box-pack: justify;
-//    justify-content: space-between;
-//    position: fixed;
-//    bottom: 0;
-//    left: 50%;
-//    -webkit-transform: translateX(-50%) translateY(100%);
-//    transform: translateX(-50%) translateY(100%);
-//    -webkit-transition: .3s;
-//    transition: .3s;
-//    -webkit-box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.2);
-//    box-shadow: 0px 3px 2px rgba(0, 0, 0, 0.2);
-//    z-index: 1051;
-//    min-width: 288px;
-//    max-width: 80%;
-//    border-radius: 0;
-//    border-top-left-radius: 2px;
-//    border-top-right-radius: 2px;
-//    opacity: 1;
-//    border: none;
-//}
-//
-//.toast.reveal {
-//    -webkit-transform: translateX(-50%) translateY(0);
-//    transform: translateX(-50%) translateY(0);
-//}
-//
-//.toast .text {
-//    flex-basis: 1;
-//    font-weight: 400;
-//    white-space: nowrap;
-//    margin-right: 48px;
-//}
-//
-//.toast .action {
-//    text-transform: uppercase;
-//    font-weight: 400;
-//    font-size: 0.875rem;
-//}
-//
-//.toast .action a:hover {
-//    text-decoration: none;
-//}
 
 .accordion .card {
   background-color: #fff;

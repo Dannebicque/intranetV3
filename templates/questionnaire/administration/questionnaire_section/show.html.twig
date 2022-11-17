@@ -7,13 +7,13 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-            <a href="{{ path('sadm_questionnaire_section_delete', {id: questionnaire_section.id}) }}" data-csrf="{{ csrf_token('delete' ~ questionnaire_section.id) }}"
+            <a href="{{ path('adm_questionnaire_section_delete', {id: questionnaire_section.id,type:type}) }}" data-csrf="{{ csrf_token('delete' ~ questionnaire_section.id) }}"
                class="btn btn-danger btn-sm btn-float supprimer" title="{{ 'atitle.supprimer'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
             ><i class="{{ iconDelete }}"></i></a>
-            <a href="{{ path('sadm_questionnaire_section_edit', {id:questionnaire_section.id}) }}" class="btn
+            <a href="{{ path('adm_questionnaire_section_edit', {id:questionnaire_section.id,type:type}) }}" class="btn
                 btn-warning btn-sm btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
                title="{{ 'atitle.modifier'|trans }}"><i class="{{ iconEdit }}"></i></a>
-            <a href="{{ path('sadm_questionnaire_section_index') }}" class="btn
+            <a href="{{ path('adm_questionnaire_section_index', {type:type}) }}" class="btn
                 btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
                title="Retour aux questionnaires"><i class="fas fa-arrow-left"></i></a>
         </div>
@@ -37,27 +37,27 @@
                     <td>{{ questionnaire_section.titre }}</td>
                 </tr>
                 <tr>
-                    <th>TextExplicatif</th>
+                    <th>Texte explicatif</th>
                     <td>{{ questionnaire_section.textExplicatif }}</td>
                 </tr>
                 <tr>
-                    <th>Config</th>
+                    <th>Configuration de la section</th>
                     <td>
-{#                        {{ questionnaire_section.config }}#}
+                        {#                        {{ questionnaire_section.config }} #}
                     </td>
                 </tr>
                 <tr>
-                    <th>TypeCalcul</th>
+                    <th>Type de Calcul</th>
                     <td>{{ questionnaire_section.typeCalcul }}</td>
                 </tr>
                 <tr>
-                    <th>Created</th>
+                    <th>{{ 'created'|trans }}</th>
                     <td>{{ questionnaire_section.created ? questionnaire_section.created|format_datetime('short',
                             'short') :
                         'non.defini'|trans }}</td>
                 </tr>
                 <tr>
-                    <th>Updated</th>
+                    <th>{{ 'updated'|trans }}</th>
                     <td>{{ questionnaire_section.updated ? questionnaire_section.updated|format_datetime('short',
                             'short') :
                         'non.defini'|trans }}</td>
@@ -80,7 +80,7 @@
             {{ 'adm.questionnaire.section.show.questions.heading'|trans }}
         </h4>
         <div class="card-body" {{ stimulus_controller('questionnaire_section', {
-            url: path('sadm_questionnaire_section_question_manage', {id:questionnaire_section.id})
+            url: path('adm_questionnaire_section_question_manage', {id:questionnaire_section.id, type:type})
         }) }}
              data-questionnaire-section-target="questions">
             {{ include('questionnaire/administration/questionnaire_section/_tableauQuestion.html.twig',

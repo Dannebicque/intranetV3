@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AlternanceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/09/2022 09:23
+ * @lastUpdate 08/11/2022 11:15
  */
 
 namespace App\Controller\administration;
@@ -92,7 +92,7 @@ class AlternanceController extends BaseController
         $data = $mySerializer->getDataFromSerialization(
             $alternances,
             [
-                'entreprise' => ['libelle'],
+                'entreprise' => ['raisonSociale', 'adresse' => ['adresse1', 'adresse2', 'codePostal', 'ville'], 'responsable' => ['nom', 'prenom', 'email']],
                 'tuteur' => ['nom', 'prenom', 'fonction', 'telephone', 'email', 'portable'],
                 'etudiant' => ['nom', 'prenom', 'mailUniv'],
                 'tuteurUniversitaire' => ['nom', 'prenom', 'mailUniv'],
@@ -100,7 +100,7 @@ class AlternanceController extends BaseController
                 'dateDebut',
                 'dateFin',
             ],
-            ['alternance_administration', 'utilisateur'],
+            ['alternance_administration', 'utilisateur', 'adresse'],
         );
 
         return $myExport->genereFichierGeneriqueFromData(

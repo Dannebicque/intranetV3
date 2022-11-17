@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/components/table.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/07/2022 08:36
+// @lastUpdate 21/10/2022 14:50
 
 import { post } from '../js/fetch'
 
@@ -29,9 +29,7 @@ export default class Table extends HTMLElement {
     this.filter = {}
 
     this.tableBody.innerHTML = ''
-    console.log(this.options.columns)
     this.options.columns.forEach((column) => {
-      console.log(column)
       if (column.orderable === true) {
         if (column.order != null) {
           this.order = [{
@@ -45,7 +43,8 @@ export default class Table extends HTMLElement {
           this.order = [{
             column: elem.target.id,
             order: elem.target.dataset.order,
-            // todo: ordre actuel... a inverser dans la requete? Mettre les deux fleches si pas trié ? si defaultorder = false?
+            // todo: ordre actuel... a inverser dans la requete? Mettre les deux fleches
+            // si pas trié ? si defaultorder = false?
           }]
           // todo: mettre à jour le sens de la fleche...
           this._updateHeader()
@@ -55,11 +54,19 @@ export default class Table extends HTMLElement {
     })
 
     this.form = this.getElementsByTagName('form')
-
+    const btnErase = document.getElementById('eraseFiltre')
+    if (btnErase != null) {
+      btnErase.addEventListener('click', (elem) => {
+        elem.preventDefault()
+        this.filter = {}
+        this._clearForm()
+        this._buildArray()
+      })
+    }
     // ajout des events sur le form
-    const inputs = this.form[0].getElementsByTagName('input')
-    const selects = this.form[0].getElementsByTagName('select')
-    Array.from(inputs).forEach((input) => {
+    this.inputs = this.form[0].getElementsByTagName('input')
+    this.selects = this.form[0].getElementsByTagName('select')
+    Array.from(this.inputs).forEach((input) => {
       if (input.type === 'text') {
         input.addEventListener('keyup', (event) => {
           if (event.target.type === 'text' && event.target.value.length < 3) {
@@ -80,7 +87,7 @@ export default class Table extends HTMLElement {
       }
     })
 
-    Array.from(selects).forEach((select) => {
+    Array.from(this.selects).forEach((select) => {
       select.addEventListener('change', (elem) => {
         this._getFilterFromField(elem.target)
         this._filterArray()
@@ -184,7 +191,7 @@ export default class Table extends HTMLElement {
                         </li>`
     // 10 pages, on affiche tout
     if (paging.nbPages <= 10) {
-      for (let i = 1; i <= paging.nbPages; i++) {
+      for (let i = 1; i <= paging.nbPages; i += 1) {
         const pageActive = i === paging.numActivePage ? 'active' : ''
         html += `<li class="page-item ${pageActive}">
                   <a class="page-link" href="#">${i}</a>
@@ -260,19 +267,14 @@ export default class Table extends HTMLElement {
     })
   }
 
-  _extractNameFromForm(name) {
+  static _extractNameFromForm(name) {
     const t = name.split('[')
     return t[1].substr(0, t[1].length - 1)
   }
 
   _getFilterFromField(input) {
-    const name = this._extractNameFromForm(input.name)
+    const name = Table._extractNameFromForm(input.name)
     switch (input.type) {
-      case 'text':
-      case 'select-one':
-      case 'radio':
-        this.filter[name] = input.value
-        break
       case 'checkbox':
         if (input.checked === true) {
           if (!(name in this.filter)) {
@@ -283,6 +285,25 @@ export default class Table extends HTMLElement {
           )
         }
         break
+      default:
+        this.filter[name] = input.value
+        break
     }
+  }
+
+  _clearForm() {
+    Array.from(this.inputs).forEach((input) => {
+      if (input.type === 'text') {
+        input.value = ''
+      }
+
+      if (input.type === 'radio' || input.type === 'checkbox') {
+        input.checked = false
+      }
+    })
+
+    Array.from(this.selects).forEach((select) => {
+      select.value = ''
+    })
   }
 }

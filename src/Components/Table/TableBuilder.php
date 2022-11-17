@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Table/TableBuilder.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:28
+ * @lastUpdate 21/10/2022 14:18
  */
 
 namespace App\Components\Table;
@@ -15,6 +15,7 @@ use App\Components\Table\Column\PropertyColumnType;
 use App\Components\Table\DTO\Paging;
 use App\Components\Table\DTO\Table;
 use App\Components\Table\DTO\Toolbar;
+use App\Components\Widget\Type\ButtonType;
 use App\Components\Widget\WidgetBuilder;
 use App\Utils\HtmlUtils;
 use InvalidArgumentException;
@@ -196,6 +197,16 @@ class TableBuilder
 
         [$adapterType, $resolvedAdapterOptions] = $this->helper->createAdapter($this->adaptaterData['type'],
             $this->adaptaterData['options']);
+
+        if ($this->formBuilder->count() > 0) {
+            $this->widgetBuilder->add('erase', ButtonType::class, [
+                'attr' => ['id' => 'eraseFiltre'],
+                'icon' => 'fas fa-eraser',
+                'class' => 'btn btn-secondary',
+                'icon_only' => true,
+                'title' => 'Supprimer les filtres',
+            ]);
+        }
 
         $toolbar = new Toolbar(
             $this->formBuilder->getForm(),

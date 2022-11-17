@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtBorne.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/09/2022 15:21
+ * @lastUpdate 07/11/2022 15:12
  */
 
 /*
@@ -93,9 +93,14 @@ class MyEdtBorne
         $groupes = $this->groupeRepository->findByDiplomeAndOrdreSemestre($semestre->getDiplome(), $semestre->getOrdreLmd());
 
         $this->data['semestre'] = $semestre;
+        $matieres = $typeMatiereManager->findByReferentielOrdreSemestre($semestre, $semestre->getDiplome()->getReferentiel());
+        $tMatieres = [];
+        foreach ($matieres as $matiere) {
+            $tMatieres[$matiere->getTypeIdMatiere()] = $matiere;
+        }
         if (null !== $semaine) {
             $planning = $this->edtManager->recupereEDTBornes($semaine->getSemaineFormation(),
-                $semestre, $this->data['jsem'], $typeMatiereManager->findBySemestreArray($semestre), $groupes);
+                $semestre, $this->data['jsem'], $tMatieres, $groupes);
             $tab = [];
             foreach ($planning->getEvents() as $pl) {
                 $tab[$pl->ordreGroupe][$pl->gridStart] = $pl;

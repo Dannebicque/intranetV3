@@ -46,6 +46,7 @@ security:
     # Là dans ce cas seul les utilisateurs ayant le rôle ROLE_ADMIN
     # peuvent acceder à toutes les pages commençant par /admin
     - { path: '^/[a-z]{2}/but', roles: PUBLIC_ACCESS }
+    - { path: '^/[a-z]{2}/aide', roles: PUBLIC_ACCESS }
     - { path: '^/[a-z]{2}/borne', roles: PUBLIC_ACCESS }
     - { path: '^/[a-z]{2}/rdd', roles: PUBLIC_ACCESS }
     - { path: '^/[a-z]{2}/sso/redirect/cas', roles: PUBLIC_ACCESS }

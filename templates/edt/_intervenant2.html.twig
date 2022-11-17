@@ -1,9 +1,16 @@
-<div class="card">
+<div class="card"
+        {{ stimulus_controller('edt-personnel', {
+            urlCarnetDeBord: path('application_personnel_absence_ajax_pas_absent'),
+            urlEdt: path('edt_personnel_ajax'),
+            urlEdtSemestre: path('edt_personnel_semestre_ajax'),
+            urlPasDAbsent: path('application_personnel_absence_ajax_pas_absent'),
+            semaine: semaine,
+            filtre: filtre,
+            valeur:valeur
+        }) }}>
     <header class="card-header">
         <h4 class="card-title">
-            {{ 'heading.edt.dashboard'|trans }} | {{ user_data.user.displayPr }} |
-                                                Semaine {{ calendrier.semaine }}
-                                                (semaine formation {{ calendrier.semaineFormationIUT }})
+            {{ 'heading.edt.dashboard'|trans }}
         </h4>
         <div class="card-header-actions">
             <ul class="card-controls">
@@ -37,114 +44,7 @@
             </ul>
         </div>
     </header>
-    <div class="card-body" {{ stimulus_controller('edt-personnel', {
-        urlCarnetDeBord: path('application_personnel_absence_ajax_pas_absent'),
-        urlPasDAbsent: path('application_personnel_absence_ajax_pas_absent')
-    }) }}>
-        {% if source == 'celcat' %}
-            <div class="alert alert-warning mb-2">
-                L'emploi du temps est récupéré depuis Celcat. Cette fonctionnalité est encore en cours de développement.
-                Les emplois du temps sont synchronisés chaque nuit.
-            </div>
-        {% endif %}
-        {{ render(controller(
-            'App\\Controller\\EdtController::navPersonnel', {filtre:filtre, valeur:valeur, calendrier:calendrier}
-        )) }}
-        <br>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="schedule-individual" aria-labelledby="schedule-heading">
-                    {{ include('edt/_header_edt2.html.twig') }}
-                    {% for ligne in 0..24 %}
-                        <h2 class="time-slot" style="grid-row: time-{{ tabHeures[ligne][0] }};">{{ tabHeures[ligne][1] }}</h2>
-                        {% for j in 1..5 %}
-                            {% if edt[j][ligne] is defined %}
-                                <div class="session {{ edt[j][ligne].couleurEdt }}" style="grid-column: track-{{ j }}; grid-row:
-                                        time-{{ edt
-                                [j][ligne].gridStart }} / time-{{ edt[j][ligne].gridEnd }};">
-                                    <div class="session-body">
-                                        <a href="{{ path('application_personnel_absence_from_planning',{
-                                            'event':edt[j][ligne].id,
-                                            'source': edt[j][ligne].source,
-                                            'semestre': edt[j][ligne].semestre.id}) }}">
-                                            <span class="session-title">{{ edt[j][ligne].matiere|raw }}</span>
-                                            <span class="session-time">{{ edt[j][ligne].heureDebut|format_time('short') }} - {{ edt
-                                                [j][ligne].heureFin|format_time('short') }}</span>
-                                            <span class="session-track">{{ edt[j][ligne].groupe }}</span>
-                                            <span class="session-room">{{ edt[j][ligne].salle }}</span>
-                                        </a>
-                                    </div>
-                                    <div class="session-footer">
-                                        <div class="row no-gutters ">
-                                            <div class="col-4 d-grid d-block">
-                                                <button
-                                                        {{ stimulus_controller('modal', {
-                                                            size: 'lg',
-                                                            modalTitle: 'cahier.texte.enseignant.heading'|trans,
-                                                            modalUrl: path('app_personnel_plan_cours_realise',
-                                                                {'event': edt[j][ligne].getTypeIdEvent}) }) }}
-                                                        data-action="click->modal#openModal"
-                                                        class="btn btn-purple no-radius"
-                                                        data-size="lg"
-                                                        data-bs-toggle="tooltip"
-                                                        data-bs-placement="bottom"
-                                                        title="Cahier de texte enseignant"
-                                                >
-                                                    <i class="fas fa-book-open"></i>
-                                                </button>
-                                            </div>
-                                            <div class="col-4 d-grid d-block">
-                                                <button class="btn btn-warning no-radius"
-                                                        data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                        data-action="edt-personnel#btnPasAbsent"
-                                                        data-event="{{ edt[j][ligne].getTypeIdEvent }}"
-                                                        data-semestre="{{ edt[j][ligne].semestre.id }}"
-                                                        title="Marquer comme Appel fait, pas d'absents"
-                                                        {% if suiviAppel[edt[j][ligne].typeIdMatiere] is defined and
-                                                            suiviAppel[edt[j][ligne].typeIdMatiere][edt
-                                                            [j][ligne].dateObjet|date('Y-m-d')] is defined
-                                                            and suiviAppel[edt[j][ligne].typeIdMatiere][edt
-                                                        [j][ligne].dateObjet|date('Y-m-d')][edt[j][ligne]
-                                                        .heureDebut|date('H:i')] is defined %}
-                                                            disabled="disabled"
-                                                        {% endif %}
-                                                >
-                                                    <i class="fas fa-users-slash"></i>
-                                                </button>
-                                            </div>
+    <div class="card-body" {{ stimulus_target('edt-personnel', "zoneEdt") }}>
 
-                                            <div class="col-4 d-grid d-block">
-                                                {% if suiviAppel[edt[j][ligne].typeIdMatiere] is defined and
-                                                    suiviAppel[edt[j][ligne].typeIdMatiere][edt
-                                                    [j][ligne].dateObjet|date('Y-m-d')] is defined
-                                                    and suiviAppel[edt[j][ligne].typeIdMatiere][edt
-                                                [j][ligne].dateObjet|date('Y-m-d')][edt[j][ligne]
-                                                .heureDebut|date('H:i')] is defined %}
-                                                    <button class="btn btn-block btn-success no-radius"
-                                                            data-bs-toggle="tooltip"
-                                                            data-bs-placement="bottom"
-                                                            title="Appel réalisé"
-                                                    >
-                                                        <i class="fas fa-check"></i>
-                                                    </button>
-                                                {% else %}
-                                                    <button class="btn btn-danger no-radius"
-                                                            data-bs-toggle="tooltip"
-                                                            id="pointage{{ edt[j][ligne].getTypeIdEvent }}"
-                                                            data-edt-personnel-target="etatAppel"
-                                                            data-bs-placement="bottom" title="Appel à faire">
-                                                        <i class="fas fa-times"></i>
-                                                    </button>
-                                                {% endif %}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            {% endif %}
-                        {% endfor %}
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
     </div>
 </div>

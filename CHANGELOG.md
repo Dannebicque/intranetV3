@@ -2,6 +2,115 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.47](https://github.com/Dannebicque/intranetV3/compare/v3.9.46...v3.9.47) (2022-11-16)
+
+
+### Features
+
+* [Edt] Navigation avec Stimulus + Navigation semaine corrigé avec picker ([c3b0aa7](https://github.com/Dannebicque/intranetV3/commit/c3b0aa7bda2473a10cf176e585fd9f4308c17f02))
+* [Edt] Navigation avec Stimulus + Navigation semaine corrigé avec picker ([119decb](https://github.com/Dannebicque/intranetV3/commit/119decbf9b4c676fa7ed6da3767ef3782f91516a))
+
+
+### Bug Fixes
+
+* [Edt] Comparaiso appel fait ([8f01407](https://github.com/Dannebicque/intranetV3/commit/8f01407a1d50f995d44d59cb956f31083b46010b))
+
+### [3.9.46](https://github.com/Dannebicque/intranetV3/compare/v3.9.45...v3.9.46) (2022-11-08)
+
+
+### Features
+
+* [Alternance] Ajout de données dans l'export ([32925b6](https://github.com/Dannebicque/intranetV3/commit/32925b6ac1c390d36b20344145801c43585dae49))
+
+
+### Bug Fixes
+
+* [Evaluations] Fix si LP ou BUT ([8944248](https://github.com/Dannebicque/intranetV3/commit/8944248ce0ee9a39262841627f35c936efce4f1e))
+
+### [3.9.45](https://github.com/Dannebicque/intranetV3/compare/v3.9.44...v3.9.45) (2022-11-08)
+
+
+### Features
+
+* [Alternance] Ajout de données dans l'export ([a21b811](https://github.com/Dannebicque/intranetV3/commit/a21b811df11923a117e0004aadee1e235a31acbc))
+
+
+### Bug Fixes
+
+* [Borne] Bug des semestres des parcours ([d908266](https://github.com/Dannebicque/intranetV3/commit/d908266afe94df4a3b05bae4758df94da65922db))
+
+### [3.9.44](https://github.com/Dannebicque/intranetV3/compare/v3.9.43...v3.9.44) (2022-11-07)
+
+
+### Bug Fixes
+
+* [Borne] Bug des semestres des parcours ([174437b](https://github.com/Dannebicque/intranetV3/commit/174437b19299db3c76cbf2483b966846b7d8aad0))
+
+### [3.9.43](https://github.com/Dannebicque/intranetV3/compare/v3.9.42...v3.9.43) (2022-11-07)
+
+
+### Bug Fixes
+
+* [Evaluation] Import, gestion des semestres ([94edb19](https://github.com/Dannebicque/intranetV3/commit/94edb19e23c5c93a5ee0e6548329506b3a7dc97e))
+* [Stage] Gratification à 0 par défaut si moins de 8 semaines ([978505e](https://github.com/Dannebicque/intranetV3/commit/978505ece8800ebed5a51a4d83261378a14ea841))
+
+### [3.9.42](https://github.com/Dannebicque/intranetV3/compare/v3.9.41...v3.9.42) (2022-11-07)
+
+### [3.9.41](https://github.com/Dannebicque/intranetV3/compare/v3.9.40...v3.9.41) (2022-11-07)
+
+
+### Bug Fixes
+
+* [Notes] Export des notes avec les parcours ([37c03db](https://github.com/Dannebicque/intranetV3/commit/37c03dbe2308bdb21f241a5034bab9e08839db9b))
+* [Notes] Export des notes avec les parcours ([06927e2](https://github.com/Dannebicque/intranetV3/commit/06927e2d27e69d2e8315ab2783d0756ff62994f2))
+* [Notes] Export des notes avec les parcours ([70288d1](https://github.com/Dannebicque/intranetV3/commit/70288d16e8124aee1c1f9b4aecd1d924498b87c1))
+* [Trombinoscope] Gestion des trop nombreux onglets, affichage par semestre ([8ba08fb](https://github.com/Dannebicque/intranetV3/commit/8ba08fb34730404868ed416f92f7d84ea5d91660))
+
+### [3.9.40](https://github.com/Dannebicque/intranetV3/compare/v3.9.39...v3.9.40) (2022-11-03)
+
+
+### Features
+
+* [Qualite] Mise en place des interfaces pour les départements + Gestion qualité ([2e71c2b](https://github.com/Dannebicque/intranetV3/commit/2e71c2b0bfe19636333d380a39bea45bb3fe4c44))
+
+
+### Bug Fixes
+
+* [Notes] Export des notes avec les parcours ([15cc372](https://github.com/Dannebicque/intranetV3/commit/15cc3725cdf42f129810aa65b6bd48eec2388f88))
+
+### [3.9.39](https://github.com/Dannebicque/intranetV3/compare/v3.9.38...v3.9.39) (2022-10-28)
+
+
+### Features
+
+* [CSS] Augmentation bordure shadow card ([00cf35c](https://github.com/Dannebicque/intranetV3/commit/00cf35c34ffa0e14afc1017e70e89d9d4308e008))
+* [Logo Partenaire] Possibilité d'ajouter un logo partenaire sur les documents de l'intranet par diplôme ([7912791](https://github.com/Dannebicque/intranetV3/commit/7912791a78d42d5b67baaa7434dd7f35bbd2ce23))
+
+
+### Bug Fixes
+
+* [TEmp. Erreur] Ajout du message sur 500 + corrections CSS ([bcf6dc5](https://github.com/Dannebicque/intranetV3/commit/bcf6dc531c7bf0d4a8184b470bc162ff91b7841d))
+
+### [3.9.38](https://github.com/Dannebicque/intranetV3/compare/v3.9.37...v3.9.38) (2022-10-24)
+
+
+### Features
+
+* [css] mise en place du thème halloween ([e1dab1b](https://github.com/Dannebicque/intranetV3/commit/e1dab1b433d2d86f1e373d8692531356df1ae93e))
+
+
+### Bug Fixes
+
+* [aide] Exclusion des routes d'aides de la sécurité ([422e06c](https://github.com/Dannebicque/intranetV3/commit/422e06c85ae35de9c8016a70131dda7bc18cf3f5))
+* [Appel] Modification de la structure ([e790613](https://github.com/Dannebicque/intranetV3/commit/e790613b2a5d21c4938c2c84a6ff2fe5ac46b9b3))
+* [css] Mise en place du thème halloween | Accès menu sur téléphone ([fb962d5](https://github.com/Dannebicque/intranetV3/commit/fb962d5e3891cb657f3540164852252539bdf67f))
+* [css] Mise en place du thème halloween | Accès menu sur téléphone ([a1e001b](https://github.com/Dannebicque/intranetV3/commit/a1e001b6d26024006f5d0c4e0764ebde80eec1d5))
+* [Edt] Modification EDT ([64ed301](https://github.com/Dannebicque/intranetV3/commit/64ed301782e2171c9c75683257e56051b8009289))
+* [Etudiant] Export des données ([8b2eaf9](https://github.com/Dannebicque/intranetV3/commit/8b2eaf99fbdbfdcad89b76b5bd6d74c50af4bbe7))
+* [TableType] Ajout d'un bouton pour effacer les filtres ([0527de9](https://github.com/Dannebicque/intranetV3/commit/0527de9c452016b45cf752d616315062cf1aacab))
+* [Toast] Css et amélioration des toasts messages ([75da4d0](https://github.com/Dannebicque/intranetV3/commit/75da4d0e6bf6ad4d2d9f8a7ecda2a216bf678647))
+* [Toast] Css et amélioration des toasts messages ([5026285](https://github.com/Dannebicque/intranetV3/commit/5026285cd6f565efbd4c026afcfc8c89f77d3976))
+
 ### [3.9.37](https://github.com/Dannebicque/intranetV3/compare/v3.9.36...v3.9.37) (2022-10-19)
 
 

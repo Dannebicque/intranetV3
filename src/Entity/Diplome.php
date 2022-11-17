@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Diplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/08/2022 22:41
+ * @lastUpdate 28/10/2022 15:16
  */
 
 namespace App\Entity;
@@ -19,7 +19,10 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use function ord;
 use Serializable;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
+#[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: DiplomeRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 class Diplome extends BaseEntity implements Serializable
@@ -92,6 +95,7 @@ class Diplome extends BaseEntity implements Serializable
     private bool $actif = true;
 
     #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class, inversedBy: 'diplomes')]
+    /** @deprecated plus nécessaire de le gérer ici */
     private ?AnneeUniversitaire $anneeUniversitaire = null;
 
     #[ORM\Column(type: Types::INTEGER)]
@@ -136,6 +140,12 @@ class Diplome extends BaseEntity implements Serializable
     #[ORM\OneToMany(mappedBy: 'diplome', targetEntity: EdtPlanning::class)]
     private Collection $edtPlannings;
 
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $logoPartenaire = null;
+
+    #[Vich\UploadableField(mapping: 'logo', fileNameProperty: 'logoPartenaire')]
+    private ?File $logoFile = null;
+
     public function __construct(#[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'diplomes')] private ?Departement $departement, ?Diplome $diplome = null)
     {
         $this->hrs = new ArrayCollection();
@@ -147,6 +157,22 @@ class Diplome extends BaseEntity implements Serializable
         $this->parent = $diplome;
         $this->typeGroupes = new ArrayCollection();
         $this->edtPlannings = new ArrayCollection();
+    }
+
+    public function getLogoFile(): ?File
+    {
+        return $this->logoFile;
+    }
+
+    public function setLogoFile(?File $logo = null): void
+    {
+        $this->logoFile = $logo;
+
+        if (null !== $logo) {
+            // It is required that at least one field changes if you are using doctrine
+            // otherwise the event listeners won't be called and the file is lost
+            $this->setUpdatedValue();
+        }
     }
 
     public function getDisplay(): ?string
@@ -437,16 +463,19 @@ class Diplome extends BaseEntity implements Serializable
         return $this;
     }
 
+    /** @deprecated plus nécessaire de le gérer ici ? Passé par l'année de l'étudiant ou de l'enseignant ?*/
     public function displayAnneeUniversitaire(): string
     {
         return null !== $this->getAnneeUniversitaire() ? $this->getAnneeUniversitaire()->displayAnneeUniversitaire() : 'err';
     }
 
+    /** @deprecated plus nécessaire de le gérer ici ? Passé par l'année de l'étudiant ou de l'enseignant ?*/
     public function getAnneeUniversitaire(): ?AnneeUniversitaire
     {
         return $this->anneeUniversitaire;
     }
 
+    /** @deprecated plus nécessaire de le gérer ici ? Passé par l'année de l'étudiant ou de l'enseignant ?*/
     public function setAnneeUniversitaire(?AnneeUniversitaire $anneeUniversitaire): self
     {
         $this->anneeUniversitaire = $anneeUniversitaire;
@@ -764,6 +793,18 @@ class Diplome extends BaseEntity implements Serializable
                 $edtPlanning->setDiplome(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getLogoPartenaire(): ?string
+    {
+        return $this->logoPartenaire;
+    }
+
+    public function setLogoPartenaire(?string $logoPartenaire): self
+    {
+        $this->logoPartenaire = $logoPartenaire;
 
         return $this;
     }

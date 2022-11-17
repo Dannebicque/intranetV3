@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/administration/QuestionnaireSectionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 31/10/2022 09:53
  */
 
 namespace App\Controller\questionnaire\administration;
@@ -21,7 +21,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/administratif/questionnaire/section', name: 'sadm_questionnaire_section_')]
+#[Route('/{type}/questionnaire/section', name: 'adm_questionnaire_section_', requirements: ['type' => 'administratif|administration'], defaults: ['type' => 'administratif'])]
 class QuestionnaireSectionController extends BaseController
 {
     /**
@@ -30,7 +30,10 @@ class QuestionnaireSectionController extends BaseController
     #[Route('/', name: 'index', options: ['expose' => true], methods: ['GET', 'POST'])]
     public function index(Request $request): Response
     {
-        $table = $this->createTable(QuestionnaireSectionTableType::class);
+        $table = $this->createTable(QuestionnaireSectionTableType::class, [
+            'type' => $request->get('type'),
+            'departement' => 'administration' === $request->get('type') ? $this->getDepartement() : null,
+        ]);
 
         $table->handleRequest($request);
 
@@ -40,6 +43,7 @@ class QuestionnaireSectionController extends BaseController
 
         return $this->render('questionnaire/administration/questionnaire_section/index.html.twig', [
             'table' => $table,
+            'type' => $request->get('type'),
         ]);
     }
 
@@ -65,17 +69,19 @@ class QuestionnaireSectionController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'questionnaire.administration.section.add.success.flash');
 
-            return $this->redirectToRoute('sadm_questionnaire_section_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('adm_questionnaire_section_index', ['type' => $request->get('type')], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('questionnaire/administration/questionnaire_section/new.html.twig', [
             'questionnaire_section' => $questionnaireSection,
             'form' => $form,
+            'type' => $request->get('type'),
         ]);
     }
 
     #[Route('/{id}', name: 'show', methods: ['GET'])]
     public function show(
+        Request $request,
         QuestionnaireQuestionRepository $questionnaireQuestionRepository,
         QuestionnaireSection $questionnaireSection
     ): Response {
@@ -84,6 +90,7 @@ class QuestionnaireSectionController extends BaseController
         return $this->render('questionnaire/administration/questionnaire_section/show.html.twig', [
             'questionnaire_section' => $questionnaireSection,
             'questions' => $questions,
+            'type' => $request->get('type'),
         ]);
     }
 
@@ -100,6 +107,7 @@ class QuestionnaireSectionController extends BaseController
         return $this->render('questionnaire/administration/questionnaire_section/_tableauQuestion.html.twig', [
             'qualiteSectionQuestions' => $questionnaireSection->getQualiteSectionQuestions(),
             'questions' => $questionnaireQuestionRepository->findAll(),
+            'type' => $request->get('type'),
         ]);
     }
 
@@ -117,12 +125,13 @@ class QuestionnaireSectionController extends BaseController
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'questionnaire.administration.section.edit.success.flash');
             // todo: sadm
-            return $this->redirectToRoute('adm_questionnaire_section_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('adm_questionnaire_section_index', ['type' => $request->get('type')], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('questionnaire/administration/questionnaire_section/edit.html.twig', [
             'questionnaire_section' => $questionnaireSection,
             'form' => $form,
+            'type' => $request->get('type'),
         ]);
     }
 
@@ -146,8 +155,14 @@ class QuestionnaireSectionController extends BaseController
         }
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'questionnaire.administration.section.delete.error.flash');
 
-        return $this->redirectToRoute('sadm_questionnaire_section_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('adm_questionnaire_section_index', ['type' => $request->get('type')], Response::HTTP_SEE_OTHER);
     }
 
-    // todo: duplicate, export
+    #[Route('/{id}/duplicate', name: 'duplicate', methods: ['GET'])]
+    public function duplicate(QuestionnaireSection $questionnaireSection): Response
+    {
+        // todo: duplicate, export
+    }
+
+
 }

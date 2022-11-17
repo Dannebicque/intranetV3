@@ -4,11 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyEvaluations.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/09/2022 09:51
- */
-
-/*
- * Pull your hearder here, for exemple, Licence header.
+ * @lastUpdate 08/11/2022 16:58
  */
 
 namespace App\Classes;
@@ -72,8 +68,14 @@ class MyEvaluations
 
     public function getEvaluationsSemestre(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): array
     {
-        $evaluations = $this->evaluationRespository->findBySemestre($semestre,
-            $anneeUniversitaire);
+        if ($semestre->getDiplome()?->isApc()) {
+            $evaluations = $this->evaluationRespository->findByReferentielOrdreSemestre($semestre->getDiplome()?->getReferentiel(),
+                $semestre->getOrdreLmd(),
+                $anneeUniversitaire);
+        } else {
+            $evaluations = $this->evaluationRespository->findBySemestre($semestre, $anneeUniversitaire);
+        }
+
         $tab = [];
         /** @var Evaluation $eval */
         foreach ($evaluations as $eval) {

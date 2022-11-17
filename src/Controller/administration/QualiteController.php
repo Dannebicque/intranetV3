@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ArticleController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/QualiteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 24/10/2022 14:54
  */
 
 namespace App\Controller\administration;
@@ -46,6 +46,16 @@ class QualiteController extends BaseController
         return $this->render('administration/qualite/index.html.twig',
             [
                 'table' => $table,
+            ]);
+    }
+
+    #[Route('/creation', name: 'administration_qualite_index_creation', methods: ['GET'])]
+    public function creation(): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+
+        return $this->render('administration/qualite/creation.html.twig',
+            [
             ]);
     }
 

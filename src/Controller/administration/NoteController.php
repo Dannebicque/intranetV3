@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/NoteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/09/2022 09:13
+ * @lastUpdate 03/11/2022 11:06
  */
 
 namespace App\Controller\administration;
@@ -35,7 +35,7 @@ class NoteController extends BaseController
             'semestre' => $semestre,
             'matieres' => $myEvaluations->getMatieresSemestre(),
             'evaluations' => $myEvaluations->getEvaluationsSemestre($semestre,
-                $this->dataUserSession->getAnneeUniversitaire()),
+                $this->getAnneeUniversitaire()),
         ]);
     }
 
@@ -47,7 +47,7 @@ class NoteController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
 
-        return $notesExport->exportXlsToutesLesNotes($semestre, $this->dataUserSession->getAnneeUniversitaire());
+        return $notesExport->exportXlsToutesLesNotes($semestre, $this->getAnneeUniversitaire());
     }
 
     public function analyse(

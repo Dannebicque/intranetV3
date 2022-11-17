@@ -7,13 +7,14 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-            <a href="{{ path('sadm_questionnaire_qualite_delete', {id: questionnaire_qualite.id}) }}" data-csrf="{{ csrf_token('delete' ~ questionnaire_qualite.id) }}"
+            <a href="{{ path('adm_questionnaire_qualite_delete', {id: questionnaire_qualite.id, type:type}) }}" data-csrf="{{
+            csrf_token('delete' ~ questionnaire_qualite.id) }}"
                class="btn btn-danger btn-sm btn-float supprimer" title="{{ 'atitle.supprimer'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
             ><i class="{{ iconDelete }}"></i></a>
-            <a href="{{ path('sadm_questionnaire_qualite_edit', {id:questionnaire_qualite.id}) }}" class="btn
+            <a href="{{ path('adm_questionnaire_qualite_edit', {id:questionnaire_qualite.id, type:type}) }}" class="btn
                 btn-warning btn-sm btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
                title="{{ 'atitle.modifier'|trans }}"><i class="{{ iconEdit }}"></i></a>
-            <a href="{{ path('sadm_questionnaire_qualite_index') }}" class="btn
+            <a href="{{ path('adm_questionnaire_qualite_index', {type:type}) }}" class="btn
                 btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
                title="Retour aux questionnaires"><i class="fas fa-arrow-left"></i></a>
         </div>
@@ -37,29 +38,29 @@
                     <td>{{ questionnaire_qualite.titre }}</td>
                 </tr>
                 <tr>
-                    <th>TextExplicatif</th>
-                    <td>{{ questionnaire_qualite.texteExplication }}</td>
+                    <th>Texte Explicatif</th>
+                    <td>{{ questionnaire_qualite.texteExplication|raw}}</td>
                 </tr>
                 <tr>
-                    <th>texteDebut</th>
-                    <td>{{ questionnaire_qualite.texteDebut }}</td>
+                    <th>Texte de début</th>
+                    <td>{{ questionnaire_qualite.texteDebut|raw }}</td>
                 </tr>
                 <tr>
-                    <th>textFin</th>
-                    <td>{{ questionnaire_qualite.textFin }}</td>
+                    <th>Texte de fin</th>
+                    <td>{{ questionnaire_qualite.textFin|raw }}</td>
                 </tr>
                 <tr>
                     <th>Semestre</th>
                     <td>{{ questionnaire_qualite.semestre != null ? questionnaire_qualite.Semestre.display : 'non.defini'|trans }}</td>
                 </tr>
                 <tr>
-                    <th>Created</th>
+                    <th>{{ 'created'|trans }}</th>
                     <td>{{ questionnaire_qualite.created ? questionnaire_qualite.created|format_datetime('short',
                             'short') :
                         'non.defini'|trans }}</td>
                 </tr>
                 <tr>
-                    <th>Updated</th>
+                    <th>{{ 'updated'|trans }}</th>
                     <td>{{ questionnaire_qualite.updated ? questionnaire_qualite.updated|format_datetime('short',
                             'short') :
                         'non.defini'|trans }}</td>
@@ -75,7 +76,7 @@
             {{ 'adm.questionnaire.qualite.show.sections.heading'|trans }}
         </h4>
         <div class="card-body" {{ stimulus_controller('questionnaire_qualite', {
-            url: path('sadm_questionnaire_qualite_section_manage', {id:questionnaire_qualite.id})
+            url: path('adm_questionnaire_qualite_section_manage', {id:questionnaire_qualite.id, type:type})
         }) }}
              data-questionnaire-qualite-target="sections">
             {{ include('questionnaire/administration/questionnaire_qualite/_tableauSection.html.twig',

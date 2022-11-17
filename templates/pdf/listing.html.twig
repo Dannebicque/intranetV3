@@ -6,13 +6,29 @@
         <table style="width: 100%; border:none;">
             <tr>
                 <td style="text-align: center; width:35%">
-                        <img src="{{ settings('BASE_PATH') }}{{ 'logo/'~user_data.departement.logoName }}" alt="logo
-                        département
-" height="75px"/>
-                        {% if typeGroupe.semestre.diplome.optCertifieQualite == true %}
-                        <img src="{{ settings('BASE_PATH') }}{{ 'logo/'~settings('LOGO_QUALITE') }}" alt="logo
-                        certificat qualité" height="75px" style="float:right"/>
-                        {% endif %}
+                    <table>
+                        <tr>
+                            <td>
+                                <img src="{{ settings('BASE_PATH') }}{{ 'logo/'~user_data.departement.logoName }}"
+                                     alt="logo département" height="75px"/>
+                            </td>
+                            {% if typeGroupe.semestre.diplome.optCertifieQualite == true %}
+                                <td>
+                                    <img src="{{ settings('BASE_PATH') }}{{ 'logo/'~settings('LOGO_QUALITE') }}" alt="logo
+                        certificat qualité" height="75px"/>
+                                </td>
+                            {% endif %}
+
+                            {% if diplome.logoPartenaire != null %}
+                                <td>
+                                    <img src="{{ settings('BASE_PATH') }}{{ 'logo/'~diplome.logoPartenaire }}" alt="logo
+                        du partenaire" height="75px"/>
+                                </td>
+                            {% endif %}
+                        </tr>
+                    </table>
+
+
                 </td>
                 <td style="text-align: center; width:5%"></td>
                 <td style="text-align: right; width:60%">

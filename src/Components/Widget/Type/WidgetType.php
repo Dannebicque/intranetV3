@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Widget/Type/WidgetType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Widget/Type/WidgetType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 19:11
+ * @lastUpdate 21/10/2022 12:10
  */
 
 namespace App\Components\Widget\Type;
@@ -36,14 +36,13 @@ class WidgetType
         $view->vars['text'] = $options['text'];
         $view->vars['translation_domain'] = $options['translation_domain'];
         $view->vars['icon'] = $options['icon'];
+        $view->vars['icon_only'] = $options['icon_only'];
 
         if (!empty($options['title'])) {
             $view->vars['attr']['title'] = $options['title'];
             $view->vars['attr']['data-bs-toggle'] = 'tooltip';
             $view->vars['attr']['data-bs-trigger'] = 'hover';
         }
-
-        // hack (used only by DataTable)
     }
 
     public function buildWidget(WidgetBuilder $builder, array $options): void
@@ -85,6 +84,11 @@ class WidgetType
             ->define('icon')
             ->default(null)
             ->allowedTypes('string', 'null');
+
+        $resolver
+            ->define('icon_only')
+            ->default(false)
+            ->allowedTypes('boolean', 'null');
 
         $resolver
             ->define('attr')

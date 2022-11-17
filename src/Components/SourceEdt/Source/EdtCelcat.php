@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Source/EdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2022 19:17
+ * @lastUpdate 16/11/2022 21:39
  */
 
 namespace App\Components\SourceEdt\Source;
@@ -116,7 +116,6 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
         $this->groupes = $groupes;
         $this->init($anneeUniversitaire, Constantes::FILTRE_EDT_PROMO, $semestre->getId(), $calendrier->semaine);
         $this->calculEdt();
-        dump($this->evenements);
 
         return $this->evenements;
     }

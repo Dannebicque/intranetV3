@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/administration/QuestionnaireQuestionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 24/10/2022 14:54
  */
 
 namespace App\Controller\questionnaire\administration;
@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/administratif/questionnaire/question', name: 'sadm_questionnaire_question_')]
+#[Route('/{type}/questionnaire/question', name: 'adm_questionnaire_question_', requirements: ['type' => 'administratif|administration'], defaults: ['type' => 'administratif'])]
 class QuestionnaireQuestionController extends BaseController
 {
     public function __construct(private readonly QuestionnaireQuestionTagRepository $questionnaireQuestionTagRepository)
@@ -34,7 +34,9 @@ class QuestionnaireQuestionController extends BaseController
     public function index(Request $request, QuestionnaireRegistry $questionnaireRegistry): Response
     {
         $table = $this->createTable(QuestionnaireQuestionTableType::class,
-            ['typeQuestions' => $questionnaireRegistry->getAllTypeQuestions()]);
+            ['typeQuestions' => $questionnaireRegistry->getAllTypeQuestions(),
+                'type' => $request->get('type'),
+                'departement' => 'administration' === $request->get('type') ? $this->getDepartement() : null, ]);
 
         $table->handleRequest($request);
 
@@ -44,6 +46,7 @@ class QuestionnaireQuestionController extends BaseController
 
         return $this->render('questionnaire/administration/questionnaire_question/index.html.twig', [
             'table' => $table,
+            'type' => $request->get('type'),
         ]);
     }
 
@@ -69,12 +72,13 @@ class QuestionnaireQuestionController extends BaseController
                     $t['newQuestionnaireQuestionTags']);
                 $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'questionnaire_question.add.success.flash');
 
-                return $this->redirectToRoute('sadm_questionnaire_question_index', [], Response::HTTP_SEE_OTHER);
+                return $this->redirectToRoute('adm_questionnaire_question_index', ['type' => $request->get('type')], Response::HTTP_SEE_OTHER);
             }
         }
 
         return $this->renderForm('questionnaire/administration/questionnaire_question/new.html.twig', [
             'typeQuestions' => $questionnaireRegistry->getTypeQuestions(),
+            'type' => $request->get('type'),
         ]);
     }
 
@@ -88,19 +92,21 @@ class QuestionnaireQuestionController extends BaseController
         $typeQuestion = $questionnaireRegistry->getTypeQuestion($type);
         $question = new QuestionnaireQuestion($this->getUser());
         $form = $this->createForm($typeQuestion::FORM, $question, [
-            'action' => $this->generateUrl('sadm_questionnaire_question_new', ['typeQuestion' => $typeQuestion::class]),
+            'action' => $this->generateUrl('adm_questionnaire_question_new', ['typeQuestion' => $typeQuestion::class, 'type' => $request->get('type')]),
         ]);
 
         return $this->render('questionnaire/administration/questionnaire_question/typeQuestion.html.twig', [
             'form' => $form->createView(),
+            'type' => $request->get('type'),
         ]);
     }
 
     #[Route('/{id}', name: 'show', methods: ['GET'])]
-    public function show(QuestionnaireQuestion $questionnaireQuestion): Response
+    public function show(Request $request, QuestionnaireQuestion $questionnaireQuestion): Response
     {
         return $this->render('questionnaire/administration/questionnaire_question/show.html.twig', [
             'questionnaire_question' => $questionnaireQuestion,
+            'type' => $request->get('type'),
         ]);
     }
 
@@ -126,21 +132,23 @@ class QuestionnaireQuestionController extends BaseController
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'questionnaire_question.edit.success.flash');
 
             if (null !== $request->request->get('btn_update')) {
-                return $this->redirectToRoute('sadm_questionnaire_question_index', [], Response::HTTP_SEE_OTHER);
+                return $this->redirectToRoute('adm_questionnaire_question_index', ['type' => $request->get('type')], Response::HTTP_SEE_OTHER);
             }
 
-            return $this->redirectToRoute('sadm_questionnaire_question_edit', ['id' => $questionnaireQuestion->getId()],
+            return $this->redirectToRoute('adm_questionnaire_question_edit', ['id' => $questionnaireQuestion->getId()],
                 Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('questionnaire/administration/questionnaire_question/edit.html.twig', [
             'questionnaire_question' => $questionnaireQuestion,
             'form' => $form,
+            'type' => $request->get('type'),
         ]);
     }
 
     #[Route('/{id}/duplicate', name: 'duplicate', methods: ['GET', 'POST'])]
     public function duplicate(
+        Request $request,
         QuestionnaireQuestion $questionnaireQuestion
     ): Response {
         $newQuestionnaireQuestion = clone $questionnaireQuestion;
@@ -156,7 +164,7 @@ class QuestionnaireQuestionController extends BaseController
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'questionnaire_question.duplicate.success.flash');
 
-        return $this->redirectToRoute('sadm_questionnaire_question_edit', ['id' => $newQuestionnaireQuestion->getId()]);
+        return $this->redirectToRoute('adm_questionnaire_question_edit', ['id' => $newQuestionnaireQuestion->getId(),  'type' => $request->get('type')]);
     }
 
     #[Route('/{id}', name: 'delete', methods: ['POST', 'DELETE'])]

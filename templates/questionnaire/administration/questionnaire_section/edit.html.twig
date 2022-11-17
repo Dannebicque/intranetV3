@@ -7,7 +7,7 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-            <a href="{{ path('questionnaire_section_show'|path_admin, {id:questionnaire_section.id}) }}"
+            <a href="{{ path('adm_questionnaire_section_show', {id:questionnaire_section.id,type:type}) }}"
                class="btn btn-info btn-sm btn-float"
                title="{{ 'atitle.voir'|trans }}"
                data-bs-toggle="tooltip" data-bs-placement="bottom"
@@ -15,7 +15,7 @@
                 <i class="{{ iconShow }}"></i>
                 <span class="sr-only">{{ 'atitle.voir'|trans }}</span>
             </a>
-            <a href="{{ path('sadm_questionnaire_section_index') }}" class="btn
+            <a href="{{ path('adm_questionnaire_section_index', {type:type}) }}" class="btn
                 btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
                title="Retour aux sections"><i class="fas fa-arrow-left"></i></a>
         </div>

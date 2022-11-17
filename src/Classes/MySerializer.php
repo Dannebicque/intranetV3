@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MySerializer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:27
+ * @lastUpdate 08/11/2022 11:18
  */
 
 /*
@@ -86,17 +86,26 @@ class MySerializer
         }
         $i = 1;
         ++$ligne;
-        // data
+        // data : todo: 3 niveaux possible... comment généraliser ?
         foreach ($tabData as $row) {
             foreach ($colonne as $key => $value) {
                 if ((!is_array($value) && array_key_exists($value,
                             $row)) || (is_array($value) && array_key_exists($key,
                             $row))) {
                     if (is_array($value)) {
-                        foreach ($value as $col) {
+                        foreach ($value as $key2 => $col) {
                             if (is_array($row[$key])) {
-                                // todo: gérer le 3eme niveau...Si $col est un tableau...
-                                if (array_key_exists($col, $row[$key])) {
+                                if (is_array($col)) {
+                                    foreach ($col as $col2) {
+                                        if (array_key_exists($col2, $row[$key][$key2])) {
+                                            $dataArray[$ligne][$i] = $this->transformValue($row[$key][$key2][$col2], $key2);
+                                        } else {
+                                            $dataArray[$ligne][$i] = '-';
+                                        }
+                                        ++$i;
+                                    }
+                                }
+                                else if (array_key_exists($col, $row[$key])) {
                                     $dataArray[$ligne][$i] = $this->transformValue($row[$key][$col], $key);
                                 } else {
                                     $dataArray[$ligne][$i] = '-';

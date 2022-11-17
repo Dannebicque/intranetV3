@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyEvaluation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/10/2022 20:57
+ * @lastUpdate 07/11/2022 11:39
  */
 
 /*
@@ -21,6 +21,7 @@ use App\Entity\Etudiant;
 use App\Entity\Evaluation;
 use App\Entity\Note;
 use App\Entity\Semestre;
+use App\Enums\TypeGroupeEnum;
 use App\Exception\MatiereNotFoundException;
 use App\Repository\EtudiantRepository;
 use App\Utils\Tools;
@@ -233,7 +234,7 @@ class MyEvaluation
             throw new MatiereNotFoundException();
         }
 
-        $name = 'releve-' . $matiere->codeMatiere;
+        $name = 'releve-'.$matiere->codeMatiere;
         switch ($_format) {
             case Constantes::FORMAT_PDF:
                 return $this->myPdf::generePdf('pdf/releveEvaluation.html.twig', [
@@ -271,8 +272,12 @@ class MyEvaluation
     /**
      * @throws Exception
      */
-    public function importEvaluation(Evaluation $evaluation, string $fichier, Semestre $semestre, bool $ecrase = false): bool
-    {
+    public function importEvaluation(
+        Evaluation $evaluation,
+        string $fichier,
+        Semestre $semestre,
+        bool $ecrase = false
+    ): bool {
         $t = explode('.', $fichier);
         $extension = $t[count($t) - 1];
 
@@ -297,7 +302,9 @@ class MyEvaluation
     {
         $evaluation->setVisible(false); // on masque l'évaluation le temps de l'import et de la vérification
         $notes = [];
-        $req = $this->etudiantRepository->findBySemestre($semestre);
+
+        $req = $this->etudiantRepository->findBySemestre($semestre); // todo: améliorer pour filtrer les étudiants si parcours...
+
         $etudiants = [];
         /** @var Etudiant $etu */
         foreach ($req as $etu) {
@@ -311,20 +318,20 @@ class MyEvaluation
         foreach ($data as $note) {
             if (array_key_exists($note['num_etudiant'], $etudiants)) {
                 if (array_key_exists($note['num_etudiant'], $notes)) {
-                    if ($ecrase === true || -0.01 === $notes[$note['num_etudiant']]->getNote()) {
+                    if (true === $ecrase || -0.01 === $notes[$note['num_etudiant']]->getNote()) {
                         // une note = -0.01, ou on force l'écriture on met à jour...
                         $notes[$note['num_etudiant']]->setNote(Tools::convertToFloat($note['note']));
                         $notes[$note['num_etudiant']]->setCommentaire($note['commentaire']);
                     }
+                } else {
+                    // pas de note, on ajoute
+                    $nnnote = new Note();
+                    $nnnote->setEvaluation($evaluation);
+                    $nnnote->setEtudiant($etudiants[$note['num_etudiant']]);
+                    $nnnote->setCommentaire($note['commentaire']);
+                    $nnnote->setNote(Tools::convertToFloat($note['note']));
+                    $this->entityManager->persist($nnnote);
                 }
-            } elseif (!array_key_exists($note['num_etudiant'], $notes)) {
-                // pas de note, on ajoute
-                $nnnote = new Note();
-                $nnnote->setEvaluation($evaluation);
-                $nnnote->setEtudiant($etudiants[$note['num_etudiant']]);
-                $nnnote->setCommentaire($note['commentaire']);
-                $nnnote->setNote(Tools::convertToFloat($note['note']));
-                $this->entityManager->persist($nnnote);
             }
         }
 
