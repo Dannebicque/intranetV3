@@ -97,36 +97,39 @@
                                                                 {{ 'contacter'|trans }}
                                                             </a>
                                                         </div>
-                                                        <div>
-                                                            {% if etudiant.siteUniv != '' and etudiant.siteUniv != null %}
-                                                                <a href="{{ etudiant.siteUniv }}"
-                                                                   class="text-white"
-                                                                   target="_blank" title="{{ 'site_universitaire'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                                >
-                                                                    <i class="fa fa-fw fa-globe w-20px"></i>
-                                                                    <span class="sr-only">{{ 'site_universitaire'|trans }}</span>
-                                                                </a>
-                                                            {% endif %}
-                                                            {% if etudiant.sitePerso != '' and etudiant.sitePerso != null %}
-                                                                <a href="{{ etudiant.sitePerso }}"
-                                                                   class="text-white"
-                                                                   target="_blank" title="{{ 'site_personnel'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                                >
-                                                                    <i class="fa fa-fw fa-link"></i>
-                                                                    <span class="sr-only">{{ 'site_personnel'|trans }}</span>
-                                                                </a>
-                                                            {% endif %}
-                                                            {% if semestre.diplome.typeDiplome.apc == true %}
-                                                                <a href="#"
-                                                                   class="text-white"
-                                                                   target="_blank" title="{{ 'portfolio_de_comptences'|trans }}"
-                                                                   data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                                >
-                                                                    <i class="fa fa-fw fa-book-open"></i>
-                                                                    {{ 'portfolio_comptences'|trans }}
-                                                                </a>
-                                                            {% endif %}
-                                                        </div>
+                                                        {% if (is_granted('ROLE_ETUDIANT') and siteperso == true) or
+                                                            is_granted('ROLE_PERMANENT') %}
+                                                            <div>
+                                                                {% if etudiant.siteUniv != '' and etudiant.siteUniv != null %}
+                                                                    <a href="{{ etudiant.siteUniv }}"
+                                                                       class="text-white"
+                                                                       target="_blank" title="{{ 'site_universitaire'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                                    >
+                                                                        <i class="fa fa-fw fa-globe w-20px"></i>
+                                                                        <span class="sr-only">{{ 'site_universitaire'|trans }}</span>
+                                                                    </a>
+                                                                {% endif %}
+                                                                {% if etudiant.sitePerso != '' and etudiant.sitePerso != null %}
+                                                                    <a href="{{ etudiant.sitePerso }}"
+                                                                       class="text-white"
+                                                                       target="_blank" title="{{ 'site_personnel'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                                    >
+                                                                        <i class="fa fa-fw fa-link"></i>
+                                                                        <span class="sr-only">{{ 'site_personnel'|trans }}</span>
+                                                                    </a>
+                                                                {% endif %}
+                                                                {% if semestre.diplome.typeDiplome.apc == true %}
+                                                                    <a href="#"
+                                                                       class="text-white"
+                                                                       target="_blank" title="{{ 'portfolio_de_comptences'|trans }}"
+                                                                       data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                                    >
+                                                                        <i class="fa fa-fw fa-book-open"></i>
+                                                                        {{ 'portfolio_comptences'|trans }}
+                                                                    </a>
+                                                                {% endif %}
+                                                            </div>
+                                                        {% endif %}
                                                         {% if is_granted('ROLE_ETUDIANT') %}
                                                             <label class="toggler toggler-danger fs-16">
                                                                 <input type="checkbox" checked class="addfavori"

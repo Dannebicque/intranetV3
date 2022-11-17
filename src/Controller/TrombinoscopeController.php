@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/TrombinoscopeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/11/2022 17:29
+ * @lastUpdate 17/11/2022 08:24
  */
 
 namespace App\Controller;
@@ -153,6 +153,7 @@ class TrombinoscopeController extends BaseController
             'typeGroupes' => $typeGroupes,
             'groupes' => $groupes,
             'etudiants' => $etudiants,
+            'siteperso' => $semestre->getDiplome()->getOptEspacePersoVisible(),
             'etudiantGroupes' => $etudiantRepository->getEtudiantGroupes($semestre),
         ]);
     }
