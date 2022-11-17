@@ -184,15 +184,6 @@
 
 
     <header class="topbar">
-        <!-- ------------------------------ANIM HALLOWEEN----------------------------- -->
-
-        <div class="anim_spider" id="spider"
-             style="position: absolute; top: -80px; left: 60%; display: flex; flex-direction: column; align-items: center; z-index: 999">
-            <span style="background-color: darkgrey; height: 100px; width: .5px"></span>
-            <i class="fa-solid fa-spider"
-               style="position: absolute; top: 90px; color: darkgrey"></i>
-        </div>
-
 
         <div class="topbar-left">
             <span class="topbar-btn sidebar-toggler"><i>&#9776;</i></span>
@@ -346,9 +337,6 @@
             <div class="header-info">
                 <div class="left">
 
-                    <img src="{{ asset('spiderweb.webp') }}"
-                         style="position:absolute; left: -30px; top: -30px; z-index: 1000; opacity: 15%; width: 150px"/>
-
                     <h1 class="header-title" id="header-title">
                         {% block header %}
                             <strong>No title</strong>
@@ -459,48 +447,6 @@
     </div>
 
 
-    <script>
-        //-----------------------------------------ANIMATION HALLOWEEN-----------------------------------------//
-        //----------------------------------------------------------------------------------------------------//
-        //----------------------------------------------------------------------------------------------------//
-
-        setTimeout(function myMove() {
-            var id = null;
-            var elem = document.getElementById("spider");
-            var pos = -80;
-            clearInterval(id);
-            id = setInterval(frame, 10);
-
-            function frame() {
-                if (pos === 0) {
-                    clearInterval(id);
-                    setTimeout(function myMoveUp() {
-                        var id = null;
-                        var elem = document.getElementById("spider");
-                        var pos = 0;
-                        clearInterval(id);
-                        id = setInterval(frame, 10);
-
-                        function frame() {
-                            if (pos === -80) {
-                                clearInterval(id);
-                            } else {
-                                pos--;
-                                elem.style.top = pos + 'px';
-                            }
-                        }
-                    }, 2000)
-                } else {
-                    pos++;
-                    elem.style.top = pos + 'px';
-                }
-            }
-        }, 1000)
-
-        window.onload = function () {
-            myMove();
-        };
-    </script>
 {% endblock %}{# fin du block full body #}
 </body>
 </html>
