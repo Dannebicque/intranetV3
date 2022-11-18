@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/BlocNotesAbsencesController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/09/2022 15:29
+ * @lastUpdate 18/11/2022 14:51
  */
 
 namespace App\Controller;
@@ -31,16 +31,22 @@ class BlocNotesAbsencesController extends BaseController
         StatsAbsences $statsAbsences
     ): Response {
         $etudiantAbsences->setEtudiant($this->getUser());
-        $matieres = $typeMatiereManager->findBySemestreArray($this->getEtudiantSemestre());
+        $matieres = $typeMatiereManager->findByReferentielOrdreSemestre($this->getEtudiantSemestre(),
+            $this->getEtudiantSemestre()?->getDiplome()?->getReferentiel());
         $absences = $etudiantAbsences->getAbsencesParSemestresEtAnneeUniversitaire($matieres,
             $this->getAnneeUniversitaire());
         $statistiquesAbsences = $statsAbsences->calculStatistiquesAbsencesEtudiant($absences);
+
+        $tMatieres = [];
+        foreach ($matieres as $matiere) {
+            $tMatieres[$matiere->getTypeIdMatiere()] = $matiere;
+        }
 
         return $this->render('bloc_notes_absences/etudiant_absences.html.twig', [
             'absences' => $absences,
             'etudiant' => $this->getUser(),
             'statistiquesAbsences' => $statistiquesAbsences,
-            'matieres' => $matieres,
+            'matieres' => $tMatieres,
         ]);
     }
 
