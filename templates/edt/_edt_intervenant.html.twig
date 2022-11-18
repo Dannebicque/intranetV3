@@ -35,69 +35,81 @@
                                     <span class="session-room">{{ edt[j][ligne].salle }}</span>
                                 </a>
                             </div>
+
                             <div class="session-footer">
                                 <div class="row no-gutters ">
-                                    <div class="col-4 d-grid d-block">
-                                        <button
-                                                {{ stimulus_controller('modal', {
-                                                    size: 'lg',
-                                                    modalTitle: 'cahier.texte.enseignant.heading'|trans,
-                                                    modalUrl: path('app_personnel_plan_cours_realise',
-                                                        {'event': edt[j][ligne].getTypeIdEvent}) }) }}
-                                                data-action="click->modal#openModal"
-                                                class="btn btn-purple no-radius"
-                                                data-size="lg"
-                                                data-bs-toggle="tooltip"
-                                                data-bs-placement="bottom"
-                                                title="Cahier de texte enseignant"
-                                        >
-                                            <i class="fas fa-book-open"></i>
-                                        </button>
-                                    </div>
-                                    <div class="col-4 d-grid d-block">
-                                        <button class="btn btn-warning no-radius"
-                                                data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                                data-action="edt-personnel#btnPasAbsent"
-                                                data-event="{{ edt[j][ligne].getTypeIdEvent }}"
-                                                data-semestre="{{ edt[j][ligne].semestre.id }}"
-                                                title="Marquer comme Appel fait, pas d'absents"
-                                                {% if suiviAppel[edt[j][ligne].typeIdMatiere] is defined and
-                                                    suiviAppel[edt[j][ligne].typeIdMatiere][edt
-                                                    [j][ligne].dateObjet|date('Y-m-d')] is defined
-                                                    and suiviAppel[edt[j][ligne].typeIdMatiere][edt
-                                                [j][ligne].dateObjet|date('Y-m-d')][edt[j][ligne]
-                                                .heureDebut|date('H:i')] is defined %}
-                                                    disabled="disabled"
-                                                {% endif %}
-                                        >
-                                            <i class="fas fa-users-slash"></i>
-                                        </button>
-                                    </div>
-
-                                    <div class="col-4 d-grid d-block">
-                                        {% if suiviAppel[edt[j][ligne].typeIdMatiere] is defined and
-                                            suiviAppel[edt[j][ligne].typeIdMatiere][edt
-                                            [j][ligne].dateObjet|date('Y-m-d')] is defined
-                                            and suiviAppel[edt[j][ligne].typeIdMatiere][edt
-                                        [j][ligne].dateObjet|date('Y-m-d')][edt[j][ligne]
-                                        .heureDebut|date('H:i')] is defined %}
-                                            <button class="btn btn-block btn-success no-radius"
+                                    {% if 'now'|date('Y-m-d') >= edt[j][ligne].date|date('Y-m-d') and 'now'|date('H:i') >=
+                                        edt[j][ligne].heureDebut|date('H:i') %}
+                                        <div class="col-4 d-grid d-block">
+                                            <button
+                                                    {{ stimulus_controller('modal', {
+                                                        size: 'lg',
+                                                        modalTitle: 'cahier.texte.enseignant.heading'|trans,
+                                                        modalUrl: path('app_personnel_plan_cours_realise',
+                                                            {'event': edt[j][ligne].getTypeIdEvent}) }) }}
+                                                    data-action="click->modal#openModal"
+                                                    class="btn btn-purple no-radius"
+                                                    data-size="lg"
                                                     data-bs-toggle="tooltip"
                                                     data-bs-placement="bottom"
-                                                    title="Appel réalisé"
+                                                    title="Cahier de texte enseignant"
                                             >
-                                                <i class="fas fa-check"></i>
+                                                <i class="fas fa-book-open"></i>
                                             </button>
-                                        {% else %}
-                                            <button class="btn btn-danger no-radius"
-                                                    data-bs-toggle="tooltip"
-                                                    id="pointage{{ edt[j][ligne].getTypeIdEvent }}"
-                                                    data-edt-personnel-target="etatAppel"
-                                                    data-bs-placement="bottom" title="Appel à faire">
-                                                <i class="fas fa-times"></i>
+                                        </div>
+
+
+                                        <div class="col-4 d-grid d-block">
+                                            <button class="btn btn-warning no-radius"
+                                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                    data-action="edt-personnel#btnPasAbsent"
+                                                    data-event="{{ edt[j][ligne].getTypeIdEvent }}"
+                                                    data-semestre="{{ edt[j][ligne].semestre.id }}"
+                                                    title="Marquer comme Appel fait, pas d'absents"
+                                                    {% if suiviAppel[edt[j][ligne].typeIdMatiere] is defined and
+                                                        suiviAppel[edt[j][ligne].typeIdMatiere][edt
+                                                        [j][ligne].dateObjet|date('Y-m-d')] is defined
+                                                        and suiviAppel[edt[j][ligne].typeIdMatiere][edt
+                                                    [j][ligne].dateObjet|date('Y-m-d')][edt[j][ligne]
+                                                    .heureDebut|date('H:i')] is defined %}
+                                                        disabled="disabled"
+                                                    {% endif %}
+                                            >
+                                                <i class="fas fa-users-slash"></i>
                                             </button>
-                                        {% endif %}
-                                    </div>
+                                        </div>
+
+                                        <div class="col-4 d-grid d-block">
+                                            {% if suiviAppel[edt[j][ligne].typeIdMatiere] is defined and
+                                                suiviAppel[edt[j][ligne].typeIdMatiere][edt
+                                                [j][ligne].dateObjet|date('Y-m-d')] is defined
+                                                and suiviAppel[edt[j][ligne].typeIdMatiere][edt
+                                            [j][ligne].dateObjet|date('Y-m-d')][edt[j][ligne]
+                                            .heureDebut|date('H:i')] is defined %}
+                                                <button class="btn btn-block btn-success no-radius"
+                                                        data-bs-toggle="tooltip"
+                                                        data-bs-placement="bottom"
+                                                        title="Appel réalisé"
+                                                >
+                                                    <i class="fas fa-check"></i>
+                                                </button>
+                                            {% else %}
+                                                <button class="btn btn-danger no-radius"
+                                                        data-bs-toggle="tooltip"
+                                                        id="pointage{{ edt[j][ligne].getTypeIdEvent }}"
+                                                        data-edt-personnel-target="etatAppel"
+                                                        data-bs-placement="bottom" title="Appel à faire">
+                                                    <i class="fas fa-times"></i>
+                                                </button>
+                                            {% endif %}
+                                        </div>
+                                    {% else %}
+                                        <div class="col-12 d-grid d-block">
+                                            <button class="btn btn-warning no-radius">
+                                                Evènement à venir
+                                            </button>
+                                        </div>
+                                    {% endif %}
                                 </div>
                             </div>
                         </div>
