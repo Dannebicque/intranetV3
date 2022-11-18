@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.48](https://github.com/Dannebicque/intranetV3/compare/v3.9.47...v3.9.48) (2022-11-18)
+
+
+### Bug Fixes
+
+* [base] remove halloween ([275f797](https://github.com/Dannebicque/intranetV3/commit/275f7978f0df69b61afcb42e0364939f047f5539))
+* [css] Suppression du thème halloween ([02c6013](https://github.com/Dannebicque/intranetV3/commit/02c601326ef92e4574ebe900d16a98b268804fd5))
+* [css] Suppression du thème halloween ([e3b7b11](https://github.com/Dannebicque/intranetV3/commit/e3b7b11dbb1a1165918d637d19ebe2497f151397))
+* [css] Suppression du thème halloween ([e0aceda](https://github.com/Dannebicque/intranetV3/commit/e0aceda61e653f334593b00d3f8f17aabcaa6c6d))
+* [Trombi] affichage espace personnel pour les étudiants ou non ([9b9a716](https://github.com/Dannebicque/intranetV3/commit/9b9a71658b41d86759a475f209ca2bfdf00ed2a8))
+
 ### [3.9.47](https://github.com/Dannebicque/intranetV3/compare/v3.9.46...v3.9.47) (2022-11-16)
 
 
