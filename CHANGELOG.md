@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.49](https://github.com/Dannebicque/intranetV3/compare/v3.9.48...v3.9.49) (2022-11-18)
+
+
+### Bug Fixes
+
+* [Absence] Liste des absences sur le dashboard ([4687285](https://github.com/Dannebicque/intranetV3/commit/4687285f0312f881221ba2139f368f9a3a4a2787))
+
 ### [3.9.48](https://github.com/Dannebicque/intranetV3/compare/v3.9.47...v3.9.48) (2022-11-18)
 
 
