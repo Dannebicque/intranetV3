@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/BlocNotesAbsencesController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 15:11
+ * @lastUpdate 22/11/2022 11:16
  */
 
 namespace App\Controller;
@@ -13,6 +13,7 @@ use App\Classes\Etudiant\EtudiantAbsences;
 use App\Classes\Etudiant\EtudiantNotes;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\StatsAbsences;
+use App\Entity\Etudiant;
 use Exception;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -51,18 +52,18 @@ class BlocNotesAbsencesController extends BaseController
         ]);
     }
 
-    public function etudiantNotes(TypeMatiereManager $typeMatiereManager, EtudiantNotes $etudiantNotes): Response
+    public function etudiantNotes(TypeMatiereManager $typeMatiereManager, EtudiantNotes $etudiantNotes, Etudiant $etudiant): Response
     {
         //todo: mutualiser avec ProfilEtudiant... (TwigComponent ?)
 
-        if (false === $this->getUser()->getDiplome()->isApc()) {
-            $matieres = $typeMatiereManager->findBySemestreArray($this->getEtudiantSemestre());
-        } else {
-            $matieres = $typeMatiereManager->findByReferentielOrdreSemestreArray($this->getEtudiantSemestre(),
+        if ($this->getUser()->getDiplome()->isApc()) {
+            $matieres = $typeMatiereManager->findByReferentielOrdreSemestreArray($etudiant->getSemestre(),
                 $this->getEtudiantSemestre()?->getDiplome()?->getReferentiel());
+        } else {
+            $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestre());
         }
 
-        $etudiantNotes->setEtudiant($this->getUser());
+        $etudiantNotes->setEtudiant($etudiant);
         $notes = $etudiantNotes->getNotesParSemestresEtAnneeUniversitaire($matieres,
             $this->getAnneeUniversitaire());
 
