@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Matieres/TypeMatiereManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/09/2022 16:06
+ * @lastUpdate 18/11/2022 15:07
  */
 
 namespace App\Classes\Matieres;
@@ -233,5 +233,16 @@ class TypeMatiereManager
         }
 
         return array_merge(...$t);
+    }
+
+    public function findByReferentielOrdreSemestreArray(Semestre $semestre, ApcReferentiel $referentiel): array
+    {
+        $matieres = $this->findByReferentielOrdreSemestre($semestre, $referentiel);
+        $tMatieres = [];
+        foreach ($matieres as $matiere) {
+            $tMatieres[$matiere->getTypeIdMatiere()] = $matiere;
+        }
+
+        return $tMatieres;
     }
 }
