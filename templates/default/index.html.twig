@@ -128,7 +128,7 @@
 
             <div class="col-12">
                 {{ render_esi(controller(
-                    'App\\Controller\\BlocNotesAbsencesController::etudiantNotes'
+                    'App\\Controller\\BlocNotesAbsencesController::etudiantNotes', {etudiant: user_data.user.id}
                 )) }}
             </div>
 
@@ -208,4 +208,5 @@
         </div>
     </div>
 {% endblock %}
+
 
