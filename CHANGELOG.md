@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.50](https://github.com/Dannebicque/intranetV3/compare/v3.9.49...v3.9.50) (2022-11-22)
+
+
+### Features
+
+* [Edt] Boutons appels, edt, ... non disponible avant la date ([f089b48](https://github.com/Dannebicque/intranetV3/commit/f089b488b9127c4b3027c43f752370589df98188))
+* [Matomo] Suppression de la dépendance à Matomo ([4db0674](https://github.com/Dannebicque/intranetV3/commit/4db06746d5471783a3825636c39065ab4ba01cd3))
+
+
+### Bug Fixes
+
+* [icone] icone ([9c356d5](https://github.com/Dannebicque/intranetV3/commit/9c356d5ecd1eb3f428a2190c6908379531287089))
+* [Note/Absence] Filtre sur dashboard avec les parcours, des notes/Absences étaient manquantes ([121707b](https://github.com/Dannebicque/intranetV3/commit/121707b7f01b72de0b0de637d1d8e05ac6d72cc1))
+* [Notes] Affichage des notes sur le profil des étudiants ([48e1a52](https://github.com/Dannebicque/intranetV3/commit/48e1a52b8a3e0295ddbb72c71f9a86bd31ca5815))
+
 ### [3.9.49](https://github.com/Dannebicque/intranetV3/compare/v3.9.48...v3.9.49) (2022-11-18)
 
 
