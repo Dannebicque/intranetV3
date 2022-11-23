@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.51](https://github.com/Dannebicque/intranetV3/compare/v3.9.50...v3.9.51) (2022-11-23)
+
+
+### Features
+
+* [Notes/Absences] Mise en avant du bouton ajout justificatif et rattrapage ([136dc34](https://github.com/Dannebicque/intranetV3/commit/136dc3408df3acaefdd9793d7322bcd1824c0f34))
+* [Notifications] Refonte de la page listing des notifications + suppression "all" ([94bede1](https://github.com/Dannebicque/intranetV3/commit/94bede1bf6dfdb5a17d8cf985ef5135c0bd22a1b))
+
+
+### Bug Fixes
+
+* [Convention] Gestion du numéro de téléphone d'un pro (portable ou fixe) ([b1f189a](https://github.com/Dannebicque/intranetV3/commit/b1f189a781806566c4b2b8bd5a7c2ef90c59535e))
+* [Notes] Affichage des notes sur le profil des étudiants ([a0d9ec7](https://github.com/Dannebicque/intranetV3/commit/a0d9ec77438376fdb7d3b94ec5db7ce6ccf00093))
+* [Notes] Affichage des notes sur le profil des étudiants ([386b357](https://github.com/Dannebicque/intranetV3/commit/386b3570cea762a6fe82611b61a1df4f983b744b))
+* [Notifications] typo sur l'event déclenché ([886ad0b](https://github.com/Dannebicque/intranetV3/commit/886ad0bb3b0228fec22e150b4f9dc1d9f61c9678))
+
 ### [3.9.50](https://github.com/Dannebicque/intranetV3/compare/v3.9.49...v3.9.50) (2022-11-22)
 
 
