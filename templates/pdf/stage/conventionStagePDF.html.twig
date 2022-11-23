@@ -93,7 +93,8 @@
                     {{ proposition.entreprise.responsable.display }}</p>
                 <p>Qualité du représentant : <br>{{ proposition.entreprise.responsable.fonction }}</p>
                 <p>Service dans lequel le stage sera effectué : <br>{{ proposition.serviceStageEntreprise }}</p>
-                <p>Tél. : {{ proposition.entreprise.responsable.telephone }}</p>
+                <p>Tél. : {{ proposition.entreprise.responsable.telephone != null ? proposition.entreprise
+                    .responsable.telephone|tel_format : proposition.entreprise.responsable.portable|tel_format }}</p>
                 <p>Email : {{ proposition.entreprise.responsable.email }}</p>
                 <p>Lieu du stage (si différent de l’adresse de l’organisme) :</p>
                 {% if proposition.adresseStage != null %}
