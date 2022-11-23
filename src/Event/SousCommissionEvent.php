@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Event/SousCommissionEvent.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Event/SousCommissionEvent.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 09:46
+ * @lastUpdate 23/11/2022 07:31
  */
 
 namespace App\Event;
@@ -14,7 +14,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class SousCommissionEvent extends Event
 {
-    final public const PUBLISHED = 'sooscommission.publiee';
+    final public const PUBLISHED = 'souscommission.publiee';
 
     public function __construct(protected ScolaritePromo $scolaritePromo)
     {
