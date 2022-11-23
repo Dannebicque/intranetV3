@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/util.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 17/10/2022 21:57
+// @lastUpdate 23/11/2022 07:01
 
 import Swal from 'sweetalert2'
 import $ from 'jquery'
@@ -68,9 +68,8 @@ $(document).on('click', '.supprimer', function (e) {
       }).then((response) => {
         if (response.status === 200) {
           return response.json().then((body) => {
-            console.log(body.id)
-            const id = body.id
-            if (id.hasOwnProperty('redirect') && id.hasOwnProperty('url')) {
+            console.log(body)
+            if (body.hasOwnProperty('redirect') && body.hasOwnProperty('url')) {
               document.location.href = id.url
             } else {
               const ligne = getParentByTagName(e.target, 'tr')

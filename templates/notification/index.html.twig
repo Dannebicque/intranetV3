@@ -20,19 +20,50 @@
         <h4 class="card-title">
             {{ 'notification.heading'|trans }}
         </h4>
-        <div class="media-list media-list-hover media-list-divided">
-            {% for notification in user_data.notifications %}
-                <a class="media media-single {% if notification.lu == false %}media-new{% endif %} notification"
-                   href="{{ notification.url }}">
-                    <span class="avatar bg-{{ notification.color }}"><i class="{{ notification.icone }}"></i></span>
-                    <span class="title">{{ notification.type|trans }}</span>
-                    <time datetime="{{ notification.created|format_datetime('short', 'short') }}">{{ notification
-                        .created|time_ago(app.request.locale) }}</time>
-                </a>
-            {% else %}
-                <a class="media media-single notification"
-                   href="#">{{ 'aucune.notification'|trans }}</a>
-            {% endfor %}
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Notification</th>
+                    <th>Date</th>
+                    <th>Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for notification in notifications %}
+                    <tr class="{% if notification.lu == false %}bg-color{% endif %}" id="ligne_{{ notification.id }}">
+                        <td>
+                            <a class="me-2"
+                               href="{{ notification.url }}">
+                            <span class="avatar bg-{{ notification.color }}">
+                                <i class="{{ notification.icone }}"></i>
+                            </span>
+                            </a>
+                        <span class="title">{{ notification.type|trans }}</span></td>
+                        <td>
+                            <time datetime="{{ notification.created|format_datetime('short', 'short') }}">{{ notification.created|time_ago(app.request.locale) }}</time>
+                        </td>
+                        <td>
+                            <a href="{{ path('notification_delete', {id: notification.id}) }}"
+                               data-csrf="{{ csrf_token('delete' ~  notification.id) }}"
+                               class="btn btn-danger btn-sm supprimer"
+                               title="{{ 'atitle.supprimer'|trans }}"
+                               data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            >
+                                <i class="fas fa-trash"></i>
+                                <span class="sr-only">{{ 'atitle.supprimer'|trans }}</span>
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4" class="text-center">
+                            {{ 'aucune.notification'|trans }}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 {% endblock %}

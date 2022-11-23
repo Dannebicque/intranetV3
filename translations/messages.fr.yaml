@@ -343,6 +343,8 @@ adm:
     index.heading: 'Liste des questionnaires qualité du département'
     show.heading: 'Détails d''un questionnaire qualité'
     apercu.heading: 'Aperçu du questionnaire qualité'
+    resultats:
+      heading: 'Résultats du questionnaire qualité'
   questionnaire:
     qualite:
       index.heading: 'Liste des questionnaires qualité'
@@ -950,6 +952,7 @@ chgt:
   etat_stage_valide: 'Votre stage est validé'
   etat_stage_refuse: 'Proposition de stage refusée'
 
+souscommission.publiee: 'Résultats de la sous-commission publiés'
 choice:
   non: Non
   oui: Oui
@@ -1250,7 +1253,7 @@ groupes: Groupes
 groupes.parents.synchronises: 'Groupes Parents synchronisés'
 
 H: Heure
-heading.edt.dashboard: 'Votre emploi du temps'
+heading.edt.dashboard: 'Emploi du temps'
 
 help:
   validationSaisieAbsence: La saisie des absences impliquera une phase de validation, et non plus une saisie enregistrée automatiquement.

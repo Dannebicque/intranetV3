@@ -3,13 +3,13 @@
                             class="{{ iconNotification }}"></i><span
                             class="sr-only">Notifications</span></span>
     <div class="dropdown-menu dropdown-menu-right">
-        <div class="media-list media-list-hover media-list-divided media-list-xs">
+        <div class="media-list media-list-divided media-list-hover media-list-xs scrollable">
             {% for notification in notifications %}
-                <a class="media {% if notification.lu == false %}media-new{% endif %} notification"
+                <a class="media row {% if notification.lu == false %}media-new{% endif %} notification"
                    href="{{ path('notification_lire', {uuid:notification.uuidString}) }}">
-                                    <span class="avatar bg-{{ notification.color }}"><i
+                                    <span class="avatar bg-{{ notification.color }} col-3"><i
                                                 class="{{ notification.icone }}"></i></span>
-                    <div class="media-body">
+                    <div class="media-body col-9">
                         <p>{{ notification.type|trans }}</p>
                         <time datetime="{{ notification.created|format_datetime('medium', 'short') }}">{{ notification.created|time_ago(app.request.locale) }}</time>
                     </div>
@@ -31,9 +31,12 @@
                         <span class="sr-only">Marquer comme lu</span>
                     </i>
                 </a>
-                <a href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ 'update'|trans }}">
-                    <i class="fas fa-redo-alt">
-                        <span class="sr-only">Marquer comme lu</span>
+                <a href="{{ path('notification_delete_all') }}" class="supprimer"
+                   data-csrf="{{ csrf_token('delete') }}"
+                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+                   title="{{ 'supprimer.tout'|trans }}">
+                    <i class="fas fa-trash-alt">
+                        <span class="sr-only">Supprimer tout</span>
                     </i>
                 </a>
             </div>

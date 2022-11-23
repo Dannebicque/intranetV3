@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Notification.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:21
+ * @lastUpdate 23/11/2022 07:31
  */
 
 namespace App\Entity;
@@ -44,6 +44,7 @@ class Notification extends BaseEntity
         'chgt.emprunt.refus' => 'fas fa-ban',
         'decision.justificatif.acceptee' => 'fas fa-check',
         'decision.justificatif.refuse' => 'fas fa-ban',
+        'souscommission.publiee' => 'fas fa-square-poll-vertical',
     ];
 
     final public const TABCOLOR = [
@@ -65,6 +66,7 @@ class Notification extends BaseEntity
         'chgt.emprunt.refus' => 'danger',
         'decision.justificatif.acceptee' => 'success',
         'decision.justificatif.refuse' => 'danger',
+        'souscommission.publiee' => 'success',
     ];
 
     #[ORM\ManyToOne(targetEntity: Etudiant::class, inversedBy: 'notifications')]
