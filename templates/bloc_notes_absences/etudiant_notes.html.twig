@@ -1,5 +1,17 @@
 <div class="card">
-    <h4 class="card-title">{{ 'bloc.note.etu.heading'|trans }}</h4>
+    <header class="card-header">
+        <h4 class="card-title">{{ 'bloc.note.etu.heading'|trans }}</h4>
+        {% if is_granted('ROLE_ETUDIANT') %}
+            <div class="card-header-actions">
+                <a href="{{ path('application_index', {'onglet': 'rattrapage'}) }}" class="btn btn-sm btn-primary"
+                   title="Faire une demande de rattrapage"
+                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+                >
+                    <i class="fas fa-plus"></i> Faire une demande de rattrapage
+                </a>
+            </div>
+        {% endif %}
+    </header>
     <div class="card-body">
         <table class="table table-border table-striped">
             <thead>
