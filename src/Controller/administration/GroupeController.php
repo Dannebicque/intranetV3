@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/GroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/10/2022 17:51
+ * @lastUpdate 18/11/2022 08:54
  */
 
 namespace App\Controller\administration;
@@ -202,7 +202,7 @@ class GroupeController extends BaseController
                 'groupe.delete.success.flash'
             );
 
-            return $this->json($id, Response::HTTP_OK);
+            return $this->json(['id' => $id], Response::HTTP_OK);
         }
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'groupe.delete.error.flash');
 

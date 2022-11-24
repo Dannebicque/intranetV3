@@ -70,7 +70,7 @@
                 {% for option in parcours %}
                     <option value="{{ option.id }}" {% if (groupe.parcours != null and  groupe.parcours.id == option
                     .id) or (groupe.apcParcours != null and  groupe.apcParcours.id == option
-                    .id) %}selected{% endif %}>{{ option.libelle }}</option>
+                    .id) %}selected{% endif %}>{{ option.display }}</option>
                 {% endfor %}
             </select>
         {% else %}

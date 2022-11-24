@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcParcours.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2022 14:27
+ * @lastUpdate 24/11/2022 10:12
  */
 
 namespace App\Entity;
@@ -24,7 +24,7 @@ class ApcParcours extends BaseEntity
     use LifeCycleTrait;
     use ApogeeTrait;
 
-    //todo: ajouter couleur, et faire une déclinaison de couleur en badge
+    // todo: ajouter couleur, et faire une déclinaison de couleur en badge
 
     #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $libelle = null;
@@ -56,6 +56,9 @@ class ApcParcours extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'apcParcours', targetEntity: Groupe::class)]
     private Collection $groupes;
 
+    #[ORM\Column]
+    private ?bool $formationContinue = false;
+
     public function __construct(ApcReferentiel $apcReferentiel)
     {
         $this->setApcReferentiel($apcReferentiel);
@@ -67,6 +70,15 @@ class ApcParcours extends BaseEntity
     public function getLibelle(): ?string
     {
         return $this->libelle;
+    }
+
+    public function getDisplay(): ?string
+    {
+        if ($this->formationContinue) {
+            return $this->libelle.' (FC/Alt)';
+        }
+
+        return $this->libelle.' (FI)';
     }
 
     public function setLibelle(string $libelle): self
@@ -220,6 +232,18 @@ class ApcParcours extends BaseEntity
                 $groupe->setApcParcours(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isFormationContinue(): ?bool
+    {
+        return $this->formationContinue;
+    }
+
+    public function setFormationContinue(bool $formationContinue): self
+    {
+        $this->formationContinue = $formationContinue;
 
         return $this;
     }

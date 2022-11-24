@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/GroupeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2022 10:40
+ * @lastUpdate 24/11/2022 10:26
  */
 
 namespace App\Form;
@@ -67,12 +67,12 @@ class GroupeType extends AbstractType
                 'multiple' => false,
             ]);
 
-        if ($diplome !== null && $diplome->isApc()) {
+        if (null !== $diplome && $diplome->isApc()) {
             $builder->add('apcParcours', EntityType::class, [
                 'class' => ApcParcours::class,
                 'label' => 'label.parcours.but',
-                'choice_label' => 'libelle',
-                'query_builder' => fn(ApcParcoursRepository $parcourRepository
+                'choice_label' => 'display',
+                'query_builder' => fn (ApcParcoursRepository $parcourRepository
                 ) => $parcourRepository->findByDiplomeBuilder($diplome),
                 'required' => false,
                 'expanded' => false,
@@ -82,8 +82,8 @@ class GroupeType extends AbstractType
             $builder->add('parcours', EntityType::class, [
                 'class' => Parcour::class,
                 'label' => 'label.parcours',
-                'choice_label' => 'libelle',
-                'query_builder' => fn(ParcourRepository $parcourRepository
+                'choice_label' => 'display',
+                'query_builder' => fn (ParcourRepository $parcourRepository
                 ) => $parcourRepository->findBySemestreBuilder($this->semestre),
                 'required' => false,
                 'expanded' => false,

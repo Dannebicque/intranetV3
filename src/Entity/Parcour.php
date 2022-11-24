@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Parcour.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:21
+ * @lastUpdate 24/11/2022 10:34
  */
 
 namespace App\Entity;
@@ -58,6 +58,11 @@ class Parcour extends BaseEntity
         $this->libelle = $libelle;
 
         return $this;
+    }
+
+    public function getDisplay(): string
+    {
+        return $this->libelle;
     }
 
     /**
@@ -146,7 +151,6 @@ class Parcour extends BaseEntity
     {
         if ($this->groupes->contains($groupe)) {
             $this->groupes->removeElement($groupe);
-            // set the owning side to null (unless already changed)
             if ($groupe->getParcours() === $this) {
                 $groupe->setParcours(null);
             }
