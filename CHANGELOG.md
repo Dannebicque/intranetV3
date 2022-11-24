@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.52](https://github.com/Dannebicque/intranetV3/compare/v3.9.51...v3.9.52) (2022-11-24)
+
+
+### Features
+
+* [ApcParcours] Formation continue sur les parcours et affichage dans les groupes et formulaires ([7c7f52e](https://github.com/Dannebicque/intranetV3/commit/7c7f52e56f5a0fcef2059e8922b9cc0cbb064e7d))
+
 ### [3.9.51](https://github.com/Dannebicque/intranetV3/compare/v3.9.50...v3.9.51) (2022-11-23)
 
 
