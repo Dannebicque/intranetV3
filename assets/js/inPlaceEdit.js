@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/inPlaceEdit.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/09/2022 14:28
+// @lastUpdate 24/11/2022 19:15
 
 import { Popover } from 'bootstrap'
 import { addCallout } from './util'
@@ -82,7 +82,8 @@ export default class InPlaceEdit {
 
   createTextareaContent() {
     const input = this.createElement('textarea')
-    input.type = this.type
+    input.cols = 100
+    input.rows = 5
     input.value = this.value.trim()
     return this.createContainer(input)
   }
@@ -251,6 +252,7 @@ export default class InPlaceEdit {
     const form = new FormData()
     form.append('field', this.field)
     form.append('value', newValue)
+    form.append('type', this.type)
     const option = {}
     option.method = 'POST'
     option.body = form
@@ -263,5 +265,33 @@ export default class InPlaceEdit {
 
   error() {
     addCallout('Erreur lors de la mise à jour', 'error')
+  }
+
+  createDateContent() {
+    const input = this.createElement('input')
+    input.type = this.type
+    input.value = this.value.trim()
+    return this.createContainer(input)
+  }
+
+  createRadioContent() {
+    const input = this.createElement('input')
+    input.type = this.type
+    input.value = this.value.trim()
+    return this.createContainer(input)
+  }
+
+  createCheckboxContent() {
+    const input = this.createElement('input')
+    input.type = this.type
+    input.value = this.value.trim()
+    return this.createContainer(input)
+  }
+
+  createSelectContent() {
+    const input = this.createElement('input')
+    input.type = this.type
+    input.value = this.value.trim()
+    return this.createContainer(input)
   }
 }
