@@ -146,7 +146,7 @@
                            data-field="dateFinStage"
                            data-type="date"
                            data-href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
-                           title="Corriger la date de début du stage">
+                           title="Corriger la date de fin du stage">
                             {{ stageEtudiant.dateFinStage ? stageEtudiant.dateFinStage|format_date('short') : '' }}
                         </a>
                     </td>
@@ -179,7 +179,7 @@
                            data-field="sujetStage"
                            data-type="textarea"
                            data-href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
-                           title="Corriger le numéro de fax">
+                           title="Corriger le sujet du stage">
                             {{ stageEtudiant.sujetStage|raw }}
                         </a>
                     </td>
@@ -190,7 +190,7 @@
                            data-field="activites"
                            data-type="textarea"
                            data-href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
-                           title="Corriger le numéro de fax">
+                           title="Corriger les activités du stage">
                             {{ stageEtudiant.activites }}
                         </a>
                     </td>
@@ -202,7 +202,7 @@
                            data-field="amenagementStage"
                            data-type="textarea"
                            data-href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
-                           title="Corriger le numéro de fax">
+                           title="Corriger les aménagements du stage">
                             {{ stageEtudiant.amenagementStage }}
                         </a>
                     </td>
@@ -240,7 +240,7 @@
                         <a class="editable"
                            data-field="avantages"
                            data-href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
-                           title="Corriger le numéro de fax">
+                           title="Corriger les avantages du stage">
                             {{ stageEtudiant.avantages }}
                         </a></td>
                 </tr>
