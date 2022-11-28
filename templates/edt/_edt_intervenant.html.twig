@@ -38,8 +38,7 @@
 
                             <div class="session-footer">
                                 <div class="row no-gutters ">
-                                    {% if 'now'|date('Y-m-d') >= edt[j][ligne].date|date('Y-m-d') and 'now'|date('H:i') >=
-                                        edt[j][ligne].heureDebut|date('H:i') %}
+                                    {% if date(edt[j][ligne].date) <= date() %}
                                         <div class="col-4 d-grid d-block">
                                             <button
                                                     {{ stimulus_controller('modal', {
