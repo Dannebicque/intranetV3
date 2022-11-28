@@ -93,8 +93,7 @@
                     {{ proposition.entreprise.responsable.display }}</p>
                 <p>Qualité du représentant : <br>{{ proposition.entreprise.responsable.fonction }}</p>
                 <p>Service dans lequel le stage sera effectué : <br>{{ proposition.serviceStageEntreprise }}</p>
-                <p>Tél. : {{ proposition.entreprise.responsable.telephone != null ? proposition.entreprise
-                    .responsable.telephone|tel_format : proposition.entreprise.responsable.portable|tel_format }}</p>
+                <p>Tél. : {{ proposition.entreprise.responsable.telephone != null ? proposition.entreprise.responsable.telephone|tel_format : proposition.entreprise.responsable.portable|tel_format }}</p>
                 <p>Email : {{ proposition.entreprise.responsable.email }}</p>
                 <p>Lieu du stage (si différent de l’adresse de l’organisme) :</p>
                 {% if proposition.adresseStage != null %}
@@ -146,8 +145,7 @@
                 <p>Commentaire : {{ proposition.commentaireDureeHebdomadaire }}.
                     {% if proposition.stagePeriode.stagePeriodeInterruptions|length > 0 %}Période(s) d'interruption(s) : {% for inter in
                         proposition.stagePeriode.stagePeriodeInterruptions %}
-                        du {{ inter.dateDebut|date('d/m/Y') }} au {{ inter.dateFin|date('d/m/Y') }}{% if not loop
-                            .last %},{% endif %}
+                        du {{ inter.dateDebut|date('d/m/Y') }} au {{ inter.dateFin|date('d/m/Y') }}{% if not loop.last %},{% endif %}
                     {% endfor %}
                     {% endif %}
                 </p><br>
@@ -185,13 +183,14 @@
                     <p>Nom et prénom :
                         {{ proposition.tuteur.display }}</p>
                     <p>Fonction : {{ proposition.tuteur.fonction }}</p>
-                    <p>Tél. : {{ proposition.tuteur.telephone|tel_format }} </p>
+                    <p>Tél. : {{ proposition.tuteur.telephone != null ? proposition.tuteur.telephone|tel_format :
+                        proposition.tuteur.portable|tel_format }}</p>
                     <p>Email : {{ proposition.tuteur.email }}</p>
                 {% else %}
                     <p>Nom et prénom :
                         {{ proposition.entreprise.responsable.display }} </p>
                     <p>Fonction : {{ proposition.entreprise.responsable.fonction }}</p>
-                    <p>Tél. : {{ proposition.entreprise.responsable.telephone|tel_format }} </p>
+                    <p>Tél. : {{ proposition.entreprise.responsable.telephone != null ? proposition.entreprise.responsable.telephone|tel_format : proposition.entreprise.responsable.portable|tel_format }}</p>
                     <p>Email : {{ proposition.entreprise.responsable.email }}</p>
                 {% endif %}
             </td>
@@ -746,7 +745,7 @@
                 <p>Adresse
                    : {% if proposition.entreprise.adresse != null %}{{ proposition.entreprise.adresse.display|striptags }}{% endif %}
                 </p>
-                <p>Tél. : {{ proposition.entreprise.responsable.telephone|tel_format }}</p>
+                <p>Tél. : {{ proposition.entreprise.responsable.telephone != null ? proposition.entreprise.responsable.telephone|tel_format : proposition.entreprise.responsable.portable|tel_format }}</p>
             </td>
         </tr>
     </table>
