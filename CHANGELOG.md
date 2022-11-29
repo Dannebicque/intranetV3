@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.53](https://github.com/Dannebicque/intranetV3/compare/v3.9.52...v3.9.53) (2022-11-29)
+
+
+### Bug Fixes
+
+* [Edt] affichage des boutons sur les événements précédents ([81f0ff6](https://github.com/Dannebicque/intranetV3/commit/81f0ff6741056016081f78417deb9989129c35ab))
+* [Stage] Téléphone ou portable ([9766aeb](https://github.com/Dannebicque/intranetV3/commit/9766aeb7c953bcf43d511a26a60af4d421102fe2))
+* [Stage/InPlace] Gestion de l'édition en ligne sur textarea et type par défaut ([1c925a4](https://github.com/Dannebicque/intranetV3/commit/1c925a448d99d2fb6a8a9e9a7e6c7e33206b17fd))
+* [Stage/InPlace] Libellés des zones d'édition ([337ff8b](https://github.com/Dannebicque/intranetV3/commit/337ff8b8a7c7be7ce1382c9483fd13871ef45cf0))
+
 ### [3.9.52](https://github.com/Dannebicque/intranetV3/compare/v3.9.51...v3.9.52) (2022-11-24)
 
 
