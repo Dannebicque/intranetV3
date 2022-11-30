@@ -11,7 +11,7 @@
             </div>
             <div class="col-sm-6 text-center">
                 <h1></h1>
-                <h2>Remise des diplômes 2021</h2>
+                <h2>Remise des diplômes 2022</h2>
             </div>
             <div class="col-sm-3 text-center">
                 <img src="{{ asset('upload/logo/'~settings('LOGO_UNIVERSITE')) }}" alt="logo" width="100px"/>
@@ -34,21 +34,17 @@
 
                         <p>Vous êtes diplômés de l'IUT de Troyes et nous vous en félicitons !</p>
 
-                        <p>Cette année, les événements nous obligent à ne pas organiser notre traditionnelle cérémonie
-                           de
-                           remise des diplômes qui a habituellement lieu le dernier samedi de novembre.</p>
+                        <p>Cette année, vos diplômes vont vous être adressés par courrier.</p>
 
-                        <p>Vos diplômes vont donc vous être adressés par courrier.</p>
+                        <p>Merci de nous confirmer l'adresse postale à laquelle vous souhaitez recevoir votre diplôme,
+                           en remplissant ce formulaire en ligne avant le 08/12/2022.</p>
+{#                        <p>Un premier envoi des diplômes aura lieu après la date limite de réponse au #}
+{#                           formulaire fixé au 8/12/2022.#}
 
-{#                        <p>Merci de nous confirmer l'adresse postale à laquelle vous souhaitez recevoir votre diplôme,#}
-{#                           en#}
-{#                           remplissant ce formulaire en ligne avant le 08/12/2021.</p>#}
-                        <p>Un premier envoi des diplômes a eu lieu comme convenu après la date limite de réponse au formulaire du 8/12.
+{#                           Si vous n’avez pas pu répondre au formulaire, vous pouvez encore y répondre pour que votre diplôme vous soit envoyé en janvier.#}
 
-                           Si vous n’avez pas pu répondre au formulaire, vous pouvez encore y répondre pour que votre diplôme vous soit envoyé en janvier.
-
-                           Pour cela, merci d’y répondre avant le 6/01/2022 au plus tard.
-                        </p>
+{#                           Pour cela, merci d’y répondre avant le 6/01/2022 au plus tard.#}
+{#                        </p>#}
 
                         <p>Bonne continuation !</p>
 
@@ -71,9 +67,8 @@
                                 En
                                 cas
                                 de difficulté, vous pouvez contacter la scolarité de l'IUT de Troyes : <a
-                                        href="mailto:scolarite.iut-troyes@univ-reims.fr" target="_blank">Par
-                                                                                                         email</a> ou 03
-                                25 42 46 46.
+                                        href="mailto:scolarite.iut-troyes@univ-reims.fr" target="_blank">
+                                    Par email</a> ou 03 25 42 46 04.
                             </div>
                             <br>
                         {% endif %}
@@ -120,7 +115,7 @@
                                         </div>
                                         <div class="col-sm-12 col-md-3">
                                             <select id="annee" name="annee" class="form-select">
-                                                {% for i in 1960..2002 %}
+                                                {% for i in 1960..2004 %}
                                                     <option value="{{ i }}">{{ i }}</option>
                                                 {% endfor %}
                                             </select>
