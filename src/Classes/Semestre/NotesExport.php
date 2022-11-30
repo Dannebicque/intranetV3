@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Semestre/NotesExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/11/2022 16:53
+ * @lastUpdate 30/11/2022 17:15
  */
 
 /*
@@ -102,8 +102,9 @@ class NotesExport
                         $this->myExcel->writeCellXY($colonne, $ligne,
                             '-');
                     }
+                    ++$colonne;
                 }
-                ++$colonne;
+
             }
         }
 
