@@ -2,7 +2,9 @@
 # @file /Users/davidannebicque/Sites/intranetV3/update.sh
 # @author davidannebicque
 # @project intranetV3
-# @lastUpdate 09/10/2022 16:43
+# @lastUpdate 18/11/2022 08:54
+
+#!/usr/bin/env bash
 
 touch maintenance.lock
 echo "Début mise à jour"

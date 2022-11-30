@@ -29,6 +29,9 @@
     "dasprid/enum": {
         "version": "1.0.3"
     },
+    "davidannebicque/table-bundle": {
+        "version": "dev-main"
+    },
     "dealerdirect/phpcodesniffer-composer-installer": {
         "version": "v0.7.1"
     },

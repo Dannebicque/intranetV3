@@ -2,6 +2,5 @@ cas_return:
   path: /sso/cas
 
 live_component:
-  resource: '@LiveComponentBundle/Resources/config/routing/live_component.xml'
-  # uncomment to add localization to your components
-  prefix: '/{_locale}'
+  resource: '@LiveComponentBundle/config/routes.php'
+  prefix: '/{_locale}/_components'
