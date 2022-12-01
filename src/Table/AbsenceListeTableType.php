@@ -4,23 +4,23 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/AbsenceListeTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/09/2022 14:23
+ * @lastUpdate 18/11/2022 08:54
  */
 
 namespace App\Table;
 
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyAbsences;
-use App\Components\Table\Column\BadgeSeuilColumnType;
-use App\Components\Table\Column\PropertyColumnType;
-use App\Components\Table\Column\WidgetColumnType;
-use App\Components\Table\DTO\TableResult;
-use App\Components\Table\DTO\TableState;
-use App\Components\Table\TableBuilder;
-use App\Components\Table\TableType;
-use App\Components\Widget\Type\ExportDropdownType;
-use App\Components\Widget\Type\RowLinkType;
-use App\Components\Widget\WidgetBuilder;
+use DavidAnnebicque\TableBundle\Column\BadgeSeuilColumnType;
+use DavidAnnebicque\TableBundle\Column\PropertyColumnType;
+use DavidAnnebicque\TableBundle\Column\WidgetColumnType;
+use DavidAnnebicque\TableBundle\DTO\TableResult;
+use DavidAnnebicque\TableBundle\DTO\TableState;
+use DavidAnnebicque\TableBundle\TableBuilder;
+use DavidAnnebicque\TableBundle\TableType;
+use DavidAnnebicque\TableBundle\Widget\Type\ExportDropdownType;
+use DavidAnnebicque\TableBundle\Widget\Type\RowLinkType;
+use DavidAnnebicque\TableBundle\Widget\WidgetBuilder;
 use App\DTO\AbsencesEtudiant;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Semestre;

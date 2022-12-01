@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/AbsenceEtatAppelRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/09/2022 20:40
+ * @lastUpdate 01/12/2022 08:10
  */
 
 namespace App\Repository;
 
 use App\Entity\AbsenceEtatAppel;
 use App\Entity\Personnel;
+use App\Entity\Semestre;
 use Carbon\CarbonImmutable;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -68,5 +69,21 @@ class AbsenceEtatAppelRepository extends ServiceEntityRepository
         }
 
         return $t;
+    }
+
+    public function findBySemestreEtat(Semestre $semestre): array
+    {
+        return $this->findBySemestre($semestre);
+    }
+
+    private function findBySemestre(Semestre $semestre)
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.semestre = :semestre')
+            ->setParameters([
+                'semestre' => $semestre,
+            ])
+            ->getQuery()
+            ->getResult();
     }
 }

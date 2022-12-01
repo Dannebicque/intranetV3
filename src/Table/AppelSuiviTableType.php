@@ -4,22 +4,14 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/AppelSuiviTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2022 20:37
+ * @lastUpdate 18/11/2022 08:54
  */
 
 namespace App\Table;
 
 use App\Classes\Edt\EdtManager;
 use App\Classes\Matieres\TypeMatiereManager;
-use App\Components\Table\Adapter\EntityAdapter;
-use App\Components\Table\Column\DateColumnType;
-use App\Components\Table\Column\PropertyColumnType;
-use App\Components\Table\DTO\TableResult;
-use App\Components\Table\DTO\TableState;
-use App\Components\Table\TableBuilder;
-use App\Components\Table\TableType;
-use App\Components\Widget\Type\ExportDropdownType;
-use App\Entity\AbsenceEtatAppel;
+use DavidAnnebicque\TableBundle\Widget\Type\ExportDropdownType;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Rattrapage;
 use App\Entity\Semestre;
@@ -28,7 +20,12 @@ use App\Form\Type\SearchType;
 use App\Repository\GroupeRepository;
 use App\Table\ColumnType\MatiereColumnType;
 use App\Table\ColumnType\StatusAppelFaitColumnType;
-use Doctrine\ORM\QueryBuilder;
+use DavidAnnebicque\TableBundle\Column\DateColumnType;
+use DavidAnnebicque\TableBundle\Column\PropertyColumnType;
+use DavidAnnebicque\TableBundle\DTO\TableResult;
+use DavidAnnebicque\TableBundle\DTO\TableState;
+use DavidAnnebicque\TableBundle\TableBuilder;
+use DavidAnnebicque\TableBundle\TableType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 

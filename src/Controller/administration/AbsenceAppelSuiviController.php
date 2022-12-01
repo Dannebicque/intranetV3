@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AbsenceAppelSuiviController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2022 19:09
+ * @lastUpdate 01/12/2022 06:55
  */
 
 namespace App\Controller\administration;
@@ -39,7 +39,7 @@ class AbsenceAppelSuiviController extends BaseController
     ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
 
-        $statsAppel = $this->absenceEtatAppel->getBySemestre($semestre);
+        $statsAppel = $this->absenceEtatAppel->getBySemestre($semestre, $this->getAnneeUniversitaire());
         $matieres = $typeMatiereManager->findBySemestreArray($semestre);
         $groupes = $groupeRepository->findBySemestre($semestre);
         $table = $this->createTable(AppelSuiviTableType::class, [
@@ -72,7 +72,7 @@ class AbsenceAppelSuiviController extends BaseController
     ): ?Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
         // todo: gérer l'export passer par un DTO, et l'injecter aussi dans le table de l'index
-        $statsAppel = $this->absenceEtatAppel->getBySemestre($semestre);
+        $statsAppel = $this->absenceEtatAppel->getBySemestre($semestre, $this->getAnneeUniversitaire());
 //        $datas = new DtoSourceIterator($statsAppel, AbsenceEtatAppel::class);
 //
 //        return $exporterManager->export($datas, $_format, 'dates');

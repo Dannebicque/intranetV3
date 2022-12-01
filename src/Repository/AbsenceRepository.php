@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/AbsenceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/09/2022 20:03
+ * @lastUpdate 01/12/2022 08:10
  */
 
 namespace App\Repository;
@@ -260,5 +260,10 @@ class AbsenceRepository extends ServiceEntityRepository
         }
 
         return $t;
+    }
+
+    public function findBySemestreEtat(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): array
+    {
+        return $this->getBySemestre($semestre, $anneeUniversitaire);
     }
 }

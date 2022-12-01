@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/EvenementEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/10/2022 09:19
+ * @lastUpdate 01/12/2022 07:52
  */
 
 namespace App\DTO;
@@ -165,7 +165,7 @@ class EvenementEdt
     public function appelFait(): ?string
     {
         if (null !== $this->dateObjet && null !== $this->heureDebut) {
-            return $this->dateObjet->format('Ymd').'_'.$this->heureDebut->format('Hi').'_'.$this->getTypeMatiere();
+            return $this->dateObjet->format('Ymd').'_'.$this->heureDebut->format('Hi').'_'.$this->typeIdMatiere.'_'.$this->ordreGroupe;
         }
 
         return null;

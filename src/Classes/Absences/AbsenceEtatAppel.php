@@ -1,23 +1,28 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Absences/AbsenceEtatAppel.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Absences/AbsenceEtatAppel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 19:44
+ * @lastUpdate 01/12/2022 08:10
  */
 
 namespace App\Classes\Absences;
 
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Semestre;
 use App\Repository\AbsenceEtatAppelRepository;
+use App\Repository\AbsenceRepository;
 use App\Utils\Tools;
 use App\Utils\ToolsMatiere;
 use Doctrine\ORM\EntityManagerInterface;
 
 class AbsenceEtatAppel
 {
-    public function __construct(private readonly AbsenceEtatAppelRepository $absenceEtatAppelRepository, private readonly EntityManagerInterface $entityManager)
+    public function __construct(
+        private readonly AbsenceEtatAppelRepository $absenceEtatAppelRepository,
+        private readonly AbsenceRepository $absenceRepository,
+        private readonly EntityManagerInterface $entityManager)
     {
     }
 
@@ -61,14 +66,17 @@ class AbsenceEtatAppel
         ]);
     }
 
-    public function getBySemestre(Semestre $semestre): array
+    public function getBySemestre(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): array
     {
-        $abs = $this->absenceEtatAppelRepository->findBy(['semestre' => $semestre->getId()]);
+        $suiviAppel[] = $this->absenceEtatAppelRepository->findBySemestreEtat($semestre);
+        $suiviAppel[] = $this->absenceRepository->findBySemestreEtat($semestre, $anneeUniversitaire);
+        $suiviAppel = array_merge_recursive(...$suiviAppel);
+
         $tab = [];
         $tab['statistiques']['nbcours'] = 0;
         $tab['statistiques']['nbsaisie'] = 0;
 
-        foreach ($abs as $ab) {
+        foreach ($suiviAppel as $ab) {
             if (null !== $ab->getDate() && null !== $ab->getHeure() && null !== $ab->getGroupe()) {
                 if (!array_key_exists($ab->getDate()->format('Ymd'), $tab)) {
                     $tab[$ab->getDate()->format('Ymd')] = [];
@@ -78,15 +86,15 @@ class AbsenceEtatAppel
                 }
                 if (!array_key_exists($ab->getHeure()->format('H:i'),
                     $tab[$ab->getDate()->format('Ymd')][$ab->getTypeIdMatiere()])) {
-                    $tab[$ab->getDate()->format('Ymd')][$ab->getTypeIdMatiere()][$ab->getHeure()->format('H:i')] = [];
+                    $tab[$ab->getDate()->format('Ymd')][$ab->getTypeIdMatiere()][$ab->getHeure()->format('Hi')] = [];
                 }
                 if (!array_key_exists($ab->getGroupe()->getOrdre(),
-                    $tab[$ab->getDate()->format('Ymd')][$ab->getTypeIdMatiere()][$ab->getHeure()->format('H:i')])) {
+                    $tab[$ab->getDate()->format('Ymd')][$ab->getTypeIdMatiere()][$ab->getHeure()->format('Hi')])) {
                     // todo: ordre risuqe de buguer... faudrait un type+ordre?
-                    $tab[$ab->getDate()->format('Ymd')][$ab->getTypeIdMatiere()][$ab->getHeure()->format('H:i')][$ab->getGroupe()->getOrdre()] = [];
+                    $tab[$ab->getDate()->format('Ymd')][$ab->getTypeIdMatiere()][$ab->getHeure()->format('Hi')][$ab->getGroupe()->getOrdre()] = [];
                 }
 
-                $tab[$ab->getDate()->format('Ymd')][$ab->getTypeIdMatiere()][$ab->getHeure()->format('H:i')][$ab->getGroupe()->getOrdre()] = $ab->getTypeSaisie();
+                $tab[$ab->getDate()->format('Ymd')][$ab->getTypeIdMatiere()][$ab->getHeure()->format('Hi')][$ab->getGroupe()->getOrdre()] = $ab->getTypeSaisie();
             }
         }
 
