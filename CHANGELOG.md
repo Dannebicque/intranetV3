@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.57](https://github.com/Dannebicque/intranetV3/compare/v3.9.56...v3.9.57) (2022-12-01)
+
+
+### Bug Fixes
+
+* [Export Notes] Export Excel de toutes les notes, décalages ([905265f](https://github.com/Dannebicque/intranetV3/commit/905265fe1d0f9e9ade4a13cf56391962ac4063ba))
+* [Export Notes] Export Excel de toutes les notes, décalages ([8826646](https://github.com/Dannebicque/intranetV3/commit/88266469b8d3563b03551adaa3641c90af0f0785))
+* [Suivi Appel] Suivi des appels fait ([b576e55](https://github.com/Dannebicque/intranetV3/commit/b576e5584ea4aaa8e74b458edb80db63fcd46d5a))
+
 ### [3.9.56](https://github.com/Dannebicque/intranetV3/compare/v3.9.55...v3.9.56) (2022-11-30)
 
 
