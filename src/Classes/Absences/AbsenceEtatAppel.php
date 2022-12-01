@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Absences/AbsenceEtatAppel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/12/2022 08:10
+ * @lastUpdate 01/12/2022 13:22
  */
 
 namespace App\Classes\Absences;
@@ -22,8 +22,8 @@ class AbsenceEtatAppel
     public function __construct(
         private readonly AbsenceEtatAppelRepository $absenceEtatAppelRepository,
         private readonly AbsenceRepository $absenceRepository,
-        private readonly EntityManagerInterface $entityManager)
-    {
+        private readonly EntityManagerInterface $entityManager
+    ) {
     }
 
     /**
@@ -69,7 +69,8 @@ class AbsenceEtatAppel
     public function getBySemestre(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): array
     {
         $suiviAppel[] = $this->absenceEtatAppelRepository->findBySemestreEtat($semestre);
-        $suiviAppel[] = $this->absenceRepository->findBySemestreEtat($semestre, $anneeUniversitaire);
+        //   $suiviAppel[] = $this->absenceRepository->findBySemestreEtat($semestre, $anneeUniversitaire);
+        //passer par un DTO???
         $suiviAppel = array_merge_recursive(...$suiviAppel);
 
         $tab = [];
