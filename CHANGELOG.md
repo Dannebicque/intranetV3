@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.9.58](https://github.com/Dannebicque/intranetV3/compare/v3.9.57...v3.9.58) (2022-12-01)
+
+
+### Features
+
+* [Stage] Nouveau formulaire de stage, mise en place depuis https://github.com/CyndelHerolt/Formulaire_Stage_Etudiant/ ([3c17138](https://github.com/Dannebicque/intranetV3/commit/3c171388a1cdc48bc798dad8a679e4c1a92d0b79))
+
+
+### Bug Fixes
+
+* [Suivi Appel] Suivi des appels fait ([00fc726](https://github.com/Dannebicque/intranetV3/commit/00fc726203035765299b5a06fd7f53eac7292cd3))
+* [Suivi Appel] Suivi des appels fait ([59de55b](https://github.com/Dannebicque/intranetV3/commit/59de55b6d846c21905c04c81e89935fd8143acf9))
+
 ### [3.9.57](https://github.com/Dannebicque/intranetV3/compare/v3.9.56...v3.9.57) (2022-12-01)
 
 
