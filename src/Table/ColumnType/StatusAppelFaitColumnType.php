@@ -1,15 +1,15 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/ColumnType/StatusAppelFaitColumnType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Table/ColumnType/StatusAppelFaitColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/10/2021 12:14
+ * @lastUpdate 01/12/2022 08:05
  */
 
 namespace App\Table\ColumnType;
 
-use App\Components\Table\Column\PropertyColumnType;
+use DavidAnnebicque\TableBundle\Column\PropertyColumnType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -23,18 +23,26 @@ class StatusAppelFaitColumnType extends PropertyColumnType
     public function renderProperty(mixed $value, array $options): string
     {
         $statsAppel = $options['statsAppel'];
-        $elt = explode('_', (string) $value); // 'dmY_typeIdMatiere_heure_groupeId'
-
-        if (array_key_exists($elt[0], $statsAppel) &&
-            array_key_exists($elt[1], $statsAppel[0]) &&
-            array_key_exists($elt[2], $statsAppel[0][1]) &&
-            array_key_exists($elt[3], $statsAppel[0][1][2])) {
-            return '<span class="badge bg-success">'.$this->translator->trans($statsAppel[0][1][2][3],
-                            ['domain' => 'messages']).'</span>';
+        $elt = explode('_', (string)$value); // 'dmY_typeIdMatiere_heure_groupeId'
+//        dump($elt);
+//        dump($statsAppel);
+//        die();
+        if (count($elt) === 5) {
+            $date = $elt[0];
+            $heure = $elt[1];
+            $groupeId = $elt[4];
+            $typeIdMatiere = $elt[2].'_'.$elt[3];
+            if (is_array($statsAppel) && array_key_exists($date, $statsAppel) &&
+                array_key_exists($typeIdMatiere, $statsAppel[$date]) &&
+                array_key_exists($heure, $statsAppel[$date][$typeIdMatiere]) &&
+                array_key_exists($groupeId, $statsAppel[$date][$typeIdMatiere][$heure])) {
+                return '<span class="badge bg-success">' . $this->translator->trans($statsAppel[$date][$typeIdMatiere][$heure][$groupeId],
+                        ['domain' => 'messages']) . '</span>';
+            }
         }
 
-        return '<span class="badge bg-warning">'.$this->translator->trans('pas.d.absence.saisie',
-                ['domain' => 'messages']).'</span>';
+        return '<span class="badge bg-warning">' . $this->translator->trans('pas.d.absence.saisie',
+                ['domain' => 'messages']) . '</span>';
     }
 
     public function configureOptions(
