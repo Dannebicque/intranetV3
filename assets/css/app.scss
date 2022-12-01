@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/10/2022 18:51
+// @lastUpdate 01/12/2022 15:59
 
 @import "./theme-troyes.scss";
 @import "./theme-rcc.scss";
@@ -15,12 +15,16 @@ $dropdown-link-hover-bg:            var(--colorIUT);
 
 
 @import "./theme.scss";
+@import "./_nav_process.scss";
 @import "./_layout.scss";
 @import "./color.scss";
 @import "./apc.scss";
 @import "./_toolbar.scss";
 @import "./_edt.scss";
+@import "./questionnaire.scss";
 @import "perfect-scrollbar.css";
+
+@import "./_formulaire.scss";
 
 // FlatPickr
 @import "~flatpickr";

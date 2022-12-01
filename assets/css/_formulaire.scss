@@ -1,0 +1,271 @@
+// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/Sites/intranetV3/assets/css/_formulaire.scss
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 01/12/2022 21:03
+
+body {
+  background-color: #F5F6FA !important;
+
+  .formulaire {
+    //width: 80%;
+    //margin: 50px auto;
+
+    .card {
+      margin: 0 auto;
+      background-color: white;
+      font-size: 14px;
+
+      .card-body {
+        padding: 35px;
+
+        .modal-footer {
+          justify-content: space-between !important;
+
+          .btn {
+            background-color: #4D3677 !important;
+            color: #fff !important;
+            border: none;
+          }
+        }
+
+        .nav-process {
+          margin: 25px 0;
+        }
+
+        .nav-item.complete .nav-link {
+          background-color: #F7B000;
+
+          .nav-link-number {
+            color: #F7B000;
+          }
+          .nav-link-body {
+            color: white;
+          }
+        }
+
+        .nav-item .nav-link {
+          background-color: rgba(250, 188, 37, 0.33);
+          color: #4D3677;
+          padding: 10px;
+          margin: 4px 0;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+
+          .nav-link-number {
+            color: #4D3677;
+          }
+          .nav-link-body {
+            padding: 10px 0 0 0;
+          }
+        }
+        .nav-item .nav-link:hover {
+          text-decoration: none;
+        }
+
+        .form-control:focus {
+          border-color: #4D3677;
+          box-shadow: none;
+        }
+
+        .form-info {
+          background-color: #fff2cd;
+          width: 100%;
+          padding: 10px 20px;
+        }
+
+        .form-rows {
+          margin-top: 25px;
+
+          .form-main {
+
+            form {
+              display: flex;
+              justify-content: space-between;
+              flex-wrap: wrap;
+
+              .mb-3 {
+                width: 45%;
+              }
+            }
+
+            .mission {
+              display: flex;
+              flex-direction: column;
+              width: 100%;
+
+            .mb-3 {
+              width: 100%;
+            }
+            }
+          }
+
+          .form-group-adresse {
+
+            #adresseliste, #adresselisteEntreprise, #adresselisteStage {
+              padding: 0;
+              list-style: none;
+              border-right: solid .5px #ebebeb;
+              border-left: solid .5px #ebebeb;
+
+              li {
+                margin: 0;
+                padding: 10px 0 10px 20px;
+                border-bottom: solid .5px #ebebeb;
+              }
+
+              li:hover {
+                background-color: lightgray;
+              }
+            }
+
+            .form-champs-adresse {
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: space-between;
+
+              .mb-3 {
+                width: 45%;
+              }
+            }
+
+            .form-btn-verif {
+              .mb-3 {
+                margin: 0 !important;
+
+                button {
+                  margin: 10px 0 0 0 !important;
+                  background-color: #4D3677;
+                  color: white;
+                  font-size: 14px;
+                }
+              }
+            }
+          }
+
+          .form-btn-multiple {
+            display: flex;
+            justify-content: space-between;
+
+            .form-btn-help-precedent {
+              display: flex;
+              flex-direction: column;
+              align-items: flex-start;
+
+              .mb-3 {
+                margin: 0 !important;
+
+                .btn-precedent {
+                  margin: 10px 0 0 0;
+                  background-color: #F7B000FF;
+                  color: white;
+                  font-size: 14px;
+                }
+              }
+            }
+
+            .form-btn-help-suivant {
+              display: flex;
+              flex-direction: column;
+              align-items: flex-end;
+
+              .mb-3 {
+                margin: 0 !important;
+
+                .btn-suivant {
+                  margin: 10px 0 0 0;
+                  background-color: #F7B000FF;
+                  color: white;
+                  font-size: 14px;
+                }
+                .btn-final {
+                  background-color: greenyellow;
+                }
+              }
+            }
+          }
+
+          .form-btn-alone {
+            display: flex;
+            justify-content: flex-end;
+
+            .form-btn-help {
+              display: flex;
+              flex-direction: column;
+              align-items: flex-end;
+
+              .mb-3 {
+                margin: 0 !important;
+              }
+            }
+
+            .btn-suivant {
+              margin: 10px 0 0 0;
+              background-color: #F7B000FF;
+              color: white;
+              font-size: 14px;
+            }
+          }
+
+          .form-btn-recup {
+            display: flex;
+            width: 100%;
+            height: 40px;
+            background-color: #fff2cd;
+            align-items: center;
+            padding: 10px 0;
+            margin-bottom: 20px;
+
+            p {
+              padding-left: 20px;
+              margin: 0;
+            }
+
+            .mb-3 {
+              width: auto !important;
+              margin: 0 0 0 0 !important;
+            }
+
+            button {
+              background-color: #4D3677;
+              color: white !important;
+              font-size: 14px;
+              border: none;
+              height: 40px;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  #gratif {
+    width: 45%;
+
+    .mb-3 {
+      width: 100%;
+      border: none;
+    }
+  }
+
+  #gratif_opt1 {
+    width: 45%;
+
+    .mb-3 {
+      width: 100% !important;
+      border: none;
+    }
+  }
+
+  #gratif_opt2 {
+    width: 45%;
+
+    .mb-3 {
+      width: 100% !important;
+      border: none;
+    }
+  }
+}
+
+

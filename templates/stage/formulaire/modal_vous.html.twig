@@ -1,0 +1,10 @@
+<p class="form-info">Veuillez confirmer l’exactitude des informations saisies précédemment.</p>
+
+<p class="confirm_infos">Organisme de sécurité sociale : {{ stageEtudiant.etudiant.intituleSecuriteSociale }}</p>
+<p class="confirm_infos">Adresse de l'organisme : {{ stageEtudiant.etudiant.adresseSecuriteSociale }}</p>
+<p class="confirm_infos">Votre adresse : {{ stageEtudiant.etudiant.adresse != null ? stageEtudiant.etudiant
+    .adresse.display|raw : 'A compléter' }}
+</p>
+<p class="confirm_infos">Votre numéro de téléphone : {{ stageEtudiant.etudiant.tel1|tel_format }}</p>
+<p class="confirm_infos">Votre email personnel : {{ stageEtudiant.etudiant.mailPerso }}</p>
+
