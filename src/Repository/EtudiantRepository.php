@@ -39,25 +39,6 @@ class EtudiantRepository extends ServiceEntityRepository
         parent::__construct($registry, Etudiant::class);
     }
 
-//    public function getData(int | string $getId): array
-//    {
-//        $etudiants = $this->findBySemestre($getId);
-//        $tab = [];
-//        /** @var Etudiant $etudiant */
-//        foreach ($etudiants as $etudiant) {
-//            $t = [];
-//
-//            $t['id'] = $etudiant->getId();
-//            $t['numetudiant'] = $etudiant->getNumEtudiant();
-//            $t['nom'] = $etudiant->getNom();
-//            $t['prenom'] = $etudiant->getPrenom();
-//            $t['semestre'] = $etudiant->getSemestre() ? $etudiant->getSemestre()->getLibelle() : '-';
-//            $tab[] = $t;
-//        }
-//
-//        return $tab;
-//    }
-
     public function getByDepartement(
         Departement $departement
     ): mixed {
@@ -115,7 +96,7 @@ class EtudiantRepository extends ServiceEntityRepository
             $tt['mailPerso'] = $etudiant->getMailPerso();
             $tt['semestre'] = null !== $etudiant->getSemestre() ? $etudiant->getSemestre()->getLibelle() : 'non défini';
             $tt['semestreId'] = $etudiant->getSemestre()?->getId();
-            $tt['diplomeId'] = null !== $etudiant->getSemestre() ? $etudiant->getDiplome()->getId() : null;
+            $tt['diplomeId'] = null !== $etudiant->getSemestre() ? $etudiant->getDiplome()?->getId() : null;
             $tt['promo'] = $etudiant->getPromotion();
             $tt['anneeSortie'] = $etudiant->getAnneeSortie();
             $tt['avatarInitiales'] = $etudiant->getAvatarInitiales();
@@ -159,7 +140,7 @@ class EtudiantRepository extends ServiceEntityRepository
             ->setParameter('needle', '%'.$needle.'%')
             ->setParameter('departement', $departement->getId())
             ->orderBy('p.nom', Criteria::ASC)
-            ->orderBy('p.prenom', Criteria::ASC)
+            ->addOrderBy('p.prenom', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -175,7 +156,7 @@ class EtudiantRepository extends ServiceEntityRepository
             ->orWhere('p.numIne LIKE :needle')
             ->setParameter('needle', '%'.$needle.'%')
             ->orderBy('p.nom', Criteria::ASC)
-            ->orderBy('p.prenom', Criteria::ASC)
+            ->addOrderBy('p.prenom', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -260,7 +241,7 @@ class EtudiantRepository extends ServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function identificationRdd(string $login, CarbonInterface $date): array
+    public function identificationRdd(string $login, CarbonInterface $date): ?Etudiant
     {
         return $this->createQueryBuilder('p')
             ->select('p.numEtudiant')
@@ -296,7 +277,7 @@ class EtudiantRepository extends ServiceEntityRepository
         return $t;
     }
 
-    public function findByOrdreSemestreAndDiplome(int $ordreLmd, Diplome $diplome)
+    public function findByOrdreSemestreAndDiplome(int $ordreLmd, Diplome $diplome): array
     {
         if (null !== $diplome->getParent()) {
             $diplome = $diplome->getParent();
