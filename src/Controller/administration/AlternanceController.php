@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AlternanceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/11/2022 11:15
+ * @lastUpdate 06/12/2022 10:06
  */
 
 namespace App\Controller\administration;
@@ -121,7 +121,7 @@ class AlternanceController extends BaseController
     #[Route(path: '/{id}/edit', name: 'administration_alternance_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Alternance $alternance): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $alternance->getAnnee());
+        //$this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $alternance->getAnnee());
         $form = $this->createForm(AlternanceType::class, $alternance,
             ['departement' => $this->dataUserSession->getDepartement()]);
         $form->handleRequest($request);
