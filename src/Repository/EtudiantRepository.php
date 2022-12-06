@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EtudiantRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/09/2022 09:48
+ * @lastUpdate 06/12/2022 09:55
  */
 
 namespace App\Repository;
@@ -241,7 +241,7 @@ class EtudiantRepository extends ServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function identificationRdd(string $login, CarbonInterface $date): ?Etudiant
+    public function identificationRdd(string $login, CarbonInterface $date)
     {
         return $this->createQueryBuilder('p')
             ->select('p.numEtudiant')
