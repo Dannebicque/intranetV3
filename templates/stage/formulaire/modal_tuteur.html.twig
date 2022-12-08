@@ -1,9 +1,10 @@
-
-    <p class="confirm_infos">Prénom : {{ stageEtudiant.tuteur != null ? stageEtudiant.tuteur.prenom : 'A compléter'
-        }}</p>
-    <p class="confirm_infos">Nom : {{ stageEtudiant.tuteur != null ? stageEtudiant.tuteur.nom : 'A compléter' }}</p>
-    <p class="confirm_infos">Fonction dans l'entreprise : {{ stageEtudiant.tuteur != null ? stageEtudiant.tuteur.fonction : 'A compléter' }} <br></p>
-    <p class="confirm_infos">Email : {{ stageEtudiant.tuteur != null ? stageEtudiant.tuteur.email : '' }} <br></p>
-    <p class="confirm_infos">Téléphone : {{ stageEtudiant.tuteur != null ? stageEtudiant.tuteur.telephone|tel_format: '' }} <br></p>
-    <p class="confirm_infos">Portable : {{ stageEtudiant.tuteur != null ? stageEtudiant.tuteur.portable|tel_format: '' }} <br></p>
+<p class="confirm_infos">Prénom : {{ stageEtudiant.tuteur != null ? stageEtudiant.tuteur.prenom : 'A compléter' }}</p>
+<p class="confirm_infos">Nom : {{ stageEtudiant.tuteur != null ? stageEtudiant.tuteur.nom : 'A compléter' }}</p>
+<p class="confirm_infos">Fonction dans l'entreprise
+                         : {{ stageEtudiant.tuteur != null ? stageEtudiant.tuteur.fonction : 'A compléter' }} <br></p>
+<p class="confirm_infos">Email : {{ stageEtudiant.tuteur != null ? stageEtudiant.tuteur.email : '' }} <br></p>
+<p class="confirm_infos">Téléphone : {{ stageEtudiant.tuteur != null ? stageEtudiant.tuteur.telephone|tel_format: '' }}
+    <br></p>
+<p class="confirm_infos">Portable : {{ stageEtudiant.tuteur != null ? stageEtudiant.tuteur.portable|tel_format: '' }}
+    <br></p>
 
