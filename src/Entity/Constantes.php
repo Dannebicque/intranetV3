@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Constantes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/07/2022 09:24
+ * @lastUpdate 18/11/2022 08:54
  */
 
 namespace App\Entity;
@@ -55,6 +55,8 @@ class Constantes
     final public const CHAMPS_NUM_ETUDIANT = 'num';
     final public const CHAMPS_BAC = 'bac';
     final public const CHAMPS_MAIL_ETUDIANT = 'mail';
+    final public const CHAMPS_DATE_NAISSANCE = 'ddn';
+    final public const CHAMPS_AGE = 'age';
 
     final public const FORMAT_CSV_POINT_VIRGULE = 'csv';
     final public const FORMAT_CSV_VIRGULE = 'csv-v';

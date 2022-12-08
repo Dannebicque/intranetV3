@@ -1,0 +1,62 @@
+Plan de cours de la SAE {{ matiere.display }}
+
+Formation ...
+
+Année universitaire xx/xx
+
+Responsable de la SAE : liste des auteurs du prévisionnel
+
+Description et objectifs de la SAE
+{{ form_row(form.description) }} //prérempli
+
+Compétences et Apprentissages critiques visés
+
+Liste des ressources à mobiliser
+
+{{ form_row(form.livrables) }}
+
+{{ form_row(form.coefficient) }}
+
+{{ form_row(form.nbNotes) }}
+
+Nombre d'heures prévues : CM / TD  / TP / Projet Prévisionnel?
+Nombre d'heures prévues : CM / TD  / TP Prévisionnel?
+<div class="row">
+    <div class="col-3">{{ form_row(form.cmPrevu) }}</div>
+    <div class="col-3">{{ form_row(form.tdPrevu) }}</div>
+    <div class="col-3">{{ form_row(form.tpPrevu) }}</div>
+    <div class="col-3">{{ form_row(form.projetPrevu) }}</div>
+</div>
+
+{{ form_row(form.modalitesEvaluations) }}
+{{ form_row(form.modaliteEncadrementAutonomie) }}
+
+
+{{ form_row(form.bibliographie) }}
+
+//Upload du fichier ou ajout des séquences
+
+{{ form_row(form.planSuivi) }}
+{{ form_row(form.planSuiviCommentaire) }}
+
+{{ form_row(form.objectifsAtteints) }}
+{{ form_row(form.objectifsFAtteintsCommentaire) }}
+
+{{ form_row(form.livrablesRendus) }}
+
+
+{{ form_row(form.competencesAcquises) }} {#  pas ici ? juste pour matière ?? #}
+{{ form_row(form.competencesAcquisesCommentaire) }}
+
+Nombre d'heures réalisées : CM / TD  / TP saisie ?
+
+<div class="row">
+    <div class="col-3">{{ form_row(form.cmRealise) }}</div>
+    <div class="col-3">{{ form_row(form.tdRealise) }}</div>
+    <div class="col-3">{{ form_row(form.tpRealise) }}</div>
+    <div class="col-3">{{ form_row(form.projetRealise) }}</div>
+</div>
+
+{{ form_row(form.modeEvaluationCommentaire) }}
+{{ form_row(form.commentaires) }}
+

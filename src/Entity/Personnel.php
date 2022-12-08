@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/09/2022 13:38
+ * @lastUpdate 06/12/2022 15:13
  */
 
 namespace App\Entity;
@@ -185,6 +185,8 @@ class Personnel extends Utilisateur implements UtilisateurInterface
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\QuestionnaireQuestion>
+     *
+     * @deprecated
      */
     #[ORM\OneToMany(mappedBy: 'auteur', targetEntity: QuestionnaireQuestion::class)]
     private Collection $quizzQuestions;
@@ -262,12 +264,14 @@ class Personnel extends Utilisateur implements UtilisateurInterface
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\QuestionnairePersonnel>
+     *
+     * @deprecated Use QuestPersonnel
      */
     #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: QuestionnairePersonnel::class)]
     private Collection $quizzPersonnels;
 
-//    #[ORM\OneToMany(mappedBy: 'intervenant', targetEntity: PlanCours::class)]
-//    private Collection $planCours;
+    #[ORM\OneToMany(mappedBy: 'intervenant', targetEntity: PlanCours::class)]
+    private Collection $planCours;
 
     #[ORM\Column]
     private ?bool $accessOriginaux = false;
@@ -313,7 +317,7 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         $this->bcServiceFaitReceptionniste = new ArrayCollection();
         $this->bcServiceFaitResponsableSignataire = new ArrayCollection();
         $this->quizzPersonnels = new ArrayCollection();
-      //  $this->planCours = new ArrayCollection();
+        $this->planCours = new ArrayCollection();
         $this->planCoursHistoriqueEdts = new ArrayCollection();
         $this->edtCelcats = new ArrayCollection();
     }
@@ -1015,12 +1019,15 @@ class Personnel extends Utilisateur implements UtilisateurInterface
 
     /**
      * @return Collection|QuestionnaireQuestion[]
+     *
+     * @deprecated
      */
     public function getQuizzQuestions(): Collection
     {
         return $this->quizzQuestions;
     }
 
+    /** @deprecated */
     public function addQuizzQuestion(QuestionnaireQuestion $quizzQuestion): self
     {
         if (!$this->quizzQuestions->contains($quizzQuestion)) {
@@ -1031,6 +1038,7 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         return $this;
     }
 
+    /** @deprecated */
     public function removeQuizzQuestion(QuestionnaireQuestion $quizzQuestion): self
     {
         if ($this->quizzQuestions->contains($quizzQuestion)) {
@@ -1458,12 +1466,15 @@ class Personnel extends Utilisateur implements UtilisateurInterface
 
     /**
      * @return Collection<int, QuestionnairePersonnel>
+     *
+     *     @deprecated
      */
     public function getQuizzPersonnels(): Collection
     {
         return $this->quizzPersonnels;
     }
 
+    /** @deprecated */
     public function addQuizzPersonnel(QuestionnairePersonnel $quizzPersonnel): self
     {
         if (!$this->quizzPersonnels->contains($quizzPersonnel)) {
@@ -1474,6 +1485,7 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         return $this;
     }
 
+    /** @deprecated */
     public function removeQuizzPersonnel(QuestionnairePersonnel $quizzPersonnel): self
     {
         if ($this->quizzPersonnels->removeElement($quizzPersonnel)) {
@@ -1486,35 +1498,35 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         return $this;
     }
 
-//    /**
-//     * @return Collection<int, PlanCours>
-//     */
-//    public function getPlanCours(): Collection
-//    {
-//        return $this->planCours;
-//    }
-//
-//    public function addPlanCour(PlanCours $planCour): self
-//    {
-//        if (!$this->planCours->contains($planCour)) {
-//            $this->planCours[] = $planCour;
-//            $planCour->setIntervenant($this);
-//        }
-//
-//        return $this;
-//    }
-//
-//    public function removePlanCour(PlanCours $planCour): self
-//    {
-//        if ($this->planCours->removeElement($planCour)) {
-//            // set the owning side to null (unless already changed)
-//            if ($planCour->getIntervenant() === $this) {
-//                $planCour->setIntervenant(null);
-//            }
-//        }
-//
-//        return $this;
-//    }
+    /**
+     * @return Collection<int, PlanCours>
+     */
+    public function getPlanCours(): Collection
+    {
+        return $this->planCours;
+    }
+
+    public function addPlanCour(PlanCours $planCour): self
+    {
+        if (!$this->planCours->contains($planCour)) {
+            $this->planCours[] = $planCour;
+            $planCour->setIntervenant($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlanCour(PlanCours $planCour): self
+    {
+        if ($this->planCours->removeElement($planCour)) {
+            // set the owning side to null (unless already changed)
+            if ($planCour->getIntervenant() === $this) {
+                $planCour->setIntervenant(null);
+            }
+        }
+
+        return $this;
+    }
 
     public function isAccessOriginaux(): ?bool
     {
@@ -1527,7 +1539,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
 
         return $this;
     }
-
 
     public function getPlanCoursHistoriqueEdts(): Collection
     {

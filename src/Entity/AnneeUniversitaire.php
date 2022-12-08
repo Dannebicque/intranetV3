@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/AnneeUniversitaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/08/2022 15:17
+ * @lastUpdate 07/12/2022 16:47
  */
 
 namespace App\Entity;
@@ -40,7 +40,7 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Departement>
      */
-    #[Deprecated]
+    /** @Deprecated */
     #[ORM\OneToMany(mappedBy: 'anneeUniversitairePrepare', targetEntity: Departement::class)]
     private Collection $departements;
 
@@ -110,6 +110,15 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
     #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: EdtPlanning::class)]
     private Collection $edtPlannings;
 
+    #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: PlanCours::class)]
+    private Collection $planCours;
+
+    #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: ConpereEtudiant::class)]
+    private Collection $conpereEtudiants;
+
+    #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: Mcc::class)]
+    private Collection $mccs;
+
     public function __construct()
     {
         $this->departements = new ArrayCollection();
@@ -125,6 +134,9 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
         $this->planningAlternances = new ArrayCollection();
         $this->anneeUniversitaireSemestres = new ArrayCollection();
         $this->edtPlannings = new ArrayCollection();
+        $this->planCours = new ArrayCollection();
+        $this->conpereEtudiants = new ArrayCollection();
+        $this->mccs = new ArrayCollection();
     }
 
     public function getLibelle(): ?string
@@ -543,6 +555,96 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
             // set the owning side to null (unless already changed)
             if ($edtPlanning->getAnneeUniversitaire() === $this) {
                 $edtPlanning->setAnneeUniversitaire(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PlanCours>
+     */
+    public function getPlanCours(): Collection
+    {
+        return $this->planCours;
+    }
+
+    public function addPlanCour(PlanCours $planCour): self
+    {
+        if (!$this->planCours->contains($planCour)) {
+            $this->planCours[] = $planCour;
+            $planCour->setAnneeUniversitaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlanCour(PlanCours $planCour): self
+    {
+        if ($this->planCours->removeElement($planCour)) {
+            // set the owning side to null (unless already changed)
+            if ($planCour->getAnneeUniversitaire() === $this) {
+                $planCour->setAnneeUniversitaire(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ConpereEtudiant>
+     */
+    public function getConpereEtudiants(): Collection
+    {
+        return $this->conpereEtudiants;
+    }
+
+    public function addConpereEtudiant(ConpereEtudiant $conpereEtudiant): self
+    {
+        if (!$this->conpereEtudiants->contains($conpereEtudiant)) {
+            $this->conpereEtudiants->add($conpereEtudiant);
+            $conpereEtudiant->setAnneeUniversitaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeConpereEtudiant(ConpereEtudiant $conpereEtudiant): self
+    {
+        if ($this->conpereEtudiants->removeElement($conpereEtudiant)) {
+            // set the owning side to null (unless already changed)
+            if ($conpereEtudiant->getAnneeUniversitaire() === $this) {
+                $conpereEtudiant->setAnneeUniversitaire(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Mcc>
+     */
+    public function getMccs(): Collection
+    {
+        return $this->mccs;
+    }
+
+    public function addMcc(Mcc $mcc): self
+    {
+        if (!$this->mccs->contains($mcc)) {
+            $this->mccs->add($mcc);
+            $mcc->setAnneeUniversitaire($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMcc(Mcc $mcc): self
+    {
+        if ($this->mccs->removeElement($mcc)) {
+            // set the owning side to null (unless already changed)
+            if ($mcc->getAnneeUniversitaire() === $this) {
+                $mcc->setAnneeUniversitaire(null);
             }
         }
 

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Ppn.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/08/2022 18:41
+ * @lastUpdate 20/11/2022 11:08
  */
 
 namespace App\Entity;
@@ -41,7 +41,7 @@ class Ppn extends BaseEntity
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Semestre>
      */
-    #[Deprecated(['reason' => 'La gestion du PPN se fait en lien avec l\'annee universitaire'])]
+    /** @Deprecated(['reason' => 'La gestion du PPN se fait en lien avec l\'annee universitaire']) */
     #[ORM\OneToMany(mappedBy: 'ppnActif', targetEntity: Semestre::class)]
     private Collection $semestres;
 

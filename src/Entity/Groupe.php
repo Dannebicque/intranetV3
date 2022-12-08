@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Groupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2022 14:27
+ * @lastUpdate 24/11/2022 10:05
  */
 
 namespace App\Entity;
@@ -71,6 +71,9 @@ class Groupe extends BaseEntity
     #[ORM\ManyToOne(inversedBy: 'groupes')]
     private ?ApcParcours $apcParcours = null;
 
+    #[ORM\OneToMany(mappedBy: 'groupe', targetEntity: PlanCoursHistoriqueEdt::class)]
+    private Collection $planCoursHistoriqueEdts;
+
     public function __construct()
     {
         $this->etudiants = new ArrayCollection();
@@ -78,6 +81,7 @@ class Groupe extends BaseEntity
         $this->covidAttestationEtudiants = new ArrayCollection();
         $this->absenceEtatAppels = new ArrayCollection();
         $this->apcRessourceEnfants = new ArrayCollection();
+        $this->planCoursHistoriqueEdts = new ArrayCollection();
     }
 
     public function getCodeApogee(): ?string
@@ -345,5 +349,57 @@ class Groupe extends BaseEntity
         $this->apcParcours = $apcParcours;
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, PlanCoursHistoriqueEdt>
+     */
+    public function getPlanCoursHistoriqueEdts(): Collection
+    {
+        return $this->planCoursHistoriqueEdts;
+    }
+
+    public function addPlanCoursHistoriqueEdt(PlanCoursHistoriqueEdt $planCoursHistoriqueEdt): self
+    {
+        if (!$this->planCoursHistoriqueEdts->contains($planCoursHistoriqueEdt)) {
+            $this->planCoursHistoriqueEdts->add($planCoursHistoriqueEdt);
+            $planCoursHistoriqueEdt->setGroupe($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlanCoursHistoriqueEdt(PlanCoursHistoriqueEdt $planCoursHistoriqueEdt): self
+    {
+        if ($this->planCoursHistoriqueEdts->removeElement($planCoursHistoriqueEdt)) {
+            // set the owning side to null (unless already changed)
+            if ($planCoursHistoriqueEdt->getGroupe() === $this) {
+                $planCoursHistoriqueEdt->setGroupe(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function inParcoursOrOption(\App\DTO\Matiere $matiere): bool
+    {
+        if ($matiere->apcParcours === null && $matiere->mutualisee === true) {
+            return true; //todo: attention ne pas afficher les groupes des parcours FC si FI et inversement ???
+            //todo: tester via le diplôme ?
+        }
+
+        if (null === $this->getApcParcours() && null === $this->getParcours()) {
+            return true;
+        }
+
+        if (null !== $matiere->apcParcours && null !== $this->getApcParcours()) {
+            return $matiere->apcParcours->contains($this->getApcParcours());
+        }
+
+        if (null !== $matiere->parcours && null !== $this->getParcours()) {
+            return $this->getParcours()->getId() === $matiere->parcours->getId();
+        }
+
+        return false;
     }
 }

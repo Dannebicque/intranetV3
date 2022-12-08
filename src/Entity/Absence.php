@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Absence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:52
+ * @lastUpdate 01/12/2022 13:21
  */
 
 namespace App\Entity;
@@ -130,6 +130,16 @@ class Absence extends BaseEntity
     }
 
     public function getDateHeure(): ?CarbonInterface
+    {
+        return $this->dateHeure;
+    }
+
+    public function getDate(): ?CarbonInterface
+    {
+        return $this->dateHeure;
+    }
+
+    public function getHeure(): ?CarbonInterface
     {
         return $this->dateHeure;
     }

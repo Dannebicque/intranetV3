@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Evaluation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:21
+ * @lastUpdate 23/11/2022 11:45
  */
 
 namespace App\Entity;
@@ -69,7 +69,7 @@ class Evaluation extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Evaluation::class)]
     private Collection $enfants;
 
-    #[ORM\ManyToOne(targetEntity: TypeGroupe::class)]
+    #[ORM\ManyToOne(targetEntity: TypeGroupe::class, fetch: 'EAGER')]
     private ?TypeGroupe $typeGroupe = null;
 
     #[ORM\Column(type: Types::STRING, length: 100, nullable: true)]

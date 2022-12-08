@@ -1,0 +1,50 @@
+<div class="card">
+    <h4 class="card-title"><strong>Plan de cours</strong></h4>
+    <div class="card-body">
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Matière/SAE/Ress.</th>
+                <th>Etat</th>
+                <th>Etat</th>
+                <th>Créé le</th>
+                <th>Mise à jour</th>
+                <th>actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for previsionnel in previsionnels %}
+                <tr>
+                    <td>{{ previsionnel.matiere_libelle }}</td>
+                    <td>{{ previsionnel.type_matiere }}</td>
+                    <td>
+                        <span class="badge bg-{{ previsionnel.etatPlanCours.badge }}">{{ previsionnel.etatPlanCours.value|trans }}</span>
+                    </td>
+                    {% if plansCours[previsionnel.id] is defined %}
+                        <td>{{ plansCours[previsionnel.id].created ? plansCours[previsionnel.id].created|format_datetime('short',
+                                'short') : '-' }}</td>
+                        <td>{{ plansCours[previsionnel.id].updated ? plansCours[previsionnel.id].updated|format_datetime('short',
+                                'short') : '-' }}</td>
+                        <td>
+                            <a href="{{ path('app_plan_cours_apc_show', {'id': plansCours[previsionnel.id].id}) }}"
+                               class="btn btn-info btn-outline"><i class="{{ iconShow }}"></i></a>
+                            <a href="{{ path('app_plan_cours_apc_edit', {'id': plansCours[previsionnel.id].id}) }}"
+                               class="btn btn-warning btn-outline"><i class="{{ iconEdit }}"></i></a>
+                        </td>
+                    {% else %}
+                        <td colspan="2">-</td>
+                        <td>
+                            <a href="{{ path('app_plan_cours_apc_new', {'previsionnel': previsionnel.id}) }}"
+                               class="btn btn-success btn-outline"><i class="{{ iconAdd }}"></i></a>
+                        </td>
+                    {% endif %}
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="6">no records found</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/10/2022 09:25
+ * @lastUpdate 06/12/2022 15:15
  */
 
 namespace App\Entity;
@@ -182,6 +182,7 @@ class Semestre extends BaseEntity implements Stringable
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\QuestionnaireQualite>
+     * @deprecated
      */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: QuestionnaireQualite::class)]
     private Collection $qualiteQuestionnaires;
@@ -1047,12 +1048,14 @@ class Semestre extends BaseEntity implements Stringable
 
     /**
      * @return Collection|QuestionnaireQualite[]
+     * @deprecated
      */
     public function getQualiteQuestionnaires(): ?Collection
     {
         return $this->qualiteQuestionnaires;
     }
 
+    /** @deprecated  */
     public function addQualiteQuestionnaire(QuestionnaireQualite $qualiteQuestionnaire): self
     {
         if (!$this->qualiteQuestionnaires->contains($qualiteQuestionnaire)) {
@@ -1063,6 +1066,7 @@ class Semestre extends BaseEntity implements Stringable
         return $this;
     }
 
+    /** @deprecated  */
     public function removeQualiteQuestionnaire(QuestionnaireQualite $qualiteQuestionnaire): self
     {
         if ($this->qualiteQuestionnaires->contains($qualiteQuestionnaire)) {

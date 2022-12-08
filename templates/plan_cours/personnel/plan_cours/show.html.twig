@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}PlanCoursApc{% endblock %}
+
+{% block content %}
+    <h1>PlanCoursApc</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Created</th>
+                <td>{{ plan_cours_apc.created ? plan_cours_apc.created|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Updated</th>
+                <td>{{ plan_cours_apc.updated ? plan_cours_apc.updated|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>TypeMatiere</th>
+                <td>{{ plan_cours_apc.typeMatiere }}</td>
+            </tr>
+            <tr>
+                <th>IdMatiere</th>
+                <td>{{ plan_cours_apc.idMatiere }}</td>
+            </tr>
+            <tr>
+                <th>Id</th>
+                <td>{{ plan_cours_apc.id }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

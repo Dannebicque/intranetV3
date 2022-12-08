@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcApprentissageCritique.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/08/2022 18:41
+ * @lastUpdate 18/11/2022 08:54
  */
 
 namespace App\Entity;
@@ -39,6 +39,7 @@ class ApcApprentissageCritique extends BaseEntity
      */
     #[ORM\OneToMany(mappedBy: 'apprentissageCritique', targetEntity: ApcSaeApprentissageCritique::class)]
     private Collection $apcSaeApprentissageCritiques;
+
 
     public function __construct(#[ORM\ManyToOne(targetEntity: ApcNiveau::class, inversedBy: 'apcApprentissageCritiques')] private ?ApcNiveau $niveau = null)
     {
