@@ -47,20 +47,24 @@
 
 <ul class="nav nav-tabs">
     {% for groupe in evaluation.typeGroupe.groupes %} {# if matiere.option == null or groupe.options == matiere.option #}
-        {% if matiere.isEnfant == false or (matiere.isEnfant == true and
-            matiere.containsGroupesEnfant(groupe) ) %}
+        {% if groupe.inParcoursOrOption(matiere) %}
+            {% if matiere.isEnfant == false or (matiere.isEnfant == true and
+                matiere.containsGroupesEnfant(groupe) ) %}
 
-            <li class="nav-item"><a href="#gr{{ groupe.id }}"
-                                    class="nav-link {% if loop.index == 1 %} active show{% endif %}"
-                                    data-bs-toggle="tab" role="tab">{{ groupe.libelle }}</a>
-            </li>
+                <li class="nav-item"><a href="#gr{{ groupe.id }}"
+                                        class="nav-link {% if loop.index == 1 %} active show{% endif %}"
+                                        data-bs-toggle="tab" role="tab">{{ groupe.libelle }}</a>
+                </li>
+            {% endif %}
         {% endif %}
     {% endfor %}
 </ul>
 
 <div class="tab-content">
-    {% for groupe in evaluation.typeGroupe.groupes %} {# if matiere.option == null or groupe.options == matiere.option #}
-
+    {% for groupe in evaluation.typeGroupe.groupes %} {# if matiere.option == null or groupe.options
+     == matiere
+    .option #}
+        {% if groupe.inParcoursOrOption(matiere) %}
         {% if matiere.isEnfant == false or (matiere.isEnfant == true and
             matiere.containsGroupesEnfant(groupe) ) %}
             <div class="tab-pane {% if loop.index == 1 %} active {% endif %}" id="gr{{ groupe.id }}">
@@ -179,5 +183,6 @@
                 {% endif %}
             </div>
         {% endif %}
+    {% endif %}
     {% endfor %}
 </div>

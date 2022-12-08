@@ -68,44 +68,57 @@
                             {% endif %}
                             <div class="overflow-auto">
                                 <table class="table table-striped table-bordered">
+                                    <thead>
                                     <tr>
                                         <th>{{ 'table.groupe'|trans }}</th>
                                         {% for groupe in eval.typeGroupe.groupes %}
+                                            {% if groupe.inParcoursOrOption(matiere) %}
                                             <th>{{ groupe.libelle }}</th>
+                                            {% endif %}
                                         {% endfor %}
                                         <th>{{ 'table.promo'|trans }}</th>
                                     </tr>
+                                    </thead>
                                     <tr>
                                         <th>{{ 'table.minimum'|trans }}</th>
                                         {% for groupe in eval.typeGroupe.groupes %}
+                                            {% if groupe.inParcoursOrOption(matiere) %}
                                             <td>{{ evaluations.statistiques[eval.id][groupe.id].min|number_format(2) }}</td>
+                                            {% endif %}
                                         {% endfor %}
                                         <td>{{ evaluations.statistiques[eval.id].promo.min|number_format(2) }}</td>
                                     </tr>
                                     <tr>
                                         <th>{{ 'table.maximum'|trans }}</th>
                                         {% for groupe in eval.typeGroupe.groupes %}
+                                            {% if groupe.inParcoursOrOption(matiere) %}
                                             <td>{{ evaluations.statistiques[eval.id][groupe.id].max|number_format(2) }}</td>
+                                            {% endif %}
                                         {% endfor %}
                                         <td>{{ evaluations.statistiques[eval.id].promo.max|number_format(2) }}</td>
                                     </tr>
                                     <tr>
                                         <th>{{ 'table.moyenne'|trans }}</th>
                                         {% for groupe in eval.typeGroupe.groupes %}
+                                            {% if groupe.inParcoursOrOption(matiere) %}
                                             <td>{{ evaluations.statistiques[eval.id][groupe.id].moyenne|number_format(2) }}</td>
+                                            {% endif %}
                                         {% endfor %}
                                         <td>{{ evaluations.statistiques[eval.id].promo.moyenne|number_format(2) }}</td>
                                     </tr>
                                     <tr>
                                         <th>{{ 'ecart.type'|trans }}</th>
                                         {% for groupe in eval.typeGroupe.groupes %}
+                                            {% if groupe.inParcoursOrOption(matiere) %}
                                             <td>{{ evaluations.statistiques[eval.id][groupe.id].ecart_type|number_format(2) }}</td>
+                                            {% endif %}
                                         {% endfor %}
                                         <td>{{ evaluations.statistiques[eval.id].promo.ecart_type|number_format(2) }}</td>
                                     </tr>
                                     <tr>
                                         <th>{{ 'table.actions'|trans }}</th>
                                         {% for groupe in eval.typeGroupe.groupes %}
+                                            {% if groupe.inParcoursOrOption(matiere) %}
                                             <td>
 
                                                 <div class="btn-group d-grid d-block mb-2">
@@ -129,6 +142,7 @@
                                                 <a href="{{ path('application_personnel_evaluation_show', {uuid:eval.uuidString}) }}"
                                                    class="btn d-grid d-block btn-info">{{ 'voir.modifier'|trans }}</a>
                                             </td>
+                                            {% endif %}
                                         {% endfor %}
                                         <td>
                                             <div class="btn-group d-grid d-block mn-2">

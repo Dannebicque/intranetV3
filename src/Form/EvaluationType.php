@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/EvaluationType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/09/2022 11:35
+ * @lastUpdate 23/11/2022 11:51
  */
 
 namespace App\Form;
@@ -96,7 +96,7 @@ class EvaluationType extends AbstractType
             ->add('visible', YesNoType::class,
                 ['label' => 'label.evaluation.visible', 'help' => 'help.evaluation.visible'])
             ->add('typeGroupe', EntityType::class, [
-                'data' => true === $options['enfant'] ? ($options['groupeEnfant']?->first()->getTypeGroupe()) : null,
+              // 'data' => true === $options['enfant'] ? ($options['groupeEnfant']?->first()->getTypeGroupe()) : null,
                 // todo: en attendant mieux. Car peut y avoir plusieurs groupes, et donc plusieurs types groupes.)
                 'class' => TypeGroupe::class,
                 'label' => 'label.evaluation_type_groupe',
