@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/Matiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/10/2022 15:23
+ * @lastUpdate 18/11/2022 08:54
  */
 
 namespace App\DTO;
@@ -48,23 +48,12 @@ class Matiere
 
     public ?Groupe $groupeEnfant = null;
 
-    /**  ne-pas-exporter */
-    // todo: ce n'est vrai que pour matière (old school...) pour les SAE/Ressources, c'est potentiellement plusieurs UE...
-    /** @deprecated */
-    public int $ue_id = 0;
-    /** @deprecated */
-    public string $ue_display;
-    /** @deprecated */
-    public ?int $ue_numero = 0;
-
     public array $tab_ues = []; // tableau d'UE/Compétences
 
     public bool $suspendu = false;
 
-    /** @deprecated */
-    public ?Semestre $semestre = null;
-
     public ?Parcour $parcours = null;
+    public ?Collection $apcParcours = null;
 
     public mixed $objet;
     private ?Collection $groupesEnfant = null;
@@ -235,15 +224,17 @@ class Matiere
         return null;
     }
 
-    public function getDiplome(): Diplome
+    public function getDiplome(): ?Diplome
     {
-        if ($this->getSemestres()->count() > 0) {
-            if ($this->getSemestres()->first()->getDiplome()->getParent() !== null) {
-                return $this->getSemestres()->first()->getDiplome()->getParent();
+        if ($this->getSemestres()?->count() > 0) {
+            if (null !== $this->getSemestres()?->first()->getDiplome()->getParent()) {
+                return $this->getSemestres()?->first()->getDiplome()->getParent();
             }
 
-            return $this->getSemestres()->first()->getDiplome();
+            return $this->getSemestres()?->first()->getDiplome();
         }
+
+        return null;
     }
 
     public function getDiplomeDisplay(): ?string
