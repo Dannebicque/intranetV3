@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/StageEtudiantRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 01/12/2022 12:06
  */
 
 namespace App\Repository;
@@ -106,4 +106,23 @@ class StageEtudiantRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function save(StageEtudiant $stageEtudiant, bool $flush = false)
+    {
+        $this->getEntityManager()->persist($stageEtudiant);
+
+        if ($flush) {
+            $this->getEntityManager()->flush();
+        }
+    }
+
+//
+//    public function remove(QuestChoixEtudiant $entity, bool $flush = false): void
+//    {
+//        $this->getEntityManager()->remove($entity);
+//
+//        if ($flush) {
+//            $this->getEntityManager()->flush();
+//        }
+//    }
 }
