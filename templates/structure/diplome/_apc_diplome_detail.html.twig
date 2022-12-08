@@ -1,7 +1,7 @@
 {% if diplome.apcParcours == null %}
     <h2><span class="badge bg-info">Tronc commun ou parcours non précisé</span></h2>
 {% else %}
-    <h2><span class="badge bg-warning">Parcours {{ diplome.apcParcours.libelle }} ({{ diplome.apcParcours.code
+    <h2><span class="badge bg-warning">Parcours {{ diplome.apcParcours.display }} ({{ diplome.apcParcours.code
     }})</span></h2>
 {% endif %}
 

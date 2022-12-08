@@ -4,9 +4,9 @@
     {% set baseurl = 'administration_' %}
 {% endif %}
 
-        {% if diplome.typeDiplome.apc == true %}
-            {{ include('structure/_structure_apc.html.twig') }}
-        {% else %}
-            {{ include('structure/_structure_default.html.twig') }}
-        {% endif %}
+{% if diplome.typeDiplome.apc == true %}
+    {{ include('structure/_structure_apc.html.twig') }}
+{% else %}
+    {{ include('structure/_structure_default.html.twig') }}
+{% endif %}
 

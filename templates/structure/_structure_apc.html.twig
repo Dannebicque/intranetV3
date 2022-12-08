@@ -45,9 +45,15 @@
                     <div class="row gap-y lignehover">
                         <div class="col-md-1">&nbsp;</div>
                         <div class="col-md-9">Parcours {{ parcour.libelle }}
-                                              | {{ parcour.code }} <span class="badge {% if parcour.actif == true
+                                              | {{ parcour.code }}
+                            <span class="badge {% if parcour.actif == true
                             %}bg-success{% else %}bg-danger{% endif %}">{% if parcour.actif == true
-                                %}Actif{% else %}non proposé{% endif %}</span></div>
+                                %}Actif{% else %}non proposé{% endif %}</span>
+                            <span class="badge {% if parcour.formationContinue == true %}bg-info{% else
+                %}bg-primary{% endif %}">{% if parcour.formationContinue == true %}Parcours en formation continue ou
+alternance (FC){% else
+                                %}Parcours en formation initiale (FI){% endif %}</span>
+                        </div>
                         <div class="col-md-2">
                             <a href="{{ path('administration_apc_parcours_duplicate', {'id': parcour.id}) }}"
                                class="btn btn-success btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
