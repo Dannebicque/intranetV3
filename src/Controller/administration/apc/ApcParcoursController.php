@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcParcoursController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/07/2022 11:38
+ * @lastUpdate 24/11/2022 11:04
  */
 
 namespace App\Controller\administration\apc;
@@ -49,7 +49,7 @@ class ApcParcoursController extends BaseController
     {
         return $this->render('apc/apc_parcours/show.html.twig', [
             'parcour' => $apcParcour,
-            'parcoursNiveaux' => $apcStructure->parcoursNiveaux($apcParcour->getDiplome()),
+            'parcoursNiveaux' => $apcStructure->parcoursNiveaux([$apcParcour]),
         ]);
     }
 
@@ -98,6 +98,6 @@ class ApcParcoursController extends BaseController
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apcParcours.duplicate.success.flash');
 
-        return $this->redirectToRoute('administration_apc_parcours_show', ['id' => $newApcParcours->getId()]);
+        return $this->redirectToRoute('administration_apc_parcours_edit', ['id' => $newApcParcours->getId()]);
     }
 }
