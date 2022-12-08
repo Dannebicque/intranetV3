@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/composants/NoteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 11:45
+ * @lastUpdate 23/11/2022 11:52
  */
 
 namespace App\Controller\composants;
@@ -37,13 +37,14 @@ class NoteController extends BaseController
         if (null === $matiere) {
             throw new MatiereNotFoundException();
         }
+
         $form = $this->createForm(
             EvaluationType::class,
             $evaluation,
             [
                 'action' => $this->generateUrl('composant_edit_form_evaluation',
                     ['evaluation' => $evaluation->getId(), 'source' => $source]),
-                'departement' => $this->dataUserSession->getDepartement(),
+                'departement' => $this->getDepartement(),
                 'matiereDisabled' => !('app' === $source),
                 'autorise' => $evaluation->getAutorise($this->getUser()->getId(), $this->dataUserSession),
                 'locale' => $request->getLocale(),

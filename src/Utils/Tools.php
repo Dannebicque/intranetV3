@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Utils/Tools.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/09/2022 11:49
+ * @lastUpdate 18/11/2022 08:54
  */
 
 /*
@@ -174,5 +174,22 @@ abstract class Tools
         }
 
         return Carbon::createMidnightDate($d->year, $d->month, $d->day);
+    }
+
+    public static function dateEntreCreaneaux(
+        ?CarbonInterface $dateObjet,
+        ?CarbonInterface $heureDebut,
+        ?CarbonInterface $heureFin
+    ): bool {
+        $dateMaintenant = Carbon::now();
+
+        if (null === $dateObjet || null === $heureDebut || null === $heureFin) {
+            return false;
+        }
+
+        $dateDebut = $dateObjet->copy()->setTime($heureDebut->hour, $heureDebut->minute);
+        $dateFin = $dateObjet->copy()->setTime($heureFin->hour, $heureFin->minute);
+
+        return $dateMaintenant->between($dateDebut, $dateFin);//todo: attention UTC ?
     }
 }

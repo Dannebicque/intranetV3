@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/DiplomeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/10/2022 15:14
+ * @lastUpdate 24/11/2022 10:57
  */
 
 namespace App\Form;
@@ -75,7 +75,7 @@ class DiplomeType extends AbstractType
             ->add('apcParcours', EntityCompleteType::class, [
                 'class' => ApcParcours::class,
                 'query_builder' => static fn (ApcParcoursRepository $apcParcoursRepository) => $apcParcoursRepository->findAllBuilder(),
-                'choice_label' => 'libelle',
+                'choice_label' => 'display',
                 'required' => false,
                 'label' => 'label.parcours',
                 'help' => 'label.parcours_help',

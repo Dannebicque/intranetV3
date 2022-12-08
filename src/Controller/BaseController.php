@@ -4,24 +4,23 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/BaseController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/08/2022 11:39
+ * @lastUpdate 18/11/2022 08:54
  */
 
 namespace App\Controller;
 
 use App\Classes\DataUserSession;
 use App\Components\Breadcrumbs\BreadcrumbHelper;
-use App\Components\Table\DTO\Table;
-use App\Components\Table\TableFactory;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
 use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
+use DavidAnnebicque\TableBundle\DTO\Table;
+use DavidAnnebicque\TableBundle\TableFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Translation\TranslatableMessage;
 use Symfony\Contracts\Service\Attribute\Required;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -97,7 +96,7 @@ class BaseController extends AbstractController
         }
     }
 
-    public function getUser(): UserInterface
+    public function getUser(): Personnel|Etudiant
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         $user = parent::getUser();

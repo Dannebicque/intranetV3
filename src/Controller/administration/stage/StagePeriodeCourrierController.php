@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/stage/StagePeriodeCourrierController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:44
+ * @lastUpdate 18/11/2022 08:54
  */
 
 namespace App\Controller\administration\stage;
@@ -86,7 +86,7 @@ class StagePeriodeCourrierController extends BaseController
     ];
 
     #[Route(path: '/apercu-defaut/{mail}', name: 'administration_stage_periode_courrier_apercu_defaut')]
-    public function apercuDefaut($mail): Response
+    public function apercuDefaut(string $mail): Response
     {
         return $this->render('administration/stage/stage_periode_courrier/apercuDefaut.html.twig', [
             'mail' => $mail,
@@ -100,7 +100,7 @@ class StagePeriodeCourrierController extends BaseController
      * @throws SyntaxError
      */
     #[Route(path: '/apercu/{stagePeriode}/{mail}', name: 'administration_stage_periode_courrier_apercu_modele')]
-    public function apercu(Environment $twig, StageMailTemplateRepository $stageMailTemplateRepository, StagePeriode $stagePeriode, $mail): Response
+    public function apercu(Environment $twig, StageMailTemplateRepository $stageMailTemplateRepository, StagePeriode $stagePeriode, string $mail): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
         $mailTemplate = $stageMailTemplateRepository->findEventPeriode(
@@ -126,7 +126,7 @@ class StagePeriodeCourrierController extends BaseController
      */
     #[Route(path: '/sauvegarde-modele/{uuid}/{mail}', name: 'administration_stage_periode_courrier_sauvegarde_modele', options: ['expose' => true])]
     #[ParamConverter('stagePeriode', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function sauvegardeModele(MyStageMailTemplate $myStageMailTemplate, Request $request, StagePeriode $stagePeriode, $mail): Response
+    public function sauvegardeModele(MyStageMailTemplate $myStageMailTemplate, Request $request, StagePeriode $stagePeriode, string $mail): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
         $myStageMailTemplate->updateTemplate($mail, $request->request->get('sujet'), $request->request->get('message'),
@@ -139,7 +139,7 @@ class StagePeriodeCourrierController extends BaseController
     }
 
     #[Route(path: '/reset/{id}/{etat}', name: 'administration_stage_periode_courrier_reset', options: ['expose' => true])]
-    public function reset(StageMailTemplateRepository $stageMailTemplateRepository, StagePeriode $stagePeriode, $etat): Response
+    public function reset(StageMailTemplateRepository $stageMailTemplateRepository, StagePeriode $stagePeriode, string $etat): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
         $mails = $stageMailTemplateRepository->findBy(['stagePeriode' => $stagePeriode->getId(), 'event' => $etat]);

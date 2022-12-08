@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/apc/ButPublicController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/09/2022 11:58
+ * @lastUpdate 18/11/2022 08:54
  */
 
 namespace App\Controller\apc;
@@ -43,10 +43,15 @@ class ButPublicController extends AbstractController
     }
 
     #[Route(path: '/{diplome}/referentiel-comptences', name: 'but_referentiel_competences')]
-    public function referentielCompetences(ApcStructure $apcStructure, $diplome): Response
+    public function referentielCompetences(ApcStructure $apcStructure, string $diplome): Response
     {
-        $diplome = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
-        $referentiel = $diplome->getReferentiel();
+        $dip = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
+
+        if (null === $dip) {
+            throw new DiplomeNotFoundException();
+        }
+
+        $referentiel = $dip->getReferentiel();
 
         if (null === $referentiel) {
             throw new DiplomeNotFoundException();
@@ -55,7 +60,7 @@ class ButPublicController extends AbstractController
         $tParcours = $apcStructure->parcoursNiveaux($referentiel);
 
         return $this->render('apc/public/referentielCompetences.html.twig', [
-            'diplome' => $diplome,
+            'diplome' => $dip,
             'referentiel' => $referentiel,
             'competences' => $referentiel->getApcComptences(),
             'parcours' => $referentiel->getApcParcours(),
@@ -68,34 +73,47 @@ class ButPublicController extends AbstractController
         Request $request,
         ApcRessourceRepository $apcRessourceRepository,
         ApcSaeRepository $apcSaeRepository,
-        $diplome
+        string $diplome
     ): Response {
-        $diplome = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
+        $dip = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
+
+        if (null === $dip) {
+            throw new DiplomeNotFoundException();
+        }
+
         $search = $request->query->get('s');
-        $saes = $apcSaeRepository->search($search, $diplome);
-        $ressources = $apcRessourceRepository->search($search, $diplome);
+        $saes = $apcSaeRepository->search($search, $dip);
+        $ressources = $apcRessourceRepository->search($search, $dip);
 
         return $this->render('apc/public/resultats.html.twig', [
             'saes' => $saes,
             'ressources' => $ressources,
-            'diplome' => $diplome,
+            'diplome' => $dip,
         ]);
     }
 
     #[Route(path: '/{diplome}/fiche-sae/{apcSae}', name: 'but_fiche_sae')]
-    public function ficheSae(ApcSae $apcSae, $diplome): Response
+    public function ficheSae(ApcSae $apcSae, string $diplome): Response
     {
-        $diplome = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
+        $dip = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
+
+        if (null === $dip) {
+            throw new DiplomeNotFoundException();
+        }
 
         return $this->render('apc/public/ficheSae.html.twig', [
             'apc_sae' => $apcSae,
-            'diplome' => $diplome,
+            'diplome' => $dip,
         ]);
     }
 
     #[Route(path: '/{diplome}/semestre-{semestre}', name: 'but_ressources_saes')]
-    public function ressourcesSaes(ApcSaeRepository $apcSaeRepository, ApcRessourceRepository $apcRessourceRepository, string $diplome, int $semestre): Response
-    {
+    public function ressourcesSaes(
+        ApcSaeRepository $apcSaeRepository,
+        ApcRessourceRepository $apcRessourceRepository,
+        string $diplome,
+        int $semestre
+    ): Response {
         $dip = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
 
         if (null === $dip || null === $dip->getReferentiel()) {
@@ -110,24 +128,32 @@ class ButPublicController extends AbstractController
     }
 
     #[Route(path: '/{diplome}/sae', name: 'but_sae')]
-    public function sae(ApcSaeRepository $apcSaeRepository, $diplome): Response
+    public function sae(ApcSaeRepository $apcSaeRepository, string $diplome): Response
     {
-        $diplome = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
+        $dip = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
+
+        if (null === $dip) {
+            throw new DiplomeNotFoundException();
+        }
 
         return $this->render('apc/public/sae.html.twig', [
             'saes' => $apcSaeRepository->findByDiplome($diplome),
-            'diplome' => $diplome,
+            'diplome' => $dip,
         ]);
     }
 
     #[Route(path: '/{diplome}/fiche-ressource/{apcRessource}', name: 'but_fiche_ressource')]
-    public function ficheRessource($diplome, ApcRessource $apcRessource): Response
+    public function ficheRessource(string $diplome, ApcRessource $apcRessource): Response
     {
-        $diplome = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
+        $dip = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
+
+        if (null === $dip) {
+            throw new DiplomeNotFoundException();
+        }
 
         return $this->render('apc/public/ficheRessource.html.twig', [
             'apc_ressource' => $apcRessource,
-            'diplome' => $diplome,
+            'diplome' => $dip,
         ]);
     }
 
@@ -135,16 +161,21 @@ class ButPublicController extends AbstractController
     public function repartitionHoraire(
         ApcRessourceRepository $apcRessourceRepository,
         ApcSaeRepository $apcSaeRepository,
-        $diplome
+        string $diplome
     ): Response {
-        $diplome = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
+        $dip = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
+
+        if (null === $dip) {
+            throw new DiplomeNotFoundException();
+        }
+
         $ressources = $apcRessourceRepository->findByDiplomeToSemestreArray($diplome);
         $saes = $apcSaeRepository->findByDiplomeToSemestreArray($diplome);
 
         return $this->render('apc/public/preconisations.html.twig', [
             'ressources' => $ressources,
             'saes' => $saes,
-            'diplome' => $diplome,
+            'diplome' => $dip,
         ]);
     }
 
@@ -154,13 +185,18 @@ class ButPublicController extends AbstractController
         ApcRessourceRepository $apcRessourceRepository,
         ApcSaeRepository $apcSaeRepository,
         ApcNiveauRepository $apcNiveauRepository,
-        $diplome
+        string $diplome
     ): Response {
-        $diplome = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
+        $dip = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
+
+        if (null === $dip) {
+            throw new DiplomeNotFoundException();
+        }
+
         $ressources = $apcRessourceRepository->findByDiplomeToSemestreArray($diplome);
         $saes = $apcSaeRepository->findByDiplomeToSemestreArray($diplome);
         $tab = [];
-        foreach ($diplome->getSemestres() as $semestre) {
+        foreach ($dip->getSemestres() as $semestre) {
             $semestreid = $semestre->getId();
             $tab[$semestre->getId()] = [];
             $tab[$semestre->getId()]['niveaux'] = $apcNiveauRepository->findBySemestre($semestre);
@@ -172,19 +208,23 @@ class ButPublicController extends AbstractController
 
         return $this->render('apc/public/coefficients.html.twig', [
             'tab' => $tab,
-            'diplome' => $diplome,
+            'diplome' => $dip,
         ]);
     }
 
     #[Route(path: '/{diplome}/ressource/{semestre}', name: 'but_ressource')]
-    public function ressource(ApcRessourceRepository $apcRessourceRepository, $diplome, Semestre $semestre): Response
+    public function ressource(ApcRessourceRepository $apcRessourceRepository, string $diplome, Semestre $semestre): Response
     {
-        $diplome = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
+        $dip = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
+
+        if (null === $dip) {
+            throw new DiplomeNotFoundException();
+        }
 
         return $this->render('apc/public/ressources.html.twig', [
             'ressources' => $apcRessourceRepository->findBySemestre($semestre),
             'semestre' => $semestre,
-            'diplome' => $diplome,
+            'diplome' => $dip,
         ]);
     }
 }

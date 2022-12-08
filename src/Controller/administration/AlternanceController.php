@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AlternanceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/12/2022 10:06
+ * @lastUpdate 06/12/2022 14:51
  */
 
 namespace App\Controller\administration;
@@ -176,6 +176,7 @@ class AlternanceController extends BaseController
     #[Route(path: '/update/tuteur-universitaire/{alternance}/{personnel}', name: 'administration_alternance_update_tuteur_universitaire', options: ['expose' => true])]
     public function updateTuteurUniversitaire(Alternance $alternance, Personnel $personnel): JsonResponse
     {
+        //todo: null pour personnel si vide ?
         // todo: a revoir $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $alternance->getAnnee());
         $alternance->setTuteurUniversitaire($personnel);
         $this->entityManager->persist($alternance);

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcRessourceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/09/2022 22:31
+ * @lastUpdate 18/11/2022 08:54
  */
 
 namespace App\Repository;
@@ -128,7 +128,6 @@ class ApcRessourceRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-
     public function findByReferentielOrdreSemestre(ApcReferentiel $referentiel, int $semestre): array
     {
         return $this->createQueryBuilder('r')
@@ -145,11 +144,11 @@ class ApcRessourceRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findBySemestreReferentiel(Semestre $semestre, ApcReferentiel $referentiel)
+    public function findBySemestreReferentiel(Semestre $semestre, ApcReferentiel $referentiel): array
     {
         return $this->createQueryBuilder('r')
             ->innerJoin('r.semestres', 's')
-            //->addSelect('s')
+            // ->addSelect('s')
             ->where('s.id = :semestre')
             ->innerJoin(ApcRessourceCompetence::class, 'cs', 'WITH', 'cs.ressource = r.id')
             ->innerJoin(ApcCompetence::class, 'c', 'WITH', 'cs.competence = c.id')
@@ -159,5 +158,22 @@ class ApcRessourceRepository extends ServiceEntityRepository
             ->orderBy('r.codeMatiere', Criteria::ASC)
             ->getQuery()
             ->getResult();
+    }
+
+    public function findByCodeApogee(string $code, ApcReferentiel $referentiel): ?ApcRessource
+    {
+        return $this->createQueryBuilder('r')
+            ->innerJoin('r.semestres', 's')
+            ->where('s.actif = true')
+            ->andWhere('r.codeElement = :code')
+            ->innerJoin(ApcRessourceCompetence::class, 'cs', 'WITH', 'cs.ressource = r.id')
+            ->innerJoin(ApcCompetence::class, 'c', 'WITH', 'cs.competence = c.id')
+            ->andWhere('c.apcReferentiel = :referentiel')
+            ->setParameter('referentiel', $referentiel->getId())
+            ->setParameter('code', $code)
+            ->orderBy('r.codeMatiere', Criteria::ASC)
+            ->groupBy('r.id')
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/09/2022 20:29
+ * @lastUpdate 18/11/2022 08:54
  */
 
 namespace App\Controller\administration;
@@ -169,7 +169,7 @@ class PrevisionnelController extends BaseController
             if (null !== $matiere) {
                 $nbLignes = $request->request->get('nbLignes');
                 for ($i = 1; $i <= $nbLignes; ++$i) {
-                    $idPersonnel = $request->request->get('intervenant_' . $i);
+                    $idPersonnel = $request->request->get('intervenant_'.$i);
                     if (isset($idPersonnel)) {
                         $personnel = $personnelRepository->find($idPersonnel);
                     } else {
@@ -177,12 +177,12 @@ class PrevisionnelController extends BaseController
                     }
 
                     $previsionnel = new Previsionnel($annee, $personnel);
-                    $previsionnel->setNbHCm($request->request->get('cm_' . $i));
-                    $previsionnel->setNbHTd($request->request->get('td_' . $i));
-                    $previsionnel->setNbHTp($request->request->get('tp_' . $i));
-                    $previsionnel->setNbGrCm($request->request->get('gr_cm_' . $i));
-                    $previsionnel->setNbGrTd($request->request->get('gr_td_' . $i));
-                    $previsionnel->setNbGrTp($request->request->get('gr_tp_' . $i));
+                    $previsionnel->setNbHCm($request->request->get('cm_'.$i));
+                    $previsionnel->setNbHTd($request->request->get('td_'.$i));
+                    $previsionnel->setNbHTp($request->request->get('tp_'.$i));
+                    $previsionnel->setNbGrCm($request->request->get('gr_cm_'.$i));
+                    $previsionnel->setNbGrTd($request->request->get('gr_td_'.$i));
+                    $previsionnel->setNbGrTp($request->request->get('gr_tp_'.$i));
                     $previsionnel->setIdMatiere($matiere->id);
                     $previsionnel->setTypeMatiere($matiere->typeMatiere);
                     $this->entityManager->persist($previsionnel);
@@ -289,11 +289,11 @@ class PrevisionnelController extends BaseController
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         $id = $previsionnel->getId();
-        if ($this->isCsrfTokenValid('delete' . $id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
+        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $this->entityManager->remove($previsionnel);
             $this->entityManager->flush();
 
-            return $this->json($id, Response::HTTP_OK);
+            return $this->json(['id' => $id], Response::HTTP_OK);
         }
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);

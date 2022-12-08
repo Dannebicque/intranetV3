@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/UserController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/UserController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/07/2021 17:05
+ * @lastUpdate 18/11/2022 08:54
  */
 
 namespace App\Controller;
@@ -41,7 +41,7 @@ class UserController extends BaseController
     #[Route(path: '/liste-departement', name: 'user_get_departements', options: ['expose' => true])]
     public function listeDepartements(): Response
     {
-        $departements = $this->dataUserSession->getUser()->getPersonnelDepartements();
+        $departements = $this->getUser()->getPersonnelDepartements();
         $departementsArray = [];
         foreach ($departements as $departement) {
             $t['defaut'] = $departement->getDefaut();

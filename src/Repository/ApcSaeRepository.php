@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcSaeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/09/2022 22:31
+ * @lastUpdate 18/11/2022 08:54
  */
 
 namespace App\Repository;
@@ -109,7 +109,7 @@ class ApcSaeRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByDiplomeToSemestreArray(?Diplome $diplome): array
+    public function findByDiplomeToSemestreArray(Diplome $diplome): array
     {
         $tab = [];
         foreach ($diplome->getSemestres() as $semestre) {
@@ -147,7 +147,7 @@ class ApcSaeRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findBySemestreReferentiel(Semestre $semestre, ApcReferentiel $referentiel)
+    public function findBySemestreReferentiel(Semestre $semestre, ApcReferentiel $referentiel): array
     {
         return $this->createQueryBuilder('r')
             ->innerJoin('r.semestres', 's')

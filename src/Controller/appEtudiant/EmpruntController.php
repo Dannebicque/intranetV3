@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/EmpruntController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 18/11/2022 08:54
  */
 
 namespace App\Controller\appEtudiant;
@@ -33,11 +33,11 @@ class EmpruntController extends BaseController
     #[Route(path: '/', name: 'application_etudiant_emprunt_index')]
     public function index(MyEmprunts $myEmprunts, MaterielRepository $materielRepository): Response
     {
-        if (null !== $this->dataUserSession->getUser()) {
+        if (null !== $this->getUser()) {
             $myEmprunts->calculGrille();
 
             return $this->render('appEtudiant/emprunt/index.html.twig', [
-                'emprunts' => $this->dataUserSession->getUser()->getEmprunts(),
+                'emprunts' => $this->getUser()->getEmprunts(),
                 'myEmprunt' => $myEmprunts,
                 'materiels' => $materielRepository->findByDepartement($this->dataUserSession->getDepartement()),
             ]);

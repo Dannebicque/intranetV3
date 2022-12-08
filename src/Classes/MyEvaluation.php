@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyEvaluation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/11/2022 11:39
+ * @lastUpdate 18/11/2022 08:54
  */
 
 /*
@@ -21,7 +21,6 @@ use App\Entity\Etudiant;
 use App\Entity\Evaluation;
 use App\Entity\Note;
 use App\Entity\Semestre;
-use App\Enums\TypeGroupeEnum;
 use App\Exception\MatiereNotFoundException;
 use App\Repository\EtudiantRepository;
 use App\Utils\Tools;
@@ -300,10 +299,15 @@ class MyEvaluation
      */
     private function insertNotes(Evaluation $evaluation, array $data, Semestre $semestre, bool $ecrase = false): bool
     {
+        $matiere = $this->typeMatiereManager->getMatiereFromSelect($evaluation->getTypeIdMatiere());
         $evaluation->setVisible(false); // on masque l'évaluation le temps de l'import et de la vérification
         $notes = [];
 
-        $req = $this->etudiantRepository->findBySemestre($semestre); // todo: améliorer pour filtrer les étudiants si parcours...
+        if (true === $matiere->mutualisee) {
+            $req = $this->etudiantRepository->findByOrdreSemestreAndDiplome($semestre->getOrdreLmd(), $semestre->getDiplome()); // todo: améliorer pour éviter la FC ? Diplômes différents à la base pour le parent ? ou via les parcours ?
+        } else {
+            $req = $this->etudiantRepository->findBySemestre($semestre); // todo: améliorer pour filtrer les étudiants si parcours...
+        }
 
         $etudiants = [];
         /** @var Etudiant $etu */

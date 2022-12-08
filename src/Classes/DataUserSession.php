@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/DataUserSession.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/05/2022 14:49
+ * @lastUpdate 18/11/2022 08:54
  */
 
 /*
@@ -116,7 +116,7 @@ class DataUserSession
         }
     }
 
-    public function getUser(): ?UserInterface
+    public function getUser(): Personnel|Etudiant|null
     {
         if (null !== $this->user->getToken()) {
             return $this->user->getToken()->getUser();
@@ -188,7 +188,7 @@ class DataUserSession
 
     public function getAnneePrevisionnel(): ?int
     {
-        return $this->getAnneeUniversitaire()->getAnnee();
+        return $this->getAnneeUniversitaire()?->getAnnee();
     }
 
     public function getDepartementId(): int
@@ -200,6 +200,9 @@ class DataUserSession
         return 0;
     }
 
+    /**
+     * @throws \JsonException
+     */
     public function isGoodDepartement(string $role): bool
     {
         if (null !== $this->getUser() && !($this->getUser() instanceof Etudiant)) {
@@ -218,6 +221,9 @@ class DataUserSession
         return false;
     }
 
+    /**
+     * @throws \JsonException
+     */
     public function isGoodDepartementArray(array $roles): bool
     {
         if (null !== $this->getUser() && !($this->getUser() instanceof Etudiant)) {
