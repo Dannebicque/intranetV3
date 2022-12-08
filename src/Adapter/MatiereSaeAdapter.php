@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Adapter/MatiereSaeAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/08/2022 16:49
+ * @lastUpdate 24/11/2022 08:06
  */
 
 namespace App\Adapter;
@@ -12,6 +12,7 @@ namespace App\Adapter;
 use App\DTO\Matiere;
 use App\DTO\MatiereCollection;
 use App\DTO\Ue;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class MatiereSaeAdapter extends AbstractMatiereAdapter implements MatiereAdapterInterface
 {
@@ -36,9 +37,13 @@ class MatiereSaeAdapter extends AbstractMatiereAdapter implements MatiereAdapter
             $m->id = $matiere->getId();
             $m->projetFormation = $matiere->getProjetFormation();
             $m->projetPpn = $matiere->getProjetPpn();
-            // $m->semestre = $matiere->getSemestre();//todo: supprimer et gérer en mutualiser avec semestres
             $m->apc = true;
             $m->bonification = $matiere->getBonification();
+
+            $m->apcParcours = new ArrayCollection();
+            foreach ($matiere->getSemestres() as $semestre) {
+                $m->apcParcours->add($semestre->getDiplome()->getApcParcours());
+            }
 
             foreach ($matiere->getApcSaeCompetences() as $competence) {
                 $ue = new Ue();

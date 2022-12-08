@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Adapter/MatiereRessourceAdapter.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Adapter/MatiereRessourceAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/10/2021 10:36
+ * @lastUpdate 24/11/2022 08:59
  */
 
 namespace App\Adapter;
@@ -12,6 +12,7 @@ namespace App\Adapter;
 use App\DTO\Matiere;
 use App\DTO\MatiereCollection;
 use App\DTO\Ue;
+use Doctrine\Common\Collections\ArrayCollection;
 
 class MatiereRessourceAdapter extends AbstractMatiereAdapter implements MatiereAdapterInterface
 {
@@ -33,6 +34,11 @@ class MatiereRessourceAdapter extends AbstractMatiereAdapter implements MatiereA
         if (null !== $m) {
             $m->apc = true;
             $m->id = $matiere->getId();
+            $m->apcParcours = new ArrayCollection();
+
+            foreach ($matiere->getSemestres() as $semestre) {
+                $m->apcParcours->add($semestre->getDiplome()->getApcParcours());
+            }
 
             foreach ($matiere->getApcRessourceCompetences() as $competence) {
                 $ue = new Ue();
