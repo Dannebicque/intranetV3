@@ -34,6 +34,9 @@
     <script src="{{ asset('bundles/fosjsrouting/js/router.min.js') }}" defer></script>
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}" defer></script>
     {% block javascripts %}
+        <script>
+          let toasts = [];
+        </script>
         {{ encore_entry_script_tags('app') }}
     {% endblock %}
     {% if app.environment == 'prod' %}
