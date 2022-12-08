@@ -4,10 +4,10 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/DependencyInjection/services.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/09/2022 17:04
+ * @lastUpdate 18/11/2022 08:54
  */
 
-namespace App\Components\Questionnaire\DependencyInjection;
+namespace App\Components\SourceEdt\DependencyInjection;
 
 use App\Components\SourceEdt\Source\EdtAde;
 use App\Components\SourceEdt\Source\EdtCelcat;
