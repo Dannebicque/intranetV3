@@ -75,14 +75,14 @@
                         <div class="form-group-adresse">
                             <label for="adresse" class="form-label">Votre adresse :</label> <br>
                             <input type="text" id="adresse" class="form-control" autocomplete="off">
-                            <div class="form-text mb-0 help-text">Veuillez saisir votre adresse puis sélectionner la
-                                                                  proposition correspondante
+                            <div class="form-text mb-0 help-text">
+                                Veuillez saisir votre adresse puis sélectionner la
+                                proposition correspondante
                             </div>
                             <ul id="adresseliste">
                             </ul>
 
                             <hr>
-
 
                             <div class="form-champs-adresse">
                                 {{ form_row(form_vous.etudiant.adresse.adresse1) }}
@@ -94,16 +94,17 @@
 
                             <div class="form-btn-verif">
                                 {{ form_row(form_vous.etudiant.adresse.modif_adresse) }}
-                                <p class="form-text mb-0 help-text">Si l'adresse n'est pas disponible, merci de la
-                                                                    saisir
-                                                                    manuellement en cliquant sur ce bouton</p>
+                                <p class="form-text mb-0 help-text">
+                                    Si l'adresse n'est pas disponible, merci de la
+                                    saisir manuellement en cliquant sur ce bouton
+                                </p>
                             </div>
                         </div>
 
                         <hr>
 
                         <div class="form-main">
-                            {{ form_row(form_vous.etudiant.tel1|tel_format) }}
+                            {{ form_row(form_vous.etudiant.tel1) }}
                             {{ form_row(form_vous.etudiant.mail_perso) }}
                         </div>
 
@@ -1211,11 +1212,6 @@
                     </div>
                     <script defer lang="text/javascript" type="module">
                       window.addEventListener('load', () => {
-
-                        flatpickr('.flatdatepicker', {
-                          dateFormat: 'd-m-Y',
-                        })
-
 
                           {#                            //------------------------------------------------------------------------------ -#}
                           {#                            //-----------------------CALC NBR JOURS----------------------------------------- -#}

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/Type/DatePickerType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 17:41
+ * @lastUpdate 08/12/2022 16:25
  */
 
 namespace App\Form\Type;
@@ -33,6 +33,7 @@ class DatePickerType extends AbstractType
         $jsOptions = [
             'dateFormat' => $options['format'],
             'enableTime' => $options['enable_time'],
+            'locale' => $options['locale'],
 
             'allowInput' => $options['allow_input'],
             'minDate' => $this->toDate($options['min'], $options['format']),
@@ -73,6 +74,7 @@ class DatePickerType extends AbstractType
         $resolver
             ->setDefault('data_class', null)
             ->setDefault('enable_time', false)
+            ->setDefault('locale', 'fr')
             ->setAllowedTypes('enable_time', 'bool')
             ->setDefault('min', null)
             ->setAllowedTypes('min', [CarbonInterface::class, 'string', 'null'])

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/stage/FormTypeVosInformations.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/12/2022 21:40
+ * @lastUpdate 08/12/2022 16:15
  */
 
 namespace App\Form\stage;
@@ -21,7 +21,7 @@ class FormTypeVosInformations extends AbstractType
     {
         $builder
             ->add('etudiant', EtudiantStageType::class, ['label' => 'Vos informations', 'required' => false])
-            ->add('suivant', SubmitType::class, ['label' => 'Etape suivante', 'attr' => ['data-action' => 'click->formulaire#formvous', 'data-bs-toggle' => 'modal', 'data-bs-target' => '#exampleModal', 'class' => 'btn-suivant']]);
+            ->add('suivant', SubmitType::class, ['label' => 'Etape suivante', 'attr' => ['class' => 'btn-suivant']]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/stage/EtudiantStageType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/12/2022 21:40
+ * @lastUpdate 08/12/2022 16:06
  */
 
 namespace App\Form\stage;
@@ -27,8 +27,6 @@ class EtudiantStageType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->departement = $options['departement'];
-
         $builder
             ->add('intituleSecuriteSociale', TextType::class, [
                 'label' => 'Organisme de sécurité sociale * :',
@@ -51,7 +49,6 @@ class EtudiantStageType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Etudiant::class,
             'translation_domain' => 'form',
-            'departement' => null,
         ]);
     }
 }

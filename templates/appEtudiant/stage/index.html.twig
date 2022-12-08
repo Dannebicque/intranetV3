@@ -92,7 +92,10 @@
                                     <strong>{{ stageEtudiants[stagePeriode.id].dateAutorise|format_date('long') }}</strong>.
                                                                 Vous devez maintenant remplir le formulaire.</p></div>
                             <div class="d-grid">
-                            <a href="{{ path('application_etudiant_stage_formulaire', {stageEtudiant:stageEtudiants[stagePeriode.id].uuidString}) }}"
+{#                            <a href="{{ path('application_etudiant_stage_formulaire', {stageEtudiant:stageEtudiants[stagePeriode.id].uuidString}) }}"#}
+{#                               class="btn d-block btn-large btn-info">[OLD] Compléter la proposition de stage</a>#}
+                                <a href="{{ path('app_stage_etudiant_formulaire', {stageEtudiant:stageEtudiants[stagePeriode.id]
+                                .uuidString}) }}"
                                class="btn d-block btn-large btn-info">Compléter la proposition de stage</a>
                             </div>
                         {% elseif ((stageEtudiants[stagePeriode.id] is  defined) and (stageEtudiants[stagePeriode.id].etatStage is constant('ETAT_STAGE_DEPOSE', stageEtudiants[stagePeriode.id]) )) %}
