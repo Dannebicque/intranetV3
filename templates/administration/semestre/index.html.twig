@@ -156,7 +156,10 @@
                                 <span class="badge rounded-pill bg-info">{{ nbRattrapages }}</span>
                             </a>
                         </div>
-
+                        <div class="col-12 d-grid d-block mb-2">
+                            <a href="{{ path('administration_mcc_index', {semestre:semestre.id}) }}"
+                               class="btn btn-primary"> {{ 'adm.mcc'|trans }}</a>
+                        </div>
                     </div>
                 </div>
             </div>
