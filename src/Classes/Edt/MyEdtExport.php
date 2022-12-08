@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2022 19:15
+ * @lastUpdate 18/11/2022 08:54
  */
 
 /*
@@ -79,7 +79,7 @@ class MyEdtExport
                 $max = $emaineActuelle->getSemaineFormation() + $nbSemaines;
                 if ($user->getDepartement()->isOptUpdateCelcat()) {
                     for ($i = $emaineActuelle->getSemaineFormation(); $i < $max; ++$i) {
-                        $temp[] = $this->celcatEventsRepository->getByEtudiantArray($user, $i);
+                        $temp[] = $this->celcatEventsRepository->getByEtudiantArray($user, $i,$user->getAnneeUniversitaire());
                     }
                 } else {
                     if ($user->getSemestre()->getDiplome()->isApc()) {
