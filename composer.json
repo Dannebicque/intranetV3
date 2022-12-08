@@ -10,6 +10,7 @@
     "ext-zip": "*",
     "bugsnag/bugsnag-symfony": "^1.11",
     "composer/package-versions-deprecated": "^1.11",
+    "davidannebicque/table-bundle": "*@dev",
     "doctrine/annotations": "^1.13",
     "doctrine/doctrine-bundle": "^2.6",
     "doctrine/doctrine-migrations-bundle": "^3.1",
@@ -136,5 +137,11 @@
     "symfony/maker-bundle": "^1.19",
     "symfony/phpunit-bridge": "^6.0",
     "symfony/web-profiler-bundle": "^6.0"
-  }
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/Dannebicque/TableBundle.git"
+    }
+  ]
 }

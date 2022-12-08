@@ -1,15 +1,15 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/ColumnType/MatiereColumnType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Table/ColumnType/MatiereColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/09/2021 20:28
+ * @lastUpdate 18/11/2022 08:54
  */
 
 namespace App\Table\ColumnType;
 
-use App\Components\Table\Column\PropertyColumnType;
+use DavidAnnebicque\TableBundle\Column\PropertyColumnType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MatiereColumnType extends PropertyColumnType

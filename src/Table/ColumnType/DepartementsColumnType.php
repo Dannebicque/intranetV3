@@ -1,15 +1,15 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/ColumnType/SemestreColumnType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Table/ColumnType/DepartementsColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/10/2021 12:18
+ * @lastUpdate 18/11/2022 08:54
  */
 
 namespace App\Table\ColumnType;
 
-use App\Components\Table\Column\ColumnType;
+use DavidAnnebicque\TableBundle\Column\ColumnType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DepartementsColumnType extends ColumnType

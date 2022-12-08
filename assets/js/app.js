@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/10/2022 18:17
+// @lastUpdate 18/11/2022 08:54
 import '@fortawesome/fontawesome-pro/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-pro/scss/brands.scss'
 import '@fortawesome/fontawesome-pro/scss/solid.scss'
@@ -19,7 +19,6 @@ import '../css/app.scss'
 
 import 'flatpickr/dist/l10n/fr.js'
 
-import Table from '../components/table'
 import SelectComplete from '../components/SelectComplete'
 import SelectChangeWidget from '../components/SelectChangeWidget'
 import { get, post } from './fetch'
@@ -32,7 +31,6 @@ window.da = {
   loader: document.getElementById('loader'),
 }
 
-customElements.define('my-table', Table)
 customElements.define('select-complete', SelectComplete, { extends: 'select' })
 customElements.define('select-live-update', SelectChangeWidget, { extends: 'select' })
 

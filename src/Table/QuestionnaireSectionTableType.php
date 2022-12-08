@@ -4,20 +4,22 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/QuestionnaireSectionTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/05/2022 15:13
+ * @lastUpdate 18/11/2022 08:54
  */
 
 namespace App\Table;
 
-use App\Components\Table\Adapter\EntityAdapter;
-use App\Components\Table\Column\PropertyColumnType;
-use App\Components\Table\Column\WidgetColumnType;
-use App\Components\Table\TableBuilder;
-use App\Components\Table\TableType;
-use App\Components\Widget\Type\RowDeleteLinkType;
-use App\Components\Widget\Type\RowEditLinkType;
-use App\Components\Widget\Type\RowShowLinkType;
-use App\Components\Widget\WidgetBuilder;
+use DavidAnnebicque\TableBundle\Adapter\EntityAdapter;
+use DavidAnnebicque\TableBundle\Column\PropertyColumnType;
+use DavidAnnebicque\TableBundle\Column\WidgetColumnType;
+use DavidAnnebicque\TableBundle\TableBuilder;
+use DavidAnnebicque\TableBundle\TableType;
+use DavidAnnebicque\TableBundle\Widget\Type\RowDeleteLinkType;
+use DavidAnnebicque\TableBundle\Widget\Type\RowDuplicateLinkType;
+use DavidAnnebicque\TableBundle\Widget\Type\RowEditLinkType;
+use DavidAnnebicque\TableBundle\Widget\Type\RowShowLinkType;
+use DavidAnnebicque\TableBundle\Widget\WidgetBuilder;
+use App\Entity\Departement;
 use App\Entity\QuestionnaireSection;
 use App\Form\Type\SearchType;
 use Doctrine\ORM\QueryBuilder;
@@ -26,12 +28,18 @@ use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class QuestionnaireSectionTableType extends TableType
 {
+    protected string $type = 'administratif';
+    protected ?Departement $departement;
+
     public function __construct(private readonly CsrfTokenManagerInterface $csrfToken)
     {
     }
 
     public function buildTable(TableBuilder $builder, array $options): void
     {
+        $this->type = $options['type'];
+        $this->departement = $options['departement'];
+
         $builder->addFilter('search', SearchType::class);
 
 //        $builder->addWidget('export', ExportDropdownType::class, [
@@ -42,36 +50,39 @@ class QuestionnaireSectionTableType extends TableType
 //        ]);
 
         $builder->addColumn('titre', PropertyColumnType::class, ['label' => 'table.titre']);
-        $builder->setLoadUrl('sadm_questionnaire_section_index');
+        $builder->setLoadUrl('adm_questionnaire_section_index', ['type' => $this->type]);
 
         $builder->addColumn('links', WidgetColumnType::class, [
             'build' => function (WidgetBuilder $builder, QuestionnaireSection $s) {
-//                $builder->add('duplicate', RowDuplicateLinkType::class, [
-//                    'route' => 'adm_questionnaire_section_duplicate',
-//                    'route_params' => ['id' => $s->getId()],
-//                    'xhr' => false,
-//                ]);
+                $builder->add('duplicate', RowDuplicateLinkType::class, [
+                    'route' => 'adm_questionnaire_section_duplicate',
+                    'route_params' => ['id' => $s->getId(),'type' => $this->type,],
+                    'xhr' => false,
+                ]);
                 $builder->add('show', RowShowLinkType::class, [
-                    'route' => 'sadm_questionnaire_section_show',
+                    'route' => 'adm_questionnaire_section_show',
                     'route_params' => [
                         'id' => $s->getId(),
+                        'type' => $this->type,
                     ],
                     'xhr' => false,
                 ]);
                 $builder->add('edit', RowEditLinkType::class, [
-                    'route' => 'sadm_questionnaire_section_edit',
+                    'route' => 'adm_questionnaire_section_edit',
                     'route_params' => [
                         'id' => $s->getId(),
+                        'type' => $this->type,
                     ],
                     'xhr' => false,
                 ]);
                 $builder->add('delete', RowDeleteLinkType::class, [
-                    'route' => 'sadm_questionnaire_section_delete',
+                    'route' => 'adm_questionnaire_section_delete',
                     'route_params' => [
                         'id' => $s->getId(),
+                        'type' => $this->type,
                     ],
                     'attr' => [
-                        'data-href' => 'sadm_questionnaire_section_delete',
+                        'data-href' => 'adm_questionnaire_section_delete',
                         'data-uuid' => $s->getId(),
                         'data-csrf' => $this->csrfToken->getToken('delete'.$s->getId()),
                     ],
@@ -83,6 +94,10 @@ class QuestionnaireSectionTableType extends TableType
             'class' => QuestionnaireSection::class,
             'fetch_join_collection' => false,
             'query' => function (QueryBuilder $qb, array $formData) {
+                if ('administration' === $this->type && null !== $this->departement) {
+                    $qb->andWhere('e.departement = :departement')
+                        ->setParameter('departement', $this->departement);
+                }
                 if (isset($formData['search'])) {
                     $qb->andWhere('LOWER(e.titre) LIKE :search');
                     $qb->orWhere('LOWER(e.texte) LIKE :search');
@@ -109,6 +124,7 @@ class QuestionnaireSectionTableType extends TableType
         $resolver->setDefaults([
             'orderable' => true,
             'departement' => null,
+            'type' => 'administratif',
         ]);
     }
 }

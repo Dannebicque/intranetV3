@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/config/bundles.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/09/2022 08:21
+ * @lastUpdate 18/11/2022 08:54
  */
 
 return [
@@ -31,4 +31,5 @@ return [
     Symfony\UX\LiveComponent\LiveComponentBundle::class => ['all' => true],
     Symfony\UX\Dropzone\DropzoneBundle::class => ['all' => true],
     Symfony\UX\Autocomplete\AutocompleteBundle::class => ['all' => true],
+    DavidAnnebicque\TableBundle\DavidAnnebicqueTableBundle::class => ['all' => true],
 ];

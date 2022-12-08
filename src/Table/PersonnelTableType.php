@@ -4,29 +4,28 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/PersonnelTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/08/2022 14:26
+ * @lastUpdate 18/11/2022 08:54
  */
 
 namespace App\Table;
 
-use App\Components\Table\Adapter\EntityAdapter;
-use App\Components\Table\Column\BooleanColumnType;
-use App\Components\Table\Column\PropertyColumnType;
-use App\Components\Table\Column\WidgetColumnType;
-use App\Components\Table\TableBuilder;
-use App\Components\Table\TableType;
-use App\Components\Widget\Type\ButtonType;
-use App\Components\Widget\Type\ExportDropdownType;
-use App\Components\Widget\Type\RowDeleteLinkType;
-use App\Components\Widget\Type\RowEditLinkType;
-use App\Components\Widget\Type\RowShowLinkType;
-use App\Components\Widget\WidgetBuilder;
+use DavidAnnebicque\TableBundle\Widget\Type\ButtonType;
+use DavidAnnebicque\TableBundle\Widget\Type\ExportDropdownType;
+use DavidAnnebicque\TableBundle\Widget\Type\RowDeleteLinkType;
+use DavidAnnebicque\TableBundle\Widget\Type\RowEditLinkType;
+use DavidAnnebicque\TableBundle\Widget\Type\RowShowLinkType;
+use DavidAnnebicque\TableBundle\Widget\WidgetBuilder;
 use App\Entity\Departement;
 use App\Entity\Personnel;
 use App\Entity\PersonnelDepartement;
 use App\Form\Type\SearchType;
 use App\Table\ColumnType\DepartementsColumnType;
 use App\Table\ColumnType\TypePersonnelColumnType;
+use DavidAnnebicque\TableBundle\Adapter\EntityAdapter;
+use DavidAnnebicque\TableBundle\Column\PropertyColumnType;
+use DavidAnnebicque\TableBundle\Column\WidgetColumnType;
+use DavidAnnebicque\TableBundle\TableBuilder;
+use DavidAnnebicque\TableBundle\TableType;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -93,7 +92,6 @@ class PersonnelTableType extends TableType
                 'expanded' => false,
                 'multiple' => false,
             ]);
-
 
             $builder->setLoadUrl('sa_qualite_originaux_acces_index');
 

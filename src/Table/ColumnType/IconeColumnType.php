@@ -1,15 +1,15 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Table/ColumnType/IconeColumnType.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Table/ColumnType/IconeColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2021 09:32
+ * @lastUpdate 18/11/2022 08:54
  */
 
 namespace App\Table\ColumnType;
 
-use App\Components\Table\Column\PropertyColumnType;
+use DavidAnnebicque\TableBundle\Column\PropertyColumnType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class IconeColumnType extends PropertyColumnType

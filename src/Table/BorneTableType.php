@@ -4,24 +4,24 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/BorneTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/05/2022 15:13
+ * @lastUpdate 18/11/2022 08:54
  */
 
 namespace App\Table;
 
-use App\Components\Table\Adapter\EntityAdapter;
-use App\Components\Table\Column\BooleanColumnType;
-use App\Components\Table\Column\DateColumnType;
-use App\Components\Table\Column\PropertyColumnType;
-use App\Components\Table\Column\WidgetColumnType;
-use App\Components\Table\TableBuilder;
-use App\Components\Table\TableType;
-use App\Components\Widget\Type\ExportDropdownType;
-use App\Components\Widget\Type\RowDeleteLinkType;
-use App\Components\Widget\Type\RowDuplicateLinkType;
-use App\Components\Widget\Type\RowEditLinkType;
-use App\Components\Widget\Type\RowShowLinkType;
-use App\Components\Widget\WidgetBuilder;
+use DavidAnnebicque\TableBundle\Adapter\EntityAdapter;
+use DavidAnnebicque\TableBundle\Column\BooleanColumnType;
+use DavidAnnebicque\TableBundle\Column\DateColumnType;
+use DavidAnnebicque\TableBundle\Column\PropertyColumnType;
+use DavidAnnebicque\TableBundle\Column\WidgetColumnType;
+use DavidAnnebicque\TableBundle\TableBuilder;
+use DavidAnnebicque\TableBundle\TableType;
+use DavidAnnebicque\TableBundle\Widget\Type\ExportDropdownType;
+use DavidAnnebicque\TableBundle\Widget\Type\RowDeleteLinkType;
+use DavidAnnebicque\TableBundle\Widget\Type\RowDuplicateLinkType;
+use DavidAnnebicque\TableBundle\Widget\Type\RowEditLinkType;
+use DavidAnnebicque\TableBundle\Widget\Type\RowShowLinkType;
+use DavidAnnebicque\TableBundle\Widget\WidgetBuilder;
 use App\Entity\Annee;
 use App\Entity\Borne;
 use App\Entity\Departement;

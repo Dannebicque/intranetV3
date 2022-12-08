@@ -4,17 +4,17 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/PlanCoursTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/05/2022 15:13
+ * @lastUpdate 18/11/2022 08:54
  */
 
 namespace App\Table;
 
 use App\Classes\Previsionnel\PrevisionnelManager;
-use App\Components\Table\Column\PropertyColumnType;
-use App\Components\Table\DTO\TableResult;
-use App\Components\Table\DTO\TableState;
-use App\Components\Table\TableBuilder;
-use App\Components\Table\TableType;
+use DavidAnnebicque\TableBundle\Column\PropertyColumnType;
+use DavidAnnebicque\TableBundle\DTO\TableResult;
+use DavidAnnebicque\TableBundle\DTO\TableState;
+use DavidAnnebicque\TableBundle\TableBuilder;
+use DavidAnnebicque\TableBundle\TableType;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Enums\PlanCoursEnum;

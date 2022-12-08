@@ -4,23 +4,23 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/EnqueteQualiteDiplomesTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/09/2022 08:51
+ * @lastUpdate 18/11/2022 08:54
  */
 
 namespace App\Table;
 
-use App\Components\Table\Adapter\EntityAdapter;
-use App\Components\Table\Column\EntityColumnType;
-use App\Components\Table\Column\PropertyColumnType;
-use App\Components\Table\DTO\Table;
-use App\Components\Table\TableBuilder;
-use App\Components\Table\TableType;
 use App\Entity\Diplome;
 use App\Form\Type\DiplomeEntityType;
 use App\Form\Type\SearchType;
 use App\Form\Type\TypeDiplomeEntityType;
 use App\Table\ColumnType\NbEtudiantsColumnType;
 use App\Table\ColumnType\SemestresAvecActifColumnType;
+use DavidAnnebicque\TableBundle\Adapter\EntityAdapter;
+use DavidAnnebicque\TableBundle\Column\EntityColumnType;
+use DavidAnnebicque\TableBundle\Column\PropertyColumnType;
+use DavidAnnebicque\TableBundle\DTO\Table;
+use DavidAnnebicque\TableBundle\TableBuilder;
+use DavidAnnebicque\TableBundle\TableType;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -32,9 +32,11 @@ class EnqueteQualiteDiplomesTableType extends TableType
         $builder->addFilter('diplome', DiplomeEntityType::class);
         $builder->addFilter('typeDiplome', TypeDiplomeEntityType::class);
 
-        $builder->addColumn('typeDiplome', EntityColumnType::class, ['label' => 'table.typeDiplome', 'display_field' => 'libelle', 'order' => Table::SORT_ASCENDING]);
+        $builder->addColumn('typeDiplome', EntityColumnType::class,
+            ['label' => 'table.typeDiplome', 'display_field' => 'libelle', 'order' => Table::SORT_ASCENDING]);
         $builder->addColumn('libelle', PropertyColumnType::class, ['label' => 'table.libelle']);
-        $builder->addColumn('id', NbEtudiantsColumnType::class, ['label' => 'table.nbEtudiants', 'effectifs' => $options['effectifs']]);
+        $builder->addColumn('id', NbEtudiantsColumnType::class,
+            ['label' => 'table.nbEtudiants', 'effectifs' => $options['effectifs']]);
         $builder->addColumn('semestres', SemestresAvecActifColumnType::class, ['label' => 'table.semestre']);
 
         $builder->setLoadUrl('administratif_enquete_etudiant_index');
@@ -43,6 +45,8 @@ class EnqueteQualiteDiplomesTableType extends TableType
             'class' => Diplome::class,
             'fetch_join_collection' => false,
             'query' => function (QueryBuilder $qb, array $formData) {
+                $qb->where('e.actif = true');
+
                 if (isset($formData['diplome'])) {
                     $qb->andWhere('e.id = :diplome');
                     $qb->setParameter('diplome', $formData['diplome']);
