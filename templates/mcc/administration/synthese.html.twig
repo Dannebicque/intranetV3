@@ -1,0 +1,69 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th>#</th>
+        <th>Type évaluation</th>
+        <th>Pourcentage</th>
+        <th>&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% set next = 1 %}
+    {% set totalPourcentage = 0 %}
+    {% for mcc in mccs %}
+        <tr>
+            <th>{{ loop.index }}</th>
+            <td>{{ mcc.typeEpreuve != null ? mcc.typeEpreuve.libelle : 'erreur' }}</td>
+            <td>{{ mcc.coefficient|number_format(2) }} %</td>
+            <td>
+                <button type="button" class="btn btn-danger-outline" {{ stimulus_action('mcc', 'supprMcc', 'click', {id: mcc.id}) }}>
+                    <i class="{{ iconDelete }}"></i>
+                </button>
+            </td>
+        </tr>
+        {% set totalPourcentage = totalPourcentage + mcc.coefficient %}
+        {% if loop.last %}
+            {% set next = loop.index+1 %}
+        {% endif %}
+    {% else %}
+        <tr>
+            <td colspan="4" class="bg-pale-warning">{{ 'no.record.found'|trans }}</td>
+        </tr>
+    {% endfor %}
+    {% form_theme form 'form/my-form.html.twig' %}
+    {{ form_start(form) }}
+    <tr>
+        <td>{{ next }}</td>
+        <td>
+            {{ form_widget(form.typeEpreuve) }}
+        </td>
+        <td>
+            {{ form_widget(form.coefficient) }}
+        </td>
+        <td>
+            <button type="button" class="btn btn-success" {{ stimulus_action('mcc', 'addMcc', 'click') }}>
+                Ajouter
+            </button>
+        </td>
+    </tr>
+    {{ form_end(form) }}
+    </tbody>
+    <tfoot>
+    <tr>
+        <td colspan="2" class="text-end">Total</td>
+        <td>
+            <span class="badge {% if totalPourcentage == 100 %}bg-success{% else %}bg-warning{% endif %}">
+                {{ totalPourcentage|number_format(2) }} %
+            </span>
+            {% if totalPourcentage > 100 %}
+                <span>Dépasse de {{ totalPourcentage-100 }} %</span>
+            {% endif %}
+            {% if totalPourcentage < 100 %}
+                <span>Manque de {{ 100-totalPourcentage }} %</span>
+            {% endif %}
+
+        </td>
+        <td>&nbsp;</td>
+    </tr>
+    </tfoot>
+</table>

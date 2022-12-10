@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    MCC pour {{ matiere.display }}
+{% endblock %}
+
+{% block headeractions %}
+
+{% endblock %}
+
+{% block stimulus %}
+    {{ stimulus_controller('mcc', {
+        urlMcc: path('administration_mcc_synthese', {typeIdMatiere: matiere.typeIdMatiere, semestre: semestre.id}),
+        urlAddMcc: path('administration_mcc_add', {typeIdMatiere: matiere.typeIdMatiere, semestre: semestre.id}),
+        urlSupprMcc: path('administration_mcc_suppr', {typeIdMatiere: matiere.typeIdMatiere, semestre: semestre.id}),
+    }) }}
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">Synthèse</h4>
+        <div class="card-body" {{ stimulus_target('mcc', 'synthese') }}>
+
+        </div>
+    </div>
+{% endblock %}
+
