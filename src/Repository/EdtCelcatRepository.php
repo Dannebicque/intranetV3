@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtCelcatRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/12/2022 10:25
+ * @lastUpdate 10/12/2022 18:12
  */
 
 namespace App\Repository;
@@ -54,6 +54,9 @@ class EdtCelcatRepository extends ServiceEntityRepository
     public function findEdtEtu(Etudiant $user, int $semaine, AnneeUniversitaire $anneeUniversitaire): null|array|int
     {
         if (null !== $user->getSemestre()) {
+            $this->chaine = '';
+            $this->params = [];
+
             $this->groupes($user);
             $this->params['semaine'] = $semaine;
             $this->params['anneeUniversitaire'] = $anneeUniversitaire->getId();
@@ -125,7 +128,7 @@ class EdtCelcatRepository extends ServiceEntityRepository
             ->addOrderBy('p.codeGroupe', Criteria::ASC);
 
         $ors = [];
-        $diplome = null === $semestre->getDiplome()->getParent() ? $semestre->getDiplome() : $semestre->getDiplome()->getParent();
+        $diplome = $semestre->getDiplome()->getParent() ?? $semestre->getDiplome();
         foreach ($diplome->getEnfants() as $dip) {
             $ors[] = '(' . $query->expr()->orx('a.diplome = ' . $query->expr()->literal($dip->getId())) . ')';
         }
@@ -194,7 +197,7 @@ class EdtCelcatRepository extends ServiceEntityRepository
             ->addOrderBy('p.codeGroupe', Criteria::ASC);
 
         $ors = [];
-        $diplome = null === $semestre->getDiplome()->getParent() ? $semestre->getDiplome() : $semestre->getDiplome()->getParent();
+        $diplome = $semestre->getDiplome()->getParent() ?? $semestre->getDiplome();
         foreach ($diplome->getEnfants() as $dip) {
             $ors[] = '('.$query->expr()->orx('a.diplome = '.$query->expr()->literal($dip->getId())).')';
         }
