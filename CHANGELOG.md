@@ -2,6 +2,42 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.10.0](https://github.com/Dannebicque/intranetV3/compare/v3.9.58...v3.10.0) (2022-12-10)
+
+
+### Features
+
+* [APC] Parcours dans les Adapters ([e9e1fde](https://github.com/Dannebicque/intranetV3/commit/e9e1fdee566eeb0047a927e2ec75c20b0eb1b01b))
+* [Compere] mise en place BDD ([d24aae3](https://github.com/Dannebicque/intranetV3/commit/d24aae359da9a22423f9e4bd7a4131717d61fe12))
+* [Composant Graph] Composant pour la gestion des graphiques ([6c3639d](https://github.com/Dannebicque/intranetV3/commit/6c3639dd7570693006df577a87a8375a07153137))
+* [Composant Table] Nettoyage suite déport dans un bundle ([d069b51](https://github.com/Dannebicque/intranetV3/commit/d069b51607debb576e678c101fc1776eac60e2a1))
+* [Mcc] Saisie des MCC. Structure de base ([6959d01](https://github.com/Dannebicque/intranetV3/commit/6959d01c4fd41137009c7845045998aa8e2534fd))
+* [MCC][WIP] Saisie et affichages des MCC, pour alimenter le tableau de la DEVU ([8c9f0a6](https://github.com/Dannebicque/intranetV3/commit/8c9f0a68ae35665ba18a59c2bbe7ed5464413e53))
+* [Questionnaire] Refonte complète du composant questionnaire et de la structure de BDD. Marquage comme deprecié de l'ancienne solution (à supprimer les entités) ([f6f1ed8](https://github.com/Dannebicque/intranetV3/commit/f6f1ed858803d142724b5efc301649f7a1badeed))
+* [Stage] Nouveau formulaire de stage ([0a08f09](https://github.com/Dannebicque/intranetV3/commit/0a08f0952f797880181554344635b86fbabe4e83))
+* [Table Component] Déplacement du Composant dans son propre bundle ([5d3e48e](https://github.com/Dannebicque/intranetV3/commit/5d3e48ee58135c5414937f65dd03a6b4de4953c6))
+
+
+### Bug Fixes
+
+* [Alternance] Edition des données ([434844a](https://github.com/Dannebicque/intranetV3/commit/434844a1e8e71e45bc8e6d26f48e4ee66c5deba9))
+* [Apcparcours] Export ([96c0225](https://github.com/Dannebicque/intranetV3/commit/96c02251827ec8f69bf27a0f0dd47a55e6225b2a))
+* [Edt composant] Typage et namespace ([001fd99](https://github.com/Dannebicque/intranetV3/commit/001fd99c3970d900b3ed98948a2cae7c138fe88e))
+* [EdtExport] Export ([e21b20d](https://github.com/Dannebicque/intranetV3/commit/e21b20dda12fc99adc0e7162039b8d866cf882e6))
+* [Entity] deprecated ([4e18d11](https://github.com/Dannebicque/intranetV3/commit/4e18d11fbc05952c78ecc855ae9ac8c346afaa70))
+* [Evaluation] gestion des groupes et affichages par parcours ([7e59b03](https://github.com/Dannebicque/intranetV3/commit/7e59b0366042978187f05e84081b22fee28de48a))
+* [Mcc] Fix affichage du semestre pour le bon référentiel ([594f6b7](https://github.com/Dannebicque/intranetV3/commit/594f6b769f670dc6c941103b4fd5c76c9ba4450d))
+* [RDD] clôture ([c24f4ec](https://github.com/Dannebicque/intranetV3/commit/c24f4ec727085d8646a2fd70d00de0976467550c))
+* [RDD] typage ([4c65e75](https://github.com/Dannebicque/intranetV3/commit/4c65e75a22f9ff283822d63601c0edd59a13777a))
+* [RDD] typage ([c36c2c8](https://github.com/Dannebicque/intranetV3/commit/c36c2c852f45bd2bf2f39f90b4852d9cd48f3aac))
+* [SousComm] Typage et namespace ([15917fc](https://github.com/Dannebicque/intranetV3/commit/15917fc6dd5b2107b5563f3728ea561e5f3f914d))
+* [Stage] ajout méthode save dans repository ([c8d58cb](https://github.com/Dannebicque/intranetV3/commit/c8d58cb63c74cfa3c0af2bcdc88f900c6db3966a))
+* [Stage] correcifs + datepicker ([f95876e](https://github.com/Dannebicque/intranetV3/commit/f95876e126e30390e0aeb5b5a3d388e8dae8bdb6))
+* [Structure] Affichage des parcours ([c3f0d72](https://github.com/Dannebicque/intranetV3/commit/c3f0d72ddd2ee11a473802b3b434857ef0d37f9d))
+* [Structure] mise en page de la structure de l'APC ([dd9a0a6](https://github.com/Dannebicque/intranetV3/commit/dd9a0a6b45cfe01eb7a634f79c5d9025445db6d1))
+* [Toast] Toast sur template de base  spéciale ([fce94d5](https://github.com/Dannebicque/intranetV3/commit/fce94d5169395b6eb73323cf4ab3108ef0152fef))
+* Divers correctifs, CAS, edt... ([9592aa8](https://github.com/Dannebicque/intranetV3/commit/9592aa83d206b89f4ed2e29717012891f91303b4))
+
 ### [3.9.58](https://github.com/Dannebicque/intranetV3/compare/v3.9.57...v3.9.58) (2022-12-01)
 
 
