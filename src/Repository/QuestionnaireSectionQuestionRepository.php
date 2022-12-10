@@ -14,10 +14,12 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * @deprecated Use Quest...Repository à la place
  * @method QuestionnaireSectionQuestion|null find($id, $lockMode = null, $lockVersion = null)
  * @method QuestionnaireSectionQuestion|null findOneBy(array $criteria, array $orderBy = null)
  * @method QuestionnaireSectionQuestion[]    findAll()
- * @method QuestionnaireSectionQuestion[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method QuestionnaireSectionQuestion[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset =
+ *         null)
  * @extends ServiceEntityRepository<QuestionnaireSectionQuestion>
  */
 class QuestionnaireSectionQuestionRepository extends ServiceEntityRepository

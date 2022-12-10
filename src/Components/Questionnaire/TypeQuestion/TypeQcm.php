@@ -9,9 +9,13 @@
 
 namespace App\Components\Questionnaire\TypeQuestion;
 
+use App\Components\Graphs\Type\BarGraph;
 use App\Components\Questionnaire\Adapter\ReponseEntityAdapter;
 use App\Components\Questionnaire\Form\QuestionnaireQuestionTypeQcm;
-use App\Entity\QuestionnaireQuestion;
+use App\Entity\QuestQuestion;
+use App\Entity\QuestReponse;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TypeQcm extends AbstractQuestion
@@ -20,20 +24,57 @@ class TypeQcm extends AbstractQuestion
     final public const BADGE = 'bg-cyan';
     final public const ICON = 'fas fa-ballot-check';
     final public const FORM = QuestionnaireQuestionTypeQcm::class;
+    public const TYPE_GRAPH = BarGraph::SOURCE;
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
         $resolver
             ->setDefault('block_name', 'type_qcm')
+            ->setDefault('block_name_edit', 'type_qcm')
             ->setDefault('type_question', 'checkbox');
     }
 
-    public function getOrGenereReponses(QuestionnaireQuestion $question): void
+    /*
+     * ^ array:6 [
+  "maxChoix" => "2"
+  "questReponses" => array:2 [
+    0 => array:3 [
+      "ordre" => "1"
+      "libelle" => "A"
+      "valeur" => "A"
+    ]
+    1 => array:3 [
+      "ordre" => "2"
+      "libelle" => "B"
+      "valeur" => "B"
+    ]
+  ]
+]
+     */
+    public function sauvegarde(
+        QuestQuestion $question,
+        Request $request,
+        ?EntityManagerInterface $entityManager = null
+    ): void {
+        parent::sauvegarde($question, $request, $entityManager);
+        $parametres = $question->getParametre();
+        $parametres['maxChoix'] = $this->data['maxChoix'];
+        $question->setParametre($parametres);
+
+        $this->sauvegardeReponses($question, $entityManager);
+    }
+
+    public function getOrGenereReponses(QuestQuestion $question): void
     {
-        $reponses = $question->getReponses();
+        $reponses = $question->getQuestReponses();
         foreach ($reponses as $reponse) {
             $this->addReponse((new ReponseEntityAdapter($reponse))->getReponse());
         }
+    }
+
+    public function genereGraph()
+    {
+        return $this->graphRegistry->getTypeGraph(self::TYPE_GRAPH)->genereGraph($this);
     }
 }

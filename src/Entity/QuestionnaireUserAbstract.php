@@ -10,14 +10,18 @@
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Entity\Traits\UuidTrait;
 use Carbon\CarbonInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Uuid;
 
 #[ORM\MappedSuperclass]
 #[ORM\HasLifecycleCallbacks]
+/** @deprecated */
 abstract class QuestionnaireUserAbstract
 {
+    use UuidTrait;
     use LifeCycleTrait;
 
     #[ORM\ManyToOne(targetEntity: QuestionnaireQualite::class)]
@@ -42,6 +46,7 @@ abstract class QuestionnaireUserAbstract
                 $this->setQuestionnaireQualite($questionnaire);
                 break;
         }
+        $this->setUuid(Uuid::uuid4());
     }
 
     public function getTermine(): ?bool

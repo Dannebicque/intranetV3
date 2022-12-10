@@ -9,11 +9,13 @@
 
 namespace App\Components\Questionnaire\Adapter;
 
+use App\Components\Graphs\GraphRegistry;
+use App\Components\Questionnaire\DTO\ListeChoix;
 use App\Components\Questionnaire\DTO\ReponsesEtudiant;
 use App\Components\Questionnaire\QuestionnaireRegistry;
 use App\Components\Questionnaire\Section\AbstractSection;
 use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
-use App\Entity\QuestionnaireSectionQuestion;
+use App\Entity\QuestQuestion;
 use App\Utils\Tools;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -21,47 +23,46 @@ class QuestionnaireQuestionAdapter
 {
     protected AbstractQuestion $question;
 
-    public function __construct(private readonly QuestionnaireRegistry $questionnaireRegistry)
-    {
+    public function __construct(
+        private readonly QuestionnaireRegistry $questionnaireRegistry,
+        private readonly GraphRegistry $graphRegistry,
+    ) {
     }
 
     /**
      * @throws \App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException
      * @throws \JsonException
      */
-    public function createFromEntity(AbstractSection $abstractSection, QuestionnaireSectionQuestion $question, int $ordre = 1, array $options = [], ?ReponsesEtudiant $reponsesEtudiant = null): self
-    {
-        $obj = $this->questionnaireRegistry->getTypeQuestion($question->getQuestion()?->getType());
-        $options = array_merge($options, $question->getQuestion()?->getConfiguration());
-        $this->question = new $obj();
+    public function createFromEntity(
+        AbstractSection $abstractSection,
+        QuestQuestion $question,
+        int $ordre = 1,
+        array $options = []
+    ): self {
+        $obj = $this->questionnaireRegistry->getTypeQuestion($question->getType());
+        $options = array_merge($options, $question->getConfig());
+        $this->question = new $obj($this->graphRegistry);
 
         $optionResolver = new OptionsResolver();
         $this->question->configureOptions($optionResolver);
         $this->question->options = $optionResolver->resolve($options);
+        $this->question->parametres = $question->getParametre();
 
         if (true === $abstractSection->configurable) {
             $data = $abstractSection->abstractSectionAdapter->getData($abstractSection->params['valeurs'][$ordre]);
             $this->question->valeurs = $abstractSection->params['valeurs'];
-            $this->question->libelle = Tools::personnaliseTexte($question->getQuestion()->getLibelle(), $data);
+            $this->question->libelle = Tools::personnaliseTexte($question->getLibelle(), $data);
         } else {
-            $this->question->libelle = $question->getQuestion()->getLibelle();
+            $this->question->libelle = $question->getLibelle();
         }
 
-        $this->question->id = $question->getQuestion()->getId();
+        $this->question->id = $question->getId();
         $this->question->numero = $question->getOrdre();
-        $this->question->help = $question->getQuestion()->getHelp();
-        $this->question->parametres = $question->getQuestion()->getParametre();
-        $this->question->config = $question->getQuestion()->getConfiguration();
+        $this->question->help = $question->getHelp();
+        $this->question->config = $question->getConfig();
+        $this->question->cle = $question->getCle();
 
-        if (null !== $reponsesEtudiant) {
-            $this->question->reponseEtudiant = $reponsesEtudiant->getReponse($question->getQuestion()->getCle());
-
-            if (null !== $this->question->reponseEtudiant && 'CHX:OTHER' === $this->question->reponseEtudiant->valeur) {
-                $this->question->reponseEtudiant->complementValeur = $reponsesEtudiant->getReponse($question->getQuestion()->getCle().'_autre')?->valeur;
-            }
-        }
-
-        $this->question->getOrGenereReponses($question->getQuestion());
+        $this->question->getOrGenereReponses($question);
 
         return $this;
     }
@@ -69,5 +70,25 @@ class QuestionnaireQuestionAdapter
     public function getQuestion(): AbstractQuestion
     {
         return $this->question;
+    }
+
+    public function setReponseEtudiant(?ReponsesEtudiant $reponsesEtudiant): self
+    {
+        if (null !== $reponsesEtudiant) {
+            $this->question->reponseEtudiant = $reponsesEtudiant->getReponse($this->question->cle);
+
+            if (null !== $this->question->reponseEtudiant && 'CHX:OTHER' === $this->question->reponseEtudiant->valeur) {
+                $this->question->reponseEtudiant->complementValeur = $reponsesEtudiant->getReponse($this->question->cle . '_autre')?->valeur;
+            }
+        }
+
+        return $this;
+    }
+
+    public function setReponsesEtudiants(ListeChoix $listeChoix): self
+    {
+        $this->question->choix = $listeChoix->getChoix($this->question->cle);
+
+        return $this;
     }
 }

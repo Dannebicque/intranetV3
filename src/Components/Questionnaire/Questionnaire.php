@@ -9,12 +9,17 @@
 
 namespace App\Components\Questionnaire;
 
+use App\Components\Graphs\GraphRegistry;
 use App\Components\Questionnaire\DTO\AbstractQuestionnaire;
+use App\Components\Questionnaire\DTO\ListeChoix;
 use App\Components\Questionnaire\DTO\ReponsesEtudiant;
+use App\Components\Questionnaire\Interfaces\QuestChoixInterface;
+use App\Components\Questionnaire\Interfaces\QuestionnaireChoixInterface;
 use App\Components\Questionnaire\Section\AbstractSection;
 use App\Components\Questionnaire\Section\ConfigurableSection;
 use App\Components\Questionnaire\Section\EndSection;
 use App\Components\Questionnaire\Section\StartSection;
+use App\Entity\QuestChoix;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -24,10 +29,14 @@ use Twig\Environment;
 class Questionnaire
 {
     private const DEFAULT_TEMPLATE = 'components/questionnaire/questionnaire.html.twig';
+    private const DEFAULT_TEMPLATE_RESULTATS = 'components/questionnaire/questionnaire_resultats.html.twig';
+    private const DEFAULT_TEMPLATE_GRAPHIQUES = 'components/questionnaire/questionnaire_graphiques.html.twig';
 
     protected Sections $sections;
     protected ReponsesEtudiant $reponses;
     protected ?int $etudiant = null;
+
+    protected ListeChoix $listeChoix;
     private AbstractQuestionnaire $questionnaire;
     private array $options = [];
     private string $typeQuestionnaire;
@@ -36,9 +45,11 @@ class Questionnaire
     public function __construct(
         private readonly Environment $twig,
         private readonly RouterInterface $router,
-        private readonly QuestionnaireRegistry $questionnaireRegistry
+        private readonly QuestionnaireRegistry $questionnaireRegistry,
+        private readonly GraphRegistry $graphRegistry
     ) {
         $this->sections = new Sections();
+        $this->listeChoix = new ListeChoix();
     }
 
     public function setIdEtudiant(?int $etudiant): void
@@ -64,6 +75,8 @@ class Questionnaire
     {
         $resolver->setDefaults([
             'template' => self::DEFAULT_TEMPLATE,
+            'template_resultats' => self::DEFAULT_TEMPLATE_RESULTATS,
+            'template_graphiques' => self::DEFAULT_TEMPLATE_GRAPHIQUES,
             'mode' => AbstractQuestionnaire::MODE_APERCU,
             'route' => '',
             'routeEnd' => '',
@@ -77,8 +90,9 @@ class Questionnaire
     {
         if (ConfigurableSection::class === $section->typeSection) {
             // c'est configurable, potentiellement plusieurs sections à créer
-            $configSection = new ConfigurableSection($this->questionnaireRegistry);
+            $configSection = new ConfigurableSection($this->questionnaireRegistry, $this->graphRegistry);
             $configSection->setSection($section, [
+                'mode' => $this->options['mode'],
                 'questionnaire_id' => $this->getQuestionnaire()->id,
                 'etudiant_id' => $this->etudiant,
                 'typeQuestionnaire' => $this->options['typeQuestionnaire'],
@@ -89,8 +103,9 @@ class Questionnaire
                 $this->sections->addSection($cSection);
             }
         } else {
-            $abstractSection = new Section\Section($this->questionnaireRegistry);
+            $abstractSection = new Section\Section($this->questionnaireRegistry, $this->graphRegistry);
             $abstractSection->setSection($section, [
+                'mode' => $this->options['mode'],
                 'questionnaire_id' => $this->getQuestionnaire()->id,
                 'etudiant_id' => $this->etudiant,
                 'typeQuestionnaire' => $this->options['typeQuestionnaire'],
@@ -140,10 +155,13 @@ class Questionnaire
     public function AddSpecialSection(string $type): Questionnaire
     {
         $abstractSection = match ($type) {
-            AbstractSection::INTRODUCTION => (new StartSection($this->questionnaireRegistry))->setQuestionnaire($this->questionnaire),
-            AbstractSection::END => (new EndSection($this->questionnaireRegistry))->setQuestionnaire(count($this->getSections()),
+            AbstractSection::INTRODUCTION => (new StartSection($this->questionnaireRegistry,
+                $this->graphRegistry))->setQuestionnaire($this->questionnaire),
+            AbstractSection::END => (new EndSection($this->questionnaireRegistry,
+                $this->graphRegistry))->setQuestionnaire(count($this->getSections()),
                 $this->questionnaire),
         };
+        $abstractSection->setOptions(['mode' => $this->options['mode']]);
         $this->sections->addSection($abstractSection);
 
         return $this;
@@ -212,7 +230,7 @@ class Questionnaire
     public function getOnlySectionConfigurable(DTO\Section $section): ?array
     {
         if (ConfigurableSection::class === $section->typeSection) {
-            $configSection = new ConfigurableSection($this->questionnaireRegistry);
+            $configSection = new ConfigurableSection($this->questionnaireRegistry, $this->graphRegistry);
             $configSection->setSection($section);
 
             return
@@ -231,6 +249,34 @@ class Questionnaire
             return $this->router->generate($this->options['routeEnd'], $this->options['paramsEnd']);
         }
 
-        return 'https://univ-reims.fr';
+        return 'https://www.univ-reims.fr';
     }
+
+    public function calculResultats(ListeChoix $listeChoix): void
+    {
+        foreach ($this->getSections() as $section) {
+            if ($section instanceof Section\Section) {
+                $section->calculResultatsQuestions([
+                    'questionnaire_id' => $this->getQuestionnaire()->id,
+                    'mode' => $this->getOption('mode'),
+                    'typeQuestionnaire' => $this->getOption('typeQuestionnaire'),
+                ], $listeChoix);
+            }
+        }
+    }
+
+    public function addChoix(QuestChoix $reponse, string $cle)
+    {
+        $this->listeChoix->addChoix($reponse, $cle);
+    }
+
+    /**
+     * @return \App\Components\Questionnaire\DTO\ListeChoix
+     */
+    public function getListeChoix(): ListeChoix
+    {
+        return $this->listeChoix;
+    }
+
+
 }

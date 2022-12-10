@@ -10,10 +10,13 @@
 namespace App\Controller\questionnaire;
 
 use App\Classes\Enquetes\EnqueteRelance;
+use App\Components\Questionnaire\Interfaces\QuestChoixInterface;
+use App\Components\Questionnaire\QuestionnaireRegistry;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\QuestionnaireQualite;
+use App\Entity\QuestQuestionnaire;
 use App\Repository\EtudiantRepository;
 use App\Repository\QuestionnaireEtudiantRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -30,9 +33,8 @@ class QuestionnaireMailsController extends BaseController
     public function relance(
         Request $request,
         EnqueteRelance $enqueteRelance,
-        EtudiantRepository $etudiantRepository,
-        QuestionnaireEtudiantRepository $quizzEtudiantRepository,
-        QuestionnaireQualite $questionnaire
+        QuestionnaireRegistry $questionnaireRegistry,
+        QuestQuestionnaire $questionnaire
     ): RedirectResponse {
         $reponses = $quizzEtudiantRepository->findByQuestionnaireQualite($questionnaire);
         $etudiants = $etudiantRepository->findBySemestre($questionnaire->getSemestre());
@@ -43,12 +45,12 @@ class QuestionnaireMailsController extends BaseController
         return new RedirectResponse($request->headers->get('referer'));
     }
 
-    #[Route('/questionnaire/relance/{questionnaire}/{etudiant}', name: 'enquete_relance_individuelle', options: ['expose' => true])]
+    #[Route('/questionnaire/relance/{questChoix}', name: 'enquete_relance_individuelle', options: ['expose' => true])]
     public function relanceIndividuelle(
         EnqueteRelance $enqueteRelance,
-        QuestionnaireQualite $questionnaire, Etudiant $etudiant): JsonResponse
-    {
-        $enqueteRelance->envoyerRelanceIndividuelle($questionnaire, $etudiant);
+        QuestChoixInterface $questChoix
+    ): JsonResponse {
+        $enqueteRelance->envoyerRelanceIndividuelle($questChoix);
 
         return $this->json(true);
     }

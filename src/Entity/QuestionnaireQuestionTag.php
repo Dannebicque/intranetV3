@@ -16,6 +16,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: QuestionnaireQuestionTagRepository::class)]
+/** @deprecated */
 class QuestionnaireQuestionTag extends BaseEntity
 {
     #[ORM\Column(type: Types::STRING, length: 100)]

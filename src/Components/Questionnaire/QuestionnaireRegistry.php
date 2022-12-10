@@ -12,6 +12,7 @@ namespace App\Components\Questionnaire;
 use App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException;
 use App\Components\Questionnaire\Section\AbstractSection;
 use App\Components\Questionnaire\Section\AbstractSectionAdapter;
+use App\Components\Questionnaire\TypeDestinataire\AbstractTypeDestinataire;
 use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
 
 class QuestionnaireRegistry
@@ -20,8 +21,11 @@ class QuestionnaireRegistry
     final public const TAG_TYPE_QUESTION = 'da.questionnaire.typequestion';
     final public const TAG_TYPE_SECTION = 'da.questionnaire.typesection';
     final public const TAG_TYPE_SECTION_ADAPTER = 'da.questionnaire.section.adapter';
+    final public const TAG_TYPE_DESTINATAIRE_ADAPTER = 'da.questionnaire.type_destinataire.adapter';
+
     private array $typeQuestions = [];
     private array $typeSections = [];
+    private array $typeDestinataires = [];
     private array $sectionsAdapter = [];
 
     public function registerTypeQuestion(string $name, AbstractQuestion $abstractQuestion): void
@@ -32,6 +36,11 @@ class QuestionnaireRegistry
     public function registerTypeSection(string $name, AbstractSection $abstractSection): void
     {
         $this->typeSections[$name] = $abstractSection;
+    }
+
+    public function registerTypeDestinataire(string $name, AbstractTypeDestinataire $abstractTypeDestinataire): void
+    {
+        $this->typeDestinataires[$name] = $abstractTypeDestinataire;
     }
 
     public function registerSectionAdapter(string $name, AbstractSectionAdapter $abstractSection): void
@@ -61,6 +70,15 @@ class QuestionnaireRegistry
         }
 
         return $this->typeSections[$name];
+    }
+
+    public function getTypeDestinataire(string $name): mixed
+    {
+        if (!array_key_exists($name, $this->typeDestinataires)) {
+            throw new TypeQuestionNotFoundException();
+        }
+
+        return $this->typeDestinataires[$name];
     }
 
     /**
@@ -99,10 +117,20 @@ class QuestionnaireRegistry
     {
         $typeSections = [];
         foreach ($this->typeSections as $typeSection) {
-            $typeSections['label.'.$typeSection::LABEL] = $typeSection::class;
+            $typeSections['label.' . $typeSection::LABEL] = $typeSection::class;
         }
 
         return $typeSections;
+    }
+
+    public function getAllTypeDestinataires(): array
+    {
+        $typeDestinataires = [];
+        foreach ($this->typeDestinataires as $typeDestinataire) {
+            $typeDestinataires['label.' . $typeDestinataire::LABEL] = $typeDestinataire::class;
+        }
+
+        return $typeDestinataires;
     }
 
     public function getTypeQuestions(): array

@@ -1,0 +1,30 @@
+<ul class="nav nav-process nav-process-circle" {{ stimulus_target('questionnaire--creation', 'nav') }}>
+    <li class="nav-item {% if step == 'intro' %}processing{% else %}complete{% endif %} "
+            {{ stimulus_action('questionnaire--creation', 'changeStep', 'click', {step: 'intro'}) }}>
+        <span class="nav-title">Introduction</span>
+        <a class="nav-link" href="#"></a>
+    </li>
+    {% if sections is defined %}
+        {% for section in sections %}
+            <li class="nav-item {% if step == 'section' and element.ordre == section.ordre %}processing{% elseif
+                (step ==
+                'addSection' or step =='fin' or (step == 'section' and section.ordre < element.ordre)) %}complete{% endif %}"
+                    {{ stimulus_action('questionnaire--creation', 'changeStep', 'click', {step: 'section', section:
+                        section.id}) }}>
+                <span class="nav-title">{{ section.titre }}</span>
+                <a class="nav-link" href="#"></a>
+            </li>
+        {% endfor %}
+    {% endif %}
+    <li class="nav-item {% if step == 'addSection' %}processing{% elseif (step == 'fin') %}complete{% endif %}"
+            {{ stimulus_action('questionnaire--creation', 'changeStep', 'click', {step: 'addSection'}) }}>
+        <span class="nav-title">Ajouter Section</span>
+        <a class="nav-link" href="#"></a>
+    </li>
+    <li class="nav-item {% if step == 'fin' %}processing{% endif %}"
+            {{ stimulus_action('questionnaire--creation', 'changeStep', 'click', {step: 'fin'}) }}>
+        <span class="nav-title">Fin</span>
+        <a class="nav-link" href="#"></a>
+    </li>
+</ul>
+

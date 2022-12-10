@@ -1,27 +1,44 @@
-{% extends 'base.html.twig' %}
+{% extends is_granted('ROLE_ADMINISTRATIF') ? 'base-super_admin.html.twig' : 'base.html.twig' %}
 
 {% block header %}
-    {{ 'adm.qualite.apercu.heading'|trans }} | {{ semestre.display }}
+    {{ 'adm.qualite.apercu.heading'|trans }}
+    {#    | {{ semestre.display }}
+#todo: en focntion du type de destinataire
+    #}
 {% endblock %}
 
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-            <a href="{{ path('administration_qualite_index') }}"
-               class="btn btn-primary btn-float"
-               title="{{ 'atitle.retour_liste'|trans }}"
-               data-bs-toggle="tooltip" data-bs-placement="bottom"
-            >
-                <i class="fas fa-arrow-left"></i>
-                <span class="sr-only">{{ 'atitle.retour_liste'|trans }}</span>
-            </a>
+            {% if is_granted('ROLE_ADMINISTRATIF') %}
+                <a href="{{ path('sa_qualite_diplome', {diplome:semestre.diplome.id}) }}"
+                   class="btn btn-primary btn-float"
+                   title="{{ 'atitle.retour_liste'|trans }}"
+                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+                >
+                    <i class="fas fa-arrow-left"></i>
+                    <span class="sr-only">{{ 'atitle.retour_liste'|trans }}</span>
+                </a>
+            {% else %}
+                <a href="{{ path('administration_qualite_index') }}"
+                   class="btn btn-primary btn-float"
+                   title="{{ 'atitle.retour_liste'|trans }}"
+                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+                >
+                    <i class="fas fa-arrow-left"></i>
+                    <span class="sr-only">{{ 'atitle.retour_liste'|trans }}</span>
+                </a>
+            {% endif %}
         </div>
     </div>
 {% endblock %}
 
 {% block content %}
     <div class="card">
-        <h4 class="card-title">{{ 'adm.qualite.apercu.heading'|trans }} | {{ semestre.display }}</h4>
+        <h4 class="card-title">
+            {{ 'adm.qualite.apercu.heading'|trans }}
+            {#    | {{ semestre.display }} todo: en focntion du type de destinataire #}
+        </h4>
         <div class="card-body">
             {{ questionnaire_render(questionnaire) }}
         </div>

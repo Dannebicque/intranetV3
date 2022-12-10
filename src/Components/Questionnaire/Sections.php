@@ -17,6 +17,7 @@ class Sections
 
     public function addSection(AbstractSection $section): void
     {
+        $section->typeSection = $section::class;
         $section->arrayKey = count($this->sections);
         $this->sections[] = $section;
     }

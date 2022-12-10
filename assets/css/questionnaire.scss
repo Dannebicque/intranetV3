@@ -1,0 +1,24 @@
+// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// @file /Users/davidannebicque/Sites/intranetV3/assets/css/questionnaire.scss
+// @author davidannebicque
+// @project intranetV3
+// @lastUpdate 20/11/2022 17:30
+
+.question-edit {
+  border: 1px solid #ccc;
+  margin-left: 0px;
+  padding: 2px;
+  margin-bottom: 4px;
+}
+
+.question-edit fieldset {
+  border: 0px;
+}
+
+.bloc_question {
+  padding: 5px;
+}
+
+.bloc_question:nth-child(even) {
+  background-color: #f5f5f5;
+}

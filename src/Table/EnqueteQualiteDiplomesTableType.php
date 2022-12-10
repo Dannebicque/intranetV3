@@ -9,6 +9,9 @@
 
 namespace App\Table;
 
+use App\Components\Questionnaire\TypeDestinataire\Etudiant;
+use App\Components\Questionnaire\TypeDestinataire\Exterieur;
+use App\Components\Questionnaire\TypeDestinataire\Personnel;
 use App\Entity\Diplome;
 use App\Form\Type\DiplomeEntityType;
 use App\Form\Type\SearchType;
@@ -18,9 +21,13 @@ use App\Table\ColumnType\SemestresAvecActifColumnType;
 use DavidAnnebicque\TableBundle\Adapter\EntityAdapter;
 use DavidAnnebicque\TableBundle\Column\EntityColumnType;
 use DavidAnnebicque\TableBundle\Column\PropertyColumnType;
+use DavidAnnebicque\TableBundle\Column\WidgetColumnType;
 use DavidAnnebicque\TableBundle\DTO\Table;
 use DavidAnnebicque\TableBundle\TableBuilder;
 use DavidAnnebicque\TableBundle\TableType;
+use DavidAnnebicque\TableBundle\Widget\Type\LinkType;
+use DavidAnnebicque\TableBundle\Widget\Type\RowShowLinkType;
+use DavidAnnebicque\TableBundle\Widget\WidgetBuilder;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -35,16 +42,26 @@ class EnqueteQualiteDiplomesTableType extends TableType
         $builder->addColumn('typeDiplome', EntityColumnType::class,
             ['label' => 'table.typeDiplome', 'display_field' => 'libelle', 'order' => Table::SORT_ASCENDING]);
         $builder->addColumn('libelle', PropertyColumnType::class, ['label' => 'table.libelle']);
-        $builder->addColumn('id', NbEtudiantsColumnType::class,
-            ['label' => 'table.nbEtudiants', 'effectifs' => $options['effectifs']]);
-        $builder->addColumn('semestres', SemestresAvecActifColumnType::class, ['label' => 'table.semestre']);
 
-        $builder->setLoadUrl('administratif_enquete_etudiant_index');
+        $builder->addColumn('links', WidgetColumnType::class, [
+            'build' => function(WidgetBuilder $builder, Diplome $s) {
+                $builder->add('show', LinkType::class, [
+                    'class' => 'btn btn-info btn-sm',
+                    'text' => 'Voir les questionnaires',
+                    'route' => 'sa_qualite_diplome',
+                    'route_params' => [
+                        'diplome' => $s->getId(),
+                    ]
+                ]);
+            },
+        ]);
+        $builder->setLoadUrl('administratif_enquete_destinataire_index',
+            ['typeDestinataire' => $options['typeDestinataire']]);
 
         $builder->useAdapter(EntityAdapter::class, [
             'class' => Diplome::class,
             'fetch_join_collection' => false,
-            'query' => function (QueryBuilder $qb, array $formData) {
+            'query' => function(QueryBuilder $qb, array $formData) {
                 $qb->where('e.actif = true');
 
                 if (isset($formData['diplome'])) {
@@ -67,6 +84,7 @@ class EnqueteQualiteDiplomesTableType extends TableType
         $resolver->setDefaults([
             'orderable' => true,
             'effectifs' => null,
+            'typeDestinataire' => null,
             'translation_domain' => 'table',
         ]);
     }

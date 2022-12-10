@@ -1,0 +1,10 @@
+Bonjour {{ questChoix.display }},
+
+Veuillez trouver le lien pour le questionnaire ...
+
+{{ url('enquete_questionnaire_qualite_index', {uuidQuestionnaire: questionnaire.uuidString, uuid: questChoix.cleQuestionnaire}) }}
+
+Le questionnaire est anonyme et confidentiel.
+Il est accessible du ... au ...
+
+Merci...

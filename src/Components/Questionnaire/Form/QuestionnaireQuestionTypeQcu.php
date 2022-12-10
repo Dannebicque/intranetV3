@@ -11,7 +11,10 @@ namespace App\Components\Questionnaire\Form;
 
 use App\Form\QuestionnaireReponseType;
 use App\Form\Type\CollectionStimulusType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 
 class QuestionnaireQuestionTypeQcu extends QuestionnaireQuestionType
 {
@@ -19,8 +22,35 @@ class QuestionnaireQuestionTypeQcu extends QuestionnaireQuestionType
     {
         parent::buildForm($builder, $options);
         $builder
-            // ->add('parametre', TextType::class)
-            ->add('quizzReponses', CollectionStimulusType::class, [
+            ->addEventListener(FormEvents::PRE_SET_DATA, static function(FormEvent $event) {
+                $question = $event->getData();
+
+                $config = $question->getParametre();
+                $form = $event->getForm();
+                $form->add('choix_autre', CheckboxType::class,
+                    [
+                        'mapped' => false,
+                        'label' => 'label.choix_autre',
+                        'help' => 'help.choix_autre',
+                        'data' => $config['choix_autre'] ?? false,
+                    ])
+                    ->add('choix_nc', CheckboxType::class,
+                        [
+                            'mapped' => false,
+                            'label' => 'label.choix_nc',
+                            'help' => 'help.choix_nc',
+                            'data' => $config['choix_nc'] ?? false,
+                        ]);
+            })
+            ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
+                $question = $event->getData();
+                $form = $event->getForm();
+                $t = $question->getParametre();
+                $t['choix_nc'] = $form->get('choix_nc')->getData();
+                $t['choix_autre'] = $form->get('choix_autre')->getData();
+                $question->setParametre($t);
+            })
+            ->add('questReponses', CollectionStimulusType::class, [
                 'entry_type' => QuestionnaireReponseType::class,
                 'entry_options' => ['label' => false],
                 'allow_add' => true,
@@ -29,8 +59,6 @@ class QuestionnaireQuestionTypeQcu extends QuestionnaireQuestionType
                 'label' => 'Réponses pour la question',
                 'by_reference' => false,
                 'max_items' => 0,
-
-                // 'help' => 'Ajoutez les situations professionnelles de la compétence.',
             ]);
     }
 }

@@ -14,10 +14,12 @@ use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Deprecated;
 use Ramsey\Uuid\Uuid;
 
 #[ORM\MappedSuperclass]
 #[ORM\HasLifecycleCallbacks]
+/** @deprecated Utiliser QuestQuestionnaire' */
 abstract class Questionnaire extends BaseEntity
 {
     use UuidTrait;
@@ -42,6 +44,9 @@ abstract class Questionnaire extends BaseEntity
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $textFin = null;
+
+    #[ORM\ManyToOne]
+    private ?Departement $departement = null;
 
     public function __construct()
     {
@@ -140,6 +145,18 @@ abstract class Questionnaire extends BaseEntity
     public function setDateFermeture(?CarbonInterface $dateFermeture): self
     {
         $this->dateFermeture = $dateFermeture;
+
+        return $this;
+    }
+
+    public function getDepartement(): ?Departement
+    {
+        return $this->departement;
+    }
+
+    public function setDepartement(?Departement $departement): self
+    {
+        $this->departement = $departement;
 
         return $this;
     }

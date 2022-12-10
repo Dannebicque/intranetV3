@@ -1,0 +1,75 @@
+<?php
+/*
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeQuestionGraphiqueRenderer.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 18/11/2022 08:54
+ */
+
+namespace App\Components\Questionnaire;
+
+use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
+use App\Components\Questionnaire\TypeQuestion\TypeChainee;
+use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
+use Twig\Environment;
+use Twig\TemplateWrapper;
+
+class TypeQuestionGraphiqueRenderer
+{
+    public ?TemplateWrapper $templateWrapper = null;
+    private readonly string $template;
+
+    public function __construct(
+        public ChartBuilderInterface $chartBuilder,
+        public Environment $twig
+    ) {
+        $this->template = 'components/questionnaire/blocks_type_question_graphique.html.twig';
+    }
+
+    /**
+     * @throws \Throwable
+     */
+    public function render(AbstractQuestion $question, ?int $ordre = 0): string
+    {
+        $template = $this->load();
+
+        $params = $question->getOptions();
+        $params['block_name'] = $question->getOption('block_name');
+
+        if (TypeChainee::class === $question::class) {
+            $params['questionsEnfants'] = $question->questions;
+        }
+
+        $params['name'] = 'q' . $question->id;
+        $params['id'] = $question->id;
+        $params['reponses'] = $question->getReponses();
+        $params['help'] = $question->help;
+        $params['config'] = $question->config;
+        $params['cle'] = $question->cle;
+        $params['parametres'] = $question->parametres;
+        $params['valeurs'] = $question->valeurs;
+        $params['libelle'] = $question->libelle;
+        $params['numero'] = $question->numero;
+        $params['ordre'] = $ordre;
+        $params['typeQuestionnaire'] = $question->getOption('typeQuestionnaire');
+        $params['choix'] = $question->choix;
+        $params['chart'] = $question->genereGraph();
+
+        return $template->renderBlock($params['block_name'], $params);
+    }
+
+    /**
+     * @throws \Twig\Error\SyntaxError
+     * @throws \Twig\Error\RuntimeErrort
+     * @throws \Twig\Error\LoaderError
+     */
+    private function load(): TemplateWrapper
+    {
+        if (null === $this->templateWrapper) {
+            $this->templateWrapper = $this->twig->load($this->template);
+        }
+
+        return $this->templateWrapper;
+    }
+}

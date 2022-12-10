@@ -1,12 +1,14 @@
 <div class="d-grid d-block mb-2">
-<a href="{{ path('administratif_enquete_relance',{questionnaire:questionnaire.id}) }}"
-   class="btn btn-warning">
-    Relancer les questionnaires non complétés
-</a></div>
+    <a href="{{ path('administratif_enquete_relance',{questionnaire:questionnaire.id}) }}"
+       class="btn btn-warning">
+        Relancer les questionnaires non complétés
+    </a></div>
 <table class="table">
     <thead>
     <tr>
-        <th>Etudiant</th>
+        <th>Destinataire</th>
+        <th>Envoyé le</th>
+        <th>Clé</th>
         <th>Répondu</th>
         <th>Le</th>
         <th>Actions</th>
@@ -14,62 +16,57 @@
     </thead>
     <tbody>
     {# todo: tableau tabletype... #}
-    {% for etudiant in  etudiants %}
+    {% for element in liste %}
         <tr>
-            <td>{{ etudiant.display }}</td>
-            {% if quizzEtudiant[questionnaire.id] is defined and quizzEtudiant[questionnaire.id][etudiant.id] is defined %}
-                {% if quizzEtudiant[questionnaire.id][etudiant.id].termine == true %}
-                    <td id="termine_{{ quizzEtudiant[questionnaire.id][etudiant.id].id }}">
-                        Terminé
-                    </td>
-                    <td id="valide_{{ quizzEtudiant[questionnaire.id][etudiant.id].id }}">Validé
-                                                                                          le {{ quizzEtudiant[questionnaire.id][etudiant.id]
-                        .dateTermine|format_datetime('short', 'short') }}</td>
-                {% else %}
-                    <td>En cours</td>
-                    <td>Modifié
-                        le {{ quizzEtudiant[questionnaire.id][etudiant.id].updated|format_datetime('short','short') }}</td>
-                {% endif %}
+            <td>{{ element.display }}</td>
+            <td>{{ element.dateEnvoi|format_datetime('short', 'short') }}</td>
+            <td>{{ element.cleQuestionnaire }}</td>
+            {% if element.dateTermine != null %}
+                <td id="termine_{{ element.id }}">
+                    <span class="badge bg-success">Terminé</span>
+                </td>
+                <td id="valide_{{ element.id }}">
+                    Validé le {{ element.dateTermine|format_datetime('short', 'short') }}
+                </td>
+            {% else %}
                 <td>
-                    {% if quizzEtudiant[questionnaire.id][etudiant.id].termine == true %}
-                        <a href="#"
-                           class="btn btn-info btn-outline btn-square deverouiller"
-                           data-bs-toggle="tooltip" data-bs-placement="bottom"
-                           title="{{ 'atitle.deverouiller'|trans }}">
-                            <i class="fas fa-unlock" data-id="{{ quizzEtudiant[questionnaire.id][etudiant.id].id }}"></i>
-                        </a>
-                    {% endif %}
-                    {% if is_granted('ROLE_QUALITE') %}
-                    <a href="{{ path('administratif_enquete_etudiant_voir_modifier',
-                        {questionnaire: quizzEtudiant[questionnaire.id][etudiant.id].id}) }}"
-                       class="btn btn-warning btn-outline btn-square"
-                       data-bs-toggle="tooltip" data-bs-placement="bottom"
-
-                       title="{{ 'atitle.voir_modifier'|trans }}">
-                        <i class="{{ iconEdit }}"></i>
+                    <span class="badge bg-warning">En cours</span>
+                </td>
+                <td>Modifié
+                    le {{ element.updated|format_datetime('short','short') }}</td>
+            {% endif %}
+            <td>
+                {% if element.dateTermine == null %}
+                    <a href="{{ path('enquete_relance_individuelle',{questChoix:element.id}) }}" class="btn btn-warning
+                btn-outline relanceIndividuelle">
+                        Relancer
                     </a>
+                    <a href="#"
+                       class="btn btn-info btn-outline btn-square deverouiller"
+                       data-bs-toggle="tooltip" data-bs-placement="bottom"
+                       title="{{ 'atitle.deverouiller'|trans }}">
+                        <i class="fas fa-unlock" data-id="{{ element.id }}"></i>
+                    </a>
+                {% endif %}
+                {% if is_granted('ROLE_QUALITE') %}
+                    {#                    <a href="{{ path('administratif_enquete_etudiant_voir_modifier', #}
+                    {#                        {questionnaire: quizzEtudiant[questionnaire.id][etudiant.id].id}) }}" #}
+                    {#                       class="btn btn-warning btn-outline btn-square" #}
+                    {#                       data-bs-toggle="tooltip" data-bs-placement="bottom" #}
+                    {#                       title="{{ 'atitle.voir_modifier'|trans }}"> #}
+                    {#                        <i class="{{ iconEdit }}"></i> #}
+                    {#                    </a> #}
                     <a href="{{ path('administratif_enquete_etudiant_supprimer',
-                        {questionnaire: quizzEtudiant[questionnaire.id][etudiant.id].id}) }}" data-csrf="{{ csrf_token('delete' ~ quizzEtudiant[questionnaire.id][etudiant.id].id) }}"
+                        {questionnaire: element.id}) }}" data-csrf="{{ csrf_token('delete' ~ element.id) }}"
                        class="btn btn-danger btn-outline btn-square supprimer"
                        data-bs-toggle="tooltip" data-bs-placement="bottom"
                        title="{{ 'atitle.supprimer'|trans }}">
                         <i class="{{ iconDelete }}"></i>
                     </a>
-                        {% else %}
-                        -
-                    {% endif %}
-                </td>
-            {% else %}
-                <td>Non</td>
-                <td>-</td>
-                <td>
-                    <a href="{{ path('enquete_relance_individuelle',{questionnaire:questionnaire.id,
-                        etudiant:etudiant.id}) }}" class="btn btn-warning btn-outline relanceIndividuelle">
-                        Relancer
-                    </a>
-                </td>
-            {% endif %}
-
+                {% else %}
+                    -
+                {% endif %}
+            </td>
         </tr>
 
     {% endfor %}

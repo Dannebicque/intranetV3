@@ -1,0 +1,222 @@
+{% block type_chainee %}
+    <fieldset class="form-group"
+            {{ stimulus_controller('enquete', {
+                parametres: parametres|json_encode,
+                idQuestion: id,
+                typeQuestionnaire: typeQuestionnaire,
+                questionnaireId: questionnaire_id
+            }) }}
+    >
+        {{ block('libelle') }}
+        <div aria-describedby="quizz_question_{{ id }}_help">
+            <small id="quizz_question_{{ id }}_help" class="form-text text-muted">{{ help }}</small>
+        </div>
+        {% for subQuestion in questionsEnfants %}
+            <div class="sub-question {% if loop.index is odd %}row-striped{% endif %}">
+                <div class="row">
+                    <div class="col-sm-12 col-md-12 sub-question-titre">
+                        # {{ subQuestion.libelle }}
+                    </div>
+
+                    {% if valeurs == null %}
+                        {% set name = 'q'~subQuestion.id %}
+                    {% else %}
+                        {% set name = 'q'~subQuestion.id~'_c'~valeurs[ordre] %}
+                    {% endif %}
+                    {% for reponse in reponses %}
+                        <div class="col-sm-12 col-md-2">
+                            <div class="form-check">
+                                <input type="radio" id="quizz_question_qcu_{{ name }}_{{ reponse.id }}"
+                                       name="quizz_question_reponses_{{ name }}"
+                                       data-action="change->enquete#change"
+                                       data-fieldset="{{ id }}"
+                                       data-typeQuestionnaire="radio" {# todo: pourrait être autre chose... #}
+                                        {% if apercu is not defined or apercu == false %}
+                                            data-etudiant="{{ etudiant_id }}"
+                                        {% endif %}
+                                        {% if reponseEtudiant != null and
+                                            reponseEtudiant.valeur == reponse.valeur %}checked{% endif %}
+                                        {% if obligatoire %}required{% endif %}
+                                       class="form-check-input"
+                                       value="{{ reponse.valeur }}">
+                                <label class="form-check-label required" for="quizz_question_qcu_{{ name }}_{{ reponse.id }}">{{ reponse.libelle }}</label>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endfor %}
+    </fieldset>
+{% endblock %}
+
+{% block type_echelle %}
+    <div class="row">
+        <div class="col-5">
+            {{ form_row(form.libelle) }}
+        </div>
+        <div class="col-3">
+            {{ form_row(form.obligatoire) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(form.type) }}
+        </div>
+        <div class="col-9">
+            {{ form_row(form.help) }}
+        </div>
+        <div class="col-3">&nbsp;</div>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-4">
+                    {{ form_row(form.min) }}
+                </div>
+                <div class="col-4">
+                    {{ form_row(form.max) }}
+                </div>
+                <div class="col-4">
+                    {{ form_row(form.pas) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block type_libre %}
+    <div class="row">
+        <div class="col-5">
+            {{ form_row(form.libelle) }}
+        </div>
+        <div class="col-3">
+            {{ form_row(form.obligatoire) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(form.type) }}
+        </div>
+        <div class="col-9">
+            {{ form_row(form.help) }}
+        </div>
+        <div class="col-3">&nbsp;</div>
+    </div>
+{% endblock %}
+
+{% block type_oui_non %}
+    <div class="row">
+        <div class="col-5">
+            {{ form_row(form.libelle) }}
+        </div>
+        <div class="col-3">
+            {{ form_row(form.obligatoire) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(form.type) }}
+        </div>
+        <div class="col-6">
+            {{ form_row(form.help) }}
+        </div>
+        <div class="col-3">
+            {{ form_row(form.choix_autre) }}
+        </div>
+        <div class="col-3">
+            {{ form_row(form.choix_nc) }}
+        </div>
+        <div class="col-12">
+            <div class="row">
+                <div class="col-2">
+                    1.
+                </div>
+                <div class="col-5">
+                    {{ form_row(form.libelle_1) }}
+                </div>
+                <div class="col-5">
+                    {{ form_row(form.valeur_1) }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-2">
+                    2.
+                </div>
+                <div class="col-5">
+                    {{ form_row(form.libelle_2) }}
+                </div>
+                <div class="col-5">
+                    {{ form_row(form.valeur_2) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block type_qcm %}
+    <div class="row">
+        <div class="col-5">
+            {{ form_row(form.libelle) }}
+        </div>
+        <div class="col-3">
+            {{ form_row(form.obligatoire) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(form.type) }}
+        </div>
+        <div class="col-6">
+            {{ form_row(form.help) }}
+        </div>
+        <div class="col-2">
+            {{ form_row(form.maxChoix) }}
+        </div>
+        <div class="col-2">
+            {{ form_row(form.choix_autre) }}
+        </div>
+        <div class="col-2">
+            {{ form_row(form.choix_nc) }}
+        </div>
+        <div class="col-12">
+            {{ form_row(form.questReponses) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block type_qcu %}
+    {% import _self as formMacros %}
+
+    <div class="row">
+        <div class="col-5">
+            {{ form_row(form.libelle) }}
+        </div>
+        <div class="col-3">
+            {{ form_row(form.obligatoire) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(form.type) }}
+        </div>
+        <div class="col-6">
+            {{ form_row(form.help) }}
+        </div>
+        <div class="col-3">
+            {{ form_row(form.choix_autre) }}
+        </div>
+        <div class="col-3">
+            {{ form_row(form.choix_nc) }}
+        </div>
+        <div class="col-12">
+            {{ form_row(form.questReponses) }}
+        </div>
+    </div>
+{% endblock %}
+
+
+{% macro response(form) %}
+    <div class="row">
+        <div class="col-2">
+            {{ form_row(form.ordre) }}
+        </div>
+        <div class="col-5">
+            {{ form_row(form.libelle) }}
+        </div>
+        <div class="col-3">
+            {{ form_row(form.valeur) }}
+        </div>
+        <div class="col-2">
+            {{ form_row(form.supprimer) }}
+        </div>
+    </div>
+{% endmacro %}
+

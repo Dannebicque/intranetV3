@@ -17,6 +17,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: QuestionnairePersonnelRepository::class)]
 #[ORM\HasLifecycleCallbacks]
+/** @deprecated */
 class QuestionnairePersonnel extends QuestionnaireUserAbstract
 {
     #[ORM\Id]

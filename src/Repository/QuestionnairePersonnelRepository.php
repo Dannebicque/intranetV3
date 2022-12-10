@@ -20,6 +20,7 @@ use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * @deprecated Use Quest...Repository à la place
  * @method QuestionnairePersonnel|null find($id, $lockMode = null, $lockVersion = null)
  * @method QuestionnairePersonnel|null findOneBy(array $criteria, array $orderBy = null)
  * @method QuestionnairePersonnel[]    findAll()

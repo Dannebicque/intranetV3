@@ -14,7 +14,6 @@ use Twig\Environment;
 
 class QuestionnaireRenderer
 {
-    protected ?int $idEtudiant = null;
     protected ?int $idQuestionnaire = null;
 
     public function __construct(protected Environment $twig)

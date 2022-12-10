@@ -1,0 +1,5 @@
+{% for section in sections %}
+    {% if section.hasQuestions %}
+        {{ section_render(section) }}
+    {% endif %}
+{% endfor %}

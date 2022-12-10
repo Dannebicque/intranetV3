@@ -13,6 +13,7 @@ use App\Repository\QuestionnaireExterieurRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: QuestionnaireExterieurRepository::class)]
+/** @deprecated */
 class QuestionnaireExterieur extends QuestionnaireUserAbstract
 {
     #[ORM\Id]

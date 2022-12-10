@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Components\Questionnaire\Interfaces\QuestionnaireChoixInterface;
 use App\Entity\Traits\LifeCycleTrait;
 use function count;
 use Doctrine\DBAL\Types\Types;
@@ -16,7 +17,8 @@ use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\MappedSuperclass]
 #[ORM\HasLifecycleCallbacks]
-abstract class QuestionnaireUserReponseAbstract
+/** @deprecated */
+abstract class QuestionnaireUserReponseAbstract implements QuestionnaireChoixInterface
 {
     use LifeCycleTrait;
 

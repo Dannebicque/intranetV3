@@ -25,6 +25,8 @@ class QuestionnaireCompilerPass implements CompilerPassInterface
         $registry = $container->getDefinition(QuestionnaireRegistry::class);
         $this->addToRegistry($container, $registry, QuestionnaireRegistry::TAG_TYPE_QUESTION, 'registerTypeQuestion');
         $this->addToRegistry($container, $registry, QuestionnaireRegistry::TAG_TYPE_SECTION, 'registerTypeSection');
+        $this->addToRegistry($container, $registry, QuestionnaireRegistry::TAG_TYPE_DESTINATAIRE_ADAPTER,
+            'registerTypeDestinataire');
         $this->addToRegistry($container, $registry, QuestionnaireRegistry::TAG_TYPE_SECTION_ADAPTER,
             'registerSectionAdapter');
     }

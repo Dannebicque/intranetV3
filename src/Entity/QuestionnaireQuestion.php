@@ -20,9 +20,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Deprecated;
 
 #[ORM\Entity(repositoryClass: QuestionnaireQuestionRepository::class)]
 #[ORM\HasLifecycleCallbacks]
+/** @deprecated Utiliser QuestQuestion */
 class QuestionnaireQuestion extends BaseEntity
 {
     use LifeCycleTrait;
@@ -98,6 +100,9 @@ class QuestionnaireQuestion extends BaseEntity
      */
     #[ORM\ManyToMany(targetEntity: QuestionnaireQuestionTag::class, mappedBy: 'question', cascade: ['persist'])]
     private Collection $questionnaireQuestionTags;
+
+    #[ORM\ManyToOne]
+    private ?Departement $departement = null;
 
     public function __construct(Personnel $personnel)
     {
@@ -283,7 +288,11 @@ class QuestionnaireQuestion extends BaseEntity
     public function getCle(?string $config = ''): string
     {
         if (!('' !== $config && null !== $config)) {
-            return 'quizz_question_reponses_q'.$this->getId();
+            if ($this->type === TypeLibre::class) {
+                return 'quizz_question_text_q' . $this->getId();
+            }
+
+            return 'quizz_question_reponses_q' . $this->getId();
         }
 
         return '';
@@ -382,6 +391,18 @@ class QuestionnaireQuestion extends BaseEntity
         if ($this->questionnaireQuestionTags->removeElement($questionnaireQuestionTag)) {
             $questionnaireQuestionTag->removeQuestion($this);
         }
+
+        return $this;
+    }
+
+    public function getDepartement(): ?Departement
+    {
+        return $this->departement;
+    }
+
+    public function setDepartement(?Departement $departement): self
+    {
+        $this->departement = $departement;
 
         return $this;
     }

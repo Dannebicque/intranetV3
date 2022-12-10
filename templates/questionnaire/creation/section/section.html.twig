@@ -1,0 +1,12 @@
+{{ section_creation_render(section) }}
+
+<select class="form-select mt-2" {{ stimulus_action('questionnaire--section', 'addQuestion', 'change',
+    {section:section.id}) }}
+        id="addQuestion"
+>
+    <option value="">Choisir...</option>
+    <option value="new">Ajouter une nouvelle question</option>
+    {% for question in liste %}
+        <option value="{{ question.id }}">{{ question.libelle }}</option>
+    {% endfor %}
+</select>

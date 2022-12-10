@@ -1,9 +1,17 @@
 <h5><strong>{{ ordre }}.</strong> {{ titre }}</h5>
 
 {% for question in questions %}
-    {{ question_render(question, loop.index0) }}
+    {% if options.mode == 'mode.resultat.tableau' %}
+        {{ question_tableau_render(question) }}
+    {% elseif options.mode == 'mode.resultat.graphique' %}
+        {{ question_graphique_render(question) }}
+    {% else %}
+        {{ question_render(question, loop.index0) }}
+    {% endif %}
 {% endfor %}
 <br>
-<div class="alert alert-info">
-    Les questions qui affichent un <span class="required-etoile">*</span> sont obligatoires.
-</div>
+{% if options.mode == 'mode.apercu' or options.mode == 'mode.etudiant' %}
+    <div class="alert alert-info">
+        Les questions qui affichent un <span class="required-etoile">*</span> sont obligatoires.
+    </div>
+{% endif %}

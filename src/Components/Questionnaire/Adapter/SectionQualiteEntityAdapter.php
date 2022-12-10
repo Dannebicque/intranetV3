@@ -10,27 +10,26 @@
 namespace App\Components\Questionnaire\Adapter;
 
 use App\Components\Questionnaire\DTO\Section;
-use App\Entity\QuestionnaireQuestionnaireSection;
+use App\Entity\QuestSection;
 
 class SectionQualiteEntityAdapter
 {
     protected Section $section;
 
-    public function __construct(QuestionnaireQuestionnaireSection $section)
+    public function __construct(QuestSection $section)
     {
         $this->section = new Section(
-            $section->getSection()->getTypeSection(),
-            $section->getSection()->getTitre(),
-            $section->getSection()->getId(),
+            $section->getTypeSection(),
+            $section->getTitre(),
+            $section->getId(),
             $section->getId(),
             $section->getOrdre(),
-            $section->getQuestionnaireQualite()->getId(),
-            $section->getSection()->getTextExplicatif(),
-            $section->getSection()->getConfig(),
+            $section->getQuestionnaire()?->getId(),
+            $section->getTextExplicatif(),
             $section->getConfig()
         );
 
-        $this->section->setQuestions($section->getSection()->getQualiteSectionQuestions());
+        $this->section->setQuestions($section->getQuestQuestions());
     }
 
     public function getSection(): Section

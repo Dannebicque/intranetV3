@@ -9,11 +9,10 @@
 
 namespace App\Components\Questionnaire\Form;
 
-use App\Entity\QuestionnaireQuestion;
-use App\Entity\QuestionnaireQuestionTag;
-use App\Form\Type\EntityCompleteType;
+use App\Entity\QuestQuestion;
 use App\Form\Type\YesNoType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -23,25 +22,15 @@ abstract class QuestionnaireQuestionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('type', ChoiceType::class, [
+                'translation_domain' => 'form',
+                'label' => 'label.type_question',
+                'choices' => $options['listeTypeQuestion'],
+                'attr' => ['data-action' => 'questionnaire--question#changeTypeQuestion']
+            ])
             ->add('libelle', TextType::class, [
                 'translation_domain' => 'form',
                 'label' => 'label.libelle',
-            ])
-            ->add('questionnaireQuestionTags', EntityCompleteType::class, [
-                'label' => 'label.questionnaireQuestionTags',
-                'multiple' => true,
-                'required' => false,
-                'translation_domain' => 'form',
-                'class' => QuestionnaireQuestionTag::class,
-                'help' => 'Choisissez un ou plusieurs tag pour retrouver les questions plus facilement',
-                'choice_label' => 'libelle',
-            ])
-            ->add('newQuestionnaireQuestionTags', TextType::class, [
-                'label' => 'label.newQuestionnaireQuestionTags',
-                'mapped' => false,
-                'required' => false,
-                'translation_domain' => 'form',
-                'help' => 'Si un tag n\'existe pas, vous pouvez les ajouter ici. Séparer par un ";" (point-virgule)',
             ])
             ->add('help', TextType::class, [
                 'label' => 'label.question.help',
@@ -66,8 +55,9 @@ abstract class QuestionnaireQuestionType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => QuestionnaireQuestion::class,
+            'data_class' => QuestQuestion::class,
             'translation_domain' => 'form',
+            'listeTypeQuestion' => [],
         ]);
     }
 }

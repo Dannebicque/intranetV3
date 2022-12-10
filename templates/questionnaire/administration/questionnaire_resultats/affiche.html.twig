@@ -1,0 +1,38 @@
+{% extends is_granted('ROLE_ADMINISTRATIF') ? 'base-super_admin.html.twig' : 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.qualite.resultats.affiche.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('adm_questionnaire_qualite_detail', {id: questionnaireQualite.id, type:type}) }}"
+               class="btn btn-primary btn-float"
+               title="{{ 'atitle.retour_liste'|trans }}"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
+                <i class="fas fa-arrow-left"></i>
+                <span class="sr-only">{{ 'atitle.retour_liste'|trans }}</span>
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.qualite.resultats.affiche.heading'|trans }}</h4>
+        <div class="card-body">
+            {{ questionnaire_resultats_render(questionnaire) }}
+        </div>
+    </div>
+{% endblock %}
+
+{% block fabactions %}
+    {{ include('composants/fab-button-help.html.twig', {
+        href:path('help_article', {sujet: 'administration_qualite'}),
+    }) }}
+{% endblock %}
+
+
+

@@ -9,14 +9,15 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\LifeCycleTrait;
+use App\Components\Questionnaire\Interfaces\QuestionnaireChoixInterface;
 use App\Repository\QuestionnaireEtudiantReponseRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: QuestionnaireEtudiantReponseRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class QuestionnaireEtudiantReponse extends QuestionnaireUserReponseAbstract
+/** @deprecated */
+class QuestionnaireEtudiantReponse extends QuestionnaireUserReponseAbstract implements QuestionnaireChoixInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]

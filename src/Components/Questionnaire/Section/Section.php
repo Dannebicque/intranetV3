@@ -10,8 +10,9 @@
 namespace App\Components\Questionnaire\Section;
 
 use App\Components\Questionnaire\Adapter\QuestionnaireQuestionAdapter;
-use App\Components\Questionnaire\DTO\AbstractQuestionnaire;
+use App\Components\Questionnaire\DTO\ListeChoix;
 use App\Components\Questionnaire\DTO\ReponsesEtudiant;
+use App\Components\Questionnaire\DTO\ReponsesEtudiants;
 use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
 
 class Section extends AbstractSection
@@ -52,14 +53,15 @@ class Section extends AbstractSection
     public function prepareQuestions(array $options = [], ?ReponsesEtudiant $reponsesEtudiant = null): void
     {
         foreach ($this->section->questions as $question) {
-            $questionnaireQuestionAdapter = new QuestionnaireQuestionAdapter($this->questionnaireRegistry);
+            $questionnaireQuestionAdapter = new QuestionnaireQuestionAdapter($this->questionnaireRegistry,
+                $this->graphRegistry);
             for ($i = 0; $i < $this->nbParties; ++$i) {
                 $this->addQuestion(
                     $questionnaireQuestionAdapter->createFromEntity(
                         $this,
                         $question,
                         $i,
-                    array_merge(['mode' => AbstractQuestionnaire::MODE_EDITION], $options), $reponsesEtudiant)->getQuestion());
+                        $options)->setReponseEtudiant($reponsesEtudiant)->getQuestion());
             }
         }
     }
@@ -68,5 +70,19 @@ class Section extends AbstractSection
     {
         // ajouter dans la section concernée...
         $this->questions->addQuestion($question);
+    }
+
+    public function calculResultatsQuestions(array $options = [], ListeChoix $listeChoix): void
+    {
+        foreach ($this->section->questions as $question) {
+            $questionnaireQuestionAdapter = new QuestionnaireQuestionAdapter($this->questionnaireRegistry,
+                $this->graphRegistry);
+            $this->addQuestion(
+                $questionnaireQuestionAdapter->createFromEntity(
+                    $this,
+                    $question,
+                    0,
+                    $options)->setReponsesEtudiants($listeChoix)->getQuestion());
+        }
     }
 }

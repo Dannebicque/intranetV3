@@ -1,0 +1,9 @@
+<div {{ stimulus_controller('questionnaire--section', {
+    urlSection: path('adm_questionnaire_creation_section_index', { section: element.id, type:type }),
+}) }}
+        data-action="questionnaire--question:updateListe->questionnaire--section#refreshContent">
+
+    <div {{ stimulus_target('questionnaire--section', 'section') }}>
+        {{ include('questionnaire/creation/section/section.html.twig', {section:element} ) }}
+    </div>
+</div>

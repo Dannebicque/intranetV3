@@ -1,0 +1,89 @@
+{% extends (is_granted('ROLE_ADMINISTRATIF')) ? 'base-super_admin.html.twig' : 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.qualite.show.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            {% if is_granted('ROLE_ADMINISTRATIF') %}
+                <a href="{{ path('sa_qualite_diplome', {diplome:questionnaire.semestre.diplome.id}) }}"
+                   class="btn btn-primary btn-float"
+                   title="{{ 'atitle.retour_liste'|trans }}"
+                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+                >
+                    <i class="fas fa-arrow-left"></i>
+                    <span class="sr-only">{{ 'atitle.retour_liste'|trans }}</span>
+                </a>
+            {% else %}
+                <a href="{{ path('administration_qualite_index') }}"
+                   class="btn btn-primary btn-float"
+                   title="{{ 'atitle.retour_liste'|trans }}"
+                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+                >
+                    <i class="fas fa-arrow-left"></i>
+                    <span class="sr-only">{{ 'atitle.retour_liste'|trans }}</span>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.qualite.parametres.heading'|trans }}</h4>
+        <div class="card-body">
+            {{ include('questionnaire/creation/step/_boutonsFinQuestionnaire.html.twig') }}
+        </div>
+    </div>
+
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.qualite.resultats.heading'|trans }}</h4>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-4 d-grid">
+                    <a href="{{ path('adm_questionnaire_qualite_resultats_export', {id: questionnaire.id, type:type}) }}"
+                       class="btn btn-success d-block">
+                        <i class="fas fa-download"></i>
+                        Télécharger les résultats (xlsx)
+                    </a>
+                </div>
+
+                <div class="col-4 d-grid">
+                    <a href="{{ path('adm_questionnaire_qualite_resultats_resultats', {id: questionnaire.id, type:type,
+                        type_view:'tableaux'}) }}"
+                       class="btn
+ btn-info d-block"><i class="fas fa-table"></i> Voir sous forme tableau</a>
+                </div>
+                <div class="col-4 d-grid">
+                    <a href="{{ path('adm_questionnaire_qualite_resultats_resultats', {id: questionnaire.id, type:type,
+                        type_view:'graphiques'}) }}"
+                       class="btn
+ btn-success d-block"><i class="fas fa-chart-bar"></i> Voir sous forme graphique</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.qualite.show.heading'|trans }}</h4>
+        <div class="card-body">
+            {{ include('questionnaire/commun/_tableauReponses.html.twig') }}
+        </div>
+    </div>
+{% endblock %}
+
+    {% block fabactions %}
+        {{ include('composants/fab-button-help.html.twig', {
+            href:path('help_article', {sujet: 'administration_qualite'}),
+        }) }}
+    {% endblock %}
+
+    {% block javascripts %}
+        {{ parent() }}
+        {{ encore_entry_script_tags('adm.qualite') }}
+    {% endblock %}
+
+

@@ -22,32 +22,48 @@ use App\Entity\QuestionnaireQualite;
 use App\Entity\QuestionnaireQuestionnaireSection;
 use App\Entity\Semestre;
 use App\Repository\EtudiantRepository;
-use App\Repository\PersonnelRepository;
+use App\Repository\QuestChoixEtudiantRepository;
 use App\Repository\QuestionnaireEtudiantReponseRepository;
-use App\Repository\QuestionnaireEtudiantRepository;
-use App\Repository\QuestionnairePersonnelRepository;
-use App\Repository\QuestionnaireQualiteRepository;
 use App\Repository\QuestionnaireQuestionnaireSectionRepository;
+use App\Repository\QuestQuestionnaireRepository;
 use App\Table\EnqueteQualiteDiplomesTableType;
+use App\Table\EnqueteQualiteExterieursTableType;
+use App\Table\EnqueteQualitePersonnelsTableType;
 use Carbon\Carbon;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/administratif/enquete')]
+/** @deprecated */
 class EnqueteController extends BaseController
 {
-    //todo: à centraliser ??? commun avec personnel?
     /**
      * @throws \JsonException
      */
-    #[Route('/etudiant', name: 'administratif_enquete_etudiant_index', options: ['expose' => true])]
-    public function indexEtudiant(Request $request, EtudiantRepository $etudiantRepository): Response
-    {
-        $effectifs = $etudiantRepository->statistiquesEtudiants();
-        $table = $this->createTable(EnqueteQualiteDiplomesTableType::class, [
-            'effectifs' => $effectifs,
-        ]);
+    #[Route('/{typeDestinataire}', name: 'administratif_enquete_destinataire_index', options: ['expose' => true])]
+    public function indexEtudiant(
+        Request $request,
+        EtudiantRepository $etudiantRepository,
+        string $typeDestinataire
+    ): Response {
+        if ('etudiant' === $typeDestinataire) {
+            $table = $this->createTable(EnqueteQualiteDiplomesTableType::class, [
+                'typeDestinataire' => $typeDestinataire,
+                'effectifs' => [],
+            ]);
+        } elseif ('personnel' === $typeDestinataire) {
+            $table = $this->createTable(EnqueteQualitePersonnelsTableType::class, [
+                'typeDestinataire' => $typeDestinataire,
+                'effectifs' => [],
+            ]);
+        } else {
+            $table = $this->createTable(EnqueteQualiteExterieursTableType::class, [
+                'typeDestinataire' => $typeDestinataire,
+                'effectifs' => [],
+            ]);
+        }
+
         $table->handleRequest($request);
 
         if ($table->isCallback()) {
@@ -56,28 +72,7 @@ class EnqueteController extends BaseController
 
         return $this->render('super-administration/enquete/index.html.twig', [
             'table' => $table,
-        ]);
-    }
-
-    #[Route('/personnel', name: 'administratif_enquete_personnel_index')]
-    public function indexPersonnel(
-    QuestionnaireQualiteRepository $questionnaireQualiteRepository,
-    QuestionnairePersonnelRepository $questionnairePersonnelRepository,
-    PersonnelRepository $personnelRepository,
-    ): Response
-    {
-        $stats = [];
-        $personnels = $personnelRepository->findActifs();
-        $quizzEtudiants = $questionnairePersonnelRepository->findAll();
-        $questionnaires = $questionnaireQualiteRepository->findForPersonnel();
-        foreach ($questionnaires as $questionnaire) {
-            $stats[$questionnaire->getId()]['nbReponses'] = $questionnairePersonnelRepository->compteReponse($questionnaire);
-        }
-
-        return $this->render('super-administration/enquete/indexPersonnel.html.twig', [
-            'nbReponses' => $stats,
-            'personnels' => $personnels,
-            'quizzEtudiant' => $quizzEtudiants,
+            'typeDestinataire' => $typeDestinataire,
         ]);
     }
 
@@ -117,7 +112,10 @@ class EnqueteController extends BaseController
 
         if (null !== $sections) {
             foreach ($sections as $key => $values) {
-                $sect = $questionnaireQuestionnaireSectionRepository->findOneBy(['questionnaireQualite' => $questionnaireQualite->getId(), 'section' => $key]);
+                $sect = $questionnaireQuestionnaireSectionRepository->findOneBy([
+                    'questionnaireQualite' => $questionnaireQualite->getId(),
+                    'section' => $key,
+                ]);
                 $sect?->setConfig(['valeurs' => $values]);
             }
         }
@@ -133,22 +131,23 @@ class EnqueteController extends BaseController
     #[Route('/questionnaire/semestre/{semestre}', name: 'administratif_enquete_semestre')]
     public function semestre(
         EtudiantRepository $etudiantRepository,
-        QuestionnaireEtudiantRepository $quizzEtudiantRepository,
+        QuestQuestionnaireRepository $questQuestionnaireRepository,
+        QuestChoixEtudiantRepository $questChoixEtudiantRepository,
         Semestre $semestre
     ): Response {
+        $questionnaires = $questQuestionnaireRepository->findBy(['semestre' => $semestre], ['dateOuverture' => 'ASC']);
         $stats = [];
         $etudiants = $etudiantRepository->findBySemestre($semestre);
-        $quizzEtudiants = $quizzEtudiantRepository->findBySemestreArray($semestre);
-        foreach ($semestre->getQualiteQuestionnaires() as $questionnaire) {
-            $stats[$questionnaire->getId()]['nbReponses'] = $quizzEtudiantRepository->compteReponse($questionnaire);
+        foreach ($questionnaires as $questionnaire) {
+            $stats[$questionnaire->getId()]['nbReponses'] = $questChoixEtudiantRepository->compteReponse($questionnaire);
         }
 
         return $this->render('super-administration/enquete/semestre.html.twig', [
             'semestre' => $semestre,
             'nbReponses' => $stats,
             'etudiants' => $etudiants,
-            'quizzEtudiant' => $quizzEtudiants,
-            'type' => 'administratif'
+            'type' => 'administratif',
+            'questionnaires' => $questionnaires,
         ]);
     }
 

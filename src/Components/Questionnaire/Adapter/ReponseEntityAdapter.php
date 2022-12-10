@@ -11,14 +11,16 @@ namespace App\Components\Questionnaire\Adapter;
 
 use App\Components\Questionnaire\DTO\Reponse;
 use App\Entity\QuestionnaireReponse;
+use App\Entity\QuestReponse;
 
 class ReponseEntityAdapter
 {
     protected Reponse $reponse;
 
-    public function __construct(QuestionnaireReponse $questionnaireReponse)
+    public function __construct(QuestReponse $questionnaireReponse)
     {
-        $this->reponse = new Reponse($questionnaireReponse->getId(), $questionnaireReponse->getLibelle(), $questionnaireReponse->getValeur(), $questionnaireReponse->getOrdre(), ['alignement' => $questionnaireReponse->getAlignement()]);
+        $this->reponse = new Reponse($questionnaireReponse->getId(), $questionnaireReponse->getLibelle(),
+            $questionnaireReponse->getValeur(), $questionnaireReponse->getOrdre(), $questionnaireReponse->getConfig());
     }
 
     public function getReponse(): Reponse

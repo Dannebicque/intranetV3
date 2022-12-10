@@ -14,6 +14,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * @deprecated Use Quest...Repository à la place
  * @method QuestionnaireSection|null find($id, $lockMode = null, $lockVersion = null)
  * @method QuestionnaireSection|null findOneBy(array $criteria, array $orderBy = null)
  * @method QuestionnaireSection[]    findAll()

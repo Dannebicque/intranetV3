@@ -1,0 +1,37 @@
+<div class="bloc_question" {{ stimulus_controller('questionnaire--question', {
+    urlQuestion: path('questionnaire_creation_question_manage', {question:question.id})
+}) }}>
+
+    <div class="row" {{ stimulus_target('questionnaire--question', 'question') }}>
+        <div class="col-10">
+            <h4>{{ question.libelle }} {% if question.obligatoire %}
+                    <span class="required-etoile fs-3">*</span>{% endif %}
+                <span
+                        class="badge {{ badge }}">{{ type_question|trans }}</span></h4>
+            <p class="small">{{ question.help }}</p>
+        </div>
+        <div class="col-2">
+            <button class="btn btn-danger-outline btn-sm"
+                    {{ stimulus_action('questionnaire--question', 'delete', 'click', {section: section.id}) }}
+            ><i class="{{ iconDelete }}"></i></button>
+            <button class="btn btn-primary-outline btn-sm"
+                    {{ stimulus_action('questionnaire--question', 'edit', 'click') }}
+            ><i class="{{ iconEdit }}"></i></button>
+            <button class="btn btn-success-outline btn-sm"
+                    {{ stimulus_action('questionnaire--question', 'duplicate', 'click') }}
+            ><i class="{{ iconDuplicate }}"></i></button>
+
+
+            <button class="btn btn-primary btn-sm"
+                    {% if question.ordre == 1 %}disabled{% endif %}
+                    {{ stimulus_action('questionnaire--question', 'up', 'click', {section: section.id}) }}
+            ><i class="fas fa-up"></i></button>
+            <button class="btn btn-primary btn-sm"
+                    {% if question.ordre == lastQuestion %}disabled{% endif %}
+                    {{ stimulus_action('questionnaire--question', 'down', 'click', {section: section.id}) }}
+            ><i class="fas fa-down"></i></button>
+        </div>
+    </div>
+</div>
+
+

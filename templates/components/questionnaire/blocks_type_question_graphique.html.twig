@@ -1,0 +1,57 @@
+{% block type_qcu %}
+    {{ block('libelle') }}
+    <div style="height:300px">{# options... #}
+        {{ render_chart(chart) }}
+    </div>
+{% endblock %}
+
+{% block type_qcm %}
+    {{ block('libelle') }}
+    <div style="height:300px">{# options... #}
+
+        {{ render_chart(chart) }}
+    </div>
+{% endblock %}
+
+{% block type_slider %}
+    {{ block('libelle') }}
+    <div style="height:300px">{# options... #}
+
+        {{ render_chart(chart) }}
+    </div>
+{% endblock %}
+
+{% block type_echelle %}
+    {{ block('libelle') }}
+    <div style="height:300px">{# options... #}
+
+        {{ render_chart(chart) }}
+    </div>
+{% endblock %}
+
+{% block type_chainee %}
+    type_chainee
+{% endblock %}
+
+{% block type_libre %}
+    {{ block('libelle') }}
+
+    {% if choix != null %}
+        <ul>
+            {% for chx in choix.autre %}
+                <li>{{ chx }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}
+
+{% block type_oui_non %}
+    {{ block('libelle') }}
+    <div style="height:300px">{# options... #}
+        {{ render_chart(chart) }}
+    </div>
+{% endblock %}
+
+{% block libelle %}
+    <h5><strong>{{ numero }}</strong>. {{ libelle }}</h5>
+{% endblock %}

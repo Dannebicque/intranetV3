@@ -9,9 +9,13 @@
 
 namespace App\Components\Questionnaire\TypeQuestion;
 
+use App\Components\Graphs\Type\BarGraph;
 use App\Components\Questionnaire\Adapter\ReponseEntityAdapter;
 use App\Components\Questionnaire\Form\QuestionnaireQuestionTypeQcu;
-use App\Entity\QuestionnaireQuestion;
+use App\Entity\QuestQuestion;
+use App\Entity\QuestReponse;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TypeQcu extends AbstractQuestion
@@ -20,19 +24,60 @@ class TypeQcu extends AbstractQuestion
     public const BADGE = 'bg-pink';
     public const ICON = 'fas fa-ellipsis-vertical';
     public const FORM = QuestionnaireQuestionTypeQcu::class;
+    public const TYPE_GRAPH = BarGraph::SOURCE;
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);
         $resolver->setDefault('block_name', 'type_qcu')
+            ->setDefault('block_name_edit', 'type_qcu')
             ->setDefault('type_question', 'radio');
     }
 
-    public function getOrGenereReponses(QuestionnaireQuestion $question): void
+    public function getOrGenereReponses(QuestQuestion $question): void
     {
-        $reponses = $question->getReponses();
+        $reponses = $question->getQuestReponses();
         foreach ($reponses as $reponse) {
             $this->addReponse((new ReponseEntityAdapter($reponse))->getReponse());
         }
+    }
+
+    public function sauvegarde(
+        QuestQuestion $question,
+        Request $request,
+        ?EntityManagerInterface $entityManager = null
+    ): void {
+        parent::sauvegarde($question, $request, $entityManager);
+        $parametres = $question->getParametre();
+        $parametres['choix_autre'] = array_key_exists('choix_autre',
+            $this->data) ? (bool)$this->data['choix_autre'] : false;
+        $parametres['choix_nc'] = array_key_exists('choix_nc', $this->data) ? (bool)$this->data['choix_nc'] : false;
+        $question->setParametre($parametres);
+
+        $this->sauvegardeReponses($question, $entityManager);
+
+//        //todo: déplacer dans sauvegardeReponses ? Généré à la volée dans l'affichage
+//        if ($parametres['choix_autre']) {
+//            $qR = new QuestReponse();
+//            $qR->setLibelle('Autre');
+//            $qR->setOrdre(99);
+//            $qR->setValeur('CHX:OTHER');
+//            $qR->setQuestion($question);
+//            $entityManager->persist($qR);
+//        }
+//
+//        if ($parametres['choix_nc']) {
+//            $qR = new QuestReponse();
+//            $qR->setLibelle('Non concerné');
+//            $qR->setOrdre(98);
+//            $qR->setValeur('CHX:NC');
+//            $qR->setQuestion($question);
+//            $entityManager->persist($qR);
+//        }
+    }
+
+    public function genereGraph()
+    {
+        return $this->graphRegistry->getTypeGraph(self::TYPE_GRAPH)->genereGraph($this);
     }
 }

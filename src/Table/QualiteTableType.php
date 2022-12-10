@@ -9,7 +9,9 @@
 
 namespace App\Table;
 
+use App\Entity\Annee;
 use App\Entity\Departement;
+use App\Entity\Diplome;
 use App\Entity\QuestQuestionnaire;
 use App\Entity\Semestre;
 use App\Form\Type\DatePickerType;
@@ -33,11 +35,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 class QualiteTableType extends TableType
 {
     private ?Departement $departement = null;
+    private ?Diplome $diplome = null;
     private string $type;
 
     public function buildTable(TableBuilder $builder, array $options): void
     {
         $this->departement = $options['departement'];
+        $this->diplome = $options['diplome'];
         $this->type = $options['type'];
 
         $builder->addFilter('from', DatePickerType::class, [
@@ -46,14 +50,27 @@ class QualiteTableType extends TableType
         $builder->addFilter('to', DatePickerType::class, [
             'input_prefix_text' => 'Au',
         ]);
-        $builder->addFilter('semestre', EntityType::class,
-            [
-                'class' => Semestre::class,
-                'choice_label' => 'libelle',
-                'required' => false,
-                'query_builder' => fn (SemestreRepository $semestreRepository
-                ) => $semestreRepository->findByDepartementBuilder($this->departement),
-            ]);
+        if (null !== $this->departement) {
+            $builder->addFilter('semestre', EntityType::class,
+                [
+                    'class' => Semestre::class,
+                    'choice_label' => 'libelle',
+                    'required' => false,
+                    'query_builder' => fn(SemestreRepository $semestreRepository
+                    ) => $semestreRepository->findByDepartementBuilder($this->departement),
+                ]);
+        }
+
+        if (null !== $this->diplome) {
+            $builder->addFilter('semestre', EntityType::class,
+                [
+                    'class' => Semestre::class,
+                    'choice_label' => 'libelle',
+                    'required' => false,
+                    'query_builder' => fn(SemestreRepository $semestreRepository
+                    ) => $semestreRepository->findByDiplomeBuilder($this->diplome),
+                ]);
+        }
 
         $builder->addColumn('titre', PropertyColumnType::class, ['label' => 'table.titre']);
         $builder->addColumn('dateOuverture', DateColumnType::class, ['label' => 'table.dateOuverture']);
@@ -64,12 +81,12 @@ class QualiteTableType extends TableType
             ['label' => 'table.semestre']);
 
         $builder->addColumn('links', WidgetColumnType::class, [
-            'build' => function (WidgetBuilder $builder, QuestQuestionnaire $s) {
+            'build' => function(WidgetBuilder $builder, QuestQuestionnaire $s) {
                 $builder->add('apercu', RowLinkType::class, [
                     'route' => 'administration_qualite_apercu',
                     'icon' => 'fas fa-eye',
                     'attr' => ['class' => 'btn btn-square btn-info-outline btn-sm me-1'],
-                    'route_params' => ['id' => $s->getId()],
+                    'route_params' => ['id' => $s->getId(), 'type' => $this->type],
                     'xhr' => false,
                 ]);
                 $builder->add('show', RowShowLinkType::class, [
@@ -93,15 +110,30 @@ class QualiteTableType extends TableType
             },
         ]);
 
-        $builder->setLoadUrl('administration_qualite_index');
+        if ($this->type === 'administration') {
+            $builder->setLoadUrl('administration_qualite_index', ['type' => $this->type]);
+        } else {
+            $builder->setLoadUrl('sa_qualite_diplome', ['diplome' => $this->diplome->getId()]);
+        }
+
 
         $builder->useAdapter(EntityAdapter::class, [
             'class' => QuestQuestionnaire::class,
             'fetch_join_collection' => false,
-            'query' => function (QueryBuilder $qb, array $formData) {
-                $qb
-                    ->where('e.departement = :departement')
-                    ->setParameter('departement', $this->departement->getId());
+            'query' => function(QueryBuilder $qb, array $formData) {
+                if (null !== $this->departement) {
+                    $qb
+                        ->where('e.departement = :departement')
+                        ->setParameter('departement', $this->departement->getId());
+                }
+
+                if (null !== $this->diplome) {
+                    $qb
+                        ->innerJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
+                        ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
+                        ->where('a.diplome = :diplome')
+                        ->setParameter('diplome', $this->diplome->getId());
+                }
 
                 if (isset($formData['from'])) {
                     $qb->andWhere('e.dateOuverture >= :from');
@@ -123,6 +155,7 @@ class QualiteTableType extends TableType
         $resolver->setDefaults([
             'orderable' => true,
             'departement' => null,
+            'diplome' => null,
             'type' => 'administration',
         ]);
     }

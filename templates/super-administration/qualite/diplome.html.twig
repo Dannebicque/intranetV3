@@ -1,0 +1,41 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+    {{ 'sa_qualite.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('adm_questionnaire_creation_index',{type:'administratif'}) }}"
+               class="btn btn-info btn-sm btn-float"
+               data-bs-toggle="tooltip"
+               data-bs-placement="bottom"
+               title="Créer une enquête">
+                <i class="{{ iconAdd }}">
+                    <span class="sr-only">Créer une enquête</span>
+                </i>
+            </a>
+            <a href="{{ path('sa_qualite_index') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="{{ 'atitle.retour_dashboard'|trans }}">
+                <i class="{{ iconRetour }}"><span class="sr-only">retour</span></i>
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <header class="card-header">
+                    <h2 class="card-title">{{ 'sa_enquete.heading'|trans }}</h2>
+                </header>
+
+                <div class="card-body">
+                    {{ table_render(table) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

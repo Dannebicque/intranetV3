@@ -9,8 +9,7 @@
 
 namespace App\Event;
 
-use App\Entity\Etudiant;
-use App\Entity\QuestionnaireQualite;
+use App\Components\Questionnaire\Interfaces\QuestChoixInterface;
 use Symfony\Contracts\EventDispatcher\Event;
 
 class QualiteRelanceEvent extends Event
@@ -18,29 +17,18 @@ class QualiteRelanceEvent extends Event
     final public const SEND_RELANCE = 'sendRelance';
     final public const SEND_SYNTHESE = 'sendSynthese';
 
-    protected ?Etudiant $etudiant = null;
     protected array $etudiants;
 
-    public function __construct(protected ?QuestionnaireQualite $questionnaireQualite)
+    public function __construct(protected ?QuestChoixInterface $questionnaireQualite)
     {
     }
 
-    public function getEtudiant(): ?Etudiant
-    {
-        return $this->etudiant;
-    }
-
-    public function setEtudiant(Etudiant $etudiant): void
-    {
-        $this->etudiant = $etudiant;
-    }
-
-    public function getQuestionnaireQualite(): QuestionnaireQualite
+    public function getQuestionnaireQualite(): QuestChoixInterface
     {
         return $this->questionnaireQualite;
     }
 
-    public function getEtudiants(): array
+    public function getDestinataire(): array
     {
         return $this->etudiants;
     }

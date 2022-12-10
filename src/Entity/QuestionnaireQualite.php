@@ -14,9 +14,11 @@ use App\Repository\QuestionnaireQualiteRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Deprecated;
 
 #[ORM\Entity(repositoryClass: QuestionnaireQualiteRepository::class)]
 #[ORM\HasLifecycleCallbacks]
+/** @deprecated Utiliser QuestSection * */
 class QuestionnaireQualite extends Questionnaire
 {
     use LifeCycleTrait;

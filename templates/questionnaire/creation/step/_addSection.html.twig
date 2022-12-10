@@ -1,0 +1,9 @@
+<h2>Ajouter une section</h2>
+<div {{ stimulus_target('questionnaire--creation', 'section') }}></div>
+<select class="form-select form-select-lg" {{ stimulus_action('questionnaire--creation', 'addSection') }}>
+    <option value="">Choisir...</option>
+    <option value="new">Ajouter une nouvelle section</option>
+    {% for section in liste %}
+        <option value="{{ section.id }}">{{ section.titre }}</option>
+    {% endfor %}
+</select>

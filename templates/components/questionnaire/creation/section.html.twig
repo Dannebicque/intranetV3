@@ -1,0 +1,27 @@
+<div class="row mb-2" {{ stimulus_target('questionnaire--section', 'sectionEdit') }}>
+    <div class="col-10">
+        <h3>Section : "{{ section.titre }}"</h3>
+    </div>
+    <div class="col-2">
+        <button class="btn btn-danger btn-sm"
+                {{ stimulus_action('questionnaire--section', 'delete', 'click') }}
+        ><i class="{{ iconDelete }}"></i></button>
+        <button class="btn btn-primary btn-sm"
+                {{ stimulus_action('questionnaire--section', 'edit', 'click', {section: section.id}) }}
+        ><i class="{{ iconEdit }}"></i></button>
+        <button
+                class="btn btn-primary btn-sm" {% if section.ordre == 1 %}disabled{% endif %}
+                {{ stimulus_action('questionnaire--section', 'left', 'click', {section: section.id}) }}
+        ><i class="fas
+                fa-left"></i></button>
+        <button class="btn btn-primary btn-sm" {% if section.ordre == lastSection %}disabled{% endif %}
+                {{ stimulus_action('questionnaire--section', 'right', 'click', {section: section.id}) }}
+        ><i class="fas
+                fa-right"></i></button>
+    </div>
+</div>
+
+{% for question in questions %}
+    {{ question_creation_render(question) }}
+{% endfor %}
+

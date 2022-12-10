@@ -1,0 +1,15 @@
+<div class="row question-edit">
+    <div class="col-10">
+        {% form_theme form 'form/my-form-quest.html.twig' %}
+        <form>
+            {{ question_creation_form_render(question, form) }}
+        </form>
+    </div>
+    <div class="col-2 d-grid">
+        <button class="btn btn-primary d-block"
+                {{ stimulus_action('questionnaire--question', 'sauvegarde') }}
+        >Enregister
+        </button>
+    </div>
+</div>
+

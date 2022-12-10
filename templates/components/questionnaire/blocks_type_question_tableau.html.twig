@@ -1,0 +1,112 @@
+{% block type_qcu %}
+    {{ block('libelle') }}
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>Choix</th>
+            <th>Nb. Réponse</th>
+            <th>%</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for reponse in reponses %}
+            <tr>
+                <td>{{ reponse.libelle }}</td>
+                <td>{{ choix.totalReponses[reponse.valeur] is defined ? choix.totalReponses[reponse.valeur] : 0 }}</td>
+                <td>{{ choix.pourcentageReponse(reponse.valeur) }} %</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Total</th>
+            <th>{{ choix.nbReponsesTotal }} %</th>
+            <th>100 %</th>
+        </tr>
+        </tfoot>
+    </table>
+{% endblock %}
+
+
+{% block type_chainee %}
+    {{ block('libelle') }}    type_chainee
+{% endblock %}
+
+{% block type_libre %}
+    {{ block('libelle') }}
+
+    {% if choix != null %}
+        <ul>
+            {% for chx in choix.autre %}
+                <li>{{ chx }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}
+
+{% block type_oui_non %}
+    {{ block('libelle') }}
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>Choix</th>
+            <th>Nb. Réponse</th>
+            <th>%</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for reponse in reponses %}
+            <tr>
+                <td>{{ reponse.libelle }}</td>
+                <td>{{ choix.totalReponses[reponse.valeur] is defined ? choix.totalReponses[reponse.valeur] : 0 }}</td>
+                <td>{{ choix.pourcentageReponse(reponse.valeur) }} %</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Total</th>
+            <th>{{ choix.nbReponsesTotal }} %</th>
+            <th>100 %</th>
+        </tr>
+        </tfoot>
+    </table>
+{% endblock %}
+
+{% block type_qcm %}
+    {{ block('libelle') }}
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>Choix</th>
+            <th>Nb. Réponse</th>
+            <th>%</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for reponse in reponses %}
+            <tr>
+                <td>{{ reponse.libelle }}</td>
+                <td>{{ choix != null ? (choix.totalReponses[reponse.valeur] is defined ? choix.totalReponses[reponse
+                    .valeur] : 0) : '-' }}</td>
+                <td>{{ choix != null ? choix.pourcentageReponse(reponse.valeur) : '-' }} %</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr>
+            <th>Total</th>
+            <th>{{ choix != null ? choix.nbReponsesTotal : 0 }} %</th>
+            <th>100 %</th>
+        </tr>
+        </tfoot>
+    </table>
+{% endblock %}
+
+{% block libelle %}
+    <h5><strong>{{ numero }}</strong>. {{ libelle }}</h5>
+{% endblock %}
+
+{% block type_slider %}
+    A faire
+{% endblock %}

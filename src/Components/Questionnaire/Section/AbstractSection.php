@@ -9,6 +9,7 @@
 
 namespace App\Components\Questionnaire\Section;
 
+use App\Components\Graphs\GraphRegistry;
 use App\Components\Questionnaire\DTO\AbstractQuestionnaire;
 use App\Components\Questionnaire\QuestionnaireRegistry;
 use App\Components\Questionnaire\Questions;
@@ -38,10 +39,12 @@ abstract class AbstractSection
     public array $options = [];
     public ?int $questionnaire_id = null;
     public ?int $etudiant_id = null;
+    public ?string $typeSection;
 
     public function __construct(
-        public QuestionnaireRegistry $questionnaireRegistry)
-    {
+        public QuestionnaireRegistry $questionnaireRegistry,
+        public GraphRegistry $graphRegistry,
+    ) {
         $this->questions = new Questions();
     }
 
@@ -97,5 +100,10 @@ abstract class AbstractSection
             'ordre' => 1,
             'titre' => null,
         ];
+    }
+
+    public function hasQuestions(): bool
+    {
+        return StartSection::class !== $this->typeSection && EndSection::class !== $this->typeSection;
     }
 }

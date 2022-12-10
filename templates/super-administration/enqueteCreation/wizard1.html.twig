@@ -1,9 +1,0 @@
-<p class="text-center fs-35 text-muted">Questionnaire Qualité : <strong
-            class="text-primary">paramètrage</strong></p>
-<hr class="w-100px">
-
-{% form_theme form 'form/my-form.html.twig' %}
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-<button class="btn btn-success">{{ button_label|default('label.save_and_continue'|trans) }}</button>
-{{ form_end(form) }}

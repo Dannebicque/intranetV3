@@ -1,0 +1,18 @@
+<h2>Introduction</h2>
+
+{% form_theme form 'form/my-form.html.twig' %}
+    {{ form_start(form, {attr: {'id': 'questionnaire_qualite', 'name': 'questionnaire_qualite'}}) }}
+
+    {{ form_row(form.titre) }}
+    {{ form_row(form.libelle) }}
+    {{ form_row(form.texteExplication) }}
+    {{ form_row(form.texteDebut) }}
+    {{ form_row(form.typeDestinataire) }}
+
+<button data-action="click->questionnaire--creation#sauvegardeIntro:prevent" class="btn btn-primary">Save</button>
+<button data-action="click->questionnaire--creation#sauvegardeIntroAndNext:prevent" class="btn btn-primary">Save and
+                                                                                                            continue
+</button>
+{{ form_end(form) }}
+
+

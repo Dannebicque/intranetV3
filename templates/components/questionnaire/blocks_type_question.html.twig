@@ -1,6 +1,6 @@
 {% block type_chainee %}
     <fieldset class="form-group"
-            {{ stimulus_controller('enquete', {
+            {{ stimulus_controller('questionnaire--enquete', {
                 parametres: parametres|json_encode,
                 idQuestion: id,
                 typeQuestionnaire: typeQuestionnaire,
@@ -28,7 +28,7 @@
                             <div class="form-check">
                                 <input type="radio" id="quizz_question_qcu_{{ name }}_{{ reponse.id }}"
                                        name="quizz_question_reponses_{{ name }}"
-                                       data-action="change->enquete#change"
+                                       data-action="change->questionnaire--enquete#change"
                                        data-fieldset="{{ id }}"
                                        data-typeQuestionnaire="radio" {# todo: pourrait être autre chose... #}
                                         {% if apercu is not defined or apercu == false %}
@@ -48,15 +48,16 @@
         {% endfor %}
     </fieldset>
 {% endblock %}
+
 {% block type_echelle %}
     <fieldset class="form-group mt-2" {% if visible == false %}style="display:none"{% endif %}
-            {{ stimulus_controller('enquete', {
+            {{ stimulus_controller('questionnaire--enquete', {
                 parametres: parametres|json_encode,
                 idQuestion: id,
                 typeQuestionnaire: typeQuestionnaire,
                 questionnaireId: questionnaire_id
             }) }}
-              data-action="enquete:change-value->enquete#updateQuestion"
+              data-action="enquete:change-value->questionnaire--enquete#updateQuestion"
               id="field_{{ id }}">
         {{ block('libelle') }}
         <div aria-describedby="quizz_question_{{ id }}_help">
@@ -68,15 +69,38 @@
     </fieldset>
 {% endblock %}
 
-{% block type_libre %}
+{% block type_slider %}
     <fieldset class="form-group mt-2" {% if visible == false %}style="display:none"{% endif %}
-            {{ stimulus_controller('enquete', {
+            {{ stimulus_controller('questionnaire--enquete', {
                 parametres: parametres|json_encode,
                 idQuestion: id,
                 typeQuestionnaire: typeQuestionnaire,
                 questionnaireId: questionnaire_id
             }) }}
-              data-action="enquete:change-value@window->enquete#updateQuestion"
+              data-action="enquete:change-value->questionnaire--enquete#updateQuestion"
+              id="field_{{ id }}">
+        {{ block('libelle') }}
+        <div aria-describedby="quizz_question_{{ id }}_help">
+            <small id="quizz_question_{{ id }}_help" class="form-text text-muted">{{ help }}</small>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <label for="customRange3" class="form-label">Example range</label>
+                <input type="range" class="form-range" min="{{ parametres.min }}" max="{{ parametres.max }}" step="{{ parametres.pas }}" id="customRange3">
+            </div>
+        </div>
+    </fieldset>
+{% endblock %}
+
+{% block type_libre %}
+    <fieldset class="form-group mt-2" {% if visible == false %}style="display:none"{% endif %}
+            {{ stimulus_controller('questionnaire--enquete', {
+                parametres: parametres|json_encode,
+                idQuestion: id,
+                typeQuestionnaire: typeQuestionnaire,
+                questionnaireId: questionnaire_id
+            }) }}
+              data-action="enquete:change-value@window->questionnaire--enquete#updateQuestion"
               id="field_{{ id }}">
         {{ block('libelle') }}
 
@@ -88,7 +112,7 @@
                    for="quizz_question_text_{{ name }}">Votre réponse</label>
             <textarea id="quizz_question_text_{{ name }}"
                       name="quizz_question_text_{{ name }}"
-                      data-action="change->enquete#onTextAreaChange"
+                      data-action="change->questionnaire--enquete#onTextAreaChange"
                       data-typeQuestionnaire="{{ type_question }}"
                      {% if apercu is not defined or apercu == false %}
                          data-etudiant="{{ etudiant_id }}"
@@ -103,13 +127,13 @@
 
 {% block type_oui_non %}
     <fieldset class="form-group mt-2" {% if visible == false %}style="display:none"{% endif %}
-            {{ stimulus_controller('enquete', {
+            {{ stimulus_controller('questionnaire--enquete', {
                 parametres: parametres|json_encode,
                 idQuestion: id,
                 typeQuestionnaire: typeQuestionnaire,
                 questionnaireId: questionnaire_id
             }) }}
-              data-action="enquete:change-value->enquete#updateQuestion"
+              data-action="enquete:change-value->questionnaire--enquete#updateQuestion"
               id="field_{{ id }}">
         {{ block('libelle') }}
         <div aria-describedby="quizz_question_{{ id }}_help">
@@ -121,7 +145,7 @@
                     <input type="radio" id="quizz_question_qcu_{{ name }}_{{ reponse.id }}"
                            name="quizz_question_reponses_{{ name }}"
                            data-typeQuestionnaire="{{ type_question }}"
-                           data-action="change->enquete#change"
+                           data-action="change->questionnaire--enquete#change"
                             {% if apercu is not defined or apercu == false %}
                                 data-etudiant="{{ etudiant_id }}"
                             {% endif %}
@@ -137,7 +161,7 @@
                 <div class="form-check">
                     <input type="radio" id="quizz_question_qcu_{{ name }}_{{ reponse.id }}"
                            name="quizz_question_reponses_{{ name }}"
-                           data-action="change->enquete#change"
+                           data-action="change->questionnaire--enquete#change"
                            data-typeQuestionnaire="{{ type_question }}"
                             {% if apercu is not defined or apercu == false %}
                                 data-etudiant="{{ etudiant_id }}"
@@ -156,13 +180,13 @@
 
 {% block type_qcm %}
     <fieldset class="form-group mt-2" {% if visible == false %}style="display:none"{% endif %}
-            {{ stimulus_controller('enquete', {
+            {{ stimulus_controller('questionnaire--enquete', {
                 parametres: parametres|json_encode,
                 idQuestion: id,
                 typeQuestionnaire: typeQuestionnaire,
                 questionnaireId: questionnaire_id
             }) }}
-              data-action="enquete:change-value->enquete#updateQuestion"
+              data-action="enquete:change-value->questionnaire--enquete#updateQuestion"
               id="field_{{ id }}"
     >
         {{ block('libelle') }}
@@ -179,13 +203,13 @@
     <fieldset class="form-group mt-2"
               {% if visible == false %}style="display:none"{% endif %}
               id="field_{{ id }}"
-            {{ stimulus_controller('enquete', {
+            {{ stimulus_controller('questionnaire--enquete', {
                 parametres: parametres|json_encode,
                 idQuestion: id,
                 typeQuestionnaire: typeQuestionnaire,
                 questionnaireId: questionnaire_id
             }) }}
-              data-action="enquete:change-value@window->enquete#updateQuestion"
+              data-action="enquete:change-value@window->questionnaire--enquete#updateQuestion"
     >
         {{ block('libelle') }}
         <div aria-describedby="quizz_question_{{ id }}_help">
@@ -209,7 +233,7 @@
             <div class="form-check">
                 <input type="{{ type_question }}" id="quizz_question_qcu_{{ name }}_{{ reponse.id }}"
                        name="quizz_question_reponses_{{ name }}"
-                       data-action="change->enquete#change"
+                       data-action="change->questionnaire--enquete#change"
                        data-fieldset="{{ id }}"
                        data-typeQuestionnaire="{{ type_question }}"
                         {% if apercu is not defined or apercu == false %}
@@ -225,7 +249,7 @@
                     <input type="text" id="quizz_question_qcm_autre_{{ name }}_{{ reponse.id }}"
                            name="quizz_question_reponses_{{ name }}_autre"
                            data-typeQuestionnaire="{{ type_question }}"
-                           data-action="change->enquete#onTextAreaChange"
+                           data-action="change->questionnaire--enquete#onTextAreaChange"
                             {% if mode is defined or mode == false %}
                                 data-etudiant="{{ etudiant_id }}"
                             {% endif %}

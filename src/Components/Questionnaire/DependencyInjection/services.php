@@ -9,6 +9,8 @@
 
 namespace App\Components\Questionnaire\DependencyInjection;
 
+use App\Components\Graphs\GraphRegistry;
+use App\Components\Questionnaire\QuestionnaireRegistry;
 use App\Components\Questionnaire\Section\ConfigurableSection;
 use App\Components\Questionnaire\Section\EndSection;
 use App\Components\Questionnaire\Section\MatiereSectionAdapter;
@@ -17,6 +19,10 @@ use App\Components\Questionnaire\Section\RessourceSectionAdapter;
 use App\Components\Questionnaire\Section\SaeSectionAdapter;
 use App\Components\Questionnaire\Section\Section;
 use App\Components\Questionnaire\Section\StartSection;
+use App\Components\Questionnaire\TypeDestinataire\Etudiant;
+use App\Components\Questionnaire\TypeDestinataire\Exterieur;
+use App\Components\Questionnaire\TypeDestinataire\Personnel;
+use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
 use App\Components\Questionnaire\TypeQuestion\TypeChainee;
 use App\Components\Questionnaire\TypeQuestion\TypeEchelle;
 use App\Components\Questionnaire\TypeQuestion\TypeLibre;
@@ -25,6 +31,7 @@ use App\Components\Questionnaire\TypeQuestion\TypeQcm;
 use App\Components\Questionnaire\TypeQuestion\TypeQcu;
 use App\Components\Questionnaire\TypeQuestion\TypeSlider;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
+use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $configurator): void {
     $services = $configurator->services();
@@ -33,21 +40,28 @@ return static function (ContainerConfigurator $configurator): void {
         ->autowire()
         ->autoconfigure(false);
 
-    $services->set(TypeQcu::class)->tag('da.questionnaire.typequestion');
-    $services->set(TypeQcm::class)->tag('da.questionnaire.typequestion');
-    $services->set(TypeLibre::class)->tag('da.questionnaire.typequestion');
-    $services->set(TypeEchelle::class)->tag('da.questionnaire.typequestion');
-    $services->set(TypeOuiNon::class)->tag('da.questionnaire.typequestion');
-    $services->set(TypeSlider::class)->tag('da.questionnaire.typequestion');
-    $services->set(TypeChainee::class)->tag('da.questionnaire.typequestion');
+    $services->set(AbstractQuestion::class)
+        ->args([service('app.graph_registry')]);
 
-    $services->set(StartSection::class)->tag('da.questionnaire.typesection');
-    $services->set(ConfigurableSection::class)->tag('da.questionnaire.typesection');
-    $services->set(Section::class)->tag('da.questionnaire.typesection');
-    $services->set(EndSection::class)->tag('da.questionnaire.typesection');
+    $services->set(TypeQcu::class)->tag(QuestionnaireRegistry::TAG_TYPE_QUESTION);
+    $services->set(TypeQcm::class)->tag(QuestionnaireRegistry::TAG_TYPE_QUESTION);
+    $services->set(TypeLibre::class)->tag(QuestionnaireRegistry::TAG_TYPE_QUESTION);
+    $services->set(TypeEchelle::class)->tag(QuestionnaireRegistry::TAG_TYPE_QUESTION);
+    $services->set(TypeOuiNon::class)->tag(QuestionnaireRegistry::TAG_TYPE_QUESTION);
+    $services->set(TypeSlider::class)->tag(QuestionnaireRegistry::TAG_TYPE_QUESTION);
+    $services->set(TypeChainee::class)->tag(QuestionnaireRegistry::TAG_TYPE_QUESTION);
 
-    $services->set(PrevisionnelSectionAdapter::class)->tag('da.questionnaire.section.adapter');
-    $services->set(MatiereSectionAdapter::class)->tag('da.questionnaire.section.adapter');
-    $services->set(SaeSectionAdapter::class)->tag('da.questionnaire.section.adapter');
-    $services->set(RessourceSectionAdapter::class)->tag('da.questionnaire.section.adapter');
+    $services->set(StartSection::class)->tag(QuestionnaireRegistry::TAG_TYPE_SECTION);
+    $services->set(ConfigurableSection::class)->tag(QuestionnaireRegistry::TAG_TYPE_SECTION);
+    $services->set(Section::class)->tag(QuestionnaireRegistry::TAG_TYPE_SECTION);
+    $services->set(EndSection::class)->tag(QuestionnaireRegistry::TAG_TYPE_SECTION);
+
+    $services->set(PrevisionnelSectionAdapter::class)->tag(QuestionnaireRegistry::TAG_TYPE_SECTION_ADAPTER);
+    $services->set(MatiereSectionAdapter::class)->tag(QuestionnaireRegistry::TAG_TYPE_SECTION_ADAPTER);
+    $services->set(SaeSectionAdapter::class)->tag(QuestionnaireRegistry::TAG_TYPE_SECTION_ADAPTER);
+    $services->set(RessourceSectionAdapter::class)->tag(QuestionnaireRegistry::TAG_TYPE_SECTION_ADAPTER);
+
+    $services->set(Personnel::class)->tag(QuestionnaireRegistry::TAG_TYPE_DESTINATAIRE_ADAPTER);
+    $services->set(Etudiant::class)->tag(QuestionnaireRegistry::TAG_TYPE_DESTINATAIRE_ADAPTER);
+    $services->set(Exterieur::class)->tag(QuestionnaireRegistry::TAG_TYPE_DESTINATAIRE_ADAPTER);
 };

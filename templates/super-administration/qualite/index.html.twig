@@ -7,6 +7,15 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
+            <a href="{{ path('adm_questionnaire_creation_index',{type:'administratif'}) }}"
+               class="btn btn-info btn-sm btn-float"
+               data-bs-toggle="tooltip"
+               data-bs-placement="bottom"
+               title="Créer une enquête">
+                <i class="{{ iconAdd }}">
+                    <span class="sr-only">Créer une enquête</span>
+                </i>
+            </a>
             <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
                title="{{ 'atitle.retour_dashboard'|trans }}">
                 <i class="{{ iconDashboard }}"><span class="sr-only">dashboard</span></i>
@@ -26,42 +35,16 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-12 col-md-4 d-grid d-block">
-                            <a href="{{ path('administratif_enquete_etudiant_index') }}"
+                            <a href="{{ path('administratif_enquete_destinataire_index', {typeDestinataire: 'etudiant'}) }}"
                                class="btn btn-primary"> {{ 'enquete.etudiant.index'|trans }}</a>
                         </div>
                         <div class="col-sm-12 col-md-4 d-grid d-block">
-                            <a href="{{ path('administratif_enquete_personnel_index') }}"
+                            <a href="{{ path('administratif_enquete_destinataire_index', {typeDestinataire: 'personnel'}) }}"
                                class="btn btn-primary"> {{ 'enquete.personnel.index'|trans }}</a>
                         </div>
                         <div class="col-sm-12 col-md-4 d-grid d-block">
-                            <a href="{{ path('administratif_enquete_personnel_index') }}"
+                            <a href="{{ path('administratif_enquete_destinataire_index', {typeDestinataire: 'exterieur'}) }}"
                                class="btn btn-primary"> {{ 'enquete.nomminatif.index'|trans }}</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="col-sm-12">
-            <div class="card">
-                <header class="card-header">
-                    <h2 class="card-title">{{ 'sa_quizz.heading'|trans }}</h2>
-                </header>
-
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-12 col-md-4 d-grid mb-2">
-                            <a href="{{ path('adm_questionnaire_qualite_index', {type: 'administratif'}) }}"
-                               class="btn d-block btn-primary"> Gérer les questionnaires</a>
-                        </div>
-                        <div class="col-sm-12 col-md-4 d-grid mb-2">
-                            <a href="{{ path('adm_questionnaire_section_index', {type: 'administratif'}) }}"
-                               class="btn d-block btn-primary"> Gérer les sections</a>
-                        </div>
-                        <div class="col-sm-12 col-md-4 d-grid mb-2">
-                            <a href="{{ path('adm_questionnaire_question_index', {type: 'administratif'}) }}"
-                               class="btn d-block btn-primary"> Gérer les questions</a>
                         </div>
                     </div>
                 </div>

@@ -19,10 +19,12 @@ use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * @deprecated Use Quest...Repository à la place
  * @method QuestionnairePersonnelReponse|null find($id, $lockMode = null, $lockVersion = null)
  * @method QuestionnairePersonnelReponse|null findOneBy(array $criteria, array $orderBy = null)
  * @method QuestionnairePersonnelReponse[]    findAll()
- * @method QuestionnairePersonnelReponse[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method QuestionnairePersonnelReponse[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset =
+ *         null)
  * @extends ServiceEntityRepository<QuestionnairePersonnelReponse>
  */
 class QuestionnairePersonnelReponseRepository extends ServiceEntityRepository

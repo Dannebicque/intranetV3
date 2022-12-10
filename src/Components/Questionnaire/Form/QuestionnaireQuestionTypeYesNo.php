@@ -23,7 +23,7 @@ class QuestionnaireQuestionTypeYesNo extends QuestionnaireQuestionType
         $builder
             ->addEventListener(FormEvents::PRE_SET_DATA, static function (FormEvent $event) {
                 $question = $event->getData();
-                $config = $question->getConfiguration();
+                $config = $question->getParametre();
                 $form = $event->getForm();
                 $form->add('libelle_1', TextType::class,
                     ['mapped' => false, 'label' => 'label.libelle_1', 'help' => 'help.libelle_1', 'data' => $config['libelle_1'] ?? 'Oui'])
@@ -37,13 +37,12 @@ class QuestionnaireQuestionTypeYesNo extends QuestionnaireQuestionType
             ->addEventListener(FormEvents::POST_SUBMIT, static function (FormEvent $event) {
                 $question = $event->getData();
                 $form = $event->getForm();
-                $t = $question->getConfiguration();
+                $t = $question->getParametre();
                 $t['libelle_1'] = $form->get('libelle_1')->getData();
                 $t['valeur_1'] = $form->get('valeur_1')->getData();
                 $t['libelle_2'] = $form->get('libelle_2')->getData();
                 $t['valeur_2'] = $form->get('valeur_2')->getData();
-                $question->setConfiguration($t);
+                $question->setParametre($t);
             });
-        // ->add('parametre', TextType::class)
     }
 }

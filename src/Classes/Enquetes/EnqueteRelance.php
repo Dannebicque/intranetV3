@@ -9,6 +9,7 @@
 
 namespace App\Classes\Enquetes;
 
+use App\Components\Questionnaire\Interfaces\QuestChoixInterface;
 use App\Entity\Etudiant;
 use App\Entity\QuestionnaireEtudiant;
 use App\Entity\QuestionnaireQualite;
@@ -49,10 +50,9 @@ class EnqueteRelance
         $this->eventDispatcher->dispatch($event, QualiteRelanceEvent::SEND_SYNTHESE);
     }
 
-    public function envoyerRelanceIndividuelle(QuestionnaireQualite $questionnaire, Etudiant $etudiant): void
+    public function envoyerRelanceIndividuelle(QuestChoixInterface $questionnaire): void
     {
         $event = new QualiteRelanceEvent($questionnaire);
-        $event->setEtudiant($etudiant);
         $this->eventDispatcher->dispatch($event, QualiteRelanceEvent::SEND_RELANCE);
     }
 }

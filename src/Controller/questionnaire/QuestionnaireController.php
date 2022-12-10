@@ -10,6 +10,7 @@
 namespace App\Controller\questionnaire;
 
 use App\Classes\Previsionnel\PrevisionnelManager;
+use App\Components\Questionnaire\QuestionnaireRegistry;
 use App\Components\Questionnaire\TypeQuestion\TypeEchelle;
 use App\Components\Questionnaire\TypeQuestion\TypeOuiNon;
 use App\Components\Questionnaire\TypeQuestion\TypeQcm;
@@ -21,6 +22,7 @@ use App\Entity\QuestionnaireQualite;
 use App\Entity\QuestionnaireQuestion;
 use App\Entity\QuestionnaireQuestionnaireSection;
 use App\Entity\QuestionnaireQuizz;
+use App\Entity\QuestQuestionnaire;
 use App\Repository\EtudiantRepository;
 use App\Repository\QuestionnaireEtudiantReponseRepository;
 use App\Repository\QuestionnaireEtudiantRepository;
@@ -31,6 +33,7 @@ use App\Repository\QuestionnaireReponseRepository;
 use App\Utils\JsonRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -42,8 +45,28 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class QuestionnaireController extends AbstractController
 {
-    public function __construct(private readonly QuestionnaireQualiteRepository $questionnaireQualiteRepository, private readonly QuestionnaireQuizzRepository $questionnaireQuizzRepository, private readonly EntityManagerInterface $entityManager)
-    {
+    public function __construct(
+        private readonly QuestionnaireQualiteRepository $questionnaireQualiteRepository,
+        private readonly QuestionnaireQuizzRepository $questionnaireQuizzRepository,
+        private readonly EntityManagerInterface $entityManager
+    ) {
+    }
+
+    #[Route('/enquete-qualite/{uuidQuestionnaire}/{uuid}', name: 'enquete_questionnaire_qualite_index')]
+    #[ParamConverter('questionnaire', options: ['mapping' => ['uuidQuestionnaire' => 'uuid']])]
+    public function afficheQuestionnaire(
+        QuestionnaireRegistry $questionnaireRegistry,
+        QuestQuestionnaire $questionnaire,
+        string $uuid
+    ): Response {
+        $typeDestinataire = $questionnaireRegistry->getTypeDestinataire($questionnaire->getTypeDestinataire());
+        $typeDestinataire->setQuestionnaire($questionnaire);
+        $user = $typeDestinataire->getChoixUser($uuid);
+
+        return $this->render('questionnaire/affiche_questionnaire.html.twig', [
+            'questionnaire' => $questionnaire,
+            'user' => $user
+        ]);
     }
 
     public function section(

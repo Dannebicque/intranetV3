@@ -23,7 +23,7 @@ class QuestionnaireQuestionTypeEchelle extends QuestionnaireQuestionType
             ->addEventListener(FormEvents::PRE_SET_DATA, static function(FormEvent $event) {
                 $question = $event->getData();
 
-                $config = $question->getConfiguration();
+                $config = $question->getParametre();
                 $form = $event->getForm();
                 $form->add('min', TextType::class,
                     [
@@ -50,11 +50,11 @@ class QuestionnaireQuestionTypeEchelle extends QuestionnaireQuestionType
             ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
                 $question = $event->getData();
                 $form = $event->getForm();
-                $t = $question->getConfiguration();
+                $t = $question->getParametre();
                 $t['min'] = $form->get('min')->getData();
                 $t['max'] = $form->get('max')->getData();
                 $t['pas'] = $form->get('pas')->getData();
-                $question->setConfiguration($t);
+                $question->setParametre($t);
             });
     }
 }

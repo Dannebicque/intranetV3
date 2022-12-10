@@ -66,13 +66,14 @@ class ConfigurableSection extends AbstractSection
 
     public function genereSections(): array
     {
+        //todo: ne pas créer de pagination si c'est le mode resultat qui est utilisé
         $valeursParSection = [];
         if (is_array($this->config) && array_key_exists('valeurs', $this->config) && is_array($this->config['valeurs'])) {
             $nbSections = ceil(count($this->config['valeurs']) / self::NB_QUESTIONS_PAR_SECTION);
             for ($i = 1; $i <= $nbSections; ++$i) {
                 $valeursParSection[$i] = array_slice($this->config['valeurs'], ($i - 1) * self::NB_QUESTIONS_PAR_SECTION, self::NB_QUESTIONS_PAR_SECTION);
-                $numSection = $this->section->ordre.'-'.$i;
-                $this->sections[$numSection] = new Section($this->questionnaireRegistry);
+                $numSection = $this->section->ordre . '-' . $i;
+                $this->sections[$numSection] = new Section($this->questionnaireRegistry, $this->graphRegistry);
                 $newSection = clone $this->section; // clonage pour gérer indépendement les sections ?
 
                 // Définir les éléments liés ) la configuration

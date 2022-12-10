@@ -6,12 +6,12 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-12 d-grid d-block mb-2">
-                    <a href="{{ path('administration_qualite_index') }}"
+                    <a href="{{ path('administration_qualite_index',{type:'administration'}) }}"
                        class="btn btn-primary"> {{ 'adm.gerer.questionnaire_qualite'|trans }}
                     </a>
                 </div>
                 <div class="col-12 d-grid d-block mb-2">
-                    <a href="{{ path('administration_qualite_index_creation') }}"
+                    <a href="{{ path('adm_questionnaire_creation_index',{type:'administration'}) }}"
                        class="btn btn-primary"> {{ 'adm.creer.questionnaire_qualite'|trans }}
                     </a>
                 </div>

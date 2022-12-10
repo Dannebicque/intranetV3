@@ -38,7 +38,7 @@ class TypeQuestionRenderer
             $params['questionsEnfants'] = $question->questions;
         }
 
-        $params['name'] = 'q'.$question->id;
+        $params['name'] = 'q' . $question->id;
         $params['id'] = $question->id;
         $params['visible'] = $this->isVisible($question->parametres);
         $params['reponses'] = $question->getReponses();
@@ -72,10 +72,8 @@ class TypeQuestionRenderer
 
     private function isVisible(array $parametres): bool
     {
-        foreach ($parametres as $param) {
-            if (array_key_exists('type', $param) && 'condition' === $param['type']) {
-                return false;
-            }
+        if (array_key_exists('type', $parametres) && 'condition' === $parametres['type']) {
+            return false;
         }
 
         return true;

@@ -1,155 +1,154 @@
-{% extends 'base-super_admin.html.twig' %}
+{# {% extends 'base-super_admin.html.twig' %} #}
 
-{% block header %}
-    {{ 'enquete.semestre.heading'|trans({'%semestre%':semestre.libelle}) }}
-{% endblock %}
+{# {% block header %} #}
+{#    {{ 'enquete.semestre.heading'|trans({'%semestre%':semestre.libelle}) }} #}
+{# {% endblock %} #}
 
-{% block headeractions %}
-    <div class="header-action">
-        <div class="buttons">
-            <a href="{{ path('adm_questionnaire_qualite_new', {semestre:semestre.id, type:'administratif'}) }}"
-               class="btn btn-info btn-sm btn-float"
-               title="{{ 'atitle.creer_nouveau'|trans }}"
-               data-bs-toggle="tooltip" data-bs-placement="bottom"
-            >
-                <i class="{{ iconAdd }}"></i>
-                <span class="sr-only">{{ 'atitle.creer_nouveau'|trans }}</span>
-            </a>
-            <a href="{{ path('administratif_enquete_etudiant_index') }}"
-               class="btn btn-primary btn-float"
-               title="{{ 'atitle.retour_enquete'|trans }}"
-               data-bs-toggle="tooltip" data-bs-placement="bottom"
-            >
-                <i class="fas fa-arrow-left"></i>
-                <span class="sr-only">{{ 'atitle.retour_enquete'|trans }}</span>
-            </a>
-        </div>
-    </div>
-{% endblock %}
+{# {% block headeractions %} #}
+{#    <div class="header-action"> #}
+{#        <div class="buttons"> #}
+{#            <a href="{{ path('adm_questionnaire_qualite_new', {semestre:semestre.id, type:'administratif'}) }}" #}
+{#               class="btn btn-info btn-sm btn-float" #}
+{#               title="{{ 'atitle.creer_nouveau'|trans }}" #}
+{#               data-bs-toggle="tooltip" data-bs-placement="bottom" #}
+{#            > #}
+{#                <i class="{{ iconAdd }}"></i> #}
+{#                <span class="sr-only">{{ 'atitle.creer_nouveau'|trans }}</span> #}
+{#            </a> #}
+{#            <a href="{{ path('administratif_enquete_etudiant_index') }}" #}
+{#               class="btn btn-primary btn-float" #}
+{#               title="{{ 'atitle.retour_enquete'|trans }}" #}
+{#               data-bs-toggle="tooltip" data-bs-placement="bottom" #}
+{#            > #}
+{#                <i class="fas fa-arrow-left"></i> #}
+{#                <span class="sr-only">{{ 'atitle.retour_enquete'|trans }}</span> #}
+{#            </a> #}
+{#        </div> #}
+{#    </div> #}
+{# {% endblock %} #}
 
-{% block content %}
-    <div class="card">
-        <h4 class="card-title">{{ 'enquete.semestre.heading'|trans({'%semestre%':semestre.libelle}) }}</h4>
-        <div class="card-body">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th>Libelle</th>
-                    <th>Période</th>
-                    <th>Nb Réponse</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for questionnaire in  semestre.qualiteQuestionnaires %}
-                    <tr id="ligne_{{ questionnaire.id }}">
-                        <td>{{ questionnaire.libelle }}</td>
-                        <td>du {{ questionnaire.dateOuverture|format_datetime('long', 'short') }} au {{ questionnaire
-                            .dateFermeture|format_datetime('long', 'short') }}</td>
-                        <td>{{ nbReponses[questionnaire.id].nbReponses }} / {{ semestre.etudiants|length }}</td>
-                        <td>
+{# {% block content %} #}
+{#    <div class="card"> #}
+{#        <h4 class="card-title">{{ 'enquete.semestre.heading'|trans({'%semestre%':semestre.libelle}) }}</h4> #}
+{#        <div class="card-body"> #}
+{#            <table class="table"> #}
+{#                <thead> #}
+{#                <tr> #}
+{#                    <th>Libelle</th> #}
+{#                    <th>Période</th> #}
+{#                    <th>Nb Réponse</th> #}
+{#                    <th>Actions</th> #}
+{#                </tr> #}
+{#                </thead> #}
+{#                <tbody> #}
+{#                {% for questionnaire in  questionnaires %} #}
+{#                    <tr id="ligne_{{ questionnaire.id }}"> #}
+{#                        <td>{{ questionnaire.libelle }}</td> #}
+{#                        <td>du {{ questionnaire.dateOuverture|format_datetime('long', 'short') }} au {{ questionnaire #}
+{#                            .dateFermeture|format_datetime('long', 'short') }}</td> #}
+{#                        <td>{{ nbReponses[questionnaire.id].nbReponses }} / {{ semestre.etudiants|length }}</td> #}
+{#                        <td> #}
 
-                            <a href="{{ path('administratif_enquete_duplicate', {questionnaire: questionnaire.id}) }}"
-                               class="btn btn-success btn-outline btn-square" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                               title="{{ 'atitle.dupliquer'|trans }}"><i class="{{ iconDuplicate }}"></i></a>
-                            <a href="{{ path('administratif_enquete_show', {questionnaireQualite: questionnaire.id}) }}"
-                               class="btn btn-info btn-outline btn-square" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                               title="{{ 'atitle.apercu'|trans }}"><i class="fas
-                               fa-eye"></i></a>
-                            <a href="{{ path('adm_questionnaire_qualite_edit', {id: questionnaire.id, type:type}) }}"
-                               target="_blank"
-                               class="btn btn-warning btn-outline btn-square" data-bs-toggle="tooltip" data-bs-placement="bottom"
+{#                            <a href="{{ path('administratif_enquete_duplicate', {questionnaire: questionnaire.id}) }}" #}
+{#                               class="btn btn-success btn-outline btn-square" data-bs-toggle="tooltip" data-bs-placement="bottom" #}
+{#                               title="{{ 'atitle.dupliquer'|trans }}"><i class="{{ iconDuplicate }}"></i></a> #}
+{#                            <a href="{{ path('administratif_enquete_show', {questionnaireQualite: questionnaire.id}) }}" #}
+{#                               class="btn btn-info btn-outline btn-square" data-bs-toggle="tooltip" data-bs-placement="bottom" #}
+{#                               title="{{ 'atitle.apercu'|trans }}"><i class="fas #}
+{#                               fa-eye"></i></a> #}
+{#                            <a href="{{ path('adm_questionnaire_qualite_edit', {id: questionnaire.id, type:type}) }}" #}
+{#                               target="_blank" #}
+{#                               class="btn btn-warning btn-outline btn-square" data-bs-toggle="tooltip" data-bs-placement="bottom" #}
 
-                               title="{{ 'atitle.modifier'|trans }}"><i class="{{ iconEdit }}"
-                                ></i></a>
-                            <a href="{{ path('adm_questionnaire_qualite_edit', {id: questionnaire.id, type:type}) }}"
-                                    {{ stimulus_controller('modal', {
-                                        size: 'lg',
-                                        form: true,
-                                        formAction: path('administratif_enquete_modal_config_submit', {id: questionnaire.id}),
-                                        modalTitle: 'Configuration du questionnaire qualité',
-                                        modalUrl:  path('administratif_enquete_modal_config', {id: questionnaire.id}) }) }}
-                               data-action="click->modal#openModal"
-                               class="btn btn-warning btn-outline btn-square" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                               title="{{ 'atitle.configurer'|trans }}"><i class="fas fa-wrench"
-                                ></i></a>
-                            <a href="{{ path('administratif_enquete_delete', {questionnaire: questionnaire.id}) }}" data-csrf="{{ csrf_token('delete' ~ questionnaire.id) }}"
-                               class="btn btn-danger btn-outline btn-square supprimer" data-id="id" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                               title="{{ 'atitle.supprimer'|trans }}">
-                                <i class="{{ iconDelete }}"></i>
-                            </a>
-                            <a href="{{ path('administratif_enquete_export', {questionnaire: questionnaire.id}) }}"
-                               class="btn btn-info btn-outline btn-square"
-                               data-bs-toggle="tooltip" data-bs-placement="bottom"
+{#                               title="{{ 'atitle.modifier'|trans }}"><i class="{{ iconEdit }}" #}
+{#                                ></i></a> #}
+{#                            <a href="{{ path('adm_questionnaire_qualite_edit', {id: questionnaire.id, type:type}) }}" #}
+{#                                    {{ stimulus_controller('modal', { #}
+{#                                        size: 'lg', #}
+{#                                        form: true, #}
+{#                                        formAction: path('administratif_enquete_modal_config_submit', {id: questionnaire.id}), #}
+{#                                        modalTitle: 'Configuration du questionnaire qualité', #}
+{#                                        modalUrl:  path('administratif_enquete_modal_config', {id: questionnaire.id}) }) }} #}
+{#                               data-action="click->modal#openModal" #}
+{#                               class="btn btn-warning btn-outline btn-square" data-bs-toggle="tooltip" data-bs-placement="bottom" #}
+{#                               title="{{ 'atitle.configurer'|trans }}"><i class="fas fa-wrench" #}
+{#                                ></i></a> #}
+{#                            <a href="{{ path('administratif_enquete_delete', {questionnaire: questionnaire.id}) }}" data-csrf="{{ csrf_token('delete' ~ questionnaire.id) }}" #}
+{#                               class="btn btn-danger btn-outline btn-square supprimer" data-id="id" data-bs-toggle="tooltip" data-bs-placement="bottom" #}
+{#                               title="{{ 'atitle.supprimer'|trans }}"> #}
+{#                                <i class="{{ iconDelete }}"></i> #}
+{#                            </a> #}
+{#                            <a href="{{ path('administratif_enquete_export', {questionnaire: questionnaire.id}) }}" #}
+{#                               class="btn btn-info btn-outline btn-square" #}
+{#                               data-bs-toggle="tooltip" data-bs-placement="bottom" #}
 
-                               title="{{ 'atitle.export'|trans }}"
-                            >
-                                <i class="fas fa-download"></i>
-                            </a>
-                            <a href="{{ path('administratif_enquete_delete', {questionnaire: questionnaire.id}) }}" data-csrf="{{ csrf_token('delete' ~ questionnaire.id) }}"
-                               class="btn btn-danger btn-outline btn-square vider" data-id="id" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                               title="{{ 'atitle.vider'|trans }}">
-                                <i class="fas fa-broom"></i>
-                            </a>
-                        </td>
-                    </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="4">
-                            Aucun questionnaire... En créer un ...
-                            <a href="{{ path('adm_questionnaire_qualite_new',
-                                {semestre:semestre.id, type:type}) }}" class="btn btn-primary">
-                                <i class="{{ iconAdd }}"></i>
-                                Créer un questionnaire
-                            </a>
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
+{#                               title="{{ 'atitle.export'|trans }}" #}
+{#                            > #}
+{#                                <i class="fas fa-download"></i> #}
+{#                            </a> #}
+{#                            <a href="{{ path('administratif_enquete_delete', {questionnaire: questionnaire.id}) }}" data-csrf="{{ csrf_token('delete' ~ questionnaire.id) }}" #}
+{#                               class="btn btn-danger btn-outline btn-square vider" data-id="id" data-bs-toggle="tooltip" data-bs-placement="bottom" #}
+{#                               title="{{ 'atitle.vider'|trans }}"> #}
+{#                                <i class="fas fa-broom"></i> #}
+{#                            </a> #}
+{#                        </td> #}
+{#                    </tr> #}
+{#                {% else %} #}
+{#                    <tr> #}
+{#                        <td colspan="4"> #}
+{#                            Aucun questionnaire... En créer un ... #}
+{#                            <a href="{{ path('adm_questionnaire_creation_index',{type:type, semestre:semestre.id}) }}" #}
+{#                               class="btn btn-primary"> #}
+{#                                <i class="{{ iconAdd }}"></i> #}
+{#                                Créer un questionnaire #}
+{#                            </a> #}
+{#                        </td> #}
+{#                    </tr> #}
+{#                {% endfor %} #}
+{#                </tbody> #}
+{#            </table> #}
+{#        </div> #}
+{#    </div> #}
 
-    <div class="card">
-        <h4 class="card-title">{{ 'detail.enquete.semestre.heading'|trans({'%semestre%':semestre.libelle}) }}</h4>
-        <div class="card-body">
-            <ul class="nav nav-tabs">
-                {% for questionnaire in  semestre.qualiteQuestionnaires %}
-                    <li class="nav-item">
-                        <a class="nav-link {% if loop.first %} active{% endif %}" data-bs-toggle="tab"
-                           href="#questionnaire{{ questionnaire.id }}">{{ questionnaire.libelle }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-            <div class="tab-content">
-                {% for questionnaire in  semestre.qualiteQuestionnaires %}
-                    <div class="tab-pane {% if loop.first %}fade active show{% endif %}"
-                         id="questionnaire{{ questionnaire.id }}">
-                        {{ include('questionnaire/commun/_tableauReponses.html.twig') }}
-                    </div>
-                {% else %}
+{#    <div class="card"> #}
+{#        <h4 class="card-title">{{ 'detail.enquete.semestre.heading'|trans({'%semestre%':semestre.libelle}) }}</h4> #}
+{#        <div class="card-body"> #}
+{#            <ul class="nav nav-tabs"> #}
+{#                {% for questionnaire in  semestre.qualiteQuestionnaires %} #}
+{#                    <li class="nav-item"> #}
+{#                        <a class="nav-link {% if loop.first %} active{% endif %}" data-bs-toggle="tab" #}
+{#                           href="#questionnaire{{ questionnaire.id }}">{{ questionnaire.libelle }}</a> #}
+{#                    </li> #}
+{#                {% endfor %} #}
+{#            </ul> #}
+{#            <div class="tab-content"> #}
+{#                {% for questionnaire in  questionnaires %} #}
+{#                    <div class="tab-pane {% if loop.first %}fade active show{% endif %}" #}
+{#                         id="questionnaire{{ questionnaire.id }}"> #}
+{#                        {{ include('questionnaire/commun/_tableauReponses.html.twig') }} #}
+{#                    </div> #}
+{#                {% else %} #}
 
-                    Aucun questionnaire... En créer un ...
-                    <a href="{{ path('adm_questionnaire_qualite_new',
-                        {semestre:semestre.id, type:type}) }}" class="btn btn-primary">
-                        <i class="{{ iconAdd }}"></i>
-                        Créer un questionnaire
-                    </a>
+{#                    Aucun questionnaire... En créer un ... #}
+{#                    <a href="{{ path('adm_questionnaire_creation_index',{type:type, semestre:semestre.id}) }}" class="btn btn-primary"> #}
+{#                        <i class="{{ iconAdd }}"></i> #}
+{#                        Créer un questionnaire #}
+{#                    </a> #}
 
-                {% endfor %}
-            </div>
-        </div>
-    </div>
-{% endblock %}
+{#                {% endfor %} #}
+{#            </div> #}
+{#        </div> #}
+{#    </div> #}
+{# {% endblock %} #}
 
 
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('sadm.enquete') }}
-{% endblock %}
+{# {% block stylesheets %} #}
+{#    {{ parent() }} #}
+{#    {{ encore_entry_link_tags('sadm.enquete') }} #}
+{# {% endblock %} #}
 
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('sadm.enquete') }}
-    {{ encore_entry_script_tags('adm.qualite') }}
-{% endblock %}
+{# {% block javascripts %} #}
+{#    {{ parent() }} #}
+{#    {{ encore_entry_script_tags('sadm.enquete') }} #}
+{#    {{ encore_entry_script_tags('adm.qualite') }} #}
+{# {% endblock %} #}

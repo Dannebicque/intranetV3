@@ -1,0 +1,6 @@
+<div {{ stimulus_target('questionnaire--creation', 'progressBar') }}>
+    {{ include('questionnaire/creation/nav_creation.html.twig') }}
+</div>
+<div>
+    {{ include('questionnaire/creation/step/_'~step~'.html.twig') }}
+</div>

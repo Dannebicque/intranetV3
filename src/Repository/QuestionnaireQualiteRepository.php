@@ -19,6 +19,7 @@ use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
+ * @deprecated Use Quest...Repository à la place
  * @method QuestionnaireQualite|null find($id, $lockMode = null, $lockVersion = null)
  * @method QuestionnaireQualite|null findOneBy(array $criteria, array $orderBy = null)
  * @method QuestionnaireQualite[]    findAll()

@@ -1,0 +1,14 @@
+<div class="row section-edit">
+    <div class="col-10">
+        {% form_theme form 'form/my-form-quest.html.twig' %}
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+        {{ form_end(form) }}
+    </div>
+    <div class="col-2 d-grid">
+        <button class="btn btn-primary d-block"
+                {{ stimulus_action('questionnaire--section', 'sauvegarde', 'click', {section: section.id}) }}
+        >Enregister
+        </button>
+    </div>
+</div>

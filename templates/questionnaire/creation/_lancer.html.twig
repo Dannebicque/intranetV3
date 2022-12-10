@@ -1,0 +1,44 @@
+<div {{ stimulus_controller('questionnaire--lancer', {
+    url: path('adm_questionnaire_creation_sauvegarde_lancer', {type:type, questionnaire: questionnaire.id }),
+    urlRedirect: path('adm_questionnaire_qualite_detail', {type:type, id: questionnaire.id }),
+}) }}
+<h1>Lancement du questionnaire</h1>
+
+<h2>Configuration</h2>
+Questionnaire actif du <strong>{{ questionnaire.dateOuverture|format_datetime('short', 'short') }}</strong> au
+<strong>{{ questionnaire.dateFermeture|format_datetime('short', 'short') }}</strong>
+
+
+<h2>Choix des destinataires</h2>
+{# todo: si exterieur formulaire d'ajout dynamique #}
+{% if typeDestinataire == 'etudiant' or typeDestinataire == 'personnel' %}
+    <ul class="row">
+        {% for elt in liste %}
+            <li class="col-4">
+                <input type="checkbox" id="dest_{{ elt.id }}" name="destinataires[]" value="{{ elt.id }}" class="element"/>
+                <label for="dest_{{ elt.id }}">{{ elt.display }}</label>
+            </li>
+        {% endfor %}
+    </ul>
+    <a href="#" {{ stimulus_action('questionnaire--lancer', 'selectAll', 'click') }}>Tout selectionner</a> |
+    <a href="#" {{ stimulus_action('questionnaire--lancer', 'unselectAll', 'click') }}>Tout déselectionner</a>
+{% elseif typeDestinataire == 'exterieur' %}
+{% endif %}
+<div class="row mt-2">
+    <div class="col-6 d-grid">
+        <button class="btn btn-danger-outline d-block"
+                {{ stimulus_action('questionnaire--lancer', 'saveAndClose', 'click') }}
+        >Sauvegarder et fermer
+        </button>
+    </div>
+    <div class="col-6 d-grid">
+        <button class="btn btn-success-outline d-block"
+                {{ stimulus_action('questionnaire--lancer', 'sendAndClose', 'click') }}
+        >Enregistrer et envoyer
+        </button>
+    </div>
+</div>
+{# Si Etudiant #}
+{# => Liste des étudiants avec cases pré-cochées #}
+{# => Si Permanent => Collégues du département pré-coché, possibilité d'en ajouter #}
+{# => Si extérieur ajout (nom, prénom, mail) #}

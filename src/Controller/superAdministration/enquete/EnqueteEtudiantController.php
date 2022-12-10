@@ -17,21 +17,22 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/administratif/enquete/etudiant', name: 'administratif_enquete_etudiant_')]
+/** @deprecated */
 class EnqueteEtudiantController extends BaseController
 {
-    #[Route('/voir-editer/{questionnaire}', name: 'voir_modifier')]
-    public function voirEditerQuestionnaireEtudiant(
-        QuestionnaireEtudiant $questionnaire
-    ): Response {
-        return $this->render('super-administration/enquete/voir_editer.html.twig', [
-            'questionnaireEtudiant' => $questionnaire,
-            'etudiant' => $questionnaire->getEtudiant(),
-            'questionnaireSections' => $questionnaire->getQuestionnaireQualite()->getSections(),
-            'questionnaire' => $questionnaire->getQuestionnaireQualite(),
-            'typeQuestionnaire' => 'qualite',
-            'semestre' => $questionnaire->getEtudiant()->getSemestre(),
-        ]);
-    }
+//    #[Route('/voir-editer/{questionnaire}', name: 'voir_modifier')]
+//    public function voirEditerQuestionnaireEtudiant(
+//        QuestionnaireEtudiant $questionnaire
+//    ): Response {
+//        return $this->render('super-administration/enquete/voir_editer.html.twig', [
+//            'questionnaireEtudiant' => $questionnaire,
+//            'etudiant' => $questionnaire->getEtudiant(),
+//            'questionnaireSections' => $questionnaire->getQuestionnaireQualite()->getSections(),
+//            'questionnaire' => $questionnaire->getQuestionnaireQualite(),
+//            'typeQuestionnaire' => 'qualite',
+//            'semestre' => $questionnaire->getEtudiant()->getSemestre(),
+//        ]);
+//    }
 
     #[Route('/deverouiller/{questionnaire}', name: 'deverouiller', options: ['expose' => true])]
     public function deverouillerQuestionnaireEtudiant(
