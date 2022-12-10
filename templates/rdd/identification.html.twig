@@ -23,12 +23,12 @@
             <div class="col-sm-12">
                 <div class="card">
                     <div class="card-body">
-                        {# <div class="alert alert-warning"> #}
-                        {# Le formulaire est clôtué depuis le 7 décembre. Les diplômes vont être envoyés #}
-                        {# prochainement. Pour toutes questions, vous pouvez contacter la scolarité de l'IUT de Troyes #}
-                        {# : <a href="mailto:scolarite.iut-troyes@univ-reims.fr" target="_blank">Par email</a> ou 03 25 #}
-                        {# 42 46 46. #}
-                        {# </div> #}
+                        <div class="alert alert-warning">
+                            Le formulaire est clôtué depuis le 8 décembre. Les diplômes vont être envoyés
+                            prochainement. Pour toutes questions, vous pouvez contacter la scolarité de l'IUT de Troyes
+                            : <a href="mailto:scolarite.iut-troyes@univ-reims.fr" target="_blank">Par email</a> ou 03 25
+                            42 46 46.
+                        </div>
                         <br>
 {#                        <p>Chers étudiants,</p>#}
 
@@ -44,7 +44,7 @@
 {#                           Si vous n’avez pas pu répondre au formulaire, vous pouvez encore y répondre pour que votre diplôme vous soit envoyé en janvier.#}
 
 {#                           Pour cela, merci d’y répondre avant le 6/01/2022 au plus tard.#}
-{#                        </p>#}
+                        {#                        </p> #}
 
                         <p>Bonne continuation !</p>
 
@@ -54,80 +54,80 @@
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h2>Veuillez vous identifier pour accéder au formulaire</h2>
-                    </div>
-                    <div class="card-body">
-                        {% if erreur is defined and erreur == true %}
-                            <div class="alert alert-danger">
-                                Nous n'avons pas pu vous identifier. Vérifier le formulaire et les informations saisies.
-                                En
-                                cas
-                                de difficulté, vous pouvez contacter la scolarité de l'IUT de Troyes : <a
-                                        href="mailto:scolarite.iut-troyes@univ-reims.fr" target="_blank">
-                                    Par email</a> ou 03 25 42 46 04.
-                            </div>
-                            <br>
-                        {% endif %}
-                        <form action="{{ path('rdd_identification') }}" method="POST" class="form-horizontal
-         form-bordered form-horizontal">
-                            <div class="form-group">
-                                <label for="login" class="form-label col-sm-2 required ">
-                                    Login URCA ou mail étudiant ou numéro étudiant <span class="required" title="Ce champ est
-         obligatoire">*</span>:
-                                </label>
-                                <div class="col-sm-10">
-                                    <input type="text" id="login" name="login" required="required" class="form-control form-control">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="datedn" class="form-label col-sm-2 required ">
-                                    Date de naissance <span class="required" title="Ce champ est obligatoire">*</span>:
-                                </label>
-                                <div class="col-sm-10">
-                                    <div class="row">
-                                        <div class="col-sm-12 col-md-3">
-                                            <select id="jour" name="jour" class="form-select">
-                                                {% for i in 0..31 %}
-                                                    <option value="{{ i }}">{{ i }}</option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-12 col-md-6">
-                                            <select id="mois" name="mois" class="form-select">
-                                                <option value="0">Choisir</option>
-                                                <option value="01">Janvier</option>
-                                                <option value="02">Février</option>
-                                                <option value="03">Mars</option>
-                                                <option value="04">Avril</option>
-                                                <option value="05">Mai</option>
-                                                <option value="06">Juin</option>
-                                                <option value="07">Juillet</option>
-                                                <option value="08">Août</option>
-                                                <option value="09">Sepembre</option>
-                                                <option value="10">Octobre</option>
-                                                <option value="11">Novembre</option>
-                                                <option value="12">Décembre</option>
-                                            </select>
-                                        </div>
-                                        <div class="col-sm-12 col-md-3">
-                                            <select id="annee" name="annee" class="form-select">
-                                                {% for i in 1960..2004 %}
-                                                    <option value="{{ i }}">{{ i }}</option>
-                                                {% endfor %}
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <input type="submit" value="Accéder à l'inscription" class="btn btn-block btn-success">
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+        {#        <div class="row"> #}
+        {#            <div class="col-sm-12"> #}
+        {#                <div class="card"> #}
+        {#                    <div class="card-header"> #}
+        {#                        <h2>Veuillez vous identifier pour accéder au formulaire</h2> #}
+        {#                    </div> #}
+        {#                    <div class="card-body"> #}
+        {#                        {% if erreur is defined and erreur == true %} #}
+        {#                            <div class="alert alert-danger"> #}
+        {#                                Nous n'avons pas pu vous identifier. Vérifier le formulaire et les informations saisies. #}
+        {#                                En #}
+        {#                                cas #}
+        {#                                de difficulté, vous pouvez contacter la scolarité de l'IUT de Troyes : <a #}
+        {#                                        href="mailto:scolarite.iut-troyes@univ-reims.fr" target="_blank"> #}
+        {#                                    Par email</a> ou 03 25 42 46 04. #}
+        {#                            </div> #}
+        {#                            <br> #}
+        {#                        {% endif %} #}
+        {#                        <form action="{{ path('rdd_identification') }}" method="POST" class="form-horizontal #}
+        {#         form-bordered form-horizontal"> #}
+        {#                            <div class="form-group"> #}
+        {#                                <label for="login" class="form-label col-sm-2 required "> #}
+        {#                                    Login URCA ou mail étudiant ou numéro étudiant <span class="required" title="Ce champ est #}
+        {#         obligatoire">*</span>: #}
+        {#                                </label> #}
+        {#                                <div class="col-sm-10"> #}
+        {#                                    <input type="text" id="login" name="login" required="required" class="form-control form-control"> #}
+        {#                                </div> #}
+        {#                            </div> #}
+        {#                            <div class="form-group"> #}
+        {#                                <label for="datedn" class="form-label col-sm-2 required "> #}
+        {#                                    Date de naissance <span class="required" title="Ce champ est obligatoire">*</span>: #}
+        {#                                </label> #}
+        {#                                <div class="col-sm-10"> #}
+        {#                                    <div class="row"> #}
+        {#                                        <div class="col-sm-12 col-md-3"> #}
+        {#                                            <select id="jour" name="jour" class="form-select"> #}
+        {#                                                {% for i in 0..31 %} #}
+        {#                                                    <option value="{{ i }}">{{ i }}</option> #}
+        {#                                                {% endfor %} #}
+        {#                                            </select> #}
+        {#                                        </div> #}
+        {#                                        <div class="col-sm-12 col-md-6"> #}
+        {#                                            <select id="mois" name="mois" class="form-select"> #}
+        {#                                                <option value="0">Choisir</option> #}
+        {#                                                <option value="01">Janvier</option> #}
+        {#                                                <option value="02">Février</option> #}
+        {#                                                <option value="03">Mars</option> #}
+        {#                                                <option value="04">Avril</option> #}
+        {#                                                <option value="05">Mai</option> #}
+        {#                                                <option value="06">Juin</option> #}
+        {#                                                <option value="07">Juillet</option> #}
+        {#                                                <option value="08">Août</option> #}
+        {#                                                <option value="09">Sepembre</option> #}
+        {#                                                <option value="10">Octobre</option> #}
+        {#                                                <option value="11">Novembre</option> #}
+        {#                                                <option value="12">Décembre</option> #}
+        {#                                            </select> #}
+        {#                                        </div> #}
+        {#                                        <div class="col-sm-12 col-md-3"> #}
+        {#                                            <select id="annee" name="annee" class="form-select"> #}
+        {#                                                {% for i in 1960..2004 %} #}
+        {#                                                    <option value="{{ i }}">{{ i }}</option> #}
+        {#                                                {% endfor %} #}
+        {#                                            </select> #}
+        {#                                        </div> #}
+        {#                                    </div> #}
+        {#                                </div> #}
+        {#                            </div> #}
+        {#                            <input type="submit" value="Accéder à l'inscription" class="btn btn-block btn-success"> #}
+        {#                        </form> #}
+        {#                    </div> #}
+        {#                </div> #}
+        {#            </div> #}
+        {#        </div> #}
     </div>
 {% endblock %}
