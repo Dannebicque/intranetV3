@@ -1,5 +1,31 @@
 framework:
   workflows:
+    conpere:
+      type: 'workflow'
+      audit_trail:
+        enabled: "%kernel.debug%"
+      marking_store:
+        type: 'method'
+        property: 'etat_process'
+      supports:
+        - App\Entity\BCDemande
+      initial_marking: demande_initiale
+      places:
+        - demande_initiale
+        - validation_departement
+        - signature_etudiant
+        - signature_departement
+        - cloture
+      transitions:
+        creation_demande_initiale:
+          from: demande_initiale
+          to: validation_departement
+        valide_departement:
+          from: validation_departement
+          to: [ signature_departement, signature_etudiant ]
+        cloture_conpere:
+          from: [ signature_departement, signature_etudiant ]
+          to: cloture
     bon_commande:
       type: 'state_machine'
       audit_trail:

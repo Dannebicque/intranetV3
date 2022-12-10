@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/11/2022 08:54
+// @lastUpdate 08/12/2022 19:33
 import '@fortawesome/fontawesome-pro/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-pro/scss/brands.scss'
 import '@fortawesome/fontawesome-pro/scss/solid.scss'
@@ -11,13 +11,12 @@ import PerfectScrollbar from 'perfect-scrollbar'
 import * as bootstrap from 'bootstrap'
 import InPlaceEdit from './inPlaceEdit'
 import flatpickr from 'flatpickr'
+import { French } from 'flatpickr/dist/l10n/fr'
 import Routing from 'fos-router'
 
 import { addCallout, getParentByTagName } from './util'
 
 import '../css/app.scss'
-
-import 'flatpickr/dist/l10n/fr.js'
 
 import SelectComplete from '../components/SelectComplete'
 import SelectChangeWidget from '../components/SelectChangeWidget'
@@ -155,6 +154,7 @@ function updateInterface() {
 
   if (document.querySelectorAll('.flatdatepicker').length > 0) {
     document.querySelectorAll('.flatdatepicker').forEach((elem) => {
+      console.log(elem)
       let options
       if (elem.dataset.options) {
         options = JSON.parse(elem.dataset.options)
@@ -162,7 +162,9 @@ function updateInterface() {
         options = []
         options.dateFormat = 'd/m/Y'
       }
-      options.locale = da.LANG
+      options.locale = French
+      options.dateFormat = 'd/m/Y'
+      console.log(options)
       flatpickr(elem, options)
     })
   }
@@ -170,7 +172,7 @@ function updateInterface() {
   if (document.getElementsByClassName('datepicker-range').length > 0) {
     $('.datepicker-range').flatpickr({
       mode: 'range',
-      locale: da.LANG,
+      locale: French,
       dateFormat: 'd/m/Y',
     })
   }

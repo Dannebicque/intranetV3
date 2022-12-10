@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/apc.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/07/2022 13:30
+// @lastUpdate 18/11/2022 08:54
 import $ from 'jquery'
 import '../../vendor/jquery.collection'
 import Routing from 'fos-router'
@@ -25,17 +25,17 @@ $(document).on('change', 'input:checkbox[name="apc_sae[competences][]"]', (e) =>
   updateSaeApprentisagesCritiques()
 })
 
-$(document).on('change', 'input:radio[name="apc_ressource[semestre]"]', function (e) {
-  semestre = $(this).val()
-  semestreRessource = true
-  updateRessourcesApprentisagesCritiques()
-  updateRessourceSae()
-})
+// $(document).on('change', 'input:radio[name="apc_ressource[semestre]"]', function (e) {
+//   semestre = $(this).val()
+//   semestreRessource = true
+//   updateRessourcesApprentisagesCritiques()
+//   updateRessourceSae()
+// })
 
-$(document).on('change', 'input:checkbox[name="apc_ressource[competences][]"]', (e) => {
-  competenceRessource = $('input:checkbox[name="apc_ressource[competences][]"]:checked').length > 0
-  updateRessourcesApprentisagesCritiques()
-})
+// $(document).on('change', 'input:checkbox[name="apc_ressource[competences][]"]', (e) => {
+//   competenceRessource = $('input:checkbox[name="apc_ressource[competences][]"]:checked').length > 0
+//   updateRessourcesApprentisagesCritiques()
+// })
 
 function updateSaeRessources() {
   if (semestreSae === true) {
@@ -111,78 +111,78 @@ function updateSaeApprentisagesCritiques() {
   }
 }
 
-function updateRessourceSae() {
-  if (semestreRessource === true) {
-    $.ajax({
-      url: Routing.generate('administration_apc_sae_ajax'),
-      type: 'POST',
-      dataType: 'json',
-      data: {
-        semestre,
-        ressource,
-      },
-      success(data) {
-        let html = '<div class="row">'
-        if (data !== false) {
-          for (const ressource in data) {
-            html = `${html}<div class="col-md-6">`
-              + '<div class="form-check">'
-              + `<input type="checkbox" id="sae_${data[ressource].id}" name="saes[]" class="form-check-input" value="${data[ressource].id}" ${data[ressource].checked}>\n`
-              + `<label class="form-check-label" for="sae_${data[ressource].id}">${data[ressource].code} : ${data[ressource].libelle}</label></div>`
-              + '</div>'
-          }
-          html += '</div>'
-        }
-        $('#saeRessource').html(html)
-      },
-    })
-  } else {
-    const html = '<div class="alert alert-warning">Indiquer un semestre</div>'
-    $('#saeRessource').html(html)
-  }
-}
+// function updateRessourceSae() {
+//   if (semestreRessource === true) {
+//     $.ajax({
+//       url: Routing.generate('administration_apc_sae_ajax'),
+//       type: 'POST',
+//       dataType: 'json',
+//       data: {
+//         semestre,
+//         ressource,
+//       },
+//       success(data) {
+//         let html = '<div class="row">'
+//         if (data !== false) {
+//           for (const ressource in data) {
+//             html = `${html}<div class="col-md-6">`
+//               + '<div class="form-check">'
+//               + `<input type="checkbox" id="sae_${data[ressource].id}" name="saes[]" class="form-check-input" value="${data[ressource].id}" ${data[ressource].checked}>\n`
+//               + `<label class="form-check-label" for="sae_${data[ressource].id}">${data[ressource].code} : ${data[ressource].libelle}</label></div>`
+//               + '</div>'
+//           }
+//           html += '</div>'
+//         }
+//         $('#saeRessource').html(html)
+//       },
+//     })
+//   } else {
+//     const html = '<div class="alert alert-warning">Indiquer un semestre</div>'
+//     $('#saeRessource').html(html)
+//   }
+// }
 
-function updateRessourcesApprentisagesCritiques() {
-  if (competenceRessource === true && semestreRessource === true) {
-    const comps = []
-    $.each($('input:checkbox[name="apc_ressource[competences][]"]:checked'), function () {
-      comps.push($(this).val())
-    })
-
-    $.ajax({
-      url: Routing.generate('administration_apc_ressources_ajax_ac'),
-      type: 'POST',
-      dataType: 'json',
-      data: {
-        semestre,
-        competences: comps,
-        ressource,
-      },
-      success(data) {
-        let html = ''
-        if (data !== false) {
-          for (const comp in data) {
-            html = `${html}<p>${comp}</p><div class="row">`
-            for (const ac in data[comp]) {
-              html = `${html}<div class="col-md-6">`
-                + '<div class="form-check">'
-                + `<input type="checkbox" id="ac_${data[comp][ac].id}" name="ac[]" class="form-check-input" value="${data[comp][ac].id}" ${data[comp][ac].checked}>\n`
-                + `<label class="form-check-label" for="ac_${data[comp][ac].id}">${data[comp][ac].code} : ${data[comp][ac].libelle}</label></div>`
-                + '</div>'
-            }
-            html += '</div>'
-          }
-        } else {
-          html = '<div class="alert alert-warning">Indiquer un semestre et au moins une compétence</div>'
-        }
-        $('#acRessources').html(html)
-      },
-    })
-  } else {
-    const html = '<div class="alert alert-warning">Indiquer un semestre et au moins une compétence</div>'
-    $('#acRessources').html(html)
-  }
-}
+// function updateRessourcesApprentisagesCritiques() {
+//   if (competenceRessource === true && semestreRessource === true) {
+//     const comps = []
+//     $.each($('input:checkbox[name="apc_ressource[competences][]"]:checked'), function () {
+//       comps.push($(this).val())
+//     })
+//
+//     $.ajax({
+//       url: Routing.generate('administration_apc_ressources_ajax_ac'),
+//       type: 'POST',
+//       dataType: 'json',
+//       data: {
+//         semestre,
+//         competences: comps,
+//         ressource,
+//       },
+//       success(data) {
+//         let html = ''
+//         if (data !== false) {
+//           for (const comp in data) {
+//             html = `${html}<p>${comp}</p><div class="row">`
+//             for (const ac in data[comp]) {
+//               html = `${html}<div class="col-md-6">`
+//                 + '<div class="form-check">'
+//                 + `<input type="checkbox" id="ac_${data[comp][ac].id}" name="ac[]" class="form-check-input" value="${data[comp][ac].id}" ${data[comp][ac].checked}>\n`
+//                 + `<label class="form-check-label" for="ac_${data[comp][ac].id}">${data[comp][ac].code} : ${data[comp][ac].libelle}</label></div>`
+//                 + '</div>'
+//             }
+//             html += '</div>'
+//           }
+//          } else {
+//           html = '<div class="alert alert-warning">Indiquer un semestre et au moins une compétence</div>'
+//         }
+//         $('#acRessources').html(html)
+//       },
+//     })
+//   } else {
+//     const html = '<div class="alert alert-warning">Indiquer un semestre et au moins une compétence</div>'
+//     $('#acRessources').html(html)
+//   }
+// }
 
 $(document).ready(() => {
   semestreSae = true // $('input:radio[name="apc_sae[semestre]"]:checked').length() === 1

@@ -23,15 +23,20 @@
                    href="{{ path('application_personnel_salle_examen_index') }}" role="tab">{{ 'menu.salle_examen'|trans }}</a>
             </li>
 
-{#            <li class="nav-item">#}
-{#                <a class="nav-link changeapplication {% if onglet == 'carnet' %}active{% endif %}"#}
-{#                   href="{{ path('application_personnel_carnet_index') }}" role="tab">{{ 'menu.carnet'|trans }}</a>#}
-{#            </li>#}
+            <li class="nav-item">
+                <a class="nav-link changeapplication {% if onglet == 'plan_cours' %}active{% endif %}"
+                   href="{{ path('application_personnel_plan_cours_index') }}" role="tab">{{ 'menu.plan_cours'|trans }}</a>
+            </li>
 
-{#            <li class="nav-item">#}
-{#                <a class="nav-link changeapplication {% if onglet == 'quizz' %}active{% endif %}"#}
-{#                   href="{{ path('application_personnel_quizz_index') }}" role="tab">{{ 'menu.quizz'|trans }}</a>#}
-{#            </li>#}
+            {#            <li class="nav-item"> #}
+            {#                <a class="nav-link changeapplication {% if onglet == 'carnet' %}active{% endif %}" #}
+            {#                   href="{{ path('application_personnel_carnet_index') }}" role="tab">{{ 'menu.carnet'|trans }}</a> #}
+            {#            </li> #}
+
+            {#            <li class="nav-item"> #}
+            {#                <a class="nav-link changeapplication {% if onglet == 'quizz' %}active{% endif %}" #}
+            {#                   href="{{ path('application_personnel_quizz_index') }}" role="tab">{{ 'menu.quizz'|trans }}</a> #}
+            {#            </li> #}
         {% else %}
             <li class="nav-item ">
                 <a class="nav-link changeapplication {% if onglet == 'messagerie' %}active{% endif %}"
@@ -50,13 +55,7 @@
                        role="tab">{{ 'menu.alternance'|trans }}</a>
                 </li>
             {% endif %}
-            {% if user_data.user.diplome.optCertifieQualite == true %}
-                <li class="nav-item ">
-                    <a class="nav-link changeapplication {% if onglet == 'qualite' %}active{% endif %}"
-                       href="{{ path('application_etudiant_qualite_index') }}"
-                       role="tab">{{ 'menu.qualite'|trans }}</a>
-                </li>
-            {% endif %}
+
             {% if user_data.departement.optStage == true %}
                 <li class="nav-item ">
                     <a class="nav-link changeapplication {% if onglet == 'stage' %}active{% endif %}"

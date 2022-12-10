@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/StageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/09/2022 11:30
+ * @lastUpdate 08/12/2022 16:02
  */
 
 namespace App\Controller\appEtudiant;
@@ -67,6 +67,7 @@ class StageController extends BaseController
 
     /**
      * @throws Exception
+     * @deprecated nouveau formulaire à utiliser
      */
     #[Route(path: '/formulaire/{stageEtudiant}', name: 'application_etudiant_stage_formulaire', methods: 'GET|POST')]
     #[ParamConverter('stageEtudiant', options: ['mapping' => ['stageEtudiant' => 'uuid']])]

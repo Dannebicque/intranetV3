@@ -103,11 +103,12 @@
         <br>
         <div class="row">
             <div class="col-sm-12">
-                <div class="schedule-individual" aria-labelledby="schedule-heading">
+                <div class="schedule-individual " aria-labelledby="schedule-heading">
                     {{ include('edt/_header_edt2.html.twig') }}
 
                     {% for ligne in 0..24 %}
-                        <h2 class="time-slot col-edt-hide" style="grid-row: time-{{ tabHeures[ligne][0] }};">{{ tabHeures[ligne][1] }}</h2>
+                        <h2 class="time-slot col-edt-heure col-edt-hide" style="grid-row: time-{{ tabHeures[ligne][0] }};
+                                ">{{ tabHeures[ligne][1] }}</h2>
                         {% for j in 1..5 %}
                             {% if edt.planning[j][ligne] is defined %}
                                 <div class="session {{ edt.planning[j][ligne].classCss }} {% if 'now'|date('N') != j %}col-edt-hide{% endif %}"

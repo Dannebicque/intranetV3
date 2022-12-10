@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/QualiteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:44
+ * @lastUpdate 10/12/2022 10:25
  */
 
 namespace App\Controller\appEtudiant;
@@ -29,6 +29,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * Class QualiteController.
+ * @deprecated Plus nécessaire
  */
 #[Route(path: '/application/etudiant/qualite')]
 class QualiteController extends BaseController
@@ -36,8 +37,8 @@ class QualiteController extends BaseController
     #[Route(path: '/', name: 'application_etudiant_qualite_index')]
     public function index(QuestionnaireEtudiantRepository $questionnaireEtudiantRepository, QuestionnaireQualiteRepository $qualiteQuestionnaireRepository): Response
     {
-        if (null !== $this->dataUserSession->getUser()) {
-            $questionnaires = $qualiteQuestionnaireRepository->findByDiplome($this->dataUserSession->getUser()->getDiplome());
+        if (null !== $this->getUser()) {
+            $questionnaires = $qualiteQuestionnaireRepository->findByDiplome($this->getUser()->getDiplome());
 
             $reponsesEtudiant = $questionnaireEtudiantRepository->findByEtudiantArray($this->getUser());
 

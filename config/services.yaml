@@ -18,6 +18,7 @@ parameters:
   CAS_HOST: '%env(resolve:CAS_HOST)%'
   CAS_PORT: '%env(resolve:CAS_PORT)%'
   CAS_CONTEXT: '%env(resolve:CAS_CONTEXT)%'
+  CAS_CLIENT_SERVICE_NAME: '%env(resolve:CAS_CLIENT_SERVICE_NAME)%'
   iconShow: '%env(resolve:ICON_SHOW)%'
   iconRetour: '%env(resolve:ICON_RETOUR)%'
   iconEdit: '%env(resolve:ICON_EDIT)%'

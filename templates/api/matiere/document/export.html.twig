@@ -63,6 +63,20 @@
                 {{ 'mail.etudiant'|trans }}
             </label>
         </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="exportChamps[]"
+                   id="exportChamps_5" value="{{ constant('App\\Entity\\Constantes::CHAMPS_DATE_NAISSANCE') }}" checked>
+            <label class="form-check-label" for="exportChamps_5">
+                {{ 'ddn.etudiant'|trans }}
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" name="exportChamps[]"
+                   id="exportChamps_6" value="{{ constant('App\\Entity\\Constantes::CHAMPS_AGE') }}" checked>
+            <label class="form-check-label" for="exportChamps_6">
+                {{ 'age.etudiant'|trans }}
+            </label>
+        </div>
     </div>
 
     <div class="col-md-3">

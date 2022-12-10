@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Previsionnel/PrevisionnelExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 18/11/2022 08:54
  */
 
 namespace App\Classes\Previsionnel;
@@ -74,7 +74,7 @@ class PrevisionnelExport
             $colonne = 1;
             // CODE VET
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
-                $previ->annee_code_etape);
+                $previ->annee_code_etape);//todo: ajouter le code version
             ++$colonne;
             // LIBELLE VET
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne,

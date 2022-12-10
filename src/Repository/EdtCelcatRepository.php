@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtCelcatRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/09/2022 12:59
+ * @lastUpdate 10/12/2022 10:25
  */
 
 namespace App\Repository;
@@ -109,18 +109,29 @@ class EdtCelcatRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findEdtSemestre(Semestre $semestre, ?int $semaineFormationIUT, AnneeUniversitaire $anneeUniversitaire): array|int
+    public function findEdtSemestre(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): array|int
     {
-        return $this->createQueryBuilder('p')
-           // ->innerJoin(Matiere::class, 'm', 'WITH', 'p.codeModule = m.codeElement')
-           // ->innerJoin(Ue::class, 'u', 'WITH', 'u.id = m.ue')
-            ->where('p.semaineFormation = :semaine')
-            ->andWhere('p.semestre = :semestre')
-            ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
-            ->setParameters(['semaine' => $semaineFormationIUT, 'semestre' => $semestre->getId(), 'anneeUniversitaire' => $anneeUniversitaire->getId()])
+        $query = $this->createQueryBuilder('p')
+            ->innerJoin(Semestre::class, 's', 'WITH', 'p.semestre = s.id')
+            ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
+            ->andWhere('s.ordreLmd = :semestre')
+            ->andWhere('p.anneeUniversitaire = :annee')
+            ->setParameters([
+                'semestre' => $semestre->getOrdreLmd(),
+                'annee' => $anneeUniversitaire->getId(),
+            ])
             ->orderBy('p.jour', Criteria::ASC)
             ->addOrderBy('p.debut', Criteria::ASC)
-            ->addOrderBy('p.codeGroupe', Criteria::ASC)
+            ->addOrderBy('p.codeGroupe', Criteria::ASC);
+
+        $ors = [];
+        $diplome = null === $semestre->getDiplome()->getParent() ? $semestre->getDiplome() : $semestre->getDiplome()->getParent();
+        foreach ($diplome->getEnfants() as $dip) {
+            $ors[] = '(' . $query->expr()->orx('a.diplome = ' . $query->expr()->literal($dip->getId())) . ')';
+        }
+        $ors[] = '(' . $query->expr()->orx('a.diplome = ' . $query->expr()->literal($diplome->getId())) . ')';
+
+        return $query->andWhere(implode(' OR ', $ors))
             ->getQuery()
             ->getResult();
     }
@@ -139,9 +150,9 @@ class EdtCelcatRepository extends ServiceEntityRepository
         return $this->transformeArray($query);
     }
 
-    public function getByEtudiantArray(Etudiant $user, int $semaine): array|int
+    public function getByEtudiantArray(Etudiant $user, int $semaine, AnneeUniversitaire $anneeUniversitaire): array|int
     {
-        $query = $this->findEdtEtu($user, $semaine);
+        $query = $this->findEdtEtu($user, $semaine, $anneeUniversitaire);
 
         return $this->transformeArray($query);
     }

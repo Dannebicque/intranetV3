@@ -2,20 +2,21 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/structure-diplome_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/07/2022 16:21
+// @lastUpdate 18/11/2022 08:54
 
-import {Controller} from '@hotwired/stimulus'
+import { Controller } from '@hotwired/stimulus'
 import InPlaceEdit from '../js/inPlaceEdit'
 
 export default class extends Controller {
   static targets = ['content']
+
   static values = {
     urlDiplome: String,
   }
 
   connect() {
     let diplome = null
-    document.querySelectorAll('.changeDiplome').forEach(element => {
+    document.querySelectorAll('.changeDiplome').forEach((element) => {
       if (element.classList.contains('active')) {
         diplome = element.dataset.diplome
       }
@@ -28,19 +29,19 @@ export default class extends Controller {
     this._loadDiplome(event.target.dataset.diplome, event.target.value)
   }
 
-  changeDiplome (event) {
-    document.querySelectorAll('.changeDiplome').forEach(element => {
+  changeDiplome(event) {
+    document.querySelectorAll('.changeDiplome').forEach((element) => {
       element.classList.remove('active')
     })
     event.target.classList.add('active')
     this._loadDiplome(event.target.dataset.diplome)
   }
 
-  async _loadDiplome (diplomeId, ppn = null) {
+  async _loadDiplome(diplomeId, ppn = null) {
     this.contentTarget.innerHTML = window.da.loaderStimulus
     const params = new URLSearchParams({
       diplome: diplomeId,
-      ppn: ppn
+      ppn,
     })
     const response = await fetch(`${this.urlDiplomeValue}?${params.toString()}`)
     this.contentTarget.innerHTML = await response.text()
