@@ -1,4 +1,11 @@
 <?php
+/*
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/QuestQuestionnaire.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 10/12/2022 11:06
+ */
 
 namespace App\Entity;
 
@@ -59,7 +66,7 @@ class QuestQuestionnaire extends BaseEntity
     private ?string $typeDestinataire = null;
 
     #[ORM\Column]
-    private ?bool $envoye = null;
+    private ?bool $envoye = false;
 
 
     public function __construct()
