@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.10.1](https://github.com/Dannebicque/intranetV3/compare/v3.10.0...v3.10.1) (2022-12-10)
+
+
+### Bug Fixes
+
+* [Quest] Envoyé par défaut à faux ([8e719bc](https://github.com/Dannebicque/intranetV3/commit/8e719bc7b4d25b7f6159c2603d751e252c71df8f))
+* [RDD] clôture ([d306ebf](https://github.com/Dannebicque/intranetV3/commit/d306ebfce6de281a0eb59aad061d7a883ba934ac))
+* [RDD] Fermeture ([60ec4ba](https://github.com/Dannebicque/intranetV3/commit/60ec4ba68ebc1d33ff08b7056c044bc5b34553f7))
+* suppressions fichiers public ([d4c13f4](https://github.com/Dannebicque/intranetV3/commit/d4c13f42f012501ade02380b97989655ba0fdbd8))
+* Version PHPCas ([c4eb0f2](https://github.com/Dannebicque/intranetV3/commit/c4eb0f2973127b6e75a67457268009bc95c02d89))
+
 ## [3.10.0](https://github.com/Dannebicque/intranetV3/compare/v3.9.58...v3.10.0) (2022-12-10)
 
 
