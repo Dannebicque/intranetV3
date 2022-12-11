@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.10.2](https://github.com/Dannebicque/intranetV3/compare/v3.10.1...v3.10.2) (2022-12-11)
+
+
+### Bug Fixes
+
+* [Edt] Celcat ([7721fd3](https://github.com/Dannebicque/intranetV3/commit/7721fd3ca059e08ca6a75e83612cd9697a6c4376))
+* [Entreprise Type] Marqué comme deprécié avant usage du formtype de Cyndel ([55cf590](https://github.com/Dannebicque/intranetV3/commit/55cf5904036d490b8eca5eb2033d1657471f8dbf))
+* [Quest] Bug relation inversées. Corrigé ([b3558eb](https://github.com/Dannebicque/intranetV3/commit/b3558eb7884e49a7c9e672c7f78cc2e996f132d2))
+* [Stage] nav process + récapitulatif + soumission finale ([9ac3723](https://github.com/Dannebicque/intranetV3/commit/9ac37230cbbfefbc81c9729add5bee53960d9820))
+
 ### [3.10.1](https://github.com/Dannebicque/intranetV3/compare/v3.10.0...v3.10.1) (2022-12-10)
 
 
