@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/QuestQuestionnaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/12/2022 11:06
+ * @lastUpdate 11/12/2022 10:23
  */
 
 namespace App\Entity;
@@ -59,7 +59,7 @@ class QuestQuestionnaire extends BaseEntity
     #[ORM\OrderBy(['ordre' => 'ASC'])]
     private Collection $questSections;
 
-    #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'questQuestionnaires')]
+    #[ORM\ManyToOne(targetEntity: Semestre::class)]
     private ?Semestre $semestre;
 
     #[ORM\Column(length: 255, nullable: true)]
