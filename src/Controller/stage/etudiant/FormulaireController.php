@@ -4,15 +4,18 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/stage/etudiant/FormulaireController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/12/2022 17:24
+ * @lastUpdate 11/12/2022 09:57
  */
 
 // src/Controller/FormulaireController.php
 
 namespace App\Controller\stage\etudiant;
 
+use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\Contact;
 use App\Entity\StageEtudiant;
+use App\Event\StageEvent;
 use App\Form\stage\FormTypeEntreprise;
 use App\Form\stage\FormTypeStage;
 use App\Form\stage\FormTypeTuteur;
@@ -23,12 +26,12 @@ use App\Repository\ContactRepository;
 use App\Repository\StageEtudiantRepository;
 use Carbon\Carbon;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-class FormulaireController extends AbstractController
+class FormulaireController extends BaseController
 {
     // todo: ajouter les contraintes de validation + message d'erreur
 
@@ -40,11 +43,13 @@ class FormulaireController extends AbstractController
     #[ParamConverter('stageEtudiant', options: ['mapping' => ['stageEtudiant' => 'uuid']])]
     public function new_form_vous(
         StageEtudiantRepository $stageEtudiantRepository,
-        Request $request, StageEtudiant $stageEtudiant): Response
-    {
+        Request $request,
+        StageEtudiant $stageEtudiant
+    ): Response {
         $form = $this->createForm(FormTypeVosInformations::class, $stageEtudiant, [
             'csrf_protection' => false,
-            'action' => $this->generateUrl('app_stage_etudiant_formulaire', ['stageEtudiant' => $stageEtudiant->getUuidString()]),
+            'action' => $this->generateUrl('app_stage_etudiant_formulaire',
+                ['stageEtudiant' => $stageEtudiant->getUuidString()]),
         ]);
 
         $form->handleRequest($request);
@@ -52,7 +57,10 @@ class FormulaireController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $stageEtudiantRepository->save($stageEtudiant, true);
 
-            return $this->json(['route' => $this->generateUrl('app_formulaireEntreprise', ['stageEtudiant' => $stageEtudiant->getUuidString()])]);
+            return $this->json([
+                'route' => $this->generateUrl('app_formulaireEntreprise',
+                    ['stageEtudiant' => $stageEtudiant->getUuidString()]),
+            ]);
         }
         if ($form->isSubmitted() && !$form->isValid()) {
             $errors = [];
@@ -64,7 +72,8 @@ class FormulaireController extends AbstractController
             return $this->json($errors);
         }
 
-        return $this->render('stage/formulaire/index.html.twig', ['form_vous' => $form->createView(), 'step' => 1, 'stageEtudiant' => $stageEtudiant->getUuidString()]);
+        return $this->render('stage/formulaire/index.html.twig',
+            ['form_vous' => $form->createView(), 'step' => 1, 'stageEtudiant' => $stageEtudiant->getUuidString()]);
     }
 
     // -------------------------------------------2EME ETAPE-------------------------------------------------
@@ -73,11 +82,15 @@ class FormulaireController extends AbstractController
 
     #[Route('/formulaire/entreprise/{stageEtudiant}', name: 'app_formulaireEntreprise')]
     #[ParamConverter('stageEtudiant', options: ['mapping' => ['stageEtudiant' => 'uuid']])]
-    public function new_form_entreprise(Request $request, StageEtudiantRepository $stageEtudiantRepository, StageEtudiant $stageEtudiant): Response
-    {
+    public function new_form_entreprise(
+        Request $request,
+        StageEtudiantRepository $stageEtudiantRepository,
+        StageEtudiant $stageEtudiant
+    ): Response {
         $form2 = $this->createForm(FormTypeEntreprise::class, $stageEtudiant, [
             'csrf_protection' => false,
-            'action' => $this->generateUrl('app_formulaireEntreprise', ['stageEtudiant' => $stageEtudiant->getUuidString()]),
+            'action' => $this->generateUrl('app_formulaireEntreprise',
+                ['stageEtudiant' => $stageEtudiant->getUuidString()]),
         ]);
 
         $form2->handleRequest($request);
@@ -86,14 +99,21 @@ class FormulaireController extends AbstractController
                 $stageEtudiantRepository->save($stageEtudiant, true);
 
                 if ('form_type_entreprise_suivant' == $request->request->get('button')) {
-                    return $this->json(['route' => $this->generateUrl('app_formulaireResponsable', ['stageEtudiant' => $stageEtudiant->getUuidString()])]);
+                    return $this->json([
+                        'route' => $this->generateUrl('app_formulaireResponsable',
+                            ['stageEtudiant' => $stageEtudiant->getUuidString()]),
+                    ]);
                 } else {
-                    return $this->json(['route' => $this->generateUrl('app_stage_etudiant_formulaire', ['stageEtudiant' => $stageEtudiant->getUuidString()])]);
+                    return $this->json([
+                        'route' => $this->generateUrl('app_stage_etudiant_formulaire',
+                            ['stageEtudiant' => $stageEtudiant->getUuidString()]),
+                    ]);
                 }
             }
         }
 
-        return $this->renderForm('stage/formulaire/index.html.twig', ['form_entreprise' => $form2, 'step' => 2, 'stageEtudiant' => $stageEtudiant]);
+        return $this->renderForm('stage/formulaire/index.html.twig',
+            ['form_entreprise' => $form2, 'step' => 2, 'stageEtudiant' => $stageEtudiant]);
     }
 
     // -------------------------------------------3EME ETAPE-------------------------------------------------
@@ -102,8 +122,11 @@ class FormulaireController extends AbstractController
 
     #[Route('/formulaire/responsable/{stageEtudiant}', name: 'app_formulaireResponsable')]
     #[ParamConverter('stageEtudiant', options: ['mapping' => ['stageEtudiant' => 'uuid']])]
-    public function new_form_responsable(Request $request, StageEtudiantRepository $stageEtudiantRepository, StageEtudiant $stageEtudiant): Response
-    {
+    public function new_form_responsable(
+        Request $request,
+        StageEtudiantRepository $stageEtudiantRepository,
+        StageEtudiant $stageEtudiant
+    ): Response {
         if (null == $stageEtudiant->getEntreprise()->getResponsable()) {
             $responsable = new Contact();
             $stageEtudiant->getEntreprise()->setResponsable($responsable);
@@ -113,7 +136,8 @@ class FormulaireController extends AbstractController
 
         $form3 = $this->createForm(ResponsableType::class, $responsable, [
             'csrf_protection' => false,
-            'action' => $this->generateUrl('app_formulaireResponsable', ['stageEtudiant' => $stageEtudiant->getUuidString()]),
+            'action' => $this->generateUrl('app_formulaireResponsable',
+                ['stageEtudiant' => $stageEtudiant->getUuidString()]),
         ]);
 
         $form3->handleRequest($request);
@@ -122,14 +146,21 @@ class FormulaireController extends AbstractController
                 $stageEtudiantRepository->save($stageEtudiant, true);
 
                 if ('responsable_suivant' === $request->request->get('button')) {
-                    return $this->json(['route' => $this->generateUrl('app_formulaireTuteur', ['stageEtudiant' => $stageEtudiant->getUuidString()])]);
+                    return $this->json([
+                        'route' => $this->generateUrl('app_formulaireTuteur',
+                            ['stageEtudiant' => $stageEtudiant->getUuidString()]),
+                    ]);
                 } else {
-                    return $this->json(['route' => $this->generateUrl('app_formulaireEntreprise', ['stageEtudiant' => $stageEtudiant->getUuidString()])]);
+                    return $this->json([
+                        'route' => $this->generateUrl('app_formulaireEntreprise',
+                            ['stageEtudiant' => $stageEtudiant->getUuidString()]),
+                    ]);
                 }
             }
         }
 
-        return $this->renderForm('stage/formulaire/index.html.twig', ['form_responsable' => $form3, 'step' => 3, 'stageEtudiant' => $stageEtudiant]);
+        return $this->renderForm('stage/formulaire/index.html.twig',
+            ['form_responsable' => $form3, 'step' => 3, 'stageEtudiant' => $stageEtudiant]);
     }
 
     // -------------------------------------------4EME ETAPE-------------------------------------------------
@@ -138,8 +169,12 @@ class FormulaireController extends AbstractController
 
     #[Route('/formulaire/tuteur/{stageEtudiant}', name: 'app_formulaireTuteur')]
     #[ParamConverter('stageEtudiant', options: ['mapping' => ['stageEtudiant' => 'uuid']])]
-    public function new_form_tuteur(Request $request, StageEtudiantRepository $stageEtudiantRepository, ContactRepository $contactRepository, StageEtudiant $stageEtudiant): Response
-    {
+    public function new_form_tuteur(
+        Request $request,
+        StageEtudiantRepository $stageEtudiantRepository,
+        ContactRepository $contactRepository,
+        StageEtudiant $stageEtudiant
+    ): Response {
         $form4 = $this->createForm(FormTypeTuteur::class, $stageEtudiant, [
             'csrf_protection' => false,
         ]);
@@ -150,9 +185,11 @@ class FormulaireController extends AbstractController
             if ($form4->get('suivant')->isClicked()) {
                 $stageEtudiantRepository->save($stageEtudiant, true);
 
-                return $this->redirectToRoute('app_formulaireAdresseStage', ['stageEtudiant' => $stageEtudiant->getUuidString()]);
+                return $this->redirectToRoute('app_formulaireAdresseStage',
+                    ['stageEtudiant' => $stageEtudiant->getUuidString()]);
             } elseif ($form4->get('retour')->isClicked()) {
-                return $this->redirectToRoute('app_formulaireResponsable', ['stageEtudiant' => $stageEtudiant->getUuidString()]);
+                return $this->redirectToRoute('app_formulaireResponsable',
+                    ['stageEtudiant' => $stageEtudiant->getUuidString()]);
             } elseif ($form4->get('recup_informations')->isClicked()) {
                 $stageEtudiant->setTuteur($stageEtudiant->getEntreprise()->getResponsable());
                 $form4 = $this->createForm(FormTypeTuteur::class, $stageEtudiant, [
@@ -161,7 +198,8 @@ class FormulaireController extends AbstractController
             }
         }
 
-        return $this->renderForm('stage/formulaire/index.html.twig', ['form_tuteur' => $form4, 'step' => 4, 'stageEtudiant' => $stageEtudiant]);
+        return $this->renderForm('stage/formulaire/index.html.twig',
+            ['form_tuteur' => $form4, 'step' => 4, 'stageEtudiant' => $stageEtudiant]);
     }
 
     // -------------------------------------------5EME ETAPE-------------------------------------------------
@@ -170,8 +208,11 @@ class FormulaireController extends AbstractController
 
     #[Route('/formulaire/adresse_stage/{stageEtudiant}', name: 'app_formulaireAdresseStage')]
     #[ParamConverter('stageEtudiant', options: ['mapping' => ['stageEtudiant' => 'uuid']])]
-    public function new_form_adresse_stage(Request $request, StageEtudiantRepository $stageEtudiantRepository, StageEtudiant $stageEtudiant): Response
-    {
+    public function new_form_adresse_stage(
+        Request $request,
+        StageEtudiantRepository $stageEtudiantRepository,
+        StageEtudiant $stageEtudiant
+    ): Response {
         $form5 = $this->createForm(StageAdresseFormType::class, $stageEtudiant, [
             'csrf_protection' => false,
         ]);
@@ -181,21 +222,31 @@ class FormulaireController extends AbstractController
             if ($form5->isValid()) {
                 $stageEtudiantRepository->save($stageEtudiant, true);
 
-                if ('stage_adresse_form_suivant' == $request->request->get('button')) {
-                    return $this->json(['route' => $this->generateUrl('app_formulaireStage', ['stageEtudiant' => $stageEtudiant->getUuidString()])]);
-                } elseif ('stage_adresse_form_retour' == $request->request->get('button')) {
-                    return $this->json(['route' => $this->generateUrl('app_formulaireTuteur', ['stageEtudiant' => $stageEtudiant->getUuidString()])]);
+                if ('stage_adresse_form_suivant' === $request->request->get('button')) {
+                    return $this->json([
+                        'route' => $this->generateUrl('app_formulaireStage',
+                            ['stageEtudiant' => $stageEtudiant->getUuidString()]),
+                    ]);
+                } elseif ('stage_adresse_form_retour' === $request->request->get('button')) {
+                    return $this->json([
+                        'route' => $this->generateUrl('app_formulaireTuteur',
+                            ['stageEtudiant' => $stageEtudiant->getUuidString()]),
+                    ]);
                 }
             }
         }
 
-        return $this->renderForm('stage/formulaire/index.html.twig', ['form_adss_stage' => $form5, 'step' => 5, 'stageEtudiant' => $stageEtudiant]);
+        return $this->renderForm('stage/formulaire/index.html.twig',
+            ['form_adss_stage' => $form5, 'step' => 5, 'stageEtudiant' => $stageEtudiant]);
     }
 
     #[Route('/formulaire/stage/{stageEtudiant}', name: 'app_formulaireStage')]
     #[ParamConverter('stageEtudiant', options: ['mapping' => ['stageEtudiant' => 'uuid']])]
-    public function new_form_stage(Request $request, StageEtudiantRepository $stageEtudiantRepository, StageEtudiant $stageEtudiant): Response
-    {
+    public function new_form_stage(
+        Request $request,
+        StageEtudiantRepository $stageEtudiantRepository,
+        StageEtudiant $stageEtudiant
+    ): Response {
         $form6 = $this->createForm(FormTypeStage::class, $stageEtudiant, [
             'csrf_protection' => false,
         ]);
@@ -205,24 +256,27 @@ class FormulaireController extends AbstractController
             // Si clic sur "retour"
             if ($form6->get('retour')->isClicked()) {
                 // Alors location->formulaire/entreprise
-                return $this->redirectToRoute('app_formulaireAdresseStage', ['stageEtudiant' => $stageEtudiant->getUuidString()]);
+                return $this->redirectToRoute('app_formulaireAdresseStage',
+                    ['stageEtudiant' => $stageEtudiant->getUuidString()]);
             } // Si clic sur "suivant"
             else {
                 $stageEtudiantRepository->save($stageEtudiant, true);
 
-                return $this->redirectToRoute('app_formulaireRecap', ['stageEtudiant' => $stageEtudiant->getUuidString()]);
+                return $this->redirectToRoute('app_formulaireRecap',
+                    ['stageEtudiant' => $stageEtudiant->getUuidString()]);
             }
         }
 
-        return $this->renderForm('stage/formulaire/index.html.twig', ['form_stage' => $form6, 'step' => 6, 'stageEtudiant' => $stageEtudiant]);
+        return $this->renderForm('stage/formulaire/index.html.twig',
+            ['form_stage' => $form6, 'step' => 6, 'stageEtudiant' => $stageEtudiant]);
     }
 
     #[Route('/calendar', name: 'calendar')]
     public function calculJoursDeStage(Request $request)
     {
         $tab = json_decode($request->getContent(), true);
-        $date_debut = Carbon::createFromFormat('d/m/Y', $tab['date1']); //new \DateTime($tab['date1']);
-        $date_fin = Carbon::createFromFormat('d/m/Y', $tab['date2']); //new \DateTime($tab['date2']);
+        $date_debut = Carbon::createFromFormat('d/m/Y', $tab['date1']); // new \DateTime($tab['date1']);
+        $date_fin = Carbon::createFromFormat('d/m/Y', $tab['date2']); // new \DateTime($tab['date2']);
         $interval = $date_debut->diff($date_fin);
 
         $interval = $interval->format('%y') * 365 + $interval->format('%m') * 30 + $interval->format('%d');
@@ -273,8 +327,25 @@ class FormulaireController extends AbstractController
 
     #[Route('/formulaire/stage/recapitulatif/{stageEtudiant}', name: 'app_formulaireRecap')]
     #[ParamConverter('stageEtudiant', options: ['mapping' => ['stageEtudiant' => 'uuid']])]
-    public function new_form_stage_recapitulatif(Request $request, StageEtudiantRepository $stageEtudiantRepository, StageEtudiant $stageEtudiant): Response
-    {
-        return $this->renderForm('stage/formulaire/index.html.twig', ['step' => 7, 'stageEtudiant' => $stageEtudiant]);
+    public function new_form_stage_recapitulatif(
+        EventDispatcherInterface $eventDispatcher,
+        Request $request,
+        StageEtudiant $stageEtudiant
+    ): Response {
+        if ($request->isMethod('POST')) {
+            $stageEtudiant->setEtatStage(StageEtudiant::ETAT_STAGE_DEPOSE);
+            $stageEtudiant->setDateDepotFormulaire(Carbon::now());
+            $this->entityManager->flush();
+
+            $event = new StageEvent($stageEtudiant);
+            $eventDispatcher->dispatch($event, StageEvent::CHGT_ETAT_STAGE_DEPOSE);
+
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'stage_etudiant.formulaire.success.flash');
+
+            return $this->redirectToRoute('application_index', ['onglet' => 'stage']);
+        }
+
+        return $this->renderForm('stage/formulaire/index.html.twig',
+            ['step' => 7, 'stageEtudiant' => $stageEtudiant]);
     }
 }

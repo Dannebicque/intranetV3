@@ -1,0 +1,67 @@
+<ul class="nav nav-process nav-process-sm nav-process-block nav-process-yellow" id="process-block-color">
+    <li class="nav-item {% if step == 1 %}processing{% elseif step > 1 %}complete{% endif %}">
+        <a class="nav-link" href="{% if step > 1 %}{{ path('app_stage_etudiant_formulaire',
+            {stageEtudiant:stageEtudiant.uuidString}) }}{% else %}#{% endif %}">
+            <span class="nav-link-number">1</span>
+            <div class="nav-link-body">
+                <span class="nav-title">Vous</span>
+            </div>
+        </a>
+    </li>
+    <li class="nav-item {% if step == 2 %}processing{% elseif step > 2 %}complete{% endif %}">
+
+        <a class="nav-link" href="{% if step > 2 %}{{ path('app_formulaireEntreprise', { stageEtudiant:stageEtudiant
+        .uuidString }) }}{% else %}#{% endif %}">
+            <span class="nav-link-number">2</span>
+            <div class="nav-link-body">
+                <span class="nav-title">L'entreprise</span>
+            </div>
+        </a>
+    </li>
+    <li class="nav-item {% if step == 3 %}processing{% elseif step > 3 %}complete{% endif %}">
+
+        <a class="nav-link" href="{% if step > 3 %}{{ path('app_formulaireResponsable', { stageEtudiant:stageEtudiant
+        .uuidString }) }}{% else %}#{% endif %}">
+            <span class="nav-link-number">3</span>
+            <div class="nav-link-body">
+                <span class="nav-title">Le signataire</span>
+            </div>
+        </a>
+    </li>
+    <li class="nav-item {% if step == 4 %}processing{% elseif step > 4 %}complete{% endif %}">
+        <a class="nav-link" href="{% if step > 4 %}{{ path('app_formulaireTuteur', { stageEtudiant:stageEtudiant
+        .uuidString }) }}{% else %}#{% endif %}">
+            <span class="nav-link-number">4</span>
+            <div class="nav-link-body">
+                <span class="nav-title">Le tuteur</span>
+            </div>
+        </a>
+    </li>
+    <li class="nav-item {% if step == 5 %}processing{% elseif step > 5 %}complete{% endif %}">
+
+        <a class="nav-link" href="{% if step > 5 %}{{ path('app_formulaireAdresseStage', {
+            stageEtudiant:stageEtudiant.uuidString }) }}{% else %}#{% endif %}">
+            <span class="nav-link-number">5</span>
+            <div class="nav-link-body">
+                <span class="nav-title"> L'adresse</span>
+            </div>
+        </a>
+    </li>
+    <li class="nav-item {% if step == 6 %}processing{% elseif step > 6 %}complete{% endif %}">
+        <a class="nav-link" href="{% if step > 6 %}{{ path('app_formulaireStage', { stageEtudiant:stageEtudiant
+        .uuidString }) }}{% else %}#{% endif %}">
+            <span class="nav-link-number">6</span>
+            <div class="nav-link-body">
+                <span class="nav-title">Le stage</span>
+            </div>
+        </a>
+    </li>
+    <li class="nav-item {% if step == 7 %}processing{% elseif step > 7 %}complete{% endif %}">
+        <a class="nav-link" href="#">
+            <span class="nav-link-number">7</span>
+            <div class="nav-link-body">
+                <span class="nav-title">Récapitulatif</span>
+            </div>
+        </a>
+    </li>
+</ul>

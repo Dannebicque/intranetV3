@@ -1,937 +1,339 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Formulaire Stage{% endblock %}
+{% block header %}
+    {{ 'applications.etudiant.stage.formulaire.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('application_index', {onglet:'stage'}) }}" class="btn btn-primary btn-float"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="{{ 'atitle.retour_applications'|trans }}"><i
+                        class="fas fa-arrow-left"></i></a>
+        </div>
+    </div>
+{% endblock %}
 
 {% block content %}
     <div class="formulaire">
         <div class="card col-11">
             <div class="card-body">
                 {% if step==1 %}
-                    <ul class="nav nav-process nav-process-sm nav-process-block nav-process-yellow" id="process-block-color">
-                        <li class="nav-item processing">
-                            <a class="nav-link" href="#">
-                                <span class="nav-link-number">1</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">Vous</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span class="nav-link-number">2</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">L'entreprise</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span class="nav-link-number">3</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">Le signataire</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span class="nav-link-number">4</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">Le tuteur</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span class="nav-link-number">5</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">L'adresse</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span class="nav-link-number">6</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">Le stage</span>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
+                {{ include('stage/formulaire/_processStage.html.twig') }}
 
-                    <h2>Vos informations</h2>
-                    <p class="form-info">Merci de vérifier vos informations ci-dessous.</p>
-                    <p class="form-text mb-0 help-text">La complétion des champs marqués d'un astérisque (*) est
-                                                        obligatoire.</p>
-                    <div class="form-rows">
 
-                        <div class="form-main">
-                            {% form_theme form_vous 'bootstrap_5_layout.html.twig' %}
-                            {{ form_start(form_vous) }}
+                <h2>Vos informations</h2>
+                <p class="form-info">Merci de vérifier vos informations ci-dessous.</p>
+                <p class="form-text mb-0 help-text">La complétion des champs marqués d'un astérisque (*) est
+                                                    obligatoire.</p>
+                <div class="form-rows">
 
-                            {{ form_row(form_vous.etudiant.intituleSecuriteSociale) }}
-                            {{ form_row(form_vous.etudiant.adresseSecuriteSociale) }}
+                    <div class="form-main">
+                        {% form_theme form_vous 'bootstrap_5_layout.html.twig' %}
+                        {{ form_start(form_vous) }}
+
+                        {{ form_row(form_vous.etudiant.intituleSecuriteSociale) }}
+                        {{ form_row(form_vous.etudiant.adresseSecuriteSociale) }}
+                    </div>
+
+                    <div class="form-group-adresse">
+                        <label for="adresse" class="form-label">Votre adresse :</label> <br>
+                        <input type="text" id="adresse" class="form-control" autocomplete="off">
+                        <div class="form-text mb-0 help-text">
+                            Veuillez saisir votre adresse puis sélectionner la
+                            proposition correspondante
                         </div>
-
-                        <div class="form-group-adresse">
-                            <label for="adresse" class="form-label">Votre adresse :</label> <br>
-                            <input type="text" id="adresse" class="form-control" autocomplete="off">
-                            <div class="form-text mb-0 help-text">
-                                Veuillez saisir votre adresse puis sélectionner la
-                                proposition correspondante
-                            </div>
-                            <ul id="adresseliste">
-                            </ul>
-
-                            <hr>
-
-                            <div class="form-champs-adresse">
-                                {{ form_row(form_vous.etudiant.adresse.adresse1) }}
-                                {{ form_row(form_vous.etudiant.adresse.adresse2) }}
-                                {{ form_row(form_vous.etudiant.adresse.adresse3) }}
-                                {{ form_row(form_vous.etudiant.adresse.code_postal) }}
-                                {{ form_row(form_vous.etudiant.adresse.ville) }}
-                            </div>
-
-                            <div class="form-btn-verif">
-                                {{ form_row(form_vous.etudiant.adresse.modif_adresse) }}
-                                <p class="form-text mb-0 help-text">
-                                    Si l'adresse n'est pas disponible, merci de la
-                                    saisir manuellement en cliquant sur ce bouton
-                                </p>
-                            </div>
-                        </div>
+                        <ul id="adresseliste">
+                        </ul>
 
                         <hr>
 
-                        <div class="form-main">
-                            {{ form_row(form_vous.etudiant.tel1) }}
-                            {{ form_row(form_vous.etudiant.mail_perso) }}
+                        <div class="form-champs-adresse">
+                            {{ form_row(form_vous.etudiant.adresse.adresse1) }}
+                            {{ form_row(form_vous.etudiant.adresse.adresse2) }}
+                            {{ form_row(form_vous.etudiant.adresse.adresse3) }}
+                            {{ form_row(form_vous.etudiant.adresse.code_postal) }}
+                            {{ form_row(form_vous.etudiant.adresse.ville) }}
                         </div>
 
-                        <div class="form-btn-alone">
-                            <div class="form-btn-help">
-                                {{ form_row(form_vous.suivant) }}
-                                <p class="form-text mb-0 help-text">Les données saisies seront sauvegardées.</p>
-                            </div>
+                        <div class="form-btn-verif">
+                            {{ form_row(form_vous.etudiant.adresse.modif_adresse) }}
+                            <p class="form-text mb-0 help-text">
+                                Si l'adresse n'est pas disponible, merci de la
+                                saisir manuellement en cliquant sur ce bouton
+                            </p>
                         </div>
-
-                        {{ form_end(form_vous) }}
                     </div>
 
-                    <script defer>
-                      window.addEventListener('load', () => {
-                        //---------------------------------------------------------------------------
-                        //---------------------------------------------------------------------------
-                        // Utilisation de l'API pour récupérer les villes relatives aux codes postaux
-                        //---------------------------------------------------------------------------
-                        //---------------------------------------------------------------------------
+                    <hr>
 
-                        document.getElementById('form_type_vos_informations_etudiant_adresse_code_postal')
-                          .addEventListener('blur', (e) => {
-                            let cp = e.currentTarget.value
+                    <div class="form-main">
+                        {{ form_row(form_vous.etudiant.tel1) }}
+                        {{ form_row(form_vous.etudiant.mail_perso) }}
+                    </div>
 
-                            // url : liste communes / cp saisi -> inject dans data => data.json
-                            fetch('https://apicarto.ign.fr/api/codes-postaux/communes/' + cp)
-                              .then((data) => {
-                                return data.json()
-                              })
+                    <div class="form-btn-alone">
+                        <div class="form-btn-help">
+                            {{ form_row(form_vous.suivant) }}
+                            <p class="form-text mb-0 help-text">Les données saisies seront sauvegardées.</p>
+                        </div>
+                    </div>
 
-                              .then((data) => {
-                                // input "ville" = var ville
-                                let ville = document.getElementById('form_type_vos_informations_etudiant_adresse_ville')
-                                // var options = éléments html "option" de la liste déroulante
-                                let options = document.querySelectorAll('#form_type_vos_informations_etudiant_adresse_ville option')
+                    {{ form_end(form_vous) }}
+                </div>
 
-                                options.forEach((option) => {
-                                  option.remove()
-                                })
+                <script defer>
+                  window.addEventListener('load', () => {
+                    //---------------------------------------------------------------------------
+                    //---------------------------------------------------------------------------
+                    // Utilisation de l'API pour récupérer les villes relatives aux codes postaux
+                    //---------------------------------------------------------------------------
+                    //---------------------------------------------------------------------------
 
-                                data.forEach(element => {
-                                  let opt1 = document.createElement('option')
-                                  opt1.text = element.nomCommune
-                                  opt1.value = element.nomCommune
-                                  ville.append(opt1)
-                                  console.log(ville)
-                                  console.log(element.nomCommune)
-                                })
+                    document.getElementById('form_type_vos_informations_etudiant_adresse_code_postal')
+                      .addEventListener('blur', (e) => {
+                        let cp = e.currentTarget.value
 
-                              })
+                        // url : liste communes / cp saisi -> inject dans data => data.json
+                        fetch('https://apicarto.ign.fr/api/codes-postaux/communes/' + cp)
+                          .then((data) => {
+                            return data.json()
                           })
 
-                        //---------------------------------------------------------------------------
-                        //---------------------------------------------------------------------------
-                        // Bouton qui permet de modifier l'adresse
-                        //---------------------------------------------------------------------------
-                        //---------------------------------------------------------------------------
-
-                        document.getElementById('form_type_vos_informations_etudiant_adresse_modif_adresse')
-                          .addEventListener('click', (e) => {
-                            let adss = document.getElementById
-                            ('form_type_vos_informations_etudiant_adresse_adresse1')
-                            let adssSuite = document.getElementById
-                            ('form_type_vos_informations_etudiant_adresse_adresse2')
-                            let adssComplement = document.getElementById
-                            ('form_type_vos_informations_etudiant_adresse_adresse3')
-                            let cp = document.getElementById
-                            ('form_type_vos_informations_etudiant_adresse_code_postal')
+                          .then((data) => {
+                            // input "ville" = var ville
                             let ville = document.getElementById('form_type_vos_informations_etudiant_adresse_ville')
+                            // var options = éléments html "option" de la liste déroulante
+                            let options = document.querySelectorAll('#form_type_vos_informations_etudiant_adresse_ville option')
 
-                            adss.disabled = false
-                            adssSuite.disabled = false
-                            adssComplement.disabled = false
-                            cp.disabled = false
-                            ville.disabled = false
+                            options.forEach((option) => {
+                              option.remove()
+                            })
+
+                            data.forEach(element => {
+                              let opt1 = document.createElement('option')
+                              opt1.text = element.nomCommune
+                              opt1.value = element.nomCommune
+                              ville.append(opt1)
+                            })
+
                           })
-
-                        //---------------------------------------------------------------------------
-                        //---------------------------------------------------------------------------
-                        // Système d'autocomplétion de l'adresse en relation avec l'API
-                        //---------------------------------------------------------------------------
-                        //---------------------------------------------------------------------------
-
-                        document.getElementById('adresse').addEventListener('keyup', (e) => {
-                          let adresseSuite = e.currentTarget.value
-
-                          // On récupère l'api et on y injecte la saisie de l'utilisateur
-                          fetch('https://api-adresse.data.gouv.fr/search/?q=' + adresseSuite + '&type=&autocomplete=1')
-                            //on l'injecte dans data et on la transforme en json
-                            .then((data) => {
-                              return data.json()
-                            })
-                            .then((data) => {
-                              console.log(data)
-
-                              let options = document.querySelectorAll('#adresseliste li')
-                              let adresseliste = document.getElementById('adresseliste')
-
-                              options.forEach((option) => {
-                                option.remove()
-                              })
-
-                              data.features.forEach(element => {
-                                console.log(element.properties.label)
-                                let autoCompleteOpt = document.createElement('li')
-                                autoCompleteOpt.innerHTML = element.properties.label
-                                autoCompleteOpt.dataset.name = element.properties.name
-                                autoCompleteOpt.dataset.city = element.properties.city
-                                autoCompleteOpt.dataset.postcode = element.properties.postcode
-                                autoCompleteOpt.classList.add('item')
-                                adresseliste.append(autoCompleteOpt)
-                              })
-                              document.querySelectorAll('.item').forEach((event) => {
-                                event.addEventListener('click', (e) => {
-                                  console.log(e)
-                                  document.getElementById
-                                  ('form_type_vos_informations_etudiant_adresse_ville').innerHTML = ''
-                                  let adresse = e.currentTarget
-                                  console.log(adresse.dataset.city)
-                                  document.getElementById
-                                  ('form_type_vos_informations_etudiant_adresse_adresse1').value = adresse
-                                    .dataset.name
-                                  document.getElementById
-                                  ('form_type_vos_informations_etudiant_adresse_code_postal').value =
-                                    adresse.dataset.postcode
-                                  let opt1 = document.createElement('option')
-                                  opt1.text = adresse.dataset.city
-                                  opt1.value = adresse.dataset.city
-                                  document.getElementById
-                                  ('form_type_vos_informations_etudiant_adresse_ville').append(opt1)
-
-                                })
-                              })
-                            })
-                        })
-
-                        //---------------------------------------------------------------------------
-                        //---------------------------------------------------------------------------
-                        // traitement de formulaire avec interception du submit, ajout de données et soumission du formulaire
-                        //---------------------------------------------------------------------------
-                        //---------------------------------------------------------------------------
-
-                        const formElem = document.forms['form_type_vos_informations'] //récupération du formulaire, par son name
-
-                        formElem.addEventListener('submit', async (e) => { //on détecte lorsque le formulaire est soumis
-                          console.log('submit')
-                          e.preventDefault() //on empèche qu'il soit envoyé
-                          const formData = new FormData(formElem) //on construit un objet formData avec les éléments du formulaire
-                          formData.set('form_type_vos_informations[etudiant][adresse][adresse1]', document
-                            .getElementById('form_type_vos_informations_etudiant_adresse_adresse1').value) //on
-                          // ajoute un élément dans le formulaire en récupérant les données d'un champs disabled
-
-                          formData.set('form_type_vos_informations[etudiant][adresse][code_postal]', document
-                            .getElementById('form_type_vos_informations_etudiant_adresse_code_postal').value)
-                          formData.set('form_type_vos_informations[etudiant][adresse][ville]', document
-                            .getElementById('form_type_vos_informations_etudiant_adresse_ville').value)
-
-
-                          let response = await fetch(formElem.action, { //on soumet de nouveau le formulaire, mais on doit simuler tout le processus en récupérant le lien dans action
-                            method: 'POST', //méthode en post (on pourrait dire aussi formElem.method)
-                            body: formData, //on passe les données avec l'objet créé plus haut
-                          })
-                            .then((data) => {
-                              return data.json()
-                            })
-                            .then((data) => {
-                              // console.log(data)
-                              if (data.route) {
-                                window.location.href = data.route //on redirige vers la page entreprise/ID
-                              } else {
-                                console.log(data)
-                                afficheErrors(data, 'form_type_vos_informations_etudiant_')
-                              }
-
-                            })
-                            .catch((error) => {
-                              console.log(error)
-                            })
-
-                        })
                       })
 
-                      function afficheErrors(errors, champ) {
-                        for (error in errors) {
-                          document.getElementById(champ + error).parentElement.innerHTML += '<div >' + errors[error] + '</div>'
-                        }
-                      }
+                    //---------------------------------------------------------------------------
+                    //---------------------------------------------------------------------------
+                    // Bouton qui permet de modifier l'adresse
+                    //---------------------------------------------------------------------------
+                    //---------------------------------------------------------------------------
 
-                    </script>
+                    document.getElementById('form_type_vos_informations_etudiant_adresse_modif_adresse')
+                      .addEventListener('click', (e) => {
+                        let adss = document.getElementById
+                        ('form_type_vos_informations_etudiant_adresse_adresse1')
+                        let adssSuite = document.getElementById
+                        ('form_type_vos_informations_etudiant_adresse_adresse2')
+                        let adssComplement = document.getElementById
+                        ('form_type_vos_informations_etudiant_adresse_adresse3')
+                        let cp = document.getElementById
+                        ('form_type_vos_informations_etudiant_adresse_code_postal')
+                        let ville = document.getElementById('form_type_vos_informations_etudiant_adresse_ville')
+
+                        adss.disabled = false
+                        adssSuite.disabled = false
+                        adssComplement.disabled = false
+                        cp.disabled = false
+                        ville.disabled = false
+                      })
+
+                    //---------------------------------------------------------------------------
+                    //---------------------------------------------------------------------------
+                    // Système d'autocomplétion de l'adresse en relation avec l'API
+                    //---------------------------------------------------------------------------
+                    //---------------------------------------------------------------------------
+
+                    document.getElementById('adresse').addEventListener('keyup', (e) => {
+                      let adresseSuite = e.currentTarget.value
+
+                      // On récupère l'api et on y injecte la saisie de l'utilisateur
+                      fetch('https://api-adresse.data.gouv.fr/search/?q=' + adresseSuite + '&type=&autocomplete=1')
+                        //on l'injecte dans data et on la transforme en json
+                        .then((data) => {
+                          return data.json()
+                        })
+                        .then((data) => {
+                          let options = document.querySelectorAll('#adresseliste li')
+                          let adresseliste = document.getElementById('adresseliste')
+
+                          options.forEach((option) => {
+                            option.remove()
+                          })
+
+                          data.features.forEach(element => {
+                            let autoCompleteOpt = document.createElement('li')
+                            autoCompleteOpt.innerHTML = element.properties.label
+                            autoCompleteOpt.dataset.name = element.properties.name
+                            autoCompleteOpt.dataset.city = element.properties.city
+                            autoCompleteOpt.dataset.postcode = element.properties.postcode
+                            autoCompleteOpt.classList.add('item')
+                            adresseliste.append(autoCompleteOpt)
+                          })
+                          document.querySelectorAll('.item').forEach((event) => {
+                            event.addEventListener('click', (e) => {
+                              document.getElementById
+                              ('form_type_vos_informations_etudiant_adresse_ville').innerHTML = ''
+                              let adresse = e.currentTarget
+                              document.getElementById
+                              ('form_type_vos_informations_etudiant_adresse_adresse1').value = adresse
+                                .dataset.name
+                              document.getElementById
+                              ('form_type_vos_informations_etudiant_adresse_code_postal').value =
+                                adresse.dataset.postcode
+                              let opt1 = document.createElement('option')
+                              opt1.text = adresse.dataset.city
+                              opt1.value = adresse.dataset.city
+                              document.getElementById
+                              ('form_type_vos_informations_etudiant_adresse_ville').append(opt1)
+
+                            })
+                          })
+                        })
+                    })
+
+                    //---------------------------------------------------------------------------
+                    //---------------------------------------------------------------------------
+                    // traitement de formulaire avec interception du submit, ajout de données et soumission du formulaire
+                    //---------------------------------------------------------------------------
+                    //---------------------------------------------------------------------------
+
+                    const formElem = document.forms['form_type_vos_informations'] //récupération du formulaire, par son name
+
+                    formElem.addEventListener('submit', async (e) => { //on détecte lorsque le formulaire est soumis
+                      e.preventDefault() //on empèche qu'il soit envoyé
+                      const formData = new FormData(formElem) //on construit un objet formData avec les éléments du formulaire
+                      formData.set('form_type_vos_informations[etudiant][adresse][adresse1]', document
+                        .getElementById('form_type_vos_informations_etudiant_adresse_adresse1').value) //on
+                      // ajoute un élément dans le formulaire en récupérant les données d'un champs disabled
+
+                      formData.set('form_type_vos_informations[etudiant][adresse][code_postal]', document
+                        .getElementById('form_type_vos_informations_etudiant_adresse_code_postal').value)
+                      formData.set('form_type_vos_informations[etudiant][adresse][ville]', document
+                        .getElementById('form_type_vos_informations_etudiant_adresse_ville').value)
+
+                      let response = await fetch(formElem.action, { //on soumet de nouveau le formulaire, mais on doit simuler tout le processus en récupérant le lien dans action
+                        method: 'POST', //méthode en post (on pourrait dire aussi formElem.method)
+                        body: formData, //on passe les données avec l'objet créé plus haut
+                      })
+                        .then((data) => {
+                          return data.json()
+                        })
+                        .then((data) => {
+                          if (data.route) {
+                            window.location.href = data.route //on redirige vers la page entreprise/ID
+                          } else {
+                            afficheErrors(data, 'form_type_vos_informations_etudiant_')
+                          }
+
+                        })
+                        .catch((error) => {
+                        })
+
+                    })
+                  })
+
+                  function afficheErrors(errors, champ) {
+                    for (error in errors) {
+                      document.getElementById(champ + error).parentElement.innerHTML += '<div >' + errors[error] + '</div>'
+                    }
+                  }
+
+                </script>
 
 
-                    {% elseif step==2 %}
+                {% elseif step==2 %}
 
-                    <ul class="nav nav-process nav-process-sm nav-process-block nav-process-yellow" id="process-block-color">
-                        <li class="nav-item complete">
-                            <a class="nav-link" href="{{ path('app_stage_etudiant_formulaire', {stageEtudiant:stageEtudiant.uuidString}) }}">
-                                <span class="nav-link-number">1</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">Vous</span>
+                {{ include('stage/formulaire/_processStage.html.twig') }}
+
+
+                <h2>L'entreprise d'accueil</h2>
+                <p class="form-text mb-0 help-text">La complétion des champs marqués d'un astérisque (*) est
+                                                    obligatoire.</p>
+                <div {{ stimulus_controller('formulaire', {url:path('app_stimulus_modal_vous',
+                    {stageEtudiant:stageEtudiant.uuidString})}) }}>
+
+                    <div data-formulaire-target="connect">
+                        <div class="form-rows">
+                            <div class="form-main">
+                                {% form_theme form_entreprise 'bootstrap_5_layout.html.twig' %}
+
+                                {{ form_start(form_entreprise) }}
+                                {{ form_row(form_entreprise.entreprise.siret) }}
+                                {{ form_row(form_entreprise.entreprise.raisonSociale) }}
+                            </div>
+
+                            <div class="form-group-adresse">
+                                <label for="adresseEntreprise" class="form-label">Adresse :</label> <br>
+                                <input type="text" id="adresseEntreprise" class="form-control">
+                                <div class="form-text mb-0 help-text">Veuillez saisir votre adresse puis
+                                                                      sélectionner la proposition correspondante
                                 </div>
-                            </a>
-                        </li>
-                        <li class="nav-item processing">
-                            <a class="nav-link" href="#">
-                                <span class="nav-link-number">2</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">L'entreprise</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span class="nav-link-number">3</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">Le signataire</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span class="nav-link-number">4</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">Le tuteur</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span class="nav-link-number">5</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">L'adresse</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span class="nav-link-number">6</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">Le stage</span>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
 
-                    <h2>L'entreprise d'accueil</h2>
-                    <p class="form-text mb-0 help-text">La complétion des champs marqués d'un astérisque (*) est
-                                                        obligatoire.</p>
-                    <div {{ stimulus_controller('formulaire', {url:path('app_stimulus_modal_vous',
-                        {stageEtudiant:stageEtudiant.uuidString})}) }}>
-
-                        <div data-formulaire-target="connect">
-                            <div class="form-rows">
-                                <div class="form-main">
-                                    {% form_theme form_entreprise 'bootstrap_5_layout.html.twig' %}
-
-                                    {{ form_start(form_entreprise) }}
-                                    {{ form_row(form_entreprise.entreprise.siret) }}
-                                    {{ form_row(form_entreprise.entreprise.raisonSociale) }}
-                                </div>
-
-                                <div class="form-group-adresse">
-                                    <label for="adresseEntreprise" class="form-label">Adresse :</label> <br>
-                                    <input type="text" id="adresseEntreprise" class="form-control">
-                                    <div class="form-text mb-0 help-text">Veuillez saisir votre adresse puis
-                                                                          sélectionner la proposition correspondante
-                                    </div>
-
-                                    <ul id="adresselisteEntreprise">
-                                    </ul>
-
-                                    <hr>
-
-                                    <div class="form-champs-adresse">
-                                        {{ form_row(form_entreprise.entreprise.adresse.adresse1) }}
-                                        {{ form_row(form_entreprise.entreprise.adresse.adresse2) }}
-                                        {{ form_row(form_entreprise.entreprise.adresse.adresse3) }}
-                                        {{ form_row(form_entreprise.entreprise.adresse.code_postal) }}
-                                        {{ form_row(form_entreprise.entreprise.adresse.ville) }}
-                                    </div>
-                                    <div class="form-btn-verif">
-                                        {{ form_row(form_entreprise.entreprise.adresse.modif_adresse) }}
-                                        <p class="form-text mb-0 help-text">Si l'adresse n'existe pas, veuillez la
-                                                                            saisir
-                                                                            manuellement en cliquant sur ce
-                                                                            bouton.</p>
-                                    </div>
-                                </div>
+                                <ul id="adresselisteEntreprise">
+                                </ul>
 
                                 <hr>
 
-                                <div class="form-btn-multiple">
-                                    <div class="form-btn-help-precedent">
-                                        {{ form_row(form_entreprise.retour) }}
-                                        <p class="form-text mb-0 help-text">Les données saisies seront sauvegardées.</p>
-                                    </div>
-                                    <div class="form-btn-help-suivant">
-                                        {{ form_row(form_entreprise.suivant) }}
-                                        <p class="form-text mb-0 help-text">Les données saisies seront sauvegardées.</p>
-                                    </div>
+                                <div class="form-champs-adresse">
+                                    {{ form_row(form_entreprise.entreprise.adresse.adresse1) }}
+                                    {{ form_row(form_entreprise.entreprise.adresse.adresse2) }}
+                                    {{ form_row(form_entreprise.entreprise.adresse.adresse3) }}
+                                    {{ form_row(form_entreprise.entreprise.adresse.code_postal) }}
+                                    {{ form_row(form_entreprise.entreprise.adresse.ville) }}
                                 </div>
-
-                            </div>
-                        </div>
-                        {{ include('stage/formulaire/_modal.html.twig', {
-                            modalTitle: 'Récapitulatif de vos informations',
-                            modalRetour: 'app_stage_etudiant_formulaire',
-                        }) }}
-                    </div>
-
-
-                    <script defer>
-                      window.addEventListener('load', () => {
-                        //---------------------------------------------------------------------------
-                        //---------------------------------------------------------------------------
-                        // Utilisation de l'API pour récupérer les villes relatives aux codes postaux
-                        //---------------------------------------------------------------------------
-                        //---------------------------------------------------------------------------
-
-                        // if form_type_vous_cp_vous != focus -> var cp => valeur saisie : form_type_vous_cp_vous
-                        document.getElementById('form_type_entreprise_entreprise_adresse_code_postal')
-                          .addEventListener('keyup', (e) => {
-                            let cp = e.currentTarget.value
-                            if (cp.length === 5) {
-                              // url : liste communes / cp saisi -> inject dans data => data.json
-                              fetch('https://apicarto.ign.fr/api/codes-postaux/communes/' + cp)
-                                .then((data) => {
-                                  return data.json()
-                                })
-
-                                .then((data) => {
-                                  // input "ville" = var ville
-                                  let ville = document.getElementById('form_type_entreprise_entreprise_adresse_ville')
-                                  // var options = éléments html "option" de la liste déroulante
-                                  let options = document.querySelectorAll('#form_type_entreprise_entreprise_adresse_ville option')
-
-                                  options.forEach((option) => {
-                                    option.remove()
-                                  })
-
-                                  data.forEach(element => {
-                                    let opt1 = document.createElement('option')
-                                    opt1.text = element.nomCommune
-                                    opt1.value = element.nomCommune
-                                    ville.append(opt1)
-                                  })
-
-                                })
-                            }
-                          })
-
-                        //---------------------------------------------------------------------------
-                        //---------------------------------------------------------------------------
-                        // Bouton qui permet de modifier l'adresse
-                        //---------------------------------------------------------------------------
-                        //---------------------------------------------------------------------------
-
-                        document.getElementById('form_type_entreprise_entreprise_adresse_modif_adresse').addEventListener('click', (e) => {
-                          let adss = document.getElementById('form_type_entreprise_entreprise_adresse_adresse1')
-                          let adssSuite = document.getElementById('form_type_entreprise_entreprise_adresse_adresse2')
-                          let adssComplement = document.getElementById('form_type_entreprise_entreprise_adresse_adresse3')
-                          let cp = document.getElementById('form_type_entreprise_entreprise_adresse_code_postal')
-                          let ville = document.getElementById('form_type_entreprise_entreprise_adresse_ville')
-
-                          adss.disabled = false
-                          adssSuite.disabled = false
-                          adssComplement.disabled = false
-                          cp.disabled = false
-                          ville.disabled = false
-                        })
-
-                        //---------------------------------------------------------------------------
-                        //---------------------------------------------------------------------------
-                        // Système d'autocomplétion de l'adresse en relation avec l'API
-                        //---------------------------------------------------------------------------
-                        //---------------------------------------------------------------------------
-
-                        document.getElementById('adresseEntreprise').addEventListener('keyup', (e) => {
-                          let adresseSuite = e.currentTarget.value
-
-                          // On récupère l'api et on y injecte la saisie de l'utilisateur
-                          fetch('https://api-adresse.data.gouv.fr/search/?q=' + adresseSuite + '&type=&autocomplete=1')
-                            //on l'injecte dans data et on la transforme en json
-                            .then((data) => {
-                              return data.json()
-                            })
-                            .then((data) => {
-                              let options = document.querySelectorAll('#adresselisteEntreprise li')
-                              let adresselisteEntreprise = document.getElementById('adresselisteEntreprise')
-
-                              options.forEach((option) => {
-                                option.remove()
-                              })
-
-                              data.features.forEach(element => {
-                                let autoCompleteOpt = document.createElement('li')
-                                autoCompleteOpt.innerHTML = element.properties.label
-                                autoCompleteOpt.dataset.name = element.properties.name
-                                autoCompleteOpt.dataset.city = element.properties.city
-                                autoCompleteOpt.dataset.postcode = element.properties.postcode
-                                autoCompleteOpt.classList.add('item')
-                                adresselisteEntreprise.append(autoCompleteOpt)
-                              })
-                              document.querySelectorAll('.item').forEach((event) => {
-                                event.addEventListener('click', (e) => {
-                                  document.getElementById('form_type_entreprise_entreprise_adresse_ville').innerHTML = ''
-                                  let adresse = e.currentTarget
-                                  document.getElementById('form_type_entreprise_entreprise_adresse_adresse1').value = adresse.dataset.name
-                                  document.getElementById('form_type_entreprise_entreprise_adresse_code_postal').value = adresse.dataset.postcode
-                                  let opt1 = document.createElement('option')
-                                  opt1.text = adresse.dataset.city
-                                  opt1.value = adresse.dataset.city
-                                  document.getElementById('form_type_entreprise_entreprise_adresse_ville').append(opt1)
-                                })
-                              })
-                            })
-                        })
-
-                        //---------------------------------------------------------------------------
-                        //---------------------------------------------------------------------------
-                        // traitement de formulaire avec interception du submit, ajout de données et soumission du formulaire
-                        //---------------------------------------------------------------------------
-                        //---------------------------------------------------------------------------
-
-                        const formElemEntreprise = document.forms['form_type_entreprise'] //récupération du formulaire, par son name
-
-                        formElemEntreprise.addEventListener('submit', async (e) => { //on détecte lorsque le formulaire est soumis
-                          e.preventDefault() //on empèche qu'il soit envoyé
-                          const formData = new FormData(formElemEntreprise) //on construit un objet formData avec les éléments du formulaire
-                          formData.set('form_type_entreprise[entreprise][adresse][adresse1]', document.getElementById('form_type_entreprise_entreprise_adresse_adresse1').value) //on ajoute un élément dans le formulaire en récupérant les données d'un champs disabled
-
-                          formData.set('form_type_entreprise[entreprise][adresse][code_postal]', document.getElementById('form_type_entreprise_entreprise_adresse_code_postal').value)
-
-                          formData.set('form_type_entreprise[entreprise][adresse][ville]', document.getElementById('form_type_entreprise_entreprise_adresse_ville').value)
-
-                          formData.set('button', e.submitter.id)
-
-                          let response = await fetch(formElemEntreprise.action, { //on soumet de nouveau le formulaire, mais on doit simuler tout le processus en récupérant le lien dans action
-                            method: 'POST', //méthode en post (on pourrait dire aussi formElemEntreprise.method)
-                            body: formData, //on passe les données avec l'objet créé plus haut
-                          })
-                            .then((data) => {
-                              return data.json()
-                            })
-                            .then((data) => {
-                              console.log(data)
-                              window.location.href = data.route
-                            })
-                        })
-                      })
-
-                    </script>
-
-                    {% elseif step==3 %}
-
-                    <ul class="nav nav-process nav-process-sm nav-process-block nav-process-yellow" id="process-block-color">
-                        <li class="nav-item complete">
-                            <a class="nav-link" href="{{ path('app_stage_etudiant_formulaire',
-                                {stageEtudiant:stageEtudiant.uuidString}) }}">
-                                <span class="nav-link-number">1</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">Vous</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item complete">
-                            <a class="nav-link" href="{{ path('app_formulaireEntreprise', { stageEtudiant:stageEtudiant.uuidString
-                            }) }}">
-                                <span class="nav-link-number">2</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">L'entreprise</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item processing">
-                            <a class="nav-link" href="#">
-                                <span class="nav-link-number">3</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">Le signataire</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span class="nav-link-number">4</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">Le tuteur</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span class="nav-link-number">5</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">L'adresse</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span class="nav-link-number">6</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">Le stage</span>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-
-                    <h2>Le.La responsable de l'entreprise (Signataire de la convention)</h2>
-                    <p class="form-text mb-0 help-text">La complétion des champs marqués d'un astérisque (*) est
-                                                        obligatoire.</p>
-
-                    <div {{ stimulus_controller('formulaire', {url:path('app_stimulus_modal_entreprise', {stageEtudiant:stageEtudiant.uuidString})}) }}>
-
-                        <div data-formulaire-target="connect">
-                            <div class="form-rows">
-                                <div class="form-main">
-                                    {% form_theme form_responsable 'bootstrap_5_layout.html.twig' %}
-                                    {{ form_start(form_responsable) }}
-
-                                    {{ form_row(form_responsable.prenom) }}
-                                    {{ form_row(form_responsable.nom) }}
-                                    {{ form_row(form_responsable.fonction) }}
-                                    {{ form_row(form_responsable.email) }}
-                                    {{ form_row(form_responsable.telephone) }}
-                                    {{ form_row(form_responsable.portable) }}
-                                </div>
-
-                                <div class="form-btn-multiple">
-                                    <div class="form-btn-help-precedent">
-                                        {{ form_row(form_responsable.retour) }}
-                                        <p class="form-text mb-0 help-text">Les données saisies seront sauvegardées.</p>
-                                    </div>
-                                    <div class="form-btn-help-suivant">
-                                        {{ form_row(form_responsable.suivant) }}
-                                        <p class="form-text mb-0 help-text">Les données saisies seront sauvegardées.</p>
-                                    </div>
+                                <div class="form-btn-verif">
+                                    {{ form_row(form_entreprise.entreprise.adresse.modif_adresse) }}
+                                    <p class="form-text mb-0 help-text">Si l'adresse n'existe pas, veuillez la
+                                                                        saisir
+                                                                        manuellement en cliquant sur ce
+                                                                        bouton.</p>
                                 </div>
                             </div>
-                        </div>
 
-                        {{ include('stage/formulaire/_modal.html.twig', {
-                            modalTitle: 'Récapitulatif des informations de l\'entreprise',
-                            modalRetour: 'app_formulaireEntreprise',
-                        }) }}
-                    </div>
+                            <hr>
 
-                    <script defer>
-                      window.addEventListener('load', () => {
-
-                        //---------------------------------------------------------------------------
-                        //---------------------------------------------------------------------------
-                        // traitement de formulaire avec interception du submit, ajout de données et soumission du formulaire
-                        //---------------------------------------------------------------------------
-                        //---------------------------------------------------------------------------
-
-                        const formElemResponsable = document.forms['responsable'] //récupération du formulaire, par son name
-
-                        formElemResponsable.addEventListener('submit', async (e) => { //on détecte lorsque le formulaire est soumis
-                          e.preventDefault() //on empèche qu'il soit envoyé
-                          const formData = new FormData(formElemResponsable) //on construit un objet formData avec les éléments du formulaire
-                          formData.set('responsable[prenom]', document.getElementById('responsable_prenom').value) //on ajoute un élément dans le formulaire en récupérant les données d'un champs disabled
-
-                          formData.set('responsable[nom]', document.getElementById('responsable_nom').value)
-
-                          formData.set('responsable[fonction]', document.getElementById('responsable_fonction').value)
-
-                          formData.set('responsable[email]', document.getElementById('responsable_email').value)
-
-                          formData.set('responsable[telephone]', document.getElementById('responsable_telephone').value)
-
-                          formData.set('responsable[portable]', document.getElementById('responsable_portable').value)
-
-                          formData.set('button', e.submitter.id)
-                          console.log(e)
-
-                          let response = await fetch(formElemResponsable.action, { //on soumet de nouveau le formulaire, mais on doit simuler tout le processus en récupérant le lien dans action
-                            method: 'POST', //méthode en post (on pourrait dire aussi formElemEntreprise.method)
-                            body: formData, //on passe les données avec l'objet créé plus haut
-                          })
-                            .then((data) => {
-                              return data.json()
-                            })
-                            .then((data) => {
-                              console.log(data)
-                              window.location.href = data.route
-                            })
-                        })
-                      })
-
-                    </script>
-
-                    {% elseif step==4 %}
-
-                    <ul class="nav nav-process nav-process-sm nav-process-block nav-process-yellow" id="process-block-color">
-                        <li class="nav-item complete">
-                            <a class="nav-link" href="{{ path('app_stage_etudiant_formulaire',
-                                {stageEtudiant:stageEtudiant.uuidString}) }}">
-                                <span class="nav-link-number">1</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">Vous</span>
+                            <div class="form-btn-multiple">
+                                <div class="form-btn-help-precedent">
+                                    {{ form_row(form_entreprise.retour) }}
+                                    <p class="form-text mb-0 help-text">Les données saisies seront sauvegardées.</p>
                                 </div>
-                            </a>
-                        </li>
-                        <li class="nav-item complete">
-
-                            <a class="nav-link" href="{{ path('app_formulaireEntreprise', { stageEtudiant:stageEtudiant.uuidString }) }}">
-                                <span class="nav-link-number">2</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">L'entreprise</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item complete">
-                            <a class="nav-link" href="{{ path('app_formulaireResponsable', { stageEtudiant:stageEtudiant.uuidString }) }}">
-                                <span class="nav-link-number">3</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">Le signataire</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item processing">
-                            <a class="nav-link" href="#">
-                                <span class="nav-link-number">4</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">Le tuteur</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span class="nav-link-number">5</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">L'adresse</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span class="nav-link-number">6</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">Le stage</span>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-
-                    <h2>Le tuteur entreprise</h2>
-                    <p class="form-text mb-0 help-text">La complétion des champs marqués d'un astérisque (*) est
-                                                        obligatoire.</p>
-
-                    <div {{ stimulus_controller('formulaire', {url:path('app_stimulus_modal_responsable', {stageEtudiant:stageEtudiant.uuidString})}) }}>
-
-                        <div data-formulaire-target="connect">
-                            <div class="form-rows">
-                                <div class="form-main">
-                                    {% form_theme form_tuteur 'bootstrap_5_layout.html.twig' %}
-                                    {{ form_start(form_tuteur) }}
-                                    <div class="form-btn-recup">
-                                        {{ form_row(form_tuteur.recup_informations) }}
-                                        <p>Si ces informations sont identiques à celles du signataire de la
-                                           convention</p>
-                                    </div>
-                                    {{ form_row(form_tuteur.tuteur.prenom) }}
-                                    {{ form_row(form_tuteur.tuteur.nom) }}
-                                    {{ form_row(form_tuteur.tuteur.fonction) }}
-                                    {{ form_row(form_tuteur.tuteur.email) }}
-                                    {{ form_row(form_tuteur.tuteur.telephone) }}
-                                    {{ form_row(form_tuteur.tuteur.portable) }}
-                                </div>
-
-                                <div class="form-btn-multiple">
-                                    <div class="form-btn-help-precedent">
-                                        {{ form_row(form_tuteur.retour) }}
-                                        <p class="form-text mb-0 help-text">Les données saisies seront sauvegardées.</p>
-                                    </div>
-                                    <div class="form-btn-help-suivant">
-                                        {{ form_row(form_tuteur.suivant) }}
-                                        <p class="form-text mb-0 help-text">Les données saisies seront sauvegardées.</p>
-                                    </div>
+                                <div class="form-btn-help-suivant">
+                                    {{ form_row(form_entreprise.suivant) }}
+                                    <p class="form-text mb-0 help-text">Les données saisies seront sauvegardées.</p>
                                 </div>
                             </div>
+
                         </div>
-
-                        {{ include('stage/formulaire/_modal.html.twig', {
-                            modalTitle: 'Récapitulatif des informations du responsable',
-                            modalRetour: 'app_formulaireResponsable',
-                        }) }}
-
                     </div>
+                    {{ include('stage/formulaire/_modal.html.twig', {
+                        modalTitle: 'Récapitulatif de vos informations',
+                        modalRetour: 'app_stage_etudiant_formulaire',
+                    }) }}
+                </div>
 
 
-                    {% elseif step==5 %}
+                <script defer>
+                  window.addEventListener('load', () => {
+                    //---------------------------------------------------------------------------
+                    //---------------------------------------------------------------------------
+                    // Utilisation de l'API pour récupérer les villes relatives aux codes postaux
+                    //---------------------------------------------------------------------------
+                    //---------------------------------------------------------------------------
 
-                    <ul class="nav nav-process nav-process-sm nav-process-block nav-process-yellow" id="process-block-color">
-                        <li class="nav-item complete">
-                            <a class="nav-link" href="{{ path('app_stage_etudiant_formulaire',
-                                {stageEtudiant:stageEtudiant.uuidString}) }}">
-                                <span class="nav-link-number">1</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">Vous</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item complete">
-                            <a class="nav-link" href="{{ path('app_formulaireEntreprise', { stageEtudiant:stageEtudiant.uuidString }) }}">
-                                <span class="nav-link-number">2</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">L'entreprise</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item complete">
-                            <a class="nav-link" href="{{ path('app_formulaireResponsable', { stageEtudiant:stageEtudiant.uuidString }) }}">
-                                <span class="nav-link-number">3</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">Le signataire</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item complete">
-                            <a class="nav-link" href="{{ path('app_formulaireTuteur', { stageEtudiant:stageEtudiant.uuidString }) }}">
-                                <span class="nav-link-number">4</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">Le tuteur</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item processing">
-                            <a class="nav-link" href="#">
-                                <span class="nav-link-number">5</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">L'adresse</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">
-                                <span class="nav-link-number">6</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">Le stage</span>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-
-                    <h2>Adresse du lieu où le stage sera effectué</h2>
-                    <p class="form-text mb-0 help-text">Les champs marqués d'un * sont obligatoires</p>
-
-                    <div {{ stimulus_controller('formulaire', {url:path('app_stimulus_modal_tuteur', {stageEtudiant:stageEtudiant.uuidString})}) }}>
-                        {% form_theme form_adss_stage 'bootstrap_5_layout.html.twig' %}
-                        {{ form_start(form_adss_stage) }}
-
-
-                        <div data-formulaire-target="connect">
-                            <div class="form-rows">
-                                <div class="form-btn-recup">
-                                    {{ form_row(form_adss_stage.recup_informations) }} <p>Si ces informations sont
-                                                                                          identiques à celles du
-                                                                                          signataire de la
-                                                                                          convention</p>
-                                </div>
-                                <div class="form-group-adresse">
-
-                                    <label for="adresseStage" class="form-label">Adresse :</label> <br>
-                                    <input type="text" id="adresseStage" class="form-control">
-                                    <div class="form-text mb-0 help-text">Veuillez saisir votre adresse puis
-                                                                          sélectionner la proposition correspondante
-                                    </div>
-
-                                    <ul id="adresselisteStage">
-                                    </ul>
-
-                                    <hr>
-
-                                    <div class="form-champs-adresse">
-                                        {{ form_row(form_adss_stage.adresse_stage.adresse1) }}
-                                        {{ form_row(form_adss_stage.adresse_stage.adresse2) }}
-                                        {{ form_row(form_adss_stage.adresse_stage.adresse3) }}
-                                        {{ form_row(form_adss_stage.adresse_stage.code_postal) }}
-                                        {{ form_row(form_adss_stage.adresse_stage.ville) }}
-                                    </div>
-
-                                    <div class="form-btn-verif">
-                                        {{ form_row(form_adss_stage.adresse_stage.modif_adresse) }}
-                                        <p class="form-text mb-0 help-text">Si l'adresse n'est pas disponible, merci de
-                                                                            la
-                                                                            saisir
-                                                                            manuellement en cliquant sur ce bouton</p>
-                                    </div>
-                                </div>
-
-                                <hr>
-
-                                <div class="form-btn-multiple">
-                                    <div class="form-btn-help-precedent">
-                                        {{ form_row(form_adss_stage.retour) }}
-                                        <p class="form-text mb-0 help-text">Les données saisies seront sauvegardées.</p>
-                                    </div>
-                                    <div class="form-btn-help-suivant">
-                                        {{ form_row(form_adss_stage.suivant) }}
-                                        <p class="form-text mb-0 help-text">Les données saisies seront sauvegardées.</p>
-                                    </div>
-                                </div>
-                                {{ form_end(form_adss_stage) }}
-                            </div>
-                        </div>
-
-                        {{ include('stage/formulaire/_modal.html.twig', {
-                            modalTitle: 'Récapitulatif des informations du tuteur',
-                            modalRetour: 'app_formulaireTuteur',
-                        }) }}
-
-                    </div>
-
-                    <script defer>
-                      window.addEventListener('load', () => {
-                        //---------------------------------------------------------------------------
-                        //---------------------------------------------------------------------------
-                        // Utilisation de l'API pour récupérer les villes relatives aux codes postaux
-                        //---------------------------------------------------------------------------
-                        //---------------------------------------------------------------------------
-
-                        // if form_type_vous_cp_vous != focus -> var cp => valeur saisie : form_type_vous_cp_vous
-                        document.getElementById('stage_adresse_form_adresse_stage_code_postal').addEventListener('blur', (e) => {
-                          let cp = e.currentTarget.value
-
+                    // if form_type_vous_cp_vous != focus -> var cp => valeur saisie : form_type_vous_cp_vous
+                    document.getElementById('form_type_entreprise_entreprise_adresse_code_postal')
+                      .addEventListener('keyup', (e) => {
+                        let cp = e.currentTarget.value
+                        if (cp.length === 5) {
                           // url : liste communes / cp saisi -> inject dans data => data.json
                           fetch('https://apicarto.ign.fr/api/codes-postaux/communes/' + cp)
                             .then((data) => {
@@ -940,9 +342,9 @@
 
                             .then((data) => {
                               // input "ville" = var ville
-                              let ville = document.getElementById('stage_adresse_form_adresse_stage_ville')
+                              let ville = document.getElementById('form_type_entreprise_entreprise_adresse_ville')
                               // var options = éléments html "option" de la liste déroulante
-                              let options = document.querySelectorAll('#stage_adresse_form_adresse_stage_ville option')
+                              let options = document.querySelectorAll('#form_type_entreprise_entreprise_adresse_ville option')
 
                               options.forEach((option) => {
                                 option.remove()
@@ -953,518 +355,817 @@
                                 opt1.text = element.nomCommune
                                 opt1.value = element.nomCommune
                                 ville.append(opt1)
-                                console.log(ville)
-                                console.log(element.nomCommune)
                               })
 
-                            })
-                        })
-
-                        //---------------------------------------------------------------------------
-                        //---------------------------------------------------------------------------
-                        // Bouton qui permet de modifier l'adresse
-                        //---------------------------------------------------------------------------
-                        //---------------------------------------------------------------------------
-
-                        document.getElementById('stage_adresse_form_adresse_stage_modif_adresse').addEventListener('click', (e) => {
-                          let adss = document.getElementById('stage_adresse_form_adresse_stage_adresse1')
-                          let adssSuite = document.getElementById('stage_adresse_form_adresse_stage_adresse2')
-                          let adssComplement = document.getElementById('stage_adresse_form_adresse_stage_adresse3')
-                          let cp = document.getElementById('stage_adresse_form_adresse_stage_code_postal')
-                          let ville = document.getElementById('stage_adresse_form_adresse_stage_ville')
-
-                          adss.disabled = false
-                          adssSuite.disabled = false
-                          adssComplement.disabled = false
-                          cp.disabled = false
-                          ville.disabled = false
-                        })
-
-                        //---------------------------------------------------------------------------
-                        //---------------------------------------------------------------------------
-                        // Système d'autocomplétion de l'adresse en relation avec l'API
-                        //---------------------------------------------------------------------------
-                        //---------------------------------------------------------------------------
-
-                        document.getElementById('adresseStage').addEventListener('keyup', (e) => {
-                          let adresseSuite = e.currentTarget.value
-
-                          // On récupère l'api et on y injecte la saisie de l'utilisateur
-                          fetch('https://api-adresse.data.gouv.fr/search/?q=' + adresseSuite + '&type=&autocomplete=1')
-                            //on l'injecte dans data et on la transforme en json
-                            .then((data) => {
-                              return data.json()
-                            })
-                            .then((data) => {
-                              console.log(data)
-
-                              let options = document.querySelectorAll('#adresselisteStage li')
-                              let adresselisteStage = document.getElementById('adresselisteStage')
-
-                              options.forEach((option) => {
-                                option.remove()
-                              })
-
-                              data.features.forEach(element => {
-                                console.log(element.properties.label)
-                                let autoCompleteOpt = document.createElement('li')
-                                autoCompleteOpt.innerHTML = element.properties.label
-                                autoCompleteOpt.dataset.name = element.properties.name
-                                autoCompleteOpt.dataset.city = element.properties.city
-                                autoCompleteOpt.dataset.postcode = element.properties.postcode
-                                autoCompleteOpt.classList.add('item')
-                                adresselisteStage.append(autoCompleteOpt)
-                              })
-                              document.querySelectorAll('.item').forEach((event) => {
-                                event.addEventListener('click', (e) => {
-                                  console.log(e)
-                                  document.getElementById('stage_adresse_form_adresse_stage_ville').innerHTML = ''
-                                  let adresse = e.currentTarget
-                                  console.log(adresse.dataset.city)
-                                  document.getElementById('stage_adresse_form_adresse_stage_adresse1').value = adresse.dataset.name
-                                  document.getElementById('stage_adresse_form_adresse_stage_code_postal').value = adresse.dataset.postcode
-                                  let opt1 = document.createElement('option')
-                                  opt1.text = adresse.dataset.city
-                                  opt1.value = adresse.dataset.city
-                                  document.getElementById('stage_adresse_form_adresse_stage_ville').append(opt1)
-                                })
-                              })
-                            })
-                        })
-
-                        //---------------------------------------------------------------------------
-                        //---------------------------------------------------------------------------
-                        // traitement de formulaire avec interception du submit, ajout de données et soumission du formulaire
-                        //---------------------------------------------------------------------------
-                        //---------------------------------------------------------------------------
-
-                        const formElemAdssStage = document.forms['stage_adresse_form'] //récupération du formulaire, par son name
-
-                        formElemAdssStage.addEventListener('submit', async (e) => { //on détecte lorsque le formulaire est soumis
-                          e.preventDefault() //on empèche qu'il soit envoyé
-                          const formData = new FormData(formElemAdssStage) //on construit un objet formData avec les éléments du formulaire
-                          formData.set('stage_adresse_form[adresse_stage][adresse1]', document.getElementById('stage_adresse_form_adresse_stage_adresse1').value) //on ajoute un élément dans le formulaire en récupérant les données d'un champ disabled
-
-                          formData.set('stage_adresse_form[adresse_stage][code_postal]', document.getElementById('stage_adresse_form_adresse_stage_code_postal').value)
-
-                          formData.set('stage_adresse_form[adresse_stage][ville]', document.getElementById('stage_adresse_form_adresse_stage_ville').value)
-
-                          formData.set('button', e.submitter.id)
-                          console.log(e)
-
-                          console.log(formData.get('stage_adresse_form[adresse_stage][adresse1]')) //pour tester que ca fonctionne
-                          console.log(formData.get('stage_adresse_form[adresse_stage][code_postal]'))
-                          console.log(formData.get('stage_adresse_form[adresse_stage][ville]'))
-
-                          let response = await fetch(formElemAdssStage.action, { //on soumet de nouveau le formulaire, mais on doit simuler tout le processus en récupérant le lien dans action
-                            method: 'POST', //méthode en post (on pourrait dire aussi formElemAdssStage.method)
-                            body: formData, //on passe les données avec l'objet créé plus haut
-                          })
-                            .then((data) => {
-                              return data.json()
-                            })
-                            .then((data) => {
-                              console.log(data)
-                              window.location.href = data.route
-                            })
-                        })
-
-                        //---------------------------------------------------------------------------
-                        //--------------------------RECUP DATA ENTREPRISE----------------------------
-                        //--------------en JS car le submit de ce form est en JS---------------------
-
-                        const formElemAdresseStage = document.forms['stage_adresse_form']
-                        document.getElementById('stage_adresse_form_recup_informations').addEventListener('click', async (e) => {
-
-                          document.getElementById('stage_adresse_form_adresse_stage_adresse1').value = document.getElementById('stage_adresse_form_adresse_stage_entreprise_adresse_adresse1').value //on ajoute un élément dans le formulaire en récupérant les données d'un champ
-                          document.getElementById('stage_adresse_form_adresse_stage_adresse2').value = document.getElementById('stage_adresse_form_adresse_stage_entreprise_adresse_adresse2').value
-                          document.getElementById('stage_adresse_form_adresse_stage_adresse3').value = document.getElementById('stage_adresse_form_adresse_stage_entreprise_adresse_adresse3').value
-                          document.getElementById('stage_adresse_form_adresse_stage_code_postal').value = document.getElementById('stage_adresse_form_adresse_stage_entreprise_adresse_code_postal').value
-
-                          let opt = document.createElement('option')
-                          document.getElementById('stage_adresse_form_adresse_stage_ville').innerHTML = ''
-                          opt.text = document.getElementById('stage_adresse_form_adresse_stage_entreprise_adresse_ville').value
-                          opt.value = document.getElementById('stage_adresse_form_adresse_stage_entreprise_adresse_ville').value
-                          console.log(opt)
-                          document.getElementById('stage_adresse_form_adresse_stage_ville').append(opt)
-                        })
-                      })
-
-
-                    </script>
-
-                    {% elseif step==6 %}
-
-                    <ul class="nav nav-process nav-process-sm nav-process-block nav-process-yellow" id="process-block-color">
-                        <li class="nav-item complete">
-                            <a class="nav-link" href="{{ path('app_stage_etudiant_formulaire',
-                                {stageEtudiant:stageEtudiant.uuidString}) }}">
-                                <span class="nav-link-number">1</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">Vous</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item complete">
-
-                            <a class="nav-link" href="{{ path('app_formulaireEntreprise', { stageEtudiant:stageEtudiant.uuidString }) }}">
-                                <span class="nav-link-number">2</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">L'entreprise</span>
-                                </div>
-                                </a>
-                        </li>
-                        <li class="nav-item complete">
-
-                            <a class="nav-link" href="{{ path('app_formulaireResponsable', { stageEtudiant:stageEtudiant.uuidString }) }}">
-                                <span class="nav-link-number">3</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">Le signataire</span>
-                                </div>
-                                </a>
-                        </li>
-                        <li class="nav-item complete">
-                            <a class="nav-link" href="{{ path('app_formulaireTuteur', { stageEtudiant:stageEtudiant.uuidString }) }}">
-                                <span class="nav-link-number">4</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">Le tuteur</span>
-                                </div>
-                               </a>
-                        </li>
-                        <li class="nav-item complete">
-
-                            <a class="nav-link" href="{{ path('app_formulaireAdresseStage', { stageEtudiant:stageEtudiant.uuidString }) }}">
-                                <span class="nav-link-number">5</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title"> L'adresse</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="nav-item processing">
-
-                            <a class="nav-link" href="#">
-                                <span class="nav-link-number">6</span>
-                                <div class="nav-link-body">
-                                    <span class="nav-title">Le stage</span>
-                                </div>
-                            </a>
-                        </li>
-                    </ul>
-
-                    <h2>Le Stage</h2>
-                    <p>Les champs marqués d'un * sont obligatoires</p>
-
-                    <div {{ stimulus_controller('formulaire', {url:path('app_stimulus_modal_adss_stage',
-                        {stageEtudiant:stageEtudiant.uuidString})}) }}>
-
-                        <div data-formulaire-target="connect">
-                            <div class="form-rows">
-                                <div class="form-main">
-                                    {% form_theme form_stage 'bootstrap_5_layout.html.twig' %}
-                                    {{ form_start(form_stage) }}
-                                    {{ form_row(form_stage.date_debut_stage) }}
-                                    {{ form_row(form_stage.date_fin_stage) }}
-                                    {{ form_row(form_stage.duree_jours_stage) }}
-                                    {{ form_row(form_stage.service_stage_entreprise) }}
-                                    <div class="mission">
-                                        {{ form_row(form_stage.sujet_stage) }}
-                                        {{ form_row(form_stage.activites) }}
-                                    </div>
-                                    {{ form_row(form_stage.periodes_interruptions) }}
-                                    {{ form_row(form_stage.duree_hebdomadaire) }}
-                                    <div class="mission">
-                                        {{ form_row(form_stage.commentaire_duree_hebdomadaire) }}
-                                        {{ form_row(form_stage.amenagement_stage) }}
-                                    </div>
-                                    <div id="gratif">
-                                        {{ form_row(form_stage.gratification) }}
-                                    </div>
-
-                                    <div id="gratif_opt1">
-                                        {{ form_row(form_stage.gratification_periode) }}
-                                    </div>
-                                    <div id="gratif_opt2">
-                                        {{ form_row(form_stage.gratification_montant) }}
-                                    </div>
-                                    {{ form_row(form_stage.avantages) }}
-                                </div>
-                                <hr>
-
-                                <div class="form-btn-multiple">
-                                    <div class="form-btn-help-precedent">
-                                        {{ form_row(form_stage.retour) }}
-                                        <p class="form-text mb-0 help-text">Les données saisies seront
-                                                                            sauvegardées.</p>
-                                    </div>
-                                    <div class="form-btn-help-suivant">
-                                        {{ form_row(form_stage.suivant) }}
-                                        <p class="form-text mb-0 help-text">Les données saisies seront
-                                                                            sauvegardées.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        {{ include('stage/formulaire/_modal.html.twig', {
-                            modalTitle: 'Récapitulatif des informations de l\'adresse du stage',
-                            modalRetour: 'app_formulaireAdresseStage',
-                        }) }}
-                    </div>
-                    <script defer lang="text/javascript" type="module">
-                      window.addEventListener('load', () => {
-
-                          {#                            //------------------------------------------------------------------------------ -#}
-                          {#                            //-----------------------CALC NBR JOURS----------------------------------------- -#}
-
-                        document.getElementById('form_type_stage_date_fin_stage').addEventListener('change', calcJours)
-                        document.getElementById('form_type_stage_date_debut_stage').addEventListener('change', calcJours)
-
-                        function calcJours(e) {
-                          let dateDebutStage = document.getElementById('form_type_stage_date_debut_stage').value
-                          let dateFinStage = document.getElementById('form_type_stage_date_fin_stage').value
-
-                          fetch('{{ path('calendar') }}', {
-                            method: 'Post',
-                            body: JSON.stringify({ date1: dateDebutStage, date2: dateFinStage }),
-                          })
-                            .then((data) => {
-                              console.log(dateDebutStage)
-
-                              return data.json()
-                            })
-                            .then((data) => {
-                              console.log(data)
-                              document.getElementById('form_type_stage_duree_jours_stage').value = data.duree
-                            })
-                            .then(() => {
-                              //---------------------------------------------GRATIF OBLIGATOIRE---------------------------------------------
-                              // -----------------------------------------------------------------------------------------------------------
-                              let interval = document.getElementById('form_type_stage_duree_jours_stage')
-                              let gratification = document.getElementById('form_type_stage_gratification')
-                              let gratificationOui = document.getElementById('form_type_stage_gratification_0')
-                              let gratificationNon = document.getElementById('form_type_stage_gratification_1')
-                              if (interval.value >= 40) {
-                                gratificationOui.checked = true
-                                document.getElementById(('gratif_opt1')).style.display = 'block'
-                                document.getElementById(('gratif_opt2')).style.display = 'block'
-                                document.getElementById(('gratif')).style.display = 'block'
-                                document.querySelector('.form-check:nth-child(1)').style.display = 'block'
-                                document.querySelector('.form-check:nth-child(2)').style.display = 'none'
-                              } else {
-                                // gratification.value = 'non'
-                                gratificationNon.checked = true
-                                document.getElementById('form_type_stage_gratification_periode_2').value = ''
-                                document.getElementById('form_type_stage_gratification_periode_1').value = ''
-                                document.getElementById('form_type_stage_gratification_periode_0').value = ''
-
-                                document.getElementById('form_type_stage_gratification_montant').value = 0
-                                document.getElementById(('gratif_opt1')).style.display = 'none'
-                                document.getElementById(('gratif_opt2')).style.display = 'none'
-                                document.getElementById(('gratif')).style.display = 'block'
-                                document.querySelector('.form-check:nth-child(1)').style.display = 'block'
-                                document.querySelector('.form-check:nth-child(2)').style.display = 'block'
-
-                                gratificationOui.addEventListener('click', () => {
-                                  document.getElementById(('gratif_opt1')).style.display = 'block'
-                                  document.getElementById(('gratif_opt2')).style.display = 'block'
-                                })
-                                gratificationNon.addEventListener('click', () => {
-                                  document.getElementById('gratif_opt1').style.display = 'none'
-
-                                  document.getElementById('gratif_opt2').style.display = 'none'
-                                })
-                              }
                             })
                         }
                       })
 
-                    </script>
+                    //---------------------------------------------------------------------------
+                    //---------------------------------------------------------------------------
+                    // Bouton qui permet de modifier l'adresse
+                    //---------------------------------------------------------------------------
+                    //---------------------------------------------------------------------------
 
-                    {% elseif step==7 %}
+                    document.getElementById('form_type_entreprise_entreprise_adresse_modif_adresse').addEventListener('click', (e) => {
+                      let adss = document.getElementById('form_type_entreprise_entreprise_adresse_adresse1')
+                      let adssSuite = document.getElementById('form_type_entreprise_entreprise_adresse_adresse2')
+                      let adssComplement = document.getElementById('form_type_entreprise_entreprise_adresse_adresse3')
+                      let cp = document.getElementById('form_type_entreprise_entreprise_adresse_code_postal')
+                      let ville = document.getElementById('form_type_entreprise_entreprise_adresse_ville')
 
-                    <h2>Récapitulatif des informations saisies.</h2>
+                      adss.disabled = false
+                      adssSuite.disabled = false
+                      adssComplement.disabled = false
+                      cp.disabled = false
+                      ville.disabled = false
+                    })
 
-                    <table>
-                        <tr>
-                            <th>Vos informations</th>
-                        </tr>
-                        <tr>
-                            <td>Organisme de sécurité sociale :</td>
-                            <td>{{ stageEtudiant.etudiant.intituleSecuriteSociale }}</td>
-                        </tr>
-                        <tr>
-                            <td>Adresse de l'organisme de sécurité sociale :</td>
-                            <td>{{ stageEtudiant.etudiant.adresseSecuriteSociale }}</td>
-                        </tr>
-                        <tr>
-                            <td>Votre adresse :</td>
-                            <td>{{ stageEtudiant.etudiant.adresse.adresse1 }}
-                                {{ stageEtudiant.etudiant.adresse.adresse2 }}
-                                {{ stageEtudiant.etudiant.adresse.adresse3 }}
-                                {{ stageEtudiant.etudiant.adresse.codePostal }}
-                                {{ stageEtudiant.etudiant.adresse.ville }}</td>
-                        </tr>
-                        <tr>
-                            <td>Votre numéro de téléphone :</td>
-                            <td>{{ stageEtudiant.etudiant.tel1|tel_format }}</td>
-                        </tr>
-                        <tr>
-                            <td>Votre email personnel :</td>
-                            <td>{{ stageEtudiant.etudiant.mailPerso }}</td>
-                        </tr>
-                        <tr>
-                            <th>
-                                L'entreprise
-                            </th>
-                        </tr>
-                        <tr>
-                            <td>N° de siret :</td>
-                            <td>{{ stageEtudiant.entreprise.siret }}</td>
-                        </tr>
-                        <tr>
-                            <td>Raison sociale :</td>
-                            <td>{{ stageEtudiant.entreprise.raisonSociale }}</td>
-                        </tr>
-                        <tr>
-                            <td>Adresse de l'entreprise :</td>
-                            <td>{{ stageEtudiant.entreprise.adresse.display|raw }}</td>
-                        </tr>
-                        <tr>
-                            <th>
-                                Le.La responsable (signataire de la convention)
-                            </th>
-                        </tr>
-                        <tr>
-                            <td>Prénom, Nom :</td>
-                            <td>{{ stageEtudiant.entreprise.responsable.prenom|capitalize }} {{ stageEtudiant.entreprise.responsable.nom|capitalize }}</td>
-                        </tr>
-                        <tr>
-                            <td>Fonction dans l'entreprise :</td>
-                            <td>{{ stageEtudiant.entreprise.responsable.fonction }}</td>
-                        </tr>
-                        <tr>
-                            <td>Email :</td>
-                            <td>{{ stageEtudiant.entreprise.responsable.email }}</td>
-                        </tr>
-                        <tr>
-                            <td>Téléphone :</td>
-                            <td>{{ stageEtudiant.entreprise.responsable.telephone|tel_format }}</td>
-                        </tr>
-                        <tr>
-                            <td>Portable :</td>
-                            <td>{{ stageEtudiant.entreprise.responsable.portable|tel_format }}</td>
-                        </tr>
-                        <tr>
-                            <th>
-                                Le.La tuteur.trice
-                            </th>
-                        </tr>
-                        <tr>
-                            <td>Prénom, Nom :</td>
-                            <td>{{ stageEtudiant.tuteur.prenom|capitalize }} {{ stageEtudiant.tuteur.nom|capitalize }}</td>
-                        </tr>
-                        <tr>
-                            <td>Fonction dans l :</td>
-                            <td>{{ stageEtudiant.tuteur.fonction }}</td>
-                        </tr>
-                        <tr>
-                            <td>Email :</td>
-                            <td>{{ stageEtudiant.tuteur.email }}</td>
-                        </tr>
-                        <tr>
-                            <td>Téléphone :</td>
-                            <td>{{ stageEtudiant.tuteur.telephone|tel_format }}</td>
-                        </tr>
-                        <tr>
-                            <td>Portable :</td>
-                            <td>{{ stageEtudiant.tuteur.portable|tel_format }}</td>
-                        </tr>
-                        <tr>
-                            <th>
-                                L'adresse du lieu où le stage sera effectué
-                            </th>
-                        </tr>
-                        <tr>
-                            <td>Adresse :</td>
-                            <td>{{ stageEtudiant.adresseStage != null ? stageEtudiant.adresseStage.display|raw : 'A
+                    //---------------------------------------------------------------------------
+                    //---------------------------------------------------------------------------
+                    // Système d'autocomplétion de l'adresse en relation avec l'API
+                    //---------------------------------------------------------------------------
+                    //---------------------------------------------------------------------------
+
+                    document.getElementById('adresseEntreprise').addEventListener('keyup', (e) => {
+                      let adresseSuite = e.currentTarget.value
+
+                      // On récupère l'api et on y injecte la saisie de l'utilisateur
+                      fetch('https://api-adresse.data.gouv.fr/search/?q=' + adresseSuite + '&type=&autocomplete=1')
+                        //on l'injecte dans data et on la transforme en json
+                        .then((data) => {
+                          return data.json()
+                        })
+                        .then((data) => {
+                          let options = document.querySelectorAll('#adresselisteEntreprise li')
+                          let adresselisteEntreprise = document.getElementById('adresselisteEntreprise')
+
+                          options.forEach((option) => {
+                            option.remove()
+                          })
+
+                          data.features.forEach(element => {
+                            let autoCompleteOpt = document.createElement('li')
+                            autoCompleteOpt.innerHTML = element.properties.label
+                            autoCompleteOpt.dataset.name = element.properties.name
+                            autoCompleteOpt.dataset.city = element.properties.city
+                            autoCompleteOpt.dataset.postcode = element.properties.postcode
+                            autoCompleteOpt.classList.add('item')
+                            adresselisteEntreprise.append(autoCompleteOpt)
+                          })
+                          document.querySelectorAll('.item').forEach((event) => {
+                            event.addEventListener('click', (e) => {
+                              document.getElementById('form_type_entreprise_entreprise_adresse_ville').innerHTML = ''
+                              let adresse = e.currentTarget
+                              document.getElementById('form_type_entreprise_entreprise_adresse_adresse1').value = adresse.dataset.name
+                              document.getElementById('form_type_entreprise_entreprise_adresse_code_postal').value = adresse.dataset.postcode
+                              let opt1 = document.createElement('option')
+                              opt1.text = adresse.dataset.city
+                              opt1.value = adresse.dataset.city
+                              document.getElementById('form_type_entreprise_entreprise_adresse_ville').append(opt1)
+                            })
+                          })
+                        })
+                    })
+
+                    //---------------------------------------------------------------------------
+                    //---------------------------------------------------------------------------
+                    // traitement de formulaire avec interception du submit, ajout de données et soumission du formulaire
+                    //---------------------------------------------------------------------------
+                    //---------------------------------------------------------------------------
+
+                    const formElemEntreprise = document.forms['form_type_entreprise'] //récupération du formulaire, par son name
+
+                    formElemEntreprise.addEventListener('submit', async (e) => { //on détecte lorsque le formulaire est soumis
+                      e.preventDefault() //on empèche qu'il soit envoyé
+                      const formData = new FormData(formElemEntreprise) //on construit un objet formData avec les éléments du formulaire
+                      formData.set('form_type_entreprise[entreprise][adresse][adresse1]', document.getElementById('form_type_entreprise_entreprise_adresse_adresse1').value) //on ajoute un élément dans le formulaire en récupérant les données d'un champs disabled
+
+                      formData.set('form_type_entreprise[entreprise][adresse][code_postal]', document.getElementById('form_type_entreprise_entreprise_adresse_code_postal').value)
+
+                      formData.set('form_type_entreprise[entreprise][adresse][ville]', document.getElementById('form_type_entreprise_entreprise_adresse_ville').value)
+
+                      formData.set('button', e.submitter.id)
+
+                      let response = await fetch(formElemEntreprise.action, { //on soumet de nouveau le formulaire, mais on doit simuler tout le processus en récupérant le lien dans action
+                        method: 'POST', //méthode en post (on pourrait dire aussi formElemEntreprise.method)
+                        body: formData, //on passe les données avec l'objet créé plus haut
+                      })
+                        .then((data) => {
+                          return data.json()
+                        })
+                        .then((data) => {
+                          window.location.href = data.route
+                        })
+                    })
+                  })
+
+                </script>
+
+                {% elseif step==3 %}
+
+                {{ include('stage/formulaire/_processStage.html.twig') }}
+
+
+                <h2>Le.La responsable de l'entreprise (Signataire de la convention)</h2>
+                <p class="form-text mb-0 help-text">La complétion des champs marqués d'un astérisque (*) est
+                                                    obligatoire.</p>
+
+                <div {{ stimulus_controller('formulaire', {url:path('app_stimulus_modal_entreprise', {stageEtudiant:stageEtudiant.uuidString})}) }}>
+
+                    <div data-formulaire-target="connect">
+                        <div class="form-rows">
+                            <div class="form-main">
+                                {% form_theme form_responsable 'bootstrap_5_layout.html.twig' %}
+                                {{ form_start(form_responsable) }}
+
+                                {{ form_row(form_responsable.prenom) }}
+                                {{ form_row(form_responsable.nom) }}
+                                {{ form_row(form_responsable.fonction) }}
+                                {{ form_row(form_responsable.email) }}
+                                {{ form_row(form_responsable.telephone) }}
+                                {{ form_row(form_responsable.portable) }}
+                            </div>
+
+                            <div class="form-btn-multiple">
+                                <div class="form-btn-help-precedent">
+                                    {{ form_row(form_responsable.retour) }}
+                                    <p class="form-text mb-0 help-text">Les données saisies seront sauvegardées.</p>
+                                </div>
+                                <div class="form-btn-help-suivant">
+                                    {{ form_row(form_responsable.suivant) }}
+                                    <p class="form-text mb-0 help-text">Les données saisies seront sauvegardées.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{ include('stage/formulaire/_modal.html.twig', {
+                        modalTitle: 'Récapitulatif des informations de l\'entreprise',
+                        modalRetour: 'app_formulaireEntreprise',
+                    }) }}
+                </div>
+
+                <script defer>
+                  window.addEventListener('load', () => {
+
+                    //---------------------------------------------------------------------------
+                    //---------------------------------------------------------------------------
+                    // traitement de formulaire avec interception du submit, ajout de données et soumission du formulaire
+                    //---------------------------------------------------------------------------
+                    //---------------------------------------------------------------------------
+
+                    const formElemResponsable = document.forms['responsable'] //récupération du formulaire, par son name
+
+                    formElemResponsable.addEventListener('submit', async (e) => { //on détecte lorsque le formulaire est soumis
+                      e.preventDefault() //on empèche qu'il soit envoyé
+                      const formData = new FormData(formElemResponsable) //on construit un objet formData avec les éléments du formulaire
+                      formData.set('responsable[prenom]', document.getElementById('responsable_prenom').value) //on ajoute un élément dans le formulaire en récupérant les données d'un champs disabled
+
+                      formData.set('responsable[nom]', document.getElementById('responsable_nom').value)
+
+                      formData.set('responsable[fonction]', document.getElementById('responsable_fonction').value)
+
+                      formData.set('responsable[email]', document.getElementById('responsable_email').value)
+
+                      formData.set('responsable[telephone]', document.getElementById('responsable_telephone').value)
+
+                      formData.set('responsable[portable]', document.getElementById('responsable_portable').value)
+
+                      formData.set('button', e.submitter.id)
+
+                      let response = await fetch(formElemResponsable.action, { //on soumet de nouveau le formulaire, mais on doit simuler tout le processus en récupérant le lien dans action
+                        method: 'POST', //méthode en post (on pourrait dire aussi formElemEntreprise.method)
+                        body: formData, //on passe les données avec l'objet créé plus haut
+                      })
+                        .then((data) => {
+                          return data.json()
+                        })
+                        .then((data) => {
+                          window.location.href = data.route
+                        })
+                    })
+                  })
+
+                </script>
+
+                {% elseif step==4 %}
+
+                {{ include('stage/formulaire/_processStage.html.twig') }}
+
+
+                <h2>Le tuteur entreprise</h2>
+                <p class="form-text mb-0 help-text">La complétion des champs marqués d'un astérisque (*) est
+                                                    obligatoire.</p>
+
+                <div {{ stimulus_controller('formulaire', {url:path('app_stimulus_modal_responsable', {stageEtudiant:stageEtudiant.uuidString})}) }}>
+
+                    <div data-formulaire-target="connect">
+                        <div class="form-rows">
+                            <div class="form-main">
+                                {% form_theme form_tuteur 'bootstrap_5_layout.html.twig' %}
+                                {{ form_start(form_tuteur) }}
+                                <div class="form-btn-recup">
+                                    {{ form_row(form_tuteur.recup_informations) }}
+                                    <p>Si ces informations sont identiques à celles du signataire de la
+                                       convention</p>
+                                </div>
+                                {{ form_row(form_tuteur.tuteur.prenom) }}
+                                {{ form_row(form_tuteur.tuteur.nom) }}
+                                {{ form_row(form_tuteur.tuteur.fonction) }}
+                                {{ form_row(form_tuteur.tuteur.email) }}
+                                {{ form_row(form_tuteur.tuteur.telephone) }}
+                                {{ form_row(form_tuteur.tuteur.portable) }}
+                            </div>
+
+                            <div class="form-btn-multiple">
+                                <div class="form-btn-help-precedent">
+                                    {{ form_row(form_tuteur.retour) }}
+                                    <p class="form-text mb-0 help-text">Les données saisies seront sauvegardées.</p>
+                                </div>
+                                <div class="form-btn-help-suivant">
+                                    {{ form_row(form_tuteur.suivant) }}
+                                    <p class="form-text mb-0 help-text">Les données saisies seront sauvegardées.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{ include('stage/formulaire/_modal.html.twig', {
+                        modalTitle: 'Récapitulatif des informations du responsable',
+                        modalRetour: 'app_formulaireResponsable',
+                    }) }}
+
+                </div>
+
+
+                {% elseif step==5 %}
+
+                {{ include('stage/formulaire/_processStage.html.twig') }}
+
+
+                <h2>Adresse du lieu où le stage sera effectué</h2>
+                <p class="form-text mb-0 help-text">Les champs marqués d'un * sont obligatoires</p>
+
+                <div {{ stimulus_controller('formulaire', {url:path('app_stimulus_modal_tuteur', {stageEtudiant:stageEtudiant.uuidString})}) }}>
+                    {% form_theme form_adss_stage 'bootstrap_5_layout.html.twig' %}
+
+                    {{ form_start(form_adss_stage) }}
+                    <input type="hidden"
+                           id="stage_adresse_form_adresse_stage_entreprise_adresse_adresse1"
+                           value="{{ stageEtudiant.entreprise != null ? (stageEtudiant.entreprise
+                           .adresse != null ? stageEtudiant.entreprise.adresse.adresse1 : '') : '' }}">
+                    <input type="hidden" id="stage_adresse_form_adresse_stage_entreprise_adresse_adresse2" value="{{ stageEtudiant.entreprise != null ? (stageEtudiant.entreprise
+                    .adresse != null ? stageEtudiant.entreprise.adresse.adresse2 : '') : '' }}">
+                    <input type="hidden" id="stage_adresse_form_adresse_stage_entreprise_adresse_adresse3" value="{{ stageEtudiant.entreprise != null ? (stageEtudiant.entreprise
+                    .adresse != null ? stageEtudiant.entreprise.adresse.adresse3 : '') : '' }}">
+                    <input type="hidden" id="stage_adresse_form_adresse_stage_entreprise_adresse_code_postal" value="{{ stageEtudiant.entreprise != null ? (stageEtudiant.entreprise
+                    .adresse != null ? stageEtudiant.entreprise.adresse.codePostal : '') : '' }}">
+                    <input type="hidden" id="stage_adresse_form_adresse_stage_entreprise_adresse_ville" value="{{ stageEtudiant.entreprise != null ? (stageEtudiant.entreprise
+                    .adresse != null ? stageEtudiant.entreprise.adresse.ville : '') : '' }}">
+
+                    <div data-formulaire-target="connect">
+                        <div class="form-rows">
+                            <div class="form-btn-recup">
+                                {{ form_row(form_adss_stage.recup_informations) }} <p>Si ces informations sont
+                                                                                      identiques à celles du
+                                                                                      signataire de la
+                                                                                      convention</p>
+                            </div>
+                            <div class="form-group-adresse">
+
+                                <label for="adresseStage" class="form-label">Adresse :</label> <br>
+                                <input type="text" id="adresseStage" class="form-control">
+                                <div class="form-text mb-0 help-text">Veuillez saisir votre adresse puis
+                                                                      sélectionner la proposition correspondante
+                                </div>
+
+                                <ul id="adresselisteStage">
+                                </ul>
+
+                                <hr>
+
+                                <div class="form-champs-adresse">
+                                    {{ form_row(form_adss_stage.adresse_stage.adresse1) }}
+                                    {{ form_row(form_adss_stage.adresse_stage.adresse2) }}
+                                    {{ form_row(form_adss_stage.adresse_stage.adresse3) }}
+                                    {{ form_row(form_adss_stage.adresse_stage.code_postal) }}
+                                    {{ form_row(form_adss_stage.adresse_stage.ville) }}
+                                </div>
+
+                                <div class="form-btn-verif">
+                                    {{ form_row(form_adss_stage.adresse_stage.modif_adresse) }}
+                                    <p class="form-text mb-0 help-text">Si l'adresse n'est pas disponible, merci de
+                                                                        la
+                                                                        saisir
+                                                                        manuellement en cliquant sur ce bouton</p>
+                                </div>
+                            </div>
+
+                            <hr>
+
+                            <div class="form-btn-multiple">
+                                <div class="form-btn-help-precedent">
+                                    {{ form_row(form_adss_stage.retour) }}
+                                    <p class="form-text mb-0 help-text">Les données saisies seront sauvegardées.</p>
+                                </div>
+                                <div class="form-btn-help-suivant">
+                                    {{ form_row(form_adss_stage.suivant) }}
+                                    <p class="form-text mb-0 help-text">Les données saisies seront sauvegardées.</p>
+                                </div>
+                            </div>
+                            {{ form_end(form_adss_stage) }}
+                        </div>
+                    </div>
+
+                    {{ include('stage/formulaire/_modal.html.twig', {
+                        modalTitle: 'Récapitulatif des informations du tuteur',
+                        modalRetour: 'app_formulaireTuteur',
+                    }) }}
+
+                </div>
+
+                <script defer>
+                  window.addEventListener('load', () => {
+                    //---------------------------------------------------------------------------
+                    //---------------------------------------------------------------------------
+                    // Utilisation de l'API pour récupérer les villes relatives aux codes postaux
+                    //---------------------------------------------------------------------------
+                    //---------------------------------------------------------------------------
+
+                    // if form_type_vous_cp_vous != focus -> var cp => valeur saisie : form_type_vous_cp_vous
+                    document.getElementById('stage_adresse_form_adresse_stage_code_postal').addEventListener('blur', (e) => {
+                      let cp = e.currentTarget.value
+
+                      // url : liste communes / cp saisi -> inject dans data => data.json
+                      fetch('https://apicarto.ign.fr/api/codes-postaux/communes/' + cp)
+                        .then((data) => {
+                          return data.json()
+                        })
+
+                        .then((data) => {
+                          // input "ville" = var ville
+                          let ville = document.getElementById('stage_adresse_form_adresse_stage_ville')
+                          // var options = éléments html "option" de la liste déroulante
+                          let options = document.querySelectorAll('#stage_adresse_form_adresse_stage_ville option')
+
+                          options.forEach((option) => {
+                            option.remove()
+                          })
+
+                          data.forEach(element => {
+                            let opt1 = document.createElement('option')
+                            opt1.text = element.nomCommune
+                            opt1.value = element.nomCommune
+                            ville.append(opt1)
+                          })
+
+                        })
+                    })
+
+                    //---------------------------------------------------------------------------
+                    //---------------------------------------------------------------------------
+                    // Bouton qui permet de modifier l'adresse
+                    //---------------------------------------------------------------------------
+                    //---------------------------------------------------------------------------
+
+                    document.getElementById('stage_adresse_form_adresse_stage_modif_adresse').addEventListener('click', (e) => {
+                      let adss = document.getElementById('stage_adresse_form_adresse_stage_adresse1')
+                      let adssSuite = document.getElementById('stage_adresse_form_adresse_stage_adresse2')
+                      let adssComplement = document.getElementById('stage_adresse_form_adresse_stage_adresse3')
+                      let cp = document.getElementById('stage_adresse_form_adresse_stage_code_postal')
+                      let ville = document.getElementById('stage_adresse_form_adresse_stage_ville')
+
+                      adss.disabled = false
+                      adssSuite.disabled = false
+                      adssComplement.disabled = false
+                      cp.disabled = false
+                      ville.disabled = false
+                    })
+
+                    //---------------------------------------------------------------------------
+                    //---------------------------------------------------------------------------
+                    // Système d'autocomplétion de l'adresse en relation avec l'API
+                    //---------------------------------------------------------------------------
+                    //---------------------------------------------------------------------------
+
+                    document.getElementById('adresseStage').addEventListener('keyup', (e) => {
+                      let adresseSuite = e.currentTarget.value
+
+                      // On récupère l'api et on y injecte la saisie de l'utilisateur
+                      fetch('https://api-adresse.data.gouv.fr/search/?q=' + adresseSuite + '&type=&autocomplete=1')
+                        //on l'injecte dans data et on la transforme en json
+                        .then((data) => {
+                          return data.json()
+                        })
+                        .then((data) => {
+
+                          let options = document.querySelectorAll('#adresselisteStage li')
+                          let adresselisteStage = document.getElementById('adresselisteStage')
+
+                          options.forEach((option) => {
+                            option.remove()
+                          })
+
+                          data.features.forEach(element => {
+                            let autoCompleteOpt = document.createElement('li')
+                            autoCompleteOpt.innerHTML = element.properties.label
+                            autoCompleteOpt.dataset.name = element.properties.name
+                            autoCompleteOpt.dataset.city = element.properties.city
+                            autoCompleteOpt.dataset.postcode = element.properties.postcode
+                            autoCompleteOpt.classList.add('item')
+                            adresselisteStage.append(autoCompleteOpt)
+                          })
+                          document.querySelectorAll('.item').forEach((event) => {
+                            event.addEventListener('click', (e) => {
+                              document.getElementById('stage_adresse_form_adresse_stage_ville').innerHTML = ''
+                              let adresse = e.currentTarget
+                              document.getElementById('stage_adresse_form_adresse_stage_adresse1').value = adresse.dataset.name
+                              document.getElementById('stage_adresse_form_adresse_stage_code_postal').value = adresse.dataset.postcode
+                              let opt1 = document.createElement('option')
+                              opt1.text = adresse.dataset.city
+                              opt1.value = adresse.dataset.city
+                              document.getElementById('stage_adresse_form_adresse_stage_ville').append(opt1)
+                            })
+                          })
+                        })
+                    })
+
+                    //---------------------------------------------------------------------------
+                    //---------------------------------------------------------------------------
+                    // traitement de formulaire avec interception du submit, ajout de données et soumission du formulaire
+                    //---------------------------------------------------------------------------
+                    //---------------------------------------------------------------------------
+
+                    const formElemAdssStage = document.forms['stage_adresse_form'] //récupération du formulaire, par son name
+
+                    formElemAdssStage.addEventListener('submit', async (e) => { //on détecte lorsque le formulaire est soumis
+                      e.preventDefault() //on empèche qu'il soit envoyé
+                      const formData = new FormData(formElemAdssStage) //on construit un objet formData avec les éléments du formulaire
+                      formData.set('stage_adresse_form[adresse_stage][adresse1]', document.getElementById('stage_adresse_form_adresse_stage_adresse1').value) //on ajoute un élément dans le formulaire en récupérant les données d'un champ disabled
+                      formData.set('stage_adresse_form[adresse_stage][adresse2]', document.getElementById
+                      ('stage_adresse_form_adresse_stage_adresse2').value)
+                      formData.set('stage_adresse_form[adresse_stage][adresse3]', document.getElementById
+                      ('stage_adresse_form_adresse_stage_adresse3').value)
+
+                      formData.set('stage_adresse_form[adresse_stage][code_postal]', document.getElementById('stage_adresse_form_adresse_stage_code_postal').value)
+
+                      formData.set('stage_adresse_form[adresse_stage][ville]', document.getElementById('stage_adresse_form_adresse_stage_ville').value)
+
+                      formData.set('button', e.submitter.id)
+
+                      let response = await fetch(formElemAdssStage.action, { //on soumet de nouveau le formulaire, mais on doit simuler tout le processus en récupérant le lien dans action
+                        method: 'POST', //méthode en post (on pourrait dire aussi formElemAdssStage.method)
+                        body: formData, //on passe les données avec l'objet créé plus haut
+                      })
+                        .then((data) => {
+                          return data.json()
+                        })
+                        .then((data) => {
+                          window.location.href = data.route
+                        })
+                    })
+
+                    //---------------------------------------------------------------------------
+                    //--------------------------RECUP DATA ENTREPRISE----------------------------
+                    //--------------en JS car le submit de ce form est en JS---------------------
+
+                    const formElemAdresseStage = document.forms['stage_adresse_form']
+                    document.getElementById('stage_adresse_form_recup_informations').addEventListener('click', async (e) => {
+
+                      document.getElementById('stage_adresse_form_adresse_stage_adresse1').value = document.getElementById('stage_adresse_form_adresse_stage_entreprise_adresse_adresse1').value //on ajoute un élément dans le formulaire en récupérant les données d'un champ
+                      document.getElementById('stage_adresse_form_adresse_stage_adresse2').value = document.getElementById('stage_adresse_form_adresse_stage_entreprise_adresse_adresse2').value
+                      document.getElementById('stage_adresse_form_adresse_stage_adresse3').value = document.getElementById('stage_adresse_form_adresse_stage_entreprise_adresse_adresse3').value
+                      document.getElementById('stage_adresse_form_adresse_stage_code_postal').value = document.getElementById('stage_adresse_form_adresse_stage_entreprise_adresse_code_postal').value
+
+                      let opt = document.createElement('option')
+                      document.getElementById('stage_adresse_form_adresse_stage_ville').innerHTML = ''
+                      opt.text = document.getElementById('stage_adresse_form_adresse_stage_entreprise_adresse_ville').value
+                      opt.value = document.getElementById('stage_adresse_form_adresse_stage_entreprise_adresse_ville').value
+                      document.getElementById('stage_adresse_form_adresse_stage_ville').append(opt)
+                    })
+                  })
+
+
+                </script>
+
+                {% elseif step==6 %}
+
+                {{ include('stage/formulaire/_processStage.html.twig') }}
+
+                <h2>Le Stage</h2>
+                <p>Les champs marqués d'un * sont obligatoires</p>
+
+                <div {{ stimulus_controller('formulaire', {url:path('app_stimulus_modal_adss_stage',
+                    {stageEtudiant:stageEtudiant.uuidString})}) }}>
+
+                    <div data-formulaire-target="connect">
+                        <div class="form-rows">
+                            <div class="form-main">
+                                {% form_theme form_stage 'bootstrap_5_layout.html.twig' %}
+                                {{ form_start(form_stage) }}
+                                {{ form_row(form_stage.date_debut_stage) }}
+                                {{ form_row(form_stage.date_fin_stage) }}
+                                {{ form_row(form_stage.duree_jours_stage) }}
+                                {{ form_row(form_stage.service_stage_entreprise) }}
+                                <div class="mission">
+                                    {{ form_row(form_stage.sujet_stage) }}
+                                    {{ form_row(form_stage.activites) }}
+                                </div>
+                                {{ form_row(form_stage.periodes_interruptions) }}
+                                {{ form_row(form_stage.duree_hebdomadaire) }}
+                                <div class="mission">
+                                    {{ form_row(form_stage.commentaire_duree_hebdomadaire) }}
+                                    {{ form_row(form_stage.amenagement_stage) }}
+                                </div>
+                                <div id="gratif">
+                                    {{ form_row(form_stage.gratification) }}
+                                </div>
+
+                                <div id="gratif_opt1">
+                                    {{ form_row(form_stage.gratification_periode) }}
+                                </div>
+                                <div id="gratif_opt2">
+                                    {{ form_row(form_stage.gratification_montant) }}
+                                </div>
+                                {{ form_row(form_stage.avantages) }}
+                            </div>
+                            <hr>
+
+                            <div class="form-btn-multiple">
+                                <div class="form-btn-help-precedent">
+                                    {{ form_row(form_stage.retour) }}
+                                    <p class="form-text mb-0 help-text">Les données saisies seront
+                                                                        sauvegardées.</p>
+                                </div>
+                                <div class="form-btn-help-suivant">
+                                    {{ form_row(form_stage.suivant) }}
+                                    <p class="form-text mb-0 help-text">Les données saisies seront
+                                                                        sauvegardées.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{ include('stage/formulaire/_modal.html.twig', {
+                        modalTitle: 'Récapitulatif des informations de l\'adresse du stage',
+                        modalRetour: 'app_formulaireAdresseStage',
+                    }) }}
+                </div>
+                <script defer lang="text/javascript" type="module">
+                  window.addEventListener('load', () => {
+
+                      {#                            //------------------------------------------------------------------------------ -#}
+                      {#                            //-----------------------CALC NBR JOURS----------------------------------------- -#}
+
+                    document.getElementById('form_type_stage_date_fin_stage').addEventListener('change', calcJours)
+                    document.getElementById('form_type_stage_date_debut_stage').addEventListener('change', calcJours)
+
+                    let gratificationOui = document.getElementById('form_type_stage_gratification_0')
+                    let gratificationNon = document.getElementById('form_type_stage_gratification_1')
+                    gratificationOui.addEventListener('click', () => {
+                      document.getElementById(('gratif_opt1')).style.display = 'block'
+                      document.getElementById(('gratif_opt2')).style.display = 'block'
+                    })
+                    gratificationNon.addEventListener('click', () => {
+                      document.getElementById('gratif_opt1').style.display = 'none'
+
+                      document.getElementById('gratif_opt2').style.display = 'none'
+                    })
+
+                    function calcJours(e) {
+                      let dateDebutStage = document.getElementById('form_type_stage_date_debut_stage').value
+                      let dateFinStage = document.getElementById('form_type_stage_date_fin_stage').value
+
+                      fetch('{{ path('calendar') }}', {
+                        method: 'Post',
+                        body: JSON.stringify({ date1: dateDebutStage, date2: dateFinStage }),
+                      })
+                        .then((data) => {
+                          return data.json()
+                        })
+                        .then((data) => {
+                          document.getElementById('form_type_stage_duree_jours_stage').value = data.duree
+                        })
+                        .then(() => {
+                          //---------------------------------------------GRATIF OBLIGATOIRE---------------------------------------------
+                          // -----------------------------------------------------------------------------------------------------------
+                          let interval = document.getElementById('form_type_stage_duree_jours_stage')
+                          let gratification = document.getElementById('form_type_stage_gratification')
+
+                          if (interval.value >= 40) {
+                            gratificationOui.checked = true
+                            document.getElementById(('gratif_opt1')).style.display = 'block'
+                            document.getElementById(('gratif_opt2')).style.display = 'block'
+                            document.getElementById(('gratif')).style.display = 'block'
+                            document.querySelector('.form-check:nth-child(1)').style.display = 'block'
+                            document.querySelector('.form-check:nth-child(2)').style.display = 'none'
+                          } else {
+                            // gratification.value = 'non'
+                            gratificationNon.checked = true
+                            document.getElementById('form_type_stage_gratification_periode_2').value = ''
+                            document.getElementById('form_type_stage_gratification_periode_1').value = ''
+                            document.getElementById('form_type_stage_gratification_periode_0').value = ''
+
+                            document.getElementById('form_type_stage_gratification_montant').value = 0
+                            document.getElementById(('gratif_opt1')).style.display = 'none'
+                            document.getElementById(('gratif_opt2')).style.display = 'none'
+                            document.getElementById(('gratif')).style.display = 'block'
+                            document.querySelector('.form-check:nth-child(1)').style.display = 'block'
+                            document.querySelector('.form-check:nth-child(2)').style.display = 'block'
+                          }
+                        })
+                    }
+                  })
+
+                </script>
+
+                {% elseif step==7 %}
+                {{ include('stage/formulaire/_processStage.html.twig') }}
+
+                <h2>Récapitulatif des informations saisies.</h2>
+                <div class="alert alert-warning">
+                    Merci de bien vérifier vos informations et de valider définivement votre formulaire de stage.
+                </div>
+                <table class="table table-bordered">
+                    <tr>
+                        <th colspan="2" class="th_titre">Vos informations</th>
+                    </tr>
+                    <tr>
+                        <td>Organisme de sécurité sociale :</td>
+                        <td>{{ stageEtudiant.etudiant.intituleSecuriteSociale }}</td>
+                    </tr>
+                    <tr>
+                        <td>Adresse de l'organisme de sécurité sociale :</td>
+                        <td>{{ stageEtudiant.etudiant.adresseSecuriteSociale }}</td>
+                    </tr>
+                    <tr>
+                        <td>Votre adresse :</td>
+                        <td>{{ stageEtudiant.etudiant.adresse.adresse1 }}
+                            {{ stageEtudiant.etudiant.adresse.adresse2 }}
+                            {{ stageEtudiant.etudiant.adresse.adresse3 }}
+                            {{ stageEtudiant.etudiant.adresse.codePostal }}
+                            {{ stageEtudiant.etudiant.adresse.ville }}</td>
+                    </tr>
+                    <tr>
+                        <td>Votre numéro de téléphone :</td>
+                        <td>{{ stageEtudiant.etudiant.tel1|tel_format }}</td>
+                    </tr>
+                    <tr>
+                        <td>Votre email personnel :</td>
+                        <td>{{ stageEtudiant.etudiant.mailPerso|mailto }}</td>
+                    </tr>
+                    <tr>
+                        <th colspan="2" class="th_titre">
+                            L'entreprise
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>N° de siret :</td>
+                        <td>{{ stageEtudiant.entreprise.siret }}</td>
+                    </tr>
+                    <tr>
+                        <td>Raison sociale :</td>
+                        <td>{{ stageEtudiant.entreprise.raisonSociale }}</td>
+                    </tr>
+                    <tr>
+                        <td>Adresse de l'entreprise :</td>
+                        <td>{{ stageEtudiant.entreprise.adresse.display|raw }}</td>
+                    </tr>
+                    <tr>
+                        <th colspan="2" class="th_titre">
+                            Le.La responsable (signataire de la convention)
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>Prénom, Nom :</td>
+                        <td>{{ stageEtudiant.entreprise.responsable.prenom|capitalize }} {{ stageEtudiant.entreprise.responsable.nom|capitalize }}</td>
+                    </tr>
+                    <tr>
+                        <td>Fonction dans l'entreprise :</td>
+                        <td>{{ stageEtudiant.entreprise.responsable.fonction }}</td>
+                    </tr>
+                    <tr>
+                        <td>Email :</td>
+                        <td>{{ stageEtudiant.entreprise.responsable.email|mailto }}</td>
+                    </tr>
+                    <tr>
+                        <td>Téléphone :</td>
+                        <td>{{ stageEtudiant.entreprise.responsable.telephone|tel_format }}</td>
+                    </tr>
+                    <tr>
+                        <td>Portable :</td>
+                        <td>{{ stageEtudiant.entreprise.responsable.portable|tel_format }}</td>
+                    </tr>
+                    <tr>
+                        <th colspan="2" class="th_titre">
+                            Le.La tuteur.trice
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>Prénom, Nom :</td>
+                        <td>{{ stageEtudiant.tuteur.prenom|capitalize }} {{ stageEtudiant.tuteur.nom|capitalize }}</td>
+                    </tr>
+                    <tr>
+                        <td>Fonction dans l :</td>
+                        <td>{{ stageEtudiant.tuteur.fonction }}</td>
+                    </tr>
+                    <tr>
+                        <td>Email :</td>
+                        <td>{{ stageEtudiant.tuteur.email|mailto }}</td>
+                    </tr>
+                    <tr>
+                        <td>Téléphone :</td>
+                        <td>{{ stageEtudiant.tuteur.telephone|tel_format }}</td>
+                    </tr>
+                    <tr>
+                        <td>Portable :</td>
+                        <td>{{ stageEtudiant.tuteur.portable|tel_format }}</td>
+                    </tr>
+                    <tr>
+                        <th colspan="2" class="th_titre">
+                            L'adresse du lieu où le stage sera effectué
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>Adresse :</td>
+                        <td>{{ stageEtudiant.adresseStage != null ? stageEtudiant.adresseStage.display|raw : 'A
                             compléter' }}</td>
-                        </tr>
-                        <tr>
-                            <th>
-                                Le stage
-                            </th>
-                        </tr>
-                        <tr>
-                            <td>Date de début :</td>
-                            <td>{{ stageEtudiant.dateDebutStage|date('d-m-Y') }}</td>
-                        </tr>
-                        <tr>
-                            <td>Date de fin :</td>
-                            <td>{{ stageEtudiant.dateFinStage|date('d-m-Y') }}</td>
-                        </tr>
-                        <tr>
-                            <td>Nombre de jours de stage :</td>
-                            <td>{{ stageEtudiant.dureeJoursStage }} jours</td>
-                        </tr>
-                        <tr>
-                            <td>Service dans l'entreprise :</td>
-                            <td>{{ stageEtudiant.serviceStageEntreprise }}</td>
-                        </tr>
-                        <tr>
-                            <td>Mission principale :</td>
-                            <td>{{ stageEtudiant.sujetStage }}</td>
-                        </tr>
-                        <tr>
-                            <td>Activités à réaliser :</td>
-                            <td>{{ stageEtudiant.activites }}</td>
-                        </tr>
-                        <tr>
-                            <td>Périodes d'interruptions :</td>
-                            <td>{{ stageEtudiant.periodesInterruptions }}</td>
-                        </tr>
-                        <tr>
-                            <td>Durée de travail hebdomadaire :</td>
-                            <td>{{ stageEtudiant.dureeHebdomadaire }}</td>
-                        </tr>
-                        <tr>
-                            <td>Commentaires sur la durée du travail :</td>
-                            <td>{{ stageEtudiant.commentaireDureeHebdomadaire }}</td>
-                        </tr>
-                        <tr>
-                            <td>Aménagement du stage :</td>
-                            <td>{{ stageEtudiant.amenagementStage }}</td>
-                        </tr>
-                        <tr>
-                            <td>Gratification :</td>
-                            <td>{{ stageEtudiant.gratification }}</td>
-                        </tr>
-                        <tr>
-                            <td>Prériodicité de gratification :</td>
-                            <td>{{ stageEtudiant.gratificationPeriode }}</td>
-                        </tr>
-                        <tr>
-                            <td>Montant de la gratification :</td>
-                            <td>{{ stageEtudiant.gratificationMontant|number_format(2) }} €</td>
-                        </tr>
-                        <tr>
-                            <td>Avantages :</td>
-                            <td>{{ stageEtudiant.avantages }}</td>
-                        </tr>
+                    </tr>
+                    <tr>
+                        <th colspan="2" class="th_titre">
+                            Le stage
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>Date de début :</td>
+                        <td>{{ stageEtudiant.dateDebutStage|format_date('short') }}</td>
+                    </tr>
+                    <tr>
+                        <td>Date de fin :</td>
+                        <td>{{ stageEtudiant.dateFinStage|format_date('short') }}</td>
+                    </tr>
+                    <tr>
+                        <td>Nombre de jours de stage :</td>
+                        <td>{{ stageEtudiant.dureeJoursStage }} jours</td>
+                    </tr>
+                    <tr>
+                        <td>Service dans l'entreprise :</td>
+                        <td>{{ stageEtudiant.serviceStageEntreprise }}</td>
+                    </tr>
+                    <tr>
+                        <td>Mission principale :</td>
+                        <td>{{ stageEtudiant.sujetStage }}</td>
+                    </tr>
+                    <tr>
+                        <td>Activités à réaliser :</td>
+                        <td>{{ stageEtudiant.activites }}</td>
+                    </tr>
+                    <tr>
+                        <td>Périodes d'interruptions :</td>
+                        <td>{{ stageEtudiant.periodesInterruptions }}</td>
+                    </tr>
+                    <tr>
+                        <td>Durée de travail hebdomadaire :</td>
+                        <td>{{ stageEtudiant.dureeHebdomadaire }} heures</td>
+                    </tr>
+                    <tr>
+                        <td>Commentaires sur la durée du travail :</td>
+                        <td>{{ stageEtudiant.commentaireDureeHebdomadaire }}</td>
+                    </tr>
+                    <tr>
+                        <td>Aménagement du stage :</td>
+                        <td>{{ stageEtudiant.amenagementStage }}</td>
+                    </tr>
+                    <tr>
+                        <td>Gratification :</td>
+                        <td>{{ stageEtudiant.gratification == true ? 'Oui' : 'Non' }}</td>
+                    </tr>
+                    <tr>
+                        <td>Prériodicité de gratification :</td>
+                        <td>{{ stageEtudiant.gratificationPeriode }}</td>
+                    </tr>
+                    <tr>
+                        <td>Montant de la gratification :</td>
+                        <td>{{ stageEtudiant.gratificationMontant|number_format(2) }} €</td>
+                    </tr>
+                    <tr>
+                        <td>Avantages :</td>
+                        <td>{{ stageEtudiant.avantages }}</td>
+                    </tr>
 
-                    </table>
-
-                {% endif %}
+                </table>
+                <form action="{{ path('app_formulaireRecap', {'stageEtudiant': stageEtudiant.uuidString}) }}" method="post"
+                      class="d-grid mt-2">
+                    <input type="submit" value="Je certifie ces informations exactes et soumets le formulaire"
+                           class="btn btn-primary d-block">
+                    {% endif %}
             </div>
         </div>
     </div>
 
     {#    todo: limiter aux btn back & forward du browser #}
     <script>
-      // window.addEventListener('beforeunload',(event) =>{
-      //     event.preventDefault();
-      //     event.returnValue = '';
-      // });
-
       document.onmouseover = function () {
         //User's mouse is inside the page.
         window.innerDocClick = true
@@ -1477,7 +1178,6 @@
 
       window.addEventListener('beforeunload', (event) => {
         if (window.innerDocClick) {
-          console.log('user clicked a link')
         } else {
           event.preventDefault()
           event.returnValue = 'test'

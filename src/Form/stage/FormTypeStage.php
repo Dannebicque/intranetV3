@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/stage/FormTypeStage.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/12/2022 21:40
+ * @lastUpdate 11/12/2022 10:19
  */
 
 namespace App\Form\stage;
@@ -33,17 +33,39 @@ class FormTypeStage extends AbstractType
             ->add('service_stage_entreprise', TextType::class, ['label' => 'Service dans l\'entreprise :', 'help' => 'Service dans lequel vous effectuerez votre stage', 'required' => false])
             ->add('sujet_stage', TextareaType::class, ['label' => 'Mission principale :',
             ])
-            ->add('activites', TextareaType::class, ['label' => 'Activités à réaliser :', 'help' => 'Décrivez les missions qui vous seront confiées'])
-            ->add('periodes_interruptions', TextType::class, ['label' => 'Périodes d\'interruptions :', 'help' => 'En complément des périodes déjà prévues',
-                'required' => false, ])
-
-            ->add('duree_hebdomadaire', NumberType::class, ['label' => 'Durée de travail hebdomadaire :', 'attr' => ['placeholder' => '35'],
+            ->add('activites', TextareaType::class,
+                ['label' => 'Activités à réaliser :', 'help' => 'Décrivez les missions qui vous seront confiées'])
+            ->add('periodes_interruptions', TextType::class, [
+                'label' => 'Périodes d\'interruptions :',
+                'help' => 'En complément des périodes déjà prévues',
+                'required' => false,
             ])
-            ->add('commentaire_duree_hebdomadaire', TextareaType::class, ['label' => 'Commentaires sur la durée du travail :', 'help' => 'Toutes précisions nécessaires sur la durée de travail', 'required' => false])
-            ->add('amenagement_stage', TextareaType::class, ['label' => 'Aménagement du stage :', 'help' => 'Aménagement du temps de travail par exemple (travail de nuit, déplacements, télétravail...)', 'required' => false])
-            ->add('gratification', ChoiceType::class, ['label' => 'Gratification :', 'choices' => ['oui' => 'oui', 'non' => 'non'],
-                'expanded' => true, 'help' => 'Le stage sera-t-il rémunéré ?', ])
-            ->add('gratification_periode', ChoiceType::class, ['label' => 'Période de gratification :', 'choices' => ['Heure' => 'h', 'Jour' => 'j', 'Mois' => 'm'], 'expanded' => true, 'help' => 'Choisissez la période de calcul de la gratification',
+            ->add('duree_hebdomadaire', NumberType::class, [
+                'label' => 'Durée de travail hebdomadaire :',
+                'attr' => ['placeholder' => '35'],
+            ])
+            ->add('commentaire_duree_hebdomadaire', TextareaType::class, [
+                'label' => 'Commentaires sur la durée du travail :',
+                'help' => 'Toutes précisions nécessaires sur la durée de travail',
+                'required' => false
+            ])
+            ->add('amenagement_stage', TextareaType::class, [
+                'label' => 'Aménagement du stage :',
+                'help' => 'Aménagement du temps de travail par exemple (travail de nuit, déplacements, télétravail...)',
+                'required' => false
+            ])
+            ->add('gratification', ChoiceType::class, [
+                'label' => 'Gratification :',
+                'choices' => ['oui' => 'oui', 'non' => 'non'],
+                'expanded' => true,
+                'help' => 'Le stage sera-t-il rémunéré ?',
+            ])
+            ->add('gratification_periode', ChoiceType::class, [
+                'label' => 'Période de gratification :',
+                'choices' => ['Heure' => 'h', 'Jour' => 'j', 'Mois' => 'm'],
+                'empty_data' => StageEtudiant::PERIODE_GRATIFICATION_HEURE,
+                'expanded' => true,
+                'help' => 'Choisissez la période de calcul de la gratification',
             ])
             ->add('gratification_montant', NumberType::class, ['label' => 'Montant de la gratification :', 'help' => 'En fonction de la période sélectionnée',
                 'attr' => ['placeholder' => '3.9'], ])
