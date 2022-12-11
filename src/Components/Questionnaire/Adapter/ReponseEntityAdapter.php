@@ -1,16 +1,15 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/Adpapter/ReponseEntityAdapter.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Adapter/ReponseEntityAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/11/2021 13:09
+ * @lastUpdate 11/12/2022 15:52
  */
 
 namespace App\Components\Questionnaire\Adapter;
 
 use App\Components\Questionnaire\DTO\Reponse;
-use App\Entity\QuestionnaireReponse;
 use App\Entity\QuestReponse;
 
 class ReponseEntityAdapter

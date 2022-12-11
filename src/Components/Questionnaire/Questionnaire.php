@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Questionnaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/12/2022 14:35
+ * @lastUpdate 11/12/2022 15:40
  */
 
 namespace App\Components\Questionnaire;
@@ -83,8 +83,7 @@ class Questionnaire
             'route' => '',
             'routeEnd' => '',
             'params' => [],
-            'paramsEnd' => [],
-            'typeQuestionnaire' => 'qualite',
+            'paramsEnd' => []
         ]);
     }
 

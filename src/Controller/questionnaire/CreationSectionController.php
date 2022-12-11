@@ -1,10 +1,10 @@
 <?php
 /*
  * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/CreationController.php
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/CreationSectionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 11/12/2022 16:07
  */
 
 namespace App\Controller\questionnaire;
@@ -84,9 +84,14 @@ class CreationSectionController extends BaseController
 
                 return $this->json(true);
             case 'sauvegarde':
-//                $typeQuestion = $questionnaireRegistry->getTypeQuestion($question->getType());
-//                $typeQuestion->sauvegarde($question, $request, $this->entityManager);
-//                $this->entityManager->flush();
+                $data = $request->request->all()['quest_section'];
+                $section->setTitre($data['titre']);
+                $section->setTextExplicatif($data['textExplicatif']);
+                $section->setTypeSection($data['typeSection']);
+                $section->setEnabled($data['enabled']);
+                $section->setConfig(['configSection' => $data['configSection']]);//todo: éventuellement array_merge si des data sont déjà là??
+                $this->entityManager->flush();
+
                 return $this->json(true);
             case 'addQuestion':
                 $idQuestion = $request->query->get('question');

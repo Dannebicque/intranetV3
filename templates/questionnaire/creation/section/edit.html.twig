@@ -2,7 +2,23 @@
     <div class="col-10">
         {% form_theme form 'form/my-form-quest.html.twig' %}
         {{ form_start(form) }}
-        {{ form_widget(form) }}
+        <div class="row">
+            <div class="col-8">
+                {{ form_row(form.titre) }}
+            </div>
+            <div class="col-4">
+                {{ form_row(form.enabled) }}
+            </div>
+            <div class="col-12">
+                {{ form_row(form.textExplicatif) }}
+            </div>
+            <div class="col-6">
+                {{ form_row(form.typeSection) }}
+            </div>
+            <div class="col-6">
+                {{ form_row(form.configSection) }}
+            </div>
+        </div>
         {{ form_end(form) }}
     </div>
     <div class="col-2 d-grid">

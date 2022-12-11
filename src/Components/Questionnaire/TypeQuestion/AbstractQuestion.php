@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeQuestion/AbstractQuestion.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/12/2022 14:43
+ * @lastUpdate 11/12/2022 15:40
  */
 
 namespace App\Components\Questionnaire\TypeQuestion;
@@ -60,11 +60,8 @@ abstract class AbstractQuestion
             ->setDefault('parametres', [])
             ->setDefault('type', [])
             ->setDefault('alignement', [])
-            //->setDefault('questionnaire_id', null)
             ->setDefault('questionnaireUuid', null)
             ->setDefault('choixUserUuid', null)
-//            ->setDefault('typeQuestionnaire', 'qualite')
-//            ->setDefault('etudiant_id', null)
             ->setDefault('block_name', '');
     }
 

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeQuestionTableauRenderer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 11/12/2022 15:40
  */
 
 namespace App\Components\Questionnaire;
@@ -49,7 +49,6 @@ class TypeQuestionTableauRenderer
         $params['libelle'] = $question->libelle;
         $params['numero'] = $question->numero;
         $params['ordre'] = $ordre;
-        $params['typeQuestionnaire'] = $question->getOption('typeQuestionnaire');
         $params['choix'] = $question->choix;
 
         return $template->renderBlock($params['block_name'], $params);
