@@ -7,19 +7,19 @@
 <form {{ stimulus_controller('wizard', {
     url: url,
     step: 0,
-    etudiant: etudiant,
-    questionnaire: questionnaire.questionnaire.id,
+    choixUserUuid: choixUserUuid,
+    questionnaireUuid: questionnaire.questionnaire.uuidString,
     maxStep: sections|length-1 }) }}>
-    <input type="hidden" value="{{ id }}" id="questionnaire">
+    <input type="hidden" value="{{ questionnaireUuid }}" id="questionnaire">
     <ul class="nav nav-process nav-process-circle">
         {% for section in sections %}
             <li class="nav-item {% if loop.first %}processing{% endif %}" data-step="{{ loop.index0 }}">
                 <span class="nav-title">Section #{{ section.ordre }}</span>
                 <a class="nav-link {% if loop.first %}active{% endif %}" href="#"
-                   {% if questionnaire.options.mode == constant('App\\Components\\Questionnaire\\DTO\\AbstractQuestionnaire::MODE_APERCU') %}
-                   data-action="wizard#step"
-                   data-step="{{ loop.index0 }}"
-                   {% endif %}
+                        {% if questionnaire.options.mode == constant('App\\Components\\Questionnaire\\DTO\\AbstractQuestionnaire::MODE_APERCU') %}
+                            data-action="wizard#step"
+                            data-step="{{ loop.index0 }}"
+                        {% endif %}
                 ></a>
             </li>
         {% endfor %}

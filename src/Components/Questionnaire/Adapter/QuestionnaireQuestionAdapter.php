@@ -1,17 +1,17 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/Adpapter/QuestionnaireQuestionAdapter.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Adapter/QuestionnaireQuestionAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/08/2021 15:29
+ * @lastUpdate 11/12/2022 15:26
  */
 
 namespace App\Components\Questionnaire\Adapter;
 
 use App\Components\Graphs\GraphRegistry;
 use App\Components\Questionnaire\DTO\ListeChoix;
-use App\Components\Questionnaire\DTO\ReponsesEtudiant;
+use App\Components\Questionnaire\DTO\ReponsesUser;
 use App\Components\Questionnaire\QuestionnaireRegistry;
 use App\Components\Questionnaire\Section\AbstractSection;
 use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
@@ -72,13 +72,13 @@ class QuestionnaireQuestionAdapter
         return $this->question;
     }
 
-    public function setReponseEtudiant(?ReponsesEtudiant $reponsesEtudiant): self
+    public function setReponse(?ReponsesUser $reponsesUser): self
     {
-        if (null !== $reponsesEtudiant) {
-            $this->question->reponseEtudiant = $reponsesEtudiant->getReponse($this->question->cle);
+        if (null !== $reponsesUser) {
+            $this->question->reponseUser = $reponsesUser->getReponse($this->question->cle);
 
-            if (null !== $this->question->reponseEtudiant && 'CHX:OTHER' === $this->question->reponseEtudiant->valeur) {
-                $this->question->reponseEtudiant->complementValeur = $reponsesEtudiant->getReponse($this->question->cle . '_autre')?->valeur;
+            if (null !== $this->question->reponseUser && 'CHX:OTHER' === $this->question->reponseUser->getValeur()) {
+                $this->question->reponseUser->complementValeur = $reponsesUser->getReponse($this->question->cle . '_autre')?->getValeur();
             }
         }
 

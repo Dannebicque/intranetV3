@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/DTO/AbstractQuestionnaire.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/DTO/AbstractQuestionnaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/08/2021 11:53
+ * @lastUpdate 11/12/2022 12:48
  */
 
 namespace App\Components\Questionnaire\DTO;
@@ -34,6 +34,7 @@ class AbstractQuestionnaire
     public array $sections = [];
     public string $mode;
     public int $id;
+    public string $uuidString;
 
     public function addSection($section): void
     {

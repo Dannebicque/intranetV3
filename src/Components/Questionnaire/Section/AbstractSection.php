@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/Section/AbstractSection.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Section/AbstractSection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/08/2021 08:00
+ * @lastUpdate 11/12/2022 12:39
  */
 
 namespace App\Components\Questionnaire\Section;
@@ -37,8 +37,8 @@ abstract class AbstractSection
     protected Questions $questions;
 
     public array $options = [];
-    public ?int $questionnaire_id = null;
-    public ?int $etudiant_id = null;
+    public ?string $questionnaireUuid = null;
+    public ?string $choixUserUuid = null;
     public ?string $typeSection;
 
     public function __construct(
@@ -51,8 +51,8 @@ abstract class AbstractSection
     public function setSection(\App\Components\Questionnaire\DTO\Section $section, array $options = []): void
     {
         $this->setOptions($options);
-        $this->questionnaire_id = $options['questionnaire_id'];
-        $this->etudiant_id = $options['etudiant_id'];
+        $this->questionnaireUuid = $options['questionnaireUuid'];
+        $this->choixUserUuid = $options['choixUserUuid'];
         $this->ordre = $section->ordre;
         $this->titre = $section->titre;
         $this->text_explicatif = $section->texte_explicatif;
@@ -76,9 +76,8 @@ abstract class AbstractSection
         $resolver->setDefaults([
             'template' => self::DEFAULT_TEMPLATE,
             'mode' => AbstractQuestionnaire::MODE_APERCU,
-            'questionnaire_id' => null,
-            'typeQuestionnaire' => 'qualite',
-            'etudiant_id' => null,
+            'questionnaireUuid' => null,
+            'choixUserUuid' => null,
         ]);
     }
 

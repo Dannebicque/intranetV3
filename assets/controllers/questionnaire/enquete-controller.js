@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/questionnaire/enquete-controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/11/2022 13:30
+// @lastUpdate 11/12/2022 15:26
 import { Controller } from '@hotwired/stimulus'
 import { useDebounce, useDispatch } from 'stimulus-use'
 import { post } from '../../js/fetch'
@@ -11,8 +11,8 @@ export default class extends Controller {
   static values = {
     parametres: Array,
     idQuestion: String,
-    typeQuestionnaire: String,
-    questionnaireId: String
+    questionnaireUuid: String,
+    choixUserUuid: String,
   }
 
   static debounces = ['sauvegardeReponseLibre']
@@ -61,12 +61,11 @@ export default class extends Controller {
 
   sauvegardeReponseChoix (event) {
     post(Routing.generate('app_etudiant_qualite_ajax_reponse', {
-      questionnaire: this.questionnaireIdValue,
-      typeQuestionnaire: this.typeQuestionnaireValue
+      uuidQuestionnaire: this.questionnaireUuidValue,
+      uuid: this.choixUserUuidValue,
     }), {
       cleReponse: event.target.id,
       cleQuestion: event.target.name,
-      etudiant: event.target.dataset.etudiant
     })
   }
 

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/Questionnaire.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Questionnaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/10/2021 18:17
+ * @lastUpdate 11/12/2022 14:35
  */
 
 namespace App\Components\Questionnaire;
@@ -12,9 +12,8 @@ namespace App\Components\Questionnaire;
 use App\Components\Graphs\GraphRegistry;
 use App\Components\Questionnaire\DTO\AbstractQuestionnaire;
 use App\Components\Questionnaire\DTO\ListeChoix;
-use App\Components\Questionnaire\DTO\ReponsesEtudiant;
+use App\Components\Questionnaire\DTO\ReponsesUser;
 use App\Components\Questionnaire\Interfaces\QuestChoixInterface;
-use App\Components\Questionnaire\Interfaces\QuestionnaireChoixInterface;
 use App\Components\Questionnaire\Section\AbstractSection;
 use App\Components\Questionnaire\Section\ConfigurableSection;
 use App\Components\Questionnaire\Section\EndSection;
@@ -33,13 +32,12 @@ class Questionnaire
     private const DEFAULT_TEMPLATE_GRAPHIQUES = 'components/questionnaire/questionnaire_graphiques.html.twig';
 
     protected Sections $sections;
-    protected ReponsesEtudiant $reponses;
-    protected ?int $etudiant = null;
+    protected ReponsesUser $reponses;
+    protected ?string $choixUserUuid = null;
 
     protected ListeChoix $listeChoix;
     private AbstractQuestionnaire $questionnaire;
     private array $options = [];
-    private string $typeQuestionnaire;
     private ?int $ordreSection = null;
 
     public function __construct(
@@ -52,9 +50,14 @@ class Questionnaire
         $this->listeChoix = new ListeChoix();
     }
 
-    public function setIdEtudiant(?int $etudiant): void
+    public function setChoixUser(QuestChoixInterface $choix): void
     {
-        $this->etudiant = $etudiant;
+        $this->choixUserUuid = $choix->getCleQuestionnaire();
+    }
+
+    public function getChoixUser(): ?string
+    {
+        return $this->choixUserUuid;
     }
 
     public function createQuestionnaire(
@@ -65,7 +68,6 @@ class Questionnaire
         $resolver = new OptionsResolver();
         $this->configureOptions($resolver);
         $this->options = $resolver->resolve($options);
-        $this->typeQuestionnaire = $type;
         $this->questionnaire = $abstractQuestionnaire;
 
         return $this;
@@ -93,9 +95,8 @@ class Questionnaire
             $configSection = new ConfigurableSection($this->questionnaireRegistry, $this->graphRegistry);
             $configSection->setSection($section, [
                 'mode' => $this->options['mode'],
-                'questionnaire_id' => $this->getQuestionnaire()->id,
-                'etudiant_id' => $this->etudiant,
-                'typeQuestionnaire' => $this->options['typeQuestionnaire'],
+                'questionnaireUuid' => $this->getQuestionnaire()->uuidString,
+                'choixUserUuid' => $this->choixUserUuid,
             ]);
             $sections = $configSection->genereSections();
             foreach ($sections as $cSection) {
@@ -106,9 +107,8 @@ class Questionnaire
             $abstractSection = new Section\Section($this->questionnaireRegistry, $this->graphRegistry);
             $abstractSection->setSection($section, [
                 'mode' => $this->options['mode'],
-                'questionnaire_id' => $this->getQuestionnaire()->id,
-                'etudiant_id' => $this->etudiant,
-                'typeQuestionnaire' => $this->options['typeQuestionnaire'],
+                'questionnaireUuid' => $this->getQuestionnaire()->uuidString,
+                'choixUserUuid' => $this->choixUserUuid,
             ]);
             $this->sections->addSection($abstractSection->getSection());
         }
@@ -167,27 +167,21 @@ class Questionnaire
         return $this;
     }
 
-    public function setQuestionsForSection(?ReponsesEtudiant $reponsesEtudiant = null): void
+    public function setQuestionsForSection(?ReponsesUser $reponsesUser = null): void
     {
         foreach ($this->getSections() as $section) {
             if ($section instanceof Section\Section && $section->arrayKey === $this->ordreSection) {
                 $section->prepareQuestions([
-                    'questionnaire_id' => $this->getQuestionnaire()->id,
-                    'etudiant_id' => $this->etudiant,
+                    'questionnaireUuid' => $this->getQuestionnaire()->uuidString,
+                    'choixUserUuid' => $this->choixUserUuid,
                     'mode' => $this->getOption('mode'),
-                    'typeQuestionnaire' => $this->getOption('typeQuestionnaire'),
-                ], $reponsesEtudiant);
+                ], $reponsesUser);
                 break;
             }
         }
     }
 
-    public function getIdEtudiant(): ?int
-    {
-        return $this->etudiant;
-    }
-
-    public function setReponses(ReponsesEtudiant $reponses): void
+    public function setReponses(ReponsesUser $reponses): void
     {
         $this->reponses = $reponses;
     }
@@ -221,7 +215,7 @@ class Questionnaire
     {
         $params = array_merge([
             'section' => $this->getSection($this->ordreSection),
-            'idQuestionnaire' => $this->questionnaire->id,
+            'questionnaireUuid' => $this->questionnaire->uuidString,
         ], $options);
 
         return new Response($this->twig->render($template, $params));
@@ -257,9 +251,8 @@ class Questionnaire
         foreach ($this->getSections() as $section) {
             if ($section instanceof Section\Section) {
                 $section->calculResultatsQuestions([
-                    'questionnaire_id' => $this->getQuestionnaire()->id,
+                    'questionnaireUuid' => $this->questionnaire->uuidString,
                     'mode' => $this->getOption('mode'),
-                    'typeQuestionnaire' => $this->getOption('typeQuestionnaire'),
                 ], $listeChoix);
             }
         }
@@ -277,6 +270,4 @@ class Questionnaire
     {
         return $this->listeChoix;
     }
-
-
 }

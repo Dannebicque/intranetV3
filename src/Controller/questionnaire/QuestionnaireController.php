@@ -4,33 +4,27 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/QuestionnaireController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/09/2022 09:28
+ * @lastUpdate 11/12/2022 15:26
  */
 
 namespace App\Controller\questionnaire;
 
-use App\Classes\Previsionnel\PrevisionnelManager;
+use App\Classes\Mail\MailerFromTwig;
+use App\Components\Questionnaire\Adapter\QuestionnaireQualiteAdapter;
+use App\Components\Questionnaire\Adapter\SectionQualiteEntityAdapter;
+use App\Components\Questionnaire\DTO\AbstractQuestionnaire;
+use App\Components\Questionnaire\Questionnaire;
 use App\Components\Questionnaire\QuestionnaireRegistry;
-use App\Components\Questionnaire\TypeQuestion\TypeEchelle;
-use App\Components\Questionnaire\TypeQuestion\TypeOuiNon;
-use App\Components\Questionnaire\TypeQuestion\TypeQcm;
-use App\Components\Questionnaire\TypeQuestion\TypeQcu;
-use App\Entity\Etudiant;
+use App\Components\Questionnaire\Section\AbstractSection;
 use App\Entity\QuestionnaireEtudiant;
 use App\Entity\QuestionnaireEtudiantReponse;
-use App\Entity\QuestionnaireQualite;
-use App\Entity\QuestionnaireQuestion;
-use App\Entity\QuestionnaireQuestionnaireSection;
-use App\Entity\QuestionnaireQuizz;
 use App\Entity\QuestQuestionnaire;
 use App\Repository\EtudiantRepository;
 use App\Repository\QuestionnaireEtudiantReponseRepository;
 use App\Repository\QuestionnaireEtudiantRepository;
-use App\Repository\QuestionnaireQualiteRepository;
 use App\Repository\QuestionnaireQuestionRepository;
-use App\Repository\QuestionnaireQuizzRepository;
-use App\Repository\QuestionnaireReponseRepository;
 use App\Utils\JsonRequest;
+use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -46,166 +40,161 @@ use Symfony\Component\Routing\Annotation\Route;
 class QuestionnaireController extends AbstractController
 {
     public function __construct(
-        private readonly QuestionnaireQualiteRepository $questionnaireQualiteRepository,
-        private readonly QuestionnaireQuizzRepository $questionnaireQuizzRepository,
         private readonly EntityManagerInterface $entityManager
     ) {
     }
 
     #[Route('/enquete-qualite/{uuidQuestionnaire}/{uuid}', name: 'enquete_questionnaire_qualite_index')]
-    #[ParamConverter('questionnaire', options: ['mapping' => ['uuidQuestionnaire' => 'uuid']])]
+    #[ParamConverter('questQuestionnaire', options: ['mapping' => ['uuidQuestionnaire' => 'uuid']])]
     public function afficheQuestionnaire(
+        Request $request,
+        Questionnaire $questionnaire,
         QuestionnaireRegistry $questionnaireRegistry,
-        QuestQuestionnaire $questionnaire,
+        QuestQuestionnaire $questQuestionnaire,
         string $uuid
     ): Response {
-        $typeDestinataire = $questionnaireRegistry->getTypeDestinataire($questionnaire->getTypeDestinataire());
-        $typeDestinataire->setQuestionnaire($questionnaire);
-        $user = $typeDestinataire->getChoixUser($uuid);
+        $typeDestinataire = $questionnaireRegistry->getTypeDestinataire($questQuestionnaire->getTypeDestinataire());
+        $typeDestinataire->setQuestionnaire($questQuestionnaire);
+        $choixUser = $typeDestinataire->getChoixUser($uuid);
+        $reponses = $typeDestinataire->getReponses();
+
+        $questionnaire->createQuestionnaire(QuestQuestionnaire::class,
+            (new QuestionnaireQualiteAdapter($questQuestionnaire))->getQuestionnaire(),
+            [
+                'mode' => AbstractQuestionnaire::MODE_EDITION,
+                'routeEnd' => 'enquete_questionnaire_qualite_complet',
+                'route' => 'enquete_questionnaire_qualite_index',
+                'params' => ['uuidQuestionnaire' => $questQuestionnaire->getUuidString(), 'uuid' => $uuid],
+                'paramsEnd' => ['uuidQuestionnaire' => $questQuestionnaire->getUuidString(), 'uuid' => $uuid],
+            ]);
+        $questionnaire->AddSpecialSection(AbstractSection::INTRODUCTION);
+        foreach ($questQuestionnaire->getQuestSections() as $section) {
+            $sect = (new SectionQualiteEntityAdapter($section))->getSection(); // todo: tester si la section est visible
+            $questionnaire->addSection($sect);
+        }
+        $questionnaire->setChoixUser($choixUser);
+        // todo: passer l'étudiant aux réponses
+        $questionnaire->AddSpecialSection(AbstractSection::END);
+
+        if ($questionnaire->handleRequest($request)) {
+            $questionnaire->setQuestionsForSection($reponses);
+
+            return $questionnaire->wizardPage();
+        }
 
         return $this->render('questionnaire/affiche_questionnaire.html.twig', [
             'questionnaire' => $questionnaire,
-            'user' => $user
+            'user' => $choixUser,
         ]);
     }
 
-    public function section(
-        PrevisionnelManager $previsionnelManager,
-        QuestionnaireEtudiantRepository $quizzEtudiantRepository,
-        QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository,
-        QuestionnaireQuestionnaireSection $questionnaireSection,
-        string $type,
-        Etudiant $etudiant,
-        int $onglet = 1,
-        bool $apercu = false
+    #[Route('/enquete-qualite/complet/{uuidQuestionnaire}/{uuid}', name: 'enquete_questionnaire_qualite_complet')]
+    #[ParamConverter('questQuestionnaire', options: ['mapping' => ['uuidQuestionnaire' => 'uuid']])]
+    public function complet(
+        QuestionnaireRegistry $questionnaireRegistry,
+        MailerFromTwig $myMailer,
+        QuestQuestionnaire $questQuestionnaire,
+        string $uuid
     ): Response {
-        $quizzEtudiant = null;
-        switch ($type) {
-            case 'quizz':
-                $questionnaire = $questionnaireSection->getQuestionnaireQuizz()->getId();
-                $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
-                    'questionnaireQuizz' => $questionnaire,
-                    'etudiant' => $etudiant->getId(),
-                ]);
-                break;
-            case 'qualite':
-                $questionnaire = $questionnaireSection->getQuestionnaireQualite()->getId();
-                $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
-                    'questionnaireQualite' => $questionnaire,
-                    'etudiant' => $etudiant->getId(),
-                ]);
-                break;
+        $typeDestinataire = $questionnaireRegistry->getTypeDestinataire($questQuestionnaire->getTypeDestinataire());
+        $typeDestinataire->setQuestionnaire($questQuestionnaire);
+        $choixUser = $typeDestinataire->getChoixUser($uuid);
+
+        if (null !== $choixUser) {
+            $choixUser->setDateTermine(Carbon::now());
+            $this->entityManager->flush();
+
+            if (null !== $questQuestionnaire->getSemestre() && null !== $questQuestionnaire->getSemestre()->getDiplome()->getOptResponsableQualite()) {
+                $typeDestinataire->sendMail($choixUser, $myMailer);
+
+                return $this->redirectToRoute('security_login');
+            }
         }
 
-        if (null !== $quizzEtudiant) {
-            $reponses = $quizzEtudiantReponseRepository->findByQuizzEtudiant($quizzEtudiant);
-        } else {
-            $reponses = [];
-        }
-
-        return $this->render('appEtudiant/qualite/section.html.twig', [
-            'ordre' => $questionnaireSection->getOrdre(),
-            'config' => $questionnaireSection,
-            'section' => $questionnaireSection->getSection(),
-            'tPrevisionnel' => $previsionnelManager->getPrevisionnelAnneeArray($etudiant->getSemestre()->getAnnee(),
-                $etudiant->getAnneeUniversitaire()->getAnnee()),
-            'reponses' => $reponses,
-            'etudiant' => $etudiant,
-            'typeQuestionnaire' => $type,
-            'onglet' => $onglet,
-            'apercu' => $apercu,
-        ]);
+        return $this->redirectToRoute('erreur_666');
     }
 
+//    public function section(
+//        PrevisionnelManager $previsionnelManager,
+//        QuestionnaireEtudiantRepository $quizzEtudiantRepository,
+//        QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository,
+//        QuestionnaireQuestionnaireSection $questionnaireSection,
+//        string $type,
+//        Etudiant $etudiant,
+//        int $onglet = 1,
+//        bool $apercu = false
+//    ): Response {
+//        $quizzEtudiant = null;
+//        switch ($type) {
+//            case 'quizz':
+//                $questionnaire = $questionnaireSection->getQuestionnaireQuizz()->getId();
+//                $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
+//                    'questionnaireQuizz' => $questionnaire,
+//                    'etudiant' => $etudiant->getId(),
+//                ]);
+//                break;
+//            case 'qualite':
+//                $questionnaire = $questionnaireSection->getQuestionnaireQualite()->getId();
+//                $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
+//                    'questionnaireQualite' => $questionnaire,
+//                    'etudiant' => $etudiant->getId(),
+//                ]);
+//                break;
+//        }
+//
+//        if (null !== $quizzEtudiant) {
+//            $reponses = $quizzEtudiantReponseRepository->findByQuizzEtudiant($quizzEtudiant);
+//        } else {
+//            $reponses = [];
+//        }
+//
+//        return $this->render('appEtudiant/qualite/section.html.twig', [
+//            'ordre' => $questionnaireSection->getOrdre(),
+//            'config' => $questionnaireSection,
+//            'section' => $questionnaireSection->getSection(),
+//            'tPrevisionnel' => $previsionnelManager->getPrevisionnelAnneeArray($etudiant->getSemestre()->getAnnee(),
+//                $etudiant->getAnneeUniversitaire()->getAnnee()),
+//            'reponses' => $reponses,
+//            'etudiant' => $etudiant,
+//            'typeQuestionnaire' => $type,
+//            'onglet' => $onglet,
+//            'apercu' => $apercu,
+//        ]);
+//    }
+
+    /*
+     *
+            MailerFromTwig $myMailer, QuestQuestionnaire $questQuestionnaire, string $uuid): Response
+        {
+            $typeDestinataire = $questionnaireRegistry->getTypeDestinataire($questQuestionnaire->getTypeDestinataire());
+            $typeDestinataire->setQuestionnaire($questQuestionnaire);
+            $choixUser = $typeDestinataire->getChoixUser($uuid);
+     */
     /**
      * @throws NonUniqueResultException
      * @throws \JsonException
      */
-    #[Route(path: '/api/ajax/reponse/{questionnaire}/{typeQuestionnaire}', name: 'app_etudiant_qualite_ajax_reponse', options: ['expose' => true])]
-    public function sauvegardeReponse(EtudiantRepository $etudiantRepository, QuestionnaireQuestionRepository $quizzQuestionRepository, QuestionnaireReponseRepository $quizzReponseRepository, QuestionnaireEtudiantRepository $quizzEtudiantRepository, QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository, Request $request, mixed $questionnaire, string $typeQuestionnaire): JsonResponse
-    {
-        $quizzEtudiant = null;
+    #[Route(path: '/api/ajax/reponse/{uuidQuestionnaire}/{uuid}', name: 'app_etudiant_qualite_ajax_reponse', options: ['expose' => true])]
+    #[ParamConverter('questQuestionnaire', options: ['mapping' => ['uuidQuestionnaire' => 'uuid']])]
+    public function sauvegardeReponse(
+        QuestionnaireRegistry $questionnaireRegistry,
+        QuestQuestionnaire $questQuestionnaire,
+        string $uuid,
+        Request $request
+    ): JsonResponse {
+        $typeDestinataire = $questionnaireRegistry->getTypeDestinataire($questQuestionnaire->getTypeDestinataire());
+        $typeDestinataire->setQuestionnaire($questQuestionnaire);
+        $choixUser = $typeDestinataire->getChoixUser($uuid);
+
         $donnees = JsonRequest::getFromRequest($request);
+
         $cleReponse = $donnees['cleReponse'];
         $cleQuestion = $donnees['cleQuestion'];
-        $etudiant = $etudiantRepository->find($donnees['etudiant']);
-        if (null !== $etudiant) {
-            switch ($typeQuestionnaire) {
-                case 'quizz':
-                    $questionnaire = $this->questionnaireQuizzRepository->find($questionnaire);
-                    $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
-                        'questionnaireQuizz' => $questionnaire->getId(),
-                        'etudiant' => $etudiant->getId(),
-                    ]);
-                    break;
-                case 'qualite':
-                    $questionnaire = $this->questionnaireQualiteRepository->find($questionnaire);
-                    $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
-                        'questionnaireQualite' => $questionnaire->getId(),
-                        'etudiant' => $etudiant->getId(),
-                    ]);
-                    break;
-            }
 
-            if (null === $quizzEtudiant) {
-                $quizzEtudiant = new QuestionnaireEtudiant($etudiant, $questionnaire, $typeQuestionnaire);
-                $this->entityManager->persist($quizzEtudiant);
-                $this->entityManager->flush();
-            }
+        if (null !== $choixUser) {
+            $typeDestinataire->sauvegardeReponse($choixUser, $cleReponse, $cleQuestion);
 
-            /** @var QuestionnaireEtudiantReponse $exist */
-            $exist = $quizzEtudiantReponseRepository->findExistQuestion($cleQuestion, $quizzEtudiant);
-
-            $t = explode('_', (string) $cleReponse);
-            $question = $quizzQuestionRepository->find(mb_substr($t[3], 1, mb_strlen($t[0])));
-            if (str_starts_with($t[4], 'c')) {
-                $reponse = $quizzReponseRepository->find($t[5]);
-            } else {
-                $reponse = $quizzReponseRepository->find($t[4]);
-            }
-
-            if (null !== $question && null !== $reponse) {
-                if (null === $exist) {
-                    $qr = new QuestionnaireEtudiantReponse($quizzEtudiant);
-                    $qr->setCleQuestion($cleQuestion);
-
-                    if (QuestionnaireQuestion::QUESTION_TYPE_QCM === $question->getType()) {
-                        $qr->setCleReponse(json_encode([$cleReponse], JSON_THROW_ON_ERROR));
-                        $qr->setValeur(json_encode([$reponse->getValeur()], JSON_THROW_ON_ERROR));
-                    } else {
-                        $qr->setCleReponse($cleReponse);
-                        $qr->setValeur($reponse->getValeur());
-                    }
-
-                    $this->entityManager->persist($qr);
-                } elseif (TypeQcu::class === $question->getType() || TypeEchelle::class === $question->getType() || TypeOuiNon::class === $question->getType()) {
-                    $exist->setCleReponse($cleReponse);
-                    $exist->setValeur($reponse->getValeur());
-                } elseif (TypeQcm::class === $question->getType()) {
-                    // si c'est un QCM, on fait un tableau de réponse.
-                    $cleReponses = json_decode($exist->getCleReponse(), false, 512, JSON_THROW_ON_ERROR);
-                    $valeurs = json_decode($exist->getValeur(), false, 512, JSON_THROW_ON_ERROR);
-                    $idCle = array_search($cleReponse, $cleReponses, true);
-                    $idValeur = array_search($reponse->getValeur(), $valeurs, true);
-                    if (false !== $idCle && false !== $idValeur) {
-                        // réponse déjà présente on supprime
-                        unset($cleReponses[$idCle], $valeurs[$idValeur]);
-                        $cleReponses = array_values($cleReponses);
-                        $valeurs = array_values($valeurs);
-                    } else {
-                        $cleReponses[] = $cleReponse;
-                        $valeurs[] = $reponse->getValeur();
-                    }
-
-                    $exist->setCleReponse(json_encode($cleReponses, JSON_THROW_ON_ERROR));
-                    $exist->setValeur(json_encode($valeurs, JSON_THROW_ON_ERROR));
-                }
-                $this->entityManager->flush();
-
-                return $this->json(true, Response::HTTP_OK);
-            }
-
-            return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->json(true, Response::HTTP_OK);
         }
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -217,8 +206,15 @@ class QuestionnaireController extends AbstractController
      * @throws \JsonException
      */
     #[Route(path: '/api/ajax/reponse-txt/{questionnaire}/{typeQuestionnaire}', name: 'app_etudiant_qualite_ajax_reponse_txt', options: ['expose' => true])]
-    public function sauvegardeReponseTxt(EtudiantRepository $etudiantRepository, QuestionnaireQuestionRepository $quizzQuestionRepository, QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository, QuestionnaireEtudiantRepository $quizzEtudiantRepository, Request $request, mixed $questionnaire, string $typeQuestionnaire): JsonResponse
-    {
+    public function sauvegardeReponseTxt(
+        EtudiantRepository $etudiantRepository,
+        QuestionnaireQuestionRepository $quizzQuestionRepository,
+        QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository,
+        QuestionnaireEtudiantRepository $quizzEtudiantRepository,
+        Request $request,
+        mixed $questionnaire,
+        string $typeQuestionnaire
+    ): JsonResponse {
         $quizzEtudiant = null;
         $donnees = JsonRequest::getFromRequest($request);
         $cleQuestion = $donnees['cleQuestion'];
@@ -247,12 +243,15 @@ class QuestionnaireController extends AbstractController
             }
             $t = explode('_', (string) $cleQuestion);
             if ('autre' === $t[3]) {
-                $cleQuestion = $t[0].'_'.$t[1].'_reponses_'.$t[4].'_autre';
+                $cleQuestion = $t[0] . '_' . $t[1] . '_reponses_' . $t[4] . '_autre';
 
                 // gesion du cas autre...
                 // on met à jour la question de base. On ajoute la réponse écrite
 
-                $exist = $quizzEtudiantReponseRepository->findOneBy(['questionnaireEtudiant' => $quizzEtudiant->getId(), 'cleQuestion' => $cleQuestion]);
+                $exist = $quizzEtudiantReponseRepository->findOneBy([
+                    'questionnaireEtudiant' => $quizzEtudiant->getId(),
+                    'cleQuestion' => $cleQuestion,
+                ]);
                 if (null === $exist) {
                     $qr = new QuestionnaireEtudiantReponse($quizzEtudiant);
                     $qr->setCleQuestion($cleQuestion);

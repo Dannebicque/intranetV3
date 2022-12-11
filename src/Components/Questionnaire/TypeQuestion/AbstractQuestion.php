@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/TypeQuestion/AbstractQuestion.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeQuestion/AbstractQuestion.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/10/2021 07:43
+ * @lastUpdate 11/12/2022 14:43
  */
 
 namespace App\Components\Questionnaire\TypeQuestion;
@@ -14,8 +14,8 @@ use App\Components\Questionnaire\DTO\AbstractQuestionnaire;
 use App\Components\Questionnaire\DTO\Choix;
 use App\Components\Questionnaire\DTO\Question;
 use App\Components\Questionnaire\DTO\Reponse;
-use App\Components\Questionnaire\DTO\ReponseEtudiant;
 use App\Components\Questionnaire\Reponses;
+use App\Entity\QuestChoix;
 use App\Entity\QuestQuestion;
 use App\Entity\QuestReponse;
 use Doctrine\ORM\EntityManagerInterface;
@@ -44,7 +44,7 @@ abstract class AbstractQuestion
 
     protected ?EntityManagerInterface $em;
     private readonly Reponses $reponses;
-    public ?ReponseEtudiant $reponseEtudiant = null;
+    public ?QuestChoix $reponseUser = null;
     public ?Choix $choix = null;
 
     public function __construct(protected GraphRegistry $graphRegistry)
@@ -60,9 +60,11 @@ abstract class AbstractQuestion
             ->setDefault('parametres', [])
             ->setDefault('type', [])
             ->setDefault('alignement', [])
-            ->setDefault('questionnaire_id', null)
-            ->setDefault('typeQuestionnaire', 'qualite')
-            ->setDefault('etudiant_id', null)
+            //->setDefault('questionnaire_id', null)
+            ->setDefault('questionnaireUuid', null)
+            ->setDefault('choixUserUuid', null)
+//            ->setDefault('typeQuestionnaire', 'qualite')
+//            ->setDefault('etudiant_id', null)
             ->setDefault('block_name', '');
     }
 

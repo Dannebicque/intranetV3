@@ -1,18 +1,17 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/Section/Section.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Section/Section.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/11/2021 12:03
+ * @lastUpdate 11/12/2022 14:31
  */
 
 namespace App\Components\Questionnaire\Section;
 
 use App\Components\Questionnaire\Adapter\QuestionnaireQuestionAdapter;
 use App\Components\Questionnaire\DTO\ListeChoix;
-use App\Components\Questionnaire\DTO\ReponsesEtudiant;
-use App\Components\Questionnaire\DTO\ReponsesEtudiants;
+use App\Components\Questionnaire\DTO\ReponsesUser;
 use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
 
 class Section extends AbstractSection
@@ -50,7 +49,7 @@ class Section extends AbstractSection
     /**
      * @throws \App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException
      */
-    public function prepareQuestions(array $options = [], ?ReponsesEtudiant $reponsesEtudiant = null): void
+    public function prepareQuestions(array $options = [], ?ReponsesUser $reponsesUser = null): void
     {
         foreach ($this->section->questions as $question) {
             $questionnaireQuestionAdapter = new QuestionnaireQuestionAdapter($this->questionnaireRegistry,
@@ -61,7 +60,7 @@ class Section extends AbstractSection
                         $this,
                         $question,
                         $i,
-                        $options)->setReponseEtudiant($reponsesEtudiant)->getQuestion());
+                        $options)->setReponse($reponsesUser)->getQuestion());
             }
         }
     }

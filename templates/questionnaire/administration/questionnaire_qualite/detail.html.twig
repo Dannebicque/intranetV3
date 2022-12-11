@@ -17,7 +17,7 @@
                     <span class="sr-only">{{ 'atitle.retour_liste'|trans }}</span>
                 </a>
             {% else %}
-                <a href="{{ path('administration_qualite_index') }}"
+                <a href="{{ path('administration_qualite_index', {type:'administration'}) }}"
                    class="btn btn-primary btn-float"
                    title="{{ 'atitle.retour_liste'|trans }}"
                    data-bs-toggle="tooltip" data-bs-placement="bottom"

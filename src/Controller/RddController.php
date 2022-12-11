@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/RddController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/RddController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/10/2021 11:51
+ * @lastUpdate 11/12/2022 15:26
  */
 
 namespace App\Controller;
@@ -12,14 +12,8 @@ namespace App\Controller;
 use App\Components\Questionnaire\Adapter\QuestionnaireQuizzAdapter;
 use App\Components\Questionnaire\Adapter\ReponsesEtudiantAdapter;
 use App\Components\Questionnaire\Adapter\SectionQuizzEntityAdapter;
-use App\Components\Questionnaire\DTO\AbstractQuestionnaire;
-use App\Components\Questionnaire\DTO\ReponsesEtudiant;
-use App\Components\Questionnaire\Questionnaire;
-use App\Components\Questionnaire\Section\AbstractSection;
-use App\Entity\QuestionnaireQuizz;
 use App\Form\RddType;
 use App\Repository\EtudiantRepository;
-use App\Repository\QuestionnaireQuizzRepository;
 use App\Repository\RddDiplomeRepository;
 use App\Utils\Tools;
 use Doctrine\ORM\EntityManagerInterface;
@@ -30,7 +24,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+
+//use App\Components\Questionnaire\DTO\ReponsesEtudiant;
 
 #[Route('rdd', name: 'rdd_')]
 class RddController extends AbstractController
@@ -135,58 +130,58 @@ class RddController extends AbstractController
         return $this->render('rdd/identification.html.twig', ['erreur' => false]);
     }
 
-    #[Route('/enquete/{numetudiant}/{diplome}', name: 'enquete_diplome')]
-    public function enquete(
-        ReponsesEtudiantAdapter $reponsesEtudiantAdapter,
-        Request $request,
-        Questionnaire $questionnaire,
-        QuestionnaireQuizzRepository $questionnaireQuizzRepository,
-        EtudiantRepository $etudiantRepository,
-        RddDiplomeRepository $rddDiplomeRepository,
-        $numetudiant,
-        $diplome
-    ): Response {
-        $reponses = new ReponsesEtudiant();
-
-        $dip = $rddDiplomeRepository->find($diplome);
-        if ((null !== $dip) && md5('clerdd'.$dip->getNumetudiant()) === $numetudiant) {
-            $questionnaireQuizz = $questionnaireQuizzRepository->find(1);
-            $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $dip->getNumetudiant()]);
-
-            $questionnaire->createQuestionnaire(QuestionnaireQuizz::class,
-                (new QuestionnaireQuizzAdapter($questionnaireQuizz))->getQuestionnaire(),
-                ['mode' => AbstractQuestionnaire::MODE_EDITION,
-                    'typeQuestionnaire' => 'quizz',
-                    'route' => 'rdd_enquete_diplome',
-                    'params' => [
-                        'numetudiant' => $numetudiant,
-                        'diplome' => $diplome,
-                    ], ]);
-            $questionnaire->setIdEtudiant($etudiant->getId()); // todo: pourrait être plus générique si c'est des questionnaires aux personnels
-            $questionnaire->AddSpecialSection(AbstractSection::INTRODUCTION);
-
-            foreach ($questionnaireQuizz->getSections() as $section) {
-                $sect = (new SectionQuizzEntityAdapter($section))->getSection();
-                $questionnaire->addSection($sect);
-                $reponses->merge($reponsesEtudiantAdapter->getReponsesEtudiant($sect, $etudiant->getId())); // todo: on pourrait faire que sur la section concernée ?
-            }
-
-            $questionnaire->AddSpecialSection(AbstractSection::END);
-
-            if ($questionnaire->handleRequest($request)) {
-                $questionnaire->setQuestionsForSection($reponses);
-
-                return $questionnaire->wizardPage();
-            }
-
-            return $this->render('rdd/enquete.html.twig', [
-                'etudiant' => $etudiant,
-                'questionnaire' => $questionnaire->createView(),
-            ]);
-        }
-
-        throw new AccessDeniedException();
-    }
+    //#[Route('/enquete/{numetudiant}/{diplome}', name: 'enquete_diplome')]
+//todo: refaire avec nouveau questionnaire
+//    public function enquete(
+//        Request $request,
+//        Questionnaire $questionnaire,
+//        QuestionnaireQuizzRepository $questionnaireQuizzRepository,
+//        EtudiantRepository $etudiantRepository,
+//        RddDiplomeRepository $rddDiplomeRepository,
+//        $numetudiant,
+//        $diplome
+//    ): Response {
+//        //$reponses = new ReponsesEtudiant();
+//
+//        $dip = $rddDiplomeRepository->find($diplome);
+//        if ((null !== $dip) && md5('clerdd'.$dip->getNumetudiant()) === $numetudiant) {
+//            $questionnaireQuizz = $questionnaireQuizzRepository->find(1);
+//            $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $dip->getNumetudiant()]);
+//
+//            $questionnaire->createQuestionnaire(QuestionnaireQuizz::class,
+//                (new QuestionnaireQuizzAdapter($questionnaireQuizz))->getQuestionnaire(),
+//                ['mode' => AbstractQuestionnaire::MODE_EDITION,
+//                    'typeQuestionnaire' => 'quizz',
+//                    'route' => 'rdd_enquete_diplome',
+//                    'params' => [
+//                        'numetudiant' => $numetudiant,
+//                        'diplome' => $diplome,
+//                    ], ]);
+//            $questionnaire->setIdEtudiant($etudiant->getId()); // todo: pourrait être plus générique si c'est des questionnaires aux personnels
+//            $questionnaire->AddSpecialSection(AbstractSection::INTRODUCTION);
+//
+//            foreach ($questionnaireQuizz->getSections() as $section) {
+//                $sect = (new SectionQuizzEntityAdapter($section))->getSection();
+//                $questionnaire->addSection($sect);
+//                $reponses->merge($reponsesEtudiantAdapter->getReponsesEtudiant($sect, $etudiant->getId())); // todo: on pourrait faire que sur la section concernée ?
+//            }
+//
+//            $questionnaire->AddSpecialSection(AbstractSection::END);
+//
+//            if ($questionnaire->handleRequest($request)) {
+//                $questionnaire->setQuestionsForSection($reponses);
+//
+//                return $questionnaire->wizardPage();
+//            }
+//
+//            return $this->render('rdd/enquete.html.twig', [
+//                'etudiant' => $etudiant,
+//                'questionnaire' => $questionnaire->createView(),
+//            ]);
+//        }
+//
+//        throw new AccessDeniedException();
+//    }
 
 //    #[Route('/enquete-page/', name: 'enquete_wizard_page', options: ['expose' => true])]
 //    public function wizardPage(

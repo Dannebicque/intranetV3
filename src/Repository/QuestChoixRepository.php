@@ -1,7 +1,15 @@
 <?php
+/*
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/QuestChoixRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 11/12/2022 13:57
+ */
 
 namespace App\Repository;
 
+use App\Components\Questionnaire\Interfaces\QuestChoixInterface;
 use App\Entity\QuestChoix;
 use App\Entity\QuestQuestion;
 use App\Entity\QuestQuestionnaire;
@@ -52,5 +60,21 @@ class QuestChoixRepository extends ServiceEntityRepository
             ->setParameter('questionnaire', $questionnaireQualite)
             ->getQuery()
             ->getResult();
+    }
+
+    public function findExistQuestion(
+        string $cleQuestion,
+        QuestChoixInterface $choixUser,
+        string $typeDestinataire
+    ): ?QuestChoix {
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.question = :question')
+            ->andWhere('c.idQuestChoix = :idQuestChoix')
+            ->andWhere('c.typeDestinataire = :typeDestinataire')
+            ->setParameter('question', $cleQuestion)
+            ->setParameter('idQuestChoix', $choixUser->getId())
+            ->setParameter('typeDestinataire', $typeDestinataire)
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }

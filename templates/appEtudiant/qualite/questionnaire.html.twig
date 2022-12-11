@@ -1,35 +1,35 @@
-{% extends 'base.html.twig' %}
+{# {% extends 'base.html.twig' %} #}
 
-{% block header %}
-    {{ 'applications.etudiant.qualite.questionnaire.heading'|trans }}
-{% endblock %}
+{# {% block header %} #}
+{#    {{ 'applications.etudiant.qualite.questionnaire.heading'|trans }} #}
+{# {% endblock %} #}
 
-{% block headeractions %}
-    <div class="header-action">
-        <div class="buttons">
-            <a href="{{ path('application_index', {onglet:'qualite'}) }}" class="btn btn-primary btn-float"
-               data-bs-toggle="tooltip" data-bs-placement="bottom"
-               title="{{ 'atitle.retour_applications'|trans }}"><i
-                        class="fas fa-arrow-left"></i></a>
-        </div>
-    </div>
-{% endblock %}
+{# {% block headeractions %} #}
+{#    <div class="header-action"> #}
+{#        <div class="buttons"> #}
+{#            <a href="{{ path('application_index', {onglet:'qualite'}) }}" class="btn btn-primary btn-float" #}
+{#               data-bs-toggle="tooltip" data-bs-placement="bottom" #}
+{#               title="{{ 'atitle.retour_applications'|trans }}"><i #}
+{#                        class="fas fa-arrow-left"></i></a> #}
+{#        </div> #}
+{#    </div> #}
+{# {% endblock %} #}
 
-{% block content %}
-    <div class="card">
-        <h4 class="card-title">{{ 'applications.etudiant.qualite.questionnaire.heading'|trans }}</h4>
-        <div class="card-body">
-            {{ questionnaire_render(questionnaire) }}
-        </div>
-    </div>
-{% endblock %}
+{# {% block content %} #}
+{#    <div class="card"> #}
+{#        <h4 class="card-title">{{ 'applications.etudiant.qualite.questionnaire.heading'|trans }}</h4> #}
+{#        <div class="card-body"> #}
+{#            {{ questionnaire_render(questionnaire) }} #}
+{#        </div> #}
+{#    </div> #}
+{# {% endblock %} #}
 
-{#{% block stylesheets %}#}
-{#    {{ parent() }}#}
-{#    {{ encore_entry_link_tags('quizzQualite') }}#}
-{#{% endblock %}#}
+{# {% block stylesheets %} #}
+{#    {{ parent() }} #}
+{#    {{ encore_entry_link_tags('quizzQualite') }} #}
+{# {% endblock %} #}
 
-{#{% block javascripts %}#}
-{#    {{ parent() }}#}
-{#    {{ encore_entry_script_tags('quizzQualite') }}#}
-{#{% endblock %}#}
+{# {% block javascripts %} #}
+{#    {{ parent() }} #}
+{#    {{ encore_entry_script_tags('quizzQualite') }} #}
+{# {% endblock %} #}

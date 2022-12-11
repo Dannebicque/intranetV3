@@ -1,8 +1,14 @@
 <?php
+/*
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/QuestChoix.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 11/12/2022 15:26
+ */
 
 namespace App\Entity;
 
-use App\Components\Questionnaire\Interfaces\QuestChoixInterface;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\QuestChoixRepository;
 use Doctrine\ORM\Mapping as ORM;
@@ -24,6 +30,9 @@ class QuestChoix extends BaseEntity
 
     #[ORM\ManyToOne(inversedBy: 'questChoixes')]
     private ?QuestQuestion $question = null;
+
+    #[ORM\Column(length: 100)]
+    private ?string $cleReponse = null;
 
     public function getValeur(): ?string
     {
@@ -69,6 +78,18 @@ class QuestChoix extends BaseEntity
     public function setQuestion(?QuestQuestion $question): self
     {
         $this->question = $question;
+
+        return $this;
+    }
+
+    public function getCleReponse(): ?string
+    {
+        return $this->cleReponse;
+    }
+
+    public function setCleReponse(string $cleReponse): self
+    {
+        $this->cleReponse = $cleReponse;
 
         return $this;
     }

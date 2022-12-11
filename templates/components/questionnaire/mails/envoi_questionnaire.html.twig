@@ -1,10 +1,17 @@
-Bonjour {{ questChoix.display }},
+<p>Bonjour {{ questChoix.display }},</p>
 
 Veuillez trouver le lien pour le questionnaire ...
 
-{{ url('enquete_questionnaire_qualite_index', {uuidQuestionnaire: questionnaire.uuidString, uuid: questChoix.cleQuestionnaire}) }}
+<p>
+    <a href="{{ url('enquete_questionnaire_qualite_index', {uuidQuestionnaire: questionnaire.uuidString, uuid: questChoix
+    .cleQuestionnaire}) }}" target="_blank">Accéder au questionnaire en cliquant sur ce lien</a> ou copier/coller
+                                                                                                 l'adresse suivante dans
+                                                                                                 votre navigateur
+                                                                                                 : {{ url('enquete_questionnaire_qualite_index', {uuidQuestionnaire: questionnaire.uuidString, uuid: questChoix.cleQuestionnaire}) }}
+</p>
 
-Le questionnaire est anonyme et confidentiel.
-Il est accessible du ... au ...
+<p>Le questionnaire est anonyme et confidentiel.</p>
+<p>Il est accessible du {{ questionnaire.dateOuverture|format_datetime('short', 'short') }} au {{ questionnaire
+    .dateFermeture|format_datetime('short', 'short') }}</p>
 
 Merci...

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/TypeQuestionRenderer.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeQuestionRenderer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/10/2021 10:37
+ * @lastUpdate 11/12/2022 14:44
  */
 
 namespace App\Components\Questionnaire;
@@ -50,8 +50,7 @@ class TypeQuestionRenderer
         $params['numero'] = $question->numero;
         $params['ordre'] = $ordre;
         $params['obligatoire'] = $question->obligatoire;
-        $params['typeQuestionnaire'] = $question->getOption('typeQuestionnaire');
-        $params['reponseEtudiant'] = $question->reponseEtudiant;
+        $params['reponseEtudiant'] = $question->reponseUser;
 
         return $template->renderBlock($params['block_name'], $params);
     }

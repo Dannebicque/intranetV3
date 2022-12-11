@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/webpack.config.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 17/10/2022 21:25
+// @lastUpdate 11/12/2022 12:27
 
 var Encore = require('@symfony/webpack-encore')
 var path = require('path')
@@ -36,7 +36,6 @@ Encore
    */
   .addEntry('app', './assets/app.js')
   .addEntry('borne', './assets/js/pages/borne.js')
-  .addEntry('questionnaire', './assets/js/pages/questionnaire.js')
   .addEntry('covid', './assets/js/pages/covid.js')
   .addEntry('tinyMce', './assets/js/tinyMce.js')
   .addEntry('apc', './assets/js/pages/apc.js')
@@ -45,7 +44,6 @@ Encore
   .addEntry('applications', './assets/js/pages/applications.js')
   .addEntry('profil', './assets/js/pages/profil.js')
   .addEntry('planning', './assets/js/pages/planning.js')
-  .addEntry('quizzQualite', './assets/js/pages/quizzQualite.js')
   .addEntry('adm.configuration', './assets/js/pages/adm.configuration.js')
   .addEntry('adm.articles', './assets/js/pages/adm.articles.js')
   .addEntry('adm.quizz', './assets/js/pages/adm.quizz.js')

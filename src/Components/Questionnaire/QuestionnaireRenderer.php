@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/QuestionnaireRenderer.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/QuestionnaireRenderer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/10/2021 10:37
+ * @lastUpdate 11/12/2022 12:57
  */
 
 namespace App\Components\Questionnaire;
@@ -37,9 +37,9 @@ class QuestionnaireRenderer
         $vars = [];
         $vars['sections'] = $questionnaire->getSections();
         $vars['questionnaire'] = $questionnaire;
-        $vars['etudiant'] = $questionnaire->getIdEtudiant();
+        $vars['choixUserUuid'] = $questionnaire->getChoixUser();
         $vars['options'] = $options;
-        $vars['id'] = $questionnaire->getQuestionnaire()->id;
+        $vars['questionnaireUuid'] = $questionnaire->getQuestionnaire()->uuidString;
         $vars['url'] = $questionnaire->getUrl();
         $vars['urlEnd'] = $questionnaire->getUrlEnd();
 
@@ -62,8 +62,8 @@ class QuestionnaireRenderer
 
         $vars = $section->getVars();
         $vars['options'] = $options;
-        $vars['idQuestionnaire'] = $section->questionnaire_id;
-        $vars['etudiant'] = $section->etudiant_id;
+        $vars['questionnaireUuid'] = $section->questionnaireUuid;
+        $vars['choixUserUuid'] = $section->choixUserUuid;
 
         return $vars;
     }

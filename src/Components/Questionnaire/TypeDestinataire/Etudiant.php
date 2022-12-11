@@ -4,17 +4,21 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeDestinataire/Etudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/11/2022 17:42
+ * @lastUpdate 11/12/2022 15:26
  */
 
 namespace App\Components\Questionnaire\TypeDestinataire;
 
 use App\Classes\Mail\MailerFromTwig;
+use App\Components\Questionnaire\DTO\ReponsesUser;
 use App\Components\Questionnaire\Interfaces\QuestChoixInterface;
 use App\Components\Questionnaire\Interfaces\TypeDestinataireInterface;
 use App\Entity\QuestChoixEtudiant;
 use App\Repository\EtudiantRepository;
 use App\Repository\QuestChoixEtudiantRepository;
+use App\Repository\QuestChoixRepository;
+use App\Repository\QuestQuestionRepository;
+use App\Repository\QuestReponseRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Ramsey\Uuid\Uuid;
 
@@ -24,11 +28,15 @@ class Etudiant extends AbstractTypeDestinataire implements TypeDestinataireInter
     public const ENTITY = QuestChoixEtudiant::class;
 
     public function __construct(
+        QuestChoixRepository $questChoixRepository,
+        QuestQuestionRepository $questQuestionRepository,
+        QuestReponseRepository $questReponseRepository,
         protected MailerFromTwig $myMailer,
-        protected EntityManagerInterface $entityManager,
+        EntityManagerInterface $entityManager,
         protected QuestChoixEtudiantRepository $questChoixEtudiantRepository,
         protected EtudiantRepository $etudiantRepository
     ) {
+        parent::__construct($entityManager, $questChoixRepository, $questQuestionRepository, $questReponseRepository);
     }
 
     public function getListe(): array
@@ -46,7 +54,7 @@ class Etudiant extends AbstractTypeDestinataire implements TypeDestinataireInter
         foreach ($liste as $etu) {
             $etudiant = $this->etudiantRepository->find($etu);
 
-            if ($etudiant !== null) {
+            if (null !== $etudiant) {
                 $questChoixEtudiant = new QuestChoixEtudiant();
                 $questChoixEtudiant->setEtudiant($etudiant);
                 $questChoixEtudiant->setQuestionnaire($this->questionnaire);
@@ -65,11 +73,38 @@ class Etudiant extends AbstractTypeDestinataire implements TypeDestinataireInter
         $this->entityManager->flush();
     }
 
-    public function getChoixUser(string $uuid): QuestChoixInterface
+    public function getChoixUser(string $uuid): ?QuestChoixInterface
     {
-        return $this->questChoixEtudiantRepository->findOneBy([
+        $this->choixUser = $this->questChoixEtudiantRepository->findOneBy([
             'cleQuestionnaire' => $uuid,
-            'questionnaire' => $this->questionnaire
+            'questionnaire' => $this->questionnaire,
         ]);
+
+        return $this->choixUser;
+    }
+
+    public function sendMail(QuestChoixInterface $choixUser, MailerFromTwig $myMailer): void
+    {
+        $myMailer->initEmail();
+        $myMailer->setTemplate('mails/qualite-complete-etudiant.html.twig',
+            ['questionnaire' => $this->questionnaire, 'user' => $choixUser]);
+        $myMailer->sendMessage($choixUser->getEtudiant()->getMails(),
+            'Accusé réception questionnaire ' . $this->questionnaire->getLibelle());
+
+        $myMailer->initEmail();
+        $myMailer->setTemplate('mails/qualite-complete-responsable.html.twig',
+            ['questionnaire' => $this->questionnaire, 'etudiant' => $choixUser->getEtudiant()]);
+        $myMailer->sendMessage($choixUser->getEtudiant()->getDiplome()->getOptResponsableQualite()->getMails(),
+            'Accusé réception questionnaire ' . $this->questionnaire->getLibelle());
+    }
+
+    public function sauvegardeReponse(QuestChoixInterface $choixUser, string $cleReponse, string $cleQuestion): void
+    {
+        $this->abstractSauvegardeReponse($choixUser, $cleReponse, $cleQuestion, 'etudiant');
+    }
+
+    public function getReponses(): ReponsesUser
+    {
+        return $this->abstractGetReponses('etudiant');
     }
 }
