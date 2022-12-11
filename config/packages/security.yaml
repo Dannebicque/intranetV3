@@ -42,9 +42,6 @@ security:
 
 
   access_control:
-    # Les regles de securité
-    # Là dans ce cas seul les utilisateurs ayant le rôle ROLE_ADMIN
-    # peuvent acceder à toutes les pages commençant par /admin
     - { path: '^/[a-z]{2}/but', roles: PUBLIC_ACCESS }
     - { path: '^/[a-z]{2}/aide', roles: PUBLIC_ACCESS }
     - { path: '^/[a-z]{2}/borne', roles: PUBLIC_ACCESS }
@@ -52,8 +49,8 @@ security:
     - { path: '^/[a-z]{2}/sso/redirect/cas', roles: PUBLIC_ACCESS }
     - { path: '^/[a-z]{2}/connexion', roles: PUBLIC_ACCESS }
     - { path: '^/[a-z]{2}/mentions-legales', roles: PUBLIC_ACCESS }
+    - { path: '^/[a-z]{2}/enquete-qualite', roles: PUBLIC_ACCESS }
     - { path: '^/[a-z]{2}/login', roles: PUBLIC_ACCESS }
-    #- { path: '^/[a-z]{2}/api', roles: PUBLIC_ACCESS }
     - { path: '^/[a-z]{2}/administration', roles: [ROLE_PERMANENT, ROLE_SUPER_ADMIN] }
     - { path: '^/[a-z]{2}/ldap', roles: [ ROLE_PERMANENT, ROLE_SUPER_ADMIN, ROLE_RH ] }
     - { path: '^/[a-z]{2}/administratif', roles: [ ROLE_ADMINISTRATIF ] }
