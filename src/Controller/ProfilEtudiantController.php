@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/ProfilEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 15:11
+ * @lastUpdate 12/12/2022 21:30
  */
 
 namespace App\Controller;
@@ -193,15 +193,16 @@ class ProfilEtudiantController extends BaseController
         Etudiant $etudiant
     ): Response {
         $semestresPrecedents = $scolariteRepository->findByEtudiant($etudiant);
+        $semestre = $etudiant->getSemestre();
+        if (null !== $semestre) {
 
-        if (null !== $etudiant->getSemestre()) {
-            $semestre = $etudiant->getSemestre();
             $ressources = $apcRessourceCompetenceRepository->findBySemestreArray($semestre);
             $saes = $apcSaeCompetenceRepository->findBySemestreArray($semestre);
             $ues = $ueRepository->findBySemestre($semestre);
             $etudiantSousCommissionApc = new EtudiantSousCommissionApc($etudiant, $semestre, $ues);
             $etudiantNotes->setEtudiant($etudiant);
-            $matieres = $typeMatiereManager->findBySemestreAndReferentiel($etudiant->getSemestre(), $etudiant->getSemestre()->getDiplome()->getReferentiel());
+            $matieres = $typeMatiereManager->findBySemestreAndReferentiel($etudiant->getSemestre(),
+                $etudiant->getSemestre()->getDiplome()->getReferentiel());
             $etudiantSousCommissionApc->moyenneMatieres = $etudiantNotes->getMoyenneParMatiereParSemestresEtAnneeUniversitaire($matieres,
                 $etudiant->getSemestre(),
                 $this->getAnneeUniversitaire(), true);
