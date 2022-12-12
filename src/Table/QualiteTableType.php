@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/QualiteTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/11/2022 18:04
+ * @lastUpdate 12/12/2022 19:07
  */
 
 namespace App\Table;
 
+use App\Components\Questionnaire\TypeDestinataire\Etudiant;
 use App\Entity\Annee;
 use App\Entity\Departement;
 use App\Entity\Diplome;
@@ -16,6 +17,7 @@ use App\Entity\QuestQuestionnaire;
 use App\Entity\Semestre;
 use App\Form\Type\DatePickerType;
 use App\Repository\SemestreRepository;
+use App\Table\ColumnType\PersonnelColumnType;
 use DavidAnnebicque\TableBundle\Adapter\EntityAdapter;
 use DavidAnnebicque\TableBundle\Column\BadgeColumnType;
 use DavidAnnebicque\TableBundle\Column\DateColumnType;
@@ -26,7 +28,6 @@ use DavidAnnebicque\TableBundle\TableType;
 use DavidAnnebicque\TableBundle\Widget\Type\RowDuplicateLinkType;
 use DavidAnnebicque\TableBundle\Widget\Type\RowEditLinkType;
 use DavidAnnebicque\TableBundle\Widget\Type\RowLinkType;
-use DavidAnnebicque\TableBundle\Widget\Type\RowShowLinkType;
 use DavidAnnebicque\TableBundle\Widget\WidgetBuilder;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -79,6 +80,9 @@ class QualiteTableType extends TableType
             ['label' => 'table.typeDestinataire']);
         $builder->addColumn('semestre', BadgeColumnType::class,
             ['label' => 'table.semestre']);
+        if ($this->type === 'administratif') {
+            $builder->addColumn('auteur', PersonnelColumnType::class, ['label' => 'table.auteur']);
+        }
 
         $builder->addColumn('links', WidgetColumnType::class, [
             'build' => function(WidgetBuilder $builder, QuestQuestionnaire $s) {
@@ -89,13 +93,15 @@ class QualiteTableType extends TableType
                     'route_params' => ['id' => $s->getId(), 'type' => $this->type],
                     'xhr' => false,
                 ]);
-                $builder->add('show', RowShowLinkType::class, [
+                $builder->add('show', RowLinkType::class, [
                     'route' => 'adm_questionnaire_qualite_detail',
                     'route_params' => [
                         'id' => $s->getId(),
                         'type' => $this->type,
                     ],
                     'xhr' => false,
+                    'icon' => 'fas fa-list-check',
+                    'attr' => ['class' => 'btn btn-square btn-primary-outline btn-sm me-1'],
                 ]);
                 $builder->add('duplicate', RowDuplicateLinkType::class, [
                     'route' => 'adm_questionnaire_qualite_duplicate',
@@ -121,9 +127,12 @@ class QualiteTableType extends TableType
             'class' => QuestQuestionnaire::class,
             'fetch_join_collection' => false,
             'query' => function(QueryBuilder $qb, array $formData) {
+                $qb->where('e.typeDestinataire = :typeDestinataire')
+                    ->setParameter('typeDestinataire', Etudiant::class);
+
                 if (null !== $this->departement) {
                     $qb
-                        ->where('e.departement = :departement')
+                        ->andWhere('e.departement = :departement')
                         ->setParameter('departement', $this->departement->getId());
                 }
 
@@ -131,7 +140,7 @@ class QualiteTableType extends TableType
                     $qb
                         ->innerJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
                         ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
-                        ->where('a.diplome = :diplome')
+                        ->andWhere('a.diplome = :diplome')
                         ->setParameter('diplome', $this->diplome->getId());
                 }
 

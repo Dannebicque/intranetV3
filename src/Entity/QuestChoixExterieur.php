@@ -1,4 +1,11 @@
 <?php
+/*
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/QuestChoixExterieur.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 12/12/2022 21:28
+ */
 
 namespace App\Entity;
 
@@ -26,7 +33,7 @@ class QuestChoixExterieur extends BaseEntity implements QuestChoixInterface
 
     public function getNom(): string
     {
-        return $this->nom;
+        return mb_strtoupper($this->nom);
     }
 
     public function setNom(string $nom): self
@@ -38,7 +45,7 @@ class QuestChoixExterieur extends BaseEntity implements QuestChoixInterface
 
     public function getPrenom(): string
     {
-        return $this->prenom;
+        return ucwords(mb_strtolower($this->prenom));
     }
 
     public function setPrenom(string $prenom): self
@@ -62,6 +69,6 @@ class QuestChoixExterieur extends BaseEntity implements QuestChoixInterface
 
     public function getDisplay(): string
     {
-        // TODO: Implement getDisplay() method.
+        return $this->getPrenom() . ' ' . $this->getNom();
     }
 }

@@ -1,5 +1,6 @@
 <div {{ stimulus_controller('questionnaire--lancer', {
     url: path('adm_questionnaire_creation_sauvegarde_lancer', {type:type, questionnaire: questionnaire.id }),
+    urlExt: path('adm_questionnaire_creation_add_exterieur', {type:type, questionnaire: questionnaire.id }),
     urlRedirect: path('adm_questionnaire_qualite_detail', {type:type, id: questionnaire.id }),
 }) }}
 <h1>Lancement du questionnaire</h1>
@@ -23,6 +24,10 @@ Questionnaire actif du <strong>{{ questionnaire.dateOuverture|format_datetime('s
     <a href="#" {{ stimulus_action('questionnaire--lancer', 'selectAll', 'click') }}>Tout selectionner</a> |
     <a href="#" {{ stimulus_action('questionnaire--lancer', 'unselectAll', 'click') }}>Tout déselectionner</a>
 {% elseif typeDestinataire == 'exterieur' %}
+    <div {{ stimulus_target('questionnaire--lancer', 'listeExt') }}>
+        {{ include('questionnaire/creation/_addExterieur.html.twig') }}
+    </div>
+
 {% endif %}
 <div class="row mt-2">
     <div class="col-6 d-grid">

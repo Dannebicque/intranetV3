@@ -1,0 +1,46 @@
+<table class="table table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>Nom</th>
+        <th>Prénom</th>
+        <th>Email</th>
+        <th>Envoyé?</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>
+            <label for="ext_nom" class="sr-only">Nom</label>
+            <input type="text" name="ext_nom" class="form-control" id="ext_nom"/>
+        </td>
+        <td>
+            <label for="ext_prenom" class="sr-only">Nom</label>
+            <input type="text" name="ext_prenom" class="form-control" id="ext_prenom"/>
+        </td>
+        <td colspan="2">
+            <label for="ext_email" class="sr-only">Nom</label>
+            <input type="text" name="ext_email" class="form-control" id="ext_email"/>
+        </td>
+        <td>
+            <button class="btn btn-success"
+                    {{ stimulus_action('questionnaire--lancer', 'ajouterExt', 'click') }}>Ajouter
+            </button>
+        </td>
+    </tr>
+
+    {% for elt in liste %}
+        <tr>
+            <td>{{ elt.nom }}</td>
+            <td>{{ elt.prenom }}</td>
+            <th>{{ elt.email }}</th>
+            <th>
+                    <span class="badge bg-{% if elt.envoye == true %}success{% else %}warning{% endif %}">
+                    {% if elt.envoye == true %}Envoyé{% else %}En attente{% endif %}
+                    </span>
+            </th>
+            <th></th>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

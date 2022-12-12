@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeDestinataire/Etudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/12/2022 15:26
+ * @lastUpdate 12/12/2022 16:51
  */
 
 namespace App\Components\Questionnaire\TypeDestinataire;
@@ -19,6 +19,7 @@ use App\Repository\QuestChoixEtudiantRepository;
 use App\Repository\QuestChoixRepository;
 use App\Repository\QuestQuestionRepository;
 use App\Repository\QuestReponseRepository;
+use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Ramsey\Uuid\Uuid;
 
@@ -64,7 +65,7 @@ class Etudiant extends AbstractTypeDestinataire implements TypeDestinataireInter
                     ['questionnaire' => $this->questionnaire, 'questChoix' => $questChoixEtudiant]);
                 $this->myMailer->sendMessage($etudiant->getMails(),
                     '[Questionnaire Qualité] ' . $this->questionnaire->getLibelle());
-                $questChoixEtudiant->setDateEnvoi(new \DateTime());
+                $questChoixEtudiant->setDateEnvoi(Carbon::now());
                 $this->entityManager->persist($questChoixEtudiant);
                 $this->entityManager->flush();
             }

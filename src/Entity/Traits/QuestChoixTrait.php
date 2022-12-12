@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Traits/QuestChoixTrait.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/11/2022 19:47
+ * @lastUpdate 12/12/2022 16:42
  */
 
 namespace App\Entity\Traits;
 
 use App\Entity\QuestQuestionnaire;
+use Carbon\CarbonInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -18,11 +19,11 @@ trait QuestChoixTrait
     #[ORM\ManyToOne]
     private ?QuestQuestionnaire $questionnaire = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $dateEnvoi = null;
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateEnvoi = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $dateTermine = null;
+    private ?CarbonInterface $dateTermine = null;
 
     #[ORM\Column(length: 255)]
     private ?string $cleQuestionnaire = null;
@@ -39,24 +40,24 @@ trait QuestChoixTrait
         return $this;
     }
 
-    public function getDateEnvoi(): ?\DateTimeInterface
+    public function getDateEnvoi(): ?CarbonInterface
     {
         return $this->dateEnvoi;
     }
 
-    public function setDateEnvoi(\DateTimeInterface $dateEnvoi): self
+    public function setDateEnvoi(?CarbonInterface $dateEnvoi): self
     {
         $this->dateEnvoi = $dateEnvoi;
 
         return $this;
     }
 
-    public function getDateTermine(): ?\DateTimeInterface
+    public function getDateTermine(): ?CarbonInterface
     {
         return $this->dateTermine;
     }
 
-    public function setDateTermine(?\DateTimeInterface $dateTermine): self
+    public function setDateTermine(?CarbonInterface $dateTermine): self
     {
         $this->dateTermine = $dateTermine;
 
@@ -73,5 +74,10 @@ trait QuestChoixTrait
         $this->cleQuestionnaire = $cleQuestionnaire;
 
         return $this;
+    }
+
+    public function envoye(): bool
+    {
+        return null !== $this->dateEnvoi;
     }
 }

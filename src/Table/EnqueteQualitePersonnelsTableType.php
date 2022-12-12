@@ -1,18 +1,18 @@
 <?php
 /*
  * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/Sites/intranetV3/src/Table/QualiteTableType.php
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Table/EnqueteQualitePersonnelsTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/11/2022 18:04
+ * @lastUpdate 12/12/2022 19:07
  */
 
 namespace App\Table;
 
-use App\Components\Questionnaire\TypeDestinataire\Exterieur;
 use App\Components\Questionnaire\TypeDestinataire\Personnel;
 use App\Entity\QuestQuestionnaire;
 use App\Form\Type\DatePickerType;
+use App\Table\ColumnType\PersonnelColumnType;
 use DavidAnnebicque\TableBundle\Adapter\EntityAdapter;
 use DavidAnnebicque\TableBundle\Column\BadgeColumnType;
 use DavidAnnebicque\TableBundle\Column\DateColumnType;
@@ -23,7 +23,6 @@ use DavidAnnebicque\TableBundle\TableType;
 use DavidAnnebicque\TableBundle\Widget\Type\RowDuplicateLinkType;
 use DavidAnnebicque\TableBundle\Widget\Type\RowEditLinkType;
 use DavidAnnebicque\TableBundle\Widget\Type\RowLinkType;
-use DavidAnnebicque\TableBundle\Widget\Type\RowShowLinkType;
 use DavidAnnebicque\TableBundle\Widget\WidgetBuilder;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -49,6 +48,10 @@ class EnqueteQualitePersonnelsTableType extends TableType
         $builder->addColumn('typeDestinataire', BadgeColumnType::class,
             ['label' => 'table.typeDestinataire']);
 
+        if ($this->type === 'administratif') {
+            $builder->addColumn('auteur', PersonnelColumnType::class, ['label' => 'table.auteur']);
+        }
+
         $builder->addColumn('links', WidgetColumnType::class, [
             'build' => function(WidgetBuilder $builder, QuestQuestionnaire $s) {
                 $builder->add('apercu', RowLinkType::class, [
@@ -58,13 +61,15 @@ class EnqueteQualitePersonnelsTableType extends TableType
                     'route_params' => ['id' => $s->getId(), 'type' => $this->type],
                     'xhr' => false,
                 ]);
-                $builder->add('show', RowShowLinkType::class, [
+                $builder->add('show', RowLinkType::class, [
                     'route' => 'adm_questionnaire_qualite_detail',
                     'route_params' => [
                         'id' => $s->getId(),
                         'type' => $this->type,
                     ],
                     'xhr' => false,
+                    'icon' => 'fas fa-list-check',
+                    'attr' => ['class' => 'btn btn-square btn-primary-outline btn-sm me-1'],
                 ]);
                 $builder->add('duplicate', RowDuplicateLinkType::class, [
                     'route' => 'adm_questionnaire_qualite_duplicate',
@@ -88,7 +93,6 @@ class EnqueteQualitePersonnelsTableType extends TableType
             'fetch_join_collection' => false,
             'query' => function(QueryBuilder $qb, array $formData) {
                 $qb->where('e.typeDestinataire = :typeDestinataire')
-                    ->andWhere('e.departement IS NULL')
                     ->setParameter('typeDestinataire', Personnel::class);
 
                 if (isset($formData['from'])) {

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/CreationSectionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/12/2022 16:07
+ * @lastUpdate 12/12/2022 21:28
  */
 
 namespace App\Controller\questionnaire;
@@ -17,6 +17,7 @@ use App\Form\QuestSectionType;
 use App\Repository\QuestQuestionRepository;
 use App\Repository\QuestSectionRepository;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/{type}/questionnaire/creation/section', name: 'adm_questionnaire_creation_section_', requirements: ['type' => 'administratif|administration'], defaults: ['type' => 'administratif'])]
@@ -122,6 +123,17 @@ class CreationSectionController extends BaseController
         return $this->render('questionnaire/creation/section/section.html.twig', [
             'section' => $section,
             'liste' => $liste,
+        ]);
+    }
+
+    #[Route('/{section}/transition-question/{question}', name: 'transition_question')]
+    public function configTransitionQuestion(
+        QuestSection $section,
+        QuestQuestion $question,
+    ): Response {
+        return $this->render('questionnaire/creation/section/_transitionQuestion.html.twig', [
+            'section' => $section,
+            'question' => $question,
         ]);
     }
 }

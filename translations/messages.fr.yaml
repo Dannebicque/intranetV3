@@ -339,11 +339,13 @@ adm:
     show.heading: 'Détails d''une période de projet tutoré'
   projet: Projets
   qualite:
+    parametres.heading: Paramètres du questionnaire
     menu: Qualité
     index.heading: 'Liste des questionnaires qualité du département'
     show.heading: 'Détails d''un questionnaire qualité'
     apercu.heading: 'Aperçu du questionnaire qualité'
     resultats:
+      affiche.heading: 'Résultats du questionnaire'
       heading: 'Résultats du questionnaire qualité'
   questionnaire:
     qualite:

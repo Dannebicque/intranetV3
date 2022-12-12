@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/CreationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 12/12/2022 16:40
  */
 
 namespace App\Controller\questionnaire;
@@ -147,8 +147,6 @@ class CreationController extends BaseController
     public function configurer(
         QuestQuestionnaire $questionnaire
     ): Response {
-
-
         return $this->render('questionnaire/creation/_modalConfig.html.twig', [
             'questionnaire' => $questionnaire,
         ]);
@@ -168,7 +166,7 @@ class CreationController extends BaseController
             'typeDestinataire' => $typeDest::LABEL,
             'type' => $request->get('type'),
             'liste' => $typeDest->getListe(),
-            //todo: la liste devrait fusionner le questionnaire et la liste des étudiants
+            // todo: la liste devrait fusionner le questionnaire et la liste des étudiants
         ]);
     }
 
@@ -186,10 +184,25 @@ class CreationController extends BaseController
                 $typeDest->send($liste);
                 break;
             case 'save':
-
                 break;
         }
 
         return $this->json(true);
+    }
+
+    #[Route('/modal/add-exterieur/{questionnaire}', name: 'add_exterieur')]
+    public function addExterieur(
+        Request $request,
+        QuestionnaireRegistry $questionnaireRegistry,
+        QuestQuestionnaire $questionnaire
+    ): Response {
+        $typeDest = $questionnaireRegistry->getTypeDestinataire($questionnaire->getTypeDestinataire());
+        $typeDest->setQuestionnaire($questionnaire);
+
+        $typeDest->addExterieur(JsonRequest::getFromRequest($request));
+
+        return $this->render('questionnaire/creation/_addExterieur.html.twig', [
+            'liste' => $typeDest->getListe()
+        ]);
     }
 }

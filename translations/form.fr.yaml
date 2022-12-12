@@ -154,6 +154,8 @@ initiales: Initiales
 j: Jour
 Jour: Jour
 label:
+  exterieur: 'Exterieur, nomminatif'
+  etudiant: 'Etudiants, semestre'
   formationContinue: 'Parcours en formation continue ou alternance ?'
   semestre_projet_periode: 'Semestre(s) du projet'
   responsables_projet: 'Responsable(s) du projet'

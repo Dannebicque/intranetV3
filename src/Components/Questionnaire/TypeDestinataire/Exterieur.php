@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeDestinataire/Exterieur.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/12/2022 15:26
+ * @lastUpdate 12/12/2022 21:28
  */
 
 namespace App\Components\Questionnaire\TypeDestinataire;
@@ -18,7 +18,9 @@ use App\Repository\QuestChoixExterieurRepository;
 use App\Repository\QuestChoixRepository;
 use App\Repository\QuestQuestionRepository;
 use App\Repository\QuestReponseRepository;
+use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
+use Ramsey\Uuid\Uuid;
 
 class Exterieur extends AbstractTypeDestinataire implements TypeDestinataireInterface
 {
@@ -38,11 +40,11 @@ class Exterieur extends AbstractTypeDestinataire implements TypeDestinataireInte
 
     public function getListe(): array
     {
-//        if (null !== $this->questionnaire->getDepartement()) {
-//            return $this->personnelRepository->findByDepartement($this->questionnaire->getDepartement());
-//        }
-//
-//        return $this->personnelRepository->findAll();
+        return $this->questChoixExterieurRepository->findBy(
+            [
+                'questionnaire' => $this->questionnaire,
+            ]
+        );
     }
 
     public function getListeDestinataire(): array
@@ -50,22 +52,36 @@ class Exterieur extends AbstractTypeDestinataire implements TypeDestinataireInte
         return $this->questChoixExterieurRepository->findByQuestionnaire($this->questionnaire);
     }
 
+    public function addExterieur(array $data): void
+    {
+        $choix = new QuestChoixExterieur();
+        $choix->setQuestionnaire($this->questionnaire);
+        $choix->setEmail($data['email']);
+        $choix->setNom($data['nom']);
+        $choix->setPrenom($data['prenom']);
+        $choix->setCleQuestionnaire(Uuid::uuid4());
+
+        $this->entityManager->persist($choix);
+        $this->entityManager->flush();
+    }
+
     public function send(array $liste): void
     {
-        foreach ($liste as $pers) {
-//
-//                $questChoixPersonnel = new QuestChoixExterieur();
-//                $questChoixPersonnel->setQuestionnaire($this->questionnaire);
-//                $questChoixPersonnel->setCleQuestionnaire(Uuid::uuid4());
-//                $this->myMailer->initEmail();
-//                $this->myMailer->setTemplate('components/questionnaire/mails/envoi_questionnaire.html.twig',
-//                    ['questionnaire' => $this->questionnaire, 'questChoix' => $questChoixPersonnel]);
-//                $this->myMailer->sendMessage($personnel->getMails(),
-//                    '[Questionnaire Qualité] '.$this->questionnaire->getLibelle());
-//                $questChoixPersonnel->setDateEnvoi(new \DateTime());
-//                $this->entityManager->persist($questChoixPersonnel);
-//                $this->entityManager->flush();
+        $data = $this->questChoixExterieurRepository->findBy(
+            [
+                'questionnaire' => $this->questionnaire,
+                'dateEnvoi' => null,
+            ]
+        );
 
+        foreach ($data as $questChoixPersonnel) {
+            $this->myMailer->initEmail();
+            $this->myMailer->setTemplate('components/questionnaire/mails/envoi_questionnaire.html.twig',
+                ['questionnaire' => $this->questionnaire, 'questChoix' => $questChoixPersonnel]);
+            $this->myMailer->sendMessage([$questChoixPersonnel->getEmail()],
+                '[Questionnaire Qualité] ' . $this->questionnaire->getLibelle());
+            $questChoixPersonnel->setDateEnvoi(Carbon::now());
+            $this->entityManager->flush();
         }
         $this->questionnaire->setEnvoye(true);
         $this->entityManager->flush();

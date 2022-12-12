@@ -1,28 +1,49 @@
 // Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/questionnaire/creation_controller.js
+// @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/questionnaire/lancer_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/11/2022 08:54
+// @lastUpdate 12/12/2022 21:28
 
 import { Controller } from '@hotwired/stimulus'
-import Routing from 'fos-router'
 import { addCallout } from '../../js/util'
 
 export default class extends Controller {
-  static targets = []
+  static targets = [
+    'listeExt',
+  ]
 
   static values = {
     url: String,
+    urlExt: String,
     urlRedirect: String,
   }
 
   connect() {
-    console.log('coucou')
+  }
+
+  async ajouterExt(event) {
+    event.preventDefault()
+    console.log('add')
+
+    const body = {
+      method: 'POST',
+      body: JSON.stringify({
+        nom: document.getElementById('ext_nom').value,
+        prenom: document.getElementById('ext_prenom').value,
+        email: document.getElementById('ext_email').value,
+      }),
+    }
+    await fetch(`${this.urlExtValue}`, body).then(async (response) => {
+      addCallout('Extérieur ajouté', 'success')
+      this.listeExtTarget.innerHTML = await response.text()
+    })
+      .catch(() => {
+        addCallout('Erreur lors de l\'ajout de la personne extérieure', 'error')
+      })
   }
 
   selectAll(event) {
     event.preventDefault()
-    console.log('select all')
     document.querySelectorAll('.element').forEach((elem) => {
       elem.checked = true
     })
@@ -30,7 +51,6 @@ export default class extends Controller {
 
   unselectAll(event) {
     event.preventDefault()
-    console.log('select all')
     document.querySelectorAll('.element').forEach((elem) => {
       elem.checked = false
     })
