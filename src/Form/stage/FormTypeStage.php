@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/stage/FormTypeStage.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/12/2022 10:19
+ * @lastUpdate 12/12/2022 10:11
  */
 
 namespace App\Form\stage;
@@ -62,6 +62,7 @@ class FormTypeStage extends AbstractType
             ])
             ->add('gratification_periode', ChoiceType::class, [
                 'label' => 'Période de gratification :',
+                'required' => false,
                 'choices' => ['Heure' => 'h', 'Jour' => 'j', 'Mois' => 'm'],
                 'empty_data' => StageEtudiant::PERIODE_GRATIFICATION_HEURE,
                 'expanded' => true,
