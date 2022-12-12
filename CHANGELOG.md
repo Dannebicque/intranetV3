@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.10.4](https://github.com/Dannebicque/intranetV3/compare/v3.10.3...v3.10.4) (2022-12-12)
+
+
+### Bug Fixes
+
+* [Stage] Formulaire, correction pour la période de stage. ([eefdea8](https://github.com/Dannebicque/intranetV3/commit/eefdea8fa53d387692cb30a3a251cf49108cfbb7))
+
 ### [3.10.3](https://github.com/Dannebicque/intranetV3/compare/v3.10.2...v3.10.3) (2022-12-12)
 
 
