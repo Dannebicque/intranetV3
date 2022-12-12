@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.10.3](https://github.com/Dannebicque/intranetV3/compare/v3.10.2...v3.10.3) (2022-12-12)
+
+
+### Bug Fixes
+
+* [Questionnaire] Gestion des réponses et affichages : etudiant et personnel ([bc20498](https://github.com/Dannebicque/intranetV3/commit/bc2049890396f3254ef8fd7cc354fa1d9ed30b58))
+* [Questionnaire] Sauvegarde de la modification d'une section ([be21545](https://github.com/Dannebicque/intranetV3/commit/be215456d32c22e709f6b927c036b525efca1671))
+* [Questionnaire] Securité pour les enquêtes ([1e44ca8](https://github.com/Dannebicque/intranetV3/commit/1e44ca80801c410d60db39f69510bb4f740face4))
+
 ### [3.10.2](https://github.com/Dannebicque/intranetV3/compare/v3.10.1...v3.10.2) (2022-12-11)
 
 
