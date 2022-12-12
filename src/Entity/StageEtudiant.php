@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/StageEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:35
+ * @lastUpdate 12/12/2022 10:45
  */
 
 namespace App\Entity;
@@ -113,8 +113,8 @@ class StageEtudiant extends BaseEntity
     )]
     private ?float $gratificationMontant = null;
 
-    #[ORM\Column(type: Types::STRING, length: 1)]
-    private string $gratificationPeriode = self::PERIODE_GRATIFICATION_HEURE;
+    #[ORM\Column(type: Types::STRING, length: 1, nullable: true)]
+    private ?string $gratificationPeriode = self::PERIODE_GRATIFICATION_HEURE;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $avantages = null;
