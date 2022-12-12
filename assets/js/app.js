@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/12/2022 19:33
+// @lastUpdate 12/12/2022 15:22
 import '@fortawesome/fontawesome-pro/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-pro/scss/brands.scss'
 import '@fortawesome/fontawesome-pro/scss/solid.scss'
@@ -154,7 +154,6 @@ function updateInterface() {
 
   if (document.querySelectorAll('.flatdatepicker').length > 0) {
     document.querySelectorAll('.flatdatepicker').forEach((elem) => {
-      console.log(elem)
       let options
       if (elem.dataset.options) {
         options = JSON.parse(elem.dataset.options)
@@ -163,8 +162,6 @@ function updateInterface() {
         options.dateFormat = 'd/m/Y'
       }
       options.locale = French
-      options.dateFormat = 'd/m/Y'
-      console.log(options)
       flatpickr(elem, options)
     })
   }
