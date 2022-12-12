@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/StageEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/12/2022 10:54
+ * @lastUpdate 12/12/2022 16:04
  */
 
 namespace App\Entity;
@@ -358,7 +358,7 @@ class StageEtudiant extends BaseEntity
         return $this->gratificationPeriode;
     }
 
-    public function setGratificationPeriode(string $gratificationPeriode): self
+    public function setGratificationPeriode(?string $gratificationPeriode): self
     {
         $this->gratificationPeriode = $gratificationPeriode;
 
