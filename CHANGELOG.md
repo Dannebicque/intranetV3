@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.10.5](https://github.com/Dannebicque/intranetV3/compare/v3.10.4...v3.10.5) (2022-12-13)
+
+
+### Features
+
+* [Questionnaire] Gestion des exterieurs, ajout du lien pour configuration transition, tableaux ([5209b18](https://github.com/Dannebicque/intranetV3/commit/5209b1842f2ded9b3ac3e62db04c9a0547e9d362))
+
+
+### Bug Fixes
+
+* [Flatpicker] options depuis le formtype et pas figées ([7baa23e](https://github.com/Dannebicque/intranetV3/commit/7baa23e7b25f4ce7889c33768b0d6819a68ed1ab))
+* [Previsionnel] suppression d'un dump ([5a50b39](https://github.com/Dannebicque/intranetV3/commit/5a50b397fee304e70db33b0a6aa85878964fd314))
+* [Profil] correction test semestre not null ([7f61b23](https://github.com/Dannebicque/intranetV3/commit/7f61b23790b2c501ebf3fd362d5264d93268a228))
+* [Stage] Formulaire, correction pour la période de stage. ([3c7798a](https://github.com/Dannebicque/intranetV3/commit/3c7798a478dbc6646c9df24f1b9e49d3711f9aa5))
+* [Stage] Formulaire, correction pour la période de stage. ([389f8b4](https://github.com/Dannebicque/intranetV3/commit/389f8b490b2d5debea7ca96f441effa186e0a436))
+* [Stage] Formulaire, correction pour la période de stage. ([2ff483c](https://github.com/Dannebicque/intranetV3/commit/2ff483c06de74a4526e59e9f7d9b20dfbe9e8459))
+* [Stage] Période de gratification si display none ([bd45ba1](https://github.com/Dannebicque/intranetV3/commit/bd45ba17fd51e813448803c13fd1474e3e472896))
+
 ### [3.10.4](https://github.com/Dannebicque/intranetV3/compare/v3.10.3...v3.10.4) (2022-12-12)
 
 
