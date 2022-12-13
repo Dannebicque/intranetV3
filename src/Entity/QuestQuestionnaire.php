@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/QuestQuestionnaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/12/2022 10:23
+ * @lastUpdate 13/12/2022 08:35
  */
 
 namespace App\Entity;
@@ -60,7 +60,7 @@ class QuestQuestionnaire extends BaseEntity
     private Collection $questSections;
 
     #[ORM\ManyToOne(targetEntity: Semestre::class)]
-    private ?Semestre $semestre;
+    private ?Semestre $semestre = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $typeDestinataire = null;

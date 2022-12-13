@@ -7,6 +7,15 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
+            <a href="{{ path('adm_questionnaire_creation_index',{type:'administratif'}) }}"
+               class="btn btn-info btn-sm btn-float"
+               data-bs-toggle="tooltip"
+               data-bs-placement="bottom"
+               title="Créer une enquête">
+                <i class="{{ iconAdd }}">
+                    <span class="sr-only">Créer une enquête</span>
+                </i>
+            </a>
             <a href="{{ path('sa_qualite_index') }}"
                class="btn btn-primary btn-float"
                title="{{ 'atitle.retour_enquete'|trans }}"
