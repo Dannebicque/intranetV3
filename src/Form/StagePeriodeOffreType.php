@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/StagePeriodeOffreType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/06/2022 11:56
+ * @lastUpdate 13/12/2022 20:35
  */
 
 namespace App\Form;
@@ -32,21 +32,22 @@ class StagePeriodeOffreType extends AbstractType
         $this->annee = $options['annee'];
 
         $builder
-            ->add('libelle', TextType::class, ['label' => 'libelle'])
-            ->add('entreprise', TextType::class, ['label' => 'entreprise'])
-            ->add('ville', TextType::class, ['label' => 'ville'])
+            ->add('libelle', TextType::class, ['label' => 'label.libelle'])
+            ->add('entreprise', TextType::class, ['label' => 'label.entreprise'])
+            ->add('ville', TextType::class, ['label' => 'label.ville'])
             ->add('documentFile', VichFileType::class, [
                 'required' => false,
-                'label' => 'fichier',
-                'download_label' => 'apercu',
+                'label' => 'label.fichier',
+                'download_label' => 'label.apercu',
                 'allow_delete' => false,
             ])
             ->add('stagePeriodes', EntityType::class, [
                 'class' => StagePeriode::class,
-                'label' => 'stagePeriodes',
+                'label' => 'label.stagePeriodes',
                 'choice_label' => 'libelle',
-                'query_builder' => fn (StagePeriodeRepository $stagePeriodeRepository) => $stagePeriodeRepository->findByDepartementBuilder($this->departement,
-                    $this->annee->getAnnee()),
+                'query_builder' => fn(StagePeriodeRepository $stagePeriodeRepository
+                ) => $stagePeriodeRepository->findByDepartementBuilder($this->departement,
+                    $this->annee),
                 'required' => true,
                 'expanded' => true,
                 'multiple' => true,

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/StagePeriodeOffre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/05/2022 16:33
+ * @lastUpdate 13/12/2022 20:30
  */
 
 namespace App\Entity;
@@ -42,7 +42,7 @@ class StagePeriodeOffre extends BaseEntity
     #[ORM\Column(type: Types::STRING, length: 255)]
     private ?string $ville = null;
 
-    #[ORM\Column(type: Types::STRING, length: 50)]
+    #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
     private ?string $documentName = '';
 
     #[Vich\UploadableField(mapping: 'offreStage', fileNameProperty: 'documentName')]
@@ -143,7 +143,7 @@ class StagePeriodeOffre extends BaseEntity
         return $this->documentName;
     }
 
-    public function setDocumentName(string $documentName): void
+    public function setDocumentName(?string $documentName): void
     {
         $this->documentName = $documentName;
     }

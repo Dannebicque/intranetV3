@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/StagePeriodeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/09/2022 11:30
+ * @lastUpdate 13/12/2022 20:24
  */
 
 namespace App\Repository;
@@ -87,12 +87,12 @@ class StagePeriodeRepository extends ServiceEntityRepository
             ->where('d.departement = :departement')
             ->setParameter('departement', $departement->getId())
             ->orderBy('p.anneeUniversitaire', Criteria::DESC)
-            ->orderBy('p.numeroPeriode', Criteria::ASC);
+            ->addOrderBy('p.numeroPeriode', Criteria::ASC);
 
         return $query->getQuery()->getResult();
     }
 
-    public function findByDepartementBuilder(Departement $departement, int $annee): QueryBuilder
+    public function findByDepartementBuilder(Departement $departement, AnneeUniversitaire $annee): QueryBuilder
     {
         $query = $this->createQueryBuilder('p')
             ->innerJoin(Semestre::class, 's', 'WITH', 'p.semestre = s.id')
@@ -102,7 +102,7 @@ class StagePeriodeRepository extends ServiceEntityRepository
             ->andWhere('p.anneeUniversitaire = :annee');
 
         $query->setParameter('departement', $departement->getId())
-            ->setParameter('annee', $annee)
+            ->setParameter('annee', $annee->getId())
             ->orderBy('p.numeroPeriode', Criteria::ASC);
 
         return $query;
