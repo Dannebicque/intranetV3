@@ -46,143 +46,145 @@
 {% endif %}
 
 <ul class="nav nav-tabs">
-    {% for groupe in evaluation.typeGroupe.groupes %} {# if matiere.option == null or groupe.options == matiere.option #}
+    {% set first = true %}
+    {% for groupe in evaluation.typeGroupe.groupes %}
         {% if groupe.inParcoursOrOption(matiere) %}
             {% if matiere.isEnfant == false or (matiere.isEnfant == true and
                 matiere.containsGroupesEnfant(groupe) ) %}
-
                 <li class="nav-item"><a href="#gr{{ groupe.id }}"
-                                        class="nav-link {% if loop.index == 1 %} active show{% endif %}"
+                                        class="nav-link {% if first == true %} active show{% endif %}"
                                         data-bs-toggle="tab" role="tab">{{ groupe.libelle }}</a>
                 </li>
+                {% set first = false %}
             {% endif %}
         {% endif %}
     {% endfor %}
 </ul>
 
 <div class="tab-content">
-    {% for groupe in evaluation.typeGroupe.groupes %} {# if matiere.option == null or groupe.options
-     == matiere
-    .option #}
+    {% set first = true %}
+    {% for groupe in evaluation.typeGroupe.groupes %}
         {% if groupe.inParcoursOrOption(matiere) %}
-        {% if matiere.isEnfant == false or (matiere.isEnfant == true and
-            matiere.containsGroupesEnfant(groupe) ) %}
-            <div class="tab-pane {% if loop.index == 1 %} active {% endif %}" id="gr{{ groupe.id }}">
-                {% if import is defined %}
-                    <div class="alert alert-danger">
-                        Cette page affiche la synthèse de l'import de vos notes. Merci de les vérifier.
-                        Aucune note déjà existante n'a été modifée par l'import.
-                        <strong>L'évaluation est pour le moment invisible des étudiants. <a
-                                    href="{{ path('application_personnel_evaluation_visible', {uuid:
-                                        evaluation.uuidString, etat: 'visible'}) }}">Cliquez
-                                                                                     ici pour la diffuser aux
-                                                                                     étudiants après
-                                                                                     vérification de
-                                                                                     l'import.</a></strong>
-                    </div>
-                {% elseif import is not defined and evaluation.visible == false %}
-                    <div class="alert alert-warning">
-                        <strong>L'évaluation est pour le moment invisible des étudiants. <a
-                                    href="{{ path('application_personnel_evaluation_visible', {uuid:
-                                        evaluation.uuidString, etat: 'visible'}) }}">Cliquez ici pour la
-                                                                                     diffuser aux étudiants
-                                                                                     après
-                                                                                     vérification de
-                                                                                     l'import.</a></strong>
-                    </div>
-                {% else %}
-                    <div class="alert alert-warning">
-                        Naviguez dans les onglets. <strong>N'oubliez pas de sauvegarder chaque groupe.</strong>
-                        Les
-                        groupes non saisis pourront être complétés plus tard.
-                    </div>
-                {% endif %}
-                <br>
-                <div class="alert alert-info">
-                    * Indiquez un étudiant absent que si son <strong>absence est justifiée</strong>. Il ne sera
-                    pas
-                    pénalisé par un 0. Laisser non coché si vous n'avez pas encore l'information. <br>
-                    -0.01 indique une note non encore saisie.<br>
-                    ** Le commentaire est limité à 255 caractères.
-                </div>
-                <table class="table table-striped table-hover">
-                    <thead>
-                    <tr>
-                        <th>{{ 'table.etudiant'|trans }}</th>
-                        <th>{{ 'table.note'|trans }}</th>
-                        <th>{{ 'table.absence'|trans }} *</th>
-                        <th>{{ 'table.commentaire_optionnel'|trans }} **</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% set tab=1 %}
-                    {% for etudiant in groupe.etudiants %}
-                        <tr {% if not(notes[etudiant.id] is defined) or notes[etudiant.id].note == '-0.01' %}class="bg-pale-warning"{% endif %}>
-                            <td>{{ etudiant.nom|capitalize }} {{ etudiant.prenom|capitalize }}  </td>
-                            <td>
-                                <label class="sr-only" for="no_{{ etudiant.id }}">Note
-                                                                                  pour {{ etudiant.display }}</label>
-                                {% if  autorise == true and evaluation.modifiable == true %}
-                                    <input type="text" name="no_{{ etudiant.id }}" tabindex="{{ tab }}"
-                                           id="no_{{ etudiant.id }}" data-etudiant="{{ etudiant.id }}"
-
-                                           class="form-control noteetudiant groupe_{{ groupe.id }}"
-                                           value="{% if notes[etudiant.id] is defined %}{{ notes[etudiant.id].note }}{% else %}-0.01{% endif %}"/>
-                                {% else %}
-                                    {% if notes[etudiant.id] is defined %}{{ notes[etudiant.id].note }}{% else %}-0.01{% endif %}
-                                {% endif %}
-                            </td>
-                            <td>
-                                <div class="form-check">
-                                    {% if  autorise == true and evaluation.modifiable == true %}
-                                        <input type="checkbox" name="abs_{{ etudiant.id }}"
-                                               id="abs_{{ etudiant.id }}" data-etudiant="{{ etudiant.id }}"
-                                               class="form-check-input absenceetudiant"
-                                               {% if notes[etudiant.id] is defined and notes[etudiant.id]
-                                               .absenceJustifie ==
-                                                   true %}checked{% endif %}/>
-                                        <label for="abs_{{ etudiant.id }}" class="form-check-label">
-
-                                            Absence justfiée
-                                        </label>
-                                    {% else %}
-                                        {% if notes[etudiant.id] is defined and notes[etudiant.id]
-                                        .absenceJustifie == true %}Absence justifiée{% else %}-{% endif %}
-                                    {% endif %}
-                                </div>
-                            </td>
-                            <td>
-                                {% if  autorise == true and evaluation.modifiable == true %}
-                                    <label class="sr-only" for="com_{{ etudiant.id }}">Commentaire pour {{ etudiant
-                                        .display }}</label>
-                                    <input type="text" name="com_{{ etudiant.id }}" id="com_{{ etudiant.id }}"
-                                           maxlength="255"
-                                           class="form-control groupe_{{ groupe.id }}"
-                                           value="{% if notes[etudiant.id] is defined %}{{ notes[etudiant.id].commentaire }}{% endif %}"/>
-                                {% else %}
-                                    {% if notes[etudiant.id] is defined %}{{ notes[etudiant.id].commentaire }}{% endif %}
-                                {% endif %}
-                            </td>
-                        </tr>
-                        {% set tab=tab+1 %}
+            {% if matiere.isEnfant == false or (matiere.isEnfant == true and
+                matiere.containsGroupesEnfant(groupe) ) %}
+                <div class="tab-pane {% if first == true %} active {% endif %}" id="gr{{ groupe.id }}">
+                    {% set first = false %}
+                    {% if import is defined %}
+                        <div class="alert alert-danger">
+                            Cette page affiche la synthèse de l'import de vos notes. Merci de les vérifier.
+                            Aucune note déjà existante n'a été modifée par l'import.
+                            <strong>L'évaluation est pour le moment invisible des étudiants. <a
+                                        href="{{ path('application_personnel_evaluation_visible', {uuid:
+                                            evaluation.uuidString, etat: 'visible'}) }}">Cliquez
+                                                                                         ici pour la diffuser aux
+                                                                                         étudiants après
+                                                                                         vérification de
+                                                                                         l'import.</a></strong>
+                        </div>
+                    {% elseif import is not defined and evaluation.visible == false %}
+                        <div class="alert alert-warning">
+                            <strong>L'évaluation est pour le moment invisible des étudiants. <a
+                                        href="{{ path('application_personnel_evaluation_visible', {uuid:
+                                            evaluation.uuidString, etat: 'visible'}) }}">Cliquez ici pour la
+                                                                                         diffuser aux étudiants
+                                                                                         après
+                                                                                         vérification de
+                                                                                         l'import.</a></strong>
+                        </div>
                     {% else %}
-                        <tr class="bg-warning">
-                            <td colspan="4">{{ 'pas.etudiant.groupe'|trans }}</td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
-                </table>
-                {% if  autorise == true %}
-                    <div class="d-grid mt-2">
-                        <button class="btn btn-success btn-large d-block savegroupe"
-                                id="groupe_{{ groupe.id }}" data-evaluation="{{ evaluation.uuidString }}">Enregistrer
-                                                                                                          les notes
-                                                                                                          de ce groupe
-                        </button>
+                        <div class="alert alert-warning">
+                            Naviguez dans les onglets. <strong>N'oubliez pas de sauvegarder chaque groupe.</strong>
+                            Les
+                            groupes non saisis pourront être complétés plus tard.
+                        </div>
+                    {% endif %}
+                    <br>
+                    <div class="alert alert-info">
+                        * Indiquez un étudiant absent que si son <strong>absence est justifiée</strong>. Il ne sera
+                        pas
+                        pénalisé par un 0. Laisser non coché si vous n'avez pas encore l'information. <br>
+                        -0.01 indique une note non encore saisie.<br>
+                        ** Le commentaire est limité à 255 caractères.
                     </div>
-                {% endif %}
-            </div>
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th>{{ 'table.etudiant'|trans }}</th>
+                            <th>{{ 'table.note'|trans }}</th>
+                            <th>{{ 'table.absence'|trans }} *</th>
+                            <th>{{ 'table.commentaire_optionnel'|trans }} **</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% set tab=1 %}
+                        {% for etudiant in groupe.etudiants %}
+                            <tr {% if not(notes[etudiant.id] is defined) or notes[etudiant.id].note == '-0.01' %}class="bg-pale-warning"{% endif %}>
+                                <td>{{ etudiant.nom|capitalize }} {{ etudiant.prenom|capitalize }}  </td>
+                                <td>
+                                    <label class="sr-only" for="no_{{ etudiant.id }}">Note
+                                                                                      pour {{ etudiant.display }}</label>
+                                    {% if  autorise == true and evaluation.modifiable == true %}
+                                        <input type="text" name="no_{{ etudiant.id }}" tabindex="{{ tab }}"
+                                               id="no_{{ etudiant.id }}" data-etudiant="{{ etudiant.id }}"
+
+                                               class="form-control noteetudiant groupe_{{ groupe.id }}"
+                                               value="{% if notes[etudiant.id] is defined %}{{ notes[etudiant.id].note }}{% else %}-0.01{% endif %}"/>
+                                    {% else %}
+                                        {% if notes[etudiant.id] is defined %}{{ notes[etudiant.id].note }}{% else %}-0.01{% endif %}
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <div class="form-check">
+                                        {% if  autorise == true and evaluation.modifiable == true %}
+                                            <input type="checkbox" name="abs_{{ etudiant.id }}"
+                                                   id="abs_{{ etudiant.id }}" data-etudiant="{{ etudiant.id }}"
+                                                   class="form-check-input absenceetudiant"
+                                                   {% if notes[etudiant.id] is defined and notes[etudiant.id]
+                                                   .absenceJustifie ==
+                                                       true %}checked{% endif %}/>
+                                            <label for="abs_{{ etudiant.id }}" class="form-check-label">
+
+                                                Absence justfiée
+                                            </label>
+                                        {% else %}
+                                            {% if notes[etudiant.id] is defined and notes[etudiant.id]
+                                            .absenceJustifie == true %}Absence justifiée{% else %}-{% endif %}
+                                        {% endif %}
+                                    </div>
+                                </td>
+                                <td>
+                                    {% if  autorise == true and evaluation.modifiable == true %}
+                                        <label class="sr-only" for="com_{{ etudiant.id }}">Commentaire pour {{ etudiant
+                                            .display }}</label>
+                                        <input type="text" name="com_{{ etudiant.id }}" id="com_{{ etudiant.id }}"
+                                               maxlength="255"
+                                               class="form-control groupe_{{ groupe.id }}"
+                                               value="{% if notes[etudiant.id] is defined %}{{ notes[etudiant.id].commentaire }}{% endif %}"/>
+                                    {% else %}
+                                        {% if notes[etudiant.id] is defined %}{{ notes[etudiant.id].commentaire }}{% endif %}
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% set tab=tab+1 %}
+                        {% else %}
+                            <tr class="bg-warning">
+                                <td colspan="4">{{ 'pas.etudiant.groupe'|trans }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    {% if  autorise == true %}
+                        <div class="d-grid mt-2">
+                            <button class="btn btn-success btn-large d-block savegroupe"
+                                    id="groupe_{{ groupe.id }}" data-evaluation="{{ evaluation.uuidString }}">
+                                Enregistrer
+                                les notes
+                                de ce groupe
+                            </button>
+                        </div>
+                    {% endif %}
+                </div>
+            {% endif %}
         {% endif %}
-    {% endif %}
     {% endfor %}
 </div>
