@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.10.6](https://github.com/Dannebicque/intranetV3/compare/v3.10.5...v3.10.6) (2022-12-13)
+
+
+### Bug Fixes
+
+* [Enquete] typage + ajout bouton création ([c777b6d](https://github.com/Dannebicque/intranetV3/commit/c777b6df6e944f84ad38bb05b74f0617f3a4b3d7))
+* [Evaluation]  Correction si premier tab pas première itération de boucle avec les parcours ([d8a1eb9](https://github.com/Dannebicque/intranetV3/commit/d8a1eb94393599721de8a902e466f9197382f53b))
+* [offre stage] Suppression des offres ([9763c8f](https://github.com/Dannebicque/intranetV3/commit/9763c8f32017b97c2cd8240f02336f7a0734bda2))
+* [questionnaire]  correction questions chainées ([ced3bdc](https://github.com/Dannebicque/intranetV3/commit/ced3bdcbe32b667563534766f2b3dfd71134d994))
+* [stage]  modifications de quelques types de champs ([82e9573](https://github.com/Dannebicque/intranetV3/commit/82e95735920de2502f6f7c5d6a12d5fe73db2c8a))
+
 ### [3.10.5](https://github.com/Dannebicque/intranetV3/compare/v3.10.4...v3.10.5) (2022-12-13)
 
 
