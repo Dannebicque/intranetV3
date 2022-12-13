@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/StageEtudiantEtudiantType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 18:37
+ * @lastUpdate 13/12/2022 19:24
  */
 
 namespace App\Form;
@@ -23,6 +23,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/** @deprecated Utiliser les formulaires dans stage */
 class StageEtudiantEtudiantType extends AbstractType
 {
     protected bool $flexible = false;

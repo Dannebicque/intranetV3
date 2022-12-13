@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/stage/ContactType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/12/2022 21:21
+ * @lastUpdate 13/12/2022 19:33
  */
 
 namespace App\Form\stage;
@@ -25,7 +25,7 @@ class ContactType extends AbstractType
             ->add('nom', TextType::class, ['label' => 'Nom * :'])
             ->add('prenom', TextType::class, ['label' => 'Prénom * :'])
             ->add('fonction', TextType::class, ['label' => 'Fonction dans l\'entreprise * :'])
-            ->add('telephone', IntegerType::class, ['label' => 'Téléphone :', 'required' => false])
+            ->add('telephone', TextType::class, ['label' => 'Téléphone :', 'required' => false])
             ->add('email', EmailType::class, ['label' => 'Email :', 'required' => false])
             ->add('portable', IntegerType::class, ['label' => 'Portable * :']);
     }
