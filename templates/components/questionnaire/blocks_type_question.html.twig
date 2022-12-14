@@ -1,7 +1,7 @@
 {% block type_chainee %}
     <fieldset class="form-group"
             {{ stimulus_controller('questionnaire--enquete', {
-                parametres: parametres|json_encode,
+                parametres: parametres,
                 idQuestion: id,
                 questionnaireUuid: questionnaireUuid,
                 choixUserUuid: choixUserUuid
@@ -52,12 +52,12 @@
 {% block type_echelle %}
     <fieldset class="form-group mt-2" {% if visible == false %}style="display:none"{% endif %}
             {{ stimulus_controller('questionnaire--enquete', {
-                parametres: parametres|json_encode,
+                parametres: parametres,
                 idQuestion: id,
                 questionnaireUuid: questionnaireUuid,
                 choixUserUuid: choixUserUuid
             }) }}
-              data-action="enquete:change-value->questionnaire--enquete#updateQuestion"
+              data-action="questionnaire--enquete:change-value->questionnaire--enquete#updateQuestion"
               id="field_{{ id }}">
         {{ block('libelle') }}
         <div aria-describedby="quizz_question_{{ id }}_help">
@@ -72,12 +72,12 @@
 {% block type_slider %}
     <fieldset class="form-group mt-2" {% if visible == false %}style="display:none"{% endif %}
             {{ stimulus_controller('questionnaire--enquete', {
-                parametres: parametres|json_encode,
+                parametres: parametres,
                 idQuestion: id,
                 questionnaireUuid: questionnaireUuid,
                 choixUserUuid: choixUserUuid
             }) }}
-              data-action="enquete:change-value->questionnaire--enquete#updateQuestion"
+              data-action="questionnaire--enquete:change-value->questionnaire--enquete#updateQuestion"
               id="field_{{ id }}">
         {{ block('libelle') }}
         <div aria-describedby="quizz_question_{{ id }}_help">
@@ -95,12 +95,12 @@
 {% block type_libre %}
     <fieldset class="form-group mt-2" {% if visible == false %}style="display:none"{% endif %}
             {{ stimulus_controller('questionnaire--enquete', {
-                parametres: parametres|json_encode,
+                parametres: parametres,
                 idQuestion: id,
                 questionnaireUuid: questionnaireUuid,
                 choixUserUuid: choixUserUuid
             }) }}
-              data-action="enquete:change-value@window->questionnaire--enquete#updateQuestion"
+              data-action="questionnaire--enquete:change-value@window->questionnaire--enquete#updateQuestion"
               id="field_{{ id }}">
         {{ block('libelle') }}
 
@@ -125,12 +125,12 @@
 {% block type_oui_non %}
     <fieldset class="form-group mt-2" {% if visible == false %}style="display:none"{% endif %}
             {{ stimulus_controller('questionnaire--enquete', {
-                parametres: parametres|json_encode,
+                parametres: parametres,
                 idQuestion: id,
                 questionnaireUuid: questionnaireUuid,
                 choixUserUuid: choixUserUuid
             }) }}
-              data-action="enquete:change-value->questionnaire--enquete#updateQuestion"
+              data-action="questionnaire--enquete:change-value->questionnaire--enquete#updateQuestion"
               id="field_{{ id }}">
         {{ block('libelle') }}
         <div aria-describedby="quizz_question_{{ id }}_help">
@@ -174,12 +174,12 @@
 {% block type_qcm %}
     <fieldset class="form-group mt-2" {% if visible == false %}style="display:none"{% endif %}
             {{ stimulus_controller('questionnaire--enquete', {
-                parametres: parametres|json_encode,
+                parametres: parametres,
                 idQuestion: id,
                 questionnaireUuid: questionnaireUuid,
                 choixUserUuid: choixUserUuid
             }) }}
-              data-action="enquete:change-value->questionnaire--enquete#updateQuestion"
+              data-action="questionnaire--enquete:change-value->questionnaire--enquete#updateQuestion"
               id="field_{{ id }}"
     >
         {{ block('libelle') }}
@@ -197,12 +197,12 @@
               {% if visible == false %}style="display:none"{% endif %}
               id="field_{{ id }}"
             {{ stimulus_controller('questionnaire--enquete', {
-                parametres: parametres|json_encode,
+                parametres: parametres,
                 idQuestion: id,
                 questionnaireUuid: questionnaireUuid,
                 choixUserUuid: choixUserUuid
             }) }}
-              data-action="enquete:change-value@window->questionnaire--enquete#updateQuestion"
+              data-action="questionnaire--enquete:change-value@window->questionnaire--enquete#updateQuestion"
     >
         {{ block('libelle') }}
         <div aria-describedby="quizz_question_{{ id }}_help">

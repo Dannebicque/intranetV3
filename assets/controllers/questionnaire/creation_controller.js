@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/questionnaire/creation_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/11/2022 08:54
+// @lastUpdate 14/12/2022 20:21
 
 import { Controller } from '@hotwired/stimulus'
 import { addCallout } from '../../js/util'
@@ -25,6 +25,31 @@ export default class extends Controller {
 
   async sauvegardeIntro(event) {
     this._saveIntro(event)
+  }
+
+  async sauvegardeFin(event) {
+    this._saveFin(event)
+  }
+
+  async _saveFin() {
+    const form = document.getElementById('questionnaire_qualite_fin')
+    const dataForm = new FormData(form)
+
+    const params = new URLSearchParams({
+      step: 'fin',
+    })
+
+    const body = {
+      method: 'POST',
+      body: dataForm,
+    }
+    await fetch(`${this.urlSaveValue}?${params.toString()}`, body).then((response) => response.json()).then((data) => {
+      if (data === true) {
+        addCallout('Questionnaire enregistré', 'success')
+      } else {
+        addCallout('Erreur lors de l\'enregistrement du questionnaire', 'error')
+      }
+    })
   }
 
   async sauvegardeIntroAndNext(event) {

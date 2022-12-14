@@ -1,5 +1,30 @@
 <h2>Fin du questionnaire</h2>
 
-Text de fin de questionnaire...
+<form id="questionnaire_qualite_fin">
+    <div class="mb-3">
+        <label class="form-label" for="questionnaire_fin_texteFin">Texte de fin</label>
+        <textarea id="questionnaire_fin_texteFin" name="questionnaire_fin_texteFin" class="tinyMce form-control"
+                  rows="10" aria-describedby="questionnaire_fin_texteFin_help">{{ questionnaire.textFin }}</textarea>
+        <div id="questionnaire_fin_texteFin_help" class="form-text mb-0 help-text">
+            Texte affiché sur la dernière étape du questionnaire, par exemple pour remercier ou informer de la suite.
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label" for="questionnaire_fin_lien">Lien de redirection</label>
+        <input id="questionnaire_fin_lien" name="questionnaire_fin_lien"
+               class="form-control" type="text" value="{{ questionnaire.urlFin }}">
+        <div id="questionnaire_fin_lien_help" class="form-text mb-0 help-text">
+            Lien de redirection après validation du questionnaire.
+        </div>
+    </div>
+    <button data-action="click->questionnaire--creation#sauvegardeFin:prevent" class="btn btn-primary">Sauvegarder
+    </button>
+</form>
+<div class="divider text-primary text-capitalize">Test et envoi du questionnaire</div>
 
 {{ include('questionnaire/creation/step/_boutonsFinQuestionnaire.html.twig') }}
+
+<div class="alert alert-info">
+    Vous pourrez retrouver ces options dans la page de détail/gestion de votre questionnaire.
+</div>

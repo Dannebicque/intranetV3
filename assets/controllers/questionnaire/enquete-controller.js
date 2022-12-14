@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/questionnaire/enquete-controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/12/2022 17:30
+// @lastUpdate 14/12/2022 21:25
 import { Controller } from '@hotwired/stimulus'
 import { useDebounce, useDispatch } from 'stimulus-use'
 import Routing from 'fos-router'
@@ -10,7 +10,7 @@ import { post } from '../../js/fetch'
 
 export default class extends Controller {
   static values = {
-    parametres: Array,
+    parametres: Object,
     idQuestion: String,
     questionnaireUuid: String,
     choixUserUuid: String,
@@ -26,34 +26,37 @@ export default class extends Controller {
   change(event) {
     const { value } = event.target
     this.sauvegardeReponseChoix(event)
-
+    console.log(this.parametresValue)
     if (this.idQuestionValue === event.target.dataset.fieldset) {
-      for (let i = 0; i < this.parametresValue.length; i++) {
-        if (this.parametresValue[i].type === 'masquage') {
-          if (this.parametresValue[i].criteres.includes(value)) {
-            for (let j = 0; j < this.parametresValue[i].questions.length; j++) {
-              document.getElementById(`field_${this.parametresValue[i].questions[j]}`).style.display = 'none'
+      if (this.parametresValue.conditions) {
+        for (const condition of this.parametresValue.conditions) {
+          if (condition.type === 'masquage') {
+            if (condition.criteres.includes(value)) {
+              for (let j = 0; j < condition.questions.length; j++) {
+                document.getElementById(`field_${condition.questions[j]}`).style.display = 'none'
+              }
             }
           }
         }
       }
     }
+
     this.dispatch('change-value', {
-      value,
-      source: event.target.name,
-      fieldset: event.target.dataset.fieldset,
+      value, source: event.target.name, fieldset: event.target.dataset.fieldset,
     })
   }
 
   updateQuestion(event) {
     const parametres = this.parametresValue
     const { value } = event.detail
-    for (let i = 0; i < parametres.length; i++) {
-      if (parametres[i].type === 'condition' && parametres[i].declenchement == event.detail.fieldset) {
-        if (parametres[i].criteres.includes(value)) {
-          document.getElementById(`field_${this.idQuestionValue}`).style.display = 'block'
-        } else {
-          document.getElementById(`field_${this.idQuestionValue}`).style.display = 'none'
+    if (parametres.conditions) {
+      for (const condition of parametres.conditions) {
+        if (condition.type === 'condition' && condition.declenchement == event.detail.fieldset) {
+          if (condition.criteres.includes(parseInt(value))) {
+            document.getElementById(`field_${this.idQuestionValue}`).style.display = 'block'
+          } else {
+            document.getElementById(`field_${this.idQuestionValue}`).style.display = 'none'
+          }
         }
       }
     }

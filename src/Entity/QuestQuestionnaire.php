@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/QuestQuestionnaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/12/2022 08:35
+ * @lastUpdate 14/12/2022 20:24
  */
 
 namespace App\Entity;
@@ -67,6 +67,9 @@ class QuestQuestionnaire extends BaseEntity
 
     #[ORM\Column]
     private ?bool $envoye = false;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $urlFin = null;
 
 
     public function __construct()
@@ -257,6 +260,18 @@ class QuestQuestionnaire extends BaseEntity
     public function setEnvoye(bool $envoye): self
     {
         $this->envoye = $envoye;
+
+        return $this;
+    }
+
+    public function getUrlFin(): ?string
+    {
+        return $this->urlFin;
+    }
+
+    public function setUrlFin(?string $urlFin): self
+    {
+        $this->urlFin = $urlFin;
 
         return $this;
     }

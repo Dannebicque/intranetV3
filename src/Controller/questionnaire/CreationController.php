@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/CreationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/12/2022 16:40
+ * @lastUpdate 14/12/2022 20:24
  */
 
 namespace App\Controller\questionnaire;
@@ -72,6 +72,14 @@ class CreationController extends BaseController
             $questionnaire->setTexteDebut($data['questionnaire_intro']['texteDebut']);
             $questionnaire->setTexteExplication($data['questionnaire_intro']['texteExplication']);
             $questionnaire->setTypeDestinataire($data['questionnaire_intro']['typeDestinataire']);
+            $this->entityManager->flush();
+
+            return $this->json(true);
+        }
+
+        if ('fin' === $step) {
+            $questionnaire->setTextFin($data['questionnaire_fin_texteFin']);
+            $questionnaire->setUrlFin($data['questionnaire_fin_lien']);
             $this->entityManager->flush();
 
             return $this->json(true);

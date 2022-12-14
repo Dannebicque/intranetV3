@@ -1,4 +1,11 @@
 <?php
+/*
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/QuestQuestion.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 14/12/2022 20:36
+ */
 
 namespace App\Entity;
 
@@ -150,7 +157,7 @@ class QuestQuestion extends BaseEntity
 
     public function getParametre(): ?array
     {
-        return json_decode($this->parametre, true);
+        return json_decode($this->parametre, true, 512, JSON_THROW_ON_ERROR);
     }
 
     public function setParametre(?array $parametres): self
