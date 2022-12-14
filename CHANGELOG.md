@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.10.7](https://github.com/Dannebicque/intranetV3/compare/v3.10.6...v3.10.7) (2022-12-14)
+
+
+### Bug Fixes
+
+* [https] generation des URL avec HTTPS (bug sur RCC?) ([a947cc5](https://github.com/Dannebicque/intranetV3/commit/a947cc545d1476e5ba533630320c1def8c206df7))
+* [Questionnaire] Sauvegarde des réponses textes ([bf9648b](https://github.com/Dannebicque/intranetV3/commit/bf9648b74fdd6dd45d9f888e6f60dd7ce8fe3a39))
+
 ### [3.10.6](https://github.com/Dannebicque/intranetV3/compare/v3.10.5...v3.10.6) (2022-12-13)
 
 
