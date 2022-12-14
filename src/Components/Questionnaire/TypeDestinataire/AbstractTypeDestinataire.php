@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeDestinataire/AbstractTypeDestinataire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/12/2022 15:26
+ * @lastUpdate 14/12/2022 17:30
  */
 
 namespace App\Components\Questionnaire\TypeDestinataire;
@@ -102,13 +102,59 @@ abstract class AbstractTypeDestinataire
         }
     }
 
+    public function abstractSauvegardeReponseTexte(
+        QuestChoixInterface $choixUser,
+        string $cleQuestion,
+        string $typeDestinataire,
+        string $value
+    ): void {
+        $exist = $this->questChoixRepository->findExistQuestion($cleQuestion, $choixUser, $typeDestinataire);
+
+        $t = explode('_', $cleQuestion);
+        $question = $this->questQuestionRepository->find(mb_substr($t[3], 1, mb_strlen($t[0])));
+
+        if ('autre' === $t[3]) {
+            $cleQuestion = $t[0] . '_' . $t[1] . '_reponses_' . $t[4] . '_autre';
+
+            // gesion du cas autre...
+            // on met à jour la question de base. On ajoute la réponse écrite
+            if (null === $exist) {
+                $qr = new QuestChoix();
+                $qr->setQuestion($question);
+                $qr->setTypeDestinataire($typeDestinataire);
+                $qr->setIdQuestChoix($choixUser->getId());
+                $qr->setCleReponse($cleQuestion);
+                $qr->setValeur($value);
+                $this->entityManager->persist($qr);
+            } else {
+                $exist->setValeur($value);
+            }
+
+            $this->entityManager->flush();
+        } else {
+            // pas autre
+            if (null === $exist) {
+                $qr = new QuestChoix();
+                $qr->setQuestion($question);
+                $qr->setTypeDestinataire($typeDestinataire);
+                $qr->setIdQuestChoix($choixUser->getId());
+                $qr->setCleReponse($cleQuestion);
+                $qr->setValeur($value);
+                $this->entityManager->persist($qr);
+            } else {
+                $exist->setValeur($value);
+            }
+            $this->entityManager->flush();
+        }
+    }
+
     public function abstractGetReponses(string $typeDestinataire): ReponsesUser
     {
         $this->reponses = new ReponsesUser();
 
         $reponses = $this->questChoixRepository->findBy([
             'idQuestChoix' => $this->choixUser->getId(),
-            'typeDestinataire' => $typeDestinataire
+            'typeDestinataire' => $typeDestinataire,
         ]);
         foreach ($reponses as $reponse) {
             $this->reponses->addReponse($reponse);

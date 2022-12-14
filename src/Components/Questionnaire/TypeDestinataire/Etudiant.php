@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeDestinataire/Etudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/12/2022 16:51
+ * @lastUpdate 14/12/2022 17:30
  */
 
 namespace App\Components\Questionnaire\TypeDestinataire;
@@ -102,6 +102,11 @@ class Etudiant extends AbstractTypeDestinataire implements TypeDestinataireInter
     public function sauvegardeReponse(QuestChoixInterface $choixUser, string $cleReponse, string $cleQuestion): void
     {
         $this->abstractSauvegardeReponse($choixUser, $cleReponse, $cleQuestion, 'etudiant');
+    }
+
+    public function sauvegardeReponseTexte(QuestChoixInterface $choixUser, string $cleQuestion, string $value): void
+    {
+        $this->abstractSauvegardeReponseTexte($choixUser, $cleQuestion, 'etudiant', $value);
     }
 
     public function getReponses(): ReponsesUser

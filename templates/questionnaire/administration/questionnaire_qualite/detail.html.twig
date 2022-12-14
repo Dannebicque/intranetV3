@@ -8,14 +8,14 @@
     <div class="header-action">
         <div class="buttons">
             {% if is_granted('ROLE_ADMINISTRATIF') %}
-                <a href="{{ path('sa_qualite_diplome', {diplome:questionnaire.semestre.diplome.id}) }}"
-                   class="btn btn-primary btn-float"
-                   title="{{ 'atitle.retour_liste'|trans }}"
-                   data-bs-toggle="tooltip" data-bs-placement="bottom"
-                >
-                    <i class="fas fa-arrow-left"></i>
-                    <span class="sr-only">{{ 'atitle.retour_liste'|trans }}</span>
-                </a>
+                {#                <a href="{{ path('sa_qualite_diplome', {diplome:questionnaire.semestre.diplome.id}) }}" #}
+                {#                   class="btn btn-primary btn-float" #}
+                {#                   title="{{ 'atitle.retour_liste'|trans }}" #}
+                {#                   data-bs-toggle="tooltip" data-bs-placement="bottom" #}
+                {#                > #}
+                {#                    <i class="fas fa-arrow-left"></i> #}
+                {#                    <span class="sr-only">{{ 'atitle.retour_liste'|trans }}</span> #}
+                {#                </a> #}
             {% else %}
                 <a href="{{ path('administration_qualite_index', {type:'administration'}) }}"
                    class="btn btn-primary btn-float"

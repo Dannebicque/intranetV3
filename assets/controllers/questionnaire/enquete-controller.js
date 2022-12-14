@@ -2,9 +2,10 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/questionnaire/enquete-controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/12/2022 15:26
+// @lastUpdate 14/12/2022 17:30
 import { Controller } from '@hotwired/stimulus'
 import { useDebounce, useDispatch } from 'stimulus-use'
+import Routing from 'fos-router'
 import { post } from '../../js/fetch'
 
 export default class extends Controller {
@@ -17,13 +18,13 @@ export default class extends Controller {
 
   static debounces = ['sauvegardeReponseLibre']
 
-  connect () {
+  connect() {
     useDebounce(this)
-    useDispatch(this, {debug: true})
+    useDispatch(this, { debug: true })
   }
 
-  change (event) {
-    let value = event.target.value
+  change(event) {
+    const { value } = event.target
     this.sauvegardeReponseChoix(event)
 
     if (this.idQuestionValue === event.target.dataset.fieldset) {
@@ -31,36 +32,35 @@ export default class extends Controller {
         if (this.parametresValue[i].type === 'masquage') {
           if (this.parametresValue[i].criteres.includes(value)) {
             for (let j = 0; j < this.parametresValue[i].questions.length; j++) {
-              document.getElementById('field_' + this.parametresValue[i].questions[j]).style.display = 'none'
+              document.getElementById(`field_${this.parametresValue[i].questions[j]}`).style.display = 'none'
             }
           }
         }
       }
     }
     this.dispatch('change-value', {
-      value: value,
+      value,
       source: event.target.name,
-      fieldset: event.target.dataset.fieldset
+      fieldset: event.target.dataset.fieldset,
     })
   }
 
-  updateQuestion (event) {
-    let parametres = this.parametresValue
-    const value = event.detail.value
+  updateQuestion(event) {
+    const parametres = this.parametresValue
+    const { value } = event.detail
     for (let i = 0; i < parametres.length; i++) {
       if (parametres[i].type === 'condition' && parametres[i].declenchement == event.detail.fieldset) {
         if (parametres[i].criteres.includes(value)) {
-          document.getElementById('field_' + this.idQuestionValue).style.display = 'block'
+          document.getElementById(`field_${this.idQuestionValue}`).style.display = 'block'
         } else {
-          document.getElementById('field_' + this.idQuestionValue).style.display = 'none'
+          document.getElementById(`field_${this.idQuestionValue}`).style.display = 'none'
         }
       }
-
     }
   }
 
-  sauvegardeReponseChoix (event) {
-    post(Routing.generate('app_etudiant_qualite_ajax_reponse', {
+  sauvegardeReponseChoix(event) {
+    post(Routing.generate('api_questionnaire_qualite_ajax_reponse', {
       uuidQuestionnaire: this.questionnaireUuidValue,
       uuid: this.choixUserUuidValue,
     }), {
@@ -69,18 +69,17 @@ export default class extends Controller {
     })
   }
 
-  onTextAreaChange (event) {
+  onTextAreaChange(event) {
     this.sauvegardeReponseLibre(event)
   }
 
-  async sauvegardeReponseLibre (event) {
-    await post(Routing.generate('app_etudiant_qualite_ajax_reponse_txt', {
-      questionnaire: this.questionnaireIdValue,
-      typeQuestionnaire: this.typeQuestionnaireValue
+  async sauvegardeReponseLibre(event) {
+    await post(Routing.generate('api_questionnaire_qualite_ajax_reponse_txt', {
+      uuidQuestionnaire: this.questionnaireUuidValue,
+      uuid: this.choixUserUuidValue,
     }), {
       cleQuestion: event.target.id,
       value: event.target.value,
-      etudiant: event.target.dataset.etudiant
     })
   }
 }

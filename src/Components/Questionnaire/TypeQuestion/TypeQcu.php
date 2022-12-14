@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/TypeQuestion/TypeQcu.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeQuestion/TypeQcu.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/10/2021 07:59
+ * @lastUpdate 14/12/2022 17:42
  */
 
 namespace App\Components\Questionnaire\TypeQuestion;
@@ -13,7 +13,6 @@ use App\Components\Graphs\Type\BarGraph;
 use App\Components\Questionnaire\Adapter\ReponseEntityAdapter;
 use App\Components\Questionnaire\Form\QuestionnaireQuestionTypeQcu;
 use App\Entity\QuestQuestion;
-use App\Entity\QuestReponse;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -55,25 +54,6 @@ class TypeQcu extends AbstractQuestion
         $question->setParametre($parametres);
 
         $this->sauvegardeReponses($question, $entityManager);
-
-//        //todo: déplacer dans sauvegardeReponses ? Généré à la volée dans l'affichage
-//        if ($parametres['choix_autre']) {
-//            $qR = new QuestReponse();
-//            $qR->setLibelle('Autre');
-//            $qR->setOrdre(99);
-//            $qR->setValeur('CHX:OTHER');
-//            $qR->setQuestion($question);
-//            $entityManager->persist($qR);
-//        }
-//
-//        if ($parametres['choix_nc']) {
-//            $qR = new QuestReponse();
-//            $qR->setLibelle('Non concerné');
-//            $qR->setOrdre(98);
-//            $qR->setValeur('CHX:NC');
-//            $qR->setQuestion($question);
-//            $entityManager->persist($qR);
-//        }
     }
 
     public function genereGraph()

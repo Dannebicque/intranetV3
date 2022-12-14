@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Section/Section.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/12/2022 14:31
+ * @lastUpdate 14/12/2022 17:42
  */
 
 namespace App\Components\Questionnaire\Section;
@@ -55,12 +55,14 @@ class Section extends AbstractSection
             $questionnaireQuestionAdapter = new QuestionnaireQuestionAdapter($this->questionnaireRegistry,
                 $this->graphRegistry);
             for ($i = 0; $i < $this->nbParties; ++$i) {
-                $this->addQuestion(
-                    $questionnaireQuestionAdapter->createFromEntity(
-                        $this,
-                        $question,
-                        $i,
-                        $options)->setReponse($reponsesUser)->getQuestion());
+                if ($question->getQuestionParent() === null) {
+                    $this->addQuestion(
+                        $questionnaireQuestionAdapter->createFromEntity(
+                            $this,
+                            $question,
+                            $i,
+                            $options)->setReponse($reponsesUser)->getQuestion());
+                }
             }
         }
     }

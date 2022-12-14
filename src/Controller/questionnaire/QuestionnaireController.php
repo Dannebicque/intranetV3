@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/QuestionnaireController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/12/2022 15:26
+ * @lastUpdate 14/12/2022 17:30
  */
 
 namespace App\Controller\questionnaire;
@@ -16,13 +16,7 @@ use App\Components\Questionnaire\DTO\AbstractQuestionnaire;
 use App\Components\Questionnaire\Questionnaire;
 use App\Components\Questionnaire\QuestionnaireRegistry;
 use App\Components\Questionnaire\Section\AbstractSection;
-use App\Entity\QuestionnaireEtudiant;
-use App\Entity\QuestionnaireEtudiantReponse;
 use App\Entity\QuestQuestionnaire;
-use App\Repository\EtudiantRepository;
-use App\Repository\QuestionnaireEtudiantReponseRepository;
-use App\Repository\QuestionnaireEtudiantRepository;
-use App\Repository\QuestionnaireQuestionRepository;
 use App\Utils\JsonRequest;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
@@ -174,7 +168,7 @@ class QuestionnaireController extends AbstractController
      * @throws NonUniqueResultException
      * @throws \JsonException
      */
-    #[Route(path: '/api/ajax/reponse/{uuidQuestionnaire}/{uuid}', name: 'app_etudiant_qualite_ajax_reponse', options: ['expose' => true])]
+    #[Route(path: '/api/ajax/reponse/{uuidQuestionnaire}/{uuid}', name: 'api_questionnaire_qualite_ajax_reponse', options: ['expose' => true])]
     #[ParamConverter('questQuestionnaire', options: ['mapping' => ['uuidQuestionnaire' => 'uuid']])]
     public function sauvegardeReponse(
         QuestionnaireRegistry $questionnaireRegistry,
@@ -205,89 +199,31 @@ class QuestionnaireController extends AbstractController
      * @throws \JsonException
      * @throws \JsonException
      */
-    #[Route(path: '/api/ajax/reponse-txt/{questionnaire}/{typeQuestionnaire}', name: 'app_etudiant_qualite_ajax_reponse_txt', options: ['expose' => true])]
+    #[Route(path: '/api/ajax/reponse-txt/{uuidQuestionnaire}/{uuid}', name: 'api_questionnaire_qualite_ajax_reponse_txt', options: ['expose' => true])]
+    #[ParamConverter('questQuestionnaire', options: ['mapping' => ['uuidQuestionnaire' => 'uuid']])]
     public function sauvegardeReponseTxt(
-        EtudiantRepository $etudiantRepository,
-        QuestionnaireQuestionRepository $quizzQuestionRepository,
-        QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository,
-        QuestionnaireEtudiantRepository $quizzEtudiantRepository,
-        Request $request,
-        mixed $questionnaire,
-        string $typeQuestionnaire
+        QuestionnaireRegistry $questionnaireRegistry,
+        QuestQuestionnaire $questQuestionnaire,
+        string $uuid,
+        Request $request
     ): JsonResponse {
-        $quizzEtudiant = null;
+        $typeDestinataire = $questionnaireRegistry->getTypeDestinataire($questQuestionnaire->getTypeDestinataire());
+        $typeDestinataire->setQuestionnaire($questQuestionnaire);
+        $choixUser = $typeDestinataire->getChoixUser($uuid);
+
         $donnees = JsonRequest::getFromRequest($request);
+
         $cleQuestion = $donnees['cleQuestion'];
-        $etudiant = $etudiantRepository->find($donnees['etudiant']);
-        if (null !== $etudiant) {
-            switch ($typeQuestionnaire) {
-                case 'quizz':
-                    $questionnaire = $this->questionnaireQuizzRepository->find($questionnaire);
-                    $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
-                        'questionnaireQuizz' => $questionnaire->getId(),
-                        'etudiant' => $etudiant,
-                    ]);
-                    break;
-                case 'qualite':
-                    $questionnaire = $this->questionnaireQualiteRepository->find($questionnaire);
-                    $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
-                        'questionnaireQualite' => $questionnaire->getId(),
-                        'etudiant' => $etudiant,
-                    ]);
-                    break;
-            }
+        $value = $donnees['value'];
 
-            if (null === $quizzEtudiant) {
-                $quizzEtudiant = new QuestionnaireEtudiant($etudiant, $questionnaire, $typeQuestionnaire);
-                $this->entityManager->persist($quizzEtudiant);
-            }
-            $t = explode('_', (string) $cleQuestion);
-            if ('autre' === $t[3]) {
-                $cleQuestion = $t[0] . '_' . $t[1] . '_reponses_' . $t[4] . '_autre';
+        if (null !== $choixUser) {
+            $typeDestinataire->sauvegardeReponseTexte($choixUser, $cleQuestion, $value);
 
-                // gesion du cas autre...
-                // on met à jour la question de base. On ajoute la réponse écrite
-
-                $exist = $quizzEtudiantReponseRepository->findOneBy([
-                    'questionnaireEtudiant' => $quizzEtudiant->getId(),
-                    'cleQuestion' => $cleQuestion,
-                ]);
-                if (null === $exist) {
-                    $qr = new QuestionnaireEtudiantReponse($quizzEtudiant);
-                    $qr->setCleQuestion($cleQuestion);
-                    $qr->setCleReponse($cleQuestion);
-                    $qr->setValeur($donnees['value']);
-                    $this->entityManager->persist($qr);
-                } else {
-                    $exist->setValeur($donnees['value']);
-                }
-
-                $this->entityManager->flush();
-
-                return $this->json(true, Response::HTTP_OK);
-            }
-
-            $question = $quizzQuestionRepository->find(mb_substr($t[3], 1, mb_strlen($t[0])));
-            $exist = $quizzEtudiantReponseRepository->findExistQuestion($cleQuestion, $quizzEtudiant);
-
-            if (null !== $question) {
-                if (null === $exist) {
-                    $qr = new QuestionnaireEtudiantReponse($quizzEtudiant);
-                    $qr->setCleQuestion($cleQuestion);
-                    $qr->setCleReponse(null);
-                    $qr->setValeur($donnees['value']);
-                    $this->entityManager->persist($qr);
-                } else {
-                    $exist->setValeur($donnees['value']);
-                }
-                $this->entityManager->flush();
-
-                return $this->json(true, Response::HTTP_OK);
-            }
-
-            return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+            return $this->json(true, Response::HTTP_OK);
         }
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+
+
     }
 }
