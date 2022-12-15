@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Section/Section.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/12/2022 17:42
+ * @lastUpdate 15/12/2022 16:34
  */
 
 namespace App\Components\Questionnaire\Section;
@@ -29,6 +29,7 @@ class Section extends AbstractSection
         return array_merge(parent::getVars(), [
             'ordre' => $this->section->ordre,
             'titre' => $this->section->titre,
+            'text_explicatif' => $this->section->texte_explicatif,
             'questions' => $this->getQuestions(),
         ]);
     }

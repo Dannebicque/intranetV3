@@ -38,8 +38,8 @@
 
     {% if choix != null %}
         <ul>
-            {% for chx in choix.autre %}
-                <li>{{ chx }}</li>
+            {% for key, chx in choix.totalReponses %}
+                <li>{{ key }}</li>
             {% endfor %}
         </ul>
     {% endif %}
@@ -53,5 +53,5 @@
 {% endblock %}
 
 {% block libelle %}
-    <h5><strong>{{ numero }}</strong>. {{ libelle }}</h5>
+    <h5><strong>{{ ordre }}.{{ numero }}</strong>. {{ libelle }}</h5>
 {% endblock %}

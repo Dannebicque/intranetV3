@@ -1,12 +1,14 @@
-<h5><strong>{{ ordre }}.</strong> {{ titre }}</h5>
+<h4><strong>{{ ordre }}.</strong> {{ titre }}</h4>
+
+<div class="alert alert-info">{{ text_explicatif }}</div>
 
 {% for question in questions %}
     {% if options.mode == 'mode.resultat.tableau' %}
-        {{ question_tableau_render(question) }}
+        {{ question_tableau_render(question, ordre) }}
     {% elseif options.mode == 'mode.resultat.graphique' %}
-        {{ question_graphique_render(question) }}
+        {{ question_graphique_render(question, ordre) }}
     {% else %}
-        {{ question_render(question, loop.index0) }}
+        {{ question_render(question, ordre) }}
     {% endif %}
 {% endfor %}
 <br>

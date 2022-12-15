@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Section/AbstractSection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/12/2022 12:39
+ * @lastUpdate 15/12/2022 16:34
  */
 
 namespace App\Components\Questionnaire\Section;
@@ -98,6 +98,7 @@ abstract class AbstractSection
             'questionnaire_section_id' => null,
             'ordre' => 1,
             'titre' => null,
+            'text_explicatif' => null,
         ];
     }
 
