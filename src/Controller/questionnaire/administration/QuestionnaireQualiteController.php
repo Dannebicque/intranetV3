@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/administration/QuestionnaireQualiteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/10/2022 14:54
+ * @lastUpdate 15/12/2022 17:44
  */
 
 namespace App\Controller\questionnaire\administration;
@@ -12,7 +12,6 @@ namespace App\Controller\questionnaire\administration;
 use App\Components\Questionnaire\QuestionnaireRegistry;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
-use App\Entity\QuestionnaireQualite;
 use App\Entity\QuestQuestionnaire;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -35,7 +34,8 @@ class QuestionnaireQualiteController extends BaseController
         if (null === $questionnaireQualite->getTypeDestinataire()) {
             $liste = [];
         } else {
-            $liste = $questionnaireRegistry->getTypeDestinataire($questionnaireQualite->getTypeDestinataire())
+            $dest = $questionnaireRegistry->getTypeDestinataire($questionnaireQualite->getTypeDestinataire());
+            $liste = $dest
                 ->setQuestionnaire($questionnaireQualite)
                 ->getListeDestinataire();
         }
@@ -45,6 +45,7 @@ class QuestionnaireQualiteController extends BaseController
                 'liste' => $liste,
                 'questionnaire' => $questionnaireQualite,
                 'type' => $request->get('type'),
+                'typeDestinataire' => $dest::LABEL,
             ]);
     }
 

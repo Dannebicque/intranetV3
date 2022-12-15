@@ -49,8 +49,8 @@
                             ) %}
                             <li class="nav-item">
                                 <a class="nav-link {% if loop.first %}active{% endif %}" data-bs-toggle="tab"
-                                   href="#groupe_{{ groupe.id }}">{{ groupe.libelle }} ({{ groupe.etudiants|length }}
-                                                                                       )</a>
+                                   href="#groupe_{{ groupe.id }}">{{ groupe.libelle }}
+                                    ({{ groupe.etudiants|length }})</a>
                             </li>
                         {% endfor %}
                     </ul>
@@ -59,9 +59,7 @@
                 <div class="tab-content">
                     {% for groupe in groupes|filter(groupe => (parcours != null and groupe.typeGroupe.type.value != 'CM'
                         and groupe.apcParcours != null and groupe.apcParcours.id == parcours.id) or (parcours == null
-                        or groupe.typeGroupe
-                    .mutualise == true) or (groupe.typeGroupe
-                    .type.value == 'CM' and groupe.apcParcours == null)
+                        or groupe.typeGroupe.mutualise == true) or (groupe.typeGroupe.type.value == 'CM' and groupe.apcParcours == null)
                         ) %}
                         <div class="tab-pane {% if loop.first %}fade active show{% endif %}" id="groupe_{{ groupe.id }}">
                             <div class="row">

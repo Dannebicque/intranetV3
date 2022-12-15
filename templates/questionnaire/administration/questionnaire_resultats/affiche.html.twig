@@ -7,6 +7,15 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
+            <a href="{{ path('adm_questionnaire_qualite_resultats_resultats', {id: questionnaireQualite.id,
+                type:type, type_view: type_view == 'graphiques' ? 'tableaux' : 'graphiques'}) }}"
+               class="btn btn-info btn-sm btn-float"
+               title="{{ 'atitle.retour_liste'|trans }}"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
+                <i class="fas fa-shuffle"></i>
+                <span class="sr-only">Changer d'affichage</span>
+            </a>
             <a href="{{ path('adm_questionnaire_qualite_detail', {id: questionnaireQualite.id, type:type}) }}"
                class="btn btn-primary btn-float"
                title="{{ 'atitle.retour_liste'|trans }}"

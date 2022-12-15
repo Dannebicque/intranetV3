@@ -4,13 +4,12 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/enquete/EnqueteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/12/2022 21:28
+ * @lastUpdate 15/12/2022 17:44
  */
 
 namespace App\Controller\superAdministration\enquete;
 
 use App\Controller\BaseController;
-use App\Repository\EtudiantRepository;
 use App\Table\EnqueteQualiteDiplomesTableType;
 use App\Table\EnqueteQualiteExterieursTableType;
 use App\Table\EnqueteQualitePersonnelsTableType;
@@ -27,7 +26,6 @@ class EnqueteController extends BaseController
     #[Route('/{typeDestinataire}', name: 'administratif_enquete_destinataire_index', options: ['expose' => true])]
     public function indexEtudiant(
         Request $request,
-        EtudiantRepository $etudiantRepository,
         string $typeDestinataire
     ): Response {
         if ('etudiant' === $typeDestinataire) {
