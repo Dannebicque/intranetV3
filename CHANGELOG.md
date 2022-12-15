@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.10.8](https://github.com/Dannebicque/intranetV3/compare/v3.10.7...v3.10.8) (2022-12-15)
+
+
+### Bug Fixes
+
+* [Convention] Suppression civilité partie entreprise (tuteur et responsable) ([b522f5c](https://github.com/Dannebicque/intranetV3/commit/b522f5c8cce9249f67d8c3d6257f74de3d64b580))
+* [Questionnaire] Gestion des types chainées et des questions sous conditions ([acb1e1c](https://github.com/Dannebicque/intranetV3/commit/acb1e1c0dcbca3668927ad4ac8fb7b733e3b9bc7))
+
 ### [3.10.7](https://github.com/Dannebicque/intranetV3/compare/v3.10.6...v3.10.7) (2022-12-14)
 
 
