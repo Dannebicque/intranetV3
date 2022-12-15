@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Contact.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:21
+ * @lastUpdate 15/12/2022 08:55
  */
 
 namespace App\Entity;
@@ -131,7 +131,7 @@ class Contact extends BaseEntity
 
     public function getDisplay(): string
     {
-        return $this->civilite.' '.ucfirst($this->getPrenom()).' '.mb_strtoupper($this->getNom());
+        return ucfirst($this->getPrenom()) . ' ' . mb_strtoupper($this->getNom());
     }
 
     public function getPrenom(): ?string
