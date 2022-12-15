@@ -11,9 +11,6 @@ namespace App\Components\PlanCours;
 
 use App\Components\PlanCours\Exceptions\PlanCoursNotFoundException;
 use App\Components\PlanCours\Source\AbstractPlanCours;
-use App\Components\SourceEdt\Exceptions\SourceEdtNotFoundException;
-use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
-use App\Components\SourceEdt\Source\AbstractEdt;
 
 class PlanCoursRegistry
 {

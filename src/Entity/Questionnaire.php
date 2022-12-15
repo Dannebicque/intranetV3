@@ -14,7 +14,6 @@ use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use JetBrains\PhpStorm\Deprecated;
 use Ramsey\Uuid\Uuid;
 
 #[ORM\MappedSuperclass]

@@ -3,10 +3,7 @@
 namespace App\Repository;
 
 use App\Components\Questionnaire\TypeDestinataire\Personnel;
-use App\Entity\Etudiant;
-use App\Entity\QuestionnaireEtudiant;
 use App\Entity\QuestQuestionnaire;
-use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 

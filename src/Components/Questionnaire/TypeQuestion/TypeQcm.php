@@ -13,7 +13,6 @@ use App\Components\Graphs\Type\BarGraph;
 use App\Components\Questionnaire\Adapter\ReponseEntityAdapter;
 use App\Components\Questionnaire\Form\QuestionnaireQuestionTypeQcm;
 use App\Entity\QuestQuestion;
-use App\Entity\QuestReponse;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;

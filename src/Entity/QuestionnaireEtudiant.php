@@ -9,9 +9,7 @@
 
 namespace App\Entity;
 
-use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\QuestionnaireEtudiantRepository;
-use Carbon\CarbonInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;

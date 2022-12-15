@@ -9,15 +9,10 @@
 
 namespace App\Table;
 
-use App\Components\Questionnaire\TypeDestinataire\Etudiant;
-use App\Components\Questionnaire\TypeDestinataire\Exterieur;
-use App\Components\Questionnaire\TypeDestinataire\Personnel;
 use App\Entity\Diplome;
 use App\Form\Type\DiplomeEntityType;
 use App\Form\Type\SearchType;
 use App\Form\Type\TypeDiplomeEntityType;
-use App\Table\ColumnType\NbEtudiantsColumnType;
-use App\Table\ColumnType\SemestresAvecActifColumnType;
 use DavidAnnebicque\TableBundle\Adapter\EntityAdapter;
 use DavidAnnebicque\TableBundle\Column\EntityColumnType;
 use DavidAnnebicque\TableBundle\Column\PropertyColumnType;
@@ -26,7 +21,6 @@ use DavidAnnebicque\TableBundle\DTO\Table;
 use DavidAnnebicque\TableBundle\TableBuilder;
 use DavidAnnebicque\TableBundle\TableType;
 use DavidAnnebicque\TableBundle\Widget\Type\LinkType;
-use DavidAnnebicque\TableBundle\Widget\Type\RowShowLinkType;
 use DavidAnnebicque\TableBundle\Widget\WidgetBuilder;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;

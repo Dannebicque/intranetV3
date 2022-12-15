@@ -14,8 +14,6 @@ use App\Entity\ApcApprentissageCritique;
 use App\Entity\ApcCompetence;
 use App\Entity\ApcNiveau;
 use App\Entity\ApcReferentiel;
-use App\Entity\Referentiel;
-use App\Entity\Ppn;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;

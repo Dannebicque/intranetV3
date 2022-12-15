@@ -11,8 +11,6 @@ namespace App\Repository;
 
 use App\Entity\ApcCompetence;
 use App\Entity\ApcReferentiel;
-use App\Entity\Diplome;
-use App\Entity\Ppn;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;

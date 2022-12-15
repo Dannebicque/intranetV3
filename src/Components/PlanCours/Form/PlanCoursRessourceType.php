@@ -9,10 +9,8 @@
 
 namespace App\Components\PlanCours\Form;
 
-use App\Entity\PlanCoursApc;
 use App\Entity\PlanCoursRessource;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 

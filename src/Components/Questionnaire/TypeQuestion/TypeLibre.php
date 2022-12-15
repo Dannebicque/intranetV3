@@ -11,9 +11,7 @@ namespace App\Components\Questionnaire\TypeQuestion;
 
 use App\Components\Graphs\Type\BarGraph;
 use App\Components\Questionnaire\Form\QuestionnaireQuestionTypeChainee;
-use App\Entity\QuestionnaireQuestion;
 use App\Entity\QuestQuestion;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TypeLibre extends AbstractQuestion

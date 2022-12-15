@@ -10,7 +10,6 @@
 namespace App\Components\SourceEdt;
 
 use App\Components\SourceEdt\Exceptions\SourceEdtNotFoundException;
-use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
 use App\Components\SourceEdt\Source\AbstractEdt;
 
 class SourceEdtRegistry

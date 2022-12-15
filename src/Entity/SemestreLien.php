@@ -9,7 +9,6 @@
 
 namespace App\Entity;
 
-use App\Enums\BacEnum;
 use App\Enums\SemestreLienEnum;
 use App\Repository\SemestreLienRepository;
 use Doctrine\DBAL\Types\Types;

@@ -9,7 +9,6 @@
 
 namespace App\Components\Logger\Twig;
 
-use App\Components\Breadcrumbs\BreadcrumbHelper;
 use App\Components\Logger\LogHelper;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;

@@ -10,7 +10,6 @@
 namespace App\Components\Questionnaire\TypeQuestion;
 
 use App\Components\Graphs\Type\BarGraph;
-use App\Entity\QuestionnaireQuestion;
 use App\Entity\QuestQuestion;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 

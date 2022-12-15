@@ -12,7 +12,6 @@ namespace App\Components\Questionnaire\Form;
 use App\Form\QuestionnaireReponseType;
 use App\Form\Type\CollectionStimulusType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;

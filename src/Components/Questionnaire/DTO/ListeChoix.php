@@ -9,7 +9,6 @@
 
 namespace App\Components\Questionnaire\DTO;
 
-use App\Components\Questionnaire\Interfaces\QuestionnaireChoixInterface;
 use App\Entity\QuestChoix;
 
 class ListeChoix

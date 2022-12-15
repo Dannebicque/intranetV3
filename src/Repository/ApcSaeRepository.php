@@ -16,7 +16,6 @@ use App\Entity\ApcSae;
 use App\Entity\ApcSaeCompetence;
 use App\Entity\Departement;
 use App\Entity\Diplome;
-use App\Entity\Ppn;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Criteria;

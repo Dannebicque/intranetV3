@@ -11,9 +11,7 @@ namespace App\Repository;
 
 use App\Entity\Annee;
 use App\Entity\AnneeUniversitaire;
-use App\Entity\ApcCompetence;
 use App\Entity\ApcReferentiel;
-use App\Entity\ApcSaeCompetence;
 use App\Entity\Diplome;
 use App\Entity\Evaluation;
 use App\Entity\Semestre;

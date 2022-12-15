@@ -7,13 +7,8 @@
  * @lastUpdate 24/11/2022 10:54
  */
 
-/*
- * Pull your hearder here, for exemple, Licence header.
- */
-
 namespace App\Classes\Apc;
 
-use App\Entity\ApcReferentiel;
 use function array_key_exists;
 
 class ApcStructure

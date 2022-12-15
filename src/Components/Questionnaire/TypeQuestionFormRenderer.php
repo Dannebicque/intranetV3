@@ -9,10 +9,7 @@
 
 namespace App\Components\Questionnaire;
 
-use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
-use App\Components\Questionnaire\TypeQuestion\TypeChainee;
 use App\Entity\QuestQuestion;
-use App\Form\QuestionnaireReponseType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Twig\Environment;
 use Twig\TemplateWrapper;

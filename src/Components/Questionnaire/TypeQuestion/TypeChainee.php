@@ -12,7 +12,6 @@ namespace App\Components\Questionnaire\TypeQuestion;
 use App\Components\Graphs\Type\BarGraph;
 use App\Components\Questionnaire\Adapter\ReponseEntityAdapter;
 use App\Components\Questionnaire\Form\QuestionnaireQuestionTypeChainee;
-use App\Entity\QuestionnaireQuestion;
 use App\Entity\QuestQuestion;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 

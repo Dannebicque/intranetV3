@@ -9,13 +9,7 @@
 
 namespace App\Form;
 
-use App\Entity\QuestionnaireQualite;
 use App\Entity\QuestQuestionnaire;
-use App\Entity\Semestre;
-use App\Form\Type\CollectionStimulusType;
-use App\Form\Type\DatePickerType;
-use App\Form\Type\EntityCompleteType;
-use App\Repository\SemestreRepository;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;

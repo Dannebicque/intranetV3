@@ -9,8 +9,6 @@
 
 namespace App\Classes\Matieres;
 
-use App\Classes\Edt\EdtManager;
-use App\DTO\EvenementEdt;
 use App\Entity\ApcReferentiel;
 use App\Entity\ApcRessource;
 use App\Entity\ApcSae;

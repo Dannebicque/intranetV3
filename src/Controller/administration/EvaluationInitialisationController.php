@@ -15,7 +15,6 @@ use App\Controller\BaseController;
 use App\Entity\Evaluation;
 use App\Entity\Semestre;
 use App\Repository\EvaluationRepository;
-use App\Repository\TypeGroupeRepository;
 use function count;
 use Exception;
 use Symfony\Component\HttpFoundation\Request;

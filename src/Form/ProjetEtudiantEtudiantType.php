@@ -11,7 +11,6 @@ namespace App\Form;
 
 use App\Entity\Etudiant;
 use App\Entity\ProjetEtudiant;
-use App\Entity\Semestre;
 use App\Form\Type\YesNoType;
 use App\Repository\EtudiantRepository;
 use Doctrine\Common\Collections\Collection;

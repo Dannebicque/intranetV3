@@ -10,9 +10,7 @@
 namespace App\Classes\Enquetes;
 
 use App\Components\Questionnaire\Interfaces\QuestChoixInterface;
-use App\Entity\Etudiant;
-use App\Entity\QuestionnaireEtudiant;
-use App\Entity\QuestionnaireQualite;
+use App\Entity\QuestQuestionnaire;
 use App\Event\QualiteRelanceEvent;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -25,11 +23,10 @@ class EnqueteRelance
     {
     }
 
-    public function envoyerRelance(QuestionnaireQualite $questionnaire, $reponses, array $etudiants): void
+    public function envoyerRelance(QuestQuestionnaire $questionnaire, $reponses, array $etudiants): void
     {
         $t = [];
 
-        /** @var QuestionnaireEtudiant $reponse */
         foreach ($reponses as $reponse) {
             $t[$reponse->getEtudiant()?->getId()] = $reponse;
         }

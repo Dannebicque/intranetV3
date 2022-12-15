@@ -9,7 +9,6 @@
 
 namespace App\Components\Questionnaire\DependencyInjection;
 
-use App\Components\Graphs\GraphRegistry;
 use App\Components\Questionnaire\QuestionnaireRegistry;
 use App\Components\Questionnaire\Section\ConfigurableSection;
 use App\Components\Questionnaire\Section\EndSection;
