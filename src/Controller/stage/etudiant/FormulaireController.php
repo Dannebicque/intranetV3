@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/stage/etudiant/FormulaireController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/12/2022 09:57
+ * @lastUpdate 16/12/2022 12:09
  */
 
 // src/Controller/FormulaireController.php
@@ -272,7 +272,7 @@ class FormulaireController extends BaseController
     }
 
     #[Route('/calendar', name: 'calendar')]
-    public function calculJoursDeStage(Request $request)
+    public function calculJoursDeStage(Request $request): Response
     {
         $tab = json_decode($request->getContent(), true);
         $date_debut = Carbon::createFromFormat('d/m/Y', $tab['date1']); // new \DateTime($tab['date1']);

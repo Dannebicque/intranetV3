@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/AlternanceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:44
+ * @lastUpdate 16/12/2022 12:09
  */
 
 namespace App\Controller\appEtudiant;
@@ -15,7 +15,6 @@ use App\Entity\Constantes;
 use App\Form\AlternanceEtudiantType;
 use App\Repository\AlternanceRepository;
 use Doctrine\ORM\NonUniqueResultException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,7 +23,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class AlternanceController.
  */
 #[Route(path: '/application/etudiant/alternance')]
-#[IsGranted('ROLE_ETUDIANT')]
+#[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_ETUDIANT')]
 class AlternanceController extends BaseController
 {
     /**

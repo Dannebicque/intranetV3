@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/CovidAttestationPersonnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 16/12/2022 12:09
  */
 
 namespace App\Controller\appPersonnel;
@@ -16,14 +16,13 @@ use App\Entity\CovidAttestationPersonnel;
 use App\Event\CovidEvent;
 use App\Form\CovidAttestationPersonnelType;
 use App\Repository\CovidAttestationPersonnelRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 #[Route('/covid/attestation/personnel', name: 'application_personnel_')]
-#[IsGranted('ROLE_PERMANENT')]
+#[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_PERMANENT')]
 class CovidAttestationPersonnelController extends BaseController
 {
     #[Route(path: '/', name: 'covid_attestation_personnel_index', methods: ['GET'])]

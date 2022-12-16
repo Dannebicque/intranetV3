@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/StageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/12/2022 16:02
+ * @lastUpdate 16/12/2022 12:09
  */
 
 namespace App\Controller\appEtudiant;
@@ -18,7 +18,6 @@ use App\Form\StageEtudiantEtudiantType;
 use App\Repository\StagePeriodeRepository;
 use Carbon\Carbon;
 use Exception;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,7 +28,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 /**
  * Class StageController.
  */
-#[isGranted('ROLE_ETUDIANT')]
+#[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_ETUDIANT')]
 #[Route(path: '/application/etudiant/stage')]
 class StageController extends BaseController
 {

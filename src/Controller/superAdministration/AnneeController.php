@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/AnneeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 16/12/2022 12:09
  */
 
 namespace App\Controller\superAdministration;
@@ -14,13 +14,12 @@ use App\Entity\Annee;
 use App\Entity\Constantes;
 use App\Entity\Diplome;
 use App\Form\AnneeType;
-use function count;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function count;
 
 #[Route(path: '/administratif/structure/annee')]
 class AnneeController extends BaseController
@@ -153,7 +152,7 @@ class AnneeController extends BaseController
     }
 
     #[Route(path: '/activate/{annee}/{etat}', name: 'sa_annee_activate', methods: ['GET'])]
-    #[IsGranted('ROLE_SUPER_ADMIN')]
+    #[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_SUPER_ADMIN')]
     public function activate(Annee $annee, bool $etat): RedirectResponse
     {
         $annee->setActif($etat);

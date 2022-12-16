@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/UeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 16/12/2022 12:09
  */
 
 namespace App\Controller\superAdministration;
@@ -16,12 +16,11 @@ use App\Entity\Ue;
 use App\Form\UeType;
 use App\Utils\Tools;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use function count;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function count;
 
 #[Route(path: '/administratif/structure/unite-enseignement')]
 class UeController extends BaseController
@@ -149,7 +148,7 @@ class UeController extends BaseController
     }
 
     #[Route(path: '/activate/{ue}/{etat}', name: 'sa_ue_activate', methods: ['GET'])]
-    #[IsGranted('ROLE_SUPER_ADMIN')]
+    #[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_SUPER_ADMIN')]
     public function activate(Ue $ue, bool $etat): RedirectResponse
     {
         $ue->setActif($etat);

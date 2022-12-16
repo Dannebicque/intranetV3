@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/RattrapageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/05/2022 13:06
+ * @lastUpdate 16/12/2022 12:09
  */
 
 namespace App\Controller\appEtudiant;
@@ -15,13 +15,12 @@ use App\Entity\Rattrapage;
 use App\Form\RattrapageType;
 use App\Repository\RattrapageRepository;
 use App\Utils\ToolsMatiere;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[IsGranted('ROLE_ETUDIANT')]
+#[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_ETUDIANT')]
 #[Route(path: '/application/etudiant/rattrapage')]
 class RattrapageController extends BaseController
 {

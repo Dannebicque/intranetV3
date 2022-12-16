@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Command/UpdateDateEdtCommand.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Command/UpdateDateEdtCommand.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2021 21:43
+ * @lastUpdate 16/12/2022 12:09
  */
 
 namespace App\Command;
@@ -54,6 +54,6 @@ class UpdateDateEdtCommand extends Command
         }
         $this->entityManager->flush();
 
-        return 0;
+        return (int)Command::SUCCESS;
     }
 }

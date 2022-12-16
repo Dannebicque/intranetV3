@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/SemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 16/12/2022 12:09
  */
 
 namespace App\Controller\superAdministration;
@@ -15,12 +15,11 @@ use App\Entity\Constantes;
 use App\Entity\Semestre;
 use App\Form\SemestreType;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use function count;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function count;
 
 #[Route(path: '/administratif/structure/semestre')]
 class SemestreController extends BaseController
@@ -153,7 +152,7 @@ class SemestreController extends BaseController
     }
 
     #[Route(path: '/activate/{semestre}/{etat}', name: 'sa_semestre_activate', methods: ['GET'])]
-    #[IsGranted('ROLE_SUPER_ADMIN')]
+    #[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_SUPER_ADMIN')]
     public function activate(Semestre $semestre, bool $etat): RedirectResponse
     {
         $semestre->setActif($etat);

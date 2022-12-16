@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/MatiereController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:44
+ * @lastUpdate 16/12/2022 12:09
  */
 
 namespace App\Controller\superAdministration;
@@ -18,7 +18,6 @@ use App\Entity\Ue;
 use App\Form\MatiereType;
 use App\Form\PpnImportType;
 use Exception;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -139,7 +138,7 @@ class MatiereController extends BaseController
     }
 
     #[Route(path: '/activate/{matiere}/{etat}', name: 'sa_matiere_activate', methods: ['GET'])]
-    #[IsGranted('ROLE_SUPER_ADMIN')]
+    #[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_SUPER_ADMIN')]
     public function activate(Matiere $matiere, bool $etat): RedirectResponse
     {
         $matiere->setSuspendu($etat);

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/BCDemandeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 16/12/2022 12:03
  */
 
 namespace App\Controller\administration;
@@ -84,7 +84,7 @@ class BCDemandeController extends BaseController
     }
 
     #[Route('/{id}/modifier', name: 'edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, BCDemande $bCDemande): Response
+    public function edit(BCDemande $bCDemande): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $bCDemande->getDepartement());
 

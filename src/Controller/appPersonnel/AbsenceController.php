@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 16/12/2022 12:09
  */
 
 namespace App\Controller\appPersonnel;
@@ -24,7 +24,6 @@ use App\Repository\AbsenceRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\SemestreRepository;
 use App\Utils\JsonRequest;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,7 +31,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/application/personnel/absence')]
-#[IsGranted('ROLE_PERMANENT')]
+#[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_PERMANENT')]
 class AbsenceController extends BaseController
 {
     public function __construct(private readonly MyAbsences $myAbsences)

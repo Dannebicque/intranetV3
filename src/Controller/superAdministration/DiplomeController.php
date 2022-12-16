@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/DiplomeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 16/12/2022 12:09
  */
 
 namespace App\Controller\superAdministration;
@@ -16,15 +16,14 @@ use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Form\DiplomeType;
 use App\Repository\DiplomeRepository;
-use function count;
 use Exception;
 use RuntimeException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function count;
 
 #[Route(path: '/administratif/structure/diplome')]
 class DiplomeController extends BaseController
@@ -201,7 +200,7 @@ class DiplomeController extends BaseController
     }
 
     #[Route(path: '/activate/{diplome}/{etat}', name: 'sa_diplome_activate', methods: ['GET'])]
-    #[IsGranted('ROLE_SUPER_ADMIN')]
+    #[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_SUPER_ADMIN')]
     public function activate(Diplome $diplome, bool $etat): RedirectResponse
     {
         $diplome->setActif($etat);

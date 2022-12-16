@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/CarnetController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:44
+ * @lastUpdate 16/12/2022 12:09
  */
 
 namespace App\Controller\appEtudiant;
@@ -13,7 +13,6 @@ use App\Classes\Matieres\TypeMatiereManager;
 use App\Controller\BaseController;
 use App\Entity\CahierTexte;
 use App\Repository\CahierTexteRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -21,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class CarnetController.
  */
 #[Route(path: '/application/etudiant/carnet')]
-#[IsGranted('ROLE_ETUDIANT')]
+#[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_ETUDIANT')]
 class CarnetController extends BaseController
 {
     #[Route(path: '/', name: 'application_etudiant_carnet_index')]

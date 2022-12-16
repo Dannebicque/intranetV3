@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Command/UpdateEdtCommand.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/10/2022 14:36
+ * @lastUpdate 16/12/2022 12:09
  */
 
 namespace App\Command;
@@ -52,11 +52,11 @@ class UpdateEdtCommand extends Command
 
             $io->success('Emplois du temps synchronisés avec Celcat');
 
-            return 0;
+            return (int)Command::SUCCESS;
         }
 
         $io->error('Aucune année universitaire trouvée');
 
-        return 1;
+        return (int)Command::FAILURE;
     }
 }

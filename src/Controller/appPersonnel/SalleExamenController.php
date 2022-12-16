@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/SalleExamenController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/05/2022 12:56
+ * @lastUpdate 16/12/2022 12:09
  */
 
 namespace App\Controller\appPersonnel;
@@ -15,7 +15,6 @@ use App\Entity\Constantes;
 use App\Repository\PersonnelRepository;
 use App\Repository\SalleExamenRepository;
 use App\Repository\SemestreRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,7 +26,7 @@ use Twig\Error\SyntaxError;
  * Class QuizzController.
  */
 #[Route(path: '/application/personnel/salle-examen')]
-#[IsGranted('ROLE_PERMANENT')]
+#[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_PERMANENT')]
 class SalleExamenController extends BaseController
 {
     #[Route(path: '/', name: 'application_personnel_salle_examen_index')]

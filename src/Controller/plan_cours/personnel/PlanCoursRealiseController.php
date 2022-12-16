@@ -4,20 +4,19 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/plan_cours/personnel/PlanCoursRealiseController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/07/2022 12:00
+ * @lastUpdate 16/12/2022 12:09
  */
 
 namespace App\Controller\plan_cours\personnel;
 
 use App\Components\PlanCours\Form\PlanCoursHistoriqueEdtType;
 use App\Entity\PlanCoursHistoriqueEdt;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/application/personnel/plan-cours', name: 'app_personnel_plan_cours_')]
-#[IsGranted('ROLE_PERMANENT')]
+#[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_PERMANENT')]
 class PlanCoursRealiseController extends AbstractController
 {
     #[Route('/realise', name: 'realise')]

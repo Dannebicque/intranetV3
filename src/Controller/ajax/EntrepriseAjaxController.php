@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/ajax/EntrepriseAjaxController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:44
+ * @lastUpdate 16/12/2022 12:09
  */
 
 namespace App\Controller\ajax;
@@ -12,7 +12,6 @@ namespace App\Controller\ajax;
 use App\Classes\MyEntreprise;
 use App\Controller\BaseController;
 use App\Entity\Entreprise;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class AbsenceApiController.
  */
 #[Route(path: '/ajax/entreprise')]
-#[IsGranted('ROLE_PERMANENT')]
+#[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_PERMANENT')]
 class EntrepriseAjaxController extends BaseController
 {
     #[Route(path: '/edit/{id}', name: 'entreprise_ajax_edit', options: ['expose' => true])]

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appPersonnel/AbsenceEtatAppelController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/AbsenceEtatAppelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/10/2021 16:46
+ * @lastUpdate 16/12/2022 12:09
  */
 
 namespace App\Controller\appPersonnel;
@@ -13,12 +13,11 @@ use App\Classes\Absences\AbsenceEtatAppel;
 use App\Controller\BaseController;
 use App\Repository\GroupeRepository;
 use App\Utils\JsonRequest;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[IsGranted('ROLE_PERMANENT')]
+#[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_PERMANENT')]
 class AbsenceEtatAppelController extends BaseController
 {
     /**

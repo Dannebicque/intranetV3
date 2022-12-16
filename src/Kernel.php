@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Kernel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 16/12/2022 12:09
  */
 
 namespace App;
@@ -13,11 +13,12 @@ use App\Components\Graphs\DependencyInjection\TypeGraphCompilerPass;
 use App\Components\PlanCours\DependencyInjection\PlanCoursCompilerPass;
 use App\Components\Questionnaire\DependencyInjection\QuestionnaireCompilerPass;
 use App\Components\SourceEdt\DependencyInjection\SourceEdtCompilerPass;
-use function dirname;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+use Symfony\Component\DependencyInjection\Compiler\PassConfig;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\HttpKernel\Kernel as BaseKernel;
+use function dirname;
 
 class Kernel extends BaseKernel
 {
@@ -25,10 +26,10 @@ class Kernel extends BaseKernel
 
     protected function build(ContainerBuilder $container): void
     {
-        $container->addCompilerPass(new QuestionnaireCompilerPass());
-        $container->addCompilerPass(new SourceEdtCompilerPass());
-        $container->addCompilerPass(new PlanCoursCompilerPass());
-        $container->addCompilerPass(new TypeGraphCompilerPass());
+        $container->addCompilerPass(new QuestionnaireCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 0);
+        $container->addCompilerPass(new SourceEdtCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 0);
+        $container->addCompilerPass(new PlanCoursCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 0);
+        $container->addCompilerPass(new TypeGraphCompilerPass(), PassConfig::TYPE_BEFORE_OPTIMIZATION, 0);
     }
 
     protected function configureContainer(ContainerConfigurator $container): void

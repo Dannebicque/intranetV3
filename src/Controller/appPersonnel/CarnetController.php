@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/CarnetController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/09/2022 09:23
+ * @lastUpdate 16/12/2022 12:09
  */
 
 namespace App\Controller\appPersonnel;
@@ -16,7 +16,6 @@ use App\Entity\Constantes;
 use App\Event\CarnetEvent;
 use App\Form\CahierTexteType;
 use App\Repository\CahierTexteRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,7 +25,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
  * Class CarnetController.
  */
 #[Route(path: '/application/personnel/carnet')]
-#[IsGranted('ROLE_PERMANENT')]
+#[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_PERMANENT')]
 class CarnetController extends BaseController
 {
     #[Route(path: '/', name: 'application_personnel_carnet_index', methods: 'GET')]

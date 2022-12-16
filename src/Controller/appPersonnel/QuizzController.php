@@ -4,13 +4,12 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/QuizzController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:44
+ * @lastUpdate 16/12/2022 12:09
  */
 
 namespace App\Controller\appPersonnel;
 
 use App\Controller\BaseController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -18,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class QuizzController.
  */
 #[Route(path: '/application/personnel/quizz')]
-#[IsGranted('ROLE_PERMANENT')]
+#[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_PERMANENT')]
 class QuizzController extends BaseController
 {
     #[Route(path: '/', name: 'application_personnel_quizz_index')]

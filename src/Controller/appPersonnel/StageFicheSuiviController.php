@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/StageFicheSuiviController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 16/12/2022 12:09
  */
 
 namespace App\Controller\appPersonnel;
@@ -15,7 +15,6 @@ use App\Entity\Constantes;
 use App\Entity\StageEtudiant;
 use App\Entity\StageFicheSuivi;
 use App\Form\FicheSuiviType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -24,7 +23,7 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
 #[Route('/application/personnel/stage/suivi', name: 'app_personnel_stage_fiche_suivi_')]
-#[IsGranted('ROLE_PERMANENT')]
+#[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_PERMANENT')]
 class StageFicheSuiviController extends BaseController
 {
     #[Route('/{stage}', name: 'index')]

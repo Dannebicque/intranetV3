@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/plan_cours/personnel/PlanCoursController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 16/12/2022 12:03
  */
 
 namespace App\Controller\plan_cours\personnel;
@@ -82,7 +82,6 @@ class PlanCoursController extends BaseController
 
     #[Route('/{id}/edit', name: 'app_plan_cours_apc_edit', methods: ['GET', 'POST'])]
     public function edit(
-        Request $request,
         $planCoursApc,
     ): Response {
         // todo:

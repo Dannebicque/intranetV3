@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/AlternanceFicheSuiviController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 16/12/2022 12:09
  */
 
 namespace App\Controller\appPersonnel;
@@ -16,7 +16,6 @@ use App\Entity\AlternanceFicheSuivi;
 use App\Entity\Constantes;
 use App\Form\AlternanceFicheSuiviType;
 use Exception;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,7 +24,7 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
 #[Route('/application/personnel/alternance/fiche-suivi')]
-#[IsGranted('ROLE_PERMANENT')]
+#[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_PERMANENT')]
 class AlternanceFicheSuiviController extends BaseController
 {
     #[Route(path: '/{alternance}', name: 'application_personnel_alternance_fiche_suivi_alternance', methods: ['GET'])]

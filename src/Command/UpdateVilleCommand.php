@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Command/UpdateVilleCommand.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Command/UpdateVilleCommand.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 16/12/2022 12:09
  */
 
 /*
@@ -15,13 +15,13 @@ namespace App\Command;
 
 use App\Repository\CodeInseeRepository;
 use App\Repository\EtudiantRepository;
-use function array_key_exists;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use function array_key_exists;
 
 #[AsCommand(
     name: 'app:update-ville',
@@ -67,6 +67,6 @@ class UpdateVilleCommand extends Command
 
         $io->success(sprintf('%d Villes mises à jour.', $i));
 
-        return 0;
+        return (int)Command::SUCCESS;
     }
 }

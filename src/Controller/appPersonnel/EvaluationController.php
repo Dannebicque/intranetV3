@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/EvaluationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 11:54
+ * @lastUpdate 16/12/2022 12:09
  */
 
 namespace App\Controller\appPersonnel;
@@ -15,7 +15,6 @@ use App\Controller\BaseController;
 use App\Entity\Evaluation;
 use App\Entity\Semestre;
 use App\Repository\GroupeRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,7 +23,7 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-#[IsGranted('ROLE_PERMANENT')]
+#[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_PERMANENT')]
 #[Route(path: '/application/personnel/evaluation')]
 class EvaluationController extends BaseController
 {

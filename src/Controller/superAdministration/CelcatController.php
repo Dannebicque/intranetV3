@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/CelcatController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/09/2022 12:27
+ * @lastUpdate 16/12/2022 12:09
  */
 
 namespace App\Controller\superAdministration;
@@ -12,10 +12,9 @@ namespace App\Controller\superAdministration;
 use App\Classes\Celcat\MyCelcat;
 use App\Controller\BaseController;
 use App\Entity\Diplome;
-use App\Repository\EdtCelcatRepository;
 use App\Repository\DiplomeRepository;
+use App\Repository\EdtCelcatRepository;
 use Exception;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -31,7 +30,7 @@ class CelcatController extends BaseController
     }
 
     #[Route(path: '/', name: 'sa_celcat_index', methods: ['GET'])]
-    #[IsGranted('ROLE_SUPER_ADMIN')]
+    #[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_SUPER_ADMIN')]
     public function index(DiplomeRepository $diplomeRepository): Response
     {
         return $this->render('super-administration/celcat/index.html.twig', [
@@ -40,7 +39,7 @@ class CelcatController extends BaseController
     }
 
     #[Route(path: '/extraction', name: 'sa_celcat_extraction_code', methods: ['GET'])]
-    #[IsGranted('ROLE_SUPER_ADMIN')]
+    #[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_SUPER_ADMIN')]
     public function extraction(): Response
     {
         return $this->render('super-administration/celcat/extraction.html.twig', [
@@ -52,7 +51,7 @@ class CelcatController extends BaseController
      * @throws Exception
      */
     #[Route(path: '/update/{id}', name: 'sa_celcat_update_events', methods: ['GET'])]
-    #[IsGranted('ROLE_SUPER_ADMIN')]
+    #[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_SUPER_ADMIN')]
     public function update(EdtCelcatRepository $celcatEventsRepository, Diplome $diplome): RedirectResponse
     {
         // suppression des events existants pour le département

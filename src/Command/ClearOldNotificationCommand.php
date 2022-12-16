@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Command/ClearOldNotificationCommand.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Command/ClearOldNotificationCommand.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/07/2021 19:38
+ * @lastUpdate 16/12/2022 12:09
  */
 
 /*
@@ -46,6 +46,6 @@ class ClearOldNotificationCommand extends Command
 
         $io->success(sprintf('"%d" notifications supprimées.', $count));
 
-        return 0;
+        return (int)Command::SUCCESS;
     }
 }

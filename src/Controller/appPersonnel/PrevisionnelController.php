@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2022 08:31
+ * @lastUpdate 16/12/2022 12:09
  */
 
 namespace App\Controller\appPersonnel;
@@ -17,7 +17,6 @@ use App\Classes\ServiceRealise\ServiceRealiseCelcat;
 use App\Classes\ServiceRealise\ServiceRealiseIntranet;
 use App\Controller\BaseController;
 use App\Exception\DepartementNotFoundException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -25,7 +24,7 @@ use Symfony\Component\Routing\Annotation\Route;
  * Class PrevisionnelController.
  */
 #[Route(path: '/application/personnel/previsionnel')]
-#[IsGranted('ROLE_PERMANENT')]
+#[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_PERMANENT')]
 class PrevisionnelController extends BaseController
 {
     #[Route(path: '/', name: 'previsionnel_index')]

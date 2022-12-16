@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/bloc_saisie_absence/SaisieAbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/10/2022 20:40
+ * @lastUpdate 16/12/2022 12:09
  */
 
 namespace App\Controller\bloc_saisie_absence;
@@ -21,15 +21,14 @@ use App\Repository\TypeGroupeRepository;
 use App\Utils\Tools;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
-use function count;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function count;
 
 #[Route(path: '/application/personnel/absence/ajax')]
-#[IsGranted('ROLE_PERMANENT')]
+#[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_PERMANENT')]
 class SaisieAbsenceController extends BaseController
 {
     public function index(
