@@ -1,10 +1,10 @@
 <?php
 /*
  * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/Sites/intranetV3/src/Form/QuestionnaireQualiteIntroType.php
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/QuestionnaireIntroType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 17/12/2022 09:36
  */
 
 namespace App\Form;
@@ -33,13 +33,13 @@ class QuestionnaireIntroType extends AbstractType
                 'help' => 'Titre du questionnaire affiché aux étudiants',
             ])
             ->add('texteExplication', TextareaType::class, [
-                'attr' => ['class' => 'tinyMce', 'rows' => 10],
+                'attr' => ['data-controller' => 'interface--editor', 'class' => 'tinyMce', 'rows' => 10],
                 'label' => 'label.texteExplication',
                 'required' => false,
                 'help' => 'Texte d\'explication du questionnaire. Affiché dans la liste des questionnaires.',
             ])
             ->add('texteDebut', TextareaType::class, [
-                'attr' => ['class' => 'tinyMce', 'rows' => 10],
+                'attr' => ['data-controller' => 'interface--editor', 'class' => 'tinyMce', 'rows' => 10],
                 'label' => 'label.texteDebut',
                 'required' => false,
                 'help' => 'Texte introductif du questionnaire, affiché au début de l\'enquête',
