@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/EnqueteQualiteExterieursTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/12/2022 19:07
+ * @lastUpdate 17/12/2022 09:14
  */
 
 namespace App\Table;
@@ -14,7 +14,6 @@ use App\Entity\QuestQuestionnaire;
 use App\Form\Type\DatePickerType;
 use App\Table\ColumnType\PersonnelColumnType;
 use DavidAnnebicque\TableBundle\Adapter\EntityAdapter;
-use DavidAnnebicque\TableBundle\Column\BadgeColumnType;
 use DavidAnnebicque\TableBundle\Column\DateColumnType;
 use DavidAnnebicque\TableBundle\Column\PropertyColumnType;
 use DavidAnnebicque\TableBundle\Column\WidgetColumnType;
@@ -45,10 +44,8 @@ class EnqueteQualiteExterieursTableType extends TableType
         $builder->addColumn('titre', PropertyColumnType::class, ['label' => 'table.titre']);
         $builder->addColumn('dateOuverture', DateColumnType::class, ['label' => 'table.dateOuverture']);
         $builder->addColumn('dateFermeture', DateColumnType::class, ['label' => 'table.dateFermeture']);
-        $builder->addColumn('typeDestinataire', BadgeColumnType::class,
-            ['label' => 'table.typeDestinataire']);
 
-        if ($this->type === 'administratif') {
+        if ('administratif' === $this->type) {
             $builder->addColumn('auteur', PersonnelColumnType::class, ['label' => 'table.auteur']);
         }
 
@@ -56,6 +53,7 @@ class EnqueteQualiteExterieursTableType extends TableType
             'build' => function(WidgetBuilder $builder, QuestQuestionnaire $s) {
                 $builder->add('apercu', RowLinkType::class, [
                     'route' => 'administration_qualite_apercu',
+                    'title' => 'Aperçu du questionnaire',
                     'icon' => 'fas fa-eye',
                     'attr' => ['class' => 'btn btn-square btn-info-outline btn-sm me-1'],
                     'route_params' => ['id' => $s->getId(), 'type' => $this->type],
@@ -63,6 +61,7 @@ class EnqueteQualiteExterieursTableType extends TableType
                 ]);
                 $builder->add('show', RowLinkType::class, [
                     'route' => 'adm_questionnaire_qualite_detail',
+                    'title' => 'Détails du questionnaire et paramètrage',
                     'route_params' => [
                         'id' => $s->getId(),
                         'type' => $this->type,
@@ -73,11 +72,13 @@ class EnqueteQualiteExterieursTableType extends TableType
                 ]);
                 $builder->add('duplicate', RowDuplicateLinkType::class, [
                     'route' => 'adm_questionnaire_qualite_duplicate',
+                    'title' => 'Dupliquer le questionnaire',
                     'route_params' => ['id' => $s->getId(), 'type' => $this->type],
                     'xhr' => false,
                 ]);
                 $builder->add('edit', RowEditLinkType::class, [
                     'route' => 'adm_questionnaire_creation_index',
+                    'title' => 'Modifier le questionnaire',
                     'route_params' => ['questionnaire' => $s->getId(), 'type' => $this->type],
                     'xhr' => false,
                 ]);
@@ -86,7 +87,6 @@ class EnqueteQualiteExterieursTableType extends TableType
 
         $builder->setLoadUrl('administratif_enquete_destinataire_index',
             ['typeDestinataire' => $options['typeDestinataire']]);
-
 
         $builder->useAdapter(EntityAdapter::class, [
             'class' => QuestQuestionnaire::class,

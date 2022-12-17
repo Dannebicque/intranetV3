@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/AbsenceJustificatifTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 17/12/2022 09:14
  */
 
 namespace App\Table;
@@ -118,6 +118,7 @@ class AbsenceJustificatifTableType extends TableType
                     'icon' => 'fas fa-eye',
                     'text' => false,
                     'modalSize' => 'lg',
+                    'title' => 'Détail du justificatif',
                     'modalTitle' => 'Détail du justificatif',
                     'modalUrl' => $this->router->generate('administration_absence_justificatif_details',
                         ['uuid' => $s->getUuidString()]),
@@ -126,7 +127,8 @@ class AbsenceJustificatifTableType extends TableType
         ]);
 
         $builder->addColumn('links', WidgetColumnType::class, [
-            'build' => function (WidgetBuilder $builder, AbsenceJustificatif $s) {
+            'class' => 'text-end',
+            'build' => function(WidgetBuilder $builder, AbsenceJustificatif $s) {
                 switch ($s->getEtat()) {
                     case AbsenceJustificatif::ACCEPTE:
                         $builder->add('demande.acceptee', ButtonType::class, [

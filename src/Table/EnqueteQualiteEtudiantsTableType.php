@@ -1,18 +1,20 @@
 <?php
 /*
  * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/Sites/intranetV3/src/Table/EnqueteQualitePersonnelsTableType.php
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Table/EnqueteQualiteEtudiantsTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/12/2022 11:39
+ * @lastUpdate 17/12/2022 09:14
  */
 
 namespace App\Table;
 
-use App\Components\Questionnaire\TypeDestinataire\Personnel;
+use App\Entity\Etudiant;
 use App\Entity\QuestQuestionnaire;
+use App\Entity\Semestre;
 use App\Form\Type\DatePickerType;
 use App\Table\ColumnType\PersonnelColumnType;
+use App\Table\ColumnType\SemestreColumnType;
 use DavidAnnebicque\TableBundle\Adapter\EntityAdapter;
 use DavidAnnebicque\TableBundle\Column\DateColumnType;
 use DavidAnnebicque\TableBundle\Column\PropertyColumnType;
@@ -24,9 +26,10 @@ use DavidAnnebicque\TableBundle\Widget\Type\RowEditLinkType;
 use DavidAnnebicque\TableBundle\Widget\Type\RowLinkType;
 use DavidAnnebicque\TableBundle\Widget\WidgetBuilder;
 use Doctrine\ORM\QueryBuilder;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class EnqueteQualitePersonnelsTableType extends TableType
+class EnqueteQualiteEtudiantsTableType extends TableType
 {
     private string $type;
 
@@ -41,9 +44,18 @@ class EnqueteQualitePersonnelsTableType extends TableType
             'input_prefix_text' => 'Au',
         ]);
 
+
+        $builder->addFilter('semestre', EntityType::class, [
+            'class' => Semestre::class,
+            'choice_label' => 'display',
+            'label' => 'Semestre',
+            'required' => false,
+        ]);
+
         $builder->addColumn('titre', PropertyColumnType::class, ['label' => 'table.titre']);
         $builder->addColumn('dateOuverture', DateColumnType::class, ['label' => 'table.dateOuverture']);
         $builder->addColumn('dateFermeture', DateColumnType::class, ['label' => 'table.dateFermeture']);
+        $builder->addColumn('semestre', SemestreColumnType::class, ['label' => 'table.semestre']);
 
         if ($this->type === 'administratif') {
             $builder->addColumn('auteur', PersonnelColumnType::class, ['label' => 'table.auteur']);
@@ -61,12 +73,12 @@ class EnqueteQualitePersonnelsTableType extends TableType
                 ]);
                 $builder->add('show', RowLinkType::class, [
                     'route' => 'adm_questionnaire_qualite_detail',
+                    'title' => 'Détails du questionnaire et paramètrage',
                     'route_params' => [
                         'id' => $s->getId(),
                         'type' => $this->type,
                     ],
                     'xhr' => false,
-                    'title' => 'Détails du questionnaire et paramètrage',
                     'icon' => 'fas fa-list-check',
                     'attr' => ['class' => 'btn btn-square btn-primary-outline btn-sm me-1'],
                 ]);
@@ -94,7 +106,12 @@ class EnqueteQualitePersonnelsTableType extends TableType
             'fetch_join_collection' => false,
             'query' => function(QueryBuilder $qb, array $formData) {
                 $qb->where('e.typeDestinataire = :typeDestinataire')
-                    ->setParameter('typeDestinataire', Personnel::class);
+                    ->setParameter('typeDestinataire', Etudiant::class);
+
+                if (isset($formData['semestre'])) {
+                    $qb->andWhere('e.semestre = :semestre');
+                    $qb->setParameter('semestre', $formData['semestre']);
+                }
 
                 if (isset($formData['from'])) {
                     $qb->andWhere('e.dateOuverture >= :from');
