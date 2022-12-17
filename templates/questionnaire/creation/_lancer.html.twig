@@ -5,13 +5,40 @@
 }) }}
 <h1>Lancement du questionnaire</h1>
 
-<h2>Configuration</h2>
-Questionnaire actif du <strong>{{ questionnaire.dateOuverture|format_datetime('short', 'short') }}</strong> au
-<strong>{{ questionnaire.dateFermeture|format_datetime('short', 'short') }}</strong>
+<h2>Date d'ouverture du questionnaire</h2>
+
+{% if questionnaire.dateFermeture == null or questionnaire.dateOuverture == null %}
+    <div class="alert alert-warning mb-2" id="alertSend">
+        Attention au moins une date n'est pas renseignée.
+    </div>
+{% endif %}
+<div>
+    <label for="dateOuverture">Date ouverture</label>
+    <input
+            {{ stimulus_action('questionnaire--lancer', 'saveDate', 'change', {type: 'dateOuverture'}) }}
+            type="datetime-local" id="dateOuverture" name="dateOuverture" class="form-control" value="{{ questionnaire
+    .dateOuverture != null ? questionnaire.dateOuverture|date('Y-m-d\\TH:i') }}">
+</div>
+<div>
+    <label for="dateFermeture">Date fermeture</label>
+    <input
+            {{ stimulus_action('questionnaire--lancer', 'saveDate', 'change', {type: 'dateFermeture'}) }}
+            type="datetime-local" id="dateFermeture" name="dateFermeture" class="form-control" value="{{ questionnaire
+    .dateFermeture != null ? questionnaire.dateFermeture|date('Y-m-d\\TH:i') }}">
+</div>
 
 
 <h2>Choix des destinataires</h2>
-{# todo: si exterieur formulaire d'ajout dynamique #}
+
+{% if typeDestinataire == 'exterieur' %}
+    <div class="alert alert-info">
+        <p>Vous avez choisi de lancer le questionnaire à des personnes extérieures à l'entreprise.</p>
+        <p>Vous pouvez ajouter des destinataires en cliquant sur le bouton "Ajotuer". L'envoi n'est effectif que si vous
+           clique sur "Enregistrer et envoyer". Sinon, la liste est sauvegardée en attente de l'envoie.
+        </p>
+    </div>
+{% endif %}
+
 {% if typeDestinataire == 'etudiant' or typeDestinataire == 'personnel' %}
     <ul class="row">
         {% for elt in liste %}
@@ -31,13 +58,19 @@ Questionnaire actif du <strong>{{ questionnaire.dateOuverture|format_datetime('s
 {% endif %}
 <div class="row mt-2">
     <div class="col-6 d-grid">
-        <button class="btn btn-danger-outline d-block"
-                {{ stimulus_action('questionnaire--lancer', 'saveAndClose', 'click') }}
-        >Sauvegarder et fermer
-        </button>
+        {% if typeDestinataire != 'exterieur' %}
+            <button class="btn btn-danger-outline d-block"
+                    {{ stimulus_action('questionnaire--lancer', 'saveAndClose', 'click') }}
+            >Sauvegarder et fermer
+            </button>
+        {% else %}
+            &nbsp;
+        {% endif %}
     </div>
     <div class="col-6 d-grid">
         <button class="btn btn-success-outline d-block"
+                id="btnSaveAndSend"
+                {% if questionnaire.dateFermeture == null or questionnaire.dateOuverture == null %}disabled{% endif %}
                 {{ stimulus_action('questionnaire--lancer', 'sendAndClose', 'click') }}
         >Enregistrer et envoyer
         </button>

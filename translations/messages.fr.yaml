@@ -1851,6 +1851,7 @@ situation.par.semestre.notes: 'Situation par semestre'
 soit: soit
 
 suivi.appels: 'Suivi des pointages de présence'
+supprimer.tout: 'Supprimer tout'
 stage:
   valide: Stage validé
 stage_avenant:

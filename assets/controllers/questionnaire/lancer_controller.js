@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/questionnaire/lancer_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2022 21:28
+// @lastUpdate 16/12/2022 09:45
 
 import { Controller } from '@hotwired/stimulus'
 import { addCallout } from '../../js/util'
@@ -46,6 +46,31 @@ export default class extends Controller {
     event.preventDefault()
     document.querySelectorAll('.element').forEach((elem) => {
       elem.checked = true
+    })
+  }
+
+  async saveDate(event) {
+    event.preventDefault()
+
+    const params = new URLSearchParams({
+      action: 'saveDate',
+    })
+
+    const body = {
+      method: 'POST',
+      body: JSON.stringify({ type: event.params.type, date: event.currentTarget.value }),
+    }
+    await fetch(`${this.urlValue}?${params.toString()}`, body).then((response) => response.json()).then((data) => {
+      if (data.save === true) {
+        addCallout('Date Sauvegardée', 'success')
+        console.log(data)
+        if (data.autorise === true) {
+          document.getElementById('btnSaveAndSend').removeAttribute('disabled')
+          document.getElementById('alertSend').style.display = 'none'
+        }
+      } else {
+        addCallout('Erreur lors de la sauvegarde', 'error')
+      }
     })
   }
 

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/administration/QuestionnaireResultatController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 16/12/2022 12:03
  */
 
 namespace App\Controller\questionnaire\administration;
@@ -26,7 +26,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class QuestionnaireResultatController extends BaseController
 {
     #[Route('/export/{id}.xlsx', name: 'export', methods: ['GET'])]
-    public function exportExcel(QuestionnaireQualite $questionnaire)
+    public function exportExcel(QuestionnaireQualite $questionnaire): \Symfony\Component\HttpFoundation\Response
     {
     }
 

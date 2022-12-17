@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeDestinataire/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/12/2022 17:30
+ * @lastUpdate 17/12/2022 09:21
  */
 
 namespace App\Components\Questionnaire\TypeDestinataire;
@@ -22,6 +22,7 @@ use App\Repository\QuestReponseRepository;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class Personnel extends AbstractTypeDestinataire implements TypeDestinataireInterface
 {
@@ -33,11 +34,13 @@ class Personnel extends AbstractTypeDestinataire implements TypeDestinataireInte
         QuestQuestionRepository $questQuestionRepository,
         QuestReponseRepository $questReponseRepository,
         protected MailerFromTwig $myMailer,
+        EventDispatcherInterface $eventDispatcher,
         EntityManagerInterface $entityManager,
         protected QuestChoixPersonnelRepository $questChoixPersonnelRepository,
         protected PersonnelRepository $personnelRepository
     ) {
-        parent::__construct($entityManager, $questChoixRepository, $questQuestionRepository, $questReponseRepository);
+        parent::__construct($eventDispatcher, $entityManager, $questChoixRepository, $questQuestionRepository,
+            $questReponseRepository);
     }
 
     public function getListe(): array

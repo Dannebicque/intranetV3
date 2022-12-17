@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/CreationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/12/2022 20:24
+ * @lastUpdate 17/12/2022 09:21
  */
 
 namespace App\Controller\questionnaire;
@@ -20,6 +20,7 @@ use App\Repository\QuestQuestionRepository;
 use App\Repository\QuestSectionRepository;
 use App\Repository\SemestreRepository;
 use App\Utils\JsonRequest;
+use Carbon\Carbon;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -184,18 +185,32 @@ class CreationController extends BaseController
         QuestionnaireRegistry $questionnaireRegistry,
         QuestQuestionnaire $questionnaire
     ): Response {
+        $data = false;
         switch ($request->query->get('action')) {
             case 'send':
-                $liste = JsonRequest::getValueFromRequest($request, 'liste'); // $request->request->get('liste');
+                $liste = JsonRequest::getValueFromRequest($request, 'liste');
                 $typeDest = $questionnaireRegistry->getTypeDestinataire($questionnaire->getTypeDestinataire());
                 $typeDest->setQuestionnaire($questionnaire);
                 $typeDest->send($liste);
+                $data = true;
                 break;
-            case 'save':
+            case 'saveDate':
+                $date = Carbon::createFromFormat('Y-m-d\\TH:i', JsonRequest::getValueFromRequest($request, 'date'));
+                $type = JsonRequest::getValueFromRequest($request, 'type');
+                if ('dateOuverture' === $type) {
+                    $questionnaire->setDateOuverture($date);
+                } else {
+                    $questionnaire->setDateFermeture($date);
+                }
+                $this->entityManager->flush();
+                $data = [
+                    'save' => true,
+                    'autorise' => null !== $questionnaire->getDateOuverture() && null !== $questionnaire->getDateFermeture(),
+                ];
                 break;
         }
 
-        return $this->json(true);
+        return $this->json($data);
     }
 
     #[Route('/modal/add-exterieur/{questionnaire}', name: 'add_exterieur')]
@@ -210,7 +225,7 @@ class CreationController extends BaseController
         $typeDest->addExterieur(JsonRequest::getFromRequest($request));
 
         return $this->render('questionnaire/creation/_addExterieur.html.twig', [
-            'liste' => $typeDest->getListe()
+            'liste' => $typeDest->getListe(),
         ]);
     }
 }

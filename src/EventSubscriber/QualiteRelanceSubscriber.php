@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/EventSubscriber/QualiteRelanceSubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 08:35
+ * @lastUpdate 17/12/2022 09:21
  */
 
 namespace App\EventSubscriber;
@@ -38,20 +38,19 @@ class QualiteRelanceSubscriber implements EventSubscriberInterface
      */
     public function onSendRelance(QualiteRelanceEvent $event): void
     {
-        $etudiant = $event->getEtudiant();
+        $user = $event->getUser();
         $questionnaire = $event->getQuestionnaireQualite();
-        if (null !== $etudiant) {
-            $titre = 'Evaluation semestre '.$questionnaire->getSemestre()->getLibelle().', '.$etudiant->getDiplome()->getDisplay();
-            $rp = $etudiant->getSemestre()->getDiplome()->getResponsableDiplome();
+        if (null !== $user) {
+            $titre = '[Questionnaire Qualite] ' . $questionnaire->getLibelle();
             $this->mailer->initEmail();
-            $this->mailer->setTemplate('mails/qualite/relance.html.twig', [
-                'etudiant' => $etudiant,
+            $this->mailer->setTemplate('components/questionnaire/mails/relance.html.twig', [
+                'user' => $user,
                 'questionnaire' => $questionnaire,
                 'titre' => $titre,
             ]);
 
-            $this->mailer->sendMessage($etudiant->getMails(), 'URGENT - RAPPEL : '.$titre,
-                ['replyTo' => [$rp?->getMailUniv()]]);
+            $this->mailer->sendMessage([$user->getEmail()], 'URGENT - RELANCE : ' . $titre,
+                ['replyTo' => ['maud.briet@univ-reims.fr']]); //todo: modifier...
         }
     }
 
@@ -60,7 +59,7 @@ class QualiteRelanceSubscriber implements EventSubscriberInterface
      */
     public function onSendSynthese(QualiteRelanceEvent $event): void
     {
-        $etudiants = $event->getEtudiants();
+        $etudiants = $event->getDestinataire();
         $questionnaire = $event->getQuestionnaireQualite();
         if (0 !== count($etudiants)) {
             $titre = '';

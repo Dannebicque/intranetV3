@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeDestinataire/Exterieur.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/12/2022 17:30
+ * @lastUpdate 17/12/2022 09:21
  */
 
 namespace App\Components\Questionnaire\TypeDestinataire;
@@ -14,6 +14,7 @@ use App\Components\Questionnaire\DTO\ReponsesUser;
 use App\Components\Questionnaire\Interfaces\QuestChoixInterface;
 use App\Components\Questionnaire\Interfaces\TypeDestinataireInterface;
 use App\Entity\QuestChoixExterieur;
+use App\Event\QualiteRelanceEvent;
 use App\Repository\QuestChoixExterieurRepository;
 use App\Repository\QuestChoixRepository;
 use App\Repository\QuestQuestionRepository;
@@ -21,6 +22,7 @@ use App\Repository\QuestReponseRepository;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Ramsey\Uuid\Uuid;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 class Exterieur extends AbstractTypeDestinataire implements TypeDestinataireInterface
 {
@@ -33,9 +35,11 @@ class Exterieur extends AbstractTypeDestinataire implements TypeDestinataireInte
         QuestReponseRepository $questReponseRepository,
         protected MailerFromTwig $myMailer,
         EntityManagerInterface $entityManager,
+        EventDispatcherInterface $eventDispatcher,
         protected QuestChoixExterieurRepository $questChoixExterieurRepository
     ) {
-        parent::__construct($entityManager, $questChoixRepository, $questQuestionRepository, $questReponseRepository);
+        parent::__construct($eventDispatcher, $entityManager, $questChoixRepository, $questQuestionRepository,
+            $questReponseRepository);
     }
 
     public function getListe(): array
@@ -85,6 +89,28 @@ class Exterieur extends AbstractTypeDestinataire implements TypeDestinataireInte
         }
         $this->questionnaire->setEnvoye(true);
         $this->entityManager->flush();
+    }
+
+    public function sendRelance(): void
+    {
+        $data = $this->questChoixExterieurRepository->findBy(
+            [
+                'questionnaire' => $this->questionnaire,
+                'dateTermine' => null,
+            ]
+        );
+        //$mailsAEnvoyes=[];
+        foreach ($data as $user) {
+            $event = new QualiteRelanceEvent($this->questionnaire);
+            $event->setUser($user);
+            $this->eventDispatcher->dispatch($event, QualiteRelanceEvent::SEND_RELANCE);
+            //$mailsAEnvoyes[] = $user;
+
+        }
+
+//        $event = new QualiteRelanceEvent($this->questionnaire);
+//        $event->setUsers($mailsAEnvoyes);
+//        $this->eventDispatcher->dispatch($event, QualiteRelanceEvent::SEND_SYNTHESE); Uniquement pour les étudiants
     }
 
     public function getChoixUser(string $uuid): ?QuestChoixInterface

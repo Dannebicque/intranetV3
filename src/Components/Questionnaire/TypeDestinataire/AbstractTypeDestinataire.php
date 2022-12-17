@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeDestinataire/AbstractTypeDestinataire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/12/2022 17:30
+ * @lastUpdate 15/12/2022 18:26
  */
 
 namespace App\Components\Questionnaire\TypeDestinataire;
@@ -21,6 +21,7 @@ use App\Repository\QuestChoixRepository;
 use App\Repository\QuestQuestionRepository;
 use App\Repository\QuestReponseRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 abstract class AbstractTypeDestinataire
 {
@@ -29,6 +30,7 @@ abstract class AbstractTypeDestinataire
     protected ?ReponsesUser $reponses;
 
     public function __construct(
+        protected EventDispatcherInterface $eventDispatcher,
         protected EntityManagerInterface $entityManager,
         protected QuestChoixRepository $questChoixRepository,
         protected QuestQuestionRepository $questQuestionRepository,

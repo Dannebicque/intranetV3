@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/questionnaire/QuestionnaireController.php
+ * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/QuestionnaireMailsController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/09/2021 07:59
+ * @lastUpdate 15/12/2022 18:24
  */
 
 namespace App\Controller\questionnaire;
@@ -28,14 +28,14 @@ class QuestionnaireMailsController extends BaseController
     #[Route('/questionnaire/relance/{questionnaire}', name: 'administratif_enquete_relance')]
     public function relance(
         Request $request,
-        EnqueteRelance $enqueteRelance,
         QuestionnaireRegistry $questionnaireRegistry,
         QuestQuestionnaire $questionnaire
     ): RedirectResponse {
-        $reponses = $quizzEtudiantRepository->findByQuestionnaireQualite($questionnaire);
-        $etudiants = $etudiantRepository->findBySemestre($questionnaire->getSemestre());
+        $typeDest = $questionnaireRegistry->getTypeDestinataire($questionnaire->getTypeDestinataire());
+        $typeDest->setQuestionnaire($questionnaire);
 
-        $enqueteRelance->envoyerRelance($questionnaire, $reponses, $etudiants);
+        $typeDest->sendRelance();
+
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Message de relance envoyé');
 
         return new RedirectResponse($request->headers->get('referer'));

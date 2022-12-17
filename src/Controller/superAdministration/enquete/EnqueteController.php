@@ -4,13 +4,13 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/enquete/EnqueteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/12/2022 17:44
+ * @lastUpdate 16/12/2022 11:33
  */
 
 namespace App\Controller\superAdministration\enquete;
 
 use App\Controller\BaseController;
-use App\Table\EnqueteQualiteDiplomesTableType;
+use App\Table\EnqueteQualiteEtudiantsTableType;
 use App\Table\EnqueteQualiteExterieursTableType;
 use App\Table\EnqueteQualitePersonnelsTableType;
 use Symfony\Component\HttpFoundation\Request;
@@ -29,9 +29,10 @@ class EnqueteController extends BaseController
         string $typeDestinataire
     ): Response {
         if ('etudiant' === $typeDestinataire) {
-            $table = $this->createTable(EnqueteQualiteDiplomesTableType::class, [
+            $table = $this->createTable(EnqueteQualiteEtudiantsTableType::class, [
                 'typeDestinataire' => $typeDestinataire,
                 'effectifs' => [],
+                'type' => 'administratif',
             ]);
         } elseif ('personnel' === $typeDestinataire) {
             $table = $this->createTable(EnqueteQualitePersonnelsTableType::class, [
@@ -146,10 +147,10 @@ class EnqueteController extends BaseController
 //        foreach ($questionnaire->getSections() as $section) {
 //            $nSection = clone $section;
 //            $newQuestionnaireQualite->addSection($nSection);
-////            if (null !== $nSection->getConfig()) {
-////                $t = explode('-', $nSection->getConfig());
-////                $nSection->setConfig($t[0].'-');
-////            }
+// //            if (null !== $nSection->getConfig()) {
+// //                $t = explode('-', $nSection->getConfig());
+// //                $nSection->setConfig($t[0].'-');
+// //            }
 //            $nSection->setQuestionnaireQualite($newQuestionnaireQualite);
 //            $this->entityManager->persist($nSection);
 //        }
