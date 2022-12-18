@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/QuestQuestion.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/12/2022 20:36
+ * @lastUpdate 18/12/2022 17:46
  */
 
 namespace App\Entity;
@@ -42,7 +42,7 @@ class QuestQuestion extends BaseEntity
     #[ORM\ManyToOne(targetEntity: QuestQuestion::class, inversedBy: 'questionsEnfants')]
     private ?QuestQuestion $questionParent = null;
 
-    #[ORM\OneToMany(mappedBy: 'questionParent', targetEntity: QuestQuestion::class)]
+    #[ORM\OneToMany(mappedBy: 'questionParent', targetEntity: QuestQuestion::class, cascade: ["persist"])]
     private Collection $questionsEnfants;
 
     #[ORM\Column(type: Types::BOOLEAN)]

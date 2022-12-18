@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/questionnaire/creation_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/12/2022 20:21
+// @lastUpdate 18/12/2022 17:46
 
 import { Controller } from '@hotwired/stimulus'
 import { addCallout } from '../../js/util'
@@ -81,6 +81,7 @@ export default class extends Controller {
 
   async _saveIntro() {
     const form = document.getElementById('questionnaire_qualite')
+
     const dataForm = new FormData(form)
 
     const params = new URLSearchParams({
@@ -91,6 +92,7 @@ export default class extends Controller {
       method: 'POST',
       body: dataForm,
     }
+
     await fetch(`${this.urlSaveValue}?${params.toString()}`, body).then((response) => response.json()).then((data) => {
       if (data === true) {
         addCallout('Questionnaire enregistré', 'success')

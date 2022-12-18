@@ -1,51 +1,32 @@
 {% block type_chainee %}
-    <fieldset class="form-group"
-            {{ stimulus_controller('enquete', {
-                parametres: parametres|json_encode,
-                idQuestion: id,
-                typeQuestionnaire: typeQuestionnaire,
-                questionnaireId: questionnaire_id
-            }) }}
-    >
-        <div aria-describedby="quizz_question_{{ id }}_help">
-            <small id="quizz_question_{{ id }}_help" class="form-text text-muted">{{ help }}</small>
-        </div>
-        {% for subQuestion in questionsEnfants %}
-            <div class="sub-question {% if loop.index is odd %}row-striped{% endif %}">
-                <div class="row">
-                    <div class="col-sm-12 col-md-12 sub-question-titre">
-                        # {{ subQuestion.libelle }}
-                    </div>
+    {% import _self as formMacros %}
 
-                    {% if valeurs == null %}
-                        {% set name = 'q'~subQuestion.id %}
-                    {% else %}
-                        {% set name = 'q'~subQuestion.id~'_c'~valeurs[ordre] %}
-                    {% endif %}
-                    {% for reponse in reponses %}
-                        <div class="col-sm-12 col-md-2">
-                            <div class="form-check">
-                                <input type="radio" id="quizz_question_qcu_{{ name }}_{{ reponse.id }}"
-                                       name="quizz_question_reponses_{{ name }}"
-                                       data-action="change->enquete#change"
-                                       data-fieldset="{{ id }}"
-                                       data-typeQuestionnaire="radio" {# todo: pourrait être autre chose... #}
-                                        {% if apercu is not defined or apercu == false %}
-                                            data-etudiant="{{ etudiant_id }}"
-                                        {% endif %}
-                                        {% if reponseEtudiant != null and
-                                            reponseEtudiant.valeur == reponse.valeur %}checked{% endif %}
-                                        {% if obligatoire %}required{% endif %}
-                                       class="form-check-input"
-                                       value="{{ reponse.valeur }}">
-                                <label class="form-check-label required" for="quizz_question_qcu_{{ name }}_{{ reponse.id }}">{{ reponse.libelle }}</label>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        {% endfor %}
-    </fieldset>
+    <div class="row">
+        <div class="col-5">
+            {{ form_row(form.libelle) }}
+        </div>
+        <div class="col-3">
+            {{ form_row(form.obligatoire) }}
+        </div>
+        <div class="col-4">
+            {{ form_row(form.type) }}
+        </div>
+        <div class="col-6">
+            {{ form_row(form.help) }}
+        </div>
+        <div class="col-3">
+            {{ form_row(form.choix_autre) }}
+        </div>
+        <div class="col-3">
+            {{ form_row(form.choix_nc) }}
+        </div>
+        <div class="col-12">
+            {{ form_row(form.questReponses) }}
+        </div>
+        <div class="col-12">
+            {{ form_row(form.questionsEnfants) }}
+        </div>
+    </div>
 {% endblock %}
 
 {% block type_echelle %}

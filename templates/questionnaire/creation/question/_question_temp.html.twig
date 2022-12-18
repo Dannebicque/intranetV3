@@ -1,6 +1,9 @@
 <div class="row question-edit">
     <div class="col-10">
         {% form_theme form 'form/my-form-quest.html.twig' %}
+        {% if form.questionsEnfants is defined %}
+            {% form_theme form.questionsEnfants 'form/my-form-quest-ss.html.twig' %}
+        {% endif %}
         <form>
             {{ question_creation_form_render(question, form) }}
         </form>

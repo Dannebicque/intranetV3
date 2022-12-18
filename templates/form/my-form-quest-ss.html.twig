@@ -1,0 +1,55 @@
+{% extends "form/my-form.html.twig" %}
+{% trans_default_domain 'form' %}
+
+{% macro collection_item(form) %}
+    <div data-form-collection-target="field" class="row">
+        {% for frm in form %}
+            <div class="col-{{ frm.vars.attr.size }}">
+                {{ form_widget(frm) }}
+            </div>
+        {% endfor %}
+
+        <div class="col-2">
+            <button data-action="form-collection#removeItem" class="btn btn-outline-danger btn-sm me-1">
+                <i class="{{ iconDelete }}"></i>
+            </button>
+        </div>
+    </div>
+{% endmacro %}
+
+{% block collection_widget %}
+    {% if prototype is defined %}
+        {% set attr = attr|merge({'data-prototype': form_row(prototype)}) %}
+        {% set attr = attr|merge({'data-prototype-name': prototype.vars.name}) %}
+    {% endif %}
+    {% set attr = attr|merge({'data-allow-add': allow_add ? 1 : 0}) %}
+    {% set attr = attr|merge({'data-allow-remove': allow_delete ? 1 : 0 }) %}
+    {% set attr = attr|merge({'data-name-prefix': full_name}) %}
+    {{ block('form_widget') }}
+{% endblock collection_widget %}
+
+{% block collection_stimulus_widget %}
+    {% import _self as formMacros %}
+    <div data-controller="form-collection"
+         {% if max_items is defined %}data-form-collection-max-items-value="{{ max_items }}"{% endif %}
+         data-form-collection-prototype-value="{{ formMacros.collection_item(form.vars.prototype)|json_encode }}">
+        <div data-form-collection-target="fields">
+
+            {% do form.setRendered %}
+            <div class="row">
+                <div class="col-5">
+                    Libellé de la question
+                </div>
+                <div class="col-5">
+                    Texte d'aide (si nécessaire)
+                </div>
+            </div>
+            {% for field in form %}
+                {{ formMacros.collection_item(field) }}
+            {% endfor %}
+        </div>
+        <button data-action="form-collection#addItem" class="btn btn-outline-info">
+            <i class="{{ iconAdd }}"></i> Ajouter un élément
+        </button>
+    </div>
+{% endblock collection_stimulus_widget %}

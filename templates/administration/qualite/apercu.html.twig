@@ -11,7 +11,7 @@
     <div class="header-action">
         <div class="buttons">
             {% if is_granted('ROLE_ADMINISTRATIF') %}
-                <a href="{{ path('sa_qualite_diplome', {diplome:semestre.diplome.id}) }}"
+                <a href="{{ path('administratif_enquete_destinataire_index', {typeDestinataire:typeDestinataire}) }}"
                    class="btn btn-primary btn-float"
                    title="{{ 'atitle.retour_liste'|trans }}"
                    data-bs-toggle="tooltip" data-bs-placement="bottom"

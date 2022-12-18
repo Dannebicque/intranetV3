@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Form/QuestionnaireQuestionTypeQcm.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:23
+ * @lastUpdate 18/12/2022 17:46
  */
 
 namespace App\Components\Questionnaire\Form;
 
 use App\Form\QuestionnaireReponseType;
 use App\Form\Type\CollectionStimulusType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
@@ -22,6 +23,36 @@ class QuestionnaireQuestionTypeQcm extends QuestionnaireQuestionType
     {
         parent::buildForm($builder, $options);
         $builder
+            ->addEventListener(FormEvents::PRE_SET_DATA, static function(FormEvent $event) {
+                $question = $event->getData();
+
+                $config = $question->getParametre();
+                $form = $event->getForm();
+                $form->add('choix_autre', CheckboxType::class,
+                    [
+                        'required' => false,
+                        'mapped' => false,
+                        'label' => 'label.choix_autre',
+                        'help' => 'help.choix_autre',
+                        'data' => $config['choix_autre'] ?? false,
+                    ])
+                    ->add('choix_nc', CheckboxType::class,
+                        [
+                            'required' => false,
+                            'mapped' => false,
+                            'label' => 'label.choix_nc',
+                            'help' => 'help.choix_nc',
+                            'data' => $config['choix_nc'] ?? false,
+                        ]);
+            })
+            ->addEventListener(FormEvents::POST_SUBMIT, static function(FormEvent $event) {
+                $question = $event->getData();
+                $form = $event->getForm();
+                $t = $question->getParametre();
+                $t['choix_nc'] = $form->get('choix_nc')->getData();
+                $t['choix_autre'] = $form->get('choix_autre')->getData();
+                $question->setParametre($t);
+            })
             ->add('questReponses', CollectionStimulusType::class, [
                 'entry_type' => QuestionnaireReponseType::class,
                 'entry_options' => ['label' => false],
@@ -53,5 +84,4 @@ class QuestionnaireQuestionTypeQcm extends QuestionnaireQuestionType
                 $question->setParametre($t);
             });
     }
-
 }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Form/QuestionnaireQuestionTypeQcu.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:23
+ * @lastUpdate 18/12/2022 17:19
  */
 
 namespace App\Components\Questionnaire\Form;
@@ -29,6 +29,7 @@ class QuestionnaireQuestionTypeQcu extends QuestionnaireQuestionType
                 $form = $event->getForm();
                 $form->add('choix_autre', CheckboxType::class,
                     [
+                        'required' => false,
                         'mapped' => false,
                         'label' => 'label.choix_autre',
                         'help' => 'help.choix_autre',
@@ -36,6 +37,7 @@ class QuestionnaireQuestionTypeQcu extends QuestionnaireQuestionType
                     ])
                     ->add('choix_nc', CheckboxType::class,
                         [
+                            'required' => false,
                             'mapped' => false,
                             'label' => 'label.choix_nc',
                             'help' => 'help.choix_nc',

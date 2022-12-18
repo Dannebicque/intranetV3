@@ -86,6 +86,8 @@ Etat: Etat
 fichier_import: 'Fichier à importer'
 h: Heure
 help:
+  choix_autre: Ajouter un choix "Autre" et mettre une zone de saisie libre si coché
+  choix_nc: Ajouter un choix "Non concerné"
   type_document_parent: Indiquez une catégorie de dcoument parent, pour créer une "sous-catégorie". 1 seul niveau possible.
   typeBac: Type de bac, notamment pour les statistiques.
   complete.meme.si.identique: Compléter les informations, même si identique.
@@ -154,6 +156,17 @@ initiales: Initiales
 j: Jour
 Jour: Jour
 label:
+  maxChoix: 'Nombre maximum de choix'
+  type_question: Type de question
+  type_chainee: Question avec sous-questions
+  type_echelle: Question à échelle
+  type_libre: Question libre
+  type_oui_non: Question à 2 choix (oui/non)
+  type_qcm: Question à choix multiple
+  type_qcu: Question à choix unique
+  type_slider: Question à curseur
+  choix_autre: "Choix 'Autre' possible, avec zone de saisie"
+  choix_nc: "Choix 'Non concerné'"
   exterieur: 'Exterieur, nomminatif'
   etudiant: 'Etudiants, semestre'
   formationContinue: 'Parcours en formation continue ou alternance ?'

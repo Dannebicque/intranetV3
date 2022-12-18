@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeQuestion/TypeChainee.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/09/2022 14:07
+ * @lastUpdate 18/12/2022 17:46
  */
 
 namespace App\Components\Questionnaire\TypeQuestion;
@@ -13,6 +13,8 @@ use App\Components\Graphs\Type\BarGraph;
 use App\Components\Questionnaire\Adapter\ReponseEntityAdapter;
 use App\Components\Questionnaire\Form\QuestionnaireQuestionTypeChainee;
 use App\Entity\QuestQuestion;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class TypeChainee extends AbstractQuestion
@@ -50,5 +52,39 @@ class TypeChainee extends AbstractQuestion
     public function genereGraph()
     {
         return $this->graphRegistry->getTypeGraph(self::TYPE_GRAPH)->genereGraph($this);
+    }
+
+    public function sauvegarde(
+        QuestQuestion $question,
+        Request $request,
+        ?EntityManagerInterface $entityManager = null
+    ): void {
+        parent::sauvegarde($question, $request, $entityManager);
+        $parametres = $question->getParametre();
+        $parametres['choix_autre'] = array_key_exists('choix_autre',
+            $this->data) ? (bool)$this->data['choix_autre'] : false;
+        $parametres['choix_nc'] = array_key_exists('choix_nc', $this->data) ? (bool)$this->data['choix_nc'] : false;
+        $question->setParametre($parametres);
+
+        $this->sauvegardeReponses($question, $entityManager);
+
+        //sauvegarde des "sous-questions"
+        if (array_key_exists('questionsEnfants', $this->data) && $entityManager !== null) {
+            foreach ($question->getQuestionsEnfants() as $quest) {
+                $entityManager->remove($quest);
+            }
+
+            $i = 1;
+            foreach ($this->data['questionsEnfants'] as $reponse) {
+                $qR = new QuestQuestion();
+                $qR->setLibelle($reponse['libelle']);
+                $qR->setOrdre($i);
+                $qR->setHelp($reponse['help']);
+                $qR->setQuestionParent($question);
+                $entityManager->persist($qR);
+                $i++;
+            }
+            $entityManager->flush();
+        }
     }
 }

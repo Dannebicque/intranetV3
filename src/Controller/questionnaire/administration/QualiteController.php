@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/administration/QualiteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/12/2022 20:54
+ * @lastUpdate 18/12/2022 17:04
  */
 
 namespace App\Controller\questionnaire\administration;
@@ -13,6 +13,7 @@ use App\Components\Questionnaire\Adapter\QuestionnaireQualiteAdapter;
 use App\Components\Questionnaire\Adapter\SectionQualiteEntityAdapter;
 use App\Components\Questionnaire\DTO\AbstractQuestionnaire;
 use App\Components\Questionnaire\Questionnaire;
+use App\Components\Questionnaire\QuestionnaireRegistry;
 use App\Components\Questionnaire\Section\AbstractSection;
 use App\Controller\BaseController;
 use App\Entity\QuestQuestionnaire;
@@ -51,9 +52,11 @@ class QualiteController extends BaseController
     #[Route('/{id}/apercu', name: 'administration_qualite_apercu', methods: ['GET', 'POST'])]
     public function apercu(
         Request $request,
+        QuestionnaireRegistry $questionnaireRegistry,
         Questionnaire $questionnaire,
         QuestQuestionnaire $questionnaireQualite
     ): Response {
+        $typeDestinataire = $questionnaireRegistry->getTypeDestinataire($questionnaireQualite->getTypeDestinataire());
         // $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
         $questionnaire->createQuestionnaire(QuestQuestionnaire::class,
             (new QuestionnaireQualiteAdapter($questionnaireQualite))->getQuestionnaire(),
@@ -78,6 +81,7 @@ class QualiteController extends BaseController
         return $this->render('administration/qualite/apercu.html.twig', [
             'questionnaire' => $questionnaire->createView(),
             'semestre' => $questionnaireQualite->getSemestre(),
+            'typeDestinataire' => $typeDestinataire::LABEL,
         ]);
     }
 }

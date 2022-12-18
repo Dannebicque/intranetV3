@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Form/QuestionnaireQuestionTypeYesNo.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/12/2022 21:28
+ * @lastUpdate 18/12/2022 17:19
  */
 
 namespace App\Components\Questionnaire\Form;
@@ -57,6 +57,7 @@ class QuestionnaireQuestionTypeYesNo extends QuestionnaireQuestionType
                     ->add('choix_autre', CheckboxType::class,
                         [
                             'mapped' => false,
+                            'required' => false,
                             'label' => 'label.choix_autre',
                             'help' => 'help.choix_autre',
                             'data' => $config['choix_autre'] ?? false,
@@ -64,6 +65,7 @@ class QuestionnaireQuestionTypeYesNo extends QuestionnaireQuestionType
                     ->add('choix_nc', CheckboxType::class,
                         [
                             'mapped' => false,
+                            'required' => false,
                             'label' => 'label.choix_nc',
                             'help' => 'help.choix_nc',
                             'data' => $config['choix_nc'] ?? false,
