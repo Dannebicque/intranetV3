@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/stage/FormTypeStage.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/12/2022 20:18
+ * @lastUpdate 18/12/2022 12:50
  */
 
 namespace App\Form\stage;
@@ -26,14 +26,17 @@ class FormTypeStage extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder
-            // todo: gérer les dates figées et pré-remplies non modifiables (reprendre dans StageEtudiantEtudiantType)
-            ->add('date_debut_stage', DatePickerType::class, ['label' => 'Date de début :'])
-            ->add('date_fin_stage', DatePickerType::class, ['label' => 'Date de fin  :'])
-            ->add('duree_jours_stage', IntegerType::class, [
-                'label' => 'Nombre de jours de stage :',
-                'help' => 'En jours ouvrés (hors week-end et jours fériés)',
-            ])
+        $this->flexible = $options['flexible'];
+
+        if (true === $this->flexible) {
+            $builder->
+            add('date_debut_stage', DatePickerType::class, ['label' => 'Date de début :'])
+                ->add('date_fin_stage', DatePickerType::class, ['label' => 'Date de fin  :']);
+        }
+        $builder->add('duree_jours_stage', IntegerType::class, [
+            'label' => 'Nombre de jours de stage :',
+            'help' => 'En jours ouvrés (hors week-end et jours fériés)',
+        ])
             ->add('service_stage_entreprise', TextType::class, [
                 'label' => 'Service dans l\'entreprise :',
                 'help' => 'Service dans lequel vous effectuerez votre stage',
@@ -51,6 +54,7 @@ class FormTypeStage extends AbstractType
             ])
             ->add('duree_hebdomadaire', FloatType::class, [
                 'label' => 'Durée de travail hebdomadaire :',
+                'input_suffix' => '<span class="input-group-text"> heures</span>',
                 'attr' => ['placeholder' => '35'],
             ])
             ->add('commentaire_duree_hebdomadaire', TextareaType::class, [
@@ -81,22 +85,27 @@ class FormTypeStage extends AbstractType
             ])
             ->add('gratification_montant', FloatType::class, [
                 'label' => 'Montant de la gratification :',
+                'input_suffix' => '<span class="input-group-text"> €</span>',
                 'help' => 'En fonction de la période sélectionnée',
                 'attr' => ['placeholder' => '3.9'],
+                //todo: mettre en place la récupération depuis le contrôler et la config
             ])
             ->add('avantages', TextareaType::class, [
                 'label' => 'Avantages :',
                 'help' => 'Autres avantages (frais de transports, ...)',
                 'required' => false,
             ])
-            ->add('retour', SubmitType::class, ['label' => 'Etape précédente', 'attr' => ['class' => 'btn-precedent']])
-            ->add('suivant', SubmitType::class, ['label' => 'Etape suivante', 'attr' => ['class' => 'btn-success']]);
+            ->add('retour', SubmitType::class,
+                ['label' => 'Etape précédente', 'attr' => ['class' => 'btn-precedent']])
+            ->add('suivant', SubmitType::class,
+                ['label' => 'Etape suivante', 'attr' => ['class' => 'btn-success']]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => StageEtudiant::class,
+            'flexible' => false,
             'translation_domain' => 'form',
         ]);
     }

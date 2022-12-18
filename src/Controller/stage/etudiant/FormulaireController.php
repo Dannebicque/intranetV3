@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/stage/etudiant/FormulaireController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/12/2022 12:09
+ * @lastUpdate 18/12/2022 12:54
  */
 
 // src/Controller/FormulaireController.php
@@ -249,6 +249,7 @@ class FormulaireController extends BaseController
     ): Response {
         $form6 = $this->createForm(FormTypeStage::class, $stageEtudiant, [
             'csrf_protection' => false,
+            'flexible' => $stageEtudiant->getStagePeriode()?->getDatesFlexibles(),
         ]);
 
         $form6->handleRequest($request);
@@ -259,12 +260,11 @@ class FormulaireController extends BaseController
                 return $this->redirectToRoute('app_formulaireAdresseStage',
                     ['stageEtudiant' => $stageEtudiant->getUuidString()]);
             } // Si clic sur "suivant"
-            else {
-                $stageEtudiantRepository->save($stageEtudiant, true);
 
-                return $this->redirectToRoute('app_formulaireRecap',
-                    ['stageEtudiant' => $stageEtudiant->getUuidString()]);
-            }
+            $stageEtudiantRepository->save($stageEtudiant, true);
+
+            return $this->redirectToRoute('app_formulaireRecap',
+                ['stageEtudiant' => $stageEtudiant->getUuidString()]);
         }
 
         return $this->renderForm('stage/formulaire/index.html.twig',
