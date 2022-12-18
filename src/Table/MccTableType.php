@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/MccTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/12/2022 17:45
+ * @lastUpdate 18/12/2022 12:43
  */
 
 namespace App\Table;
@@ -13,6 +13,8 @@ use App\Classes\Matieres\TypeMatiereManager;
 use App\DTO\Matiere;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Semestre;
+use App\Table\ColumnType\MccNbNotesColumnType;
+use App\Table\ColumnType\MccPourcentageColumnType;
 use DavidAnnebicque\TableBundle\Column\PropertyColumnType;
 use DavidAnnebicque\TableBundle\Column\WidgetColumnType;
 use DavidAnnebicque\TableBundle\DTO\TableResult;
@@ -27,6 +29,7 @@ class MccTableType extends TableType
 {
     protected Semestre $semestre;
     protected AnneeUniversitaire $anneeUniversitaire;
+    protected array $mccs;
 
     public function __construct(
         private readonly TypeMatiereManager $typeMatiereManager
@@ -36,6 +39,7 @@ class MccTableType extends TableType
     public function buildTable(TableBuilder $builder, array $options): void
     {
         $this->semestre = $options['semestre'];
+        $this->mccs = $options['mccs'];
         $this->anneeUniversitaire = $options['anneeUniversitaire'];
 
         $builder->addColumn('codeElement', PropertyColumnType::class, [
@@ -50,9 +54,17 @@ class MccTableType extends TableType
         ]);
         $builder->addColumn('libelle', PropertyColumnType::class,
             ['label' => 'table.matiere_libelle', 'translation_domain' => 'messages']);
+        $builder->addColumn('typeIdMatiereMcc', MccNbNotesColumnType::class,
+            [
+                'label' => 'table.nbNotes',
+                'translation_domain' => 'messages',
+                'mccs' => $this->mccs
+            ]); // todo: à gérer dans table avec un column non mappé ?
+        $builder->addColumn('typeIdMatiere', MccPourcentageColumnType::class,
+            ['label' => 'table.pourcentage', 'translation_domain' => 'messages', 'mccs' => $this->mccs]);
 
         $builder->addColumn('links', WidgetColumnType::class, [
-            'build' => function (WidgetBuilder $builder, Matiere $s) {
+            'build' => function(WidgetBuilder $builder, Matiere $s) {
                 $builder->add('show', RowShowLinkType::class, [
                     'route' => 'administration_mcc_show_matiere',
                     'route_params' => [
@@ -80,6 +92,7 @@ class MccTableType extends TableType
             'orderable' => true,
             'semestre' => null,
             'anneeUniversitaire' => null,
+            'mccs' => null,
             'exportable' => true,
         ]);
     }

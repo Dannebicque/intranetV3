@@ -16,8 +16,14 @@
             <td>{{ mcc.typeEpreuve != null ? mcc.typeEpreuve.libelle : 'erreur' }}</td>
             <td>{{ mcc.coefficient|number_format(2) }} %</td>
             <td>
-                <button type="button" class="btn btn-danger-outline" {{ stimulus_action('mcc', 'supprMcc', 'click', {id: mcc.id}) }}>
+                <button type="button" class="btn btn-sm btn-danger-outline" {{ stimulus_action('mcc', 'supprMcc',
+                    'click', {id: mcc.id}) }}>
                     <i class="{{ iconDelete }}"></i>
+                </button>
+                <button type="button" class="btn btn-sm btn-success-outline" {{ stimulus_action('mcc', 'duplicateMcc',
+                    'click',
+                    {id: mcc.id}) }}>
+                    <i class="{{ iconDuplicate }}"></i>
                 </button>
             </td>
         </tr>

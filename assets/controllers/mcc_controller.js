@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/mcc_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/12/2022 10:08
+// @lastUpdate 18/12/2022 11:42
 
 import { Controller } from '@hotwired/stimulus'
 import { addCallout } from '../js/util'
@@ -13,6 +13,7 @@ export default class extends Controller {
   static values = {
     urlMcc: String,
     urlAddMcc: String,
+    urlDuplicateMcc: String,
     urlSupprMcc: String,
   }
 
@@ -35,6 +36,21 @@ export default class extends Controller {
         }
       })
     }
+  }
+
+  duplicateMcc(event) {
+    const params = new URLSearchParams({
+      id: event.params.id,
+    })
+
+    fetch(`${this.urlDuplicateMccValue}?${params.toString()}`, { method: 'POST' }).then((response) => response.json()).then((data) => {
+      if (data === true) {
+        addCallout('MCC dupliquée', 'success')
+        this._loadSynthese()
+      } else {
+        addCallout('Erreur lors de la recopie de la MCC', 'error')
+      }
+    })
   }
 
   async addMcc(event) {

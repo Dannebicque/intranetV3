@@ -1,0 +1,37 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+    {{ 'adm.mcc_type_epreuve.show.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/sadm-buttons-show.html.twig', {elt: 'mcc_type_epreuve', id: mcc_type_epreuve.id}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.mcc_type_epreuve.show.heading'|trans }}</h4>
+        <div class="card-body">
+
+            <table class="table">
+                <tbody>
+                <tr>
+                    <th>Libelle</th>
+                    <td>{{ mcc_type_epreuve.libelle }}</td>
+                </tr>
+                <tr>
+                    <th>Type Diplôme</th>
+                    <td>{{ mcc_type_epreuve.typeDiplome != null ? mcc_type_epreuve.typeDiplome.libelle :
+                        'non.defini'|trans }}</td>
+                </tr>
+                <tr>
+                    <th>Id</th>
+                    <td>{{ mcc_type_epreuve.id }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

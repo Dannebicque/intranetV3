@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/MccTypeEpreuve.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/12/2022 08:33
+ * @lastUpdate 18/12/2022 11:12
  */
 
 namespace App\Entity;
@@ -22,6 +22,9 @@ class MccTypeEpreuve extends BaseEntity
 
     #[ORM\OneToMany(mappedBy: 'typeEpreuve', targetEntity: Mcc::class)]
     private Collection $mccs;
+
+    #[ORM\ManyToOne(inversedBy: 'mccTypeEpreuves')]
+    private ?TypeDiplome $type_diplome = null;
 
     public function __construct()
     {
@@ -67,6 +70,18 @@ class MccTypeEpreuve extends BaseEntity
                 $mcc->setTypeEpreuve(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getTypeDiplome(): ?TypeDiplome
+    {
+        return $this->type_diplome;
+    }
+
+    public function setTypeDiplome(?TypeDiplome $type_diplome): self
+    {
+        $this->type_diplome = $type_diplome;
 
         return $this;
     }

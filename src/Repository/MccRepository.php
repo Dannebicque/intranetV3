@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/MccRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/12/2022 07:55
+ * @lastUpdate 18/12/2022 12:43
  */
 
 namespace App\Repository;
@@ -13,6 +13,7 @@ use App\DTO\Matiere;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Mcc;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -61,5 +62,52 @@ class MccRepository extends ServiceEntityRepository
             ->setParameter('anneeUniversitaire', $getAnneeUniversitaire->getId())
             ->getQuery()
             ->getResult();
+    }
+
+    public function findBySemestreTable(array $matieres, AnneeUniversitaire $anneeUniversitaire): array
+    {
+        $query = $this->getMccBySemestre($anneeUniversitaire, $matieres);
+
+        $t = [];
+
+        foreach ($query as $q) {
+            if (!array_key_exists($q->getTypeIdMatiere(), $t)) {
+                $t[$q->getTypeIdMatiere()] = [];
+                $t[$q->getTypeIdMatiere()]['nbNotes'] = 0;
+                $t[$q->getTypeIdMatiere()]['pourcentage'] = 0;
+            }
+
+            $t[$q->getTypeIdMatiere()]['nbNotes']++;
+            $t[$q->getTypeIdMatiere()]['pourcentage'] += $q->getCoefficient();
+        }
+
+        return $t;
+    }
+
+    private function getOrs(?array $matieres, QueryBuilder $query): array
+    {
+        $ors = [];
+        foreach ($matieres as $matiere) {
+            $ors[] = '(' . $query->expr()->orx('mcc.idMatiere = ' . $query->expr()->literal($matiere->id)) . ' AND ' . $query->expr()->andX('mcc.typeMatiere = ' . $query->expr()->literal($matiere->typeMatiere)) . ')';
+        }
+
+        return $ors;
+    }
+
+    /**
+     * @param \App\Entity\AnneeUniversitaire $anneeUniversitaire
+     * @param array                          $matieres
+     *
+     * @return float|int|mixed|string
+     */
+    private function getMccBySemestre(AnneeUniversitaire $anneeUniversitaire, array $matieres): mixed
+    {
+        $query = $this->createQueryBuilder('mcc')
+            ->where('mcc.anneeUniversitaire = :anneeUniversitaire')
+            ->setParameter('anneeUniversitaire', $anneeUniversitaire->getId());
+
+        $query->andWhere(implode(' OR ', $this->getOrs($matieres, $query)));
+
+        return $query->getQuery()->getResult();
     }
 }

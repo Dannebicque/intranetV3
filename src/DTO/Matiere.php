@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/Matiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 18/12/2022 12:43
  */
 
 namespace App\DTO;
@@ -122,7 +122,13 @@ class Matiere
     /** ne-pas-exporter */
     public function getTypeIdMatiere(): string
     {
-        return $this->typeMatiere.'_'.$this->id;
+        return $this->typeMatiere . '_' . $this->id;
+    }
+
+    public function getTypeIdMatiereMcc(): string
+    {
+        //todo: artificiellement ajouté pour gérer le cas de MCC qui a besoin de deux colonnes...
+        return $this->typeMatiere . '_' . $this->id;
     }
 
     /** ne-pas-exporter */

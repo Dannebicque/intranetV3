@@ -1,0 +1,21 @@
+{% extends 'base-super_admin.html.twig' %}
+
+{% block header %}
+    {{ 'adm.mcc_type_epreuve.modification.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        {{ include('composants/sadm-buttons-edit.html.twig', {elt:'mcc_type_epreuve', id: mcc_type_epreuve.id}) }}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.mcc_type_epreuve.modification.heading'|trans }}</h4>
+
+        <div class="card-body">
+            {{ include('composants/adm-form.html.twig', {'button_label': 'update'|trans}) }}
+        </div>
+    </div>
+{% endblock %}

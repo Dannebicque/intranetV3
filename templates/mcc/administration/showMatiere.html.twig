@@ -5,14 +5,26 @@
 {% endblock %}
 
 {% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('administration_mcc_index', {semestre:semestre.id}) }}"
+               class="btn btn-primary btn-float"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
 
+               title="Retour au semestre">
+                <i class="{{ iconRetour }}"></i>
+                <span class="sr-only">Retour au semestre</span>
+            </a>
+        </div>
+    </div>
 {% endblock %}
 
 {% block stimulus %}
     {{ stimulus_controller('mcc', {
         urlMcc: path('administration_mcc_synthese', {typeIdMatiere: matiere.typeIdMatiere, semestre: semestre.id}),
         urlAddMcc: path('administration_mcc_add', {typeIdMatiere: matiere.typeIdMatiere, semestre: semestre.id}),
-        urlSupprMcc: path('administration_mcc_suppr', {typeIdMatiere: matiere.typeIdMatiere, semestre: semestre.id}),
+        urlDuplicateMcc: path('administration_mcc_duplicate'),
+        urlSupprMcc: path('administration_mcc_suppr'),
     }) }}
 {% endblock %}
 

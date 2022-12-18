@@ -1914,6 +1914,9 @@ tab:
   vosParametres: 'Vos paramètres'
 #Déplacé dans Table, encore utilie ici?
 table:
+  matiere_libelle: Matière/SAE/Ressource
+  nbNotes: Nombre de notes
+  pourcentage: Pourcentage
   typeDestinataire: 'Destinataire'
   appelFait: 'Etat de l''appel'
   periodeAbsence: 'Période d''absence'

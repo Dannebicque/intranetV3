@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Mcc.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/12/2022 08:34
+ * @lastUpdate 18/12/2022 11:45
  */
 
 namespace App\Entity;
@@ -12,6 +12,7 @@ namespace App\Entity;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\MatiereTrait;
 use App\Repository\MccRepository;
+use Carbon\Carbon;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: MccRepository::class)]
@@ -29,6 +30,12 @@ class Mcc extends BaseEntity
 
     #[ORM\ManyToOne(inversedBy: 'mccs', fetch: 'EAGER')]
     private ?MccTypeEpreuve $typeEpreuve = null;
+
+    public function __clone(): void
+    {
+        $this->setCreated(Carbon::now());
+        $this->setUpdated(Carbon::now());
+    }
 
 
     public function getAnneeUniversitaire(): ?AnneeUniversitaire

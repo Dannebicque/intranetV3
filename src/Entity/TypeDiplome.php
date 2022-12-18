@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/TypeDiplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 11:28
+ * @lastUpdate 18/12/2022 11:12
  */
 
 namespace App\Entity;
@@ -55,10 +55,14 @@ class TypeDiplome extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'type_diplome', targetEntity: ApcReferentiel::class)]
     private Collection $apcReferentiels;
 
+    #[ORM\OneToMany(mappedBy: 'type_diplome', targetEntity: MccTypeEpreuve::class)]
+    private Collection $mccTypeEpreuves;
+
     public function __construct()
     {
         $this->diplomes = new ArrayCollection();
         $this->apcReferentiels = new ArrayCollection();
+        $this->mccTypeEpreuves = new ArrayCollection();
     }
 
     public function getLibelle(): ?string
@@ -178,6 +182,36 @@ class TypeDiplome extends BaseEntity
             // set the owning side to null (unless already changed)
             if ($apcReferentiel->getTypeDiplome() === $this) {
                 $apcReferentiel->setTypeDiplome(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, MccTypeEpreuve>
+     */
+    public function getMccTypeEpreuves(): Collection
+    {
+        return $this->mccTypeEpreuves;
+    }
+
+    public function addMccTypeEpreufe(MccTypeEpreuve $mccTypeEpreufe): self
+    {
+        if (!$this->mccTypeEpreuves->contains($mccTypeEpreufe)) {
+            $this->mccTypeEpreuves->add($mccTypeEpreufe);
+            $mccTypeEpreufe->setTypeDiplome($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMccTypeEpreufe(MccTypeEpreuve $mccTypeEpreufe): self
+    {
+        if ($this->mccTypeEpreuves->removeElement($mccTypeEpreufe)) {
+            // set the owning side to null (unless already changed)
+            if ($mccTypeEpreufe->getTypeDiplome() === $this) {
+                $mccTypeEpreufe->setTypeDiplome(null);
             }
         }
 

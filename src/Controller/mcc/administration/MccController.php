@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/mcc/administration/MccController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/12/2022 10:11
+ * @lastUpdate 18/12/2022 12:43
  */
 
 namespace App\Controller\mcc\administration;
@@ -27,12 +27,19 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('administration/mcc', name: 'administration_mcc_')]
 class MccController extends BaseController
 {
-    #[Route('/{semestre}', name: 'index')]
-    public function index(Request $request, Semestre $semestre): Response
-    {
+    #[Route('/semestre/{semestre}', name: 'index')]
+    public function index(
+        TypeMatiereManager $typeMatiereManager,
+        MccRepository $mccRepository,
+        Request $request,
+        Semestre $semestre
+    ): Response {
+        $matieres = $typeMatiereManager->findBySemestre($semestre);
+
         $table = $this->createTable(MccTableType::class, [
             'semestre' => $semestre,
             'anneeUniversitaire' => $this->getAnneeUniversitaire(),
+            'mccs' => $mccRepository->findBySemestreTable($matieres, $this->getAnneeUniversitaire()),
         ]);
 
         $table->handleRequest($request);
@@ -73,7 +80,7 @@ class MccController extends BaseController
 
         $mccs = $mccRepository->findByMatiereAndAnneeUniversitaire($matiere, $this->getAnneeUniversitaire());
 
-        return $this->render('mcc/administration/synthese.html.twig', [
+        return $this->render('mcc/administration/_synthese.html.twig', [
             'semestre' => $semestre,
             'matiere' => $matiere,
             'mccs' => $mccs,
@@ -103,13 +110,28 @@ class MccController extends BaseController
         return $this->json(true);
     }
 
-    #[Route('/supprimer/{semestre}/{typeIdMatiere}', name: 'suppr', methods: ['DELETE'])]
+    #[Route('/duplicate', name: 'duplicate', methods: ['POST'])]
+    public function duplicate(
+        Request $request,
+        MccRepository $mccRepository
+    ): Response {
+        $mcc = $mccRepository->find($request->query->get('id'));
+        if ($mcc) {
+            $newMcc = clone $mcc;
+            $this->entityManager->persist($newMcc);
+            $this->entityManager->flush();
+
+            return $this->json(true);
+        }
+    }
+
+    #[Route('/supprimer', name: 'suppr', methods: ['DELETE'])]
     public function delete(
         Request $request,
-        MccRepository $mccRepository): Response
-    {
+        MccRepository $mccRepository
+    ): Response {
         $mcc = $mccRepository->find($request->query->get('id'));
-        if ($mcc !== null) {
+        if (null !== $mcc) {
             $this->entityManager->remove($mcc);
             $this->entityManager->flush();
         }
