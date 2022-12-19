@@ -53,8 +53,7 @@
                                 {% if edt[jour][ligne][groupe] is defined %}
                                     {% if edt[jour][ligne][groupe] !='xx' %}
                                         <td class="center td-edt {{ edt[jour][ligne][groupe].couleurEdt }} {% if
-                                            groupe == 1 %} col-new-day{% endif %}
-{{ edt[jour][ligne][groupe].couleur }}"
+                                            groupe == 1 %} col-new-day{% endif %} {{ edt[jour][ligne][groupe].couleur }}"
                                             colspan="{{ edt[jour][ligne][groupe].largeur == 0 ? semestre
                                             .nbgroupeTPEDT : edt[jour][ligne][groupe].largeur }}"
                                             rowspan="{{ edt[jour][ligne][groupe].duree }}"
