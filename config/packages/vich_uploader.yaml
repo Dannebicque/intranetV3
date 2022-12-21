@@ -3,28 +3,33 @@ vich_uploader:
     metadata:
         type: attribute
     mappings:
-        documentFile:
-            uri_prefix: /upload/documents
-            upload_destination: '%kernel.project_dir%/public/upload/documents'
-            namer: Vich\UploaderBundle\Naming\UniqidNamer
-            inject_on_load: true
-            delete_on_update: true
-            delete_on_remove: true
-        ficheRenseignement:
-            uri_prefix: /upload/fiche-renseignement
-            upload_destination: '%kernel.project_dir%/public/upload/fiche-renseignement'
-            namer: Vich\UploaderBundle\Naming\UniqidNamer
-            inject_on_load: true
-        offreStage:
-            uri_prefix: /upload/offre-stage
-            upload_destination: '%kernel.project_dir%/public/upload/offre-stage'
-            namer: Vich\UploaderBundle\Naming\UniqidNamer
-            inject_on_load: true
-        logo:
-            uri_prefix: /upload/logo
-            upload_destination: '%kernel.project_dir%/public/upload/logo'
-            namer: Vich\UploaderBundle\Naming\UniqidNamer
-            inject_on_load: true
+      documentFile:
+        uri_prefix: /upload/documents
+        upload_destination: '%kernel.project_dir%/public/upload/documents'
+        namer: Vich\UploaderBundle\Naming\UniqidNamer
+        inject_on_load: true
+        delete_on_update: true
+        delete_on_remove: true
+      ficheRenseignement:
+        uri_prefix: /upload/fiche-renseignement
+        upload_destination: '%kernel.project_dir%/public/upload/fiche-renseignement'
+        namer: Vich\UploaderBundle\Naming\UniqidNamer
+        inject_on_load: true
+      fichierPlanCours:
+        uri_prefix: /upload/fichier-plan-cours
+        upload_destination: '%kernel.project_dir%/public/upload/fichier-plan-cours'
+        namer: Vich\UploaderBundle\Naming\UniqidNamer
+        inject_on_load: true
+      offreStage:
+        uri_prefix: /upload/offre-stage
+        upload_destination: '%kernel.project_dir%/public/upload/offre-stage'
+        namer: Vich\UploaderBundle\Naming\UniqidNamer
+        inject_on_load: true
+      logo:
+        uri_prefix: /upload/logo
+        upload_destination: '%kernel.project_dir%/public/upload/logo'
+        namer: Vich\UploaderBundle\Naming\UniqidNamer
+        inject_on_load: true
         cv:
             uri_prefix: /upload/cv
             upload_destination: '%kernel.project_dir%/public/upload/cv'

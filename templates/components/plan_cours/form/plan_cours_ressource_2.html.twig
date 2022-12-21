@@ -1,0 +1,21 @@
+{{ include('components/plan_cours/_header.html.twig') }}
+
+<div class="alert alert-info">
+    Vous disposez de 3 manières de joindre votre plan de cours. Choisissez celles qui vous conviennent le mieux, vous
+    pouvez combiner les saisies.
+</div>
+
+{{ form_row(form.commentaires_step2) }}
+
+<div class="divider">Saisie des séquences</div>
+{{ form_row(form.planCoursSequences) }}
+
+<div class="divider">Upload d'un fichier</div>
+{{ form_row(form.fichierPlanCoursFile) }}
+
+<div class="divider">Saisie libre</div>
+{{ form_row(form.saisiePlanCours) }}
+
+
+
+

@@ -726,6 +726,9 @@ app:
         show.heading: 'Détails d''une demande d''attestation de déplacement'
         edit.heading: 'Modification d''une demande d''attestation de déplacement'
     disponibilite.heading: 'Vos disponibilités'
+    plan_cours:
+      new:
+        heading: 'Plan de cours de : %matiere%'
   progression.heading: 'Progression pédagogique'
   quizz.heading: Quizz
   vos.stages.et.alternances.heading: 'Vos stages et alternances'

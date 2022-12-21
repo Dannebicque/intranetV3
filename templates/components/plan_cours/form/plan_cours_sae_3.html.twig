@@ -1,0 +1,25 @@
+{{ include('components/plan_cours/_header.html.twig') }}
+
+{{ form_row(form.planSuivi) }}
+{{ form_row(form.planSuiviCommentaire) }}
+
+{{ form_row(form.objectifsAtteints) }}
+{{ form_row(form.objectifsFAtteintsCommentaire) }}
+
+{{ form_row(form.livrablesRendus) }}
+
+
+{{ form_row(form.competencesAcquises) }} {#  pas ici ? juste pour matière ?? #}
+{{ form_row(form.competencesAcquisesCommentaire) }}
+
+<div class="row">
+    <div class="col-3">{{ form_row(form.cmRealise) }}</div>
+    <div class="col-3">{{ form_row(form.tdRealise) }}</div>
+    <div class="col-3">{{ form_row(form.tpRealise) }}</div>
+    <div class="col-3">{{ form_row(form.projetRealise) }}</div>
+</div>
+
+{{ form_row(form.modeEvaluationCommentaire) }}
+{{ form_row(form.bibliographie) }}
+{{ form_row(form.commentaires_step3) }}
+

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/plan_cours/personnel/PlanCoursController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/12/2022 12:03
+ * @lastUpdate 21/12/2022 17:36
  */
 
 namespace App\Controller\plan_cours\personnel;
@@ -14,6 +14,7 @@ use App\Classes\PlanCours\PlanCours;
 use App\Classes\Previsionnel\PrevisionnelManager;
 use App\Components\PlanCours\PlanCoursRegistry;
 use App\Controller\BaseController;
+use App\Entity\Constantes;
 use App\Entity\Previsionnel;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -40,7 +41,7 @@ class PlanCoursController extends BaseController
     /**
      * @throws \App\Components\PlanCours\Exceptions\PlanCoursNotFoundException
      */
-    #[Route('/new/{previsionnel}', name: 'app_plan_cours_apc_new', methods: ['GET', 'POST'])]
+    #[Route('/edit/{previsionnel}', name: 'app_plan_cours_apc_new', methods: ['GET', 'POST'])]
     public function new(
         PlanCoursRegistry $planCoursRegistry,
         TypeMatiereManager $typeMatiereManager,
@@ -53,22 +54,59 @@ class PlanCoursController extends BaseController
             throw new \Exception('Plan de cours non trouvé');
         }
 
-        $planCours = $planCoursManager->createPlanCours();
-        $form = $this->createForm($planCoursManager::FORM, $planCours);
+        return $this->render('plan_cours/personnel/plan_cours/new.html.twig', parameters: [
+            'matiere' => $matiere,
+            'previsionnel' => $previsionnel,
+            'step' => $request->query->get('step') ?? 1,
+        ]);
+    }
+
+    /**
+     * @throws \App\Components\PlanCours\Exceptions\PlanCoursNotFoundException
+     */
+    #[Route('/step/{previsionnel}', name: 'app_plan_cours_apc_step', methods: ['GET', 'POST'])]
+    public function step(
+        PlanCoursRegistry $planCoursRegistry,
+        TypeMatiereManager $typeMatiereManager,
+        Request $request,
+        Previsionnel $previsionnel
+    ): Response {
+        $step = $request->query->get('step');
+        $planCoursManager = $planCoursRegistry->getPlanCours($previsionnel->getTypeMatiere());
+        $matiere = $typeMatiereManager->getMatiereFromSelect($previsionnel->getTypeIdMatiere());
+        if (null === $planCoursManager) {
+            throw new \Exception('Plan de cours non trouvé');
+        }
+
+        $planCours = $planCoursManager->createPlanCours($matiere,
+            $this->getAnneeUniversitaire()); // todo: récupérer si déjà existant ??
+
+        $form = $this->createForm(constant(get_class($planCoursManager) . '::FORM_STEP_' . $step), $planCours, [
+            'action' => $this->generateUrl('app_plan_cours_apc_step', [
+                'previsionnel' => $previsionnel->getId(),
+                'step' => $step,
+            ]),
+        ]);
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted()) {
             $planCoursManager->add($planCours, true);
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'plan_cours.add.success.flash');
 
-            return $this->redirectToRoute('application_personnel_plan_cours_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_plan_cours_apc_new', [
+                'previsionnel' => $previsionnel->getId(),
+                'step' => $step
+            ], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('plan_cours/personnel/plan_cours/new.html.twig', parameters: [
+        return $this->render('components/plan_cours/_step' . $step . '.html.twig', parameters: [
             'plan_cours' => $planCours,
-            'form' => $form,
+            'form' => $form->createView(),
             'matiere' => $matiere,
-            'template' => $planCoursManager::TEMPLATE_FORM,
+            'previsionnel' => $previsionnel,
+            'step' => $step,
+            'template' => constant(get_class($planCoursManager) . '::TEMPLATE_FORM_STEP_' . $step),
         ]);
     }
 
@@ -78,13 +116,6 @@ class PlanCoursController extends BaseController
         return $this->render('plan_cours/personnel/plan_cours/show.html.twig', [
             'plan_cours_apc' => $planCoursApc,
         ]);
-    }
-
-    #[Route('/{id}/edit', name: 'app_plan_cours_apc_edit', methods: ['GET', 'POST'])]
-    public function edit(
-        $planCoursApc,
-    ): Response {
-        // todo:
     }
 
     #[Route('/{id}', name: 'app_plan_cours_apc_delete', methods: ['POST'])]

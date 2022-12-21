@@ -1,0 +1,28 @@
+{{ include('components/plan_cours/_header.html.twig') }}
+
+<div class="row">
+    <div class="col-12">
+        {{ form_row(form.description) }} //prérempli
+        {# todo: reprendre les champs ? Mots clés #}
+    </div>
+    <div class="col-12">
+        Compétences et Apprentissages critiques visés
+    </div>
+    <div class="col-12">
+        Liste des SAE mobilisant cette ressource
+    </div>
+
+    <div class="col-6">{{ form_row(form.nbNotes) }}</div>
+    <div class="col-6">&nbsp;</div>
+    <div class="col-3">{{ form_row(form.cmPrevu) }}</div>
+    <div class="col-3">{{ form_row(form.tdPrevu) }}</div>
+    <div class="col-3">{{ form_row(form.tpPrevu) }}</div>
+    <div class="col-3">&nbsp;</div>
+</div>
+
+{{ form_row(form.modalitesEvaluations) }}
+
+{{ form_row(form.bibliographie) }}
+{{ form_row(form.commentaires_step1) }}
+
+

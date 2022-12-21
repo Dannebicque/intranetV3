@@ -1,0 +1,35 @@
+<ul class="nav nav-process nav-process-sm nav-process-block">
+    <li class="nav-item {% if step == 1 %}processing{% else %}complete{% endif %}">
+        <a class="nav-link" href="#" {{ stimulus_action('plan_cours--new', 'changeStep', 'click', {
+            step: 1
+        }) }}>
+            <span class="nav-link-number">1</span>
+            <div class="nav-link-body">
+                <span class="nav-title">Informations générales</span>
+                <span>Objectifs, volumes, ...</span>
+            </div>
+        </a>
+    </li>
+    <li class="nav-item {% if step == 2 %}processing{% elseif step > 2 %}complete{% endif %}">
+        <a class="nav-link" href="#" {{ stimulus_action('plan_cours--new', 'changeStep', 'click', {
+            step: 2
+        }) }}>
+            <span class="nav-link-number">2</span>
+            <div class="nav-link-body">
+                <span class="nav-title">Plan de cours</span>
+                <span>Thèmes abordées, syllabus</span>
+            </div>
+        </a>
+    </li>
+    <li class="nav-item {% if step == 3 %}processing{% elseif step > 3 %}complete{% endif %}">
+        <a class="nav-link" href="#" {{ stimulus_action('plan_cours--new', 'changeStep', 'click', {
+            step: 3
+        }) }}>
+            <span class="nav-link-number">3</span>
+            <div class="nav-link-body">
+                <span class="nav-title">Réalisé</span>
+                <span>Bilan des interventions et objectifs</span>
+            </div>
+        </a>
+    </li>
+</ul>

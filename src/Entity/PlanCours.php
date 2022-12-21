@@ -4,17 +4,19 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/PlanCours.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 21/12/2022 17:36
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\MatiereTrait;
+use Carbon\Carbon;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity]
@@ -45,57 +47,68 @@ abstract class PlanCours
     #[ORM\OneToMany(mappedBy: 'planCours', targetEntity: PlanCoursRealise::class)]
     protected Collection $planCoursRealises;
 
-    #[ORM\Column]
-    protected ?float $coefficient = null;
-
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     protected ?float $cmPrevu = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     protected ?float $tdPrevu = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     protected ?float $tpPrevu = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     protected ?float $cmRealise = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     protected ?float $tdRealise = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     protected ?float $tpRealise = null;
 
     #[ORM\Column]
-    protected ?int $nbNotes = null;
+    protected ?int $nbNotes = 2;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     protected ?string $bibliographie = null;
 
     #[ORM\Column]
-    protected ?bool $planSuivi = null;
+    protected ?bool $planSuivi = false;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     protected ?string $planSuiviCommentaire = null;
 
     #[ORM\Column]
-    protected ?bool $objectifsAtteints = null;
+    protected ?bool $objectifsAtteints = false;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     protected ?string $objectifsFAtteintsCommentaire = null;
 
     #[ORM\Column]
-    protected ?bool $competencesAcquises = null;
+    protected ?bool $competencesAcquises = false;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     protected ?string $competencesAcquisesCommentaire = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
-    protected ?string $commentaires = null;
+    protected ?string $commentaires_step1 = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    protected ?string $commentaires_step2 = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    protected ?string $commentaires_step3 = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     protected ?string $modeEvaluationCommentaire = null;
 
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $saisiePlanCours = null;
+
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $fichierPlanCours = null;
+
+    #[Vich\UploadableField(mapping: 'fichierPlanCours', fileNameProperty: 'fichierPlanCours')]
+    private ?File $fichierPlanCoursFile = null;
 
 
     public function __construct()
@@ -184,18 +197,6 @@ abstract class PlanCours
                 $planCoursRealise->setPlanCours(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getCoefficient(): ?float
-    {
-        return $this->coefficient;
-    }
-
-    public function setCoefficient(float $coefficient): self
-    {
-        $this->coefficient = $coefficient;
 
         return $this;
     }
@@ -296,14 +297,38 @@ abstract class PlanCours
         return $this;
     }
 
-    public function getCommentaires(): ?string
+    public function getCommentairesStep1(): ?string
     {
-        return $this->commentaires;
+        return $this->commentaires_step1;
     }
 
-    public function setCommentaires(?string $commentaires): self
+    public function setCommentairesStep1(?string $commentaires): self
     {
-        $this->commentaires = $commentaires;
+        $this->commentaires_step1 = $commentaires;
+
+        return $this;
+    }
+
+    public function getCommentairesStep2(): ?string
+    {
+        return $this->commentaires_step2;
+    }
+
+    public function setCommentairesStep2(?string $commentaires): self
+    {
+        $this->commentaires_step2 = $commentaires;
+
+        return $this;
+    }
+
+    public function getCommentairesStep3(): ?string
+    {
+        return $this->commentaires_step3;
+    }
+
+    public function setCommentairesStep3(?string $commentaires): self
+    {
+        $this->commentaires_step3 = $commentaires;
 
         return $this;
     }
@@ -395,5 +420,49 @@ abstract class PlanCours
         $this->tpRealise = $tpRealise;
 
         return $this;
+    }
+
+    public function getSaisiePlanCours(): ?string
+    {
+        return $this->saisiePlanCours;
+    }
+
+    public function setSaisiePlanCours(?string $saisiePlanCours): self
+    {
+        $this->saisiePlanCours = $saisiePlanCours;
+
+        return $this;
+    }
+
+    public function getFichierPlanCours(): ?string
+    {
+        return $this->fichierPlanCours;
+    }
+
+    public function setFichierPlanCours(?string $fichierPlanCours): self
+    {
+        $this->fichierPlanCours = $fichierPlanCours;
+
+        return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\HttpFoundation\File\File|null
+     */
+    public function getFichierPlanCoursFile(): ?File
+    {
+        return $this->fichierPlanCoursFile;
+    }
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\File\File|null $fichierPlanCoursFile
+     */
+    public function setFichierPlanCoursFile(?File $fichierPlanCoursFile): void
+    {
+        $this->fichierPlanCoursFile = $fichierPlanCoursFile;
+
+        if (null !== $fichierPlanCoursFile) {
+            $this->setUpdated(Carbon::now());
+        }
     }
 }
