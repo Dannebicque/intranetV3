@@ -26,31 +26,19 @@
             {{ render(controller(
                 'App\\Controller\\appPersonnel\\ProjetController::index'
             )) }}
-{#        { elseif onglet == 'carnet' %}#}
-{#            {{ render(controller(#}
-{#                'App\\Controller\\appPersonnel\\CarnetController::index'#}
-{#            )) }}#}
-{#        {% elseif onglet == 'quizz' %}#}
-{#            {{ render(controller(#}
-{#                'App\\Controller\\appPersonnel\\QuizzController::index'#}
-{#            )) }}#}
         {% elseif onglet == 'salle_examen' %}
             {{ render(controller(
                 'App\\Controller\\appPersonnel\\SalleExamenController::index'
             )) }}
-{#        { elseif onglet == 'disponibilite' %}#}
-{#            {{ render(controller(#}
-{#                'App\\Controller\\appPersonnel\\DisponibiliteController::index'#}
-{#            )) }}#}
-{#        {% elseif onglet == 'progression' %}#}
-{#            {{ render(controller(#}
-{#                'App\\Controller\\appPersonnel\\ProgressionController::index'#}
-{#            )) }}#}
-            {#         elseif onglet == 'emprunt' %}#}
+        {% elseif onglet == 'plan_cours' %}
+            {{ render(controller(
+                'App\\Controller\\plan_cours\\personnel\\PlanCoursController::index'
+            )) }}
+            {#         elseif onglet == 'emprunt' %} #}
             //gérer en commun avec etudiant ?
-            {#            {{ render(controller(#}
-            {#                'App\\Controller\\appPersonnel\\EmpruntController::index'#}
-            {#            )) }}#}
+            {#            {{ render(controller( #}
+            {#                'App\\Controller\\appPersonnel\\EmpruntController::index' #}
+            {#            )) }} #}
         {% endif %}
     {% else %}
         {% if onglet == 'rattrapage' %}

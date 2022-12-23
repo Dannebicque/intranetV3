@@ -2,6 +2,27 @@
 
 {% block header %}{{ 'app.personnel.plan_cours.new.heading'|trans({'%matiere%': matiere.display}) }}{% endblock %}
 
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('app_plan_cours_export_pdf', {id:previsionnel.id}) }}" class="btn btn-info btn-sm
+            btn-float"
+               data-bs-toggle="tooltip"
+               data-bs-placement="bottom"
+               title="{{ 'atitle.export_pdf'|trans }}">
+                <i class="fas fa-download"></i>
+            </a>
+            <a href="{{ path('application_index', {onglet:'plan_cours'}) }}" class="btn btn-primary btn-float"
+               data-bs-toggle="tooltip"
+               data-bs-placement="bottom"
+               title="{{ 'atitle.retour_plan_cours'|trans }}">
+                <i class="fas fa-arrow-left"></i>
+            </a>
+        </div>
+    </div>
+{% endblock %}
+
+
 {% block content %}
     <div class="card">
         <h4 class="card-title">{{ 'app.personnel.plan_cours.new.heading'|trans({'%matiere%': matiere.display}) }}</h4>

@@ -1,0 +1,129 @@
+{% extends 'pdf/basepdf.html.twig' %}
+
+{% block content %}
+    <table style="width: 100%">
+        <tr>
+            <td>URCA</td>
+            <td style="text-align: center">
+                IUT de TROYES<br>
+                PLAN DE COURS SAÉ
+            </td>
+            <td>IUT</td>
+        </tr>
+        <tr>
+            <td colspan="3" style="text-align: center">
+                <h1>B.U.T. : XXX <br>
+                    PARCOURS : XXX
+                </h1>
+                <h2>SAÉ : XXX<br>
+                    20xx-20xx</h2>
+            </td>
+        </tr>
+    </table>
+
+
+
+
+    <h4>DESCRIPTION SAE</h4>
+    <h5>Responsable de la SAÉ :</h5>
+    ...todo...
+
+    <h5>Description et objectifs de la SAÉ :</h5>
+    {{ pc.description|raw }}
+
+    <h5>Compétences et Apprentissages critiques visés : </h5>
+    ...todo...
+
+    <h5>Liste des ressources à mobiliser :</h5>
+    ...todo...alimenté du PN
+
+
+
+
+
+
+    <h5>Livrables demandés / Modalités d'évaluations envisagées :</h5>
+    {{ pc.livrables|raw }}<br><br>
+    {{ pc.modalitesEvaluations|raw }}
+
+
+    <table style="width: 100%">
+        <tr>
+            <th>Nombre de notes prévu :</th>
+            <td>{{ pc.nbNotes }}</td>
+        </tr>
+    </table>
+
+    <h5>Nombre d’heures prévu :</h5>
+    <table style="width: 100%">
+        <tr>
+            <th style="width: 25%">CM</th>
+            <th style="width: 25%">TD</th>
+            <th style="width: 25%">TP</th>
+            <th style="width: 25%">Projet en autonomie</th>
+        </tr>
+        <tr>
+            <td>{{ pc.cmPrevu }}</td>
+            <td>{{ pc.tdPrevu }}</td>
+            <td>{{ pc.tpPrevu }}</td>
+            <td>{{ pc.projetPrevu }}</td>
+        </tr>
+    </table>
+
+
+    <h5>Format de la SAÉ (travail individuel, en groupe, nombre de collègues impliqués, …):</h5>
+    {{ pc.miseEnOeuvre|raw }}
+
+    <h5>Modalités d'encadrement de la partie en autonomie :</h5>
+    {{ pc.modaliteEncadrementAutonomie|raw }}
+
+    <h5>Bibliographie / webographie d’appui :</h5>
+    {{ pc.bibliographie|raw }}
+
+
+    <h4>PROGRESSION PÉDAGOGIQUE</h4>
+    (au choix, possibilité d'utiliser la grille ci-dessous ou bien
+    d'insérer son propre plan de cours dans un format libre)
+    Programme prévu    Nombre d'heures envisagé    Commentaires éventuels
+    Séquence 1 :
+
+
+    <h4>REALISATION</h4>
+
+    <h5>Le plan de cours a-t-il pu être suivi comme prévu ? (oui, non, pourquoi ?)</h5>
+    <strong>{{ pc.planSuivi == true ? 'Oui' : 'Non' }}</strong>. {{ pc.planSuiviCommentaire|raw }}
+
+    <h5>Les objectifs fixés ont-ils été atteints ? (oui, non, pourquoi ?)</h5>
+    <strong>{{ pc.objectifsAtteints == true ? 'Oui' : 'Non' }}</strong>. {{ pc.objectifsFAtteintsCommentaire|raw }}
+
+    <h5>Livrables réalisés / rendus ?</h5>
+    {{ pc.livrablesRendus|raw }}
+
+    <h5>Les compétences ont-elles été acquises ? (oui, non, pourquoi ?)</h5>
+    <strong>{{ pc.competencesAcquises == true ? 'Oui' : 'Non' }}</strong>. {{ pc.competencesAcquisesCommentaire|raw }}
+
+
+    <h5>Nombre d’heures réalisées :</h5>
+    <table style="width: 100%">
+        <tr>
+            <th style="width: 25%">CM</th>
+            <th style="width: 25%">TD</th>
+            <th style="width: 25%">TP</th>
+            <th style="width: 25%">Projet en autonomie</th>
+        </tr>
+        <tr>
+            <td>{{ pc.cmRealise }}</td>
+            <td>{{ pc.tdRealise }}</td>
+            <td>{{ pc.tpRealise }}</td>
+            <td>{{ pc.projetRealise }}</td>
+        </tr>
+    </table>
+
+    <h5>Retour sur le mode d'évaluation (bilan, moyenne, …) :</h5>
+    {{ pc.modeEvaluationCommentaire|raw }}
+
+    <h5>Commentaires éventuels :</h5>
+    {{ pc.commentairesStep1|raw }}<br>
+    {{ pc.commentairesStep2|raw }}<br>
+    {{ pc.commentairesStep3|raw }}<br>
+{% endblock %}
