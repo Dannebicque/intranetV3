@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.11.0](https://github.com/Dannebicque/intranetV3/compare/v3.10.8...v3.11.0) (2022-12-23)
+
+
+### Features
+
+* [MCC] Gestion des types d'épreuves en superadmin, affichage du tableau en admin, ajout du bouton duplicate ([52f80ec](https://github.com/Dannebicque/intranetV3/commit/52f80ec4fbb35fd83595145e0622a5c0b23b295f))
+* [Plan Cours] Export PDF + champs SAE ([960529f](https://github.com/Dannebicque/intranetV3/commit/960529fd1ad9e89f6487ee43466fc9b69e95e34e))
+* [PlanCours] MExport PDF du plan de cours SAE ([c23be81](https://github.com/Dannebicque/intranetV3/commit/c23be81bd1d9d13eda8eed46c24c1ed1c5707508))
+* [PlanCours] Mise en place des formulaires pour les personnels (SAE/Matieres/Ressources) ([28388cf](https://github.com/Dannebicque/intranetV3/commit/28388cf1ddd197e2243c5d62b59a6f6f6e00dc1c))
+* [Questionnaire] Gestion des questions avec "sous-questions" + traductions ([a57c9e3](https://github.com/Dannebicque/intranetV3/commit/a57c9e381c80162592d214366a245ee2f74fa1eb))
+* [Questionnaire] Tableau des étudiants + relance questionnaires ([2e6fc74](https://github.com/Dannebicque/intranetV3/commit/2e6fc741501e61806ee6ff91dc4d0edda38fa3ea))
+* [Questionnaire] TinyMce ([70b7274](https://github.com/Dannebicque/intranetV3/commit/70b727462ecb5aef60bed2a8e6bb2f23f42804d8))
+* [Stage] Blocage des dates si modification non autorisée. ([8d124c1](https://github.com/Dannebicque/intranetV3/commit/8d124c1721d1b95ac17e8278dc001bf18f76b349))
+* [Table] Tooltip de bootstrap sur les tableaux ([468fca9](https://github.com/Dannebicque/intranetV3/commit/468fca93e8d63e0f4246f4894a279302e906dd5f))
+
+
+### Bug Fixes
+
+* [Edt] Fix la lgne séparatrice des jours ([4957f52](https://github.com/Dannebicque/intranetV3/commit/4957f52ce922b42a0862d7f5857c6c765bd50008))
+* [Questionnaire] Liens manquants, affichage des réponses libres ([16d7526](https://github.com/Dannebicque/intranetV3/commit/16d75266cf65b9f43397144b6e5ac15befbd2c7f))
+* [Questionnaire] Réponses libres ([35fd746](https://github.com/Dannebicque/intranetV3/commit/35fd74650a5884a000093d63aa881eb2b71d185d))
+
 ### [3.10.8](https://github.com/Dannebicque/intranetV3/compare/v3.10.7...v3.10.8) (2022-12-15)
 
 
