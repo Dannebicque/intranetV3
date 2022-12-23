@@ -30,36 +30,36 @@ vich_uploader:
         upload_destination: '%kernel.project_dir%/public/upload/logo'
         namer: Vich\UploaderBundle\Naming\UniqidNamer
         inject_on_load: true
-        cv:
-            uri_prefix: /upload/cv
-            upload_destination: '%kernel.project_dir%/public/upload/cv'
-            namer: Vich\UploaderBundle\Naming\UniqidNamer
-            inject_on_load: true
-        photo:
-            uri_prefix: /upload/photo
-            upload_destination: '%kernel.project_dir%/public/upload/photo'
-            namer: Vich\UploaderBundle\Naming\UniqidNamer
-            inject_on_load: true
-        etudiant:
-            uri_prefix: /upload/etudiants
-            upload_destination: '%kernel.project_dir%/public/upload/etudiants'
-            namer: Vich\UploaderBundle\Naming\UniqidNamer
-            inject_on_load: true
-        personnel:
-            uri_prefix: /upload/personnels
-            upload_destination: '%kernel.project_dir%/public/upload/personnels'
-            namer: Vich\UploaderBundle\Naming\UniqidNamer
-            inject_on_load: true
-        materiel:
-            uri_prefix: /upload/photo
-            upload_destination: '%kernel.project_dir%/public/upload/materiel'
-            namer: Vich\UploaderBundle\Naming\UniqidNamer
-            inject_on_load: true
-        justificatif:
-            uri_prefix: /upload/justificatif
-            upload_destination: '%kernel.project_dir%/public/upload/justificatif'
-            namer: Vich\UploaderBundle\Naming\UniqidNamer
-            inject_on_load: true
+      cv:
+        uri_prefix: /upload/cv
+        upload_destination: '%kernel.project_dir%/public/upload/cv'
+        namer: Vich\UploaderBundle\Naming\UniqidNamer
+        inject_on_load: true
+      photo:
+        uri_prefix: /upload/photo
+        upload_destination: '%kernel.project_dir%/public/upload/photo'
+        namer: Vich\UploaderBundle\Naming\UniqidNamer
+        inject_on_load: true
+      etudiant:
+        uri_prefix: /upload/etudiants
+        upload_destination: '%kernel.project_dir%/public/upload/etudiants'
+        namer: Vich\UploaderBundle\Naming\UniqidNamer
+        inject_on_load: true
+      personnel:
+        uri_prefix: /upload/personnels
+        upload_destination: '%kernel.project_dir%/public/upload/personnels'
+        namer: Vich\UploaderBundle\Naming\UniqidNamer
+        inject_on_load: true
+      materiel:
+        uri_prefix: /upload/photo
+        upload_destination: '%kernel.project_dir%/public/upload/materiel'
+        namer: Vich\UploaderBundle\Naming\UniqidNamer
+        inject_on_load: true
+      justificatif:
+        uri_prefix: /upload/justificatif
+        upload_destination: '%kernel.project_dir%/public/upload/justificatif'
+        namer: Vich\UploaderBundle\Naming\UniqidNamer
+        inject_on_load: true
     #    products:
     #        uri_prefix: /images/products
     #        upload_destination: '%kernel.project_dir%/public/images/products'

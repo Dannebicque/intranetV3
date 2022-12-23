@@ -851,7 +851,7 @@
             "assets/styles/app.css",
             "config/packages/webpack_encore.yaml",
             "package.json",
-            "webpack.config.js"
+            "webpack.main.js"
         ]
     },
     "symfony/workflow": {
