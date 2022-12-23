@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/PlanCours/Source/PlanCoursSAE.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/12/2022 15:42
+ * @lastUpdate 23/12/2022 13:30
  */
 
 namespace App\Components\PlanCours\Source;
 
+use App\Classes\Pdf\MyPDF;
 use App\Components\PlanCours\Form\PlanCoursSaeStep1Type;
 use App\Components\PlanCours\Form\PlanCoursSaeStep2Type;
 use App\Components\PlanCours\Form\PlanCoursSaeStep3Type;
@@ -26,8 +27,10 @@ class PlanCoursSAE extends AbstractPlanCours implements PlanCoursInterface
     public const TEMPLATE_FORM_STEP_2 = 'plan_cours_sae_2.html.twig';
     public const TEMPLATE_FORM_STEP_3 = 'plan_cours_sae_3.html.twig';
 
-    public function __construct(protected PlanCoursSaeRepository $planCoursSaeRepository)
-    {
+    public function __construct(
+        protected MyPDF $myPDF,
+        protected PlanCoursSaeRepository $planCoursSaeRepository
+    ) {
     }
 
     public function createPlanCours(Matiere $matiere, AnneeUniversitaire $anneeUniversitaire)
@@ -62,5 +65,20 @@ class PlanCoursSAE extends AbstractPlanCours implements PlanCoursInterface
     public function getRepository()
     {
         return $this->planCoursSaeRepository;
+    }
+
+    public function export(Matiere $matiere, AnneeUniversitaire $anneeUniversitaire)
+    {
+        $obj = $this->planCoursSaeRepository->findOneBy([
+            'typeMatiere' => $matiere->typeMatiere,
+            'idMatiere' => $matiere->id,
+            'anneeUniversitaire' => $anneeUniversitaire,
+        ]);
+
+        if (null !== $obj) {
+            return $this->myPDF::generePdf('components/plan_cours/pdf/sae.html.twig',
+                ['pc' => $obj, 'matiere' => $matiere],
+                'plan_cours_sae_' . $matiere->codeMatiere);
+        }
     }
 }

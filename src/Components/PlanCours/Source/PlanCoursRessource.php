@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/PlanCours/Source/PlanCoursRessource.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/12/2022 17:36
+ * @lastUpdate 22/12/2022 10:48
  */
 
 namespace App\Components\PlanCours\Source;
@@ -63,5 +63,10 @@ class PlanCoursRessource extends AbstractPlanCours implements PlanCoursInterface
     public function getRepository()
     {
         return $this->planCoursRessourceRepository;
+    }
+
+    public function export(Matiere $matiere, AnneeUniversitaire $anneeUniversitaire)
+    {
+        // TODO: Implement export() method.
     }
 }

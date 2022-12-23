@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/PlanCours/Form/PlanCoursSaeStep1Type.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/12/2022 15:28
+ * @lastUpdate 23/12/2022 13:30
  */
 
 namespace App\Components\PlanCours\Form;
@@ -23,6 +23,12 @@ class PlanCoursSaeStep1Type extends PlanCoursStep1Type
         $builder
             ->add('description', TextareaType::class, [
                 'label' => 'Description de la mise en application de la SAE',
+                'required' => false,
+                'attr' => ['rows' => 10, 'class' => 'tinyMce'],
+            ])
+            ->add('miseEnOeuvre', TextareaType::class, [
+                'label' => 'Mise en oeuvre de la SAE',
+                'help' => 'Modalités de mise en oeuvre de la SAE (travail individuel, en groupe, nombre de collègues impliqués, …)',
                 'required' => false,
                 'attr' => ['rows' => 10, 'class' => 'tinyMce'],
             ])

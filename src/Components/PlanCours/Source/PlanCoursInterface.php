@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/PlanCours/Source/PlanCoursInterface.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/12/2022 17:36
+ * @lastUpdate 23/12/2022 13:30
  */
 
 namespace App\Components\PlanCours\Source;
@@ -15,6 +15,8 @@ use App\Entity\AnneeUniversitaire;
 interface PlanCoursInterface
 {
     public function createPlanCours(Matiere $matiere, AnneeUniversitaire $anneeUniversitaire);
+
+    public function export(Matiere $matiere, AnneeUniversitaire $anneeUniversitaire);
 
     public function add($planCours): void;
 

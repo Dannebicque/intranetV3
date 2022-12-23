@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/PlanCoursSae.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 23/12/2022 13:30
  */
 
 namespace App\Entity;
@@ -20,6 +20,9 @@ class PlanCoursSae extends PlanCours
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $miseEnOeuvre = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $modalitesEvaluations = null;
@@ -84,6 +87,23 @@ class PlanCoursSae extends PlanCours
 
         return $this;
     }
+
+    /**
+     * @return string|null
+     */
+    public function getMiseEnOeuvre(): ?string
+    {
+        return $this->miseEnOeuvre;
+    }
+
+    /**
+     * @param string|null $miseEnOeuvre
+     */
+    public function setMiseEnOeuvre(?string $miseEnOeuvre): void
+    {
+        $this->miseEnOeuvre = $miseEnOeuvre;
+    }
+
 
     public function getLivrablesRendus(): ?string
     {

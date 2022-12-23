@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/plan_cours/personnel/PlanCoursController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/12/2022 17:36
+ * @lastUpdate 23/12/2022 13:30
  */
 
 namespace App\Controller\plan_cours\personnel;
@@ -118,12 +118,27 @@ class PlanCoursController extends BaseController
         ]);
     }
 
+    #[Route('/export/{id}.pdf', name: 'app_plan_cours_export_pdf', methods: ['GET'])]
+    public function export(
+        TypeMatiereManager $typeMatiereManager,
+        PlanCoursRegistry $planCoursRegistry,
+        Previsionnel $previsionnel
+    ): Response {
+        $planCoursManager = $planCoursRegistry->getPlanCours($previsionnel->getTypeMatiere());
+        $matiere = $typeMatiereManager->getMatiereFromSelect($previsionnel->getTypeIdMatiere());
+        if (null === $planCoursManager) {
+            throw new \Exception('Plan de cours non trouvé');
+        }
+
+        return $planCoursManager->export($matiere, $this->getAnneeUniversitaire());
+    }
+
     #[Route('/{id}', name: 'app_plan_cours_apc_delete', methods: ['POST'])]
     public function delete(
         Request $request,
         $planCoursApc,
     ): Response {
-        if ($this->isCsrfTokenValid('delete'.$planCoursApc->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $planCoursApc->getId(), $request->request->get('_token'))) {
             // todo
         }
 
