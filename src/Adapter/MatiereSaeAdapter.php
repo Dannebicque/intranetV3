@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Adapter/MatiereSaeAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/11/2022 08:06
+ * @lastUpdate 27/12/2022 15:39
  */
 
 namespace App\Adapter;
@@ -12,10 +12,16 @@ namespace App\Adapter;
 use App\DTO\Matiere;
 use App\DTO\MatiereCollection;
 use App\DTO\Ue;
+use App\Repository\ApcSaeCompetenceRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 
 class MatiereSaeAdapter extends AbstractMatiereAdapter implements MatiereAdapterInterface
 {
+    public function __construct(
+        protected ApcSaeCompetenceRepository $apcSaeCompetenceRepository
+    ) {
+    }
+
     public function collection(array $matieres): MatiereCollection
     {
         $collection = new MatiereCollection();
@@ -45,10 +51,14 @@ class MatiereSaeAdapter extends AbstractMatiereAdapter implements MatiereAdapter
                 $m->apcParcours->add($semestre->getDiplome()->getApcParcours());
             }
 
-            foreach ($matiere->getApcSaeCompetences() as $competence) {
+            $competences = $this->apcSaeCompetenceRepository->getBySae($matiere);
+            $nbCompetences = count($competences);
+            for ($i = 0; $i < $nbCompetences; $i += 2) {
+                $apcSaeCompetence = $competences[$i];
                 $ue = new Ue();
-                $ue->ue_apc_id = $competence->getCompetence()->getId();
-                foreach ($competence->getCompetence()->getUe() as $ueCompetence) {
+                $competence = $competences[$i + 1];
+                $ue->ue_apc_id = $competence->getId();
+                foreach ($competence->getUe() as $ueCompetence) {
                     foreach ($matiere->getSemestres() as $semestre) {
                         if ($ueCompetence->getSemestre()->getId() === $semestre->getId()) {
                             $ue->ue_id = $ueCompetence->getId();
@@ -56,10 +66,10 @@ class MatiereSaeAdapter extends AbstractMatiereAdapter implements MatiereAdapter
                     }
                 }
 
-                $ue->ue_display = $competence->getCompetence()->getNomCourt();
-                $ue->ue_coefficient = $competence->getCoefficient();
-                $ue->ue_numero = (int) $competence->getCompetence()->getCouleur()[1];
-                $ue->ue_couleur = $competence->getCompetence()->getCouleur();
+                $ue->ue_display = $competence->getNomCourt();
+                $ue->ue_coefficient = $apcSaeCompetence->getCoefficient();
+                $ue->ue_numero = (int)$competence->getCouleur()[1];
+                $ue->ue_couleur = $competence->getCouleur();
                 $m->tab_ues[] = $ue;
             }
         }

@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcRessourceCompetenceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/10/2022 16:51
+ * @lastUpdate 27/12/2022 11:59
  */
 
 namespace App\Repository;
 
+use App\Entity\ApcCompetence;
 use App\Entity\ApcRessource;
 use App\Entity\ApcRessourceCompetence;
 use App\Entity\Semestre;
@@ -50,5 +51,18 @@ class ApcRessourceCompetenceRepository extends ServiceEntityRepository
         }
 
         return $array;
+    }
+
+    public function getByRessource(mixed $matiere): array
+    {
+        return $this->createQueryBuilder('a')
+            ->innerJoin(ApcCompetence::class, 'c', 'WITH', 'a.competence = c.id')
+            ->join('c.ue', 'u')
+            ->addSelect('c')
+            ->addSelect('u')
+            ->where('a.ressource = :ressource')
+            ->setParameter('ressource', $matiere)
+            ->getQuery()
+            ->getResult();
     }
 }

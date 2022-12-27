@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcSaeCompetenceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/11/2022 12:28
+ * @lastUpdate 27/12/2022 15:39
  */
 
 namespace App\Repository;
@@ -53,6 +53,20 @@ class ApcSaeCompetenceRepository extends ServiceEntityRepository
         foreach ($datas as $data) {
             $array[$data->getCompetence()->getId()][$data->getSae()->getCodeElement()] = $data;
         }
+
         return $array;
+    }
+
+    public function getBySae(mixed $matiere)
+    {
+        return $this->createQueryBuilder('a')
+            ->innerJoin(ApcCompetence::class, 'c', 'WITH', 'a.competence = c.id')
+            ->join('c.ue', 'u')
+            ->addSelect('c')
+            ->addSelect('u')
+            ->where('a.sae = :sae')
+            ->setParameter('sae', $matiere)
+            ->getQuery()
+            ->getResult();
     }
 }
