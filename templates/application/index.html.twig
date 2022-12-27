@@ -34,11 +34,6 @@
             {{ render(controller(
                 'App\\Controller\\plan_cours\\personnel\\PlanCoursController::index'
             )) }}
-            {#         elseif onglet == 'emprunt' %} #}
-            //gérer en commun avec etudiant ?
-            {#            {{ render(controller( #}
-            {#                'App\\Controller\\appPersonnel\\EmpruntController::index' #}
-            {#            )) }} #}
         {% endif %}
     {% else %}
         {% if onglet == 'rattrapage' %}
