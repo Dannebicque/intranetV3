@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/apc/ButPublicController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 31/12/2022 15:23
  */
 
 namespace App\Controller\apc;
@@ -137,7 +137,7 @@ class ButPublicController extends AbstractController
         }
 
         return $this->render('apc/public/sae.html.twig', [
-            'saes' => $apcSaeRepository->findByDiplome($diplome),
+            'saes' => $apcSaeRepository->findByDiplome($dip),
             'diplome' => $dip,
         ]);
     }
