@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/EvaluationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/12/2022 12:09
+ * @lastUpdate 31/12/2022 15:35
  */
 
 namespace App\Controller\appPersonnel;
@@ -45,10 +45,15 @@ class EvaluationController extends BaseController
 
     #[Route(path: '/visible/{uuid}/{etat}', name: 'application_personnel_evaluation_visible', requirements: ['evaluation' => '\d+'])]
     #[ParamConverter('evaluation', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function evaluationVisible(MyEvaluation $myEvaluation, Evaluation $evaluation, string $etat): Response
-    {
+    public function evaluationVisible(
+        TypeMatiereManager $typeMatiereManager,
+        MyEvaluation $myEvaluation,
+        Evaluation $evaluation,
+        string $etat
+    ): Response {
         // todo: tester au niveau évaluation
         $notes = $myEvaluation->setEvaluation($evaluation)->getNotesTableau();
+        $matiere = $typeMatiereManager->getMatiere($evaluation->getIdMatiere(), $evaluation->getTypeMatiere());
         $evaluation->setVisible('visible' === $etat);
         $this->entityManager->flush();
 
@@ -56,6 +61,7 @@ class EvaluationController extends BaseController
             'evaluation' => $evaluation,
             'notes' => $notes,
             'autorise' => $evaluation->getAutorise($this->getUser()->getId(), $this->dataUserSession),
+            'matiere' => $matiere
         ]);
     }
 
