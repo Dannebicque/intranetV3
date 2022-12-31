@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/_edt.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/09/2022 10:15
+// @lastUpdate 31/12/2022 15:35
 
 //.semestre_borne {
 //  max-height: 80vh;
@@ -12,8 +12,8 @@
 @media screen and (min-width:640px) {
   .schedule-individual {
     display: grid;
-    grid-gap: 1em;
-   // max-height: 40vh; => Mettre sur la borne uniquement
+    grid-gap: 0.1em;
+    // max-height: 40vh; => Mettre sur la borne uniquement
     grid-template-rows:
       [tracks] auto
       [time-0800] 1fr
@@ -86,7 +86,7 @@
   }
   .schedule-semestre-8 {
     display: grid;
-    grid-gap: 1em;
+    grid-gap: 0.1em;
     grid-template-rows:
       [tracks] auto
       [time-0800] 1fr
@@ -129,7 +129,7 @@
   }
   .schedule-semestre-2 {
     display: grid;
-    grid-gap: 1em;
+    grid-gap: 0.1em;
     grid-template-rows:
       [tracks] auto
       [time-0800] 1fr
@@ -170,14 +170,19 @@
   @each $lettre in a, c, e, g, i, k, m, o, q, s, u, w, y {
     .jour#{$i}#{$lettre} {
       grid-area: jour#{$i}#{$lettre};
-      background-color: var(--backgroundEdtVide, #f4f4f4);
+      /* background-color: var(--backgroundEdtVide, #f4f4f4);*/
+      border-bottom: 1px dashed var(--colorIUTComplementaire);
+      border-right: 1px solid var(--colorIUTComplementaire);
     }
   }
 
   @each $lettre in b, d, f, h, j, l, n, p, r, t, v, x {
     .jour#{$i}#{$lettre} {
       grid-area: jour#{$i}#{$lettre};
-      background-color: var(--backgroundEdtVidePair, #f4f4f4);
+      //background-color: var(--backgroundEdtVidePair, #f4f4f4);
+      border-bottom: 1px solid var(--colorIUTComplementaire);
+      border-right: 1px solid var(--colorIUTComplementaire);
+
     }
   }
 }
