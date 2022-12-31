@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.1](https://github.com/Dannebicque/intranetV3/compare/v3.11.0...v3.11.1) (2022-12-31)
+
+
+### Bug Fixes
+
+* [Application] nettoyage code ([c37919a](https://github.com/Dannebicque/intranetV3/commit/c37919abbbec4af03b788b40fbe2d03bca0a7e77))
+* [BUT] affichage des SAE ([9dd217f](https://github.com/Dannebicque/intranetV3/commit/9dd217fb4cb4c02932508e88df3d0f9387448dd4))
+* [edt] Amélioration CSS ([17c77ef](https://github.com/Dannebicque/intranetV3/commit/17c77ef584db0ffff6bfb3011a149097421ed270))
+* [Evaluation] visible et affichage des groupes ([8d364df](https://github.com/Dannebicque/intranetV3/commit/8d364dfb95b788e7c51b3b07d68fa3873fc01d3e))
+* [Recherche] Typo + CSS ([0381fdf](https://github.com/Dannebicque/intranetV3/commit/0381fdf3f0a9a872d6e6bf1670c8da98f24264b3))
+* [SAE/Ressource] Optimisation des requêtes ([caf97f1](https://github.com/Dannebicque/intranetV3/commit/caf97f1067a5dd606ddf781d708585de9fed4962))
+
 ## [3.11.0](https://github.com/Dannebicque/intranetV3/compare/v3.10.8...v3.11.0) (2022-12-23)
 
 
