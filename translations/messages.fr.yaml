@@ -761,6 +761,8 @@ dashboard: Dashboard
 ajouter.sous.diplome: Ajouter un sous diplôme (parcours de B.U.T.)
 
 atitle:
+  export_pdf: Export en PDF
+  retour_plan_cours: Retour à la liste des plans de cours
   nouveau_diplome: Nouveau diplôme
   refuser: 'Refuser'
   valider: 'Valider'
@@ -1458,6 +1460,7 @@ matiere.edit.success.flash: 'Matière modifiée avec succès'
 mcc: 'Modalités de Contrôle des Connaissances'
 mentions-legales.heading: 'Mentions Légales'
 menu:
+  plan_cours: 'Plan de cours'
   compta: 'Comptabilité'
   about: 'A propos'
   administration_abs: 'Adm. Abs.'

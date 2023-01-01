@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/PlanCours/Form/PlanCoursMatiereStep1Type.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/12/2022 17:29
+ * @lastUpdate 01/01/2023 15:57
  */
 
 namespace App\Components\PlanCours\Form;
@@ -21,17 +21,17 @@ class PlanCoursMatiereStep1Type extends PlanCoursStep1Type
         parent::buildForm($builder, $options);
         $builder
             ->add('descriptionMatiere', TextareaType::class, [
-                'label' => 'Description du contenu de la matière/module',
+                'label' => 'Description du contenu de la matière/module :',
                 'required' => false,
                 'attr' => ['rows' => 10, 'class' => 'tinyMce'],
             ])
             ->add('objectifs', TextareaType::class, [
-                'label' => 'Objectifs de la matière/module',
+                'label' => 'Objectifs de la matière/module :',
                 'required' => false,
                 'attr' => ['rows' => 10, 'class' => 'tinyMce'],
             ])
             ->add('modalitesEvaluations', TextareaType::class, [
-                'label' => 'Modalités d\'évaluation de la matière/module',
+                'label' => 'Modalités d\'évaluation de la matière/module :',
                 'required' => false,
                 'attr' => ['rows' => 10, 'class' => 'tinyMce'],
             ]);
@@ -39,6 +39,8 @@ class PlanCoursMatiereStep1Type extends PlanCoursStep1Type
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
+
         $resolver->setDefaults([
             'data_class' => PlanCoursMatiere::class,
         ]);

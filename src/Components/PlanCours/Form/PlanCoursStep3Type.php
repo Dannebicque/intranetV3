@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/PlanCours/Form/PlanCoursStep3Type.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/12/2022 17:25
+ * @lastUpdate 01/01/2023 15:55
  */
 
 namespace App\Components\PlanCours\Form;
@@ -22,12 +22,12 @@ class PlanCoursStep3Type extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('cmRealise', FloatType::class, ['label' => 'Nb heures CM réalisées'])
-            ->add('tdRealise', FloatType::class, ['label' => 'Nb heures TD réalisées'])
-            ->add('tpRealise', FloatType::class, ['label' => 'Nb heures TP réalisées'])
+            ->add('cmRealise', FloatType::class, ['label' => 'Nb heures CM réalisées :'])
+            ->add('tdRealise', FloatType::class, ['label' => 'Nb heures TD réalisées :'])
+            ->add('tpRealise', FloatType::class, ['label' => 'Nb heures TP réalisées :'])
             ->add('bibliographie', TextareaType::class, [
                 'required' => false,
-                'label' => 'Bibliographie/sitographie de référence',
+                'label' => 'Bibliographie/sitographie de référence :',
                 'attr' => ['rows' => 10, 'class' => 'tinyMce'],
             ])
             ->add('planSuivi', YesNoType::class, [
@@ -35,7 +35,7 @@ class PlanCoursStep3Type extends AbstractType
                 'required' => true,
             ])
             ->add('planSuiviCommentaire', TextareaType::class, [
-                'label' => 'Commentaire libre sur le suivi du plan de cours',
+                'label' => 'Commentaire libre sur le suivi du plan de cours :',
                 'required' => false,
                 'attr' => ['rows' => 10, 'class' => 'tinyMce'],
             ])
@@ -44,7 +44,7 @@ class PlanCoursStep3Type extends AbstractType
                 'required' => true,
             ])
             ->add('objectifsFAtteintsCommentaire', TextareaType::class, [
-                'label' => 'Commentaire libre sur les objectifs pédagogiques',
+                'label' => 'Commentaire libre sur les objectifs pédagogiques :',
                 'required' => false,
                 'attr' => ['rows' => 10, 'class' => 'tinyMce'],
             ])
@@ -54,16 +54,16 @@ class PlanCoursStep3Type extends AbstractType
             ])
             ->add('competencesAcquisesCommentaire', TextareaType::class, [
                 'required' => false,
-                'label' => 'Commentaire libre sur les compétences acquises',
+                'label' => 'Commentaire libre sur les compétences acquises :',
                 'attr' => ['rows' => 10, 'class' => 'tinyMce'],
             ])
             ->add('commentaires_step3', TextareaType::class, [
-                'label' => 'Commentaire libre',
+                'label' => 'Commentaire libre :',
                 'required' => false,
                 'attr' => ['rows' => 10, 'class' => 'tinyMce'],
             ])
             ->add('modeEvaluationCommentaire', TextareaType::class, [
-                'label' => 'Commentaire libre sur le mode d\'évaluation',
+                'label' => 'Commentaire libre sur le mode d\'évaluation :',
                 'required' => false,
                 'attr' => ['rows' => 10, 'class' => 'tinyMce'],
             ]);
@@ -73,6 +73,8 @@ class PlanCoursStep3Type extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => PlanCours::class,
+            'anneeUniversitaire' => null,
+            'previsionnel' => null,
         ]);
     }
 }

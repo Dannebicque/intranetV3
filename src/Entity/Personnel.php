@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/12/2022 15:13
+ * @lastUpdate 01/01/2023 16:14
  */
 
 namespace App\Entity;
@@ -270,7 +270,7 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: QuestionnairePersonnel::class)]
     private Collection $quizzPersonnels;
 
-    #[ORM\OneToMany(mappedBy: 'intervenant', targetEntity: PlanCours::class)]
+    #[ORM\OneToMany(mappedBy: 'responsable', targetEntity: PlanCours::class)]
     private Collection $planCours;
 
     #[ORM\Column]
@@ -281,6 +281,9 @@ class Personnel extends Utilisateur implements UtilisateurInterface
 
     #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: EdtCelcat::class)]
     private Collection $edtCelcats;
+
+    #[ORM\ManyToMany(targetEntity: PlanCours::class, mappedBy: 'intervenants')]
+    private Collection $plansCours;
 
     /**
      * @throws JsonException
@@ -320,6 +323,7 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         $this->planCours = new ArrayCollection();
         $this->planCoursHistoriqueEdts = new ArrayCollection();
         $this->edtCelcats = new ArrayCollection();
+        $this->plansCours = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -1592,6 +1596,33 @@ class Personnel extends Utilisateur implements UtilisateurInterface
             if ($edtCelcat->getPersonnel() === $this) {
                 $edtCelcat->setPersonnel(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PlanCours>
+     */
+    public function getPlansCours(): Collection
+    {
+        return $this->plansCours;
+    }
+
+    public function addPlansCour(PlanCours $plansCour): self
+    {
+        if (!$this->plansCours->contains($plansCour)) {
+            $this->plansCours->add($plansCour);
+            $plansCour->addIntervenant($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlansCour(PlanCours $plansCour): self
+    {
+        if ($this->plansCours->removeElement($plansCour)) {
+            $plansCour->removeIntervenant($this);
         }
 
         return $this;

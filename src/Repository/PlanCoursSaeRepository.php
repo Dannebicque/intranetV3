@@ -1,14 +1,16 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/PlanCoursSaeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 01/01/2023 11:47
  */
 
 namespace App\Repository;
 
+use App\Entity\AnneeUniversitaire;
+use App\Entity\Personnel;
 use App\Entity\PlanCoursSae;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -46,28 +48,18 @@ class PlanCoursSaeRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return PlanCoursMatiere[] Returns an array of PlanCoursMatiere objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('p.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?PlanCoursMatiere
-//    {
-//        return $this->createQueryBuilder('p')
-//            ->andWhere('p.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function findByIntervenantsAndAnnee(
+        Personnel $personnel,
+        AnneeUniversitaire $anneeUniversitaire
+    ) {
+        return $this->createQueryBuilder('p')
+            ->join('p.intervenants', 'i')
+            ->join('p.anneeUniversitaire', 'a')
+            ->where('i.id = :personnel')
+            ->andWhere('a.id = :annee')
+            ->setParameter('personnel', $personnel->getId())
+            ->setParameter('annee', $anneeUniversitaire->getId())
+            ->getQuery()
+            ->getResult();
+    }
 }

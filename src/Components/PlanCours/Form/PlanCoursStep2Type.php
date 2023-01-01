@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/PlanCours/Form/PlanCoursStep2Type.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/12/2022 17:31
+ * @lastUpdate 01/01/2023 15:55
  */
 
 namespace App\Components\PlanCours\Form;
@@ -32,17 +32,17 @@ class PlanCoursStep2Type extends AbstractType
                 'label' => false,
             ])
             ->add('fichierPlanCoursFile', VichFileType::class, [
-                'label' => 'Fichier contenant le plan de cours',
+                'label' => 'Fichier contenant le plan de cours :',
                 'help' => 'Uniquement des fichiers PDF (pdf), Word (doc, docx), texte (txt, md), PowerPoint (ppt, pptx), Excel (xls, xlsx)',
                 'required' => false,
             ])
             ->add('saisiePlanCours', TextareaType::class, [
-                'label' => 'Saisie dans un format libre de votre plan de cours',
+                'label' => 'Saisie dans un format libre de votre plan de cours :',
                 'required' => false,
                 'attr' => ['rows' => 10, 'class' => 'tinyMce'],
             ])
             ->add('commentaires_step2', TextareaType::class, [
-                'label' => 'Commentaire libre',
+                'label' => 'Commentaire libre :',
                 'required' => false,
                 'attr' => ['rows' => 10, 'class' => 'tinyMce'],
             ]);
@@ -52,6 +52,8 @@ class PlanCoursStep2Type extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => PlanCours::class,
+            'anneeUniversitaire' => null,
+            'previsionnel' => null,
         ]);
     }
 }

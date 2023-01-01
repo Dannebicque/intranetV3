@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/plan_cours/personnel/PlanCoursController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/12/2022 13:30
+ * @lastUpdate 01/01/2023 13:38
  */
 
 namespace App\Controller\plan_cours\personnel;
@@ -16,6 +16,8 @@ use App\Components\PlanCours\PlanCoursRegistry;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Previsionnel;
+use App\Repository\PlanCoursSaeRepository;
+use App\Repository\PrevisionnelRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -48,11 +50,7 @@ class PlanCoursController extends BaseController
         Request $request,
         Previsionnel $previsionnel
     ): Response {
-        $planCoursManager = $planCoursRegistry->getPlanCours($previsionnel->getTypeMatiere());
         $matiere = $typeMatiereManager->getMatiereFromSelect($previsionnel->getTypeIdMatiere());
-        if (null === $planCoursManager) {
-            throw new \Exception('Plan de cours non trouvé');
-        }
 
         return $this->render('plan_cours/personnel/plan_cours/new.html.twig', parameters: [
             'matiere' => $matiere,
@@ -66,6 +64,7 @@ class PlanCoursController extends BaseController
      */
     #[Route('/step/{previsionnel}', name: 'app_plan_cours_apc_step', methods: ['GET', 'POST'])]
     public function step(
+        PrevisionnelRepository $previsionnelRepository,
         PlanCoursRegistry $planCoursRegistry,
         TypeMatiereManager $typeMatiereManager,
         Request $request,
@@ -78,10 +77,14 @@ class PlanCoursController extends BaseController
             throw new \Exception('Plan de cours non trouvé');
         }
 
-        $planCours = $planCoursManager->createPlanCours($matiere,
-            $this->getAnneeUniversitaire()); // todo: récupérer si déjà existant ??
+        $planCours = $planCoursManager->createPlanCours(
+            $matiere,
+            $this->getAnneeUniversitaire(),
+            $this->getUser()); // todo: récupérer si déjà existant ??
 
         $form = $this->createForm(constant(get_class($planCoursManager) . '::FORM_STEP_' . $step), $planCours, [
+            'previsionnel' => $previsionnel,
+            'anneeUniversitaire' => $this->getAnneeUniversitaire(),
             'action' => $this->generateUrl('app_plan_cours_apc_step', [
                 'previsionnel' => $previsionnel->getId(),
                 'step' => $step,
@@ -120,6 +123,7 @@ class PlanCoursController extends BaseController
 
     #[Route('/export/{id}.pdf', name: 'app_plan_cours_export_pdf', methods: ['GET'])]
     public function export(
+        PlanCoursSaeRepository $planCoursSaeRepository,
         TypeMatiereManager $typeMatiereManager,
         PlanCoursRegistry $planCoursRegistry,
         Previsionnel $previsionnel
@@ -130,7 +134,7 @@ class PlanCoursController extends BaseController
             throw new \Exception('Plan de cours non trouvé');
         }
 
-        return $planCoursManager->export($matiere, $this->getAnneeUniversitaire());
+        return $planCoursManager->export($matiere, $this->getAnneeUniversitaire(), $this->getDepartement());
     }
 
     #[Route('/{id}', name: 'app_plan_cours_apc_delete', methods: ['POST'])]

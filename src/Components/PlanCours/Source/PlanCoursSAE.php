@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/PlanCours/Source/PlanCoursSAE.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/12/2022 13:30
+ * @lastUpdate 01/01/2023 16:10
  */
 
 namespace App\Components\PlanCours\Source;
@@ -15,6 +15,8 @@ use App\Components\PlanCours\Form\PlanCoursSaeStep2Type;
 use App\Components\PlanCours\Form\PlanCoursSaeStep3Type;
 use App\DTO\Matiere;
 use App\Entity\AnneeUniversitaire;
+use App\Entity\Departement;
+use App\Entity\Personnel;
 use App\Repository\PlanCoursSaeRepository;
 
 class PlanCoursSAE extends AbstractPlanCours implements PlanCoursInterface
@@ -33,8 +35,11 @@ class PlanCoursSAE extends AbstractPlanCours implements PlanCoursInterface
     ) {
     }
 
-    public function createPlanCours(Matiere $matiere, AnneeUniversitaire $anneeUniversitaire)
-    {
+    public function createPlanCours(
+        Matiere $matiere,
+        AnneeUniversitaire $anneeUniversitaire,
+        Personnel $personnel
+    ) {
         $obj = $this->planCoursSaeRepository->findOneBy([
             'typeMatiere' => $matiere->typeMatiere,
             'idMatiere' => $matiere->id,
@@ -44,6 +49,7 @@ class PlanCoursSAE extends AbstractPlanCours implements PlanCoursInterface
         if (null === $obj) {
             $obj = new \App\Entity\PlanCoursSae();
             $obj->setIdMatiere($matiere->id);
+            $obj->setResponsable($personnel);
             $obj->setTypeMatiere($matiere->typeMatiere);
             $obj->setAnneeUniversitaire($anneeUniversitaire);
             $obj->setDescription($matiere->objet->getDescription());
@@ -67,8 +73,11 @@ class PlanCoursSAE extends AbstractPlanCours implements PlanCoursInterface
         return $this->planCoursSaeRepository;
     }
 
-    public function export(Matiere $matiere, AnneeUniversitaire $anneeUniversitaire)
-    {
+    public function export(
+        Matiere $matiere,
+        AnneeUniversitaire $anneeUniversitaire,
+        Departement $departement
+    ) {
         $obj = $this->planCoursSaeRepository->findOneBy([
             'typeMatiere' => $matiere->typeMatiere,
             'idMatiere' => $matiere->id,
@@ -77,7 +86,12 @@ class PlanCoursSAE extends AbstractPlanCours implements PlanCoursInterface
 
         if (null !== $obj) {
             return $this->myPDF::generePdf('components/plan_cours/pdf/sae.html.twig',
-                ['pc' => $obj, 'matiere' => $matiere],
+                [
+                    'pc' => $obj,
+                    'matiere' => $matiere,
+                    'anneeUniversitaire' => $anneeUniversitaire,
+                    'departement' => $departement
+                ],
                 'plan_cours_sae_' . $matiere->codeMatiere);
         }
     }

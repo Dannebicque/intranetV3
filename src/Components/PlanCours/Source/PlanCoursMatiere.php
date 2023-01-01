@@ -1,19 +1,22 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/PlanCours/Source/PlanCoursMatiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/12/2022 10:48
+ * @lastUpdate 01/01/2023 16:10
  */
 
 namespace App\Components\PlanCours\Source;
 
+use App\Classes\Pdf\MyPDF;
 use App\Components\PlanCours\Form\PlanCoursMatiereStep1Type;
 use App\Components\PlanCours\Form\PlanCoursMatiereStep2Type;
 use App\Components\PlanCours\Form\PlanCoursMatiereStep3Type;
 use App\DTO\Matiere;
 use App\Entity\AnneeUniversitaire;
+use App\Entity\Departement;
+use App\Entity\Personnel;
 use App\Repository\PlanCoursMatiereRepository;
 
 class PlanCoursMatiere extends AbstractPlanCours implements PlanCoursInterface
@@ -26,11 +29,13 @@ class PlanCoursMatiere extends AbstractPlanCours implements PlanCoursInterface
     public const TEMPLATE_FORM_STEP_2 = 'plan_cours_matiere_2.html.twig';
     public const TEMPLATE_FORM_STEP_3 = 'plan_cours_matiere_3.html.twig';
 
-    public function __construct(protected PlanCoursMatiereRepository $planCoursMatiereRepository)
-    {
+    public function __construct(
+        protected MyPDF $myPDF,
+        protected PlanCoursMatiereRepository $planCoursMatiereRepository
+    ) {
     }
 
-    public function createPlanCours(Matiere $matiere, AnneeUniversitaire $anneeUniversitaire)
+    public function createPlanCours(Matiere $matiere, AnneeUniversitaire $anneeUniversitaire, Personnel $personnel)
     {
         $obj = $this->planCoursMatiereRepository->findOneBy([
             'typeMatiere' => $matiere->typeMatiere,
@@ -42,6 +47,7 @@ class PlanCoursMatiere extends AbstractPlanCours implements PlanCoursInterface
             $obj = new \App\Entity\PlanCoursMatiere();
             $obj->setIdMatiere($matiere->id);
             $obj->setTypeMatiere($matiere->typeMatiere);
+            $obj->setResponsable($personnel);
             $obj->setAnneeUniversitaire($anneeUniversitaire);
             $obj->setDescriptionMatiere($matiere->objet->getDescription());
             $obj->setNbNotes($matiere->objet->getNbNotes());
@@ -64,7 +70,7 @@ class PlanCoursMatiere extends AbstractPlanCours implements PlanCoursInterface
         return $this->planCoursMatiereRepository;
     }
 
-    public function export(Matiere $matiere, AnneeUniversitaire $anneeUniversitaire)
+    public function export(Matiere $matiere, AnneeUniversitaire $anneeUniversitaire, Departement $departement)
     {
         // TODO: Implement export() method.
     }

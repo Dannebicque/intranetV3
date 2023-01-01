@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/PlanCours/Form/PlanCoursSaeStep1Type.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/12/2022 13:30
+ * @lastUpdate 01/01/2023 15:57
  */
 
 namespace App\Components\PlanCours\Form;
@@ -22,24 +22,24 @@ class PlanCoursSaeStep1Type extends PlanCoursStep1Type
         parent::buildForm($builder, $options);
         $builder
             ->add('description', TextareaType::class, [
-                'label' => 'Description de la mise en application de la SAE',
+                'label' => 'Description de la mise en application de la SAE :',
                 'required' => false,
                 'attr' => ['rows' => 10, 'class' => 'tinyMce'],
             ])
             ->add('miseEnOeuvre', TextareaType::class, [
-                'label' => 'Mise en oeuvre de la SAE',
+                'label' => 'Mise en oeuvre de la SAE :',
                 'help' => 'Modalités de mise en oeuvre de la SAE (travail individuel, en groupe, nombre de collègues impliqués, …)',
                 'required' => false,
                 'attr' => ['rows' => 10, 'class' => 'tinyMce'],
             ])
             ->add('projetPrevu', FloatType::class, [
-                'label' => 'Nb heures de projet en autonomie prévues',
+                'label' => 'Nb heures de projet en autonomie prévues :',
                 'help' => 'Par défaut rappel de la valeur du PN, mais modifiable si vous ne faite qu\'une partie du module',
                 'required' => false,
                 'attr' => ['rows' => 10, 'class' => 'tinyMce'],
             ])
             ->add('modalitesEvaluations', TextareaType::class, [
-                'label' => 'Modalités d\'évaluation de la SAE',
+                'label' => 'Modalités d\'évaluation de la SAE :',
                 'required' => false,
                 'attr' => ['rows' => 10, 'class' => 'tinyMce'],
             ])
@@ -49,7 +49,7 @@ class PlanCoursSaeStep1Type extends PlanCoursStep1Type
                 'attr' => ['rows' => 10, 'class' => 'tinyMce'],
             ])
             ->add('modaliteEncadrementAutonomie', TextareaType::class, [
-                'label' => 'Modalités d\'encadrement des heures en autonomie',
+                'label' => 'Modalités d\'encadrement des heures en autonomie :',
                 'required' => false,
                 'attr' => ['rows' => 10, 'class' => 'tinyMce'],
             ]);
@@ -57,6 +57,7 @@ class PlanCoursSaeStep1Type extends PlanCoursStep1Type
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
         $resolver->setDefaults([
             'data_class' => PlanCoursSae::class,
         ]);

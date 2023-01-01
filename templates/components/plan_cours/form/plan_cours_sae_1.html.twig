@@ -2,15 +2,35 @@
 
 <div class="row">
     <div class="col-12">
+        {{ form_row(form.responsable) }}
+        Intervenants : <br>
+        {{ form_row(form.intervenants) }}
+    </div>
+    <div class="col-12">
         Objectif : <br>
-        {{ matiere.objet.objectifs|raw }}<br><br>
-        {{ form_row(form.description) }} //prérempli
+        <p style="text-align: justify">{{ matiere.objet.objectifs|raw }}</p>
+        {{ form_row(form.description) }}
     </div>
     <div class="col-12">
-        Compétences et Apprentissages critiques visés
+        Compétences et Apprentissages critiques visés :
+        <ul>
+            {% for ac in matiere.objet.apcSaeApprentissageCritiques %}
+                <li>{{ ac.apprentissageCritique.libelle }} ({{ ac.apprentissageCritique.niveau.competence.nomCourt }})
+                </li>
+            {% else %}
+                <li>Aucun apprentissage critique défini</li>
+            {% endfor %}
+        </ul>
     </div>
     <div class="col-12">
-        Liste des ressources à mobiliser
+        Liste des ressources à mobiliser :
+        <ul>
+            {% for ac in matiere.objet.apcSaeRessources %}
+                <li>{{ ac.ressource.display }}</li>
+            {% else %}
+                <li>Aucune ressource</li>
+            {% endfor %}
+        </ul>
     </div>
     <div class="col-12">
         {{ form_row(form.miseEnOeuvre) }}

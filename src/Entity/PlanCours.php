@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/PlanCours.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/12/2022 17:36
+ * @lastUpdate 01/01/2023 11:38
  */
 
 namespace App\Entity;
@@ -36,7 +36,7 @@ abstract class PlanCours
     protected ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'planCours')]
-    protected ?Personnel $intervenant = null;
+    protected ?Personnel $responsable = null;
 
     #[ORM\ManyToOne(inversedBy: 'planCours')]
     protected ?AnneeUniversitaire $anneeUniversitaire = null;
@@ -110,21 +110,25 @@ abstract class PlanCours
     #[Vich\UploadableField(mapping: 'fichierPlanCours', fileNameProperty: 'fichierPlanCours')]
     private ?File $fichierPlanCoursFile = null;
 
+    #[ORM\ManyToMany(targetEntity: Personnel::class, inversedBy: 'plansCours')]
+    private Collection $intervenants;
+
 
     public function __construct()
     {
         $this->planCoursSequences = new ArrayCollection();
         $this->planCoursRealises = new ArrayCollection();
+        $this->intervenants = new ArrayCollection();
     }
 
-    public function getIntervenant(): ?Personnel
+    public function getResponsable(): ?Personnel
     {
-        return $this->intervenant;
+        return $this->responsable;
     }
 
-    public function setIntervenant(?Personnel $intervenant): self
+    public function setResponsable(?Personnel $responsable): self
     {
-        $this->intervenant = $intervenant;
+        $this->responsable = $responsable;
 
         return $this;
     }
@@ -464,5 +468,29 @@ abstract class PlanCours
         if (null !== $fichierPlanCoursFile) {
             $this->setUpdated(Carbon::now());
         }
+    }
+
+    /**
+     * @return Collection<int, Personnel>
+     */
+    public function getIntervenants(): Collection
+    {
+        return $this->intervenants;
+    }
+
+    public function addIntervenant(Personnel $intervenant): self
+    {
+        if (!$this->intervenants->contains($intervenant)) {
+            $this->intervenants->add($intervenant);
+        }
+
+        return $this;
+    }
+
+    public function removeIntervenant(Personnel $intervenant): self
+    {
+        $this->intervenants->removeElement($intervenant);
+
+        return $this;
     }
 }

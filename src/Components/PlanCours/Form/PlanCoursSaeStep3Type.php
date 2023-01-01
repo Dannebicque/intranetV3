@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/PlanCours/Form/PlanCoursSaeStep3Type.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/12/2022 17:36
+ * @lastUpdate 01/01/2023 15:57
  */
 
 namespace App\Components\PlanCours\Form;
@@ -22,12 +22,12 @@ class PlanCoursSaeStep3Type extends PlanCoursStep3Type
         parent::buildForm($builder, $options);
         $builder
             ->add('projetRealise', FloatType::class, [
-                'label' => 'Nb heures Projet en autonomie réalisées',
+                'label' => 'Nb heures Projet en autonomie réalisées :',
                 'required' => false,
                 'attr' => ['rows' => 10, 'class' => 'tinyMce'],
             ])
             ->add('livrablesRendus', TextareaType::class, [
-                'label' => 'Commentaire sur les livrables attendus et rendus',
+                'label' => 'Commentaire sur les livrables attendus et rendus :',
                 'required' => false,
                 'attr' => ['rows' => 10, 'class' => 'tinyMce'],
             ]);
@@ -35,6 +35,8 @@ class PlanCoursSaeStep3Type extends PlanCoursStep3Type
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
+
         $resolver->setDefaults([
             'data_class' => PlanCoursSae::class,
         ]);

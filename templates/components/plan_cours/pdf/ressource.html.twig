@@ -43,7 +43,7 @@
             </td>
             <td style="text-align: center; width:{% if qualite is defined and qualite == true %}{% else %}60%{% endif %}">
                 {{ settings('NOM_IUT') }}<br>
-                PLAN DE COURS SAÉ
+                PLAN DE COURS RESSOURCE
             </td>
             <td style="text-align: center; width:{% if qualite is defined and qualite == true %}{% else %}20%{% endif %}">
 
@@ -64,37 +64,37 @@
                     PARCOURS : {% if matiere.apcParcours.count == 0 %}Tronc Commun{% else %}{% for parc in matiere
                     .apcParcours %}{{ parc != null ? parc.libelle : '-' }}{% if not loop.last %}, {% endif %}{% endfor %}{% endif %}
                 </h1>
-                <h2>SAÉ : {{ matiere.display }}<br>
+                <h2>RESSOURCE : {{ matiere.display }}<br>
                     {{ anneeUniversitaire.displayAnneeUniversitaire }}</h2>
             </td>
         </tr>
     </table>
 
-    <h3>DESCRIPTION SAÉ</h3>
-    <h4>Responsable de la SAÉ :</h4>
+    <h3>DESCRIPTION RESSOURCE</h3>
+    <h4>Responsable de la RESSOURCE :</h4>
     {{ pc.intervenant != null ? pc.intervenant.display : '-' }}
 
-    <h4>Description et objectifs de la SAÉ :</h4>
+    <h4>Description et objectifs de la RESSOURCE :</h4>
     <p style="text-align: justify">{{ pc.description|raw }}</p>
 
     <h4>Compétences et Apprentissages critiques visés : </h4>
     <ul>
-        {% for ac in matiere.objet.apcSaeApprentissageCritiques %}
+        {% for ac in matiere.objet.apcRessourceApprentissageCritiques %}
             <li>{{ ac.apprentissageCritique.libelle }} ({{ ac.apprentissageCritique.niveau.competence.nomCourt }})</li>
         {% endfor %}
     </ul>
 
-    <h4>Liste des ressources à mobiliser :</h4>
+    <h4>Liste des SAÉ mobilisant la ressource :</h4>
     <ul>
         {% for ac in matiere.objet.apcSaeRessources %}
-            <li>{{ ac.ressource.display }}</li>
+            <li>{{ ac.sae.display }}</li>
         {% else %}
-            <li>Aucune ressource</li>
+            <li>Aucune SAÉ</li>
         {% endfor %}
     </ul>
 
-    <h4>Livrables demandés / Modalités d'évaluations envisagées :</h4>
-    <p style="text-align: justify">{{ pc.livrables|raw }}<br><br>
+    <h4>Modalités d'évaluations envisagées :</h4>
+    <p style="text-align: justify">
         {{ pc.modalitesEvaluations|raw }}</p>
 
 
@@ -108,25 +108,16 @@
     <h4>Nombre d’heures prévu :</h4>
     <table style="width: 100%">
         <tr>
-            <th style="width: 25%">CM</th>
-            <th style="width: 25%">TD</th>
-            <th style="width: 25%">TP</th>
-            <th style="width: 25%">Projet en autonomie</th>
+            <th style="width: 33%">CM</th>
+            <th style="width: 33%">TD</th>
+            <th style="width: 34%">TP</th>
         </tr>
         <tr>
             <td style="text-align: center">{{ pc.cmPrevu }} heure(s)</td>
             <td style="text-align: center">{{ pc.tdPrevu }} heure(s)</td>
             <td style="text-align: center">{{ pc.tpPrevu }} heure(s)</td>
-            <td style="text-align: center">{{ pc.projetPrevu }} heure(s)</td>
         </tr>
     </table>
-
-
-    <h4>Format de la SAÉ (travail individuel, en groupe, nombre de collègues impliqués, …):</h4>
-    <p style="text-align: justify">{{ pc.miseEnOeuvre|raw }}</p>
-
-    <h4>Modalités d'encadrement de la partie en autonomie :</h4>
-    <p style="text-align: justify">{{ pc.modaliteEncadrementAutonomie|raw }}</p>
 
     <h4>Bibliographie / webographie d’appui :</h4>
     <p style="text-align: justify">{{ pc.bibliographie|raw }}</p>
@@ -149,27 +140,21 @@
     <p style="text-align: justify"><strong>{{ pc.objectifsAtteints == true ? 'Oui' : 'Non' }}</strong>. {{ pc
         .objectifsFAtteintsCommentaire|raw }}</p>
 
-    <h4>Livrables réalisés / rendus ?</h4>
-    <p style="text-align: justify">{{ pc.livrablesRendus|raw }}</p>
-
     <h4>Les compétences ont-elles été acquises ? (oui, non, pourquoi ?)</h4>
     <p style="text-align: justify"><strong>{{ pc.competencesAcquises == true ? 'Oui' : 'Non' }}</strong>. {{ pc
         .competencesAcquisesCommentaire|raw }}</p>
 
-
     <h4>Nombre d’heures réalisées :</h4>
     <table style="width: 100%">
         <tr>
-            <th style="width: 25%">CM</th>
-            <th style="width: 25%">TD</th>
-            <th style="width: 25%">TP</th>
-            <th style="width: 25%">Projet en autonomie</th>
+            <th style="width: 33%">CM</th>
+            <th style="width: 33%">TD</th>
+            <th style="width: 34%">TP</th>
         </tr>
         <tr>
             <td style="text-align: center">{{ pc.cmRealise }} heure(s)</td>
             <td style="text-align: center">{{ pc.tdRealise }} heure(s)</td>
             <td style="text-align: center">{{ pc.tpRealise }} heure(s)</td>
-            <td style="text-align: center">{{ pc.projetRealise }} heure(s)</td>
         </tr>
     </table>
 

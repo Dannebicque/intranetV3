@@ -1,18 +1,20 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/PersonnelRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/05/2022 15:25
+ * @lastUpdate 01/01/2023 13:43
  */
 
 namespace App\Repository;
 
+use App\Entity\AnneeUniversitaire;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Personnel;
 use App\Entity\PersonnelDepartement;
+use App\Entity\Previsionnel;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Criteria;
@@ -197,5 +199,22 @@ class PersonnelRepository extends ServiceEntityRepository
             ->addOrderBy('p.prenom', Criteria::ASC)
             ->getQuery()
             ->getResult();
+    }
+
+    public function findPersonnelByPrevisionnelBuilder(
+        Previsionnel $previsionnel,
+        AnneeUniversitaire $anneeUniversitaire
+    ): QueryBuilder {
+        return $this->createQueryBuilder('p')
+            ->join('p.previsionnels', 'i')
+            ->where('i.idMatiere = :idMatiere')
+            ->andWhere('i.typeMatiere = :typeMatiere')
+            ->andWhere('i.annee = :annee')
+            ->setParameter('idMatiere', $previsionnel->getIdMatiere())
+            ->setParameter('typeMatiere', $previsionnel->getTypeMatiere())
+            ->setParameter('annee', $anneeUniversitaire->getAnnee())
+            ->orderBy('p.nom', Criteria::ASC)
+            ->addOrderBy('p.prenom', Criteria::ASC)
+            ->groupBy('p.id');;
     }
 }

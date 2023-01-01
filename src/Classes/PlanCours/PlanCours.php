@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/PlanCours/PlanCours.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 01/01/2023 11:52
  */
 
 namespace App\Classes\PlanCours;
@@ -22,7 +22,7 @@ class PlanCours
 
     public function getPlansCoursPrevisionnel(array $previsionnels, Personnel $personnel, AnneeUniversitaire $anneeUniversitaire): array
     {
-        $plCours = $this->planCoursManager->findBy(['intervenant' => $personnel, 'anneeUniversitaire' => $anneeUniversitaire]);
+        $plCours = $this->planCoursManager->findByIntervenantsAndAnnee($personnel, $anneeUniversitaire);
 
         $plansCours = [];
         $plansCoursPrevisionnels = [];

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/PrevisionnelRepository.php
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/PrevisionnelRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/10/2021 10:36
+ * @lastUpdate 01/01/2023 16:10
  */
 
 namespace App\Repository;

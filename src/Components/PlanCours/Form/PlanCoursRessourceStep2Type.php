@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/PlanCours/Form/PlanCoursRessourceStep2Type.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/12/2022 17:25
+ * @lastUpdate 01/01/2023 13:20
  */
 
 namespace App\Components\PlanCours\Form;
@@ -23,6 +23,8 @@ class PlanCoursRessourceStep2Type extends PlanCoursStep2Type
 
     public function configureOptions(OptionsResolver $resolver): void
     {
+        parent::configureOptions($resolver);
+
         $resolver->setDefaults([
             'data_class' => PlanCoursRessource::class,
         ]);

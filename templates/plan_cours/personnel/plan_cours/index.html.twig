@@ -28,7 +28,7 @@
                         <td>
                             <a href="{{ path('app_plan_cours_apc_show', {'id': plansCours[previsionnel.id].id}) }}"
                                class="btn btn-info btn-outline"><i class="{{ iconShow }}"></i></a>
-                            <a href="{{ path('app_plan_cours_apc_edit', {'id': plansCours[previsionnel.id].id}) }}"
+                            <a href="{{ path('app_plan_cours_apc_new', {'previsionnel': previsionnel.id}) }}"
                                class="btn btn-warning btn-outline"><i class="{{ iconEdit }}"></i></a>
                         </td>
                     {% else %}
