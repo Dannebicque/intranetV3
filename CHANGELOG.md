@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.2](https://github.com/Dannebicque/intranetV3/compare/v3.11.1...v3.11.2) (2023-01-01)
+
+
+### Features
+
+* [plan cours] PDF SAE/Ressource + correctifs ([4eb51f5](https://github.com/Dannebicque/intranetV3/commit/4eb51f5f20a16a4114151f5e5e81ff41a3643326))
+
 ### [3.11.1](https://github.com/Dannebicque/intranetV3/compare/v3.11.0...v3.11.1) (2022-12-31)
 
 
