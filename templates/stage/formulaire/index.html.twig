@@ -862,11 +862,26 @@
                     <div data-formulaire-target="connect">
                         <div class="form-rows">
                             <div class="form-main">
+                                {% if flexible == false %}
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <div class="alert alert-info">
+                                                Stage du <strong>{{ stageEtudiant.dateDebutStage|date('d/m/Y') }}
+                                                    au {{ stageEtudiant.dateFinStage|date('d/m/Y') }}</strong>, stage
+                                                d'une durée de
+                                                <strong>{{ stageEtudiant.dureeJoursStage }}</strong> jours
+                                            </div>
+                                        </div>
+                                    </div>
+                                {% endif %}
                                 {% form_theme form_stage 'bootstrap_5_layout.html.twig' %}
                                 {{ form_start(form_stage) }}
-                                {{ form_row(form_stage.date_debut_stage) }}
-                                {{ form_row(form_stage.date_fin_stage) }}
-                                {{ form_row(form_stage.duree_jours_stage) }}
+                                {% if flexible == true %}
+                                    {{ form_row(form_stage.date_debut_stage) }}
+                                    {{ form_row(form_stage.date_fin_stage) }}
+                                    {{ form_row(form_stage.duree_jours_stage) }}
+                                {% endif %}
+
                                 {{ form_row(form_stage.service_stage_entreprise) }}
                                 <div class="mission">
                                     {{ form_row(form_stage.sujet_stage) }}
@@ -1169,7 +1184,8 @@
       document.onmouseover = function () {
         //User's mouse is inside the page.
         window.innerDocClick = true
-      }
+          %
+      }}
 
       document.onmouseleave = function () {
         //User's mouse has left the page.

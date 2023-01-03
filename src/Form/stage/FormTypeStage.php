@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/stage/FormTypeStage.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/12/2022 12:50
+ * @lastUpdate 03/01/2023 11:19
  */
 
 namespace App\Form\stage;
@@ -31,12 +31,13 @@ class FormTypeStage extends AbstractType
         if (true === $this->flexible) {
             $builder->
             add('date_debut_stage', DatePickerType::class, ['label' => 'Date de début :'])
-                ->add('date_fin_stage', DatePickerType::class, ['label' => 'Date de fin  :']);
+                ->add('date_fin_stage', DatePickerType::class, ['label' => 'Date de fin  :'])
+                ->add('duree_jours_stage', IntegerType::class, [
+                    'label' => 'Nombre de jours de stage :',
+                    'help' => 'En jours ouvrés (hors week-end et jours fériés)',
+                ]);
         }
-        $builder->add('duree_jours_stage', IntegerType::class, [
-            'label' => 'Nombre de jours de stage :',
-            'help' => 'En jours ouvrés (hors week-end et jours fériés)',
-        ])
+        $builder
             ->add('service_stage_entreprise', TextType::class, [
                 'label' => 'Service dans l\'entreprise :',
                 'help' => 'Service dans lequel vous effectuerez votre stage',

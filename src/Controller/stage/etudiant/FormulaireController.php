@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/stage/etudiant/FormulaireController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/12/2022 12:54
+ * @lastUpdate 03/01/2023 11:21
  */
 
 // src/Controller/FormulaireController.php
@@ -267,8 +267,13 @@ class FormulaireController extends BaseController
                 ['stageEtudiant' => $stageEtudiant->getUuidString()]);
         }
 
-        return $this->renderForm('stage/formulaire/index.html.twig',
-            ['form_stage' => $form6, 'step' => 6, 'stageEtudiant' => $stageEtudiant]);
+        return $this->render('stage/formulaire/index.html.twig',
+            [
+                'form_stage' => $form6->createView(),
+                'flexible' => $stageEtudiant->getStagePeriode()?->getDatesFlexibles(),
+                'step' => 6,
+                'stageEtudiant' => $stageEtudiant
+            ]);
     }
 
     #[Route('/calendar', name: 'calendar')]
