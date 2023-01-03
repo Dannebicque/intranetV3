@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Utils/Tools.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 03/01/2023 17:57
  */
 
 /*
@@ -15,11 +15,11 @@ namespace App\Utils;
 
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
-use function chr;
 use Exception;
-use function ord;
 use RuntimeException;
 use Symfony\Component\String\Slugger\AsciiSlugger;
+use function chr;
+use function ord;
 
 abstract class Tools
 {
@@ -96,6 +96,25 @@ abstract class Tools
         }
 
         return $str;
+    }
+
+    public static function siretFormat(?string $number): string
+    {
+        if (null === $number) {
+            return '';
+        }
+
+        str_replace(['.', '-', ' '], '', $number);
+
+        if (9 === mb_strlen($number)) {
+            return chunk_split($number, 3, ' ');
+        }
+
+        if (14 === mb_strlen($number)) {
+            return chunk_split(substr($number, 0, 9), 3, ' ') . ' ' . substr($number, 9, 14);
+        }
+
+        return '';
     }
 
     public static function supprimeAccent(string $texte): string

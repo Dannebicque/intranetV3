@@ -54,7 +54,7 @@
 
         <h2>Entreprise</h2>
         Raison sociale/Nom de l'entreprise : {{ stageEtudiant.entreprise.raisonSociale }}<br/>
-        N° de Siret : {{ stageEtudiant.entreprise.siret }}<br/>
+        N° de Siret : {{ stageEtudiant.entreprise.siret|siret_format }}<br/>
         Adresse postale
         : {% if stageEtudiant.entreprise.adresse != null %}{{ stageEtudiant.entreprise.adresse.display }}{% endif %}
         <br/>

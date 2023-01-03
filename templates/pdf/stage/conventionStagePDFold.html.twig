@@ -61,7 +61,7 @@
     <p class="titresuligne">ET L’ORGANISME D’ACCUEIL</p>
     <div class="blocconvention">
         Raison sociale/Nom de l'entreprise : {{ proposition.entreprise.raisonSociale }}<br/>
-        N° de Siret : {{ proposition.entreprise.siret }}<br/>
+        N° de Siret : {{ proposition.entreprise.siret|siret_format }}<br/>
         Adresse postale
         : {% if proposition.entreprise.adresse != null %}{{ proposition.entreprise.adresse.display|striptags }}{% endif %}
         <br/>
@@ -706,7 +706,7 @@
     <p class="titresuligne">L’ORGANISME D’ACCUEIL</p>
     <div class="blocconvention">
         Raison sociale : {{ proposition.entreprise.raisonSociale }}<br/>
-        N° de Siret : {{ proposition.entreprise.siret }}<br/>
+        N° de Siret : {{ proposition.entreprise.siret|siret_format }}<br/>
         Adresse postale
         : {% if proposition.entreprise.adresse != null %}{{ proposition.entreprise.adresse.display|striptags }}{% endif %}
         <br/>

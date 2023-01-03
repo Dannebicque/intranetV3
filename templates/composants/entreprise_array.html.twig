@@ -25,7 +25,7 @@
                     {{ entreprise.siret }}
                 </a>
             {% else %}
-                {{ entreprise.siret }}
+                {{ entreprise.siret|siret_format }}
             {% endif %}
         </td>
     </tr>

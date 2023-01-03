@@ -1,6 +1,6 @@
 <p class="form-info">Veuillez confirmer l’exactitude des informations saisies précédemment.</p>
 
-<p class="confirm_infos">N° de siret : {{ stageEtudiant.entreprise.siret }}</p>
+<p class="confirm_infos">N° de siret : {{ stageEtudiant.entreprise.siret|siret_format }}</p>
 <p class="confirm_infos">Raison Sociale : {{ stageEtudiant.entreprise.raisonSociale }}</p>
 <p class="confirm_infos">Adresse de l'entreprise : {{ stageEtudiant.entreprise.adresse != null ? stageEtudiant
     .entreprise.adresse.display|raw : 'A compléter' }}</p>

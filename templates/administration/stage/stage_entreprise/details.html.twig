@@ -1,7 +1,7 @@
 <h4>Entreprise : {{ entreprise.raisonSociale }}</h4>
 <dl class="row">
     <dt class="col-sm-4">Siret :</dt>
-    <dd class="col-sm-6">{{ entreprise.siret }}</dd>
+    <dd class="col-sm-6">{{ entreprise.siret|siret_format }}</dd>
     <dt class="col-sm-4">Adresse Siège :</dt>
     <dd class="col-sm-6">{{ entreprise.adresse.display|raw }}</dd>
 </dl>

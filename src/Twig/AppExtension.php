@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Twig/AppExtension.php
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Twig/AppExtension.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/10/2021 12:19
+ * @lastUpdate 03/01/2023 17:57
  */
 
 namespace App\Twig;
@@ -16,11 +16,11 @@ use App\Entity\Personnel;
 use App\Utils\Tools;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
-use function chr;
-use function count;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
+use function chr;
+use function count;
 
 /**
  * Class AppExtension.
@@ -33,6 +33,7 @@ class AppExtension extends AbstractExtension
     {
         return [
             new TwigFilter('tel_format', [$this, 'telFormat']),
+            new TwigFilter('siret_format', [$this, 'siretFormat']),
             new TwigFilter('age', [$this, 'age']),
             new TwigFilter('bg', [$this, 'bg']),
             new TwigFilter('time_ago', [$this, 'timeAgo']),
@@ -212,6 +213,11 @@ class AppExtension extends AbstractExtension
     public function telFormat(?string $number): ?string
     {
         return Tools::telFormat($number);
+    }
+
+    public function siretFormat(?string $number): ?string
+    {
+        return Tools::siretFormat($number);
     }
 
     public function timeAgo(CarbonInterface $date, string $locale = 'fr'): string
