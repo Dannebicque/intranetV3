@@ -1,4 +1,11 @@
 <?php
+/*
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/QuestQuestionRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 02/01/2023 15:43
+ */
 
 namespace App\Repository;
 
@@ -83,5 +90,16 @@ class QuestQuestionRepository extends ServiceEntityRepository
             ->setParameter('ordre', $question->getOrdre());
 
         return $qb->getQuery()->getResult();
+    }
+
+    public function findByQuestionnaire(QuestQuestionnaire $questionnaire): array
+    {
+        return $this->createQueryBuilder('q')
+            ->innerJoin(QuestSection::class, 's', 'WITH', 'q.section = s.id')
+            ->where('s.questionnaire = :questionnaire')
+            ->setParameter('questionnaire', $questionnaire->getId())
+            ->orderBy('q.libelle', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 }

@@ -1,18 +1,14 @@
 Bonjour {{ user.display }},<br><br>
 
-<p>Vous avez été invité(e) à répondre au questionnaire "{{ questionnaire.libelle }}". Nous constatons que vous
-   n'avez pas encore répondu et vous demandons de bien vouloir le faire dès à présent.</p>
+<p>Vous avez été invité(e) à répondre au questionnaire <strong>{{ questionnaire.libelle }}</strong>. Nous constatons
+   que vous n'avez pas encore répondu et vous demandons de bien vouloir le faire dès à présent.</p>
 
 <p>Pour y répondre, vous pouvez cliquer sur le lien suivant <a href="{{ url('enquete_questionnaire_qualite_index',
-        {uuidQuestionnaire: questionnaire.uuidString, uuid: user.cleQuestionnaire}) }}" target="_blank">Accéder au
-                                                                                                        questionnaire en
-                                                                                                        cliquant sur ce
-                                                                                                        lien</a> ou
-   copier/coller
-   l'adresse suivante dans
-   votre navigateur
-   : {{ url('enquete_questionnaire_qualite_index', {uuidQuestionnaire: questionnaire.uuidString, uuid: user.cleQuestionnaire}) }}
-   .</p>
+        {uuidQuestionnaire: questionnaire.uuidString, uuid: user.cleQuestionnaire}) }}" target="_blank">
+        Accéder au questionnaire en cliquant sur ce lien</a> ou
+   copier/coller l'adresse suivante dans votre navigateur : <br>
+    {{ url('enquete_questionnaire_qualite_index',{uuidQuestionnaire: questionnaire.uuidString, uuid: user.cleQuestionnaire}) }}
+</p>
 
 <p>Bien cordialement,</p>
 

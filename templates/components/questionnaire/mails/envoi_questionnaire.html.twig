@@ -1,17 +1,20 @@
 <p>Bonjour {{ questChoix.display }},</p>
 
-Veuillez trouver le lien pour le questionnaire ...
+<p>Dans le cadre de notre système qualité, nous devons nous assurer de la satisfaction de nos alternants et auditeurs.
+   Aussi nous vous invitons à répondre au questionnaire <strong>{{ questionnaire.titre }}</strong>.</p>
 
 <p>
     <a href="{{ url('enquete_questionnaire_qualite_index', {uuidQuestionnaire: questionnaire.uuidString, uuid: questChoix
-    .cleQuestionnaire}) }}" target="_blank">Accéder au questionnaire en cliquant sur ce lien</a> ou copier/coller
-                                                                                                 l'adresse suivante dans
-                                                                                                 votre navigateur
-                                                                                                 : {{ url('enquete_questionnaire_qualite_index', {uuidQuestionnaire: questionnaire.uuidString, uuid: questChoix.cleQuestionnaire}) }}
+    .cleQuestionnaire}) }}" target="_blank">
+        Pour y répondre, merci de cliquer sur ce lien</a> ou copier/coller l'adresse suivante dans votre navigateur :
+    <br>
+    {{ url('enquete_questionnaire_qualite_index', {uuidQuestionnaire: questionnaire.uuidString, uuid: questChoix.cleQuestionnaire}) }}
 </p>
 
 <p>Le questionnaire est anonyme et confidentiel.</p>
 <p>Il est accessible du {{ questionnaire.dateOuverture|format_datetime('short', 'short') }} au {{ questionnaire
     .dateFermeture|format_datetime('short', 'short') }}</p>
 
-Merci...
+<p>Bien cordialement,</p>
+
+<p>Le service Qualité de l'IUT de Troyes<br>

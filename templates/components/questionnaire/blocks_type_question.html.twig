@@ -1,5 +1,6 @@
 {% block type_chainee %}
     <fieldset class="form-group"
+              id="field_{{ id }}"
             {{ stimulus_controller('questionnaire--enquete', {
                 parametres: parametres,
                 idQuestion: id,
@@ -46,6 +47,8 @@
                 </div>
             </div>
         {% endfor %}
+        {{ block('autres') }}
+        {{ block('nc') }}
     </fieldset>
 {% endblock %}
 
@@ -114,7 +117,7 @@
                       name="quizz_question_text_{{ name }}"
                       data-action="change->questionnaire--enquete#onTextAreaChange"
                       data-typeQuestionnaire="{{ type_question }}"
-                    {% if obligatoire %}required{% endif %}
+                      {% if obligatoire %}required{% endif %}
          class="form-control
 ">{% if reponseEtudiant != null %}{{ reponseEtudiant.valeur }}{% endif %}</textarea>
             <div class="form-control-feedback"></div>
@@ -144,8 +147,8 @@
                            data-typeQuestionnaire="{{ type_question }}"
                            data-action="change->questionnaire--enquete#change"
 
-                            {% if reponseEtudiant != null and
-                                reponseEtudiant.valeur == reponse.valeur %}checked{% endif %}
+                           {% if reponseEtudiant != null and
+                               reponseEtudiant.valeur == reponse.valeur %}checked{% endif %}
                             {% if obligatoire %}required{% endif %}
                            class="form-check-input  {% if apercu is not defined or apercu == false %}questionQualite{% endif %}"
                            value="{{ reponse.valeur }}">
@@ -159,8 +162,8 @@
                            data-action="change->questionnaire--enquete#change"
                            data-typeQuestionnaire="{{ type_question }}"
 
-                            {% if reponseEtudiant != null and
-                                reponseEtudiant.valeur == reponse.valeur %}checked{% endif %}
+                           {% if reponseEtudiant != null and
+                               reponseEtudiant.valeur == reponse.valeur %}checked{% endif %}
                             {% if obligatoire %}required{% endif %}
                            class="form-check-input  {% if apercu is not defined or apercu == false %}questionQualite{% endif %}"
                            value="{{ reponse.valeur }}">
@@ -231,25 +234,83 @@
                        data-typeQuestionnaire="{{ type_question }}"
 
                        {% if reponseEtudiant != null and
-                            reponseEtudiant.valeur == reponse.valeur %}checked{% endif %}
+                           reponseEtudiant.valeur == reponse.valeur %}checked{% endif %}
                         {% if obligatoire %}required{% endif %}
                        class="form-check-input"
                        value="{{ reponse.valeur }}">
                 <label class="form-check-label required" for="quizz_question_qcu_{{ name }}_{{ reponse.id }}">{{ reponse.libelle }}</label>
-                {% if reponse.valeur == "CHX:OTHER" %}
-                    <input type="text" id="quizz_question_qcm_autre_{{ name }}_{{ reponse.id }}"
-                           name="quizz_question_reponses_{{ name }}_autre"
-                           data-typeQuestionnaire="{{ type_question }}"
-                           data-action="change->questionnaire--enquete#onTextAreaChange"
+                {#                {% if reponse.valeur == "CHX:OTHER" %} #}
+                {#                    <input type="text" id="quizz_question_qcm_autre_{{ name }}_{{ reponse.id }}" #}
+                {#                           name="quizz_question_reponses_{{ name }}_autre" #}
+                {#                           data-typeQuestionnaire="{{ type_question }}" #}
+                {#                           data-action="change->questionnaire--enquete#onTextAreaChange" #}
 
-                           class="form-control"
-                            {% if reponseEtudiant != null and reponseEtudiant.valeur == 'CHX:OTHER' %}
-                                value="{{ reponseEtudiant.complementValeur }}"
-                            {% endif %}
-                    >
-                {% endif %}
+                {#                           class="form-control" #}
+                {#                            {% if reponseEtudiant != null and reponseEtudiant.valeur == 'CHX:OTHER' %} #}
+                {#                                value="{{ reponseEtudiant.complementValeur }}" #}
+                {#                            {% endif %} #}
+                {#                    > #}
+                {#                {% endif %} #}
             </div>
             <div class="form-control-feedback"></div>
         </div>
     {% endfor %}
+    {{ block('autres') }}
+    {{ block('nc') }}
+{% endblock %}
+
+{% block autres %}
+    {% if parametres.choix_autre is defined and parametres.choix_autre == true %}
+        <div class="col-sm-12 col-md-2">
+            <div class="form-check">
+                <input type="{{ type_question != '' ? type_question : 'radio' }}" id="quizz_question_qcu_{{ name }}_autre"
+                       name="quizz_question_reponses_{{ name }}"
+                       data-action="change->questionnaire--enquete#change"
+                       data-fieldset="{{ id }}"
+                       data-typeQuestionnaire="{{ type_question }}"
+
+                       {% if reponseEtudiant != null and
+                           reponseEtudiant.valeur == "CHX:OTHER" %}checked{% endif %}
+                        {% if obligatoire %}required{% endif %}
+                       class="form-check-input"
+                       value="CHX:OTHER">
+                <label class="form-check-label required" for="quizz_question_qcu_{{ name }}_autre">Autre,
+                                                                                                   précisez :</label>
+                <input type="text" id="quizz_question_qcm_autre_{{ name }}_autre_text"
+                       name="quizz_question_reponses_{{ name }}_autre"
+                       data-typeQuestionnaire="{{ type_question }}"
+                       data-action="change->questionnaire--enquete#onTextAreaChange"
+
+                       class="form-control"
+                        {% if reponseEtudiant != null and reponseEtudiant.valeur == 'CHX:OTHER' %}
+                            value="{{ reponseEtudiant.complementValeur }}"
+                        {% endif %}
+                >
+            </div>
+            <div class="form-control-feedback"></div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block nc %}
+    {% if parametres.choix_nc is defined and parametres.choix_nc == true %}
+        <div class="col-sm-12 col-md-2">
+            <div class="form-check">
+                <input type="{{ type_question != '' ? type_question : 'radio' }}" id="quizz_question_qcu_{{ name }}_nc"
+                       name="quizz_question_reponses_{{ name }}"
+                       data-action="change->questionnaire--enquete#change"
+                       data-fieldset="{{ id }}"
+                       data-typeQuestionnaire="{{ type_question }}"
+
+                       {% if reponseEtudiant != null and
+                           reponseEtudiant.valeur == "CHX:NC" %}checked{% endif %}
+                        {% if obligatoire %}required{% endif %}
+                       class="form-check-input"
+                       value="CHX:NC">
+                <label class="form-check-label required" for="quizz_question_qcu_{{ name }}_nc">
+                    Non concerné
+                </label>
+            </div>
+        </div>
+    {% endif %}
 {% endblock %}

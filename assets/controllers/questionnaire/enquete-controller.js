@@ -1,8 +1,8 @@
-// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/questionnaire/enquete-controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/12/2022 21:25
+// @lastUpdate 04/01/2023 18:34
 import { Controller } from '@hotwired/stimulus'
 import { useDebounce, useDispatch } from 'stimulus-use'
 import Routing from 'fos-router'
@@ -30,9 +30,11 @@ export default class extends Controller {
     if (this.idQuestionValue === event.target.dataset.fieldset) {
       if (this.parametresValue.conditions) {
         for (const condition of this.parametresValue.conditions) {
+          console.log(condition)
           if (condition.type === 'masquage') {
             if (condition.criteres.includes(value)) {
               for (let j = 0; j < condition.questions.length; j++) {
+                console.log(`field_${condition.questions[j]}`)
                 document.getElementById(`field_${condition.questions[j]}`).style.display = 'none'
               }
             }
