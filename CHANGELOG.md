@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.4](https://github.com/Dannebicque/intranetV3/compare/v3.11.3...v3.11.4) (2023-01-04)
+
+
+### Features
+
+* [Questionnaire] Création et gestion des conditions sur les questions ([b35e7c9](https://github.com/Dannebicque/intranetV3/commit/b35e7c91698ff08b3f5eeaa5e0ceb864d6e7f6f6))
+* [Questionnaire] Gestion "Autre" et "NC" + mails ([334bd67](https://github.com/Dannebicque/intranetV3/commit/334bd673b050a41892d5158e03fb03bcb9c9dfaa))
+* [SIRET] Formattage du numéro de SIRET ([42d3178](https://github.com/Dannebicque/intranetV3/commit/42d31789db7a06b18d8546f73dab420d3f1c3fd3))
+
 ### [3.11.3](https://github.com/Dannebicque/intranetV3/compare/v3.11.2...v3.11.3) (2023-01-03)
 
 
