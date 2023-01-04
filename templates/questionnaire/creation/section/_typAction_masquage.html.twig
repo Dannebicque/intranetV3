@@ -1,0 +1,32 @@
+<h4>Masquage</h4>
+<div>
+    <label class="required" for="valeurs">Valeurs de la question <strong>{{ question.libelle }}</strong> qui vont
+                                          masquer les
+                                          questions définies ci-dessous :</label><br>
+    {% for rep in question.questReponses %}
+
+        <div class="form-check form-check-inline">
+            <input type="checkbox" name="valeurs[]" value="{{ rep.valeur }}" id="rep_{{ rep.id }}"
+                   class="form-check-input">
+            <label for="rep_{{ rep.id }}" class="form-check-label">{{ rep.libelle }}</label>
+        </div>
+
+    {% else %}
+        <input type="text" name="valeurs" id="valeurs" class="form-control"/>
+        <p class="small">Séparer les valeurs par une "," (virgule)</p>
+    {% endfor %}
+</div>
+<div>
+    <label class="required" for="question">Question(s) à masquer</label> :
+    <select class="form-select" id="question" name="questions[]" multiple>
+        {% for question in allQuestions %}
+            <option value="{{ question.id }}">{{ question.libelle }}</option>
+        {% endfor %}
+    </select>
+</div>
+<button class="btn btn-success mt-2" {{ stimulus_action('questionnaire--configuration', 'sauvegarde',
+    'click', {
+        typeAction:typeAction,
+    }) }}><i class="fas
+fa-plus-circle"></i> Ajouter la condition
+</button>

@@ -1,0 +1,22 @@
+<h4>Condition déclenchement </h4>
+<div>
+    <label class="required" for="question">Question "déclencheuse"</label>
+    <select class="form-select" id="question" name="question">
+        <option value="">Choisir la question</option>
+        {% for question in allQuestions %}
+            <option value="{{ question.id }}">{{ question.libelle }}</option>
+        {% endfor %}
+    </select>
+</div>
+<div>
+    <label class="required" for="valeurs">Valeurs de la question choisie ci-dessus qui va afficher la question
+        <strong>{{ question.libelle }}</strong> :</label>
+    <input type="text" name="valeurs" id="valeurs" class="form-control"/>
+    <p class="small">Séparer les valeurs par une "," (virgule)</p>{# todo: faire des cases à cocher avec les valeurs
+    ? #}
+</div>
+<button class="btn btn-success mt-2" {{ stimulus_action('questionnaire--configuration', 'sauvegarde',
+    'click', {
+        typeAction:typeAction,
+    }) }}><i class="fas fa-plus-circle"></i> Ajouter la condition
+</button>

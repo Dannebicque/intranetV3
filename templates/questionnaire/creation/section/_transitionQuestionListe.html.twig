@@ -1,0 +1,27 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th>Type</th>
+        <th>Valeurs</th>
+        <th>Questions</th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for condition in conditions %}
+        <tr>
+            <td>{{ condition.type }}</td>
+            {% if condition.type== 'condition' %}
+                <td>{% for crit in condition.criteres %}{{ crit }}{% if not loop.last %}, {% endif %}{% endfor %}</td>
+                <td>{{ condition.declenchement }}</td>
+            {% else %}
+                <td>{% for crit in condition.criteres %}{{ crit }}{% if not loop.last %}, {% endif %}{% endfor %}</td>
+                <td>{% for quest in condition.questions %}{{ quest }}{% if not loop.last %}, {% endif %}{% endfor %}</td>
+            {% endif %}
+            <td>
+
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>

@@ -1,1 +1,32 @@
-... Config ...
+<div {{ stimulus_controller('questionnaire--configuration', {
+    url: path('adm_questionnaire_creation_section_transition_question_affiche', { type:type, section: section.id,
+        question:question.id }),
+    urlSave: path('adm_questionnaire_creation_section_transition_question_sauvegarde', { type:type, section: section.id,
+        question:question.id }),
+    urlUpdateListe: path('adm_questionnaire_creation_section_transition_question_update_liste', { type:type, section:
+        section.id,
+        question:question.id }),
+}) }} >
+    <div class="row">
+        <div class="col-6 d-grid">
+            <button class="d-block btn btn-primary"
+                    {{ stimulus_action('questionnaire--configuration', 'addCondition', 'click', {type:'declenchement'}) }}
+            >
+                Condition d'affichage (la question est affichée si ...)
+            </button>
+        </div>
+        <div class="col-6 d-grid">
+            <button class="d-block btn btn-primary"
+                    {{ stimulus_action('questionnaire--configuration', 'addCondition', 'click', {type:'masquage'}) }}
+            >
+                Condition de masquage (Selon les réponses de cette question, masquer ...)
+            </button>
+        </div>
+    </div>
+    <div {{ stimulus_target('questionnaire--configuration', 'zoneListe') }}>
+
+    </div>
+    <div {{ stimulus_target('questionnaire--configuration', 'zone') }} class="mt-4">
+
+    </div>
+</div>

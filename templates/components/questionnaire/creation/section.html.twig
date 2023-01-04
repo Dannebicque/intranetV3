@@ -23,21 +23,5 @@
 
 {% for question in questions %}
     {{ question_creation_render(question) }}
-    {% if not loop.last %}
-        <div class="divider text-primary text-capitalize">
-            <a href="#"
-                    {{ stimulus_controller('modal', {
-                        size: 'lg',
-                        modalTitle: 'Configurer le questionnaire',
-                        modalUrl: path('adm_questionnaire_creation_section_transition_question', {section:section.id,
-                            question:question.id})
-                    }) }}
-               data-action="click->modal#openModal"
-            >
-                <i class="fas fa-gears"></i>
-                Configurer condition(s)
-            </a>
-        </div>
-    {% endif %}
 {% endfor %}
 

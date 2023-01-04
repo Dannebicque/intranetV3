@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/CreationSectionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/12/2022 09:21
+ * @lastUpdate 04/01/2023 15:17
  */
 
 namespace App\Controller\questionnaire;
@@ -16,6 +16,8 @@ use App\Entity\QuestSection;
 use App\Form\QuestSectionType;
 use App\Repository\QuestQuestionRepository;
 use App\Repository\QuestSectionRepository;
+use App\Utils\JsonRequest;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -90,7 +92,7 @@ class CreationSectionController extends BaseController
                 $section->setTextExplicatif($data['textExplicatif']);
                 $section->setTypeSection($data['typeSection']);
                 $section->setEnabled($data['enabled']);
-                $section->setConfig(['configSection' => $data['configSection']]);//todo: éventuellement array_merge si des data sont déjà là??
+                $section->setConfig(['configSection' => $data['configSection']]); // todo: éventuellement array_merge si des data sont déjà là??
                 $this->entityManager->flush();
 
                 return $this->json(true);
@@ -128,12 +130,98 @@ class CreationSectionController extends BaseController
 
     #[Route('/{section}/transition-question/{question}', name: 'transition_question')]
     public function configTransitionQuestion(
+        Request $request,
         QuestSection $section,
         QuestQuestion $question,
     ): Response {
         return $this->render('questionnaire/creation/section/_transitionQuestion.html.twig', [
             'section' => $section,
             'question' => $question,
+            'type' => $request->get('type'),
         ]);
+    }
+
+    #[Route('/{section}/transition-question-affiche/{question}', name: 'transition_question_affiche')]
+    public function configTransitionAfficheQuestion(
+        Request $request,
+        QuestQuestionRepository $questionRepository,
+        QuestSection $section,
+        QuestQuestion $question,
+    ): Response {
+        $typeAction = $request->query->get('typeAction');
+        $allQuestions = $questionRepository->findByQuestionnaire($section->getQuestionnaire());
+        switch ($typeAction) {
+            case 'declenchement':
+                return $this->render('questionnaire/creation/section/_typAction_declenchement.html.twig', [
+                    'typeAction' => $typeAction,
+                    'section' => $section,
+                    'question' => $question,
+                    'allQuestions' => $allQuestions,
+                ]);
+            case 'masquage':
+                return $this->render('questionnaire/creation/section/_typAction_masquage.html.twig', [
+                    'typeAction' => $typeAction,
+                    'section' => $section,
+                    'question' => $question,
+                    'allQuestions' => $allQuestions,
+                ]);
+        }
+    }
+
+    #[Route('/{section}/transition-question-update-liste/{question}', name: 'transition_question_update_liste')]
+    public function configTransitionUpdateListe(
+        QuestSection $section,
+        QuestQuestion $question,
+    ): Response {
+        return $this->render('questionnaire/creation/section/_transitionQuestionListe.html.twig', [
+            'conditions' => $question->getParametre()['conditions'] ?? [],
+        ]);
+    }
+
+    #[Route('/{section}/transition-question-sauvegarde/{question}', name: 'transition_question_sauvegarde')]
+    public function configTransitionSauvegarde(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        QuestQuestionRepository $questionRepository,
+        QuestSection $section,
+        QuestQuestion $question,
+    ): Response {
+        $data = JsonRequest::getFromRequest($request);
+        $typeAction = $request->query->get('typeaction');
+        $parametre = $question->getParametre();
+        if (array_key_exists('conditions', $parametre)) {
+            $conditions = $parametre['conditions'];
+        } else {
+            $conditions = [];
+        }
+
+        switch ($typeAction) {
+            case 'declenchement':
+                $conditions[] = [
+                    'type' => 'condition',
+                    'declenchement' => $data['question'],
+                    'criteres' => array_values(explode(',', $data['valeurs'])),
+                ];
+                break;
+            case 'masquage':
+                if (count($data['valeurs']) === 1 && str_contains($data['valeurs'][0], ',')) {
+                    $valeurs = array_values(explode(',', $data['valeurs'][0]));
+                } else {
+                    $valeurs = $data['valeurs'];
+                }
+
+                $conditions[] = [
+                    'type' => 'masquage',
+                    'questions' => $data['questions'],
+                    'criteres' => $valeurs
+                ];
+                break;
+        }
+        $parametre['conditions'] = $conditions;
+
+        $question->setParametre($parametre);
+        $entityManager->flush();
+
+        return $this->json(true);
     }
 }
