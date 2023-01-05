@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.5](https://github.com/Dannebicque/intranetV3/compare/v3.11.4...v3.11.5) (2023-01-05)
+
+
+### Features
+
+* [Questionnaire] Sauvegarde des réponses ([66574f4](https://github.com/Dannebicque/intranetV3/commit/66574f4c9d8a738abd4cfa3c6dd73a841bf443ff))
+
 ### [3.11.4](https://github.com/Dannebicque/intranetV3/compare/v3.11.3...v3.11.4) (2023-01-04)
 
 
