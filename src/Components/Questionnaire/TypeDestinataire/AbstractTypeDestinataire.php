@@ -1,16 +1,17 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeDestinataire/AbstractTypeDestinataire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/12/2022 18:26
+ * @lastUpdate 05/01/2023 07:55
  */
 
 namespace App\Components\Questionnaire\TypeDestinataire;
 
 use App\Components\Questionnaire\DTO\ReponsesUser;
 use App\Components\Questionnaire\Interfaces\QuestChoixInterface;
+use App\Components\Questionnaire\TypeQuestion\TypeChainee;
 use App\Components\Questionnaire\TypeQuestion\TypeEchelle;
 use App\Components\Questionnaire\TypeQuestion\TypeOuiNon;
 use App\Components\Questionnaire\TypeQuestion\TypeQcm;
@@ -49,20 +50,26 @@ abstract class AbstractTypeDestinataire
         QuestChoixInterface $choixUser,
         string $cleReponse,
         string $cleQuestion,
-        string $typeDestinataire
+        string $typeDestinataire,
+        string $value = null
     ): void {
-        $exist = $this->questChoixRepository->findExistQuestion($cleQuestion, $choixUser, $typeDestinataire);
-
         $t = explode('_', $cleReponse);
         $question = $this->questQuestionRepository->find(mb_substr($t[3], 1, mb_strlen($t[0])));
 
-        if (str_starts_with($t[4], 'c')) {
-            $reponse = $this->questReponseRepository->find($t[5]);
+        if ('autre' === $t[4]) {
+            $reponse = 'CHX:OTHER';
+        } elseif ('nc' === $t[4]) {
+            $reponse = 'CHX:NC';
+        } elseif (str_starts_with($t[4], 'c')) {
+            $rep = $this->questReponseRepository->find($t[5]);
+            $reponse = $rep?->getValeur();
         } else {
-            $reponse = $this->questReponseRepository->find($t[4]);
+            $rep = $this->questReponseRepository->find($t[4]);
+            $reponse = $rep?->getValeur();
         }
 
         if (null !== $question && null !== $reponse) {
+            $exist = $this->questChoixRepository->findExistQuestion($question->getId(), $choixUser, $typeDestinataire);
             if (null === $exist) {
                 $qr = new QuestChoix();
                 $qr->setQuestion($question);
@@ -71,22 +78,26 @@ abstract class AbstractTypeDestinataire
 
                 if (TypeQcm::class === $question->getType()) {
                     $qr->setCleReponse(json_encode([$cleReponse], JSON_THROW_ON_ERROR));
-                    $qr->setValeur(json_encode([$reponse->getValeur()], JSON_THROW_ON_ERROR));
+                    $qr->setValeur(json_encode([$reponse], JSON_THROW_ON_ERROR));
                 } else {
                     $qr->setCleReponse($cleReponse);
-                    $qr->setValeur($reponse->getValeur());
+                    $qr->setValeur($reponse);
                 }
 
                 $this->entityManager->persist($qr);
-            } elseif (TypeQcu::class === $question->getType() || TypeEchelle::class === $question->getType() || TypeOuiNon::class === $question->getType()) {
+            } elseif (
+                TypeQcu::class === $question->getType() ||
+                TypeEchelle::class === $question->getType() ||
+                TypeOuiNon::class === $question->getType()) {
+
                 $exist->setCleReponse($cleReponse);
-                $exist->setValeur($reponse->getValeur());
+                $exist->setValeur($reponse);
             } elseif (TypeQcm::class === $question->getType()) {
                 // si c'est un QCM, on fait un tableau de réponse.
                 $cleReponses = json_decode($exist->getCleReponse(), false, 512, JSON_THROW_ON_ERROR);
                 $valeurs = json_decode($exist->getValeur(), false, 512, JSON_THROW_ON_ERROR);
                 $idCle = array_search($cleReponse, $cleReponses, true);
-                $idValeur = array_search($reponse->getValeur(), $valeurs, true);
+                $idValeur = array_search($reponse, $valeurs, true);
                 if (false !== $idCle && false !== $idValeur) {
                     // réponse déjà présente on supprime
                     unset($cleReponses[$idCle], $valeurs[$idValeur]);
@@ -94,7 +105,7 @@ abstract class AbstractTypeDestinataire
                     $valeurs = array_values($valeurs);
                 } else {
                     $cleReponses[] = $cleReponse;
-                    $valeurs[] = $reponse->getValeur();
+                    $valeurs[] = $reponse;
                 }
 
                 $exist->setCleReponse(json_encode($cleReponses, JSON_THROW_ON_ERROR));
@@ -109,44 +120,48 @@ abstract class AbstractTypeDestinataire
         string $cleQuestion,
         string $typeDestinataire,
         string $value
-    ): void {
-        $exist = $this->questChoixRepository->findExistQuestion($cleQuestion, $choixUser, $typeDestinataire);
-
+    ): void
+    {
         $t = explode('_', $cleQuestion);
         $question = $this->questQuestionRepository->find(mb_substr($t[3], 1, mb_strlen($t[0])));
+        if ($question !== null) {
+            $exist = $this->questChoixRepository->findExistQuestion($question->getId(), $choixUser, $typeDestinataire);
 
-        if ('autre' === $t[3]) {
-            $cleQuestion = $t[0] . '_' . $t[1] . '_reponses_' . $t[4] . '_autre';
+            if ('autre' === $t[2]) {
+                $cleQuestion = $t[0] . '_' . $t[1] . '_reponses_' . $t[4] . '_autre';
 
-            // gesion du cas autre...
-            // on met à jour la question de base. On ajoute la réponse écrite
-            if (null === $exist) {
-                $qr = new QuestChoix();
-                $qr->setQuestion($question);
-                $qr->setTypeDestinataire($typeDestinataire);
-                $qr->setIdQuestChoix($choixUser->getId());
-                $qr->setCleReponse($cleQuestion);
-                $qr->setValeur($value);
-                $this->entityManager->persist($qr);
+                // gesion du cas autre...
+                // on met à jour la question de base. On ajoute la réponse écrite
+                if (null === $exist) {
+                    $qr = new QuestChoix();
+                    $qr->setQuestion($question);
+                    $qr->setTypeDestinataire($typeDestinataire);
+                    $qr->setIdQuestChoix($choixUser->getId());
+                    $qr->setCleReponse($cleQuestion);
+                    $qr->setValeur('CHX:OTHER');
+                    $qr->setComplement($value);
+                    $this->entityManager->persist($qr);
+                } else {
+                    $exist->setValeur('CHX:OTHER');
+                    $exist->setComplement($value);
+                }
+
+                $this->entityManager->flush();
             } else {
-                $exist->setValeur($value);
+                // pas autre
+                if (null === $exist) {
+                    $qr = new QuestChoix();
+                    $qr->setQuestion($question);
+                    $qr->setTypeDestinataire($typeDestinataire);
+                    $qr->setIdQuestChoix($choixUser->getId());
+                    $qr->setCleReponse($cleQuestion);
+                    $qr->setValeur($value);
+                    $this->entityManager->persist($qr);
+                } else {
+                    $exist->setValeur($value);
+                }
+                $this->entityManager->flush();
             }
-
-            $this->entityManager->flush();
-        } else {
-            // pas autre
-            if (null === $exist) {
-                $qr = new QuestChoix();
-                $qr->setQuestion($question);
-                $qr->setTypeDestinataire($typeDestinataire);
-                $qr->setIdQuestChoix($choixUser->getId());
-                $qr->setCleReponse($cleQuestion);
-                $qr->setValeur($value);
-                $this->entityManager->persist($qr);
-            } else {
-                $exist->setValeur($value);
-            }
-            $this->entityManager->flush();
         }
     }
 
@@ -158,6 +173,7 @@ abstract class AbstractTypeDestinataire
             'idQuestChoix' => $this->choixUser->getId(),
             'typeDestinataire' => $typeDestinataire,
         ]);
+
         foreach ($reponses as $reponse) {
             $this->reponses->addReponse($reponse);
         }

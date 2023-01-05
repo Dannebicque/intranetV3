@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeDestinataire/Exterieur.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/12/2022 09:21
+ * @lastUpdate 04/01/2023 21:30
  */
 
 namespace App\Components\Questionnaire\TypeDestinataire;
@@ -140,16 +140,16 @@ class Exterieur extends AbstractTypeDestinataire implements TypeDestinataireInte
 
     public function sauvegardeReponse(QuestChoixInterface $choixUser, string $cleReponse, string $cleQuestion): void
     {
-        $this->abstractSauvegardeReponse($choixUser, $cleReponse, $cleQuestion, 'personnel');
+        $this->abstractSauvegardeReponse($choixUser, $cleReponse, $cleQuestion, 'exterieur');
     }
 
     public function sauvegardeReponseTexte(QuestChoixInterface $choixUser, string $cleQuestion, string $value): void
     {
-        $this->abstractSauvegardeReponseTexte($choixUser, $cleQuestion, 'personnel', $value);
+        $this->abstractSauvegardeReponseTexte($choixUser, $cleQuestion, 'exterieur', $value);
     }
 
     public function getReponses(): ReponsesUser
     {
-        return $this->abstractGetReponses('personnel');
+        return $this->abstractGetReponses('exterieur');
     }
 }

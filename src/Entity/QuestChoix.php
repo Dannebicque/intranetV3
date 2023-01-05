@@ -1,16 +1,17 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/QuestChoix.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/12/2022 15:26
+ * @lastUpdate 04/01/2023 21:43
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\QuestChoixRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: QuestChoixRepository::class)]
@@ -33,6 +34,9 @@ class QuestChoix extends BaseEntity
 
     #[ORM\Column(length: 100)]
     private ?string $cleReponse = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $complement = null;
 
     public function getValeur(): ?string
     {
@@ -90,6 +94,18 @@ class QuestChoix extends BaseEntity
     public function setCleReponse(string $cleReponse): self
     {
         $this->cleReponse = $cleReponse;
+
+        return $this;
+    }
+
+    public function getComplement(): ?string
+    {
+        return $this->complement;
+    }
+
+    public function setComplement(?string $complement): self
+    {
+        $this->complement = $complement;
 
         return $this;
     }

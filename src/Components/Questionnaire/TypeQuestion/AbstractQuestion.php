@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeQuestion/AbstractQuestion.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/12/2022 15:40
+ * @lastUpdate 05/01/2023 07:55
  */
 
 namespace App\Components\Questionnaire\TypeQuestion;
@@ -40,6 +40,8 @@ abstract class AbstractQuestion
     public ?Question $questionParente = null;
     public bool $hasEnfants = false;
     public string $numero = '1';
+    //  public Collection $questionsEnfants;
+    public array $reponsesUser = [];
     protected array $data;
 
     protected ?EntityManagerInterface $em;

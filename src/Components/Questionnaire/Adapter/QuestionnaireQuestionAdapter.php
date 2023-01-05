@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Adapter/QuestionnaireQuestionAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/12/2022 15:26
+ * @lastUpdate 04/01/2023 22:41
  */
 
 namespace App\Components\Questionnaire\Adapter;
@@ -15,6 +15,7 @@ use App\Components\Questionnaire\DTO\ReponsesUser;
 use App\Components\Questionnaire\QuestionnaireRegistry;
 use App\Components\Questionnaire\Section\AbstractSection;
 use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
+use App\Components\Questionnaire\TypeQuestion\TypeChainee;
 use App\Entity\QuestQuestion;
 use App\Utils\Tools;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -61,6 +62,7 @@ class QuestionnaireQuestionAdapter
         $this->question->help = $question->getHelp();
         $this->question->config = $question->getConfig();
         $this->question->cle = $question->getCle();
+        // $this->question->questionsEnfants = $question->getQuestionsEnfants();
 
         $this->question->getOrGenereReponses($question);
 
@@ -75,11 +77,16 @@ class QuestionnaireQuestionAdapter
     public function setReponse(?ReponsesUser $reponsesUser): self
     {
         if (null !== $reponsesUser) {
-            $this->question->reponseUser = $reponsesUser->getReponse($this->question->cle);
 
-            if (null !== $this->question->reponseUser && 'CHX:OTHER' === $this->question->reponseUser->getValeur()) {
-                $this->question->reponseUser->complementValeur = $reponsesUser->getReponse($this->question->cle . '_autre')?->getValeur();
+
+            if ($this->question::class === TypeChainee::class) {
+                foreach ($this->question->questions as $questionEnfant) {
+                    $this->question->reponsesUser[$questionEnfant->getId()] = $reponsesUser->getReponse($questionEnfant->getCle());
+                }
+            } else {
+                $this->question->reponseUser = $reponsesUser->getReponse($this->question->cle);
             }
+
         }
 
         return $this;

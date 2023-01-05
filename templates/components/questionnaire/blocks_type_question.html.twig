@@ -35,8 +35,11 @@
                                         {% if apercu is not defined or apercu == false %}
                                             data-choixUser="{{ choixUserUuid }}"
                                         {% endif %}
-                                        {% if reponseEtudiant != null and
-                                            reponseEtudiant.valeur == reponse.valeur %}checked{% endif %}
+                                        {% if reponsesEtudiant|length > 0 and
+                                            reponsesEtudiant[subQuestion.id] is defined and
+                                            reponsesEtudiant[subQuestion.id] != null and
+                                            reponsesEtudiant[subQuestion.id].valeur == reponse.valeur %}checked
+                                        {% endif %}
                                         {% if obligatoire %}required{% endif %}
                                        class="form-check-input"
                                        value="{{ reponse.valeur }}">
@@ -47,8 +50,8 @@
                 </div>
             </div>
         {% endfor %}
-        {{ block('autres') }}
-        {{ block('nc') }}
+        {#        {{ block('nc') }} #}
+        {# todo: revoir pour mettre en place ? Comment récupérer la valeur ? #}
     </fieldset>
 {% endblock %}
 
@@ -88,8 +91,18 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <label for="customRange3" class="form-label">Example range</label>
-                <input type="range" class="form-range" min="{{ parametres.min }}" max="{{ parametres.max }}" step="{{ parametres.pas }}" id="customRange3">
+                <label for="quizz_question_qcu_{{ name }}_range" class="form-label">
+                    Déplacer le curseur pour indiquer la valeur
+                </label>
+
+                <input type="range"
+                       id="quizz_question_qcu_{{ name }}_range"
+                       name="quizz_question_reponses_{{ name }}"
+                       data-typeQuestionnaire="{{ type_question }}"
+                       {% if reponseEtudiant != null %}value="{{ reponseEtudiant.valeur }}"{% endif %}
+                        {% if obligatoire %}required{% endif %}
+                       data-action="change->questionnaire--enquete#changeRange"
+                       class="form-range" min="{{ parametres.min }}" max="{{ parametres.max }}" step="{{ parametres.pas }}">
             </div>
         </div>
     </fieldset>
@@ -274,16 +287,17 @@
                         {% if obligatoire %}required{% endif %}
                        class="form-check-input"
                        value="CHX:OTHER">
-                <label class="form-check-label required" for="quizz_question_qcu_{{ name }}_autre">Autre,
-                                                                                                   précisez :</label>
-                <input type="text" id="quizz_question_qcm_autre_{{ name }}_autre_text"
+                <label class="form-check-label required" for="quizz_question_qcu_{{ name }}_autre">
+                    Autre, précisez :
+                </label>
+                <input type="text" id="quizz_question_autre_{{ name }}_autre_text"
                        name="quizz_question_reponses_{{ name }}_autre"
                        data-typeQuestionnaire="{{ type_question }}"
                        data-action="change->questionnaire--enquete#onTextAreaChange"
 
                        class="form-control"
                         {% if reponseEtudiant != null and reponseEtudiant.valeur == 'CHX:OTHER' %}
-                            value="{{ reponseEtudiant.complementValeur }}"
+                            value="{{ reponseEtudiant.complement }}"
                         {% endif %}
                 >
             </div>
@@ -302,7 +316,7 @@
                        data-fieldset="{{ id }}"
                        data-typeQuestionnaire="{{ type_question }}"
 
-                       {% if reponseEtudiant != null and
+                       {% if reponseEtudiant is defined and reponseEtudiant != null and
                            reponseEtudiant.valeur == "CHX:NC" %}checked{% endif %}
                         {% if obligatoire %}required{% endif %}
                        class="form-check-input"

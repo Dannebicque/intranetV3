@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeQuestion/TypeChainee.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/12/2022 17:46
+ * @lastUpdate 05/01/2023 07:55
  */
 
 namespace App\Components\Questionnaire\TypeQuestion;
@@ -68,8 +68,8 @@ class TypeChainee extends AbstractQuestion
 
         $this->sauvegardeReponses($question, $entityManager);
 
-        //sauvegarde des "sous-questions"
-        if (array_key_exists('questionsEnfants', $this->data) && $entityManager !== null) {
+        // sauvegarde des "sous-questions"
+        if (array_key_exists('questionsEnfants', $this->data) && null !== $entityManager) {
             foreach ($question->getQuestionsEnfants() as $quest) {
                 $entityManager->remove($quest);
             }
@@ -82,7 +82,7 @@ class TypeChainee extends AbstractQuestion
                 $qR->setHelp($reponse['help']);
                 $qR->setQuestionParent($question);
                 $entityManager->persist($qR);
-                $i++;
+                ++$i;
             }
             $entityManager->flush();
         }

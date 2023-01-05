@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeQuestionRenderer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/12/2022 21:25
+ * @lastUpdate 04/01/2023 22:48
  */
 
 namespace App\Components\Questionnaire;
@@ -36,7 +36,11 @@ class TypeQuestionRenderer
 
         if (TypeChainee::class === $question::class) {
             $params['questionsEnfants'] = $question->questions;
+            $params['reponsesEtudiant'] = $question->reponsesUser;
+        } else {
+            $params['reponseEtudiant'] = $question->reponseUser;
         }
+
 
         $params['name'] = 'q' . $question->id;
         $params['id'] = $question->id;
@@ -50,7 +54,7 @@ class TypeQuestionRenderer
         $params['numero'] = $question->numero;
         $params['ordre'] = $ordre;
         $params['obligatoire'] = $question->obligatoire;
-        $params['reponseEtudiant'] = $question->reponseUser;
+
 
         return $template->renderBlock($params['block_name'], $params);
     }
@@ -60,7 +64,8 @@ class TypeQuestionRenderer
      * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\LoaderError
      */
-    private function load(): TemplateWrapper
+    private
+    function load(): TemplateWrapper
     {
         if (null === $this->templateWrapper) {
             $this->templateWrapper = $this->twig->load($this->template);
@@ -69,8 +74,10 @@ class TypeQuestionRenderer
         return $this->templateWrapper;
     }
 
-    private function isVisible(array $parametres): bool
-    {
+    private
+    function isVisible(
+        array $parametres
+    ): bool {
         if (array_key_exists('conditions', $parametres)) {
             foreach ($parametres['conditions'] as $condition) {
                 if (array_key_exists('type', $condition) && 'condition' === $condition['type']) {
