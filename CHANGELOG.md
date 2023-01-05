@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.6](https://github.com/Dannebicque/intranetV3/compare/v3.11.5...v3.11.6) (2023-01-05)
+
+
+### Bug Fixes
+
+* [Dates] Fix utilisation de TimePicker et non de TimeType qui ne retournait pas du CarbonInterface ([04b07a9](https://github.com/Dannebicque/intranetV3/commit/04b07a92a04f8e10cdf774d537c7ea3d55b1c3ad))
+* [Questionnaire] Mise en page + gestion des questions masquées/conditionnées ([c87345b](https://github.com/Dannebicque/intranetV3/commit/c87345b53864aba2c4fd9941e4832a35911d5f10))
+* [Tables] Affiche d'un semestre ou de plusieurs semestres ([64d7cce](https://github.com/Dannebicque/intranetV3/commit/64d7ccedbbab729c96df4a80b898fd4718cc99b9))
+
 ### [3.11.5](https://github.com/Dannebicque/intranetV3/compare/v3.11.4...v3.11.5) (2023-01-05)
 
 
