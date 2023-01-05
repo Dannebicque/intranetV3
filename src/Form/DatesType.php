@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/DatesType.php
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/DatesType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 14:21
+ * @lastUpdate 05/01/2023 17:48
  */
 
 namespace App\Form;
@@ -13,6 +13,7 @@ use App\Entity\Date;
 use App\Entity\Departement;
 use App\Entity\Semestre;
 use App\Form\Type\DateRangeType;
+use App\Form\Type\TimePickerType;
 use App\Form\Type\TypeDestinataireType;
 use App\Form\Type\YesNoType;
 use App\Repository\SemestreRepository;
@@ -20,7 +21,6 @@ use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
@@ -49,9 +49,10 @@ class DatesType extends AbstractType
                 'label' => 'label.texte_date',
                 'required' => false,
             ])
-            ->add('dateRange', DateRangeType::class, ['label' => 'label.date_evenement', 'mapped' => false, 'required' => true])
-            ->add('heureDebut', TimeType::class, ['widget' => 'single_text', 'label' => 'label.heure_debut'])
-            ->add('heureFin', TimeType::class, ['widget' => 'single_text', 'label' => 'label.heure_fin'])
+            ->add('dateRange', DateRangeType::class,
+                ['label' => 'label.date_evenement', 'mapped' => false, 'required' => true])
+            ->add('heureDebut', TimePickerType::class, ['label' => 'label.heure_debut'])
+            ->add('heureFin', TimePickerType::class, ['label' => 'label.heure_fin'])
             ->add('lieu', TextType::class, [
                 'label' => 'label.lieu_date',
             ])
