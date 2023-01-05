@@ -1,15 +1,15 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/EnqueteQualiteEtudiantsTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/12/2022 09:14
+ * @lastUpdate 05/01/2023 17:42
  */
 
 namespace App\Table;
 
-use App\Entity\Etudiant;
+use App\Components\Questionnaire\TypeDestinataire\Etudiant;
 use App\Entity\QuestQuestionnaire;
 use App\Entity\Semestre;
 use App\Form\Type\DatePickerType;
@@ -106,6 +106,7 @@ class EnqueteQualiteEtudiantsTableType extends TableType
             'fetch_join_collection' => false,
             'query' => function(QueryBuilder $qb, array $formData) {
                 $qb->where('e.typeDestinataire = :typeDestinataire')
+                    ->join('e.semestre', 's')
                     ->setParameter('typeDestinataire', Etudiant::class);
 
                 if (isset($formData['semestre'])) {

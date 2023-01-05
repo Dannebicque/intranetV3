@@ -1,14 +1,23 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/BorneTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 05/01/2023 17:48
  */
 
 namespace App\Table;
 
+use App\Entity\Annee;
+use App\Entity\Borne;
+use App\Entity\Departement;
+use App\Entity\Diplome;
+use App\Entity\Semestre;
+use App\Form\Type\DatePickerType;
+use App\Form\Type\SearchType;
+use App\Table\ColumnType\IconeColumnType;
+use App\Table\ColumnType\SemestresColumnType;
 use DavidAnnebicque\TableBundle\Adapter\EntityAdapter;
 use DavidAnnebicque\TableBundle\Column\BooleanColumnType;
 use DavidAnnebicque\TableBundle\Column\DateColumnType;
@@ -22,15 +31,6 @@ use DavidAnnebicque\TableBundle\Widget\Type\RowDuplicateLinkType;
 use DavidAnnebicque\TableBundle\Widget\Type\RowEditLinkType;
 use DavidAnnebicque\TableBundle\Widget\Type\RowShowLinkType;
 use DavidAnnebicque\TableBundle\Widget\WidgetBuilder;
-use App\Entity\Annee;
-use App\Entity\Borne;
-use App\Entity\Departement;
-use App\Entity\Diplome;
-use App\Entity\Semestre;
-use App\Form\Type\DatePickerType;
-use App\Form\Type\SearchType;
-use App\Table\ColumnType\IconeColumnType;
-use App\Table\ColumnType\SemestreColumnType;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
@@ -74,7 +74,7 @@ class BorneTableType extends TableType
         ]);
         $builder->addColumn('visible', BooleanColumnType::class, [
         ]);
-        $builder->addColumn('semestres', SemestreColumnType::class, [
+        $builder->addColumn('semestres', SemestresColumnType::class, [
             'label' => 'semestres',
         ]);
 
