@@ -2,9 +2,9 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/questionnaire/enquete-controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/01/2023 07:55
+// @lastUpdate 05/01/2023 17:35
 import { Controller } from '@hotwired/stimulus'
-import { useDebounce, useDispatch } from 'stimulus-use'
+import { useDebounce } from 'stimulus-use'
 import Routing from 'fos-router'
 import { post } from '../../js/fetch'
 
@@ -20,7 +20,7 @@ export default class extends Controller {
 
   connect() {
     useDebounce(this)
-    useDispatch(this, { debug: true })
+    //todo: gérer si ca doit être affiché ou non au chargement en fonction des conditions
   }
 
   change(event) {
@@ -34,6 +34,11 @@ export default class extends Controller {
               for (let j = 0; j < condition.questions.length; j++) {
                 document.getElementById(`field_${condition.questions[j]}`).style.display = 'none'
               }
+            } else {
+              //si pas dans les critères, alors on affiche les éléments
+              for (let j = 0; j < condition.questions.length; j++) {
+                document.getElementById(`field_${condition.questions[j]}`).style.display = 'block'
+              }
             }
           }
         }
@@ -41,7 +46,9 @@ export default class extends Controller {
     }
 
     this.dispatch('change-value', {
-      value, source: event.target.name, fieldset: event.target.dataset.fieldset,
+      detail: {
+        value, source: event.target.name, fieldset: event.target.dataset.fieldset,
+      },
     })
   }
 
@@ -51,7 +58,8 @@ export default class extends Controller {
     if (parametres.conditions) {
       for (const condition of parametres.conditions) {
         if (condition.type === 'condition' && condition.declenchement == event.detail.fieldset) {
-          if (condition.criteres.includes(parseInt(value))) {
+
+          if (condition.criteres.includes(value)) {
             document.getElementById(`field_${this.idQuestionValue}`).style.display = 'block'
           } else {
             document.getElementById(`field_${this.idQuestionValue}`).style.display = 'none'

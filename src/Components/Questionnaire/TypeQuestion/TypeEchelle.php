@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/TypeQuestion/TypeEchelle.php
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeQuestion/TypeEchelle.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/10/2021 19:08
+ * @lastUpdate 05/01/2023 17:21
  */
 
 namespace App\Components\Questionnaire\TypeQuestion;
@@ -29,7 +29,7 @@ class TypeEchelle extends TypeQcu
     {
         parent::configureOptions($resolver);
         $resolver
-            ->setDefault('block_name', 'type_qcu')
+            ->setDefault('block_name', 'type_echelle')
             ->setDefault('block_name_edit', 'type_echelle')
             ->setDefault('type_question', 'radio')
             ->setDefault('min', 1)

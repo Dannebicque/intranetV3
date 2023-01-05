@@ -4,14 +4,13 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeDestinataire/AbstractTypeDestinataire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/01/2023 07:55
+ * @lastUpdate 05/01/2023 17:49
  */
 
 namespace App\Components\Questionnaire\TypeDestinataire;
 
 use App\Components\Questionnaire\DTO\ReponsesUser;
 use App\Components\Questionnaire\Interfaces\QuestChoixInterface;
-use App\Components\Questionnaire\TypeQuestion\TypeChainee;
 use App\Components\Questionnaire\TypeQuestion\TypeEchelle;
 use App\Components\Questionnaire\TypeQuestion\TypeOuiNon;
 use App\Components\Questionnaire\TypeQuestion\TypeQcm;
@@ -150,6 +149,7 @@ abstract class AbstractTypeDestinataire
             } else {
                 // pas autre
                 if (null === $exist) {
+                    dump('pas de réponse');
                     $qr = new QuestChoix();
                     $qr->setQuestion($question);
                     $qr->setTypeDestinataire($typeDestinataire);
