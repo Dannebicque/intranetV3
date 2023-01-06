@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.7](https://github.com/Dannebicque/intranetV3/compare/v3.11.6...v3.11.7) (2023-01-06)
+
+
+### Bug Fixes
+
+* [Questionnaire] Problème de route sur l'ajax, ajout du champ commencé, textes des mails ([2855181](https://github.com/Dannebicque/intranetV3/commit/285518189521b0a90dbd736f7eed3369f0117469))
+
 ### [3.11.6](https://github.com/Dannebicque/intranetV3/compare/v3.11.5...v3.11.6) (2023-01-05)
 
 
