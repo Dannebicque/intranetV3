@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/EnqueteQualiteEtudiantsTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/01/2023 17:42
+ * @lastUpdate 06/01/2023 20:46
  */
 
 namespace App\Table;
@@ -21,6 +21,7 @@ use DavidAnnebicque\TableBundle\Column\PropertyColumnType;
 use DavidAnnebicque\TableBundle\Column\WidgetColumnType;
 use DavidAnnebicque\TableBundle\TableBuilder;
 use DavidAnnebicque\TableBundle\TableType;
+use DavidAnnebicque\TableBundle\Widget\Type\RowDeleteLinkType;
 use DavidAnnebicque\TableBundle\Widget\Type\RowDuplicateLinkType;
 use DavidAnnebicque\TableBundle\Widget\Type\RowEditLinkType;
 use DavidAnnebicque\TableBundle\Widget\Type\RowLinkType;
@@ -28,10 +29,15 @@ use DavidAnnebicque\TableBundle\Widget\WidgetBuilder;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class EnqueteQualiteEtudiantsTableType extends TableType
 {
     private string $type;
+
+    public function __construct(private readonly CsrfTokenManagerInterface $csrfToken)
+    {
+    }
 
     public function buildTable(TableBuilder $builder, array $options): void
     {
@@ -87,6 +93,15 @@ class EnqueteQualiteEtudiantsTableType extends TableType
                     'title' => 'Dupliquer le questionnaire',
                     'route_params' => ['id' => $s->getId(), 'type' => $this->type],
                     'xhr' => false,
+                ]);
+                $builder->add('delete', RowDeleteLinkType::class, [
+                    'route' => 'adm_questionnaire_qualite_delete',
+                    'title' => 'Supprimer le questionnaire',
+                    'route_params' => ['id' => $s->getId(), 'type' => $this->type],
+                    'attr' => [
+                        'data-csrf' => $this->csrfToken->getToken('delete' . $s->getId()),
+                        'data-message' => 'La suppression entrainera la suppression de toutes les données et réponses associées. Voulez-vous continuer ?',
+                    ],
                 ]);
                 $builder->add('edit', RowEditLinkType::class, [
                     'route' => 'adm_questionnaire_creation_index',

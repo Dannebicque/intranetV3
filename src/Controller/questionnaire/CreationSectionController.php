@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/CreationSectionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/01/2023 15:17
+ * @lastUpdate 06/01/2023 20:09
  */
 
 namespace App\Controller\questionnaire;
@@ -42,7 +42,7 @@ class CreationSectionController extends BaseController
                 ]);
             case 'delete':
                 $sections = $questSectionRepository->findsectionsSuivantes($section);
-
+//supprimer les réponses des users dans les questions de la section...
                 foreach ($section->getQuestQuestions() as $question) {
                     $this->entityManager->remove($question);
                 }
@@ -111,9 +111,16 @@ class CreationSectionController extends BaseController
                     $question = $questionRepository->find($idQuestion);
                     if (null !== $question) {
                         $newQuestion = clone $question;
+                        $newQuestion->setLibelle($question->getLibelle() . ' (copie)');
                         $newQuestion->setOrdre($ordre);
-                        $newQuestion->setSection($section); // todo: cloner les réponses
+                        $newQuestion->setSection($section);
                         $this->entityManager->persist($newQuestion);
+                        foreach ($question->getQuestReponses() as $reponse) {
+                            $nReponse = clone $reponse;
+                            $newQuestion->addQuestReponse($nReponse);
+                            $nReponse->setQuestion($newQuestion);
+                            $this->entityManager->persist($nReponse);
+                        }
                     }
                 }
 

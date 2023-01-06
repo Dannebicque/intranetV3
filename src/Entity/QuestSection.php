@@ -1,10 +1,18 @@
 <?php
+/*
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/QuestSection.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 06/01/2023 20:08
+ */
 
 namespace App\Entity;
 
 use App\Entity\Traits\ConfigTrait;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\QuestSectionRepository;
+use Carbon\Carbon;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -29,7 +37,7 @@ class QuestSection extends BaseEntity
     #[ORM\ManyToOne(inversedBy: 'questSections')]
     private ?QuestQuestionnaire $questionnaire = null;
 
-    #[ORM\OneToMany(mappedBy: 'section', targetEntity: QuestQuestion::class)]
+    #[ORM\OneToMany(mappedBy: 'section', targetEntity: QuestQuestion::class, cascade: ['persist', 'remove'])]
     #[ORM\OrderBy(['ordre' => 'ASC'])]
     private Collection $questQuestions;
 
@@ -42,6 +50,12 @@ class QuestSection extends BaseEntity
     public function __construct()
     {
         $this->questQuestions = new ArrayCollection();
+    }
+
+    public function __clone(): void
+    {
+        $this->setCreated(Carbon::now());
+        $this->setUpdated(Carbon::now());
     }
 
     public function getQuestionnaire(): ?QuestQuestionnaire

@@ -1,10 +1,18 @@
 <?php
+/*
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/QuestReponse.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 06/01/2023 19:19
+ */
 
 namespace App\Entity;
 
 use App\Entity\Traits\ConfigTrait;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\QuestReponseRepository;
+use Carbon\Carbon;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -26,6 +34,12 @@ class QuestReponse extends BaseEntity
 
     #[ORM\Column(type: Types::INTEGER)]
     private ?int $ordre = null;
+
+    public function __clone(): void
+    {
+        $this->setCreated(Carbon::now());
+        $this->setUpdated(Carbon::now());
+    }
 
     public function getQuestion(): ?QuestQuestion
     {

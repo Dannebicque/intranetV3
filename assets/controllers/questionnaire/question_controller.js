@@ -1,8 +1,8 @@
-// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/questionnaire/question_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/11/2022 08:54
+// @lastUpdate 06/01/2023 19:25
 import { Controller } from '@hotwired/stimulus'
 import { useDispatch } from 'stimulus-use'
 import { addCallout } from '../../js/util'
@@ -37,12 +37,10 @@ export default class extends Controller {
    */
 
   connect() {
-    console.log('connect')
     useDispatch(this, { debug: true })
   }
 
   async changeTypeQuestion(event) {
-    console.log(event.currentTarget.value)
     this.questionTarget.innerHTML = window.da.loaderStimulus
     const params = new URLSearchParams({
       action: 'edit',
@@ -53,11 +51,14 @@ export default class extends Controller {
   }
 
   async delete(event) {
-    const params = new URLSearchParams({
-      action: 'delete',
-    })
-    await fetch(`${this.urlQuestionValue}?${params.toString()}`)
-    this.dispatch('updateListe', { section: event.params.section })
+    if (confirm('Voulez-vous vraiment supprimer cette question et toutes les réponses associées ?')) {
+      const params = new URLSearchParams({
+        action: 'delete',
+      })
+      await fetch(`${this.urlQuestionValue}?${params.toString()}`)
+      this.dispatch('updateListe', { section: event.params.section })
+      addCallout('Question supprimée', 'success')
+    }
   }
 
   async edit() {
@@ -69,12 +70,16 @@ export default class extends Controller {
     this.questionTarget.innerHTML = await response.text()
   }
 
-  duplicate() {
-    console.log('duplicate')
+  async duplicate(event) {
+    const params = new URLSearchParams({
+      action: 'duplicate',
+    })
+    await fetch(`${this.urlQuestionValue}?${params.toString()}`)
+    this.dispatch('updateListe', { section: event.params.section })
+    addCallout('Question dupliquée', 'success')
   }
 
   async sauvegarde() {
-    console.log('sauvegarde')
     const form = document.querySelectorAll('form')
     const dataForm = new FormData(form[0])
 
@@ -83,18 +88,11 @@ export default class extends Controller {
       body: dataForm,
     }
 
-    console.log(dataForm)
     this.questionTarget.innerHTML = window.da.loaderStimulus
     const params = new URLSearchParams({
       action: 'sauvegarde',
     })
-    // await fetch(`${this.urlQuestionValue}?${params.toString()}`, body).then((response) => response.json()).then((data) => {
-    //   if (data === true) {
-    //     addCallout('Questionnaire enregistré', 'success')
-    //   } else {
-    //     addCallout('Erreur lors de l\'enregistrement du questionnaire', 'error')
-    //   }
-    // })
+
     const response = await fetch(`${this.urlQuestionValue}?${params.toString()}`, body)
     addCallout('Question enregistrée', 'success')
     this.questionTarget.innerHTML = await response.text()

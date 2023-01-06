@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/administration/QuestionnaireQualiteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/12/2022 17:44
+ * @lastUpdate 06/01/2023 19:05
  */
 
 namespace App\Controller\questionnaire\administration;
@@ -13,6 +13,7 @@ use App\Components\Questionnaire\QuestionnaireRegistry;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\QuestQuestionnaire;
+use App\Repository\QuestChoixRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -58,13 +59,25 @@ class QuestionnaireQualiteController extends BaseController
         $this->entityManager->persist($newQuestionnaireQualite);
         foreach ($questionnaire->getQuestSections() as $section) {
             $nSection = clone $section;
-//            $newQuestionnaireQualite->addSection($nSection);
-//            if (null !== $nSection->getConfig()) {
-//                $t = explode('-', (string) $nSection->getConfig());
-//                $nSection->setConfig($t[0].'-');
-//            }
-//            $nSection->setQuestionnaireQualite($newQuestionnaireQualite);
-//            $this->entityManager->persist($nSection);
+            $nSection->setQuestionnaire($newQuestionnaireQualite);
+            $newQuestionnaireQualite->addQuestSection($nSection);
+            $this->entityManager->persist($nSection);
+
+            //duplique les questions
+            foreach ($section->getQuestQuestions() as $question) {
+                $nQuestion = clone $question;
+                $nQuestion->setSection($nSection);
+                $nSection->addQuestQuestion($nQuestion);
+                $this->entityManager->persist($nQuestion);
+
+                //duplique les choix
+                foreach ($question->getQuestReponses() as $reponse) {
+                    $nChoix = clone $reponse;
+                    $nChoix->setQuestion($nQuestion);
+                    $nQuestion->addQuestReponse($nChoix);
+                    $this->entityManager->persist($nChoix);
+                }
+            }
         }
         $this->entityManager->flush();
         $this->addFlash(Constantes::FLASHBAG_SUCCESS, 'questionnaire.duplicate.success.flashbag');
@@ -73,18 +86,40 @@ class QuestionnaireQualiteController extends BaseController
             ['questionnaire' => $questionnaire->getId(), 'type' => $request->get('type')]
         );
     }
-//
-//    #[Route('/{id}', name: 'delete', methods: ['POST'])]
-//    public function delete(Request $request, QuestionnaireQualite $questionnaireQualite): Response
-//    {
-//        if ($this->isCsrfTokenValid('delete'.$questionnaireQualite->getId(),
-//            $request->server->get('HTTP_X_CSRF_TOKEN'))) {
-//            $this->entityManager->remove($questionnaireQualite);
-//            $this->entityManager->flush();
-//            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'questionnaire.delete.success.flash');
-//        }
-//
-//        return $this->redirectToRoute('adm_questionnaire_qualite_index', ['type' => $request->get('type')],
-//            Response::HTTP_SEE_OTHER);
-//    }
+
+    #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
+    public function delete(
+        QuestChoixRepository $questChoixRepository,
+        Request $request,
+        QuestQuestionnaire $questionnaireQualite
+    ): Response {
+        $id = $questionnaireQualite->getId();
+
+        if ($this->isCsrfTokenValid('delete' . $questionnaireQualite->getId(),
+            $request->server->get('HTTP_X_CSRF_TOKEN'))) {
+            // suppression des choix et choixUser
+
+            // suppression des sections
+            // suppression des questions et réponses
+            foreach ($questionnaireQualite->getQuestSections() as $section) {
+                foreach ($section->getQuestQuestions() as $question) {
+                    foreach ($question->getQuestReponses() as $reponse) {
+                        $this->entityManager->remove($reponse);
+                    }
+                    $this->entityManager->remove($question);
+                }
+                $this->entityManager->remove($section);
+            }
+
+            $this->entityManager->remove($questionnaireQualite);
+            $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'questionnaire.delete.success.flash');
+
+            return $this->json($id, Response::HTTP_OK);
+        }
+
+        $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'actualite.delete.error.flash');
+
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
 }

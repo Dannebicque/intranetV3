@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/QuestQuestionnaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/12/2022 20:24
+ * @lastUpdate 06/01/2023 19:19
  */
 
 namespace App\Entity;
@@ -13,6 +13,7 @@ use App\Entity\Traits\ConfigTrait;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
 use App\Repository\QuestQuestionnaireRepository;
+use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -76,6 +77,13 @@ class QuestQuestionnaire extends BaseEntity
     {
         $this->questSections = new ArrayCollection();
         $this->setUuid(Uuid::uuid4());
+    }
+
+    public function __clone(): void
+    {
+        $this->libelle .= ' (copie)';
+        $this->setCreated(Carbon::now());
+        $this->setUpdated(Carbon::now());
     }
 
     /**

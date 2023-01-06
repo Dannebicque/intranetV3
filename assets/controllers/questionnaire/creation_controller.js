@@ -2,11 +2,11 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/questionnaire/creation_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 02/01/2023 14:02
+// @lastUpdate 06/01/2023 20:44
 
 import { Controller } from '@hotwired/stimulus'
-import { addCallout } from '../../js/util'
 import tinymce from 'tinymce/tinymce.min'
+import { addCallout } from '../../js/util'
 
 export default class extends Controller {
   static targets = ['progressBar', 'stepZone', 'question', 'section']
@@ -24,12 +24,12 @@ export default class extends Controller {
     this._changeStep(event.params.step, event.params.section)
   }
 
-  async sauvegardeIntro(event) {
+  sauvegardeIntro(event) {
     event.preventDefault()
     this._saveIntro(event)
   }
 
-  async sauvegardeFin(event) {
+  sauvegardeFin(event) {
     event.preventDefault()
     this._saveFin(event)
   }
@@ -60,7 +60,7 @@ export default class extends Controller {
   async sauvegardeIntroAndNext(event) {
     event.preventDefault()
     this._saveIntro(event).then(() => {
-      this._changeStep('addSection') //todo: ou section suivante ??
+      this._changeStep('addSection')
     })
   }
 
@@ -74,7 +74,7 @@ export default class extends Controller {
     })
     const response = await fetch(`${this.urlValue}?${params.toString()}`)
     this.stepZoneTarget.innerHTML = await response.text()
-
+    addCallout('Section ajoutée', 'success')
   }
 
   refreshContent(event) {

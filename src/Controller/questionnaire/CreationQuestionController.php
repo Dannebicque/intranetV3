@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/CreationQuestionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 18:29
+ * @lastUpdate 06/01/2023 20:07
  */
 
 namespace App\Controller\questionnaire;
@@ -31,6 +31,16 @@ class CreationQuestionController extends BaseController
             case 'delete':
                 $questions = $questionRepository->findQuestionsSuivantes($question);
                 $question->getSection()->removeQuestQuestion($question);
+
+                //todo: supprimer les réponses des users
+//                foreach ($question->getQuestionsEnfants() as $q) {
+//                    $this->entityManager->remove($q);
+//                }
+//
+//                foreach ($question->getQuestReponses() as $reponse) {
+//                    $this->entityManager->remove($reponse);
+//                }
+
                 $this->entityManager->remove($question);
 
                 foreach ($questions as $q) {
@@ -59,7 +69,6 @@ class CreationQuestionController extends BaseController
                 }
 
                 $typeQuestion = $questionnaireRegistry->getTypeQuestion($question->getType());
-//                $question->setType($typeQuestion::class);
                 $form = $this->createForm($typeQuestion::FORM, $question, [
                     'listeTypeQuestion' => $questionnaireRegistry->getAllTypeQuestions(),
                 ]);
@@ -71,6 +80,28 @@ class CreationQuestionController extends BaseController
                         'form' => $form->createView(),
                     ]
                 );
+            case 'duplicate':
+                $nQuestion = clone $question;
+                $nQuestion->setLibelle($question->getLibelle() . ' (copie)');
+                $nQuestion->setOrdre($questionRepository->getMaxOrdre($question->getSection()) + 1);
+                $this->entityManager->persist($nQuestion);
+
+                foreach ($question->getQuestionsEnfants() as $qEnfant) {
+                    $nqEnfant = clone $qEnfant;
+                    $nqEnfant->setQuestionParent($nQuestion);
+                    $nQuestion->addQuestionsEnfant($nqEnfant);
+                    $this->entityManager->persist($nqEnfant);
+                }
+
+                foreach ($question->getQuestReponses() as $reponse) {
+                    $nReponse = clone $reponse;
+                    $nQuestion->addQuestReponse($nReponse);
+                    $nReponse->setQuestion($nQuestion);
+                    $this->entityManager->persist($nReponse);
+                }
+
+                $this->entityManager->flush();
+                break;
             case 'up':
                 $questionOld = $questionRepository->findOneBy([
                     'ordre' => $question->getOrdre() - 1,

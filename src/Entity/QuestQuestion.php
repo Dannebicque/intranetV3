@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/QuestQuestion.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/12/2022 17:46
+ * @lastUpdate 06/01/2023 20:10
  */
 
 namespace App\Entity;
@@ -12,6 +12,7 @@ namespace App\Entity;
 use App\Entity\Traits\ConfigTrait;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\QuestQuestionRepository;
+use Carbon\Carbon;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -27,7 +28,7 @@ class QuestQuestion extends BaseEntity
     #[ORM\ManyToOne(inversedBy: 'questQuestions')]
     private ?QuestSection $section = null;
 
-    #[ORM\OneToMany(mappedBy: 'question', targetEntity: QuestReponse::class)]
+    #[ORM\OneToMany(mappedBy: 'question', targetEntity: QuestReponse::class, cascade: ['persist', 'remove'])]
     private Collection $questReponses;
 
     #[ORM\Column(type: Types::STRING, length: 255)]
@@ -42,7 +43,7 @@ class QuestQuestion extends BaseEntity
     #[ORM\ManyToOne(targetEntity: QuestQuestion::class, inversedBy: 'questionsEnfants')]
     private ?QuestQuestion $questionParent = null;
 
-    #[ORM\OneToMany(mappedBy: 'questionParent', targetEntity: QuestQuestion::class, cascade: ["persist"])]
+    #[ORM\OneToMany(mappedBy: 'questionParent', targetEntity: QuestQuestion::class, cascade: ["persist", "remove"])]
     private Collection $questionsEnfants;
 
     #[ORM\Column(type: Types::BOOLEAN)]
@@ -54,7 +55,7 @@ class QuestQuestion extends BaseEntity
     #[ORM\Column(type: Types::INTEGER)]
     private ?int $ordre = null;
 
-    #[ORM\OneToMany(mappedBy: 'question', targetEntity: QuestChoix::class)]
+    #[ORM\OneToMany(mappedBy: 'question', targetEntity: QuestChoix::class, cascade: ['persist', 'remove'])]
     private Collection $questChoixes;
 
     public function __construct()
@@ -63,6 +64,12 @@ class QuestQuestion extends BaseEntity
         $this->questionsEnfants = new ArrayCollection();
         $this->type = 'text'; //todo: comment gére ? Enum?
         $this->questChoixes = new ArrayCollection();
+    }
+
+    public function __clone(): void
+    {
+        $this->setCreated(Carbon::now());
+        $this->setUpdated(Carbon::now());
     }
 
     public function getSection(): ?QuestSection

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/CreationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/12/2022 09:21
+ * @lastUpdate 06/01/2023 20:25
  */
 
 namespace App\Controller\questionnaire;
@@ -132,6 +132,28 @@ class CreationController extends BaseController
                         $elt->setTitre('Nouvelle Section ' . $ordre);
                         $elt->setOrdre($ordre);
                         $elt->setQuestionnaire($questionnaire);
+                        //dupliquer les questions
+                        foreach ($section->getQuestQuestions() as $question) {
+                            $nQuestion = clone $question;
+                            $nQuestion->setSection($elt);
+                            $elt->addQuestQuestion($nQuestion);
+                            $this->entityManager->persist($nQuestion);
+
+                            foreach ($question->getQuestionsEnfants() as $qEnfant) {
+                                $nqEnfant = clone $qEnfant;
+                                $nqEnfant->setQuestionParent($nQuestion);
+                                $nQuestion->addQuestionsEnfant($nqEnfant);
+                                $this->entityManager->persist($nqEnfant);
+                            }
+
+                            foreach ($question->getQuestReponses() as $reponse) {
+                                $nReponse = clone $reponse;
+                                $nQuestion->addQuestReponse($nReponse);
+                                $nReponse->setQuestion($nQuestion);
+                                $this->entityManager->persist($nReponse);
+                            }
+
+                        }
                         $this->entityManager->persist($elt);
                     }
                 }

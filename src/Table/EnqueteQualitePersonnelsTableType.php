@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/EnqueteQualitePersonnelsTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/12/2022 11:39
+ * @lastUpdate 06/01/2023 20:46
  */
 
 namespace App\Table;
@@ -19,16 +19,22 @@ use DavidAnnebicque\TableBundle\Column\PropertyColumnType;
 use DavidAnnebicque\TableBundle\Column\WidgetColumnType;
 use DavidAnnebicque\TableBundle\TableBuilder;
 use DavidAnnebicque\TableBundle\TableType;
+use DavidAnnebicque\TableBundle\Widget\Type\RowDeleteLinkType;
 use DavidAnnebicque\TableBundle\Widget\Type\RowDuplicateLinkType;
 use DavidAnnebicque\TableBundle\Widget\Type\RowEditLinkType;
 use DavidAnnebicque\TableBundle\Widget\Type\RowLinkType;
 use DavidAnnebicque\TableBundle\Widget\WidgetBuilder;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
 
 class EnqueteQualitePersonnelsTableType extends TableType
 {
     private string $type;
+
+    public function __construct(private readonly CsrfTokenManagerInterface $csrfToken)
+    {
+    }
 
     public function buildTable(TableBuilder $builder, array $options): void
     {
@@ -45,7 +51,7 @@ class EnqueteQualitePersonnelsTableType extends TableType
         $builder->addColumn('dateOuverture', DateColumnType::class, ['label' => 'table.dateOuverture']);
         $builder->addColumn('dateFermeture', DateColumnType::class, ['label' => 'table.dateFermeture']);
 
-        if ($this->type === 'administratif') {
+        if ('administratif' === $this->type) {
             $builder->addColumn('auteur', PersonnelColumnType::class, ['label' => 'table.auteur']);
         }
 
@@ -76,6 +82,15 @@ class EnqueteQualitePersonnelsTableType extends TableType
                     'route_params' => ['id' => $s->getId(), 'type' => $this->type],
                     'xhr' => false,
                 ]);
+                $builder->add('delete', RowDeleteLinkType::class, [
+                    'route' => 'adm_questionnaire_qualite_delete',
+                    'title' => 'Supprimer le questionnaire',
+                    'route_params' => ['id' => $s->getId(), 'type' => $this->type],
+                    'attr' => [
+                        'data-csrf' => $this->csrfToken->getToken('delete' . $s->getId()),
+                        'data-message' => 'La suppression entrainera la suppression de toutes les données et réponses associées. Voulez-vous continuer ?',
+                    ],
+                ]);
                 $builder->add('edit', RowEditLinkType::class, [
                     'route' => 'adm_questionnaire_creation_index',
                     'title' => 'Modifier le questionnaire',
@@ -87,7 +102,6 @@ class EnqueteQualitePersonnelsTableType extends TableType
 
         $builder->setLoadUrl('administratif_enquete_destinataire_index',
             ['typeDestinataire' => $options['typeDestinataire']]);
-
 
         $builder->useAdapter(EntityAdapter::class, [
             'class' => QuestQuestionnaire::class,

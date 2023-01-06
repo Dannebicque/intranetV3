@@ -32,7 +32,7 @@
                     {{ stimulus_action('questionnaire--question', 'edit', 'click') }}
             ><i class="{{ iconEdit }}"></i></button>
             <button class="btn btn-success-outline btn-sm"
-                    {{ stimulus_action('questionnaire--question', 'duplicate', 'click') }}
+                    {{ stimulus_action('questionnaire--question', 'duplicate', 'click', {section: section.id}) }}
             ><i class="{{ iconDuplicate }}"></i></button>
 
 
