@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Questionnaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/12/2022 15:40
+ * @lastUpdate 06/01/2023 11:58
  */
 
 namespace App\Components\Questionnaire;
@@ -238,11 +238,11 @@ class Questionnaire
 
     public function getUrlEnd(): string
     {
-        if ('' !== $this->options['routeEnd']) {
-            return $this->router->generate($this->options['routeEnd'], $this->options['paramsEnd']);
-        }
+//        if ('' !== $this->options['routeEnd']) {
+//            return $this->router->generate($this->options['routeEnd'], $this->options['paramsEnd']);
+//        }
 
-        return 'https://www.univ-reims.fr';
+        return 'https://www.iut-troyes.univ-reims.fr';
     }
 
     public function calculResultats(ListeChoix $listeChoix): void

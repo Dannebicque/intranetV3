@@ -1,7 +1,6 @@
 <p>Bonjour {{ questChoix.display }},</p>
 
-<p>Dans le cadre de notre système qualité, nous devons nous assurer de la satisfaction de nos alternants et auditeurs.
-   Aussi nous vous invitons à répondre au questionnaire <strong>{{ questionnaire.titre }}</strong>.</p>
+<p>{{ questionnaire.texteExplication|raw }}</p>
 
 <p>
     <a href="{{ url('enquete_questionnaire_qualite_index', {uuidQuestionnaire: questionnaire.uuidString, uuid: questChoix
@@ -12,9 +11,16 @@
 </p>
 
 <p>Le questionnaire est anonyme et confidentiel.</p>
+<p>Merci d'y consacrer quelques minutes !</p>
+<p>Vous pourrez à tout moment vous interrompre puis revenir au questionnaire quand vous le souhaiterez.</p>
+
 <p>Il est accessible du {{ questionnaire.dateOuverture|format_datetime('short', 'short') }} au {{ questionnaire
-    .dateFermeture|format_datetime('short', 'short') }}</p>
+    .dateFermeture|format_datetime('short', 'short') }}.</p>
 
-<p>Bien cordialement,</p>
+<p>Nous vous remercions vivement de votre participation,</p>
 
-<p>Le service Qualité de l'IUT de Troyes<br>
+<p>La Formation Continue & en Alternance<br>
+
+<p>
+    <i>Remarque : dans le questionnaire, le genre masculin est employé pour désigner les femmes et les hommes.</i>
+</p>

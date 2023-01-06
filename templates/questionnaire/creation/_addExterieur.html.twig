@@ -35,8 +35,10 @@
             <td>{{ elt.prenom }}</td>
             <th>{{ elt.email }}</th>
             <th>
-                    <span class="badge bg-{% if elt.envoye == true %}success{% else %}warning{% endif %}">
-                    {% if elt.envoye == true %}Envoyé{% else %}En attente{% endif %}
+                    <span class="badge bg-{% if elt.envoye == true and elt.commence == false %}success{% elseif elt
+                    .envoye == true and elt.commence == true %}info{% else %}warning{% endif %}">
+                    {% if elt.envoye == true and elt.commence == false %}Envoyé{% elseif elt
+                    .envoye == true and elt.commence == true %}Commencé{% else %}En attente{% endif %}
                     </span>
             </th>
             <th></th>

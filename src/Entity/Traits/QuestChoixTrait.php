@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Traits/QuestChoixTrait.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/12/2022 16:42
+ * @lastUpdate 06/01/2023 13:02
  */
 
 namespace App\Entity\Traits;
@@ -21,6 +21,9 @@ trait QuestChoixTrait
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateEnvoi = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?CarbonInterface $dateCommence = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?CarbonInterface $dateTermine = null;
@@ -64,6 +67,18 @@ trait QuestChoixTrait
         return $this;
     }
 
+    public function getDateCommence(): ?CarbonInterface
+    {
+        return $this->dateCommence;
+    }
+
+    public function setDateCommence(?CarbonInterface $dateCommence): self
+    {
+        $this->dateCommence = $dateCommence;
+
+        return $this;
+    }
+
     public function getCleQuestionnaire(): ?string
     {
         return $this->cleQuestionnaire;
@@ -79,5 +94,10 @@ trait QuestChoixTrait
     public function envoye(): bool
     {
         return null !== $this->dateEnvoi;
+    }
+
+    public function commence(): bool
+    {
+        return null !== $this->dateCommence;
     }
 }

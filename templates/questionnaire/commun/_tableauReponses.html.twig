@@ -28,6 +28,12 @@
                 <td id="valide_{{ element.id }}">
                     Validé le {{ element.dateTermine|format_datetime('short', 'short') }}
                 </td>
+            {% elseif element.envoye == true and element.commence == false %}
+                <td>
+                    <span class="badge bg-info">Envoyé</span>
+                </td>
+                <td>Envoyé
+                    le {{ element.dateEnvoi|format_datetime('short','short') }}</td>
             {% else %}
                 <td>
                     <span class="badge bg-warning">En cours</span>

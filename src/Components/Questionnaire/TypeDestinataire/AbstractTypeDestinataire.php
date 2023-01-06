@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeDestinataire/AbstractTypeDestinataire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/01/2023 17:49
+ * @lastUpdate 06/01/2023 13:02
  */
 
 namespace App\Components\Questionnaire\TypeDestinataire;
@@ -20,6 +20,7 @@ use App\Entity\QuestQuestionnaire;
 use App\Repository\QuestChoixRepository;
 use App\Repository\QuestQuestionRepository;
 use App\Repository\QuestReponseRepository;
+use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
@@ -52,6 +53,7 @@ abstract class AbstractTypeDestinataire
         string $typeDestinataire,
         string $value = null
     ): void {
+        $this->questionnaireCommence();
         $t = explode('_', $cleReponse);
         $question = $this->questQuestionRepository->find(mb_substr($t[3], 1, mb_strlen($t[0])));
 
@@ -88,7 +90,6 @@ abstract class AbstractTypeDestinataire
                 TypeQcu::class === $question->getType() ||
                 TypeEchelle::class === $question->getType() ||
                 TypeOuiNon::class === $question->getType()) {
-
                 $exist->setCleReponse($cleReponse);
                 $exist->setValeur($reponse);
             } elseif (TypeQcm::class === $question->getType()) {
@@ -119,11 +120,11 @@ abstract class AbstractTypeDestinataire
         string $cleQuestion,
         string $typeDestinataire,
         string $value
-    ): void
-    {
+    ): void {
+        $this->questionnaireCommence();
         $t = explode('_', $cleQuestion);
         $question = $this->questQuestionRepository->find(mb_substr($t[3], 1, mb_strlen($t[0])));
-        if ($question !== null) {
+        if (null !== $question) {
             $exist = $this->questChoixRepository->findExistQuestion($question->getId(), $choixUser, $typeDestinataire);
 
             if ('autre' === $t[2]) {
@@ -179,5 +180,13 @@ abstract class AbstractTypeDestinataire
         }
 
         return $this->reponses;
+    }
+
+    private function questionnaireCommence(): void
+    {
+        if (null === $this->choixUser->getDateCommence()) {
+            $this->choixUser->setDateCommence(Carbon::now());
+            $this->entityManager->flush();
+        }
     }
 }

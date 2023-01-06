@@ -1,8 +1,13 @@
 <p class="text-center fs-35 text-muted"><strong class="text-primary">Bienvenue</strong>
     sur le questionnaire {{ titre }}</p>
-<p class="text-center text-gray">{{ texteDebut|raw }}</p>
+<p class="text-center text-gray">
+    {{ texteDebut|raw }}
+</p>
 <hr class="w-100px">
 <div class="alert alert-info">
-    Questionnaire à compléter entre le {{ dateOuverture|format_date
-        ('short') }} et le {{ dateFermeture|format_date('short') }}.
+    <p>Questionnaire à compléter entre le {{ dateOuverture|format_date
+            ('short') }} et le {{ dateFermeture|format_date('short') }}.</p>
+    <p><strong>Le questionnaire est anonyme et confidentiel.</strong></p>
+    <i>Remarque : dans le questionnaire, le genre masculin est employé pour désigner les femmes et les hommes.</i>
 </div>
+

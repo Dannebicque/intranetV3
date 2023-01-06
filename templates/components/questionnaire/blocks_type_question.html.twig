@@ -70,7 +70,7 @@
             <small id="quizz_question_{{ id }}_help" class="form-text text-muted">{{ help }}</small>
         </div>
         <div class="row">
-            {{ block('liste_reponses') }}
+            {{ block('liste_reponses_echelle') }}
         </div>
     </fieldset>
 {% endblock %}
@@ -236,10 +236,34 @@
     </legend>
 {% endblock %}
 
+{% block liste_reponses_echelle %}
+    <div class="col-12">
+        {% for reponse in reponses %}
+            <div class="form-check form-check-inline">
+                <input type="{{ type_question }}" id="quizz_question_qcu_{{ name }}_{{ reponse.id }}"
+                       name="quizz_question_reponses_{{ name }}"
+                       data-action="change->questionnaire--enquete#changeRange"
+                       data-fieldset="{{ id }}"
+                       data-typeQuestionnaire="{{ type_question }}"
+                       {% if reponseEtudiant != null and
+                           reponseEtudiant.valeur == reponse.valeur %}checked{% endif %}
+                        {% if obligatoire %}required{% endif %}
+                       class="form-check-input"
+                       value="{{ reponse.valeur }}">
+                <label class="form-check-label  {% if obligatoire %}required{% endif %}" for="quizz_question_qcu_{{ name }}_{{ reponse.id }}">{{ reponse.libelle }}</label>
+                <div class="form-control-feedback"></div>
+            </div>
+
+        {% endfor %}
+        {{ block('autres') }}
+        {{ block('nc') }}
+    </div>
+{% endblock %}
+
 {% block liste_reponses %}
-    {% for reponse in reponses %}
-        <div class="col-sm-12 col-md-2">
-            <div class="form-check">
+    <div class="col-12">
+        {% for reponse in reponses %}
+            <div class="form-check form-check-inline">
                 <input type="{{ type_question }}" id="quizz_question_qcu_{{ name }}_{{ reponse.id }}"
                        name="quizz_question_reponses_{{ name }}"
                        data-action="change->questionnaire--enquete#change"
@@ -252,44 +276,35 @@
                        class="form-check-input"
                        value="{{ reponse.valeur }}">
                 <label class="form-check-label required" for="quizz_question_qcu_{{ name }}_{{ reponse.id }}">{{ reponse.libelle }}</label>
-                {#                {% if reponse.valeur == "CHX:OTHER" %} #}
-                {#                    <input type="text" id="quizz_question_qcm_autre_{{ name }}_{{ reponse.id }}" #}
-                {#                           name="quizz_question_reponses_{{ name }}_autre" #}
-                {#                           data-typeQuestionnaire="{{ type_question }}" #}
-                {#                           data-action="change->questionnaire--enquete#onTextAreaChange" #}
-
-                {#                           class="form-control" #}
-                {#                            {% if reponseEtudiant != null and reponseEtudiant.valeur == 'CHX:OTHER' %} #}
-                {#                                value="{{ reponseEtudiant.complementValeur }}" #}
-                {#                            {% endif %} #}
-                {#                    > #}
-                {#                {% endif %} #}
+                <div class="form-control-feedback"></div>
             </div>
-            <div class="form-control-feedback"></div>
-        </div>
-    {% endfor %}
-    {{ block('autres') }}
-    {{ block('nc') }}
+        {% endfor %}
+        {{ block('autres') }}
+        {{ block('nc') }}
+    </div>
 {% endblock %}
 
-{% block autres %}
-    {% if parametres.choix_autre is defined and parametres.choix_autre == true %}
-        <div class="col-sm-12 col-md-2">
-            <div class="form-check">
-                <input type="{{ type_question != '' ? type_question : 'radio' }}" id="quizz_question_qcu_{{ name }}_autre"
-                       name="quizz_question_reponses_{{ name }}"
-                       data-action="change->questionnaire--enquete#change"
-                       data-fieldset="{{ id }}"
-                       data-typeQuestionnaire="{{ type_question }}"
+    {% block autres %}
+        {% if parametres.choix_autre is defined and parametres.choix_autre == true %}
+            <div>
+                <div class="form-check form-check-inline">
+                    <input type="{{ type_question != '' ? type_question : 'radio' }}" id="quizz_question_qcu_{{ name }}_autre"
+                           name="quizz_question_reponses_{{ name }}"
+                           data-action="change->questionnaire--enquete#change"
+                           data-fieldset="{{ id }}"
+                           data-typeQuestionnaire="{{ type_question }}"
 
-                       {% if reponseEtudiant != null and
-                           reponseEtudiant.valeur == "CHX:OTHER" %}checked{% endif %}
-                        {% if obligatoire %}required{% endif %}
-                       class="form-check-input"
-                       value="CHX:OTHER">
-                <label class="form-check-label required" for="quizz_question_qcu_{{ name }}_autre">
-                    Autre, précisez :
-                </label>
+                           {% if reponseEtudiant != null and
+                               reponseEtudiant.valeur == "CHX:OTHER" %}checked{% endif %}
+                            {% if obligatoire %}required{% endif %}
+                           class="form-check-input"
+                           value="CHX:OTHER">
+
+                    <label class="form-check-label required" for="quizz_question_qcu_{{ name }}_autre">
+                        Autre, précisez :
+                    </label>
+                </div>
+                <label class="sr-only" for="quizz_question_autre_{{ name }}_autre_text">Précisez votre réponse</label>
                 <input type="text" id="quizz_question_autre_{{ name }}_autre_text"
                        name="quizz_question_reponses_{{ name }}_autre"
                        data-typeQuestionnaire="{{ type_question }}"
@@ -300,16 +315,14 @@
                             value="{{ reponseEtudiant.complement }}"
                         {% endif %}
                 >
+                <div class="form-control-feedback"></div>
             </div>
-            <div class="form-control-feedback"></div>
-        </div>
-    {% endif %}
-{% endblock %}
+        {% endif %}
+    {% endblock %}
 
-{% block nc %}
-    {% if parametres.choix_nc is defined and parametres.choix_nc == true %}
-        <div class="col-sm-12 col-md-2">
-            <div class="form-check">
+    {% block nc %}
+        {% if parametres.choix_nc is defined and parametres.choix_nc == true %}
+            <div class="form-check form-check-inline">
                 <input type="{{ type_question != '' ? type_question : 'radio' }}" id="quizz_question_qcu_{{ name }}_nc"
                        name="quizz_question_reponses_{{ name }}"
                        data-action="change->questionnaire--enquete#change"
@@ -325,6 +338,5 @@
                     Non concerné
                 </label>
             </div>
-        </div>
-    {% endif %}
-{% endblock %}
+        {% endif %}
+    {% endblock %}

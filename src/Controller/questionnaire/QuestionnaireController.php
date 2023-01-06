@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/QuestionnaireController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/12/2022 17:30
+ * @lastUpdate 06/01/2023 13:02
  */
 
 namespace App\Controller\questionnaire;
@@ -168,7 +168,7 @@ class QuestionnaireController extends AbstractController
      * @throws NonUniqueResultException
      * @throws \JsonException
      */
-    #[Route(path: '/api/ajax/reponse/{uuidQuestionnaire}/{uuid}', name: 'api_questionnaire_qualite_ajax_reponse', options: ['expose' => true])]
+    #[Route(path: '/enquete-qualite/api/ajax/reponse/{uuidQuestionnaire}/{uuid}', name: 'api_questionnaire_qualite_ajax_reponse', options: ['expose' => true])]
     #[ParamConverter('questQuestionnaire', options: ['mapping' => ['uuidQuestionnaire' => 'uuid']])]
     public function sauvegardeReponse(
         QuestionnaireRegistry $questionnaireRegistry,
@@ -199,7 +199,7 @@ class QuestionnaireController extends AbstractController
      * @throws \JsonException
      * @throws \JsonException
      */
-    #[Route(path: '/api/ajax/reponse-txt/{uuidQuestionnaire}/{uuid}', name: 'api_questionnaire_qualite_ajax_reponse_txt', options: ['expose' => true])]
+    #[Route(path: '/enquete-qualite/api/ajax/reponse-txt/{uuidQuestionnaire}/{uuid}', name: 'api_questionnaire_qualite_ajax_reponse_txt', options: ['expose' => true])]
     #[ParamConverter('questQuestionnaire', options: ['mapping' => ['uuidQuestionnaire' => 'uuid']])]
     public function sauvegardeReponseTxt(
         QuestionnaireRegistry $questionnaireRegistry,
@@ -207,10 +207,11 @@ class QuestionnaireController extends AbstractController
         string $uuid,
         Request $request
     ): JsonResponse {
+
+
         $typeDestinataire = $questionnaireRegistry->getTypeDestinataire($questQuestionnaire->getTypeDestinataire());
         $typeDestinataire->setQuestionnaire($questQuestionnaire);
         $choixUser = $typeDestinataire->getChoixUser($uuid);
-
         $donnees = JsonRequest::getFromRequest($request);
 
         $cleQuestion = $donnees['cleQuestion'];
@@ -226,4 +227,5 @@ class QuestionnaireController extends AbstractController
 
 
     }
+
 }
