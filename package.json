@@ -22,7 +22,6 @@
     "regenerator-runtime": "^0.13.9",
     "sass-loader": "^13.0.0",
     "stimulus-clipboard": "^1.0.0",
-    "stimulus-use": "^0.50.0",
     "webpack": "^5.74.0",
     "webpack-bundle-analyzer": "^4.4.2",
     "webpack-cli": "^4.10.0"
@@ -51,14 +50,15 @@
     "sweetalert2": "^9.17.0",
     "tinymce": "^5.9.0",
     "tom-select": "^2.2.2",
-    "webpack-notifier": "^1.6.0"
+    "webpack-notifier": "^1.6.0",
+    "stimulus-use": "^0.50.0"
   },
   "auto-changelog": {
     "template": "keepachangelog",
     "unreleased": true,
     "commitLimit": false
   },
-  "version": "3.11.7",
+  "version": "3.11.8",
   "author": "David Annebicque",
   "name": "intranetv3",
   "repository": {

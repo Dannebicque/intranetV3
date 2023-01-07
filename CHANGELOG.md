@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.8](https://github.com/Dannebicque/intranetV3/compare/v3.11.7...v3.11.8) (2023-01-07)
+
+
+### Features
+
+* [Questionnaire] Suppression, duplication des questionnaires, sections, questions ([4535221](https://github.com/Dannebicque/intranetV3/commit/453522175f924df7847cea118989b113e0f91b24))
+
 ### [3.11.7](https://github.com/Dannebicque/intranetV3/compare/v3.11.6...v3.11.7) (2023-01-06)
 
 
