@@ -1,6 +1,6 @@
 {{ section_creation_render(section) }}
 
-<select class="form-select mt-2" {{ stimulus_action('questionnaire--section', 'addQuestion', 'change',
+<select class="form-select mt-2" is="select-complete" {{ stimulus_action('questionnaire--section', 'addQuestion', 'change',
     {section:section.id}) }}
         id="addQuestion"
 >

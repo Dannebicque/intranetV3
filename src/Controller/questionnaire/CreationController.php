@@ -4,11 +4,14 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/CreationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/01/2023 19:57
+ * @lastUpdate 07/01/2023 21:55
  */
 
 namespace App\Controller\questionnaire;
 
+use App\Components\Questionnaire\Adapter\QuestionnaireQualiteAdapter;
+use App\Components\Questionnaire\Adapter\SectionQualiteEntityAdapter;
+use App\Components\Questionnaire\Questionnaire;
 use App\Components\Questionnaire\QuestionnaireRegistry;
 use App\Components\Questionnaire\Section\Section;
 use App\Components\Questionnaire\TypeDestinataire\Etudiant;
@@ -180,6 +183,7 @@ class CreationController extends BaseController
 
     #[Route('/modal/configurer/{questionnaire}', name: 'modal_configurer')]
     public function configurer(
+        Questionnaire $quest,
         Request $request,
         SemestreRepository $semestreRepository,
         QuestQuestionnaire $questionnaire
@@ -190,19 +194,47 @@ class CreationController extends BaseController
             $semestres = $semestreRepository->findAll();
         }
 
+        $quest->createQuestionnaire(QuestQuestionnaire::class,
+            (new QuestionnaireQualiteAdapter($questionnaire))->getQuestionnaire());
+
+        $data = [];
+        foreach ($questionnaire->getQuestSections() as $section) {
+            $d = $quest->getOnlySectionConfigurable((new SectionQualiteEntityAdapter($section))->getSection());
+            if (null !== $d) {
+                $data[] = $d;
+            }
+        }
+
         return $this->render('questionnaire/creation/_modalConfig.html.twig', [
             'questionnaire' => $questionnaire,
             'typeDestinataire' => $typeDest::LABEL,
             'semestres' => $semestres ?? [],
             'type' => $request->get('type'),
+            'datas' => $data,
         ]);
     }
 
     #[Route('/modal/configurer/{questionnaire}/save-donnees', name: 'modal_configurer_save_donnees')]
     public function saveDonnees(
+        Request $request,
+        QuestSectionRepository $questSectionRepository,
         QuestQuestionnaire $questionnaire
     ): Response {
-        $typeDest = $this->questionnaireRegistry->getTypeDestinataire($questionnaire->getTypeDestinataire());
+        $datas = JsonRequest::getFromRequest($request);
+        foreach ($datas['donnees'] as $key => $sectDonnees) {
+            if ($sectDonnees !== null) {
+                $section = $questSectionRepository->find($key);
+                if (null !== $section) {
+                    $config = $section->getConfig();
+                    $config['valeurs'] = $sectDonnees;
+                    $section->setConfig($config);
+                }
+            }
+        }
+
+        $this->entityManager->flush();
+
+        return $this->json(true);
     }
 
     #[Route('/modal/configurer/{questionnaire}/save-reglages', name: 'modal_configurer_save_reglages')]

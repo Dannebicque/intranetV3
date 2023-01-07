@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Section/ConfigurableSection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/09/2022 15:16
+ * @lastUpdate 07/01/2023 22:04
  */
 
 namespace App\Components\Questionnaire\Section;
@@ -42,7 +42,7 @@ class ConfigurableSection extends AbstractSection
      */
     public function initConfigGlobale(?array $config = []): void
     {
-        $this->sectionAdapter = $this->questionnaireRegistry->getSectionAdapter($config['sectionAdapter']);
+        $this->sectionAdapter = $this->questionnaireRegistry->getSectionAdapter($config['configSection']);
     }
 
     public function initConfigSection(?array $config = []): void
@@ -60,8 +60,8 @@ class ConfigurableSection extends AbstractSection
         $this->options = $options;
 
         $this->section = $section;
-        $this->initConfigGlobale($section->configGlobale);
-        $this->initConfigSection($section->configQuestionnaire);
+        $this->initConfigGlobale($section->config);
+        $this->initConfigSection($section->config);
     }
 
     public function genereSections(): array
@@ -103,7 +103,7 @@ class ConfigurableSection extends AbstractSection
 
     public function getDataPourConfiguration(Annee $annee): array
     {
-        if (null !== $this->config) {
+        if (null === $this->config || $this->config['valeurs'] === null) {
             $this->config['valeurs'] = [];
         }
 

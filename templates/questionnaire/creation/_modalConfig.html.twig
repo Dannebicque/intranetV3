@@ -60,7 +60,6 @@
                     </label>
                 </div>
             {% endif %}
-            {# todo: si personnel choix vacataire ou permanent ou les deux #}
             <div class="row mt-2">
                 <div class="col-6 d-grid">
                     &nbsp;
@@ -77,22 +76,35 @@
              id="onglet2">
             <h2>Choix des données (ressources, SAE, matières, prévisionnels)</h2>
             <div class="row">
-                {#            {% for section in datas %} #}
-                {#                <h4>{{ section.section.titre }}</h4> #}
-                {#                {% for data in section.datas %} #}
-                {#                    <div class="form-group col-sm-6"> #}
-                {#                        <div class="form-check"> #}
-                {#                            <input class="form-check-input" type="checkbox" id="questionnaire_qualite_{{ data.id }}" #}
-                {#                                   name="sections[{{ section.section.id_section }}][]" value="{{ data #}
-                {#                            .id }}" {% if data #}
-                {#                            .checked %}checked{% endif %}> #}
-                {#                            <label class="form-check-label" for="questionnaire_qualite_{{ data.id }}"> #}
-                {#                                {{ data.code }} | {{ data.libelle }} ({{ data.personnel }}) #}
-                {#                            </label> #}
-                {#                        </div> #}
-                {#                    </div> #}
-                {#                {% endfor %} #}
-                {#            {% endfor %} #}
+                {% for section in datas %}
+                    <h4>{{ section.section.titre }}</h4>
+                    {% for data in section.datas %}
+                        <div class="form-group col-sm-6">
+                            <div class="form-check">
+                                <input class="form-check-input data_questionnaire" type="checkbox"
+                                       id="questionnaire_qualite_{{ data.id }}"
+                                       data-section="{{ section.section.id_section }}"
+                                       name="sections[{{ section.section.id_section }}][]" value="{{ data
+                                .id }}" {% if data
+                                .checked %}checked{% endif %}>
+                                <label class="form-check-label" for="questionnaire_qualite_{{ data.id }}">
+                                    {{ data.code }} | {{ data.libelle }} ({{ data.personnel }})
+                                </label>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+            <div class="row mt-2">
+                <div class="col-6 d-grid">
+                    &nbsp;
+                </div>
+                <div class="col-6 d-grid">
+                    <button class="btn btn-success-outline d-block"
+                            {{ stimulus_action('questionnaire--parametres', 'saveDonnees', 'click') }}
+                    >Enregistrer
+                    </button>
+                </div>
             </div>
         </div>
     </div>

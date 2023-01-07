@@ -20,7 +20,13 @@
                 fa-right"></i></button>
     </div>
 </div>
-
+{% if section.typeSection == 'App\\Components\\Questionnaire\\Section\\ConfigurableSection' %}
+    <div class="alert alert-info">
+        Cette section est configurable, vous pouvez donc définir les libellés des questions avec des valeurs qui seront
+        paramètrés pour chaque valeur. Vous choisirez les éléments sur la dernière étape.
+        Les champs sont, à écrire strictement de cette manière , {{ '{{' }}libelle{{ '}}' }}, {{ '{{' }}code{{ '}}' }}
+    </div>
+{% endif %}
 {% for question in questions %}
     {{ question_creation_render(question) }}
 {% endfor %}
