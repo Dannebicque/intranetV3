@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/QuestionnaireController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2023 13:02
+ * @lastUpdate 06/01/2023 20:58
  */
 
 namespace App\Controller\questionnaire;
@@ -108,62 +108,6 @@ class QuestionnaireController extends AbstractController
         return $this->redirectToRoute('erreur_666');
     }
 
-//    public function section(
-//        PrevisionnelManager $previsionnelManager,
-//        QuestionnaireEtudiantRepository $quizzEtudiantRepository,
-//        QuestionnaireEtudiantReponseRepository $quizzEtudiantReponseRepository,
-//        QuestionnaireQuestionnaireSection $questionnaireSection,
-//        string $type,
-//        Etudiant $etudiant,
-//        int $onglet = 1,
-//        bool $apercu = false
-//    ): Response {
-//        $quizzEtudiant = null;
-//        switch ($type) {
-//            case 'quizz':
-//                $questionnaire = $questionnaireSection->getQuestionnaireQuizz()->getId();
-//                $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
-//                    'questionnaireQuizz' => $questionnaire,
-//                    'etudiant' => $etudiant->getId(),
-//                ]);
-//                break;
-//            case 'qualite':
-//                $questionnaire = $questionnaireSection->getQuestionnaireQualite()->getId();
-//                $quizzEtudiant = $quizzEtudiantRepository->findOneBy([
-//                    'questionnaireQualite' => $questionnaire,
-//                    'etudiant' => $etudiant->getId(),
-//                ]);
-//                break;
-//        }
-//
-//        if (null !== $quizzEtudiant) {
-//            $reponses = $quizzEtudiantReponseRepository->findByQuizzEtudiant($quizzEtudiant);
-//        } else {
-//            $reponses = [];
-//        }
-//
-//        return $this->render('appEtudiant/qualite/section.html.twig', [
-//            'ordre' => $questionnaireSection->getOrdre(),
-//            'config' => $questionnaireSection,
-//            'section' => $questionnaireSection->getSection(),
-//            'tPrevisionnel' => $previsionnelManager->getPrevisionnelAnneeArray($etudiant->getSemestre()->getAnnee(),
-//                $etudiant->getAnneeUniversitaire()->getAnnee()),
-//            'reponses' => $reponses,
-//            'etudiant' => $etudiant,
-//            'typeQuestionnaire' => $type,
-//            'onglet' => $onglet,
-//            'apercu' => $apercu,
-//        ]);
-//    }
-
-    /*
-     *
-            MailerFromTwig $myMailer, QuestQuestionnaire $questQuestionnaire, string $uuid): Response
-        {
-            $typeDestinataire = $questionnaireRegistry->getTypeDestinataire($questQuestionnaire->getTypeDestinataire());
-            $typeDestinataire->setQuestionnaire($questQuestionnaire);
-            $choixUser = $typeDestinataire->getChoixUser($uuid);
-     */
     /**
      * @throws NonUniqueResultException
      * @throws \JsonException
@@ -207,8 +151,6 @@ class QuestionnaireController extends AbstractController
         string $uuid,
         Request $request
     ): JsonResponse {
-
-
         $typeDestinataire = $questionnaireRegistry->getTypeDestinataire($questQuestionnaire->getTypeDestinataire());
         $typeDestinataire->setQuestionnaire($questQuestionnaire);
         $choixUser = $typeDestinataire->getChoixUser($uuid);
@@ -222,10 +164,7 @@ class QuestionnaireController extends AbstractController
 
             return $this->json(true, Response::HTTP_OK);
         }
-
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
-
-
     }
 
 }

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeDestinataire/Etudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/12/2022 09:21
+ * @lastUpdate 07/01/2023 18:56
  */
 
 namespace App\Components\Questionnaire\TypeDestinataire;
@@ -45,7 +45,11 @@ class Etudiant extends AbstractTypeDestinataire implements TypeDestinataireInter
 
     public function getListe(): array
     {
-        return $this->etudiantRepository->findBySemestre($this->questionnaire->getSemestre());
+        if ($this->questionnaire->getSemestre() !== null) {
+            return $this->etudiantRepository->findBySemestre($this->questionnaire->getSemestre());
+        }
+
+        return [];
     }
 
     public function getListeDestinataire(): array

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/EnqueteQualiteEtudiantsTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2023 20:46
+ * @lastUpdate 07/01/2023 18:48
  */
 
 namespace App\Table;
@@ -121,7 +121,7 @@ class EnqueteQualiteEtudiantsTableType extends TableType
             'fetch_join_collection' => false,
             'query' => function(QueryBuilder $qb, array $formData) {
                 $qb->where('e.typeDestinataire = :typeDestinataire')
-                    ->join('e.semestre', 's')
+                    ->leftJoin('e.semestre', 's')
                     ->setParameter('typeDestinataire', Etudiant::class);
 
                 if (isset($formData['semestre'])) {

@@ -14,7 +14,7 @@
     <div class="mb-3">
         <label class="form-label" for="questionnaire_fin_lien">Lien de redirection</label>
         <input id="questionnaire_fin_lien" name="questionnaire_fin_lien"
-               class="form-control" type="text" value="{{ questionnaire.urlFin }}">
+               class="form-control" type="text" value="{{ questionnaire.urlFin|default('https://iut-troyes.univ-reims.fr') }}">
         <div id="questionnaire_fin_lien_help" class="form-text mb-0 help-text">
             Lien de redirection après validation du questionnaire.
         </div>
@@ -26,6 +26,6 @@
 
 {{ include('questionnaire/creation/step/_boutonsFinQuestionnaire.html.twig') }}
 
-<div class="alert alert-info">
+<div class="alert alert-info mt-2">
     Vous pourrez retrouver ces options dans la page de détail/gestion de votre questionnaire.
 </div>

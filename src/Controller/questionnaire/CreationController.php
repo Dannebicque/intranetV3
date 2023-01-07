@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/CreationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2023 20:25
+ * @lastUpdate 07/01/2023 19:57
  */
 
 namespace App\Controller\questionnaire;
 
 use App\Components\Questionnaire\QuestionnaireRegistry;
 use App\Components\Questionnaire\Section\Section;
+use App\Components\Questionnaire\TypeDestinataire\Etudiant;
 use App\Controller\BaseController;
 use App\Entity\QuestQuestionnaire;
 use App\Entity\QuestSection;
@@ -28,6 +29,10 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/{type}/questionnaire/creation', name: 'adm_questionnaire_creation_', requirements: ['type' => 'administratif|administration'], defaults: ['type' => 'administratif'])]
 class CreationController extends BaseController
 {
+    public function __construct(private readonly QuestionnaireRegistry $questionnaireRegistry)
+    {
+    }
+
     #[Route('/', name: 'index')]
     public function index(
         SemestreRepository $semestreRepository,
@@ -132,7 +137,7 @@ class CreationController extends BaseController
                         $elt->setTitre('Nouvelle Section ' . $ordre);
                         $elt->setOrdre($ordre);
                         $elt->setQuestionnaire($questionnaire);
-                        //dupliquer les questions
+                        // dupliquer les questions
                         foreach ($section->getQuestQuestions() as $question) {
                             $nQuestion = clone $question;
                             $nQuestion->setSection($elt);
@@ -152,7 +157,6 @@ class CreationController extends BaseController
                                 $nReponse->setQuestion($nQuestion);
                                 $this->entityManager->persist($nReponse);
                             }
-
                         }
                         $this->entityManager->persist($elt);
                     }
@@ -176,11 +180,51 @@ class CreationController extends BaseController
 
     #[Route('/modal/configurer/{questionnaire}', name: 'modal_configurer')]
     public function configurer(
+        Request $request,
+        SemestreRepository $semestreRepository,
         QuestQuestionnaire $questionnaire
     ): Response {
+        $typeDest = $this->questionnaireRegistry->getTypeDestinataire($questionnaire->getTypeDestinataire());
+
+        if (Etudiant::LABEL === $typeDest::LABEL) {
+            $semestres = $semestreRepository->findAll();
+        }
+
         return $this->render('questionnaire/creation/_modalConfig.html.twig', [
             'questionnaire' => $questionnaire,
+            'typeDestinataire' => $typeDest::LABEL,
+            'semestres' => $semestres ?? [],
+            'type' => $request->get('type'),
         ]);
+    }
+
+    #[Route('/modal/configurer/{questionnaire}/save-donnees', name: 'modal_configurer_save_donnees')]
+    public function saveDonnees(
+        QuestQuestionnaire $questionnaire
+    ): Response {
+        $typeDest = $this->questionnaireRegistry->getTypeDestinataire($questionnaire->getTypeDestinataire());
+    }
+
+    #[Route('/modal/configurer/{questionnaire}/save-reglages', name: 'modal_configurer_save_reglages')]
+    public function saveReglages(
+        Request $request,
+        SemestreRepository $semestreRepository,
+        QuestQuestionnaire $questionnaire
+    ): Response {
+        $data = JsonRequest::getFromRequest($request);
+        $typeDest = $this->questionnaireRegistry->getTypeDestinataire($questionnaire->getTypeDestinataire());
+
+        $questionnaire->setDateOuverture(Carbon::createFromFormat('Y-m-d\\TH:i', $data['dateOuverture']));
+        $questionnaire->setDateFermeture(Carbon::createFromFormat('Y-m-d\\TH:i', $data['dateFermeture']));
+
+        if (Etudiant::LABEL === $typeDest::LABEL) {
+            $semestres = $semestreRepository->find($data['semestre']);
+            $questionnaire->setSemestre($semestres);
+        }
+
+        $this->entityManager->flush();
+
+        return $this->json(true);
     }
 
     #[Route('/modal/lancer/{questionnaire}', name: 'modal_lancer')]

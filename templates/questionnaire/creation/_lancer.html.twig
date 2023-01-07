@@ -2,78 +2,85 @@
     url: path('adm_questionnaire_creation_sauvegarde_lancer', {type:type, questionnaire: questionnaire.id }),
     urlExt: path('adm_questionnaire_creation_add_exterieur', {type:type, questionnaire: questionnaire.id }),
     urlRedirect: path('adm_questionnaire_qualite_detail', {type:type, id: questionnaire.id }),
-}) }}
-<h1>Lancement du questionnaire</h1>
+}) }}>
+    <h1>Lancement du questionnaire</h1>
 
-<h2>Date d'ouverture du questionnaire</h2>
+    <h2>Date d'ouverture du questionnaire</h2>
 
-{% if questionnaire.dateFermeture == null or questionnaire.dateOuverture == null %}
-    <div class="alert alert-warning mb-2" id="alertSend">
-        Attention au moins une date n'est pas renseignée.
+    {% if questionnaire.dateFermeture == null or questionnaire.dateOuverture == null %}
+        <div class="alert alert-warning mb-2" id="alertSend">
+            Attention au moins une date n'est pas renseignée.
+        </div>
+    {% endif %}
+    <div>
+        <label for="dateOuverture">Date ouverture</label>
+        <input
+                {{ stimulus_action('questionnaire--lancer', 'saveDate', 'change', {type: 'dateOuverture'}) }}
+                type="datetime-local" id="dateOuverture" name="dateOuverture" class="form-control" value="{{ questionnaire
+        .dateOuverture != null ? questionnaire.dateOuverture|date('Y-m-d\\TH:i') }}">
     </div>
-{% endif %}
-<div>
-    <label for="dateOuverture">Date ouverture</label>
-    <input
-            {{ stimulus_action('questionnaire--lancer', 'saveDate', 'change', {type: 'dateOuverture'}) }}
-            type="datetime-local" id="dateOuverture" name="dateOuverture" class="form-control" value="{{ questionnaire
-    .dateOuverture != null ? questionnaire.dateOuverture|date('Y-m-d\\TH:i') }}">
-</div>
-<div>
-    <label for="dateFermeture">Date fermeture</label>
-    <input
-            {{ stimulus_action('questionnaire--lancer', 'saveDate', 'change', {type: 'dateFermeture'}) }}
-            type="datetime-local" id="dateFermeture" name="dateFermeture" class="form-control" value="{{ questionnaire
-    .dateFermeture != null ? questionnaire.dateFermeture|date('Y-m-d\\TH:i') }}">
-</div>
-
-
-<h2>Choix des destinataires</h2>
-
-{% if typeDestinataire == 'exterieur' %}
-    <div class="alert alert-info">
-        <p>Vous avez choisi de lancer le questionnaire à des personnes extérieures à l'entreprise.</p>
-        <p>Vous pouvez ajouter des destinataires en cliquant sur le bouton "Ajotuer". L'envoi n'est effectif que si vous
-           clique sur "Enregistrer et envoyer". Sinon, la liste est sauvegardée en attente de l'envoie.
-        </p>
-    </div>
-{% endif %}
-
-{% if typeDestinataire == 'etudiant' or typeDestinataire == 'personnel' %}
-    <ul class="row">
-        {% for elt in liste %}
-            <li class="col-4">
-                <input type="checkbox" id="dest_{{ elt.id }}" name="destinataires[]" value="{{ elt.id }}" class="element"/>
-                <label for="dest_{{ elt.id }}">{{ elt.display }}</label>
-            </li>
-        {% endfor %}
-    </ul>
-    <a href="#" {{ stimulus_action('questionnaire--lancer', 'selectAll', 'click') }}>Tout selectionner</a> |
-    <a href="#" {{ stimulus_action('questionnaire--lancer', 'unselectAll', 'click') }}>Tout déselectionner</a>
-{% elseif typeDestinataire == 'exterieur' %}
-    <div {{ stimulus_target('questionnaire--lancer', 'listeExt') }}>
-        {{ include('questionnaire/creation/_addExterieur.html.twig') }}
+    <div>
+        <label for="dateFermeture">Date fermeture</label>
+        <input
+                {{ stimulus_action('questionnaire--lancer', 'saveDate', 'change', {type: 'dateFermeture'}) }}
+                type="datetime-local" id="dateFermeture" name="dateFermeture" class="form-control" value="{{ questionnaire
+        .dateFermeture != null ? questionnaire.dateFermeture|date('Y-m-d\\TH:i') }}">
     </div>
 
-{% endif %}
-<div class="row mt-2">
-    <div class="col-6 d-grid">
-        {% if typeDestinataire != 'exterieur' %}
-            <button class="btn btn-danger-outline d-block"
-                    {{ stimulus_action('questionnaire--lancer', 'saveAndClose', 'click') }}
-            >Sauvegarder et fermer
+
+    <h2>Choix des destinataires</h2>
+
+    {% if typeDestinataire == 'exterieur' %}
+        <div class="alert alert-info">
+            <p>Vous avez choisi de lancer le questionnaire à des personnes extérieures à l'entreprise.</p>
+            <p>Vous pouvez ajouter des destinataires en cliquant sur le bouton "Ajotuer". L'envoi n'est effectif que si
+               vous
+               clique sur "Enregistrer et envoyer". Sinon, la liste est sauvegardée en attente de l'envoie.
+            </p>
+        </div>
+    {% endif %}
+
+    {% if typeDestinataire == 'etudiant' or typeDestinataire == 'personnel' %}
+        <ul class="row">
+            {% for elt in liste %}
+                <li class="col-4">
+                    <input type="checkbox" id="dest_{{ elt.id }}" name="destinataires[]" value="{{ elt.id }}" class="element"/>
+                    <label for="dest_{{ elt.id }}">{{ elt.display }}</label>
+                </li>
+            {% else %}
+                <li class="col-12">
+                    <p>Aucun destinataire disponible (vérifiez que vous avez indiqué un semestre pour les étudiants ou
+                       permanent et/ou vacataires pour les personnels dans la configuration du questionnaire).</p>
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="#" {{ stimulus_action('questionnaire--lancer', 'selectAll', 'click') }}>Tout selectionner</a> |
+        <a href="#" {{ stimulus_action('questionnaire--lancer', 'unselectAll', 'click') }}>Tout déselectionner</a>
+    {% elseif typeDestinataire == 'exterieur' %}
+        <div {{ stimulus_target('questionnaire--lancer', 'listeExt') }}>
+            {{ include('questionnaire/creation/_addExterieur.html.twig') }}
+        </div>
+
+    {% endif %}
+    <div class="row mt-2">
+        <div class="col-6 d-grid">
+            {% if typeDestinataire != 'exterieur' %}
+                <button class="btn btn-danger-outline d-block"
+                        {{ stimulus_action('questionnaire--lancer', 'saveAndClose', 'click') }}
+                >Sauvegarder et fermer
+                </button>
+            {% else %}
+                &nbsp;
+            {% endif %}
+        </div>
+        <div class="col-6 d-grid">
+            <button class="btn btn-success-outline d-block"
+                    id="btnSaveAndSend"
+                    {% if questionnaire.dateFermeture == null or questionnaire.dateOuverture == null %}disabled{% endif %}
+                    {{ stimulus_action('questionnaire--lancer', 'sendAndClose', 'click') }}
+            >Enregistrer et envoyer
             </button>
-        {% else %}
-            &nbsp;
-        {% endif %}
-    </div>
-    <div class="col-6 d-grid">
-        <button class="btn btn-success-outline d-block"
-                id="btnSaveAndSend"
-                {% if questionnaire.dateFermeture == null or questionnaire.dateOuverture == null %}disabled{% endif %}
-                {{ stimulus_action('questionnaire--lancer', 'sendAndClose', 'click') }}
-        >Enregistrer et envoyer
-        </button>
+        </div>
     </div>
 </div>
 {# Si Etudiant #}

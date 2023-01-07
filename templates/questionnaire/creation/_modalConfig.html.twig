@@ -1,49 +1,99 @@
-<ul class="nav nav-tabs">
-    <li class="nav-item">
-        <a class="nav-link active" data-bs-toggle="tab"
-           href="#onglet1">Réglages</a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" data-bs-toggle="tab"
-           href="#onglet2">Choix des données</a>
-    </li>
-</ul>
+<div {{ stimulus_controller('questionnaire--parametres', {
+    urlSaveReglages: path('adm_questionnaire_creation_modal_configurer_save_reglages', {type:type, questionnaire:
+        questionnaire.id }),
+    urlSaveDonnees: path('adm_questionnaire_creation_modal_configurer_save_donnees', {type:type, questionnaire: questionnaire.id }),
+}) }}>
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link active" data-bs-toggle="tab"
+               href="#onglet1">Réglages</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" data-bs-toggle="tab"
+               href="#onglet2">Choix des données</a>
+        </li>
+    </ul>
 
-<div class="tab-content">
-    <div class="tab-pane fade active show"
-         id="onglet1">
-        <h2>Réglages généraux</h2>
-        <div>
-            <label for="dateOuverture">Date ouverture</label>
-            <input type="datetime-local" id="dateOuverture" name="dateOuverture" class="form-control" value="{{ questionnaire.dateOuverture|date('Y-m-d\\TH:i') }}">
+    <div class="tab-content">
+        <div class="tab-pane fade active show"
+             id="onglet1">
+            <h2>Réglages généraux</h2>
+            <div>
+                <label for="dateOuverture">Date ouverture</label>
+                <input type="datetime-local" id="dateOuverture" name="dateOuverture" class="form-control" value="{{ questionnaire.dateOuverture|date('Y-m-d\\TH:i') }}">
+            </div>
+            <div>
+                <label for="dateFermeture">Date fermeture</label>
+                <input type="datetime-local" id="dateFermeture" name="dateFermeture" class="form-control" value="{{ questionnaire.dateFermeture|date('Y-m-d\\TH:i') }}">
+            </div>
+            {% if typeDestinataire == 'etudiant' %}
+                <div>
+                    <label for="semestre">Choisir le semestre</label>
+                    <select id="semestre" class="form-select">
+                        <option value="">Choisir</option>
+                        {% for semestre in semestres %}
+                            <option value="{{ semestre.id }}" {% if questionnaire.semestre.id == semestre.id %}selected{% endif %}>
+                                {{ semestre.display }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            {% endif %}
+            {% if typeDestinataire == 'personnel' %}
+                Choix des personnels
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="choixPersonnel" id="choixPersonnel1">
+                    <label class="form-check-label" for="choixPersonnel1">
+                        Uniquement les permanents (choix plus précis lors du lancement)
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="choixPersonnel" id="choixPersonnel2" checked>
+                    <label class="form-check-label" for="choixPersonnel2">
+                        Uniquement les vacataires (choix plus précis lors du lancement)
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="choixPersonnel" id="choixPersonnel3" checked>
+                    <label class="form-check-label" for="choixPersonnel3">
+                        Tous les personnels et intervenants vacataires (choix plus précis lors du lancement)
+                    </label>
+                </div>
+            {% endif %}
+            {# todo: si personnel choix vacataire ou permanent ou les deux #}
+            <div class="row mt-2">
+                <div class="col-6 d-grid">
+                    &nbsp;
+                </div>
+                <div class="col-6 d-grid">
+                    <button class="btn btn-success-outline d-block"
+                            {{ stimulus_action('questionnaire--parametres', 'saveReglages', 'click') }}
+                    >Enregistrer
+                    </button>
+                </div>
+            </div>
         </div>
-        <div>
-            <label for="dateFermeture">Date fermeture</label>
-            <input type="datetime-local" id="dateFermeture" name="dateFermeture" class="form-control" value="{{ questionnaire.dateFermeture|date('Y-m-d\\TH:i') }}">
-        </div>
-        {# todo: si etudiant, choix du semestre... #}
-        {# todo: si personnel choix vacataire ou permanent ou les deux #}
-    </div>
-    <div class="tab-pane"
-         id="onglet2">
-        <h2>Choix des données (ressources, SAE, matières, prévisionnels)</h2>
-        <div class="row">
-            {#            {% for section in datas %} #}
-            {#                <h4>{{ section.section.titre }}</h4> #}
-            {#                {% for data in section.datas %} #}
-            {#                    <div class="form-group col-sm-6"> #}
-            {#                        <div class="form-check"> #}
-            {#                            <input class="form-check-input" type="checkbox" id="questionnaire_qualite_{{ data.id }}" #}
-            {#                                   name="sections[{{ section.section.id_section }}][]" value="{{ data #}
-            {#                            .id }}" {% if data #}
-            {#                            .checked %}checked{% endif %}> #}
-            {#                            <label class="form-check-label" for="questionnaire_qualite_{{ data.id }}"> #}
-            {#                                {{ data.code }} | {{ data.libelle }} ({{ data.personnel }}) #}
-            {#                            </label> #}
-            {#                        </div> #}
-            {#                    </div> #}
-            {#                {% endfor %} #}
-            {#            {% endfor %} #}
+        <div class="tab-pane"
+             id="onglet2">
+            <h2>Choix des données (ressources, SAE, matières, prévisionnels)</h2>
+            <div class="row">
+                {#            {% for section in datas %} #}
+                {#                <h4>{{ section.section.titre }}</h4> #}
+                {#                {% for data in section.datas %} #}
+                {#                    <div class="form-group col-sm-6"> #}
+                {#                        <div class="form-check"> #}
+                {#                            <input class="form-check-input" type="checkbox" id="questionnaire_qualite_{{ data.id }}" #}
+                {#                                   name="sections[{{ section.section.id_section }}][]" value="{{ data #}
+                {#                            .id }}" {% if data #}
+                {#                            .checked %}checked{% endif %}> #}
+                {#                            <label class="form-check-label" for="questionnaire_qualite_{{ data.id }}"> #}
+                {#                                {{ data.code }} | {{ data.libelle }} ({{ data.personnel }}) #}
+                {#                            </label> #}
+                {#                        </div> #}
+                {#                    </div> #}
+                {#                {% endfor %} #}
+                {#            {% endfor %} #}
+            </div>
         </div>
     </div>
 </div>
