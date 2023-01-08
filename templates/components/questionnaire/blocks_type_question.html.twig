@@ -1,5 +1,5 @@
 {% block type_chainee %}
-    <fieldset class="form-group"
+    <fieldset class="form-group mt-2"
               id="field_{{ id }}"
             {{ stimulus_controller('questionnaire--enquete', {
                 parametres: parametres,
@@ -20,30 +20,43 @@
                     </div>
 
                     {% if valeurs == null %}
+                        {# todo: a dupliquer sur les autres questions... #}
                         {% set name = 'q'~subQuestion.id %}
                     {% else %}
-                        {% set name = 'q'~subQuestion.id~'_c'~valeurs[ordre] %}
+                        {% set name = 'q'~subQuestion.id~'_c'~valeurs[numero-1] %}
                     {% endif %}
                     {% for reponse in reponses %}
                         <div class="col-sm-12 col-md-2">
                             <div class="form-check">
                                 <input type="radio" id="quizz_question_qcu_{{ name }}_{{ reponse.id }}"
                                        name="quizz_question_reponses_{{ name }}"
-                                       data-action="change->questionnaire--enquete#change"
+
                                        data-fieldset="{{ id }}"
                                        data-typeQuestionnaire="radio" {# todo: pourrait être autre chose... #}
-                                        {% if apercu is not defined or apercu == false %}
-                                            data-choixUser="{{ choixUserUuid }}"
-                                        {% endif %}
-                                        {% if reponsesEtudiant|length > 0 and
-                                            reponsesEtudiant[subQuestion.id] is defined and
-                                            reponsesEtudiant[subQuestion.id] != null and
-                                            reponsesEtudiant[subQuestion.id].valeur == reponse.valeur %}checked
+                                        {{ stimulus_action('questionnaire--enquete', 'change','change', {mode:mode}) }}
+                                        {% if reponsesEtudiant|length > 0 and reponsesEtudiant[subQuestion.id] is defined %}
+                                            {% if valeurs == null %}
+                                                {% if reponsesEtudiant[subQuestion.id] != null
+                                                    and reponsesEtudiant[subQuestion.id].valeur == reponse.valeur %}
+                                                    checked="checked"
+                                                {% endif %}
+                                            {% else %}
+                                                {% if reponsesEtudiant[subQuestion.id]['c'~valeurs[numero-1]] is
+                                                    defined
+                                                    and reponsesEtudiant[subQuestion.id]['c'~valeurs[numero-1]] !=
+                                                    null
+                                                    and reponsesEtudiant[subQuestion.id]['c'~valeurs[numero-1]].valeur ==
+                                                    reponse.valeur %}
+                                                    checked="checked"
+                                                {% endif %}
+                                            {% endif %}
                                         {% endif %}
                                         {% if obligatoire %}required{% endif %}
                                        class="form-check-input"
                                        value="{{ reponse.valeur }}">
-                                <label class="form-check-label required" for="quizz_question_qcu_{{ name }}_{{ reponse.id }}">{{ reponse.libelle }}</label>
+                                <label class="form-check-label required" for="quizz_question_qcu_{{ name }}_{{ reponse.id }}">
+                                    {{ reponse.libelle }}
+                                </label>
                             </div>
                         </div>
                     {% endfor %}
@@ -98,10 +111,9 @@
                 <input type="range"
                        id="quizz_question_qcu_{{ name }}_range"
                        name="quizz_question_reponses_{{ name }}"
-                       data-typeQuestionnaire="{{ type_question }}"
                        {% if reponseEtudiant != null %}value="{{ reponseEtudiant.valeur }}"{% endif %}
                         {% if obligatoire %}required{% endif %}
-                       data-action="change->questionnaire--enquete#changeRange"
+                        {{ stimulus_action('questionnaire--enquete', 'changeRange','change', {mode:mode}) }}
                        class="form-range" min="{{ parametres.min }}" max="{{ parametres.max }}" step="{{ parametres.pas }}">
             </div>
         </div>
@@ -128,11 +140,9 @@
                    for="quizz_question_text_{{ name }}">Votre réponse</label>
             <textarea id="quizz_question_text_{{ name }}"
                       name="quizz_question_text_{{ name }}"
-                      data-action="change->questionnaire--enquete#onTextAreaChange"
-                      data-typeQuestionnaire="{{ type_question }}"
-                      {% if obligatoire %}required{% endif %}
-         class="form-control
-">{% if reponseEtudiant != null %}{{ reponseEtudiant.valeur }}{% endif %}</textarea>
+                    {{ stimulus_action('questionnaire--enquete', 'onTextAreaChange','change', {mode:mode}) }}
+                    {% if obligatoire %}required{% endif %}
+         class="form-control">{% if reponseEtudiant != null %}{{ reponseEtudiant.valeur }}{% endif %}</textarea>
             <div class="form-control-feedback"></div>
         </div>
     </fieldset>
@@ -157,13 +167,11 @@
                 <div class="form-check">
                     <input type="radio" id="quizz_question_qcu_{{ name }}_{{ reponse.id }}"
                            name="quizz_question_reponses_{{ name }}"
-                           data-typeQuestionnaire="{{ type_question }}"
-                           data-action="change->questionnaire--enquete#change"
-
-                           {% if reponseEtudiant != null and
-                               reponseEtudiant.valeur == reponse.valeur %}checked{% endif %}
+                            {{ stimulus_action('questionnaire--enquete', 'change','change', {mode:mode}) }}
+                            {% if reponseEtudiant != null and
+                                reponseEtudiant.valeur == reponse.valeur %}checked{% endif %}
                             {% if obligatoire %}required{% endif %}
-                           class="form-check-input  {% if apercu is not defined or apercu == false %}questionQualite{% endif %}"
+                           class="form-check-input"
                            value="{{ reponse.valeur }}">
                     <label class="form-check-label required" for="quizz_question_qcu_{{ name }}_{{ reponse.id }}">{{ reponse.libelle }}</label>
                 </div>
@@ -172,13 +180,11 @@
                 <div class="form-check">
                     <input type="radio" id="quizz_question_qcu_{{ name }}_{{ reponse.id }}"
                            name="quizz_question_reponses_{{ name }}"
-                           data-action="change->questionnaire--enquete#change"
-                           data-typeQuestionnaire="{{ type_question }}"
-
-                           {% if reponseEtudiant != null and
-                               reponseEtudiant.valeur == reponse.valeur %}checked{% endif %}
+                            {{ stimulus_action('questionnaire--enquete', 'change','change', {mode:mode}) }}
+                            {% if reponseEtudiant != null and
+                                reponseEtudiant.valeur == reponse.valeur %}checked{% endif %}
                             {% if obligatoire %}required{% endif %}
-                           class="form-check-input  {% if apercu is not defined or apercu == false %}questionQualite{% endif %}"
+                           class="form-check-input"
                            value="{{ reponse.valeur }}">
                     <label class="form-check-label required" for="quizz_question_qcu_{{ name }}_{{ reponse.id }}">{{ reponse.libelle }}</label>
                 </div>
@@ -242,11 +248,10 @@
             <div class="form-check form-check-inline">
                 <input type="{{ type_question }}" id="quizz_question_qcu_{{ name }}_{{ reponse.id }}"
                        name="quizz_question_reponses_{{ name }}"
-                       data-action="change->questionnaire--enquete#changeRange"
+                        {{ stimulus_action('questionnaire--enquete', 'changeRange','change', {mode:mode}) }}
                        data-fieldset="{{ id }}"
-                       data-typeQuestionnaire="{{ type_question }}"
-                       {% if reponseEtudiant != null and
-                           reponseEtudiant.valeur == reponse.valeur %}checked{% endif %}
+                        {% if reponseEtudiant != null and
+                            reponseEtudiant.valeur == reponse.valeur %}checked{% endif %}
                         {% if obligatoire %}required{% endif %}
                        class="form-check-input"
                        value="{{ reponse.valeur }}">
@@ -266,12 +271,10 @@
             <div class="form-check form-check-inline">
                 <input type="{{ type_question }}" id="quizz_question_qcu_{{ name }}_{{ reponse.id }}"
                        name="quizz_question_reponses_{{ name }}"
-                       data-action="change->questionnaire--enquete#change"
+                        {{ stimulus_action('questionnaire--enquete', 'change','change', {mode:mode}) }}
                        data-fieldset="{{ id }}"
-                       data-typeQuestionnaire="{{ type_question }}"
-
-                       {% if reponseEtudiant != null and
-                           reponseEtudiant.valeur == reponse.valeur %}checked{% endif %}
+                        {% if reponseEtudiant != null and
+                            reponseEtudiant.valeur == reponse.valeur %}checked{% endif %}
                         {% if obligatoire %}required{% endif %}
                        class="form-check-input"
                        value="{{ reponse.valeur }}">
@@ -290,12 +293,10 @@
                 <div class="form-check form-check-inline">
                     <input type="{{ type_question != '' ? type_question : 'radio' }}" id="quizz_question_qcu_{{ name }}_autre"
                            name="quizz_question_reponses_{{ name }}"
-                           data-action="change->questionnaire--enquete#change"
+                            {{ stimulus_action('questionnaire--enquete', 'change','change', {mode:mode}) }}
                            data-fieldset="{{ id }}"
-                           data-typeQuestionnaire="{{ type_question }}"
-
-                           {% if reponseEtudiant != null and
-                               reponseEtudiant.valeur == "CHX:OTHER" %}checked{% endif %}
+                            {% if reponseEtudiant != null and
+                                reponseEtudiant.valeur == "CHX:OTHER" %}checked{% endif %}
                             {% if obligatoire %}required{% endif %}
                            class="form-check-input"
                            value="CHX:OTHER">
@@ -307,9 +308,7 @@
                 <label class="sr-only" for="quizz_question_autre_{{ name }}_autre_text">Précisez votre réponse</label>
                 <input type="text" id="quizz_question_autre_{{ name }}_autre_text"
                        name="quizz_question_reponses_{{ name }}_autre"
-                       data-typeQuestionnaire="{{ type_question }}"
-                       data-action="change->questionnaire--enquete#onTextAreaChange"
-
+                        {{ stimulus_action('questionnaire--enquete', 'onTextAreaChange','change', {mode:mode}) }}
                        class="form-control"
                         {% if reponseEtudiant != null and reponseEtudiant.valeur == 'CHX:OTHER' %}
                             value="{{ reponseEtudiant.complement }}"
@@ -325,12 +324,10 @@
             <div class="form-check form-check-inline">
                 <input type="{{ type_question != '' ? type_question : 'radio' }}" id="quizz_question_qcu_{{ name }}_nc"
                        name="quizz_question_reponses_{{ name }}"
-                       data-action="change->questionnaire--enquete#change"
                        data-fieldset="{{ id }}"
-                       data-typeQuestionnaire="{{ type_question }}"
-
-                       {% if reponseEtudiant is defined and reponseEtudiant != null and
-                           reponseEtudiant.valeur == "CHX:NC" %}checked{% endif %}
+                        {{ stimulus_action('questionnaire--enquete', 'change','change', {mode:mode}) }}
+                        {% if reponseEtudiant is defined and reponseEtudiant != null and
+                            reponseEtudiant.valeur == "CHX:NC" %}checked{% endif %}
                         {% if obligatoire %}required{% endif %}
                        class="form-check-input"
                        value="CHX:NC">

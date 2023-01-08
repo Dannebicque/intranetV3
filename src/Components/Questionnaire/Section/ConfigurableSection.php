@@ -4,12 +4,11 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Section/ConfigurableSection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/01/2023 22:04
+ * @lastUpdate 08/01/2023 11:04
  */
 
 namespace App\Components\Questionnaire\Section;
 
-use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
 use App\Entity\Annee;
 
 class ConfigurableSection extends AbstractSection
@@ -21,21 +20,6 @@ class ConfigurableSection extends AbstractSection
     public ?array $config = [];
     public string $type_calcul = '';
     public array $sections = []; // en mode configurable, on peut avoir la création de sections
-
-    public function addQuestions(AbstractQuestion $abstractQuestion): void
-    {
-        // boucler sur toutes les options, et ajouter successivement les questions... QUid des questions enfants ? Logiquement elles ne sont pas envoyées ici
-        if (is_array($this->config) && array_key_exists('valeurs', $this->config) && is_array($this->config['valeurs'])) {
-            foreach ($this->config['valeurs'] as $valeur) {
-                $abstractQuestion->numero = $valeur; // pour tester
-                $abstractQuestion->config = $valeur;
-                $this->questions->addQuestion($abstractQuestion);
-            }
-        } else {
-            // ce cas ne devrait pas exister...
-            $this->questions->addQuestion($abstractQuestion);
-        }
-    }
 
     /**
      * @throws \App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException

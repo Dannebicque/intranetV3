@@ -1,8 +1,8 @@
-// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/questionnaire/lancer_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/12/2022 09:45
+// @lastUpdate 07/01/2023 23:01
 
 import { Controller } from '@hotwired/stimulus'
 import { addCallout } from '../../js/util'
@@ -18,13 +18,8 @@ export default class extends Controller {
     urlRedirect: String,
   }
 
-  connect() {
-  }
-
   async ajouterExt(event) {
     event.preventDefault()
-    console.log('add')
-
     const body = {
       method: 'POST',
       body: JSON.stringify({
@@ -63,7 +58,6 @@ export default class extends Controller {
     await fetch(`${this.urlValue}?${params.toString()}`, body).then((response) => response.json()).then((data) => {
       if (data.save === true) {
         addCallout('Date Sauvegardée', 'success')
-        console.log(data)
         if (data.autorise === true) {
           document.getElementById('btnSaveAndSend').removeAttribute('disabled')
           document.getElementById('alertSend').style.display = 'none'

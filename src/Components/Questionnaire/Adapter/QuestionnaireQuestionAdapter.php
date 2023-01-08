@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Adapter/QuestionnaireQuestionAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/01/2023 22:41
+ * @lastUpdate 08/01/2023 11:04
  */
 
 namespace App\Components\Questionnaire\Adapter;
@@ -78,10 +78,17 @@ class QuestionnaireQuestionAdapter
     {
         if (null !== $reponsesUser) {
 
-
             if ($this->question::class === TypeChainee::class) {
                 foreach ($this->question->questions as $questionEnfant) {
-                    $this->question->reponsesUser[$questionEnfant->getId()] = $reponsesUser->getReponse($questionEnfant->getCle());
+                    if ($this->question->valeurs !== null) {
+                        foreach ($this->question->valeurs as $valeur) {
+                            $this->question->reponsesUser[$questionEnfant->getId()]['c' . $valeur] = $reponsesUser->getReponse($questionEnfant->getCle(),
+                                'c' . $valeur);
+                        }
+                    } else {
+                        $this->question->reponsesUser[$questionEnfant->getId()] = $reponsesUser->getReponse($questionEnfant->getCle());
+
+                    }
                 }
             } else {
                 $this->question->reponseUser = $reponsesUser->getReponse($this->question->cle);

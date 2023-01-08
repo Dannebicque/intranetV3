@@ -8,7 +8,7 @@
     {% elseif options.mode == 'mode.resultat.graphique' %}
         {{ question_graphique_render(question, ordre) }}
     {% else %}
-        {{ question_render(question, ordre) }}
+        {{ question_render(question, ordre, loop.index) }}
     {% endif %}
 {% endfor %}
 <br>

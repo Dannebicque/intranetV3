@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeQuestionRenderer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/01/2023 22:05
+ * @lastUpdate 08/01/2023 11:00
  */
 
 namespace App\Components\Questionnaire;
@@ -27,7 +27,7 @@ class TypeQuestionRenderer
     /**
      * @throws \Throwable
      */
-    public function render(AbstractQuestion $question, int|string|null $ordre = 0): string
+    public function render(AbstractQuestion $question, int|string|null $ordre = 0, int $loop = 0): string
     {
         $template = $this->load();
 
@@ -37,10 +37,10 @@ class TypeQuestionRenderer
         if (TypeChainee::class === $question::class) {
             $params['questionsEnfants'] = $question->questions;
             $params['reponsesEtudiant'] = $question->reponsesUser;
+
         } else {
             $params['reponseEtudiant'] = $question->reponseUser;
         }
-
 
         $params['name'] = 'q' . $question->id;
         $params['id'] = $question->id;
@@ -51,10 +51,9 @@ class TypeQuestionRenderer
         $params['parametres'] = $question->parametres;
         $params['valeurs'] = $question->valeurs;
         $params['libelle'] = $question->libelle;
-        $params['numero'] = $question->numero;
+        $params['numero'] = $loop;
         $params['ordre'] = $ordre;
         $params['obligatoire'] = $question->obligatoire;
-
 
         return $template->renderBlock($params['block_name'], $params);
     }

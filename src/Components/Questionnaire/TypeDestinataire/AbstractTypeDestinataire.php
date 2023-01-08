@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeDestinataire/AbstractTypeDestinataire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2023 13:02
+ * @lastUpdate 08/01/2023 11:04
  */
 
 namespace App\Components\Questionnaire\TypeDestinataire;
@@ -56,7 +56,7 @@ abstract class AbstractTypeDestinataire
         $this->questionnaireCommence();
         $t = explode('_', $cleReponse);
         $question = $this->questQuestionRepository->find(mb_substr($t[3], 1, mb_strlen($t[0])));
-
+        $config = false;
         if ('autre' === $t[4]) {
             $reponse = 'CHX:OTHER';
         } elseif ('nc' === $t[4]) {
@@ -64,13 +64,21 @@ abstract class AbstractTypeDestinataire
         } elseif (str_starts_with($t[4], 'c')) {
             $rep = $this->questReponseRepository->find($t[5]);
             $reponse = $rep?->getValeur();
+            $config = true;
         } else {
             $rep = $this->questReponseRepository->find($t[4]);
             $reponse = $rep?->getValeur();
         }
 
         if (null !== $question && null !== $reponse) {
-            $exist = $this->questChoixRepository->findExistQuestion($question->getId(), $choixUser, $typeDestinataire);
+            if ($config === false) {
+                $exist = $this->questChoixRepository->findExistQuestion($question->getId(), $choixUser,
+                    $typeDestinataire);
+            } else {
+                $exist = $this->questChoixRepository->findExistQuestionConfig($question->getId(), $choixUser,
+                    $typeDestinataire, $cleReponse);
+            }
+
             if (null === $exist) {
                 $qr = new QuestChoix();
                 $qr->setQuestion($question);
@@ -87,6 +95,7 @@ abstract class AbstractTypeDestinataire
 
                 $this->entityManager->persist($qr);
             } elseif (
+                $question->getType() === 'text' ||
                 TypeQcu::class === $question->getType() ||
                 TypeEchelle::class === $question->getType() ||
                 TypeOuiNon::class === $question->getType()) {
@@ -150,7 +159,6 @@ abstract class AbstractTypeDestinataire
             } else {
                 // pas autre
                 if (null === $exist) {
-                    dump('pas de réponse');
                     $qr = new QuestChoix();
                     $qr->setQuestion($question);
                     $qr->setTypeDestinataire($typeDestinataire);

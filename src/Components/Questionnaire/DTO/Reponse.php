@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/DTO/Reponse.php
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/DTO/Reponse.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/08/2021 08:00
+ * @lastUpdate 08/01/2023 11:04
  */
 
 namespace App\Components\Questionnaire\DTO;
@@ -15,8 +15,13 @@ class Reponse
 {
     protected array $options = [];
 
-    public function __construct(public int $id, public string $libelle, public string|int $valeur, public int $ordre = 1, array $options = [])
-    {
+    public function __construct(
+        public int $id,
+        public string $libelle,
+        public string|int $valeur,
+        public int $ordre = 1,
+        array $options = []
+    ) {
         $this->resolveOptions($options);
     }
 

@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/questionnaire/enquete-controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/01/2023 17:35
+// @lastUpdate 07/01/2023 23:00
 import { Controller } from '@hotwired/stimulus'
 import { useDebounce } from 'stimulus-use'
 import Routing from 'fos-router'
@@ -70,14 +70,16 @@ export default class extends Controller {
   }
 
   sauvegardeReponseChoix(event) {
-    post(Routing.generate('api_questionnaire_qualite_ajax_reponse', {
-      uuidQuestionnaire: this.questionnaireUuidValue,
-      uuid: this.choixUserUuidValue,
-    }), {
-      cleReponse: event.target.id,
-      cleQuestion: event.target.name,
-      value: event.currentTarget.value,
-    })
+    if (event.params.mode !== 'mode.apercu') {
+      post(Routing.generate('api_questionnaire_qualite_ajax_reponse', {
+        uuidQuestionnaire: this.questionnaireUuidValue,
+        uuid: this.choixUserUuidValue,
+      }), {
+        cleReponse: event.target.id,
+        cleQuestion: event.target.name,
+        value: event.currentTarget.value,
+      })
+    }
   }
 
   onTextAreaChange(event) {
@@ -89,12 +91,14 @@ export default class extends Controller {
   }
 
   async sauvegardeReponseLibre(event) {
-    await post(Routing.generate('api_questionnaire_qualite_ajax_reponse_txt', {
-      uuidQuestionnaire: this.questionnaireUuidValue,
-      uuid: this.choixUserUuidValue,
-    }), {
-      cleQuestion: event.target.id,
-      value: event.target.value,
-    })
+    if (event.params.mode !== 'mode.apercu') {
+      await post(Routing.generate('api_questionnaire_qualite_ajax_reponse_txt', {
+        uuidQuestionnaire: this.questionnaireUuidValue,
+        uuid: this.choixUserUuidValue,
+      }), {
+        cleQuestion: event.target.id,
+        value: event.target.value,
+      })
+    }
   }
 }

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/QuestChoixRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/12/2022 13:57
+ * @lastUpdate 08/01/2023 11:04
  */
 
 namespace App\Repository;
@@ -63,7 +63,7 @@ class QuestChoixRepository extends ServiceEntityRepository
     }
 
     public function findExistQuestion(
-        string $cleQuestion,
+        int $cleQuestion,
         QuestChoixInterface $choixUser,
         string $typeDestinataire
     ): ?QuestChoix {
@@ -72,6 +72,28 @@ class QuestChoixRepository extends ServiceEntityRepository
             ->andWhere('c.idQuestChoix = :idQuestChoix')
             ->andWhere('c.typeDestinataire = :typeDestinataire')
             ->setParameter('question', $cleQuestion)
+            ->setParameter('idQuestChoix', $choixUser->getId())
+            ->setParameter('typeDestinataire', $typeDestinataire)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function findExistQuestionConfig(
+        int $cleQuestion,
+        QuestChoixInterface $choixUser,
+        string $typeDestinataire,
+        string $cleReponse
+    ) {
+        $t = explode('_', $cleReponse);
+        $cleReponse = $t[0] . '_' . $t[1] . '_' . $t[2] . '_' . $t[3] . '_' . $t[4] . '_%';
+
+        return $this->createQueryBuilder('c')
+            ->andWhere('c.question = :question')
+            ->andWhere('c.idQuestChoix = :idQuestChoix')
+            ->andWhere('c.typeDestinataire = :typeDestinataire')
+            ->andWhere('c.cleReponse LIKE :cleReponse')
+            ->setParameter('question', $cleQuestion)
+            ->setParameter('cleReponse', $cleReponse)
             ->setParameter('idQuestChoix', $choixUser->getId())
             ->setParameter('typeDestinataire', $typeDestinataire)
             ->getQuery()

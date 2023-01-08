@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/questionnaire/parametres_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/01/2023 21:51
+// @lastUpdate 07/01/2023 23:01
 
 import { Controller } from '@hotwired/stimulus'
 import { addCallout } from '../../js/util'
@@ -36,7 +36,6 @@ export default class extends Controller {
   }
 
   async saveReglages(event) {
-    console.log('saveReglages')
     event.preventDefault()
     const body = {
       method: 'POST',

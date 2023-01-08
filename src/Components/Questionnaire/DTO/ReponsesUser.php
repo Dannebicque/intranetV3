@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/DTO/ReponsesUser.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/12/2022 14:25
+ * @lastUpdate 08/01/2023 11:04
  */
 
 namespace App\Components\Questionnaire\DTO;
@@ -17,7 +17,12 @@ class ReponsesUser
 
     public function addReponse(QuestChoix $reponse): void
     {
-        $this->reponses[$reponse->getQuestion()->getCle()] = $reponse;
+        $t = explode('_', $reponse->getCleReponse());
+        if (str_starts_with($t[4], 'c')) {
+            $this->reponses[$reponse->getQuestion()->getCle()][$t[4]] = $reponse;
+        } else {
+            $this->reponses[$reponse->getQuestion()->getCle()] = $reponse;
+        }
     }
 
     public function getReponses(): array
@@ -25,8 +30,13 @@ class ReponsesUser
         return $this->reponses;
     }
 
-    public function getReponse($cle)
+    public function getReponse(string $cle, ?string $sousCle = null): ?QuestChoix
     {
+
+        if (null !== $sousCle and is_array($this->reponses[$cle])) {
+            return $this->reponses[$cle][$sousCle] ?? null;
+        }
+
         return $this->reponses[$cle] ?? null;
     }
 }
