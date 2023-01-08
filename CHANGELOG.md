@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.9](https://github.com/Dannebicque/intranetV3/compare/v3.11.8...v3.11.9) (2023-01-08)
+
+
+### Features
+
+* [Questionnaire] Choix du semestre si questionnaire étudiant et onglet réglage ([ea55477](https://github.com/Dannebicque/intranetV3/commit/ea55477de2c269bff75d3df4348c548b292cf5c9))
+* [Questionnaire] Paramètrage d'une section configurable (ok pour prévisionnel) ([e8e797b](https://github.com/Dannebicque/intranetV3/commit/e8e797befc5b04173ab3c8bf55ab46abe650db67))
+* [Questionnaire] Paramètrage d'une section configurable (ok pour prévisionnel) + sauvegarde réponse sur choix chainé avec parametres ([6c6b11e](https://github.com/Dannebicque/intranetV3/commit/6c6b11e1e538771dc08f7edd82a700464c5a2487))
+
 ### [3.11.8](https://github.com/Dannebicque/intranetV3/compare/v3.11.7...v3.11.8) (2023-01-07)
 
 
