@@ -1,18 +1,17 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Section/SaeSectionAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/09/2022 18:16
+ * @lastUpdate 08/01/2023 17:22
  */
 
 namespace App\Components\Questionnaire\Section;
 
-use App\Classes\Matieres\TypeMatiereManager;
-use App\Classes\Previsionnel\PrevisionnelManager;
-use App\Entity\Annee;
 use App\Entity\ApcSae;
+use App\Entity\Semestre;
+use App\Repository\ApcSaeRepository;
 
 class SaeSectionAdapter extends AbstractSectionAdapter
 {
@@ -23,32 +22,39 @@ class SaeSectionAdapter extends AbstractSectionAdapter
     final public const LABEL = 'sae';
 
     public function __construct(
-        protected PrevisionnelManager $previsionnelManager,
-        protected TypeMatiereManager $typeMatiereManager)
-    {
+        protected ApcSaeRepository $apcSaeRepository
+    ) {
     }
 
     public function getData(mixed $id): ?array
     {
-        return [
-            'libelle' => '',
-            'code' => '',
-            'ordre' => 1,
-            'id' => $id,
-        ];
+        $matiere = $this->apcSaeRepository->find($id);
+        if (null !== $matiere) {
+            return [
+                'libelle' => $matiere->getLibelle(),
+                'code' => $matiere->getCodeElement(),
+                'personnel' => '',
+                'id' => $id,
+                'affichage' => $matiere->getCodeElement() . ' | ' . $matiere->getLibelle(),
+            ];
+        }
+
+        return null;
     }
 
-    public function getAllDataAnnee(Annee $annee, array $selectionnes): array
+    public function getAllDataSemestre(Semestre $semestre, array $selectionnes): array
     {
         $data = [];
-        $previs = $this->previsionnelManager->getPrevisionnelSaeAnnee($annee, $annee->getAnneeUniversitaire());
+        $previs = $this->apcSaeRepository->findByReferentielOrdreSemestre($semestre->getDiplome()?->getReferentiel(),
+            $semestre->getOrdreLmd());
         foreach ($previs as $previ) {
             $data[] = [
-                'libelle' => $previ->matiere_libelle,
-                'code' => $previ->matiere_code,
-                'personnel' => $previ->personnel_prenom.' '.$previ->personnel_nom,
-                'id' => $previ->id,
-                'checked' => in_array($previ->id, $selectionnes),
+                'libelle' => $previ->getLibelle(),
+                'code' => $previ->getCodeElement(),
+                'personnel' => '',
+                'id' => $previ->getId(),
+                'checked' => in_array($previ->getId(), $selectionnes),
+                'affichage' => $previ->getCodeElement() . ' | ' . $previ->getLibelle(),
             ];
         }
 

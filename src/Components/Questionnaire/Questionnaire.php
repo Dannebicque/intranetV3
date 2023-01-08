@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Questionnaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2023 11:58
+ * @lastUpdate 08/01/2023 17:04
  */
 
 namespace App\Components\Questionnaire;
@@ -229,7 +229,7 @@ class Questionnaire
             return
                 [
                     'section' => $section,
-                    'datas' => $configSection->getDataPourConfiguration($this->questionnaire->semestre->getAnnee()),
+                    'datas' => $configSection->getDataPourConfiguration($this->questionnaire->semestre),
                 ];
         }
 

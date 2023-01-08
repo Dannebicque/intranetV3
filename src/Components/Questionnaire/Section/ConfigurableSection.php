@@ -4,12 +4,12 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Section/ConfigurableSection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/01/2023 11:04
+ * @lastUpdate 08/01/2023 17:22
  */
 
 namespace App\Components\Questionnaire\Section;
 
-use App\Entity\Annee;
+use App\Entity\Semestre;
 
 class ConfigurableSection extends AbstractSection
 {
@@ -85,12 +85,13 @@ class ConfigurableSection extends AbstractSection
         return (is_countable($this->config['valeurs']) ? count($this->config['valeurs']) : 0) % self::NB_QUESTIONS_PAR_SECTION;
     }
 
-    public function getDataPourConfiguration(Annee $annee): array
+    public function getDataPourConfiguration(Semestre $semestre): array
     {
-        if (null === $this->config || $this->config['valeurs'] === null) {
+        if (null === $this->config || !array_key_exists('valeurs',
+                $this->config) || $this->config['valeurs'] === null) {
             $this->config['valeurs'] = [];
         }
 
-        return $this->sectionAdapter->getAllDataAnnee($annee, $this->config['valeurs']);
+        return $this->sectionAdapter->getAllDataSemestre($semestre, $this->config['valeurs']);
     }
 }
