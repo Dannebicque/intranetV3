@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.10](https://github.com/Dannebicque/intranetV3/compare/v3.11.9...v3.11.10) (2023-01-08)
+
+
+### Features
+
+* [Questionnaire] Ressources, Matières et SAE comme adapter pour les sections ([56c15e1](https://github.com/Dannebicque/intranetV3/commit/56c15e19e15740fbd4f4113b6a525d5c41d4c5b5))
+
 ### [3.11.9](https://github.com/Dannebicque/intranetV3/compare/v3.11.8...v3.11.9) (2023-01-08)
 
 
