@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.11](https://github.com/Dannebicque/intranetV3/compare/v3.11.10...v3.11.11) (2023-01-09)
+
+
+### Features
+
+* [Questionnaire] Questions paramètrables sur QCU et QCM ([09b87df](https://github.com/Dannebicque/intranetV3/commit/09b87dfda312874aca6189fafa526f2d80a6c8a6))
+* [Questionnaire] Ressources, Matières et SAE comme adapter pour les sections ([fdba5f8](https://github.com/Dannebicque/intranetV3/commit/fdba5f88e73d468292679d8ca9d77ab1986b1494))
+
 ### [3.11.10](https://github.com/Dannebicque/intranetV3/compare/v3.11.9...v3.11.10) (2023-01-08)
 
 
