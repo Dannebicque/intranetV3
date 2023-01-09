@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/DTO/ReponsesUser.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/01/2023 09:33
+ * @lastUpdate 09/01/2023 11:48
  */
 
 namespace App\Components\Questionnaire\DTO;
@@ -34,6 +34,10 @@ class ReponsesUser
     {
         if (null !== $sousCle && array_key_exists($cle, $this->reponses) && is_array($this->reponses[$cle])) {
             return $this->reponses[$cle][$sousCle] ?? null;
+        }
+
+        if (null !== $sousCle && !array_key_exists($sousCle, $this->reponses)) {
+            return $this->reponses[$sousCle] ?? null;
         }
 
         return $this->reponses[$cle] ?? null;

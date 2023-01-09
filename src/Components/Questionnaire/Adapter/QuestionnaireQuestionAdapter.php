@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Adapter/QuestionnaireQuestionAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/01/2023 11:04
+ * @lastUpdate 09/01/2023 18:29
  */
 
 namespace App\Components\Questionnaire\Adapter;
@@ -53,6 +53,7 @@ class QuestionnaireQuestionAdapter
             $data = $abstractSection->abstractSectionAdapter->getData($abstractSection->params['valeurs'][$ordre]);
             $this->question->valeurs = $abstractSection->params['valeurs'];
             $this->question->libelle = Tools::personnaliseTexte($question->getLibelle(), $data);
+            $this->question->valeur_config = $abstractSection->params['valeurs'][$ordre];
         } else {
             $this->question->libelle = $question->getLibelle();
         }
@@ -77,23 +78,25 @@ class QuestionnaireQuestionAdapter
     public function setReponse(?ReponsesUser $reponsesUser): self
     {
         if (null !== $reponsesUser) {
-
             if ($this->question::class === TypeChainee::class) {
                 foreach ($this->question->questions as $questionEnfant) {
-                    if ($this->question->valeurs !== null) {
+                    if (null !== $this->question->valeurs) {
                         foreach ($this->question->valeurs as $valeur) {
                             $this->question->reponsesUser[$questionEnfant->getId()]['c' . $valeur] = $reponsesUser->getReponse($questionEnfant->getCle(),
                                 'c' . $valeur);
                         }
                     } else {
                         $this->question->reponsesUser[$questionEnfant->getId()] = $reponsesUser->getReponse($questionEnfant->getCle());
-
                     }
                 }
             } else {
-                $this->question->reponseUser = $reponsesUser->getReponse($this->question->cle);
+                if ('' !== $this->question->valeur_config) {
+                    $this->question->reponsesUser[$this->question->id]['c' . $this->question->valeur_config] = $reponsesUser->getReponse($this->question->cle,
+                        'c' . $this->question->valeur_config);
+                } else {
+                    $this->question->reponseUser = $reponsesUser->getReponse($this->question->cle);
+                }
             }
-
         }
 
         return $this;

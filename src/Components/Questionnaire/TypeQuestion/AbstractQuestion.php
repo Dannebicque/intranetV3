@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeQuestion/AbstractQuestion.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/01/2023 07:55
+ * @lastUpdate 09/01/2023 11:25
  */
 
 namespace App\Components\Questionnaire\TypeQuestion;
@@ -30,6 +30,8 @@ abstract class AbstractQuestion
 
     public string $libelle;
     public ?array $valeurs = null;
+    public ?string $valeur_config = '';
+
     public ?string $help = null;
     public int $id;
     public array $parametres = [];

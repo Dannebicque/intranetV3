@@ -267,14 +267,25 @@
 
 {% block liste_reponses %}
     <div class="col-12">
+        {% if valeurs != null %}
+            {% set name = name ~'_c'~valeur_config %}
+        {% endif %}
         {% for reponse in reponses %}
             <div class="form-check form-check-inline">
                 <input type="{{ type_question }}" id="quizz_question_qcu_{{ name }}_{{ reponse.id }}"
                        name="quizz_question_reponses_{{ name }}"
                         {{ stimulus_action('questionnaire--enquete', 'change','change', {mode:mode}) }}
                        data-fieldset="{{ id }}"
-                        {% if reponseEtudiant != null and
-                            reponseEtudiant.valeur == reponse.valeur %}checked{% endif %}
+                        {% if valeur_config != '' %}
+                            {% if reponsesEtudiant[id] is defined and
+                                reponsesEtudiant[id]['c'~valeur_config] is defined and
+                                reponsesEtudiant[id]['c'~valeur_config].valeur == reponse.valeur %}checked
+                            {% endif %}
+                        {% else %}
+                            {% if reponseEtudiant != null and
+                                reponseEtudiant.valeur == reponse.valeur %}checked
+                            {% endif %}
+                        {% endif %}
                         {% if obligatoire %}required{% endif %}
                        class="form-check-input"
                        value="{{ reponse.valeur }}">
