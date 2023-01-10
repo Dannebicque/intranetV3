@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/QuestChoix.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/01/2023 21:43
+ * @lastUpdate 10/01/2023 16:35
  */
 
 namespace App\Entity;
@@ -20,7 +20,7 @@ class QuestChoix extends BaseEntity
 {
     use LifeCycleTrait;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type: Types::TEXT)]
     private ?string $valeur = null;
 
     #[ORM\Column(length: 20)]

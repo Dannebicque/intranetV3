@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/QuestQuestionnaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2023 19:19
+ * @lastUpdate 10/01/2023 16:05
  */
 
 namespace App\Entity;
@@ -84,6 +84,7 @@ class QuestQuestionnaire extends BaseEntity
         $this->libelle .= ' (copie)';
         $this->setCreated(Carbon::now());
         $this->setUpdated(Carbon::now());
+        $this->setUuid(Uuid::uuid4());
     }
 
     /**
