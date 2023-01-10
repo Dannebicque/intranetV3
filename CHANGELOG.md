@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.12](https://github.com/Dannebicque/intranetV3/compare/v3.11.11...v3.11.12) (2023-01-10)
+
+
+### Bug Fixes
+
+* [BUT] Affichage ([96aea04](https://github.com/Dannebicque/intranetV3/commit/96aea0436b02bb72376ea213c40f9e1c8b7a4cdb))
+* [Questionnaire] Affichage des résultat (typage) ([ee16036](https://github.com/Dannebicque/intranetV3/commit/ee16036b90d1e286558b1ad36ccb901033caad5c))
+* [Questionnaire] Duplication de questionnaire et clé + taille champs valeur ([7b92379](https://github.com/Dannebicque/intranetV3/commit/7b923796a5f7a3fd1f91e31f50fff2de2a08f299))
+
 ### [3.11.11](https://github.com/Dannebicque/intranetV3/compare/v3.11.10...v3.11.11) (2023-01-09)
 
 
