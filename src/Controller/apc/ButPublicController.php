@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/apc/ButPublicController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/12/2022 15:23
+ * @lastUpdate 10/01/2023 20:54
  */
 
 namespace App\Controller\apc;
@@ -57,7 +57,7 @@ class ButPublicController extends AbstractController
             throw new DiplomeNotFoundException();
         }
 
-        $tParcours = $apcStructure->parcoursNiveaux($referentiel);
+        $tParcours = $apcStructure->parcoursNiveaux($referentiel->getApcParcours());
 
         return $this->render('apc/public/referentielCompetences.html.twig', [
             'diplome' => $dip,
@@ -162,15 +162,16 @@ class ButPublicController extends AbstractController
         ApcRessourceRepository $apcRessourceRepository,
         ApcSaeRepository $apcSaeRepository,
         string $diplome
-    ): Response {
+    ): Response
+    {
         $dip = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
 
         if (null === $dip) {
             throw new DiplomeNotFoundException();
         }
 
-        $ressources = $apcRessourceRepository->findByDiplomeToSemestreArray($diplome);
-        $saes = $apcSaeRepository->findByDiplomeToSemestreArray($diplome);
+        $ressources = $apcRessourceRepository->findByDiplomeToSemestreArray($dip);
+        $saes = $apcSaeRepository->findByDiplomeToSemestreArray($dip);
 
         return $this->render('apc/public/preconisations.html.twig', [
             'ressources' => $ressources,
@@ -186,15 +187,16 @@ class ButPublicController extends AbstractController
         ApcSaeRepository $apcSaeRepository,
         ApcNiveauRepository $apcNiveauRepository,
         string $diplome
-    ): Response {
+    ): Response
+    {
         $dip = $this->diplomeRepository->findOneBy(['typeDiplome' => 4, 'sigle' => strtoupper($diplome)]);
 
         if (null === $dip) {
             throw new DiplomeNotFoundException();
         }
 
-        $ressources = $apcRessourceRepository->findByDiplomeToSemestreArray($diplome);
-        $saes = $apcSaeRepository->findByDiplomeToSemestreArray($diplome);
+        $ressources = $apcRessourceRepository->findByDiplomeToSemestreArray($dip);
+        $saes = $apcSaeRepository->findByDiplomeToSemestreArray($dip);
         $tab = [];
         foreach ($dip->getSemestres() as $semestre) {
             $semestreid = $semestre->getId();
