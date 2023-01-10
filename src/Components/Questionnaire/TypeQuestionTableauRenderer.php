@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeQuestionTableauRenderer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/12/2022 15:40
+ * @lastUpdate 10/01/2023 20:50
  */
 
 namespace App\Components\Questionnaire;
@@ -27,7 +27,7 @@ class TypeQuestionTableauRenderer
     /**
      * @throws \Throwable
      */
-    public function render(AbstractQuestion $question, ?int $ordre = 0): string
+    public function render(AbstractQuestion $question, int|string|null $ordre = 0): string
     {
         $template = $this->load();
 
