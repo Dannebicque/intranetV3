@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/QuestChoixRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/01/2023 11:04
+ * @lastUpdate 11/01/2023 22:39
  */
 
 namespace App\Repository;
@@ -52,7 +52,8 @@ class QuestChoixRepository extends ServiceEntityRepository
 
     public function findByQuestionnaire(QuestQuestionnaire $questionnaireQualite): array
     {
-        return $this->createQueryBuilder('c')
+        $data = [];
+        $data[] = $this->createQueryBuilder('c')
             ->innerJoin(QuestQuestion::class, 'q', 'WITH', 'q.id = c.question')
             ->innerJoin(QuestSection::class, 's', 'WITH', 's.id = q.section')
             ->innerJoin(QuestQuestionnaire::class, 'qq', 'WITH', 'qq.id = s.questionnaire')
@@ -60,6 +61,17 @@ class QuestChoixRepository extends ServiceEntityRepository
             ->setParameter('questionnaire', $questionnaireQualite)
             ->getQuery()
             ->getResult();
+        $data[] = $this->createQueryBuilder('c')
+            ->innerJoin(QuestQuestion::class, 'q', 'WITH', 'q.id = c.question AND q.questionParent IS NOT NULL')
+            ->innerJoin(QuestQuestion::class, 'qp', 'WITH', 'q.questionParent = qp.id')
+            ->innerJoin(QuestSection::class, 's', 'WITH', 's.id = qp.section')
+            ->innerJoin(QuestQuestionnaire::class, 'qq', 'WITH', 'qq.id = s.questionnaire')
+            ->andWhere('s.questionnaire = :questionnaire')
+            ->setParameter('questionnaire', $questionnaireQualite)
+            ->getQuery()
+            ->getResult();
+
+        return array_merge(...$data);
     }
 
     public function findExistQuestion(

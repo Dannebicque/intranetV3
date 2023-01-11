@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Adapter/QuestionnaireQuestionAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/01/2023 18:29
+ * @lastUpdate 11/01/2023 22:37
  */
 
 namespace App\Components\Questionnaire\Adapter;
@@ -104,7 +104,12 @@ class QuestionnaireQuestionAdapter
 
     public function setReponsesEtudiants(ListeChoix $listeChoix): self
     {
-        $this->question->choix = $listeChoix->getChoix($this->question->cle);
+        if ('' !== $this->question->valeur_config) {
+            $ls = $listeChoix->getChoix($this->question->cle);
+            $this->question->choix = null !== $ls ? $ls['c' . $this->question->valeur_config] : null;
+        } else {
+            $this->question->choix = $listeChoix->getChoix($this->question->cle);
+        }
 
         return $this;
     }

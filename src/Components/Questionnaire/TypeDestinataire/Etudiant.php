@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeDestinataire/Etudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/01/2023 18:56
+ * @lastUpdate 11/01/2023 21:40
  */
 
 namespace App\Components\Questionnaire\TypeDestinataire;
@@ -119,5 +119,10 @@ class Etudiant extends AbstractTypeDestinataire implements TypeDestinataireInter
     public function getReponses(): ReponsesUser
     {
         return $this->abstractGetReponses('etudiant');
+    }
+
+    public function getAllReponses(): ReponsesUser
+    {
+        return $this->abstractGetAllReponses('etudiant');
     }
 }

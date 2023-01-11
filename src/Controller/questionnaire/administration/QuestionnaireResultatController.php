@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/administration/QuestionnaireResultatController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/12/2022 12:03
+ * @lastUpdate 11/01/2023 22:37
  */
 
 namespace App\Controller\questionnaire\administration;
@@ -15,7 +15,6 @@ use App\Components\Questionnaire\DTO\AbstractQuestionnaire;
 use App\Components\Questionnaire\Questionnaire;
 use App\Components\Questionnaire\Section\AbstractSection;
 use App\Controller\BaseController;
-use App\Entity\QuestionnaireQualite;
 use App\Entity\QuestQuestionnaire;
 use App\Repository\QuestChoixRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,11 +25,11 @@ use Symfony\Component\Routing\Annotation\Route;
 class QuestionnaireResultatController extends BaseController
 {
     #[Route('/export/{id}.xlsx', name: 'export', methods: ['GET'])]
-    public function exportExcel(QuestionnaireQualite $questionnaire): \Symfony\Component\HttpFoundation\Response
+    public function exportExcel(QuestQuestionnaire $questionnaire): Response
     {
     }
 
-    #[Route('/affiche-{type_view}/{id}', name: 'resultats', methods: ['GET'], requirements: ['type_view' => 'graphiques|tableaux'])]
+    #[Route('/affiche-{type_view}/{id}', name: 'resultats', requirements: ['type_view' => 'graphiques|tableaux'], methods: ['GET'])]
     public function afficheResultats(
         Request $request,
         QuestChoixRepository $questChoixRepository,
@@ -38,9 +37,8 @@ class QuestionnaireResultatController extends BaseController
         QuestQuestionnaire $questionnaireQualite
     ): Response {
         $reponsesEtudiants = $questChoixRepository->findByQuestionnaire($questionnaireQualite);
-
         foreach ($reponsesEtudiants as $reponse) {
-            $questionnaire->addChoix($reponse, $reponse->getQuestion()->getCle());
+            $questionnaire->addChoix($reponse);
         }
 
         $questionnaire->createQuestionnaire(QuestQuestionnaire::class,

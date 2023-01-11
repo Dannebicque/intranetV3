@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeDestinataire/AbstractTypeDestinataire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/01/2023 11:04
+ * @lastUpdate 11/01/2023 21:42
  */
 
 namespace App\Components\Questionnaire\TypeDestinataire;
@@ -180,6 +180,22 @@ abstract class AbstractTypeDestinataire
 
         $reponses = $this->questChoixRepository->findBy([
             'idQuestChoix' => $this->choixUser->getId(),
+            'typeDestinataire' => $typeDestinataire,
+        ]);
+
+        foreach ($reponses as $reponse) {
+            $this->reponses->addReponse($reponse);
+        }
+
+        return $this->reponses;
+    }
+
+    public function abstractGetAllReponses(string $typeDestinataire): ReponsesUser
+    {
+        $this->reponses = new ReponsesUser();
+
+        $reponses = $this->questChoixRepository->findByQuestionnaire([
+            'questionnaire' => $this->questionnaire->getId(),
             'typeDestinataire' => $typeDestinataire,
         ]);
 

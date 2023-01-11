@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Questionnaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/01/2023 17:04
+ * @lastUpdate 11/01/2023 22:08
  */
 
 namespace App\Components\Questionnaire;
@@ -257,9 +257,9 @@ class Questionnaire
         }
     }
 
-    public function addChoix(QuestChoix $reponse, string $cle)
+    public function addChoix(QuestChoix $reponse)
     {
-        $this->listeChoix->addChoix($reponse, $cle);
+        $this->listeChoix->addChoix($reponse);
     }
 
     /**
