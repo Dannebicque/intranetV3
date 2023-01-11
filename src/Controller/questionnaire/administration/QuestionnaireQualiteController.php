@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/administration/QuestionnaireQualiteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2023 19:05
+ * @lastUpdate 11/01/2023 13:03
  */
 
 namespace App\Controller\questionnaire\administration;
@@ -56,6 +56,7 @@ class QuestionnaireQualiteController extends BaseController
         QuestQuestionnaire $questionnaire
     ): Response {
         $newQuestionnaireQualite = clone $questionnaire;
+        $newQuestionnaireQualite->setLibelle($questionnaire->getLibelle() . ' - copie');
         $this->entityManager->persist($newQuestionnaireQualite);
         foreach ($questionnaire->getQuestSections() as $section) {
             $nSection = clone $section;
