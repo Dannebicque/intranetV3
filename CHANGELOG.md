@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.13](https://github.com/Dannebicque/intranetV3/compare/v3.11.12...v3.11.13) (2023-01-11)
+
+
+### Bug Fixes
+
+* [Questionnaire] Affichage des réponses selon la catégorie ([f0ba0f9](https://github.com/Dannebicque/intranetV3/commit/f0ba0f975898873383faffb20c8623aedd7cd7f3))
+* [Questionnaire] Mention "copie" sur le questionnaire dupliqué ([9455264](https://github.com/Dannebicque/intranetV3/commit/94552645d7ce24fa56323dafc811e6f1a86a2d73))
+
 ### [3.11.12](https://github.com/Dannebicque/intranetV3/compare/v3.11.11...v3.11.12) (2023-01-10)
 
 
