@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/DTO/ListeChoix.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/01/2023 22:37
+ * @lastUpdate 11/01/2023 22:41
  */
 
 namespace App\Components\Questionnaire\DTO;
@@ -55,7 +55,7 @@ class ListeChoix
         }
     }
 
-    public function getChoix(?string $cle): ?Choix
+    public function getChoix(?string $cle): null|Choix|array
     {
         return $this->listeChoix[$cle] ?? null;
     }
