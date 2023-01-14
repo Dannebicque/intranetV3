@@ -1,8 +1,8 @@
-// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/adm.notes.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/07/2022 13:30
+// @lastUpdate 14/01/2023 14:41
 import $ from 'jquery'
 import { addCallout } from '../util'
 import Routing from 'fos-router'
@@ -97,6 +97,17 @@ $(document).on('click', '.marquerAbsent', function (e) {
 $(document).on('click', '#supprAbsent', function (e) {
   e.preventDefault()
   updateNote($(this).data('note'), 'suppr-absence')
+})
+
+let matiereHide = false
+$(document).on('click', '#masquerRessourcesSaes', function (e) {
+  if (matiereHide) {
+    $('.matiere').show()
+    matiereHide = false
+  } else {
+    $('.matiere').hide()
+    matiereHide = true
+  }
 })
 
 function updateNote(id, action) {

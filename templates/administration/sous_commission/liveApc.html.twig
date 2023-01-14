@@ -55,6 +55,9 @@ chaque UE, et pour l'année au global.
             {% endif %}
 
             <div class="table-responsive" style="height: 500px; overflow-y: auto">
+                <button class="btn btn-primary" id="masquerRessourcesSaes">Afficher/Masquer les ressources et
+                                                                           SAE
+                </button>
                 <table class="table table-striped table-hover table-bordered table-fixheader"
                        style="font-size:10px;">
                     <thead>
@@ -75,7 +78,7 @@ chaque UE, et pour l'année au global.
                             <th colspan="{{ (sousCommission.ues|length*6) + 4 }}" class="text-center" scope="col">
                                 Année {{ semestre.annee.ordre }}</th>
                         {% endif %}
-                        <th scope="col" rowspan="3">Etudiant</th>
+                        {#                        <th scope="col" rowspan="3">Etudiant</th> #}
                     </tr>
 
                     <tr style="position: sticky; top: 20px;
@@ -129,12 +132,12 @@ chaque UE, et pour l'année au global.
                                 <th class="text-center" scope="col" colspan="2">S2</th>
                                 <th class="text-center" scope="col" colspan="2">Année</th>
                             {% endfor %}
-                        {% endif %}
+
                         <th class="text-center" scope="col">S1</th>
                         <th class="text-center" scope="col">S2</th>
                         <th class="text-center" scope="col">Année</th>
                         <th class="text-center" scope="col">Prop.</th>
-
+                        {% endif %}
                     </tr>
                     </thead>
                     <tbody>
@@ -153,11 +156,11 @@ chaque UE, et pour l'année au global.
                                 {% if matiere.bonification == true %}
                                     {% if myEtudiant.moyenneMatieres[matiere.typeIdMatiere].moyenne != '-0.01'
                                         and myEtudiant.moyenneMatieres[matiere.typeIdMatiere].moyenne > 0 %}
-                                        <td>
+                                        <td class="matiere">
                                             {{ myEtudiant.moyenneMatieres[matiere.typeIdMatiere].moyenne|styleMatiere }}
                                         </td>
                                     {% else %}
-                                        <td>
+                                        <td class="matiere">
                                             <span class="badge bg-primary">No PAC</span>
                                         </td>
                                     {% endif %}
