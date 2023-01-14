@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeDestinataire/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/12/2022 09:21
+ * @lastUpdate 14/01/2023 15:43
  */
 
 namespace App\Components\Questionnaire\TypeDestinataire;
@@ -45,11 +45,27 @@ class Personnel extends AbstractTypeDestinataire implements TypeDestinataireInte
 
     public function getListe(): array
     {
-        if (null !== $this->questionnaire->getDepartement()) {
-            return $this->personnelRepository->findByDepartement($this->questionnaire->getDepartement());
+        if ($this->questionnaire->getDepartement() !== null) {
+            $personnels = $this->personnelRepository->findByDepartement($this->questionnaire->getDepartement());
+        } else {
+            $personnels = $this->personnelRepository->findAll();
+        }
+        $dest = $this->questChoixPersonnelRepository->findByQuestionnaire($this->questionnaire);
+
+        $ld = [];
+        foreach ($dest as $d) {
+            $ld[$d->getPersonnel()->getId()] = $d;
         }
 
-        return $this->personnelRepository->findAll();
+        $liste = [];
+        foreach ($personnels as $personnel) {
+            $liste[$personnel->getId()]['dest'] = $personnel;
+            if (array_key_exists($personnel->getId(), $ld)) {
+                $liste[$personnel->getId()]['choix'] = $ld[$personnel->getId()];
+            }
+        }
+
+        return $liste;
     }
 
     public function getListeDestinataire(): array

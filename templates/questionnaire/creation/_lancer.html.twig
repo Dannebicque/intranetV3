@@ -44,8 +44,10 @@
         <ul class="row">
             {% for elt in liste %}
                 <li class="col-4">
-                    <input type="checkbox" id="dest_{{ elt.id }}" name="destinataires[]" value="{{ elt.id }}" class="element"/>
-                    <label for="dest_{{ elt.id }}">{{ elt.display }}</label>
+                    <input type="checkbox" id="dest_{{ elt.dest.id }}" name="destinataires[]" value="{{ elt.dest.id }}"
+                           class="element" {% if elt.choix is defined %}checked disabled{% endif %}
+                    />
+                    <label for="dest_{{ elt.dest.id }}">{{ elt.dest.display }}</label>
                 </li>
             {% else %}
                 <li class="col-12">

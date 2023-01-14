@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeDestinataire/Etudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/01/2023 21:40
+ * @lastUpdate 14/01/2023 15:44
  */
 
 namespace App\Components\Questionnaire\TypeDestinataire;
@@ -46,7 +46,23 @@ class Etudiant extends AbstractTypeDestinataire implements TypeDestinataireInter
     public function getListe(): array
     {
         if ($this->questionnaire->getSemestre() !== null) {
-            return $this->etudiantRepository->findBySemestre($this->questionnaire->getSemestre());
+            $etudiants = $this->etudiantRepository->findBySemestre($this->questionnaire->getSemestre());
+            $dest = $this->questChoixEtudiantRepository->findByQuestionnaire($this->questionnaire);
+
+            $ld = [];
+            foreach ($dest as $d) {
+                $ld[$d->getEtudiant()->getId()] = $d;
+            }
+
+            $liste = [];
+            foreach ($etudiants as $etudiant) {
+                $liste[$etudiant->getId()]['dest'] = $etudiant;
+                if (array_key_exists($etudiant->getId(), $ld)) {
+                    $liste[$etudiant->getId()]['choix'] = $ld[$etudiant->getId()];
+                }
+            }
+
+            return $liste;
         }
 
         return [];
