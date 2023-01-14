@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/CreationSectionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2023 20:09
+ * @lastUpdate 14/01/2023 15:15
  */
 
 namespace App\Controller\questionnaire;
@@ -224,6 +224,29 @@ class CreationSectionController extends BaseController
                 ];
                 break;
         }
+        $parametre['conditions'] = $conditions;
+
+        $question->setParametre($parametre);
+        $entityManager->flush();
+
+        return $this->json(true);
+    }
+
+    #[Route('/{section}/transition-question-delete-condition/{question}', name: 'transition_question_delete_condition')]
+    public function deleteCondition(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        QuestQuestionRepository $questionRepository,
+        QuestSection $section,
+        QuestQuestion $question,
+    ): Response {
+        $key = $request->query->get('key');
+        $parametre = $question->getParametre();
+        if (array_key_exists('conditions', $parametre)) {
+            $conditions = $parametre['conditions'];
+            unset($conditions[$key]);
+        }
+
         $parametre['conditions'] = $conditions;
 
         $question->setParametre($parametre);

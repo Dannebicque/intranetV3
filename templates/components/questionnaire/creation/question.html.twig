@@ -21,9 +21,9 @@
                     data-action="click->modal#openModal"
                     title="Configurer condition(s)"
                     data-toggle="tooltip"
-                    class="btn btn-outline-info btn-sm"
+                    class="btn btn-outline-info"
             >
-                <i class="fas fa-gears"></i>
+                <i class="fas fa-gears"></i> ({{ hasConfig }})
             </button>
             <button class="btn btn-danger-outline btn-sm"
                     {{ stimulus_action('questionnaire--question', 'delete', 'click', {section: section.id}) }}

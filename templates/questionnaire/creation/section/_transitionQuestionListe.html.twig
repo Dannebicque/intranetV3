@@ -8,8 +8,8 @@
     </tr>
     </thead>
     <tbody>
-    {% for condition in conditions %}
-        <tr>
+    {% for key, condition in conditions %}
+        <tr id="ligne_{{ key }}">
             <td>{{ condition.type }}</td>
             {% if condition.type== 'condition' %}
                 <td>{% for crit in condition.criteres %}{{ crit }}{% if not loop.last %}, {% endif %}{% endfor %}</td>
@@ -19,7 +19,9 @@
                 <td>{% for quest in condition.questions %}{{ quest }}{% if not loop.last %}, {% endif %}{% endfor %}</td>
             {% endif %}
             <td>
-
+                <button class="btn btn-danger-outline btn-sm"
+                        {{ stimulus_action('questionnaire--configuration', 'delete', 'click', {key: key}) }}
+                ><i class="{{ iconDelete }}"></i></button>
             </td>
         </tr>
     {% endfor %}

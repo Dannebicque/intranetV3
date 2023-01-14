@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/QuestionnaireRenderer.php
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/CreationRenderer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/10/2021 10:37
+ * @lastUpdate 14/01/2023 15:18
  */
 
 namespace App\Components\Questionnaire;
@@ -70,6 +70,8 @@ class CreationRenderer
         $vars['badge'] = $typeQuestion::BADGE;
         $vars['type_question'] = $typeQuestion::LABEL;
         $vars['config'] = $question->getConfig();
+        $vars['hasConfig'] = array_key_exists('conditions',
+            $question->getParametre()) ? count($question->getParametre()['conditions']) : 0;
         $vars['question'] = $question;
         $vars['section'] = $question->getSection();
         $vars['lastQuestion'] = $question->getSection()?->getQuestQuestions()->count();

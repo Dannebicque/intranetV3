@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/questionnaire/configuration_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 04/01/2023 15:15
+// @lastUpdate 14/01/2023 15:16
 
 import { Controller } from '@hotwired/stimulus'
 import { addCallout } from '../../js/util'
@@ -13,6 +13,7 @@ export default class extends Controller {
   static values = {
     url: String,
     urlSave: String,
+    urlDelete: String,
     urlUpdateListe: String,
   }
 
@@ -29,6 +30,18 @@ export default class extends Controller {
     })
     const response = await fetch(`${this.urlValue}?${params.toString()}`)
     this.zoneTarget.innerHTML = await response.text()
+  }
+
+  async delete(event) {
+    event.preventDefault()
+    if (confirm('Voulez-vous vraiment supprimer cette condition ?')) {
+      const params = new URLSearchParams({
+        key: event.params.key,
+      })
+      await fetch(`${this.urlDeleteValue}?${params.toString()}`)
+      this._updateListe()
+      addCallout('Condition supprimée', 'success')
+    }
   }
 
   async sauvegarde(event) {
@@ -111,7 +124,6 @@ export default class extends Controller {
 
   async _updateListe() {
     this.zoneListeTarget.innerHTML = window.da.loaderStimulus
-
     const resp = await fetch(`${this.urlUpdateListeValue}?`)
     this.zoneListeTarget.innerHTML = await resp.text()
   }
