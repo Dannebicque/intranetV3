@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.14](https://github.com/Dannebicque/intranetV3/compare/v3.11.13...v3.11.14) (2023-01-14)
+
+
+### Features
+
+* [Questionnaire] reprise des questionnaires déjà envoyés dans la liste ([b84b7b2](https://github.com/Dannebicque/intranetV3/commit/b84b7b2b9d6daea623c70785b497c53d8895be9a))
+* [Questionnaire] Suppression d'une condition ([a99a0ea](https://github.com/Dannebicque/intranetV3/commit/a99a0ea109d3e5d90e467a42677ccf0a95f3da3e))
+* [SsComm] Afficher/masquer les SAE/Ressources ([ce6ffb6](https://github.com/Dannebicque/intranetV3/commit/ce6ffb6e1a361f185ddb347907da82c167a981c1))
+
+
+### Bug Fixes
+
+* [Questionnaire] Affichage des réponses selon la catégorie ([3e7ba06](https://github.com/Dannebicque/intranetV3/commit/3e7ba0691ccd366152426e6937a42c6698bd89bb))
+* [SsComm] Bug sur les exports BUT si semestre impair ([981605e](https://github.com/Dannebicque/intranetV3/commit/981605e062d0e5ebf3538b5f0a55c466538223d9))
+
 ### [3.11.13](https://github.com/Dannebicque/intranetV3/compare/v3.11.12...v3.11.13) (2023-01-11)
 
 
