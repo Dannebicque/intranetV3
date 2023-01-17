@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Etudiant/EtudiantNotes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/09/2022 16:06
+ * @lastUpdate 17/01/2023 13:16
  */
 
 namespace App\Classes\Etudiant;
@@ -20,10 +20,10 @@ use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Repository\NoteRepository;
 use App\Utils\Tools;
-use function array_key_exists;
-use function count;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use function array_key_exists;
+use function count;
 
 class EtudiantNotes
 {
@@ -126,7 +126,7 @@ class EtudiantNotes
         $tabMatiere = [];
         $groupes = $this->etudiant->getGroupes();
         foreach ($matieres as $matiere) {
-            if (false === $matiere->suspendu && $matiere->nbNotes > 0) {
+            if (false === $matiere->suspendu && $matiere->nbNotes > 0 && $matiere->isParent() === false) {
                 $tabMatiere[$matiere->getTypeIdMatiere()] = new MoyenneMatiere($matiere,
                     $semestre->getOptPointPenaliteAbsence(),
                     $groupes);

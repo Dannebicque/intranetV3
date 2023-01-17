@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/MoyenneMatiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/01/2023 12:02
+ * @lastUpdate 17/01/2023 13:13
  */
 
 namespace App\DTO;

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/EtudiantSousCommissionApc.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/01/2023 12:13
+ * @lastUpdate 17/01/2023 13:15
  */
 
 namespace App\DTO;
@@ -144,21 +144,23 @@ class EtudiantSousCommissionApc
     {
         $tabs = [];
         foreach ($matieres as $matiere) {
-            if (true === $matiere->bonification) {
-                $this->bonification += $this->moyenneMatieres[$matiere->getTypeIdMatiere()]->getBonification();
-            } elseif (array_key_exists($matiere->getTypeIdMatiere(), $this->moyenneMatieres)) {
-                if (true === $this->moyenneMatieres[$matiere->getTypeIdMatiere()]->matiereAAnnuler) {
-                    // toutes les notes sont des absences justifiéées
-                    $tabs['matieres'][$matiere->codeElement]['matiereAAnnuler'] = true;
+            if ($matiere->isParent() === false) {
+                if (true === $matiere->bonification) {
+                    $this->bonification += $this->moyenneMatieres[$matiere->getTypeIdMatiere()]->getBonification();
+                } elseif (array_key_exists($matiere->getTypeIdMatiere(), $this->moyenneMatieres)) {
+                    if (true === $this->moyenneMatieres[$matiere->getTypeIdMatiere()]->matiereAAnnuler) {
+                        // toutes les notes sont des absences justifiéées
+                        $tabs['matieres'][$matiere->codeElement]['matiereAAnnuler'] = true;
+                    } else {
+                        $tabs['matieres'][$matiere->codeElement]['matiereAAnnuler'] = false;
+                        $tabs['matieres'][$matiere->codeElement]['moyenne'] = $this->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyenne();
+                        $tabs['matieres'][$matiere->codeElement]['moyennePenalisee'] = $this->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyennePenalisee();
+                    }
                 } else {
                     $tabs['matieres'][$matiere->codeElement]['matiereAAnnuler'] = false;
-                    $tabs['matieres'][$matiere->codeElement]['moyenne'] = $this->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyenne();
-                    $tabs['matieres'][$matiere->codeElement]['moyennePenalisee'] = $this->moyenneMatieres[$matiere->getTypeIdMatiere()]->getMoyennePenalisee();
+                    $tabs['matieres'][$matiere->codeElement]['moyenne'] = 0;
+                    $tabs['matieres'][$matiere->codeElement]['moyennePenalisee'] = 0;
                 }
-            } else {
-                $tabs['matieres'][$matiere->codeElement]['matiereAAnnuler'] = false;
-                $tabs['matieres'][$matiere->codeElement]['moyenne'] = 0;
-                $tabs['matieres'][$matiere->codeElement]['moyennePenalisee'] = 0;
             }
         }
 
