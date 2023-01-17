@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/MoyenneMatiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/05/2022 14:24
+ * @lastUpdate 17/01/2023 12:02
  */
 
 namespace App\DTO;
@@ -32,11 +32,27 @@ class MoyenneMatiere
 
     public function isOption(Collection $groupes): bool
     {
+        if ($this->matiere->isEnfant()) {
+            $this->optionFaite = false;
+            foreach ($groupes as $groupe) {
+                foreach ($this->matiere->groupesEnfant() as $groupeEnfant) {
+                    if ($groupeEnfant->getId() === $groupe->getId()) {
+                        $this->optionFaite = true;
+
+                        return $this->optionFaite;
+                    }
+                }
+            }
+
+            return $this->optionFaite;
+        }
+
         if (null === $this->matiere->getParcours()) {
             $this->optionFaite = true;
 
             return $this->optionFaite;
         }
+
 
         foreach ($groupes as $groupe) {
             if ((null !== $groupe->getParcours()) && $groupe->getParcours()->getId() === $this->matiere->getParcours()->getId()) {
