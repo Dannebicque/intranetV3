@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.16](https://github.com/Dannebicque/intranetV3/compare/v3.11.15...v3.11.16) (2023-01-17)
+
+
+### Bug Fixes
+
+* [Instal] Manque une commande sur la génération des assets ([a0264c1](https://github.com/Dannebicque/intranetV3/commit/a0264c183a8fe6e2f4680e881f9184616f11a0c3))
+* [Moyenne Matiere] Prise en compte des matières enfants ([f9e166b](https://github.com/Dannebicque/intranetV3/commit/f9e166b0501d994b3d7817f30f51e2b1ee626d78))
+* [Sscomm] Liste des matières en APC en fonction du référentiel ([b0c5a97](https://github.com/Dannebicque/intranetV3/commit/b0c5a975ba09f111788e4e0c69bd3d7c0188eb18))
+
 ### [3.11.15](https://github.com/Dannebicque/intranetV3/compare/v3.11.14...v3.11.15) (2023-01-17)
 
 
