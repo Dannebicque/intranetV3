@@ -44,16 +44,25 @@ Enfin, il faut installer les dépendances JS/css
 yarn install --force (ou avec npm).
 ```
 
-L'intranet utilise une licence FontAwesome. Si vous n'en disposez pas, modifiez le package.json et la ligne `"@fortawesome/fontawesome-pro": "..."` par `"@fortawesome/fontawesome-free": "..."`
+L'intranet utilise une licence FontAwesome. Si vous n'en disposez pas, modifiez le package.json et la
+ligne `"@fortawesome/fontawesome-pro": "..."` par `"@fortawesome/fontawesome-free": "..."`
 Il pourrait manquer quelques pictos qu'il faudra modifier dans les templates si besoin.
+
+# Lancer le serveur de développement
+
+```
+yarn encore dev --watch //ou yarn watch ou npm run encore dev --watch
+```
 
 # Tester le site
 
 http://localhost:8888/intranetV3/public/index.php
 
-Selon votre configuration, l'URL peut évidemment changer. En mode développement, index.php peut être nécessaire, sauf si un htaccess est configuré ou si vous utiliser la Symfony CLI
+Selon votre configuration, l'URL peut évidemment changer. En mode développement, index.php peut être nécessaire, sauf si
+un htaccess est configuré ou si vous utiliser la Symfony CLI
 
 # Accès de démonstration
+
 Pour accéder, utilisez l'un des login ci-dessous, et le mot de passe « test »
 
 * permanent / enseignant (chef de département)
