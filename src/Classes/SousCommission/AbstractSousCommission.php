@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/SousCommission/AbstractSousCommission.php
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/AbstractSousCommission.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/12/2021 09:55
+ * @lastUpdate 17/01/2023 08:42
  */
 
 namespace App\Classes\SousCommission;
@@ -50,7 +50,12 @@ abstract class AbstractSousCommission
 
     public function initDataSousCommission(): void
     {
-        $this->matieres = $this->typeMatiereManager->findBySemestre($this->semestre);
+        if ($this->semestre->getDiplome()->getTypeDiplome()->getApc()) {
+            $this->matieres = $this->typeMatiereManager->findBySemestreAndReferentiel($this->semestre,
+                $this->semestre->getDiplome()->getReferentiel());
+        } else {
+            $this->matieres = $this->typeMatiereManager->findBySemestre($this->semestre);
+        }
         $this->ues = $this->ueRepository->findBySemestre($this->semestre);
         $this->etudiants = $this->etudiantRepository->findBySemestre($this->semestre);
 

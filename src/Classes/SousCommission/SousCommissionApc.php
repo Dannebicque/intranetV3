@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionApc.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/01/2023 08:37
+ * @lastUpdate 17/01/2023 08:42
  */
 
 namespace App\Classes\SousCommission;
@@ -51,8 +51,8 @@ class SousCommissionApc extends AbstractSousCommission implements SousCommission
 
         $this->anneeUniversitaire = $anneeUniversitaire;
         $this->initDataSousCommission();
-        $matieres = $this->typeMatiereManager->findBySemestreAndReferentiel($semestre,
-            $semestre->getDiplome()->getReferentiel());
+//        $matieres = $this->typeMatiereManager->findBySemestreAndReferentiel($semestre,
+//            $semestre->getDiplome()->getReferentiel());
 
         $this->sousCommissionEtudiant = [];
         if ($semestre->isPair()) {
@@ -65,15 +65,15 @@ class SousCommissionApc extends AbstractSousCommission implements SousCommission
 
             // récupérer les notes et calculer la moyenne des matières (sans pénalité)
             $this->etudiantNotes->setEtudiant($etudiant);
-            $etudiantSousCommission->moyenneMatieres = $this->etudiantNotes->getMoyenneParMatiereParSemestresEtAnneeUniversitaire($matieres,
+            $etudiantSousCommission->moyenneMatieres = $this->etudiantNotes->getMoyenneParMatiereParSemestresEtAnneeUniversitaire($this->matieres,
                 $this->semestre,
                 $anneeUniversitaire);
             // récupérer les pénalités d'absence par matière
             $this->etudiantAbsences->setEtudiant($etudiant);
-            $this->etudiantAbsences->getPenalitesAbsencesParMatiere($matieres, $anneeUniversitaire,
+            $this->etudiantAbsences->getPenalitesAbsencesParMatiere($this->matieres, $anneeUniversitaire,
                 $etudiantSousCommission->moyenneMatieres);
             // calculer la moyenne des ues (avec et sans pénalité)
-            $etudiantSousCommission->calculMoyenneUes($matieres, $ressources, $saes);
+            $etudiantSousCommission->calculMoyenneUes($this->matieres, $ressources, $saes);
             $etudiantSousCommission->recupereScolarite();
             // calcul de la décision du semestre
             $etudiantSousCommission->calculDecision();
