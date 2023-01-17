@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/EtudiantSousCommissionApc.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/11/2022 12:35
+ * @lastUpdate 17/01/2023 12:10
  */
 
 namespace App\DTO;
@@ -12,8 +12,8 @@ namespace App\DTO;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
-use function count;
 use Doctrine\Common\Collections\Collection;
+use function count;
 
 class EtudiantSousCommissionApc
 {
@@ -166,7 +166,7 @@ class EtudiantSousCommissionApc
             $competenceId = $ue->ue->getApcCompetence()?->getId();
 
             foreach ($matieres as $matiere) {
-                if (false === $matiere->bonification) {
+                if (false === $matiere->bonification && $matiere->isParent() === false) {
                     if (false === $tabs['matieres'][$matiere->codeElement]['matiereAAnnuler']) {
                         if (array_key_exists($competenceId,
                                 $ressources) && array_key_exists($matiere->codeElement,
