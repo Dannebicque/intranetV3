@@ -163,7 +163,7 @@ class EtudiantSousCommissionApc
                 }
             }
         }
-        dump($tabs['matieres']);
+
         foreach ($this->moyenneUes as $ue) {
             $competenceId = $ue->ue->getApcCompetence()?->getId();
 
