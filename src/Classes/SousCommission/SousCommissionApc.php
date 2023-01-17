@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionApc.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:28
+ * @lastUpdate 17/01/2023 08:37
  */
 
 namespace App\Classes\SousCommission;
@@ -51,7 +51,8 @@ class SousCommissionApc extends AbstractSousCommission implements SousCommission
 
         $this->anneeUniversitaire = $anneeUniversitaire;
         $this->initDataSousCommission();
-        $matieres = $this->typeMatiereManager->findBySemestre($semestre);
+        $matieres = $this->typeMatiereManager->findBySemestreAndReferentiel($semestre,
+            $semestre->getDiplome()->getReferentiel());
 
         $this->sousCommissionEtudiant = [];
         if ($semestre->isPair()) {
