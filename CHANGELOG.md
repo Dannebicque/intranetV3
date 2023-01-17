@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.15](https://github.com/Dannebicque/intranetV3/compare/v3.11.14...v3.11.15) (2023-01-17)
+
+
+### Bug Fixes
+
+* [Sscomm] Liste des matières en APC en fonction du référentiel ([5072ecc](https://github.com/Dannebicque/intranetV3/commit/5072eccda5d3f4c1c641fa4a813478d348ac4cf3))
+
 ### [3.11.14](https://github.com/Dannebicque/intranetV3/compare/v3.11.13...v3.11.14) (2023-01-14)
 
 
