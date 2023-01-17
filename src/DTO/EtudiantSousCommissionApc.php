@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/EtudiantSousCommissionApc.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/01/2023 13:15
+ * @lastUpdate 17/01/2023 13:26
  */
 
 namespace App\DTO;
@@ -148,7 +148,7 @@ class EtudiantSousCommissionApc
                 if (true === $matiere->bonification) {
                     $this->bonification += $this->moyenneMatieres[$matiere->getTypeIdMatiere()]->getBonification();
                 } elseif (array_key_exists($matiere->getTypeIdMatiere(), $this->moyenneMatieres)) {
-                    if (true === $this->moyenneMatieres[$matiere->getTypeIdMatiere()]->matiereAAnnuler) {
+                    if (true === $this->moyenneMatieres[$matiere->getTypeIdMatiere()]->matiereAAnnuler || $this->moyenneMatieres[$matiere->getTypeIdMatiere()]->optionFaite === false) {
                         // toutes les notes sont des absences justifiéées
                         $tabs['matieres'][$matiere->codeElement]['matiereAAnnuler'] = true;
                     } else {
@@ -163,7 +163,7 @@ class EtudiantSousCommissionApc
                 }
             }
         }
-
+        dump($tabs['matieres']);
         foreach ($this->moyenneUes as $ue) {
             $competenceId = $ue->ue->getApcCompetence()?->getId();
 
@@ -186,6 +186,7 @@ class EtudiantSousCommissionApc
                         }
 
                         $ue->ueAAnnuler = false;
+
                         $ue->matieres[$matiere->codeElement]['moyenne'] = $tabs['matieres'][$matiere->codeElement]['moyenne'] * $ue->matieres[$matiere->codeElement]['coefficient'];
                         $ue->matieres[$matiere->codeElement]['moyennePenalisee'] = $tabs['matieres'][$matiere->codeElement]['moyennePenalisee'] * $ue->matieres[$matiere->codeElement]['coefficient'];
                         $ue->totalMoyennes += $ue->matieres[$matiere->codeElement]['moyenne'];
