@@ -1,6 +1,22 @@
 # Changelog
- 
+
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### [3.11.17](https://github.com/Dannebicque/intranetV3/compare/v3.11.16...v3.11.17) (2023-01-22)
+
+
+### Bug Fixes
+
+* [Moyenne Matiere] Prise en compte des matières enfants ([8a897c9](https://github.com/Dannebicque/intranetV3/commit/8a897c93e65ca3ef677e8e8f53de62bf1216bf8a))
+* [Moyenne Matiere] Prise en compte des matières enfants ([8536b88](https://github.com/Dannebicque/intranetV3/commit/8536b88f87e858a674cb79988adac78f8f525906))
+* [Moyenne Matiere] Prise en compte des matières enfants ([584eb17](https://github.com/Dannebicque/intranetV3/commit/584eb17d874f061cdc50a5f7dbec8fd486274ba7))
+* [Moyenne Matiere] Prise en compte des matières enfants ([4b2a0fd](https://github.com/Dannebicque/intranetV3/commit/4b2a0fd1476e34e84f230ef91406d302e368f32b))
+* [Moyenne Matiere] Prise en compte des matières enfants ([05af715](https://github.com/Dannebicque/intranetV3/commit/05af7151d7fa9c2a290f45dc6c994aa149fa7576))
+* [Moyenne Matiere] Prise en compte des matières enfants ([e468c98](https://github.com/Dannebicque/intranetV3/commit/e468c9883176ce56c6cd643aed0d755ddd153815))
+* [Moyenne Matiere] Prise en compte des matières enfants ([2ba9509](https://github.com/Dannebicque/intranetV3/commit/2ba9509c2fb8768a8e380ced4cc2ae878f26e1fc))
+* [RDD] date deuxième session ([87dfecb](https://github.com/Dannebicque/intranetV3/commit/87dfecbb7c286decf615061f5b2deebe5d5da130))
+* [Sous-Commission] calcul d'une proposition automatiquement sur les semestres impairs. Filtre des matières en SScom de travail. ([95a6104](https://github.com/Dannebicque/intranetV3/commit/95a61046e0db9341e73608aaeface985f0a0105b))
+* [Sous-Commission] Export Apogée ([810b568](https://github.com/Dannebicque/intranetV3/commit/810b5684acecd7a8d13bc4aa33eac75629c67436))
 
 ### [3.11.16](https://github.com/Dannebicque/intranetV3/compare/v3.11.15...v3.11.16) (2023-01-17)
 
