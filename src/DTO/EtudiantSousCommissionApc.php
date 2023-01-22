@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/EtudiantSousCommissionApc.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/01/2023 14:40
+ * @lastUpdate 22/01/2023 11:25
  */
 
 namespace App\DTO;
@@ -68,15 +68,25 @@ class EtudiantSousCommissionApc
 
         if ($nbUes === $nbUesValidees) {
             $this->decision = Constantes::SEMESTRE_VALIDE; // cas simple, toutes les UE sont validées.
+            $this->proposition = 'S' . $this->semestre->getOrdreLmd() + 1;
             $this->conseil = 'RAS. Passage au semestre suivant, sans problème.';
         } elseif (0 === $nbUesValidees) {
             $this->decision = Constantes::SEMESTRE_NON_VALIDE;
+            if ($this->semestre->isImpair()) {
+                $this->proposition = 'S' . $this->semestre->getOrdreLmd() + 1;
+            }
             $this->conseil = 'Attention, grandes difficultés pour le S2 avec l\'obligation de compenser les UE';
         } elseif ($nbUesValidees < ($nbUes / 2)) {
             $this->decision = Constantes::SEMESTRE_NON_VALIDE;
+            if ($this->semestre->isImpair()) {
+                $this->proposition = 'S' . $this->semestre->getOrdreLmd() + 1;
+            }
             $this->conseil = 'Attention, moins de la moitié des UE est validé. Il faut compenser sur le semestre suivant';
         } else {
             $this->decision = Constantes::SEMESTRE_NON_VALIDE;
+            if ($this->semestre->isImpair()) {
+                $this->proposition = 'S' . $this->semestre->getOrdreLmd() + 1;
+            }
             $this->conseil = 'La moitié des UE sont validées. Le passage en année suivante sera possible, mais il faudra compenser.';
         }
     }

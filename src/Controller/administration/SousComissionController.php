@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/SousComissionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/08/2022 17:24
+ * @lastUpdate 22/01/2023 11:29
  */
 
 namespace App\Controller\administration;
@@ -122,7 +122,8 @@ class SousComissionController extends BaseController
     ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
         $sousCommission = $sousCommissionManager->getSousCommission($semestre);
-        $matieres = $typeMatiereManager->findBySemestre($semestre);
+        $matieres = $typeMatiereManager->findBySemestreAndReferentiel($semestre,
+            $semestre->getDiplome()->getReferentiel());
         $sousCommission->calcul($semestre, $this->dataUserSession->getAnneeUniversitaire());
         $sousCommissionTravail = $sousCommissionSauvegarde->sauvegardeTravail($sousCommission, $matieres);
 
