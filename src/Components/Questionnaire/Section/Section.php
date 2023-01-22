@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Section/Section.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/12/2022 16:34
+ * @lastUpdate 22/01/2023 14:42
  */
 
 namespace App\Components\Questionnaire\Section;
@@ -17,7 +17,8 @@ use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
 class Section extends AbstractSection
 {
     final public const LABEL = 'question.section';
-    public string $type_calcul = '';
+    public string $type_calcul = 'DETAIL';
+    public string $alignement = '';
 
     public function getQuestions(): array
     {

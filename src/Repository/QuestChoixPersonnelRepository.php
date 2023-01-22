@@ -1,4 +1,11 @@
 <?php
+/*
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/QuestChoixPersonnelRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 22/01/2023 13:37
+ */
 
 namespace App\Repository;
 
@@ -52,6 +59,5 @@ class QuestChoixPersonnelRepository extends ServiceEntityRepository
             ->setParameter('questionnaire', $questionnaire->getId())
             ->getQuery()
             ->getSingleResult();
-
     }
 }

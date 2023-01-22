@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeDestinataire/Etudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/01/2023 15:44
+ * @lastUpdate 22/01/2023 14:58
  */
 
 namespace App\Components\Questionnaire\TypeDestinataire;
@@ -71,6 +71,16 @@ class Etudiant extends AbstractTypeDestinataire implements TypeDestinataireInter
     public function getListeDestinataire(): array
     {
         return $this->questChoixEtudiantRepository->findByQuestionnaire($this->questionnaire);
+    }
+
+    public function getNbDestinatairesRepondus(): int
+    {
+        return $this->questChoixEtudiantRepository->compteReponse($this->questionnaire);
+    }
+
+    public function getNbDestinataires(): int
+    {
+        return count($this->getListeDestinataire());
     }
 
     public function send(array $liste): void

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/QuestionnaireRegistry.php
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/QuestionnaireRegistry.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/11/2021 17:35
+ * @lastUpdate 22/01/2023 13:30
  */
 
 namespace App\Components\Questionnaire;
@@ -137,4 +137,6 @@ class QuestionnaireRegistry
     {
         return $this->typeQuestions;
     }
+
+
 }

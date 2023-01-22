@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Section/AbstractSection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/12/2022 16:34
+ * @lastUpdate 22/01/2023 14:42
  */
 
 namespace App\Components\Questionnaire\Section;
@@ -20,6 +20,8 @@ abstract class AbstractSection
     public const DEFAULT_TEMPLATE = 'components/questionnaire/sections/section.html.twig';
     public const INTRODUCTION = 'introduction';
     public const END = 'end';
+    public const AFFICHE_GROUPE = 'GROUPE';
+    public const AFFICHE_DETAIL = 'DETAIL';
 
     public ?int $arrayKey = 0;
     public ?int $id = null;

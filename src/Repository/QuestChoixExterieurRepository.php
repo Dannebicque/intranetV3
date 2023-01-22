@@ -1,8 +1,16 @@
 <?php
+/*
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/QuestChoixExterieurRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 22/01/2023 13:44
+ */
 
 namespace App\Repository;
 
 use App\Entity\QuestChoixExterieur;
+use App\Entity\QuestQuestionnaire;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -39,28 +47,13 @@ class QuestChoixExterieurRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return QuestChoixExterieur[] Returns an array of QuestChoixExterieur objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('q')
-//            ->andWhere('q.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('q.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?QuestChoixExterieur
-//    {
-//        return $this->createQueryBuilder('q')
-//            ->andWhere('q.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function compteReponse(QuestQuestionnaire $questionnaire)
+    {
+        return $this->createQueryBuilder('qcp')
+            ->select('COUNT(qcp.id) as nbre')
+            ->where('qcp.questionnaire = :questionnaire')
+            ->setParameter('questionnaire', $questionnaire->getId())
+            ->getQuery()
+            ->getSingleResult();
+    }
 }

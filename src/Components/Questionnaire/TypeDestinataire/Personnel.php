@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeDestinataire/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/01/2023 15:43
+ * @lastUpdate 22/01/2023 14:59
  */
 
 namespace App\Components\Questionnaire\TypeDestinataire;
@@ -71,6 +71,16 @@ class Personnel extends AbstractTypeDestinataire implements TypeDestinataireInte
     public function getListeDestinataire(): array
     {
         return $this->questChoixPersonnelRepository->findByQuestionnaire($this->questionnaire);
+    }
+
+    public function getNbDestinataires(): int
+    {
+        return count($this->getListeDestinataire());
+    }
+
+    public function getNbDestinatairesRepondus(): int
+    {
+        return $this->questChoixPersonnelRepository->compteReponse($this->questionnaire);
     }
 
     public function send(array $liste): void

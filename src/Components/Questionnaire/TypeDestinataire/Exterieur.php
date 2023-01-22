@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeDestinataire/Exterieur.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/01/2023 21:30
+ * @lastUpdate 22/01/2023 14:59
  */
 
 namespace App\Components\Questionnaire\TypeDestinataire;
@@ -54,6 +54,16 @@ class Exterieur extends AbstractTypeDestinataire implements TypeDestinataireInte
     public function getListeDestinataire(): array
     {
         return $this->questChoixExterieurRepository->findByQuestionnaire($this->questionnaire);
+    }
+
+    public function getNbDestinatairesRepondus(): int
+    {
+        return $this->questChoixExterieurRepository->compteReponse($this->questionnaire);
+    }
+
+    public function getNbDestinataires(): int
+    {
+        return count($this->getListeDestinataire());
     }
 
     public function addExterieur(array $data): void

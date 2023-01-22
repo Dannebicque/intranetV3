@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Questionnaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/01/2023 22:08
+ * @lastUpdate 22/01/2023 13:31
  */
 
 namespace App\Components\Questionnaire;
@@ -268,5 +268,11 @@ class Questionnaire
     public function getListeChoix(): ListeChoix
     {
         return $this->listeChoix;
+    }
+
+    public function exportExcel()
+    {
+
+
     }
 }

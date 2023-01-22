@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/DTO/AbstractQuestionnaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/12/2022 12:48
+ * @lastUpdate 22/01/2023 13:30
  */
 
 namespace App\Components\Questionnaire\DTO;
@@ -20,6 +20,7 @@ class AbstractQuestionnaire
     public const MODE_LECTURE_REPONSES = 'mode.lecture_reponses';
     public const MODE_RESULTAT_TABLEAU = 'mode.resultat.tableau';
     public const MODE_RESULTAT_GRAPHIQUE = 'mode.resultat.graphique';
+    public const MODE_RESULTAT_EXCEL = 'mode.resultat.excel';
 
     public ?Semestre $semestre;
     public string $libelle;
