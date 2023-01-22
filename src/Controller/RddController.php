@@ -1,22 +1,24 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/RddController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/12/2022 15:26
+ * @lastUpdate 22/01/2023 16:37
  */
 
 namespace App\Controller;
 
-use App\Components\Questionnaire\Adapter\QuestionnaireQuizzAdapter;
-use App\Components\Questionnaire\Adapter\ReponsesEtudiantAdapter;
-use App\Components\Questionnaire\Adapter\SectionQuizzEntityAdapter;
+use App\Entity\QuestChoixExterieur;
 use App\Form\RddType;
 use App\Repository\EtudiantRepository;
+use App\Repository\QuestChoixExterieurRepository;
+use App\Repository\QuestQuestionnaireRepository;
 use App\Repository\RddDiplomeRepository;
 use App\Utils\Tools;
+use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
+use Ramsey\Uuid\Uuid;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -25,13 +27,13 @@ use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\Annotation\Route;
 
-//use App\Components\Questionnaire\DTO\ReponsesEtudiant;
-
 #[Route('rdd', name: 'rdd_')]
 class RddController extends AbstractController
 {
-    public function __construct(private readonly EntityManagerInterface $entityManager, private readonly MailerInterface $mailer)
-    {
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly MailerInterface $mailer
+    ) {
     }
 
     /**
@@ -44,8 +46,8 @@ class RddController extends AbstractController
         RddDiplomeRepository $rddDiplomeRepository
     ): Response {
         if ('POST' === $request->getMethod()) {
-            $jour = $request->request->get('jour') < 10 ? '0'.$request->request->get('jour') : $request->request->get('jour');
-            $date = Tools::convertDateToObject($jour.'/'.$request->request->get('mois').'/'.$request->request->get('annee'));
+            $jour = $request->request->get('jour') < 10 ? '0' . $request->request->get('jour') : $request->request->get('jour');
+            $date = Tools::convertDateToObject($jour . '/' . $request->request->get('mois') . '/' . $request->request->get('annee'));
             $etudiant = $etudiantRepository->identificationRdd($request->request->get('login'), $date);
 
             if (null !== $etudiant) {
@@ -53,7 +55,7 @@ class RddController extends AbstractController
                 $diplome = $rddDiplomeRepository->findOneBy(['numEtudiant' => $etudiant['numEtudiant']]);
                 if (null !== $diplome) {
                     return $this->redirectToRoute('rdd_inscription',
-                        ['numetudiant' => md5('clerdd'.$etudiant['numEtudiant']), 'diplome' => $diplome->getId()]);
+                        ['numetudiant' => md5('clerdd' . $etudiant['numEtudiant']), 'diplome' => $diplome->getId()]);
                 }
 
                 return $this->render('rdd/identification.html.twig', ['erreur' => true]);
@@ -78,7 +80,7 @@ class RddController extends AbstractController
     ): Response {
         $dip = $rddDiplomeRepository->find($diplome);
         if (null !== $dip) {
-            if (md5('clerdd'.$dip->getNumetudiant()) === $numetudiant) {
+            if (md5('clerdd' . $dip->getNumetudiant()) === $numetudiant) {
                 $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $dip->getNumetudiant()]);
 
                 if (null !== $etudiant) {
@@ -102,15 +104,14 @@ class RddController extends AbstractController
                                 'etudiant' => $etudiant,
                                 'rdd' => $dip,
                                 'diplome' => $diplome,
-                            ])
-                        ;
+                            ]);
 
                         $this->mailer->send($email);
 
                         return $this->render('rdd/confirm.html.twig', [
                             'etudiant' => $etudiant,
                             'rdd' => $dip,
-                            'numetudiant' => md5('clerdd'.$etudiant->getNumEtudiant()),
+                            'numetudiant' => md5('clerdd' . $etudiant->getNumEtudiant()),
                             'diplome' => $diplome,
                         ]);
                     }
@@ -130,91 +131,42 @@ class RddController extends AbstractController
         return $this->render('rdd/identification.html.twig', ['erreur' => false]);
     }
 
-    //#[Route('/enquete/{numetudiant}/{diplome}', name: 'enquete_diplome')]
-//todo: refaire avec nouveau questionnaire
-//    public function enquete(
-//        Request $request,
-//        Questionnaire $questionnaire,
-//        QuestionnaireQuizzRepository $questionnaireQuizzRepository,
-//        EtudiantRepository $etudiantRepository,
-//        RddDiplomeRepository $rddDiplomeRepository,
-//        $numetudiant,
-//        $diplome
-//    ): Response {
-//        //$reponses = new ReponsesEtudiant();
-//
-//        $dip = $rddDiplomeRepository->find($diplome);
-//        if ((null !== $dip) && md5('clerdd'.$dip->getNumetudiant()) === $numetudiant) {
-//            $questionnaireQuizz = $questionnaireQuizzRepository->find(1);
-//            $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $dip->getNumetudiant()]);
-//
-//            $questionnaire->createQuestionnaire(QuestionnaireQuizz::class,
-//                (new QuestionnaireQuizzAdapter($questionnaireQuizz))->getQuestionnaire(),
-//                ['mode' => AbstractQuestionnaire::MODE_EDITION,
-//                    'typeQuestionnaire' => 'quizz',
-//                    'route' => 'rdd_enquete_diplome',
-//                    'params' => [
-//                        'numetudiant' => $numetudiant,
-//                        'diplome' => $diplome,
-//                    ], ]);
-//            $questionnaire->setIdEtudiant($etudiant->getId()); // todo: pourrait être plus générique si c'est des questionnaires aux personnels
-//            $questionnaire->AddSpecialSection(AbstractSection::INTRODUCTION);
-//
-//            foreach ($questionnaireQuizz->getSections() as $section) {
-//                $sect = (new SectionQuizzEntityAdapter($section))->getSection();
-//                $questionnaire->addSection($sect);
-//                $reponses->merge($reponsesEtudiantAdapter->getReponsesEtudiant($sect, $etudiant->getId())); // todo: on pourrait faire que sur la section concernée ?
-//            }
-//
-//            $questionnaire->AddSpecialSection(AbstractSection::END);
-//
-//            if ($questionnaire->handleRequest($request)) {
-//                $questionnaire->setQuestionsForSection($reponses);
-//
-//                return $questionnaire->wizardPage();
-//            }
-//
-//            return $this->render('rdd/enquete.html.twig', [
-//                'etudiant' => $etudiant,
-//                'questionnaire' => $questionnaire->createView(),
-//            ]);
-//        }
-//
-//        throw new AccessDeniedException();
-//    }
+    #[Route('/enquete/{numetudiant}/{diplome}', name: 'enquete_diplome')]
+    public function enquete(
+        QuestQuestionnaireRepository $questQuestionnaireRepository,
+        QuestChoixExterieurRepository $questChoixExterieurRepository,
+        EtudiantRepository $etudiantRepository,
+        RddDiplomeRepository $rddDiplomeRepository,
+        $numetudiant,
+        $diplome
+    ): Response {
+        $questionnaire = $questQuestionnaireRepository->findOneBy(['id' => 17]);
+        $dip = $rddDiplomeRepository->find($diplome);
+        if ($questionnaire !== null && null !== $dip && md5('clerdd' . $dip->getNumetudiant()) === $numetudiant) {
+            $questChoix = $questChoixExterieurRepository->findOneBy(['email' => $dip->getMailperso()]);
+            if ($questChoix === null) {
+                $etudiant = $etudiantRepository->findOneBy(['numEtudiant' => $dip->getNumetudiant()]);
+                if (null !== $etudiant) {
+                    $questChoix = new QuestChoixExterieur();
+                    $questChoix->setEmail($dip->getMailperso());
+                    $questChoix->setNom($etudiant->getNom());
+                    $questChoix->setPrenom($etudiant->getPrenom());
+                    $questChoix->setQuestionnaire($questionnaire);
+                    $questChoix->setDateEnvoi(Carbon::now());
+                    $questChoix->setDateCommence(Carbon::now());
+                    $questChoix->setCleQuestionnaire(Uuid::uuid4());
+                    $this->entityManager->persist($questChoix);
+                    $this->entityManager->flush();
+                }
+            }
 
-//    #[Route('/enquete-page/', name: 'enquete_wizard_page', options: ['expose' => true])]
-//    public function wizardPage(
-//        ReponsesEtudiantAdapter $reponsesEtudiantAdapter,
-//        QuestionnaireQuizzRepository $qualiteRepository,
-//        Questionnaire $questionnaire,
-//        Request $request
-//    ): Response {
-//        $reponses = new ReponsesEtudiant();
-//        $ordreSection = (int) $request->query->get('page');
-//        $etudiant = $request->query->get('etudiant');
-//        $questionnaireQualite = $qualiteRepository->find($request->query->get('questionnaire'));
-//        if (null !== $questionnaireQualite) {
-//            $questionnaire->createQuestionnaire(QuestionnaireQuizz::class,
-//                (new QuestionnaireQuizzAdapter($questionnaireQualite))->getQuestionnaire(),
-//                [
-//                    'mode' => AbstractQuestionnaire::MODE_EDITION,
-//                ]); //todo: prendre le parametre de la route du wizard... ? Gérer la vue du wizard en automatique?
-//            $questionnaire->setIdEtudiant($etudiant); //todo: pourrait être plus générique si c'est des questionnaires aux personnels
-//            $questionnaire->AddSpecialSection(AbstractSection::INTRODUCTION);
-//            foreach ($questionnaireQualite->getSections() as $section) {
-//                $sect = (new SectionQuizzEntityAdapter($section))->getSection();//todo: update avec la nouvelle gestion
-//                $questionnaire->addSection($sect);
-//                $reponses->merge($reponsesEtudiantAdapter->getReponsesEtudiant($sect, $etudiant));
-//            }
-//            $questionnaire->AddSpecialSection(AbstractSection::END);
-//            $questionnaire->setQuestionsForSection($ordreSection, $reponses);
-//
-//            return $this->render('table/wizard-page.html.twig', [
-//                'section' => $questionnaire->getSection($ordreSection),
-//                'etudiant' => $etudiant,
-//                'idQuestionnaire' => $request->query->get('questionnaire'),
-//            ]);
-//        }
- //   }
+            return $this->redirectToRoute('enquete_questionnaire_qualite_index', [
+                'uuidQuestionnaire' => $questionnaire->getUuidString(),
+                'uuid' => $questChoix->getCleQuestionnaire()
+            ]);
+
+        }
+
+        throw new AccessDeniedException();
+    }
 }
