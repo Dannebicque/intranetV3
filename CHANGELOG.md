@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.18](https://github.com/Dannebicque/intranetV3/compare/v3.11.17...v3.11.18) (2023-01-22)
+
+
+### Features
+
+* [Questionnaire] export Excel ([3d6a17f](https://github.com/Dannebicque/intranetV3/commit/3d6a17f3c5c64e2b5df8f49cfa85464412d49a4b))
+* [RDD] Questionnaire ([3551522](https://github.com/Dannebicque/intranetV3/commit/3551522a7e8d7dbca888b5898aa5a0e7f86a41d3))
+
 ### [3.11.17](https://github.com/Dannebicque/intranetV3/compare/v3.11.16...v3.11.17) (2023-01-22)
 
 
