@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/01/2023 14:21
+ * @lastUpdate 22/01/2023 11:40
  */
 
 namespace App\Classes\SousCommission;
@@ -803,7 +803,12 @@ class SousCommissionExport
 
         $etudiants = $semestre->getEtudiants();
         $ues = $semestre->getUes();
-        $matieres = $this->typeMatiereManager->findBySemestre($semestre);
+        if ($semestre->getDiplome()->isApc()) {
+            $matieres = $this->typeMatiereManager->findBySemestreAndReferentiel($semestre,
+                $semestre->getDiplome()->getReferentiel());
+        } else {
+            $matieres = $this->typeMatiereManager->findBySemestre($semestre);
+        }
         $matApogee = [];
         foreach ($matieres as $matiere) {
             $matApogee[$matiere->codeElement] = $matiere->getTypeIdMatiere();
