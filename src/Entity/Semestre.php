@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/12/2022 15:15
+ * @lastUpdate 24/01/2023 11:24
  */
 
 namespace App\Entity;
@@ -16,7 +16,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use JetBrains\PhpStorm\Deprecated;
 use Stringable;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -46,15 +45,21 @@ class Semestre extends BaseEntity implements Stringable
     private bool $actif = false;
 
     #[ORM\ManyToOne(targetEntity: Semestre::class)]
-    #[Deprecated]
+    /**
+     * @deprecated
+     */
     private ?Semestre $precedent = null;
 
     #[ORM\ManyToOne(targetEntity: Semestre::class)]
-    #[Deprecated]
+    /**
+     * @deprecated
+     */
     private ?Semestre $suivant = null;
 
     #[ORM\ManyToOne(targetEntity: Semestre::class)]
-    #[Deprecated]
+    /**
+     * @deprecated
+     */
     private ?Semestre $decale = null;
 
     #[ORM\Column(type: Types::INTEGER)]
