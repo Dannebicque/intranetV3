@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.19](https://github.com/Dannebicque/intranetV3/compare/v3.11.18...v3.11.19) (2023-01-27)
+
+
+### Bug Fixes
+
+* [Export Questionnaire] Réponses texte, taux satisfaction ([d0bce95](https://github.com/Dannebicque/intranetV3/commit/d0bce9507fef48051aba7abf8cf34682e5b3d602))
+* [Semestre] typo sur la mention deprecated ([01e3e3b](https://github.com/Dannebicque/intranetV3/commit/01e3e3b96faebd64a0e1f515458c6df4595f9268))
+
 ### [3.11.18](https://github.com/Dannebicque/intranetV3/compare/v3.11.17...v3.11.18) (2023-01-22)
 
 
