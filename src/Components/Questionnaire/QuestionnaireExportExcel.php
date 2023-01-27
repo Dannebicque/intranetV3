@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/QuestionnaireExportExcel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/01/2023 09:31
+ * @lastUpdate 27/01/2023 09:53
  */
 
 namespace App\Components\Questionnaire;
 
 use App\Classes\Configuration;
 use App\Classes\Excel\MyExcelWriter;
+use App\Components\Questionnaire\DTO\Reponse;
 use App\Components\Questionnaire\Section\AbstractSection;
 use App\Components\Questionnaire\Section\EndSection;
 use App\Components\Questionnaire\Section\Section;
@@ -25,6 +26,7 @@ use App\Components\Questionnaire\TypeQuestion\TypeLibre;
 use App\Components\Questionnaire\TypeQuestion\TypeOuiNon;
 use App\Components\Questionnaire\TypeQuestion\TypeQcm;
 use App\Components\Questionnaire\TypeQuestion\TypeQcu;
+use App\Components\Questionnaire\TypeQuestion\TypeSlider;
 use App\Entity\QuestQuestion;
 use App\Entity\QuestQuestionnaire;
 use PhpOffice\PhpSpreadsheet\Exception;
@@ -267,7 +269,7 @@ class QuestionnaireExportExcel
         $satisfaction = 0;
         $nbProps = 0;
         $nbReponses = 0;
-        if ($question instanceof TypeEchelle || $question instanceof TypeQcm || $question instanceof TypeQcu || $question instanceof TypeOuiNon) {
+        if ($question instanceof TypeSlider || $question instanceof TypeEchelle || $question instanceof TypeQcm || $question instanceof TypeQcu || $question instanceof TypeOuiNon) {
             if (AbstractSection::AFFICHE_DETAIL === $section->type_calcul) {
                 $this->myExcelWriter->writeCellXY(1, $this->ligne, 'Réponse', ['style' => 'HORIZONTAL_CENTER']);
                 $this->myExcelWriter->writeCellXY(2, $this->ligne, 'Décompte', ['style' => 'HORIZONTAL_CENTER']);
@@ -275,11 +277,22 @@ class QuestionnaireExportExcel
                 ++$this->ligne;
             }
 
+            if ($question instanceof TypeSlider) {
+                $params = $question->parametres;
+                $listeReponses = [];
+                for ($i = $params['min']; $i <= $params['max']; $i += $params['pas']) {
+                    $rep = new Reponse($i, $i, $i, $i);
+                    $listeReponses[] = $rep;
+                }
+            } else {
+                $listeReponses = $questionParent->getReponses();
+            }
+
 
             $cleQ = $question->cle;
             $nbTotalReponseQuestion = 0;
 
-            foreach ($questionParent->getReponses() as $reponse) {
+            foreach ($listeReponses as $reponse) {
 
                 $nbReponses = 0;
                 $cleR = $reponse->valeur;
