@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/QuestionnaireExportExcel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/01/2023 16:36
+ * @lastUpdate 27/01/2023 09:31
  */
 
 namespace App\Components\Questionnaire;
@@ -85,7 +85,7 @@ class QuestionnaireExportExcel
         switch ($questQuestionnaire->getTypeDestinataire()) {
             case Etudiant::class:
                 $this->myExcelWriter->writeCellXY(1, 2,
-                    $questQuestionnaire->getSemestre()?->getDiplome()?->getDisplay() . ' - ' . $questQuestionnaire->getSemestre()?->getAnneeUniversitaire()?->displayAnneeUniversitaire(),
+                    $questQuestionnaire->getSemestre()?->getAnneeUniversitaire()?->displayAnneeUniversitaire(),
                     [
                         'color' => $this->configuration->get('COLOR_IUT'),
                         'font-size' => 16,
@@ -275,10 +275,17 @@ class QuestionnaireExportExcel
                 ++$this->ligne;
             }
 
+
             $cleQ = $question->cle;
             $nbTotalReponseQuestion = 0;
+
             foreach ($questionParent->getReponses() as $reponse) {
+
+                $nbReponses = 0;
                 $cleR = $reponse->valeur;
+                if ($question instanceof TypeQcm) {
+                    $cleR = '["' . $cleR . '"]';
+                }
                 ++$nbProps;
                 if (isset($question->choix->totalReponses[$cleR])) {
                     $nbReponses = $question->choix->totalReponses[$cleR];
@@ -286,8 +293,8 @@ class QuestionnaireExportExcel
                     if (is_int($question->choix->totalReponses[$cleR]) && $question->choix->nbReponsesTotal > 0) {
                         $pourcentage = $nbReponses / $question->choix->nbReponsesTotal;
 
-                        if (is_int((int)$reponse->libelle)) {
-                            $totRep = $nbReponses * (int)$reponse->libelle;
+                        if (is_int((int)$reponse->valeur)) {
+                            $totRep = $nbReponses * (int)$reponse->valeur;
                             $nbTotalReponseQuestion += $nbReponses;
                             $satisfaction += $totRep;
                         }
@@ -307,6 +314,7 @@ class QuestionnaireExportExcel
                 }
                 // version détaillée, on affiche tout.
                 if (AbstractSection::AFFICHE_DETAIL === $section->type_calcul) {
+
                     $this->myExcelWriter->writeCellXY(1, $this->ligne, $reponse->libelle,
                         ['style' => $reponse->getOption('alignement')]);
                     $this->myExcelWriter->writeCellXY(2, $this->ligne, $nbReponses,
@@ -332,63 +340,66 @@ class QuestionnaireExportExcel
                         ++$this->ligne;
                     }
                 }
+            }
 
 
-                if ((array_key_exists('type',
-                            $question->config) && 'echelle' === $question->config['type']) || $question instanceof TypeEchelle) {
-                    // si échelle ... tôt de satisfaction
-                    $div = ($nbProps * ($nbTotalReponseQuestion - $retire));
-                    if (0 !== $div) {
-                        $total = $satisfaction / ($nbProps * ($nbTotalReponseQuestion - $retire));
-                    } else {
-                        $total = 0;
-                    }
-
-                    if (AbstractSection::AFFICHE_DETAIL === $section->type_calcul) {
-                        $this->myExcelWriter->writeCellXY(1, $this->ligne, 'soit',
-                            ['font-weight' => 'bold', 'style' => 'HORIZONTAL_CENTER']);
-                        $this->myExcelWriter->writeCellXY(2, $this->ligne, $total,
-                            [
-                                'font-weight' => 'bold',
-                                'style' => 'HORIZONTAL_CENTER',
-                                'number_format' => NumberFormat::FORMAT_PERCENTAGE,
-                            ]);
-                        $this->myExcelWriter->writeCellXY(3, $this->ligne, 'de satisfaction',
-                            ['font-weight' => 'bold', 'style' => 'HORIZONTAL_CENTER']);
-                        ++$this->ligne;
-                    } elseif (AbstractSection::AFFICHE_GROUPE === $section->type_calcul) {
-                        $this->sommePourcentage += $total;
-                        $this->myExcelWriter->writeCellXY(3, $this->ligne, $total,
-                            ['style' => 'HORIZONTAL_CENTER', 'number_format' => NumberFormat::FORMAT_PERCENTAGE]);
-                    }
-                } elseif
-                ($question instanceof TypeLibre) {
-                    $this->myExcelWriter->writeCellXY(1, $this->ligne, 'Réponse', ['style' => 'HORIZONTAL_CENTER']);
-
-                    $lgRep = $this->ligne;
-                    $nbRep = 0;
-                    ++$this->ligne;
-                    $cleQ = 'quizz_question_text_q' . $question->id;
-                    if (array_key_exists($cleQ, $this->resultatQuestion)) {
-                        // liste les réponses
-                        foreach ($this->resultatQuestion[$cleQ]['totalReponse'] as $key => $rep) {
-                            ++$nbRep;
-                            $this->myExcelWriter->writeCellXY(1, $this->ligne, $key,
-                                ['wrap' => true, 'style' => 'HORIZONTAL_LEFT', 'valign' => 'VERTICAL_TOP']);
-                            $nbCar = mb_strlen($key);
-                            if ($nbCar > 55) {
-                                $n = ceil($nbCar / 55);
-                                $this->myExcelWriter->getRowDimension($this->ligne, 15 * $n);
-                            }
-                            ++$this->ligne;
-                        }
-                    }
-                    $p = number_format($nbRep / $this->nbReponses * 100);
-                    $this->myExcelWriter->writeCellXY(2, $lgRep, $nbRep, ['style' => 'HORIZONTAL_CENTER']);
-                    $this->myExcelWriter->writeCellXY(3, $lgRep, $p . '%', ['style' => 'HORIZONTAL_CENTER']);
+//                if ((array_key_exists('type',
+//                            $question->config) && 'echelle' === $question->config['type']) || $question instanceof TypeEchelle) {
+            if ($question instanceof TypeEchelle || $question instanceof TypeQcu) {
+                $div = ($nbProps * ($nbTotalReponseQuestion - $retire));
+                if (0 !== $div) {
+                    $total = $satisfaction / ($nbProps * ($nbTotalReponseQuestion - $retire));
+                } else {
+                    $total = 0;
                 }
 
+                if (AbstractSection::AFFICHE_DETAIL === $section->type_calcul) {
+                    $this->myExcelWriter->writeCellXY(1, $this->ligne, 'soit',
+                        ['font-weight' => 'bold', 'style' => 'HORIZONTAL_CENTER']);
+                    $this->myExcelWriter->writeCellXY(2, $this->ligne, $total,
+                        [
+                            'font-weight' => 'bold',
+                            'style' => 'HORIZONTAL_CENTER',
+                            'number_format' => NumberFormat::FORMAT_PERCENTAGE,
+                        ]);
+                    $this->myExcelWriter->writeCellXY(3, $this->ligne, 'de satisfaction',
+                        ['font-weight' => 'bold', 'style' => 'HORIZONTAL_CENTER']);
+                    ++$this->ligne;
+                } elseif (AbstractSection::AFFICHE_GROUPE === $section->type_calcul) {
+                    $this->sommePourcentage += $total;
+                    $this->myExcelWriter->writeCellXY(3, $this->ligne, $total,
+                        ['style' => 'HORIZONTAL_CENTER', 'number_format' => NumberFormat::FORMAT_PERCENTAGE]);
+                }
+            }
+        } elseif ($question instanceof TypeLibre) {
+            $this->myExcelWriter->writeCellXY(1, $this->ligne, 'Réponse', ['style' => 'HORIZONTAL_CENTER']);
+            $lgRep = $this->ligne;
+            $nbRep = 0;
+            ++$this->ligne;
+            $cleQ = 'quizz_question_text_q' . $question->id;
+            if ($question->choix !== null) {
+                // liste les réponses
+                foreach ($question->choix->totalReponses as $key => $rep) {
+                    $this->myExcelWriter->writeCellXY(1, $this->ligne, $key,
+                        ['wrap' => true, 'style' => 'HORIZONTAL_LEFT', 'valign' => 'VERTICAL_TOP']);
+                    $nbCar = mb_strlen($key);
+                    if ($nbCar > 55) {
+                        $n = ceil($nbCar / 55);
+                        $this->myExcelWriter->getRowDimension($this->ligne, 15 * $n);
+                    }
+                    ++$this->ligne;
+                }
+
+                $p = number_format($question->choix->nbReponsesTotal / $this->nbReponses * 100);
+                $this->myExcelWriter->writeCellXY(2, $lgRep, $question->choix->nbReponsesTotal,
+                    ['style' => 'HORIZONTAL_CENTER']);
+                $this->myExcelWriter->writeCellXY(3, $lgRep, $p . '%', ['style' => 'HORIZONTAL_CENTER']);
+            } else {
+                $this->myExcelWriter->writeCellXY(2, $lgRep, 0,
+                    ['style' => 'HORIZONTAL_CENTER']);
+                $this->myExcelWriter->writeCellXY(3, $lgRep, '0%', ['style' => 'HORIZONTAL_CENTER']);
             }
         }
     }
+
 }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Section/ConfigurableSection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/01/2023 12:06
+ * @lastUpdate 27/01/2023 09:30
  */
 
 namespace App\Components\Questionnaire\Section;
@@ -14,11 +14,10 @@ use App\Entity\Semestre;
 class ConfigurableSection extends AbstractSection
 {
     final public const LABEL = 'configurable.section';
-
     final public const NB_QUESTIONS_PAR_SECTION = 1; //todo: extraire ce paramètre pour en faire une configuration par section
     public ?AbstractSectionAdapter $sectionAdapter = null;
     public ?array $config = [];
-    public string $type_calcul = '';
+    public string $type_calcul = ''; //todo: devrait être paramétrable??
     public array $sections = []; // en mode configurable, on peut avoir la création de sections
 
     /**
