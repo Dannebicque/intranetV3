@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/questionnaire/lancer_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/01/2023 23:01
+// @lastUpdate 29/01/2023 10:56
 
 import { Controller } from '@hotwired/stimulus'
 import { addCallout } from '../../js/util'
@@ -15,6 +15,7 @@ export default class extends Controller {
   static values = {
     url: String,
     urlExt: String,
+    urlCsvExt: String,
     urlRedirect: String,
   }
 
@@ -30,6 +31,23 @@ export default class extends Controller {
     }
     await fetch(`${this.urlExtValue}`, body).then(async (response) => {
       addCallout('Extérieur ajouté', 'success')
+      this.listeExtTarget.innerHTML = await response.text()
+    })
+      .catch(() => {
+        addCallout('Erreur lors de l\'ajout de la personne extérieure', 'error')
+      })
+  }
+
+  async ajoutCsvExt(event) {
+    event.preventDefault()
+    const body = {
+      method: 'POST',
+      body: JSON.stringify({
+        liste_csv: document.getElementById('liste_csv').value,
+      }),
+    }
+    await fetch(`${this.urlCsvExtValue}`, body).then(async (response) => {
+      addCallout('Extérieurs ajoutés', 'success')
       this.listeExtTarget.innerHTML = await response.text()
     })
       .catch(() => {

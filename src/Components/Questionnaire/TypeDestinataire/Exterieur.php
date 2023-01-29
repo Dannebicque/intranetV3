@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeDestinataire/Exterieur.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/01/2023 14:59
+ * @lastUpdate 29/01/2023 11:04
  */
 
 namespace App\Components\Questionnaire\TypeDestinataire;
@@ -76,6 +76,24 @@ class Exterieur extends AbstractTypeDestinataire implements TypeDestinataireInte
         $choix->setCleQuestionnaire(Uuid::uuid4());
 
         $this->entityManager->persist($choix);
+        $this->entityManager->flush();
+    }
+
+    public function addExterieurs(array $data): void
+    {
+        $lignes = preg_split("/\\r\\n|\\r|\\n/", $data['liste_csv']);
+
+        foreach ($lignes as $ligne) {
+            $t = explode(';', $ligne);
+            $choix = new QuestChoixExterieur();
+            $choix->setQuestionnaire($this->questionnaire);
+            $choix->setEmail($t[2]);
+            $choix->setNom($t[0]);
+            $choix->setPrenom($t[1]);
+            $choix->setCleQuestionnaire(Uuid::uuid4());
+            $this->entityManager->persist($choix);
+        }
+
         $this->entityManager->flush();
     }
 

@@ -1,6 +1,7 @@
 <div {{ stimulus_controller('questionnaire--lancer', {
     url: path('adm_questionnaire_creation_sauvegarde_lancer', {type:type, questionnaire: questionnaire.id }),
     urlExt: path('adm_questionnaire_creation_add_exterieur', {type:type, questionnaire: questionnaire.id }),
+    urlCsvExt: path('adm_questionnaire_creation_add_exterieurs_csv', {type:type, questionnaire: questionnaire.id }),
     urlRedirect: path('adm_questionnaire_qualite_detail', {type:type, id: questionnaire.id }),
 }) }}>
     <h1>Lancement du questionnaire</h1>
@@ -33,7 +34,7 @@
     {% if typeDestinataire == 'exterieur' %}
         <div class="alert alert-info">
             <p>Vous avez choisi de lancer le questionnaire à des personnes extérieures à l'entreprise.</p>
-            <p>Vous pouvez ajouter des destinataires en cliquant sur le bouton "Ajotuer". L'envoi n'est effectif que si
+            <p>Vous pouvez ajouter des destinataires en cliquant sur le bouton "Ajouter". L'envoi n'est effectif que si
                vous
                clique sur "Enregistrer et envoyer". Sinon, la liste est sauvegardée en attente de l'envoie.
             </p>

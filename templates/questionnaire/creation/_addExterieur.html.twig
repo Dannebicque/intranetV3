@@ -46,3 +46,9 @@
     {% endfor %}
     </tbody>
 </table>
+
+<label for="liste_csv">Importer une liste (format texte, respectant l'ordre : nom;prenom;email</label>
+<textarea class="form-control" id="liste_csv" name="message" rows="10"></textarea>
+<button class="btn btn-success"
+        {{ stimulus_action('questionnaire--lancer', 'ajoutCsvExt', 'click') }}>Importer
+</button>
