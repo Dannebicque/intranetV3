@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.21](https://github.com/Dannebicque/intranetV3/compare/v3.11.20...v3.11.21) (2023-01-29)
+
+
+### Features
+
+* [Questionnaire] Affichage groupé pour sections configurables ([af0ecd1](https://github.com/Dannebicque/intranetV3/commit/af0ecd1a448aed0d743bb7ba02063be01c29fec0))
+* [stage] option pour supprimer ([603e497](https://github.com/Dannebicque/intranetV3/commit/603e4975d23ec2e093e7db739f1124c6e466538f))
+
 ### [3.11.20](https://github.com/Dannebicque/intranetV3/compare/v3.11.19...v3.11.20) (2023-01-29)
 
 
