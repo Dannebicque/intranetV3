@@ -1,0 +1,24 @@
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th>Semestre</th>
+        <th></th>
+        <th>Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for semestre in saeSemestres %}
+        <tr>
+            <td>{{ semestre.display }}, {{ semestre.diplome.display }}</td>
+            <td></td>
+            <td>
+                <button class="btn btn-danger d-block"
+                        data-semestre="{{ semestre.id }}"
+                        data-action="click->apc-enfant#removeDiplome">Supprimer
+                </button>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+

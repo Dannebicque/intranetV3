@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcRessourceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/09/2022 10:05
+ * @lastUpdate 29/01/2023 10:25
  */
 
 namespace App\Controller\administration\apc;
@@ -387,7 +387,7 @@ class ApcRessourceController extends BaseController
         return $this->json(['success' => false], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    #[Route(path: '/{id}/diplomes/delete', name: 'apc_ressource_delete_diplome', methods: ['POST'])]
+    #[Route(path: '/{id}/diplomes/delete', name: 'apc_ressource_delete_diplome', methods: ['POST', 'GET'])]
     public function deleteDiplome(
         Request $request,
         SemestreRepository $semestreRepository,

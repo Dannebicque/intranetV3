@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcSaeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/09/2022 09:07
+ * @lastUpdate 29/01/2023 10:25
  */
 
 namespace App\Controller\administration\apc;
@@ -223,12 +223,76 @@ class ApcSaeController extends BaseController
         ]);
     }
 
+    #[Route(path: '/{id}/diplomes', name: 'apc_sae_add_diplome', methods: ['POST'])]
+    public function addDiplome(
+        Request $request,
+        SemestreRepository $semestreRepository,
+        ApcSae $apcSae
+    ): Response {
+        $id = JsonRequest::getValueFromRequest($request, 'diplome');
+        $semestre = $semestreRepository->find($id);
+
+        if (null !== $semestre) {
+            $apcSae->addSemestre($semestre);
+            $semestre->addApcSemestresSae($apcSae);
+            $this->entityManager->flush();
+            $this->addFlashBag(
+                Constantes::FLASHBAG_SUCCESS,
+                'apc.sae.diplome.add.success.flash'
+            );
+
+            return $this->json(['success' => true], Response::HTTP_OK);
+        }
+
+        return $this->json(['success' => false], Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    #[Route(path: '/{id}/diplomes/delete', name: 'apc_sae_delete_diplome', methods: ['POST', 'GET'])]
+    public function deleteDiplome(
+        Request $request,
+        SemestreRepository $semestreRepository,
+        ApcSae $apcSae
+    ): Response {
+        $id = JsonRequest::getValueFromRequest($request, 'diplome');
+        $semestre = $semestreRepository->find($id);
+
+        if (null !== $semestre) {
+            $apcSae->removeSemestre($semestre);
+            $semestre->removeApcSemestresSae($apcSae);
+            $this->entityManager->flush();
+            $this->addFlashBag(
+                Constantes::FLASHBAG_SUCCESS,
+                'apc.sae.diplome.remove.success.flash'
+            );
+
+            return $this->json(['success' => true], Response::HTTP_OK);
+        }
+
+        return $this->json(['success' => false], Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    #[Route(path: '/{id}/diplomes/liste', name: 'apc_sae_liste_diplomes', methods: ['GET'])]
+    public function listeDiplomes(
+        ApcSae $apcSae
+    ): Response {
+        return $this->render('apc/apc_sae/_liste_diplomes.html.twig', [
+            'apcSae' => $apcSae,
+            'saeSemestres' => $apcSae->getSemestres(),
+        ]);
+    }
+
     #[Route(path: '/{id}/{semestre}/edit', name: 'apc_sae_edit', methods: ['GET', 'POST'])]
-    public function edit(ApcRessourceRepository $apcRessourceRepository, ApcApprentissageCritiqueRepository $apcApprentissageCritiqueRepository, Request $request, ApcSae $apcSae, Semestre $semestre): Response
-    {
+    public function edit(
+        ApcRessourceRepository $apcRessourceRepository,
+        ApcApprentissageCritiqueRepository $apcApprentissageCritiqueRepository,
+        Request $request,
+        ApcSae $apcSae,
+        Semestre $semestre
+    ): Response {
         $form = $this->createForm(ApcSaeType::class, $apcSae, [
             'diplome' => $semestre->getDiplome(),
-            'semestre' => $semestre,]);
+            'semestre' => $semestre,
+        ]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             // on supprimer ceux présent

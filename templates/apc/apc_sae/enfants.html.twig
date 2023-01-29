@@ -30,39 +30,43 @@
 {% endblock %}
 
 {% block content %}
-    <div>
-{#        {% if apcRessource.mutualisee == true %}#}
-{#            <div class="card">#}
-{#                <h4 class="card-title">#}
-{#                    Ressource {{ apcRessource.display }} mutualisée. Choix des autres diplôme#}
-{#                </h4>#}
-{#                <div class="card-body">#}
-{#                    <div data-apc-enfant-target="contentDiplome">#}
-{#                        {{ include('apc/apc_ressource/_liste_diplomes.html.twig') }}#}
-{#                    </div>#}
-{#                    <div class="row">#}
-{#                        <div class="col-md-5">#}
-{#                            <select class="form-select" id="semestreAdd">#}
-{#                                <option value="">Choisir un semestre</option>#}
-{#                                {% for semestre in semestres %}#}
-{#                                    <option value="{{ semestre.id }}">#}
-{#                                        {{ semestre.display }}, {{ semestre.diplome.display }}#}
-{#                                    </option>#}
-{#                                {% endfor %}#}
-{#                            </select>#}
-{#                        </div>#}
-{#                        <div class="col-md-5">#}
+    <div {{ stimulus_controller('apc-enfant', {
+        urlListeDiplome: path('administration_apc_sae_liste_diplomes', { 'id': apcSae.id }),
+        urlPostDiplome: path('administration_apc_sae_add_diplome', { 'id': apcSae.id }),
+        urlDeleteDiplome: path('administration_apc_sae_delete_diplome', { 'id': apcSae.id }),
+    }) }}>
+        {% if apcSae.mutualisee == true %}
+            <div class="card">
+                <h4 class="card-title">
+                    SAE {{ apcSae.display }} mutualisée. Choix des autres diplôme
+                </h4>
+                <div class="card-body">
+                    <div data-apc-enfant-target="contentDiplome">
+                        {{ include('apc/apc_sae/_liste_diplomes.html.twig') }}
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <select class="form-select" id="semestreAdd">
+                                <option value="">Choisir un semestre</option>
+                                {% for semestre in semestres %}
+                                    <option value="{{ semestre.id }}">
+                                        {{ semestre.display }}, {{ semestre.diplome.display }}
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-md-5">
 
-{#                        </div>#}
-{#                        <div class="col-md-2 d-grid">#}
-{#                            <button class="btn btn-primary d-block"#}
-{#                                    data-action="click->apc-enfant#addDiplome">Ajouter#}
-{#                            </button>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-{#        {% endif %}#}
+                        </div>
+                        <div class="col-md-2 d-grid">
+                            <button class="btn btn-primary d-block"
+                                    data-action="click->apc-enfant#addDiplome">Ajouter
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
 
         <div class="card">
             <h4 class="card-title">
