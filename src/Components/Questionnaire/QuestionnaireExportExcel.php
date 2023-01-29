@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/QuestionnaireExportExcel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/01/2023 09:53
+ * @lastUpdate 29/01/2023 18:38
  */
 
 namespace App\Components\Questionnaire;
@@ -139,28 +139,19 @@ class QuestionnaireExportExcel
                     $questSection->ordre . '. ' . $questSection->titre,
                     ['color' => $this->configuration->get('COLOR_IUT'), 'font-size' => 10, 'font-weight' => 'bold']);
                 $this->ligne += 2;
-//                if (null !== $questSection->params && array_key_exists('valeurs', $questSection->params)) {
-//                    $arrayConfig = $questSection->params['valeurs'];
-//                    foreach ($arrayConfig as $config) {
-//                        foreach ($questSection->getQuestions() as $questQuestion) {
-//                            $this->writeExcelQuestion($questQuestion,
-//                                $questSection, '_c'.$config);
-//                        }
-//                        ++$this->ligne;
-//                        $this->myExcelWriter->borderBottomCellsRange(1, $this->ligne, 3, $this->ligne,
-//                            ['color' => '000000', 'size' => Border::BORDER_THIN]);
-//                        $this->ligne += 2;
-//                    }
-//                } else {
-                foreach ($questSection->getQuestions() as $questQuestion) {
-                    $this->writeExcelQuestion($questQuestion,
-                        $questSection);
+                if (AbstractSection::AFFICHE_GROUPE === $questSection->options['type_calcul']) {
+                    $this->writeConfigSectionGroupe($questSection);
+                } else {
+
+                    foreach ($questSection->getQuestions() as $questQuestion) {
+                        $this->writeExcelQuestion($questQuestion,
+                            $questSection);
+                    }
+                    ++$this->ligne;
+                    $this->myExcelWriter->borderBottomCellsRange(1, $this->ligne, 3, $this->ligne,
+                        ['color' => '000000', 'size' => Border::BORDER_THIN]);
+                    $this->ligne += 2;
                 }
-                ++$this->ligne;
-                $this->myExcelWriter->borderBottomCellsRange(1, $this->ligne, 3, $this->ligne,
-                    ['color' => '000000', 'size' => Border::BORDER_THIN]);
-                $this->ligne += 2;
-                //}
 
             }
         }
@@ -201,11 +192,6 @@ class QuestionnaireExportExcel
 
         ++$this->ligne;
 
-        if (AbstractSection::AFFICHE_GROUPE === $section->type_calcul) {
-            $this->myExcelWriter->writeCellXY(3, $this->ligne, '% satisfaction',
-                ['wrap' => true, 'style' => 'HORIZONTAL_CENTER']);
-            ++$this->ligne;
-        }
 
         if (!$question instanceof TypeChainee) {
             // si QCU/QCM
@@ -215,42 +201,17 @@ class QuestionnaireExportExcel
             $nbQuestionsPourcentage = 0;
             foreach ($question->questions as $subQuestion) {
                 ++$this->ligne;
-                if (AbstractSection::AFFICHE_GROUPE === $section->type_calcul) {
+                if (AbstractSection::AFFICHE_GROUPE === $section->options['type_calcul']) {
                     $this->myExcelWriter->writeCellXY(1, $this->ligne, $subQuestion->getLibelle(),
                         ['wrap' => true, 'style' => $subQuestion->alignement]);
-                } elseif (AbstractSection::AFFICHE_DETAIL === $section->type_calcul) {
+                } elseif (AbstractSection::AFFICHE_DETAIL === $section->options['type_calcul']) {
                     $this->myExcelWriter->mergeCellsCaR(1, $this->ligne, 3, $this->ligne);
                     $this->myExcelWriter->writeCellXY(1, $this->ligne, $subQuestion->getLibelle(),
                         ['wrap' => true, 'font-weight' => 'bold', 'style' => 'HORIZONTAL_CENTER']);
                     ++$this->ligne;
                 }
                 // si QCU/QCM
-                ++$nbQuestionsPourcentage;
                 $this->writeExcelReponses($subQuestion, $section, $question);
-            }
-            if (AbstractSection::AFFICHE_GROUPE === $section->type_calcul) {
-                $moyenne = $this->sommePourcentage / $nbQuestionsPourcentage;
-                $this->myExcelWriter->writeCellXY(1, $this->ligne, 'Satisfaction globale =',
-                    ['wrap' => true, 'font-weight' => 'bold', 'style' => 'HORIZONTAL_CENTER']);
-                if ($moyenne * 100 < self::SEUIL) {
-                    $this->myExcelWriter->writeCellXY(3, $this->ligne, $moyenne,
-                        [
-                            'wrap' => true,
-                            'font-weight' => 'bold',
-                            'style' => 'HORIZONTAL_CENTER',
-                            'color' => self::COLOR_QUALITE,
-                            'number_format' => NumberFormat::FORMAT_PERCENTAGE,
-                        ]);
-                } else {
-                    $this->myExcelWriter->writeCellXY(3, $this->ligne, $moyenne,
-                        [
-                            'wrap' => true,
-                            'font-weight' => 'bold',
-                            'style' => 'HORIZONTAL_CENTER',
-                            'number_format' => NumberFormat::FORMAT_PERCENTAGE,
-                        ]);
-                }
-                ++$this->ligne;
             }
         }
     }
@@ -270,7 +231,7 @@ class QuestionnaireExportExcel
         $nbProps = 0;
         $nbReponses = 0;
         if ($question instanceof TypeSlider || $question instanceof TypeEchelle || $question instanceof TypeQcm || $question instanceof TypeQcu || $question instanceof TypeOuiNon) {
-            if (AbstractSection::AFFICHE_DETAIL === $section->type_calcul) {
+            if (AbstractSection::AFFICHE_DETAIL === $section->options['type_calcul']) {
                 $this->myExcelWriter->writeCellXY(1, $this->ligne, 'Réponse', ['style' => 'HORIZONTAL_CENTER']);
                 $this->myExcelWriter->writeCellXY(2, $this->ligne, 'Décompte', ['style' => 'HORIZONTAL_CENTER']);
                 $this->myExcelWriter->writeCellXY(3, $this->ligne, 'Pourcentage', ['style' => 'HORIZONTAL_CENTER']);
@@ -326,7 +287,7 @@ class QuestionnaireExportExcel
                     $retire = $nbReponses;
                 }
                 // version détaillée, on affiche tout.
-                if (AbstractSection::AFFICHE_DETAIL === $section->type_calcul) {
+                if (AbstractSection::AFFICHE_DETAIL === $section->options['type_calcul']) {
 
                     $this->myExcelWriter->writeCellXY(1, $this->ligne, $reponse->libelle,
                         ['style' => $reponse->getOption('alignement')]);
@@ -355,9 +316,6 @@ class QuestionnaireExportExcel
                 }
             }
 
-
-//                if ((array_key_exists('type',
-//                            $question->config) && 'echelle' === $question->config['type']) || $question instanceof TypeEchelle) {
             if ($question instanceof TypeEchelle || $question instanceof TypeQcu) {
                 $div = ($nbProps * ($nbTotalReponseQuestion - $retire));
                 if (0 !== $div) {
@@ -366,7 +324,7 @@ class QuestionnaireExportExcel
                     $total = 0;
                 }
 
-                if (AbstractSection::AFFICHE_DETAIL === $section->type_calcul) {
+                if (AbstractSection::AFFICHE_DETAIL === $section->options['type_calcul']) {
                     $this->myExcelWriter->writeCellXY(1, $this->ligne, 'soit',
                         ['font-weight' => 'bold', 'style' => 'HORIZONTAL_CENTER']);
                     $this->myExcelWriter->writeCellXY(2, $this->ligne, $total,
@@ -378,7 +336,7 @@ class QuestionnaireExportExcel
                     $this->myExcelWriter->writeCellXY(3, $this->ligne, 'de satisfaction',
                         ['font-weight' => 'bold', 'style' => 'HORIZONTAL_CENTER']);
                     ++$this->ligne;
-                } elseif (AbstractSection::AFFICHE_GROUPE === $section->type_calcul) {
+                } elseif (AbstractSection::AFFICHE_GROUPE === $section->options['type_calcul']) {
                     $this->sommePourcentage += $total;
                     $this->myExcelWriter->writeCellXY(3, $this->ligne, $total,
                         ['style' => 'HORIZONTAL_CENTER', 'number_format' => NumberFormat::FORMAT_PERCENTAGE]);
@@ -413,6 +371,115 @@ class QuestionnaireExportExcel
                 $this->myExcelWriter->writeCellXY(3, $lgRep, '0%', ['style' => 'HORIZONTAL_CENTER']);
             }
         }
+    }
+
+    private function writeConfigSectionGroupe(mixed $questSection)
+    {
+        $this->myExcelWriter->writeCellXY(3, $this->ligne, '% satisfaction',
+            ['wrap' => true, 'style' => 'HORIZONTAL_CENTER']);
+        ++$this->ligne;
+        $nbQuestions = 0;
+        $totalPourcentageQuestion = 0;
+        foreach ($questSection->getQuestions() as $question) {
+            ++$nbQuestions;
+            $this->myExcelWriter->writeCellXY(1, $this->ligne, $question->libelle,
+                ['wrap' => true, 'valign' => 'VERTICAL_TOP']);
+            if (mb_strlen($question->libelle) > 92) {
+                $this->myExcelWriter->getRowDimension($this->ligne, 30);
+            }
+
+            //calcul du taux par question
+            $nbProps = 0;
+            $satisfaction = 0;
+            $nbTotalReponseQuestion = 0;
+            if ($question instanceof TypeSlider) {
+                $params = $question->parametres;
+                $listeReponses = [];
+                for ($i = $params['min']; $i <= $params['max']; $i += $params['pas']) {
+                    $rep = new Reponse($i, $i, $i, $i);
+                    $listeReponses[] = $rep;
+                }
+            } else {
+                $listeReponses = $question->getReponses();
+            }
+            $nbReponses = 0;
+
+            foreach ($listeReponses as $reponse) {
+                ++$nbProps;
+
+                $cleR = $reponse->valeur;
+                if ($question instanceof TypeQcm) {
+                    $cleR = '["' . $cleR . '"]';
+                }
+                if (isset($question->choix->totalReponses[$cleR])) {
+                    $nbReponses = $question->choix->totalReponses[$cleR];
+                    if (is_int((int)$reponse->valeur)) {
+                        $totRep = $nbReponses * (int)$reponse->valeur;
+                        $nbTotalReponseQuestion += $nbReponses;
+                        $satisfaction += $totRep;
+
+                    }
+//
+//
+//                    $retire = 0;
+//                    if ('Je n\'ai pas suivi ce cours' === $reponse->libelle) {
+//                        //todo: revoir pour le NC ??
+//                        --$nbProps;
+//                        $retire = $nbReponses;
+//                    }
+                }
+            }
+            $pourcentage = $satisfaction / ($nbProps * $nbTotalReponseQuestion);
+            $totalPourcentageQuestion += $pourcentage;
+            if ($pourcentage * 100 <= self::SEUIL) {
+                $this->myExcelWriter->writeCellXY(3, $this->ligne, $pourcentage,
+                    [
+                        'wrap' => true,
+                        'font-weight' => 'bold',
+                        'style' => 'HORIZONTAL_CENTER',
+                        'color' => self::COLOR_QUALITE,
+                        'number_format' => NumberFormat::FORMAT_PERCENTAGE,
+                    ]);
+            } else {
+
+                $this->myExcelWriter->writeCellXY(3, $this->ligne, $pourcentage,
+                    [
+                        'wrap' => true,
+                        'font-weight' => 'bold',
+                        'style' => 'HORIZONTAL_CENTER',
+                        'number_format' => NumberFormat::FORMAT_PERCENTAGE,
+                    ]);
+            }
+
+            //calcul du taux global à la section
+
+            ++$this->ligne;
+        }
+        $moyenne = $totalPourcentageQuestion / $nbQuestions;
+        $this->myExcelWriter->writeCellXY(1, $this->ligne, 'Satisfaction globale =',
+            ['wrap' => true, 'font-weight' => 'bold', 'style' => 'HORIZONTAL_CENTER']);
+        if ($moyenne * 100 < self::SEUIL) {
+            $this->myExcelWriter->writeCellXY(3, $this->ligne, $moyenne,
+                [
+                    'wrap' => true,
+                    'font-weight' => 'bold',
+                    'style' => 'HORIZONTAL_CENTER',
+                    'color' => self::COLOR_QUALITE,
+                    'number_format' => NumberFormat::FORMAT_PERCENTAGE,
+                ]);
+        } else {
+            $this->myExcelWriter->writeCellXY(3, $this->ligne, $moyenne,
+                [
+                    'wrap' => true,
+                    'font-weight' => 'bold',
+                    'style' => 'HORIZONTAL_CENTER',
+                    'number_format' => NumberFormat::FORMAT_PERCENTAGE,
+                ]);
+        }
+        ++$this->ligne;
+        $this->myExcelWriter->borderBottomCellsRange(1, $this->ligne, 3, $this->ligne,
+            ['color' => '000000', 'size' => Border::BORDER_THIN]);
+        $this->ligne += 2;
     }
 
 }

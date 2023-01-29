@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Section/Section.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/01/2023 14:42
+ * @lastUpdate 29/01/2023 18:08
  */
 
 namespace App\Components\Questionnaire\Section;
@@ -17,7 +17,6 @@ use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
 class Section extends AbstractSection
 {
     final public const LABEL = 'question.section';
-    public string $type_calcul = 'DETAIL';
     public string $alignement = '';
 
     public function getQuestions(): array

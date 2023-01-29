@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Section/AbstractSection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/01/2023 14:42
+ * @lastUpdate 29/01/2023 18:08
  */
 
 namespace App\Components\Questionnaire\Section;
@@ -80,6 +80,7 @@ abstract class AbstractSection
             'mode' => AbstractQuestionnaire::MODE_APERCU,
             'questionnaireUuid' => null,
             'choixUserUuid' => null,
+            'type_calcul' => AbstractSection::AFFICHE_DETAIL,
         ]);
     }
 
