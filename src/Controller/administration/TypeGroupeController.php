@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/TypeGroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/10/2022 17:51
+ * @lastUpdate 29/01/2023 10:38
  */
 
 namespace App\Controller\administration;
@@ -17,6 +17,7 @@ use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use App\Enums\TypeGroupeEnum;
 use App\Exception\DiplomeNotFoundException;
+use App\Repository\SemestreRepository;
 use App\Utils\JsonRequest;
 use App\Utils\Tools;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -29,8 +30,8 @@ class TypeGroupeController extends BaseController
 {
     #[Route(path: '/liste/{semestre}', name: 'administration_type_groupe_liste_semestre', options: ['expose' => true], methods: ['GET'])]
     public function listeSemestre(
-        Semestre $semestre): Response
-    {
+        Semestre $semestre
+    ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
         $diplome = $this->getDiplomeFromSemestre($semestre);
 
@@ -49,8 +50,8 @@ class TypeGroupeController extends BaseController
     #[Route(path: '/generation-automatique/{semestre}', name: 'administration_type_groupe_semestre_generation_auto', requirements: ['semestre' => '\d+'], methods: ['GET'])]
     public function generationAutomatique(
         GenereTypeGroupe $genereTypeGroupe,
-        Semestre $semestre): Response
-    {
+        Semestre $semestre
+    ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
 
         $genereTypeGroupe->generer($semestre, $this->getDiplomeFromSemestre($semestre));
@@ -59,14 +60,24 @@ class TypeGroupeController extends BaseController
     }
 
     #[Route(path: '/new/{semestre}', name: 'administration_type_groupe_new', options: ['expose' => true], methods: ['POST'])]
-    public function new(Request $request, Semestre $semestre): Response
-    {
+    public function new(
+        SemestreRepository $semestreRepository,
+        Request $request,
+        Semestre $semestre
+    ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
         $typeGroupe = new TypeGroupe($semestre);
         $typeGroupe->setLibelle(JsonRequest::getValueFromRequest($request, 'libelle'));
         $typeGroupe->setType(TypeGroupeEnum::from(JsonRequest::getValueFromRequest($request, 'type')));
         $typeGroupe->setDefaut(Tools::convertToBool(JsonRequest::getValueFromRequest($request, 'defaut')));
         $typeGroupe->setMutualise(Tools::convertToBool(JsonRequest::getValueFromRequest($request, 'mutualise')));
+
+        $semestres = $semestreRepository->findByDiplomeEtNumero($semestre->getDiplome(), $semestre->getOrdreLmd());
+        foreach ($semestres as $s) {
+            $typeGroupe->addSemestre($s);
+            $s->addTypeGroupess($typeGroupe);
+        }
+
         $this->entityManager->persist($typeGroupe);
         $this->entityManager->flush();
 
@@ -131,7 +142,7 @@ class TypeGroupeController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $typegroupe->getSemestre());
         $newGroupe = clone $typegroupe;
-        $newGroupe->setLibelle('Copie_'.$newGroupe->getLibelle());
+        $newGroupe->setLibelle('Copie_' . $newGroupe->getLibelle());
         $this->entityManager->persist($newGroupe);
         $this->entityManager->flush();
         $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'type_groupe.duplicate.success.flash');
@@ -144,7 +155,7 @@ class TypeGroupeController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $typeGroupe->getSemestre());
         $id = $typeGroupe->getId();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
+        if ($this->isCsrfTokenValid('delete' . $id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $this->entityManager->remove($typeGroupe);
             $this->entityManager->flush();
             $this->addFlashBag(

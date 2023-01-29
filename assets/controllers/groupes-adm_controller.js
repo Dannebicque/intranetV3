@@ -1,13 +1,13 @@
-// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/groupes-adm_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 04/09/2022 11:09
+// @lastUpdate 29/01/2023 10:38
 
 import { Controller } from '@hotwired/stimulus'
 import Routing from 'fos-router'
 import $ from 'jquery'
-import { get, load, post } from '../js/fetch'
+import { get, post } from '../js/fetch'
 import { addCallout } from '../js/util'
 
 export default class extends Controller {
@@ -150,8 +150,8 @@ export default class extends Controller {
         {
           libelle: document.getElementById('typegroupe_libelle').value.trim(),
           type: document.getElementById('typegroupe_type').value.trim(),
-          defaut: document.getElementById('typegroupe_defaut').value,
-          mutualise: document.getElementById('typegroupe_mutualise').value,
+          defaut: document.getElementById('typegroupe_defaut').checked,
+          mutualise: document.getElementById('typegroupe_mutualise').checked,
         },
       ).then(() => {
         this._listeGroupe()
