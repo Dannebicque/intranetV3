@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionApc.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/01/2023 08:42
+ * @lastUpdate 29/01/2023 10:01
  */
 
 namespace App\Classes\SousCommission;
@@ -51,8 +51,7 @@ class SousCommissionApc extends AbstractSousCommission implements SousCommission
 
         $this->anneeUniversitaire = $anneeUniversitaire;
         $this->initDataSousCommission();
-//        $matieres = $this->typeMatiereManager->findBySemestreAndReferentiel($semestre,
-//            $semestre->getDiplome()->getReferentiel());
+
 
         $this->sousCommissionEtudiant = [];
         if ($semestre->isPair()) {

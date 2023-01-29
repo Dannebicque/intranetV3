@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/EtudiantSousCommissionApc.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/01/2023 11:25
+ * @lastUpdate 29/01/2023 10:09
  */
 
 namespace App\DTO;
@@ -159,7 +159,8 @@ class EtudiantSousCommissionApc
                     if (array_key_exists($matiere->getTypeIdMatiere(), $this->moyenneMatieres)) {
                         $this->bonification += $this->moyenneMatieres[$matiere->getTypeIdMatiere()]->getBonification();
                     }
-                } elseif (array_key_exists($matiere->getTypeIdMatiere(), $this->moyenneMatieres)) {
+                } elseif ($matiere->suspendu === false && array_key_exists($matiere->getTypeIdMatiere(),
+                        $this->moyenneMatieres)) {
                     if (true === $this->moyenneMatieres[$matiere->getTypeIdMatiere()]->matiereAAnnuler || $this->moyenneMatieres[$matiere->getTypeIdMatiere()]->optionFaite === false) {
                         // toutes les notes sont des absences justifiéées
                         $tabs['matieres'][$matiere->codeElement]['matiereAAnnuler'] = true;
@@ -180,7 +181,7 @@ class EtudiantSousCommissionApc
             $competenceId = $ue->ue->getApcCompetence()?->getId();
 
             foreach ($matieres as $matiere) {
-                if (false === $matiere->bonification && $matiere->isParent() === false) {
+                if (false === $matiere->suspendu && false === $matiere->bonification && $matiere->isParent() === false) {
                     if (false === $tabs['matieres'][$matiere->codeElement]['matiereAAnnuler']) {
                         if (array_key_exists($competenceId,
                                 $ressources) && array_key_exists($matiere->codeElement,
