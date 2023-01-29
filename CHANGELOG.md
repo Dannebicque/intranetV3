@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.20](https://github.com/Dannebicque/intranetV3/compare/v3.11.19...v3.11.20) (2023-01-29)
+
+
+### Features
+
+* [questionnaire] Ajout par liste CSV ([d8bd53d](https://github.com/Dannebicque/intranetV3/commit/d8bd53d7b9f3f66bc13a45f8644c9b5ee207eb36))
+
+
+### Bug Fixes
+
+* [Export Questionnaire] Réponses slider ([5095705](https://github.com/Dannebicque/intranetV3/commit/50957057353a7276c4d9a8353272b09f67b4f7c1))
+* [Groupe] Groupes mutualisés ([92ce0cc](https://github.com/Dannebicque/intranetV3/commit/92ce0cca4f464b0d880caabe4c7f27fab9d249aa))
+* [Sae] GEstion des mutualisées ([61f1e0c](https://github.com/Dannebicque/intranetV3/commit/61f1e0c212a7fbb1c7bd2406619bbdea89fbd894))
+* [SS Comm] ressources/SAE suspendues ([72bac91](https://github.com/Dannebicque/intranetV3/commit/72bac91696cc577314fc800f8b8f6bc061de8df9))
+
 ### [3.11.19](https://github.com/Dannebicque/intranetV3/compare/v3.11.18...v3.11.19) (2023-01-27)
 
 
