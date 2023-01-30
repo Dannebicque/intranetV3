@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/CreationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/01/2023 22:12
+ * @lastUpdate 29/01/2023 10:54
  */
 
 namespace App\Controller\questionnaire;
@@ -311,7 +311,7 @@ class CreationController extends BaseController
         return $this->json($data);
     }
 
-    #[Route('/modal/add-exterieur/{questionnaire}', name: 'add_exterieur')]
+    #[Route('/modal/add-exterieur/{questionnaire}', name: 'add_exterieur', methods: ['POST'])]
     public function addExterieur(
         Request $request,
         QuestionnaireRegistry $questionnaireRegistry,
@@ -321,6 +321,22 @@ class CreationController extends BaseController
         $typeDest->setQuestionnaire($questionnaire);
 
         $typeDest->addExterieur(JsonRequest::getFromRequest($request));
+
+        return $this->render('questionnaire/creation/_addExterieur.html.twig', [
+            'liste' => $typeDest->getListe(),
+        ]);
+    }
+
+    #[Route('/modal/add-exterieurs/{questionnaire}', name: 'add_exterieurs_csv', methods: ['POST'])]
+    public function addExterieursCsv(
+        Request $request,
+        QuestionnaireRegistry $questionnaireRegistry,
+        QuestQuestionnaire $questionnaire
+    ): Response {
+        $typeDest = $questionnaireRegistry->getTypeDestinataire($questionnaire->getTypeDestinataire());
+        $typeDest->setQuestionnaire($questionnaire);
+
+        $typeDest->addExterieurs(JsonRequest::getFromRequest($request));
 
         return $this->render('questionnaire/creation/_addExterieur.html.twig', [
             'liste' => $typeDest->getListe(),

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/QuestionnaireExportExcel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/01/2023 18:38
+ * @lastUpdate 30/01/2023 09:59
  */
 
 namespace App\Components\Questionnaire;
@@ -290,7 +290,7 @@ class QuestionnaireExportExcel
                 if (AbstractSection::AFFICHE_DETAIL === $section->options['type_calcul']) {
 
                     $this->myExcelWriter->writeCellXY(1, $this->ligne, $reponse->libelle,
-                        ['style' => $reponse->getOption('alignement')]);
+                        ['style' => 'HORIZONTAL_LEFT']);
                     $this->myExcelWriter->writeCellXY(2, $this->ligne, $nbReponses,
                         ['style' => 'HORIZONTAL_CENTER']);
                     $this->sommePourcentage += $pourcentage;
@@ -435,7 +435,6 @@ class QuestionnaireExportExcel
                 $this->myExcelWriter->writeCellXY(3, $this->ligne, $pourcentage,
                     [
                         'wrap' => true,
-                        'font-weight' => 'bold',
                         'style' => 'HORIZONTAL_CENTER',
                         'color' => self::COLOR_QUALITE,
                         'number_format' => NumberFormat::FORMAT_PERCENTAGE,
@@ -445,7 +444,6 @@ class QuestionnaireExportExcel
                 $this->myExcelWriter->writeCellXY(3, $this->ligne, $pourcentage,
                     [
                         'wrap' => true,
-                        'font-weight' => 'bold',
                         'style' => 'HORIZONTAL_CENTER',
                         'number_format' => NumberFormat::FORMAT_PERCENTAGE,
                     ]);
