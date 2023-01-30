@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2022 17:15
+ * @lastUpdate 30/01/2023 21:13
  */
 
 /*
@@ -26,10 +26,10 @@ use App\Repository\DiplomeRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
-use function array_key_exists;
 use Carbon\CarbonInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use function array_key_exists;
 
 class MyEdtImport
 {
@@ -126,7 +126,9 @@ class MyEdtImport
         $this->semaine = mb_substr($phrase, 1, 2); // on ne récupère pas le S
 
         $semestre = mb_substr($phrase, 5, 2);
+//        dump($semestre);
         $this->verifieSiSemaineDoitEtreEffacee($semestre);
+//        dump($phrase);
         switch ($phrase[12]) {
             case 'Z':
                 // prof commence par Z, donc, c'est une zone sans enseignant
@@ -230,30 +232,52 @@ class MyEdtImport
         $heure = $phrase[4]; // a convertir
         $date = $this->convertToDate($jour);
         $groupe = $phrase[7];
-        $ordreSemestre = (int) mb_substr($phrase, 6, 2);
+
+        $ordreSemestre = (int)mb_substr($phrase, 6, 2);
         $prof = mb_substr($phrase, 12, 3);
         $typecours = mb_substr($phrase, 8, 2);
         $matiere = '';
         $salle = '-';
         $ordre = 0;
-
+//dump($phrase[16]);
+//dump($phrase[20].' '.$phrase[21]);
         if ('S' === $phrase[16] || 'R' === $phrase[16]) {
-            if ('T' === $phrase[20] || 'C' === $phrase[20]) {
+            if ($phrase[17] === 'A') {
+                //alternance
+                if ('T' === $phrase[21] || ('C' === $phrase[21] && 'M' === $phrase[22])) {
+//                    dump('code 6');
+                    // code sur 5 caractères
+                    $matiere = mb_substr($phrase, 15, 6);
+                    $ordre = mb_substr($phrase, 23, 2);
+                    $salle = mb_substr($phrase, 25);
+                } else {
+//                    dump('code 7');
+                    // code sur 6, avec parcours
+                    $matiere = mb_substr($phrase, 15, 7);
+                    $ordre = mb_substr($phrase, 24, 2);
+                    $salle = mb_substr($phrase, 26);
+                }
+            } else if ('T' === $phrase[20] || ('C' === $phrase[20] && 'M' === $phrase[21])) {
+//                dump('code 5');
                 // code sur 5 caractères
                 $matiere = mb_substr($phrase, 15, 5);
                 $ordre = mb_substr($phrase, 22, 2);
                 $salle = mb_substr($phrase, 24);
             } else {
+//                dump('code 6');
                 // code sur 6, avec parcours
                 $matiere = mb_substr($phrase, 15, 6);
                 $ordre = mb_substr($phrase, 23, 2);
                 $salle = mb_substr($phrase, 25);
             }
         } else {
-            $this->log->addItem('Pas une ressource ou une SAE : '.$phrase);
+            $this->log->addItem('Pas une ressource ou une SAE : ' . $phrase);
         }
-
+//dump('matiere '.$matiere);
+//dump('ordre '.$ordre);
+//dump('salle '.$salle);
         if ('' !== $matiere && array_key_exists($matiere, $this->tabMatieres)) {
+//            dump('existe');
             $pl = new EdtPlanning();
             $pl->setAnneeUniversitaire($this->anneeUniversitaire);
             $pl->setOrdreSemestre($ordreSemestre);
@@ -281,8 +305,11 @@ class MyEdtImport
             }
 
             $this->entityManager->persist($pl);
-            $this->log->addItem('Ajout du cours '.$phrase, 'success');
+            $this->log->addItem('Ajout du cours ' . $phrase, 'success');
         }
+//        else {
+//            dump('pas existe');
+//        }
     }
 
     private function addGroupe(EdtPlanning $pl, string $phrase)

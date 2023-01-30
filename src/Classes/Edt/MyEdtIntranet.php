@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/09/2022 14:47
+ * @lastUpdate 30/01/2023 21:13
  */
 
 namespace App\Classes\Edt;
@@ -25,12 +25,12 @@ use App\Repository\EdtPlanningRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
-use function array_key_exists;
 use Carbon\Carbon;
-use function chr;
-use function count;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use function array_key_exists;
+use function chr;
+use function count;
 
 class MyEdtIntranet extends BaseEdt
 {
@@ -150,7 +150,7 @@ class MyEdtIntranet extends BaseEdt
         array $matieres
     ): self {
         $this->anneeUniversitaire = $anneeUniversitaire;
-        $semestres = $this->semestreRepository->findByDepartementActif($departement);
+        $semestres = $this->semestreRepository->findByDepartement($departement);
         if ('' === $valeur) {
             if ((is_countable($semestres) ? count($semestres) : 0) > 0) {
                 $valeur = $semestres[0]->getId();
