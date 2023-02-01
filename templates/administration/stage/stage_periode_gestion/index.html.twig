@@ -427,6 +427,11 @@
                                         </select>
                                     </td>
                                     <td>
+                                        <a href="{{ path('administration_stage_etudiant_delete', {id:stageEtudiant.stage.id}) }}"
+                                           data-csrf="{{ csrf_token('delete' ~ stageEtudiant.stage.id) }}"
+                                           class="btn btn-danger btn-outline btn-square supprimer"
+                                           data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                           title="{{ 'atitle.supprimer'|trans }}"><i class="{{ iconDelete }}"></i></a>
                                         <div class="dropdown table-action btn btn-primary btn-outline">
                                             <span class="dropdown-toggle no-caret" data-bs-toggle="dropdown"><i
                                                         class="fas fa-ellipsis-h rotate-90"></i>{{ 'autre.situation'|trans }}
