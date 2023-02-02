@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/01/2023 21:13
+ * @lastUpdate 02/02/2023 12:42
  */
 
 /*
@@ -257,7 +257,7 @@ class MyEdtImport
                     $ordre = mb_substr($phrase, 24, 2);
                     $salle = mb_substr($phrase, 26);
                 }
-            } else if ('T' === $phrase[20] || ('C' === $phrase[20] && 'M' === $phrase[21])) {
+            } else if ('T' === $phrase[20] || 'P' === $phrase[20] || ('C' === $phrase[20] && 'M' === $phrase[21])) {
 //                dump('code 5');
                 // code sur 5 caractères
                 $matiere = mb_substr($phrase, 15, 5);
