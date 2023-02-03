@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/01/2023 11:40
+ * @lastUpdate 03/02/2023 08:08
  */
 
 namespace App\Classes\SousCommission;
@@ -653,7 +653,8 @@ class SousCommissionExport
         }
         $ues = $semestre->getUes();
         $etudiants = $semestre->getEtudiants();
-        $matieres = $this->typeMatiereManager->findBySemestre($semestre);
+        $matieres = $this->typeMatiereManager->findBySemestreAndReferentiel($semestre,
+            $semestre->getDiplome()?->getReferentiel());
 
         $ssCommTravail = new SousCommissionTravail($semestre, $anneeUniversitaire,
             $ues->getValues(), $matieres, $etudiants->getValues(), $scolaritePromo);
