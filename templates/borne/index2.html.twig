@@ -1,167 +1,175 @@
 {% extends 'base-bornes.html.twig' %}
 
 {% block full_body %}
-    <!-- CONTENEUR 1080PX -->
-    <div id="container" style="font-size:.8rem" onload="loader()">
-        <!-- Date -->
-        <div class="row">
-            <div class="col-2">
-                <div class="heure">
-                    <article class="clock">
-                        <div class="hours-container">
-                            <div class="hours"></div>
-                        </div>
-                        <div class="minutes-container">
-                            <div class="minutes"></div>
-                        </div>
-                        <div class="seconds-container">
-                            <div class="seconds"></div>
-                        </div>
-                    </article>
+<!-- CONTENEUR 1080PX -->
+<div id="container">
+	<!-- Date -->
+	<div class="borne_date">
+        <div class="heure">
+            <article class="clock">
+                <div class="hours-container">
+                    <div class="hours"></div>
                 </div>
-            </div>
-            <div class="col-10">
-                <div id="date">
-                    <span class="element">{{ datedujourlong(app.request.locale) }}</span>
-                    <span class="element" id="heure">16:45</span>
+                <div class="minutes-container">
+                    <div class="minutes"></div>
                 </div>
-            </div>
+                <div class="seconds-container">
+                    <div class="seconds"></div>
+                </div>
+            </article>
         </div>
+        <span class="element">{{ datedujourlong(app.request.locale) }}</span>
+        <span class="element" style="padding-right:20px;" id="heure"></span>
+    </div>
+	<!-- /Date -->
 
-        <!-- /Date -->
+	{% for i in 1..2 %}
+		{% if zones['zone'~i] is defined %}
+			{% set zone = zones['zone'~i] %}
+			{% if zone.type == 'semestre' %}
+				{% set nbGroupes = zone.data.semestre.nbgroupeTPEDT %}
+				<!-- HEADER SEMESTRE -->
+				<div class="semestre-header">
+					<span>Semestre {{ zone.data.semestre.ordreLmd }}</span>
+				</div>
 
-        {% for i in 1..2 %}
-            {% if zones['zone'~i] is defined %}
-                {% set zone =  zones['zone'~i] %}
-                {% if zone.type == 'semestre' %}
-                    <!-- HEADER SEMESTRE -->
-                    <div class="row mt-2">
-                        <div class="col-12 semestre-header">
-                            <span>Semestre {{ zone.data.semestre.ordreLmd }}</span>
-                        </div>
-                        <!-- /HEADER SEMESTRE -->
-                        <div class="col-12">
-                            <div class="schedule-semestre-{{ zone.data.semestre.nbgroupeTPEDT }} semestre_borne"
-                                 aria-labelledby="schedule-heading">
-                                {% for j in 1..zone.data.semestre.nbgroupeTPEDT %}
-                                    <span class="track-slot col-edt-header jour"
-                                          style="grid-column: track-{{ j }}; grid-row: tracks;">
-                                        {{ zone.data.p1.groupes[j] }}
-                                    </span>
-                                {% endfor %}
-                                {% for ligne in 0..22 %}
-                                    <h2 class="time-slot" style="grid-row: time-{{ tabHeures[ligne][0] }};">{{ tabHeures[ligne][1] }}</h2>
-                                    {% for j in 1..zone.data.semestre.nbgroupeTPEDT %}
-                                        {% if zone.data.planning[j][tabHeures[ligne][0]] is defined %}
-                                            <div class="session {% if zone.data.planning[j][tabHeures[ligne][0]]
-                                            .couleur == null %}{{ zone.data.planning[j][tabHeures[ligne][0]].type_cours|lower }}_{{ zone.data.semestre.annee.couleur }}{% else %}{{ zone.data
-                                            .planning[j][tabHeures[ligne][0]]
-                                            .classCss }}{% endif %}"
-                                                    {% if zone.data.planning[j][tabHeures[ligne][0]].type_cours == 'TP' %}
-                                                        style="grid-column: track-{{ zone.data.planning[j][tabHeures[ligne][0]]
-                                                        .ordreGroupe }}-start / track-{{ zone.data.planning[j][tabHeures[ligne][0]]
-                                                        .ordreGroupe }}-end; grid-row:
-                                                                time-{{ zone.data.planning[j][tabHeures[ligne][0]].gridStart }} / time-{{ zone.data.planning[j][tabHeures[ligne][0]].gridEnd }};"
-                                                    {% elseif zone.data.planning[j][tabHeures[ligne][0]].type_cours ==
-                                                        'TD' %}
-                                                        style="grid-column: track-{{ zone.data.planning[j][tabHeures[ligne][0]]
-                                                        .ordreGroupe }}-start / track-{{ zone.data.planning[j][tabHeures[ligne][0]]
-                                                        .ordreGroupe + 1 }}-end;
-                                                                grid-row: time-{{ zone.data.planning[j][tabHeures[ligne][0]]
-                                                        .gridStart }} / time-{{ zone.data.planning[j][tabHeures[ligne][0]].gridEnd }};"
-                                                    {% else %}
-                                                        style="grid-column: track-1-start / track-{{ zone.data.semestre.nbgroupeTPEDT }}-end;
-                                                                grid-row: time-{{ zone.data.planning[j][tabHeures[ligne][0]]
-                                                        .gridStart }} / time-{{ zone.data.planning[j][tabHeures[ligne][0]].gridEnd }};"
-                                                    {% endif %}
-                                            >
+				<section class="semestre_borne"
+					style="grid-template-columns: 60px repeat({{ nbGroupes }}, 1fr)"
+				>
+					{% for j in 1..nbGroupes %}
+						<div class="track-slot col-edt-header jour" style="grid-area: 1 / {{ j+1 }} / 2 / {{ j+2 }};">
+							<div>{{ zone.data.p1.groupes[j] }}</div>
+						</div>
+						{% if not loop.last %}
+							<div class="dashed-lines-vertical" style="grid-area: 2 / {{ j+2 }} / 25 / {{ j+2 }}"></div>
+						{% endif %}
+					{% endfor %}
+					
+					<div class="time-slot" style="grid-area: 2 / 1 / 5 / 2;">
+						<span>8h00<br />-<br />9h30</span>
+					</div>
+					<div class="time-slot" style="grid-area: 5 / 1 / 8 / 2;">
+						<span>9h30<br />-<br />11h00</span>
+					</div>
+					<div class="time-slot" style="grid-area: 8 / 1 / 11 / 2;">
+						<span>11h00<br />-<br />12h30</span>
+					</div>
+					<div class="time-slot" style="grid-area: 11 / 1 / 14 / 2;">
+						<span>12h30<br />-<br />14h00</span>
+					</div>
+					<div class="time-slot" style="grid-area: 14 / 1 / 17 / 2;">
+						<span>14h00<br />-<br />15h30</span>
+					</div>
+					<div class="time-slot" style="grid-area: 17 / 1 / 20 / 2;">
+						<span>15h30<br />-<br />17h00</span>
+					</div>
+					<div class="time-slot" style="grid-area: 20 / 1 / 23 / 2;">
+						<span>17h00<br />-<br />18h30</span>
+					</div>
+					<div class="time-slot" style="grid-area: 23 / 1 / 25 / 2;">
+						<span>18h30<br />-<br />19h30</span>
+					</div>
+					
+					<div class="dashed-lines-horizontal" style="grid-area: 5 / 2 / 8 / {{ nbGroupes + 2 }} "></div>
+					<div class="dashed-lines-horizontal" style="grid-area: 11 / 2 / 14 / {{ nbGroupes + 2 }} "></div>
+					<div class="dashed-lines-horizontal" style="grid-area: 17 / 2 / 20 / {{ nbGroupes + 2 }} "></div>
+					<div class="dashed-lines-horizontal" style="grid-area: 5 / 2 / 23 / {{ nbGroupes + 2 }} "></div>
 
-                                                <div class="session-body">
+					<div class="dashed-lines-horizontal-small" style="grid-area: 3 / 2 / 4 / {{ nbGroupes + 2 }} "></div>
+					<div class="dashed-lines-horizontal-small" style="grid-area: 6 / 2 / 7 / {{ nbGroupes + 2 }} "></div>
+					<div class="dashed-lines-horizontal-small" style="grid-area: 9 / 2 / 10 / {{ nbGroupes + 2 }} "></div>
+					<div class="dashed-lines-horizontal-small" style="grid-area: 12 / 2 / 13 / {{ nbGroupes + 2 }} "></div>
+					<div class="dashed-lines-horizontal-small" style="grid-area: 15 / 2 / 16 / {{ nbGroupes + 2 }} "></div>
+					<div class="dashed-lines-horizontal-small" style="grid-area: 18 / 2 / 19 / {{ nbGroupes + 2 }} "></div>
+					<div class="dashed-lines-horizontal-small" style="grid-area: 21 / 2 / 22 / {{ nbGroupes + 2 }} "></div>
 
-                                                        <span class="session-title">
-                                                                {{ zone.data.planning[j][tabHeures[ligne][0]].texteEvt }}
-                                                                    </span>
-                                                    <span class="session-presenter">{{ zone.data
-                                                        .planning[j][tabHeures[ligne][0]].personnel }}</span>
-                                                    <span class="session-room">{{ zone.data.planning[j][tabHeures[ligne][0]].salle }}</span>
+					{% for j in 1..nbGroupes %}
+						{% for ligne in 0..22 %}
+							{% if zone.data.planning[j][tabHeures[ligne][0]] is defined %}
+								{% set caseData = zone.data.planning[j][tabHeures[ligne][0]] %}
+								{% set horsCrenauxWarning = (caseData.gridStart not in crenaux) or (caseData.gridEnd not in crenaux) %}
+								<div class="session {{ caseData.type_cours|lower }} {{ zone.data.semestre.libelle|lower|slice(0, 2) }}" 
+									style="grid-area:
+									{{ tabHeuresReversed[caseData.gridStart] + 2 }} /
+									{{ j+1 }} /
+									{{ tabHeuresReversed[caseData.gridEnd] + 2 }} /
+									{{ j + 1 + largeur[caseData.type_cours] }}"
+								>
+									<div class="session-body">
+										<span class="session-title">{{ caseData.texteEvt }}</span>
+										<span class="session-presenter">{{ caseData.personnel }}</span>
+										<span class="session-room">{{ caseData.salle }}</span>
+										{% if horsCrenauxWarning %}
+											<span style="background-color:crimson;padding: 0.2rem;border-radius: 5px;">
+												de {{caseData.heureDebut|date('H:i')}} à {{caseData.heureFin|date('H:i')}}
+											</span>
+										{% endif %}
+									</div>
+								</div>
+							{% endif %}
+						{% endfor %}
+					{% endfor %}
+				</section>
+			{% elseif zone.type == 'message' %}
+				{# <!-- BANDEAU INFOS --> #}
+				{# <section class="bandeau"> #}
+					{# <div class="carousel carousel-slider center" data-indicators="true"> #}
+						{# <div class="carousel-item" style="background-color:#F9B000" href="#sli_0"> #}
+							{# <div class="align"> #}
 
-                                                </div>
-                                            </div>
-                                        {% endif %}
-                                    {% endfor %}
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                    <!-- CONTENU SEMESTRE -->
+								{# <p class="white-text"> #}
+									{# Toutes les informations du département. #}
+									{# </p> #}
 
-                    <!-- /CONTENU SEMESTRE -->
-                {% else %}
-                    Non défini
-                {% endif %}
-            {% endif %}
-        {% endfor %}
+								{# <div class="qrcode"> #}
+									{# <img src="{{ qr_code_data_uri('http://mmi.iut-troyes.univ-reims.fr') }}" /> #}
+									{# <p>Flashez moi pour plus d'informations.</p> #}
+									{# </div> #}
+								{# </div> #}
+							{# </div> #}
 
-
-
-
-        {# <!-- BANDEAU INFOS --> #}
-        {# <section class="bandeau"> #}
-        {# <div class="carousel carousel-slider center" data-indicators="true"> #}
-        {# <div class="carousel-item" style="background-color:#F9B000" href="#sli_0"> #}
-        {# <div class="align"> #}
-
-        {# <p class="white-text"> #}
-        {# Toutes les informations du département. #}
-        {# </p> #}
-
-        {# <div class="qrcode"> #}
-        {# <img src="{{ qr_code_data_uri('http://mmi.iut-troyes.univ-reims.fr') }}" /> #}
-        {# <p>Flashez moi pour plus d'informations.</p> #}
-        {# </div> #}
-        {# </div> #}
-        {# </div> #}
-
-        {# {% for message in messages %} #}
-        {# {% for m in message|filter(m => (m.visible == true)) %} #}
-        {# <div class="carousel-item" style="background-color:{{ m.couleur }}" href="#sli_{{ loop.index }}"> #}
-        {# <div class="align"> #}
-        {# <i class="{{ m.icone }} fa-7x"></i> #}
-        {# <p class="white-text"> #}
-        {# {{ m.message }} #}
-        {# </p> #}
-        {# {% if m.url != '' or m.url != null %} #}
-        {# <div class="qrcode"> #}
-        {# <img src="{{ qr_code_data_uri(m.url) }}"/> #}
-        {# <p>Flashez moi pour plus d'informations.</p> #}
-        {# </div> #}
-        {# {% endif %} #}
-        {# </div> #}
-        {# </div> #}
-        {# {% endfor %} #}
-        {# {% endfor %} #}
-        {# </div> #}
-        {# </section> #}
-        {# <!-- /BANDEAU INFOS --> #}
-        <br>
-        <!--Footer-->
-        <section style="width:100%; text-align: center">
-            <div style="width:25%; text-align: center; float: left">
-                <img src="{{ absolute_url(asset('upload/logo/'~settings('LOGO_IUT'))) }}" alt="logo IUT"
-                     width="100px"/>
-            </div>
-            <div style="width:25%; text-align: center; float: left">
-                <img src="{{ absolute_url(asset('upload/logo/'~settings('LOGO_UNIVERSITE'))) }}" alt="logo Université"
-                     width="100px"/>
-            </div>
-            <div style="width:25%; text-align: center; float: left; padding-top: 20px">
-                <svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-                     width="30%" height="30%" viewBox="0 0 1811.638 1426" enable-background="new 0 0 1811.638 1426" xml:space="preserve">
-<g>
-    <path class="pt1b" fill="#333333" d="M380.607,160.948c-47.971,0-86.855,38.885-86.855,86.855c0,47.697,38.451,86.398,86.045,86.834
+						{# {% for message in messages %} #}
+						{# {% for m in message|filter(m => (m.visible == true)) %} #}
+						{# <div class="carousel-item" style="background-color:{{ m.couleur }}" href="#sli_{{ loop.index }}"> #}
+							{# <div class="align"> #}
+								{# <i class="{{ m.icone }} fa-7x"></i> #}
+								{# <p class="white-text"> #}
+									{# {{ m.message }} #}
+									{# </p> #}
+								{# {% if m.url != '' or m.url != null %} #}
+								{# <div class="qrcode"> #}
+									{# <img src="{{ qr_code_data_uri(m.url) }}" /> #}
+									{# <p>Flashez moi pour plus d'informations.</p> #}
+									{# </div> #}
+								{# {% endif %} #}
+								{# </div> #}
+							{# </div> #}
+						{# {% endfor %} #}
+						{# {% endfor %} #}
+						{# </div> #}
+					{# </section> #}
+				{# <!-- /BANDEAU INFOS --> #}
+			{% endif %}
+		{% endif %}
+	{% endfor %}
+	<br>
+	<!--Footer-->
+	<section class="borne-footer">
+		<div style="width:25%; text-align: center; float: left">
+			<img src="{{ absolute_url(asset('upload/logo/'~settings('LOGO_IUT'))) }}" alt="logo IUT" width="100px" />
+		</div>
+		<div style="width:25%; text-align: center; float: left">
+			<img src="{{ absolute_url(asset('upload/logo/'~settings('LOGO_UNIVERSITE'))) }}" alt="logo Université"
+				width="100px" />
+		</div>
+		<div style="width:25%; text-align: center; float: left; padding-top: 20px">
+			<svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30%" height="30%"
+				viewBox="0 0 1811.638 1426" enable-background="new 0 0 1811.638 1426" xml:space="preserve">
+				<g>
+					<path class="pt1b" fill="#333333" d="M380.607,160.948c-47.971,0-86.855,38.885-86.855,86.855c0,47.697,38.451,86.398,86.045,86.834
 		c0.273,0.002,0.539,0.021,0.811,0.021c36.641,0,67.959-22.699,80.717-54.793c3.945-9.924,6.137-20.734,6.137-32.063
-		C467.461,199.833,428.576,160.948,380.607,160.948z"/>
-    <path class="bt2b" fill="#333333" d="M644.994,15.184c-47.969,0-86.854,38.884-86.854,86.854v55.709v74.604v204.872V572.5l0,0
+		C467.461,199.833,428.576,160.948,380.607,160.948z" />
+					<path class="bt2b" fill="#333333" d="M644.994,15.184c-47.969,0-86.854,38.884-86.854,86.854v55.709v74.604v204.872V572.5l0,0
 		c0,0.002,0,0.005,0,0.009c0,0.023,0.002,0.047,0.002,0.071c0.002,1.383,0.041,2.757,0.104,4.126c0,0.002,0,0.006,0,0.012
 		c0.023,0.466,0.064,0.926,0.092,1.387c0.006,0.05,0.01,0.102,0.012,0.151c0.057,0.869,0.115,1.739,0.199,2.599
 		c0,0.014,0.002,0.025,0.002,0.037c0.055,0.543,0.12,1.08,0.182,1.621c0.002,0.018,0.004,0.033,0.006,0.053
@@ -224,8 +232,8 @@
 		c0.115-0.819,0.22-1.648,0.314-2.479c0.035-0.297,0.065-0.594,0.102-0.891c0.027-0.242,0.059-0.484,0.082-0.73
 		c0-0.012,0.002-0.023,0.002-0.037c0.082-0.859,0.142-1.729,0.198-2.599c0.001-0.05,0.007-0.102,0.011-0.151
 		c0.029-0.461,0.07-0.921,0.092-1.387c0-0.006,0-0.01,0-0.012c0.064-1.369,0.102-2.743,0.104-4.126c0-0.024,0.003-0.048,0.003-0.071
-		c0-0.004,0-0.007,0-0.009l0,0V382.162V177.29v-19.926v-55.326C731.85,54.068,692.965,15.184,644.994,15.184z"/>
-    <path class="bt1b" fill="#333333" d="M116.83,12.573c-47.969,0-86.854,38.885-86.854,86.854v55.709v414.754l0,0c0,0.002,0,0.004,0,0.008
+		c0-0.004,0-0.007,0-0.009l0,0V382.162V177.29v-19.926v-55.326C731.85,54.068,692.965,15.184,644.994,15.184z" />
+					<path class="bt1b" fill="#333333" d="M116.83,12.573c-47.969,0-86.854,38.885-86.854,86.854v55.709v414.754l0,0c0,0.002,0,0.004,0,0.008
 		c0,0.023,0.002,0.047,0.002,0.072c0.002,1.383,0.04,2.756,0.104,4.125c0,0.002,0,0.006,0,0.012
 		c0.023,0.467,0.063,0.926,0.092,1.387c0.004,0.051,0.01,0.102,0.012,0.152c0.057,0.869,0.115,1.738,0.198,2.598
 		c0,0.014,0.003,0.025,0.003,0.037c0.055,0.543,0.119,1.08,0.181,1.621c0.003,0.018,0.005,0.033,0.007,0.053
@@ -288,13 +296,13 @@
 		c0.115-0.818,0.219-1.648,0.313-2.479c0.035-0.297,0.065-0.594,0.103-0.891c0.027-0.242,0.058-0.484,0.082-0.73
 		c0-0.012,0.002-0.023,0.002-0.037c0.082-0.859,0.141-1.729,0.197-2.598c0.002-0.051,0.008-0.102,0.012-0.152
 		c0.029-0.461,0.07-0.92,0.092-1.387c0-0.006,0-0.01,0-0.012c0.064-1.369,0.102-2.742,0.104-4.125c0-0.025,0.003-0.049,0.003-0.072
-		c0-0.004,0-0.006,0-0.008l0,0v-56.062V154.752V99.426C203.685,51.458,164.8,12.573,116.83,12.573z"/>
-</g>
-                    <g>
-                        <path class="pt2b" fill="#333333" d="M1172.527,370.015c-18.562,0-35.746,5.841-49.859,15.757c-22.363,15.713-36.996,41.689-36.996,71.098
+		c0-0.004,0-0.006,0-0.008l0,0v-56.062V154.752V99.426C203.685,51.458,164.8,12.573,116.83,12.573z" />
+				</g>
+				<g>
+					<path class="pt2b" fill="#333333" d="M1172.527,370.015c-18.562,0-35.746,5.841-49.859,15.757c-22.363,15.713-36.996,41.689-36.996,71.098
 		c0,47.97,38.885,86.854,86.855,86.854c47.97,0,86.854-38.884,86.854-86.854c0-9.332-1.489-18.314-4.214-26.739
-		C1243.891,395.249,1211.164,370.015,1172.527,370.015z"/>
-                        <path class="bt3b" fill="#333333" d="M908.773,223.274c-47.971,0-86.855,38.883-86.855,86.854v55.712v414.747c0,0,0,0,0,0.004
+		C1243.891,395.249,1211.164,370.015,1172.527,370.015z" />
+					<path class="bt3b" fill="#333333" d="M908.773,223.274c-47.971,0-86.855,38.883-86.855,86.854v55.712v414.747c0,0,0,0,0,0.004
 		c0,0.002,0,0.006,0,0.006c0,1.414,0.04,2.818,0.107,4.213c0.022,0.465,0.063,0.924,0.091,1.385c0.06,0.934,0.125,1.865,0.212,2.787
 		c0.054,0.545,0.119,1.082,0.18,1.619c0.1,0.84,0.202,1.674,0.318,2.502c0.084,0.566,0.176,1.127,0.265,1.689
 		c0.133,0.799,0.273,1.596,0.43,2.387c0.106,0.563,0.221,1.127,0.339,1.682c0.17,0.793,0.354,1.574,0.543,2.357
@@ -329,8 +337,8 @@
 		c0.188-0.783,0.372-1.564,0.541-2.357c0.118-0.555,0.231-1.119,0.341-1.682c0.154-0.791,0.296-1.588,0.428-2.387
 		c0.09-0.563,0.182-1.123,0.264-1.689c0.118-0.828,0.221-1.662,0.314-2.502c0.064-0.537,0.133-1.074,0.186-1.619
 		c0.087-0.922,0.15-1.854,0.211-2.787c0.029-0.461,0.071-0.92,0.093-1.385c0.066-1.395,0.105-2.799,0.105-4.213c0,0,0-0.004,0-0.006
-		c0-0.004,0-0.004,0-0.004V365.455v-55.327C995.626,262.157,956.742,223.274,908.773,223.274z"/>
-                        <path class="bt4b" fill="#333333" d="M1436.304,223.274c-2.045,0-4.071,0.096-6.08,0.234c-0.478,0.033-0.952,0.068-1.426,0.109
+		c0-0.004,0-0.004,0-0.004V365.455v-55.327C995.626,262.157,956.742,223.274,908.773,223.274z" />
+					<path class="bt4b" fill="#333333" d="M1436.304,223.274c-2.045,0-4.071,0.096-6.08,0.234c-0.478,0.033-0.952,0.068-1.426,0.109
 		c-1.985,0.17-3.956,0.387-5.9,0.689c-0.152,0.023-0.302,0.057-0.452,0.08c-1.836,0.295-3.651,0.658-5.446,1.066
 		c-0.421,0.096-0.845,0.189-1.262,0.291c-1.901,0.463-3.782,0.973-5.63,1.559c-0.198,0.063-0.392,0.135-0.587,0.199
 		c-1.726,0.559-3.426,1.176-5.102,1.838c-0.323,0.127-0.647,0.252-0.968,0.383c-1.821,0.744-3.615,1.543-5.367,2.404
@@ -407,11 +415,11 @@
 		c0-0.012,0-0.023,0.003-0.035c0.082-0.861,0.138-1.73,0.197-2.6c0.003-0.053,0.007-0.1,0.011-0.152
 		c0.03-0.461,0.072-0.92,0.093-1.385c0-0.004,0-0.01,0-0.014c0.064-1.367,0.102-2.742,0.104-4.129c0-0.023,0.002-0.047,0.002-0.07
 		c0,0,0-0.004,0-0.006c0-0.004,0-0.004,0-0.004V611.25V406.376v-40.922v-55.327C1523.158,262.157,1484.273,223.274,1436.304,223.274
-		z"/>
-                    </g>
-                    <g>
-                        <circle class="pt3b" fill="#333333" cx="1700.081" cy="102.038" r="86.854"/>
-                        <path class="bt5b" fill="#333333" d="M1700.081,302.286c-47.97,0-86.854,38.885-86.854,86.854v161.542c0,0,0,0,0,0.002c0,0.003,0,0.008,0,0.008
+		z" />
+				</g>
+				<g>
+					<circle class="pt3b" fill="#333333" cx="1700.081" cy="102.038" r="86.854" />
+					<path class="bt5b" fill="#333333" d="M1700.081,302.286c-47.97,0-86.854,38.885-86.854,86.854v161.542c0,0,0,0,0,0.002c0,0.003,0,0.008,0,0.008
 		v0.094h0.002c0.004,1.381,0.041,2.752,0.104,4.119c0.025,0.463,0.064,0.923,0.092,1.385c0.063,0.934,0.126,1.863,0.213,2.787
 		c0.055,0.545,0.119,1.082,0.182,1.619c0.097,0.838,0.199,1.672,0.318,2.502c0.082,0.565,0.174,1.126,0.264,1.689
 		c0.132,0.799,0.273,1.595,0.429,2.387c0.108,0.563,0.222,1.126,0.339,1.682c0.17,0.792,0.354,1.574,0.545,2.356
@@ -446,115 +454,114 @@
 		c0.189-0.782,0.372-1.564,0.543-2.356c0.116-0.556,0.23-1.119,0.338-1.682c0.156-0.792,0.298-1.588,0.429-2.387
 		c0.091-0.563,0.182-1.124,0.265-1.689c0.118-0.83,0.223-1.664,0.316-2.502c0.063-0.537,0.132-1.074,0.184-1.619
 		c0.087-0.924,0.15-1.854,0.212-2.787c0.028-0.462,0.071-0.922,0.092-1.385c0.063-1.367,0.102-2.738,0.104-4.119h0.002v-0.094
-		c0,0,0-0.005,0-0.008c0-0.002,0-0.002,0-0.002V389.14C1786.936,341.17,1748.051,302.286,1700.081,302.286z"/>
-                    </g>
-                    <g>
-                        <path fill="#146f88" d="M303.205,1288.405v-193.498h-58.05c-20.25,0-35.55-14.851-35.55-35.101c0-19.8,15.3-34.649,35.55-34.649
+		c0,0,0-0.005,0-0.008c0-0.002,0-0.002,0-0.002V389.14C1786.936,341.17,1748.051,302.286,1700.081,302.286z" />
+				</g>
+				<g>
+					<path fill="#146f88" d="M303.205,1288.405v-193.498h-58.05c-20.25,0-35.55-14.851-35.55-35.101c0-19.8,15.3-34.649,35.55-34.649
 		h193.499c20.699,0,35.55,14.85,35.55,34.649c0,20.25-15.301,35.101-35.55,35.101h-58.05v193.498c0,22.5-16.65,39.15-38.7,39.15
-		S303.205,1310.905,303.205,1288.405z"/>
-                        <path fill="#146f88" d="M631.259,1128.207c0,20.699-13.5,34.649-35.55,37.799c-27.899,4.051-41.399,21.15-41.399,53.55v68.85
+		S303.205,1310.905,303.205,1288.405z" />
+					<path fill="#146f88"
+						d="M631.259,1128.207c0,20.699-13.5,34.649-35.55,37.799c-27.899,4.051-41.399,21.15-41.399,53.55v68.85
 		c0,22.5-16.65,39.15-38.7,39.15s-38.699-16.65-38.699-39.15v-157.499c0-22.5,16.199-39.149,37.8-39.149
-		c17.1,0,30.6,10.35,35.55,26.1c12.6-15.3,29.249-24.3,47.249-24.3C617.309,1093.557,631.259,1107.507,631.259,1128.207z"/>
-                        <path fill="#146f88" d="M888.659,1209.656c0,65.699-54,117.899-122.85,117.899c-68.849,0-122.398-51.75-122.398-117.899
+		c17.1,0,30.6,10.35,35.55,26.1c12.6-15.3,29.249-24.3,47.249-24.3C617.309,1093.557,631.259,1107.507,631.259,1128.207z" />
+					<path fill="#146f88" d="M888.659,1209.656c0,65.699-54,117.899-122.85,117.899c-68.849,0-122.398-51.75-122.398-117.899
 		s53.55-117.899,122.398-117.899C834.659,1091.757,888.659,1143.956,888.659,1209.656z M722.61,1209.656
 		c0,27.899,17.55,46.8,43.649,46.8c25.2,0,43.2-19.8,43.2-46.8s-18.45-46.8-43.2-46.8
-		C740.61,1162.856,722.61,1181.756,722.61,1209.656z"/>
-                        <path fill="#146f88" d="M1147.409,1129.106c0,5.4-1.35,11.25-4.949,18.45l-93.6,186.749c-26.55,52.649-54.899,74.249-98.1,74.249
+		C740.61,1162.856,722.61,1181.756,722.61,1209.656z" />
+					<path fill="#146f88" d="M1147.409,1129.106c0,5.4-1.35,11.25-4.949,18.45l-93.6,186.749c-26.55,52.649-54.899,74.249-98.1,74.249
 		c-12.6,0-23.399-2.25-31.05-6.75c-10.8-5.85-16.649-17.1-16.649-29.25c0-19.35,15.3-33.3,34.649-33.3h1.351
 		c17.55,0,28.8-5.399,36.899-22.949l6.3-13.95l-71.55-154.799c-3.6-7.2-4.949-13.05-4.949-18.45c0-20.25,17.1-37.35,37.35-37.35
 		c14.85,0,27.899,8.1,33.749,21.6l49.05,110.699l50.4-110.699c5.85-13.05,18.899-21.6,33.749-21.6
-		C1130.31,1091.757,1147.409,1108.856,1147.409,1129.106z"/>
-                        <path fill="#146f88" d="M1388.16,1198.406v0.899c0,22.05-17.1,37.351-40.5,37.351h-107.999c8.1,17.1,24.75,25.649,49.949,25.649
+		C1130.31,1091.757,1147.409,1108.856,1147.409,1129.106z" />
+					<path fill="#146f88" d="M1388.16,1198.406v0.899c0,22.05-17.1,37.351-40.5,37.351h-107.999c8.1,17.1,24.75,25.649,49.949,25.649
 		c12.601,0,27.45-2.7,39.15-7.65c5.399-2.25,9.449-3.6,13.949-3.6c17.101,0,30.601,13.05,30.601,30.149
 		c0,12.601-5.851,22.051-19.351,29.7c-19.35,10.8-42.749,16.65-67.049,16.65c-72.899,0-126.449-49.95-126.449-117.899
 		c0-67.05,50.85-117.899,118.349-117.899C1341.36,1091.757,1388.16,1137.206,1388.16,1198.406z M1236.961,1186.256h77.85
-		c-0.9-19.35-16.2-33.749-37.35-33.749C1257.661,1152.507,1242.812,1165.557,1236.961,1186.256z"/>
-                        <path fill="#146f88" d="M1421.008,1299.205c-7.649-6.3-11.699-14.85-11.699-24.3c0-17.1,13.949-31.05,31.5-31.05
+		c-0.9-19.35-16.2-33.749-37.35-33.749C1257.661,1152.507,1242.812,1165.557,1236.961,1186.256z" />
+					<path fill="#146f88" d="M1421.008,1299.205c-7.649-6.3-11.699-14.85-11.699-24.3c0-17.1,13.949-31.05,31.5-31.05
 		c6.3,0,12.6,1.801,20.699,7.65c11.7,8.1,27.45,14.85,43.649,14.85c10.801,0,19.801-2.25,19.801-9.899c0-5.4-4.5-7.65-13.051-11.25
 		l-25.199-10.351c-40.95-16.649-65.25-35.1-65.25-72.449c0-45,35.55-71.1,87.3-71.1c24.75,0,51.3,6.75,70.649,19.8
 		c9.45,6.3,14.85,16.2,14.85,26.55c0,17.55-13.949,31.5-31.05,31.5c-6.3,0-12.6-2.7-18-5.85c-11.699-6.75-23.399-10.8-35.999-10.8
 		c-9.9,0-15.75,2.25-15.75,8.55c0,5.85,4.95,8.1,15.3,12.149l22.5,9c40.05,16.2,65.699,32.85,65.699,70.649
-		c0,47.25-39.6,74.7-93.149,74.7C1471.408,1327.556,1442.158,1317.205,1421.008,1299.205z"/>
-                    </g>
-</svg>
-            </div>
-            <div style="width:25%; text-align: center; float: left; padding-top:20px">
-                <svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg"
-                     x="0px" y="0px"
-                     width="30%" height="30%" viewBox="0 0 376.481 277.486"
-                     enable-background="new 0 0 376.481 277.486"
-                     xml:space="preserve">
-<g>
-    <polygon class="l5" fill="#333333" points="327.643,164.671 351.643,141.759 351.643,45.489 327.643,22.42 	"/>
-</g>
-                    <g>
-                        <g>
-                            <polygon class="l3" fill="#333333"
-                                     points="176.062,164.671 200.063,141.759 200.063,113.252 176.062,89.252 		"/>
-                        </g>
-                        <g>
-                            <polygon class="l4" fill="#333333" points="239.852,85.278 176.062,22.42 176.062,55.311 239.912,119.161 279.643,79.428 279.643,141.759
-			303.643,164.671 303.643,22.42 		"/>
-                        </g>
-                    </g>
-                    <g>
-                        <g>
-                            <polygon class="l2" fill="#333333" points="88.272,85.278 72.507,69.743 72.507,103.454 88.272,119.219 128.062,79.428 128.062,141.759
-			152.062,164.671 152.062,22.42 		"/>
-                        </g>
-                        <g>
-                            <polygon class="l1" fill="#333333" points="48.507,46.093 36.494,34.256 24.482,22.42 24.482,46.093 24.482,46.094 24.482,79.454
-			24.482,79.454 24.507,79.428 24.507,141.759 36.494,153.202 48.507,164.671 48.507,79.454 48.507,79.454 48.507,46.094 		"/>
-                        </g>
-                    </g>
-                    <g>
-                        <path fill="#333333" d="M96.334,217.021v9.404H84.732v37.822h-9.521v-37.822H63.58v-9.404H96.334z"/>
-                        <path fill="#333333" d="M106.436,217.021h15.41c5.258,0,9.51,1.985,12.363,4.805c2.875,2.875,4.57,5.498,4.57,10.723v1.23
+		c0,47.25-39.6,74.7-93.149,74.7C1471.408,1327.556,1442.158,1317.205,1421.008,1299.205z" />
+				</g>
+			</svg>
+		</div>
+		<div style="width:25%; text-align: center; float: left; padding-top:20px">
+			<svg version="1.1" id="Calque_1" xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30%" height="30%"
+				viewBox="0 0 376.481 277.486" enable-background="new 0 0 376.481 277.486" xml:space="preserve">
+				<g>
+					<polygon class="l5" fill="#333333"
+						points="327.643,164.671 351.643,141.759 351.643,45.489 327.643,22.42 	" />
+				</g>
+				<g>
+					<g>
+						<polygon class="l3" fill="#333333"
+							points="176.062,164.671 200.063,141.759 200.063,113.252 176.062,89.252 		" />
+					</g>
+					<g>
+						<polygon class="l4" fill="#333333" points="239.852,85.278 176.062,22.42 176.062,55.311 239.912,119.161 279.643,79.428 279.643,141.759
+			303.643,164.671 303.643,22.42 		" />
+					</g>
+				</g>
+				<g>
+					<g>
+						<polygon class="l2" fill="#333333" points="88.272,85.278 72.507,69.743 72.507,103.454 88.272,119.219 128.062,79.428 128.062,141.759
+			152.062,164.671 152.062,22.42 		" />
+					</g>
+					<g>
+						<polygon class="l1" fill="#333333"
+							points="48.507,46.093 36.494,34.256 24.482,22.42 24.482,46.093 24.482,46.094 24.482,79.454
+			24.482,79.454 24.507,79.428 24.507,141.759 36.494,153.202 48.507,164.671 48.507,79.454 48.507,79.454 48.507,46.094 		" />
+					</g>
+				</g>
+				<g>
+					<path fill="#333333" d="M96.334,217.021v9.404H84.732v37.822h-9.521v-37.822H63.58v-9.404H96.334z" />
+					<path fill="#333333" d="M106.436,217.021h15.41c5.258,0,9.51,1.985,12.363,4.805c2.875,2.875,4.57,5.498,4.57,10.723v1.23
 		c0,3.184-0.996,6.182-2.988,8.994c-1.659,2.322-2.973,3.311-5.654,4.365l10.986,17.109h-11.602l-13.564-20.889v20.889h-9.492
 		L106.436,217.021z M128.994,232.842c0-1.719-0.625-3.232-1.875-4.541c-1.231-1.197-3.57-1.875-5.859-1.875h-5.332v13.037h3.662
-		v0.029h3.164C126.213,239.492,128.994,236.442,128.994,232.842z"/>
-                        <path fill="#333333" d="M190.336,223.701c4.707,4.707,7.061,10.361,7.061,16.963c0,6.621-2.354,12.266-7.061,16.934
+		v0.029h3.164C126.213,239.492,128.994,236.442,128.994,232.842z" />
+					<path fill="#333333" d="M190.336,223.701c4.707,4.707,7.061,10.361,7.061,16.963c0,6.621-2.354,12.266-7.061,16.934
 		c-4.688,4.648-10.332,6.973-16.934,6.973c-6.621-0.02-12.266-2.344-16.934-6.973c-4.688-4.688-7.031-10.332-7.031-16.934
 		c0-6.582,2.344-12.236,7.031-16.963c4.707-4.707,10.352-7.061,16.934-7.061S185.629,218.994,190.336,223.701z M163.236,230.439
 		c-2.813,2.852-4.219,6.24-4.219,10.166c0,3.965,1.406,7.354,4.219,10.166c2.793,2.793,6.182,4.189,10.166,4.189
 		c3.926,0,7.305-1.396,10.137-4.189s4.248-6.182,4.248-10.166c0-3.945-1.416-7.334-4.248-10.166
-		c-2.813-2.813-6.191-4.219-10.137-4.219C169.398,226.221,166.01,227.627,163.236,230.439z"/>
-                        <path fill="#333333" d="M210.574,217.021l8.613,16.377l8.613-16.377h10.752l-14.648,26.982v20.244h-9.434v-20.244l-14.619-26.982
-		H210.574z"/>
-                        <path fill="#333333"
-                              d="M277.131,216.904v9.463h-18.984v9.521h14.238v9.463h-14.238v9.521h18.984v9.434h-28.477v-47.402H277.131z"
-                        />
-                        <path fill="#333333" d="M300.393,254.951c2.622,0,5.516-2.177,5.516-4.799c0-4.312-5.787-4.913-9.053-6.044
+		c-2.813-2.813-6.191-4.219-10.137-4.219C169.398,226.221,166.01,227.627,163.236,230.439z" />
+					<path fill="#333333" d="M210.574,217.021l8.613,16.377l8.613-16.377h10.752l-14.648,26.982v20.244h-9.434v-20.244l-14.619-26.982
+		H210.574z" />
+					<path fill="#333333"
+						d="M277.131,216.904v9.463h-18.984v9.521h14.238v9.463h-14.238v9.521h18.984v9.434h-28.477v-47.402H277.131z" />
+					<path fill="#333333" d="M300.393,254.951c2.622,0,5.516-2.177,5.516-4.799c0-4.312-5.787-4.913-9.053-6.044
 		c-5.758-1.963-10.844-6.689-10.844-13.121c0-7.965,6.461-14.382,14.425-14.382c7.263,0,13.278,5.386,14.253,12.391l-9.426,1.991
 		c0-2.593-2.178-4.771-4.77-4.771c-2.637,0-4.813,2.178-4.813,4.799c0,4.254,5.386,5.386,8.666,6.36
 		c5.959,1.719,11.216,6.26,11.216,12.834c0,7.964-7.147,14.396-15.098,14.396c-7.305,0-13.908-5.357-14.982-12.39l9.425-2.006
-		c0,2.636,2.864,4.784,5.529,4.784L300.393,254.951z"/>
-                    </g>
-                    <g>
-                        <path fill="#333333" d="M307.607,300.992"/>
-                    </g>
-</svg>
-            </div>
+		c0,2.636,2.864,4.784,5.529,4.784L300.393,254.951z" />
+				</g>
+				<g>
+					<path fill="#333333" d="M307.607,300.992" />
+				</g>
+			</svg>
+		</div>
 
-        </section>
-        <section style="clear: both;">
-            <p style="text-align: right; font-size: 10px; color: darkgray">L'emploi du temps est actualisé toutes les 15
-                                                                           minutes. Dernière actualisation
-                                                                           à {{ 'now'|date('H:i') }} </p>
-        </section>
-        <!--Fin footer -->
-    </div>
-    <!-- /CONTENEUR 1080PX -->
+	</section>
+	<section style="clear: both; position: absolute; bottom:0; right:10px">
+		<p style="text-align: right; font-size: 10px; color: darkgray">L'emploi du temps est actualisé toutes les 10
+			minutes. Dernière actualisation
+			à {{ 'now'|date('H:i') }} </p>
+	</section>
+	<!--Fin footer -->
+</div>
+<!-- /CONTENEUR 1080PX -->
 {% endblock %}
 
 {% block javascripts %}
-    {% for path in encore_entry_js_files('borne') %}
-        <script src="{{ absolute_url(path) }}"></script>
-    {% endfor %}
+{% for path in encore_entry_js_files('borne') %}
+<script src="{{ absolute_url(path) }}"></script>
+{% endfor %}
 {% endblock %}
 
 {% block stylesheets %}
-    {% for path in encore_entry_css_files('borne') %}
-        <link rel="stylesheet" href="{{ absolute_url(path) }}">
-    {% endfor %}
+{% for path in encore_entry_css_files('borne') %}
+<link rel="stylesheet" href="{{ absolute_url(path) }}">
+{% endfor %}
 {% endblock %}
