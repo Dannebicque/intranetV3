@@ -85,11 +85,21 @@ class BorneController extends AbstractController
                     break;
             }
         }
+        $largeur = [
+            'TP' => 1,
+            'TD' => 2,
+            'CM' => 8
+        ];
+        $crenaux = ["0800", "0930", "1100", "1230", "1400", "1530", "1700", "1830", "1930"];
+
         $response = new Response();
         $response->headers->set('Access-Control-Allow-Origin', '*');
         $content = $this->renderView('borne/index2.html.twig', [
             'zones' => $zones,
             'tabHeures' => Constantes::TAB_HEURES_EDT_2,
+            'tabHeuresReversed' => Constantes::TAB_HEURES_EDT_LIGNE_2,
+            'largeur' => $largeur,
+            'crenaux' => $crenaux
         ]);
 
         $response->setContent($content);

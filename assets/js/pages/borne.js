@@ -7,17 +7,22 @@ import '@fortawesome/fontawesome-pro/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-pro/scss/solid.scss'
 import '../../css/borne.scss'
 
-require('bootstrap')
-
 window.addEventListener('load', () => { // le dom est chargé
-  initLocalClocks()
-  horloge()
+  initLocalClocks();
+  horloge();
+  setInterval(horloge, 1000);
+  autoRefresh(10);
 })
+
+function autoRefresh(minutes) {
+  const hms = new Date()
+  let timeout = minutes * 60000;
+  setTimeout("location.reload(true);", timeout); 
+}
 
 function horloge() {
   const hms = new Date()
-  let h; let
-    m
+  let h; let m;
   h = hms.getHours()
   m = hms.getMinutes()
   if (m < 10) {

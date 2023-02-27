@@ -12,166 +12,40 @@
 @import "./color.scss";
 @import "./_edt.scss";
 
-/* Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved */
-/* @file /Users/davidannebicque/htdocs/intranetV3/public/assets/bornes/css/style.css */
-/* @author davidannebicque */
-/* @project intranetV3 */
-/* @lastUpdate 01/10/2021 09:41 */
-
-/* CONTENEUR 1080px */
-html, body {
-  margin: 0 auto;
-  padding: 0;
-}
-
 #container {
-  margin: auto;
-  font-size:1rem
+  height: 1920px;
+  margin: 0;
+  overflow: hidden;
 }
 
-#container a {
-  text-decoration: none;
-}
-
-/* /CONTENEUR 1080px */
-
-/* DATE */
-#date {
-  display: flex;
-  justify-content: center;
-  text-align: center;
-  padding-left: 10px;
-  padding-right: 10px;
+.borne_date {
   background-color: #146f88;
-  height: 70px;
-  line-height: 70px;
   color: #fff;
-  font-size: 40px;
-  font-weight: 700;
-}
-
-.element:first-child {
-  flex: 1;
-}
-
-/* /DATE */
-
-/* HEADER SEMESTRE */
-.semestre {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin-top: 20px;
-  height: 91px;
-  color: #000;
+  font-size: 2.5em;
   font-weight: 700;
-  font-size: 21px;
+  height: 80px;
+  justify-content: space-between;
+  line-height: 70px;
   text-align: center;
-}
-
-.semestre > * {
-  flex: 13% 50%;
-}
-
-.picto {
-  height: 65px;
-  width: 65px;
 }
 
 .heure {
-  //display: flex;
-  //justify-content: center;
-  //align-items: center;
-  //margin-left: 10px;
-  height: 101px;
-  // border-radius: 5px;
-  width: 111px;
-  // margin-right: 21px;
+  background-color: lavender;
+  padding: 10px 20px;
+  height: 125px;
+  width: 145px;
+  border-bottom-right-radius: 15px;
 }
-
-.semestre-header {
-  margin-right: 10px;
-  height: 50px;
-  line-height: 50px;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  background-color: var(--colorIUT, #f7b000);
-  color: var(--colorIUTComplementaire, #4d3677);
-  font-size: 20px;
-  font-weight: bolder;
-  text-align: center;
-}
-
-.groupe {
-  display: flex;
-  height: 31px;
-  width: 938px;
-  border-radius: 5px;
-}
-
-/* /HEADER SEMESTRE */
-
-/* BANDEAU INFOS */
-.bandeau {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 220px;
-  width: 100%;
-}
-
-/* /BANDEAU INFOS */
-
-/* shadow */
-.shadow {
-  -moz-box-shadow: 3px 3px 5px 6px #ccc;
-  -webkit-box-shadow: 3px 3px 5px 6px #ccc;
-  box-shadow: 3px 3px 5px 6px #ccc;
-}
-
-/* COULEURS BANDEAU */
-.vertinfos {
-  background-color: #4caf50;
-}
-
-.orangeinfos {
-  background-color: #FF9800;
-}
-
-.rougeinfos {
-  background-color: #f44336;
-}
-
-.bleuinfos {
-  background-color: #03a9f4;
-}
-
-/* /COULEURS BANDEAU */
-
-/* Horloge */
 
 .clock {
-  margin: auto;
-  padding-top: 10px;
   border-radius: 50%;
   background: #fff url(ios_clock.svg) no-repeat center;
+  background-size: auto;
   background-size: 88%;
-  height: 6em;
+  height: 2.5em;
   position: relative;
-  width: 6em;
-}
-
-.clock.simple:after {
-  background: #000;
-  border-radius: 50%;
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  width: 5%;
-  height: 5%;
-  z-index: 10;
+  width: 2.5em;
 }
 
 .minutes-container, .hours-container, .seconds-container {
@@ -180,6 +54,18 @@ html, body {
   right: 0;
   bottom: 0;
   left: 0;
+}
+
+.hours-container {
+  animation: rotate 43200s infinite linear;
+}
+
+.minutes-container {
+  animation: rotate 3600s infinite steps(60);
+}
+
+.seconds-container {
+  animation: rotate 60s infinite steps(60);
 }
 
 .hours {
@@ -219,21 +105,177 @@ html, body {
   }
 }
 
-.hours-container {
-  animation: rotate 43200s infinite linear;
+.semestre-header {
+  background-color: var(--colorIUT,#f7b000);
+  border-radius: 10px;
+  color: var(--colorIUTComplementaire,#4d3677);
+  font-size: 20px;
+  font-weight: bolder;
+  height: 50px;
+  line-height: 50px;
+  margin: 60px 30px 20px 30px;
+  text-align: center;
 }
 
-.minutes-container {
-  animation: rotate 3600s infinite steps(60);
+.semestre_borne {
+  display: grid;
+  height: 960px;
+  width: 1070px;
+  margin: auto;
+  grid-template-rows: repeat(24, 1fr);
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
 }
 
-.seconds-container {
-  animation: rotate 60s infinite steps(60);
+.time-slot {
+  display:flex;
+  background-color: var(--colorIUTComplementaire, #4d3677);
+  margin: 2px;
+  border-radius: 8px 3px 3px 8px;
+  color: white;
+  text-align: center;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.03);
+
+  span {
+    margin:auto;
+    font-size: 0.8rem;
+    font-weight: bold;
+  }
 }
 
-.message_footer {
-  color: darkgray;
-  font-size: 10px;
+.track-slot{
+  text-align: center;
 }
 
+.col-edt-header {
+  background-color: var(--colorIUTComplementaire, #4d3677);
+  margin: 2px;
+  border-radius: 8px 8px 3px 3px;
+  color: white;
+  text-align: center;
+  box-shadow: 0 2px 3px rgba(0, 0, 0, 0.03);
 
+  div {
+    margin:auto;
+    font-size: 0.75rem;
+    font-weight: bold;
+  }
+}
+
+.dashed-lines-horizontal {
+  border-width: 2px;
+  border-style: dashed none;
+  border-color: gainsboro
+}
+
+.dashed-lines-horizontal-small {
+  border-width: 1px;
+  border-style: dashed none;
+  border-color: rgb(190, 190, 190);
+}
+
+.dashed-lines-vertical {
+  border-width: 2px;
+  border-left-style: dashed;
+  border-color: gainsboro;
+  margin-left: -1px;
+}
+
+.session {
+  box-shadow: 0 2px 3px rgba(0,0,0,.1);
+  color: white;
+  background-color: #399ab4;
+  margin: 4px;
+  border-radius: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-bottom: 0;
+
+  &.cm {
+    &.s1, &.s2 {
+      background-color: #167091;
+    }
+    
+    &.s3, &.s4 {
+      background-color: #6B1D85;
+    }
+
+    &.s5, &.s6 {
+      background-color: #B35F27;
+    }
+  }
+
+  &.td {
+    &.s1, &.s2 {
+      background-color: #32B4E3;
+    }
+    
+    &.s3, &.s4 {
+      background-color: #B732E3;
+    }
+
+    &.s5, &.s6 {
+      background-color: #E37932;
+    }
+  }
+
+  &.tp {
+    &.s1, &.s2 {
+      background-color: #6DCFF2;
+    }
+    
+    &.s3, &.s4 {
+      background-color: #CC78E8;
+    }
+
+    &.s5, &.s6 {
+      background-color: #E8A578;
+    }
+  }
+}
+
+.session-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  line-height: 1rem;
+  span {
+    padding: .175rem 0rem;
+  }
+}
+
+.session-title {
+  font-size: 0.9rem;
+  max-height: 36px;
+  display: -webkit-box;
+  -webkit-box-orient: vertical; 
+  -webkit-line-clamp: 2;
+  overflow: hidden;
+}
+
+.session-presenter {
+  font-size: .8rem;
+  max-height: 34px;
+  overflow: hidden;
+}
+
+.session-room {
+  font-weight: bold;
+}
+
+.bandeau {
+  position: absolute;
+  bottom: 200px;
+  height: 420px;
+  width:100%;
+  background-color: var(--colorIUT);
+}
+
+.borne-footer {
+  position: absolute;
+  bottom:30px;
+  width:100%;
+  text-align: center;
+}
