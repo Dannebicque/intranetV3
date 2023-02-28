@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.25](https://github.com/Dannebicque/intranetV3/compare/v3.11.24...v3.11.25) (2023-02-28)
+
+
+### Features
+
+* [Bornes] Refonte graphique ([af472da](https://github.com/Dannebicque/intranetV3/commit/af472da4bad7e6d9078ccaf9d3829a4d6b368b71))
+
+
+### Bug Fixes
+
+* [Bornes] Changement de semestre ([02f17cb](https://github.com/Dannebicque/intranetV3/commit/02f17cb04a9b5fe8f79f95f70195556913895286))
+* [EDT] Numéro de semestre dans les exports ([54c05f7](https://github.com/Dannebicque/intranetV3/commit/54c05f7bb0c59637ac61cc5c09824633abd59a51))
+
 ### [3.11.24](https://github.com/Dannebicque/intranetV3/compare/v3.11.23...v3.11.24) (2023-02-09)
 
 
