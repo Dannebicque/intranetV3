@@ -39,7 +39,7 @@
         <tbody>
         {% for pl in planning %}
             <tr style="height: 27px;">
-                <td>{{ pl.semestre != null ? pl.semestre.display : 'non.defini'|trans }}</td>
+                <td>S{{ pl.ordreSemestre }}</td>
                 <td>{{ matieres[pl.typeIdMatiere] is defined ? matieres[pl.typeIdMatiere].display : 'non.defini'|trans }}</td>
                 <td>{{ pl.date|date('d/m/Y') }}</td>
                 <td>{{ pl.debutTexte }}</td>
