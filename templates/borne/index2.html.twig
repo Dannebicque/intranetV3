@@ -30,11 +30,15 @@
 				{% set nbGroupes = zone.data.semestre.nbgroupeTPEDT %}
 				<!-- HEADER SEMESTRE -->
 				<div class="semestre-header">
-					<span>Semestre {{ zone.data.semestre.ordreLmd }}</span>
+					{% if zone.data.semestre.ordreLmd != 6 %}
+						<span> Semestre {{ zone.data.semestre.ordreLmd }}</span>
+					{% else %}
+						<span>{{zone.data.semestre.libelle}}</span> {# FIXME : temporaire, pour fix edt LP #}
+					{% endif %}
 				</div>
 
 				<section class="semestre_borne"
-					style="grid-template-columns: 60px repeat({{ nbGroupes }}, 1fr)"
+					style="grid-template-columns: 60px repeat({{ nbGroupes }}, 1fr); height: {% if zone|length >= 2 %} 720px {% else %} 960px {% endif %};" {# FIXME : temporaire, pour fix edt LP #}
 				>
 					{% for j in 1..nbGroupes %}
 						<div class="track-slot col-edt-header jour" style="grid-area: 1 / {{ j+1 }} / 2 / {{ j+2 }};">
