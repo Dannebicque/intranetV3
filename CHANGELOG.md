@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.22](https://github.com/Dannebicque/intranetV3/compare/v3.11.25...v3.11.22) (2023-03-02)
+
+
+### Features
+
+* [Quest] Relance individuelle ([5638e25](https://github.com/Dannebicque/intranetV3/commit/5638e2509e1a06a2c54201b745b24f3852d8bed6))
+
+
+### Bug Fixes
+
+* [Quest] Export Exterieur ([a5bca50](https://github.com/Dannebicque/intranetV3/commit/a5bca5047ed66e87bb13175f515dd2a46ec40b52))
+
 ### [3.11.21](https://github.com/Dannebicque/intranetV3/compare/v3.11.20...v3.11.21) (2023-01-29)
 
 
