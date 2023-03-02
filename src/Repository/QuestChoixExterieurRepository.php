@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/QuestChoixExterieurRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/01/2023 13:44
+ * @lastUpdate 02/03/2023 17:22
  */
 
 namespace App\Repository;
@@ -49,11 +49,14 @@ class QuestChoixExterieurRepository extends ServiceEntityRepository
 
     public function compteReponse(QuestQuestionnaire $questionnaire)
     {
-        return $this->createQueryBuilder('qcp')
-            ->select('COUNT(qcp.id) as nbre')
-            ->where('qcp.questionnaire = :questionnaire')
+        $qb = $this->createQueryBuilder('prov');
+
+        return $this->createQueryBuilder('q')
+            ->select($qb->expr()->countDistinct('q.email'))
+            ->innerJoin(QuestQuestionnaire::class, 'qq', 'WITH', 'q.questionnaire = qq.id')
+            ->where('qq.id = :questionnaire')
             ->setParameter('questionnaire', $questionnaire->getId())
             ->getQuery()
-            ->getSingleResult();
+            ->getSingleScalarResult();
     }
 }
