@@ -43,7 +43,10 @@
             {% endif %}
             <td>
                 {% if element.dateTermine == null %}
-                    <a href="{{ path('enquete_relance_individuelle',{questChoix:element.id}) }}" class="btn btn-warning
+                    <a href="{{ path('enquete_relance_individuelle',{idChoix:element.id, idQuestionniaire:
+                        questionnaire.id}) }}"
+                       class="btn
+                    btn-warning
                 btn-outline relanceIndividuelle">
                         Relancer
                     </a>

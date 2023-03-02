@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeDestinataire/Etudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/01/2023 14:58
+ * @lastUpdate 02/03/2023 14:52
  */
 
 namespace App\Components\Questionnaire\TypeDestinataire;
@@ -14,6 +14,8 @@ use App\Components\Questionnaire\DTO\ReponsesUser;
 use App\Components\Questionnaire\Interfaces\QuestChoixInterface;
 use App\Components\Questionnaire\Interfaces\TypeDestinataireInterface;
 use App\Entity\QuestChoixEtudiant;
+use App\Entity\QuestQuestionnaire;
+use App\Event\QualiteRelanceEvent;
 use App\Repository\EtudiantRepository;
 use App\Repository\QuestChoixEtudiantRepository;
 use App\Repository\QuestChoixRepository;
@@ -150,5 +152,21 @@ class Etudiant extends AbstractTypeDestinataire implements TypeDestinataireInter
     public function getAllReponses(): ReponsesUser
     {
         return $this->abstractGetAllReponses('etudiant');
+    }
+
+    public function sendRelanceIndividuelle(int $choix, QuestQuestionnaire $questionnaire)
+    {
+        $data = $this->questChoixEtudiantRepository->findOneBy(
+            [
+                'questionnaire' => $this->questionnaire,
+                'id' => $choix,
+            ]
+        );
+
+        if ($data !== null) {
+            $event = new QualiteRelanceEvent($this->questionnaire);
+            $event->setUser($data);
+            $this->eventDispatcher->dispatch($event, QualiteRelanceEvent::SEND_RELANCE);
+        }
     }
 }
