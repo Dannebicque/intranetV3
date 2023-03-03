@@ -38,7 +38,8 @@
 				</div>
 
 				<section class="semestre_borne"
-					style="grid-template-columns: 60px repeat({{ nbGroupes }}, 1fr); height: {% if zone|length >= 2 %} 720px {% else %} 960px {% endif %};" {# FIXME : temporaire, pour fix edt LP #}
+					style="grid-template-columns: 60px repeat({{ nbGroupes }}, 1fr); height: {% if zones|length >= 2
+					%} 720px {% else %} 960px {% endif %};" {# FIXME : temporaire, pour fix edt LP #}
 				>
 					{% for j in 1..nbGroupes %}
 						<div class="track-slot col-edt-header jour" style="grid-area: 1 / {{ j+1 }} / 2 / {{ j+2 }};">
@@ -48,7 +49,7 @@
 							<div class="dashed-lines-vertical" style="grid-area: 2 / {{ j+2 }} / 25 / {{ j+2 }}"></div>
 						{% endif %}
 					{% endfor %}
-					
+
 					<div class="time-slot" style="grid-area: 2 / 1 / 5 / 2;">
 						<span>8h00<br />-<br />9h30</span>
 					</div>
@@ -73,7 +74,7 @@
 					<div class="time-slot" style="grid-area: 23 / 1 / 25 / 2;">
 						<span>18h30<br />-<br />19h30</span>
 					</div>
-					
+
 					<div class="dashed-lines-horizontal" style="grid-area: 5 / 2 / 8 / {{ nbGroupes + 2 }} "></div>
 					<div class="dashed-lines-horizontal" style="grid-area: 11 / 2 / 14 / {{ nbGroupes + 2 }} "></div>
 					<div class="dashed-lines-horizontal" style="grid-area: 17 / 2 / 20 / {{ nbGroupes + 2 }} "></div>
@@ -92,7 +93,7 @@
 							{% if zone.data.planning[j][tabHeures[ligne][0]] is defined %}
 								{% set caseData = zone.data.planning[j][tabHeures[ligne][0]] %}
 								{% set horsCrenauxWarning = (caseData.gridStart not in crenaux) or (caseData.gridEnd not in crenaux) %}
-								<div class="session {{ caseData.type_cours|lower }} {{ zone.data.semestre.libelle|lower|slice(0, 2) }}" 
+								<div class="session {{ caseData.type_cours|lower }} {{ zone.data.semestre.libelle|lower|slice(0, 2) }}"
 									style="grid-area:
 									{{ tabHeuresReversed[caseData.gridStart] + 2 }} /
 									{{ j+1 }} /
