@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="schedule-individual" aria-labelledby="schedule-heading">
-                    {{ include('edt/_header_edt2.html.twig') }}
+                    {{ include('edt/_header_edt2.html.twig', {calendrier: edt}) }}
 
                     {% for ligne in 0..24 %}
                         <h2 class="time-slot" style="grid-row: time-{{ tabHeures[ligne][0] }};">{{ tabHeures[ligne][1] }}</h2>
