@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.28](https://github.com/Dannebicque/intranetV3/compare/v3.11.27...v3.11.28) (2023-03-03)
+
+
+### Bug Fixes
+
+* [Edt] Datess ([9423f31](https://github.com/Dannebicque/intranetV3/commit/9423f31da7a4e8eab9c1e52332b286d2010b9bd4))
+* [Edt] Matière au survol ([a35e938](https://github.com/Dannebicque/intranetV3/commit/a35e9381302ec02a6bd7510966a1ce425b611d77))
+
 ### [3.11.27](https://github.com/Dannebicque/intranetV3/compare/v3.11.25...v3.11.27) (2023-03-03)
 
 
