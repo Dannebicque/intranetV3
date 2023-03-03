@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/EvenementEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/12/2022 07:52
+ * @lastUpdate 03/03/2023 21:20
  */
 
 namespace App\DTO;
@@ -139,15 +139,36 @@ class EvenementEdt
             $inter = $this->personnelObjet->getNom();
         }
 
-        return $this->isEvaluation().'<br />'.$this->salle.'<br />'.$inter.'<br />'.$this->groupe;
+        return $this->isEvaluation() . '<br />' . $this->salle . '<br />' . $inter . '<br />' . $this->groupe;
     }
 
-    public function isEvaluation(): string
+    public function displayShortEdt(): string
+    {
+        if ('' === $this->personnel && null === $this->personnelObjet) {
+            $inter = '';
+        } elseif ('' !== $this->personnel) {
+            $inter = $this->personnel;
+        } else {
+            $inter = $this->personnelObjet->getNom();
+        }
+
+        return $this->isEvaluation(false) . '<br />' . $this->salle . '<br />' . $inter . '<br />' . $this->groupe;
+    }
+
+    public function isEvaluation(bool $long = true): string
     {
         if (null === $this->typeIdMatiere) {
             $matiere = $this->texte;
         } else {
-            $matiere = $this->matiere;
+            if ($long) {
+                $matiere = $this->matiere;
+            } else {
+                if ('' !== $this->code_matiere) {
+                    $matiere = $this->code_matiere;
+                } else {
+                    $matiere = 'Inconnue';
+                }
+            }
         }
 
         if (false === $this->evaluation) {
