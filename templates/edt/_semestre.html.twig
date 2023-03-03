@@ -58,7 +58,11 @@
                                             .nbgroupeTPEDT : edt[jour][ligne][groupe].largeur }}"
                                             rowspan="{{ edt[jour][ligne][groupe].duree }}"
                                         >
+                                            <span data-bs-toggle="tooltip"
+                                                  data-bs-placement="bottom"
+                                                  title="{{ edt[jour][ligne][groupe].matiere }}">
                                             {{ edt[jour][ligne][groupe].displayEdt|raw }}
+                                            </span>
                                         </td>
                                     {% endif %}
                                 {% else %}

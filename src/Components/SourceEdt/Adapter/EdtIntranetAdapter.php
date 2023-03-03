@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Adapter/EdtIntranetAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/09/2022 18:31
+ * @lastUpdate 03/03/2023 21:03
  */
 
 namespace App\Components\SourceEdt\Adapter;
@@ -34,7 +34,9 @@ class EdtIntranetAdapter extends AbstractEdtAdapter implements EdtAdapterInterfa
         $event = new EvenementEdt();
 
         if (array_key_exists($evt->getTypeIdMatiere(), $matieres)) {
+
             $matiere = $matieres[$evt->getTypeIdMatiere()];
+
             $event->matiere = $matiere->display;
             $event->code_matiere = $matiere->codeMatiere;
             $event->semestre = $matiere->getSemestres()->first();
