@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.29](https://github.com/Dannebicque/intranetV3/compare/v3.11.28...v3.11.29) (2023-03-06)
+
+
+### Bug Fixes
+
+* [Edt] Celcat ([f746d27](https://github.com/Dannebicque/intranetV3/commit/f746d2727790421e944d7ad077a0fe28ce06b993))
+* [Edt] Matière au survol ([3ac8258](https://github.com/Dannebicque/intranetV3/commit/3ac8258f97e27e279cbf571ce00b1f8e795de6fc))
+
 ### [3.11.28](https://github.com/Dannebicque/intranetV3/compare/v3.11.27...v3.11.28) (2023-03-03)
 
 
