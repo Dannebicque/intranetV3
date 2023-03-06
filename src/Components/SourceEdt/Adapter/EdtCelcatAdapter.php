@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Adapter/EdtCelcatAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/10/2022 15:33
+ * @lastUpdate 06/03/2023 20:30
  */
 
 namespace App\Components\SourceEdt\Adapter;
@@ -37,15 +37,17 @@ class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
         $evt->source = EdtManager::EDT_CELCAT;
         $evt->id = $event->getId();
 
-        $evt->jour = (string) ($event->getJour() + 1);
+        $evt->jour = (string)($event->getJour() + 1);
         $evt->heureDebut = $event->getDebut();
         $evt->indexDebut = Constantes::TAB_HEURES_EDT_LIGNE_2[$event->getDebut()->roundMinute(10)->format('Hi')];
         $evt->heureFin = $event->getFin();
         $evt->matiere = utf8_decode($event->getLibModule());
         $evt->typeIdMatiere = $event->getTypeIdMatiere();
-        if (array_key_exists($event->getTypeIdMatiere(), $matieres)) {
-            $matiere = $matieres[$event->getTypeIdMatiere()];
+
+        if (array_key_exists($evt->typeIdMatiere, $matieres)) {
+            $matiere = $matieres[$evt->typeIdMatiere];
             $evt->matiere = $matiere->display;
+            $evt->code_matiere = $matiere->codeMatiere;
         } else {
             $evt->matiere = 'Inconnue';
         }
