@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/ProfilEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/12/2022 21:30
+ * @lastUpdate 22/03/2023 14:46
  */
 
 namespace App\Controller;
@@ -44,6 +44,10 @@ class ProfilEtudiantController extends BaseController
     #[ParamConverter('etudiant', options: ['mapping' => ['slug' => 'slug']])]
     public function timeline(Etudiant $etudiant): Response
     {
+        if (!($this->isGranted('ROLE_PERMANENT') or $this->getUser()->getId() === $etudiant->getId())) {
+            throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');
+        }
+
         return $this->render('user/composants/_timeline.html.twig', [
             'etudiant' => $etudiant,
         ]);
@@ -53,6 +57,10 @@ class ProfilEtudiantController extends BaseController
     #[ParamConverter('etudiant', options: ['mapping' => ['slug' => 'slug']])]
     public function actions(DepartementRepository $departementRepository, Etudiant $etudiant): Response
     {
+        if (!($this->isGranted('ROLE_PERMANENT') or $this->getUser()->getId() === $etudiant->getId())) {
+            throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');
+        }
+
         return $this->render('user/composants/_actions_etudiant.html.twig', [
             'etudiant' => $etudiant,
             'departements' => $departementRepository->findActifs(),
@@ -63,6 +71,10 @@ class ProfilEtudiantController extends BaseController
     #[ParamConverter('etudiant', options: ['mapping' => ['slug' => 'slug']])]
     public function scolarite(ScolariteRepository $scolariteRepository, Etudiant $etudiant): Response
     {
+        if (!($this->isGranted('ROLE_PERMANENT') or $this->getUser()->getId() === $etudiant->getId())) {
+            throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');
+        }
+
         $scolarite = $scolariteRepository->findByEtudiant($etudiant);
 
         return $this->render('user/composants/_scolarite.html.twig', [
@@ -79,7 +91,12 @@ class ProfilEtudiantController extends BaseController
         ChartBuilderInterface $chartBuilder,
         EtudiantNotes $etudiantNotes,
         Etudiant $etudiant
-    ): Response {
+    ): Response
+    {
+        if (!($this->isGranted('ROLE_PERMANENT') or $this->getUser()->getId() === $etudiant->getId())) {
+            throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');
+        }
+
         //todo: mutualiser avec BlocNotesAbsencesController... (TwigComponent ?)
 
         if (null !== $etudiant->getSemestre()) {
@@ -147,7 +164,12 @@ class ProfilEtudiantController extends BaseController
         UeRepository $ueRepository,
         ScolariteRepository $scolariteRepository,
         TypeMatiereManager $typeMatiereManager
-    ): Response {
+    ): Response
+    {
+        if (!($this->isGranted('ROLE_PERMANENT') or $this->getUser()->getId() === $etudiant->getId())) {
+            throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');
+        }
+
         $idScolarite = $request->query->get('scolarite');
         $scolarite = $scolariteRepository->find($idScolarite);
 
@@ -191,7 +213,12 @@ class ProfilEtudiantController extends BaseController
         EtudiantAbsences $etudiantAbsences,
         EtudiantNotes $etudiantNotes,
         Etudiant $etudiant
-    ): Response {
+    ): Response
+    {
+        if (!($this->isGranted('ROLE_PERMANENT') or $this->getUser()->getId() === $etudiant->getId())) {
+            throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');
+        }
+
         $semestresPrecedents = $scolariteRepository->findByEtudiant($etudiant);
         $semestre = $etudiant->getSemestre();
         if (null !== $semestre) {
@@ -221,8 +248,7 @@ class ProfilEtudiantController extends BaseController
             ]);
         }
 
-        return $this->render('user/composants/_semestre_vide.html.twig', [
-        ]);
+        return $this->render('user/composants/_semestre_vide.html.twig');
     }
 
     /**
@@ -235,7 +261,12 @@ class ProfilEtudiantController extends BaseController
         EtudiantAbsences $etudiantAbsences,
         StatsAbsences $statsAbsences,
         Etudiant $etudiant
-    ): Response {
+    ): Response
+    {
+        if (!($this->isGranted('ROLE_PERMANENT') or $this->getUser()->getId() === $etudiant->getId())) {
+            throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');
+        }
+
         //todo: mutualiser avec BlocNotesAbsencesController... (TwigComponent ?)
         if (null !== $etudiant->getSemestre()) {
             Calendrier::calculPlanning($this->dataUserSession->getAnneeUniversitaire()->getAnnee(), 2,
@@ -244,7 +275,8 @@ class ProfilEtudiantController extends BaseController
             if ($etudiant->getDiplome()->isApc() === false) {
                 $matieres = $typeMatiereManager->findBySemestreArray($etudiant->getSemestre());
             } else {
-                $matieres = $typeMatiereManager->findByReferentielOrdreSemestreArray($etudiant->getSemestre(), $etudiant->getDiplome()->getReferentiel());
+                $matieres = $typeMatiereManager->findByReferentielOrdreSemestreArray($etudiant->getSemestre(),
+                    $etudiant->getDiplome()->getReferentiel());
             }
             $etudiantAbsences->setEtudiant($etudiant);
             $absences = $etudiantAbsences->getAbsencesParSemestresEtAnneeUniversitaire($matieres,
@@ -276,7 +308,12 @@ class ProfilEtudiantController extends BaseController
         StageEtudiantRepository $stageEtudiantRepository,
         AlternanceRepository $alternanceRepository,
         Etudiant $etudiant
-    ): Response {
+    ): Response
+    {
+        if (!($this->isGranted('ROLE_PERMANENT') or $this->getUser()->getId() === $etudiant->getId())) {
+            throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');
+        }
+
         return $this->render('user/composants/_stages.html.twig', [
             // todo: si l'étudiant n'est plus dans un semestre, garder l'historique uniquemenent. Dans ce cas l'historique ne doit pas dépendre d'une année ?
             'stagesEnCours' => $stageEtudiantRepository->findByEtudiantAnnee($etudiant,
@@ -294,6 +331,10 @@ class ProfilEtudiantController extends BaseController
     #[ParamConverter('etudiant', options: ['mapping' => ['slug' => 'slug']])]
     public function aPropos(Etudiant $etudiant): Response
     {
+        if (!($this->isGranted('ROLE_PERMANENT') or $this->getUser()->getId() === $etudiant->getId())) {
+            throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');
+        }
+
         return $this->render('user/composants/_apropos.html.twig', [
             'user' => $etudiant,
         ]);
@@ -306,6 +347,10 @@ class ProfilEtudiantController extends BaseController
     #[ParamConverter('etudiant', options: ['mapping' => ['slug' => 'slug']])]
     public function ajoutCommentaire(Request $request, Etudiant $etudiant): Response
     {
+        if (!($this->isGranted('ROLE_PERMANENT'))) {
+            throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');
+        }
+
         $datas = json_decode($request->getContent(), true, 512, JSON_THROW_ON_ERROR);
         $commentaire = new Commentaire($etudiant);
         $commentaire->setTexte($datas['commentaire']);
