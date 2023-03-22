@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/ProfilPersonnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:44
+ * @lastUpdate 22/03/2023 15:21
  */
 
 namespace App\Controller;
@@ -27,6 +27,10 @@ class ProfilPersonnelController extends BaseController
     #[ParamConverter('personnel', options: ['mapping' => ['slug' => 'slug']])]
     public function actions(Personnel $personnel): Response
     {
+        if (!($this->isGranted('ROLE_CDD') or $this->isGranted('ROLE_RP'))) {
+            throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');
+        }
+
         return $this->render('user/composants/actions_personnel.html.twig', [
             'personnel' => $personnel,
         ]);
@@ -36,6 +40,10 @@ class ProfilPersonnelController extends BaseController
     #[ParamConverter('personnel', options: ['mapping' => ['slug' => 'slug']])]
     public function about(Personnel $personnel): Response
     {
+        if (!($this->isGranted('ROLE_PERMANENT') or $this->getUser()->getId() === $personnel->getId())) {
+            throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');
+        }
+
         return $this->render('user/composants/_apropos.html.twig', [
             'user' => $personnel,
         ]);
@@ -45,6 +53,10 @@ class ProfilPersonnelController extends BaseController
     #[ParamConverter('personnel', options: ['mapping' => ['slug' => 'slug']])]
     public function previsionnel(PrevisionnelManager $myPrevisionnel, PrevisionnelSynthese $previsionnelSynthese, HrsManager $hrsManager, Personnel $personnel): Response
     {
+        if (!($this->isGranted('ROLE_PERMANENT') or $this->getUser()->getId() === $personnel->getId())) {
+            throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');
+        }
+
         $anneePrevisionnel = $this->dataUserSession->getAnneePrevisionnel();
         $previsionnels = $myPrevisionnel->getPrevisionnelEnseignantAnnee($personnel,
             $anneePrevisionnel);

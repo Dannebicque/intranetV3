@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/ProfilEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/03/2023 14:46
+ * @lastUpdate 22/03/2023 15:18
  */
 
 namespace App\Controller;
@@ -57,7 +57,7 @@ class ProfilEtudiantController extends BaseController
     #[ParamConverter('etudiant', options: ['mapping' => ['slug' => 'slug']])]
     public function actions(DepartementRepository $departementRepository, Etudiant $etudiant): Response
     {
-        if (!($this->isGranted('ROLE_PERMANENT') or $this->getUser()->getId() === $etudiant->getId())) {
+        if (!($this->isGranted('ROLE_PERMANENT'))) {
             throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');
         }
 
