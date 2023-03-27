@@ -424,7 +424,7 @@ adm:
       modification.heading: 'Modification d''une année'
       new.heading: 'Création d''une année'
       show.heading: 'Détails d''une année'
-    departement: 'Structure du département (maquette)'
+    departement: 'Structure du département - Maquette'
     departement.modification.heading: 'Modification de la structure du département'
     departement.new.heading: 'Création d''un département'
     departement.show.heading: 'Détails de la structure du département'

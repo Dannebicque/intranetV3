@@ -1,26 +1,31 @@
-<div class="col-md-4 col-lg-4 col-sm-12">
-    <div class="card">
+<div class="col-md-6 col-lg-6 col-sm-12">
+    <div class="card administration">
         <header class="card-header">
+            <i class="fa-solid fa-edit fa-2x"></i>
             <h2 class="card-title">{{ 'adm.articles'|trans }}</h2>
-            <div class="card-header-actions" style="">
-                <a href="{{ path('administration_article_new') }}" class="btn btn-sm btn-info"
-                   title="Ajouter un article" data-bs-toggle="tooltip" data-bs-placement="bottom">
-                    <i class="fas fa-plus"></i><span
-                            class="sr-only">Publier un article</span></a>
-            </div>
+{#            <div class="card-header-actions" style="">#}
+{#                <a href="{{ path('administration_article_new') }}" class="btn btn-sm btn-info"#}
+{#                   title="Ajouter un article" data-bs-toggle="tooltip" data-bs-placement="bottom">#}
+{#                    <i class="fas fa-plus"></i><span#}
+{#                            class="sr-only">Publier un article</span></a>#}
+{#            </div>#}
         </header>
         <div class="card-body">
             <div class="row">
                 <div class="col-12 d-grid d-block mb-2">
-                    <a href="{{ path('administration_article_index') }}"
-                       class="btn btn-primary"> {{ 'adm.gerer.articles'|trans }}
-                    </a>
+                    <a href="{{ path('administration_article_index') }}">Gestion des articles</a>
+                    <a href="{{ path('administration_article_categories') }}">Gestion des catégories d'articles</a>
+                    <a href="{{ path('administration_article_new') }}">Créer un article</a>
+
+{#                    <a href="{{ path('administration_article_index') }}"#}
+{#                       class="btn btn-primary"> {{ 'adm.gerer.articles'|trans }}#}
+{#                    </a>#}
                 </div>
-                <div class="col-12 d-grid d-block mb-2">
-                    <a href="{{ path('administration_article_categories') }}"
-                       class="btn btn-primary"> {{ 'adm.gerer.les.categories.articles'|trans }}
-                    </a>
-                </div>
+{#                <div class="col-12 d-grid d-block mb-2">#}
+{#                    <a href="{{ path('administration_article_categories') }}"#}
+{#                       class="btn btn-primary"> {{ 'adm.gerer.les.categories.articles'|trans }}#}
+{#                    </a>#}
+{#                </div>#}
             </div>
         </div>
     </div>
