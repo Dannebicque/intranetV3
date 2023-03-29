@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.32](https://github.com/Dannebicque/intranetV3/compare/v3.11.31...v3.11.32) (2023-03-29)
+
+
+### Bug Fixes
+
+* acces ([b9296a8](https://github.com/Dannebicque/intranetV3/commit/b9296a8b6977840fb56240bb3caa8852a2f917be))
+* acces ([3c78b65](https://github.com/Dannebicque/intranetV3/commit/3c78b651c7adae99fb665dad478fc25515586cc1))
+* Gestion des groupes de S4 ([9ff6c3c](https://github.com/Dannebicque/intranetV3/commit/9ff6c3c9f072b8eeb7fdb80b7f077bd53646781f))
+
 ### [3.11.31](https://github.com/Dannebicque/intranetV3/compare/v3.11.30...v3.11.31) (2023-03-22)
 
 ### [3.11.30](https://github.com/Dannebicque/intranetV3/compare/v3.11.29...v3.11.30) (2023-03-22)
