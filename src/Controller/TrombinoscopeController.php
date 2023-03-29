@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/TrombinoscopeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/11/2022 08:24
+ * @lastUpdate 29/03/2023 06:53
  */
 
 namespace App\Controller;
@@ -27,11 +27,13 @@ use PhpOffice\PhpSpreadsheet\Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
 #[Route('/trombinoscope')]
+
 class TrombinoscopeController extends BaseController
 {
     #[Route('/', name: 'trombinoscope_index')]
@@ -60,6 +62,7 @@ class TrombinoscopeController extends BaseController
      * @throws SyntaxError
      */
     #[Route(path: '/etudiant/export/{typeGroupe<\d+>}.{_format}', name: 'trombinoscope_etudiant_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
+    #[IsGranted('ROLE_PERMANENT')]
     public function trombiEtudiantExport(MyExportListing $myExportListing, TypeGroupe $typeGroupe, string $_format): Response
     {
         return $myExportListing->genereFichier(
@@ -77,6 +80,7 @@ class TrombinoscopeController extends BaseController
      * @throws SyntaxError
      */
     #[Route(path: '/etudiant/export-groupe/{groupe<\d+>}.{_format}', name: 'trombinoscope_etudiant_export_groupe', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
+    #[IsGranted('ROLE_PERMANENT')]
     public function trombiEtudiantExportGroupe(MyExportListing $myExportListing, Groupe $groupe, string $_format): Response
     {
         return $myExportListing->genereFichier(
@@ -93,6 +97,7 @@ class TrombinoscopeController extends BaseController
      * @throws RuntimeError
      */
     #[Route(path: '/etudiant/export-image/{typeGroupe<\d+>}.pdf', name: 'trombinoscope_etudiant_image', methods: 'GET')]
+    #[IsGranted('ROLE_PERMANENT')]
     public function trombiEtudiantExportImage(MyPDF $myPDF, TypeGroupe $typeGroupe): PdfResponse
     {
         return $myPDF::generePdf('pdf/trombinoscope.html.twig',
@@ -180,6 +185,7 @@ class TrombinoscopeController extends BaseController
      * @throws \JsonException
      */
     #[Route(path: '/{type}.{_format}', name: 'trombinoscope_personnel_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
+    #[IsGranted('ROLE_PERMANENT')]
     public function trombiPersonnelExport(
         MySerializer $mySerializer,
         MyExport $myExport,

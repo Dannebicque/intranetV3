@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/api/PersonnelApiController.php
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/api/PersonnelApiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/07/2021 17:05
+ * @lastUpdate 29/03/2023 06:51
  */
 
 namespace App\Controller\api;
@@ -38,6 +38,8 @@ class PersonnelApiController extends BaseController
     #[Route(path: '/enseignants/{type}', name: 'api_enseignants_type', options: ['expose' => true])]
     public function getEnseignantsByType($type): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_PERMANENT');
+
         $personnels = $this->personnelRepository->findByType(
             $type,
             $this->getDepartement()
@@ -88,6 +90,8 @@ class PersonnelApiController extends BaseController
     #[Route(path: '/personnel/recherche/{needle}', name: 'api_personnel_recherche', options: ['expose' => true])]
     public function searchPersonnel(SerializerInterface $serialize, $needle): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_PERMANENT');
+
         $result = $this->personnelRepository->search($needle);
         $pers = [];
         foreach ($result as $p) {

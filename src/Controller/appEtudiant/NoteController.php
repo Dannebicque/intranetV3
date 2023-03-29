@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/appEtudiant/NoteController.php
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/NoteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/05/2021 19:58
+ * @lastUpdate 29/03/2023 06:51
  */
 
 namespace App\Controller\appEtudiant;
@@ -31,6 +31,10 @@ class NoteController extends BaseController
     #[Route(path: '/details/{id}', name: 'app_etudiant_note_detail')]
     public function details(TypeMatiereManager $typeMatiereManager, MyEvaluation $myEvaluation, Note $note): Response
     {
+        if (!($this->isGranted('ROLE_PERMANENT') or $this->getUser()->getId() === $note->getEtudiant()->getId())) {
+            throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');
+        }
+
         if (null === $note->getEvaluation()) {
             throw new EvaluationNotFoundException();
         }
