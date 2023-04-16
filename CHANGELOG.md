@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.33](https://github.com/Dannebicque/intranetV3/compare/v3.11.32...v3.11.33) (2023-04-16)
+
+
+### Features
+
+* API pour Unifolio ([8c99150](https://github.com/Dannebicque/intranetV3/commit/8c99150346e9f8b12d678a1a23e9b574537147f9))
+
 ### [3.11.32](https://github.com/Dannebicque/intranetV3/compare/v3.11.31...v3.11.32) (2023-03-29)
 
 
