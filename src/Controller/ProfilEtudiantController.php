@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/ProfilEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/03/2023 15:18
+ * @lastUpdate 17/04/2023 08:09
  */
 
 namespace App\Controller;
@@ -91,8 +91,7 @@ class ProfilEtudiantController extends BaseController
         ChartBuilderInterface $chartBuilder,
         EtudiantNotes $etudiantNotes,
         Etudiant $etudiant
-    ): Response
-    {
+    ): Response {
         if (!($this->isGranted('ROLE_PERMANENT') or $this->getUser()->getId() === $etudiant->getId())) {
             throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');
         }
@@ -164,40 +163,47 @@ class ProfilEtudiantController extends BaseController
         UeRepository $ueRepository,
         ScolariteRepository $scolariteRepository,
         TypeMatiereManager $typeMatiereManager
-    ): Response
-    {
-        if (!($this->isGranted('ROLE_PERMANENT') or $this->getUser()->getId() === $etudiant->getId())) {
-            throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');
-        }
-
+    ): Response {
         $idScolarite = $request->query->get('scolarite');
         $scolarite = $scolariteRepository->find($idScolarite);
 
-        if (null !== $scolarite && null !== $scolarite->getEtudiant()) {
-            $semestre = $scolarite->getSemestre();
-            if (null !== $semestre) {
-                $ues = $ueRepository->findBySemestre($semestre);
-
-                $etudiant = $scolarite->getEtudiant();
-                $matieres = $typeMatiereManager->findBySemestreArray($semestre);
-                $coefficients = [];
-                foreach ($matieres as $matiere) {
-                    $coefficients[$matiere->codeElement] = [];
-                    foreach ($matiere->tab_ues as $ue) {
-                        $coefficients[$matiere->codeElement][$ue->ue_id] = $ue->ue_coefficient;
-                    }
-                }
-
-                return $this->render('user/composants/_notes_apc_old_semestre.html.twig', [
-                    'etudiant' => $etudiant,
-                    'semestre' => $semestre,
-                    'matieres' => $matieres,
-                    'scolarite' => $scolarite,
-                    'coefficients' => $coefficients,
-                    'ues' => $ues,
-                ]);
-            }
+        if (null === $scolarite) {
+            throw $this->createNotFoundException('Scolarité non trouvée');
         }
+
+        $etudiant = $scolarite->getEtudiant();
+
+        if ($etudiant === null) {
+            throw $this->createNotFoundException('Etudiant non trouvé');
+        }
+
+        if (!($this->isGranted('ROLE_PERMANENT') or $this->getUser()->getId() === $etudiant->getId())) {
+            throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');
+        }
+        $semestre = $scolarite->getSemestre();
+        if (null !== $semestre) {
+            $ues = $ueRepository->findBySemestre($semestre);
+
+            $etudiant = $scolarite->getEtudiant();
+            $matieres = $typeMatiereManager->findBySemestreArray($semestre);
+            $coefficients = [];
+            foreach ($matieres as $matiere) {
+                $coefficients[$matiere->codeElement] = [];
+                foreach ($matiere->tab_ues as $ue) {
+                    $coefficients[$matiere->codeElement][$ue->ue_id] = $ue->ue_coefficient;
+                }
+            }
+
+            return $this->render('user/composants/_notes_apc_old_semestre.html.twig', [
+                'etudiant' => $etudiant,
+                'semestre' => $semestre,
+                'matieres' => $matieres,
+                'scolarite' => $scolarite,
+                'coefficients' => $coefficients,
+                'ues' => $ues,
+            ]);
+        }
+
 
         return $this->render('user/composants/_semestre_vide.html.twig');
     }
@@ -213,8 +219,7 @@ class ProfilEtudiantController extends BaseController
         EtudiantAbsences $etudiantAbsences,
         EtudiantNotes $etudiantNotes,
         Etudiant $etudiant
-    ): Response
-    {
+    ): Response {
         if (!($this->isGranted('ROLE_PERMANENT') or $this->getUser()->getId() === $etudiant->getId())) {
             throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');
         }
@@ -261,8 +266,7 @@ class ProfilEtudiantController extends BaseController
         EtudiantAbsences $etudiantAbsences,
         StatsAbsences $statsAbsences,
         Etudiant $etudiant
-    ): Response
-    {
+    ): Response {
         if (!($this->isGranted('ROLE_PERMANENT') or $this->getUser()->getId() === $etudiant->getId())) {
             throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');
         }
@@ -308,8 +312,7 @@ class ProfilEtudiantController extends BaseController
         StageEtudiantRepository $stageEtudiantRepository,
         AlternanceRepository $alternanceRepository,
         Etudiant $etudiant
-    ): Response
-    {
+    ): Response {
         if (!($this->isGranted('ROLE_PERMANENT') or $this->getUser()->getId() === $etudiant->getId())) {
             throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');
         }

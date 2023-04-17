@@ -45,6 +45,7 @@ parameters:
   iconPrevi: '%env(resolve:ICON_PREVI)%' #fas fa-clock'
   iconApogee: '%env(resolve:ICON_APOGEE)%' #fas fa-chart-pie'
   iconCompta: '%env(resolve:ICON_COMPTA)%' #fas fa-comments-dollar'
+  api_key: '%env(resolve:API_KEY)%'
 
 
 services:

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/10/2022 17:45
+ * @lastUpdate 28/03/2023 13:24
  */
 
 namespace App\Controller\administration;
@@ -22,7 +22,6 @@ use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use App\Repository\TypeGroupeRepository;
 use App\Utils\Tools;
-use function array_key_exists;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
@@ -31,6 +30,7 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 use ZipArchive;
+use function array_key_exists;
 
 /**
  * Class EdtController.
@@ -165,24 +165,30 @@ class EdtExportController extends BaseController
                 }
                 if (0 !== $p->getIdMatiere() && 'H018' === $p->getSalle()) { // array_key_exists($p->getIntervenant()->getNumeroHarpege(), $tabProf))
                     $codeMatiere = $matieres[$p->getTypeIdMatiere()]->codeElement;
-                    $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= 'call  ajouterh018 '.$p->getJour().' '.Constantes::TAB_HEURES[$p->getDebut()].' '.Constantes::TAB_HEURES[$p->getFin()].' '.$codeprof.' 0 '.$codeMatiere.' '.$tabType[mb_strtoupper($p->getType())]."\n";
+                    $code[mb_strtoupper($p->getType())][$p->getGroupe()] .= 'call  ajouterh018 ' . $p->getJour() . ' ' . Constantes::TAB_HEURES[$p->getDebut()] . ' ' . Constantes::TAB_HEURES[$p->getFin()] . ' ' . $codeprof . ' 0 ' . $codeMatiere . ' ' . $tabType[mb_strtoupper($p->getType())] . "\n";
                 }
             }
             $codeComplet = '';
             $zip = new ZipArchive();
-            $zipName = $kernel->getProjectDir().'/public/upload/temp/ajouter_S'.$calendrier->getSemaineReelle().'_'.$semestre->getLibelle().'.zip';
+            $zipName = $kernel->getProjectDir() . '/public/upload/temp/ajouter_S' . $calendrier->getSemaineReelle() . '_' . $semestre->getLibelle() . '.zip';
             @unlink($zipName);
             $zip->open($zipName, ZipArchive::CREATE);
-            $i = 0;
+            if ($semestre->getOrdreLmd() === 4) {
+                $i = 6;
+            } else {
+                $i = 0;
+            }
+
             foreach ($code as $type => $value) {
                 foreach ($value as $groupe => $c) {
-                    $codeComplet .= 'call groupe '.$i."\n";
+                    $codeComplet .= 'call groupe ' . $i . "\n";
 
-                    $n = Tools::slug($semestre->getLibelle()).'_S'.$calendrier->getSemaineReelle().'_'.$type.'_'.str_replace(' ', '_',$codeGroupe[$type.'_'.$groupe]).'.bat';
+                    $n = Tools::slug($semestre->getLibelle()) . '_S' . $calendrier->getSemaineReelle() . '_' . $type . '_' . str_replace(' ',
+                            '_', $codeGroupe[$type . '_' . $groupe]) . '.bat';
 
                     $zip->addFromString($n, $c);
-                    $codeComplet .= 'call '.$n." \n";
-                    $codeComplet .= 'call fingroupe '."\n";
+                    $codeComplet .= 'call ' . $n . " \n";
+                    $codeComplet .= 'call fingroupe ' . "\n";
                     ++$i;
                 }
             }

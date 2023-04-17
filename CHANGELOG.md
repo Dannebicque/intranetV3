@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.34](https://github.com/Dannebicque/intranetV3/compare/v3.11.33...v3.11.34) (2023-04-17)
+
+
+### Bug Fixes
+
+* profil etudiants anciens semestres ([96cfb27](https://github.com/Dannebicque/intranetV3/commit/96cfb275c59862d43c55ddc790c681480a4e29fb))
+* typo ([87c6b4b](https://github.com/Dannebicque/intranetV3/commit/87c6b4b5f97f390cca579320d0a53b69b10dfb2c))
+
+### [3.11.33](https://github.com/Dannebicque/intranetV3/compare/v3.11.32...v3.11.33) (2023-04-16)
+
+
+### Features
+
+* API pour Unifolio ([8c99150](https://github.com/Dannebicque/intranetV3/commit/8c99150346e9f8b12d678a1a23e9b574537147f9))
+
+### [3.11.32](https://github.com/Dannebicque/intranetV3/compare/v3.11.31...v3.11.32) (2023-03-29)
+
+
+### Bug Fixes
+
+* acces ([b9296a8](https://github.com/Dannebicque/intranetV3/commit/b9296a8b6977840fb56240bb3caa8852a2f917be))
+* acces ([3c78b65](https://github.com/Dannebicque/intranetV3/commit/3c78b651c7adae99fb665dad478fc25515586cc1))
+* Gestion des groupes de S4 ([9ff6c3c](https://github.com/Dannebicque/intranetV3/commit/9ff6c3c9f072b8eeb7fdb80b7f077bd53646781f))
+
 ### [3.11.31](https://github.com/Dannebicque/intranetV3/compare/v3.11.30...v3.11.31) (2023-03-22)
 
 ### [3.11.30](https://github.com/Dannebicque/intranetV3/compare/v3.11.29...v3.11.30) (2023-03-22)
