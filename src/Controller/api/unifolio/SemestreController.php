@@ -10,28 +10,29 @@
 namespace App\Controller\api\unifolio;
 
 use App\Controller\BaseController;
-use App\Entity\Diplome;
+use App\Entity\Annee;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class SemestreController extends BaseController
 {
-    #[Route(path: '/api/unifolio/semestre/liste/{diplome}', name: 'api_semestre_liste')]
+    #[Route(path: '/api/unifolio/semestre/liste/{annee}', name: 'api_semestre_liste')]
     public function listeSemestre(
         Request $request,
-        Diplome $diplome
+        Annee $annee
     ) {
-        $this->checkAccessApi($request);
+        //TODO: décommenter ça quand lien avec Unifolio OK
+//        $this->checkAccessApi($request);
 
         $tabSemestre = [];
 
-        foreach ($diplome->getSemestres() as $semestre) {
+        foreach ($annee->getSemestres() as $semestre) {
             $tabSemestre[$semestre->getId()] = [
                 'id' => $semestre->getId(),
                 'libelle' => $semestre->getLibelle(),
                 'numero' => $semestre->getOrdreLmd(),
                 'code' => $semestre->getCodeElement(),
-                'diplome' => $semestre->getDiplome()->getId(),
+                'diplome' => $semestre->getAnnee()->getId(),
             ];
         }
 

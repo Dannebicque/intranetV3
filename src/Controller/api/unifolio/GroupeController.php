@@ -17,11 +17,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class GroupeController extends BaseController
 {
     #[Route(path: '/api/unifolio/groupes/liste/{semestre}', name: 'api_groupes_liste')]
-    public function listeSemestre(
+    public function listeGroupes(
         Request $request,
         Semestre $semestre
     ) {
-        $this->checkAccessApi($request);
+        //TODO: décommenter ça quand lien avec Unifolio OK
+//        $this->checkAccessApi($request);
 
         $groupes = [];
 
@@ -29,7 +30,7 @@ class GroupeController extends BaseController
             $groupes[$typeGroupess->getId()] = [
                 'id' => $typeGroupess->getId(),
                 'libelle' => $typeGroupess->getLibelle(),
-                'type' => $typeGroupess->getType(),
+                'ordre_semestre' => $typeGroupess->getOrdreSemestre(),
             ];
 
             foreach ($typeGroupess->getGroupes() as $groupe) {
@@ -37,6 +38,7 @@ class GroupeController extends BaseController
                     'id' => $groupe->getId(),
                     'libelle' => $groupe->getLibelle(),
                     'code' => $groupe->getCodeApogee(),
+                    'ordre' => $groupe->getOrdre(),
                 ];
             }
         }
