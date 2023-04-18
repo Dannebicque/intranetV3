@@ -12,7 +12,7 @@ class EtudiantController extends BaseController
     #[Route(path: '/api/unifolio/etudiant/liste/{groupe}', name: 'api_etudiant_liste')]
     public function listeEtudiant(
         Request $request,
-        Groupe $groupe
+        Groupe  $groupe
     )
     {
         //TODO: décommenter ça quand lien avec Unifolio OK
@@ -27,7 +27,11 @@ class EtudiantController extends BaseController
                 'prenom' => $etudiant->getPrenom(),
                 'mail_perso' => $etudiant->getMailPerso(),
                 'mail_univ' => $etudiant->getMailUniv(),
-                'groupe' => $etudiant->getGroupe()->getId(),
+                //Pour chaque étudiant, on récupère les id des groupes auxquels il appartient
+                'groupes' => $etudiant->getGroupes()->map(function ($groupe) {
+                    return $groupe->getId();
+                })->toArray()
+
             ];
         }
 
