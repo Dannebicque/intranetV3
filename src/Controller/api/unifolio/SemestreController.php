@@ -21,8 +21,8 @@ class SemestreController extends BaseController
         Request $request,
         Annee $annee
     ) {
-        //TODO: décommenter ça quand lien avec Unifolio OK
-//        $this->checkAccessApi($request);
+
+        $this->checkAccessApi($request);
 
         $tabSemestre = [];
 

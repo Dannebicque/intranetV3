@@ -21,8 +21,7 @@ class CompetenceController extends BaseController
         Request $request,
         Diplome $diplome
     ) {
-        //TODO: décommenter ça quand lien avec Unifolio OK
-//        $this->checkAccessApi($request);
+        $this->checkAccessApi($request);
 
         $competences = [];
         $referentiel = $diplome->getReferentiel();

@@ -12,11 +12,10 @@ class AnneeController extends BaseController
     #[Route(path: '/api/unifolio/annee/liste/{diplome}', name: 'api_annee_liste')]
     public function listeAnnee(
         Request $request,
-        Diplome $diplome
+        Diplome $diplome,
     )
     {
-        //TODO: décommenter ça quand lien avec Unifolio OK
-//        $this->checkAccessApi($request);
+        $this->checkAccessApi($request);
 
         $tabAnnee = [];
 

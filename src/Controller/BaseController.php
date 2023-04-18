@@ -21,6 +21,7 @@ use DavidAnnebicque\TableBundle\DTO\Table;
 use DavidAnnebicque\TableBundle\TableFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Translation\TranslatableMessage;
 use Symfony\Contracts\Service\Attribute\Required;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -156,5 +157,16 @@ class BaseController extends AbstractController
         }
 
         return false;
+    }
+
+    protected function checkAccessApi(Request $request)
+    {
+        if (!$request->headers->has('x-api-key')) {
+            throw $this->createAccessDeniedException('Accès non autorisé');
+        }
+
+        if ($request->headers->get('x-api-key') !== $this->getParameter('api_key')) {
+            throw $this->createAccessDeniedException('Accès non autorisé');
+        }
     }
 }

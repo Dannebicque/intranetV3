@@ -15,8 +15,7 @@ class AnneeUniversitaireController extends BaseController
         AnneeUniversitaire $anneeUniversitaire
     )
     {
-        //TODO: décommenter ça quand lien avec Unifolio OK
-//        $this->checkAccessApi($request);
+        $this->checkAccessApi($request);
 
         $tabAnneeUniversitaire = [];
 

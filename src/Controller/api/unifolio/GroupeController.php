@@ -21,8 +21,7 @@ class GroupeController extends BaseController
         Request $request,
         Semestre $semestre
     ) {
-        //TODO: décommenter ça quand lien avec Unifolio OK
-//        $this->checkAccessApi($request);
+        $this->checkAccessApi($request);
 
         $groupes = [];
 

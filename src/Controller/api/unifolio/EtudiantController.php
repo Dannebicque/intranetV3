@@ -15,8 +15,7 @@ class EtudiantController extends BaseController
         Groupe  $groupe
     )
     {
-        //TODO: décommenter ça quand lien avec Unifolio OK
-//        $this->checkAccessApi($request);
+        $this->checkAccessApi($request);
 
         $tabEtudiant = [];
 

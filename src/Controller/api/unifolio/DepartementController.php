@@ -16,8 +16,8 @@ class DepartementController extends BaseController
         DepartementRepository $departementRepository
     )
     {
-        //TODO: décommenter ça quand lien avec Unifolio OK
-//        $this->checkAccessApi($request);
+
+        $this->checkAccessApi($request);
 
         $departement = $departementRepository->findAll();
 

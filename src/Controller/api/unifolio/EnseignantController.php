@@ -16,8 +16,7 @@ class EnseignantController extends BaseController
         PersonnelRepository $personnelRepository
     )
     {
-        //TODO: décommenter ça quand lien avec Unifolio OK
-//        $this->checkAccessApi($request);
+        $this->checkAccessApi($request);
 
         $enseignants = $personnelRepository->findAll();
 
