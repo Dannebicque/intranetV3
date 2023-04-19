@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DepartementController extends BaseController
 {
-    #[Route(path: '/api/unifolio/departement/liste', name: 'api_departement_liste')]
+    #[Route(path: '/api/unifolio/departement', name: 'api_departement_liste')]
     public function listeDepartement(
         Request $request,
         DepartementRepository $departementRepository

@@ -11,28 +11,36 @@ namespace App\Controller\api\unifolio;
 
 use App\Controller\BaseController;
 use App\Entity\Annee;
+use App\Repository\SemestreRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class SemestreController extends BaseController
 {
-    #[Route(path: '/api/unifolio/semestre/liste/{annee}', name: 'api_semestre_liste')]
+    #[Route(path: '/api/unifolio/semestre', name: 'api_semestre_liste')]
     public function listeSemestre(
         Request $request,
-        Annee $annee
+        SemestreRepository $semestreRepository,
     ) {
 
         $this->checkAccessApi($request);
 
+        $semestres = $semestreRepository->findAll();
+
         $tabSemestre = [];
 
-        foreach ($annee->getSemestres() as $semestre) {
+        foreach ($semestres as $semestre) {
             $tabSemestre[$semestre->getId()] = [
                 'id' => $semestre->getId(),
                 'libelle' => $semestre->getLibelle(),
-                'numero' => $semestre->getOrdreLmd(),
+                'ordreLmd' => $semestre->getOrdreLmd(),
+                'ordreAnnee' => $semestre->getOrdreAnnee(),
                 'code' => $semestre->getCodeElement(),
-                'diplome' => $semestre->getAnnee()->getId(),
+                'actif' => $semestre->getActif(),
+                'nb_groupes_cm' => $semestre->getNbGroupesCm(),
+                'nb_groupes_td' => $semestre->getNbGroupesTd(),
+                'nb_groupes_tp' => $semestre->getNbGroupesTp(),
+                'annee' => $semestre->getAnnee()->getLibelle(),
             ];
         }
 

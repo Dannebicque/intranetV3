@@ -10,40 +10,33 @@
 namespace App\Controller\api\unifolio;
 
 use App\Controller\BaseController;
-use App\Entity\Semestre;
+use App\Repository\GroupeRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class GroupeController extends BaseController
 {
-    #[Route(path: '/api/unifolio/groupes/liste/{semestre}', name: 'api_groupes_liste')]
+    #[Route(path: '/api/unifolio/groupes', name: 'api_groupes_liste')]
     public function listeGroupes(
         Request $request,
-        Semestre $semestre
+        GroupeRepository $groupeRepository,
     ) {
         $this->checkAccessApi($request);
 
-        $groupes = [];
+        $groupes = $groupeRepository->findAll();
 
-        foreach ($semestre->getTypeGroupess() as $typeGroupess) {
-            $groupes[$typeGroupess->getId()] = [
-                'id' => $typeGroupess->getId(),
-                'libelle' => $typeGroupess->getLibelle(),
-                'ordre_semestre' => $typeGroupess->getOrdreSemestre(),
-            ];
+        $tabGroupes = [];
 
-            foreach ($typeGroupess->getGroupes() as $groupe) {
-                $groupes[$typeGroupess->getId()]['groupes'][$groupe->getId()] = [
+            foreach ($groupes as $groupe) {
+                $tabGroupes[$groupe->getId()] = [
                     'id' => $groupe->getId(),
                     'libelle' => $groupe->getLibelle(),
                     'code' => $groupe->getCodeApogee(),
                     'ordre' => $groupe->getOrdre(),
+                    'type' => $groupe->getTypeGroupe()->getLibelle(),
                 ];
             }
-        }
 
         return $this->json($groupes);
     }
-
-
 }

@@ -3,23 +3,25 @@
 namespace App\Controller\api\unifolio;
 
 use App\Controller\BaseController;
-use App\Entity\Diplome;
+use App\Repository\AnneeRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class AnneeController extends BaseController
 {
-    #[Route(path: '/api/unifolio/annee/liste/{diplome}', name: 'api_annee_liste')]
+    #[Route(path: '/api/unifolio/annee', name: 'api_annee_liste')]
     public function listeAnnee(
         Request $request,
-        Diplome $diplome,
+        AnneeRepository $anneeRepository
     )
     {
         $this->checkAccessApi($request);
 
+        $annees = $anneeRepository->findAll();
+
         $tabAnnee = [];
 
-        foreach ($diplome->getAnnees() as $annee) {
+        foreach ($annees as $annee) {
             $tabAnnee[$annee->getId()] = [
                 'id' => $annee->getId(),
                 'libelle' => $annee->getLibelle(),
@@ -27,7 +29,7 @@ class AnneeController extends BaseController
                 'libelle_long' => $annee->getLibelleLong(),
                 'opt_alternance' => $annee->getOptAlternance(),
                 'actif' => $annee->getActif(),
-                'diplome' => $annee->getDiplome()->getId(),
+                'diplome' => $annee->getDiplome()->getLibelle(),
             ];
         }
 
