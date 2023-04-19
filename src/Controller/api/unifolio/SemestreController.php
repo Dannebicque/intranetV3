@@ -10,7 +10,6 @@
 namespace App\Controller\api\unifolio;
 
 use App\Controller\BaseController;
-use App\Entity\Annee;
 use App\Repository\SemestreRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;

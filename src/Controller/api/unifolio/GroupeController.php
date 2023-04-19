@@ -11,32 +11,45 @@ namespace App\Controller\api\unifolio;
 
 use App\Controller\BaseController;
 use App\Repository\GroupeRepository;
+use App\Repository\TypeGroupeRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class GroupeController extends BaseController
 {
-    #[Route(path: '/api/unifolio/groupes', name: 'api_groupes_liste')]
-    public function listeGroupes(
-        Request $request,
+    #[Route(path: '/api/unifolio/groupe/', name: 'api_groupe_liste')]
+    public function listeGroupe(
+        Request     $request,
         GroupeRepository $groupeRepository,
-    ) {
+        TypeGroupeRepository $typeGroupeRepository
+    )
+    {
         $this->checkAccessApi($request);
 
         $groupes = $groupeRepository->findAll();
 
-        $tabGroupes = [];
+        $tabGroupe = [];
 
-            foreach ($groupes as $groupe) {
-                $tabGroupes[$groupe->getId()] = [
-                    'id' => $groupe->getId(),
-                    'libelle' => $groupe->getLibelle(),
-                    'code' => $groupe->getCodeApogee(),
-                    'ordre' => $groupe->getOrdre(),
-                    'type' => $groupe->getTypeGroupe()->getLibelle(),
+        //TODO: résoudre 'Attempted to call an undefined method named "getId" of class "Closure".' pour appliquer la meme méthode que pour les Etudiants
+        foreach ($groupes as $groupe) {
+            $types = $typeGroupeRepository->findBy(['id' => $groupe]);
+            $typeGroupes = [];
+            foreach ($types as $type) {
+                $typeGroupes[] = [
+                    'id' => $type->getId(),
+                    'libelle' => $type->getLibelle(),
                 ];
             }
 
-        return $this->json($groupes);
+            $tabGroupe[] = [
+                'id' => $groupe->getId(),
+                'libelle' => $groupe->getLibelle(),
+                'code' => $groupe->getCodeApogee(),
+                'ordre' => $groupe->getOrdre(),
+                'type' => $typeGroupes,
+            ];
+        }
+
+        return $this->json($tabGroupe);
     }
 }
