@@ -16,7 +16,7 @@ class TypeGroupeController extends BaseController
     )
     {
 
-        $this->checkAccessApi($request);
+//        $this->checkAccessApi($request);
 
         $typeGroupes = $typeGroupeRepository->findAll();
 
