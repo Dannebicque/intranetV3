@@ -36,6 +36,9 @@ class EtudiantController extends BaseController
                 'id' => $etudiant->getId(),
                 'nom' => $etudiant->getNom(),
                 'prenom' => $etudiant->getPrenom(),
+                'mail_univ' => $etudiant->getMailUniv(),
+                'mail_perso' => $etudiant->getMailPerso(),
+                'telephone' => $etudiant->getTel1(),
                 'groupes' => $groupes,
             ];
         }

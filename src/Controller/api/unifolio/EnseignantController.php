@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class EnseignantController extends BaseController
 {
-    #[Route(path: '/api/unifolio/enseignant/liste', name: 'api_enseignant_liste')]
+    #[Route(path: '/api/unifolio/enseignant', name: 'api_enseignant_liste')]
     public function listeEnseignant(
         Request $request,
         PersonnelRepository $personnelRepository
@@ -29,6 +29,7 @@ class EnseignantController extends BaseController
                 'prenom' => $enseignant->getPrenom(),
                 'mail_perso' => $enseignant->getMailPerso(),
                 'mail_univ' => $enseignant->getMailUniv(),
+                'telephone' => $enseignant->getTel1(),
             ];
         }
 
