@@ -40,6 +40,7 @@ class EnseignantController extends BaseController
                 'id' => $enseignant->getId(),
                 'nom' => $enseignant->getNom(),
                 'prenom' => $enseignant->getPrenom(),
+                'username' => $enseignant->getUsername(),
                 'mail_perso' => $enseignant->getMailPerso(),
                 'mail_univ' => $enseignant->getMailUniv(),
                 'telephone' => $enseignant->getTel1(),
