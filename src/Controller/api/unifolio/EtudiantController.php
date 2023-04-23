@@ -17,7 +17,7 @@ class EtudiantController extends BaseController
         EtudiantRepository $etudiantRepository,
     )
     {
-        $this->checkAccessApi($request);
+//        $this->checkAccessApi($request);
 
         $etudiants = $etudiantRepository->findAll();
 
@@ -36,6 +36,7 @@ class EtudiantController extends BaseController
                 'id' => $etudiant->getId(),
                 'nom' => $etudiant->getNom(),
                 'prenom' => $etudiant->getPrenom(),
+                'username' => $etudiant->getUsername(),
                 'mail_univ' => $etudiant->getMailUniv(),
                 'mail_perso' => $etudiant->getMailPerso(),
                 'telephone' => $etudiant->getTel1(),
