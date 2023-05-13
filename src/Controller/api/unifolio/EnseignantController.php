@@ -18,7 +18,7 @@ class EnseignantController extends BaseController
         DepartementRepository $departementRepository
     )
     {
-//        $this->checkAccessApi($request);
+        $this->checkAccessApi($request);
 
         $enseignants = $personnelRepository->findAll();
 
