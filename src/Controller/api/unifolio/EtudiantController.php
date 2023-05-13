@@ -32,6 +32,17 @@ class EtudiantController extends BaseController
                 ];
             }
 
+            $semestre = $etudiant->getSemestre();
+            if (null !== $semestre) {
+                $semestre = [
+                    'id' => $semestre->getId(),
+                    'libelle' => $semestre->getLibelle(),
+                ];
+            }
+            else {
+                $semestre = null;
+            }
+
             $tabEtudiant[$etudiant->getId()] = [
                 'id' => $etudiant->getId(),
                 'nom' => $etudiant->getNom(),
@@ -40,6 +51,7 @@ class EtudiantController extends BaseController
                 'mail_univ' => $etudiant->getMailUniv(),
                 'mail_perso' => $etudiant->getMailPerso(),
                 'telephone' => $etudiant->getTel1(),
+                'semestre' => $semestre,
                 'groupes' => $groupes,
             ];
         }
