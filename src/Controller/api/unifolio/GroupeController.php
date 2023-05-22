@@ -24,7 +24,7 @@ class GroupeController extends BaseController
         TypeGroupeRepository $typeGroupeRepository
     )
     {
-        $this->checkAccessApi($request);
+//        $this->checkAccessApi($request);
 
         $groupes = $groupeRepository->findAll();
 
@@ -32,23 +32,28 @@ class GroupeController extends BaseController
 
         //TODO: résoudre 'Attempted to call an undefined method named "getId" of class "Closure".' pour appliquer la meme méthode que pour les Etudiants
         foreach ($groupes as $groupe) {
-            $types = $typeGroupeRepository->findBy(['id' => $groupe]);
+//            $types = $typeGroupeRepository->findBy(['id' => $groupe]);
+            if ($groupe->getTypeGroupe() != null) {
+                $type = $groupe->getTypeGroupe();
             $typeGroupes = [];
-            foreach ($types as $type) {
+//            foreach ($types as $type) {
                 $typeGroupes[] = [
                     'id' => $type->getId(),
                     'libelle' => $type->getLibelle(),
                 ];
-            }
+//            }
 
-            $tabGroupe[] = [
-                'id' => $groupe->getId(),
-                'libelle' => $groupe->getLibelle(),
-                'code' => $groupe->getCodeApogee(),
-                'ordre' => $groupe->getOrdre(),
-                'type' => $typeGroupes,
-            ];
+                $tabGroupe[] = [
+                    'id' => $groupe->getId(),
+                    'libelle' => $groupe->getLibelle(),
+                    'code' => $groupe->getCodeApogee(),
+                    'ordre' => $groupe->getOrdre(),
+                    'type' => $typeGroupes,
+                ];
+            }
         }
+
+//        dd($tabGroupe);
 
         return $this->json($tabGroupe);
     }

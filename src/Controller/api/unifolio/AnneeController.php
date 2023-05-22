@@ -29,7 +29,7 @@ class AnneeController extends BaseController
                 'libelle_long' => $annee->getLibelleLong(),
                 'opt_alternance' => $annee->getOptAlternance(),
                 'actif' => $annee->getActif(),
-                'diplome' => $annee->getDiplome()->getLibelle(),
+                'diplome' => $annee->getDiplome()->getId(),
             ];
         }
 

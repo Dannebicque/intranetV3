@@ -39,7 +39,7 @@ class SemestreController extends BaseController
                 'nb_groupes_cm' => $semestre->getNbGroupesCm(),
                 'nb_groupes_td' => $semestre->getNbGroupesTd(),
                 'nb_groupes_tp' => $semestre->getNbGroupesTp(),
-                'annee' => $semestre->getAnnee()->getLibelle(),
+                'annee' => $semestre->getAnnee()->getId(),
             ];
         }
 
