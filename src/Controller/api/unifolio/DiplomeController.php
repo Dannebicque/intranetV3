@@ -50,8 +50,10 @@ class DiplomeController extends BaseController
                 'libelle' => $diplome->getLibelle(),
                 'sigle' => $diplome->getSigle(),
                 'departement' => $diplome->getDepartement()->getLibelle(),
+                'type' => $diplome->getTypeDiplome()->getId(),
             ];
         }
+//        dd($diplome->getTypeDiplome()->getId());
         return $this->json($tabDiplome);
     }
 }
