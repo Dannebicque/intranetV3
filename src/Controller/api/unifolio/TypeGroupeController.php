@@ -35,6 +35,7 @@ class TypeGroupeController extends BaseController
                 'id' => $typeGroupe->getId(),
                 'libelle' => $typeGroupe->getLibelle(),
                 'ordre' => $typeGroupe->getOrdreSemestre(),
+                'type' => $typeGroupe->getType(),
                 'semestres' => $semestres,
             ];
         }

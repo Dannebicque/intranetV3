@@ -38,22 +38,34 @@ class DiplomeController extends BaseController
         DiplomeRepository $diplomeRepository
     )
     {
-        $this->checkAccessApi($request);
+//        $this->checkAccessApi($request);
 
         $diplomes = $diplomeRepository->findAll();
 
         $tabDiplome = [];
 
         foreach ($diplomes as $diplome) {
-            $tabDiplome[$diplome->getId()] = [
-                'id' => $diplome->getId(),
-                'libelle' => $diplome->getLibelle(),
-                'sigle' => $diplome->getSigle(),
-                'departement' => $diplome->getDepartement()->getLibelle(),
-                'type' => $diplome->getTypeDiplome()->getId(),
-            ];
+
+            //TODO: a corriger
+            if ($diplome->getApcParcours() != null) {
+                $parcours = $diplome->getApcParcours();
+                $apcParcours = [];
+                $apcParcours[] = [
+                    'id' => $parcours->getId(),
+                    'libelle' => $parcours->getLibelle(),
+                ];
+
+
+                $tabDiplome[$diplome->getId()] = [
+                    'id' => $diplome->getId(),
+                    'libelle' => $diplome->getLibelle(),
+                    'sigle' => $diplome->getSigle(),
+                    'departement' => $diplome->getDepartement()->getLibelle(),
+                    'type' => $diplome->getTypeDiplome()->getId(),
+                    'parcours' => $apcParcours,
+                ];
+            }
         }
-//        dd($diplome->getTypeDiplome()->getId());
         return $this->json($tabDiplome);
     }
 }
