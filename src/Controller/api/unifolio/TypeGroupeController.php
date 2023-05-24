@@ -16,7 +16,7 @@ class TypeGroupeController extends BaseController
     )
     {
 
-        $this->checkAccessApi($request);
+//        $this->checkAccessApi($request);
 
         $typeGroupes = $typeGroupeRepository->findAll();
 
@@ -28,6 +28,7 @@ class TypeGroupeController extends BaseController
                 $semestres[] = [
                     'id' => $semestre->getId(),
                     'libelle' => $semestre->getLibelle(),
+                    'code' => $semestre->getCodeElement(),
                 ];
             }
 

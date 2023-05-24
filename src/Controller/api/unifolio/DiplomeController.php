@@ -34,7 +34,7 @@ class DiplomeController extends BaseController
 
     #[Route(path: '/api/unifolio/diplome/', name: 'api_diplome_all')]
     public function allDiplome(
-        Request     $request,
+        Request           $request,
         DiplomeRepository $diplomeRepository
     )
     {
@@ -45,16 +45,19 @@ class DiplomeController extends BaseController
         $tabDiplome = [];
 
         foreach ($diplomes as $diplome) {
+            if ($diplome->getTypeDiplome()->getId() == 4) {
 
-            //TODO: a corriger
-            if ($diplome->getApcParcours() != null) {
-                $parcours = $diplome->getApcParcours();
-                $apcParcours = [];
-                $apcParcours[] = [
-                    'id' => $parcours->getId(),
-                    'libelle' => $parcours->getLibelle(),
-                ];
-
+                if ($diplome->getApcParcours() != null) {
+                    $parcours = $diplome->getApcParcours();
+                    $apcParcours = [];
+                    $apcParcours[] = [
+                        'id' => $parcours->getId(),
+                        'libelle' => $parcours->getLibelle(),
+                    ];
+                }
+                else {
+                    $apcParcours = [];
+                }
 
                 $tabDiplome[$diplome->getId()] = [
                     'id' => $diplome->getId(),

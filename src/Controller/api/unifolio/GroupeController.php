@@ -21,16 +21,17 @@ class GroupeController extends BaseController
     public function listeGroupe(
         Request     $request,
         GroupeRepository $groupeRepository,
-        TypeGroupeRepository $typeGroupeRepository
+
     )
     {
-        $this->checkAccessApi($request);
+//        $this->checkAccessApi($request);
 
         $groupes = $groupeRepository->findAll();
 
         $tabGroupe = [];
 
         foreach ($groupes as $groupe) {
+
             if ($groupe->getTypeGroupe() != null) {
                 $type = $groupe->getTypeGroupe();
             $typeGroupes = [];
@@ -38,6 +39,21 @@ class GroupeController extends BaseController
                     'id' => $type->getId(),
                     'libelle' => $type->getLibelle(),
                 ];
+                $semestre = $type->getSemestre()->getCodeElement();
+            } else {
+                $typeGroupes = [];
+            }
+
+            if ($groupe->getApcParcours() != null) {
+                $parcours = $groupe->getApcParcours();
+                $parcoursGroupes = [];
+                $parcoursGroupes[] = [
+                    'id' => $parcours->getId(),
+                    'libelle' => $parcours->getLibelle(),
+                ];
+            } else {
+                $parcoursGroupes = [];
+            }
 
                 $tabGroupe[] = [
                     'id' => $groupe->getId(),
@@ -45,9 +61,10 @@ class GroupeController extends BaseController
                     'code' => $groupe->getCodeApogee(),
                     'ordre' => $groupe->getOrdre(),
                     'type' => $typeGroupes,
+                    'parcours' => $parcoursGroupes,
+                    'semestre' => $semestre,
                 ];
             }
-        }
 
         return $this->json($tabGroupe);
     }
