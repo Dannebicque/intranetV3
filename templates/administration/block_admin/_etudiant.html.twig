@@ -22,7 +22,7 @@
 
                         {% if semestre.annee.optAlternance == true %}
 
-                        <a href="{{ path('administration_etudiant_parcours_semestre_index', {'semestre': semestre.id } )}}">{{ semestre.displayAvecTypeDiplome }}</a>
+                        <a href="{{ path('administration_semestre_index', {'semestre': semestre.id } )}}">{{ semestre.displayAvecTypeDiplome }}</a>
 
                         {% endif %}
 
