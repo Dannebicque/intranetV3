@@ -22,7 +22,7 @@
 
                         {% if semestre.annee.optAlternance == true %}
 
-                        <a href="">{{ semestre.displayAvecTypeDiplome }}</a>
+                        <a href="{{ path('administration_etudiant_parcours_semestre_index', {'semestre': semestre.id } )}}">{{ semestre.displayAvecTypeDiplome }}</a>
 
                         {% endif %}
 
@@ -42,7 +42,7 @@
 
                         {% if semestre.annee.optAlternance == false %}
 
-                            <a href="">{{ semestre.displayAvecTypeDiplome }}</a>
+                            <a href="{{ path('administration_etudiant_parcours_semestre_index', {'semestre': semestre.id } )}}">{{ semestre.displayAvecTypeDiplome }}</a>
 
                         {% endif %}
 
@@ -56,11 +56,11 @@
                         <p>Gestion des différents semestres</p>
                     </div>
                     <hr>
-                    <a href="">Tous les étudiants</a>
-                    <a href="">Cohortes</a>
-                    <a href="">Statistiques</a>
-                    <a href="">Mise à jour d’une sous-commission</a>
-                    <a href="">Ajouter des étudiants</a>
+                    <a href="{{ path('administration_etudiant_index') }}">Tous les étudiants</a>
+                    <a href="{{ path('administration_cohorte_index') }}">Cohortes</a>
+                    <a href="{{ path('administration_statistique_index') }}">Statistiques</a>
+                    <a href="{{ path('administration_sous_commission_mise_a_jour') }}">Mise à jour d’une sous-commission</a>
+                    <a href="{{ path('administration_etudiant_semestre_add') }}" methods="_POST">Ajouter des étudiants</a>
                 </div>
             </div>
 
