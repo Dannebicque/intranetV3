@@ -1,15 +1,17 @@
-<a href="{{ path('sa_'~elt~'_duplicate', {'id': id}) }}"
-   class="btn btn-success btn-outline btn-square" data-bs-toggle="tooltip" data-bs-placement="bottom"
-   title="{{ 'atitle.dupliquer'|trans }}"><i class="{{ iconDuplicate }}"></i></a>
-<a href="{{ path('sa_'~elt~'_show', {'id': id}) }}"
-   class="btn btn-info btn-outline btn-square" data-bs-toggle="tooltip" data-bs-placement="bottom"
-   title="{{ 'atitle.details'|trans }}"><i class="{{ iconShow }}"></i></a>
-<a href="{{ path('sa_'~elt~'_edit', {'id': id}) }}"
-   class="btn btn-warning btn-outline btn-square"><i class="{{ iconEdit }}"
-                                                     data-bs-toggle="tooltip" data-bs-placement="bottom"
+<div class="text-end">
+    <a href="{{ path('sa_'~elt~'_duplicate', {'id': id}) }}"
+       class="text-success fs-6 me-1" data-bs-toggle="tooltip" data-bs-placement="bottom"
+       title="{{ 'atitle.dupliquer'|trans }}"><i class="{{ iconDuplicate }}"></i></a>
+    <a href="{{ path('sa_'~elt~'_show', {'id': id}) }}"
+       class="text-info fs-6 me-1" data-bs-toggle="tooltip" data-bs-placement="bottom"
+       title="{{ 'atitle.details'|trans }}"><i class="{{ iconShow }}"></i></a>
+    <a href="{{ path('sa_'~elt~'_edit', {'id': id}) }}"
+       class="text-warning fs-6 me-1"><i class="{{ iconEdit }}"
+                                         data-bs-toggle="tooltip" data-bs-placement="bottom"
 
-                                                     title="{{ 'atitle.modifier'|trans }}"></i></a>
-<a href="{{ path('sa_'~elt~'_delete', {id: id}) }}" data-csrf="{{ csrf_token('delete' ~ id) }}"
-   class="btn btn-danger btn-outline btn-square supprimer" data-id="id"><i
-            class="{{ iconDelete }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
-            title="{{ 'atitle.supprimer'|trans }}"></i></a>
+                                         title="{{ 'atitle.modifier'|trans }}"></i></a>
+    <a href="{{ path('sa_'~elt~'_delete', {id: id}) }}" data-csrf="{{ csrf_token('delete' ~ id) }}"
+       class="text-danger fs-6 me-1 supprimer" data-id="id"><i
+                class="{{ iconDelete }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                title="{{ 'atitle.supprimer'|trans }}"></i></a>
+</div>
