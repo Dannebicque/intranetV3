@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.35](https://github.com/Dannebicque/intranetV3/compare/v3.11.34...v3.11.35) (2023-06-03)
+
+
+### Bug Fixes
+
+* Mise en page des boutons en sadm ([ae13fa7](https://github.com/Dannebicque/intranetV3/commit/ae13fa7a79e229373fb2022fbca656956e9bbfa8))
+* Type null sur tableau des semestres ([10dea2f](https://github.com/Dannebicque/intranetV3/commit/10dea2f625d7da063722d10c9221e297fbbfadef))
+
 ### [3.11.34](https://github.com/Dannebicque/intranetV3/compare/v3.11.33...v3.11.34) (2023-04-17)
 
 
