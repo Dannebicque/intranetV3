@@ -8,8 +8,11 @@
             <div class="row">
                 {% set alternance = false %}
                 {% for annee in user_data.annees|filter(annee => annee.optAlternance == true) %}
-                    {% set alternance = true %}
-                        <a href="{{ path('administration_alternance_index',{annee:annee.id}) }}"> Alternances pour l'année {{ annee.libelle }}</a>
+                    <div class="col-12 d-grid d-block  mb-2">
+                        {% set alternance = true %}
+                        <a href="{{ path('administration_alternance_index',{annee:annee.id}) }}"> Alternances pour
+                            l'année {{ annee.libelle }}</a>
+                    </div>
                 {% endfor %}
                 {% if alternance == false %}
                     <div class="alert alert-info">Aucune année n'est proposée en alternance</div>
