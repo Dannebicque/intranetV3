@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/MoyenneAnneeUeApc.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:27
+ * @lastUpdate 03/06/2023 21:42
  */
 
 namespace App\DTO;
@@ -14,7 +14,7 @@ use App\Entity\Constantes;
 class MoyenneAnneeUeApc
 {
     public MoyenneUeApc $moyenneSemestrePair;
-    public array $moyenneSemestreImpair;
+    public ?array $moyenneSemestreImpair;
     public bool $penalisee = true;
 
     public function moyenneAnnee(): float
