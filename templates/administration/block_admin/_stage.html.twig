@@ -1,4 +1,4 @@
-<div class="col-md-8 col-lg-8 col-sm-12">
+<div class="col-md-6 col-lg-6 col-sm-12">
     <div class="card">
         <header class="card-header">
             <h2 class="card-title">{{ 'adm.stages'|trans }}</h2>
@@ -9,14 +9,11 @@
                             class="sr-only">Créer une période de stage</span></a>
             </div>
         </header>
-        <div class="card-body">
+        <div class="card-body administration">
             <div class="row">
                 {% for periode in stagePeriodes %}
-                    <div class="col-6 d-grid d-block mb-2">
-                        <a href="{{ path('administration_stage_periode_gestion', {uuid:periode.uuidString}) }}"
-                           class="btn btn-primary"> Période : <strong>{{ periode.libelle }}
+                        <a href="{{ path('administration_stage_periode_gestion', {uuid:periode.uuidString}) }}"> Période : <strong>{{ periode.libelle }}
                                 ({{ periode.semestre.display }})</strong></a>
-                    </div>
                 {% else %}
                     <div class="col-sm-12">
                         <div class="alert alert-info">Aucune période de stage.</div>

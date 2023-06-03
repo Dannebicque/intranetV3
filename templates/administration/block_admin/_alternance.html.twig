@@ -1,15 +1,15 @@
-<div class="col-md-4 col-lg-4 col-sm-12">
-    <div class="card"><h2 class="card-title">{{ 'adm.alternances'|trans }}</h2>
+<div class="col-md-6 col-lg-6 col-sm-12">
+    <div class="card administration">
+        <header class="card-header">
+            <i class="fa-solid fa-briefcase fa-2x"></i>
+            <h2 class="card-title">{{ 'adm.alternances'|trans }}</h2>
+        </header>
         <div class="card-body">
             <div class="row">
-
                 {% set alternance = false %}
                 {% for annee in user_data.annees|filter(annee => annee.optAlternance == true) %}
                     {% set alternance = true %}
-                    <div class="col-12 d-grid d-block mb-2">
-                        <a href="{{ path('administration_alternance_index',{annee:annee.id}) }}"
-                           class="btn btn-primary"> Alternances pour l'année {{ annee.libelle }}</a>
-                    </div>
+                        <a href="{{ path('administration_alternance_index',{annee:annee.id}) }}"> Alternances pour l'année {{ annee.libelle }}</a>
                 {% endfor %}
                 {% if alternance == false %}
                     <div class="alert alert-info">Aucune année n'est proposée en alternance</div>
@@ -19,25 +19,3 @@
         </div>
     </div>
 </div>
-
-{#<div class="col-md-4 col-lg-4 col-sm-12">#}
-{#    <div class="card"><h2 class="card-title">{{ 'adm.planning.alternances'|trans }}</h2>#}
-{#        <div class="card-body">#}
-{#            <div class="row">#}
-
-{#                {% set alternance = false %}#}
-{#                {% for annee in user_data.annees|filter(annee => annee.optAlternance == true) %}#}
-{#                    {% set alternance = true %}#}
-{#                    <div class="col-12 d-grid d-block mb-2">#}
-{#                        <a href="{{ path('administration_alternance_planning_index',{annee:annee.id}) }}"#}
-{#                           class="btn btn-primary"> Planning Alternance pour l'année {{ annee.libelle }}</a>#}
-{#                    </div>#}
-{#                {% endfor %}#}
-{#                {% if alternance == false %}#}
-{#                    <div class="alert alert-info">Aucune année n'est proposée en alternance</div>#}
-{#                {% endif %}#}
-
-{#            </div>#}
-{#        </div>#}
-{#    </div>#}
-{#</div>#}

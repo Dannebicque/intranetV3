@@ -31,10 +31,10 @@
             {{ include('administration/block_admin/_ppn.html.twig') }}
             {{ include('administration/block_admin/_edt.html.twig') }}
 
-{#            {% if user_data.departement.optStage %}#}
-{#                {{ include('administration/block_admin/_stage.html.twig') }}#}
-{#            {% endif %}#}
-{#            {{ include('administration/block_admin/_alternance.html.twig') }}#}
+            {% if user_data.departement.optStage %}
+                {{ include('administration/block_admin/_stage.html.twig') }}
+            {% endif %}
+            {{ include('administration/block_admin/_alternance.html.twig') }}
             {{ include('administration/block_admin/_bornes.html.twig') }}
             {{ include('administration/block_admin/_document.html.twig') }}
             {{ include('administration/block_admin/_article.html.twig') }}
