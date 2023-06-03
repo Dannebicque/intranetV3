@@ -1,17 +1,23 @@
-<div class="col-md-4 col-lg-4 col-sm-12">
-    <div class="card"><h2 class="card-title">{{ 'adm.actualites.bornes'|trans }}</h2>
+<div class="col-md-6 col-lg-6 col-sm-12">
+    <div class="card administration">
+        <div class="card-header">
+            <i class="fa-solid fa-globe fa-2x"></i>
+            <h2 class="card-title">{{ 'adm.actualites.bornes'|trans }}</h2>
+        </div>
         <div class="card-body">
             <div class="row">
                 <div class="col-12 d-grid d-block mb-2">
-                    <a href="{{ path('administration_actualite_index') }}"
-                       class="btn btn-primary"> {{ 'adm.gerer.actualites'|trans }}
-                    </a>
+                    <a href="{{ path('administration_actualite_index') }}">Gestion des actualités</a>
+                    <a href="{{ path('administration_actualite_new') }}">Créer une actualité</a>
+{#                    <a href="{{ path('administration_actualite_index') }}"#}
+{#                       class="btn btn-primary"> {{ 'adm.gerer.actualites'|trans }}#}
+{#                    </a>#}
                 </div>
 
-                <div class="col-12 d-grid d-block mb-2">
-                    <a href="{{ path('administration_borne_index') }}"
-                       class="btn btn-primary"> {{ 'adm.gerer.bornes'|trans }}
-                    </a></div>
+{#                <div class="col-12 d-grid d-block mb-2">#}
+{#                    <a href="{{ path('administration_borne_index') }}"#}
+{#                       class="btn btn-primary"> {{ 'adm.gerer.bornes'|trans }}#}
+{#                    </a></div>#}
             </div>
         </div>
     </div>

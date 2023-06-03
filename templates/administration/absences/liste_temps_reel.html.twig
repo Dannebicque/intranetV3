@@ -1,33 +1,34 @@
 <div class="row">
     <div class="col-sm-12">
-        <div class="alert alert-info">
-            <strong>Suivi des absents en "temps réel" pour le {{ 'now'|date('d/m/Y') }}. {{ absences|length}}
-                    absent(s) sur la demi-journée.</strong>
-            <table class="table">
-                <thead>
+
+        <strong>Suivi des absents en "temps réel" pour le {{ 'now'|date('d/m/Y') }}</strong>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Semestre</th>
+                <th>Etudiant</th>
+                <th>Heure</th>
+                <th>Prof.</th>
+                <th>Matière</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for absence in absences %}
                 <tr>
-                    <th>Semestre</th>
-                    <th>Etudiant</th>
-                    <th>Heure</th>
-                    <th>Prof.</th>
-                    <th>Matière</th>
+                    <td>{{ absence.semestre.display }}</td>
+                    <td>{{ absence.etudiant.display }}</td>
+                    <td>{{ absence.dateHeure|format_time('short') }}</td>
+                    <td>{{ absence.personnel.display }}</td>
+                    <td>{{ matieres[absence.typeIdMatiere].display }}</td>
                 </tr>
-                </thead>
-                <tbody>
-                {% for absence in absences %}
-                    <tr>
-                        <td>{{ absence.semestre.display }}</td>
-                        <td>{{ absence.etudiant.display }}</td>
-                        <td>{{ absence.dateHeure|format_time('short') }}</td>
-                        <td>{{ absence.personnel.display }}</td>
-                        <td>{{ matieres[absence.typeIdMatiere].display }}</td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
+            {% endfor %}
+            </tbody>
+        </table>
+        <div class="alert alert-info">
             <p>
-                Les informations concernent la demi-journée en cours (avant 13h00 ou après 13h00).
+                {{ absences|length }} absent(s) sur la demi-journée en cours. (avant 13h00 ou après 13h00)
             </p>
         </div>
     </div>
 </div>
+

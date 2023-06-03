@@ -10,49 +10,34 @@
 namespace App\Controller\api\unifolio;
 
 use App\Controller\BaseController;
-use App\Entity\Diplome;
+use App\Repository\ApcComptenceRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class CompetenceController extends BaseController
 {
-    #[Route(path: '/api/unifolio/competences/{diplome}', name: 'api_competences')]
+    #[Route(path: '/api/unifolio/competences', name: 'api_competences')]
     public function competences(
         Request $request,
-        Diplome $diplome
+        ApcComptenceRepository $competenceRepository,
     ) {
         $this->checkAccessApi($request);
 
-        $competences = [];
-        $referentiel = $diplome->getReferentiel();
+        $competences = $competenceRepository->findAll();
 
-        foreach ($referentiel->getApcComptences() as $competence) {
-            $competences[$competence->getId()] = [
+        $tabCompetence = [];
+
+        foreach ($competences as $competence) {
+            $tabCompetence[$competence->getId()] = [
                 'id' => $competence->getId(),
                 'libelle' => $competence->getLibelle(),
-                'nomCourt' => $competence->getNomCourt(),
-                'couleur' => $competence->getCouleur()
+                'nom_court' => $competence->getNomCourt(),
+                'couleur' => $competence->getCouleur(),
+                'referentiel' => $competence->getApcReferentiel()->getLibelle(),
             ];
-
-            foreach ($competence->getApcNiveaux() as $niveau) {
-                $competences[$competence->getId()]['niveaux'][$niveau->getId()] = [
-                    'id' => $niveau->getId(),
-                    'libelle' => $niveau->getLibelle(),
-                    'ordre' => $niveau->getOrdre(),
-                    'ordreAnnee' => $niveau->getOrdreAnnee(),
-                ];
-
-                foreach ($niveau->getApcApprentissageCritiques() as $ac) {
-                    $competences[$competence->getId()]['niveaux'][$niveau->getId()]['ac'][$ac->getId()] = [
-                        'id' => $ac->getId(),
-                        'libelle' => $ac->getLibelle(),
-                        'code' => $ac->getCode(),
-                    ];
-                }
-            }
         }
 
-        return $this->json($competences);
+        return $this->json($tabCompetence);
     }
 
 

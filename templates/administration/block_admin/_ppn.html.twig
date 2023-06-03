@@ -1,14 +1,15 @@
-<div class="col-md-4 col-lg-4 col-sm-12">
-    <div class="card"><h2 class="card-title">{{ 'adm.ppn.menu'|trans }}</h2>
+<div class="col-md-6 col-lg-6 col-sm-12">
+    <div class="card administration">
+        <div class="card-header">
+            <i class="fa-solid fa-book fa-2x"></i>
+            <h2 class="card-title">{{ 'adm.ppn.menu'|trans }}</h2>
+        </div>
         <div class="card-body">
             <div class="row">
                 <div class="col-12 d-grid d-block mb-2">
-                    <a href="{{ path('administration_matiere_index') }}"
-                       class="btn btn-primary"> {{ 'adm.programme.pedagogique'|trans }}</a>
-                </div>
-                <div class="col-12 d-grid d-block mb-2">
-                    <a href="{{ path('administration_plan_cours_index') }}" class="btn btn-primary">
-                        {{ 'adm.synthese.plan.de.cours'|trans }}</a>
+                    <a href="{{ path('administration_matiere_index') }}">Liste des matières</a>
+                    <a href="{{ path('administration_plan_cours_index') }}">Liste des plans de cours</a>
+                    <a href="{{ path('administration_ppn_index') }}">Voir les Programmes Pédagogiques</a>
                 </div>
             </div>
         </div>

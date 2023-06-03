@@ -1522,6 +1522,16 @@ class Semestre extends BaseEntity implements Stringable
         return $this->typeGroupess;
     }
 
+    /**
+     * @param Collection $typeGroupess
+     */
+    public function setTypeGroupess(Collection $typeGroupess): void
+    {
+        $this->typeGroupess = $typeGroupess;
+    }
+
+
+
     public function addTypeGroupess(TypeGroupe $typeGroupess): self
     {
         if (!$this->typeGroupess->contains($typeGroupess)) {
@@ -1540,4 +1550,5 @@ class Semestre extends BaseEntity implements Stringable
 
         return $this;
     }
+
 }

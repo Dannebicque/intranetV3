@@ -1,24 +1,14 @@
-<div class="col-md-4 col-lg-4 col-sm-12">
-    <div class="card">
+<div class="col-md-6 col-lg-6 col-sm-12">
+    <div class="card administration">
         <header class="card-header">
-            <h2 class="card-title">{{ 'adm.edt.menu'|trans }}</h2>
-            <div class="card-header-actions" style="">
-                <a href="{{ path('administration_date_new') }}" class="btn btn-sm btn-info"
-                   title="Ajouter une date" data-bs-toggle="tooltip" data-bs-placement="bottom">
-                    <i class="fas fa-plus"></i><span
-                            class="sr-only">ajouter un événement</span></a>
-            </div>
+                <i class="fa-solid fa-calendar-days fa-2x"></i>
+                <h2 class="card-title">{{ 'adm.edt.menu'|trans }}</h2>
         </header>
         <div class="card-body">
             <div class="row">
                 <div class="col-12 d-grid d-block mb-2">
-                    <a href="{{ path('administration_edt_index') }}"
-                       class="btn btn-primary"> {{ 'adm.gerer.edt'|trans }}</a>
-                </div>
-
-                <div class="col-12 d-grid d-block mb-2">
-                    <a href="{{ path('administration_date_index') }}"
-                       class="btn btn-primary"> {{ 'adm.gerer.dates'|trans }}</a>
+                    <a href="{{ path('administration_edt_index') }}">Gestion de l'emploi du temps</a>
+                    <a href="{{ path('administration_date_index') }}">Gestion des évènements</a>
                 </div>
             </div>
         </div>

@@ -1,0 +1,43 @@
+.administration {
+
+  .etudiant_bloc {
+    margin: 25px 0
+  }
+
+  .card-header {
+    justify-content: flex-start;
+
+    i {
+      color: var(--colorIUT);
+    }
+    }
+
+  .row {
+    justify-content: space-evenly;
+
+    .admin_links_bloc_header {
+      height: 110px;
+
+      i {
+        color: var(--colorIUT);
+      }
+
+      p {
+        margin: 0;
+      }
+    }
+
+    a {
+      text-decoration: underline;
+      color: var(--police);
+      padding: 5px 10px;
+
+      &:hover {
+        text-decoration: underline;
+        color: var(--police);
+        background-color: var(--colorTextPrimaryHoverOpacity);
+
+      }
+    }
+  }
+}

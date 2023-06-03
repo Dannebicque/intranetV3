@@ -2,54 +2,65 @@
     <div class="card">
         <header class="card-header">
             <h2 class="card-title">{{ 'adm.etudiants'|trans }}</h2>
-            <div class="card-header-actions" style="">
-                <a href="{{ path('administration_etudiant_semestre_add') }}" class="btn btn-sm btn-info"
-                   title="{{ 'atitle.creer_nouveau'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"><i
-                            class="fas fa-plus"></i><span class="sr-only">ajouter des étudiants</span></a>
-            </div>
         </header>
 
-        <div class="card-body">
+        <div class="card-body administration">
             {{ render_esi(controller(
                 'App\\Controller\\administration\\AbsenceController::listeTempsReel'
             )) }}
 
             <div class="row">
-                {% for semestre in user_data.semestres|filter(semestre => semestre.actif == true) %}
-                    <div class="col-2 d-grid d-block mb-2">
-                        <a
-                                href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
-                                class="btn btn-primary h-100">
-                            {{ semestre.diplome.displayCourt }} | {{ semestre.libelle }}
-                        </a></div>
-                {% endfor %}
+                <div class="col-lg-3 col-10 d-grid d-block mb-2 etudiant_bloc">
+                    <div class="admin_links_bloc_header">
+                        <i class="fa-solid fa-user-graduate fa-2x"></i>
+                        <h4>Formation Continue</h4>
+                        <p>Gestion des absences, des notes, des étudiants, des fins de semestres,
+                            des alternances et des PPN</p>
+                    </div>
+                    <hr>
+                    {% for semestre in user_data.semestres|filter(semestre => semestre.actif == true) %}
 
-                {% for semestre in user_data.semestres|filter(semestre => semestre.actif == false) %}
-                    <div class="col-2 d-grid d-block mb-2">
-                        <a
-                                href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
-                                class="btn btn-default h-100">
-                            {{ semestre.diplome.displayCourt }} | {{ semestre.libelle }}
-                        </a></div>
-                {% endfor %}
-            </div>
-            <div class="row">
-                <div class="col-3 d-grid d-block">
-                    <a href="{{ path('administration_sous_commission_mise_a_jour') }}"
-                       class="btn btn-primary">{{ 'adm.mise.a.jour.ss.comm'|trans }}</a>
+                        {% if semestre.annee.optAlternance == true %}
+
+                        <a href="{{ path('administration_semestre_index', {'semestre': semestre.id } )}}">{{ semestre.displayAvecTypeDiplome }}</a>
+
+                        {% endif %}
+
+                    {% endfor %}
                 </div>
-                <div class="col-3 d-grid d-block">
-                    <a href="{{ path('administration_etudiant_index') }}"
-                       class="btn btn-primary"> {{ 'adm.tous.les.etudiants'|trans }}</a>
+
+                <div class="col-lg-3 col-10 d-grid d-block mb-2 etudiant_bloc">
+                    <div class="admin_links_bloc_header">
+                        <i class="fa-solid fa-user-graduate fa-2x"></i>
+                        <h4>Formation Initiale</h4>
+                        <p>Gestion des absences, des notes, des étudiants, des fins de semestres,
+                            des
+                            stages</p>
+                    </div>
+                    <hr>
+                    {% for semestre in user_data.semestres|filter(semestre => semestre.actif == true) %}
+
+                        {% if semestre.annee.optAlternance == false %}
+
+                            <a href="{{ path('administration_etudiant_parcours_semestre_index', {'semestre': semestre.id } )}}">{{ semestre.displayAvecTypeDiplome }}</a>
+
+                        {% endif %}
+
+                    {% endfor %}
                 </div>
-                <div class="col-3 d-grid d-block">
-                    <a href="{{ path('administration_statistique_index') }}"
-                       class="btn btn-primary">
-                        {{ 'adm.statistiques.menu'|trans }}</a>
-                </div>
-                <div class="col-3 d-grid d-block">
-                    <a href="{{ path('administration_cohorte_index') }}" class="btn btn-primary">
-                        {{ 'adm.cohortes'|trans }}</a>
+
+                <div class="col-lg-3 col-10 d-grid d-block mb-2 etudiant_bloc">
+                    <div class="admin_links_bloc_header">
+                        <i class="fa-solid fa-users fa-2x"></i>
+                        <h4>Général</h4>
+                        <p>Gestion des différents semestres</p>
+                    </div>
+                    <hr>
+                    <a href="{{ path('administration_etudiant_index') }}">Tous les étudiants</a>
+                    <a href="{{ path('administration_cohorte_index') }}">Cohortes</a>
+                    <a href="{{ path('administration_statistique_index') }}">Statistiques</a>
+                    <a href="{{ path('administration_sous_commission_mise_a_jour') }}">Mise à jour d’une sous-commission</a>
+                    <a href="{{ path('administration_etudiant_semestre_add') }}" methods="_POST">Ajouter des étudiants</a>
                 </div>
             </div>
 

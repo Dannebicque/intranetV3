@@ -1,19 +1,14 @@
-<div class="col-md-4 col-lg-4 col-sm-12">
-    <div class="card">
+<div class="col-md-6 col-lg-6 col-sm-12">
+    <div class="card administration">
         <header class="card-header">
+            <i class="fa-solid fa-diagnoses fa-2x"></i>
             <h2 class="card-title">{{ 'adm.qualite.menu'|trans }}</h2>
         </header>
         <div class="card-body">
             <div class="row">
                 <div class="col-12 d-grid d-block mb-2">
-                    <a href="{{ path('administration_qualite_index',{type:'administration'}) }}"
-                       class="btn btn-primary"> {{ 'adm.gerer.questionnaire_qualite'|trans }}
-                    </a>
-                </div>
-                <div class="col-12 d-grid d-block mb-2">
-                    <a href="{{ path('adm_questionnaire_creation_index',{type:'administration'}) }}"
-                       class="btn btn-primary"> {{ 'adm.creer.questionnaire_qualite'|trans }}
-                    </a>
+                    <a href="{{ path('administration_qualite_index',{type:'administration'}) }}">Gestion des questionnaires qualité</a>
+                    <a href="{{ path('adm_questionnaire_creation_index',{type:'administration'}) }}">Créer un questionnaire qualité</a>
                 </div>
             </div>
         </div>

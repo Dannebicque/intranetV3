@@ -13,7 +13,7 @@ $dropdown-link-hover-bg:            var(--colorIUT);
 @import "~bootstrap/scss/bootstrap";
 
 
-
+@import "administration";
 @import "./theme.scss";
 @import "./_nav_process.scss";
 @import "./_layout.scss";
