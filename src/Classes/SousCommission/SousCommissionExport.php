@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/02/2023 08:08
+ * @lastUpdate 04/06/2023 09:32
  */
 
 namespace App\Classes\SousCommission;
@@ -52,13 +52,14 @@ class SousCommissionExport
      */
     public function __construct(
         private readonly SousCommissionManager $sousCommissionManager,
-        KernelInterface $kernel,
-        private readonly ApogeeSousCommission $apogeeSousCommission,
-        private readonly MyExcelWriter $myExcelWriter,
-        private readonly MyExcelRead $myExcelRead,
-        private readonly TypeMatiereManager $typeMatiereManager,
-        private readonly MyUpload $myUpload
-    ) {
+        KernelInterface                        $kernel,
+        private readonly ApogeeSousCommission  $apogeeSousCommission,
+        private readonly MyExcelWriter         $myExcelWriter,
+        private readonly MyExcelRead           $myExcelRead,
+        private readonly TypeMatiereManager    $typeMatiereManager,
+        private readonly MyUpload              $myUpload
+    )
+    {
         $this->dir = $kernel->getProjectDir() . '/public/upload/temp/';
     }
 
@@ -321,7 +322,7 @@ class SousCommissionExport
         $writer = new Xlsx($this->myExcelWriter->getSpreadsheet());
 
         return new StreamedResponse(
-            static function() use ($writer) {
+            static function () use ($writer) {
                 $writer->save('php://output');
             },
             Response::HTTP_OK,
@@ -336,7 +337,7 @@ class SousCommissionExport
     {
         $this->sousCommission = $this->sousCommissionManager->getSousCommission($semestre);
         $this->sousCommission->calcul($semestre, $anneeUniversitaire);
-        $semPrec = $semestre->getPrecedent();
+        $semPrec = $this->sousCommission->semestrePrecedent;
         $this->myExcelWriter->createSheet('Sous Commission ' . $semestre->getLibelle());
         $this->myExcelWriter->setHeader();
 
@@ -602,11 +603,18 @@ class SousCommissionExport
                 }
 
 //            $this->myExcelWriter->writeCellXY($colonne, $ligne - 1, 'B.U.T.', ['style' => 'HORIZONTAL_CENTER']);
-                $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                    $sousCommissionEtudiant->scolarite[$semPrec->getOrdreLmd()]->decision,
-                    ['style' => 'HORIZONTAL_CENTER']);
-                $this->myExcelWriter->colorCellRange($colonne, $ligne,
-                    $this->getStyleDecisionUe($sousCommissionEtudiant->scolarite[$semPrec->getOrdreLmd()]->decision));
+                if (array_key_exists($semPrec->getOrdreLmd(), $sousCommissionEtudiant->scolarite)) {
+                    $this->myExcelWriter->writeCellXY($colonne, $ligne,
+                        $sousCommissionEtudiant->scolarite[$semPrec->getOrdreLmd()]->decision,
+                        ['style' => 'HORIZONTAL_CENTER']);
+                    $this->myExcelWriter->colorCellRange($colonne, $ligne,
+                        $this->getStyleDecisionUe($sousCommissionEtudiant->scolarite[$semPrec->getOrdreLmd()]->decision));
+                } else {
+                    $this->myExcelWriter->writeCellXY($colonne, $ligne,
+                        'Sans Info.',
+                        ['style' => 'HORIZONTAL_CENTER']);
+                    $this->myExcelWriter->colorCellRange($colonne, $ligne, 'Sans Info.');
+                }
                 $this->myExcelWriter->writeCellXY($colonne + 1, $ligne, $sousCommissionEtudiant->decision,
                     ['style' => 'HORIZONTAL_CENTER']);
                 $this->myExcelWriter->colorCellRange($colonne + 1, $ligne,
@@ -628,7 +636,7 @@ class SousCommissionExport
         $writer = new Xlsx($this->myExcelWriter->getSpreadsheet());
 
         return new StreamedResponse(
-            static function() use ($writer) {
+            static function () use ($writer) {
                 $writer->save('php://output');
             },
             Response::HTTP_OK,
@@ -643,9 +651,10 @@ class SousCommissionExport
      * @throws \App\Exception\SemestreNotFoundException
      */
     public function exportGrandJuryApc(
-        ScolaritePromo $scolaritePromo,
+        ScolaritePromo     $scolaritePromo,
         AnneeUniversitaire $anneeUniversitaire
-    ): StreamedResponse {
+    ): StreamedResponse
+    {
         $semestre = $scolaritePromo->getSemestre();
 
         if (null === $semestre) {
@@ -758,7 +767,7 @@ class SousCommissionExport
         $writer = new Xlsx($this->myExcelWriter->getSpreadsheet());
 
         return new StreamedResponse(
-            static function() use ($writer) {
+            static function () use ($writer) {
                 $writer->save('php://output');
             },
             Response::HTTP_OK,
@@ -775,10 +784,11 @@ class SousCommissionExport
      * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
      */
     public function exportApogee(
-        Semestre $semestre,
-        $file,
+        Semestre           $semestre,
+                           $file,
         AnneeUniversitaire $anneeUniversitaire
-    ): StreamedResponse|string|null {
+    ): StreamedResponse|string|null
+    {
         $this->sousCommission = $this->sousCommissionManager->getSousCommission($semestre);
 
         $fichier = $this->myUpload->upload($file, 'temp');
@@ -857,9 +867,10 @@ class SousCommissionExport
     }
 
     public function exportGrandJury(
-        ScolaritePromo $scolaritePromo,
+        ScolaritePromo     $scolaritePromo,
         AnneeUniversitaire $anneeUniversitaire
-    ): StreamedResponse {
+    ): StreamedResponse
+    {
         $semestre = $scolaritePromo->getSemestre();
 
         if (null === $semestre) {
@@ -1028,7 +1039,7 @@ class SousCommissionExport
         $writer = new Xlsx($this->myExcelWriter->getSpreadsheet());
 
         return new StreamedResponse(
-            static function() use ($writer) {
+            static function () use ($writer) {
                 $writer->save('php://output');
             },
             Response::HTTP_OK,

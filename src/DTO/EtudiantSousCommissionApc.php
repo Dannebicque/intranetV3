@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/EtudiantSousCommissionApc.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/01/2023 10:09
+ * @lastUpdate 04/06/2023 09:57
  */
 
 namespace App\DTO;
@@ -39,10 +39,11 @@ class EtudiantSousCommissionApc
      * EtudiantSousCommissionApc constructor.
      */
     public function __construct(
-        public Etudiant $etudiant,
-        public Semestre $semestre,
-        array $ues,
-        Collection|array $uesSemestrePrecedent = []
+        public Etudiant     $etudiant,
+        public Semestre     $semestre,
+        array               $ues,
+        Collection|array    $uesSemestrePrecedent = [],
+        protected ?Semestre $semestrePrecedent = null
     ) {
         foreach ($uesSemestrePrecedent as $ueP) {
             $this->uesSemestrePrecedent[$ueP->getId()] = $ueP;
@@ -98,7 +99,7 @@ class EtudiantSousCommissionApc
         if ($this->semestre->isPair()) {
             // on est sur un semestre pair, on calcule la décision sur l'année et la proposition
             foreach ($this->moyenneAnneeUes as $ue) {
-                if (Constantes::UE_VALIDE === $ue->decisionAnnee()) {
+                if ($ue !== null && Constantes::UE_VALIDE === $ue->decisionAnnee()) {
                     ++$nbUesValidees;
                 }
             }
@@ -179,7 +180,6 @@ class EtudiantSousCommissionApc
 
         foreach ($this->moyenneUes as $ue) {
             $competenceId = $ue->ue->getApcCompetence()?->getId();
-
             foreach ($matieres as $matiere) {
                 if (false === $matiere->suspendu && false === $matiere->bonification && $matiere->isParent() === false) {
                     if (false === $tabs['matieres'][$matiere->codeElement]['matiereAAnnuler']) {
@@ -224,9 +224,13 @@ class EtudiantSousCommissionApc
     public function calculMoyennesAnnee(): void
     {
         foreach ($this->moyenneUes as $ue) {
-            $moyUeAnnee = new MoyenneAnneeUeApc();
-            $moyUeAnnee->moyenneSemestreImpair = $this->scolarite[$this->semestre->getPrecedent()->getOrdreLmd()]->moyenneUes[$ue->ue->getNumeroUe()];
-            $moyUeAnnee->moyenneSemestrePair = $ue;
+            if ($this->semestrePrecedent !== null && array_key_exists($this->semestrePrecedent->getOrdreLmd(), $this->scolarite)) {
+                $moyUeAnnee = new MoyenneAnneeUeApc();
+                $moyUeAnnee->moyenneSemestreImpair = $this->scolarite[$this->semestrePrecedent->getOrdreLmd()]->moyenneUes[$ue->ue->getNumeroUe()];
+                $moyUeAnnee->moyenneSemestrePair = $ue;
+            } else {
+                $moyUeAnnee = null;
+            }
             $this->moyenneAnneeUes[$ue->ue->getNumeroUe()] = $moyUeAnnee;
         }
     }

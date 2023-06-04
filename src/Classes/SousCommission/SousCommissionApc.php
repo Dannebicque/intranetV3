@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionApc.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/01/2023 10:01
+ * @lastUpdate 04/06/2023 09:20
  */
 
 namespace App\Classes\SousCommission;
@@ -17,6 +17,7 @@ use App\DTO\StatitiquesBac;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\ScolaritePromo;
 use App\Entity\Semestre;
+use App\Enums\SemestreLienEnum;
 use App\Repository\ApcRessourceCompetenceRepository;
 use App\Repository\ApcSaeCompetenceRepository;
 use App\Repository\EtudiantRepository;
@@ -27,6 +28,7 @@ class SousCommissionApc extends AbstractSousCommission implements SousCommission
 {
     final public const TEMPLATE_LIVE = 'liveApc.html.twig';
     final public const TEMPLATE_TRAVAIL = 'travailApc.html.twig';
+    public ?Semestre $semestrePrecedent;
 
     public function __construct(
         EntityManagerInterface $entityManager,
@@ -55,12 +57,18 @@ class SousCommissionApc extends AbstractSousCommission implements SousCommission
 
         $this->sousCommissionEtudiant = [];
         if ($semestre->isPair()) {
-            $uesSemestrePrecedent = $semestre->getPrecedent()?->getUes();
+            //$uesSemestrePrecedent = $semestre->getPrecedent()?->getUes();
+            foreach ($semestre->getSemestreLienDepart() as $semLien) {
+                if ($semLien->getSens() === SemestreLienEnum::PRECEDENT) {
+                    $this->semestrePrecedent = $semLien->getSemestreArrive();
+                    $uesSemestrePrecedent = $semLien->getSemestreArrive()->getUes();
+                }
+            }
         }
 
         foreach ($this->etudiants as $etudiant) {
             $etudiantSousCommission = new EtudiantSousCommissionApc($etudiant, $semestre, $this->ues,
-                $uesSemestrePrecedent);
+                $uesSemestrePrecedent, $this->semestrePrecedent);
 
             // récupérer les notes et calculer la moyenne des matières (sans pénalité)
             $this->etudiantNotes->setEtudiant($etudiant);
