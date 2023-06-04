@@ -1,10 +1,10 @@
 <div class="col-md-12 col-lg-12  col-sm-12">
-    <div class="card">
+    <div class="card administration">
         <header class="card-header">
             <h2 class="card-title">{{ 'adm.etudiants'|trans }}</h2>
         </header>
 
-        <div class="card-body administration">
+        <div class="card-body">
             {{ render_esi(controller(
                 'App\\Controller\\administration\\AbsenceController::listeTempsReel'
             )) }}
@@ -14,10 +14,12 @@
                     <div class="admin_links_bloc_header">
                         <i class="fa-solid fa-user-graduate fa-2x"></i>
                         <h4>Formation Continue</h4>
-                        <p>Gestion des absences, des notes, des étudiants, des fins de semestres,
-                            des alternances et des PPN</p>
+                        <small>Gestion des absences, des notes, des étudiants, des fins de semestres,
+                            des alternances et des PPN</small>
                     </div>
+
                     <hr>
+
                     {% for semestre in user_data.semestres|filter(semestre => semestre.actif == true) %}
 
                         {% if semestre.annee.optAlternance == true %}
@@ -29,15 +31,16 @@
                     {% endfor %}
                 </div>
 
-                <div class="col-lg-3 col-10 d-grid d-block mb-2 etudiant_bloc">
+
+                                <div class="col-lg-3 col-10 d-grid d-block mb-2 etudiant_bloc">
                     <div class="admin_links_bloc_header">
                         <i class="fa-solid fa-user-graduate fa-2x"></i>
                         <h4>Formation Initiale</h4>
-                        <p>Gestion des absences, des notes, des étudiants, des fins de semestres,
-                            des
-                            stages</p>
+                        <small>Gestion des absences, des notes, des étudiants, des fins de semestres, des stages</small>
                     </div>
+
                     <hr>
+
                     {% for semestre in user_data.semestres|filter(semestre => semestre.actif == true) %}
 
                         {% if semestre.annee.optAlternance == false %}
@@ -53,17 +56,19 @@
                     <div class="admin_links_bloc_header">
                         <i class="fa-solid fa-users fa-2x"></i>
                         <h4>Général</h4>
-                        <p>Gestion des différents semestres</p>
+                        <small>Gestion des différents semestres</small>
                     </div>
+
                     <hr>
+
                     <a href="{{ path('administration_etudiant_index') }}">Tous les étudiants</a>
                     <a href="{{ path('administration_cohorte_index') }}">Cohortes</a>
                     <a href="{{ path('administration_statistique_index') }}">Statistiques</a>
                     <a href="{{ path('administration_sous_commission_mise_a_jour') }}">Mise à jour d’une sous-commission</a>
                     <a href="{{ path('administration_etudiant_semestre_add') }}" methods="_POST">Ajouter des étudiants</a>
                 </div>
-            </div>
 
+            </div>
         </div>
     </div>
 </div>
