@@ -2,6 +2,39 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.11.36](https://github.com/Dannebicque/intranetV3/compare/v3.11.35...v3.11.36) (2023-06-04)
+
+
+### Features
+
+* API pour Unifolio ([56d64b9](https://github.com/Dannebicque/intranetV3/commit/56d64b9e87fafc479e0fa46518cc58e5dd334419))
+* API pour Unifolio ([03c9be5](https://github.com/Dannebicque/intranetV3/commit/03c9be584e6de58863caca37c2147972066dff9a))
+* API pour Unifolio ([0a03216](https://github.com/Dannebicque/intranetV3/commit/0a032165b5579f5cf7e96080b0aba87f0383f3f1))
+
+
+### Bug Fixes
+
+* [Administration] affichage dynamique des semestres ([8c869be](https://github.com/Dannebicque/intranetV3/commit/8c869be9a05e9193977377d033e30deab184661f))
+* [Administration] gestion alternances + stages ([63c8eef](https://github.com/Dannebicque/intranetV3/commit/63c8eef1d915286f49682195555395f261df7896))
+* [Administration] gestion alternances + stages ([150e689](https://github.com/Dannebicque/intranetV3/commit/150e689fb5fd84363a4494af44555577a703ec32))
+* [Administration] gestion semestre initale ([3661438](https://github.com/Dannebicque/intranetV3/commit/36614381fc99e7632cf4f079c3765fd73914f168))
+* [Administration] lien gestion de semestre ([95982ab](https://github.com/Dannebicque/intranetV3/commit/95982abf44edfcb32166db609c074ee560c249a8))
+* [Administration] refonte ([e1bba4d](https://github.com/Dannebicque/intranetV3/commit/e1bba4d86a2c10c06dccdd7050d2232550a16c04))
+* API pour Unifolio ([772b013](https://github.com/Dannebicque/intranetV3/commit/772b01357f7e3a1348954a003ace872543b366b8))
+* API pour Unifolio ([66873e8](https://github.com/Dannebicque/intranetV3/commit/66873e8e23575046747a7771a4f70881950b3d01))
+* API pour Unifolio ([ed557aa](https://github.com/Dannebicque/intranetV3/commit/ed557aaaf159bd60edc5a24dfab953c073720ad2))
+* API pour Unifolio ([d15e831](https://github.com/Dannebicque/intranetV3/commit/d15e83186820385a4b8d680be585d290a2f08845))
+* API pour Unifolio ([0bbeea2](https://github.com/Dannebicque/intranetV3/commit/0bbeea247c69f25e04689cedd2d9739816c1a002))
+* API pour Unifolio ([26a358e](https://github.com/Dannebicque/intranetV3/commit/26a358e21bec7eb19fa42878e5ed50049a6c2743))
+* API pour Unifolio ([b17b21c](https://github.com/Dannebicque/intranetV3/commit/b17b21cf7338d153be87eb9482dbd00a61e30000))
+* API pour Unifolio ([aac77b9](https://github.com/Dannebicque/intranetV3/commit/aac77b9a5e303eae04d7cc54b28bc27516c3c51d))
+* Api UniFolio ([c7ac33d](https://github.com/Dannebicque/intranetV3/commit/c7ac33d3fb639aad20f08cde6c6f18d174c9c946))
+* Api UniFolio ([28499e5](https://github.com/Dannebicque/intranetV3/commit/28499e57dd3b27c25648860fb55ba5673eff1f9f))
+* Api UniFolio ([60d52b1](https://github.com/Dannebicque/intranetV3/commit/60d52b1e33ca4a861d4709ce66a91df33135cf0d))
+* Api UniFolio récupération des groupes ([1750905](https://github.com/Dannebicque/intranetV3/commit/17509052ddfb7e1fca6707874918cffc549120c0))
+* rrefonte partie admin ([afcbc93](https://github.com/Dannebicque/intranetV3/commit/afcbc937e03a9bb0d20e189b211c04c0fcc2b493))
+* Sous commission live et export ([852370b](https://github.com/Dannebicque/intranetV3/commit/852370b4de045162658c3029e6970d29ea6556a5))
+
 ### [3.11.35](https://github.com/Dannebicque/intranetV3/compare/v3.11.34...v3.11.35) (2023-06-03)
 
 
