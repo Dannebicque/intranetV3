@@ -1,7 +1,7 @@
 {% extends 'base-super_admin.html.twig' %}
 
 {% block header %}
-    {{ 'enquete.index.heading'|trans }}
+    {{ 'enquete.index.heading'|trans }} | {{ typeDestinataire == 'etudiant' ? 'Etudiants' : typeDestinataire == 'personnel' ? 'Personnels' : 'Extérieurs' }}
 {% endblock %}
 
 {% block headeractions %}
@@ -30,7 +30,8 @@
 
 {% block content %}
     <div class="card">
-        <h4 class="card-title">{{ 'enquete.index.heading'|trans }}</h4>
+        <h4 class="card-title">{{ 'enquete.index.heading'|trans }}
+            | {{ typeDestinataire == 'etudiant' ? 'Etudiants' : typeDestinataire == 'personnel' ? 'Personnels' : 'Extérieurs' }}</h4>
         <div class="card-body">
             {{ table_render(table) }}
         </div>
