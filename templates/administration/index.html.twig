@@ -19,77 +19,114 @@
 {% endblock %}
 
 {% block content %}
-    <div class="row">
-        {% if user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data
-            .isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_RP') %}
-            {% if settings('APPLICATION_COVID') == true %}
-                {{ include('administration/block_admin/_covid.html.twig') }}
-            {% endif %}
+    <div class="row block_admin">
+    {% if user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data
+        .isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_RP') %}
+        {% if settings('APPLICATION_COVID') == true %}
+            {{ include('administration/block_admin/_covid.html.twig') }}
+        {% endif %}
 
-            {{ include('administration/block_admin/_etudiant.html.twig') }}
+        {{ include('administration/block_admin/_etudiant.html.twig') }}
+        </div>
+        <div class="row block_admin">
             {{ include('administration/block_admin/_personnels.html.twig') }}
             {{ include('administration/block_admin/_ppn.html.twig') }}
+        </div>
+        <div class="row block_admin">
             {{ include('administration/block_admin/_edt.html.twig') }}
 
             {% if user_data.departement.optStage %}
                 {{ include('administration/block_admin/_stage.html.twig') }}
             {% endif %}
+        </div>
+        <div class="row block_admin">
             {{ include('administration/block_admin/_alternance.html.twig') }}
             {{ include('administration/block_admin/_bornes.html.twig') }}
+        </div>
+        <div class="row block_admin">
             {{ include('administration/block_admin/_document.html.twig') }}
             {{ include('administration/block_admin/_article.html.twig') }}
+        </div>
+        <div class="row block_admin">
             {{ include('administration/block_admin/_qualite.html.twig') }}
             {{ include('administration/block_admin/_structure.html.twig') }}
+        </div>
+        <div class="row block_admin">
             {{ include('administration/block_admin/_projet.html.twig') }}
             {{ include('administration/block_admin/_salle.html.twig') }}
-
-            {% if user_data.departement.optMateriel %}
-                {{ include('administration/block_admin/_materiel.html.twig') }}
-            {% endif %}
-        {% else %}
-            {% if user_data.isGoodDepartement('ROLE_QUALITE') %}
-                {{ include('administration/block_admin/_etudiant.html.twig') }}
+        </div>
+        <div class="row block_admin">
+        {% if user_data.departement.optMateriel %}
+            {{ include('administration/block_admin/_materiel.html.twig') }}
+        {% endif %}
+    {% else %}
+        {% if user_data.isGoodDepartement('ROLE_QUALITE') %}
+            {{ include('administration/block_admin/_etudiant.html.twig') }}
+            </div>
+            <div class="row block_admin">
+                {{ include('administration/block_admin/_qualite.html.twig') }}
                 {{ include('administration/block_admin/_personnels.html.twig') }}
+            </div>
+            <div class="row block_admin">
                 {{ include('administration/block_admin/_ppn.html.twig') }}
                 {{ include('administration/block_admin/_edt.html.twig') }}
-
+            </div>
+            <div class="row block_admin">
                 {% if user_data.departement.optStage %}
                     {{ include('administration/block_admin/_stage.html.twig') }}
                 {% endif %}
                 {{ include('administration/block_admin/_alternance.html.twig') }}
+            </div>
+            <div class="row block_admin">
                 {{ include('administration/block_admin/_projet.html.twig') }}
                 {{ include('administration/block_admin/_article.html.twig') }}
+            </div>
+            <div class="row block_admin">
                 {{ include('administration/block_admin/_document.html.twig') }}
                 {{ include('administration/block_admin/_bornes.html.twig') }}
+            </div>
+            <div class="row block_admin">
                 {{ include('administration/block_admin/_structure.html.twig') }}
                 {{ include('administration/block_admin/_salle.html.twig') }}
-            {% endif %}
-            {% if user_data.isGoodDepartement('ROLE_ABS') or user_data.isGoodDepartement('ROLE_NOTES') %}
-                {{ include('administration/block_admin/_etudiant.html.twig') }}
-            {% endif %}
+            </div>
+        {% endif %}
+        <div class="row block_admin">
+        {% if user_data.isGoodDepartement('ROLE_ABS') or user_data.isGoodDepartement('ROLE_NOTES') %}
+            {{ include('administration/block_admin/_etudiant.html.twig') }}
+        {% endif %}
 
-            {% if user_data.isGoodDepartement('ROLE_STA') %}
-                {{ include('administration/block_admin/_stage.html.twig') }}
+        {% if user_data.isGoodDepartement('ROLE_STA') %}
+            {{ include('administration/block_admin/_stage.html.twig') }}
+            </div>
+            <div class="row block_admin">
                 {{ include('administration/block_admin/_alternance.html.twig') }}
                 {{ include('administration/block_admin/_document.html.twig') }}
-            {% endif %}
-            {% if user_data.isGoodDepartement('ROLE_PRJ') %}
-                {{ include('administration/block_admin/_projet.html.twig') }}
-            {% endif %}
-            {% if user_data.isGoodDepartement('ROLE_AUTEUR') %}
-                {{ include('administration/block_admin/_article.html.twig') }}
+            </div>
+        {% endif %}
+        <div class="row block_admin">
+        {% if user_data.isGoodDepartement('ROLE_PRJ') %}
+            {{ include('administration/block_admin/_projet.html.twig') }}
+        {% endif %}
+        {% if user_data.isGoodDepartement('ROLE_AUTEUR') %}
+            {{ include('administration/block_admin/_article.html.twig') }}
+            </div>
+            <div class="row block_admin">
                 {{ include('administration/block_admin/_document.html.twig') }}
                 {{ include('administration/block_admin/_bornes.html.twig') }}
-            {% endif %}
-            {% if user_data.isGoodDepartement('ROLE_EDT') %}
-                {{ include('administration/block_admin/_personnels.html.twig') }}
-                {{ include('administration/block_admin/_ppn.html.twig') }}
-                {{ include('administration/block_admin/_edt.html.twig') }}
-            {% endif %}
+            </div>
+        {% endif %}
+        <div class="row block_admin">
+        {% if user_data.isGoodDepartement('ROLE_EDT') %}
+            {{ include('administration/block_admin/_personnels.html.twig') }}
+            {{ include('administration/block_admin/_ppn.html.twig') }}
+            </div>
+            <div class="row block_admin">
+            {{ include('administration/block_admin/_edt.html.twig') }}
+        {% endif %}
 
         {% if user_data.isGoodDepartement('ROLE_MAT') %}
             {{ include('administration/block_admin/_materiel.html.twig') }}
         {% endif %}
+        </div>
     {% endif %}
-    </div>
 {% endblock %}
