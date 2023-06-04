@@ -1,16 +1,24 @@
 <div class="col-md-6 col-lg-6 col-sm-12">
     <div class="card administration">
-        <header class="card-header">
-            <i class="fa-solid fa-hammer fa-2x"></i>
-            <h2 class="card-title">{{ 'adm.projet'|trans }}</h2>
+        <header class="card-header" style="justify-content: space-between">
+            <div class="card-header-actions">
+                <i class="fa-solid fa-hammer fa-2x"></i>
+                <h2 class="card-title">{{ 'adm.projet'|trans }}</h2>
+            </div>
+            <div class="card-header-actions">
+                <a href="{{ path('administration_projet_periode_new') }}" class="btn btn-sm btn-primary
+                   title=" Créer un projet" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                <i class="fas fa-plus" style="color: white"></i><span
+                        class="sr-only">Créer un projet</span></a>
+            </div>
         </header>
         <div class="card-body">
             <div class="row">
                 {% for periode in projetPeriodes %}
                     <div class="col-6 d-grid d-block  mb-2">
-                        <a href="{{ path('administration_projet_periode_gestion', {uuid:periode.uuidString}) }}"> Période : <strong>{{ periode.libelle }}
-                                ({% for semestre in periode.semestres %}{{ semestre.display }}{% endfor
-                                %})</strong></a>
+                        <a href="{{ path('administration_projet_periode_gestion', {uuid:periode.uuidString}) }}">
+                            Période : <strong>{{ periode.libelle }}
+                                ({% for semestre in periode.semestres %}{{ semestre.display }}{% endfor %})</strong></a>
                     </div>
                 {% else %}
                     <div class="col-sm-12">
