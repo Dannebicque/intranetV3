@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.12.0](https://github.com/Dannebicque/intranetV3/compare/v3.11.36...v3.12.0) (2023-06-04)
+
+
+### Bug Fixes
+
+* [Administration] ajout projet ([00d6f19](https://github.com/Dannebicque/intranetV3/commit/00d6f1915f8ee417b262f3691b2c0c357b0d4605))
+* [Administration] style -> alignements ([8d5457a](https://github.com/Dannebicque/intranetV3/commit/8d5457ab2f57a644f07b8a7c645d75b43cadc867))
+* Lien de retour et affichage du titre ([24c36f4](https://github.com/Dannebicque/intranetV3/commit/24c36f4b4488ce6929c2808b176b83f5c22a9ae6))
+
 ### [3.11.36](https://github.com/Dannebicque/intranetV3/compare/v3.11.35...v3.11.36) (2023-06-04)
 
 
