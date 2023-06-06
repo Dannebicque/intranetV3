@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.12.1](https://github.com/Dannebicque/intranetV3/compare/v3.12.0...v3.12.1) (2023-06-06)
+
+
+### Bug Fixes
+
+* Lien de retour et affichage du titre ([841e2ce](https://github.com/Dannebicque/intranetV3/commit/841e2ce241f3363a87806af2314b4b0fbfa80977))
+* Masquage du lien portfolio sur profil ([3983f50](https://github.com/Dannebicque/intranetV3/commit/3983f50b0bac81ec506cda51496860c314d3fc62))
+
 ## [3.12.0](https://github.com/Dannebicque/intranetV3/compare/v3.11.36...v3.12.0) (2023-06-04)
 
 
