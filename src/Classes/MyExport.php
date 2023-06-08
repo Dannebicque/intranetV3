@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 16:23
+ * @lastUpdate 08/06/2023 08:03
  */
 
 /*
@@ -15,7 +15,8 @@ namespace App\Classes;
 
 use App\Classes\Excel\MyExcelMultiExport;
 use App\Classes\Pdf\MyPDF;
-use App\Entity\Semestre;
+use App\DTO\Matiere;
+use App\Entity\Evaluation;
 use App\Exception\SemestreNotFoundException;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -49,15 +50,25 @@ class MyExport
     /**
      * @throws \App\Exception\SemestreNotFoundException
      */
-    public function genereModeleImportNote(?Semestre $semestre): ?Response
+    public function genereModeleImportNote(?Evaluation $evaluation, Matiere $matiere): ?Response
     {
-        if (null === $semestre) {
+        if (null === $evaluation) {
             throw new SemestreNotFoundException();
         }
 
-        $this->excel->genereModeleExcel($semestre);
+        if ($matiere->mutualisee === true) {
+            $this->excel->genereModeleExcelMutualise($evaluation, $matiere);
+            return $this->excel->saveXlsx('modele-import-note-' . $evaluation->getLibelle());
+        }
 
-        return $this->excel->saveXlsx('modele-import-note-'.$semestre->getLibelle());
+        $semestre = $evaluation->getSemestre();
+        if (null === $semestre) {
+            throw new SemestreNotFoundException();
+        }
+        $this->excel->genereModeleExcel($semestre);
+        return $this->excel->saveXlsx('modele-import-note-' . $semestre->getLibelle());
+
+
     }
 
     public function genereFichierJustificatifAbsence(mixed $justificatifs, string $nomFichier): StreamedResponse
