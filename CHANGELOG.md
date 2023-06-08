@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.12.2](https://github.com/Dannebicque/intranetV3/compare/v3.12.1...v3.12.2) (2023-06-08)
+
+
+### Bug Fixes
+
+* Export sur matière mutualisée ([adf2514](https://github.com/Dannebicque/intranetV3/commit/adf25145866e404c45923c461c5dffeb31b7db23))
+
 ### [3.12.1](https://github.com/Dannebicque/intranetV3/compare/v3.12.0...v3.12.1) (2023-06-06)
 
 
