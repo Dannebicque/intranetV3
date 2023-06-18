@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.12.3](https://github.com/Dannebicque/intranetV3/compare/v3.12.2...v3.12.3) (2023-06-18)
+
+
+### Bug Fixes
+
+* Récupération des groupes selon les type de groupes pouvant être sur plusieurs semestres ([28293f2](https://github.com/Dannebicque/intranetV3/commit/28293f271815efa272b0229606dd78c2572bff3b))
+* total étudiant sur moyenne évaluation ([04a392f](https://github.com/Dannebicque/intranetV3/commit/04a392f99c1fc07edaf39f8eff6599b1990ccf4d))
+
 ### [3.12.2](https://github.com/Dannebicque/intranetV3/compare/v3.12.1...v3.12.2) (2023-06-08)
 
 
