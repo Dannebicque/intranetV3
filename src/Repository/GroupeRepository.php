@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/GroupeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/10/2022 17:29
+ * @lastUpdate 18/06/2023 15:00
  */
 
 namespace App\Repository;
@@ -67,7 +67,8 @@ class GroupeRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('g')
             ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')
-            ->where('t.semestre = :semestre')
+            ->join('t.semestres', 's')
+            ->where('s.semestre = :semestre')
             ->setParameter('semestre', $semestre->getId())
             ->orderBy('t.libelle', Criteria::ASC)
             ->addOrderBy('g.libelle', Criteria::ASC);
