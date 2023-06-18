@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/GroupeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/06/2023 15:00
+ * @lastUpdate 18/06/2023 15:03
  */
 
 namespace App\Repository;
@@ -68,7 +68,7 @@ class GroupeRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('g')
             ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')
             ->join('t.semestres', 's')
-            ->where('s.semestre = :semestre')
+            ->where('s.id = :semestre')
             ->setParameter('semestre', $semestre->getId())
             ->orderBy('t.libelle', Criteria::ASC)
             ->addOrderBy('g.libelle', Criteria::ASC);
