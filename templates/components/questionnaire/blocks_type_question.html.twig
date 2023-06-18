@@ -107,14 +107,19 @@
                 <label for="quizz_question_qcu_{{ name }}_range" class="form-label">
                     Déplacer le curseur pour indiquer la valeur
                 </label>
-
+                <div class="row">
+                    <div class="col-2 text-start">{{ parametres.min }}</div>
+                    <div class="col-8"></div>
+                    <div class="col-2 text-end">{{ parametres.max }}</div>
+                </div>
                 <input type="range"
                        id="quizz_question_qcu_{{ name }}_range"
                        name="quizz_question_reponses_{{ name }}"
                        {% if reponseEtudiant != null %}value="{{ reponseEtudiant.valeur }}"{% endif %}
                         {% if obligatoire %}required{% endif %}
                         {{ stimulus_action('questionnaire--enquete', 'changeRange','change', {mode:mode}) }}
-                       class="form-range" min="{{ parametres.min }}" max="{{ parametres.max }}" step="{{ parametres.pas }}">
+                       class="form-range" min="{{ parametres.min }}" max="{{ parametres.max }}"
+                       step="{{ parametres.pas }}">
             </div>
         </div>
     </fieldset>
