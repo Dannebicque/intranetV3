@@ -342,7 +342,7 @@ adm:
     parametres.heading: Paramètres du questionnaire
     menu: Qualité
     index.heading: 'Liste des questionnaires qualité du département'
-    show.heading: 'Détails d''un questionnaire qualité'
+    show.heading: 'Détails du questionnaire : %titre%'
     apercu.heading: 'Aperçu du questionnaire qualité'
     resultats:
       affiche.heading: 'Résultats du questionnaire'

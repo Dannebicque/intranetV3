@@ -69,28 +69,37 @@
                     <li class="br-1 border-light">
                         <span class="text-muted">{{ 'contacter'|trans }}</span><br>
                         <span class="fs-22"><a href="mailto:{{ user.mailUniv }}" target="_blank"
-                                               title="{{ 'contacter.sur.mail.univ'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                               title="{{ 'contacter.sur.mail.univ'|trans }}" data-bs-toggle="tooltip"
+                                               data-bs-placement="bottom"
                             ><i class="fa fa-envelope"></i></a></span>
                     </li>
-                    <li class="br-1 border-light">
+                    {% if (is_granted('ROLE_ETUDIANT') and siteperso == true) or
+                        is_granted('ROLE_PERMANENT') %}
+                        <li class="br-1 border-light">
+                            <span class="text-muted">{{ 'espace.travail'|trans }}</span><br>
+                            {% if user.siteUniv != '' or user.siteUniv != null %}
 
-                        <span class="text-muted">{{ 'espace.travail'|trans }}</span><br>
-                        {% if user.siteUniv != '' or user.siteUniv != null %}
+                                <span class="fs-22"><a href="{{ user.siteUniv }}" target="_blank"
+                                                       title="{{ 'consulter.espace.travail'|trans }}"
+                                                       data-bs-toggle="tooltip" data-bs-placement="bottom"><i
+                                                class="fa fa-globe"></i></a></span>
+                            {% else %}
+                                <span class="fs-22"><a href="#" target="_blank"
+                                                       title="{{ 'pas.d.espace.travail'|trans }}"
+                                                       data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                       class="isDisabled"><i class="fa fa-globe"></i></a></span>
+                            {% endif %}
 
-                            <span class="fs-22"><a href="{{ user.siteUniv }}" target="_blank" title="{{ 'consulter.espace.travail'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fa fa-globe"></i></a></span>
-                        {% else %}
-                            <span class="fs-22"><a href="#" target="_blank" title="{{ 'pas.d.espace.travail'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom" class="isDisabled"><i class="fa fa-globe"></i></a></span>
-                        {% endif %}
+                            {% if user.sitePerso != '' and user.sitePerso != null %}
 
-                        {% if user.sitePerso != '' and user.sitePerso != null %}
+                                <span class="fs-22"><a href="{{ user.sitePerso }}" target="_blank"
+                                                       title="{{ 'consulter.son.site.personnel'|trans }}"
+                                                       data-bs-toggle="tooltip" data-bs-placement="bottom"><i
+                                                class="fa fa-link"></i></a></span>
+                            {% endif %}
 
-                            <span class="fs-22"><a href="{{ user.sitePerso }}" target="_blank"
-                                                   title="{{ 'consulter.son.site.personnel'|trans }}"
-                                                   data-bs-toggle="tooltip" data-bs-placement="bottom"><i
-                                            class="fa fa-link"></i></a></span>
-                        {% endif %}
-
-                    </li>
+                        </li>
+                    {% endif %}
                     {#                    <li>#}
                     {#                        <span class="text-muted">Tweets</span><br>#}
                     {#                        <span class="fs-22">165</span>#}

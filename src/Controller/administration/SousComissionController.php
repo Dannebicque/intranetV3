@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/SousComissionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/01/2023 11:29
+ * @lastUpdate 04/06/2023 09:24
  */
 
 namespace App\Controller\administration;
@@ -107,7 +107,7 @@ class SousComissionController extends BaseController
 
         return $this->render('administration/sous_commission/'.$sousCommission::TEMPLATE_LIVE, [
             'semestre' => $semestre,
-            'sousCommission' => $sousCommission, // devrait etre un DTo?
+            'sousCommission' => $sousCommission, // todo: devrait etre un DTo?
             'bacs' => $bacs,
             'stats' => $sousCommission->calculStats($bacs),
         ]);

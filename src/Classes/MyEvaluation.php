@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyEvaluation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 18/06/2023 14:38
  */
 
 /*
@@ -24,16 +24,16 @@ use App\Entity\Semestre;
 use App\Exception\MatiereNotFoundException;
 use App\Repository\EtudiantRepository;
 use App\Utils\Tools;
-use function array_key_exists;
-use function chr;
-use function count;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use function in_array;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use function array_key_exists;
+use function chr;
+use function count;
+use function in_array;
 
 /**
  * Class MyEvaluation.
@@ -73,7 +73,7 @@ class MyEvaluation
         }
 
         $tgroupes = [];
-
+        $totalEtudiants = 0;
         $t = [];
 
         /** @var Note $note */
@@ -105,12 +105,13 @@ class MyEvaluation
                 $this->statistiques[$grid]['max'] = count($tgroupes[$grid]) > 0 ? max($tgroupes[$grid]) : -0.01;
                 $this->statistiques[$grid]['moyenne'] = count($tgroupes[$grid]) > 0 ? array_sum($tgroupes[$grid]) / count($tgroupes[$grid]) : -0.01;
                 $this->statistiques[$grid]['ecart_type'] = count($tgroupes[$grid]) > 0 ? $this->ecartType($tgroupes[$grid]) : -0.01;
+                $totalEtudiants += count($tgroupes[$grid]);
             }
         }
 
         $this->statistiques['promo']['min'] = count($t) > 0 ? min($t) : -0.01;
         $this->statistiques['promo']['max'] = count($t) > 0 ? max($t) : -0.01;
-        $this->statistiques['promo']['moyenne'] = count($t) > 0 ? array_sum($t) / count($t) : -0.01;
+        $this->statistiques['promo']['moyenne'] = $totalEtudiants > 0 ? array_sum($t) / $totalEtudiants : -0.01;
         $this->statistiques['promo']['ecart_type'] = count($t) > 0 ? $this->ecartType($t) : -0.01;
         $this->statistiques['promo']['rang'] = $this->classement;
         $this->statistiques['repartition'] = $repartition;

@@ -1,7 +1,7 @@
 {% extends (is_granted('ROLE_ADMINISTRATIF')) ? 'base-super_admin.html.twig' : 'base.html.twig' %}
 
 {% block header %}
-    {{ 'adm.qualite.show.heading'|trans }}
+    {{ 'adm.qualite.show.heading'|trans({'%titre%': questionnaire.libelle}) }}
 {% endblock %}
 
 {% block headeractions %}
@@ -16,16 +16,7 @@
                 <span class="sr-only">{{ 'atitle.modifier'|trans }}</span>
             </a>
             {% if is_granted('ROLE_ADMINISTRATIF') %}
-                {% if questionnaire.semestre != null %}
-                    <a href="{{ path('sa_qualite_diplome', {diplome:questionnaire.semestre.diplome.id}) }}"
-                       class="btn btn-primary btn-float"
-                       title="{{ 'atitle.retour_liste'|trans }}"
-                       data-bs-toggle="tooltip" data-bs-placement="bottom"
-                    >
-                        <i class="fas fa-arrow-left"></i>
-                        <span class="sr-only">{{ 'atitle.retour_liste'|trans }}</span>
-                    </a>
-                {% else %}
+
                     <a href="{{ path('administratif_enquete_destinataire_index', {typeDestinataire:typeDestinataire}) }}"
                        class="btn btn-primary btn-float"
                        title="{{ 'atitle.retour_liste'|trans }}"
@@ -34,7 +25,7 @@
                         <i class="fas fa-arrow-left"></i>
                         <span class="sr-only">{{ 'atitle.retour_liste'|trans }}</span>
                     </a>
-                {% endif %}
+
             {% else %}
                 <a href="{{ path('administration_qualite_index', {type:'administration'}) }}"
                    class="btn btn-primary btn-float"
@@ -87,7 +78,7 @@
     </div>
 
     <div class="card">
-        <h4 class="card-title">{{ 'adm.qualite.show.heading'|trans }}</h4>
+        <h4 class="card-title">{{ 'adm.qualite.show.heading'|trans({'%titre%': questionnaire.libelle}) }}</h4>
         <div class="card-body">
             {{ include('questionnaire/commun/_tableauReponses.html.twig') }}
         </div>

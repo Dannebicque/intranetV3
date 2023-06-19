@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Excel/MyExcelMultiExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:52
+ * @lastUpdate 08/06/2023 08:03
  */
 
 /*
@@ -20,8 +20,6 @@ use App\Entity\Etudiant;
 use App\Entity\Evaluation;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
-use function array_key_exists;
-use function count;
 use Doctrine\Common\Collections\Collection;
 use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
 use PhpOffice\PhpSpreadsheet\Writer\Csv;
@@ -29,6 +27,8 @@ use PhpOffice\PhpSpreadsheet\Writer\Pdf\Dompdf;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use function array_key_exists;
+use function count;
 
 /**
  * Class MyExcelMultiExport.
@@ -37,7 +37,8 @@ class MyExcelMultiExport
 {
     public function __construct(
         private readonly MyExcelWriter $myExcelWriter
-    ) {
+    )
+    {
     }
 
     public function saveXlsx(string $name): StreamedResponse
@@ -52,7 +53,7 @@ class MyExcelMultiExport
             Response::HTTP_OK,
             [
                 'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-                'Content-Disposition' => 'attachment;filename="'.$name.'.xlsx"',
+                'Content-Disposition' => 'attachment;filename="' . $name . '.xlsx"',
             ]
         );
     }
@@ -71,7 +72,7 @@ class MyExcelMultiExport
         $this->myExcelWriter->getSpreadsheet()->getActiveSheet()->getHeaderFooter()
             ->setOddHeader('&C&HDocument généré depuis l\'Intranet !');
         $this->myExcelWriter->getSpreadsheet()->getActiveSheet()->getHeaderFooter()
-            ->setOddFooter('&L&B'.$this->myExcelWriter->getSpreadsheet()->getProperties()->getTitle().'&RPage &P of &N');
+            ->setOddFooter('&L&B' . $this->myExcelWriter->getSpreadsheet()->getProperties()->getTitle() . '&RPage &P of &N');
     }
 
     public function saveCsv(string $name): StreamedResponse
@@ -86,7 +87,7 @@ class MyExcelMultiExport
             Response::HTTP_OK,
             [
                 'Content-Type' => 'application/csv',
-                'Content-Disposition' => 'attachment;filename="'.$name.'.csv"',
+                'Content-Disposition' => 'attachment;filename="' . $name . '.csv"',
             ]
         );
     }
@@ -104,7 +105,7 @@ class MyExcelMultiExport
             Response::HTTP_OK,
             [
                 'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'attachment;filename="'.$name.'.pdf"',
+                'Content-Disposition' => 'attachment;filename="' . $name . '.pdf"',
             ]
         );
     }
@@ -355,6 +356,31 @@ class MyExcelMultiExport
             );
             ++$ligne;
             $colonne = 1;
+        }
+    }
+
+    public function genereModeleExcelMutualise(Evaluation $evaluation, Matiere $matiere)
+    {
+        $this->myExcelWriter->createSheet('import');
+
+        $this->myExcelWriter->writeHeader(['num_etudiant', 'nom', 'prenom', 'note', 'commentaire'], 1, 1, false);
+        $ligne = 2;
+        $colonne = 1;
+        foreach ($matiere->getSemestres() as $semestre) {
+            //todo: export brut => Trie selon les noms des étudiants + filtre selon le format des groupes (sens ??) ?
+            /** @var Etudiant $etudiant */
+            foreach ($semestre->getEtudiants() as $etudiant) {
+                if (count($etudiant->getGroupes()) > 0) {
+                    // uniquement si l'étudiant est dans un groupe.
+                    $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNumEtudiant());
+                    ++$colonne;
+                    $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getNom());
+                    ++$colonne;
+                    $this->myExcelWriter->writeCellXY($colonne, $ligne, $etudiant->getPrenom());
+                    ++$ligne;
+                    $colonne = 1;
+                }
+            }
         }
     }
 }
