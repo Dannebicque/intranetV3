@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.12.4](https://github.com/Dannebicque/intranetV3/compare/v3.12.3...v3.12.4) (2023-06-20)
+
+
+### Features
+
+* Affichage du min et du max sur slider. ([3269fbe](https://github.com/Dannebicque/intranetV3/commit/3269fbe79374c998369f66489d2e48c42b24c47c))
+
+
+### Bug Fixes
+
+* Décision sur moyenne pénalisée ([e2e1fb1](https://github.com/Dannebicque/intranetV3/commit/e2e1fb1b44883c7ff80cbc25a70ce7089ad35401))
+* Récupération des groupes selon les type de groupes pouvant être sur plusieurs semestres ([d3295c5](https://github.com/Dannebicque/intranetV3/commit/d3295c5052ce2c060db0bb5430f0583adedfbedc))
+
 ### [3.12.3](https://github.com/Dannebicque/intranetV3/compare/v3.12.2...v3.12.3) (2023-06-18)
 
 
