@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/06/2023 09:32
+ * @lastUpdate 20/06/2023 20:51
  */
 
 namespace App\Classes\SousCommission;
@@ -577,15 +577,14 @@ class SousCommissionExport
                             $this->getStyleDecisionUe($sousCommissionEtudiant->scolarite[$semPrec->getOrdreLmd()]->moyenneUes[$ue->getNumeroUe()]['decision']));
                         $colonne += 2;
                         //  $this->myExcelWriter->writeCellXY($colonne, $ligne, 'S2', ['style' => 'HORIZONTAL_CENTER']);
-                        //todo: reprendre moyenne PAC + pénalisé ou pas.
                         $this->myExcelWriter->writeCellXY($colonne, $ligne,
                             $sousCommissionEtudiant->moyenneUes[$ue->getId()]->moyennePacPenalisee,
                             ['style' => 'numerique3']);
                         $this->myExcelWriter->writeCellXY($colonne + 1, $ligne,
-                            $sousCommissionEtudiant->moyenneUes[$ue->getId()]->decision,
+                            $sousCommissionEtudiant->moyenneUes[$ue->getId()]->decisionPenalisee,
                             ['style' => 'HORIZONTAL_CENTER']);
                         $this->myExcelWriter->colorCellRange($colonne + 1, $ligne,
-                            $this->getStyleDecisionUe($sousCommissionEtudiant->moyenneUes[$ue->getId()]->decision));
+                            $this->getStyleDecisionUe($sousCommissionEtudiant->moyenneUes[$ue->getId()]->decisionPenalisee));
                         $colonne += 2;
                         // $this->myExcelWriter->writeCellXY($colonne, $ligne, 'Année', ['style' => 'HORIZONTAL_CENTER']);
                         $this->myExcelWriter->writeCellXY($colonne, $ligne,
