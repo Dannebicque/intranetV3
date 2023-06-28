@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/SousCommissionTravail.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/06/2023 13:05
+ * @lastUpdate 28/06/2023 13:08
  */
 
 namespace App\DTO;
@@ -16,19 +16,19 @@ use App\Entity\Semestre;
 
 class SousCommissionTravail
 {
-    private array $tEtudiants;
-    private array $tMatieres;
-    private array $tUes;
+    private array $tEtudiants = [];
+    private array $tMatieres = [];
+    private array $tUes = [];
 
     /**
      * SousCommissionTravail constructor.
      *
-     * @param \App\Entity\Ue[]       $ues
-     * @param \App\Entity\Matiere[]  $matieres
+     * @param \App\Entity\Ue[] $ues
+     * @param \App\Entity\Matiere[] $matieres
      * @param \App\Entity\Etudiant[] $etudiants
      */
     public function __construct(
-        public Semestre $semestre,
+        public Semestre           $semestre,
         public AnneeUniversitaire $anneeUniversitaire,
         public array $ues,
         public array $matieres,
@@ -47,7 +47,7 @@ class SousCommissionTravail
             }
         }
         dump($this->tMatieres);
-        die();
+
     }
 
     public function etudiant(int $id): ?\App\Entity\Scolarite
