@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/SousCommissionTravail.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/06/2023 13:08
+ * @lastUpdate 28/06/2023 13:09
  */
 
 namespace App\DTO;
@@ -46,8 +46,6 @@ class SousCommissionTravail
                 }
             }
         }
-        dump($this->tMatieres);
-
     }
 
     public function etudiant(int $id): ?\App\Entity\Scolarite
