@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/SousCommissionTravail.php
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/SousCommissionTravail.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:41
+ * @lastUpdate 28/06/2023 13:05
  */
 
 namespace App\DTO;
@@ -46,6 +46,8 @@ class SousCommissionTravail
                 }
             }
         }
+        dump($this->tMatieres);
+        die();
     }
 
     public function etudiant(int $id): ?\App\Entity\Scolarite
