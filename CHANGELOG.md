@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.12.7](https://github.com/Dannebicque/intranetV3/compare/v3.12.6...v3.12.7) (2023-07-04)
+
+
+### Bug Fixes
+
+* ACCÈS ([53be95d](https://github.com/Dannebicque/intranetV3/commit/53be95d9f7e6d6adab7e779fe48807544ed982e9))
+* ACCÈS ([da54c3d](https://github.com/Dannebicque/intranetV3/commit/da54c3dbc86c7954cbbb50bbf3153f2690158f8e))
+* Export Sous Comm ([d01e414](https://github.com/Dannebicque/intranetV3/commit/d01e4145f877829ea43ac57eeba50b102aa77c19))
+* Export Sous Comm ([4b298ac](https://github.com/Dannebicque/intranetV3/commit/4b298ac76ad4545878254a4884cb1f8ac406d754))
+* Export Sous Comm ([92cdeb7](https://github.com/Dannebicque/intranetV3/commit/92cdeb79f571f4fadb2f9c354a9061e8bcb660da))
+* Typgae ApcParcours ([ca21a0d](https://github.com/Dannebicque/intranetV3/commit/ca21a0d291667365b7d54cade0e91d41cf33b936))
+
 ### [3.12.6](https://github.com/Dannebicque/intranetV3/compare/v3.12.5...v3.12.6) (2023-06-26)
 
 
