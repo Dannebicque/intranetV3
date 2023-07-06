@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AlternanceFicheSuiviController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 26/06/2023 22:51
  */
 
 namespace App\Controller\administration;
@@ -65,7 +65,7 @@ class AlternanceFicheSuiviController extends BaseController
     #[Route(path: '/{id}', name: 'administration_alternance_fiche_suivi_show', methods: ['GET'])]
     public function show(AlternanceFicheSuivi $alternanceFicheSuivi): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $alternanceFicheSuivi->getAlternance()?->getAnnee());
+        //$this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $alternanceFicheSuivi->getAlternance()?->getAnnee());
 
         return $this->render('administration/alternance_fiche_suivi/show.html.twig', [
             'alternance_fiche_suivi' => $alternanceFicheSuivi,

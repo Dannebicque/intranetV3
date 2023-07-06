@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AlternanceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/12/2022 14:51
+ * @lastUpdate 26/06/2023 22:54
  */
 
 namespace App\Controller\administration;
@@ -20,12 +20,12 @@ use App\Entity\Personnel;
 use App\Form\AlternanceType;
 use App\Repository\AlternanceRepository;
 use App\Repository\EtudiantRepository;
-use function count;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function count;
 
 #[Route(path: '/administration/alternance')]
 class AlternanceController extends BaseController
@@ -113,7 +113,7 @@ class AlternanceController extends BaseController
     #[Route(path: '/details/{id}', name: 'administration_alternance_show', methods: 'GET')]
     public function show(Alternance $alternance): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $alternance->getAnnee());
+       // $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $alternance->getAnnee());
 
         return $this->render('administration/alternance/show.html.twig', ['alternance' => $alternance]);
     }

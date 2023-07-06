@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/SousCommissionTravail.php
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/SousCommissionTravail.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:41
+ * @lastUpdate 28/06/2023 13:09
  */
 
 namespace App\DTO;
@@ -16,19 +16,19 @@ use App\Entity\Semestre;
 
 class SousCommissionTravail
 {
-    private array $tEtudiants;
-    private array $tMatieres;
-    private array $tUes;
+    private array $tEtudiants = [];
+    private array $tMatieres = [];
+    private array $tUes = [];
 
     /**
      * SousCommissionTravail constructor.
      *
-     * @param \App\Entity\Ue[]       $ues
-     * @param \App\Entity\Matiere[]  $matieres
+     * @param \App\Entity\Ue[] $ues
+     * @param \App\Entity\Matiere[] $matieres
      * @param \App\Entity\Etudiant[] $etudiants
      */
     public function __construct(
-        public Semestre $semestre,
+        public Semestre           $semestre,
         public AnneeUniversitaire $anneeUniversitaire,
         public array $ues,
         public array $matieres,
