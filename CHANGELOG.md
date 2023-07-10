@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.12.9](https://github.com/Dannebicque/intranetV3/compare/v3.12.8...v3.12.9) (2023-07-10)
+
+
+### Bug Fixes
+
+* AutoComplete sur add prévisionnel ([4c37b23](https://github.com/Dannebicque/intranetV3/commit/4c37b23d34f9a3ff4b30bb619f488ead8cac363e))
+
 ### [3.12.8](https://github.com/Dannebicque/intranetV3/compare/v3.12.7...v3.12.8) (2023-07-10)
 
 
