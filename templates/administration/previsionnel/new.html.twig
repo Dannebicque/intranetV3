@@ -26,11 +26,13 @@
                     <div class="col-md-6 col-sm-12">
                         <div class="form-group">
                             <label class="form-label required" for="previsionnel_matiere">{{ 'choisir.matiere'|trans }}</label>
-                            <select class="form-select selectpicker" id="previsionnel_matiere" name="previsionnel_matiere">
+                            <select class="form-select selectpicker"
+                                    {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
+                                    id="previsionnel_matiere" name="previsionnel_matiere">
                                 <option value="">{{ 'choisir.matiere'|trans }}</option>
                                 {% for matiere in matieres %}
                                     <option value="{{ matiere.typeIdMatiere }}">
-                                        {{ matiere.display }}
+                                        {{ matiere.display }} ({{ matiere.codeElement }})
                                     </option>
                                 {% endfor %}
                             </select>
@@ -122,73 +124,6 @@
                         <td style="background-color: #FFC052" id="ind_tp_1">0</td>
                     </tr>
 
-                    <tr id="ligneAdd">
-                        <td colspan="6">
-                            &nbsp;
-                        </td>
-                        <td colspan="4">
-                            <div class="d-grid">
-                            <button class="btn d-block btn-primary" id="addIntervenantPrevisionnel"><i
-                                        class="fas fa-plus"></i>{{ 'ajouter.intervenant'|trans }}
-                            </button>
-                            </div>
-                        </td>
-                    </tr>
-                    </tbody>
-                    <tfoot>
-                    <tr>
-                        <td rowspan="2">{{ 'synthese'|trans }}</td>
-                        <td colspan="2">{{ 'total.cm'|trans }}</td>
-                        <td id="totalCm">0</td>
-                        <td style="background-color: #68C39F" colspan="2">{{ 'total.td'|trans }}</td>
-                        <td style="background-color: #68C39F" id="totalTd">0</td>
-                        <td style="background-color: #FFC052" colspan="2">{{ 'total.tp'|trans }}</td>
-                        <td style="background-color: #FFC052" id="totalTp">0</td>
-                    </tr>
-                    <tr>
-
-                        <td colspan="2">{{ 'total.eq.td'|trans }}</td>
-                        <td id="totalEqTd">0</td>
-                        <td colspan="2">{{ 'total.etudiant'|trans }}</td>
-                        <td id="totalEtu">0</td>
-                        <td colspan="3">&nbsp;</td>
-                        {#                        <td colspan="2">{{ 'total.matiere'|trans }}</td>#}
-                        {#                        <td id="totalMatiere">0</td>#}
-                    </tr>
-                    <tr>
-                        <td rowspan="2">{{ 'verificiation'|trans }}</td>
-                        <td colspan="3">{{ 'cm.maquette'|trans }}</td>
-                        <td style="background-color: #68C39F" colspan="3">{{ 'td.maquette'|trans }}</td>
-                        <td style="background-color: #FFC052" colspan="3">{{ 'table.ppn.maquette'|trans }}</td>
-                    </tr>
-                    <tr>
-                        <td id="cmMaquette">Choisir</td>
-                        <td id="totalHeuresCm">une</td>
-                        <td id="diffCm">matière</td>
-                        <td id="tdMaquette" style="background-color: #68C39F">Choisir</td>
-                        <td id="totalHeuresTd" style="background-color: #68C39F">une</td>
-                        <td id="diffTd" style="background-color: #68C39F">matière</td>
-                        <td id="tpMaquette" style="background-color: #FFC052">Choisir</td>
-                        <td id="totalHeuresTp" style="background-color: #FFC052">une</td>
-                        <td id="diffTp" style="background-color: #FFC052">matière</td>
-                    </tr>
-                    </tfoot>
-
-                </table>
-
-                <div class="form-group">
-                    <label class="form-label"
-                           for="previsionnel_commentaire">{{ 'label.previsionnel_commentaire'|trans }}</label>
-                    <textarea name="previsionnel_commentaire"
-                              id="previsionnel_commentaire"
-                              class="form-control"
-                              rows="4"
-                              placeholder="Indiquez vos commentaires ici... Uniquement les contraintes d'organisation du module, le déroulement des évaluations, ..."></textarea>
-                </div>
-
-                <button class="btn btn-success">{{ 'sauvegarder'|trans }}</button>
-            </form>
-        </div>
     </div>
 {% endblock %}
 
