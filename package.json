@@ -48,7 +48,7 @@
     "html-loader": "^3.0.1",
     "jquery": "^3.5.1",
     "sweetalert2": "^9.17.0",
-    "tinymce": "^5.9.0",
+    "tinymce": "^5.10.7",
     "tom-select": "^2.2.2",
     "webpack-notifier": "^1.6.0",
     "stimulus-use": "^0.50.0"
