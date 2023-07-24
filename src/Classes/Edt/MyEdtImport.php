@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/07/2023 11:11
+ * @lastUpdate 24/07/2023 11:31
  */
 
 /*
@@ -126,15 +126,10 @@ class MyEdtImport
                 }
             }
 
-            // fin de fichier
-            /* On ferme le fichier */
-
             fclose($handle);
             unlink($this->nomfile); // suppression du fichier
             $this->entityManager->flush();
         }
-
-        // erreur lors de l'ouverture du fichier
     }
 
     private function traiteLigne(array $phrase): void
@@ -144,11 +139,6 @@ class MyEdtImport
         $semestre = $phrase[4];
         $this->verifieSiSemaineDoitEtreEffacee($semestre);
         $this->addCours($phrase, $semestre);
-    }
-
-    public function getSemaine()
-    {
-        return $this->semaine;
     }
 
     public function getSemestre(): ?Semestre
@@ -265,6 +255,13 @@ class MyEdtImport
         } elseif ($typecours === 'TP' && strlen($groupes) === 1) {
             //TP classique
             $pl->setGroupe(ord($groupes[0]) - 64);
+        } elseif ($typecours === 'CM' && str_starts_with($typeGroupeComplement, 'FI')) {
+            //S3 CM sur les deux groupes FI, on a donc groupes = ABCD
+            if (ord($groupes[0]) === ord($groupes[strlen($groupes) - 1]) - 1) {
+                $pl->setGroupe(ord($groupes[0]) - 64); // deux lettre qui se suivent, donc TD classique ou CM particulier
+            } else {
+                $pl->setGroupe(40 + ord($groupes[0]) - 64); // on ajoute 40 pour indiquer que c'est sur 4 ?
+            }
         }
     }
 }
