@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/07/2023 11:31
+ * @lastUpdate 24/07/2023 18:25
  */
 
 /*
@@ -70,7 +70,7 @@ class MyEdtImport
     /**
      * @throws Exception
      */
-    public function init($file, Departement $departement, AnneeUniversitaire $anneeUniversitaire): self
+    public function init(string $file, Departement $departement, AnneeUniversitaire $anneeUniversitaire): self
     {
         $this->departement = $departement;
         $this->anneeUniversitaire = $anneeUniversitaire;
@@ -93,11 +93,11 @@ class MyEdtImport
 
         /* Si on a réussi à ouvrir le fichier */
         if ($handle) {
-            $phrase = fgetcsv($handle, 1024, ","); //lire la première ligne de titre pour la supprimer
+            fgetcsv($handle, 1024); //lire la première ligne de titre pour la supprimer
             /* Tant que l'on est pas à la fin du fichier */
             while (!feof($handle)) {
                 /* On lit la ligne courante */
-                $phrase = fgetcsv($handle, 1024, ",");
+                $phrase = fgetcsv($handle, 1024);
                 /*
                  * 0 => semaine,
                  * 1 => jour,
@@ -151,7 +151,7 @@ class MyEdtImport
         return $this->calendrier;
     }
 
-    private function clearSemaine($semaine, string $semestre): void
+    private function clearSemaine(string $semaine, string $semestre): void
     {
         $ordreSemestre = (int)mb_substr($semestre, 1, 1);
         $sem = $this->edtPlanningRepository->findBy([
@@ -166,7 +166,7 @@ class MyEdtImport
         $this->entityManager->flush();
     }
 
-    private function convertToDate($jour): CarbonInterface
+    private function convertToDate(int $jour): CarbonInterface
     {
         return $this->calendrier->getDateLundi()->addDays($jour - 1);
     }
@@ -182,7 +182,7 @@ class MyEdtImport
         }
     }
 
-    private function addCours(array $phrase, string $semestre)
+    private function addCours(array $phrase, string $semestre): void
     {
         /*
          * 0 => semaine,
@@ -202,7 +202,7 @@ class MyEdtImport
 
         $jour = $phrase[1];
         $heure = $phrase[2]; // a convertir
-        $date = $this->convertToDate($jour);
+        $date = $this->convertToDate((int)$jour);
         $prof = $phrase[8];
         $ordreSemestre = (int)mb_substr($semestre, 1, 1);
         $matiere = $phrase[6];
@@ -215,7 +215,7 @@ class MyEdtImport
             $pl->setTypeMatiere($this->tabMatieres[$matiere]->typeMatiere);
             $pl->setTexte(null);
         } else {
-            $pl->setTexte((string)utf8_encode($phrase[7]));
+            $pl->setTexte(utf8_encode($phrase[7]));
         }
         if ('' !== $prof && 'DOE' !== $prof && 'PRJ' !== $prof && array_key_exists($prof, $this->tabIntervenants)) {
             $pl->setIntervenant($this->tabIntervenants[$prof]);
