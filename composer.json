@@ -18,7 +18,7 @@
     "endroid/qr-code-bundle": "^4.0",
     "erusev/parsedown": "^1.7",
     "friendsofsymfony/jsrouting-bundle": "^3.1",
-    "jasig/phpcas": "^1.6",
+    "apereo/phpcas": "^1.6",
     "knplabs/knp-snappy-bundle": "^1.8",
     "liip/imagine-bundle": "^2.9",
     "nesbot/carbon": "^2.64",
@@ -28,7 +28,6 @@
     "phpoffice/phpword": "^0.18",
     "phpstan/phpdoc-parser": "^1.14",
     "ramsey/uuid-doctrine": "^1.8",
-    "sensio/framework-extra-bundle": "^6.2",
     "symfony/asset": "^6.2",
     "symfony/console": "^6.2",
     "symfony/doctrine-messenger": "^6.2",
@@ -140,8 +139,8 @@
   },
   "repositories": [
     {
-      "type": "vcs",
-      "url": "https://github.com/Dannebicque/TableBundle.git"
+      "type": "path",
+      "url": "../TableBundle"
     }
   ]
 }
