@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Twig/SousCommissionExtension.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/06/2022 15:09
+ * @lastUpdate 25/07/2023 22:23
  */
 
 namespace App\Twig;
@@ -19,11 +19,11 @@ class SousCommissionExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('styleMoyenne', [$this, 'styleMoyenne'], ['is_safe' => ['html']]),
-            new TwigFilter('styleMatiere', [$this, 'styleMatiere'], ['is_safe' => ['html']]),
-            new TwigFilter('styleDecision', [$this, 'styleDecision'], ['is_safe' => ['html']]),
-            new TwigFilter('styleAbsences', [$this, 'styleAbsences'], ['is_safe' => ['html']]),
-            new TwigFilter('styleBonification', [$this, 'styleBonification'], ['is_safe' => ['html']]),
+            new TwigFilter('styleMoyenne', $this->styleMoyenne(...), ['is_safe' => ['html']]),
+            new TwigFilter('styleMatiere', $this->styleMatiere(...), ['is_safe' => ['html']]),
+            new TwigFilter('styleDecision', $this->styleDecision(...), ['is_safe' => ['html']]),
+            new TwigFilter('styleAbsences', $this->styleAbsences(...), ['is_safe' => ['html']]),
+            new TwigFilter('styleBonification', $this->styleBonification(...), ['is_safe' => ['html']]),
         ];
     }
 

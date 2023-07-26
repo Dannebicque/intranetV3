@@ -18,7 +18,6 @@ use App\Repository\PersonnelDepartementRepository;
 use App\Repository\PersonnelRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -165,8 +164,8 @@ class SecurityController extends AbstractController
     }
 
     #[Route(path: '/change-departement/{departement}', name: 'security_change_departement', options: ['expose' => true])]
-    #[ParamConverter('departement', options: ['mapping' => ['departement' => 'uuid']])]
-    public function changeDepartement(Request $request, RequestStack $session, Departement $departement): Response
+    public function changeDepartement(Request $request, RequestStack $session, #[\Symfony\Bridge\Doctrine\Attribute\MapEntity(mapping: ['departement' => 'uuid'])]
+    Departement                               $departement): Response
     {
         $session->getSession()->set('departement', $departement->getUuidString());
 

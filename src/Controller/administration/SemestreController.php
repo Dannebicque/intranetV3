@@ -26,7 +26,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class SemestreController extends BaseController
 {
     #[Route(path: '/active/{semestre}/{actif}', name: 'administration_semestre_actif', methods: ['GET'])]
-    public function activeSemestreAction(Semestre $semestre, bool $actif): RedirectResponse
+    public function activeSemestre(Semestre $semestre, bool $actif): RedirectResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
         $semestre->setActif($actif);

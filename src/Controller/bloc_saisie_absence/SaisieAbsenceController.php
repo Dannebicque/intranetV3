@@ -9,6 +9,7 @@
 
 namespace App\Controller\bloc_saisie_absence;
 
+use App\Classes\Absences\AbsenceEtatAppel;
 use App\Classes\Etudiant\EtudiantAbsences;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Controller\BaseController;
@@ -16,19 +17,21 @@ use App\DTO\EvenementEdt;
 use App\DTO\Matiere;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
+use App\Repository\AbsenceEtatAppelRepository;
 use App\Repository\AbsenceRepository;
 use App\Repository\TypeGroupeRepository;
 use App\Utils\Tools;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+use function count;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use function count;
 
 #[Route(path: '/application/personnel/absence/ajax')]
-#[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_PERMANENT')]
+#[IsGranted('ROLE_PERMANENT')]
 class SaisieAbsenceController extends BaseController
 {
     public function index(
@@ -56,6 +59,7 @@ class SaisieAbsenceController extends BaseController
 
         $typeGroupes = $semestre->getTypeGroupess();
 
+
         return $this->render('bloc_saisie_absence/_saisie_absence.html.twig', [
             'matiere' => $matiere,
             'semestre' => $semestre,
@@ -71,13 +75,15 @@ class SaisieAbsenceController extends BaseController
         ]);
     }
 
-    /**
-     * @return JsonResponse|Response
-     */
     #[Route(path: '/saisie/{matiere}/{etudiant}', name: 'application_personnel_absence_saisie_ajax', options: ['expose' => true], methods: 'POST')]
-    public function ajaxSaisie(TypeMatiereManager $typeMatiereManager, EtudiantAbsences $etudiantAbsences, AbsenceRepository $absenceRepository, Request $request, string $matiere, Etudiant $etudiant): JsonResponse|Response
+    public function ajaxSaisie(
+        TypeMatiereManager $typeMatiereManager,
+        EtudiantAbsences   $etudiantAbsences,
+        AbsenceRepository  $absenceRepository,
+        Request            $request, string $matiere,
+        Etudiant           $etudiant): JsonResponse|Response
     {
-        //todo: dupliqué avec app et Admin??
+        // todo: dupliqué avec app et Admin??
         $mat = $typeMatiereManager->getMatiereFromSelect($matiere);
         $semestre = $etudiant->getSemestre();
         if (null !== $mat && null !== $semestre) {

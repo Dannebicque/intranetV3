@@ -13,7 +13,7 @@ use App\Classes\Hrs\HrsManager;
 use App\Classes\Previsionnel\PrevisionnelManager;
 use App\Classes\Previsionnel\PrevisionnelSynthese;
 use App\Entity\Personnel;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -24,8 +24,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProfilPersonnelController extends BaseController
 {
     #[Route(path: '/profil/{slug}/actions', name: 'profil_personnel_action')]
-    #[ParamConverter('personnel', options: ['mapping' => ['slug' => 'slug']])]
-    public function actions(Personnel $personnel): Response
+    public function actions(#[MapEntity(mapping: ['slug' => 'slug'])]
+                            Personnel $personnel): Response
     {
         if (!($this->isGranted('ROLE_CDD') or $this->isGranted('ROLE_RP'))) {
             throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');
@@ -37,8 +37,8 @@ class ProfilPersonnelController extends BaseController
     }
 
     #[Route(path: '/profil/{slug}/a-propos', name: 'profil_personnel_about')]
-    #[ParamConverter('personnel', options: ['mapping' => ['slug' => 'slug']])]
-    public function about(Personnel $personnel): Response
+    public function about(#[MapEntity(mapping: ['slug' => 'slug'])]
+                          Personnel $personnel): Response
     {
         if (!($this->isGranted('ROLE_PERMANENT') or $this->getUser()->getId() === $personnel->getId())) {
             throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');
@@ -50,8 +50,8 @@ class ProfilPersonnelController extends BaseController
     }
 
     #[Route(path: '/profil/{slug}/previsionnel', name: 'profil_personnel_previsionnel')]
-    #[ParamConverter('personnel', options: ['mapping' => ['slug' => 'slug']])]
-    public function previsionnel(PrevisionnelManager $myPrevisionnel, PrevisionnelSynthese $previsionnelSynthese, HrsManager $hrsManager, Personnel $personnel): Response
+    public function previsionnel(PrevisionnelManager $myPrevisionnel, PrevisionnelSynthese $previsionnelSynthese, HrsManager $hrsManager, #[MapEntity(mapping: ['slug' => 'slug'])]
+    Personnel                                        $personnel): Response
     {
         if (!($this->isGranted('ROLE_PERMANENT') or $this->getUser()->getId() === $personnel->getId())) {
             throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');

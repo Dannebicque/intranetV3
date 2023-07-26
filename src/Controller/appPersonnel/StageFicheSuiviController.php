@@ -55,7 +55,7 @@ class StageFicheSuiviController extends BaseController
 
         return $this->render('appPersonnel/stage_fiche_suivi/new.html.twig', [
             'stage_fiche_suivi' => $stageFicheSuivi,
-            'form' => $form->createView(),
+            'form' => $form,
             'stage' => $stage,
         ]);
     }
@@ -97,7 +97,7 @@ class StageFicheSuiviController extends BaseController
 
         return $this->render('appPersonnel/stage_fiche_suivi/edit.html.twig', [
             'stage_fiche_suivi' => $stageFicheSuivi,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

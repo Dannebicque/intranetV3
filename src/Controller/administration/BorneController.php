@@ -17,6 +17,7 @@ use App\Entity\Constantes;
 use App\Form\BorneType;
 use App\Repository\BorneRepository;
 use App\Table\BorneTableType;
+use JsonException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,7 +27,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class BorneController extends BaseController
 {
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     #[Route('/', name: 'administration_borne_index', methods: ['GET', 'POST'])]
     public function index(Request $request): Response
@@ -105,7 +106,7 @@ class BorneController extends BaseController
 
         return $this->render('administration/borne/new.html.twig', [
             'borne' => $borne,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -144,7 +145,7 @@ class BorneController extends BaseController
 
         return $this->render('administration/borne/edit.html.twig', [
             'borne' => $borne,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

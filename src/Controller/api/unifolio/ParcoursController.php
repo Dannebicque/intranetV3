@@ -1,21 +1,25 @@
 <?php
+/*
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/api/unifolio/ParcoursController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 26/07/2023 08:42
+ */
 
 namespace App\Controller\api\unifolio;
 
 use App\Controller\BaseController;
-use App\Entity\ApcParcours;
 use App\Repository\ApcParcoursRepository;
-use App\Repository\ApcReferentielRepository;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 class ParcoursController extends BaseController
 {
     #[Route(path: '/api/unifolio/parcours', name: 'api_parcours_liste')]
     public function listeReferentiel(
-        Request                  $request,
         ApcParcoursRepository $parcoursRepository
-    )
+    ): JsonResponse
     {
 //        $this->checkAccessApi($request);
 

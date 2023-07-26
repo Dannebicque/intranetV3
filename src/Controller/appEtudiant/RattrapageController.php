@@ -53,7 +53,7 @@ class RattrapageController extends BaseController
         }
 
         return $this->render('appEtudiant/rattrapage/index.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form,
             'rattrapages' => $rattrapageRepository->findByEtudiant($this->getUser()),
             'matieres' => $typeMatiereManager->findBySemestreArray($this->getEtudiantSemestre()),
         ]);

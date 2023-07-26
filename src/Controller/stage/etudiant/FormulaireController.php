@@ -25,7 +25,7 @@ use App\Form\stage\StageAdresseFormType;
 use App\Repository\ContactRepository;
 use App\Repository\StageEtudiantRepository;
 use Carbon\Carbon;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -40,10 +40,10 @@ class FormulaireController extends BaseController
     // ------------------------------------------------------------------------------------------------------
 
     #[Route('/formulaire/vous/{stageEtudiant}', name: 'app_stage_etudiant_formulaire')]
-    #[ParamConverter('stageEtudiant', options: ['mapping' => ['stageEtudiant' => 'uuid']])]
     public function new_form_vous(
         StageEtudiantRepository $stageEtudiantRepository,
         Request $request,
+        #[MapEntity(mapping: ['stageEtudiant' => 'uuid'])]
         StageEtudiant $stageEtudiant
     ): Response {
         $form = $this->createForm(FormTypeVosInformations::class, $stageEtudiant, [
@@ -67,13 +67,11 @@ class FormulaireController extends BaseController
             foreach ($form->getErrors(true) as $formError) {
                 $errors[$formError->getOrigin()->getName()] = $formError->getMessage();
             }
-
-//            dump($errors);
             return $this->json($errors);
         }
 
         return $this->render('stage/formulaire/index.html.twig',
-            ['form_vous' => $form->createView(), 'step' => 1, 'stageEtudiant' => $stageEtudiant->getUuidString()]);
+            ['form_vous' => $form, 'step' => 1, 'stageEtudiant' => $stageEtudiant->getUuidString()]);
     }
 
     // -------------------------------------------2EME ETAPE-------------------------------------------------
@@ -81,10 +79,10 @@ class FormulaireController extends BaseController
     // ------------------------------------------------------------------------------------------------------
 
     #[Route('/formulaire/entreprise/{stageEtudiant}', name: 'app_formulaireEntreprise')]
-    #[ParamConverter('stageEtudiant', options: ['mapping' => ['stageEtudiant' => 'uuid']])]
     public function new_form_entreprise(
         Request $request,
         StageEtudiantRepository $stageEtudiantRepository,
+        #[MapEntity(mapping: ['stageEtudiant' => 'uuid'])]
         StageEtudiant $stageEtudiant
     ): Response {
         $form2 = $this->createForm(FormTypeEntreprise::class, $stageEtudiant, [
@@ -112,7 +110,7 @@ class FormulaireController extends BaseController
             }
         }
 
-        return $this->renderForm('stage/formulaire/index.html.twig',
+        return $this->render('stage/formulaire/index.html.twig',
             ['form_entreprise' => $form2, 'step' => 2, 'stageEtudiant' => $stageEtudiant]);
     }
 
@@ -121,10 +119,10 @@ class FormulaireController extends BaseController
     // ------------------------------------------------------------------------------------------------------
 
     #[Route('/formulaire/responsable/{stageEtudiant}', name: 'app_formulaireResponsable')]
-    #[ParamConverter('stageEtudiant', options: ['mapping' => ['stageEtudiant' => 'uuid']])]
     public function new_form_responsable(
         Request $request,
         StageEtudiantRepository $stageEtudiantRepository,
+        #[MapEntity(mapping: ['stageEtudiant' => 'uuid'])]
         StageEtudiant $stageEtudiant
     ): Response {
         if (null == $stageEtudiant->getEntreprise()->getResponsable()) {
@@ -159,7 +157,7 @@ class FormulaireController extends BaseController
             }
         }
 
-        return $this->renderForm('stage/formulaire/index.html.twig',
+        return $this->render('stage/formulaire/index.html.twig',
             ['form_responsable' => $form3, 'step' => 3, 'stageEtudiant' => $stageEtudiant]);
     }
 
@@ -168,11 +166,11 @@ class FormulaireController extends BaseController
     // ------------------------------------------------------------------------------------------------------
 
     #[Route('/formulaire/tuteur/{stageEtudiant}', name: 'app_formulaireTuteur')]
-    #[ParamConverter('stageEtudiant', options: ['mapping' => ['stageEtudiant' => 'uuid']])]
     public function new_form_tuteur(
         Request $request,
         StageEtudiantRepository $stageEtudiantRepository,
         ContactRepository $contactRepository,
+        #[MapEntity(mapping: ['stageEtudiant' => 'uuid'])]
         StageEtudiant $stageEtudiant
     ): Response {
         $form4 = $this->createForm(FormTypeTuteur::class, $stageEtudiant, [
@@ -198,7 +196,7 @@ class FormulaireController extends BaseController
             }
         }
 
-        return $this->renderForm('stage/formulaire/index.html.twig',
+        return $this->render('stage/formulaire/index.html.twig',
             ['form_tuteur' => $form4, 'step' => 4, 'stageEtudiant' => $stageEtudiant]);
     }
 
@@ -207,10 +205,10 @@ class FormulaireController extends BaseController
     // ------------------------------------------------------------------------------------------------------
 
     #[Route('/formulaire/adresse_stage/{stageEtudiant}', name: 'app_formulaireAdresseStage')]
-    #[ParamConverter('stageEtudiant', options: ['mapping' => ['stageEtudiant' => 'uuid']])]
     public function new_form_adresse_stage(
         Request $request,
         StageEtudiantRepository $stageEtudiantRepository,
+        #[MapEntity(mapping: ['stageEtudiant' => 'uuid'])]
         StageEtudiant $stageEtudiant
     ): Response {
         $form5 = $this->createForm(StageAdresseFormType::class, $stageEtudiant, [
@@ -236,15 +234,15 @@ class FormulaireController extends BaseController
             }
         }
 
-        return $this->renderForm('stage/formulaire/index.html.twig',
+        return $this->render('stage/formulaire/index.html.twig',
             ['form_adss_stage' => $form5, 'step' => 5, 'stageEtudiant' => $stageEtudiant]);
     }
 
     #[Route('/formulaire/stage/{stageEtudiant}', name: 'app_formulaireStage')]
-    #[ParamConverter('stageEtudiant', options: ['mapping' => ['stageEtudiant' => 'uuid']])]
     public function new_form_stage(
         Request $request,
         StageEtudiantRepository $stageEtudiantRepository,
+        #[MapEntity(mapping: ['stageEtudiant' => 'uuid'])]
         StageEtudiant $stageEtudiant
     ): Response {
         $form6 = $this->createForm(FormTypeStage::class, $stageEtudiant, [
@@ -269,7 +267,7 @@ class FormulaireController extends BaseController
 
         return $this->render('stage/formulaire/index.html.twig',
             [
-                'form_stage' => $form6->createView(),
+                'form_stage' => $form6,
                 'flexible' => $stageEtudiant->getStagePeriode()?->getDatesFlexibles(),
                 'step' => 6,
                 'stageEtudiant' => $stageEtudiant
@@ -331,10 +329,10 @@ class FormulaireController extends BaseController
     }
 
     #[Route('/formulaire/stage/recapitulatif/{stageEtudiant}', name: 'app_formulaireRecap')]
-    #[ParamConverter('stageEtudiant', options: ['mapping' => ['stageEtudiant' => 'uuid']])]
     public function new_form_stage_recapitulatif(
         EventDispatcherInterface $eventDispatcher,
         Request $request,
+        #[MapEntity(mapping: ['stageEtudiant' => 'uuid'])]
         StageEtudiant $stageEtudiant
     ): Response {
         if ($request->isMethod('POST')) {
@@ -350,7 +348,7 @@ class FormulaireController extends BaseController
             return $this->redirectToRoute('application_index', ['onglet' => 'stage']);
         }
 
-        return $this->renderForm('stage/formulaire/index.html.twig',
+        return $this->render('stage/formulaire/index.html.twig',
             ['step' => 7, 'stageEtudiant' => $stageEtudiant]);
     }
 }

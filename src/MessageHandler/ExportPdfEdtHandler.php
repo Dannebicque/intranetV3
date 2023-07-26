@@ -18,7 +18,8 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-class ExportPdfEdtHandler implements MessageHandlerInterface
+#[\Symfony\Component\Messenger\Attribute\AsMessageHandler]
+class ExportPdfEdtHandler
 {
     /**
      * ExportReleveHandler constructor.
@@ -31,7 +32,6 @@ class ExportPdfEdtHandler implements MessageHandlerInterface
         private readonly PersonnelRepository $personnelRepository
     ) {
     }
-
     /**
      * @throws \Twig\Error\SyntaxError
      * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface

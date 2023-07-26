@@ -18,7 +18,8 @@ use App\Event\JustificatifEvent;
 use App\Form\AbsenceJustificatifType;
 use App\Repository\AbsenceJustificatifRepository;
 use App\Table\AbsenceJustificatifTableType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use JsonException;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -28,7 +29,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 class AbsenceJustificatifController extends BaseController
 {
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     #[Route('/semestre/{semestre}', name: 'administration_absences_justificatif_semestre_liste')]
     public function justificatif(
@@ -80,7 +81,7 @@ class AbsenceJustificatifController extends BaseController
 
         return $this->render('administration/absencejustificatif/ajout.html.twig', [
             'semestre' => $semestre,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -156,8 +157,8 @@ class AbsenceJustificatifController extends BaseController
     }
 
     #[Route(path: '/show/{uuid}', name: 'administration_absence_justificatif_details')]
-    #[ParamConverter('absenceJustificatif', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function details(AbsenceJustificatif $absenceJustificatif): Response
+    public function details(#[MapEntity(mapping: ['uuid' => 'uuid'])]
+                            AbsenceJustificatif $absenceJustificatif): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $absenceJustificatif->getEtudiant()?->getSemestre());
 
@@ -167,8 +168,8 @@ class AbsenceJustificatifController extends BaseController
     }
 
     #[Route(path: '/change-etat/{uuid}/{etat}', name: 'administration_absence_justificatif_change_etat', requirements: ['etat' => 'A|R|D'], options: ['expose' => true], methods: 'GET')]
-    #[ParamConverter('absenceJustificatif', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function accepte(EventDispatcherInterface $eventDispatcher, AbsenceJustificatif $absenceJustificatif, string $etat): Response
+    public function accepte(EventDispatcherInterface $eventDispatcher, #[MapEntity(mapping: ['uuid' => 'uuid'])]
+    AbsenceJustificatif                              $absenceJustificatif, string $etat): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $absenceJustificatif->getEtudiant()?->getSemestre());
         $absenceJustificatif->setEtat($etat);

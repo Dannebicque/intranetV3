@@ -66,7 +66,7 @@ class DiplomeController extends BaseController
         return $this->render('structure/diplome/new.html.twig', [
             'diplome' => $diplome,
             'departement' => $departement,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -119,7 +119,7 @@ class DiplomeController extends BaseController
 
             return $this->render('structure/diplome/edit.html.twig', [
                 'diplome' => $diplome,
-                'form' => $form->createView(),
+                'form' => $form,
             ]);
         }
         throw new RuntimeException('Le diplôme n\'est pas attaché à un département');

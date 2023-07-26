@@ -14,7 +14,6 @@ use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Emprunt;
 use App\Repository\MaterielRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -46,7 +45,7 @@ class EmpruntController extends BaseController
     }
 
     #[Route(path: '/valide-demande', name: 'application_etudiant_emprunt_valide', methods: ['POST'])]
-    public function empruntDemandeAction(MyEmprunts $emprunt, Request $request): Response
+    public function empruntDemande(MyEmprunts $emprunt, Request $request): Response
     {
         $emprunt->empruntDemande($request, $this->getUser());
 
@@ -54,8 +53,8 @@ class EmpruntController extends BaseController
     }
 
     #[Route(path: '/details/{emprunt}', name: 'application_etudiant_emprunt_detail')]
-    #[ParamConverter('emprunt', options: ['mapping' => ['emprunt' => 'uuid']])]
-    public function show(Emprunt $emprunt): Response
+    public function show(#[\Symfony\Bridge\Doctrine\Attribute\MapEntity(mapping: ['emprunt' => 'uuid'])]
+                         Emprunt $emprunt): Response
     {
         return $this->render('appEtudiant/emprunt/show.html.twig', [
             'emprunt' => $emprunt,
@@ -68,15 +67,15 @@ class EmpruntController extends BaseController
      * @throws SyntaxError
      */
     #[Route(path: '/imprimer/{emprunt}', name: 'app_etudiant_emprunt_imprimer_fiche')]
-    #[ParamConverter('emprunt', options: ['mapping' => ['emprunt' => 'uuid']])]
-    public function imprimerFiche(MyEmprunts $myEmprunts, Emprunt $emprunt): void
+    public function imprimerFiche(MyEmprunts $myEmprunts, #[\Symfony\Bridge\Doctrine\Attribute\MapEntity(mapping: ['emprunt' => 'uuid'])]
+    Emprunt                                  $emprunt): void
     {
         $myEmprunts->genereFiche($emprunt);
     }
 
     #[Route(path: '/delete', name: 'app_etudiant_emprunt_delete', methods: ['DELETE'])]
-    #[ParamConverter('emprunt', options: ['mapping' => ['emprunt' => 'uuid']])]
-    public function delete(MyEmprunts $myEmprunts, Request $request, Emprunt $emprunt): Response
+    public function delete(MyEmprunts $myEmprunts, Request $request, #[\Symfony\Bridge\Doctrine\Attribute\MapEntity(mapping: ['emprunt' => 'uuid'])]
+    Emprunt                           $emprunt): Response
     {
         $id = $emprunt->getId();
         if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {

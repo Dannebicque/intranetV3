@@ -15,6 +15,7 @@ use App\Entity\Hrs;
 use App\Form\HrsType;
 use App\Repository\HrsRepository;
 use App\Table\HrsTableType;
+use JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,7 +24,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class HrsController extends BaseController
 {
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     #[Route(path: '/{annee}', name: 'administration_hrs_index', requirements: ['annee' => '\d+'], options: ['expose' => true], methods: 'GET|POST')]
     public function index(Request $request, ?int $annee = 0): Response
@@ -57,7 +58,7 @@ class HrsController extends BaseController
         return $this->render('administration/hrs/index.html.twig', [
             'annee' => $annee,
             'table' => $table,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -105,7 +106,7 @@ class HrsController extends BaseController
 
         return $this->render('administration/hrs/edit.html.twig', [
             'hrs' => $hrs,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

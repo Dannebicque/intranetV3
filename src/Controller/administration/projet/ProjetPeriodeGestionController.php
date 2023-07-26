@@ -15,7 +15,8 @@ use App\Classes\MySerializer;
 use App\Controller\BaseController;
 use App\Entity\ProjetPeriode;
 use App\Repository\ProjetPeriodeRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use JsonException;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -25,8 +26,10 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/administration/projet/periode/gestion')]
 class ProjetPeriodeGestionController extends BaseController
 {
+    /**
+     * @throws JsonException
+     */
     #[Route(path: '/{uuid}/export.{_format}', name: 'administration_projet_periode_gestion_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    #[ParamConverter('stagePeriode', options: ['mapping' => ['uuid' => 'uuid']])]
     public function export(
         MySerializer $mySerializer,
         MyExport $myExport, ProjetPeriode $projetPeriode, string $_format): Response
@@ -56,8 +59,8 @@ class ProjetPeriodeGestionController extends BaseController
     }
 
     #[Route(path: '/{uuid}', name: 'administration_projet_periode_gestion')]
-    #[ParamConverter('projetPeriode', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function periode(ProjetPeriodeRepository $projetPeriodeRepository, MyProjet $myProjet, ProjetPeriode $projetPeriode): Response
+    public function periode(ProjetPeriodeRepository $projetPeriodeRepository, MyProjet $myProjet, #[MapEntity(mapping: ['uuid' => 'uuid'])]
+    ProjetPeriode                                   $projetPeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestres()->first());
         $periodes = [];

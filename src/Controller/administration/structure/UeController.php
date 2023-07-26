@@ -45,7 +45,7 @@ class UeController extends BaseController
             }
 
             return $this->render('structure/ue/new.html.twig', [
-                'form' => $form->createView(),
+                'form' => $form,
             ]);
         }
 
@@ -82,7 +82,7 @@ class UeController extends BaseController
 
             return $this->render('structure/ue/edit.html.twig', [
                 'ue' => $ue,
-                'form' => $form->createView(),
+                'form' => $form,
             ]);
         }
 

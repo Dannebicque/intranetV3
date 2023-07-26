@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Graphs/Twig/GraphExtension.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 25/07/2023 22:21
  */
 
 namespace App\Components\Graphs\Twig;
@@ -28,7 +28,7 @@ class GraphExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('graph_render', [$this->renderer, 'render'], [
+            new TwigFunction('graph_render', $this->renderer->render(...), [
                 'is_safe' => ['html'],
             ]),
         ];

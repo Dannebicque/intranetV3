@@ -41,7 +41,7 @@ class ApcSituationProfessionnelleController extends BaseController
 
         return $this->render('apc/apc_situation_professionnelle/new.html.twig', [
             'apc_situation_professionnelle' => $apcSituationProfessionnelle,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -63,7 +63,7 @@ class ApcSituationProfessionnelleController extends BaseController
 
         return $this->render('apc/apc_situation_professionnelle/edit.html.twig', [
             'apc_situation_professionnelle' => $apcSituationProfessionnelle,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

@@ -170,7 +170,7 @@ class CreationController extends BaseController
                 break;
         }
 
-        return $this->renderForm('questionnaire/creation/step/_step.html.twig', [
+        return $this->render('questionnaire/creation/step/_step.html.twig', [
             'step' => $step,
             'questionnaire' => $questionnaire,
             'form' => $form,

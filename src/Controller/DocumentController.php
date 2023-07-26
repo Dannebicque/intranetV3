@@ -13,7 +13,7 @@ use App\Classes\MyDocument;
 use App\Entity\Document;
 use App\Repository\DocumentRepository;
 use App\Repository\TypeDocumentRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -118,8 +118,8 @@ class DocumentController extends BaseController
     #[Route(path: '{source}/ajax/add-favori/{document}', name: 'add_favori', requirements: [
         'source' => 'document|originaux',
     ], options: ['expose' => true])]
-    #[ParamConverter('document', options: ['mapping' => ['document' => 'uuid']])]
-    public function addFavori(MyDocument $myDocument, Document $document): Response
+    public function addFavori(MyDocument $myDocument, #[MapEntity(mapping: ['document' => 'uuid'])]
+    Document                             $document): Response
     {
         $myDocument->setDocument($document);
         $etat = $myDocument->addOrRemoveFavori($this->getUser());

@@ -20,6 +20,9 @@ use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 #[Route(path: '/administration/alternance/fiche/suivi')]
 class AlternanceFicheSuiviController extends BaseController
@@ -45,14 +48,14 @@ class AlternanceFicheSuiviController extends BaseController
         return $this->render('administration/alternance_fiche_suivi/new.html.twig', [
             'alternance_fiche_suivi' => $alternanceFicheSuivi,
             'alternance' => $alternance,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
     /**
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     #[Route(path: '/imprimer/{id}', name: 'administration_alternance_fiche_suivi_export', methods: ['GET'])]
     public function print(MyFicheSuivi $myAlternanceFicheSuivi, AlternanceFicheSuivi $alternanceFicheSuivi): PdfResponse
@@ -93,7 +96,7 @@ class AlternanceFicheSuiviController extends BaseController
 
         return $this->render('administration/alternance_fiche_suivi/edit.html.twig', [
             'alternance_fiche_suivi' => $alternanceFicheSuivi,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

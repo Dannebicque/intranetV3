@@ -1,11 +1,17 @@
 <?php
+/*
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/api/unifolio/DepartementController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 26/07/2023 08:42
+ */
 
 namespace App\Controller\api\unifolio;
 
 use App\Controller\BaseController;
-use App\Entity\Departement;
 use App\Repository\DepartementRepository;
-use App\Repository\DiplomeRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -15,8 +21,7 @@ class DepartementController extends BaseController
     public function listeDepartement(
         Request               $request,
         DepartementRepository $departementRepository,
-        DiplomeRepository     $diplomeRepository,
-    )
+    ): JsonResponse
     {
 
         $this->checkAccessApi($request);
@@ -33,7 +38,6 @@ class DepartementController extends BaseController
 //                Créer un tableau avec les types de diplomes
                 $typeDiplome[] = [
                     'id' => $diplome->getTypeDiplome()->getId(),
-//                    'libelle' => $diplome->getTypeDiplome()->getLibelle(),
                 ];
 
                 $tabDepartement[$dept->getId()] = [

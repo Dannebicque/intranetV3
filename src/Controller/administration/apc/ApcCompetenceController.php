@@ -61,7 +61,7 @@ class ApcCompetenceController extends BaseController
 
         return $this->render('apc/apc_competence/new.html.twig', [
             'apc_competence' => $apcComptence,
-            'form' => $form->createView(),
+            'form' => $form,
             'diplome' => $diplome,
         ]);
     }
@@ -89,7 +89,7 @@ class ApcCompetenceController extends BaseController
 
         return $this->render('apc/apc_competence/edit.html.twig', [
             'apc_competence' => $apcCompetence,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

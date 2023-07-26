@@ -95,7 +95,7 @@ class RhController extends BaseController
 
         return $this->render('super-administration/rh/edit.html.twig', [
             'personnel' => $personnel,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -123,7 +123,7 @@ class RhController extends BaseController
 
         return $this->render('super-administration/rh/new.html.twig', [
             'personnel' => $personnel,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

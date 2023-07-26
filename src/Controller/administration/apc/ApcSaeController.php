@@ -196,7 +196,7 @@ class ApcSaeController extends BaseController
                 return $this->render('apc/apc_sae/new.html.twig', [
                     'apc_sae' => $apcSae,
                     'diplome' => $diplome,
-                    'form' => $form->createView(),
+                    'form' => $form,
                 ]);
             }
 
@@ -210,7 +210,7 @@ class ApcSaeController extends BaseController
 
         return $this->render('apc/apc_sae/new.html.twig', [
             'apc_sae' => $apcSae,
-            'form' => $form->createView(),
+            'form' => $form,
             'diplome' => $diplome,
         ]);
     }
@@ -340,7 +340,7 @@ class ApcSaeController extends BaseController
 
         return $this->render('apc/apc_sae/edit.html.twig', [
             'apc_sae' => $apcSae,
-            'form' => $form->createView(),
+            'form' => $form,
             'diplome' => $semestre->getDiplome(),
         ]);
     }

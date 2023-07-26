@@ -117,7 +117,7 @@ class RddController extends AbstractController
                     }
 
                     return $this->render('rdd/new.html.twig', [
-                        'form' => $form->createView(),
+                        'form' => $form,
                         'etudiant' => $etudiant,
                     ]);
                 }

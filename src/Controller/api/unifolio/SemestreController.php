@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/api/unifolio/SemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/04/2023 17:09
+ * @lastUpdate 26/07/2023 08:42
  */
 
 namespace App\Controller\api\unifolio;
 
 use App\Controller\BaseController;
 use App\Repository\SemestreRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -20,7 +21,8 @@ class SemestreController extends BaseController
     public function listeSemestre(
         Request $request,
         SemestreRepository $semestreRepository,
-    ) {
+    ): JsonResponse
+    {
 
         $this->checkAccessApi($request);
 

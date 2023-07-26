@@ -16,7 +16,6 @@ use App\Event\ProjetEvent;
 use App\Form\ProjetEtudiantEtudiantType;
 use App\Repository\ProjetPeriodeRepository;
 use Carbon\Carbon;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -46,8 +45,8 @@ class ProjetController extends BaseController
     }
 
     #[Route(path: '/formulaire/{projetEtudiant}', name: 'application_etudiant_projet_formulaire', methods: 'GET|POST')]
-    #[ParamConverter('projetEtudiant', options: ['mapping' => ['projetEtudiant' => 'uuid']])]
-    public function create(EventDispatcherInterface $eventDispatcher, Request $request, ProjetEtudiant $projetEtudiant): Response
+    public function create(EventDispatcherInterface $eventDispatcher, Request $request, #[\Symfony\Bridge\Doctrine\Attribute\MapEntity(mapping: ['projetEtudiant' => 'uuid'])]
+    ProjetEtudiant                                  $projetEtudiant): Response
     {
         if (null !== $projetEtudiant->getProjetPeriode()) {
             $form = $this->createForm(ProjetEtudiantEtudiantType::class, $projetEtudiant, [
@@ -73,7 +72,7 @@ class ProjetController extends BaseController
 
             return $this->render('appEtudiant/projet/formulaire.html.twig', [
                 'stageEtudiant' => $projetEtudiant,
-                'form' => $form->createView(),
+                'form' => $form,
             ]);
         }
 

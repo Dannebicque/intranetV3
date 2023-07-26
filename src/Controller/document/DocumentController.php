@@ -20,7 +20,7 @@ use App\Form\DocumentType;
 use App\Repository\DocumentRepository;
 use App\Table\DocumentTableType;
 use Exception;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -156,15 +156,15 @@ class DocumentController extends BaseController
 
         return $this->render('document/administration/new.html.twig', [
             'document' => $document,
-            'form' => $form->createView(),
+            'form' => $form,
             'source' => $source,
         ]);
     }
 
-    #[ParamConverter('document', options: ['mapping' => ['id' => 'uuid']])]
     #[Route('/administration/document/{source}/{id}', name: 'administration_document_show', methods: ['GET'])]
     #[Route('/administratif/document/{source}/{id}', name: 'sa_qualite_documents_show', methods: ['GET'])]
-    public function show(Document $document, string $source = Document::DOCUMENTS): Response
+    public function show(#[MapEntity(mapping: ['id' => 'uuid'])]
+                         Document $document, string $source = Document::DOCUMENTS): Response
     {
         if (Document::ORIGINAUX === $source) {
             $this->denyAccessUnlessGranted('ROLE_ADMINISTRATIF');
@@ -183,10 +183,10 @@ class DocumentController extends BaseController
         'POST',
     ])]
     #[Route('/administratif/document/{source}/{id}/edit', name: 'sa_qualite_documents_edit', methods: ['GET', 'POST'])]
-    #[ParamConverter('document', options: ['mapping' => ['id' => 'uuid']])]
     public function edit(
         MyUpload $myUpload,
         Request $request,
+        #[MapEntity(mapping: ['id' => 'uuid'])]
         Document $document,
         string $source = Document::DOCUMENTS
     ): Response {
@@ -248,7 +248,7 @@ class DocumentController extends BaseController
 
         return $this->render('document/administration/edit.html.twig', [
             'document' => $document,
-            'form' => $form->createView(),
+            'form' => $form,
             'source' => $source,
         ]);
     }
@@ -258,10 +258,10 @@ class DocumentController extends BaseController
         'POST',
     ])]
     #[Route('/administratif/document/{source}/{id}', name: 'sa_qualite_documents_delete', methods: ['DELETE', 'POST'])]
-    #[ParamConverter('document', options: ['mapping' => ['id' => 'uuid']])]
     public function delete(
         DocumentDelete $documentDelete,
         Request $request,
+        #[MapEntity(mapping: ['id' => 'uuid'])]
         Document $document,
         string $source
     ): Response {
@@ -297,8 +297,8 @@ class DocumentController extends BaseController
         'GET',
         'POST',
     ])]
-    #[ParamConverter('document', options: ['mapping' => ['id' => 'uuid']])]
-    public function duplicate(Document $document, string $source): Response
+    public function duplicate(#[MapEntity(mapping: ['id' => 'uuid'])]
+                              Document $document, string $source): Response
     {
         if (Document::ORIGINAUX === $source) {
             $this->denyAccessUnlessGranted('ROLE_ADMINISTRATIF');

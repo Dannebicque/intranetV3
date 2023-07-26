@@ -67,7 +67,7 @@ class CelcatCalendrierController extends BaseController
 
         return $this->render('super-administration/celcat_calendrier/new.html.twig', [
             'celcat_calendrier' => $celcatCalendrier,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -114,7 +114,7 @@ class CelcatCalendrierController extends BaseController
 
         return $this->render('super-administration/celcat_calendrier/edit.html.twig', [
             'celcat_calendrier' => $celcatCalendrier,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

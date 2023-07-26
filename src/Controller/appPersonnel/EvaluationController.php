@@ -15,21 +15,22 @@ use App\Controller\BaseController;
 use App\Entity\Evaluation;
 use App\Entity\Semestre;
 use App\Repository\GroupeRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-#[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_PERMANENT')]
+#[IsGranted('ROLE_PERMANENT')]
 #[Route(path: '/application/personnel/evaluation')]
 class EvaluationController extends BaseController
 {
     #[Route(path: '/details/{uuid}', name: 'application_personnel_evaluation_show', requirements: ['evaluation' => '\d+'])]
-    #[ParamConverter('evaluation', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function detailsEvaluation(TypeMatiereManager $typeMatiereManager, MyEvaluation $myEvaluation, Evaluation $evaluation): Response
+    public function detailsEvaluation(TypeMatiereManager $typeMatiereManager, MyEvaluation $myEvaluation, #[MapEntity(mapping: ['uuid' => 'uuid'])]
+    Evaluation                                           $evaluation): Response
     {
         $matiere = $typeMatiereManager->getMatiere($evaluation->getIdMatiere(), $evaluation->getTypeMatiere());
         $this->denyAccessUnlessGranted('CAN_ADD_NOTE', ['matiere' => $matiere, 'semestre' => $evaluation->getSemestre()]);
@@ -44,10 +45,10 @@ class EvaluationController extends BaseController
     }
 
     #[Route(path: '/visible/{uuid}/{etat}', name: 'application_personnel_evaluation_visible', requirements: ['evaluation' => '\d+'])]
-    #[ParamConverter('evaluation', options: ['mapping' => ['uuid' => 'uuid']])]
     public function evaluationVisible(
         TypeMatiereManager $typeMatiereManager,
         MyEvaluation $myEvaluation,
+        #[MapEntity(mapping: ['uuid' => 'uuid'])]
         Evaluation $evaluation,
         string $etat
     ): Response {
@@ -66,8 +67,8 @@ class EvaluationController extends BaseController
     }
 
     #[Route(path: '/update/{uuid}', name: 'application_personnel_evaluation_update')]
-    #[ParamConverter('evaluation', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function updateEvaluation(Request $request, Evaluation $evaluation): Response
+    public function updateEvaluation(Request $request, #[MapEntity(mapping: ['uuid' => 'uuid'])]
+    Evaluation                               $evaluation): Response
     {
         // todo: tester au niveau évaluation
         // mise à jour d'un champ d'une évaluation
@@ -87,8 +88,8 @@ class EvaluationController extends BaseController
      * @throws \App\Exception\MatiereNotFoundException
      */
     #[Route(path: '/export/{uuid}/{type}-{semestre}.{_format}', name: 'application_personnel_evaluation_export', requirements: ['evaluation' => '\d+', '_format' => 'csv|xlsx|pdf'])]
-    #[ParamConverter('evaluation', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function exportEvaluation(GroupeRepository $groupeRepository, MyEvaluation $myEvaluation, Evaluation $evaluation, string $type, string $_format, Semestre $semestre): Response
+    public function exportEvaluation(GroupeRepository $groupeRepository, MyEvaluation $myEvaluation, #[MapEntity(mapping: ['uuid' => 'uuid'])]
+    Evaluation                                        $evaluation, string $type, string $_format, Semestre $semestre): Response
     {
         // todo: tester au niveau évaluation
         // todo: supprimer semestre s'il est dans évaluation ensuite...

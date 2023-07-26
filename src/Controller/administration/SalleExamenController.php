@@ -66,7 +66,7 @@ class SalleExamenController extends BaseController
 
         return $this->render('administration/salle_examen/new.html.twig', [
             'salle_examan' => $salleExaman,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -93,7 +93,7 @@ class SalleExamenController extends BaseController
 
         return $this->render('administration/salle_examen/edit.html.twig', [
             'salle_examan' => $salleExaman,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

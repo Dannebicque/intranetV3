@@ -19,7 +19,7 @@ use App\Entity\ProjetPeriode;
 use App\Form\ProjetEtudiantType;
 use Doctrine\ORM\NonUniqueResultException;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -56,7 +56,7 @@ class ProjetEtudiantController extends BaseController
 
         return $this->render('administration/projet/projet_etudiant/edit.html.twig', [
             'projetEtudiant' => $projetEtudiant,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -84,8 +84,8 @@ class ProjetEtudiantController extends BaseController
      * @throws NonUniqueResultException
      */
     #[Route(path: '/change-etat/{projetPeriode}/{etudiant}/{etat}', name: 'administration_projet_etudiant_change_etat')]
-    #[ParamConverter('projetPeriode', options: ['mapping' => ['projetPeriode' => 'uuid']])]
-    public function changeEtat(MyProjetEtudiant $myProjetEtudiant, ProjetPeriode $projetPeriode, Etudiant $etudiant, $etat): RedirectResponse
+    public function changeEtat(MyProjetEtudiant $myProjetEtudiant, #[MapEntity(mapping: ['projetPeriode' => 'uuid'])]
+    ProjetPeriode                               $projetPeriode, Etudiant $etudiant, string $etat): RedirectResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestres()->first());
         $myProjetEtudiant->changeEtat($projetPeriode, $etudiant, $etat);

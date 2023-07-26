@@ -78,7 +78,7 @@ class StageAvenantController extends BaseController
         return $this->render('administration/stage/stage_avenant/new.html.twig', [
             'stage_avenant' => $stageAvenant,
             'stageEtudiant' => $stageEtudiant,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -113,7 +113,7 @@ class StageAvenantController extends BaseController
         return $this->render('administration/stage/stage_avenant/edit.html.twig', [
             'stage_avenant' => $stageAvenant,
             'stageEtudiant' => $stageAvenant->getStageEtudiant(),
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

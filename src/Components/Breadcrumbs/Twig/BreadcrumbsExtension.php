@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Breadcrumbs/Twig/BreadcrumbsExtension.php
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Breadcrumbs/Twig/BreadcrumbsExtension.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/12/2021 12:31
+ * @lastUpdate 25/07/2023 22:21
  */
 
 namespace App\Components\Breadcrumbs\Twig;
@@ -30,7 +30,7 @@ class BreadcrumbsExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('breandcrumbs_render', [$this, 'breadcrumbsRender'], [
+            new TwigFunction('breandcrumbs_render', $this->breadcrumbsRender(...), [
                 'is_safe' => ['html'],
             ]),
         ];

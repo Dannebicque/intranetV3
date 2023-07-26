@@ -22,8 +22,9 @@ use App\Form\StageEtudiantType;
 use App\Repository\PersonnelRepository;
 use App\Repository\StageMailTemplateRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use Exception;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -56,7 +57,7 @@ class StageEtudiantController extends BaseController
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     #[Route(path: '/ajax/edit/{id}', name: 'administration_stage_etudiant_ajax_edit', options: ['expose' => true])]
     public function ajaxEdit(MyStageEtudiant $myStageEtudiant, Request $request, StageEtudiant $stageEtudiant): JsonResponse
@@ -86,7 +87,7 @@ class StageEtudiantController extends BaseController
 
         return $this->render('administration/stage/stage_etudiant/edit.html.twig', [
             'stageEtudiant' => $stageEtudiant,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -114,8 +115,8 @@ class StageEtudiantController extends BaseController
      * @throws NonUniqueResultException
      */
     #[Route(path: '/change-etat/{stagePeriode}/{etudiant}/{etat}', name: 'administration_stage_etudiant_change_etat')]
-    #[ParamConverter('stagePeriode', options: ['mapping' => ['stagePeriode' => 'uuid']])]
-    public function changeEtat(MyStageEtudiant $myStageEtudiant, StagePeriode $stagePeriode, Etudiant $etudiant, $etat): RedirectResponse
+    public function changeEtat(MyStageEtudiant $myStageEtudiant, #[MapEntity(mapping: ['stagePeriode' => 'uuid'])]
+    StagePeriode                               $stagePeriode, Etudiant $etudiant, $etat): RedirectResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
         $myStageEtudiant->changeEtat($stagePeriode, $etudiant, $etat);

@@ -120,7 +120,7 @@ class PersonnelController extends BaseController
 
         return $this->render('administration/personnel/new.html.twig', [
             'personnel' => $personnel,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -160,7 +160,7 @@ class PersonnelController extends BaseController
 
         return $this->render('administration/personnel/edit.html.twig', [
             'personnel' => $personnel,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

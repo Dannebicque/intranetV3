@@ -37,7 +37,7 @@ class ApcComposanteEssentielleController extends BaseController
 
         return $this->render('apc/apc_composante_essentielle/new.html.twig', [
             'apc_composante_essentielle' => $apcComposanteEssentielle,
-            'form' => $form->createView(),
+            'form' => $form,
             'competence' => $competence,
         ]);
     }
@@ -56,7 +56,7 @@ class ApcComposanteEssentielleController extends BaseController
 
         return $this->render('apc/apc_composante_essentielle/edit.html.twig', [
             'apc_composante_essentielle' => $apcComposanteEssentielle,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

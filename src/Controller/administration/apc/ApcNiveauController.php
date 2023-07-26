@@ -62,7 +62,7 @@ class ApcNiveauController extends BaseController
 
         return $this->render('apc/apc_niveau/new.html.twig', [
             'apc_niveau' => $apcNiveau,
-            'form' => $form->createView(),
+            'form' => $form,
             'competence' => $competence,
         ]);
     }
@@ -82,7 +82,7 @@ class ApcNiveauController extends BaseController
 
         return $this->render('apc/apc_niveau/edit.html.twig', [
             'apc_niveau' => $apcNiveau,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

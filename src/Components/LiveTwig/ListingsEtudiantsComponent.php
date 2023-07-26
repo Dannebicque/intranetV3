@@ -1,16 +1,17 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/LiveTwig/ListingsEtudiantsComponent.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 25/07/2023 13:56
  */
 
 namespace App\Components\LiveTwig;
 
 use App\Classes\DataUserSession;
 use App\Entity\Semestre;
+use App\Entity\TypeGroupe;
 use App\Exception\DiplomeNotFoundException;
 use App\Repository\SemestreRepository;
 use App\Repository\TypeGroupeRepository;
@@ -29,6 +30,7 @@ class ListingsEtudiantsComponent
     public ?Semestre $semestre = null;
 
     #[LiveProp]
+    /** @var TypeGroupe[] */
     public ?array $typeGroupes = [];
 
     public function __construct(

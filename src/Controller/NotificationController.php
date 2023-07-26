@@ -12,7 +12,7 @@ namespace App\Controller;
 use App\Entity\Constantes;
 use App\Entity\Notification;
 use App\Repository\NotificationRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -33,8 +33,8 @@ class NotificationController extends BaseController
     }
 
     #[Route(path: '/lire/{uuid}', name: 'lire')]
-    #[ParamConverter('notification', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function lire(Notification $notification): RedirectResponse
+    public function lire(#[MapEntity(mapping: ['uuid' => 'uuid'])]
+                         Notification $notification): RedirectResponse
     {
         $notification->setLu(true);
         $this->entityManager->flush();

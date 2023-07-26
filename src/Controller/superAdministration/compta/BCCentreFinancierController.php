@@ -44,7 +44,7 @@ class BCCentreFinancierController extends BaseController
             return $this->redirectToRoute('sa_bc_centre_financier_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('super-administration/compta/bc_centre_financier/new.html.twig', [
+        return $this->render('super-administration/compta/bc_centre_financier/new.html.twig', [
             'bc_centre_financier' => $bCCentreFinancier,
             'form' => $form,
         ]);
@@ -75,7 +75,7 @@ class BCCentreFinancierController extends BaseController
             return $this->redirectToRoute('sa_bc_centre_financier_edit', ['id' => $bCCentreFinancier->getId()]);
         }
 
-        return $this->renderForm('super-administration/compta/bc_centre_financier/edit.html.twig', [
+        return $this->render('super-administration/compta/bc_centre_financier/edit.html.twig', [
             'bc_centre_financier' => $bCCentreFinancier,
             'form' => $form,
         ]);

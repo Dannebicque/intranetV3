@@ -159,7 +159,7 @@ class BaseController extends AbstractController
         return false;
     }
 
-    protected function checkAccessApi(Request $request)
+    protected function checkAccessApi(Request $request): void
     {
         if (!$request->headers->has('x-api-key')) {
             throw $this->createAccessDeniedException('Accès non autorisé');

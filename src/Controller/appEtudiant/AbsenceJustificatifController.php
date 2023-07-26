@@ -16,7 +16,7 @@ use App\Event\JustificatifEvent;
 use App\Form\AbsenceJustificatifType;
 use App\Repository\AbsenceJustificatifRepository;
 use Exception;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -61,7 +61,7 @@ class AbsenceJustificatifController extends BaseController
 
             return $this->render('appEtudiant/absence_justificatif/new.html.twig', [
                 'absence_justificatif' => $absenceJustificatif,
-                'form' => $form->createView(),
+                'form' => $form,
             ]);
         }
 
@@ -69,8 +69,8 @@ class AbsenceJustificatifController extends BaseController
     }
 
     #[Route(path: '/{id}/edit', name: 'app_etudiant_absence_justificatif_edit', methods: 'GET|POST')]
-    #[ParamConverter('absenceJustificatif', options: ['mapping' => ['id' => 'uuid']])]
-    public function edit(Request $request, AbsenceJustificatif $absenceJustificatif): Response
+    public function edit(Request $request, #[MapEntity(mapping: ['id' => 'uuid'])]
+    AbsenceJustificatif          $absenceJustificatif): Response
     {
         $absenceJustificatif->prepareData();
         $form = $this->createForm(AbsenceJustificatifType::class, $absenceJustificatif, [
@@ -90,13 +90,13 @@ class AbsenceJustificatifController extends BaseController
 
         return $this->render('appEtudiant/absence_justificatif/edit.html.twig', [
             'absence_justificatif' => $absenceJustificatif,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
     #[Route(path: '/{id}', name: 'app_etudiant_absence_justificatif_delete', methods: 'DELETE')]
-    #[ParamConverter('absenceJustificatif', options: ['mapping' => ['id' => 'uuid']])]
-    public function delete(Request $request, AbsenceJustificatif $absenceJustificatif): Response
+    public function delete(Request $request, #[MapEntity(mapping: ['id' => 'uuid'])]
+    AbsenceJustificatif            $absenceJustificatif): Response
     {
         $id = $absenceJustificatif->getUuidString();
         if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {

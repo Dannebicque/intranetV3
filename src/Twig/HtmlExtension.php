@@ -1,4 +1,11 @@
 <?php
+/*
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Twig/HtmlExtension.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 25/07/2023 22:23
+ */
 
 namespace App\Twig;
 
@@ -16,9 +23,9 @@ class HtmlExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('fqn', [$this, 'fqn']),
-            new TwigFilter('deuxDigits', [$this, 'deuxDigits']),
-            new TwigFilter('badgeYesNo', [$this, 'badgeYesNo'], ['is_safe' => ['html']]),
+            new TwigFilter('fqn', $this->fqn(...)),
+            new TwigFilter('deuxDigits', $this->deuxDigits(...)),
+            new TwigFilter('badgeYesNo', $this->badgeYesNo(...), ['is_safe' => ['html']]),
         ];
     }
 
