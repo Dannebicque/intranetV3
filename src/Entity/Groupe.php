@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Groupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/11/2022 10:05
+ * @lastUpdate 26/07/2023 07:57
  */
 
 namespace App\Entity;
@@ -53,9 +53,6 @@ class Groupe extends BaseEntity
     #[ORM\ManyToOne(targetEntity: Parcour::class, inversedBy: 'groupes')]
     private ?Parcour $parcours = null;
 
-    #[ORM\ManyToMany(targetEntity: CovidAttestationEtudiant::class, mappedBy: 'groupes')]
-    private Collection $covidAttestationEtudiants;
-
     /**
      * @var \Doctrine\Common\Collections\Collection<\App\Entity\AbsenceEtatAppel>
      */
@@ -78,7 +75,6 @@ class Groupe extends BaseEntity
     {
         $this->etudiants = new ArrayCollection();
         $this->enfants = new ArrayCollection();
-        $this->covidAttestationEtudiants = new ArrayCollection();
         $this->absenceEtatAppels = new ArrayCollection();
         $this->apcRessourceEnfants = new ArrayCollection();
         $this->planCoursHistoriqueEdts = new ArrayCollection();
@@ -209,34 +205,6 @@ class Groupe extends BaseEntity
             if ($enfant->getParent() === $this) {
                 $enfant->setParent(null);
             }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|CovidAttestationEtudiant[]
-     */
-    public function getCovidAttestationEtudiants(): Collection
-    {
-        return $this->covidAttestationEtudiants;
-    }
-
-    public function addCovidAttestationEtudiant(CovidAttestationEtudiant $covidAttestationEtudiant): self
-    {
-        if (!$this->covidAttestationEtudiants->contains($covidAttestationEtudiant)) {
-            $this->covidAttestationEtudiants[] = $covidAttestationEtudiant;
-            $covidAttestationEtudiant->addGroupe($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCovidAttestationEtudiant(CovidAttestationEtudiant $covidAttestationEtudiant): self
-    {
-        if ($this->covidAttestationEtudiants->contains($covidAttestationEtudiant)) {
-            $this->covidAttestationEtudiants->removeElement($covidAttestationEtudiant);
-            $covidAttestationEtudiant->removeGroupe($this);
         }
 
         return $this;

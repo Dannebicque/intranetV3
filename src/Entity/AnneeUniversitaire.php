@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/AnneeUniversitaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/12/2022 16:47
+ * @lastUpdate 25/07/2023 13:56
  */
 
 namespace App\Entity;
@@ -15,7 +15,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use JetBrains\PhpStorm\Deprecated;
 use Stringable;
 use Symfony\Component\Serializer\Annotation\Groups;
 
@@ -116,9 +115,6 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
     #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: ConpereEtudiant::class)]
     private Collection $conpereEtudiants;
 
-    #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: Mcc::class)]
-    private Collection $mccs;
-
     public function __construct()
     {
         $this->departements = new ArrayCollection();
@@ -136,7 +132,6 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
         $this->edtPlannings = new ArrayCollection();
         $this->planCours = new ArrayCollection();
         $this->conpereEtudiants = new ArrayCollection();
-        $this->mccs = new ArrayCollection();
     }
 
     public function getLibelle(): ?string
@@ -615,36 +610,6 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
             // set the owning side to null (unless already changed)
             if ($conpereEtudiant->getAnneeUniversitaire() === $this) {
                 $conpereEtudiant->setAnneeUniversitaire(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Mcc>
-     */
-    public function getMccs(): Collection
-    {
-        return $this->mccs;
-    }
-
-    public function addMcc(Mcc $mcc): self
-    {
-        if (!$this->mccs->contains($mcc)) {
-            $this->mccs->add($mcc);
-            $mcc->setAnneeUniversitaire($this);
-        }
-
-        return $this;
-    }
-
-    public function removeMcc(Mcc $mcc): self
-    {
-        if ($this->mccs->removeElement($mcc)) {
-            // set the owning side to null (unless already changed)
-            if ($mcc->getAnneeUniversitaire() === $this) {
-                $mcc->setAnneeUniversitaire(null);
             }
         }
 

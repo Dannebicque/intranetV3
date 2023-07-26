@@ -1,8 +1,8 @@
-// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/webpack.config.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/12/2022 12:27
+// @lastUpdate 26/07/2023 08:07
 
 var Encore = require('@symfony/webpack-encore')
 var path = require('path')
@@ -36,7 +36,6 @@ Encore
    */
   .addEntry('app', './assets/app.js')
   .addEntry('borne', './assets/js/pages/borne.js')
-  .addEntry('covid', './assets/js/pages/covid.js')
   .addEntry('tinyMce', './assets/js/tinyMce.js')
   .addEntry('apc', './assets/js/pages/apc.js')
   .addEntry('agenda', './assets/js/pages/agenda.js')

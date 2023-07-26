@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Diplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/10/2022 15:16
+ * @lastUpdate 26/07/2023 08:06
  */
 
 namespace App\Entity;
@@ -12,15 +12,15 @@ namespace App\Entity;
 use App\Entity\Traits\ApogeeTrait;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\DiplomeRepository;
-use function chr;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use function ord;
 use Serializable;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use function chr;
+use function ord;
 
 #[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: DiplomeRepository::class)]
@@ -107,18 +107,6 @@ class Diplome extends BaseEntity implements Serializable
     #[ORM\ManyToOne(targetEntity: Personnel::class)]
     private ?Personnel $optResponsableQualite = null;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\CovidAttestationPersonnel>
-     */
-    #[ORM\OneToMany(mappedBy: 'diplome', targetEntity: CovidAttestationPersonnel::class)]
-    private Collection $covidAttestationPersonnels;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\CovidAttestationEtudiant>
-     */
-    #[ORM\OneToMany(mappedBy: 'diplome', targetEntity: CovidAttestationEtudiant::class)]
-    private Collection $covidAttestationEtudiants;
-
     #[ORM\Column(type: Types::BOOLEAN)]
     private ?bool $optUpdateCelcat = false;
 
@@ -151,8 +139,6 @@ class Diplome extends BaseEntity implements Serializable
         $this->hrs = new ArrayCollection();
         $this->ppns = new ArrayCollection();
         $this->annees = new ArrayCollection();
-        $this->covidAttestationPersonnels = new ArrayCollection();
-        $this->covidAttestationEtudiants = new ArrayCollection();
         $this->enfants = new ArrayCollection();
         $this->parent = $diplome;
         $this->typeGroupes = new ArrayCollection();
@@ -569,68 +555,6 @@ class Diplome extends BaseEntity implements Serializable
     public function setOptResponsableQualite(?Personnel $responsableQualite): self
     {
         $this->optResponsableQualite = $responsableQualite;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|CovidAttestationPersonnel[]
-     */
-    public function getCovidAttestationPersonnels(): Collection
-    {
-        return $this->covidAttestationPersonnels;
-    }
-
-    public function addCovidAttestationPersonnel(CovidAttestationPersonnel $covidAttestationPersonnel): self
-    {
-        if (!$this->covidAttestationPersonnels->contains($covidAttestationPersonnel)) {
-            $this->covidAttestationPersonnels[] = $covidAttestationPersonnel;
-            $covidAttestationPersonnel->setDiplome($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCovidAttestationPersonnel(CovidAttestationPersonnel $covidAttestationPersonnel): self
-    {
-        if ($this->covidAttestationPersonnels->contains($covidAttestationPersonnel)) {
-            $this->covidAttestationPersonnels->removeElement($covidAttestationPersonnel);
-            // set the owning side to null (unless already changed)
-            if ($covidAttestationPersonnel->getDiplome() === $this) {
-                $covidAttestationPersonnel->setDiplome(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|CovidAttestationEtudiant[]
-     */
-    public function getCovidAttestationEtudiants(): Collection
-    {
-        return $this->covidAttestationEtudiants;
-    }
-
-    public function addCovidAttestationEtudiant(CovidAttestationEtudiant $covidAttestationEtudiant): self
-    {
-        if (!$this->covidAttestationEtudiants->contains($covidAttestationEtudiant)) {
-            $this->covidAttestationEtudiants[] = $covidAttestationEtudiant;
-            $covidAttestationEtudiant->setDiplome($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCovidAttestationEtudiant(CovidAttestationEtudiant $covidAttestationEtudiant): self
-    {
-        if ($this->covidAttestationEtudiants->contains($covidAttestationEtudiant)) {
-            $this->covidAttestationEtudiants->removeElement($covidAttestationEtudiant);
-            // set the owning side to null (unless already changed)
-            if ($covidAttestationEtudiant->getDiplome() === $this) {
-                $covidAttestationEtudiant->setDiplome(null);
-            }
-        }
 
         return $this;
     }
