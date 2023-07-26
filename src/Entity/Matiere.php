@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Matiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:21
+ * @lastUpdate 26/07/2023 07:57
  */
 
 namespace App\Entity;
@@ -75,13 +75,9 @@ class Matiere extends AbstractMatiere implements MatiereEntityInterface
     #[ORM\OneToMany(mappedBy: 'matiereParent', targetEntity: Matiere::class)]
     private Collection $matiereEnfants;
 
-    #[ORM\ManyToMany(targetEntity: CovidAttestationEtudiant::class, mappedBy: 'matieres')]
-    private Collection $covidAttestationEtudiants;
-
     public function __construct()
     {
         $this->matiereEnfants = new ArrayCollection();
-        $this->covidAttestationEtudiants = new ArrayCollection();
     }
 
     public function isPac(): bool
@@ -311,34 +307,6 @@ class Matiere extends AbstractMatiere implements MatiereEntityInterface
             if ($matiereEnfant->getMatiereParent() === $this) {
                 $matiereEnfant->setMatiereParent(null);
             }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|CovidAttestationEtudiant[]
-     */
-    public function getCovidAttestationEtudiants(): Collection
-    {
-        return $this->covidAttestationEtudiants;
-    }
-
-    public function addCovidAttestationEtudiant(CovidAttestationEtudiant $covidAttestationEtudiant): self
-    {
-        if (!$this->covidAttestationEtudiants->contains($covidAttestationEtudiant)) {
-            $this->covidAttestationEtudiants[] = $covidAttestationEtudiant;
-            $covidAttestationEtudiant->addMatiere($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCovidAttestationEtudiant(CovidAttestationEtudiant $covidAttestationEtudiant): self
-    {
-        if ($this->covidAttestationEtudiants->contains($covidAttestationEtudiant)) {
-            $this->covidAttestationEtudiants->removeElement($covidAttestationEtudiant);
-            $covidAttestationEtudiant->removeMatiere($this);
         }
 
         return $this;

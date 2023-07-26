@@ -5,31 +5,6 @@
 {% endblock %}
 
 {% block content %}
-    {% if settings('APPLICATION_COVID') == true %}
-        {% if not is_granted('ROLE_ETUDIANT') %}
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="card card-warning">
-                        <header class="card-header">
-                            <h4 class="card-title">{{ 'covid.autorisation.heading'|trans }}</h4>
-                        </header>
-                        <div class="card-body">
-                            <div class="d-grid">
-                                <a href="{{ path('application_personnel_covid_attestation_personnel_index') }}" class="btn
-                        btn-success d-block">
-                                    Faire une nouvelle demande de déplacement</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        {% else %}
-            {{ render_esi(controller(
-                'App\\Controller\\appEtudiant\\CovidController::index'
-            )) }}
-        {% endif %}
-    {% endif %}
-
     <div class="row">
         <div class="col-sm-12 col-md-8">
             <div class="card">

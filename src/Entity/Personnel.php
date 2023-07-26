@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/01/2023 16:14
+ * @lastUpdate 26/07/2023 07:57
  */
 
 namespace App\Entity;
@@ -222,12 +222,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     private ?string $signatureElectronique = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\CovidAttestationPersonnel>
-     */
-    #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: CovidAttestationPersonnel::class)]
-    private Collection $covidAttestationPersonnels;
-
-    /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\AbsenceEtatAppel>
      */
     #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: AbsenceEtatAppel::class)]
@@ -313,7 +307,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         $this->projetPeriodes = new ArrayCollection();
         $this->materielCommuns = new ArrayCollection();
         $this->materielCommunPrets = new ArrayCollection();
-        $this->covidAttestationPersonnels = new ArrayCollection();
         $this->absenceEtatAppels = new ArrayCollection();
         $this->bcDemandesResponsable = new ArrayCollection();
         $this->bcDemandeSignataireCompta = new ArrayCollection();
@@ -1247,37 +1240,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     public function setSignatureElectronique(?string $signatureElectronique): self
     {
         $this->signatureElectronique = $signatureElectronique;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|CovidAttestationPersonnel[]
-     */
-    public function getCovidAttestationPersonnels(): Collection
-    {
-        return $this->covidAttestationPersonnels;
-    }
-
-    public function addCovidAttestationPersonnel(CovidAttestationPersonnel $covidAttestationPersonnel): self
-    {
-        if (!$this->covidAttestationPersonnels->contains($covidAttestationPersonnel)) {
-            $this->covidAttestationPersonnels[] = $covidAttestationPersonnel;
-            $covidAttestationPersonnel->setPersonnel($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCovidAttestationPersonnel(CovidAttestationPersonnel $covidAttestationPersonnel): self
-    {
-        if ($this->covidAttestationPersonnels->contains($covidAttestationPersonnel)) {
-            $this->covidAttestationPersonnels->removeElement($covidAttestationPersonnel);
-            // set the owning side to null (unless already changed)
-            if ($covidAttestationPersonnel->getPersonnel() === $this) {
-                $covidAttestationPersonnel->setPersonnel(null);
-            }
-        }
 
         return $this;
     }
