@@ -141,7 +141,7 @@ class MatiereController extends BaseController
 
             return $this->render('administration/matiere/new.html.twig', [
                 'matiere' => $matiere,
-                'form' => $form->createView(),
+                'form' => $form,
             ]);
         }
 
@@ -224,7 +224,7 @@ class MatiereController extends BaseController
 
             return $this->render('administration/matiere/edit.html.twig', [
                 'matiere' => $matiere,
-                'form' => $form->createView(),
+                'form' => $form,
             ]);
         }
 

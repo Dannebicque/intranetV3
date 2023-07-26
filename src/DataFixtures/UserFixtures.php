@@ -9,6 +9,7 @@
 
 namespace App\DataFixtures;
 
+use App\Entity\Etudiant;
 use App\Entity\Personnel;
 use Carbon\Carbon;
 use Doctrine\Bundle\FixturesBundle\Fixture;

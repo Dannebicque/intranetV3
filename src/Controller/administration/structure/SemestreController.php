@@ -46,7 +46,7 @@ class SemestreController extends BaseController
             }
 
             return $this->render('structure/semestre/new.html.twig', [
-                'form' => $form->createView(),
+                'form' => $form,
             ]);
         }
 
@@ -87,7 +87,7 @@ class SemestreController extends BaseController
 
             return $this->render('structure/semestre/edit.html.twig', [
                 'semestre' => $semestre,
-                'form' => $form->createView(),
+                'form' => $form,
             ]);
         }
 

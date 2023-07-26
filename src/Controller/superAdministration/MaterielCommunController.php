@@ -67,7 +67,7 @@ class MaterielCommunController extends BaseController
 
         return $this->render('super-administration/materiel_commun/new.html.twig', [
             'materiel_commun' => $materielCommun,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -93,7 +93,7 @@ class MaterielCommunController extends BaseController
 
         return $this->render('super-administration/materiel_commun/edit.html.twig', [
             'materiel_commun' => $materielCommun,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

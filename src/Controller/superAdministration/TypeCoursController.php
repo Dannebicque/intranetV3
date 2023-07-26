@@ -70,7 +70,7 @@ class TypeCoursController extends BaseController
 
         return $this->render('super-administration/type_cours/new.html.twig', [
             'type_cr' => $typeCours,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -102,7 +102,7 @@ class TypeCoursController extends BaseController
 
         return $this->render('super-administration/type_cours/edit.html.twig', [
             'type_cours' => $typeCours,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

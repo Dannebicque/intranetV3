@@ -134,7 +134,7 @@ class AlternanceController extends BaseController
 
         return $this->render('administration/alternance/edit.html.twig', [
             'alternance' => $alternance,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

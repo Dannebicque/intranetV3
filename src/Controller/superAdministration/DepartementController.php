@@ -45,7 +45,7 @@ class DepartementController extends BaseController
 
         return $this->render('structure/departement/new.html.twig', [
             'departement' => $departement,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -73,7 +73,7 @@ class DepartementController extends BaseController
 
         return $this->render('structure/departement/new.html.twig', [
             'departement' => $departement,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

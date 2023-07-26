@@ -16,7 +16,7 @@ use App\Classes\Stage\MyExportStage;
 use App\Controller\BaseController;
 use App\Entity\StagePeriode;
 use App\Repository\StagePeriodeRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -27,10 +27,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class StagePeriodeGestionController extends BaseController
 {
     #[Route(path: '/{uuid}/export.{_format}', name: 'administration_stage_periode_gestion_export', requirements: ['_format' => 'csv|pdf'], methods: 'GET')]
-    #[ParamConverter('stagePeriode', options: ['mapping' => ['uuid' => 'uuid']])]
     public function export(
         MySerializer $mySerializer,
-        MyExport $myExport, StagePeriode $stagePeriode, string $_format): Response
+        MyExport     $myExport, #[MapEntity(mapping: ['uuid' => 'uuid'])]
+        StagePeriode $stagePeriode, string $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
         $stageEtudiants = $stagePeriode->getStageEtudiants();
@@ -58,8 +58,8 @@ class StagePeriodeGestionController extends BaseController
     }
 
     #[Route(path: '/{uuid}/export.xlsx', name: 'administration_stage_periode_gestion_export_xlsx', methods: 'GET')]
-    #[ParamConverter('stagePeriode', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function exportXlsx(MyExportStage $myExport, StagePeriode $stagePeriode): Response
+    public function exportXlsx(MyExportStage $myExport, #[MapEntity(mapping: ['uuid' => 'uuid'])]
+    StagePeriode                             $stagePeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
 
@@ -67,8 +67,8 @@ class StagePeriodeGestionController extends BaseController
     }
 
     #[Route(path: '/{uuid}', name: 'administration_stage_periode_gestion')]
-    #[ParamConverter('stagePeriode', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function periode(StagePeriodeRepository $stagePeriodeRepository, MyStage $myStage, StagePeriode $stagePeriode): Response
+    public function periode(StagePeriodeRepository $stagePeriodeRepository, MyStage $myStage, #[MapEntity(mapping: ['uuid' => 'uuid'])]
+    StagePeriode                                   $stagePeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
         $periodes = [];

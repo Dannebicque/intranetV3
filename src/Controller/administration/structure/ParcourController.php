@@ -45,7 +45,7 @@ class ParcourController extends BaseController
             }
 
             return $this->render('structure/parcour/new.html.twig', [
-                'form' => $form->createView(),
+                'form' => $form,
             ]);
         }
 
@@ -79,7 +79,7 @@ class ParcourController extends BaseController
 
             return $this->render('structure/parcour/edit.html.twig', [
                 'parcour' => $parcour,
-                'form' => $form->createView(),
+                'form' => $form,
             ]);
         }
 

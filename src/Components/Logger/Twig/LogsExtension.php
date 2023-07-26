@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Logger/Twig/LogsExtension.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/08/2022 19:01
+ * @lastUpdate 25/07/2023 22:21
  */
 
 namespace App\Components\Logger\Twig;
@@ -30,7 +30,7 @@ class LogsExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('logger_render', [$this, 'loggerRender'], [
+            new TwigFunction('logger_render', $this->loggerRender(...), [
                 'is_safe' => ['html'],
             ]),
         ];

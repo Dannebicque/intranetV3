@@ -64,7 +64,7 @@ class BacController extends BaseController
 
         return $this->render('super-administration/bac/new.html.twig', [
             'bac' => $bac,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -92,7 +92,7 @@ class BacController extends BaseController
 
         return $this->render('super-administration/bac/edit.html.twig', [
             'bac' => $bac,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

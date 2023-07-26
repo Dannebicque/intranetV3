@@ -38,7 +38,7 @@ class CreationSectionController extends BaseController
 
                 return $this->render('questionnaire/creation/section/edit.html.twig', [
                     'section' => $section,
-                    'form' => $form->createView(),
+                    'form' => $form,
                 ]);
             case 'delete':
                 $sections = $questSectionRepository->findsectionsSuivantes($section);

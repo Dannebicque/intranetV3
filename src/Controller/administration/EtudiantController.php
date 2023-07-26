@@ -20,7 +20,8 @@ use App\Form\EtudiantType;
 use App\Repository\EtudiantRepository;
 use App\Table\EtudiantDepartementTableType;
 use App\Utils\JsonRequest;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use JsonException;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +32,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class EtudiantController extends BaseController
 {
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     #[Route('/', name: 'administration_etudiant_index', options: ['expose' => true])]
     public function index(Request $request): Response
@@ -91,7 +92,7 @@ class EtudiantController extends BaseController
 
         return $this->render('administration/etudiant/edit.html.twig', [
             'etudiant' => $etudiant,
-            'form' => $form->createView(),
+            'form' => $form,
             'origin' => $origin,
         ]);
     }
@@ -127,8 +128,8 @@ class EtudiantController extends BaseController
     }
 
     #[Route(path: '/change-etat/{uuid}/{etat}', name: 'adm_etudiant_change_etat', options: ['expose' => true], methods: 'POST')]
-    #[ParamConverter('etudiant', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function changeEtat(EtudiantScolarite $etudiantScolarite, Etudiant $etudiant, string $etat): JsonResponse
+    public function changeEtat(EtudiantScolarite $etudiantScolarite, #[MapEntity(mapping: ['uuid' => 'uuid'])]
+    Etudiant                                     $etudiant, string $etat): JsonResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $etudiant->getSemestre());
         $etudiantScolarite->setEtudiant($etudiant);
@@ -138,8 +139,8 @@ class EtudiantController extends BaseController
     }
 
     #[Route(path: '/demissionnaire/{uuid}', name: 'administration_etudiant_demissionnaire', methods: 'GET')]
-    #[ParamConverter('etudiant', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function demissionnaire(EtudiantScolarite $etudiantScolarite, Etudiant $etudiant): RedirectResponse
+    public function demissionnaire(EtudiantScolarite $etudiantScolarite, #[MapEntity(mapping: ['uuid' => 'uuid'])]
+    Etudiant                                         $etudiant): RedirectResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
         $etudiantScolarite->setEtudiant($etudiant);
@@ -149,8 +150,8 @@ class EtudiantController extends BaseController
     }
 
     #[Route(path: '/supprimer/{uuid}', name: 'administration_etudiant_delete', methods: 'DELETE')]
-    #[ParamConverter('etudiant', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function delete(EtudiantScolarite $etudiantScolarite, Etudiant $etudiant): RedirectResponse
+    public function delete(EtudiantScolarite $etudiantScolarite, #[MapEntity(mapping: ['uuid' => 'uuid'])]
+    Etudiant                                 $etudiant): RedirectResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $etudiant->getSemestre());
         $etudiantScolarite->setEtudiant($etudiant);
@@ -160,7 +161,7 @@ class EtudiantController extends BaseController
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     #[Route('/edit-ajax/{id}', name: 'adm_etudiant_edit_ajax', options: ['expose' => true], methods: ['POST'])]
     public function editAjax(EtudiantUpdate $etudiantUpdate, Request $request, Etudiant $etudiant): JsonResponse

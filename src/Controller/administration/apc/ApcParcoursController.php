@@ -39,7 +39,7 @@ class ApcParcoursController extends BaseController
 
         return $this->render('apc/apc_parcours/new.html.twig', [
             'apc_parcour' => $apcParcour,
-            'form' => $form->createView(),
+            'form' => $form,
             'diplome' => $diplome,
         ]);
     }
@@ -67,7 +67,7 @@ class ApcParcoursController extends BaseController
 
         return $this->render('apc/apc_parcours/edit.html.twig', [
             'apc_parcour' => $apcParcour,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

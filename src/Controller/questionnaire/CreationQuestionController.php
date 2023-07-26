@@ -77,7 +77,7 @@ class CreationQuestionController extends BaseController
                     'questionnaire/creation/question/_question_temp.html.twig',
                     [
                         'question' => $question,
-                        'form' => $form->createView(),
+                        'form' => $form,
                     ]
                 );
             case 'duplicate':

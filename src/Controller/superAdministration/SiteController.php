@@ -70,7 +70,7 @@ class SiteController extends BaseController
 
         return $this->render('super-administration/site/new.html.twig', [
             'site' => $site,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -98,7 +98,7 @@ class SiteController extends BaseController
 
         return $this->render('super-administration/site/edit.html.twig', [
             'site' => $site,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

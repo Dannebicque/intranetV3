@@ -4,25 +4,23 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/api/unifolio/GroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/04/2023 17:09
+ * @lastUpdate 26/07/2023 08:42
  */
 
 namespace App\Controller\api\unifolio;
 
 use App\Controller\BaseController;
 use App\Repository\GroupeRepository;
-use App\Repository\TypeGroupeRepository;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 
 class GroupeController extends BaseController
 {
     #[Route(path: '/api/unifolio/groupe/', name: 'api_groupe_liste')]
     public function listeGroupe(
-        Request     $request,
         GroupeRepository $groupeRepository,
 
-    )
+    ): JsonResponse
     {
 //        $this->checkAccessApi($request);
 

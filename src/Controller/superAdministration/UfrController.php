@@ -69,7 +69,7 @@ class UfrController extends BaseController
 
         return $this->render('super-administration/ufr/new.html.twig', [
             'ufr' => $ufr,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -97,7 +97,7 @@ class UfrController extends BaseController
 
         return $this->render('super-administration/ufr/edit.html.twig', [
             'ufr' => $ufr,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

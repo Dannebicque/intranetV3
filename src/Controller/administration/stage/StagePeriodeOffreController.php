@@ -16,7 +16,7 @@ use App\Entity\Constantes;
 use App\Entity\StagePeriode;
 use App\Entity\StagePeriodeOffre;
 use App\Form\StagePeriodeOffreType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,8 +25,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class StagePeriodeOffreController extends BaseController
 {
     #[Route(path: '/{uuid}', name: 'administration_stage_periode_offre_index', methods: 'GET')]
-    #[ParamConverter('stagePeriode', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function index(StagePeriode $stagePeriode): Response
+    public function index(#[MapEntity(mapping: ['uuid' => 'uuid'])]
+                          StagePeriode $stagePeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
 
@@ -40,10 +40,10 @@ class StagePeriodeOffreController extends BaseController
     }
 
     #[Route(path: '/{stagePeriode}/export.{_format}', name: 'administration_stage_periode_offre_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    #[ParamConverter('stagePeriode', options: ['mapping' => ['stagePeriode' => 'uuid']])]
     public function export(
         MySerializer $mySerializer,
-        MyExport $myExport, StagePeriode $stagePeriode, string $_format): Response
+        MyExport     $myExport, #[MapEntity(mapping: ['stagePeriode' => 'uuid'])]
+        StagePeriode $stagePeriode, string $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
         $offres = $stagePeriode->getStagePeriodeOffres();
@@ -62,8 +62,8 @@ class StagePeriodeOffreController extends BaseController
     }
 
     #[Route(path: '/new/{stagePeriode}', name: 'administration_stage_periode_offre_new', methods: 'GET|POST')]
-    #[ParamConverter('stagePeriode', options: ['mapping' => ['stagePeriode' => 'uuid']])]
-    public function create(Request $request, StagePeriode $stagePeriode): Response
+    public function create(Request $request, #[MapEntity(mapping: ['stagePeriode' => 'uuid'])]
+    StagePeriode                   $stagePeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
         $stagePeriodeOffre = new StagePeriodeOffre($stagePeriode);
@@ -86,7 +86,7 @@ class StagePeriodeOffreController extends BaseController
 
         return $this->render('administration/stage/stage_periode_offre/new.html.twig', [
             'stage_periode_offre' => $stagePeriodeOffre,
-            'form' => $form->createView(),
+            'form' => $form,
             'stagePeriode' => $stagePeriode,
         ]);
     }
@@ -112,7 +112,7 @@ class StagePeriodeOffreController extends BaseController
 
         return $this->render('administration/stage/stage_periode_offre/edit.html.twig', [
             'stage_periode_offre' => $stagePeriodeOffre,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -130,8 +130,8 @@ class StagePeriodeOffreController extends BaseController
     }
 
     #[Route(path: '/{id}/{stagePeriode}', name: 'administration_stage_periode_offre_show', methods: 'GET')]
-    #[ParamConverter('stagePeriode', options: ['mapping' => ['stagePeriode' => 'uuid']])]
-    public function show(StagePeriodeOffre $stagePeriodeOffre, StagePeriode $stagePeriode): Response
+    public function show(StagePeriodeOffre $stagePeriodeOffre, #[MapEntity(mapping: ['stagePeriode' => 'uuid'])]
+    StagePeriode                           $stagePeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
 

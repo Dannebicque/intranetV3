@@ -17,7 +17,7 @@ use App\Entity\Scolarite;
 use App\Entity\Semestre;
 use App\Message\ExportReleve;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -51,8 +51,8 @@ class SemestreExportController extends BaseController
      * @throws SyntaxError
      */
     #[Route(path: '/provisoire/{slug}/{semestre}', name: 'administration_semestre_export_releve_provisoire')]
-    #[ParamConverter('etudiant', options: ['mapping' => ['slug' => 'slug']])]
-    public function exportReleveProvisoire(EtudiantExportReleve $etudiantExportReleve, Etudiant $etudiant, Semestre $semestre = null): PdfResponse
+    public function exportReleveProvisoire(EtudiantExportReleve $etudiantExportReleve, #[MapEntity(mapping: ['slug' => 'slug'])]
+    Etudiant                                                    $etudiant, Semestre $semestre = null): PdfResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre ?: $etudiant->getSemestre());
         $etudiantExportReleve->setEtudiant($etudiant);
@@ -62,8 +62,8 @@ class SemestreExportController extends BaseController
     }
 
     #[Route(path: '/definitif/{slug}/{scolarite}', name: 'administration_semestre_export_releve_definitif')]
-    #[ParamConverter('etudiant', options: ['mapping' => ['slug' => 'slug']])]
-    public function exportReleveDefinitif(EtudiantExportReleve $etudiantExportReleve, Etudiant $etudiant, Scolarite $scolarite): PdfResponse
+    public function exportReleveDefinitif(EtudiantExportReleve $etudiantExportReleve, #[MapEntity(mapping: ['slug' => 'slug'])]
+    Etudiant                                                   $etudiant, Scolarite $scolarite): PdfResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $etudiant->getSemestre());
         $etudiantExportReleve->setEtudiant($etudiant);

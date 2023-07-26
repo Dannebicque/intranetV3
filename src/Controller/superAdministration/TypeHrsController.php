@@ -72,7 +72,7 @@ class TypeHrsController extends BaseController
 
         return $this->render('super-administration/type_hrs/new.html.twig', [
             'type_hr' => $typeHr,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -104,7 +104,7 @@ class TypeHrsController extends BaseController
 
         return $this->render('super-administration/type_hrs/edit.html.twig', [
             'type_hrs' => $typeHr,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

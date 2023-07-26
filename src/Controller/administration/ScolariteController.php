@@ -21,7 +21,7 @@ use App\Form\ScolariteType;
 use App\Repository\AnneeUniversitaireRepository;
 use App\Utils\Tools;
 use Exception;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,8 +35,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class ScolariteController extends BaseController
 {
     #[Route(path: '/edit/{slug}/{scolarite?<\d+>}', name: 'administration_scolarite_etudiant_edit')]
-    #[ParamConverter('etudiant', options: ['mapping' => ['slug' => 'slug']])]
-    public function editScolariteEtudiant(Request $request, Etudiant $etudiant, ?Scolarite $scolarite = null): Response
+    public function editScolariteEtudiant(Request $request, #[MapEntity(mapping: ['slug' => 'slug'])]
+    Etudiant                                      $etudiant, ?Scolarite $scolarite = null): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $etudiant->getSemestre());
         $edit = true;
@@ -67,7 +67,7 @@ class ScolariteController extends BaseController
         return $this->render('administration/scolarite/edit.html.twig', [
             'etudiant' => $etudiant,
             'scolarites' => $etudiant->getScolarites(),
-            'form' => $form->createView(),
+            'form' => $form,
             'scolarite' => $scolarite,
             'edit' => $edit,
         ]);

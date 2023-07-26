@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Twig/StageExtension.php
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Twig/StageExtension.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:10
+ * @lastUpdate 25/07/2023 22:23
  */
 
 namespace App\Twig;
@@ -28,7 +28,7 @@ class StageExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('transformeFromTwig', [$this, 'transformeFromTwig'], ['is_safe' => ['html']]),
+            new TwigFilter('transformeFromTwig', $this->transformeFromTwig(...), ['is_safe' => ['html']]),
         ];
     }
 

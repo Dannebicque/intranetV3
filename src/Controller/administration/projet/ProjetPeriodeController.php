@@ -16,7 +16,8 @@ use App\Entity\Constantes;
 use App\Entity\ProjetPeriode;
 use App\Form\ProjetPeriodeType;
 use App\Repository\ProjetPeriodeRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use JsonException;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -34,6 +35,9 @@ class ProjetPeriodeController extends BaseController
         ]);
     }
 
+    /**
+     * @throws JsonException
+     */
     #[Route(path: '/export.{_format}', name: 'administration_projet_periode_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
     public function export(
         MySerializer $mySerializer,
@@ -79,13 +83,13 @@ class ProjetPeriodeController extends BaseController
 
         return $this->render('administration/projet/projet_periode/new.html.twig', [
             'projet_periode' => $projetPeriode,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
     #[Route(path: '/{id}', name: 'administration_projet_periode_show', methods: ['GET'])]
-    #[ParamConverter('projetPeriode', options: ['mapping' => ['id' => 'uuid']])]
-    public function show(ProjetPeriode $projetPeriode): Response
+    public function show(#[MapEntity(mapping: ['id' => 'uuid'])]
+                         ProjetPeriode $projetPeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestre());
 
@@ -95,8 +99,8 @@ class ProjetPeriodeController extends BaseController
     }
 
     #[Route(path: '/{id}/edit', name: 'administration_projet_periode_edit', methods: ['GET', 'POST'])]
-    #[ParamConverter('projetPeriode', options: ['mapping' => ['id' => 'uuid']])]
-    public function edit(Request $request, ProjetPeriode $projetPeriode): Response
+    public function edit(Request $request, #[MapEntity(mapping: ['id' => 'uuid'])]
+    ProjetPeriode                $projetPeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestre());
         $form = $this->createForm(ProjetPeriodeType::class, $projetPeriode, [
@@ -115,13 +119,13 @@ class ProjetPeriodeController extends BaseController
 
         return $this->render('administration/projet/projet_periode/edit.html.twig', [
             'projet_periode' => $projetPeriode,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
     #[Route(path: '/{id}', name: 'administration_projet_periode_delete', methods: ['DELETE'])]
-    #[ParamConverter('projetPeriode', options: ['mapping' => ['id' => 'uuid']])]
-    public function delete(Request $request, ProjetPeriode $projetPeriode): Response
+    public function delete(Request $request, #[MapEntity(mapping: ['id' => 'uuid'])]
+    ProjetPeriode                  $projetPeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestre());
         // la suppression entraine la suppression des offres, des templates et des stages déjà présent.
@@ -142,8 +146,8 @@ class ProjetPeriodeController extends BaseController
     }
 
     #[Route(path: '/{id}/duplicate', name: 'administration_projet_periode_duplicate', methods: 'GET')]
-    #[ParamConverter('projetPeriode', options: ['mapping' => ['id' => 'uuid']])]
-    public function duplicate(ProjetPeriode $projetPeriode): Response
+    public function duplicate(#[MapEntity(mapping: ['id' => 'uuid'])]
+                              ProjetPeriode $projetPeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetPeriode->getSemestre());
         $newProjetPeriode = clone $projetPeriode;

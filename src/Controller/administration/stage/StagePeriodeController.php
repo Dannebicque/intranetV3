@@ -17,7 +17,7 @@ use App\Entity\StagePeriode;
 use App\Form\StagePeriodeType;
 use App\Repository\StagePeriodeRepository;
 use Exception;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -83,13 +83,13 @@ class StagePeriodeController extends BaseController
 
         return $this->render('administration/stage/stage_periode/new.html.twig', [
             'stage_periode' => $stagePeriode,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
     #[Route(path: '/{id}', name: 'administration_stage_periode_show', methods: 'GET')]
-    #[ParamConverter('stagePeriode', options: ['mapping' => ['id' => 'uuid']])]
-    public function show(StagePeriode $stagePeriode): Response
+    public function show(#[MapEntity(mapping: ['id' => 'uuid'])]
+                         StagePeriode $stagePeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
 
@@ -97,8 +97,8 @@ class StagePeriodeController extends BaseController
     }
 
     #[Route(path: '/{id}/edit', name: 'administration_stage_periode_edit', methods: 'GET|POST')]
-    #[ParamConverter('stagePeriode', options: ['mapping' => ['id' => 'uuid']])]
-    public function edit(Request $request, StagePeriode $stagePeriode): Response
+    public function edit(Request $request, #[MapEntity(mapping: ['id' => 'uuid'])]
+    StagePeriode                 $stagePeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
         $form = $this->createForm(StagePeriodeType::class, $stagePeriode, [
@@ -118,13 +118,13 @@ class StagePeriodeController extends BaseController
 
         return $this->render('administration/stage/stage_periode/edit.html.twig', [
             'stage_periode' => $stagePeriode,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
     #[Route(path: '/{id}', name: 'administration_stage_periode_delete', methods: 'DELETE')]
-    #[ParamConverter('stagePeriode', options: ['mapping' => ['id' => 'uuid']])]
-    public function delete(Request $request, StagePeriode $stagePeriode): Response
+    public function delete(Request $request, #[MapEntity(mapping: ['id' => 'uuid'])]
+    StagePeriode                   $stagePeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
         // la suppression entraine la suppression des offres, des templates et des stages déjà présent.
@@ -145,8 +145,8 @@ class StagePeriodeController extends BaseController
     }
 
     #[Route(path: '/{id}/duplicate', name: 'administration_stage_periode_duplicate', methods: 'GET')]
-    #[ParamConverter('stagePeriode', options: ['mapping' => ['id' => 'uuid']])]
-    public function duplicate(StagePeriode $stagePeriode): Response
+    public function duplicate(#[MapEntity(mapping: ['id' => 'uuid'])]
+                              StagePeriode $stagePeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
         $newStagePeriode = clone $stagePeriode;

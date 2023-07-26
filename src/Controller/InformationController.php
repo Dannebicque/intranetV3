@@ -15,8 +15,8 @@ use App\Entity\Article;
 use App\Entity\ArticleCategorie;
 use App\Entity\ArticleLike;
 use App\Repository\ArticleRepository;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use function count;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -59,8 +59,8 @@ class InformationController extends BaseController
     }
 
     #[Route(path: '/show/{slug}', name: 'information_read_more')]
-    #[ParamConverter('article', options: ['mapping' => ['slug' => 'slug']])]
-    public function show(Article $article): Response
+    public function show(#[MapEntity(mapping: ['slug' => 'slug'])]
+                         Article $article): Response
     {
         $like = false;
         /** @var ArticleLike $like */
@@ -77,8 +77,8 @@ class InformationController extends BaseController
     }
 
     #[Route(path: '/like/{slug}', name: 'information_like', options: ['expose' => true])]
-    #[ParamConverter('article', options: ['mapping' => ['slug' => 'slug']])]
-    public function like(MyArticle $myArticle, Article $article): JsonResponse
+    public function like(MyArticle $myArticle, #[MapEntity(mapping: ['slug' => 'slug'])]
+    Article                        $article): JsonResponse
     {
         $myArticle->setArticle($article)->saveLike($this->getUser());
 

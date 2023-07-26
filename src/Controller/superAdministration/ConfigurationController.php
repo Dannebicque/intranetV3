@@ -65,7 +65,7 @@ class ConfigurationController extends BaseController
 
         return $this->render('super-administration/configuration/new.html.twig', [
             'configuration' => $configuration,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -89,7 +89,7 @@ class ConfigurationController extends BaseController
 
         return $this->render('super-administration/configuration/edit.html.twig', [
             'configuration' => $configuration,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

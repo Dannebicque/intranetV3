@@ -69,7 +69,7 @@ class SalleController extends BaseController
 
         return $this->render('super-administration/salle/new.html.twig', [
             'salle' => $salle,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -101,7 +101,7 @@ class SalleController extends BaseController
 
         return $this->render('super-administration/salle/edit.html.twig', [
             'salle' => $salle,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

@@ -124,7 +124,7 @@ class SousComissionController extends BaseController
         $sousCommission = $sousCommissionManager->getSousCommission($semestre);
         $matieres = $typeMatiereManager->findBySemestreAndReferentiel($semestre,
             $semestre->getDiplome()->getReferentiel());
-        $sousCommission->calcul($semestre, $this->dataUserSession->getAnneeUniversitaire());
+        $sousCommission->calcul($semestre, $this->getAnneeUniversitaire());
         $sousCommissionTravail = $sousCommissionSauvegarde->sauvegardeTravail($sousCommission, $matieres);
 
         return $this->render('administration/sous_commission/'.$sousCommission::TEMPLATE_TRAVAIL, [

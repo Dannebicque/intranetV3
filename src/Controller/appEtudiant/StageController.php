@@ -18,17 +18,18 @@ use App\Form\StageEtudiantEtudiantType;
 use App\Repository\StagePeriodeRepository;
 use Carbon\Carbon;
 use Exception;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class StageController.
  */
-#[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_ETUDIANT')]
+#[IsGranted('ROLE_ETUDIANT')]
 #[Route(path: '/application/etudiant/stage')]
 class StageController extends BaseController
 {
@@ -69,8 +70,8 @@ class StageController extends BaseController
      * @deprecated nouveau formulaire à utiliser
      */
     #[Route(path: '/formulaire/{stageEtudiant}', name: 'application_etudiant_stage_formulaire', methods: 'GET|POST')]
-    #[ParamConverter('stageEtudiant', options: ['mapping' => ['stageEtudiant' => 'uuid']])]
-    public function create(EventDispatcherInterface $eventDispatcher, Request $request, StageEtudiant $stageEtudiant): Response
+    public function create(EventDispatcherInterface $eventDispatcher, Request $request, #[MapEntity(mapping: ['stageEtudiant' => 'uuid'])]
+    StageEtudiant                                   $stageEtudiant): Response
     {
         if ($stageEtudiant->getEtudiant()->getId() !== $this->getUser()->getId()) {
             // si incohérence entre l'utilisateur connecté et le stage
@@ -101,7 +102,7 @@ class StageController extends BaseController
 
             return $this->render('appEtudiant/stage/formulaire.html.twig', [
                 'stageEtudiant' => $stageEtudiant,
-                'form' => $form->createView(),
+                'form' => $form,
             ]);
         }
 

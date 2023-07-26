@@ -70,7 +70,7 @@ class TypeDiplomeController extends BaseController
 
         return $this->render('super-administration/type_diplome/new.html.twig', [
             'type_diplome' => $typeDiplome,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -98,7 +98,7 @@ class TypeDiplomeController extends BaseController
 
         return $this->render('super-administration/type_diplome/edit.html.twig', [
             'type_diplome' => $typeDiplome,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

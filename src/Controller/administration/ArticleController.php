@@ -19,6 +19,7 @@ use App\Form\ArticleType;
 use App\Repository\ArticleCategorieRepository;
 use App\Repository\ArticleRepository;
 use App\Table\ArticleTableType;
+use JsonException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -28,7 +29,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ArticleController extends BaseController
 {
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     #[Route('/', name: 'administration_article_index', options: ['expose' => true], methods: ['GET', 'POST'])]
     public function index(Request $request): Response
@@ -94,7 +95,7 @@ class ArticleController extends BaseController
 
         return $this->render('administration/article/new.html.twig', [
             'article' => $article,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -134,7 +135,7 @@ class ArticleController extends BaseController
 
         return $this->render('administration/article/edit.html.twig', [
             'article' => $article,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
