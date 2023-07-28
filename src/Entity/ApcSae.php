@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcSae.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2022 16:15
+ * @lastUpdate 28/07/2023 15:35
  */
 
 namespace App\Entity;
@@ -17,7 +17,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use JetBrains\PhpStorm\Deprecated;
 
 #[ORM\Entity(repositoryClass: ApcSaeRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -31,13 +30,15 @@ class ApcSae extends AbstractMatiere implements MatiereEntityInterface
      * @return \App\Entity\Semestre|null
      *
      */
-    #[Deprecated('supprimer')]
+    /** @deprecated */
     public function getSemestre(): ?Semestre
     {
         return $this->semestre;
     }
 
-    #[Deprecated(reason: 'Une SAE peut être commune  à plusieurs parcours. Le plus simple serait d\'avoir une gestion manytomany')]
+    //(reason: 'Une SAE peut être commune  à plusieurs parcours. Le plus simple serait d\'avoir une gestion manytomany')
+
+    /** @deprecated */
     #[ORM\ManyToOne(targetEntity: Semestre::class, fetch: 'EAGER')]
     private ?Semestre $semestre = null;
 
@@ -326,7 +327,7 @@ class ApcSae extends AbstractMatiere implements MatiereEntityInterface
     /**
      * @param \App\Entity\Semestre|null $semestre
      */
-    #[Deprecated('supprimer')]
+    /** @deprecated */
     public function setSemestre(?Semestre $semestre): void
     {
         $this->semestre = $semestre;

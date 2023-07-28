@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcRessource.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2022 12:51
+ * @lastUpdate 25/07/2023 13:56
  */
 
 namespace App\Entity;
@@ -16,7 +16,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use JetBrains\PhpStorm\Deprecated;
 
 #[ORM\Entity(repositoryClass: ApcRessourceRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -29,13 +28,13 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
     /**
      * @return \App\Entity\Semestre|null
      */
-    #[Deprecated('a supprimer')]
+    /** @deprecated */
     public function getSemestre(): ?Semestre
     {
         return $this->semestre;
     }
 
-    #[Deprecated(reason: 'Une ressource peut être commune  à plusieurs parcours. Le plus simple serait d\'avoir une gestion manytomany')]
+    /** @deprecated(reason: 'Une ressource peut être commune  à plusieurs parcours. Le plus simple serait d\'avoir une gestion manytomany') */
     #[ORM\ManyToOne(targetEntity: Semestre::class, fetch: 'EAGER')]
     private ?Semestre $semestre = null;
 
@@ -397,7 +396,7 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
     /**
      * @param \App\Entity\Semestre|null $semestre
      */
-    #[Deprecated('a supprimer')]
+    /** @deprecated */
     public function setSemestre(?Semestre $semestre): void
     {
         $this->semestre = $semestre;

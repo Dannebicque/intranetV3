@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ProjetPeriode.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/09/2022 08:54
+ * @lastUpdate 25/07/2023 13:56
  */
 
 namespace App\Entity;
@@ -17,7 +17,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use JetBrains\PhpStorm\Deprecated;
 use Ramsey\Uuid\Uuid;
 
 #[ORM\Entity(repositoryClass: ProjetPeriodeRepository::class)]
@@ -31,7 +30,7 @@ class ProjetPeriode extends BaseEntity
     private ?string $libelle = null;
 
     #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'projetPeriodes')]
-    #[Deprecated]
+    /** @deprecated */
     private ?Semestre $semestre = null;
 
     #[ORM\ManyToMany(targetEntity: Personnel::class, inversedBy: 'projetPeriodes')]
@@ -83,13 +82,13 @@ class ProjetPeriode extends BaseEntity
         return $this;
     }
 
-    #[Deprecated]
+    /** @deprecated */
     public function getSemestre(): ?Semestre
     {
         return $this->semestre;
     }
 
-    #[Deprecated]
+    /** @deprecated */
     public function setSemestre(?Semestre $semestre): self
     {
         $this->semestre = $semestre;
