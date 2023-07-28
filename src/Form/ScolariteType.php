@@ -1,23 +1,25 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/ScolariteType.php
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/ScolariteType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/05/2021 14:21
+ * @lastUpdate 28/07/2023 18:28
  */
 
 namespace App\Form;
 
 use App\Entity\AnneeUniversitaire;
-use App\Entity\Constantes;
 use App\Entity\Departement;
 use App\Entity\Scolarite;
 use App\Entity\Semestre;
+use App\Enums\DecisionSemestreEnum;
 use App\Repository\SemestreRepository;
+use BackedEnum;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -30,6 +32,7 @@ class ScolariteType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->departement = $options['departement'];
+        $isApc = $options['isApc'];
 
         $builder
             ->add('ordre', ChoiceType::class, [
@@ -45,49 +48,45 @@ class ScolariteType extends AbstractType
                     9 => 9,
                     10 => 10,
                 ],
-                'label' => 'ordre',
+                'label' => 'label.ordre',
             ])
             ->add('semestre', EntityType::class, [
-                'label' => 'semestre',
+                'label' => 'label.semestre',
                 'placeholder' => 'Choisir le semestre',
                 'class' => Semestre::class,
                 'query_builder' => fn (SemestreRepository $semestreRepository) => $semestreRepository->findByDepartementBuilder($this->departement),
                 'choice_label' => 'libelle',
             ])
             ->add('anneeUniversitaire', EntityType::class, [
-                'label' => 'anneeUniversitaire',
+                'label' => 'label.anneeUniversitaire',
                 'class' => AnneeUniversitaire::class,
                 'choice_label' => 'libelle',
             ])
-            ->add('decision', ChoiceType::class, [
-                'choices' => [
-                    'En cours' => Constantes::SEMESTRE_EN_COURS,
-                    'Validé' => Constantes::SEMESTRE_VALIDE,
-                    'Non Validé' => Constantes::SEMESTRE_NON_VALIDE,
-                    'Démission' => Constantes::SEMESTRE_DEMISSIONNAIRE,
-                    'Réorientation' => Constantes::SEMESTRE_REORIENTE,
-                    'VCJ' => Constantes::SEMESTRE_VCJ,
-                    'VCA' => Constantes::SEMESTRE_VCA,
-                    'Blanchimenent' => Constantes::SEMESTRE_BLANCHIMENT,
-                ],
-                'label' => 'decision',
+            ->add('decision', EnumType::class, [
+                'class' => DecisionSemestreEnum::class,
+                'choice_label' => static fn(BackedEnum $choice): string => $choice->value,
+                'label' => 'label.decision.semestre',
             ])
             ->add('proposition', TextType::class, [
-                'label' => 'proposition',
+                'label' => 'label.proposition',
                 'required' => false,
                 'help' => 'Sn+1, DUT, ...',
             ])
-            ->add('moyenne', TextType::class, [
-                'label' => 'moyenne',
-            ])
             ->add('nbAbsences', TextType::class, [
-                'label' => 'nbAbsences',
+                'label' => 'label.nbAbsences',
             ])
             ->add('commentaire', TextareaType::class, [
-                'label' => 'commentaire',
+                'label' => 'label.commentaire',
+                'help' => 'Commentaire libre sur le semestre, non diffusé aux étudiants.',
                 'required' => false,
             ])
            ;
+
+        if (false === $isApc) {
+            $builder->add('moyenne', TextType::class, [
+                'label' => 'moyenne',
+            ]);
+        }
     }
 
     public function configureOptions(OptionsResolver $resolver): void
@@ -96,6 +95,7 @@ class ScolariteType extends AbstractType
             'data_class' => Scolarite::class,
             'translation_domain' => 'form',
             'departement' => null,
+            'isApc' => false
         ]);
     }
 }

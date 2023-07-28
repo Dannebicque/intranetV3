@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/ScolariteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:44
+ * @lastUpdate 28/07/2023 18:28
  */
 
 namespace App\Controller\administration;
@@ -17,6 +17,7 @@ use App\Entity\Etudiant;
 use App\Entity\Scolarite;
 use App\Entity\Semestre;
 use App\Entity\Ue;
+use App\Enums\DecisionUeEnum;
 use App\Form\ScolariteType;
 use App\Repository\AnneeUniversitaireRepository;
 use App\Utils\Tools;
@@ -35,8 +36,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class ScolariteController extends BaseController
 {
     #[Route(path: '/edit/{slug}/{scolarite?<\d+>}', name: 'administration_scolarite_etudiant_edit')]
-    public function editScolariteEtudiant(Request $request, #[MapEntity(mapping: ['slug' => 'slug'])]
-    Etudiant                                      $etudiant, ?Scolarite $scolarite = null): Response
+    public function editScolariteEtudiant(
+        Request                                            $request,
+        #[MapEntity(mapping: ['slug' => 'slug'])] Etudiant $etudiant,
+        ?Scolarite                                         $scolarite = null): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $etudiant->getSemestre());
         $edit = true;
@@ -45,8 +48,13 @@ class ScolariteController extends BaseController
                 $this->dataUserSession->getAnneeUniversitaire());
             $edit = false;
         }
+        $isApc = $scolarite->getSemestre()->getDiplome()->isApc();
+        //todo: gérer avec stimulus la partie édit...
         $form = $this->createForm(ScolariteType::class, $scolarite,
-            ['departement' => $this->dataUserSession->getDepartement()]);
+            [
+                'departement' => $this->dataUserSession->getDepartement(),
+                'isApc' => $isApc
+            ]);
         $form->handleRequest($request);
         if ($form->isSubmitted()) {
             $this->entityManager->persist($scolarite);
@@ -55,6 +63,9 @@ class ScolariteController extends BaseController
             foreach ($scolarite->getSemestre()->getUes() as $ue) {
                 $idUe = $ue->getId();
                 $tUes[$idUe]['moyenne'] = Tools::convertToFloat($request->request->get('ue_'.$idUe));
+                if ($isApc) {
+                    $tUes[$idUe]['decision'] = $request->request->get('ue_decision_' . $idUe, DecisionUeEnum::UE_EN_COURS->value);
+                }
                 $tUes[$idUe]['rang'] = -1;
             }
             $scolarite->setMoyennesUes($tUes);
@@ -70,6 +81,7 @@ class ScolariteController extends BaseController
             'form' => $form,
             'scolarite' => $scolarite,
             'edit' => $edit,
+            'ueDecisions' => DecisionUeEnum::cases()
         ]);
     }
 

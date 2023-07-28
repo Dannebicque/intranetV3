@@ -215,12 +215,12 @@ chaque UE, et pour l'année au global.
                                             {{ myEtudiant.moyenneUes[u.id].moyennePacPenalisee|styleMoyenne }}
                                         </a>
                                     </td>
-                                    <td>{{ myEtudiant.moyenneUes[u.id].decisionPenalisee|styleDecision }}</td>
+                                    <td>{{ myEtudiant.moyenneUes[u.id].decisionPenalisee|styleDecisionUe }}</td>
                                 {% else %}
                                     <td>
                                         {{ myEtudiant.moyenneUes[u.id].moyennePac|styleMoyenne }}
                                     </td>
-                                    <td>{{ myEtudiant.moyenneUes[u.id].decision|styleDecision }}</td>
+                                    <td>{{ myEtudiant.moyenneUes[u.id].decision|styleDecisionUe }}</td>
                                 {% endif %}
                             {% endfor %}
 
@@ -228,7 +228,7 @@ chaque UE, et pour l'année au global.
                             <td>
                                 <a href="#" data-bs-toggle="tooltip" data-bs-placement="bottom"
                                    title="{{ etudiant.display }}">
-                                    {{ myEtudiant.decision|styleDecision }}
+                                    {{ myEtudiant.decision|styleDecisionSemestre }}
                                 </a>
                             </td>
 
@@ -253,7 +253,7 @@ chaque UE, et pour l'année au global.
                                             {% endif %}
                                         </td>
                                         <td>
-                                            {{ myEtudiant.scolarite[sem.ordreLmd].moyenneUes[u.numeroUe].decision|styleDecision }}
+                                            {{ myEtudiant.scolarite[sem.ordreLmd].moyenneUes[u.numeroUe].decision|styleDecisionUe }}
                                         </td>
                                     {% else %}
                                         <td> -</td>
@@ -265,16 +265,16 @@ chaque UE, et pour l'année au global.
                                                 {{ myEtudiant.moyenneUes[u.id].moyennePacPenalisee|styleMoyenne }}
                                             </a>
                                         </td>
-                                        <td>{{ myEtudiant.moyenneUes[u.id].decisionPenalisee|styleDecision }}</td>
+                                        <td>{{ myEtudiant.moyenneUes[u.id].decisionPenalisee|styleDecisionUe }}</td>
                                     {% else %}
                                         <td>
                                             {{ myEtudiant.moyenneUes[u.id].moyennePac|styleMoyenne }}
                                         </td>
-                                        <td>{{ myEtudiant.moyenneUes[u.id].decision|styleDecision }}</td>
+                                        <td>{{ myEtudiant.moyenneUes[u.id].decision|styleDecisionUe }}</td>
                                     {% endif %}
                                     {% if myEtudiant.moyenneAnneeUes[u.numeroUe] != null %}
                                         <td>{{ myEtudiant.moyenneAnneeUes[u.numeroUe].moyenneAnnee|styleMoyenne }}</td>
-                                        <td>{{ myEtudiant.moyenneAnneeUes[u.numeroUe].decisionAnnee|styleDecision }}</td>
+                                        <td>{{ myEtudiant.moyenneAnneeUes[u.numeroUe].decisionAnnee|styleDecisionUe }}</td>
                                     {% else %}
                                         <td>Sans info ?</td>
                                         <td>Sans info ?</td>
@@ -282,15 +282,15 @@ chaque UE, et pour l'année au global.
                                 {% endfor %}
                                 <td>
                                     {% if myEtudiant.scolarite[sem.ordreLmd] is defined %}
-                                        {{ myEtudiant.scolarite[sem.ordreLmd].decision|styleDecision }}
+                                        {{ myEtudiant.scolarite[sem.ordreLmd].decision|styleDecisionSemestre }}
                                     {% else %}
                                         Sans info ?
                                     {% endif %}
                                     {# todo: est-ce que la décision peu évoluer  #}
                                 </td>
 
-                                <td>{{ myEtudiant.decision|styleDecision }}</td>
-                                <td>{{ myEtudiant.decisionAnnee|styleDecision }}</td>
+                                <td>{{ myEtudiant.decision|styleDecisionSemestre }}</td>
+                                <td>{{ myEtudiant.decisionAnnee|styleDecisionSemestre }}</td>
                                 <td>{{ myEtudiant.propositionAnnee }}</td>
                                 <th><a href="{{ path('user_profil',{type:'etudiant', slug:etudiant.slug}) }}"
                                        target="_blank" title="Profil de l'étudiant"
