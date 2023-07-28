@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Hrs.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:21
+ * @lastUpdate 26/07/2023 15:53
  */
 
 namespace App\Entity;
@@ -22,7 +22,7 @@ class Hrs extends BaseEntity
 
     #[Groups(groups: ['hrs_administration'])]
     #[ORM\Column(type: Types::FLOAT)]
-    private ?float $nbHeuresTd = null;
+    private ?float $nbHeuresTd = 0.0;
 
     #[Groups(groups: ['hrs_administration'])]
     #[ORM\Column(type: Types::STRING, length: 150)]
@@ -91,7 +91,7 @@ class Hrs extends BaseEntity
         return $this->libelle;
     }
 
-    public function setLibelle(?string $libelle): void
+    public function setLibelle(?string $libelle = '-'): void
     {
         $this->libelle = $libelle;
     }
