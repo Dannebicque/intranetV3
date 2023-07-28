@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/PlanCours/PlanCoursRegistry.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 25/07/2023 13:56
  */
 
 namespace App\Components\PlanCours;
@@ -38,5 +38,15 @@ class PlanCoursRegistry
     public function getPlansCours(): array
     {
         return $this->planCours;
+    }
+
+    public function getChoicePlansCours(): array
+    {
+        $tab = [];
+        foreach ($this->planCours as $planCours) {
+            $tab[$planCours::LABEL] = $planCours::class;
+        }
+
+        return $tab;
     }
 }

@@ -1,33 +1,59 @@
-// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/absences.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 05/10/2022 20:18
+// @lastUpdate 25/07/2023 13:56
 import $ from 'jquery'
-import { addCallout } from '../util'
 import Routing from 'fos-router'
+import { addCallout } from '../util'
 import { post } from '../fetch'
 
 let tabsences = []
 
 function updateAffichage(date, _heure) {
   let heure = _heure
+  document.querySelectorAll('.pasabsent').forEach((btn) => {
+    btn.disabled = false
+  })
   $.ajax({
     type: 'GET',
     url: Routing.generate('application_personnel_absence_get_ajax', { matiere: $('#absence-matiere').val() }),
     dataType: 'json',
     success(data) {
-      // const t = date.split('/')
-      // const ddate = t[2].trim() + '-' + t[1].trim() + '-' + t[0].trim()
       if (heure.length === 4) {
         heure = `0${heure}`
       }
-
-      for (const d in data) {
+      let hasAbsence = false
+      const tAbsences = data.absences
+      for (const d in tAbsences) {
         if (d == date) {
-          if (typeof data[d][heure] !== 'undefined') {
-            for (let i = 0; i < data[d][heure].length; i++) {
-              $(`#etu_${data[d][heure][i]}`).addClass('absent')
+          if (typeof tAbsences[d][heure] !== 'undefined') {
+            for (let i = 0; i < tAbsences[d][heure].length; i++) {
+              $(`#etu_${tAbsences[d][heure][i]}`).addClass('absent')
+              hasAbsence = true
+            }
+          }
+        }
+      }
+      // activation des boutons
+      if (hasAbsence) {
+        // des absences, on désactive les boutons
+        document.querySelectorAll('.pasabsent').forEach((btn) => {
+          btn.disabled = true
+        })
+      } else {
+        const tAppel = data.etatAppel
+        // on regarde dans le tableau etatAppel si un appel a été fait pour le groupe
+        for (const a in tAppel) {
+          if (a == date) {
+            if (typeof tAppel[a][heure] !== 'undefined') {
+              for (let i = 0; i < tAppel[a][heure].length; i++) {
+                document.querySelectorAll('.pasabsent').forEach((btn) => {
+                  if (btn.dataset.groupe == tAppel[a][heure][i]) {
+                    btn.disabled = true
+                  }
+                })
+              }
             }
           }
         }
@@ -81,7 +107,7 @@ $(document).on('click', '.etudiant', function () {
   } else {
     const $split = $(this).attr('id').split('_')
     if ($(this).hasClass('absent')) {
-    // supprimer absence
+      // supprimer absence
       $(this).removeClass('absent')
       // todo: tester si heure n'est pas vide.
       $.ajax({
@@ -107,7 +133,7 @@ $(document).on('click', '.etudiant', function () {
         },
       })
     } else {
-    // marquer comme absent
+      // marquer comme absent
       $(this).addClass('absent')
       $.ajax({
         type: 'POST',

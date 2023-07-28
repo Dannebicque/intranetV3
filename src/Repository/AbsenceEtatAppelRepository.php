@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/AbsenceEtatAppelRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/12/2022 08:10
+ * @lastUpdate 25/07/2023 13:56
  */
 
 namespace App\Repository;
@@ -83,6 +83,21 @@ class AbsenceEtatAppelRepository extends ServiceEntityRepository
             ->setParameters([
                 'semestre' => $semestre,
             ])
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByMatiere(\App\DTO\Matiere $mat, ?\App\Entity\AnneeUniversitaire $anneeUniversitaire)
+    {
+        return $this->createQueryBuilder('a')
+            ->where('a.typeMatiere = :typeMatiere')
+            ->andWhere('a.idMatiere = :idMatiere')
+            ->setParameters([
+                'idMatiere' => $mat->id,
+                'typeMatiere' => $mat->typeMatiere,
+            ])
+            ->orderBy('a.date', 'ASC')
+            ->addOrderBy('a.heure', 'ASC')
             ->getQuery()
             ->getResult();
     }
