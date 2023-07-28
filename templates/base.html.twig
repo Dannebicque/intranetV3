@@ -121,12 +121,6 @@
                         </a>
                     </li>
 
-                    <li class="menu-item" id="menu-information">
-                        <a class="menu-link" href="{{ path('informations_index') }}">
-                            <i class="{{ iconInformation }} fa-2x"><span class="sr-only">Informations</span></i>
-                            <span class="title">{{ 'menu.informations'|trans }}</span>
-                        </a>
-                    </li>
                     {% if is_granted('ROLE_PERMANENT') and user_data.user.accessOriginaux == true %}
                         <li class="menu-item" id="menu-originaux">
                             <a class="menu-link" href="{{ path('document_index', {source: 'originaux'}) }}">

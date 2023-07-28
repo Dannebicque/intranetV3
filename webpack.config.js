@@ -2,13 +2,13 @@
 // @file /Users/davidannebicque/Sites/intranetV3/webpack.config.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/07/2023 08:07
+// @lastUpdate 28/07/2023 15:54
 
-var Encore = require('@symfony/webpack-encore')
-var path = require('path')
+const Encore = require('@symfony/webpack-encore')
+const path = require('path')
 const FosRouting = require('fos-router/webpack/FosRouting');
 
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 // Manually configure the runtime environment if not already configured yet by the "encore" command.
 // It's useful when you use tools that rely on webpack.config.js file.
 if (!Encore.isRuntimeEnvironmentConfigured()) {
@@ -44,7 +44,6 @@ Encore
   .addEntry('profil', './assets/js/pages/profil.js')
   .addEntry('planning', './assets/js/pages/planning.js')
   .addEntry('adm.configuration', './assets/js/pages/adm.configuration.js')
-  .addEntry('adm.articles', './assets/js/pages/adm.articles.js')
   .addEntry('adm.quizz', './assets/js/pages/adm.quizz.js')
   .addEntry('adm.groupe', './assets/js/pages/adm.groupe.js')
   .addEntry('adm.edt', './assets/js/pages/adm.edt.js')
@@ -69,7 +68,6 @@ Encore
   .addEntry('creneaux', './assets/js/pages/creneaux.js')
   .addEntry('settings', './assets/js/pages/settings.js')
   .addEntry('notes', './assets/js/pages/notes.js')
-  .addEntry('informations', './assets/js/pages/informations.js')
   .addEntry('scolarite', './assets/js/pages/scolarite.js')
   .addEntry('sadm.scolarite', './assets/js/pages/sadm.scolarite.js')
   .addEntry('sadm.enquete', './assets/js/pages/sadm.enquete.js')
@@ -101,9 +99,9 @@ Encore
   .enableSassLoader()
 
   .autoProvidejQuery()
-  .configureBabel(function (babelConfig) {
+  .configureBabel((babelConfig) => {
   }, {})
-  //optimisations
+// optimisations
 
 if (!Encore.isProduction()) {
   Encore.addPlugin(
@@ -136,8 +134,8 @@ if (!Encore.isProduction()) {
       /* See more options here: https://github.com/webpack/webpack/blob/webpack-1/lib/Stats.js#L21 */
       statsOptions: null,
       /* Log level. Can be 'info', 'warn', 'error' or 'silent'. */
-      logLevel: 'info'
-    })
+      logLevel: 'info',
+    }),
   )
 }
 
@@ -145,6 +143,3 @@ config = Encore.getWebpackConfig()
 config.resolve.extensions = ['.js', '.ts', '.svg']
 
 module.exports = config
-
-
-

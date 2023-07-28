@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Etudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/07/2023 16:14
+ * @lastUpdate 28/07/2023 15:47
  */
 
 namespace App\Entity;
@@ -166,12 +166,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     #[ORM\OrderBy(value: ['created' => 'DESC'])]
     private Collection $emprunts;
 
-    /**
-     * @var Collection<int, ArticleLikeEtudiant>
-     */
-    #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: ArticleLikeEtudiant::class)]
-    private Collection $articlesLike;
-
     #[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'etudiants')]
     private ?Departement $departement = null;
 
@@ -218,7 +212,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         $this->absenceJustificatifs = new ArrayCollection();
         $this->stageEtudiants = new ArrayCollection();
         $this->alternances = new ArrayCollection();
-        $this->articlesLike = new ArrayCollection();
         $this->documentsFavoris = new ArrayCollection();
 
         $this->promotion = (int) date('Y');
@@ -935,37 +928,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
             // set the owning side to null (unless already changed)
             if ($empruntEtudiant->getEtudiant() === $this) {
                 $empruntEtudiant->setEtudiant(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|ArticleLikeEtudiant[]
-     */
-    public function getArticlesLike(): Collection
-    {
-        return $this->articlesLike;
-    }
-
-    public function addArticlesLike(ArticleLikeEtudiant $articlesLike): self
-    {
-        if (!$this->articlesLike->contains($articlesLike)) {
-            $this->articlesLike[] = $articlesLike;
-            $articlesLike->setEtudiant($this);
-        }
-
-        return $this;
-    }
-
-    public function removeArticlesLike(ArticleLikeEtudiant $articlesLike): self
-    {
-        if ($this->articlesLike->contains($articlesLike)) {
-            $this->articlesLike->removeElement($articlesLike);
-            // set the owning side to null (unless already changed)
-            if ($articlesLike->getEtudiant() === $this) {
-                $articlesLike->setEtudiant(null);
             }
         }
 

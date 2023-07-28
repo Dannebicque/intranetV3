@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/07/2023 16:15
+ * @lastUpdate 28/07/2023 15:47
  */
 
 namespace App\Entity;
@@ -190,12 +190,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     private Collection $quizzQuestions;
 
     /**
-     * @var Collection<int, \App\Entity\ArticleLikePersonnel>
-     */
-    #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: ArticleLikePersonnel::class)]
-    private Collection $articlesLike;
-
-    /**
      * @var Collection<int, \App\Entity\DocumentFavoriPersonnel>
      */
     #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: DocumentFavoriPersonnel::class)]
@@ -292,7 +286,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         $this->departements = new ArrayCollection();
         $this->quizzQuestions = new ArrayCollection();
         $this->emprunts = new ArrayCollection();
-        $this->articlesLike = new ArrayCollection();
         $this->documentsFavoris = new ArrayCollection();
         $this->projetPeriodes = new ArrayCollection();
         $this->materielCommuns = new ArrayCollection();
@@ -1063,37 +1056,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
             // set the owning side to null (unless already changed)
             if ($emprunt->getPersonnel() === $this) {
                 $emprunt->setPersonnel(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|ArticleLikePersonnel[]
-     */
-    public function getArticlesLike(): Collection
-    {
-        return $this->articlesLike;
-    }
-
-    public function addArticlesLike(ArticleLikePersonnel $articlesLike): self
-    {
-        if (!$this->articlesLike->contains($articlesLike)) {
-            $this->articlesLike[] = $articlesLike;
-            $articlesLike->setPersonnel($this);
-        }
-
-        return $this;
-    }
-
-    public function removeArticlesLike(ArticleLikePersonnel $articlesLike): self
-    {
-        if ($this->articlesLike->contains($articlesLike)) {
-            $this->articlesLike->removeElement($articlesLike);
-            // set the owning side to null (unless already changed)
-            if ($articlesLike->getPersonnel() === $this) {
-                $articlesLike->setPersonnel(null);
             }
         }
 

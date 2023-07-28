@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Departement.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/05/2022 16:34
+ * @lastUpdate 28/07/2023 15:54
  */
 
 namespace App\Entity;
@@ -12,19 +12,19 @@ namespace App\Entity;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
 use App\Repository\DepartementRepository;
-use function chr;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
-use function ord;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Serializer\Annotation\MaxDepth;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use function chr;
+use function ord;
 
 #[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: DepartementRepository::class)]
@@ -149,12 +149,6 @@ class Departement extends BaseEntity
     private ?AnneeUniversitaire $anneeUniversitairePrepare = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ArticleCategorie>
-     */
-    #[ORM\OneToMany(mappedBy: 'departement', targetEntity: ArticleCategorie::class)]
-    private Collection $articleCategories;
-
-    /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Emprunt>
      */
     #[ORM\OneToMany(mappedBy: 'departement', targetEntity: Emprunt::class)]
@@ -194,7 +188,6 @@ class Departement extends BaseEntity
         $this->salleExamens = new ArrayCollection();
         $this->hrs = new ArrayCollection();
         $this->typeMateriels = new ArrayCollection();
-        $this->articleCategories = new ArrayCollection();
         $this->emprunts = new ArrayCollection();
         $this->etudiants = new ArrayCollection();
         $this->bCDemandes = new ArrayCollection();
@@ -658,37 +651,6 @@ class Departement extends BaseEntity
     public function setAnneeUniversitairePrepare(?AnneeUniversitaire $anneeUniversitairePrepare): self
     {
         $this->anneeUniversitairePrepare = $anneeUniversitairePrepare;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|ArticleCategorie[]
-     */
-    public function getArticleCategories(): Collection
-    {
-        return $this->articleCategories;
-    }
-
-    public function addArticleCategory(ArticleCategorie $articleCategory): self
-    {
-        if (!$this->articleCategories->contains($articleCategory)) {
-            $this->articleCategories[] = $articleCategory;
-            $articleCategory->setDepartement($this);
-        }
-
-        return $this;
-    }
-
-    public function removeArticleCategory(ArticleCategorie $articleCategory): self
-    {
-        if ($this->articleCategories->contains($articleCategory)) {
-            $this->articleCategories->removeElement($articleCategory);
-            // set the owning side to null (unless already changed)
-            if ($articleCategory->getDepartement() === $this) {
-                $articleCategory->setDepartement(null);
-            }
-        }
 
         return $this;
     }
