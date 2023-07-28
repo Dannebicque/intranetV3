@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/HrsRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 26/07/2023 16:00
  */
 
 namespace App\Repository;
@@ -43,7 +43,7 @@ class HrsRepository extends ServiceEntityRepository
             ->where('h.personnel = :user')
             ->setParameter('user', $personnel)
             ->orderBy('h.typeHrs', Criteria::ASC)
-            ->orderBy('h.semestre', Criteria::ASC);
+            ->addOrderBy('h.semestre', Criteria::ASC);
 
         if (0 !== $annee) {
             $query->andWhere('h.annee = :annee')
@@ -59,10 +59,8 @@ class HrsRepository extends ServiceEntityRepository
         Departement $departement,
         int $annee): array
     {
-        // todo: gérer le département pour le filtre
-
         return $this->createQueryBuilder('h')
-            ->join('h.typeHrs', 'tp')
+            ->leftJoin('h.typeHrs', 'tp')
             ->addSelect('tp')
             ->leftJoin('h.personnel', 'p')
             ->addSelect('p')
@@ -71,10 +69,12 @@ class HrsRepository extends ServiceEntityRepository
 
             ->where('h.personnel = :user')
             ->andWhere('h.annee = :annee')
+            ->andWhere('h.departement = :departement')
             ->setParameter('user', $personnel)
             ->setParameter('annee', $annee)
+            ->setParameter('departement', $departement)
             ->orderBy('h.typeHrs', Criteria::ASC)
-            ->orderBy('h.semestre', Criteria::ASC)
+            ->addOrderBy('h.semestre', Criteria::ASC)
             ->getQuery()
             ->getResult();
     }
@@ -91,8 +91,12 @@ class HrsRepository extends ServiceEntityRepository
             ->setParameter('departement', $departement->getId())
             ->setParameter('annee', $annee)
             ->orderBy('h.typeHrs', Criteria::ASC)
-            ->orderBy('h.semestre', Criteria::ASC)
+            ->addOrderBy('h.semestre', Criteria::ASC)
             ->getQuery()
             ->getResult();
+    }
+
+    public function findByPersonnelAnnee(Personnel $personnel, float|bool|int|string|null $annee)
+    {
     }
 }
