@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/rector.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/12/2022 12:09
+ * @lastUpdate 25/07/2023 22:19
  */
 
 declare(strict_types=1);
@@ -18,6 +18,6 @@ return static function(RectorConfig $rectorConfig): void {
 
     // Define what rule sets will be applied
 
-    $rectorConfig->import(SymfonyLevelSetList::UP_TO_SYMFONY_62);
+    $rectorConfig->import(SymfonyLevelSetList::UP_TO_SYMFONY_63);
     $rectorConfig->import(SymfonySetList::SYMFONY_CODE_QUALITY);
 };
