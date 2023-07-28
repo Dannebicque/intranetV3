@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/plan_cours/personnel/PlanCoursController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/01/2023 13:38
+ * @lastUpdate 25/07/2023 22:22
  */
 
 namespace App\Controller\plan_cours\personnel;
@@ -105,7 +105,7 @@ class PlanCoursController extends BaseController
 
         return $this->render('components/plan_cours/_step' . $step . '.html.twig', parameters: [
             'plan_cours' => $planCours,
-            'form' => $form->createView(),
+            'form' => $form,
             'matiere' => $matiere,
             'previsionnel' => $previsionnel,
             'step' => $step,

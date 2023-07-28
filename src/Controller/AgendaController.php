@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/AgendaController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2022 08:47
+ * @lastUpdate 26/07/2023 12:29
  */
 
 namespace App\Controller;
@@ -22,7 +22,7 @@ class AgendaController extends BaseController
     #[Route(path: '/qv', name: 'agenda_qv', options: ['expose' => true])]
     public function qv(PrevisionnelManager $previsionnelManager): Response
     {
-        $previsionnel = $previsionnelManager->getPrevisionnelPersonnelDepartementAnnee($this->getUser(),
+        $previsionnel = $previsionnelManager->getPrevisionnelPersonnelDepartementAnneeArray($this->getUser(),
             $this->dataUserSession->getDepartement(), $this->dataUserSession->getAnneePrevisionnel());
 
         return $this->render('agenda/qv.html.twig', [

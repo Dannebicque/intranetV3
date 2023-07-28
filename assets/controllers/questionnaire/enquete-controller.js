@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/questionnaire/enquete-controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/01/2023 23:00
+// @lastUpdate 25/07/2023 13:56
 import { Controller } from '@hotwired/stimulus'
 import { useDebounce } from 'stimulus-use'
 import Routing from 'fos-router'
@@ -20,7 +20,7 @@ export default class extends Controller {
 
   connect() {
     useDebounce(this)
-    //todo: gérer si ca doit être affiché ou non au chargement en fonction des conditions
+    // todo: gérer si ca doit être affiché ou non au chargement en fonction des conditions
   }
 
   change(event) {
@@ -35,7 +35,8 @@ export default class extends Controller {
                 document.getElementById(`field_${condition.questions[j]}`).style.display = 'none'
               }
             } else {
-              //si pas dans les critères, alors on affiche les éléments
+              // si pas dans les critères, alors on affiche les éléments
+              // todo: a tester???
               for (let j = 0; j < condition.questions.length; j++) {
                 document.getElementById(`field_${condition.questions[j]}`).style.display = 'block'
               }
@@ -58,7 +59,6 @@ export default class extends Controller {
     if (parametres.conditions) {
       for (const condition of parametres.conditions) {
         if (condition.type === 'condition' && condition.declenchement == event.detail.fieldset) {
-
           if (condition.criteres.includes(value)) {
             document.getElementById(`field_${this.idQuestionValue}`).style.display = 'block'
           } else {
