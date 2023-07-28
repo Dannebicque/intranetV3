@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/07/2023 16:07
+ * @lastUpdate 28/07/2023 15:46
  */
 
 namespace App\Entity;
@@ -110,9 +110,6 @@ class Semestre extends BaseEntity implements Stringable
 
     #[ORM\Column(type: Types::FLOAT)]
     private float $optPointPenaliteAbsence = 0.5;
-
-    #[ORM\ManyToMany(targetEntity: Article::class, mappedBy: 'semestres')]
-    private Collection $articles;
 
     #[ORM\ManyToMany(targetEntity: Document::class, mappedBy: 'semestres')]
     private Collection $documents;
@@ -278,7 +275,6 @@ class Semestre extends BaseEntity implements Stringable
 
     private function init(): void
     {
-        $this->articles = new ArrayCollection();
         $this->documents = new ArrayCollection();
         $this->dates = new ArrayCollection();
         $this->hrs = new ArrayCollection();
@@ -532,34 +528,6 @@ class Semestre extends BaseEntity implements Stringable
     public function displayLong(): string
     {
         return $this->getDiplome()->getDisplayCourt().' | '.$this->getLibelle();
-    }
-
-    /**
-     * @return Collection|Article[]
-     */
-    public function getArticles(): Collection
-    {
-        return $this->articles;
-    }
-
-    public function addArticle(Article $article): self
-    {
-        if (!$this->articles->contains($article)) {
-            $this->articles[] = $article;
-            $article->addSemestre($this);
-        }
-
-        return $this;
-    }
-
-    public function removeArticle(Article $article): self
-    {
-        if ($this->articles->contains($article)) {
-            $this->articles->removeElement($article);
-            $article->removeSemestre($this);
-        }
-
-        return $this;
     }
 
     /**
