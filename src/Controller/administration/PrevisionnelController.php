@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 28/07/2023 15:33
  */
 
 namespace App\Controller\administration;
@@ -15,14 +15,24 @@ use App\Classes\Previsionnel\PrevisionnelImport;
 use App\Classes\Previsionnel\PrevisionnelManager;
 use App\Classes\Previsionnel\PrevisionnelSynthese;
 use App\Controller\BaseController;
+use App\DTO\HrsCollection;
 use App\Entity\Constantes;
 use App\Entity\Personnel;
 use App\Entity\Previsionnel;
 use App\Entity\Semestre;
+use App\Enums\TypeHrsEnum;
 use App\Exception\AnneeUniversitaireNotFoundException;
+use App\Exception\MatiereNotFoundException;
+use App\Exception\PersonnelNotFoundException;
+use App\Exception\SemestreNotFoundException;
 use App\Form\ImportPrevisionnelType;
+use App\Repository\HrsRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\PrevisionnelRepository;
+use App\Repository\SemestreRepository;
+use App\Repository\TypeHrsRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -124,7 +134,7 @@ class PrevisionnelController extends BaseController
             $annee = $this->dataUserSession->getAnneePrevisionnel();
         }
 
-        $previsionnels = $previsionnelManager->getPrevisionnelPersonnelDepartementAnnee($personnel,
+        $previsionnels = $previsionnelManager->getPrevisionnelPersonnelDepartementAnneeArray($personnel,
             $this->getDepartement(), $annee);
         $hrs = $hrsManager->getHrsPersonnelDepartementAnnee($personnel, $this->getDepartement(), $annee);
         $synthsePrevisionnel = $previsionnelSynthese->getSynthese($previsionnels, $personnel)
@@ -155,53 +165,261 @@ class PrevisionnelController extends BaseController
     }
 
     #[Route('/new', name: 'administration_previsionnel_new', methods: ['GET', 'POST'])]
-    public function create(
+    public function create(): RedirectResponse|Response
+    {
+
+        return $this->render('administration/previsionnel/new.html.twig');
+    }
+
+    #[Route('/new/charge-step', name: 'administration_previsionnel_load_step', methods: ['GET', 'POST'])]
+    public function loadStep(
         PersonnelRepository $personnelRepository,
         TypeMatiereManager $typeMatiereManager,
-        Request $request
-    ): RedirectResponse|Response {
-        // todo: faire une comparaison avec le prévisionnel max... et mettre des alertes.
-        if ($request->isMethod('POST')) {
-            $matiere = $typeMatiereManager->getMatiereFromSelect($request->request->get('previsionnel_matiere'));
-            // $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $matiere->semestre); //todo: faire avec l'année ?
+        Request $request): Response
+    {
+        $type = $request->query->get('type');
 
-            $annee = '' !== $request->request->get('previsionnel_annee_previsionnel') ? $request->request->get('previsionnel_annee_previsionnel') : $this->dataUserSession->getAnneePrevisionnel();
-            if (null !== $matiere) {
-                $nbLignes = $request->request->get('nbLignes');
-                for ($i = 1; $i <= $nbLignes; ++$i) {
-                    $idPersonnel = $request->request->get('intervenant_'.$i);
-                    if (isset($idPersonnel)) {
-                        $personnel = $personnelRepository->find($idPersonnel);
-                    } else {
-                        $personnel = null;
-                    }
-
-                    $previsionnel = new Previsionnel($annee, $personnel);
-                    $previsionnel->setNbHCm($request->request->get('cm_'.$i));
-                    $previsionnel->setNbHTd($request->request->get('td_'.$i));
-                    $previsionnel->setNbHTp($request->request->get('tp_'.$i));
-                    $previsionnel->setNbGrCm($request->request->get('gr_cm_'.$i));
-                    $previsionnel->setNbGrTd($request->request->get('gr_td_'.$i));
-                    $previsionnel->setNbGrTp($request->request->get('gr_tp_'.$i));
-                    $previsionnel->setIdMatiere($matiere->id);
-                    $previsionnel->setTypeMatiere($matiere->typeMatiere);
-                    $this->entityManager->persist($previsionnel);
-                }
-                $this->entityManager->flush();
-                $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'previsionnel.add.success.flash');
-
-                return $this->redirectToRoute('administration_previsionnel_new');
-            }
-
-            $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'previsionnel.add.error.flash');
-
-            return $this->redirectToRoute('administration_previsionnel_new');
+        if ($type === 'matiere') {
+            return $this->render('previsionnel/administration/add/_matiere.html.twig', [
+                'matieres' => $typeMatiereManager->findByDepartement($this->getDepartement()),
+            ]);
         }
 
-        return $this->render('administration/previsionnel/new.html.twig', [
-            'matieres' => $typeMatiereManager->findByDepartement($this->getDepartement()),
+        if ($type === 'enseignant') {
+            return $this->render('previsionnel/administration/add/_enseignant.html.twig', [
+                'personnels' => $personnelRepository->findByDepartement($this->getDepartement()),
+            ]);
+        }
+
+        if ($type === 'semestre') {
+            return $this->render('previsionnel/administration/add/_semestre.html.twig', [
+                'semestres' => $this->getDataUserSession()->getSemestres(),
+            ]);
+        }
+    }
+
+    #[Route('/new/charge-content-matiere', name: 'administration_previsionnel_charge_content_matiere', methods: ['GET', 'POST'])]
+    public function loadContentMatiere(
+        PrevisionnelManager $previsionnelManager,
+        TypeMatiereManager  $typeMatiereManager,
+        Request             $request): Response
+    {
+        $matiere = $typeMatiereManager->getMatiereFromSelect($request->query->get('matiere'));
+        $annee = $request->query->get('annee');
+
+        if ($matiere === null) {
+            throw new MatiereNotFoundException();
+        }
+
+        //récupérer le prévisionnel déjà existant matière/année
+        $previsionnel = $previsionnelManager->getPrevisionnelMatiere($matiere->id, $matiere->typeMatiere, $annee);
+
+        return $this->render('previsionnel/administration/add/_matiere_content.html.twig', [
+            'matiere' => $matiere,
+            'annee' => $annee,
+            'previsionnel' => $previsionnel,
         ]);
     }
+
+    #[Route('/new/charge-content-personnel', name: 'administration_previsionnel_charge_content_personnel', methods: ['GET', 'POST'])]
+    public function loadContentPersonnel(
+        HrsRepository       $hrsRepository,
+        TypeHrsRepository   $typeHrsRepository,
+        TypeMatiereManager  $typeMatiereManager,
+        PrevisionnelManager $previsionnelManager,
+        PersonnelRepository $personnelRepository,
+        Request             $request): Response
+    {
+        $personnel = $personnelRepository->find($request->query->get('personnel'));
+        $annee = $request->query->get('annee');
+
+        if ($personnel === null) {
+            throw new PersonnelNotFoundException();
+        }
+
+        //récupérer le prévisionnel déjà existant matière/année
+        $previsionnel = $previsionnelManager->getPrevisionnelPersonnelDepartementAnneeCollection($personnel, $this->getDepartement(), $annee);
+
+        $hrs = $hrsRepository->getPersonnelDepartementAnnee($personnel, $this->getDepartement(), $annee);
+        $hrsCollection = new HrsCollection();
+        foreach ($hrs as $hr) {
+            $hrsCollection->addHrs($hr);
+        }
+
+        return $this->render('previsionnel/administration/add/_personnel_content.html.twig', [
+            'personnel' => $personnel,
+            'matieres' => $typeMatiereManager->findByDepartement($this->getDepartement()),
+            'annee' => $annee,
+            'previsionnel' => $previsionnel,
+            'primes' => $hrsCollection,
+            'typesHrs' => $typeHrsRepository->findAll(),
+            'categorieHrs' => TypeHrsEnum::cases()
+        ]);
+    }
+
+    #[Route('/new/charge-content-semestre', name: 'administration_previsionnel_charge_content_semestre', methods: ['GET', 'POST'])]
+    public function loadContentSemestre(
+        SemestreRepository  $semestreRepository,
+        TypeMatiereManager  $typeMatiereManager,
+        PrevisionnelManager $previsionnelManager,
+        PersonnelRepository $personnelRepository,
+        Request             $request): Response
+    {
+        $semestre = $semestreRepository->find($request->query->get('semestre'));
+        $annee = $request->query->get('annee');
+
+        if ($semestre === null) {
+            throw new SemestreNotFoundException();
+        }
+
+        //récupérer le prévisionnel déjà existant matière/année
+        $previsionnel = $previsionnelManager->getPrevisionnelSemestreCollection($semestre, $annee);
+
+        return $this->render('previsionnel/administration/add/_semestre_content.html.twig', [
+            'semestre' => $semestre,
+            'matieres' => $typeMatiereManager->findBySemestre($semestre),
+            'annee' => $annee,
+            'previsionnel' => $previsionnel,
+            'personnels' => $personnelRepository->findByDepartement($this->getDepartement()),
+        ]);
+    }
+
+    #[Route('/new/ajax/add-enseignant', name: 'administration_previsionnel_add_enseignant', methods: ['POST'])]
+    public function addEnseignant(
+        EntityManagerInterface $entityManager,
+        PersonnelRepository    $personnelRepository,
+        TypeMatiereManager     $typeMatiereManager,
+        Request                $request): Response
+    {
+        $personnel = $personnelRepository->find($request->request->get('intervenant'));
+        $matiere = $typeMatiereManager->getMatiereFromSelect($request->request->get('matiere'));
+        $annee = $request->request->get('annee');
+
+        if ($personnel === null) {
+            throw new PersonnelNotFoundException();
+        }
+
+        if ($matiere === null) {
+            throw new MatiereNotFoundException();
+        }
+
+        $previsionnel = new Previsionnel($annee, $personnel);
+        $previsionnel->setTypeMatiere($matiere->typeMatiere);
+        $previsionnel->setIdMatiere($matiere->id);
+
+        $entityManager->persist($previsionnel);
+        $entityManager->flush();
+
+        return new JsonResponse(true, Response::HTTP_OK);
+    }
+
+    #[Route('/new/ajax/add-matiere', name: 'administration_previsionnel_add_matiere', methods: ['POST'])]
+    public function addMatiere(
+        EntityManagerInterface $entityManager,
+        PersonnelRepository    $personnelRepository,
+        TypeMatiereManager     $typeMatiereManager,
+        Request                $request): Response
+    {
+//        $personnel = $personnelRepository->find($request->request->get('intervenant'));
+//        $matiere = $typeMatiereManager->getMatiereFromSelect($request->request->get('matiere'));
+//        $annee = $request->request->get('annee');
+//
+//        if ($personnel === null) {
+//            throw new PersonnelNotFoundException();
+//        }
+//
+//        if ($matiere === null) {
+//            throw new MatiereNotFoundException();
+//        }
+//
+//        $previsionnel = new Previsionnel($annee, $personnel);
+//        $previsionnel->setTypeMatiere($matiere->typeMatiere);
+//        $previsionnel->setIdMatiere($matiere->id);
+//
+//        $entityManager->persist($previsionnel);
+//        $entityManager->flush();
+//
+//        return new JsonResponse(true, Response::HTTP_OK);
+    }
+
+    #[Route('/new/ajax/change-intervenant/{id}', name: 'administration_previsionnel_change_intervenant', methods: ['POST'])]
+    public function changeIntervenant(
+        EntityManagerInterface $entityManager,
+        PersonnelRepository    $personnelRepository,
+        Previsionnel           $previsionnel,
+        Request                $request): Response
+    {
+        if ($request->request->get('valeur') === '') {
+            $previsionnel->setPersonnel(null);
+        } else {
+            $personnel = $personnelRepository->find($request->request->get('valeur'));
+
+            if ($personnel === null) {
+                throw new PersonnelNotFoundException();
+            }
+            $previsionnel->setPersonnel($personnel);
+        }
+        $entityManager->flush();
+
+        return new JsonResponse(true, Response::HTTP_OK);
+    }
+
+    #[Route('/new/ajax/change-matiere/{id}', name: 'administration_previsionnel_change_matiere', methods: ['POST'])]
+    public function changeMatiere(
+        EntityManagerInterface $entityManager,
+        PersonnelRepository    $personnelRepository,
+        Previsionnel           $previsionnel,
+        Request                $request): Response
+    {
+        if ($request->request->get('valeur') === '') {
+            $previsionnel->setPersonnel(null);
+        } else {
+            $personnel = $personnelRepository->find($request->request->get('valeur'));
+
+            if ($personnel === null) {
+                throw new PersonnelNotFoundException();
+            }
+            $previsionnel->setPersonnel($personnel);
+        }
+        $entityManager->flush();
+
+        return new JsonResponse(true, Response::HTTP_OK);
+    }
+
+    #[Route('/new/ajax/change-data/{id}', name: 'administration_previsionnel_change_data', methods: ['POST'])]
+    public function changeData(
+        EntityManagerInterface $entityManager,
+        Previsionnel           $previsionnel,
+        Request                $request): Response
+    {
+        switch ($request->request->get('field')) {
+            case 'nbGrCm':
+                $previsionnel->setNbGrCm($request->request->get('valeur'));
+                break;
+            case 'nbHCm':
+                $previsionnel->setNbHCm($request->request->get('valeur'));
+                break;
+            case 'nbGrTd':
+                $previsionnel->setNbGrTd($request->request->get('valeur'));
+                break;
+            case 'nbHTd':
+                $previsionnel->setNbHTd($request->request->get('valeur'));
+                break;
+            case 'nbGrTp':
+                $previsionnel->setNbGrTp($request->request->get('valeur'));
+                break;
+            case 'nbHTp':
+                $previsionnel->setNbHTp($request->request->get('valeur'));
+                break;
+            default:
+                throw new Exception();
+        }
+
+        $entityManager->flush();
+
+        return new JsonResponse(true, Response::HTTP_OK);
+    }
+
 
     /**
      * @throws \Exception
@@ -230,7 +448,7 @@ class PrevisionnelController extends BaseController
         }
 
         return $this->render('administration/previsionnel/import.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -269,16 +487,14 @@ class PrevisionnelController extends BaseController
 
     #[Route('/{id}/dupliquer', name: 'administration_previsionnel_duplicate',
         methods: ['GET'])]
-    public function duplicate(Request $request, Previsionnel $previsionnel): Response
+    public function duplicate(Previsionnel $previsionnel): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         $newprevisionnel = clone $previsionnel;
         $this->entityManager->persist($newprevisionnel);
         $this->entityManager->flush();
-        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'previsionnel.duplicate.success.flash');
-
-        return $this->redirect($request->headers->get('referer'));
+        return new JsonResponse(true, Response::HTTP_OK);
     }
 
     #[Route('/{id}', name: 'administration_previsionnel_delete', methods: ['DELETE'])]

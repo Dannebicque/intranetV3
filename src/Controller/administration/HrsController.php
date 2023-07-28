@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/HrsController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/09/2022 12:25
+ * @lastUpdate 26/07/2023 16:59
  */
 
 namespace App\Controller\administration;
@@ -12,10 +12,17 @@ namespace App\Controller\administration;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Hrs;
+use App\Exception\PersonnelNotFoundException;
 use App\Form\HrsType;
+use App\Repository\DiplomeRepository;
 use App\Repository\HrsRepository;
+use App\Repository\PersonnelRepository;
+use App\Repository\SemestreRepository;
+use App\Repository\TypeHrsRepository;
 use App\Table\HrsTableType;
+use App\Utils\Tools;
 use JsonException;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,6 +34,7 @@ class HrsController extends BaseController
      * @throws JsonException
      */
     #[Route(path: '/{annee}', name: 'administration_hrs_index', requirements: ['annee' => '\d+'], options: ['expose' => true], methods: 'GET|POST')]
+    /** @deprecated */
     public function index(Request $request, ?int $annee = 0): Response
     {
         //todo: faire avec Stimulus ?
@@ -63,6 +71,7 @@ class HrsController extends BaseController
     }
 
     #[Route(path: '/{annee}/post', name: 'administration_hrs_post_index', requirements: ['annee' => '\d+'], options: ['expose' => true], methods: 'POST')]
+    /** @deprecated */
     public function addHrs(Request $request, int $annee): Response
     {
         $hrs = new Hrs($this->getDepartement(), $annee);
@@ -83,31 +92,26 @@ class HrsController extends BaseController
         return $this->redirectToRoute('administration_hrs_index', ['annee' => $annee]);
     }
 
-    #[Route(path: '/{id}/edit', name: 'administration_hrs_edit', methods: 'GET|POST')]
-    public function edit(Request $request, Hrs $hrs): Response
+    #[Route(path: '/new', name: 'administration_hrs_new', methods: 'GET|POST')]
+    public function new(
+        PersonnelRepository $personnelRepository,
+        Request             $request): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $hrs->getDepartement());
-        // todo: département parfois null??
-        $form = $this->createForm(HrsType::class, $hrs, [
-            'departement' => $this->getDepartement(),
-            'attr' => [
-                'data-provide' => 'validation',
-            ],
-        ]);
-        $form->handleRequest($request);
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->flush();
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'hrs.edit.success.flash');
 
-            if (null !== $request->request->get('btn_update')) {
-                return $this->redirectToRoute('administration_hrs_index');
-            }
+        $personnel = $personnelRepository->find($request->request->get('personnel'));
+        $annee = $request->request->get('annee');
+
+        if ($personnel === null) {
+            throw new PersonnelNotFoundException();
         }
 
-        return $this->render('administration/hrs/edit.html.twig', [
-            'hrs' => $hrs,
-            'form' => $form,
-        ]);
+        $hrs = new Hrs($this->getDepartement(), $annee);
+        $hrs->setPersonnel($personnel);
+        $hrs->setLibelle('A définir');
+        $this->entityManager->persist($hrs);
+        $this->entityManager->flush();
+
+        return new JsonResponse(true, Response::HTTP_OK);
     }
 
     #[Route(path: '/annee/duplicate', name: 'administration_hrs_duplicate_annee', methods: 'POST')]
@@ -145,12 +149,53 @@ class HrsController extends BaseController
         $newHrs = clone $hrs;
         $this->entityManager->persist($newHrs);
         $this->entityManager->flush();
-        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'hrs.duplicate.success.flash');
-        // 'Copie effectuée avec succès. VOus pouvez modifier le nouvel élément.'
-        return $this->redirectToRoute('administration_hrs_edit', ['id' => $newHrs->getId()]);
+
+        return new JsonResponse(true, Response::HTTP_OK);
+    }
+
+    #[Route(path: '/{id}/change-data', name: 'administration_hrs_change_data', methods: 'POST')]
+    public function changeData(
+        Request            $request,
+        TypeHrsRepository  $typeHrsRepository,
+        SemestreRepository $semestreRepository,
+        DiplomeRepository  $diplomeRepository,
+        Hrs                $hrs): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $hrs->getDepartement());
+
+
+        switch ($request->request->get('field')) {
+            case 'typeHrs':
+                $type = $typeHrsRepository->find($request->request->get('valeur'));
+                if ($type !== null) {
+                    $hrs->setTypeHrs($type);
+                }
+                break;
+            case 'libelle':
+                $hrs->setLibelle($request->request->get('valeur'));
+                break;
+            case 'semestre':
+                $semestre = $semestreRepository->find($request->request->get('valeur'));
+                if ($semestre !== null) {
+                    $hrs->setSemestre($semestre);
+                }
+                break;
+            case 'diplome':
+                $diplome = $diplomeRepository->find($request->request->get('valeur'));
+                if ($diplome !== null) {
+                    $hrs->setDiplome($diplome);
+                }
+                break;
+            case 'nbHeuresTd':
+                $hrs->setNbHeuresTd(Tools::convertToFloat($request->request->get('valeur')));
+                break;
+        }
+        $this->entityManager->flush();
+        return new JsonResponse(true, Response::HTTP_OK);
     }
 
     #[Route(path: '/{id}/details', name: 'administration_hrs_show', methods: 'GET')]
+    /** @deprecated */
     public function show(Hrs $hrs): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $hrs->getDepartement());
@@ -163,15 +208,13 @@ class HrsController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $hrs->getDepartement());
         $id = $hrs->getId();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
+        if ($this->isCsrfTokenValid('delete' . $id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $this->entityManager->remove($hrs);
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'hrs.delete.success.flash');
 
             return $this->json($id, Response::HTTP_OK);
         }
-        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'hrs.delete.error.flash');
-
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 

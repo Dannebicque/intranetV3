@@ -21,7 +21,16 @@
                 "enabled": true,
                 "fetch": "eager",
                 "autoimport": {
-                    "@symfony/ux-dropzone/src/style.css": true
+                    "@symfony/ux-dropzone/dist/style.min.css": true
+                }
+            }
+        },
+        "@symfony/ux-live-component": {
+            "live": {
+                "enabled": true,
+                "fetch": "eager",
+                "autoimport": {
+                    "@symfony/ux-live-component/dist/live.min.css": true
                 }
             }
         }
