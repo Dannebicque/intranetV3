@@ -1,8 +1,8 @@
-// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/12/2022 15:59
+// @lastUpdate 28/07/2023 15:33
 
 @import "./theme-troyes.scss";
 @import "./theme-rcc.scss";
@@ -12,8 +12,6 @@ $dropdown-link-hover-bg:            var(--colorIUT);
 
 @import "~bootstrap/scss/bootstrap";
 
-
-@import "administration";
 @import "./theme.scss";
 @import "./_nav_process.scss";
 @import "./_layout.scss";
@@ -25,6 +23,7 @@ $dropdown-link-hover-bg:            var(--colorIUT);
 @import "perfect-scrollbar.css";
 
 @import "./_formulaire.scss";
+@import "./_administration.scss";
 
 // FlatPickr
 @import "~flatpickr";
@@ -90,6 +89,11 @@ a .btn-round {
   background-color: #f5f6fa;
 }
 
+.previcm {
+  background-color: var(--colorCM) !important;
+  color: #3f4a59;
+}
+
 
 .previtd {
   background-color: var(--colorTD) !important;
@@ -98,6 +102,11 @@ a .btn-round {
 
 .previtp {
   background-color: var(--colorTP) !important;
+  color: #3f4a59;
+}
+
+.previprojet {
+  background-color: var(--colorPTUT) !important;
   color: #3f4a59;
 }
 
@@ -810,4 +819,9 @@ td.bg-disabled {
 .card {
   -webkit-box-shadow:0 7px 14px 0 rgba(65, 69, 88, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.07);
   box-shadow:0 7px 14px 0 rgba(65, 69, 88, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.07);
+}
+
+.bg-complementary {
+  background-color: var(--colorIUTComplementaire) !important;
+  color: var(--colorIUT) !important;
 }

@@ -1,14 +1,15 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/Matiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/12/2022 12:43
+ * @lastUpdate 25/07/2023 13:56
  */
 
 namespace App\DTO;
 
+use App\Entity\ApcSae;
 use App\Entity\Constantes;
 use App\Entity\Diplome;
 use App\Entity\Groupe;
@@ -246,5 +247,10 @@ class Matiere
     public function getDiplomeDisplay(): ?string
     {
         return $this->getDiplome()?->getDisplay();
+    }
+
+    public function hasProjet(): bool
+    {
+        return $this->typeMatiere === ApcSae::SOURCE;
     }
 }
