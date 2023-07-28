@@ -1,23 +1,24 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Scolarite.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:23
+ * @lastUpdate 28/07/2023 18:28
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
+use App\Enums\DecisionSemestreEnum;
 use App\Repository\ScolariteRepository;
 use App\Utils\Tools;
-use function array_key_exists;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
+use function array_key_exists;
 
 #[ORM\Entity(repositoryClass: ScolariteRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -32,8 +33,8 @@ class Scolarite extends BaseEntity
     #[ORM\ManyToOne(targetEntity: Semestre::class)]
     private ?Semestre $semestre = null;
 
-    #[ORM\Column(type: Types::STRING, length: 10)]
-    private string $decision = Constantes::SEMESTRE_EN_COURS;
+    #[ORM\Column(type: Types::STRING, enumType: DecisionSemestreEnum::class, length: 10)]
+    private DecisionSemestreEnum $decision = DecisionSemestreEnum::SEMESTRE_EN_COURS;
 
     #[ORM\Column(type: Types::STRING, length: 10, nullable: true)]
     private ?string $proposition = null;
@@ -116,12 +117,12 @@ class Scolarite extends BaseEntity
         return $this;
     }
 
-    public function getDecision(): ?string
+    public function getDecision(): ?DecisionSemestreEnum
     {
         return $this->decision;
     }
 
-    public function setDecision(string $decision): self
+    public function setDecision(DecisionSemestreEnum $decision): self
     {
         $this->decision = $decision;
 

@@ -12,11 +12,7 @@
                 {% endif %}
                 <th>{{ 'table.decision'|trans }}</th>
                 <th>{{ 'table.proposition'|trans }}</th>
-                <th>{{ 'table.infos'|trans }}</th>
-                {% if  user_data.isGoodDepartement('ROLE_NOTE') or  user_data.isGoodDepartement('ROLE_CDD')
-                    or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
-                    <th>{{ 'table.releve'|trans }}</th>
-                {% endif %}
+                <th>{{ 'table.actions'|trans }}</th>
             </tr>
             </thead>
             <tbody>
@@ -31,43 +27,46 @@
                             {% if parcour.decision != 'EC' %}
                                 {% for ue in parcour.semestre.ues %}
                                     <strong>UE {{ ue.numeroUe }}:</strong>
-                                    {{ parcour.moyennesUes[ue.id].moyenne|styleMoyenne }}<br>
+                                    {{ parcour.moyennesUes[ue.id].moyenne|styleMoyenne }}
+                                    {{ parcour.moyennesUes[ue.id].decision is defined ? parcour.moyennesUes[ue.id].decision|styleDecisionUe : '-' }}
+                                    <br>
                                 {% endfor %}
                             {% else %}
                                 EC
-                            {% endif %}</td>
+                            {% endif %}
+                        </td>
                         {% if etudiant.semestre.diplome.typeDiplome.apc == false %}
                             <td>{{ parcour.moyenne|styleMoyenne }}</td>
                         {% endif %}
-                        <td>{{ parcour.decision|styleDecision }}</td>
+                        <td>{{ parcour.decision|styleDecisionSemestre }}</td>
                         <td>{{ parcour.proposition }}</td>
-                        <td><a href="{{ path('app_etudiant_scolarite_detail', {'id': parcour.id}) }}"
-                               class="btn btn-info btn-outline btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                        <td>
+                            <a href="{{ path('app_etudiant_scolarite_detail', {'id': parcour.id}) }}"
+                               class="btn btn-info btn-outline btn-xs" data-bs-toggle="tooltip"
+                               data-bs-placement="bottom"
                                title="{{ 'atitle.details'|trans }}"><i class="{{ iconShow }}"></i></a>
                             {% if  user_data.isGoodDepartement('ROLE_NOTE') or
                                 user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
-                                <a href="{{ path('administration_scolarite_etudiant_edit', {slug: etudiant.slug,scolarite:parcour.id }) }}" title="Editer la scolarité de {{ etudiant.displayPr }}"
+                                <a href="{{ path('administration_scolarite_etudiant_edit', {slug: etudiant.slug,scolarite:parcour.id }) }}"
+                                   title="Editer la scolarité de {{ etudiant.displayPr }}"
                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
 
                                    class="btn btn-warning btn-outline btn-xs"><i class="{{ iconEdit }}"></i></a>
                             {% endif %}
-                        </td>
-                        {% if  user_data.isGoodDepartement('ROLE_NOTE') or  user_data.isGoodDepartement('ROLE_CDD')
-                            or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
-                            <td>
 
+                            {% if  user_data.isGoodDepartement('ROLE_NOTE') or  user_data.isGoodDepartement('ROLE_CDD')
+                                or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
                                 {% if parcour.scolaritePromo != null %}
                                     <a href="{{ path('administration_semestre_export_releve_definitif',{slug:etudiant
                                     .slug, scolarite: parcour.id}) }}"
-                                       class="btn btn-warning" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Editer un
-                                        relevé de notes définiti"><i
-                                                class="fas fa-print"></i> Editer le relevé de notes définitif</a>
-                                {% else %}
-                                    Le relevé n'est disponible qu'à partir de Sept. 2020
+                                       class="btn btn-outline btn-success btn-xs" data-bs-toggle="tooltip"
+                                       data-bs-placement="bottom"
+                                       title="Editer un
+                                        relevé de notes définitif"><i
+                                                class="fas fa-print"></i></a>
                                 {% endif %}
-
-                            </td>
-                        {% endif %}
+                            {% endif %}
+                        </td>
                     </tr>
                 {% endif %}
             {% endfor %}
