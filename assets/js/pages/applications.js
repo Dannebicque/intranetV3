@@ -1,12 +1,11 @@
-// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/applications.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/07/2022 13:30
+// @lastUpdate 31/07/2023 16:19
 import $ from 'jquery'
-import { addCallout } from '../util'
-import './messagerie'
 import Routing from 'fos-router'
+import { addCallout } from '../util'
 
 $(document).on('click', '.changeapplication', function (e) {
   e.preventDefault()

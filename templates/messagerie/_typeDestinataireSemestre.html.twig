@@ -1,0 +1,14 @@
+<div class="form-group">
+    <label for="messageToSemestre">Choix semestre(s)</label>
+    <select
+            {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
+            multiple
+            class="form-select"
+            id="messageToSemestre" name="messageToSemestre[]" data-size="10"
+            title="Choisir le(s) semestre(s)"
+    >
+        {% for semestre in semestres %}
+            <option value="{{ semestre.id }}">{{ semestre.display }}</option>
+        {% endfor %}
+    </select>
+</div>

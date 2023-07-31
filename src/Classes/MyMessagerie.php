@@ -1,14 +1,15 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyMessagerie.php
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyMessagerie.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 31/07/2023 16:34
  */
 
 namespace App\Classes;
 
+use App\Classes\Previsionnel\PrevisionnelManager;
 use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Message;
@@ -21,12 +22,12 @@ use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
-use function count;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
+use function count;
 
 class MyMessagerie
 {
@@ -47,6 +48,7 @@ class MyMessagerie
     private ?string $type = null;
     private int $id;
     private array $pjs = [];
+    private array $personnels = [];
 
     /**
      * MyMessagerie constructor.
@@ -58,6 +60,7 @@ class MyMessagerie
         private readonly EtudiantRepository $etudiantRepository,
         private readonly SemestreRepository $semestreRepository,
         private readonly PersonnelRepository $personnelRepository,
+        private readonly PrevisionnelManager $previsionnelManager,
         private readonly Configuration $configuration
     ) {
     }
@@ -65,33 +68,13 @@ class MyMessagerie
     /**
      * @throws TransportExceptionInterface
      */
-    public function sendToPersonnels(array $destinataires, Departement $departement): void
+    public function sendToPersonnels(): void
     {
         // mail réel + notification (utiliser le busMessage ?
         // sauvegarde en BDD
         $mess = $this->saveMessageDatabase(Message::ETAT_MESSAGE_ENVOYE);
-        $listeDestinataires = [];
-        $this->typeDestinataires = '';
 
-        foreach ($destinataires as $destinataire) {
-            if (Personnel::PERMANENT === $destinataire) {
-                $temp = $this->personnelRepository->findByType(Personnel::PERMANENT, $departement);
-                foreach ($temp as $dest) {
-                    $listeDestinataires[] = $dest;
-                }
-                $this->typeDestinataires .= Personnel::PERMANENT.', ';
-            } elseif (Personnel::VACATAIRE === $destinataire) {
-                $temp = $this->personnelRepository->findByType(Personnel::VACATAIRE, $departement);
-                foreach ($temp as $dest) {
-                    $listeDestinataires[] = $dest;
-                }
-                $this->typeDestinataires .= Personnel::VACATAIRE.', ';
-            } else {
-                $listeDestinataires[] = $this->personnelRepository->find($destinataire);
-            }
-        }
-        foreach ($listeDestinataires as $destinataire) {
-            // foreach ($tdestinataire as $destinataire) {
+        foreach ($this->personnels as $destinataire) {
             if (null !== $destinataire) {
                 $message = $this->sendMessage($destinataire);
 
@@ -100,7 +83,6 @@ class MyMessagerie
                 $this->myMailer->send($message);
                 ++$this->nbMessagesEnvoyes;
             }
-            // }
         }
         $mess->setTypeDestinataires($this->typeDestinataires);
         $this->entityManager->flush();
@@ -126,7 +108,7 @@ class MyMessagerie
         $this->entityManager->flush();
     }
 
-    public function setMessage(string $sujet, string $message, Personnel $expediteur, array $pjs = []): void
+    public function setMessage(string $sujet, string $message, Personnel $expediteur): void
     {
         // pour définir les éléments du message, commun à tous les destinataires
         $this->sujet = $sujet;
@@ -137,9 +119,16 @@ class MyMessagerie
     /**
      * @throws TransportExceptionInterface
      */
-    public function setCopie(array $copie, Departement $departement): void
+    public function setCopie(array $copies): void
     {
-        $this->sendToPersonnels($copie, $departement);
+        foreach ($copies as $copie) {
+            $pers = $this->personnelRepository->find($copie);
+            if (null !== $pers) {
+                $this->personnels[$pers->getId()] = $pers;
+            }
+        }
+
+        $this->sendToPersonnels();
     }
 
     /**
@@ -167,7 +156,11 @@ class MyMessagerie
     /**
      * @throws TransportExceptionInterface
      */
-    public function sendToDestinataires(array $destinataires, ?string $typeDestinataire, Departement $departement = null): void
+    public function sendToDestinataires(
+        array       $destinataires,
+        int         $anneePrevisionnel,
+        ?string     $typeDestinataire,
+        Departement $departement = null): void
     {
         $this->type = $typeDestinataire;
         $this->nbMessagesEnvoyes = 0;
@@ -175,7 +168,8 @@ class MyMessagerie
         switch ($typeDestinataire) {
             case Message::MESSAGE_TYPE_PERMANENT:
                 if (null !== $departement) {
-                    $this->sendToPersonnels($destinataires, $departement);
+                    $this->preparePersonnels($destinataires, $departement);
+                    $this->sendToPersonnels();
                 }
                 break;
             case Message::MESSAGE_TYPE_SEMESTRE:
@@ -195,6 +189,10 @@ class MyMessagerie
             case Message::MESSAGE_TYPE_ETUDIANT:
                 $this->prepareEtudiants($destinataires);
                 $this->sendToEtudiants();
+                break;
+            case Message::MESSAGE_TYPE_MATIERE:
+                $this->prepareMatieres($destinataires, $anneePrevisionnel);
+                $this->sendToPersonnels();
                 break;
         }
     }
@@ -266,7 +264,7 @@ class MyMessagerie
         foreach ($destinataires as $destinatiare) {
             $etudiant = $this->etudiantRepository->find($destinatiare);
             if (null !== $etudiant) {
-                $this->etudiants[] = $etudiant;
+                $this->etudiants[$etudiant->getId()] = $etudiant;
             }
         }
     }
@@ -315,5 +313,53 @@ class MyMessagerie
         }
 
         return $message;
+    }
+
+    private function preparePersonnels(array $destinataires, Departement $departement): void
+    {
+        $this->personnels = [];
+        $this->typeDestinataires = '';
+
+        $destinataires = array_merge(...$destinataires);
+
+        foreach ($destinataires as $destinataire) {
+            if (Personnel::PERMANENT === $destinataire) {
+                $temp = $this->personnelRepository->findByType(Personnel::PERMANENT, $departement);
+                foreach ($temp as $dest) {
+                    $this->personnels[$dest->getId()] = $dest;
+                }
+                $this->typeDestinataires .= Personnel::PERMANENT . ', ';
+            } elseif (Personnel::VACATAIRE === $destinataire) {
+                $temp = $this->personnelRepository->findByType(Personnel::VACATAIRE, $departement);
+                foreach ($temp as $dest) {
+                    $this->personnels[$dest->getId()] = $dest;
+                }
+                $this->typeDestinataires .= Personnel::VACATAIRE . ', ';
+            } else {
+                $pers = $this->personnelRepository->find($destinataire);
+                if ($pers !== null) {
+                    $this->personnels[$pers->getId()] = $pers;
+                }
+            }
+        }
+    }
+
+    private function prepareMatieres(array $matieres, int $annee): void
+    {
+        $this->personnels = [];
+
+        foreach ($matieres as $matiere) {
+            $tM = explode('_', $matiere);
+            $previsionnel = $this->previsionnelManager->getPrevisionnelMatiere((int)$tM[1], $tM[0], $annee);
+            if ($previsionnel !== null) {
+                foreach ($previsionnel->getPrevisionnels() as $personnel) {
+                    $personnel = $this->personnelRepository->find($personnel->personnel_id);
+                    if ($personnel !== null) {
+                        $this->personnels[$personnel->getId()] = $personnel;
+                    }
+                }
+            }
+        }
+
     }
 }

@@ -1,0 +1,20 @@
+<div class="form-group">
+    <label for="messageToMatiere">Choisir le(s) matière(s)</label>
+    <select
+            {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
+            multiple
+            class="form-select"
+            id="messageToMatiere" name="messageToMatiere[]"
+            title="Choisir le(s) matière(s)"
+            data-size="10"
+    >
+        {% for matiere in matieres %}
+            <option value="{{ matiere.typeIdMatiere }}">{{ matiere.display }}</option>
+        {% endfor %}
+    </select>
+    <div>Saisissez les premières lettres (du libellé ou du code) d'une matière, ressource ou SAE.</div>
+</div>
+<div class="alert alert-info mt-2">
+    Les messages seront envoyés aux intervenants associés dans le prévisionnel des matières, ressources ou SAE
+    selectionnées
+</div>

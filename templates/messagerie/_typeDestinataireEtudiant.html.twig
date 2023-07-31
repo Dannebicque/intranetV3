@@ -1,0 +1,20 @@
+<div class="form-group">
+    <label for="messageToLibreEtudiant">Choisir le(s) étudiants(s)</label>
+    <select
+            {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
+            multiple
+            class="form-select"
+            id="messageToLibreEtudiant" name="messageToLibreEtudiant[]"
+            title="Choisir le(s) étudiants(s)"
+            data-size="10"
+    >
+        {% for semestre in user_data.semestres %}
+            <optgroup label="{{ semestre.display }}">
+                {% for etudiant in semestre.etudiants %}
+                    <option value="{{ etudiant.id }}">{{ etudiant.display }}</option>
+                {% endfor %}
+            </optgroup>
+        {% endfor %}
+    </select>
+    <div>Saisissez les premières lettres d'un nom d'étudiant.</div>
+</div>

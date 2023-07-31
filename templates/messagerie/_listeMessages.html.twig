@@ -1,0 +1,172 @@
+<div class="media-list media-list-divided media-list-hover" data-provide="selectall" id="messages-liste">
+
+    <header class="flexbox align-items-center media-list-header bg-transparent b-0 py-16 pl-20">
+        <div class="flexbox align-items-center">
+            <div>
+                <label for="selectAll" class="sr-only">Selectionner tous les messages</label>
+                <input type="checkbox" id="selectAll"
+                        {{ stimulus_action('application--messagerie', 'selectAll') }}
+                >
+            </div>
+
+            <span class="divider-line mx-1"></span>
+
+            <div class="btn-group">
+                <a
+                        href="{{ path('messagerie_delete_all') }}"
+                        class="btn" title="Supprimer les messages selectionnés" data-bs-toggle="tooltip"
+                        data-bs-placement="bottom"
+                        {{ stimulus_action('application--messagerie', 'deleteAll') }}
+                >
+                    <i class="{{ iconDelete }}"></i>
+                </a>
+            </div>
+
+            <span class="divider-line mx-1"></span>
+        </div>
+
+        <div class="d-none d-md-block">
+            <div class="lookup lookup-circle lookup-right">
+                <input type="text" data-provide="media-search">
+            </div>
+        </div>
+    </header>
+
+
+    <div class="media-list-body bg-white b-1">
+        {% if filtre == 'sent' or filtre=='draft' %}
+            {% for message in messages %}
+                <div class="row media align-items-center">
+                    <div class="col-1 custom-control custom-checkbox">
+                        <input type="checkbox"
+                               class="custom-control-input selectMessage"
+                               id="select_{{ message.id }}"
+                               value="{{ message.id }}"
+                                {{ stimulus_action('application--messagerie', 'selectMessage', 'change') }}
+                        >
+                        <label class="custom-control-label sr-only" for="select_{{ message.id }}">Choisir</label>
+                    </div>
+                    <div class="col-1">
+                        {% if message.important == true %}
+                            <span class="badge badge-dot bg-danger"></span>
+                        {% else %}
+                            <span class="badge badge-dot opacity-0"></span>
+                        {% endif %}
+                        <a href="">
+                            <div class="avatar-circle-sm">
+                        <span class="initials">
+                            {{ message.type|upper }}
+                        </span>
+                            </div>
+                        </a>
+                    </div>
+                    <div class="col-5">
+                        <a class="media-body text-truncate" href="#"
+                                {{ stimulus_action('application--messagerie', 'messageReadAuteur', 'click', {url: path('messagerie_message_envoye', {message:message.id})}) }}
+                        >
+                            <h6>{% if filtre=='sent' %}Envoyé à :{% endif %} {{ message.type|badgeTypeMessage }}</h6>
+                            <small>
+                                <strong>{{ message.sujet }}</strong>
+                                <span class="fw-300 opacity-80">{{ message.message }}</span>
+                            </small>
+                        </a>
+                    </div>
+                    <div class="col-1">
+                        {% if message.messagePieceJointes|length > 0 %}
+                            <a class="text-lighter fs-18" href="#" data-message="{{ message.id }}"><i
+                                        class="fas fa-clipboard"></i></a>
+                        {% else %}
+                            <a class="text-lighter fs-18 opacity-0" href="#"><i class="fas fa-clipboard"></i></a>
+                        {% endif %}
+                    </div>
+                    <div class="col-2">
+                        {% if filtre=='draft' %}
+                            <button class="btn btn-warning"
+
+                                    {{ stimulus_action('application--messagerie', 'editDraft', 'click', {url: path('messagerie_nouveau', {message:message.id})}) }}
+                                    data-message="{{ message.id }}">Modifier / envoyer
+                            </button>
+                        {% else %}
+                            <time datetime="{{ message.message.created|date('Y-m-d H:i:s') }}">{{ message.created|time_ago(app.request.locale) }}</time>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            {% for message in messages %}
+                <div class="row media {% if message.etat == 'U' %}media-new{% endif %} align-items-center">
+                    <div class="col-1 custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input selectMessage"
+                               id="select_{{ message.id }}"
+                               value="{{ message.message.id }}"
+                                {{ stimulus_action('application--messagerie', 'selectMessage', 'change') }}
+                        >
+                        <label class="custom-control-label sr-only" for="select_{{ message.id }}">Choisir</label>
+                    </div>
+                    <div class="col-1">
+                        <label class="toggler ml-20 fs-16">
+                            <input type="checkbox" class="starred" data-message="{{ message.id }}"
+                                   {% if message.starred == true %}checked{% endif %}>
+                            <i class="fa fa-star"></i>
+                        </label>
+
+
+                        {% if message.message.important == true %}
+                            <span class="badge badge-dot bg-danger"></span>
+                        {% else %}
+                            <span class="badge badge-dot opacity-0"></span>
+                        {% endif %}
+                    </div>
+                    <div class="col-1">
+                        <a href="#" data-message="{{ message.message.id }}"
+                                {{ stimulus_action('application--messagerie', 'messageReadAuteur', 'click', {url: path('messagerie_message', {message:message.message.id})}) }}
+                        >
+                            {% if message.message.expediteur.photoName != null and message.message.expediteur.photoName != 'noimage.png' %}
+                                <div class="avatar-center">
+                                    <img class="avatar"
+                                         src="{{ asset('upload/personnels/'~message.message.expediteur.photoName)
+                                         |imagine_filter('avatar') }}" alt="Avatar de l'expéditeur">
+                                </div>
+                            {% else %}
+                                {{ include('composants/_avatar.html.twig', {user:message.message.expediteur, size:'sm',
+                                    class:'correctif-position'
+                                }) }}
+                            {% endif %}
+                        </a>
+                    </div>
+                    <div class="col-4">
+                        <a class="media-body text-truncate" href="#"
+                                {{ stimulus_action('application--messagerie', 'messageReadAuteur', 'click', {url: path('messagerie_message', {message:message.message.id})}) }}
+                        >
+                            <h6>{{ message.message.expediteur.displayPr }}</h6>
+                            <small>
+                                <strong>{{ message.message.sujet }}</strong>
+                            </small>
+                        </a>
+                    </div>
+                    <div class="col-1">
+                        {% if message.message.messagePieceJointes|length > 0 %}
+                            <a class="text-lighter fs-18" href="#" data-message="{{ message.message.id }}"><i
+                                        class="fas fa-clipboard"></i></a>
+                        {% else %}
+                            <a class="text-lighter fs-18 opacity-0" href="#" data-message="{{ message
+                            .message.id }}"><i class="fas fa-clipboard"></i></a>
+                        {% endif %}
+                    </div>
+                    <div class="col-2">
+                        <time datetime="{{ message.message.created|date('Y-m-d H:i:s') }}">{{ message.message.created|time_ago(app.request.locale) }}</time>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+
+
+    <footer class="flexbox align-items-center py-20">
+        <span class="flex-grow text-right text-lighter pr-2">{{ pagination.depart }}-{{ pagination.fin }} sur {{ messages|length }}</span>
+        <nav>
+            <a class="btn btn-sm btn-square disabled" href="#"><i class="fas fa-chevron-left"></i></a>
+            <a class="btn btn-sm btn-square" href="#"><i class="fas fa-chevron-right"></i></a>
+        </nav>
+    </footer>
+</div>
