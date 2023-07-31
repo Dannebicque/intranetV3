@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Previsionnel/PrevisionnelManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/07/2023 15:33
+ * @lastUpdate 31/07/2023 16:32
  */
 
 namespace App\Classes\Previsionnel;
@@ -97,7 +97,7 @@ class PrevisionnelManager
         return $this->managers[$type];
     }
 
-    public function getPrevisionnelMatiere(int $matiere, string $type, int $annee): PrevisionnelCollection
+    public function getPrevisionnelMatiere(int $matiere, string $type, int $annee): ?PrevisionnelCollection
     {
         return $this->getManager($type)->findPrevisionnelMatiere($matiere, $annee);
     }
