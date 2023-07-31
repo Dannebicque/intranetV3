@@ -48,6 +48,9 @@
         <script src="{{ asset('bundles/davidannebicquetable/table.js') }}" defer></script>
     {% endblock %}
     <script data-provide="sweetalert"></script>
+    <noscript>Votre navigateur ne supporte pas le javascript. Celui-ci est indispensable pour le fonctionnement de
+        l'intranet.
+    </noscript>
 </head>
 
 <body class="{{ settings('CODE_IUT') }}"
@@ -172,16 +175,13 @@
                     Département {{ user_data.departement.libelle }}
                 </a>
             {% endif %}
-            <a class="topbar-btn d-none d-md-block" href="#" data-provide="fullscreen"
-               data-bs-toggle="tooltip" data-bs-placement="bottom"
-               title="{{ 'fullscreen'|trans }}">
-                <i class="fas fa-expand fullscreen-default"></i>
-                <i class="fas fa-compress fullscreen-active"></i>
-                <span class="sr-only">Fullscreen</span>
-            </a>
 
             <div class="dropdown d-none d-md-block">
-                <span class="topbar-btn" data-bs-toggle="dropdown"><i class="fas fa-th-large"></i></span>
+                <span class="topbar-btn" data-bs-toggle="dropdown"
+                      data-controller="interface--tooltip"
+                      title="Menu rapide"
+                      data-bs-placement="bottom"
+                ><i class="fas fa-th-large"></i></span>
                 <div class="dropdown-menu dropdown-grid">
                     <div class="row" style="max-height: 300px; overflow-y: auto">
                         <a class="dropdown-item col-4" href="{{ path('default_homepage') }}">
@@ -210,7 +210,11 @@
 
             {% if (is_granted('ROLE_PERMANENT') and user_data.departementMultiple == true) %}
                 <div class="dropdown d-none d-md-block">
-                <span class="topbar-btn" data-bs-toggle="dropdown" id="changeDepartement">
+                <span class="topbar-btn" data-bs-toggle="dropdown" id="changeDepartement"
+                      data-bs-placement="bottom"
+                      data-controller="interface--tooltip"
+                      title="Changer de département"
+                >
                     <i class="fas fa-random"></i>
                 </span>
                     <div class="dropdown-menu dropdown-grid">
@@ -225,7 +229,7 @@
                 <a class="topbar-btn d-none d-md-block" href="#" title="{{ 'rechercher'|trans }}"
                    data-bs-toggle="tooltip" data-bs-placement="bottom"
                    data-action="lookup-search#openModal"
-                   data-original-title="{{ 'rechercher'|trans }}">
+                >
                     <i class="fas fa-search"></i>
                     <span class="sr-only">Rechercher</span>
                 </a>
@@ -237,6 +241,9 @@
 
         <div class="topbar-right">
             <a class="topbar-btn" href="#qv-global" data-toggle="quickview"
+               data-bs-placement="bottom"
+               data-controller="interface--tooltip"
+               title="Informations contextuelles"
                data-url="{% block quickViewUrl %}no-url{% endblock %}"><i class="fas fa-align-right"></i><span
                         class="sr-only">
                     Informations contextuelles

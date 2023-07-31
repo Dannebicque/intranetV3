@@ -1,0 +1,38 @@
+<!-- Page aside -->
+<aside style="background-color: white; margin-left: -30px;margin-top: -30px; margin-bottom: 30px; height: 100%;
+       padding-left: 10px; padding-right: 10px">
+    <div class="aside-body">
+        <button
+                {{ stimulus_action('application--messagerie', 'nouveauMessage') }}
+                class="btn btn-primary">
+            <i class="fa fa-plus"></i>
+            {{ 'nouveau.message'|trans }}
+        </button>
+        <ul class="nav nav-lg nav-pills flex-column">
+            <li class="nav-item {% if filtre=='all' %}active{% endif %}"
+                    {{ stimulus_action('application--messagerie', 'filtreMessage', 'click', {filtre:'all'}) }}
+            >
+                <i class="fa fa-inbox"></i>
+                <a class="nav-link" href="#">{{ 'messagerie.boite.reception'|trans }}</a>
+                <span class="badge rounded-pill bg-info">{# user_data.nbUnread #}</span>
+            </li>
+            <li class="nav-item {% if filtre=='sent' %}active{% endif %}"
+                    {{ stimulus_action('application--messagerie', 'filtreMessage', 'click', {filtre:'sent'}) }}
+            >
+                <i class="fa fa-envelope"></i>
+                <a class="nav-link" href="#">{{ 'messagerie.boite.envoyes'|trans }}</a>
+            </li>
+
+            <li class="nav-item {% if filtre=='draft' %}active{% endif %}"
+                    {{ stimulus_action('application--messagerie', 'filtreMessage', 'click', {filtre:'draft'}) }}
+            >
+                <i class="fa fa-file"></i>
+                <a class="nav-link" href="#">{{ 'messagerie.boite.brouillons'|trans }}</a>
+            </li>
+        </ul>
+
+        <hr>
+    </div>
+    <button class="aside-toggler"></button>
+</aside>
+<!-- END Page aside -->

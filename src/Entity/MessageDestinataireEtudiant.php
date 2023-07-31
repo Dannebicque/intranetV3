@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Entity/MessageDestinataireEtudiant.php
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/MessageDestinataireEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2021 08:24
+ * @lastUpdate 31/07/2023 09:48
  */
 
 namespace App\Entity;
@@ -32,5 +32,10 @@ class MessageDestinataireEtudiant extends MessageDestinataire
         $this->etudiant = $etudiant;
 
         return $this;
+    }
+
+    public function display(): string
+    {
+        return $this->getEtudiant()->getDisplay();
     }
 }

@@ -1,22 +1,19 @@
 <div class="card">
     <header class="card-header">
         <div class="card-title flexbox">
-            <div class="avatar-circle-sm">
+            <div class="avatar-circle-sm col-1">
                 <span class="initials">
                     {{ message.type|upper }}
                 </span>
             </div>
             <div>
-                <h6 class="mb-0">Envoyé à : {{ message.typeDestinataires }}</h6>
+                <h6 class="mb-1">Envoyé à : {{ message.type|badgeTypeMessage }}</h6>
+                <p><strong>Destinataire(s) :</strong>
+                    {% for dest in message.messageDestinataires %}
+                        {{ dest.display }}{% if not loop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
                 <small>{{ message.created ? message.created|format_datetime('long', 'short') : '' }}</small>
-            </div>
-        </div>
-
-        <div class="dropdown">
-            <a class="text-lighter" data-bs-toggle="dropdown" href="#"><i class="fas fa-ellipsis-h rotate-90"></i></a>
-            <div class="dropdown-menu dropdown-menu-right">
-                <a class="dropdown-item" href="#"><i class="fa fa-print"></i> {{ 'imprimer'|trans }}</a>
-                <div class="dropdown-divider"></div>
             </div>
         </div>
     </header>
@@ -36,6 +33,10 @@
                             <i class="fas fa-file fa-5x"></i>
                         </a>
                     {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert alert-info">
+                    Pas de pièces jointes
                 </div>
             {% endif %}
         </div>

@@ -1,6 +1,9 @@
 <!-- Messages -->
 <li class="dropdown d-none d-md-block">
     <span class="topbar-btn {% if nouveauxMessages == true %}has-new{% endif %}"
+          data-bs-placement="bottom"
+          data-controller="interface--tooltip"
+          title="Messagerie Intranet"
           data-bs-toggle="dropdown"><i class="{{ iconMessage }}"></i></span>
     <div class="dropdown-menu dropdown-menu-right">
         <div class="media-list media-list-divided media-list-hover media-list-xs scrollable"
