@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/application/messagerie_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 31/07/2023 16:34
+// @lastUpdate 31/07/2023 16:47
 
 import { Controller } from '@hotwired/stimulus'
 import tinymce from 'tinymce/tinymce.min'
@@ -35,7 +35,7 @@ export default class extends Controller {
       alert('Le sujet du message est vide.')
       return
     }
-    console.log(content)
+
     if (content.trim() === '') {
       alert('Le texte du message est vide.')
       return
