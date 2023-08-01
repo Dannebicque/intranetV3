@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.13.0](https://github.com/Dannebicque/intranetV3/compare/v3.12.14...v3.13.0) (2023-08-01)
+
+
+### Features
+
+* Affichage des décisions sur mes UE pour APC + refactoring (enum) ([7dc108a](https://github.com/Dannebicque/intranetV3/commit/7dc108ac0899bbdb4519ee4fdcb46ec4cfd78008))
+* Affichage des diplômes actif/inactif dans la structure ([7a079b2](https://github.com/Dannebicque/intranetV3/commit/7a079b244fa7714465d422f96281eda5c40493ee))
+* Ajout d'un énum pour le type de type de HRS ([41612ec](https://github.com/Dannebicque/intranetV3/commit/41612ec0045c76d98031a39b09b2bb871e2cdf25))
+* Commandes et structure pour EduSign (à finaliser avec les datas) ([5e0bf9f](https://github.com/Dannebicque/intranetV3/commit/5e0bf9f5f700d47b54441f8be9d667a3cd2ad59d))
+* Ne pas afficher les diplômes inactifs dans le PN ([cadf927](https://github.com/Dannebicque/intranetV3/commit/cadf927e0e5e08c273bbbbe800b7cb7cec743ceb))
+* Nouvelle version du prévisionnel. Saisie par matière ou personnel ([5ffe5de](https://github.com/Dannebicque/intranetV3/commit/5ffe5de571f97b4c995edaba0ca519c265a66826))
+* Réécriture de la partie messagerie avec Stimulus + nouvelles fonctionnalités + divers correctifs et fonctions corrigées/améliorées ([9de526d](https://github.com/Dannebicque/intranetV3/commit/9de526d632d0a6da4becf11bd48457911faf81d0))
+* Suppression de la partie article jamais utilisée ([caae180](https://github.com/Dannebicque/intranetV3/commit/caae1800d65d01f54da4bb369bd844bcb75ab1c2))
+* Suppression de toute la partie gestion du COVID ([1a37270](https://github.com/Dannebicque/intranetV3/commit/1a3727043bccac29b9ed104f347b80710d5ae593))
+* Variable clé Api EduSIgn ([9567f89](https://github.com/Dannebicque/intranetV3/commit/9567f89e83cd12b068521bbbfff9608d11dd3e89))
+
+
+### Bug Fixes
+
+* Correctifs requetes repository HRS ([b208961](https://github.com/Dannebicque/intranetV3/commit/b208961da69af5df0db190d20854a7824e27c6f0))
+* Marquage deprecated ([26026f6](https://github.com/Dannebicque/intranetV3/commit/26026f6851d0bccc8a6873d5544a333d8e64b849))
+* Remove console.log ([bc3f44f](https://github.com/Dannebicque/intranetV3/commit/bc3f44f12283f30f2f196b5178533093e54d2b99))
+* typage de retour ([3f8e3c7](https://github.com/Dannebicque/intranetV3/commit/3f8e3c72ab58a6ace484d62d966cac40ce9099b7))
+
 ### [3.12.14](https://github.com/Dannebicque/intranetV3/compare/v3.12.13...v3.12.14) (2023-07-25)
 
 ### [3.12.13](https://github.com/Dannebicque/intranetV3/compare/v3.12.12...v3.12.13) (2023-07-25)
