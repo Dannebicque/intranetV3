@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Departement.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/07/2023 15:54
+ * @lastUpdate 01/08/2023 15:37
  */
 
 namespace App\Entity;
@@ -118,7 +118,7 @@ class Departement extends BaseEntity
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Diplome>
      */
     #[ORM\OneToMany(mappedBy: 'departement', targetEntity: Diplome::class)]
-    #[ORM\OrderBy(value: ['libelle' => 'ASC'])]
+    #[ORM\OrderBy(value: ['libelle' => 'ASC', 'actif' => 'DESC'])]
     private Collection $diplomes;
 
     /**
