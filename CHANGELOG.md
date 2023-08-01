@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.13.1](https://github.com/Dannebicque/intranetV3/compare/v3.12.14...v3.13.1) (2023-08-01)
+
+
+### Features
+
+* Add autocomplete feature to form fields ([fa503e3](https://github.com/Dannebicque/intranetV3/commit/fa503e32c193ef6f6a21e6062186c0b5cdf8dc89))
+* Add checkbox to toggle semester activity status ([306be05](https://github.com/Dannebicque/intranetV3/commit/306be05c6df4c0b75036ba2a2f2a4ba0584f434a))
+* Affichage des décisions sur mes UE pour APC + refactoring (enum) ([571c8ab](https://github.com/Dannebicque/intranetV3/commit/571c8ab31d1895bf67cb00def8d7533113f748c3))
+* Affichage des diplômes actif/inactif dans la structure ([6c910af](https://github.com/Dannebicque/intranetV3/commit/6c910afa9b6f5dfe07547386c0944f8cafbfcd7b))
+* Ajout d'un énum pour le type de type de HRS ([6cc1155](https://github.com/Dannebicque/intranetV3/commit/6cc1155452be2f74c058db6bbabacee7c3cddf6d))
+* Commandes et structure pour EduSign (à finaliser avec les datas) ([95cef96](https://github.com/Dannebicque/intranetV3/commit/95cef96845a2e390be1345c1b799c1e85c73c1c1))
+* Ne pas afficher les diplômes inactifs dans le PN ([4f7a071](https://github.com/Dannebicque/intranetV3/commit/4f7a071ff8f3c87c278d7fcca4d2d006281160b4))
+* Nouvelle version du prévisionnel. Saisie par matière ou personnel ([fe27534](https://github.com/Dannebicque/intranetV3/commit/fe2753440e545a47dcc0451112972d7001c130e9))
+* Réécriture de la partie messagerie avec Stimulus + nouvelles fonctionnalités + divers correctifs et fonctions corrigées/améliorées ([3dd2a8b](https://github.com/Dannebicque/intranetV3/commit/3dd2a8b6f0605a7140e6c91eff4a46075315249e))
+* Suppression de la partie article jamais utilisée ([cf20137](https://github.com/Dannebicque/intranetV3/commit/cf201372da4c89d7a01e186979097bbf86cf263b))
+* Suppression de toute la partie gestion du COVID ([5aa1f41](https://github.com/Dannebicque/intranetV3/commit/5aa1f41054810a36449c8aeb15ff116be6ec5473))
+* Variable clé Api EduSIgn ([5b70786](https://github.com/Dannebicque/intranetV3/commit/5b707863d68c0db2676baa831b18d8edc303a31a))
+
+
+### Bug Fixes
+
+* Correctifs requetes repository HRS ([b190730](https://github.com/Dannebicque/intranetV3/commit/b1907309be9de71c3dbb74a9c7c1481409fc1ca4))
+* Display only active diplomas in configuration ([9646000](https://github.com/Dannebicque/intranetV3/commit/964600093e6da87af446dc1830ed841b851b64a4))
+* Marquage deprecated ([2bdfc64](https://github.com/Dannebicque/intranetV3/commit/2bdfc640a85b686e95757c86c0dd8cb4ad572394))
+* Refactor semestre index page structure ([14f5b45](https://github.com/Dannebicque/intranetV3/commit/14f5b453971075a308534b5e08dbaa92a48ecf74))
+* Remove console.log ([e99d71a](https://github.com/Dannebicque/intranetV3/commit/e99d71aecf848318043d718e69b6589950746dbc))
+* typage de retour ([01488ba](https://github.com/Dannebicque/intranetV3/commit/01488ba28ff8c5d330ad07ee8cac3b78858161ad))
+
 ## [3.13.0](https://github.com/Dannebicque/intranetV3/compare/v3.12.14...v3.13.0) (2023-08-01)
 
 
