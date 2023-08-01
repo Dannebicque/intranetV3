@@ -9,7 +9,7 @@
 
     <div class="header-action">
         <nav class="nav nav-tabs">
-            {% for diplome in user_data.diplomes %}
+            {% for diplome in user_data.diplomes|filter(diplome => diplome.actif) %}
                 <a class="nav-link {% if (diplomeSelect == null and loop.first) or (diplomeSelect != null and diplomeSelect
                 .id==diplome.id) %}active{% endif %} change-diplome"
                    href="#" data-diplome="{{ diplome.id }}">{{ diplome.displayCourt }}</a>
@@ -26,7 +26,7 @@
 
 {% block content %}
     <div id="content_diplome">
-        {% for diplome in user_data.diplomes %}
+        {% for diplome in user_data.diplomes|filter(diplome => diplome.actif) %}
             {% if (diplomeSelect == null and loop.first) or (diplomeSelect != null and diplomeSelect.id==diplome.id) %}
                 {{ render(controller(
                     'App\\Controller\\administration\\MatiereController::diplome', {diplome:diplome.id}
