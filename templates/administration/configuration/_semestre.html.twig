@@ -3,6 +3,22 @@
     <div class="col-md-6">
         <div class="media">
             <div class="media-body">
+                <p><strong>{{ 'table.semestre_actif'|trans }}</strong></p>
+                <p>{{ 'help.semestre_actif'|trans }}</p>
+            </div>
+            <label class="switch" for="actif_{{ semestre.id }}">
+                <input type="checkbox" {{ semestre.actif ? 'checked': '' }}
+                       class="changeOption"
+                       name="actif_{{ semestre.id }}"
+                       id="actif_{{ semestre.id }}"
+                       data-type="semestre"
+                       data-id="{{ semestre.id }}">
+                <span class="switch-indicator"></span>
+            </label>
+        </div>
+
+        <div class="media">
+            <div class="media-body">
                 <p><strong>{{ 'table.ppn_semestre'|trans }}</strong></p>
                 <p>{{ 'help.ppn_semestre'|trans }}</p>
             </div>
