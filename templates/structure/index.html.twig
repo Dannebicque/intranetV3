@@ -24,7 +24,9 @@
                 .id==diplome.id) %}active{% endif %} changeDiplome"
                    href="#" data-diplome="{{ diplome.id }}"
                    data-action="click->structure-diplome#changeDiplome"
-                >{{ diplome.displayCourt }}</a>
+                >{{ diplome.displayCourt }} {% if diplome.actif %}<span class="badge bg-success">Actif</span>{% else %}
+                        <span class="badge bg-danger">Inactif</span>{% endif %}
+                </a>
             {% endfor %}
         </nav>
 
