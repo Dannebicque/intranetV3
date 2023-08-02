@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.14.0](https://github.com/Dannebicque/intranetV3/compare/v3.13.5...v3.14.0) (2023-08-02)
+
+
+### Features
+
+* Change input type for Questionnaire Fields ([89a3e86](https://github.com/Dannebicque/intranetV3/commit/89a3e864d2dc6020845e3d24b4a25d361eb1ae02))
+* Suppression des entrée suivant, précédent et décalé de semestre (deprecié) ([173b5b9](https://github.com/Dannebicque/intranetV3/commit/173b5b93de499fabfc70c371726a893a24f9e313))
+
+
+### Bug Fixes
+
+* amélioration lisibilité des quesitons/section + ajout direct par type de question ([7981033](https://github.com/Dannebicque/intranetV3/commit/7981033ffe72ceaccb07e7a8864b2af48896aa75))
+* ordre des rubriques identique version précédente ([32e70dd](https://github.com/Dannebicque/intranetV3/commit/32e70dd3209940671e19556c39c1f40498035537))
+* Redirection après création/édition d'un questionnaire ([424c4c6](https://github.com/Dannebicque/intranetV3/commit/424c4c672c4226c7318e11e9005d61aba42d0eee))
+* Utilisation de l'enumération ([091ba3d](https://github.com/Dannebicque/intranetV3/commit/091ba3d5a1ef0cee3a8e3d710a888774a4ecaa6e))
+* variable previsionnels non initialisée ([f0b2ef8](https://github.com/Dannebicque/intranetV3/commit/f0b2ef851db475cdfa47f41459a4d583cbda011e))
+
 ### [3.13.5](https://github.com/Dannebicque/intranetV3/compare/v3.13.4...v3.13.5) (2023-08-02)
 
 
