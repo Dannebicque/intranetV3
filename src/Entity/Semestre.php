@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/08/2023 08:44
+ * @lastUpdate 02/08/2023 10:10
  */
 
 namespace App\Entity;
@@ -42,27 +42,6 @@ class Semestre extends BaseEntity implements Stringable
 
     #[ORM\Column(type: Types::BOOLEAN)]
     private bool $actif = false;
-
-    #[ORM\ManyToOne(targetEntity: Semestre::class)]
-
-    /**
-     * @deprecated
-     */
-    private ?Semestre $precedent = null;
-
-    #[ORM\ManyToOne(targetEntity: Semestre::class)]
-
-    /**
-     * @deprecated
-     */
-    private ?Semestre $suivant = null;
-
-    #[ORM\ManyToOne(targetEntity: Semestre::class)]
-
-    /**
-     * @deprecated
-     */
-    private ?Semestre $decale = null;
 
     #[ORM\Column(type: Types::INTEGER)]
     private int $nbGroupesCm = 1;
@@ -314,42 +293,6 @@ class Semestre extends BaseEntity implements Stringable
     public function setOrdreLmd(int $ordreLmd): void
     {
         $this->ordreLmd = $ordreLmd;
-    }
-
-    #[Deprecated]
-    public function getPrecedent(): ?self
-    {
-        return $this->precedent;
-    }
-
-    #[Deprecated]
-    public function setPrecedent(?self $precedent): void
-    {
-        $this->precedent = $precedent;
-    }
-
-    #[Deprecated]
-    public function getSuivant(): ?self
-    {
-        return $this->suivant;
-    }
-
-    #[Deprecated]
-    public function setSuivant(?self $suivant): void
-    {
-        $this->suivant = $suivant;
-    }
-
-    #[Deprecated]
-    public function getDecale(): ?self
-    {
-        return $this->decale;
-    }
-
-    #[Deprecated]
-    public function setDecale(?self $decale): void
-    {
-        $this->decale = $decale;
     }
 
     public function getNbGroupesTd(): int

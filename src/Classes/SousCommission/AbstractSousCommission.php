@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/AbstractSousCommission.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/01/2023 08:42
+ * @lastUpdate 02/08/2023 10:05
  */
 
 namespace App\Classes\SousCommission;
@@ -16,6 +16,7 @@ use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use App\Entity\Ue;
+use App\Enums\SemestreLienEnum;
 use App\Repository\EtudiantRepository;
 use App\Repository\UeRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -61,9 +62,11 @@ abstract class AbstractSousCommission
 
         // récupération des semestres précédents
         $sem = $this->semestre;
-        while (null !== $sem->getPrecedent()) {
-            $this->semestresScolarite[] = $sem->getPrecedent();
-            $sem = $sem->getPrecedent();
+
+        foreach ($sem->getSemestreLienDepart() as $se) {
+            if ($se->getSens() === SemestreLienEnum::PRECEDENT) {
+                $this->semestresScolarite[] = $se->getSemestreArrive();
+            }
         }
     }
 

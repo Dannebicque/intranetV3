@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/06/2023 20:51
+ * @lastUpdate 02/08/2023 10:07
  */
 
 namespace App\Classes\SousCommission;
@@ -20,6 +20,7 @@ use App\Entity\Constantes;
 use App\Entity\ScolaritePromo;
 use App\Entity\Semestre;
 use App\Entity\Ue;
+use App\Enums\SemestreLienEnum;
 use App\Exception\SemestreNotFoundException;
 use Carbon\Carbon;
 use PhpOffice\PhpSpreadsheet\Exception;
@@ -916,10 +917,12 @@ class SousCommissionExport
         }
 
         $tsem = [];
-        $precedent = $semestre->getPrecedent();
-        while (null !== $precedent) {
-            $tsem[] = $precedent;
-            $precedent = $precedent->getPrecedent();
+
+        foreach ($semestre->getSemestreLienDepart() as $se) {
+            if ($se->getSens() === SemestreLienEnum::PRECEDENT) {
+                $tsem[] = $se->getSemestreArrive();
+                $precedent = $se->getSemestreArrive();
+            }
         }
 
         /*foreach ($tsem as $prec) {
