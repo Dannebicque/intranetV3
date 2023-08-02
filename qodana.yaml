@@ -14,13 +14,13 @@ profile:
 
 #Disable inspections
 exclude:
-  - name: <SomeDisabledInspectionId>
+  - name: All
     paths:
       - vendor/**
       - public/**
       - var/**
       - node_modules/**
-
+      - assets/vendor/**
 #The following options are only applied in CI/CD environment
 #These options are ignored during local run
 
