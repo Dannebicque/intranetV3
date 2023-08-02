@@ -2,6 +2,26 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.13.5](https://github.com/Dannebicque/intranetV3/compare/v3.13.4...v3.13.5) (2023-08-02)
+
+
+### Bug Fixes
+
+* Ajout de la structure XML de base ([cda5ef3](https://github.com/Dannebicque/intranetV3/commit/cda5ef3c17449d54fdba575ae6db2bc8fdbd23d1))
+* Correction nouvelle entité de questionnaire ([f863f5b](https://github.com/Dannebicque/intranetV3/commit/f863f5b5e69eab14d702dff2b5e83eca61118d4d))
+* Correction nouvelle structure questionnaire. Retrait des anciens appels et formulaires ([2278070](https://github.com/Dannebicque/intranetV3/commit/227807084dcf430fa09a848741aae71db1789d07))
+* Erreur de typage et diplôme sur APC ([e245b49](https://github.com/Dannebicque/intranetV3/commit/e245b49084133972f063fbe601c40d4ed8160e77))
+* ParamConverter => MapEntity ([48f8617](https://github.com/Dannebicque/intranetV3/commit/48f8617044883b4398040962eb2cc87718d5fd8d))
+* Suppression d'article ([40d80bc](https://github.com/Dannebicque/intranetV3/commit/40d80bc5bd96313fbb801b2688b3a1dcecbde348))
+* Suppression des import liés à article ([5f783ae](https://github.com/Dannebicque/intranetV3/commit/5f783aedd62c9f8209123f6eb691dda28bdbcb7b))
+* tag mal fermé ([e5db6c5](https://github.com/Dannebicque/intranetV3/commit/e5db6c59ab0a77731f96f415a1c8b60c9ab52fc1))
+* tag mal fermé ([f6171c3](https://github.com/Dannebicque/intranetV3/commit/f6171c32a6e8e67c76a811256df33617025fc880))
+* tag mal fermé ([7121ff8](https://github.com/Dannebicque/intranetV3/commit/7121ff8503874fc8e837fe40d77faa6a83cd9310))
+* tag mal fermé ([c83df93](https://github.com/Dannebicque/intranetV3/commit/c83df933cf5cf6900d6a9ad5467213f4df326cce))
+* Typo ([a86535e](https://github.com/Dannebicque/intranetV3/commit/a86535e58a2fb89a0515b345dcb6f781eba6d0d2))
+* Typo sur Deprecated ([56a5c1c](https://github.com/Dannebicque/intranetV3/commit/56a5c1c560b87acf7f64cb46da883a3ba4e6d5ad))
+* Typo sur formulaire stage ([19ad6eb](https://github.com/Dannebicque/intranetV3/commit/19ad6ebcc2642f916ae20284cf0e5874d33c7746))
+
 ### [3.13.4](https://github.com/Dannebicque/intranetV3/compare/v3.13.3...v3.13.4) (2023-08-01)
 
 ### [3.13.3](https://github.com/Dannebicque/intranetV3/compare/v3.13.2...v3.13.3) (2023-08-01)
