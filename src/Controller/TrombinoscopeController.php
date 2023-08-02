@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/TrombinoscopeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/03/2023 06:53
+ * @lastUpdate 02/08/2023 08:48
  */
 
 namespace App\Controller;
@@ -24,7 +24,7 @@ use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use PhpOffice\PhpSpreadsheet\Exception;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -33,7 +33,6 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
 #[Route('/trombinoscope')]
-
 class TrombinoscopeController extends BaseController
 {
     #[Route('/', name: 'trombinoscope_index')]
@@ -115,11 +114,11 @@ class TrombinoscopeController extends BaseController
      */
     #[Route(path: '/etudiant/{semestre<\d+>}', name: 'trombinoscope_etudiant_semestre', options: ['expose' => true])]
     #[Route(path: '/etudiant/{semestre<\d+>}/{typegroupe<\d+>}', name: 'trombinoscope_etudiant_semestre_type_groupe', options: ['expose' => true])]
-    #[ParamConverter('typegroupe', options: ['id' => 'typegroupe'])]
     public function trombiEtudiantSemestre(
         EtudiantRepository $etudiantRepository,
         GroupeRepository $groupeRepository,
         Semestre $semestre,
+        #[MapEntity(mapping: ['typegroupe' => 'id'])]
         ?TypeGroupe $typegroupe = null
     ): Response {
         if (null !== $semestre->getDiplome() && null !== $semestre->getDiplome()->getParent()) {
