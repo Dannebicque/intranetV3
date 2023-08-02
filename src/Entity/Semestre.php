@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/08/2023 08:33
+ * @lastUpdate 02/08/2023 08:44
  */
 
 namespace App\Entity;
@@ -44,18 +44,21 @@ class Semestre extends BaseEntity implements Stringable
     private bool $actif = false;
 
     #[ORM\ManyToOne(targetEntity: Semestre::class)]
+
     /**
      * @deprecated
      */
     private ?Semestre $precedent = null;
 
     #[ORM\ManyToOne(targetEntity: Semestre::class)]
+
     /**
      * @deprecated
      */
     private ?Semestre $suivant = null;
 
     #[ORM\ManyToOne(targetEntity: Semestre::class)]
+
     /**
      * @deprecated
      */
@@ -71,7 +74,7 @@ class Semestre extends BaseEntity implements Stringable
     private int $nbGroupesTP = 2;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Etudiant>
+     * @var Collection<int, \App\Entity\Etudiant>
      */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: Etudiant::class)]
     #[ORM\OrderBy(value: ['nom' => 'ASC', 'prenom' => 'ASC'])]
@@ -117,13 +120,13 @@ class Semestre extends BaseEntity implements Stringable
     private Collection $dates;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Hrs>
+     * @var Collection<int, \App\Entity\Hrs>
      */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: Hrs::class)]
     private Collection $hrs;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Parcour>
+     * @var Collection<int, \App\Entity\Parcour>
      */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: Parcour::class)]
     private Collection $parcours;
@@ -132,23 +135,21 @@ class Semestre extends BaseEntity implements Stringable
     private Collection $bornes;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\CahierTexte>
+     * @var Collection<int, \App\Entity\CahierTexte>
      */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: CahierTexte::class)]
     private Collection $cahierTextes;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Ue>
+     * @var Collection<int, \App\Entity\Ue>
      */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: Ue::class)]
     #[ORM\OrderBy(value: ['numeroUe' => 'ASC'])]
     private Collection $ues;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\TypeGroupe>
-     *
+     * @deprecated
      */
-    #[Deprecated]
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: TypeGroupe::class)]
     #[ORM\OrderBy(value: ['libelle' => 'ASC'])]
     private Collection $typeGroupes;
@@ -161,13 +162,13 @@ class Semestre extends BaseEntity implements Stringable
     private ?Annee $annee = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\StagePeriode>
+     * @var Collection<int, \App\Entity\StagePeriode>
      */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: StagePeriode::class)]
     private Collection $stagePeriodes;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ScolaritePromo>
+     * @var Collection<int, \App\Entity\ScolaritePromo>
      */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: ScolaritePromo::class)]
     private Collection $scolaritePromos;
@@ -185,43 +186,43 @@ class Semestre extends BaseEntity implements Stringable
     private int $optNbJoursSaisieAbsence = 10;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ProjetPeriode>
+     * @var Collection<int, \App\Entity\ProjetPeriode>
      */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: ProjetPeriode::class)]
     private Collection $projetPeriodes;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\AbsenceEtatAppel>
+     * @var Collection<int, \App\Entity\AbsenceEtatAppel>
      */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: AbsenceEtatAppel::class)]
     private Collection $absenceEtatAppels;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\EdtCelcat>
+     * @var Collection<int, \App\Entity\EdtCelcat>
      */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: EdtCelcat::class)]
     private Collection $edtCelcats;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Evaluation>
+     * @var Collection<int, \App\Entity\Evaluation>
      */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: Evaluation::class)]
     private Collection $evaluations;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Rattrapage>
+     * @var Collection<int, \App\Entity\Rattrapage>
      */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: Rattrapage::class)]
     private Collection $rattrapages;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\AbsenceJustificatif>
+     * @var Collection<int, \App\Entity\AbsenceJustificatif>
      */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: AbsenceJustificatif::class)]
     private Collection $absenceJustificatifs;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Absence>
+     * @var Collection<int, \App\Entity\Absence>
      */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: Absence::class)]
     private Collection $absences;
@@ -233,7 +234,7 @@ class Semestre extends BaseEntity implements Stringable
     private ?bool $optBilanSemestre = false;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\AnneeUniversitaireSemestre>
+     * @var Collection<int, \App\Entity\AnneeUniversitaireSemestre>
      */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: AnneeUniversitaireSemestre::class)]
     private Collection $anneeUniversitaireSemestres;
