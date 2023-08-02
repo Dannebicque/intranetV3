@@ -7,26 +7,24 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
+            <a href="{{ path('administration_qualite_apercu', {id:questionnaire.id, type:type}) }}"
+               class="btn btn-info btn-sm btn-float"
+               title="{{ 'atitle.apercu'|trans }}"
+               target="_blank"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
+                <i class="fas fa-eye"></i>
+                <span class="sr-only">{{ 'atitle.apercu'|trans }}</span>
+            </a>
             {% if is_granted('ROLE_ADMINISTRATIF') %}
-                {% if questionnaire.semestre != null %}
-                    <a href="{{ path('sa_qualite_diplome', {diplome:questionnaire.semestre.diplome.id}) }}"
-                       class="btn btn-primary btn-float"
-                       title="{{ 'atitle.retour_liste'|trans }}"
-                       data-bs-toggle="tooltip" data-bs-placement="bottom"
-                    >
-                        <i class="fas fa-arrow-left"></i>
-                        <span class="sr-only">{{ 'atitle.retour_liste'|trans }}</span>
-                    </a>
-                {% else %}
-                    <a href="{{ path('sa_qualite_index') }}"
-                       class="btn btn-primary btn-float"
-                       title="{{ 'atitle.retour_liste'|trans }}"
-                       data-bs-toggle="tooltip" data-bs-placement="bottom"
-                    >
-                        <i class="fas fa-arrow-left"></i>
-                        <span class="sr-only">{{ 'atitle.retour_liste'|trans }}</span>
-                    </a>
-                {% endif %}
+                <a href="{{ path('administratif_enquete_destinataire_index', {typeDestinataire:questionnaire.typeDestinataireLink}) }}"
+                   class="btn btn-primary btn-float"
+                   title="{{ 'atitle.retour_liste'|trans }}"
+                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+                >
+                    <i class="fas fa-arrow-left"></i>
+                    <span class="sr-only">{{ 'atitle.retour_liste'|trans }}</span>
+                </a>
             {% else %}
                 <a href="{{ path('administration_qualite_index', {type:type}) }}"
                    class="btn btn-primary btn-float"
