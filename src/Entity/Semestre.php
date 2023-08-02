@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/07/2023 15:46
+ * @lastUpdate 02/08/2023 08:33
  */
 
 namespace App\Entity;
@@ -27,7 +27,6 @@ class Semestre extends BaseEntity implements Stringable
 
     #[ORM\Column(type: Types::STRING, length: 255)]
     #[Groups(groups: [
-        'article_administration',
         'date_administration',
         'semestre',
         'etudiants_administration',

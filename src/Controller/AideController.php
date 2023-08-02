@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/AideController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2022 21:53
+ * @lastUpdate 02/08/2023 08:33
  */
 
 namespace App\Controller;
@@ -30,7 +30,6 @@ class AideController extends AbstractController
             'administration_justificatif_absence' => 'url',
             'administration_actualite' => 'url',
             'administration_alternance' => 'url',
-            'administration_article' => 'url',
             'administration_bc_demande' => 'url',
             'administration_borne' => 'url',
             'administration_date' => 'url',

@@ -1,17 +1,15 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Event/SlugGenerator.php
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Event/SlugGenerator.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 19:11
+ * @lastUpdate 02/08/2023 08:34
  */
 
 namespace App\Event;
 
-use App\Entity\Article;
 use App\Entity\Utilisateur;
-use App\Utils\Tools;
 use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Events;
 use Doctrine\Persistence\Event\LifecycleEventArgs;
@@ -42,9 +40,7 @@ class SlugGenerator implements EventSubscriber
 
         // if this subscriber only applies to certain entity types,
         // add some code to check the entity type as early as possible
-        if ($entity instanceof Article) {
-            $entity->setSlug(Tools::slug($entity->getTitre()));
-        } elseif ($entity instanceof Utilisateur) {
+        if ($entity instanceof Utilisateur) {
             if ('' !== $entity->getMailUniv() && null !== $entity->getMailUniv()) {
                 $tabSlug = explode('@', $entity->getMailUniv());
                 $entity->setSlug($tabSlug[0]);
