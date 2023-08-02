@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/CreationSectionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/01/2023 15:15
+ * @lastUpdate 02/08/2023 16:01
  */
 
 namespace App\Controller\questionnaire;
 
+use App\Components\Questionnaire\QuestionnaireRegistry;
 use App\Components\Questionnaire\TypeQuestion\TypeQcu;
 use App\Controller\BaseController;
 use App\Entity\QuestQuestion;
@@ -27,11 +28,13 @@ class CreationSectionController extends BaseController
 {
     #[Route('/{section}', name: 'index')]
     public function section(
+        QuestionnaireRegistry  $questionnaireRegistry,
         QuestSectionRepository $questSectionRepository,
         QuestQuestionRepository $questionRepository,
-        Request $request,
-        QuestSection $section
-    ): Response {
+        Request                $request,
+        QuestSection           $section
+    ): Response
+    {
         switch ($request->query->get('action')) {
             case 'edit':
                 $form = $this->createForm(QuestSectionType::class, $section);
@@ -127,6 +130,29 @@ class CreationSectionController extends BaseController
                 $this->entityManager->flush();
                 $liste = $questionRepository->findByDepartementOrNull($this->getDepartement());
                 break;
+            case 'addQuestionTypeOrdre':
+                $typeQuestion = $request->query->get('type');
+                $ordre = $request->query->get('ordre');
+
+                $question = new QuestQuestion();
+                $question->setLibelle('Nouvelle question ' . $ordre);
+                $question->setOrdre($ordre);
+                $question->setSection($section);
+                $question->setType($questionnaireRegistry->getTypeQuestion($typeQuestion)::class);
+                $this->entityManager->persist($question);
+
+                //décaler toutes les autres questions
+                $questions = $questionRepository->findBy(['section' => $section], ['ordre' => 'ASC']);
+                foreach ($questions as $q) {
+                    if ($q->getOrdre() >= $ordre && $q !== $question) {
+                        $q->setOrdre($q->getOrdre() + 1);
+                    }
+                }
+
+
+                $this->entityManager->flush();
+                $liste = $questionRepository->findByDepartementOrNull($this->getDepartement());
+                break;
         }
 
         return $this->render('questionnaire/creation/section/section.html.twig', [
@@ -137,10 +163,11 @@ class CreationSectionController extends BaseController
 
     #[Route('/{section}/transition-question/{question}', name: 'transition_question')]
     public function configTransitionQuestion(
-        Request $request,
+        Request      $request,
         QuestSection $section,
         QuestQuestion $question,
-    ): Response {
+    ): Response
+    {
         return $this->render('questionnaire/creation/section/_transitionQuestion.html.twig', [
             'section' => $section,
             'question' => $question,
@@ -150,11 +177,12 @@ class CreationSectionController extends BaseController
 
     #[Route('/{section}/transition-question-affiche/{question}', name: 'transition_question_affiche')]
     public function configTransitionAfficheQuestion(
-        Request $request,
+        Request       $request,
         QuestQuestionRepository $questionRepository,
-        QuestSection $section,
+        QuestSection  $section,
         QuestQuestion $question,
-    ): Response {
+    ): Response
+    {
         $typeAction = $request->query->get('typeAction');
         $allQuestions = $questionRepository->findByQuestionnaire($section->getQuestionnaire());
         switch ($typeAction) {
@@ -179,7 +207,8 @@ class CreationSectionController extends BaseController
     public function configTransitionUpdateListe(
         QuestSection $section,
         QuestQuestion $question,
-    ): Response {
+    ): Response
+    {
         return $this->render('questionnaire/creation/section/_transitionQuestionListe.html.twig', [
             'conditions' => $question->getParametre()['conditions'] ?? [],
         ]);
@@ -187,12 +216,13 @@ class CreationSectionController extends BaseController
 
     #[Route('/{section}/transition-question-sauvegarde/{question}', name: 'transition_question_sauvegarde')]
     public function configTransitionSauvegarde(
-        Request $request,
+        Request                $request,
         EntityManagerInterface $entityManager,
         QuestQuestionRepository $questionRepository,
-        QuestSection $section,
-        QuestQuestion $question,
-    ): Response {
+        QuestSection           $section,
+        QuestQuestion          $question,
+    ): Response
+    {
         $data = JsonRequest::getFromRequest($request);
         $typeAction = $request->query->get('typeaction');
         $parametre = $question->getParametre();
@@ -234,12 +264,13 @@ class CreationSectionController extends BaseController
 
     #[Route('/{section}/transition-question-delete-condition/{question}', name: 'transition_question_delete_condition')]
     public function deleteCondition(
-        Request $request,
+        Request                $request,
         EntityManagerInterface $entityManager,
         QuestQuestionRepository $questionRepository,
-        QuestSection $section,
-        QuestQuestion $question,
-    ): Response {
+        QuestSection           $section,
+        QuestQuestion          $question,
+    ): Response
+    {
         $key = $request->query->get('key');
         $parametre = $question->getParametre();
         if (array_key_exists('conditions', $parametre)) {

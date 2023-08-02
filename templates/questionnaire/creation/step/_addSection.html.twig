@@ -10,7 +10,7 @@
         <option value="">Choisir...</option>
         <option value="new">Ajouter une nouvelle section</option>
         {% for section in liste %}
-            <option value="{{ section.id }}">{{ section.titre }}</option>
+            <option value="{{ section.id }}">{{ section.titre }} ({{ section.questionnaire.libelle }})</option>
         {% endfor %}
     </select>
 </div>

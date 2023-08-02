@@ -28,6 +28,10 @@
     </div>
 {% endif %}
 {% for question in questions %}
+    {{ include('components/questionnaire/creation/_addQuestion.html.twig', {ordre:question.ordre}) }}
     {{ question_creation_render(question) }}
+    {% if loop.last %}
+        {{ include('components/questionnaire/creation/_addQuestion.html.twig', {ordre:question.ordre + 1}) }}
+    {% endif %}
 {% endfor %}
 

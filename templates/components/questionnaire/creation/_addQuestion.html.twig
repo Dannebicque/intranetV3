@@ -1,0 +1,38 @@
+<div class="divider text-primary">
+    Ajouter une question :
+    <a href="#"
+            {{ stimulus_action('questionnaire--section', 'addQuestionTypeOrdre', 'click', {section: section.id, type: 'App\\Components\\Questionnaire\\TypeQuestion\\TypeQcm', ordre:ordre}) }}
+    >
+        QCM
+    </a> |
+    <a href="#"
+            {{ stimulus_action('questionnaire--section', 'addQuestionTypeOrdre', 'click', {section: section.id, type: 'App\\Components\\Questionnaire\\TypeQuestion\\TypeQcu', ordre:ordre}) }}
+    >
+        QCU
+    </a> |
+    <a href="#"
+            {{ stimulus_action('questionnaire--section', 'addQuestionTypeOrdre', 'click', {section: section.id, type: 'App\\Components\\Questionnaire\\TypeQuestion\\TypeOuiNon', ordre:ordre}) }}
+    >
+        OUI/NON
+    </a> |
+    <a href="#"
+            {{ stimulus_action('questionnaire--section', 'addQuestionTypeOrdre', 'click', {section: section.id, type: 'App\\Components\\Questionnaire\\TypeQuestion\\TypeChainee', ordre:ordre}) }}
+    >
+        Chainée
+    </a> |
+    <a href="#"
+            {{ stimulus_action('questionnaire--section', 'addQuestionTypeOrdre', 'click', {section: section.id, type: 'App\\Components\\Questionnaire\\TypeQuestion\\TypeLibre', ordre:ordre}) }}
+    >
+        Libre
+    </a> |
+    <a href="#"
+            {{ stimulus_action('questionnaire--section', 'addQuestionTypeOrdre', 'click', {section: section.id, type: 'App\\Components\\Questionnaire\\TypeQuestion\\TypeEchelle', ordre:ordre}) }}
+    >
+        Echelle
+    </a> |
+    <a href="#"
+            {{ stimulus_action('questionnaire--section', 'addQuestionTypeOrdre', 'click', {section: section.id, type: 'App\\Components\\Questionnaire\\TypeQuestion\\TypeSlider', ordre:ordre}) }}
+    >
+        Slider
+    </a>
+</div>
