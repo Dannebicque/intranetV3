@@ -1,16 +1,17 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcComptenceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/08/2022 11:01
+ * @lastUpdate 02/08/2023 09:14
  */
 
 namespace App\Repository;
 
 use App\Entity\ApcCompetence;
 use App\Entity\ApcReferentiel;
+use App\Entity\Diplome;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -53,5 +54,16 @@ class ApcComptenceRepository extends ServiceEntityRepository
     public function findByReferentiel(ApcReferentiel $referentiel): array
     {
         return $this->findByReferentielBuilder($referentiel) ? $this->findByReferentielBuilder($referentiel)->getQuery()->getResult() : [];
+    }
+
+    public function findByDiplome(Diplome $diplome): array
+    {
+        return $this->createQueryBuilder('c')
+            ->join('c.apcReferentiel', 'r')
+            ->where('c.apcReferentiel = :referentiel')
+            ->setParameter('referentiel', $diplome->getReferentiel()->getId())
+            ->orderBy('c.couleur', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 }
