@@ -43,6 +43,136 @@
             </div>
         {% endif %}
 
+
+        <div class="row block_admin">
+            {% if user_data.isGoodDepartement('ROLE_CDD') or user_data
+                .isGoodDepartement('ROLE_DDE') or user_data
+                .isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_ABS') or user_data.isGoodDepartement
+                ('ROLE_RP') %}
+                <div class="col-md-6 col-lg-6 col-sm-12">
+                    <div class="card administration">
+                        <header class="card-header" style="justify-content: space-between">
+                            <div class="card-header-actions">
+                                <i class="fas fa-clock fa-2x"></i>
+                                <h4 class="card-title">{{ 'gestion.des.absences'|trans|raw }}</h4>
+                            </div>
+                            <div class="card-header-actions">
+                                <a class="btn btn-primary btn-sm"
+                                   type="button"
+                                   title="{{ 'saisir.absences'|trans }}"
+                                   data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                   href="{{ path('administration_absences_semestre_saisie',{semestre:semestre.id}) }}"
+                                >
+                                    <i class="fas fa-plus" style="color: white"></i>
+                                </a>
+                                <ul class="card-controls">
+                                    <li class="dropdown">
+                                        <a data-bs-toggle="dropdown" href="#"><i
+                                                    class="fas fa-ellipsis-h rotate-90"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            {#                                        <a href="{{ path('administration_all_absences_semestre_export', {semestre:semestre.id, _format:'pdf'}) }}" #}
+                                            {#                                           class="dropdown-item"><i #}
+                                            {#                                                    class="fa fa-file-pdf"></i>{{ 'exporter.pdf'|trans }}</a> #}
+                                            {#                                        <a href="{{ path('administration_all_absences_semestre_export', {semestre:semestre.id, _format:'csv'}) }}" #}
+                                            {#                                           class="dropdown-item"><i #}
+                                            {#                                                    class="fas fa-file-export"></i>{{ 'exporter.csv'|trans }}</a> #}
+                                            <a href="{{ path('administration_all_absences_semestre_export', {semestre:semestre.id, _format:'xlsx'}) }}"
+                                               class="dropdown-item"><i
+                                                        class="fas fa-file-export"></i>{{ 'exporter.xls'|trans }}</a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </header>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 d-block d-grid mb-2">
+                                    <a href="{{ path('administration_absences_semestre_liste',{semestre:semestre.id}) }}">
+                                        {{ 'afficher.les.absences'|trans }}</a>
+                                </div>
+                                <div class="col-12 d-block d-grid mb-2">
+                                    <a href="{{ path('administration_absences_justificatif_semestre_liste',{semestre:semestre.id}) }}">
+                                        {{ 'liste.justificatifs'|trans }}
+                                        (<span class="badge rounded-pill bg-info">{{ nbJustificatifs }}</span> nouveaux)</a>
+                                </div>
+                                <div class="col-12 d-block d-grid mb-2">
+                                    <a href="{{ path('administration_absences_semestre_justifier',{semestre:semestre.id}) }}">
+                                        {{ 'justifier.les.absences'|trans }}</a>
+                                </div>
+                                <div class="col-12 d-block d-grid mb-2">
+                                    <a href="{{ path('administration_commission_absences_semestre_index',{semestre:semestre.id}) }}">
+                                        {{ 'commission.des.absences'|trans }}</a>
+                                </div>
+                                <div class="col-12 d-block d-grid mb-2">
+                                    <a href="{{ path('administration_absence_appel_index',{semestre:semestre.id}) }}">
+                                        {{ 'suivi.appels'|trans }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+
+            {% if user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_ABS') or user_data.isGoodDepartement('ROLE_DDE') or user_data
+                .isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_NOTES') or user_data.isGoodDepartement('ROLE_RP') %}
+                <div class="col-md-6 col-sm-12">
+                    <div class="card administration">
+                        <header class="card-header" style="justify-content: space-between">
+                            <div class="card-header-actions">
+                                <i class="fas fa-chart-pie fa-2x"></i>
+                                <h4 class="card-title">{{ 'gestion.des.notes'|trans|raw }}</h4>
+                            </div>
+                            <div class="card-header-actions">
+                                <ul class="card-controls">
+                                    <li class="dropdown">
+                                        <a data-bs-toggle="dropdown" href="#"><i
+                                                    class="fas fa-ellipsis-h rotate-90"></i></a>
+                                        <div class="dropdown-menu dropdown-menu-right">
+                                            <a href="{{ path('administration_all_notes_export', {semestre:semestre.id, _format:'xlsx'}) }}"
+                                               class="dropdown-item"><i
+                                                        class="fas fa-file-export"></i>{{ 'exporter.xlsx'|trans }}
+                                            </a>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </header>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12 d-block d-grid mb-2">
+                                    <a href="{{ path('administration_notes_semestre_index',{semestre:semestre.id}) }}">
+                                        {{ 'afficher.les.notes'|trans }}
+                                    </a>
+                                </div>
+                                <div class="col-12 d-block d-grid mb-2">
+                                    <a href="{{ path('administration_evaluation_initialisation_index',{semestre:semestre.id}) }}">
+                                        {{ 'initialiser.les.evaluations'|trans }}
+                                    </a>
+                                </div>
+                                <div class="col-12 d-block d-grid mb-2">
+                                    <a href="{{ path('administration_affecter_enseignant_groupe_index',{semestre:semestre.id}) }}">
+                                        {{ 'affecter.enseignant.groupe'|trans }}
+                                    </a>
+                                </div>
+                                <div class="col-12 d-block d-grid mb-2">
+                                    <a href="{{ path('administration_rattrapage_semestre_index',{semestre:semestre.id}) }}">
+                                        {{ 'demandes.rattrapages'|trans }}
+                                        <span class="badge rounded-pill bg-info">{{ nbRattrapages }}</span>
+                                    </a>
+                                </div>
+                                <div class="col-12 d-grid d-block mb-2">
+                                    <a href="{{ path('administration_mcc_index', {semestre:semestre.id}) }}"> {{ 'Modalités du contrôle continu'|trans }}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+
+        </div>
+
         <div class="row block_admin">
             {% if user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data
                 .isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_RP') %}
@@ -148,130 +278,5 @@
             {% endif %}
         </div>
 
-        <div class="row block_admin">
-            {% if user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_ABS') or user_data.isGoodDepartement('ROLE_DDE') or user_data
-                .isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_NOTES') or user_data.isGoodDepartement('ROLE_RP') %}
-                <div class="col-md-6 col-sm-12">
-                    <div class="card administration">
-                        <header class="card-header" style="justify-content: space-between">
-                            <div class="card-header-actions">
-                                <i class="fas fa-chart-pie fa-2x"></i>
-                                <h4 class="card-title">{{ 'gestion.des.notes'|trans|raw }}</h4>
-                            </div>
-                            <div class="card-header-actions">
-                                <ul class="card-controls">
-                                    <li class="dropdown">
-                                        <a data-bs-toggle="dropdown" href="#"><i
-                                                    class="fas fa-ellipsis-h rotate-90"></i></a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a href="{{ path('administration_all_notes_export', {semestre:semestre.id, _format:'xlsx'}) }}"
-                                               class="dropdown-item"><i
-                                                        class="fas fa-file-export"></i>{{ 'exporter.xlsx'|trans }}
-                                            </a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </header>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12 d-block d-grid mb-2">
-                                    <a href="{{ path('administration_notes_semestre_index',{semestre:semestre.id}) }}">
-                                        {{ 'afficher.les.notes'|trans }}
-                                    </a>
-                                </div>
-                                <div class="col-12 d-block d-grid mb-2">
-                                    <a href="{{ path('administration_evaluation_initialisation_index',{semestre:semestre.id}) }}">
-                                        {{ 'initialiser.les.evaluations'|trans }}
-                                    </a>
-                                </div>
-                                <div class="col-12 d-block d-grid mb-2">
-                                    <a href="{{ path('administration_affecter_enseignant_groupe_index',{semestre:semestre.id}) }}">
-                                        {{ 'affecter.enseignant.groupe'|trans }}
-                                    </a>
-                                </div>
-                                <div class="col-12 d-block d-grid mb-2">
-                                    <a href="{{ path('administration_rattrapage_semestre_index',{semestre:semestre.id}) }}">
-                                        {{ 'demandes.rattrapages'|trans }}
-                                        <span class="badge rounded-pill bg-info">{{ nbRattrapages }}</span>
-                                    </a>
-                                </div>
-                                <div class="col-12 d-grid d-block mb-2">
-                                    <a href="{{ path('administration_mcc_index', {semestre:semestre.id}) }}"> {{ 'Modalités du contrôle continu'|trans }}</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
-
-            {% if user_data.isGoodDepartement('ROLE_CDD') or user_data
-                .isGoodDepartement('ROLE_DDE') or user_data
-                .isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_ABS') or user_data.isGoodDepartement
-                ('ROLE_RP') %}
-                <div class="col-md-6 col-lg-6 col-sm-12">
-                    <div class="card administration">
-                        <header class="card-header" style="justify-content: space-between">
-                            <div class="card-header-actions">
-                                <i class="fas fa-clock fa-2x"></i>
-                                <h4 class="card-title">{{ 'gestion.des.absences'|trans|raw }}</h4>
-                            </div>
-                            <div class="card-header-actions">
-                                <a class="btn btn-primary btn-sm"
-                                   type="button"
-                                   title="{{ 'saisir.absences'|trans }}"
-                                   data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                   href="{{ path('administration_absences_semestre_saisie',{semestre:semestre.id}) }}"
-                                >
-                                    <i class="fas fa-plus" style="color: white"></i>
-                                </a>
-                                <ul class="card-controls">
-                                    <li class="dropdown">
-                                        <a data-bs-toggle="dropdown" href="#"><i
-                                                    class="fas fa-ellipsis-h rotate-90"></i></a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            {#                                        <a href="{{ path('administration_all_absences_semestre_export', {semestre:semestre.id, _format:'pdf'}) }}" #}
-                                            {#                                           class="dropdown-item"><i #}
-                                            {#                                                    class="fa fa-file-pdf"></i>{{ 'exporter.pdf'|trans }}</a> #}
-                                            {#                                        <a href="{{ path('administration_all_absences_semestre_export', {semestre:semestre.id, _format:'csv'}) }}" #}
-                                            {#                                           class="dropdown-item"><i #}
-                                            {#                                                    class="fas fa-file-export"></i>{{ 'exporter.csv'|trans }}</a> #}
-                                            <a href="{{ path('administration_all_absences_semestre_export', {semestre:semestre.id, _format:'xlsx'}) }}"
-                                               class="dropdown-item"><i
-                                                        class="fas fa-file-export"></i>{{ 'exporter.xls'|trans }}</a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </header>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-12 d-block d-grid mb-2">
-                                    <a href="{{ path('administration_absences_semestre_liste',{semestre:semestre.id}) }}">
-                                        {{ 'afficher.les.absences'|trans }}</a>
-                                </div>
-                                <div class="col-12 d-block d-grid mb-2">
-                                    <a href="{{ path('administration_absences_justificatif_semestre_liste',{semestre:semestre.id}) }}">
-                                        {{ 'liste.justificatifs'|trans }}
-                                        (<span class="badge rounded-pill bg-info">{{ nbJustificatifs }}</span> nouveaux)</a>
-                                </div>
-                                <div class="col-12 d-block d-grid mb-2">
-                                    <a href="{{ path('administration_absences_semestre_justifier',{semestre:semestre.id}) }}">
-                                        {{ 'justifier.les.absences'|trans }}</a>
-                                </div>
-                                <div class="col-12 d-block d-grid mb-2">
-                                    <a href="{{ path('administration_commission_absences_semestre_index',{semestre:semestre.id}) }}">
-                                        {{ 'commission.des.absences'|trans }}</a>
-                                </div>
-                                <div class="col-12 d-block d-grid mb-2">
-                                    <a href="{{ path('administration_absence_appel_index',{semestre:semestre.id}) }}">
-                                        {{ 'suivi.appels'|trans }}</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
-        </div>
     </div>
 {% endblock %}
