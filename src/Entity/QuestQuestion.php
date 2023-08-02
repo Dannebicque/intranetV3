@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/QuestQuestion.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2023 20:10
+ * @lastUpdate 02/08/2023 08:50
  */
 
 namespace App\Entity;
 
+use App\Components\Questionnaire\TypeQuestion\TypeLibre;
 use App\Entity\Traits\ConfigTrait;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\QuestQuestionRepository;
