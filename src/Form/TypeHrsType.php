@@ -1,18 +1,20 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/TypeHrsType.php
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/TypeHrsType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/06/2021 10:56
+ * @lastUpdate 02/08/2023 10:19
  */
 
 namespace App\Form;
 
 use App\Entity\TypeHrs;
+use App\Enums\TypeHrsEnum;
 use App\Form\Type\YesNoType;
+use BackedEnum;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\Exception\AccessException;
@@ -30,9 +32,10 @@ class TypeHrsType extends AbstractType
             ->add('incluService', YesNoType::class, [
                 'label' => 'incluService',
             ])
-            ->add('type', ChoiceType::class, [
+            ->add('type', EnumType::class, [
                 'label' => 'typehrs',
-                'choices' => TypeHrs::TAB_TYPE_HRS,
+                'class' => TypeHrsEnum::class,
+                'choice_label' => static fn(BackedEnum $choice): string => 'type_hrs.' . $choice->value,
                 'choice_translation_domain' => 'form',
                 'expanded' => true,
             ])
