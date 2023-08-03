@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/QuestionnaireRenderer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/12/2022 12:57
+ * @lastUpdate 03/08/2023 09:56
  */
 
 namespace App\Components\Questionnaire;
@@ -64,7 +64,6 @@ class QuestionnaireRenderer
         $vars['options'] = $options;
         $vars['questionnaireUuid'] = $section->questionnaireUuid;
         $vars['choixUserUuid'] = $section->choixUserUuid;
-
         return $vars;
     }
 }

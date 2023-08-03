@@ -4,11 +4,14 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/QuestSection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2023 20:08
+ * @lastUpdate 03/08/2023 10:03
  */
 
 namespace App\Entity;
 
+use App\Components\Questionnaire\Section\ConfigurableSection;
+use App\Components\Questionnaire\Section\EndSection;
+use App\Components\Questionnaire\Section\StartSection;
 use App\Entity\Traits\ConfigTrait;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\QuestSectionRepository;
@@ -158,5 +161,16 @@ class QuestSection extends BaseEntity
         $this->enabled = $enabled;
 
         return $this;
+    }
+
+    public function typeSectionTexte(): string
+    {
+        return match ($this->typeSection) {
+
+            ConfigurableSection::class => 'Paramètrable',
+            StartSection::class => 'Introduction',
+            EndSection::class => 'Fin',
+            default => 'Section',
+        };
     }
 }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Section/RessourceSectionAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/01/2023 17:22
+ * @lastUpdate 03/08/2023 10:23
  */
 
 namespace App\Components\Questionnaire\Section;
@@ -52,11 +52,10 @@ class RessourceSectionAdapter extends AbstractSectionAdapter
                 'code' => $previ->getCodeElement(),
                 'personnel' => '',
                 'id' => $previ->getId(),
-                'checked' => in_array($previ->getId(), $selectionnes, true),
+                'checked' => in_array($previ->getId(), $selectionnes),
                 'affichage' => $previ->getCodeElement() . ' | ' . $previ->getLibelle(),
             ];
         }
-
         return $data;
     }
 }

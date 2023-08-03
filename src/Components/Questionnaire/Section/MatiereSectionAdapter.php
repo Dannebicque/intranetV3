@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Section/MatiereSectionAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/01/2023 17:22
+ * @lastUpdate 03/08/2023 10:24
  */
 
 namespace App\Components\Questionnaire\Section;
@@ -51,7 +51,7 @@ class MatiereSectionAdapter extends AbstractSectionAdapter
                 'code' => $previ->getCodeMatiere(),
                 'personnel' => '',
                 'id' => $previ->getId(),
-                'checked' => in_array($previ->getId(), $selectionnes, true),
+                'checked' => in_array($previ->getId(), $selectionnes),
                 'affichage' => $previ->getCodeMatiere() . ' | ' . $previ->getLibelle(),
             ];
         }

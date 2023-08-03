@@ -85,8 +85,7 @@
                                        id="questionnaire_qualite_{{ data.id }}"
                                        data-section="{{ section.section.id_section }}"
                                        name="sections[{{ section.section.id_section }}][]" value="{{ data
-                                .id }}" {% if data
-                                .checked %}checked{% endif %}>
+                                .id }}" {% if data.checked %}checked{% endif %}>
                                 <label class="form-check-label" for="questionnaire_qualite_{{ data.id }}">
                                     {{ data.affichage }}
                                 </label>
