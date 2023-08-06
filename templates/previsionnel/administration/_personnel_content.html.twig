@@ -354,8 +354,8 @@
     {% for categorie in categorieHrs %}
         <tr>
             <th colspan="2">{{ categorie.value }}</th>
-            <td colspan="2" class="text-center">{{ primes.totalTypeHrs[categorie.value] }}</td>
-            <td colspan="2" class="text-center">{{ categorie.maxHeures }}</td>
+            <td colspan="2" class="text-center">{{ primes.totalTypeHrs[categorie.value]|nombreHeure }}</td>
+            <td colspan="2" class="text-center">{{ categorie.maxHeures|nombreHeure }}</td>
             <td colspan="2" class="text-center">
                 {% if categorie.maxHeures == 0 %}
                     <span class="badge bg-info">N.C.</span>
@@ -381,15 +381,17 @@
 
     <tr>
         <th colspan="5"> Total d’heures équivalent TD (hors prime)</th>
-        <td colspan="2" class="text-center">{{ previsionnel.totalEqTD }} ({{ previsionnel.totalEqTDMajore }}**)</td>
-        <td colspan="2" class="text-center">{{ personnel.nbHeuresService }}</td>
+        <td colspan="2" class="text-center">{{ previsionnel.totalEqTD|nombreHeure }}
+            ({{ previsionnel.totalEqTDMajore|nombreHeure }}**)
+        </td>
+        <td colspan="2" class="text-center">{{ personnel.nbHeuresService|nombreHeure }}</td>
         <td colspan="2" class="text-center">
             {% if personnel.nbHeuresService == 0 %}
                 <span class="badge bg-info">Pas de max défini</span>
             {% elseif personnel.nbHeuresService > previsionnel.totalEqTD %}
-                <span class="badge bg-warning">{{ previsionnel.totalEqTD - personnel.nbHeuresService }}</span>
+                <span class="badge bg-warning">{{ (previsionnel.totalEqTD - personnel.nbHeuresService)|nombreHeure }}</span>
             {% else %}
-                <span class="badge bg-success">{{ previsionnel.totalEqTD - personnel.nbHeuresService }}</span>
+                <span class="badge bg-success">{{ (previsionnel.totalEqTD - personnel.nbHeuresService)|nombreHeure }}</span>
             {% endif %}
         </td>
     </tr>
@@ -398,22 +400,22 @@
             Total prime/HRS/Suivis
         </th>
         <td class="previcm text-center" colspan="6">
-            {{ primes.total }}*
+            {{ primes.total|nombreHeure }}*
         </td>
     </tr>
     <tr>
         <th colspan="5"> Total d’heures équivalent TD + prime/HRS/Suivis</th>
-        <td colspan="2" class="text-center">{{ previsionnel.totalEqTD + primes.total }}
-            ({{ previsionnel.totalEqTDMajore + primes.total }}**)
+        <td colspan="2" class="text-center">{{ (previsionnel.totalEqTD + primes.total)|nombreHeure }}
+            ({{ (previsionnel.totalEqTDMajore + primes.total)|nombreHeure }}**)
         </td>
         <td colspan="2" class="text-center">{{ personnel.nbHeuresService }}</td>
         <td colspan="2" class="text-center">
             {% if personnel.nbHeuresService == 0 %}
                 <span class="badge bg-info">Pas de max défini</span>
             {% elseif personnel.nbHeuresService > (previsionnel.totalEqTD + primes.total) %}
-                <span class="badge bg-warning">{{ (previsionnel.totalEqTD + primes.total) - personnel.nbHeuresService }}</span>
+                <span class="badge bg-warning">{{ ((previsionnel.totalEqTD + primes.total) - personnel.nbHeuresService)|nombreHeure }}</span>
             {% else %}
-                <span class="badge bg-success">{{ (previsionnel.totalEqTD + primes.total) - personnel.nbHeuresService }}</span>
+                <span class="badge bg-success">{{ ((previsionnel.totalEqTD + primes.total) - personnel.nbHeuresService)|nombreHeure }}</span>
             {% endif %}
         </td>
     </tr>

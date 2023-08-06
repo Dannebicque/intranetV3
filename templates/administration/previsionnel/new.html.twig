@@ -12,6 +12,7 @@
         urlAddMatiere: path('administration_previsionnel_add_matiere'),
         urlChangePersonnel: path('administration_previsionnel_charge_content_personnel'),
         urlChangeSemestre: path('administration_previsionnel_charge_content_semestre'),
+        urlChangeSynthesePersonnel: path('administration_previsionnel_charge_content_synthese_personnel'),
         urlAddPrime: path('administration_hrs_new'),
     }) }}
 {% endblock %}
@@ -35,6 +36,12 @@
                    href="#"
                         {{ stimulus_action('adm--previsionnel', 'changeType', 'click', {type:'semestre'}) }}
                    role="tab"> {{ 'previsionnel.saisie.semestre.heading'|trans }}</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab"
+                   href="#"
+                        {{ stimulus_action('adm--previsionnel', 'changeType', 'click', {type:'synthese-personnel'}) }}
+                   role="tab"> {{ 'previsionnel.synthese.personnel.heading'|trans }}</a>
             </li>
         </ul>
 

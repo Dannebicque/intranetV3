@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/07/2023 15:47
+ * @lastUpdate 03/08/2023 16:01
  */
 
 namespace App\Entity;
@@ -90,19 +90,19 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     private ?File $photoFile = null;
 
     /**
-     * @var Collection<int, \App\Entity\Hrs>
+     * @var Collection<int, Hrs>
      */
     #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: Hrs::class)]
     private Collection $hrs;
 
     /**
-     * @var Collection<int, \App\Entity\Previsionnel>
+     * @var Collection<int, Previsionnel>
      */
     #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: Previsionnel::class)]
     private Collection $previsionnels;
 
     /**
-     * @var Collection<int, \App\Entity\Evaluation>
+     * @var Collection<int, Evaluation>
      */
     #[ORM\OneToMany(mappedBy: 'personnelAuteur', targetEntity: Evaluation::class)]
     private Collection $evaluationsAuteur;
@@ -111,13 +111,13 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     private Collection $evaluationsAutorise;
 
     /**
-     * @var Collection<int, \App\Entity\ModificationNote>
+     * @var Collection<int, ModificationNote>
      */
     #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: ModificationNote::class)]
     private Collection $modificationNotes;
 
     /**
-     * @var Collection<int, \App\Entity\PersonnelDepartement>
+     * @var Collection<int, PersonnelDepartement>
      */
     #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: PersonnelDepartement::class)]
     private Collection $personnelDepartements;
@@ -126,26 +126,26 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     private float $nbHeuresService = 192;
 
     /**
-     * @var Collection<int, \App\Entity\CahierTexte>
+     * @var Collection<int, CahierTexte>
      */
     #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: CahierTexte::class)]
     private Collection $cahierTextes;
 
     /**
-     * @var Collection<int, \App\Entity\Notification>
+     * @var Collection<int, Notification>
      */
     #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: Notification::class)]
     #[ORM\OrderBy(value: ['created' => 'DESC'])]
     private Collection $notifications;
 
     /**
-     * @var Collection<int, \App\Entity\Message>
+     * @var Collection<int, Message>
      */
     #[ORM\OneToMany(mappedBy: 'expediteur', targetEntity: Message::class)]
     private Collection $messages;
 
     /**
-     * @var Collection<int, \App\Entity\MessageDestinatairePersonnel>
+     * @var Collection<int, MessageDestinatairePersonnel>
      */
     #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: MessageDestinatairePersonnel::class)]
     private Collection $messageDestinatairePersonnels;
@@ -154,13 +154,13 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     private Collection $stagePeriodes;
 
     /**
-     * @var Collection<int, \App\Entity\StageEtudiant>
+     * @var Collection<int, StageEtudiant>
      */
     #[ORM\OneToMany(mappedBy: 'tuteurUniversitaire', targetEntity: StageEtudiant::class)]
     private Collection $stageEtudiants;
 
     /**
-     * @var Collection<int, \App\Entity\Alternance>
+     * @var Collection<int, Alternance>
      */
     #[ORM\OneToMany(mappedBy: 'tuteurUniversitaire', targetEntity: Alternance::class)]
     private Collection $alternances;
@@ -172,13 +172,13 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     private ?string $couleur = null;
 
     /**
-     * @var Collection<int, \App\Entity\EmpruntPersonnel>
+     * @var Collection<int, EmpruntPersonnel>
      */
     #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: EmpruntPersonnel::class)]
     private Collection $emprunts;
 
     /**
-     * @var Collection<int, \App\Entity\Departement>
+     * @var Collection<int, Departement>
      */
     #[ORM\OneToMany(mappedBy: 'respMateriel', targetEntity: Departement::class)]
     private Collection $departements;
@@ -190,7 +190,7 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     private Collection $quizzQuestions;
 
     /**
-     * @var Collection<int, \App\Entity\DocumentFavoriPersonnel>
+     * @var Collection<int, DocumentFavoriPersonnel>
      */
     #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: DocumentFavoriPersonnel::class)]
     private Collection $documentsFavoris;
@@ -199,13 +199,13 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     private Collection $projetPeriodes;
 
     /**
-     * @var Collection<int, \App\Entity\MaterielCommun>
+     * @var Collection<int, MaterielCommun>
      */
     #[ORM\OneToMany(mappedBy: 'contact', targetEntity: MaterielCommun::class)]
     private Collection $materielCommuns;
 
     /**
-     * @var Collection<int, \App\Entity\MaterielCommunPret>
+     * @var Collection<int, MaterielCommunPret>
      */
     #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: MaterielCommunPret::class)]
     private Collection $materielCommunPrets;
@@ -214,7 +214,7 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     private ?string $signatureElectronique = null;
 
     /**
-     * @var Collection<int, \App\Entity\AbsenceEtatAppel>
+     * @var Collection<int, AbsenceEtatAppel>
      */
     #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: AbsenceEtatAppel::class)]
     private Collection $absenceEtatAppels;
@@ -226,24 +226,24 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     private ?string $configuration = null;
 
     /**
-     * @var Collection<\App\Entity\BCDemande>
+     * @var Collection<BCDemande>
      */
     #[ORM\OneToMany(mappedBy: 'responsable', targetEntity: BCDemande::class)]
     private Collection $bcDemandesResponsable;
 
     /**
-     * @var Collection<\App\Entity\BCDemande>
+     * @var Collection<BCDemande>
      */
     #[ORM\OneToMany(mappedBy: 'signataireCompta', targetEntity: BCDemande::class)]
     private Collection $bcDemandeSignataireCompta;
     /**
-     * @var Collection<\App\Entity\BCServiceFait>
+     * @var Collection<BCServiceFait>
      */
     #[ORM\OneToMany(mappedBy: 'receptionnisteMigo', targetEntity: BCServiceFait::class)]
     private Collection $bcServiceFaitReceptionniste;
 
     /**
-     * @var Collection<\App\Entity\BCServiceFait>
+     * @var Collection<BCServiceFait>
      */
     #[ORM\OneToMany(mappedBy: 'responsableSignataire', targetEntity: BCServiceFait::class)]
     private Collection $bcServiceFaitResponsableSignataire;

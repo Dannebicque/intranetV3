@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/07/2023 15:33
+ * @lastUpdate 06/08/2023 15:41
  */
 
 namespace App\Controller\administration;
@@ -16,6 +16,7 @@ use App\Classes\Previsionnel\PrevisionnelManager;
 use App\Classes\Previsionnel\PrevisionnelSynthese;
 use App\Controller\BaseController;
 use App\DTO\HrsCollection;
+use App\DTO\PrevisionnelSynthesePersonnels;
 use App\Entity\Constantes;
 use App\Entity\Personnel;
 use App\Entity\Previsionnel;
@@ -180,22 +181,29 @@ class PrevisionnelController extends BaseController
         $type = $request->query->get('type');
 
         if ($type === 'matiere') {
-            return $this->render('previsionnel/administration/add/_matiere.html.twig', [
+            return $this->render('previsionnel/administration/_matiere.html.twig', [
                 'matieres' => $typeMatiereManager->findByDepartement($this->getDepartement()),
             ]);
         }
 
         if ($type === 'enseignant') {
-            return $this->render('previsionnel/administration/add/_enseignant.html.twig', [
+            return $this->render('previsionnel/administration/_enseignant.html.twig', [
                 'personnels' => $personnelRepository->findByDepartement($this->getDepartement()),
             ]);
         }
 
         if ($type === 'semestre') {
-            return $this->render('previsionnel/administration/add/_semestre.html.twig', [
+            return $this->render('previsionnel/administration/_semestre.html.twig', [
                 'semestres' => $this->getDataUserSession()->getSemestres(),
             ]);
         }
+
+        if ($type === 'synthese-personnel') {
+            return $this->render('previsionnel/administration/_synthesePersonnel.html.twig', [
+            ]);
+        }
+
+        return $this->render('_stepError.html.twig');
     }
 
     #[Route('/new/charge-content-matiere', name: 'administration_previsionnel_charge_content_matiere', methods: ['GET', 'POST'])]
@@ -214,7 +222,7 @@ class PrevisionnelController extends BaseController
         //récupérer le prévisionnel déjà existant matière/année
         $previsionnel = $previsionnelManager->getPrevisionnelMatiere($matiere->id, $matiere->typeMatiere, $annee);
 
-        return $this->render('previsionnel/administration/add/_matiere_content.html.twig', [
+        return $this->render('previsionnel/administration/_matiere_content.html.twig', [
             'matiere' => $matiere,
             'annee' => $annee,
             'previsionnel' => $previsionnel,
@@ -246,7 +254,7 @@ class PrevisionnelController extends BaseController
             $hrsCollection->addHrs($hr);
         }
 
-        return $this->render('previsionnel/administration/add/_personnel_content.html.twig', [
+        return $this->render('previsionnel/administration/_personnel_content.html.twig', [
             'personnel' => $personnel,
             'matieres' => $typeMatiereManager->findByDepartement($this->getDepartement()),
             'annee' => $annee,
@@ -275,12 +283,34 @@ class PrevisionnelController extends BaseController
         //récupérer le prévisionnel déjà existant matière/année
         $previsionnel = $previsionnelManager->getPrevisionnelSemestreCollection($semestre, $annee);
 
-        return $this->render('previsionnel/administration/add/_semestre_content.html.twig', [
+        return $this->render('previsionnel/administration/_semestre_content.html.twig', [
             'semestre' => $semestre,
             'matieres' => $typeMatiereManager->findBySemestre($semestre),
             'annee' => $annee,
             'previsionnel' => $previsionnel,
             'personnels' => $personnelRepository->findByDepartement($this->getDepartement()),
+        ]);
+    }
+
+    #[Route('/new/charge-content-synthese-personnel', name: 'administration_previsionnel_charge_content_synthese_personnel', methods: ['GET', 'POST'])]
+    public function loadContentSynthesePersonnel(
+        PrevisionnelManager $previsionnelManager,
+        Request             $request): Response
+    {
+        $annee = $request->query->get('annee');
+
+        //récupérer le prévisionnel déjà existant matière/année
+        $previsionnel = $previsionnelManager->getPrevisionnelDepartement($this->getDepartement(), $annee);
+
+        $synthesePrevisionnel = new PrevisionnelSynthesePersonnels();
+        foreach ($previsionnel as $previsionnelPersonnel) {
+            $synthesePrevisionnel->addPrevisionnelPersonnel($previsionnelPersonnel);
+        }
+
+        return $this->render('previsionnel/administration/_synthesePersonnel_content.html.twig', [
+            'annee' => $annee,
+            'previsionnel' => $previsionnel,
+            'synthesePrevisionnel' => $synthesePrevisionnel
         ]);
     }
 

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Twig/HtmlExtension.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/07/2023 22:23
+ * @lastUpdate 06/08/2023 15:41
  */
 
 namespace App\Twig;
@@ -24,11 +24,20 @@ class HtmlExtension extends AbstractExtension
     {
         return [
             new TwigFilter('fqn', $this->fqn(...)),
+            new TwigFilter('nombreHeure', $this->nombreHeure(...)),
             new TwigFilter('deuxDigits', $this->deuxDigits(...)),
             new TwigFilter('badgeYesNo', $this->badgeYesNo(...), ['is_safe' => ['html']]),
         ];
     }
 
+    public function nombreHeure(float $value): string
+    {
+        if ($value > 0) {
+            return number_format($value, 2, ',', ' ') . ' h';
+        }
+
+        return '';
+    }
     public function fqn(object $value): string
     {
         $object = new ReflectionClass($value);

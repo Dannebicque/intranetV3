@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Twig/AppExtension.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/07/2023 08:11
+ * @lastUpdate 06/08/2023 15:41
  */
 
 namespace App\Twig;
@@ -30,6 +30,7 @@ class AppExtension extends AbstractExtension
     {
         return [
             new TwigFilter('tel_format', $this->telFormat(...)),
+            new TwigFilter('pourcentage', $this->pourcentage(...)),
             new TwigFilter('siret_format', $this->siretFormat(...)),
             new TwigFilter('bg', $this->bg(...)),
             new TwigFilter('badge', $this->badge(...)),
@@ -46,6 +47,14 @@ class AppExtension extends AbstractExtension
         ];
     }
 
+    public function pourcentage(?float $value, int $nbdecimales = 2): string
+    {
+        if (null === $value) {
+            return '';
+        }
+
+        return number_format($value, $nbdecimales, ',', ' ') . ' %';
+    }
 
     public function formatNote(float $note, int $nbdecimales = 2, float $seuil = 10): string
     {

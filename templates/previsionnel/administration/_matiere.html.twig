@@ -1,0 +1,55 @@
+<div class="card">
+    <header class="card-header">
+        <h4 class="card-title">{{ 'adm.previsionnel.matiere.new.heading'|trans }}</h4>
+        <div class="card-header-actions" style="">
+                <span>
+                    <button
+                            class="btn btn-sm btn btn-info" title="{{ 'atitle.actualiser'|trans }}"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="bottom"
+                       {{ stimulus_action('adm--previsionnel', 'actualiser', 'click', {type:'matiere'}) }}
+                    ><i class="fas fa-refresh"></i></button>
+                </span>
+        </div>
+    </header>
+
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                    <label class="form-label required" for="previ_matiere">{{ 'choisir.matiere'|trans }}</label>
+                    <select class="form-select selectpicker"
+                            id="previ_matiere"
+                            name="previsionnel_matiere"
+                            {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
+                            {{ stimulus_action('adm--previsionnel', 'changeShowMatiere') }}
+                    >
+                        <option value="">{{ 'choisir.matiere'|trans }}</option>
+                        {% for matiere in matieres %}
+                            <option value="{{ matiere.typeIdMatiere }}">
+                                {{ matiere.display }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <label class="form-label required"
+                       for="previ_annee_previsionnel">{{ 'label.annee_previsionnel'|trans }}</label>
+                <select class="form-select selectpicker" id="previ_annee_previsionnel"
+                        {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
+                        {{ stimulus_action('adm--previsionnel', 'changeAnneeMatiere') }}
+                        name="previsionnel_annee_previsionnel">
+                    {% for annee in 'now'|date('Y')-5..'now'|date('Y')+5 %}
+                        <option value="{{ annee }}"
+                                {% if annee == user_data.anneePrevisionnel %}selected{% endif %}>{{ annee }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="mt-2"
+                {{ stimulus_target('adm--previsionnel', 'contentAdd') }}
+        ></div>
+    </div>
+</div>
+

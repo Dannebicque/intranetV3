@@ -3,15 +3,15 @@
     <div class="row">
         <div class="col-sm-12 {{ col }} text-center">
             <strong>CM</strong><br>
-            {{ matiere.cmFormation }}h
+            {{ matiere.cmFormation|nombreHeure }}h
         </div>
         <div class="col-sm-12 {{ col }} text-center">
             <strong>TD</strong><br>
-            {{ matiere.tdFormation }}h
+            {{ matiere.tdFormation|nombreHeure }}h
         </div>
         <div class="col-sm-12 {{ col }} text-center">
             <strong>TP</strong><br>
-            {{ matiere.tpFormation }}h
+            {{ matiere.tpFormation|nombreHeure }}h
         </div>
     </div>
 </div>
@@ -262,10 +262,10 @@
     </tr>
     <tr>
         <td class="previcm text-center">
-            {{ matiere.cmFormation }}
+            {{ matiere.cmFormation|nombreHeure }}
         </td>
         <td class="previcm text-center">
-            {{ previsionnel.nbHCm }}
+            {{ previsionnel.nbHCm|nombreHeure }}
         </td>
         <td class="previcm text-center">
             {% set ecart = previsionnel.nbHCm - matiere.cmFormation %}
@@ -273,17 +273,17 @@
                 <span class="badge bg-success">OK</span>
             {% else %}
                 {% if ecart > 0 %}
-                    <span class="badge bg-danger">{{ ecart }}</span>
+                    <span class="badge bg-danger">{{ ecart|nombreHeure }}</span>
                 {% else %}
-                    <span class="badge bg-warning">{{ ecart }}</span>
+                    <span class="badge bg-warning">{{ ecart|nombreHeure }}</span>
                 {% endif %}
             {% endif %}
         </td>
         <td class="previtd text-center">
-            {{ matiere.tdFormation }}
+            {{ matiere.tdFormation|nombreHeure }}
         </td>
         <td class="previtd text-center">
-            {{ previsionnel.nbHTd }}
+            {{ previsionnel.nbHTd|nombreHeure }}
         </td>
         <td class="previtd text-center">
             {% set ecart = previsionnel.nbHTd - matiere.tdFormation %}
@@ -291,17 +291,17 @@
                 <span class="badge bg-success">OK</span>
             {% else %}
                 {% if ecart > 0 %}
-                    <span class="badge bg-danger">{{ ecart }}</span>
+                    <span class="badge bg-danger">{{ ecart|nombreHeure }}</span>
                 {% else %}
-                    <span class="badge bg-warning">{{ ecart }}</span>
+                    <span class="badge bg-warning">{{ ecart|nombreHeure }}</span>
                 {% endif %}
             {% endif %}
         </td>
         <td class="previtp text-center">
-            {{ matiere.tpFormation }}
+            {{ matiere.tpFormation|nombreHeure }}
         </td>
         <td class="previtp text-center">
-            {{ previsionnel.nbHTp }}
+            {{ previsionnel.nbHTp|nombreHeure }}
         </td>
         <td class="previtp">
             {% set ecart = previsionnel.nbHTp - matiere.tpFormation %}
@@ -309,9 +309,9 @@
                 <span class="badge bg-success">OK</span>
             {% else %}
                 {% if ecart > 0 %}
-                    <span class="badge bg-danger">{{ ecart }}</span>
+                    <span class="badge bg-danger">{{ ecart|nombreHeure }}</span>
                 {% else %}
-                    <span class="badge bg-warning">{{ ecart }}</span>
+                    <span class="badge bg-warning">{{ ecart|nombreHeure }}</span>
                 {% endif %}
             {% endif %}
         </td>
@@ -332,13 +332,13 @@
             Total d'heures
         </th>
         <td class="previcm text-center" colspan="3">
-            {{ previsionnel.totalCm }}
+            {{ previsionnel.totalCm|nombreHeure }}
         </td>
         <td class="previtd text-center" colspan="3">
-            {{ previsionnel.totalTd }}
+            {{ previsionnel.totalTd|nombreHeure }}
         </td>
         <td class="previtp text-center" colspan="3">
-            {{ previsionnel.totalTp }}
+            {{ previsionnel.totalTp|nombreHeure }}
         </td>
         <td></td>
     </tr>
@@ -347,13 +347,13 @@
             Total d’heures par étudiant
         </th>
         <td class="previcm text-center" colspan="3">
-            {{ previsionnel.totalEtudiantCm }}
+            {{ previsionnel.totalEtudiantCm|nombreHeure }}
         </td>
         <td class="previtd text-center" colspan="3">
-            {{ previsionnel.totalEtudiantTd }}
+            {{ previsionnel.totalEtudiantTd|nombreHeure }}
         </td>
         <td class="previtp text-center" colspan="3">
-            {{ previsionnel.totalEtudiantTp }}
+            {{ previsionnel.totalEtudiantTp|nombreHeure }}
         </td>
         <td></td>
     </tr>
@@ -362,7 +362,7 @@
             Total d’heures équivalent TD
         </th>
         <td class="previcm text-center" colspan="9">
-            {{ previsionnel.totalEqTD }} ({{ previsionnel.totalEqTDMajore }}**)
+            {{ previsionnel.totalEqTD|nombreHeure }} ({{ previsionnel.totalEqTDMajore|nombreHeure }}**)
         </td>
         <td></td>
     </tr>

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Adapter/AbstractPrevisionnelAdapter.php
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Adapter/AbstractPrevisionnelAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/09/2021 11:09
+ * @lastUpdate 06/08/2023 14:43
  */
 
 namespace App\Adapter;
@@ -33,6 +33,7 @@ class AbstractPrevisionnelAdapter
         $p->personnel_nom = '' !== $previ['nom'] ? mb_strtoupper($previ['nom']) : '-';
         $p->personnel_prenom = '' !== $previ['prenom'] ? ucwords(mb_strtolower($previ['prenom'])) : '-';
         $p->personnel_numeroHarpege = $previ['numeroHarpege'] ?? 0;
+        $p->personnel_type = $previ['statut'] ?? 0;
         $p->personnel_mail = $previ['mailUniv'] ?? '-';
         $p->nbHeuresService = $previ['nbHeuresService'] ?? 0;
         $p->semestre_id = $previ['id_semestre'] ?? 0;

@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/adm/previsionnel_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 28/07/2023 15:33
+// @lastUpdate 06/08/2023 15:41
 
 import { Controller } from '@hotwired/stimulus'
 import { addCallout } from '../../js/util'
@@ -18,6 +18,7 @@ export default class extends Controller {
     urlChangeSemestre: String,
     urlAddMatiere: String,
     urlAddPrime: String,
+    urlChangeSynthesePersonnel: String,
   }
 
   connect() {
@@ -35,6 +36,10 @@ export default class extends Controller {
 
     await fetch(`${this.urlValue}?${params.toString()}`, {}).then((response) => response.text()).then((html) => {
       this.contentTarget.innerHTML = html
+    }).then(() => {
+      if (type === 'synthese-personnel') {
+        this._loadContent(type, { annee: document.getElementById('previ_annee_previsionnel').value })
+      }
     })
   }
 
@@ -71,6 +76,10 @@ export default class extends Controller {
       params = {
         annee: document.getElementById('previ_annee_previsionnel').value,
         matiere: document.getElementById('previ_matiere').value,
+      }
+    } else if (type === 'synthese-personnel') {
+      params = {
+        annee: document.getElementById('previ_annee_previsionnel').value,
       }
     } else {
       addCallout('Type de prévisionnel inconnu', 'danger')
@@ -270,9 +279,24 @@ export default class extends Controller {
     this._updateSemestre(params)
   }
 
+  async changeAnneeSynthesePersonnel(e) {
+    const params = new URLSearchParams({
+      annee: e.target.value,
+    })
+
+    this._updateSynthesePersonnel(params)
+  }
+
   async _updateMatiere(params) {
     this.contentAddTarget.innerHTML = window.da.loaderStimulus
     await fetch(`${this.urlChangeMatiereValue}?${params.toString()}`, {}).then((response) => response.text()).then((html) => {
+      this.contentAddTarget.innerHTML = html
+    })
+  }
+
+  async _updateSynthesePersonnel(params) {
+    this.contentAddTarget.innerHTML = window.da.loaderStimulus
+    await fetch(`${this.urlChangeSynthesePersonnelValue}?${params.toString()}`, {}).then((response) => response.text()).then((html) => {
       this.contentAddTarget.innerHTML = html
     })
   }
@@ -320,6 +344,18 @@ export default class extends Controller {
         personnel,
       })
       this._updatePersonnel(params)
+    } else if (type === 'synthese-personnel') {
+      const { annee } = eparams
+
+      if (annee === '') {
+        addCallout('Veuillez sélectionner une année', 'danger')
+        return false
+      }
+
+      const params = new URLSearchParams({
+        annee,
+      })
+      this._updateSynthesePersonnel(params)
     } else if (type === 'semestre') {
       const { semestre } = eparams
       const { annee } = eparams

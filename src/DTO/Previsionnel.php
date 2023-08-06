@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/Previsionnel.php
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/Previsionnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/09/2021 11:12
+ * @lastUpdate 06/08/2023 13:48
  */
 
 namespace App\DTO;
@@ -31,6 +31,7 @@ class Previsionnel
     public ?string $matiere_code_element = '';
     public string $personnel_nom = '';
     public string $personnel_prenom = '';
+    public string $personnel_type = '';
     public string $personnel_numeroHarpege;
     public string $personnel_mail;
     public float $nbHeuresService;

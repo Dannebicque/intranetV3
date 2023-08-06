@@ -44,7 +44,7 @@
                         name="previsionnel_annee_previsionnel">
                     {% for annee in 'now'|date('Y')-5..'now'|date('Y')+5 %}
                         <option value="{{ annee }}"
-                                {% if annee == user_data.getAnneePrevisionnel %}selected{% endif %}>{{ annee }}</option>
+                                {% if annee == user_data.anneePrevisionnel %}selected{% endif %}>{{ annee }}</option>
                     {% endfor %}
                 </select>
             </div>
