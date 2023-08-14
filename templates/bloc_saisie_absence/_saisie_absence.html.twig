@@ -4,24 +4,25 @@
         <li>
             {% if user_data.user.configuration['validationSaisieAbsence'] is defined and user_data.user
             .configuration['validationSaisieAbsence'] == true %}
-                Etape de confirmation de la saisie avant sauvegarde et envois des mails aux étudiants (si vous
-                quittez avant de confirmer, aucune donnée n'est sauvegardée).
+                <strong>Etape de confirmation</strong> de la saisie avant sauvegarde et envois des mails aux étudiants (
+                <strong>si vous quittez avant de confirmer, aucune donnée n'est sauvegardée</strong>).
             {% else %}
-                Les absences sont enregistées automatiquement, et les mails envoyés aux étudiants.
+                Les absences sont <strong>enregistées automatiquement</strong>, et les mails envoyés aux étudiants.
             {% endif %}
         </li>
         <li>
             {% if user_data.user.configuration['saisieDesPresents'] is defined and user_data.user
             .configuration['saisieDesPresents'] == true %}
-                Vous indiquez les étudiants présents, et vous devez valider pour comptabiliser les absents (si vous
+                <strong>Vous indiquez les étudiants
+                    présents</strong>, et vous devez valider pour comptabiliser les absents (si vous
                 quittez avant de confirmer, aucune donnée n'est sauvegardée).
             {% else %}
-                Vous indiquez les étudiants absents.
+                <strong>Vous indiquez les étudiants absents</strong>.
             {% endif %}
         </li>
     </ul>
 
-    Pour modidier ce comportement par défaut, <a href="{{ path('settings_configuration_personnel') }}" target="_blank">
+    Pour modidier ce comportement par défaut, <a href="{{ path('user_settings') }}" target="_blank">
         vous devez aller dans vos paramètres et actualiser cette page une fois les modifications faites</a>
 </div>
 
@@ -33,7 +34,9 @@
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label for="absence-matiere">{{ 'matiere'|trans }}</label>
-                    <select class="form-select selectpicker"
+                    <select class="form-select"
+                            {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
+                            {{ stimulus_action('absences', 'changeMatiere') }}
                             id="absence-matiere"
                     >
 
@@ -51,6 +54,7 @@
                     <label for="absence-date">{{ 'date_'|trans }}</label>
                     <div class="input-group">
                         <input type="date" class="form-control"
+                                {{ stimulus_action('absences', 'changeDate') }}
                                id="absence-date"
                                value="{%- if event != null and event.dateObjet != null -%}{{- event.dateObjet|date('Y-m-d') -}}
 {%- else -%}
@@ -67,7 +71,9 @@
             <div class="col-md-4 col-sm-6">
                 <div class="form-group">
                     <label for="absence-heure">Heure</label>
-                    <select class="form-select selectpicker" id="absence-heure"
+                    <select class="form-select" id="absence-heure"
+                            {{ stimulus_action('absences', 'changeHeure') }}
+                            {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
                     >
                         <option value="">{{ 'choisir.heure.debut'|trans }}</option>
                         {% for i in 08..19 %}
@@ -97,9 +103,13 @@
                         {% if typeGroupes is defined %}
                             {% for typeGroupe in typeGroupes %}
                                 <div class="col-sm-2 d-grid d-block">
-                                    <button data-typegroupe="{{ typeGroupe.id }}"
+                                    <button
+                                            {{ stimulus_action('absences', 'absChangeTypeGroupe', 'click', {
+                                                typegroupe: typeGroupe.id
+                                            }) }}
                                             class="btn {% if event != null and event.type_cours|upper ==
-                                                typeGroupe.libelle|upper %}btn-primary{% endif %} absChangeTypeGroupe">{{ typeGroupe.libelle }}</button>
+                                                typeGroupe.libelle|upper %}btn-primary{% endif %} absChangeTypeGroupe">{{ typeGroupe.libelle }}
+                                    </button>
                                 </div>
                             {% else %}
                                 <div class="col-md-12">
@@ -108,15 +118,15 @@
                                             ('ROLE_DDE') %}
                                             Aucun groupe n'existe dans ce semestre. <a
                                                 href="{{ path('administration_groupe_index', {semestre:semestre.id}) }}">Veuillez
-                                                                                                                         d'abord
-                                                                                                                         ajouter
-                                                                                                                         des
-                                                                                                                         types
-                                                                                                                         de
-                                                                                                                         groupe
-                                                                                                                         et
-                                                                                                                         des
-                                                                                                                         groupes.</a>
+                                            d'abord
+                                            ajouter
+                                            des
+                                            types
+                                            de
+                                            groupe
+                                            et
+                                            des
+                                            groupes.</a>
                                         {% else %}
                                             Aucun groupe n'existe dans ce semestre. Contactez les responsables du
                                             département.
@@ -127,9 +137,13 @@
                         {% else %}
                             {% for typeGroupe in groupes.typeGroupes %}
                                 <div class="col-sm-2 d-grid d-block">
-                                    <button data-typegroupe="{{ typeGroupe.id }}"
+                                    <button
+                                            {{ stimulus_action('absences', 'absChangeTypeGroupe', 'click', {
+                                                typegroupe: typeGroupe.id
+                                            }) }}
                                             class="btn {% if event != null and event.type_cours|upper ==
-                                                typeGroupe.libelle|upper %}btn-primary{% endif %} absChangeTypeGroupe">{{ typeGroupe.libelle }}</button>
+                                                typeGroupe.libelle|upper %}btn-primary{% endif %} absChangeTypeGroupe">{{ typeGroupe.libelle }}
+                                    </button>
                                 </div>
 
                             {% endfor %}
@@ -142,7 +156,7 @@
 </div>
 <div class="card">
     <h4 class="card-title">{{ 'etudiants.du.semestre'|trans }}</h4>
-    <div class="card-body" id="listeEtudiantsAbsences">
+    <div class="card-body" id="listeEtudiantsAbsences" {{ stimulus_target('absences', 'listeEtudiantsAbsences') }}>
         {% if event != null %}
             {{ include('api/absence/listeEtudiant.html.twig', {selectedTypeGroupe: groupes, numerogroupe: event.groupe}) }}
         {% else %}

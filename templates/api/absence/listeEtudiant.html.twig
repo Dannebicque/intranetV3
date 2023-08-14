@@ -20,8 +20,9 @@
                 {% if groupe.etudiants|length >0 %}
                     <div class="row">
                         <div class="col-12 d-grid d-block">
-                            <button class="btn btn-primary pasabsent"
-                                    data-groupe="{{ groupe.id }}">
+                            <button class="btn btn-primary"
+                                    {{ stimulus_action('absences', 'pasabsent', 'click', {groupe: groupe.id}) }}
+                            >
                                 Appel réalisé, aucun absent dans ce groupe ? ({{ groupe.etudiants|length }} étudiants
                                 présents)
                             </button>
@@ -31,7 +32,9 @@
                 <div class="row mt-2">
                     {% for etudiant in groupe.etudiants %}
                         <div class="col-sm-6 col-md-3 col-lg-3">
-                            <div class="card card-trombi etudiant" id="etu_{{ etudiant.id }}">
+                            <div class="card card-trombi etudiant" id="etu_{{ etudiant.id }}"
+                                    {{ stimulus_action('absences', 'etudiant', 'click') }}
+                            >
                                 <div class="card-body text-center pt-1 pb-50">
                                     <img class="avatar avatar-xxl" src="{{ asset('upload/etudiants/'~etudiant.photoName)|imagine_filter('thumb') }}"
 
@@ -54,8 +57,9 @@
                 {% if groupe.etudiants|length >0 %}
                     <div class="row">
                         <div class="col-12  d-grid d-block">
-                            <button class="btn btn-primary pasabsent"
-                                    data-groupe="{{ groupe.id }}">
+                            <button class="btn btn-primary"
+                                    {{ stimulus_action('absences', 'pasabsent', 'click', {groupe: groupe.id}) }}
+                            >
                                 Appel réalisé, aucun absent dans ce groupe ? ({{ groupe.etudiants|length }} étudiants
                                 présents)
                             </button>

@@ -17,6 +17,10 @@
     </div>
 {% endblock %}
 
+{% block stimulus %}
+    {{ stimulus_controller('absences') }}
+{% endblock %}
+
 {% block content %}
     {% if semestre == null %}
         <div class="alert alert-info">Ce créneau ne peut pas faire l'objet d'une saisie d'absence</div>
@@ -36,14 +40,4 @@
         href:path('help_article', {sujet: 'personnel_absence'})
     }
     ) }}
-{% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('absences') }}
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('absences') }}
 {% endblock %}
