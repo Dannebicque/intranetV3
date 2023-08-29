@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/EdtPlanning.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2022 17:16
+ * @lastUpdate 29/08/2023 11:02
  */
 
 namespace App\Entity;
@@ -13,9 +13,9 @@ use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\MatiereTrait;
 use App\Repository\EdtPlanningRepository;
 use Carbon\CarbonInterface;
-use function chr;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use function chr;
 
 #[ORM\Entity(repositoryClass: EdtPlanningRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -143,7 +143,7 @@ class EdtPlanning extends BaseEntity
                 }
                 $tab = ['', 'AB', '', 'CD', '', 'EF', '', 'GH'];
                 if ($this->groupe > 40) {
-                    return 'TD EH';
+                    return 'TD AD';
                 }
 
                 return 'CM '.$tab[$this->groupe];
@@ -151,7 +151,7 @@ class EdtPlanning extends BaseEntity
             case 'td':
                 $tab = ['', 'AB', '', 'CD', '', 'EF', '', 'GH'];
                 if ($this->groupe > 40) {
-                    return 'TD EH';
+                    return 'TD AD';
                 }
 
                 return 'TD '.$tab[$this->groupe];
