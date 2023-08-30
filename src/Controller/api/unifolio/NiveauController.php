@@ -26,7 +26,7 @@ class NiveauController extends BaseController
                 'id' => $niveau->getId(),
                 'libelle' => $niveau->getLibelle(),
                 'ordre' => $niveau->getOrdre(),
-                'competences' => $niveau->getCompetence()->getLibelle(),
+                'competences' => $niveau->getCompetence()->getId(),
             ];
         }
         return $this->json($tabApcNiveau);

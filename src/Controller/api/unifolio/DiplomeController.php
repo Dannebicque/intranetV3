@@ -66,6 +66,7 @@ class DiplomeController extends BaseController
                     'departement' => $diplome->getDepartement()->getLibelle(),
                     'type' => $diplome->getTypeDiplome()->getId(),
                     'parcours' => $apcParcours,
+                    'referentiel' => $diplome->getReferentiel()->getLibelle(),
                 ];
             }
         }
