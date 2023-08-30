@@ -19,13 +19,14 @@ use App\Repository\CahierTexteRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
  * Class CarnetController.
  */
 #[Route(path: '/application/personnel/carnet')]
-#[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_PERMANENT')]
+#[IsGranted('ROLE_PERMANENT')]
 class CarnetController extends BaseController
 {
     #[Route(path: '/', name: 'application_personnel_carnet_index', methods: 'GET')]
@@ -74,7 +75,7 @@ class CarnetController extends BaseController
 
         return $this->render('appPersonnel/carnet/new.html.twig', [
             'cahierTexte' => $cahierTexte,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -106,7 +107,7 @@ class CarnetController extends BaseController
 
         return $this->render('appPersonnel/carnet/edit.html.twig', [
             'cahierTexte' => $cahierTexte,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

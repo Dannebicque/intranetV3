@@ -2,7 +2,7 @@
   "devDependencies": {
     "@babel/core": "^7.19.3",
     "@babel/preset-env": "^7.19.4",
-    "@popperjs/core": "^2.10.2",
+    "@popperjs/core": "^2.10",
     "@symfony/stimulus-bridge": "^3.0",
     "@symfony/ux-autocomplete": "file:vendor/symfony/ux-autocomplete/assets",
     "@symfony/ux-chartjs": "file:vendor/symfony/ux-chartjs/assets",
@@ -58,7 +58,7 @@
     "unreleased": true,
     "commitLimit": false
   },
-  "version": "3.12.3",
+  "version": "3.14.0",
   "author": "David Annebicque",
   "name": "intranetv3",
   "repository": {

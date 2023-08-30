@@ -38,6 +38,7 @@
         <div class="form-group">
             <label for="chgt_etudiant_semestre">Modification du semestre de l'étudiant</label>
             <select class="form-select" name="semestre" id="chgt_etudiant_semestre"
+                    {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
                     data-etudiant="{{ etudiant.id }}">
                 {% for semestre in user_data.semestres %}
                     <option value="{{ semestre.id }}" {% if etudiant.semestre != null and semestre.id == etudiant.semestre.id %} selected {% endif %}>{{ semestre.libelle }}</option>
@@ -54,6 +55,7 @@
         <div class="form-group">
             <label for="chgt_etudiant_departement">Département actuel</label>
             <select class="form-select" name="departement" id="chgt_etudiant_departement"
+                    {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
                     data-etudiant="{{ etudiant.id }}">
                 {% for departement in departements %}
                     <option value="{{ departement.id }}"
@@ -67,7 +69,9 @@
 
         <div class="form-group">
             <label for="chgt_etudiant_fin">Année sortie DUT/LP/IUT</label>
-            <select class="form-select" name="fin" id="chgt_etudiant_fin" data-etudiant="{{ etudiant.id }}">
+            <select class="form-select" name="fin" id="chgt_etudiant_fin" data-etudiant="{{ etudiant.id }}"
+                    {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
+            >
                 {% for annee in 2017..'now'|date('Y')+2 %}
                     <option value="{{ annee }}" {% if annee == etudiant.anneeSortie %}selected{% endif %}>{{ annee }}</option>
                 {% endfor %}

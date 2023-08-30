@@ -85,7 +85,7 @@ class AnneeUniversitaireController extends BaseController
 
         return $this->render('super-administration/annee_universitaire/new.html.twig', [
             'annee_universitaire' => $anneeUniversitaire,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -113,7 +113,7 @@ class AnneeUniversitaireController extends BaseController
 
         return $this->render('super-administration/annee_universitaire/edit.html.twig', [
             'annee_universitaire' => $anneeUniversitaire,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

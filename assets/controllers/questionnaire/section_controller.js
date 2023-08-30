@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/questionnaire/section_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/01/2023 20:45
+// @lastUpdate 02/08/2023 16:01
 
 import { Controller } from '@hotwired/stimulus'
 import { useDispatch } from 'stimulus-use'
@@ -63,6 +63,17 @@ export default class extends Controller {
     const params = new URLSearchParams({
       action: 'addQuestion',
       question: _value,
+    })
+    const response = await fetch(`${this.urlSectionValue}?${params.toString()}`)
+    this.sectionTarget.innerHTML = await response.text()
+  }
+
+  async addQuestionTypeOrdre(event) {
+    this.sectionTarget.innerHTML = window.da.loaderStimulus
+    const params = new URLSearchParams({
+      action: 'addQuestionTypeOrdre',
+      type: event.params.type,
+      ordre: event.params.ordre,
     })
     const response = await fetch(`${this.urlSectionValue}?${params.toString()}`)
     this.sectionTarget.innerHTML = await response.text()

@@ -17,6 +17,7 @@ use App\Entity\Constantes;
 use App\Form\ActualiteType;
 use App\Repository\ActualiteRepository;
 use App\Table\ActualiteTableType;
+use JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,7 +26,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ActualiteController extends BaseController
 {
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     #[Route('/', name: 'index', options: ['expose' => true], methods: ['GET', 'POST'])]
     public function index(
@@ -51,7 +52,7 @@ class ActualiteController extends BaseController
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     #[Route('/export.{_format}', name: 'export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: ['GET'])]
     public function export(MySerializer $mySerializer, MyExport $myExport, ActualiteRepository $actualiteRepository, string $_format): Response
@@ -96,7 +97,7 @@ class ActualiteController extends BaseController
 
         return $this->render('administration/actualite/new.html.twig', [
             'actualite' => $actualite,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -133,7 +134,7 @@ class ActualiteController extends BaseController
 
         return $this->render('administration/actualite/edit.html.twig', [
             'actualite' => $actualite,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

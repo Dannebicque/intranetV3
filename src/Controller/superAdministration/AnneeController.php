@@ -50,7 +50,7 @@ class AnneeController extends BaseController
             }
 
             return $this->render('structure/annee/new.html.twig', [
-                'form' => $form->createView(),
+                'form' => $form,
             ]);
         }
 
@@ -91,7 +91,7 @@ class AnneeController extends BaseController
 
             return $this->render('structure/annee/edit.html.twig', [
                 'annee' => $annee,
-                'form' => $form->createView(),
+                'form' => $form,
             ]);
         }
 

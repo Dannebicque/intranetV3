@@ -4,18 +4,15 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Twig/AppExtension.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/01/2023 17:57
+ * @lastUpdate 26/07/2023 08:11
  */
 
 namespace App\Twig;
 
 use App\Classes\Configuration;
-use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Personnel;
 use App\Utils\Tools;
-use Carbon\Carbon;
-use Carbon\CarbonInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -32,30 +29,23 @@ class AppExtension extends AbstractExtension
     public function getFilters(): array
     {
         return [
-            new TwigFilter('tel_format', [$this, 'telFormat']),
-            new TwigFilter('siret_format', [$this, 'siretFormat']),
-            new TwigFilter('age', [$this, 'age']),
-            new TwigFilter('bg', [$this, 'bg']),
-            new TwigFilter('time_ago', [$this, 'timeAgo']),
-            new TwigFilter('badge', [$this, 'badge']),
-            new TwigFilter('keyWords', [$this, 'keyWords'], ['is_safe' => ['html']]),
-            new TwigFilter('escapetitle', [$this, 'escapetitle']),
-            new TwigFilter('chr', [$this, 'mychr']),
-            new TwigFilter('upper', [$this, 'upper']),
-            new TwigFilter('mailto', [$this, 'mailto'], ['is_safe' => ['html']]),
-            new TwigFilter('displayGroupes', [$this, 'displayGroupes'], ['is_safe' => ['html']]),
-            new TwigFilter('link', [$this, 'link'], ['is_safe' => ['html']]),
-            new TwigFilter('border', [$this, 'border']),
-            new TwigFilter('format_note', [$this, 'formatNote'], ['is_safe' => ['html']]),
-            new TwigFilter('formatHeure', [$this, 'formatHeure']),
-            new TwigFilter('formatDifference', [$this, 'formatDifference'], ['is_safe' => ['html']]),
+            new TwigFilter('tel_format', $this->telFormat(...)),
+            new TwigFilter('siret_format', $this->siretFormat(...)),
+            new TwigFilter('bg', $this->bg(...)),
+            new TwigFilter('badge', $this->badge(...)),
+            new TwigFilter('keyWords', $this->keyWords(...), ['is_safe' => ['html']]),
+            new TwigFilter('escapetitle', $this->escapetitle(...)),
+            new TwigFilter('chr', $this->mychr(...)),
+            new TwigFilter('upper', $this->upper(...)),
+            new TwigFilter('mailto', $this->mailto(...), ['is_safe' => ['html']]),
+            new TwigFilter('displayGroupes', $this->displayGroupes(...), ['is_safe' => ['html']]),
+            new TwigFilter('link', $this->link(...), ['is_safe' => ['html']]),
+            new TwigFilter('border', $this->border(...)),
+            new TwigFilter('format_note', $this->formatNote(...), ['is_safe' => ['html']]),
+            new TwigFilter('formatDifference', $this->formatDifference(...), ['is_safe' => ['html']]),
         ];
     }
 
-    public function formatHeure(string $heure): string
-    {
-        return 1 === mb_strlen($heure) ? '0'.$heure : $heure;
-    }
 
     public function formatNote(float $note, int $nbdecimales = 2, float $seuil = 10): string
     {
@@ -78,9 +68,7 @@ class AppExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('settings', [$this, 'getSetting']),
-            new TwigFunction('datedujourlong', [$this, 'dateDuJourLong']),
-            new TwigFunction('convertHeureEdt', [$this, 'convertHeureEdt']),
+            new TwigFunction('settings', $this->getSetting(...)),
         ];
     }
 
@@ -91,11 +79,6 @@ class AppExtension extends AbstractExtension
             Personnel::MCF, Personnel::PU => 'card-outline-primary',
             default => 'card-outline-info',
         };
-    }
-
-    public function age(CarbonInterface $dateNaissance): string
-    {
-        return (string) Carbon::instance($dateNaissance)->age;
     }
 
     public function bg(?bool $value): string
@@ -148,16 +131,6 @@ class AppExtension extends AbstractExtension
         }
 
         return mb_strtoupper($texte);
-    }
-
-    public function convertHeureEdt(?string $duree): string
-    {
-        return Constantes::TAB_HEURES[$duree];
-    }
-
-    public function dateDuJourLong(?string $locale): string
-    {
-        return Carbon::now()->locale($locale)->isoFormat('dddd Do MMMM YYYY');
     }
 
     public function setConfig(Configuration $config): void
@@ -218,11 +191,5 @@ class AppExtension extends AbstractExtension
     public function siretFormat(?string $number): ?string
     {
         return Tools::siretFormat($number);
-    }
-
-    public function timeAgo(CarbonInterface $date, string $locale = 'fr'): string
-    {
-        return $date->locale($locale)->diffForHumans(Carbon::now()->locale('fr'),
-            CarbonInterface::DIFF_RELATIVE_TO_NOW);
     }
 }

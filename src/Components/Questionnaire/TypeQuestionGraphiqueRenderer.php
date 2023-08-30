@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeQuestionGraphiqueRenderer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/01/2023 20:50
+ * @lastUpdate 02/08/2023 08:52
  */
 
 namespace App\Components\Questionnaire;
@@ -60,7 +60,7 @@ class TypeQuestionGraphiqueRenderer
 
     /**
      * @throws \Twig\Error\SyntaxError
-     * @throws \Twig\Error\RuntimeErrort
+     * @throws \Twig\Error\RuntimeError
      * @throws \Twig\Error\LoaderError
      */
     private function load(): TemplateWrapper

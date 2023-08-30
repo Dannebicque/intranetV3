@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/QuestQuestionnaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/01/2023 16:05
+ * @lastUpdate 02/08/2023 17:01
  */
 
 namespace App\Entity;
 
+use App\Components\Questionnaire\TypeDestinataire\Exterieur;
 use App\Entity\Traits\ConfigTrait;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\UuidTrait;
@@ -259,6 +260,21 @@ class QuestQuestionnaire extends BaseEntity
         $this->typeDestinataire = $typeDestinataire;
 
         return $this;
+    }
+
+    public function typeDestinataireLink(): ?string
+    {
+        if ($this->typeDestinataire === \App\Components\Questionnaire\TypeDestinataire\Etudiant::class) {
+            return 'etudiant';
+        }
+
+        if ($this->typeDestinataire === \App\Components\Questionnaire\TypeDestinataire\Personnel::class) {
+            return 'personnel';
+        }
+
+        if ($this->typeDestinataire === Exterieur::class) {
+            return 'exterieur';
+        }
     }
 
     public function isEnvoye(): ?bool

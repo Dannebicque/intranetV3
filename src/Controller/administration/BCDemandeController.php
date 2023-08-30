@@ -67,7 +67,7 @@ class BCDemandeController extends BaseController
             return $this->redirectToRoute('administration_bc_demande_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('administration/bc_demande/new.html.twig', [
+        return $this->render('administration/bc_demande/new.html.twig', [
             'bc_demande' => $bCDemande,
             'form' => $form,
         ]);
@@ -100,7 +100,7 @@ class BCDemandeController extends BaseController
 //            return $this->redirectToRoute('administration_bc_demande_index', [], Response::HTTP_SEE_OTHER);
 //        }
 
-        return $this->renderForm('administration/bc_demande/edit.html.twig', [
+        return $this->render('administration/bc_demande/edit.html.twig', [
             'bc_demande' => $bCDemande,
             //  'form' => $form,
         ]);

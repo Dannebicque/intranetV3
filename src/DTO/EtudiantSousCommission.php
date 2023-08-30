@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/EtudiantSousCommission.php
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/EtudiantSousCommission.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 19:44
+ * @lastUpdate 02/08/2023 10:16
  */
 
 namespace App\DTO;
@@ -13,6 +13,7 @@ use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use App\Entity\Ue;
+use App\Enums\SemestreLienEnum;
 use function array_key_exists;
 use function count;
 use function in_array;
@@ -88,14 +89,21 @@ class EtudiantSousCommission
 
     public function calculDecision(): void
     {
+        $suivant = null;
+        foreach ($this->semestre->getSemestreLienDepart() as $sem) {
+            if ($sem->getSens() === SemestreLienEnum::SUIVANT) {
+                $suivant = $sem->getSemestreArrive();
+            }
+        }
+
         if (false === $this->hasPoleFaible() && ((true === $this->semestre->isOptPenaliteAbsence() &&
                     $this->moyenneSemestrePenalisee >= Constantes::SEUIL_MOYENNE) || (false === $this->semestre->isOptPenaliteAbsence() && $this->moyenneSemestre >= Constantes::SEUIL_MOYENNE))) {
             // semestre >=10 et UE >=8
             // todo: vérifier semestres rpécédents
             $this->decision = Constantes::SEMESTRE_VALIDE;
 
-            if (null !== $this->semestre->getSuivant()) {
-                $this->proposition = $this->semestre->getSuivant()->getLibelle();
+            if (null !== $suivant) {
+                $this->proposition = $suivant->getLibelle();
             } else {
                 $this->proposition = Constantes::PROPOSITION_INDEFINIE;
             }
@@ -116,8 +124,8 @@ class EtudiantSousCommission
 
                 if ($moyenneS >= 10) {
                     $this->decision = Constantes::SEMESTRE_VCA;
-                    if (null !== $this->semestre->getSuivant()) {
-                        $this->proposition = $this->semestre->getSuivant()->getLibelle();
+                    if (null !== $suivant) {
+                        $this->proposition = $suivant->getLibelle();
                     } else {
                         $this->proposition = Constantes::PROPOSITION_INDEFINIE;
                     }

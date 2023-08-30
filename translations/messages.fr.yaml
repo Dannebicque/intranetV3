@@ -329,6 +329,9 @@ adm:
     duplicate.annee.heading: 'Dupliquer un prévisionnel'
     index.heading: 'Liste des prévisionnels'
     new.heading: 'Création d''un Service Prévisionnel'
+    semestre.new.heading: 'Gestion du prévisionnel par semestre'
+    matiere.new.heading: 'Gestion du prévisionnel par matière'
+    personnel.new.heading: 'Gestion du prévisionnel par enseignant'
     supprimer.annee.heading: 'Supprimer le prévisionnel pour une année'
   previsionnels: Prévisionnels
   programme.pedagogique: 'Programmes Pédagogiques'
@@ -965,13 +968,15 @@ choice:
   oui: Oui
 
 choisir: Choisir
+choisir.semestre: 'Choisir un semestre'
+choisir.personnel: 'Choisir un enseignant'
 choisir.dabord.un.semestre: 'Choisir d''abord un semestre'
 choisir.dabord.une.matiere: 'Choisir d''abord une matière'
 choisir.export: 'Exporter des documents'
 choisir.heure.debut: 'Choisir l''heure du début'
 choisir.intervenant: 'Choisir l''intervenant'
 choisir.letudiant: 'Choisir l''étudiant'
-choisir.matiere: 'Choisir matière'
+choisir.matiere: 'Choisir une matière/ressource/SAÉ'
 choisir.un.semestre: 'Choisir un semestre'
 choisir.un.etudiant: 'Choisir un étudiant'
 choisir.une.annee-universitaire: 'Choisir une année universitaire'
@@ -1631,6 +1636,9 @@ preparer.sous-commission: 'Préparer la sous-commission'
 Présence: Présence
 
 previsionnel:
+  saisie.matiere.heading: 'Saisie par matière'
+  saisie.enseignant.heading: 'Saisie par enseignant'
+  saisie.semestre.heading: 'Saisie par semestre'
   add.success.flash: 'Prévisionnel ajouté avec succès'
   duplicate_annee.success.flash: 'Prévisionnel complet dupliqué avec succès'
   duplicate.success.flash: 'Prévisionnel dupliqué avec succès'

@@ -21,7 +21,7 @@
 {% block content %}
 
     {{ include('user/composants/_scolarite.html.twig', {scolarites:scolarites}) }}
-
+    {% set isApc = scolarite.semestre.diplome.isApc %}
     <div class="card">
         {% if edit == true %}
             <h4 class="card-title">{{ 'adm.scolarite.edit.heading'|trans({'%etudiant%': etudiant.displayPr}) }}</h4>
@@ -36,24 +36,61 @@
                 <div class="col-sm-12 col-md-6">{{ form_row(form.anneeUniversitaire) }}</div>
 
                 <div class="col-sm-12 col-md-4">{{ form_row(form.semestre) }}</div>
-                <div class="col-sm-12 col-md-4">{{ form_row(form.moyenne) }}</div>
+                {% if isApc == false %}
+                    <div class="col-sm-12 col-md-4">{{ form_row(form.moyenne) }}</div>
+                {% endif %}
                 <div class="col-sm-12 col-md-4">{{ form_row(form.nbAbsences) }}</div>
             </div>
 
 
             <div id="ues_semestre">
                 {% if scolarite != null and scolarite.semestre != null %}
-                    <div class="row">
-                        {% for ue in scolarite.semestre.ues %}
-                            <div class="col-sm-12 col-md-4">
-                                <div class="form-group">
-                                    <label for="ue_{{ ue.id }}" class="required">UE {{ ue.numeroue }}</label>
-                                    <input type="text" id="ue_{{ ue.id }}" name="ue_{{ ue.id }}" required="required"
-                                           class="form-control" value="{{ scolarite.moyennesUes[ue.id] is defined ?
-                                    scolarite.moyennesUes[ue.id].moyenne : '' }}">
+                    <div class="row mb-2">
+                        {% if isApc == false %}
+                            {% for ue in scolarite.semestre.ues %}
+                                <div class="col-sm-12 col-md-4">
+                                    <div class="form-group">
+                                        <label for="ue_{{ ue.id }}" class="required">UE {{ ue.numeroue }}</label>
+                                        <input type="text" id="ue_{{ ue.id }}" name="ue_{{ ue.id }}" required="required"
+                                               class="form-control" value="{{ scolarite.moyennesUes[ue.id] is defined ?
+                                        scolarite.moyennesUes[ue.id].moyenne : '' }}">
+                                    </div>
                                 </div>
-                            </div>
-                        {% endfor %}
+                            {% endfor %}
+                        {% else %}
+                            {% for ue in scolarite.semestre.ues %}
+                                <div class="col-sm-12 col-md-4">
+                                    <div class="form-group">
+                                        <label for="ue_{{ ue.id }}" class="required">Moyenne
+                                            UE {{ ue.numeroue }}</label>
+                                        <input type="text" id="ue_{{ ue.id }}" name="ue_{{ ue.id }}" required="required"
+                                               class="form-control" value="{{ scolarite.moyennesUes[ue.id] is defined ?
+                                        scolarite.moyennesUes[ue.id].moyenne : '' }}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-4">
+                                    <div class="form-group">
+                                        <label for="ue_decision_{{ ue.id }}" class="required">Décision
+                                            UE {{ ue.numeroue }}</label>
+                                        <select id="ue_decision_{{ ue.id }}" name="ue_decision_{{ ue.id }}"
+                                                required="required"
+                                                class="form-select" value="{{ scolarite.moyennesUes[ue.id] is defined ?
+                                        scolarite.moyennesUes[ue.id].moyenne : '' }}">
+                                            <option value="">Décision pour l'UE</option>
+                                            {% for dec in ueDecisions %}
+                                                <option value="{{ dec.value }}"
+                                                        {% if scolarite.moyennesUes[ue.id] is defined and scolarite.moyennesUes[ue.id].decision is defined and scolarite.moyennesUes[ue.id].decision == dec.value %}
+                                                    selected="selected"
+                                                        {% endif %}>
+                                                    {{ ('label.'~dec.value)|trans }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12 col-md-4">&nbsp;</div>
+                            {% endfor %}
+                        {% endif %}
                     </div>
                 {% else %}
                     <div class="alert alert-info">
@@ -67,6 +104,9 @@
                 </div>
                 <div class="col-sm-12 col-md-6">
                     {{ form_row(form.proposition) }}
+                </div>
+                <div class="col-sm-12">
+                    {{ form_row(form.commentaire) }}
                 </div>
             </div>
             {{ form_rest(form) }}

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/01/2023 16:14
+ * @lastUpdate 28/07/2023 15:47
  */
 
 namespace App\Entity;
@@ -90,19 +90,19 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     private ?File $photoFile = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Hrs>
+     * @var Collection<int, \App\Entity\Hrs>
      */
     #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: Hrs::class)]
     private Collection $hrs;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Previsionnel>
+     * @var Collection<int, \App\Entity\Previsionnel>
      */
     #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: Previsionnel::class)]
     private Collection $previsionnels;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Evaluation>
+     * @var Collection<int, \App\Entity\Evaluation>
      */
     #[ORM\OneToMany(mappedBy: 'personnelAuteur', targetEntity: Evaluation::class)]
     private Collection $evaluationsAuteur;
@@ -111,13 +111,13 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     private Collection $evaluationsAutorise;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ModificationNote>
+     * @var Collection<int, \App\Entity\ModificationNote>
      */
     #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: ModificationNote::class)]
     private Collection $modificationNotes;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\PersonnelDepartement>
+     * @var Collection<int, \App\Entity\PersonnelDepartement>
      */
     #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: PersonnelDepartement::class)]
     private Collection $personnelDepartements;
@@ -126,26 +126,26 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     private float $nbHeuresService = 192;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\CahierTexte>
+     * @var Collection<int, \App\Entity\CahierTexte>
      */
     #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: CahierTexte::class)]
     private Collection $cahierTextes;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Notification>
+     * @var Collection<int, \App\Entity\Notification>
      */
     #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: Notification::class)]
     #[ORM\OrderBy(value: ['created' => 'DESC'])]
     private Collection $notifications;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Message>
+     * @var Collection<int, \App\Entity\Message>
      */
     #[ORM\OneToMany(mappedBy: 'expediteur', targetEntity: Message::class)]
     private Collection $messages;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\MessageDestinatairePersonnel>
+     * @var Collection<int, \App\Entity\MessageDestinatairePersonnel>
      */
     #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: MessageDestinatairePersonnel::class)]
     private Collection $messageDestinatairePersonnels;
@@ -154,13 +154,13 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     private Collection $stagePeriodes;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\StageEtudiant>
+     * @var Collection<int, \App\Entity\StageEtudiant>
      */
     #[ORM\OneToMany(mappedBy: 'tuteurUniversitaire', targetEntity: StageEtudiant::class)]
     private Collection $stageEtudiants;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Alternance>
+     * @var Collection<int, \App\Entity\Alternance>
      */
     #[ORM\OneToMany(mappedBy: 'tuteurUniversitaire', targetEntity: Alternance::class)]
     private Collection $alternances;
@@ -172,33 +172,25 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     private ?string $couleur = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\EmpruntPersonnel>
+     * @var Collection<int, \App\Entity\EmpruntPersonnel>
      */
     #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: EmpruntPersonnel::class)]
     private Collection $emprunts;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Departement>
+     * @var Collection<int, \App\Entity\Departement>
      */
     #[ORM\OneToMany(mappedBy: 'respMateriel', targetEntity: Departement::class)]
     private Collection $departements;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\QuestionnaireQuestion>
-     *
-     * @deprecated
+     * @var Collection<int, QuestQuestionnaire>
      */
-    #[ORM\OneToMany(mappedBy: 'auteur', targetEntity: QuestionnaireQuestion::class)]
+    #[ORM\OneToMany(mappedBy: 'auteur', targetEntity: QuestQuestionnaire::class)]
     private Collection $quizzQuestions;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ArticleLikePersonnel>
-     */
-    #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: ArticleLikePersonnel::class)]
-    private Collection $articlesLike;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\DocumentFavoriPersonnel>
+     * @var Collection<int, \App\Entity\DocumentFavoriPersonnel>
      */
     #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: DocumentFavoriPersonnel::class)]
     private Collection $documentsFavoris;
@@ -207,13 +199,13 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     private Collection $projetPeriodes;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\MaterielCommun>
+     * @var Collection<int, \App\Entity\MaterielCommun>
      */
     #[ORM\OneToMany(mappedBy: 'contact', targetEntity: MaterielCommun::class)]
     private Collection $materielCommuns;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\MaterielCommunPret>
+     * @var Collection<int, \App\Entity\MaterielCommunPret>
      */
     #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: MaterielCommunPret::class)]
     private Collection $materielCommunPrets;
@@ -222,13 +214,7 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     private ?string $signatureElectronique = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\CovidAttestationPersonnel>
-     */
-    #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: CovidAttestationPersonnel::class)]
-    private Collection $covidAttestationPersonnels;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\AbsenceEtatAppel>
+     * @var Collection<int, \App\Entity\AbsenceEtatAppel>
      */
     #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: AbsenceEtatAppel::class)]
     private Collection $absenceEtatAppels;
@@ -240,35 +226,27 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     private ?string $configuration = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<\App\Entity\BCDemande>
+     * @var Collection<\App\Entity\BCDemande>
      */
     #[ORM\OneToMany(mappedBy: 'responsable', targetEntity: BCDemande::class)]
     private Collection $bcDemandesResponsable;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<\App\Entity\BCDemande>
+     * @var Collection<\App\Entity\BCDemande>
      */
     #[ORM\OneToMany(mappedBy: 'signataireCompta', targetEntity: BCDemande::class)]
     private Collection $bcDemandeSignataireCompta;
     /**
-     * @var \Doctrine\Common\Collections\Collection<\App\Entity\BCServiceFait>
+     * @var Collection<\App\Entity\BCServiceFait>
      */
     #[ORM\OneToMany(mappedBy: 'receptionnisteMigo', targetEntity: BCServiceFait::class)]
     private Collection $bcServiceFaitReceptionniste;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<\App\Entity\BCServiceFait>
+     * @var Collection<\App\Entity\BCServiceFait>
      */
     #[ORM\OneToMany(mappedBy: 'responsableSignataire', targetEntity: BCServiceFait::class)]
     private Collection $bcServiceFaitResponsableSignataire;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\QuestionnairePersonnel>
-     *
-     * @deprecated Use QuestPersonnel
-     */
-    #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: QuestionnairePersonnel::class)]
-    private Collection $quizzPersonnels;
 
     #[ORM\OneToMany(mappedBy: 'responsable', targetEntity: PlanCours::class)]
     private Collection $planCours;
@@ -308,18 +286,15 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         $this->departements = new ArrayCollection();
         $this->quizzQuestions = new ArrayCollection();
         $this->emprunts = new ArrayCollection();
-        $this->articlesLike = new ArrayCollection();
         $this->documentsFavoris = new ArrayCollection();
         $this->projetPeriodes = new ArrayCollection();
         $this->materielCommuns = new ArrayCollection();
         $this->materielCommunPrets = new ArrayCollection();
-        $this->covidAttestationPersonnels = new ArrayCollection();
         $this->absenceEtatAppels = new ArrayCollection();
         $this->bcDemandesResponsable = new ArrayCollection();
         $this->bcDemandeSignataireCompta = new ArrayCollection();
         $this->bcServiceFaitReceptionniste = new ArrayCollection();
         $this->bcServiceFaitResponsableSignataire = new ArrayCollection();
-        $this->quizzPersonnels = new ArrayCollection();
         $this->planCours = new ArrayCollection();
         $this->planCoursHistoriqueEdts = new ArrayCollection();
         $this->edtCelcats = new ArrayCollection();
@@ -1022,7 +997,7 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     }
 
     /**
-     * @return Collection|QuestionnaireQuestion[]
+     * @return Collection|QuestQuestionnaire[]
      *
      * @deprecated
      */
@@ -1032,7 +1007,7 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     }
 
     /** @deprecated */
-    public function addQuizzQuestion(QuestionnaireQuestion $quizzQuestion): self
+    public function addQuizzQuestion(QuestQuestionnaire $quizzQuestion): self
     {
         if (!$this->quizzQuestions->contains($quizzQuestion)) {
             $this->quizzQuestions[] = $quizzQuestion;
@@ -1043,7 +1018,7 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     }
 
     /** @deprecated */
-    public function removeQuizzQuestion(QuestionnaireQuestion $quizzQuestion): self
+    public function removeQuizzQuestion(QuestQuestionnaire $quizzQuestion): self
     {
         if ($this->quizzQuestions->contains($quizzQuestion)) {
             $this->quizzQuestions->removeElement($quizzQuestion);
@@ -1081,37 +1056,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
             // set the owning side to null (unless already changed)
             if ($emprunt->getPersonnel() === $this) {
                 $emprunt->setPersonnel(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|ArticleLikePersonnel[]
-     */
-    public function getArticlesLike(): Collection
-    {
-        return $this->articlesLike;
-    }
-
-    public function addArticlesLike(ArticleLikePersonnel $articlesLike): self
-    {
-        if (!$this->articlesLike->contains($articlesLike)) {
-            $this->articlesLike[] = $articlesLike;
-            $articlesLike->setPersonnel($this);
-        }
-
-        return $this;
-    }
-
-    public function removeArticlesLike(ArticleLikePersonnel $articlesLike): self
-    {
-        if ($this->articlesLike->contains($articlesLike)) {
-            $this->articlesLike->removeElement($articlesLike);
-            // set the owning side to null (unless already changed)
-            if ($articlesLike->getPersonnel() === $this) {
-                $articlesLike->setPersonnel(null);
             }
         }
 
@@ -1247,37 +1191,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     public function setSignatureElectronique(?string $signatureElectronique): self
     {
         $this->signatureElectronique = $signatureElectronique;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|CovidAttestationPersonnel[]
-     */
-    public function getCovidAttestationPersonnels(): Collection
-    {
-        return $this->covidAttestationPersonnels;
-    }
-
-    public function addCovidAttestationPersonnel(CovidAttestationPersonnel $covidAttestationPersonnel): self
-    {
-        if (!$this->covidAttestationPersonnels->contains($covidAttestationPersonnel)) {
-            $this->covidAttestationPersonnels[] = $covidAttestationPersonnel;
-            $covidAttestationPersonnel->setPersonnel($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCovidAttestationPersonnel(CovidAttestationPersonnel $covidAttestationPersonnel): self
-    {
-        if ($this->covidAttestationPersonnels->contains($covidAttestationPersonnel)) {
-            $this->covidAttestationPersonnels->removeElement($covidAttestationPersonnel);
-            // set the owning side to null (unless already changed)
-            if ($covidAttestationPersonnel->getPersonnel() === $this) {
-                $covidAttestationPersonnel->setPersonnel(null);
-            }
-        }
 
         return $this;
     }
@@ -1466,40 +1379,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     public function isDeleted(): ?bool
     {
         return $this->deleted;
-    }
-
-    /**
-     * @return Collection<int, QuestionnairePersonnel>
-     *
-     *     @deprecated
-     */
-    public function getQuizzPersonnels(): Collection
-    {
-        return $this->quizzPersonnels;
-    }
-
-    /** @deprecated */
-    public function addQuizzPersonnel(QuestionnairePersonnel $quizzPersonnel): self
-    {
-        if (!$this->quizzPersonnels->contains($quizzPersonnel)) {
-            $this->quizzPersonnels[] = $quizzPersonnel;
-            $quizzPersonnel->setPersonnel($this);
-        }
-
-        return $this;
-    }
-
-    /** @deprecated */
-    public function removeQuizzPersonnel(QuestionnairePersonnel $quizzPersonnel): self
-    {
-        if ($this->quizzPersonnels->removeElement($quizzPersonnel)) {
-            // set the owning side to null (unless already changed)
-            if ($quizzPersonnel->getPersonnel() === $this) {
-                $quizzPersonnel->setPersonnel(null);
-            }
-        }
-
-        return $this;
     }
 
     /**

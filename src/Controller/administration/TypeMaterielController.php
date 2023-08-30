@@ -70,7 +70,7 @@ class TypeMaterielController extends BaseController
 
         return $this->render('administration/type_materiel/new.html.twig', [
             'type_materiel' => $typeMateriel,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -101,7 +101,7 @@ class TypeMaterielController extends BaseController
 
         return $this->render('administration/type_materiel/edit.html.twig', [
             'type_materiel' => $typeMateriel,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

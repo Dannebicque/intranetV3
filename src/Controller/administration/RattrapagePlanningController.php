@@ -17,7 +17,8 @@ use App\Entity\Diplome;
 use App\Entity\Rattrapage;
 use App\Repository\RattrapageRepository;
 use App\Utils\Tools;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Exception;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -79,11 +80,11 @@ class RattrapagePlanningController extends BaseController
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     #[Route(path: '/change/{uuid}/{type}', name: 'administration_rattrapage_planning_change', requirements: ['type' => 'date|heure|salle'], options: ['expose' => true], methods: 'POST')]
-    #[ParamConverter('rattrapage', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function change(Request $request, Rattrapage $rattrapage, $type): Response
+    public function change(Request $request, #[MapEntity(mapping: ['uuid' => 'uuid'])]
+    Rattrapage                     $rattrapage, string $type): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $rattrapage->getEtudiant()?->getSemestre());
         $data = $request->request->get('data');
@@ -106,10 +107,10 @@ class RattrapagePlanningController extends BaseController
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     #[Route(path: '/update_global/{type}/{diplome}', name: 'administration_rattrapage_update_global', requirements: ['type' => 'salle|heure|date'], options: ['expose' => true], methods: 'POST')]
-    public function updateGlobal(Request $request, RattrapageRepository $rattrapageRepository, $type, Diplome $diplome): Response
+    public function updateGlobal(Request $request, RattrapageRepository $rattrapageRepository, string $type, Diplome $diplome): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $diplome);
         $valeur = $request->request->get('valeur');

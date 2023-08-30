@@ -83,7 +83,7 @@ class PpnController extends BaseController
 
         return $this->render('structure/ppn/new.html.twig', [
             'ppn' => $ppn,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -112,7 +112,7 @@ class PpnController extends BaseController
 
         return $this->render('structure/ppn/edit.html.twig', [
             'ppn' => $ppn,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

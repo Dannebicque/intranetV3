@@ -1,9 +1,16 @@
 <?php
+/*
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Command/MessagesQualiteCommand.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 02/08/2023 08:45
+ */
 
 namespace App\Command;
 
 use App\Classes\Mail\MailerFromTwig;
-use App\Repository\QuestionnaireQualiteRepository;
+use App\Repository\QuestQuestionnaireRepository;
 use DateTime;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -17,7 +24,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class MessagesQualiteCommand extends Command
 {
-    public function __construct(protected QuestionnaireQualiteRepository $questionnaireQualiteRepository, protected MailerFromTwig $mailer)
+    public function __construct(protected QuestQuestionnaireRepository $questionnaireQualiteRepository, protected MailerFromTwig $mailer)
     {
         parent::__construct();
     }
@@ -40,7 +47,7 @@ class MessagesQualiteCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $nbMessages = 0;
         $questionnaires = $this->questionnaireQualiteRepository->findInDate((new DateTime())->modify('+2 days')); // tous les questionnaires dans deux jours
-        /** @var \App\Entity\QuestionnaireQualite $questionnaire */
+        /** @var \App\Entity\QuestQuestionnaire $questionnaire */
         foreach ($questionnaires as $questionnaire) {
             $dests = [
                 $questionnaire->getSemestre()?->getDiplome()?->getAssistantDiplome()?->getMailUniv(),

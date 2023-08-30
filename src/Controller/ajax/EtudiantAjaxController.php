@@ -12,7 +12,7 @@ namespace App\Controller\ajax;
 use App\Classes\Etudiant\EtudiantUpdate;
 use App\Controller\BaseController;
 use App\Entity\Etudiant;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,8 +25,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class EtudiantAjaxController extends BaseController
 {
     #[Route(path: '/edit/uuid/{uuid}', name: 'etudiant_ajax_edit_uuid', options: ['expose' => true])]
-    #[ParamConverter('etudiant', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function editUuid(EtudiantUpdate $etudiantUpdate, Request $request, Etudiant $etudiant): JsonResponse
+    public function editUuid(EtudiantUpdate $etudiantUpdate, Request $request, #[MapEntity(mapping: ['uuid' => 'uuid'])]
+    Etudiant                                $etudiant): JsonResponse
     {
         return $this->update($request, $etudiantUpdate, $etudiant);
     }

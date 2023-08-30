@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/QuestionnaireController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2023 20:58
+ * @lastUpdate 02/08/2023 08:50
  */
 
 namespace App\Controller\questionnaire;
@@ -21,7 +21,6 @@ use App\Utils\JsonRequest;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -39,11 +38,11 @@ class QuestionnaireController extends AbstractController
     }
 
     #[Route('/enquete-qualite/{uuidQuestionnaire}/{uuid}', name: 'enquete_questionnaire_qualite_index')]
-    #[ParamConverter('questQuestionnaire', options: ['mapping' => ['uuidQuestionnaire' => 'uuid']])]
     public function afficheQuestionnaire(
         Request $request,
         Questionnaire $questionnaire,
         QuestionnaireRegistry $questionnaireRegistry,
+        #[\Symfony\Bridge\Doctrine\Attribute\MapEntity(mapping: ['uuidQuestionnaire' => 'uuid'])]
         QuestQuestionnaire $questQuestionnaire,
         string $uuid
     ): Response {
@@ -83,10 +82,10 @@ class QuestionnaireController extends AbstractController
     }
 
     #[Route('/enquete-qualite/complet/{uuidQuestionnaire}/{uuid}', name: 'enquete_questionnaire_qualite_complet')]
-    #[ParamConverter('questQuestionnaire', options: ['mapping' => ['uuidQuestionnaire' => 'uuid']])]
     public function complet(
         QuestionnaireRegistry $questionnaireRegistry,
         MailerFromTwig $myMailer,
+        #[\Symfony\Bridge\Doctrine\Attribute\MapEntity(mapping: ['uuidQuestionnaire' => 'uuid'])]
         QuestQuestionnaire $questQuestionnaire,
         string $uuid
     ): Response {
@@ -113,9 +112,9 @@ class QuestionnaireController extends AbstractController
      * @throws \JsonException
      */
     #[Route(path: '/enquete-qualite/api/ajax/reponse/{uuidQuestionnaire}/{uuid}', name: 'api_questionnaire_qualite_ajax_reponse', options: ['expose' => true])]
-    #[ParamConverter('questQuestionnaire', options: ['mapping' => ['uuidQuestionnaire' => 'uuid']])]
     public function sauvegardeReponse(
         QuestionnaireRegistry $questionnaireRegistry,
+        #[\Symfony\Bridge\Doctrine\Attribute\MapEntity(mapping: ['uuidQuestionnaire' => 'uuid'])]
         QuestQuestionnaire $questQuestionnaire,
         string $uuid,
         Request $request
@@ -144,9 +143,9 @@ class QuestionnaireController extends AbstractController
      * @throws \JsonException
      */
     #[Route(path: '/enquete-qualite/api/ajax/reponse-txt/{uuidQuestionnaire}/{uuid}', name: 'api_questionnaire_qualite_ajax_reponse_txt', options: ['expose' => true])]
-    #[ParamConverter('questQuestionnaire', options: ['mapping' => ['uuidQuestionnaire' => 'uuid']])]
     public function sauvegardeReponseTxt(
         QuestionnaireRegistry $questionnaireRegistry,
+        #[\Symfony\Bridge\Doctrine\Attribute\MapEntity(mapping: ['uuidQuestionnaire' => 'uuid'])]
         QuestQuestionnaire $questQuestionnaire,
         string $uuid,
         Request $request

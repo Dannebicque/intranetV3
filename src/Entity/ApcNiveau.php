@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcNiveau.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/08/2022 19:30
+ * @lastUpdate 28/07/2023 15:35
  */
 
 namespace App\Entity;
@@ -15,7 +15,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use JetBrains\PhpStorm\Deprecated;
 
 #[ORM\Entity(repositoryClass: ApcNiveauRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -37,7 +36,9 @@ class ApcNiveau extends BaseEntity
     private ?int $ordre = null;
 
     #[ORM\ManyToOne(targetEntity: Annee::class, inversedBy: 'apcNiveaux')]
-    #[Deprecated("Ne pas utiliser ici. Eviter les liens APC/Structure et pas de sens avec la structiure en plusieurs diplôme => impliquerait plusieurs années. Filter par numéro d'ordre...")]
+    /**
+     * @deprecated("Ne pas utiliser ici. Eviter les liens APC/Structure et pas de sens avec la structiure en plusieurs diplôme => impliquerait plusieurs années. Filter par numéro d'ordre...")
+     */
     private ?Annee $annee = null;
 
     /**
@@ -86,13 +87,13 @@ class ApcNiveau extends BaseEntity
         return $this;
     }
 
-    #[Deprecated("Ne pas utiliser ici. Eviter les liens APC/Structure et pas de sens avec la structiure en plusieurs diplôme => impliquerait plusieurs années. Filter par numéro d'ordre...")]
+    /** @deprecated("Ne pas utiliser ici. Eviter les liens APC/Structure et pas de sens avec la structiure en plusieurs diplôme => impliquerait plusieurs années. Filter par numéro d'ordre...") */
     public function getAnnee(): ?Annee
     {
         return $this->annee;
     }
 
-    #[Deprecated("Ne pas utiliser ici. Eviter les liens APC/Structure et pas de sens avec la structiure en plusieurs diplôme => impliquerait plusieurs années. Filter par numéro d'ordre...")]
+    /** @deprecated("Ne pas utiliser ici. Eviter les liens APC/Structure et pas de sens avec la structiure en plusieurs diplôme => impliquerait plusieurs années. Filter par numéro d'ordre...") */
     public function setAnnee(?Annee $annee): self
     {
         $this->annee = $annee;

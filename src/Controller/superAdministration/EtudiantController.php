@@ -94,7 +94,7 @@ class EtudiantController extends BaseController
 
         return $this->render('super-administration/etudiant/edit.html.twig', [
             'etudiant' => $etudiant,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 }

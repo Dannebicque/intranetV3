@@ -46,6 +46,7 @@ parameters:
   iconApogee: '%env(resolve:ICON_APOGEE)%' #fas fa-chart-pie'
   iconCompta: '%env(resolve:ICON_COMPTA)%' #fas fa-comments-dollar'
   api_key: '%env(resolve:API_KEY)%'
+  api_edu_sign: '%env(resolve:API_EDUSIGN)%'
 
 
 services:

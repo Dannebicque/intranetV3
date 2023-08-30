@@ -20,7 +20,8 @@ use App\Event\RattrapageEvent;
 use App\Repository\AbsenceRepository;
 use App\Repository\RattrapageRepository;
 use App\Table\RattrapageTableType;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use JsonException;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -30,7 +31,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 class RattrapageController extends BaseController
 {
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     #[Route('/semestre/{semestre}', name: 'administration_rattrapage_semestre_index', options: ['expose' => true])]
     public function index(
@@ -106,8 +107,8 @@ class RattrapageController extends BaseController
     }
 
     #[Route(path: '/change-etat/{uuid}/{etat}', name: 'administration_rattrapage_change_etat', options: ['expose' => true], methods: 'GET')]
-    #[ParamConverter('rattrapage', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function accepte(EventDispatcherInterface $eventDispatcher, Rattrapage $rattrapage, string $etat): Response
+    public function accepte(EventDispatcherInterface $eventDispatcher, #[MapEntity(mapping: ['uuid' => 'uuid'])]
+    Rattrapage                                       $rattrapage, string $etat): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $rattrapage->getEtudiant()?->getSemestre());
         if (Rattrapage::DEMANDE_ACCEPTEE === $etat || Rattrapage::DEMANDE_REFUSEE === $etat) {
@@ -142,8 +143,8 @@ class RattrapageController extends BaseController
     }
 
     #[Route(path: '/{uuid}', name: 'administration_rattrapage_delete', options: ['expose' => true], methods: 'DELETE')]
-    #[ParamConverter('rattrapage', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function delete(Request $request, Rattrapage $rattrapage): Response
+    public function delete(Request $request, #[MapEntity(mapping: ['uuid' => 'uuid'])]
+    Rattrapage                     $rattrapage): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $rattrapage->getEtudiant()?->getSemestre());
         $id = $rattrapage->getUuidString();

@@ -16,8 +16,8 @@ use App\Entity\Entreprise;
 use App\Entity\StageEtudiant;
 use App\Entity\StagePeriode;
 use App\Repository\StageEtudiantRepository;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use function array_key_exists;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -28,8 +28,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class StageEntrepriseController extends BaseController
 {
     #[Route(path: '/{uuid}', name: 'administration_stage_entreprise_index')]
-    #[ParamConverter('stagePeriode', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function index(StageEtudiantRepository $stageEtudiantRepository, StagePeriode $stagePeriode): Response
+    public function index(StageEtudiantRepository $stageEtudiantRepository, #[MapEntity(mapping: ['uuid' => 'uuid'])]
+    StagePeriode                                  $stagePeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
         $entreprises = $stageEtudiantRepository->findEntreprisesByPeriode($stagePeriode);
@@ -62,10 +62,10 @@ class StageEntrepriseController extends BaseController
     }
 
     #[Route(path: '/{uuid}/export.{_format}', name: 'administration_stage_entreprise_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
-    #[ParamConverter('stagePeriode', options: ['mapping' => ['uuid' => 'uuid']])]
     public function export(
         MySerializer $mySerializer,
-        StageEtudiantRepository $stageEtudiantRepository, MyExport $myExport, StagePeriode $stagePeriode, string $_format): Response
+        StageEtudiantRepository $stageEtudiantRepository, MyExport $myExport, #[MapEntity(mapping: ['uuid' => 'uuid'])]
+        StagePeriode            $stagePeriode, string $_format): Response
     {
         // feature: Développer de manière général en super Admin...
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());

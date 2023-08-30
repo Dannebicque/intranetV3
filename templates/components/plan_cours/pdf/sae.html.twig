@@ -72,7 +72,12 @@
 
     <h3>DESCRIPTION SAÉ</h3>
     <h4>Responsable de la SAÉ :</h4>
-    {{ pc.intervenant != null ? pc.intervenant.display : '-' }}
+    {{ pc.responsable != null ? pc.responsable.display : '-' }}
+
+    <h4>Intervenants de la SAÉ :</h4>
+    {% for intervenant in pc.intervenants %}
+        {{ intervenant.display }}{% if not loop.last %}, {% endif %}
+    {% endfor %}
 
     <h4>Description et objectifs de la SAÉ :</h4>
     <p style="text-align: justify">{{ pc.description|raw }}</p>

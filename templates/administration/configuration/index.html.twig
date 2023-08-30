@@ -44,17 +44,17 @@
                 <div class="card-body">
                     <!-- Nav tabs -->
                     <ul class="nav nav-tabs">
-                        {% for diplome in user_data.diplomes %}
+                        {% for diplome in user_data.diplomes|filter(diplome => diplome.actif) %}
                             <li class="nav-item">
                                 <a class="nav-link {% if loop.first %} active{% endif %}" data-bs-toggle="tab"
-                                   href="#diplome{{ diplome.id }}">{{ diplome.libelle }}</a>
+                                   href="#diplome{{ diplome.id }}">{{ diplome.displayCourt }}</a>
                             </li>
                         {% endfor %}
                     </ul>
 
                     <!-- Tab panes -->
                     <div class="tab-content">
-                        {% for diplome in user_data.diplomes %}
+                        {% for diplome in user_data.diplomes|filter(diplome => diplome.actif) %}
                             <div class="tab-pane {% if loop.first %}fade active show{% endif %}"
                                  id="diplome{{ diplome.id }}">
                                 {{ include('administration/configuration/_diplome.html.twig') }}

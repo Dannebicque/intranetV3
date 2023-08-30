@@ -20,6 +20,7 @@ use App\Entity\Semestre;
 use App\Exception\DiplomeNotFoundException;
 use App\Form\GroupeType;
 use App\Repository\GroupeRepository;
+use JsonException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -29,7 +30,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class GroupeController extends BaseController
 {
     /**
-     * @throws \App\Exception\DiplomeNotFoundException
+     * @throws DiplomeNotFoundException
      */
     #[Route(path: '/{semestre}', name: 'administration_groupe_index', requirements: ['semestre' => '\d+'], methods: ['GET', 'POST'])]
     public function index(Semestre $semestre): Response
@@ -53,7 +54,7 @@ class GroupeController extends BaseController
     }
 
     /**
-     * @throws \App\Exception\DiplomeNotFoundException
+     * @throws DiplomeNotFoundException
      */
     #[Route(path: '/genere-groupes/{semestre}', name: 'administration_groupe_semestre_genere', requirements: ['semestre' => '\d+'], methods: ['POST'])]
     public function genereGroupes(
@@ -78,7 +79,7 @@ class GroupeController extends BaseController
     }
 
     /**
-     * @throws \App\Exception\DiplomeNotFoundException
+     * @throws DiplomeNotFoundException
      */
     #[Route(path: '/liste/{semestre}', name: 'administration_groupe_liste_semestre', options: ['expose' => true], methods: ['GET'])]
     public function listeSemestre(
@@ -115,7 +116,7 @@ class GroupeController extends BaseController
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     #[Route(path: '/{semestre}/export.{_format}', name: 'administration_groupe_export', requirements: ['_format' => 'csv|xlsx|pdf'], options: ['expose' => true], methods: 'GET')]
     public function export(
@@ -148,7 +149,7 @@ class GroupeController extends BaseController
     }
 
     /**
-     * @throws \App\Exception\DiplomeNotFoundException
+     * @throws DiplomeNotFoundException
      */
     #[Route(path: '/new/{semestre}', name: 'administration_groupe_new', options: ['expose' => true], methods: [
         'GET',
@@ -173,7 +174,7 @@ class GroupeController extends BaseController
             'groupe' => $groupe,
             'semestre' => $semestre,
             'diplome' => $diplome,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -210,7 +211,7 @@ class GroupeController extends BaseController
     }
 
     /**
-     * @throws \App\Exception\DiplomeNotFoundException
+     * @throws DiplomeNotFoundException
      */
     private function getDiplomeFromSemestre(Semestre $semestre): Diplome
     {

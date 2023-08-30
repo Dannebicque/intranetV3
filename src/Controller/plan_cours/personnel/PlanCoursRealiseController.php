@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/plan_cours/personnel/PlanCoursRealiseController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/12/2022 12:09
+ * @lastUpdate 25/07/2023 22:22
  */
 
 namespace App\Controller\plan_cours\personnel;
@@ -34,7 +34,7 @@ class PlanCoursRealiseController extends AbstractController
             ]
         );
 
-        return $this->renderForm('plan_cours/personnel/realise/index.html.twig', [
+        return $this->render('plan_cours/personnel/realise/index.html.twig', [
             'form' => $form,
         ]);
     }

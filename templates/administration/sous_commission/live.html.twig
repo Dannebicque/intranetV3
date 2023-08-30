@@ -165,7 +165,7 @@
                             <td>
 
                                             <a href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="{{ etudiant.display }}">
-                                                {{ myEtudiant.decision|styleDecision }}
+                                                {{ myEtudiant.decision|styleDecisionSemestre }}
                                             </a>
 
                             </td>
@@ -197,7 +197,7 @@
                                          {{ myEtudiant.scolarite[sem.ordreLmd].moyenne|styleMoyenne }}
                                     </td>
                                     <td>
-                                         {{ myEtudiant.scolarite[sem.ordreLmd].decision|styleDecision }}
+                                        {{ myEtudiant.scolarite[sem.ordreLmd].decision|styleDecisionSemestre }}
                                     </td>
                                 {% else %}
                                     <td> -</td>

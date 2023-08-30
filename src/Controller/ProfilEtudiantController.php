@@ -27,7 +27,7 @@ use App\Repository\ScolariteRepository;
 use App\Repository\StageEtudiantRepository;
 use App\Repository\UeRepository;
 use Exception;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -41,8 +41,8 @@ use Symfony\UX\Chartjs\Model\Chart;
 class ProfilEtudiantController extends BaseController
 {
     #[Route(path: '/profil/{slug}/timeline', name: 'profil_etudiant_timeline')]
-    #[ParamConverter('etudiant', options: ['mapping' => ['slug' => 'slug']])]
-    public function timeline(Etudiant $etudiant): Response
+    public function timeline(#[MapEntity(mapping: ['slug' => 'slug'])]
+                             Etudiant $etudiant): Response
     {
         if (!($this->isGranted('ROLE_PERMANENT') or $this->getUser()->getId() === $etudiant->getId())) {
             throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');
@@ -54,8 +54,8 @@ class ProfilEtudiantController extends BaseController
     }
 
     #[Route(path: '/profil/{slug}/actions', name: 'profil_etudiant_action')]
-    #[ParamConverter('etudiant', options: ['mapping' => ['slug' => 'slug']])]
-    public function actions(DepartementRepository $departementRepository, Etudiant $etudiant): Response
+    public function actions(DepartementRepository $departementRepository, #[MapEntity(mapping: ['slug' => 'slug'])]
+    Etudiant                                      $etudiant): Response
     {
         if (!($this->isGranted('ROLE_PERMANENT'))) {
             throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');
@@ -68,8 +68,8 @@ class ProfilEtudiantController extends BaseController
     }
 
     #[Route(path: '/profil/{slug}/scolarite', name: 'profil_etudiant_scolarite')]
-    #[ParamConverter('etudiant', options: ['mapping' => ['slug' => 'slug']])]
-    public function scolarite(ScolariteRepository $scolariteRepository, Etudiant $etudiant): Response
+    public function scolarite(ScolariteRepository $scolariteRepository, #[MapEntity(mapping: ['slug' => 'slug'])]
+    Etudiant                                      $etudiant): Response
     {
         if (!($this->isGranted('ROLE_PERMANENT') or $this->getUser()->getId() === $etudiant->getId())) {
             throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');
@@ -84,12 +84,12 @@ class ProfilEtudiantController extends BaseController
     }
 
     #[Route(path: '/profil/{slug}/notes', name: 'profil_etudiant_notes')]
-    #[ParamConverter('etudiant', options: ['mapping' => ['slug' => 'slug']])]
     public function notes(
         NotesTri $notesTri,
         TypeMatiereManager $typeMatiereManager,
         ChartBuilderInterface $chartBuilder,
         EtudiantNotes $etudiantNotes,
+        #[MapEntity(mapping: ['slug' => 'slug'])]
         Etudiant $etudiant
     ): Response {
         if (!($this->isGranted('ROLE_PERMANENT') or $this->getUser()->getId() === $etudiant->getId())) {
@@ -157,7 +157,6 @@ class ProfilEtudiantController extends BaseController
     }
 
     #[Route(path: '/profil/apc_notes/ancien_semestre', name: 'profil_etudiant_apc_ancien_semestre', options: ['expose' => true])]
-    #[ParamConverter('etudiant', options: ['mapping' => ['slug' => 'slug']])]
     public function apcNotesAncienSemestre(
         Request $request,
         UeRepository $ueRepository,
@@ -209,7 +208,6 @@ class ProfilEtudiantController extends BaseController
     }
 
     #[Route(path: '/profil/{slug}/apc_notes', name: 'profil_etudiant_apc')]
-    #[ParamConverter('etudiant', options: ['mapping' => ['slug' => 'slug']])]
     public function apcNotes(
         UeRepository $ueRepository,
         ScolariteRepository $scolariteRepository,
@@ -218,6 +216,7 @@ class ProfilEtudiantController extends BaseController
         TypeMatiereManager $typeMatiereManager,
         EtudiantAbsences $etudiantAbsences,
         EtudiantNotes $etudiantNotes,
+        #[MapEntity(mapping: ['slug' => 'slug'])]
         Etudiant $etudiant
     ): Response {
         if (!($this->isGranted('ROLE_PERMANENT') or $this->getUser()->getId() === $etudiant->getId())) {
@@ -260,11 +259,11 @@ class ProfilEtudiantController extends BaseController
      * @throws Exception
      */
     #[Route(path: '/profil/{slug}/absences', name: 'profil_etudiant_absences')]
-    #[ParamConverter('etudiant', options: ['mapping' => ['slug' => 'slug']])]
     public function absences(
         TypeMatiereManager $typeMatiereManager,
         EtudiantAbsences $etudiantAbsences,
         StatsAbsences $statsAbsences,
+        #[MapEntity(mapping: ['slug' => 'slug'])]
         Etudiant $etudiant
     ): Response {
         if (!($this->isGranted('ROLE_PERMANENT') or $this->getUser()->getId() === $etudiant->getId())) {
@@ -307,10 +306,10 @@ class ProfilEtudiantController extends BaseController
     }
 
     #[Route(path: '/profil/{slug}/stages', name: 'profil_etudiant_stages')]
-    #[ParamConverter('etudiant', options: ['mapping' => ['slug' => 'slug']])]
     public function stages(
         StageEtudiantRepository $stageEtudiantRepository,
         AlternanceRepository $alternanceRepository,
+        #[MapEntity(mapping: ['slug' => 'slug'])]
         Etudiant $etudiant
     ): Response {
         if (!($this->isGranted('ROLE_PERMANENT') or $this->getUser()->getId() === $etudiant->getId())) {
@@ -331,8 +330,8 @@ class ProfilEtudiantController extends BaseController
     }
 
     #[Route(path: '/profil/{slug}/a-propos', name: 'profil_etudiant_about')]
-    #[ParamConverter('etudiant', options: ['mapping' => ['slug' => 'slug']])]
-    public function aPropos(Etudiant $etudiant): Response
+    public function aPropos(#[MapEntity(mapping: ['slug' => 'slug'])]
+                            Etudiant $etudiant): Response
     {
         if (!($this->isGranted('ROLE_PERMANENT') or $this->getUser()->getId() === $etudiant->getId())) {
             throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');
@@ -347,8 +346,8 @@ class ProfilEtudiantController extends BaseController
      * @throws \JsonException
      */
     #[Route(path: '/profil/{slug}/ajout-commentaire', name: 'profil_etudiant_ajout_commentaire', options: ['expose' => true])]
-    #[ParamConverter('etudiant', options: ['mapping' => ['slug' => 'slug']])]
-    public function ajoutCommentaire(Request $request, Etudiant $etudiant): Response
+    public function ajoutCommentaire(Request $request, #[MapEntity(mapping: ['slug' => 'slug'])]
+    Etudiant                                 $etudiant): Response
     {
         if (!($this->isGranted('ROLE_PERMANENT'))) {
             throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');

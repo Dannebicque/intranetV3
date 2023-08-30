@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Ppn.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/11/2022 11:08
+ * @lastUpdate 25/07/2023 13:56
  */
 
 namespace App\Entity;
@@ -15,7 +15,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use JetBrains\PhpStorm\Deprecated;
 
 #[ORM\Entity(repositoryClass: PpnRepository::class)]
 #[ORM\HasLifecycleCallbacks]

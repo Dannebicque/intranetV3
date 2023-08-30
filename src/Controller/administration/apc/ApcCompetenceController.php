@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcCompetenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/09/2022 09:23
+ * @lastUpdate 02/08/2023 08:55
  */
 
 namespace App\Controller\administration\apc;
@@ -48,7 +48,7 @@ class ApcCompetenceController extends BaseController
     #[Route(path: '/{diplome}/new', name: 'administration_apc_competence_new', methods: ['GET', 'POST'])]
     public function new(Request $request, Diplome $diplome): Response
     {
-        $apcComptence = new ApcCompetence($diplome);
+        $apcComptence = new ApcCompetence($diplome->getReferentiel());
         $form = $this->createForm(ApcCompetenceType::class, $apcComptence);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -61,7 +61,7 @@ class ApcCompetenceController extends BaseController
 
         return $this->render('apc/apc_competence/new.html.twig', [
             'apc_competence' => $apcComptence,
-            'form' => $form->createView(),
+            'form' => $form,
             'diplome' => $diplome,
         ]);
     }
@@ -84,12 +84,12 @@ class ApcCompetenceController extends BaseController
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.competence.edit.success.flash');
 
             return $this->redirectToRoute('administration_apc_competence_index',
-                ['diplome' => $apcCompetence->getDiplome()?->getId()]);//Todo: a revoir, pas de diplome
+                ['diplome' => $apcCompetence->getApcReferentiel()->getDiplomes()?->getId()]);//Todo: a revoir, pas de diplome
         }
 
         return $this->render('apc/apc_competence/edit.html.twig', [
             'apc_competence' => $apcCompetence,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

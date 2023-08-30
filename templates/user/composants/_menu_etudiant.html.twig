@@ -9,8 +9,7 @@
     <a class="nav-link changeprofil {% if onglet == 'notes' %}active{% endif %}"
        href="{{ path('profil_etudiant_notes', {slug: user.slug}) }}"
        id="profil-notes">{{ 'tab.notes'|trans }}</a>
-    {% if (user.semestre.diplome.typeDiplome.apc == true and (is_granted('ROLE_PERMANENT') or is_granted
-        ('ROLE_SCOLARITE') or is_granted('ROLE_SUPER_ADMIN'))) or (is_granted('ROLE_ETUDIANT') and user.semestre.optBilanSemestre == true ) %}
+    {% if (user.semestre.diplome.typeDiplome.apc == true and user.semestre.optBilanSemestre == true ) %}
         <a class="nav-link changeprofil {% if onglet == 'apc' %}active{% endif %}"
            href="{{ path('profil_etudiant_apc', {slug: user.slug}) }}"
            id="profil-notes-apc">{{ 'tab.apc_notes'|trans }}</a>

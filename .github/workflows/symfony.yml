@@ -10,13 +10,13 @@ on:
 #ES_HTTP_PORT: 9209
 jobs:
   symfony:
-    name: Symfony 5.2 (PHP ${{ matrix.php-versions }})
+    name: Symfony 6.2 (PHP ${{ matrix.php-versions }})
     # https://hub.docker.com/_/ubuntu/
     runs-on: ubuntu-latest
     services:
       # https://docs.docker.com/samples/library/mysql/
       mysql:
-        image: mysql:5.7
+        image: mysql:8.0
         env:
           MYSQL_ROOT_PASSWORD: root
         ports:
@@ -31,22 +31,15 @@ jobs:
     strategy:
       fail-fast: true
       matrix:
-        php-versions: [ '8.0' ]
+        php-versions: [ '8.2' ]
     steps:
-      # —— Check Elasticsearch 🔎 ——————————————————————————————————————————————
-      #      - name: Check the Elasticsearch connection from runner host
-      #        run: |
-      #          curl -fsSL "http://localhost:$ES_HTTP_PORT"
-      #          curl -fsSL "http://localhost:$ES_HTTP_PORT/_cluster/health?pretty"
-
-      # —— Setup Github actions 🐙 —————————————————————————————————————————————
       # https://github.com/actions/checkout (official)
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       # https://github.com/shivammathur/setup-php (community)
       - name: Setup PHP, extensions and composer with shivammathur/setup-php
-        uses: shivammathur/setup-php@v2
+        uses: shivammathur/setup-php@v3
         with:
           php-version: ${{ matrix.php-versions }}
           extensions: mbstring, xml, ctype, iconv, intl, pdo, pdo_mysql, dom, filter, gd, iconv, json, mbstring, pdo

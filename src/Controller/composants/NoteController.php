@@ -18,16 +18,17 @@ use App\Form\EvaluationType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * Class NotesController.
  */
 #[Route(path: '/composant')]
-#[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_PERMANENT')]
+#[IsGranted('ROLE_PERMANENT')]
 class NoteController extends BaseController
 {
     /**
-     * @throws \App\Exception\MatiereNotFoundException
+     * @throws MatiereNotFoundException
      */
     #[Route(path: '/edit-form-evaluation/{evaluation}/{source}', name: 'composant_edit_form_evaluation')]
     public function editFormEvaluation(TypeMatiereManager $typeMatiereManager, Request $request, Evaluation $evaluation, string $source): Response
@@ -68,7 +69,7 @@ class NoteController extends BaseController
 
         return $this->render('composants/_edit_eval.html.twig', [
             'evaluation' => $evaluation,
-            'form' => $form->createView(),
+            'form' => $form,
             'autorise' => $evaluation->getAutorise($this->getUser()->getId(), $this->dataUserSession),
             'source' => $source,
         ]);

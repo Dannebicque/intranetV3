@@ -21,7 +21,7 @@ use App\Repository\PersonnelDepartementRepository;
 use App\Repository\SemestreRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Exception;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -68,8 +68,8 @@ class UserAjaxController extends BaseController
     }
 
     #[Route(path: '/change-defaut/{departement}', name: 'user_change_departement_defaut', options: ['expose' => true])]
-    #[ParamConverter('departement', options: ['mapping' => ['departement' => 'uuid']])]
-    public function changeDepartementDefaut(PersonnelDepartementRepository $personnelDepartementRepository, Departement $departement): ?JsonResponse
+    public function changeDepartementDefaut(PersonnelDepartementRepository $personnelDepartementRepository, #[MapEntity(mapping: ['departement' => 'uuid'])]
+    Departement                                                            $departement): ?JsonResponse
     {
         if (null !== $this->getUser() && 'permanent' === $this->getUser()->getTypeUser()) {
             $pf = $personnelDepartementRepository->findByPersonnel($this->getUser());

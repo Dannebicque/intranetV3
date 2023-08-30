@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/TypeGroupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/10/2022 09:26
+ * @lastUpdate 25/07/2023 13:56
  */
 
 namespace App\Entity;
@@ -16,7 +16,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use JetBrains\PhpStorm\Deprecated;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: TypeGroupeRepository::class)]
@@ -55,8 +54,13 @@ class TypeGroupe extends BaseEntity
     #[ORM\ManyToMany(targetEntity: Semestre::class, inversedBy: 'typeGroupess')]
     private Collection $semestres;
 
+    //('ne plus utiliser, et avoir Diplome + semestre')]
+    /** @deprecated */
+    #[Groups(['type_groupe_administration'])] #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'typeGroupes')]
+    private ?Semestre $semestre;
+
     public function __construct(
-        #[Groups(['type_groupe_administration'])] #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'typeGroupes')] #[Deprecated('ne plus utiliser, et avoir Diplome + semestre')] private Semestre $semestre
+        ?Semestre $semestre
     ) {
         $this->groupes = new ArrayCollection();
         $this->ordreSemestre = $semestre->getOrdreLmd();
@@ -170,13 +174,13 @@ class TypeGroupe extends BaseEntity
             return 'S'.$this->ordreSemestre.' | '.$this->getDiplome()?->getDisplayCourt();
     }
 
-    #[Deprecated]
+    /** @deprecated */
     public function getSemestre(): ?Semestre
     {
         return $this->semestre;
     }
 
-    #[Deprecated]
+    /** @deprecated */
     public function setSemestre(?Semestre $semestre): self
     {
         $this->semestre = $semestre;

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/07/2022 12:52
+ * @lastUpdate 02/08/2023 09:11
  */
 
 namespace App\Controller\administration\apc;
@@ -33,8 +33,8 @@ class ApcController extends BaseController
         } else {
             $ppn = $ppnRepository->find($request->query->get('ppn'));
         }
-        $tParcours = $apcStructure->parcoursNiveaux($diplome);
-        $competences = $apcComptenceRepository->findByDiplomeAndPn($diplome, $ppn);
+        $tParcours = $apcStructure->parcoursNiveaux($diplome->getReferentiel()->getApcParcours());
+        $competences = $apcComptenceRepository->findByDiplome($diplome);
 
         return $this->render('apc/referentiel.html.twig', [
             'diplome' => $diplome,

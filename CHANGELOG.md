@@ -2,6 +2,164 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.14.0](https://github.com/Dannebicque/intranetV3/compare/v3.13.5...v3.14.0) (2023-08-02)
+
+
+### Features
+
+* Change input type for Questionnaire Fields ([89a3e86](https://github.com/Dannebicque/intranetV3/commit/89a3e864d2dc6020845e3d24b4a25d361eb1ae02))
+* Suppression des entrée suivant, précédent et décalé de semestre (deprecié) ([173b5b9](https://github.com/Dannebicque/intranetV3/commit/173b5b93de499fabfc70c371726a893a24f9e313))
+
+
+### Bug Fixes
+
+* amélioration lisibilité des quesitons/section + ajout direct par type de question ([7981033](https://github.com/Dannebicque/intranetV3/commit/7981033ffe72ceaccb07e7a8864b2af48896aa75))
+* ordre des rubriques identique version précédente ([32e70dd](https://github.com/Dannebicque/intranetV3/commit/32e70dd3209940671e19556c39c1f40498035537))
+* Redirection après création/édition d'un questionnaire ([424c4c6](https://github.com/Dannebicque/intranetV3/commit/424c4c672c4226c7318e11e9005d61aba42d0eee))
+* Utilisation de l'enumération ([091ba3d](https://github.com/Dannebicque/intranetV3/commit/091ba3d5a1ef0cee3a8e3d710a888774a4ecaa6e))
+* variable previsionnels non initialisée ([f0b2ef8](https://github.com/Dannebicque/intranetV3/commit/f0b2ef851db475cdfa47f41459a4d583cbda011e))
+
+### [3.13.5](https://github.com/Dannebicque/intranetV3/compare/v3.13.4...v3.13.5) (2023-08-02)
+
+
+### Bug Fixes
+
+* Ajout de la structure XML de base ([cda5ef3](https://github.com/Dannebicque/intranetV3/commit/cda5ef3c17449d54fdba575ae6db2bc8fdbd23d1))
+* Correction nouvelle entité de questionnaire ([f863f5b](https://github.com/Dannebicque/intranetV3/commit/f863f5b5e69eab14d702dff2b5e83eca61118d4d))
+* Correction nouvelle structure questionnaire. Retrait des anciens appels et formulaires ([2278070](https://github.com/Dannebicque/intranetV3/commit/227807084dcf430fa09a848741aae71db1789d07))
+* Erreur de typage et diplôme sur APC ([e245b49](https://github.com/Dannebicque/intranetV3/commit/e245b49084133972f063fbe601c40d4ed8160e77))
+* ParamConverter => MapEntity ([48f8617](https://github.com/Dannebicque/intranetV3/commit/48f8617044883b4398040962eb2cc87718d5fd8d))
+* Suppression d'article ([40d80bc](https://github.com/Dannebicque/intranetV3/commit/40d80bc5bd96313fbb801b2688b3a1dcecbde348))
+* Suppression des import liés à article ([5f783ae](https://github.com/Dannebicque/intranetV3/commit/5f783aedd62c9f8209123f6eb691dda28bdbcb7b))
+* tag mal fermé ([e5db6c5](https://github.com/Dannebicque/intranetV3/commit/e5db6c59ab0a77731f96f415a1c8b60c9ab52fc1))
+* tag mal fermé ([f6171c3](https://github.com/Dannebicque/intranetV3/commit/f6171c32a6e8e67c76a811256df33617025fc880))
+* tag mal fermé ([7121ff8](https://github.com/Dannebicque/intranetV3/commit/7121ff8503874fc8e837fe40d77faa6a83cd9310))
+* tag mal fermé ([c83df93](https://github.com/Dannebicque/intranetV3/commit/c83df933cf5cf6900d6a9ad5467213f4df326cce))
+* Typo ([a86535e](https://github.com/Dannebicque/intranetV3/commit/a86535e58a2fb89a0515b345dcb6f781eba6d0d2))
+* Typo sur Deprecated ([56a5c1c](https://github.com/Dannebicque/intranetV3/commit/56a5c1c560b87acf7f64cb46da883a3ba4e6d5ad))
+* Typo sur formulaire stage ([19ad6eb](https://github.com/Dannebicque/intranetV3/commit/19ad6ebcc2642f916ae20284cf0e5874d33c7746))
+
+### [3.13.4](https://github.com/Dannebicque/intranetV3/compare/v3.13.3...v3.13.4) (2023-08-01)
+
+### [3.13.3](https://github.com/Dannebicque/intranetV3/compare/v3.13.2...v3.13.3) (2023-08-01)
+
+### [3.13.2](https://github.com/Dannebicque/intranetV3/compare/v3.13.1...v3.13.2) (2023-08-01)
+
+### [3.13.1](https://github.com/Dannebicque/intranetV3/compare/v3.12.14...v3.13.1) (2023-08-01)
+
+
+### Features
+
+* Add autocomplete feature to form fields ([fa503e3](https://github.com/Dannebicque/intranetV3/commit/fa503e32c193ef6f6a21e6062186c0b5cdf8dc89))
+* Add checkbox to toggle semester activity status ([306be05](https://github.com/Dannebicque/intranetV3/commit/306be05c6df4c0b75036ba2a2f2a4ba0584f434a))
+* Affichage des décisions sur mes UE pour APC + refactoring (enum) ([571c8ab](https://github.com/Dannebicque/intranetV3/commit/571c8ab31d1895bf67cb00def8d7533113f748c3))
+* Affichage des diplômes actif/inactif dans la structure ([6c910af](https://github.com/Dannebicque/intranetV3/commit/6c910afa9b6f5dfe07547386c0944f8cafbfcd7b))
+* Ajout d'un énum pour le type de type de HRS ([6cc1155](https://github.com/Dannebicque/intranetV3/commit/6cc1155452be2f74c058db6bbabacee7c3cddf6d))
+* Commandes et structure pour EduSign (à finaliser avec les datas) ([95cef96](https://github.com/Dannebicque/intranetV3/commit/95cef96845a2e390be1345c1b799c1e85c73c1c1))
+* Ne pas afficher les diplômes inactifs dans le PN ([4f7a071](https://github.com/Dannebicque/intranetV3/commit/4f7a071ff8f3c87c278d7fcca4d2d006281160b4))
+* Nouvelle version du prévisionnel. Saisie par matière ou personnel ([fe27534](https://github.com/Dannebicque/intranetV3/commit/fe2753440e545a47dcc0451112972d7001c130e9))
+* Réécriture de la partie messagerie avec Stimulus + nouvelles fonctionnalités + divers correctifs et fonctions corrigées/améliorées ([3dd2a8b](https://github.com/Dannebicque/intranetV3/commit/3dd2a8b6f0605a7140e6c91eff4a46075315249e))
+* Suppression de la partie article jamais utilisée ([cf20137](https://github.com/Dannebicque/intranetV3/commit/cf201372da4c89d7a01e186979097bbf86cf263b))
+* Suppression de toute la partie gestion du COVID ([5aa1f41](https://github.com/Dannebicque/intranetV3/commit/5aa1f41054810a36449c8aeb15ff116be6ec5473))
+* Variable clé Api EduSIgn ([5b70786](https://github.com/Dannebicque/intranetV3/commit/5b707863d68c0db2676baa831b18d8edc303a31a))
+
+
+### Bug Fixes
+
+* Correctifs requetes repository HRS ([b190730](https://github.com/Dannebicque/intranetV3/commit/b1907309be9de71c3dbb74a9c7c1481409fc1ca4))
+* Display only active diplomas in configuration ([9646000](https://github.com/Dannebicque/intranetV3/commit/964600093e6da87af446dc1830ed841b851b64a4))
+* Marquage deprecated ([2bdfc64](https://github.com/Dannebicque/intranetV3/commit/2bdfc640a85b686e95757c86c0dd8cb4ad572394))
+* Refactor semestre index page structure ([14f5b45](https://github.com/Dannebicque/intranetV3/commit/14f5b453971075a308534b5e08dbaa92a48ecf74))
+* Remove console.log ([e99d71a](https://github.com/Dannebicque/intranetV3/commit/e99d71aecf848318043d718e69b6589950746dbc))
+* typage de retour ([01488ba](https://github.com/Dannebicque/intranetV3/commit/01488ba28ff8c5d330ad07ee8cac3b78858161ad))
+
+## [3.13.0](https://github.com/Dannebicque/intranetV3/compare/v3.12.14...v3.13.0) (2023-08-01)
+
+
+### Features
+
+* Affichage des décisions sur mes UE pour APC + refactoring (enum) ([7dc108a](https://github.com/Dannebicque/intranetV3/commit/7dc108ac0899bbdb4519ee4fdcb46ec4cfd78008))
+* Affichage des diplômes actif/inactif dans la structure ([7a079b2](https://github.com/Dannebicque/intranetV3/commit/7a079b244fa7714465d422f96281eda5c40493ee))
+* Ajout d'un énum pour le type de type de HRS ([41612ec](https://github.com/Dannebicque/intranetV3/commit/41612ec0045c76d98031a39b09b2bb871e2cdf25))
+* Commandes et structure pour EduSign (à finaliser avec les datas) ([5e0bf9f](https://github.com/Dannebicque/intranetV3/commit/5e0bf9f5f700d47b54441f8be9d667a3cd2ad59d))
+* Ne pas afficher les diplômes inactifs dans le PN ([cadf927](https://github.com/Dannebicque/intranetV3/commit/cadf927e0e5e08c273bbbbe800b7cb7cec743ceb))
+* Nouvelle version du prévisionnel. Saisie par matière ou personnel ([5ffe5de](https://github.com/Dannebicque/intranetV3/commit/5ffe5de571f97b4c995edaba0ca519c265a66826))
+* Réécriture de la partie messagerie avec Stimulus + nouvelles fonctionnalités + divers correctifs et fonctions corrigées/améliorées ([9de526d](https://github.com/Dannebicque/intranetV3/commit/9de526d632d0a6da4becf11bd48457911faf81d0))
+* Suppression de la partie article jamais utilisée ([caae180](https://github.com/Dannebicque/intranetV3/commit/caae1800d65d01f54da4bb369bd844bcb75ab1c2))
+* Suppression de toute la partie gestion du COVID ([1a37270](https://github.com/Dannebicque/intranetV3/commit/1a3727043bccac29b9ed104f347b80710d5ae593))
+* Variable clé Api EduSIgn ([9567f89](https://github.com/Dannebicque/intranetV3/commit/9567f89e83cd12b068521bbbfff9608d11dd3e89))
+
+
+### Bug Fixes
+
+* Correctifs requetes repository HRS ([b208961](https://github.com/Dannebicque/intranetV3/commit/b208961da69af5df0db190d20854a7824e27c6f0))
+* Marquage deprecated ([26026f6](https://github.com/Dannebicque/intranetV3/commit/26026f6851d0bccc8a6873d5544a333d8e64b849))
+* Remove console.log ([bc3f44f](https://github.com/Dannebicque/intranetV3/commit/bc3f44f12283f30f2f196b5178533093e54d2b99))
+* typage de retour ([3f8e3c7](https://github.com/Dannebicque/intranetV3/commit/3f8e3c72ab58a6ace484d62d966cac40ce9099b7))
+
+### [3.12.14](https://github.com/Dannebicque/intranetV3/compare/v3.12.13...v3.12.14) (2023-07-25)
+
+### [3.12.13](https://github.com/Dannebicque/intranetV3/compare/v3.12.12...v3.12.13) (2023-07-25)
+
+### [3.12.12](https://github.com/Dannebicque/intranetV3/compare/v3.12.11...v3.12.12) (2023-07-24)
+
+### [3.12.11](https://github.com/Dannebicque/intranetV3/compare/v3.12.10...v3.12.11) (2023-07-24)
+
+### [3.12.10](https://github.com/Dannebicque/intranetV3/compare/v3.12.9...v3.12.10) (2023-07-11)
+
+
+### Bug Fixes
+
+* Division par 0 ([c2c14b5](https://github.com/Dannebicque/intranetV3/commit/c2c14b587d4b89049f62f6b80c14d21698b57d60))
+
+### [3.12.9](https://github.com/Dannebicque/intranetV3/compare/v3.12.8...v3.12.9) (2023-07-10)
+
+
+### Bug Fixes
+
+* AutoComplete sur add prévisionnel ([4c37b23](https://github.com/Dannebicque/intranetV3/commit/4c37b23d34f9a3ff4b30bb619f488ead8cac363e))
+
+### [3.12.8](https://github.com/Dannebicque/intranetV3/compare/v3.12.7...v3.12.8) (2023-07-10)
+
+
+### Bug Fixes
+
+* AutoComplete sur add prévisionnel ([e4ab96c](https://github.com/Dannebicque/intranetV3/commit/e4ab96c592c89ecf8f759f7ab6c61d99d182135c))
+
+### [3.12.7](https://github.com/Dannebicque/intranetV3/compare/v3.12.6...v3.12.7) (2023-07-04)
+
+
+### Bug Fixes
+
+* ACCÈS ([53be95d](https://github.com/Dannebicque/intranetV3/commit/53be95d9f7e6d6adab7e779fe48807544ed982e9))
+* ACCÈS ([da54c3d](https://github.com/Dannebicque/intranetV3/commit/da54c3dbc86c7954cbbb50bbf3153f2690158f8e))
+* Export Sous Comm ([d01e414](https://github.com/Dannebicque/intranetV3/commit/d01e4145f877829ea43ac57eeba50b102aa77c19))
+* Export Sous Comm ([4b298ac](https://github.com/Dannebicque/intranetV3/commit/4b298ac76ad4545878254a4884cb1f8ac406d754))
+* Export Sous Comm ([92cdeb7](https://github.com/Dannebicque/intranetV3/commit/92cdeb79f571f4fadb2f9c354a9061e8bcb660da))
+* Typgae ApcParcours ([ca21a0d](https://github.com/Dannebicque/intranetV3/commit/ca21a0d291667365b7d54cade0e91d41cf33b936))
+
+### [3.12.6](https://github.com/Dannebicque/intranetV3/compare/v3.12.5...v3.12.6) (2023-06-26)
+
+
+### Bug Fixes
+
+* ACCÈS ([10f7ee8](https://github.com/Dannebicque/intranetV3/commit/10f7ee858c2d0bbe3569c1ead9a1928bd680a9c0))
+
+### [3.12.5](https://github.com/Dannebicque/intranetV3/compare/v3.12.4...v3.12.5) (2023-06-20)
+
+### [3.12.4](https://github.com/Dannebicque/intranetV3/compare/v3.12.3...v3.12.4) (2023-06-20)
+
+
+### Features
+
+* Affichage du min et du max sur slider. ([3269fbe](https://github.com/Dannebicque/intranetV3/commit/3269fbe79374c998369f66489d2e48c42b24c47c))
+
+
+### Bug Fixes
+
+* Décision sur moyenne pénalisée ([e2e1fb1](https://github.com/Dannebicque/intranetV3/commit/e2e1fb1b44883c7ff80cbc25a70ce7089ad35401))
+* Récupération des groupes selon les type de groupes pouvant être sur plusieurs semestres ([d3295c5](https://github.com/Dannebicque/intranetV3/commit/d3295c5052ce2c060db0bb5430f0583adedfbedc))
+
 ### [3.12.3](https://github.com/Dannebicque/intranetV3/compare/v3.12.2...v3.12.3) (2023-06-18)
 
 

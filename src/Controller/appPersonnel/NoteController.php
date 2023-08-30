@@ -20,21 +20,23 @@ use App\Entity\Constantes;
 use App\Entity\Evaluation;
 use App\Entity\Semestre;
 use App\Exception\MatiereNotFoundException;
+use App\Exception\SemestreNotFoundException;
 use App\Form\EvaluationType;
 use App\Repository\EtudiantRepository;
 use Exception;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_PERMANENT')]
+#[IsGranted('ROLE_PERMANENT')]
 #[Route(path: '/application/personnel/note')]
 class NoteController extends BaseController
 {
     /**
-     * @throws \App\Exception\MatiereNotFoundException
+     * @throws MatiereNotFoundException
      */
     #[Route(path: '/saisie/etape-1/{matiere}/{semestre}', name: 'application_personnel_note_saisie')]
     public function saisie(TypeMatiereManager $typeMatiereManager, Request $request, string $matiere, Semestre $semestre): RedirectResponse|Response
@@ -77,13 +79,13 @@ class NoteController extends BaseController
 
         return $this->render('appPersonnel/note/saisie.html.twig', [
             'matiere' => $mat,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
     #[Route(path: '/saisie/etape-2/{uuid}', name: 'application_personnel_note_saisie_2', requirements: ['matiere' => '\d+'])]
-    #[ParamConverter('evaluation', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function saisieNotes(TypeMatiereManager $typeMatiereManager, MyEvaluation $myEvaluation, Evaluation $evaluation): Response
+    public function saisieNotes(TypeMatiereManager $typeMatiereManager, MyEvaluation $myEvaluation, #[MapEntity(mapping: ['uuid' => 'uuid'])]
+    Evaluation                                     $evaluation): Response
     {
         $matiere = $typeMatiereManager->getMatiere($evaluation->getIdMatiere(), $evaluation->getTypeMatiere());
         $this->denyAccessUnlessGranted('CAN_ADD_NOTE', ['matiere' => $matiere, 'semestre' => $evaluation->getSemestre()]);
@@ -102,8 +104,8 @@ class NoteController extends BaseController
      * @throws Exception
      */
     #[Route(path: '/sauvegarde/{uuid}', name: 'application_personnel_note_ajax_saisie', options: ['expose' => true], methods: ['POST|GET'])]
-    #[ParamConverter('evaluation', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function enregistreNoteAction(EtudiantNotes $etudiantNotes, EtudiantRepository $etudiantRepository, Request $request, Evaluation $evaluation): Response
+    public function enregistreNote(EtudiantNotes $etudiantNotes, EtudiantRepository $etudiantRepository, Request $request, #[MapEntity(mapping: ['uuid' => 'uuid'])]
+    Evaluation                                   $evaluation): Response
     {
         $tnote = $request->request->all();
         $tnote = $tnote['notes']['notes'];
@@ -146,8 +148,8 @@ class NoteController extends BaseController
     }
 
     /**
-     * @throws \App\Exception\MatiereNotFoundException
-     * @throws \App\Exception\SemestreNotFoundException
+     * @throws MatiereNotFoundException
+     * @throws SemestreNotFoundException
      */
     #[Route(path: '/modele-import/{evaluation}/{semestre}', name: 'application_personnel_note_import_modele', methods: 'GET')]
     public function modeleImport(TypeMatiereManager $typeMatiereManager, MyExport $myExport, Evaluation $evaluation, Semestre $semestre): ?Response
@@ -162,7 +164,7 @@ class NoteController extends BaseController
     }
 
     /**
-     * @throws \App\Exception\MatiereNotFoundException
+     * @throws MatiereNotFoundException
      */
     #[Route(path: '/{matiere}/{index}/{semestre}', name: 'application_personnel_note_index')]
     public function index(TypeMatiereManager $typeMatiereManager, MyEvaluations $myEvaluations, string $matiere, Semestre $semestre, int $index = 0): Response

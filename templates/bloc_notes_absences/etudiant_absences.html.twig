@@ -33,8 +33,11 @@
             {% for absence in absences %}
                 <tr class="{% if absence.justifie %}bg-pale-success{% else %}bg-pale-warning{% endif %}" id="ligne_{{ absence.uuidString }}">
                     <td>{{ absence.dateHeure ? absence.dateHeure|format_datetime('long', 'short') : '' }}</td>
-                    <td>{{ matieres[absence.typeIdMatiere] is defined ? matieres[absence.typeIdMatiere].codeMatiere
-                        : '-' }}</td>
+                    <td>
+                        <abbr title="{{ matieres[absence.typeIdMatiere] is defined ? matieres[absence.typeIdMatiere].display
+                        : '-' }}">
+                            {{ matieres[absence.typeIdMatiere] is defined ? matieres[absence.typeIdMatiere].codeMatiere
+                            : '-' }}</abbr></td>
                     <td>{{ absence.justifie|badgeYesNo }}</td>
                     <td class="hide">{{ absence.personnel ? absence.personnel.display : 'non.defini'|trans }}</td>
                     <td>

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyDocument.php
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyDocument.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 02/08/2023 08:34
  */
 
 /*
@@ -21,16 +21,13 @@ use App\Entity\Personnel;
 use App\Interfaces\UtilisateurInterface;
 use App\Repository\DocumentFavoriEtudiantRepository;
 use App\Repository\DocumentFavoriPersonnelRepository;
-use function count;
 use Doctrine\ORM\EntityManagerInterface;
+use function count;
 
 class MyDocument
 {
     protected Document $document;
 
-    /**
-     * MyArticle constructor.
-     */
     public function __construct(protected EntityManagerInterface $entityManager, protected DocumentFavoriEtudiantRepository $documentFavoriEtudiantRepository, protected DocumentFavoriPersonnelRepository $documentFavoriPersonnelRepository)
     {
     }

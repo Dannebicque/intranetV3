@@ -19,12 +19,13 @@ use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
 #[Route('/application/personnel/alternance/fiche-suivi')]
-#[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_PERMANENT')]
+#[IsGranted('ROLE_PERMANENT')]
 class AlternanceFicheSuiviController extends BaseController
 {
     #[Route(path: '/{alternance}', name: 'application_personnel_alternance_fiche_suivi_alternance', methods: ['GET'])]
@@ -59,7 +60,7 @@ class AlternanceFicheSuiviController extends BaseController
 
         return $this->render('appPersonnel/alternance_fiche_suivi/new.html.twig', [
             'alternance_fiche_suivi' => $alternanceFicheSuivi,
-            'form' => $form->createView(),
+            'form' => $form,
             'alternance' => $alternance,
         ]);
     }
@@ -101,7 +102,7 @@ class AlternanceFicheSuiviController extends BaseController
 
         return $this->render('appPersonnel/alternance_fiche_suivi/edit.html.twig', [
             'alternance_fiche_suivi' => $alternanceFicheSuivi,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

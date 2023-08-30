@@ -20,18 +20,21 @@ use App\Entity\AbsenceEtatAppel;
 use App\Entity\Constantes;
 use App\Entity\Semestre;
 use App\Exception\MatiereNotFoundException;
+use App\Exception\SemestreNotFoundException;
 use App\Repository\AbsenceRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\SemestreRepository;
 use App\Utils\JsonRequest;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use JsonException;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/application/personnel/absence')]
-#[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_PERMANENT')]
+#[IsGranted('ROLE_PERMANENT')]
 class AbsenceController extends BaseController
 {
     public function __construct(private readonly MyAbsences $myAbsences)
@@ -39,7 +42,7 @@ class AbsenceController extends BaseController
     }
 
     /**
-     * @throws \App\Exception\MatiereNotFoundException
+     * @throws MatiereNotFoundException
      */
     #[Route('/matiere/{matiere}/{semestre}', name: 'application_personnel_absence_index', methods: ['GET'])]
     public function index(
@@ -62,8 +65,8 @@ class AbsenceController extends BaseController
     }
 
     /**
-     * @throws \App\Exception\MatiereNotFoundException
-     * @throws \App\Exception\SemestreNotFoundException
+     * @throws MatiereNotFoundException
+     * @throws SemestreNotFoundException
      */
     #[Route('/edt/{event}/{source}/{semestre}',
         name: 'application_personnel_absence_from_planning',
@@ -74,7 +77,7 @@ class AbsenceController extends BaseController
         TypeMatiereManager $typeMatiereManager,
         EdtManager $edtManager,
         MyGroupes $myGroupes,
-        $event,
+        int $event,
         string $source = EdtManager::EDT_INTRANET,
         Semestre $semestre
     ): Response {
@@ -110,7 +113,7 @@ class AbsenceController extends BaseController
     }
 
     /**
-     * @throws \App\Exception\MatiereNotFoundException
+     * @throws MatiereNotFoundException
      */
     #[Route('/voir/{matiere}/{semestre}', name: 'application_personnel_absence_voir')]
     public function voir(TypeMatiereManager $typeMatiereManager, string $matiere, Semestre $semestre): Response
@@ -133,7 +136,7 @@ class AbsenceController extends BaseController
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     #[Route('/ajax/pas-absent/', name: 'application_personnel_absence_ajax_pas_absent', options: ['expose' => true], methods: ['POST'])]
     public function pasAbsentEvent(
@@ -179,7 +182,7 @@ class AbsenceController extends BaseController
     }
 
     /**
-     * @throws \App\Exception\MatiereNotFoundException
+     * @throws MatiereNotFoundException
      */
     #[Route('/export/{matiere}/{semestre}/export.{_format}', name: 'application_personnel_absence_export', methods: ['GET'])]
     public function export(
@@ -197,8 +200,8 @@ class AbsenceController extends BaseController
     }
 
     #[Route(path: '/{uuid}', name: 'application_personnel_absence_delete', methods: 'DELETE')]
-    #[ParamConverter('absence', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function supprimer(EtudiantAbsences $etudiantAbsences, Request $request, Absence $absence): Response
+    public function supprimer(EtudiantAbsences $etudiantAbsences, Request $request, #[MapEntity(mapping: ['uuid' => 'uuid'])]
+    Absence                                    $absence): Response
     {
         // todo: tester...
         $id = $absence->getUuidString();
@@ -215,6 +218,7 @@ class AbsenceController extends BaseController
 
     #[Route(path: '/ajax/absences/{matiere}', name: 'application_personnel_absence_get_ajax', options: ['expose' => true], methods: 'GET')]
     public function ajaxGetAbsencesMatiere(
+        \App\Classes\Absences\AbsenceEtatAppel $absenceEtatAppel,
         TypeMatiereManager $typeMatiereManager,
         AbsenceRepository $absenceRepository,
         string $matiere
@@ -226,8 +230,9 @@ class AbsenceController extends BaseController
                 $mat,
                 $this->getAnneeUniversitaire() // todo: ?? $mat->semestre?->getAnneeUniversitaire() equivalent ?
             );
+            $etatAppel = $absenceEtatAppel->getByMatiereArray($mat, $this->getAnneeUniversitaire()); //todo: récupére comme $absences un tableau complet (?) et du coup le json contient deux entrées ?? En JS on affiche ou masque les infos ? Juste appel fait, pas besoin des absences déjà et tester si l'un ou l'utre est vide pour afficher ou masquer ?
 
-            return $this->json($absences);
+            return $this->json(['absences' => $absences, 'etatAppel' => $etatAppel]);
         }
 
         return $this->json(null);

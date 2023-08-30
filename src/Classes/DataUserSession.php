@@ -1,14 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/DataUserSession.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
- */
-
-/*
- * Pull your hearder here, for exemple, Licence header.
+ * @lastUpdate 26/07/2023 08:33
  */
 
 namespace App\Classes;
@@ -28,15 +24,14 @@ use App\Repository\DepartementRepository;
 use App\Repository\DiplomeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
-use function count;
 use Doctrine\ORM\NonUniqueResultException;
-use function in_array;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
-use Symfony\Component\Security\Core\Security;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use function count;
+use function in_array;
 
 /**
  * Récupère les données d'une session utilisateur
@@ -84,7 +79,7 @@ class DataUserSession
         protected PersonnelRepository $personnelRepository,
         protected DepartementRepository $departementRepository,
         protected TokenStorageInterface $user,
-        protected Security $security,
+        protected \Symfony\Bundle\SecurityBundle\Security $security,
         EventDispatcherInterface $eventDispatcher,
         RequestStack $requestStack
     ) {

@@ -1,14 +1,15 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Absences/AbsenceEtatAppel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/12/2022 13:22
+ * @lastUpdate 25/07/2023 13:56
  */
 
 namespace App\Classes\Absences;
 
+use App\DTO\Matiere;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Semestre;
 use App\Repository\AbsenceEtatAppelRepository;
@@ -97,6 +98,28 @@ class AbsenceEtatAppel
 
                 $tab[$ab->getDate()->format('Ymd')][$ab->getTypeIdMatiere()][$ab->getHeure()->format('Hi')][$ab->getGroupe()->getOrdre()] = $ab->getTypeSaisie();
             }
+        }
+
+        return $tab;
+    }
+
+    public function getByMatiereArray(Matiere $mat, ?AnneeUniversitaire $anneeUniversitaire)
+    {
+        $data = $this->absenceEtatAppelRepository->findByMatiere($mat, $anneeUniversitaire);
+        $tab = [];
+        foreach ($data as $absence) {
+            $date = null !== $absence->getDate() ? $absence->getDate()->format('Y-m-d') : '';
+            $heure = null !== $absence->getHeure() ? $absence->getHeure()->format('H:i') : '';
+
+            if (!array_key_exists($date, $tab)) {
+                $tab[$date] = [];
+            }
+
+            if (!array_key_exists($heure, $tab[$date])) {
+                $tab[$date][$heure] = [];
+            }
+
+            $tab[$date][$heure][] = $absence->getGroupe()->getId();
         }
 
         return $tab;

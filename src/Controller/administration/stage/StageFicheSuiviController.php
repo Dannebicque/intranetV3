@@ -21,6 +21,9 @@ use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 #[Route(path: '/administration/stage/fiche/suivi')]
 class StageFicheSuiviController extends BaseController
@@ -62,14 +65,14 @@ class StageFicheSuiviController extends BaseController
         return $this->render('administration/stage/fiche_suivi/new.html.twig', [
             'stage_fiche_suivi' => $stageFicheSuivi,
             'stage' => $stage,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
     /**
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     #[Route(path: '/imprimer/{id}', name: 'administration_stage_fiche_suivi_export', methods: ['GET'])]
     public function print(MyFicheSuivi $myStageFicheSuivi, StageFicheSuivi $stageFicheSuivi): PdfResponse
@@ -109,7 +112,7 @@ class StageFicheSuiviController extends BaseController
 
         return $this->render('administration/stage/fiche_suivi/edit.html.twig', [
             'stage_fiche_suivi' => $stageFicheSuivi,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

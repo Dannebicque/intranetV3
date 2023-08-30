@@ -49,7 +49,7 @@ class StatutController extends BaseController
 
         return $this->render('super-administration/status/new.html.twig', [
             'status' => $status,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -79,7 +79,7 @@ class StatutController extends BaseController
 
         return $this->render('super-administration/status/edit.html.twig', [
             'statuts' => $status,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

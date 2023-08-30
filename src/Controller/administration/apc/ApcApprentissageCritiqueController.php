@@ -41,7 +41,7 @@ class ApcApprentissageCritiqueController extends BaseController
 
         return $this->render('apc/apc_apprentissage_critique/new.html.twig', [
             'apc_apprentissage_critique' => $apcApprentissageCritique,
-            'form' => $form->createView(),
+            'form' => $form,
             'competence' => $niveau->getCompetence(),
         ]);
     }
@@ -60,7 +60,7 @@ class ApcApprentissageCritiqueController extends BaseController
 
         return $this->render('apc/apc_apprentissage_critique/edit.html.twig', [
             'apc_apprentissage_critique' => $apcApprentissageCritique,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

@@ -116,7 +116,7 @@ class TypeDocumentController extends BaseController
 
         return $this->render('document/type_document/new.html.twig', [
             'type_document' => $typeDocument,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -171,7 +171,7 @@ class TypeDocumentController extends BaseController
 
         return $this->render('document/type_document/edit.html.twig', [
             'type_document' => $typeDocument,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

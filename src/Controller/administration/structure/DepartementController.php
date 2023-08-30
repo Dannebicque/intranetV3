@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/structure/DepartementController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 02/08/2023 09:14
  */
 
 namespace App\Controller\administration\structure;
@@ -12,11 +12,11 @@ namespace App\Controller\administration\structure;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Departement;
-use function count;
 use Symfony\Component\Form\Exception\LogicException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use function count;
 
 #[Route(path: '/administration/structure/departement')]
 class DepartementController extends BaseController
@@ -39,7 +39,6 @@ class DepartementController extends BaseController
             0 === count($departement->getHrs()) &&
             0 === count($departement->getEtudiants()) &&
             0 === count($departement->getPersonnelDepartements()) &&
-            0 === count($departement->getArticleCategories()) &&
             0 === count($departement->getTypeDocuments()) &&
             0 === count($departement->getActualites())) {
             $this->entityManager->remove($departement);

@@ -49,7 +49,7 @@
         <th colspan="3" class="text-end">Décision</th>
         {% for ue in ues %}
             <th class="text-center">
-                {{ scolarite.moyennesUes[ue.id].decision|styleDecision }}
+                {{ scolarite.moyennesUes[ue.id].decision|styleDecisionUe }}
             </th>
         {% endfor %}
     </tr>

@@ -12,7 +12,7 @@ namespace App\Controller\appEtudiant;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Controller\BaseController;
 use App\Entity\Absence;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -23,8 +23,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class AbsenceController extends BaseController
 {
     #[Route(path: '/details/{uuid}', name: 'app_etudiant_absence_detail', options: ['expose' => true])]
-    #[ParamConverter('absence', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function details(TypeMatiereManager $typeMatiereManager, Absence $absence): Response
+    public function details(TypeMatiereManager $typeMatiereManager, #[MapEntity(mapping: ['uuid' => 'uuid'])]
+    Absence                                    $absence): Response
     {
         return $this->render('appEtudiant/absence/_detail.html.twig', [
             'absence' => $absence,

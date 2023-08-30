@@ -18,8 +18,9 @@ use App\Entity\Semestre;
 use App\Exception\MatiereNotFoundException;
 use App\Form\EvaluationType;
 use App\Repository\EvaluationRepository;
+use Exception;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,8 +38,8 @@ use Twig\Error\SyntaxError;
 class EvaluationController extends BaseController
 {
     #[Route(path: '/details/{uuid}', name: 'administration_evaluation_show', methods: ['GET', 'POST'])]
-    #[ParamConverter('evaluation', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function show(TypeMatiereManager $typeMatiereManager, MyEvaluation $myEvaluation, Evaluation $evaluation): Response
+    public function show(TypeMatiereManager $typeMatiereManager, MyEvaluation $myEvaluation, #[MapEntity(mapping: ['uuid' => 'uuid'])]
+    Evaluation                              $evaluation): Response
     {
         // $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $evaluation->getSemestre());
         $notes = $myEvaluation->setEvaluation($evaluation)->getNotesTableau();
@@ -56,11 +57,11 @@ class EvaluationController extends BaseController
      * @throws SyntaxError
      * @throws LoaderError
      * @throws RuntimeError
-     * @throws \App\Exception\MatiereNotFoundException
+     * @throws MatiereNotFoundException
      */
     #[Route(path: '/export/{semestre}/{uuid}.{_format}', name: 'administration_evaluation_export', methods: 'GET')]
-    #[ParamConverter('evaluation', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function exportEvaluation(MyEvaluation $myEvaluation, Evaluation $evaluation, string $_format, Semestre $semestre): StreamedResponse|PdfResponse|null
+    public function exportEvaluation(MyEvaluation $myEvaluation, #[MapEntity(mapping: ['uuid' => 'uuid'])]
+    Evaluation                                    $evaluation, string $_format, Semestre $semestre): StreamedResponse|PdfResponse|null
     {
         // todo: $semestre pourrait être supprimé s'il est dans évaluation
         $data = $evaluation->getTypeGroupe()->getGroupes();
@@ -70,8 +71,8 @@ class EvaluationController extends BaseController
     }
 
     /**
-     * @throws \App\Exception\MatiereNotFoundException
-     * @throws \Exception
+     * @throws MatiereNotFoundException
+     * @throws Exception
      */
     #[Route(path: '/ajouter/{matiere}/{semestre}', name: 'administration_evaluation_create', methods: ['GET', 'POST'])]
     public function create(TypeMatiereManager $typeMatiereManager, Request $request, string $matiere, Semestre $semestre): RedirectResponse|Response
@@ -117,18 +118,18 @@ class EvaluationController extends BaseController
         }
 
         return $this->render('administration/evaluation/create.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form,
             'matiere' => $mat,
             'semestre' => $semestre,
         ]);
     }
 
     /**
-     * @throws \App\Exception\MatiereNotFoundException
+     * @throws MatiereNotFoundException
      */
     #[Route(path: '/saisie/etape-2/{uuid}', name: 'administration_note_saisie_2')]
-    #[ParamConverter('evaluation', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function saisieNotes(TypeMatiereManager $typeMatiereManager, MyEvaluation $myEvaluation, Evaluation $evaluation): Response
+    public function saisieNotes(TypeMatiereManager $typeMatiereManager, MyEvaluation $myEvaluation, #[MapEntity(mapping: ['uuid' => 'uuid'])]
+    Evaluation                                     $evaluation): Response
     {
         $matiere = $typeMatiereManager->getMatiere($evaluation->getIdMatiere(), $evaluation->getTypeMatiere());
         if (null === $matiere) {
@@ -180,8 +181,8 @@ class EvaluationController extends BaseController
     }
 
     #[Route(path: '/modifiable/{uuid}', name: 'administration_evaluation_modifiable', options: ['expose' => true], methods: ['GET'])]
-    #[ParamConverter('evaluation', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function modifiable(Evaluation $evaluation): Response
+    public function modifiable(#[MapEntity(mapping: ['uuid' => 'uuid'])]
+                               Evaluation $evaluation): Response
     {
         $evaluation->setModifiable(!$evaluation->getModifiable());
         $this->entityManager->flush();
@@ -190,8 +191,8 @@ class EvaluationController extends BaseController
     }
 
     #[Route(path: '/visibilite/{uuid}', name: 'administration_evaluation_visibilite', options: ['expose' => true], methods: ['GET'])]
-    #[ParamConverter('evaluation', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function visibilite(Evaluation $evaluation): Response
+    public function visibilite(#[MapEntity(mapping: ['uuid' => 'uuid'])]
+                               Evaluation $evaluation): Response
     {
         $evaluation->setVisible(!$evaluation->getVisible());
         $this->entityManager->flush();
@@ -200,8 +201,8 @@ class EvaluationController extends BaseController
     }
 
     #[Route(path: '/{uuid}', name: 'administration_evaluation_delete', methods: 'DELETE')]
-    #[ParamConverter('evaluation', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function delete(MyEvaluation $myEvaluation, Request $request, Evaluation $evaluation): Response
+    public function delete(MyEvaluation $myEvaluation, Request $request, #[MapEntity(mapping: ['uuid' => 'uuid'])]
+    Evaluation                          $evaluation): Response
     {
         $id = $evaluation->getUuidString();
         if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {

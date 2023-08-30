@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/12/2022 12:09
+ * @lastUpdate 26/07/2023 12:29
  */
 
 namespace App\Controller\appPersonnel;
@@ -33,7 +33,7 @@ class PrevisionnelController extends BaseController
         $anneePrevisionnel = $this->dataUserSession->getAnneePrevisionnel();
         $personnel = $this->getUser();
         $departement = $this->getDepartement();
-        $previsionnels = $myPrevisionnel->getPrevisionnelPersonnelDepartementAnnee($personnel, $departement,
+        $previsionnels = $myPrevisionnel->getPrevisionnelPersonnelDepartementAnneeArray($personnel, $departement,
             $anneePrevisionnel);
         $hrs = $hrsManager->getHrsPersonnelDepartementAnnee($personnel, $departement, $anneePrevisionnel);
         $synthsePrevisionnel = $previsionnelSynthese->getSynthese($previsionnels, $personnel)

@@ -108,14 +108,10 @@
                 <td>
                     <ul>
                     {% for semestre in semestre.semestreLienDepart %}
-                    <li>{{ semestre.semestreArrive.displayLong }}</li>
+                        <li>{{ semestre.semestreLienArrive.displayLong }}</li>
                     {% endfor %}
                     </ul>
                 </td>
-            </tr>
-            <tr>
-              <th>{{ 'semestre.semestre_decale'|trans }}</th>
-              <td>{{ semestre.decale ? semestre.decale.display : 'non.defini'|trans }}</td>
             </tr>
             <tr>
               <th>{{ 'table.created'|trans }}</th>

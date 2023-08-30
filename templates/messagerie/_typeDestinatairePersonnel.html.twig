@@ -1,0 +1,34 @@
+<div class="form-group">
+    <div class="row">
+        <div class="col-sm-6">
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="cc-permanent"
+                       name="messageToPersonnel[]" value="permanent">
+                <label class="custom-control-label" for="cc-permanent">Tous les permanents</label>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class="custom-control custom-checkbox" data-children-count="1">
+                <input type="checkbox" class="custom-control-input" id="cc-vacataires"
+                       name="messageToPersonnel[]" value="vacataire">
+                <label class="custom-control-label" for="cc-vacataires">Tous les vacataires</label>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group mt-2">
+    <label for="messageToLibrePersonnel">Choisir le(s) enseignant/intervenant(s)</label>
+    <select
+            {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
+            multiple
+            class="form-select"
+            id="messageToLibrePersonnel" name="messageToLibrePersonnel[]"
+            title="Choisir le(s) matière(s)"
+            data-size="10"
+    >
+        {% for personnel in personnels %}
+            <option value="{{ personnel.id }}">{{ personnel.display }}</option>
+        {% endfor %}
+    </select>
+    <div>Saisissez les premières lettres du nom de l'enseignant/intervenant.</div>
+</div>

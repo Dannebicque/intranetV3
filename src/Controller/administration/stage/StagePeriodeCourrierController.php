@@ -15,7 +15,7 @@ use App\Entity\StageEtudiant;
 use App\Entity\StagePeriode;
 use App\Repository\StageMailTemplateRepository;
 use Doctrine\ORM\NonUniqueResultException;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -125,8 +125,8 @@ class StagePeriodeCourrierController extends BaseController
      * @throws NonUniqueResultException
      */
     #[Route(path: '/sauvegarde-modele/{uuid}/{mail}', name: 'administration_stage_periode_courrier_sauvegarde_modele', options: ['expose' => true])]
-    #[ParamConverter('stagePeriode', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function sauvegardeModele(MyStageMailTemplate $myStageMailTemplate, Request $request, StagePeriode $stagePeriode, string $mail): Response
+    public function sauvegardeModele(MyStageMailTemplate $myStageMailTemplate, Request $request, #[MapEntity(mapping: ['uuid' => 'uuid'])]
+    StagePeriode                                         $stagePeriode, string $mail): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
         $myStageMailTemplate->updateTemplate($mail, $request->request->get('sujet'), $request->request->get('message'),
@@ -155,8 +155,8 @@ class StagePeriodeCourrierController extends BaseController
     }
 
     #[Route(path: '/{uuid}', name: 'administration_stage_periode_courrier_index')]
-    #[ParamConverter('stagePeriode', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function index(StageMailTemplateRepository $stageMailTemplateRepository, StagePeriode $stagePeriode): Response
+    public function index(StageMailTemplateRepository $stageMailTemplateRepository, #[MapEntity(mapping: ['uuid' => 'uuid'])]
+    StagePeriode                                      $stagePeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
         $courriers = $stageMailTemplateRepository->findByStagePeriodeArray($stagePeriode);

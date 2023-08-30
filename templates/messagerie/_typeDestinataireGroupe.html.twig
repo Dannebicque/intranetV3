@@ -1,0 +1,18 @@
+<div class="form-group">
+    <label for="messageToGroupe">Choix groupe(s)</label>
+    <select
+            {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
+            multiple
+            class="form-select"
+            id="messageToGroupe" name="messageToGroupe[]" data-size="10"
+            title="Choisir le(s) groupe(s)"
+    >
+        {% for type_groupe in type_groupes %}
+            <optgroup label="{{ type_groupe.display }}">
+                {% for groupe in type_groupe.groupes %}
+                    <option value="{{ groupe.id }}">{{ groupe.libelle }}</option>
+                {% endfor %}
+            </optgroup>
+        {% endfor %}
+    </select>
+</div>

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/01/2023 11:24
+ * @lastUpdate 02/08/2023 10:10
  */
 
 namespace App\Entity;
@@ -27,7 +27,6 @@ class Semestre extends BaseEntity implements Stringable
 
     #[ORM\Column(type: Types::STRING, length: 255)]
     #[Groups(groups: [
-        'article_administration',
         'date_administration',
         'semestre',
         'etudiants_administration',
@@ -44,24 +43,6 @@ class Semestre extends BaseEntity implements Stringable
     #[ORM\Column(type: Types::BOOLEAN)]
     private bool $actif = false;
 
-    #[ORM\ManyToOne(targetEntity: Semestre::class)]
-    /**
-     * @deprecated
-     */
-    private ?Semestre $precedent = null;
-
-    #[ORM\ManyToOne(targetEntity: Semestre::class)]
-    /**
-     * @deprecated
-     */
-    private ?Semestre $suivant = null;
-
-    #[ORM\ManyToOne(targetEntity: Semestre::class)]
-    /**
-     * @deprecated
-     */
-    private ?Semestre $decale = null;
-
     #[ORM\Column(type: Types::INTEGER)]
     private int $nbGroupesCm = 1;
 
@@ -72,7 +53,7 @@ class Semestre extends BaseEntity implements Stringable
     private int $nbGroupesTP = 2;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Etudiant>
+     * @var Collection<int, \App\Entity\Etudiant>
      */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: Etudiant::class)]
     #[ORM\OrderBy(value: ['nom' => 'ASC', 'prenom' => 'ASC'])]
@@ -111,9 +92,6 @@ class Semestre extends BaseEntity implements Stringable
     #[ORM\Column(type: Types::FLOAT)]
     private float $optPointPenaliteAbsence = 0.5;
 
-    #[ORM\ManyToMany(targetEntity: Article::class, mappedBy: 'semestres')]
-    private Collection $articles;
-
     #[ORM\ManyToMany(targetEntity: Document::class, mappedBy: 'semestres')]
     private Collection $documents;
 
@@ -121,13 +99,13 @@ class Semestre extends BaseEntity implements Stringable
     private Collection $dates;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Hrs>
+     * @var Collection<int, \App\Entity\Hrs>
      */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: Hrs::class)]
     private Collection $hrs;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Parcour>
+     * @var Collection<int, \App\Entity\Parcour>
      */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: Parcour::class)]
     private Collection $parcours;
@@ -136,23 +114,21 @@ class Semestre extends BaseEntity implements Stringable
     private Collection $bornes;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\CahierTexte>
+     * @var Collection<int, \App\Entity\CahierTexte>
      */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: CahierTexte::class)]
     private Collection $cahierTextes;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Ue>
+     * @var Collection<int, \App\Entity\Ue>
      */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: Ue::class)]
     #[ORM\OrderBy(value: ['numeroUe' => 'ASC'])]
     private Collection $ues;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\TypeGroupe>
-     *
+     * @deprecated
      */
-    #[Deprecated]
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: TypeGroupe::class)]
     #[ORM\OrderBy(value: ['libelle' => 'ASC'])]
     private Collection $typeGroupes;
@@ -165,13 +141,13 @@ class Semestre extends BaseEntity implements Stringable
     private ?Annee $annee = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\StagePeriode>
+     * @var Collection<int, \App\Entity\StagePeriode>
      */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: StagePeriode::class)]
     private Collection $stagePeriodes;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ScolaritePromo>
+     * @var Collection<int, \App\Entity\ScolaritePromo>
      */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: ScolaritePromo::class)]
     private Collection $scolaritePromos;
@@ -185,54 +161,47 @@ class Semestre extends BaseEntity implements Stringable
     #[ORM\Column(type: Types::BOOLEAN)]
     private bool $optEvaluationPreInitialisee = false;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\QuestionnaireQualite>
-     * @deprecated
-     */
-    #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: QuestionnaireQualite::class)]
-    private Collection $qualiteQuestionnaires;
-
     #[ORM\Column(type: Types::INTEGER)]
     private int $optNbJoursSaisieAbsence = 10;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ProjetPeriode>
+     * @var Collection<int, \App\Entity\ProjetPeriode>
      */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: ProjetPeriode::class)]
     private Collection $projetPeriodes;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\AbsenceEtatAppel>
+     * @var Collection<int, \App\Entity\AbsenceEtatAppel>
      */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: AbsenceEtatAppel::class)]
     private Collection $absenceEtatAppels;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\EdtCelcat>
+     * @var Collection<int, \App\Entity\EdtCelcat>
      */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: EdtCelcat::class)]
     private Collection $edtCelcats;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Evaluation>
+     * @var Collection<int, \App\Entity\Evaluation>
      */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: Evaluation::class)]
     private Collection $evaluations;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Rattrapage>
+     * @var Collection<int, \App\Entity\Rattrapage>
      */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: Rattrapage::class)]
     private Collection $rattrapages;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\AbsenceJustificatif>
+     * @var Collection<int, \App\Entity\AbsenceJustificatif>
      */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: AbsenceJustificatif::class)]
     private Collection $absenceJustificatifs;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Absence>
+     * @var Collection<int, \App\Entity\Absence>
      */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: Absence::class)]
     private Collection $absences;
@@ -244,7 +213,7 @@ class Semestre extends BaseEntity implements Stringable
     private ?bool $optBilanSemestre = false;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\AnneeUniversitaireSemestre>
+     * @var Collection<int, \App\Entity\AnneeUniversitaireSemestre>
      */
     #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: AnneeUniversitaireSemestre::class)]
     private Collection $anneeUniversitaireSemestres;
@@ -285,7 +254,6 @@ class Semestre extends BaseEntity implements Stringable
 
     private function init(): void
     {
-        $this->articles = new ArrayCollection();
         $this->documents = new ArrayCollection();
         $this->dates = new ArrayCollection();
         $this->hrs = new ArrayCollection();
@@ -297,7 +265,6 @@ class Semestre extends BaseEntity implements Stringable
         $this->stagePeriodes = new ArrayCollection();
         $this->scolaritePromos = new ArrayCollection();
         $this->etudiants = new ArrayCollection();
-        $this->qualiteQuestionnaires = new ArrayCollection();
         $this->projetPeriodes = new ArrayCollection();
         $this->absenceEtatAppels = new ArrayCollection();
         $this->edtCelcats = new ArrayCollection();
@@ -326,42 +293,6 @@ class Semestre extends BaseEntity implements Stringable
     public function setOrdreLmd(int $ordreLmd): void
     {
         $this->ordreLmd = $ordreLmd;
-    }
-
-    #[Deprecated]
-    public function getPrecedent(): ?self
-    {
-        return $this->precedent;
-    }
-
-    #[Deprecated]
-    public function setPrecedent(?self $precedent): void
-    {
-        $this->precedent = $precedent;
-    }
-
-    #[Deprecated]
-    public function getSuivant(): ?self
-    {
-        return $this->suivant;
-    }
-
-    #[Deprecated]
-    public function setSuivant(?self $suivant): void
-    {
-        $this->suivant = $suivant;
-    }
-
-    #[Deprecated]
-    public function getDecale(): ?self
-    {
-        return $this->decale;
-    }
-
-    #[Deprecated]
-    public function setDecale(?self $decale): void
-    {
-        $this->decale = $decale;
     }
 
     public function getNbGroupesTd(): int
@@ -540,34 +471,6 @@ class Semestre extends BaseEntity implements Stringable
     public function displayLong(): string
     {
         return $this->getDiplome()->getDisplayCourt().' | '.$this->getLibelle();
-    }
-
-    /**
-     * @return Collection|Article[]
-     */
-    public function getArticles(): Collection
-    {
-        return $this->articles;
-    }
-
-    public function addArticle(Article $article): self
-    {
-        if (!$this->articles->contains($article)) {
-            $this->articles[] = $article;
-            $article->addSemestre($this);
-        }
-
-        return $this;
-    }
-
-    public function removeArticle(Article $article): self
-    {
-        if ($this->articles->contains($article)) {
-            $this->articles->removeElement($article);
-            $article->removeSemestre($this);
-        }
-
-        return $this;
     }
 
     /**
@@ -1047,40 +950,6 @@ class Semestre extends BaseEntity implements Stringable
     public function setOptEvaluationPreInitialisee(bool $optEvaluationPreInitialisee): self
     {
         $this->optEvaluationPreInitialisee = $optEvaluationPreInitialisee;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|QuestionnaireQualite[]
-     * @deprecated
-     */
-    public function getQualiteQuestionnaires(): ?Collection
-    {
-        return $this->qualiteQuestionnaires;
-    }
-
-    /** @deprecated  */
-    public function addQualiteQuestionnaire(QuestionnaireQualite $qualiteQuestionnaire): self
-    {
-        if (!$this->qualiteQuestionnaires->contains($qualiteQuestionnaire)) {
-            $this->qualiteQuestionnaires[] = $qualiteQuestionnaire;
-            $qualiteQuestionnaire->setSemestre($this);
-        }
-
-        return $this;
-    }
-
-    /** @deprecated  */
-    public function removeQualiteQuestionnaire(QuestionnaireQualite $qualiteQuestionnaire): self
-    {
-        if ($this->qualiteQuestionnaires->contains($qualiteQuestionnaire)) {
-            $this->qualiteQuestionnaires->removeElement($qualiteQuestionnaire);
-            // set the owning side to null (unless already changed)
-            if ($qualiteQuestionnaire->getSemestre() === $this) {
-                $qualiteQuestionnaire->setSemestre(null);
-            }
-        }
 
         return $this;
     }

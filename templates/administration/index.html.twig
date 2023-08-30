@@ -22,9 +22,6 @@
     <div class="row block_admin">
     {% if user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data
         .isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_RP') %}
-        {% if settings('APPLICATION_COVID') == true %}
-            {{ include('administration/block_admin/_covid.html.twig') }}
-        {% endif %}
 
         {{ include('administration/block_admin/_etudiant.html.twig') }}
         </div>
@@ -45,7 +42,6 @@
         </div>
         <div class="row block_admin">
             {{ include('administration/block_admin/_document.html.twig') }}
-            {{ include('administration/block_admin/_article.html.twig') }}
         </div>
         <div class="row block_admin">
             {{ include('administration/block_admin/_qualite.html.twig') }}
@@ -79,7 +75,6 @@
             </div>
             <div class="row block_admin">
                 {{ include('administration/block_admin/_projet.html.twig') }}
-                {{ include('administration/block_admin/_article.html.twig') }}
             </div>
             <div class="row block_admin">
                 {{ include('administration/block_admin/_document.html.twig') }}
@@ -108,7 +103,6 @@
             {{ include('administration/block_admin/_projet.html.twig') }}
         {% endif %}
         {% if user_data.isGoodDepartement('ROLE_AUTEUR') %}
-            {{ include('administration/block_admin/_article.html.twig') }}
             </div>
             <div class="row block_admin">
                 {{ include('administration/block_admin/_document.html.twig') }}

@@ -197,7 +197,7 @@ class ApcRessourceController extends BaseController
                 return $this->render('apc/apc_ressource/new.html.twig', [
                     'apc_ressource' => $apcRessource,
                     'diplome' => $diplome,
-                    'form' => $form->createView(),
+                    'form' => $form,
                 ]);
             }
 
@@ -212,7 +212,7 @@ class ApcRessourceController extends BaseController
         return $this->render('apc/apc_ressource/new.html.twig', [
             'apc_ressource' => $apcRessource,
             'diplome' => $diplome,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -485,7 +485,7 @@ class ApcRessourceController extends BaseController
 
         return $this->render('apc/apc_ressource/edit.html.twig', [
             'apc_ressource' => $apcRessource,
-            'form' => $form->createView(),
+            'form' => $form,
             'diplome' => $semestre->getDiplome(),
         ]);
     }

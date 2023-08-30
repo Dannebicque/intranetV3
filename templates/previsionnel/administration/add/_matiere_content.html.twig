@@ -1,0 +1,370 @@
+<div class="alert alert-info mb-2">
+    {% set col = 'col-md-4' %}
+    <div class="row">
+        <div class="col-sm-12 {{ col }} text-center">
+            <strong>CM</strong><br>
+            {{ matiere.cmFormation }}h
+        </div>
+        <div class="col-sm-12 {{ col }} text-center">
+            <strong>TD</strong><br>
+            {{ matiere.tdFormation }}h
+        </div>
+        <div class="col-sm-12 {{ col }} text-center">
+            <strong>TP</strong><br>
+            {{ matiere.tpFormation }}h
+        </div>
+    </div>
+</div>
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th scope="col" rowspan="2">Intervenant</th>
+        <th colspan="3" class="previcm text-center">CM</th>
+        <th colspan="3" class="previtd text-center">TD</th>
+        <th colspan="3" class="previtp text-center">TP</th>
+        <th scope="col" rowspan="2">&nbsp;</th>
+    </tr>
+    <tr>
+        <th scope="col" class="previcm text-center">
+            <strong>NB h/ Gr. *</strong>
+        </th>
+        <th scope="col" class="previcm text-center">
+            <strong>NB Gr.</strong>
+        </th>
+        <th scope="col" class="previcm text-center">
+            <strong>NB séance/Gr</strong>
+        </th>
+
+        <th scope="col" class="previtd text-center">
+            <strong>NB h/ Gr. *</strong>
+        </th>
+        <th scope="col" class="previtd text-center">
+            <strong>NB Gr.</strong>
+        </th>
+        <th scope="col" class="previtd text-center">
+            <strong>NB séance/Gr</strong>
+        </th>
+
+        <th scope="col" class="previtp text-center">
+            <strong>NB h/ Gr. *</strong>
+        </th>
+        <th scope="col" class="previtp text-center">
+            <strong>NB Gr.</strong>
+        </th>
+        <th scope="col" class="previtp text-center">
+            <strong>NB séance/Gr</strong>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for previ in previsionnel.previsionnels %}
+        <tr>
+            <td>
+                <label for="intervenant_{{ loop.index }}" class="sr-only">intervenant {{ loop.index }}</label>
+                <select class="form-select" name="intervenant_{{ loop.index }}"
+                        {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
+                        id="intervenant_{{ loop.index }}"
+                        {{ stimulus_action('adm--previsionnel', 'changePersonnel', 'change', {
+                            matiere: matiere.typeIdMatiere,
+                            annee: annee,
+                            url: path('administration_previsionnel_change_intervenant', {id: previ.id})
+                        }) }}
+                >
+                    <option value="">{{ 'choisir.intervenant'|trans }}</option>
+                    {% for personnel in user_data.personnels %}
+                        <option value="{{ personnel.id }}"
+                                {% if previ.personnel_id == personnel.id %}selected{% endif %}>
+                            {{ personnel.displayPr }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </td>
+            <td class="previcm">
+                <label for="cm_{{ loop.index }}" class="sr-only">Nb Heures CM</label>
+                <input type="text" name="cm_{{ loop.index }}" id="cm_{{ loop.index }}" data-ligne="{{ loop.index }}"
+                        {{ stimulus_action('adm--previsionnel', 'changeData', 'change', {
+                            field: 'nbHCm',
+                            matiere: matiere.typeIdMatiere,
+                            annee: annee,
+                            type:'matiere',
+                            url: path('administration_previsionnel_change_data', {id: previ.id})
+                        }) }}
+                       value="{{ previ.nbHCm }}"
+                       class="form-control chgcm"></td>
+            <td class="previcm">
+                <label for="gr_cm_{{ loop.index }}" class="sr-only">Nb groupe CM</label>
+                <input type="number" name="gr_cm_{{ loop.index }}" id="gr_cm_{{ loop.index }}"
+                        {{ stimulus_action('adm--previsionnel', 'changeData', 'change', {
+                            field: 'nbGrCm',
+                            matiere: matiere.typeIdMatiere,
+                            annee: annee,
+                            type:'matiere',
+                            url: path('administration_previsionnel_change_data', {id: previ.id})
+                        }) }}
+                       data-ligne="{{ loop.index }}"
+                       value="{{ previ.nbGrCm }}"
+                       class="form-control chgcm">
+            </td>
+            <td id="ind_cm_{{ loop.index }}" class="previcm text-center">
+                {{ previ.nbHCm * previ.nbGrCm }}
+            </td>
+            <td class="previtd">
+                <label for="td_{{ loop.index }}" class="sr-only">Nb Heures TD</label>
+                <input type="text" value="{{ previ.nbHTd }}" name="td_{{ loop.index }}" id="td_{{ loop.index }}"
+                        {{ stimulus_action('adm--previsionnel', 'changeData', 'change', {
+                            field: 'nbHTd',
+                            matiere: matiere.typeIdMatiere,
+                            annee: annee,
+                            type:'matiere',
+                            url: path('administration_previsionnel_change_data', {id: previ.id})
+                        }) }}
+                       data-ligne="{{ loop.index }}"
+                       class="form-control chgtd"></td>
+            <td class="previtd">
+                <label for="gr_td_{{ loop.index }}" class="sr-only">Nb groupe TD</label>
+                <input type="number" value="{{ previ.nbGrTd }}" name="gr_td_{{ loop.index }}"
+                        {{ stimulus_action('adm--previsionnel', 'changeData', 'change', {
+                            field: 'nbGrTd',
+                            type:'matiere',
+                            matiere: matiere.typeIdMatiere,
+                            annee: annee,
+                            url: path('administration_previsionnel_change_data', {id: previ.id})
+                        }) }}
+                       id="gr_td_{{ loop.index }}"
+                       data-ligne="{{ loop.index }}" class="form-control chgtd"></td>
+            <td class="previtd text-center" id="ind_td_{{ loop.index }}">
+                {{ previ.nbHTd * previ.nbGrTd }}
+            </td>
+            <td class="previtp">
+                <label for="tp_{{ loop.index }}" class="sr-only">Nb Heures TP</label>
+                <input type="text" value="{{ previ.nbHTp }}" name="tp_{{ loop.index }}" id="tp_{{ loop.index }}"
+                       data-ligne="{{ loop.index }}"
+                        {{ stimulus_action('adm--previsionnel', 'changeData', 'change', {
+                            field: 'nbHTp',
+                            type:'matiere',
+                            matiere: matiere.typeIdMatiere,
+                            annee: annee,
+                            url: path('administration_previsionnel_change_data', {id: previ.id})
+                        }) }}
+                       class="form-control chgtp"></td>
+            <td class="previtp">
+                <label for="gr_tp_{{ loop.index }}" class="sr-only">Nb groupe TP</label>
+                <input type="number" value="{{ previ.nbGrTp }}" name="gr_tp_{{ loop.index }}"
+                       id="gr_tp_{{ loop.index }}"
+                        {{ stimulus_action('adm--previsionnel', 'changeData', 'change', {
+                            field: 'nbGrTp',
+                            type:'matiere',
+                            matiere: matiere.typeIdMatiere,
+                            annee: annee,
+                            url: path('administration_previsionnel_change_data', {id: previ.id})
+                        }) }}
+                       data-ligne="{{ loop.index }}" class="form-control chgtp"></td>
+            <td class="previtp text-center" id="ind_tp_{{ loop.index }}">
+                {{ previ.nbHTp * previ.nbGrTp }}
+            </td>
+            <td>
+                <a href="{{ path('administration_previsionnel_duplicate', {id:previ.id}) }}"
+                        {{ stimulus_action('adm--previsionnel', 'dupliquer', 'click',{
+                            matiere: matiere.typeIdMatiere,
+                            annee: annee,
+                            type:'matiere'
+                        }) }}
+                   class="btn btn-success btn-outline btn-xs">
+                    <i class="{{ iconDuplicate }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                       title="{{ 'atitle.dupliquer'|trans }}"></i></a>
+                <a href="{{ path('administration_previsionnel_delete', {id:previ.id}) }}"
+                        {{ stimulus_action('adm--previsionnel', 'supprIntervenant', 'click',{
+                            matiere: matiere.typeIdMatiere,
+                            annee: annee,
+                            type:'matiere'
+                        }) }}
+                   data-csrf="{{ csrf_token('delete' ~ previ.id) }}"
+                   class="btn btn-danger btn-outline btn-xs">
+                    <i class="{{ iconDelete }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                       title="{{ 'atitle.supprimer'|trans }}"></i></a>
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="11" class="text-center">
+                <span class="badge bg-warning">Aucun intervenant n'a été saisi</span>
+            </td>
+        </tr>
+    {% endfor %}
+    <tr id="ligneAdd">
+        <td colspan="11" class="bg-complementary">
+            <div class="row">
+                <div class="col-6">
+                    <label class="sr-only" for="addPersonnel">Choisir un intervenant à ajouter</label>
+                    <select id="addPersonnel"
+                            {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
+                            class="form-select"
+                    >
+                        <option value="">{{ 'choisir.intervenant'|trans }}</option>
+                        {% for personnel in user_data.personnels %}
+                            <option value="{{ personnel.id }}">
+                                {{ personnel.displayPr }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-6">
+                    <div class="d-grid ">
+                        <button class="btn btn-success d-block text-white"
+                                {{ stimulus_action('adm--previsionnel', 'ajoutIntervenant', 'click', {
+                                    matiere: matiere.typeIdMatiere,
+                                    annee: annee,
+                                }) }}
+                                id="addIntervenantPrevisionnel"><i
+                                    class="fas fa-plus"></i> {{ 'ajouter.intervenant'|trans }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </td>
+    </tr>
+    <tr>
+        <th rowspan="2">
+            Vérification du total d’heures par étudiant
+        </th>
+        <th class="previcm text-center">
+            <strong>NB h attendu</strong>
+        </th>
+        <td class="previcm text-center">
+            <strong>NB h saisi</strong>
+        </td>
+        <td class="previcm text-center">
+            <strong>Ecart</strong>
+        </td>
+
+        <th class="previtd text-center">
+            <strong>NB h attendu</strong>
+        </th>
+        <td class="previtd text-center">
+            <strong>NB h saisi</strong>
+        </td>
+        <td class="previtd text-center">
+            <strong>Ecart</strong>
+        </td>
+
+        <th class="previtp text-center">
+            <strong>NB h attendu</strong>
+        </th>
+        <td class="previtp text-center">
+            <strong>NB h saisi</strong>
+        </td>
+        <td class="previtp text-center">
+            <strong>Ecart</strong>
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td class="previcm text-center">
+            {{ matiere.cmFormation }}
+        </td>
+        <td class="previcm text-center">
+            {{ previsionnel.nbHCm }}
+        </td>
+        <td class="previcm text-center">
+            {% set ecart = previsionnel.nbHCm - matiere.cmFormation %}
+            {% if ecart == 0 %}
+                <span class="badge bg-success">OK</span>
+            {% else %}
+                {% if ecart > 0 %}
+                    <span class="badge bg-danger">{{ ecart }}</span>
+                {% else %}
+                    <span class="badge bg-warning">{{ ecart }}</span>
+                {% endif %}
+            {% endif %}
+        </td>
+        <td class="previtd text-center">
+            {{ matiere.tdFormation }}
+        </td>
+        <td class="previtd text-center">
+            {{ previsionnel.nbHTd }}
+        </td>
+        <td class="previtd text-center">
+            {% set ecart = previsionnel.nbHTd - matiere.tdFormation %}
+            {% if ecart == 0 %}
+                <span class="badge bg-success">OK</span>
+            {% else %}
+                {% if ecart > 0 %}
+                    <span class="badge bg-danger">{{ ecart }}</span>
+                {% else %}
+                    <span class="badge bg-warning">{{ ecart }}</span>
+                {% endif %}
+            {% endif %}
+        </td>
+        <td class="previtp text-center">
+            {{ matiere.tpFormation }}
+        </td>
+        <td class="previtp text-center">
+            {{ previsionnel.nbHTp }}
+        </td>
+        <td class="previtp">
+            {% set ecart = previsionnel.nbHTp - matiere.tpFormation %}
+            {% if ecart == 0 %}
+                <span class="badge bg-success">OK</span>
+            {% else %}
+                {% if ecart > 0 %}
+                    <span class="badge bg-danger">{{ ecart }}</span>
+                {% else %}
+                    <span class="badge bg-warning">{{ ecart }}</span>
+                {% endif %}
+            {% endif %}
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td colspan="11" class="bg-complementary">
+            <div class="d-grid ">
+                <span class="btn d-block text-white">
+                    Synthèse de la saisie
+                </span>
+            </div>
+
+        </td>
+    </tr>
+    <tr>
+        <th>
+            Total d'heures
+        </th>
+        <td class="previcm text-center" colspan="3">
+            {{ previsionnel.totalCm }}
+        </td>
+        <td class="previtd text-center" colspan="3">
+            {{ previsionnel.totalTd }}
+        </td>
+        <td class="previtp text-center" colspan="3">
+            {{ previsionnel.totalTp }}
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <th>
+            Total d’heures par étudiant
+        </th>
+        <td class="previcm text-center" colspan="3">
+            {{ previsionnel.totalEtudiantCm }}
+        </td>
+        <td class="previtd text-center" colspan="3">
+            {{ previsionnel.totalEtudiantTd }}
+        </td>
+        <td class="previtp text-center" colspan="3">
+            {{ previsionnel.totalEtudiantTp }}
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <th>
+            Total d’heures équivalent TD
+        </th>
+        <td class="previcm text-center" colspan="9">
+            {{ previsionnel.totalEqTD }} ({{ previsionnel.totalEqTDMajore }}**)
+        </td>
+        <td></td>
+    </tr>
+    </tbody>
+</table>

@@ -65,7 +65,7 @@ class AbsenceJustificatifType extends AbstractType
                 'label' => 'fichier',
                 'download_label' => 'apercu',
                 'allow_delete' => false,
-                'help' => 'Le justificatif ne peut être qu\'une convocation officielle ou un certificat médical',
+                'help' => 'Le justificatif doit être une convocation officielle ou un certificat médical',
             ]);
 
         if ('admin' === $this->role) {

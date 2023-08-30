@@ -11,7 +11,7 @@ namespace App\Controller\administration\stage;
 
 use App\Controller\BaseController;
 use App\Entity\StagePeriode;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -22,8 +22,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class StagePeriodeSoutenanceController extends BaseController
 {
     #[Route(path: '/{uuid}', name: 'administration_stage_periode_soutenance_index')]
-    #[ParamConverter('stagePeriode', options: ['mapping' => ['uuid' => 'uuid']])]
-    public function index(StagePeriode $stagePeriode): Response
+    public function index(#[MapEntity(mapping: ['uuid' => 'uuid'])]
+                          StagePeriode $stagePeriode): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
 

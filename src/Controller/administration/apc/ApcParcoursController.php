@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcParcoursController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/11/2022 11:04
+ * @lastUpdate 04/07/2023 17:20
  */
 
 namespace App\Controller\administration\apc;
@@ -26,7 +26,7 @@ class ApcParcoursController extends BaseController
     #[Route(path: '/{diplome}/new', name: 'apc_parcours_new', methods: ['GET', 'POST'])]
     public function new(Request $request, Diplome $diplome): Response
     {
-        $apcParcour = new ApcParcours($diplome);
+        $apcParcour = new ApcParcours($diplome->getReferentiel());
         $form = $this->createForm(ApcParcoursType::class, $apcParcour);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
@@ -39,7 +39,7 @@ class ApcParcoursController extends BaseController
 
         return $this->render('apc/apc_parcours/new.html.twig', [
             'apc_parcour' => $apcParcour,
-            'form' => $form->createView(),
+            'form' => $form,
             'diplome' => $diplome,
         ]);
     }
@@ -67,7 +67,7 @@ class ApcParcoursController extends BaseController
 
         return $this->render('apc/apc_parcours/edit.html.twig', [
             'apc_parcour' => $apcParcour,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 

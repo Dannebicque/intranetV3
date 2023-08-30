@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Message.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:21
+ * @lastUpdate 31/07/2023 09:48
  */
 
 namespace App\Entity;
@@ -27,6 +27,7 @@ class Message extends BaseEntity
     final public const MESSAGE_TYPE_ETUDIANT = 'e';
     final public const MESSAGE_TYPE_SEMESTRE = 's';
     final public const MESSAGE_TYPE_GROUPE = 'g';
+    final public const MESSAGE_TYPE_MATIERE = 'm';
     final public const MESSAGE_TYPE_PERMANENT = 'p';
 
     #[ORM\Column(type: Types::STRING, length: 255)]
@@ -42,13 +43,13 @@ class Message extends BaseEntity
     private ?Personnel $expediteur = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\MessageDestinataire>
+     * @var Collection<int, MessageDestinataire>
      */
     #[ORM\OneToMany(mappedBy: 'message', targetEntity: MessageDestinataire::class)]
     private Collection $messageDestinataires;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\MessagePieceJointe>
+     * @var Collection<int, MessagePieceJointe>
      */
     #[ORM\OneToMany(mappedBy: 'message', targetEntity: MessagePieceJointe::class, fetch: 'EAGER')]
     private Collection $messagePieceJointes;

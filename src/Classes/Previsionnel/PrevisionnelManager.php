@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Previsionnel/PrevisionnelManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/12/2022 15:20
+ * @lastUpdate 02/08/2023 10:22
  */
 
 namespace App\Classes\Previsionnel;
@@ -26,27 +26,59 @@ class PrevisionnelManager
 
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-        PrevisionnelSaeManager $previsionnelSae,
+        PrevisionnelSaeManager       $previsionnelSae,
         PrevisionnelRessourceManager $previsionnelRessource,
-        PrevisionnelMatiereManager $previsionnelMatiere
-    ) {
+        PrevisionnelMatiereManager   $previsionnelMatiere
+    )
+    {
         $this->managers[PrevisionnelSaeManager::TYPE] = $previsionnelSae;
         $this->managers[PrevisionnelRessourceManager::TYPE] = $previsionnelRessource;
         $this->managers[PrevisionnelMatiereManager::TYPE] = $previsionnelMatiere;
     }
 
-    public function getPrevisionnelPersonnelDepartementAnnee(
+    private function getPrevisionnelPersonnelDepartementAnnee(
         UtilisateurInterface $personnel,
         Departement $departement,
-        int $annee = 0
-    ): array {
+        int         $annee = 0
+    ): array
+    {
         $t = [];
         foreach ($this->managers as $manager) {
             $previs = $manager->getPrevisionnelPersonnelDepartementAnnee($personnel, $departement, $annee);
-            $t[] = $previs->toArray();
+            $t[] = $previs;
         }
 
-        return array_merge(...$t);
+        return $t;
+    }
+
+    public function getPrevisionnelPersonnelDepartementAnneeArray(
+        UtilisateurInterface $personnel,
+        Departement          $departement,
+        int                  $annee = 0
+    ): array
+    {
+        $t = $this->getPrevisionnelPersonnelDepartementAnnee($personnel, $departement, $annee);
+        $tt = [];
+        foreach ($t as $previs) {
+            $tt[] = $previs->toArray();
+        }
+        return array_merge(...$tt);
+    }
+
+    public function getPrevisionnelPersonnelDepartementAnneeCollection(
+        UtilisateurInterface $personnel,
+        Departement          $departement,
+        int                  $annee = 0
+    ): PrevisionnelCollection
+    {
+        $t = $this->getPrevisionnelPersonnelDepartementAnnee($personnel, $departement, $annee);
+        $collection = new PrevisionnelCollection();
+        foreach ($t as $previs) {
+            foreach ($previs->previsionnels as $previ) {
+                $collection->add($previ);
+            }
+        }
+        return $collection;
     }
 
     public function getPrevisionnelEnseignantAnnee(UtilisateurInterface $personnel, int $annee = 0): array
@@ -65,17 +97,18 @@ class PrevisionnelManager
         return $this->managers[$type];
     }
 
-    public function getPrevisionnelMatiere(int $matiere, string $type, int $annee): PrevisionnelCollection
+    public function getPrevisionnelMatiere(int $matiere, string $type, int $annee): ?PrevisionnelCollection
     {
         return $this->getManager($type)->findPrevisionnelMatiere($matiere, $annee);
     }
 
     public function getPrevisionnelMatierePersonnel(
         UtilisateurInterface $personnel,
-        int $matiere,
+        int    $matiere,
         string $type,
-        int $annee
-    ): PrevisionnelCollection {
+        int    $annee
+    ): PrevisionnelCollection
+    {
         return $this->getManager($type)->findPrevisionnelMatierePersonnelAnnee($matiere, $personnel, $annee);
     }
 
@@ -114,18 +147,18 @@ class PrevisionnelManager
         return array_merge(...$t);
     }
 
-    public function getPrevisionnelAnneeArray(Annee $annee, int $anneeUniversitaire = 0): array
-    {
-        $previsionnels = $this->getPrevisionnelAnnee($annee, $anneeUniversitaire);
-        $tPrevisionnel = [];
-        foreach ($previsionnels as $p) {
-            $tPrevisionnel[$p->id]['matiere'] = $p->matiere_libelle;
-            $tPrevisionnel[$p->id]['libelle'] = $p->matiere_libelle;
-            $tPrevisionnel[$p->id]['personnel'] = $p->personnel_prenom.' '.$p->personnel_nom;
-        }
-
-        return $tPrevisionnel;
-    }
+//    public function getPrevisionnelAnneeArray(Annee $annee, int $anneeUniversitaire = 0): array
+//    {
+//        $previsionnels = $this->getPrevisionnelAnnee($annee, $anneeUniversitaire);
+//        $tPrevisionnel = [];
+//        foreach ($previsionnels as $p) {
+//            $tPrevisionnel[$p->id]['matiere'] = $p->matiere_libelle;
+//            $tPrevisionnel[$p->id]['libelle'] = $p->matiere_libelle;
+//            $tPrevisionnel[$p->id]['personnel'] = $p->personnel_prenom . ' ' . $p->personnel_nom;
+//        }
+//
+//        return $tPrevisionnel;
+//    }
 
     public function findByDepartement(Departement $departement, int $annee): array
     {
@@ -178,7 +211,7 @@ class PrevisionnelManager
 
             return false;
         }
-        $method = 'set'.$name;
+        $method = 'set' . $name;
         if (method_exists($previ, $method)) {
             $previ->$method(Tools::convertToFloat($value));
             $this->entityManager->flush();
@@ -191,12 +224,13 @@ class PrevisionnelManager
 
     public function dupliqueAnnee(
         Departement $departement,
-        int $anneeDepart,
-        int $annee_destination,
-        array $personnels,
+        int     $anneeDepart,
+        int     $annee_destination,
+        array   $personnels,
         ?string $annee_concerver = 'false',
-        array $listeAnneesActives = []
-    ): void {
+        array   $listeAnneesActives = []
+    ): void
+    {
         // on efface, sauf si la case est cochée.
         if ('true' !== $annee_concerver) {
             $this->supprimeAnnee($departement, $annee_destination);
@@ -229,6 +263,7 @@ class PrevisionnelManager
 
     public function supprimeAnnee(Departement $departement, int $annee_destination): void
     {
+        $previsionnels = $this->getPrevisionnelDepartement($departement, $annee_destination);
         foreach ($previsionnels as $previsionnel) {
             if (null !== $previsionnel->objPrevisionnel) {
                 $this->entityManager->remove($this->$previsionnel->objPrevisionnel);
@@ -247,15 +282,25 @@ class PrevisionnelManager
 
         return array_merge(...$t);
     }
+//
+//    public function getPrevisionnelSaeAnnee(Annee $annee, ?int $anneeUniversitaire): array
+//    {
+//        $t = [];
+//        foreach ($annee->getSemestres() as $semestre) {
+//            $previs = $this->managers[PrevisionnelSaeManager::TYPE]->getPrevisionnelSemestre($semestre, $anneeUniversitaire);
+//            $t[] = $previs->toArray();
+//        }
+//
+//        return array_merge(...$t);
+//    }
 
-    public function getPrevisionnelSaeAnnee(Annee $annee, ?int $anneeUniversitaire): array
+    public function getPrevisionnelSemestreCollection(Semestre $semestre, int|null $annee): PrevisionnelCollection
     {
-        $t = [];
-        foreach ($annee->getSemestres() as $semestre) {
-            $previs = $this->managers[PrevisionnelSaeManager::TYPE]->getPrevisionnelSemestre($semestre, $anneeUniversitaire);
-            $t[] = $previs->toArray();
+        $t = $this->getPrevisionnelSemestre($semestre, $annee);
+        $collection = new PrevisionnelCollection();
+        foreach ($t as $previ) {
+            $collection->add($previ);
         }
-
-        return array_merge(...$t);
+        return $collection;
     }
 }

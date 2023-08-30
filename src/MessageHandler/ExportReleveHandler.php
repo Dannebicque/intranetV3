@@ -17,9 +17,11 @@ use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
-class ExportReleveHandler implements MessageHandlerInterface
+#[AsMessageHandler]
+class ExportReleveHandler
 {
     /**
      * ExportReleveHandler constructor.

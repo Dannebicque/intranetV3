@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/QuestionnaireExportExcel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/01/2023 09:59
+ * @lastUpdate 11/07/2023 11:01
  */
 
 namespace App\Components\Questionnaire;
@@ -300,7 +300,9 @@ class QuestionnaireExportExcel
                     ]);
                     ++$this->ligne;
                 }
+
                 // si autre, énumérer les réponses autres
+                //todo: est-ce encore bon ?
                 if (array_key_exists($cleQ . '_autre',
                         $this->resultatQuestion) && 'CHX:OTHER' === $reponse->valeur) {
                     foreach ($this->resultatQuestion[$cleQ . '_autre']['totalReponse'] as $key => $value) {
@@ -429,7 +431,11 @@ class QuestionnaireExportExcel
 //                    }
                 }
             }
-            $pourcentage = $satisfaction / ($nbProps * $nbTotalReponseQuestion);
+            if ($nbProps * $nbTotalReponseQuestion > 0) {
+                $pourcentage = $satisfaction / ($nbProps * $nbTotalReponseQuestion);
+            } else {
+                $pourcentage = 0;
+            }
             $totalPourcentageQuestion += $pourcentage;
             if ($pourcentage * 100 <= self::SEUIL) {
                 $this->myExcelWriter->writeCellXY(3, $this->ligne, $pourcentage,

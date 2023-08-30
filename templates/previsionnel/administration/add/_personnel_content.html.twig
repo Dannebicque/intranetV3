@@ -1,0 +1,426 @@
+<table class="table table-bordered">
+    <thead>
+    <tr>
+        <th scope="col" rowspan="2">Matière/ressource/SAE</th>
+        <th colspan="3" class="previcm text-center">CM</th>
+        <th colspan="3" class="previtd text-center">TD</th>
+        <th colspan="3" class="previtp text-center">TP</th>
+        <th scope="col" rowspan="2">&nbsp;</th>
+    </tr>
+    <tr>
+        <th scope="col" class="previcm text-center">
+            <strong>NB h/ Gr. *</strong>
+        </th>
+        <th scope="col" class="previcm text-center">
+            <strong>NB Gr.</strong>
+        </th>
+        <th scope="col" class="previcm text-center">
+            <strong>NB séance/Gr</strong>
+        </th>
+
+        <th scope="col" class="previtd text-center">
+            <strong>NB h/ Gr. *</strong>
+        </th>
+        <th scope="col" class="previtd text-center">
+            <strong>NB Gr.</strong>
+        </th>
+        <th scope="col" class="previtd text-center">
+            <strong>NB séance/Gr</strong>
+        </th>
+
+        <th scope="col" class="previtp text-center">
+            <strong>NB h/ Gr. *</strong>
+        </th>
+        <th scope="col" class="previtp text-center">
+            <strong>NB Gr.</strong>
+        </th>
+        <th scope="col" class="previtp text-center">
+            <strong>NB séance/Gr</strong>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for previ in previsionnel.previsionnels %}
+        <tr>
+            <td>
+                <label for="matiere_{{ loop.index }}" class="sr-only">Matière {{ loop.index }}</label>
+                <select class="form-select" name="matiere_{{ loop.index }}"
+                        {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
+                        id="matiere_{{ loop.index }}"
+                        {{ stimulus_action('adm--previsionnel', 'changeMatiere', 'change', {
+                            personnel: personnel.id,
+                            annee: annee,
+                            url: path('administration_previsionnel_change_matiere', {id: previ.id})
+                        }) }}
+                >
+                    <option value="">{{ 'choisir.matiere'|trans }}</option>
+                    {% for matiere in matieres %}
+                        <option value="{{ matiere.typeIdMatiere }}"
+                                {% if previ.typeIdMatiere == matiere.typeIdMatiere %}selected{% endif %}>
+                            {{ matiere.display }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </td>
+            <td class="previcm">
+                <label for="cm_{{ loop.index }}" class="sr-only">Nb Heures CM</label>
+                <input type="text" name="cm_{{ loop.index }}" id="cm_{{ loop.index }}" data-ligne="{{ loop.index }}"
+                        {{ stimulus_action('adm--previsionnel', 'changeData', 'change', {
+                            field: 'nbHCm',
+                            type:'personnel',
+                            personnel: personnel.id,
+                            annee: annee,
+                            url: path('administration_previsionnel_change_data', {id: previ.id})
+                        }) }}
+                       value="{{ previ.nbHCm }}"
+                       class="form-control chgcm"></td>
+            <td class="previcm">
+                <label for="gr_cm_{{ loop.index }}" class="sr-only">Nb groupe CM</label>
+                <input type="number" name="gr_cm_{{ loop.index }}" id="gr_cm_{{ loop.index }}"
+                        {{ stimulus_action('adm--previsionnel', 'changeData', 'change', {
+                            field: 'nbGrCm',
+                            type:'personnel',
+                            personnel: personnel.id,
+                            annee: annee,
+                            url: path('administration_previsionnel_change_data', {id: previ.id})
+                        }) }}
+                       data-ligne="{{ loop.index }}"
+                       value="{{ previ.nbGrCm }}"
+                       class="form-control chgcm">
+            </td>
+            <td id="ind_cm_{{ loop.index }}" class="previcm text-center">
+                {{ previ.nbHCm * previ.nbGrCm }}
+            </td>
+            <td class="previtd">
+                <label for="td_{{ loop.index }}" class="sr-only">Nb Heures TD</label>
+                <input type="text" value="{{ previ.nbHTd }}" name="td_{{ loop.index }}" id="td_{{ loop.index }}"
+                        {{ stimulus_action('adm--previsionnel', 'changeData', 'change', {
+                            field: 'nbHTd',
+                            type:'personnel',
+                            personnel: personnel.id,
+                            annee: annee,
+                            url: path('administration_previsionnel_change_data', {id: previ.id})
+                        }) }}
+                       data-ligne="{{ loop.index }}"
+                       class="form-control chgtd"></td>
+            <td class="previtd">
+                <label for="gr_td_{{ loop.index }}" class="sr-only">Nb groupe TD</label>
+                <input type="number" value="{{ previ.nbGrTd }}" name="gr_td_{{ loop.index }}"
+                        {{ stimulus_action('adm--previsionnel', 'changeData', 'change', {
+                            field: 'nbGrTd',
+                            type:'personnel',
+                            personnel: personnel.id,
+                            annee: annee,
+                            url: path('administration_previsionnel_change_data', {id: previ.id})
+                        }) }}
+                       id="gr_td_{{ loop.index }}"
+                       data-ligne="{{ loop.index }}" class="form-control chgtd"></td>
+            <td class="previtd text-center" id="ind_td_{{ loop.index }}">
+                {{ previ.nbHTd * previ.nbGrTd }}
+            </td>
+            <td class="previtp">
+                <label for="tp_{{ loop.index }}" class="sr-only">Nb Heures TP</label>
+                <input type="text" value="{{ previ.nbHTp }}" name="tp_{{ loop.index }}" id="tp_{{ loop.index }}"
+                       data-ligne="{{ loop.index }}"
+                        {{ stimulus_action('adm--previsionnel', 'changeData', 'change', {
+                            field: 'nbHTp',
+                            type:'personnel',
+                            personnel: personnel.id,
+                            annee: annee,
+                            url: path('administration_previsionnel_change_data', {id: previ.id})
+                        }) }}
+                       class="form-control chgtp"></td>
+            <td class="previtp">
+                <label for="gr_tp_{{ loop.index }}" class="sr-only">Nb groupe TP</label>
+                <input type="number" value="{{ previ.nbGrTp }}" name="gr_tp_{{ loop.index }}"
+                       id="gr_tp_{{ loop.index }}"
+                        {{ stimulus_action('adm--previsionnel', 'changeData', 'change', {
+                            field: 'nbGrTp',
+                            type:'personnel',
+                            personnel: personnel.id,
+                            annee: annee,
+                            url: path('administration_previsionnel_change_data', {id: previ.id})
+                        }) }}
+                       data-ligne="{{ loop.index }}" class="form-control chgtp"></td>
+            <td class="previtp text-center" id="ind_tp_{{ loop.index }}">
+                {{ previ.nbHTp * previ.nbGrTp }}
+            </td>
+            <td>
+                <a href="{{ path('administration_previsionnel_duplicate', {id:previ.id}) }}"
+                        {{ stimulus_action('adm--previsionnel', 'dupliquer', 'click',{
+                            personnel: personnel.id,
+                            annee: annee,
+                            type:'personnel'
+                        }) }}
+                   class="btn btn-success btn-outline btn-xs">
+                    <i class="{{ iconDuplicate }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                       title="{{ 'atitle.dupliquer'|trans }}"></i></a>
+                <a href="{{ path('administration_previsionnel_delete', {id:previ.id}) }}"
+                        {{ stimulus_action('adm--previsionnel', 'supprIntervenant', 'click',{
+                            personnel: personnel.id,
+                            annee: annee,
+                            type:'personnel'
+                        }) }}
+                   data-csrf="{{ csrf_token('delete' ~ previ.id) }}"
+                   class="btn btn-danger btn-outline btn-xs">
+                    <i class="{{ iconDelete }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                       title="{{ 'atitle.supprimer'|trans }}"></i></a>
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="11" class="text-center">
+                <span class="badge bg-warning">Aucune matière/ressource/SAE n'a été saisie</span>
+            </td>
+        </tr>
+    {% endfor %}
+    <tr>
+        <td colspan="11" class="bg-complementary">
+            <div class="row">
+                <div class="col-6">
+                    <label class="sr-only" for="addPersonnel">Choisir une matière/ressource/SAE à ajouter</label>
+                    <select id="addPersonnel"
+                            {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
+                            class="form-select"
+                    >
+                        <option value="">{{ 'choisir.matiere'|trans }}</option>
+                        {% for matiere in matieres %}
+                            <option value="{{ matiere.typeIdMatiere }}">
+                                {{ matiere.display }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-6">
+                    <div class="d-grid ">
+                        <button class="btn btn-success d-block text-white"
+                                {{ stimulus_action('adm--previsionnel', 'ajoutMatiere', 'click', {
+                                    personnel: personnel.id,
+                                    annee: annee,
+                                }) }}
+                                id="addMatierePrevisionnel"><i
+                                    class="fas fa-plus"></i> {{ 'ajouter.matiere'|trans }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </td>
+    </tr>
+
+    <tr>
+        <th colspan="11" class="text-center">
+            Suivi de projet, Primes et HRS
+        </th>
+    </tr>
+
+    <tr>
+        <th colspan="2">Type d'HRS, de prime ou de suivi</th>
+        <th colspan="2" class="text-center">Libellé</th>
+        <th colspan="2" class="text-center">Semestre</th>
+        <th colspan="2" class="text-center">Diplôme</th>
+        <th colspan="2" class="text-center">Nb heures équivalent TD</th>
+        <th>&nbsp;</th>
+    </tr>
+    {% for prime in primes.hrs %}
+        <tr>
+            <td colspan="2">
+                <label for="prime_{{ loop.index }}" class="sr-only">Type de prime {{ loop.index }}</label>
+                <select class="form-select" name="prime_{{ loop.index }}"
+                        {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
+                        id="prime_{{ loop.index }}"
+                        {{ stimulus_action('adm--previsionnel', 'changePrime', 'change', {
+                            personnel: personnel.id,
+                            annee: annee,
+                            field: 'typeHrs',
+                            url: path('administration_hrs_change_data', {id:prime.id}) }) }}>
+                    <option value="">{{ 'choisir.prime'|trans }}</option>
+                    {% for type in typesHrs %}
+                        <option value="{{ type.id }}"
+                                {% if prime.typeHrs != null and prime.typeHrs.id == type.id %}selected{% endif %}>
+                            {{ type.libelle }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </td>
+            <td colspan="2">
+                <label for="libelle_{{ loop.index }}" class="sr-only">Libellé {{ loop.index }}</label>
+                <input type="text" name="libelle_{{ loop.index }}" id="libelle_{{ loop.index }}"
+                       value="{{ prime.libelle }}"
+                        {{ stimulus_action('adm--previsionnel', 'changePrime', 'change', {
+                            personnel: personnel.id,
+                            annee: annee,
+                            field: 'libelle',
+                            url: path('administration_hrs_change_data', {id:prime.id}) }) }}
+                       class="form-control">
+            </td>
+            <td colspan="2">
+                <label for="semestre_{{ loop.index }}" class="sr-only">Semestre {{ loop.index }}</label>
+                <select class="form-select" name="semestre_{{ loop.index }}"
+                        {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
+                        id="semestre_{{ loop.index }}"
+                        {{ stimulus_action('adm--previsionnel', 'changePrime', 'change', {
+                            personnel: personnel.id,
+                            field: 'semestre',
+                            annee: annee,
+                            url: path('administration_hrs_change_data', {id:prime.id}) }) }}>
+                    <option value="">{{ 'choisir.semestre'|trans }}</option>
+                    {#                {% for type in types %} #}
+                    {#                    <option value="{{ type.id }}" #}
+                    {#                            {% if prime.typeId == type.id %}selected{% endif %}> #}
+                    {#                        {{ type.display }} #}
+                    {#                    </option> #}
+                    {#                {% endfor %} #}
+                </select>
+            </td>
+            <td colspan="2">
+                <label for="diplome_{{ loop.index }}" class="sr-only">Diplôme {{ loop.index }}</label>
+                <select class="form-select" name="diplome_{{ loop.index }}"
+                        {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
+                        id="diplome_{{ loop.index }}"
+                        {{ stimulus_action('adm--previsionnel', 'changePrime', 'change', {
+                            personnel: personnel.id,
+                            field: 'diplome',
+                            annee: annee,
+                            url: path('administration_hrs_change_data', {id:prime.id}) }) }}>
+                    <option value="">{{ 'choisir.diplome'|trans }}</option>
+                    {#                {% for type in types %} #}
+                    {#                    <option value="{{ type.id }}" #}
+                    {#                            {% if prime.typeId == type.id %}selected{% endif %}> #}
+                    {#                        {{ type.display }} #}
+                    {#                    </option> #}
+                    {#                {% endfor %} #}
+                </select>
+            </td>
+            <td colspan="2">
+                <label for="heures_{{ loop.index }}" class="sr-only">Heures Eq TD {{ loop.index }}</label>
+                <input type="text" name="heures_{{ loop.index }}" id="heures_{{ loop.index }}"
+                       value="{{ prime.nbHeuresTd }}"
+                        {{ stimulus_action('adm--previsionnel', 'changePrime', 'change', {
+                            personnel: personnel.id,
+                            annee: annee,
+                            field: 'nbHeuresTd',
+                            url: path('administration_hrs_change_data', {id:prime.id}) }) }}
+                       class="form-control">
+            </td>
+            <td>
+                <a href="{{ path('administration_hrs_duplicate', {id:prime.id}) }}"
+                        {{ stimulus_action('adm--previsionnel', 'dupliquerPrime', 'click',{
+                            personnel: personnel.id,
+                            annee: annee,
+                        }) }}
+                   class="btn btn-success btn-outline btn-xs">
+                    <i class="{{ iconDuplicate }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                       title="{{ 'atitle.dupliquer'|trans }}"></i></a>
+                <a href="{{ path('administration_hrs_delete', {id:prime.id}) }}"
+                        {{ stimulus_action('adm--previsionnel', 'supprPrime', 'click',{
+                            personnel: personnel.id,
+                            annee: annee,
+                        }) }}
+                   data-csrf="{{ csrf_token('delete' ~ prime.id) }}"
+                   class="btn btn-danger btn-outline btn-xs">
+                    <i class="{{ iconDelete }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                       title="{{ 'atitle.supprimer'|trans }}"></i></a>
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="11" class="text-center">
+                <span class="badge bg-warning">Aucune prime n'a été saisie</span>
+            </td>
+        </tr>
+    {% endfor %}
+    <tr>
+        <td colspan="11" class="bg-complementary">
+            <div class="d-grid ">
+                <button class="btn btn-success d-block text-white"
+                        {{ stimulus_action('adm--previsionnel', 'ajoutPrime', 'click', {
+                            personnel: personnel.id,
+                            annee: annee,
+                        }) }}
+                ><i class="fas fa-plus"></i> {{ 'ajouter.prime'|trans }}
+                </button>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <th rowspan="{{ categorieHrs|length + 1 }}" colspan="3">Vérification des heures</th>
+        <td colspan="2" class="text-center">Type</td>
+        <td colspan="2" class="text-center">Nb heures saisies</td>
+        <td colspan="2" class="text-center">Nb heures maximum</td>
+        <td colspan="2" class="text-center">Différence</td>
+    </tr>
+    {% for categorie in categorieHrs %}
+        <tr>
+            <th colspan="2">{{ categorie.value }}</th>
+            <td colspan="2" class="text-center">{{ primes.totalTypeHrs[categorie.value] }}</td>
+            <td colspan="2" class="text-center">{{ categorie.maxHeures }}</td>
+            <td colspan="2" class="text-center">
+                {% if categorie.maxHeures == 0 %}
+                    <span class="badge bg-info">N.C.</span>
+                {% elseif categorie.maxHeures >= primes.totalTypeHrs[categorie.value] %}
+                    <span class="badge bg-success">OK *</span>
+                {% else %}
+                    <span class="badge bg-danger">Dépassement *</span>
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+
+    <tr>
+        <td colspan="11" class="bg-complementary">
+            <div class="d-grid ">
+                <span class="btn d-block text-white">
+                    Synthèse de la saisie
+                </span>
+            </div>
+
+        </td>
+    </tr>
+
+    <tr>
+        <th colspan="5"> Total d’heures équivalent TD (hors prime)</th>
+        <td colspan="2" class="text-center">{{ previsionnel.totalEqTD }} ({{ previsionnel.totalEqTDMajore }}**)</td>
+        <td colspan="2" class="text-center">{{ personnel.nbHeuresService }}</td>
+        <td colspan="2" class="text-center">
+            {% if personnel.nbHeuresService == 0 %}
+                <span class="badge bg-info">Pas de max défini</span>
+            {% elseif personnel.nbHeuresService > previsionnel.totalEqTD %}
+                <span class="badge bg-warning">{{ previsionnel.totalEqTD - personnel.nbHeuresService }}</span>
+            {% else %}
+                <span class="badge bg-success">{{ previsionnel.totalEqTD - personnel.nbHeuresService }}</span>
+            {% endif %}
+        </td>
+    </tr>
+    <tr>
+        <th colspan="5">
+            Total prime/HRS/Suivis
+        </th>
+        <td class="previcm text-center" colspan="6">
+            {{ primes.total }}*
+        </td>
+    </tr>
+    <tr>
+        <th colspan="5"> Total d’heures équivalent TD + prime/HRS/Suivis</th>
+        <td colspan="2" class="text-center">{{ previsionnel.totalEqTD + primes.total }}
+            ({{ previsionnel.totalEqTDMajore + primes.total }}**)
+        </td>
+        <td colspan="2" class="text-center">{{ personnel.nbHeuresService }}</td>
+        <td colspan="2" class="text-center">
+            {% if personnel.nbHeuresService == 0 %}
+                <span class="badge bg-info">Pas de max défini</span>
+            {% elseif personnel.nbHeuresService > (previsionnel.totalEqTD + primes.total) %}
+                <span class="badge bg-warning">{{ (previsionnel.totalEqTD + primes.total) - personnel.nbHeuresService }}</span>
+            {% else %}
+                <span class="badge bg-success">{{ (previsionnel.totalEqTD + primes.total) - personnel.nbHeuresService }}</span>
+            {% endif %}
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="alert alert-info mt-2">
+    * Les heures de prime/HRS/Suivis sont comptabilisées uniquement pour le département concerné<br>
+    ** Les heures équivalent TD majorée sont calculées avec les CM * 1.5
+</div>

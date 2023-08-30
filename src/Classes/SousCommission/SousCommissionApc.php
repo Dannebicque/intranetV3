@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionApc.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/06/2023 09:20
+ * @lastUpdate 27/06/2023 14:28
  */
 
 namespace App\Classes\SousCommission;
@@ -28,7 +28,7 @@ class SousCommissionApc extends AbstractSousCommission implements SousCommission
 {
     final public const TEMPLATE_LIVE = 'liveApc.html.twig';
     final public const TEMPLATE_TRAVAIL = 'travailApc.html.twig';
-    public ?Semestre $semestrePrecedent;
+    public ?Semestre $semestrePrecedent = null;
 
     public function __construct(
         EntityManagerInterface $entityManager,

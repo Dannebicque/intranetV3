@@ -1,0 +1,149 @@
+<div class="card card-body">
+    <form action="{{ path('messagerie_sent') }}" id="formNewMessage" enctype="multipart/form-data" method="post">
+        <div>
+            <div class="form-group">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="messageDestinataireType"
+                           id="messageSemestre" value="s"
+                           data-message="{{ message != null ? message.id : '' }} }}"
+                            {{ stimulus_action('application--messagerie', 'changeTypeDestinataire') }}
+                           {% if message != null and message.type== "s" %}checked{% endif %}>
+                    <label class="form-check-label" for="messageSemestre">Semestre</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input"
+                            {{ stimulus_action('application--messagerie', 'changeTypeDestinataire') }}
+                           type="radio" name="messageDestinataireType" id="messageGroupe"
+                           data-message="{{ message != null ? message.id : '' }} }}"
+                           value="g"
+                           {% if message != null and message.type== "g" %}checked{% endif %}>
+                    <label class="form-check-label" for="messageGroupe">Groupe(s)</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="messageDestinataireType"
+                           data-message="{{ message != null ? message.id : '' }} }}"
+                           id="messageEtudiant"
+                            {{ stimulus_action('application--messagerie', 'changeTypeDestinataire') }}
+                           value="e"
+                           {% if message != null and message.type== "e" %}checked{% endif %}>
+                    <label class="form-check-label" for="messageEtudiant">Etudiant(s)</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="messageDestinataireType"
+                           data-message="{{ message != null ? message.id : '' }} }}"
+                           id="messagePersonnel" value="p"
+                            {{ stimulus_action('application--messagerie', 'changeTypeDestinataire') }}
+                           {% if message != null and message.type== "p" %}checked{% endif %}>
+                    <label class="form-check-label" for="messagePersonnel">Personnel(s)/vacataire(s)</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="messageDestinataireType"
+                           id="messageMatiere" value="m"
+                           data-message="{{ message != null ? message.id : '' }} }}"
+                            {{ stimulus_action('application--messagerie', 'changeTypeDestinataire') }}
+                            {% if message != null and message.type== "m" %}checked{% endif %}>
+                    <label class="form-check-label" for="messageMatiere">Matière/Ressource/SAÉ</label>
+                </div>
+            </div>
+            <div id="blocDestMessgaeInfo" class="alert alert-info">Choisir d'abord le type de destinataire pour filtrer
+            </div>
+        </div>
+        <div {{ stimulus_target('application--messagerie', 'contentTypeDestinataire') }}></div>
+
+
+        <br>
+        <div class="form-group">
+            <label for="messageCopy">Copie(s)</label>
+            <select class="form-select selectpicker" data-size="10"
+                    is="select-complete"
+                    title="{{ 'message.copy'|trans }}" id="messageCopy" name="messageCopy[]" multiple>
+                {% for personnel in user_data.personnels %}
+                    <option value="{{ personnel.id }}">{{ personnel.display }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="messageSubject">Sujet</label>
+            <input class="form-control form-control-lg" type="text" maxlength="255"
+                   placeholder="{{ 'message.subject'|trans }}" id="messageSubject" name="messageSubject"
+                   {% if message != null %}value="{{ message.sujet }}"{% endif %}>
+        </div>
+        <div class="form-group">
+            <label for="messageMessage">Message</label>
+            <textarea id="messageMessage" name="messageMessage">
+            {% if message != null %}{{ message.message|raw }}{% endif %}
+        </textarea>
+        </div>
+        <div style="display:none" id="blocPj">
+            <div class="alert alert-info">
+                Le total du poids des pièces jointes, ne peut pas exceder 10Mo. Dans le cas contraire utilisez par
+                exemple
+                <a href="https://filesender.renater.fr" target="_blank">filesender</a> pour obtenir un lien de partage
+                de vos fichiers volumineux.
+            </div>
+            <div id="blocFiles">
+            <div class="row" id="file1">
+                <div class="col-10">
+                    <input type="file" name="pj1" id="pj1" class="form-control"
+                           data-action="change->application--messagerie#pjFile"
+                           placeholder="Ajouter une pièce
+                jointe">
+                </div>
+                <div class="col-2 d-grid">
+                    <button class="btn d-block btn-danger-outline" data-file="1"
+                            data-bs-placement="bottom"
+                            data-controller="interface--tooltip"
+                            title="Supprimer le fichier"
+                            {{ stimulus_action('application--messagerie', 'removeFile') }}>
+                        <i class="fa fa-minus-circle"></i></button>
+                </div>
+            </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-12 d-grid">
+                    <button class="btn d-block btn-success-outline" data-file="1"
+                            data-bs-placement="bottom"
+                            data-controller="interface--tooltip"
+                            title="Ajouter un autre fichier"
+                            {{ stimulus_action('application--messagerie', 'addFile') }}
+                    >
+                        <i class="fa fa-plus-circle"></i> Ajouter un autre fichier
+                    </button>
+                </div>
+            </div>
+        </div>
+        <br>
+
+        <div class="gap-items-2 text-right p-10 bg-lightest bt-1">
+            <span id="poidPj"></span>
+            <button class="btn btn-light" type="button"
+                    data-bs-placement="bottom"
+                    data-controller="interface--tooltip"
+                    title="Ajouter des pièces jointes"
+                    {{ stimulus_action('application--messagerie', 'addPj') }}
+            >
+                <i class="fa fa-paperclip" title="Ajouter des pièces jointes"></i>
+            </button>
+            <button class="btn btn-light" type="button" title="Sauvegarder le brouillon"
+                    data-bs-placement="bottom"
+                    data-controller="interface--tooltip"
+                    {{ stimulus_action('application--messagerie', 'saveDraft', 'click', {url:path('messagerie_draft')}) }}
+            ><i
+                        class="fa fa-save"></i>
+            </button>
+
+            <button class="btn btn-secondary" type="button" data-dock="close"
+                    data-bs-placement="bottom"
+                    data-controller="interface--tooltip"
+                    title="Annuler l'envoi du message"
+            >{{ 'annuler'|trans }}</button>
+            <button class="btn btn-primary" type="submit"
+                    data-bs-placement="bottom"
+                    data-controller="interface--tooltip"
+                    title="Envoyer le message"
+                    id="messageSent"
+                    {{ stimulus_action('application--messagerie', 'envoyer') }}
+            >{{ 'envoyer'|trans }}</button>
+        </div>
+    </form>
+</div>

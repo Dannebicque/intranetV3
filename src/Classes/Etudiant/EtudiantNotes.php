@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Etudiant/EtudiantNotes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/01/2023 13:16
+ * @lastUpdate 25/07/2023 13:56
  */
 
 namespace App\Classes\Etudiant;

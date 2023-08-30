@@ -1,15 +1,16 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/TypeHrs.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 21:28
+ * @lastUpdate 28/07/2023 15:24
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
+use App\Enums\TypeHrsEnum;
 use App\Repository\TypeHrsRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -23,28 +24,14 @@ use Symfony\Component\Serializer\Annotation\Groups;
 class TypeHrs extends BaseEntity implements Stringable
 {
     use LifeCycleTrait;
-    final public const TYPE_HRS_HRS = 'HRS';
-    final public const TYPE_HRS_PCA = 'PCA';
-    final public const TYPE_HRS_PRP = 'PRP';
-    final public const TYPE_HRS_SUIVI = 'Suivi';
-    final public const TYPE_HRS_AUTRE = 'Autre';
-    final public const TAB_TYPE_HRS = [
-        'choice.'.self::TYPE_HRS_HRS => self::TYPE_HRS_HRS,
-        'choice.'.self::TYPE_HRS_PCA => self::TYPE_HRS_PCA,
-        'choice.'.self::TYPE_HRS_PRP => self::TYPE_HRS_PRP,
-        'choice.'.self::TYPE_HRS_SUIVI => self::TYPE_HRS_SUIVI,
-        'choice.'.self::TYPE_HRS_AUTRE => self::TYPE_HRS_AUTRE,
-    ];
-
-    // STAGE, PRP, PCA, HRS
 
     #[Groups(['type_hrs_administration'])]
     #[ORM\Column(type: Types::STRING, length: 100)]
     private ?string $libelle = null;
 
     #[Groups(['type_hrs_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 20)]
-    private ?string $type = null;
+    #[ORM\Column(type: Types::STRING, enumType: TypeHrsEnum::class, nullable: true, length: 20)]
+    private TypeHrsEnum|null $type = null;
 
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Hrs>
@@ -120,12 +107,12 @@ class TypeHrs extends BaseEntity implements Stringable
         return $this;
     }
 
-    public function getType(): ?string
+    public function getType(): ?TypeHrsEnum
     {
         return $this->type;
     }
 
-    public function setType(?string $type): void
+    public function setType(?TypeHrsEnum $type): void
     {
         $this->type = $type;
     }

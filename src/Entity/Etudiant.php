@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Etudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/11/2022 19:44
+ * @lastUpdate 28/07/2023 15:47
  */
 
 namespace App\Entity;
@@ -48,7 +48,7 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     private ?Semestre $semestre = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Note>
+     * @var Collection<int, \App\Entity\Note>
      */
     #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: Note::class)]
     private Collection $notes;
@@ -64,7 +64,7 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     private ?int $anneeBac;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Absence>
+     * @var Collection<int, Absence>
      */
     #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: Absence::class)]
     #[ORM\OrderBy(value: ['dateHeure' => 'desc'])]
@@ -74,32 +74,32 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     private ?Adresse $adresseParentale = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Rattrapage>
+     * @var Collection<int, Rattrapage>
      */
     #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: Rattrapage::class)]
     private Collection $rattrapages;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Favori>
+     * @var Collection<int, Favori>
      */
     #[ORM\OneToMany(mappedBy: 'etudiantDemandeur', targetEntity: Favori::class)]
     private Collection $etudiantDemande;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Favori>
+     * @var Collection<int, Favori>
      */
     #[ORM\OneToMany(mappedBy: 'etudiantDemande', targetEntity: Favori::class)]
     private Collection $etudiantDemandeur;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Scolarite>
+     * @var Collection<int, Scolarite>
      */
     #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: Scolarite::class)]
     #[ORM\OrderBy(value: ['ordre' => 'ASC'])]
     private Collection $scolarites;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Notification>
+     * @var Collection<int, Notification>
      */
     #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: Notification::class)]
     #[ORM\OrderBy(value: ['created' => 'desc'])]
@@ -115,25 +115,25 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     private Collection $groupes;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\MessageDestinataireEtudiant>
+     * @var Collection<int, MessageDestinataireEtudiant>
      */
     #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: MessageDestinataireEtudiant::class)]
     private Collection $messageDestinataireEtudiants;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int,\App\Entity\AbsenceJustificatif>
+     * @var Collection<int,AbsenceJustificatif>
      */
     #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: AbsenceJustificatif::class)]
     private Collection $absenceJustificatifs;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\StageEtudiant>
+     * @var Collection<int, StageEtudiant>
      */
     #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: StageEtudiant::class)]
     private Collection $stageEtudiants;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Alternance>
+     * @var Collection<int, Alternance>
      */
     #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: Alternance::class)]
     private Collection $alternances;
@@ -160,26 +160,14 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     private int $anneeSortie = 0;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\EmpruntEtudiant>
+     * @var Collection<int, EmpruntEtudiant>
      */
     #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: EmpruntEtudiant::class)]
     #[ORM\OrderBy(value: ['created' => 'DESC'])]
     private Collection $emprunts;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ArticleLikeEtudiant>
-     */
-    #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: ArticleLikeEtudiant::class)]
-    private Collection $articlesLike;
-
     #[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'etudiants')]
     private ?Departement $departement = null;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\QuestionnaireEtudiant>
-     */
-    #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: QuestionnaireEtudiant::class)]
-    private Collection $quizzEtudiants;
 
     #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
     private ?string $loginSpecifique = null;
@@ -188,7 +176,7 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     private bool $formationContinue = false;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\DocumentFavoriEtudiant>
+     * @var Collection<int, DocumentFavoriEtudiant>
      */
     #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: DocumentFavoriEtudiant::class)]
     private Collection $documentsFavoris;
@@ -197,7 +185,7 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     private Collection $projetEtudiants;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Commentaire>
+     * @var Collection<int, Commentaire>
      */
     #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: Commentaire::class)]
     private Collection $commentaires;
@@ -224,14 +212,12 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         $this->absenceJustificatifs = new ArrayCollection();
         $this->stageEtudiants = new ArrayCollection();
         $this->alternances = new ArrayCollection();
-        $this->articlesLike = new ArrayCollection();
         $this->documentsFavoris = new ArrayCollection();
 
         $this->promotion = (int) date('Y');
         $this->anneeBac = (int) date('Y');
         $this->typeUser = 'ETU';
         $this->emprunts = new ArrayCollection();
-        $this->quizzEtudiants = new ArrayCollection();
         $this->projetEtudiants = new ArrayCollection();
         $this->commentaires = new ArrayCollection();
         $this->conpereEtudiants = new ArrayCollection();
@@ -948,37 +934,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         return $this;
     }
 
-    /**
-     * @return Collection|ArticleLikeEtudiant[]
-     */
-    public function getArticlesLike(): Collection
-    {
-        return $this->articlesLike;
-    }
-
-    public function addArticlesLike(ArticleLikeEtudiant $articlesLike): self
-    {
-        if (!$this->articlesLike->contains($articlesLike)) {
-            $this->articlesLike[] = $articlesLike;
-            $articlesLike->setEtudiant($this);
-        }
-
-        return $this;
-    }
-
-    public function removeArticlesLike(ArticleLikeEtudiant $articlesLike): self
-    {
-        if ($this->articlesLike->contains($articlesLike)) {
-            $this->articlesLike->removeElement($articlesLike);
-            // set the owning side to null (unless already changed)
-            if ($articlesLike->getEtudiant() === $this) {
-                $articlesLike->setEtudiant(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getDepartement(): ?Departement
     {
         return $this->departement;
@@ -987,37 +942,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     public function setDepartement(?Departement $departement): self
     {
         $this->departement = $departement;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|QuestionnaireEtudiant[]
-     */
-    public function getQuizzEtudiants(): Collection
-    {
-        return $this->quizzEtudiants;
-    }
-
-    public function addQuizzEtudiant(QuestionnaireEtudiant $quizzEtudiant): self
-    {
-        if (!$this->quizzEtudiants->contains($quizzEtudiant)) {
-            $this->quizzEtudiants[] = $quizzEtudiant;
-            $quizzEtudiant->setEtudiant($this);
-        }
-
-        return $this;
-    }
-
-    public function removeQuizzEtudiant(QuestionnaireEtudiant $quizzEtudiant): self
-    {
-        if ($this->quizzEtudiants->contains($quizzEtudiant)) {
-            $this->quizzEtudiants->removeElement($quizzEtudiant);
-            // set the owning side to null (unless already changed)
-            if ($quizzEtudiant->getEtudiant() === $this) {
-                $quizzEtudiant->setEtudiant(null);
-            }
-        }
 
         return $this;
     }

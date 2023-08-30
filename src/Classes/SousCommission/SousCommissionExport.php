@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/06/2023 09:32
+ * @lastUpdate 02/08/2023 10:07
  */
 
 namespace App\Classes\SousCommission;
@@ -20,6 +20,7 @@ use App\Entity\Constantes;
 use App\Entity\ScolaritePromo;
 use App\Entity\Semestre;
 use App\Entity\Ue;
+use App\Enums\SemestreLienEnum;
 use App\Exception\SemestreNotFoundException;
 use Carbon\Carbon;
 use PhpOffice\PhpSpreadsheet\Exception;
@@ -577,15 +578,14 @@ class SousCommissionExport
                             $this->getStyleDecisionUe($sousCommissionEtudiant->scolarite[$semPrec->getOrdreLmd()]->moyenneUes[$ue->getNumeroUe()]['decision']));
                         $colonne += 2;
                         //  $this->myExcelWriter->writeCellXY($colonne, $ligne, 'S2', ['style' => 'HORIZONTAL_CENTER']);
-                        //todo: reprendre moyenne PAC + pénalisé ou pas.
                         $this->myExcelWriter->writeCellXY($colonne, $ligne,
                             $sousCommissionEtudiant->moyenneUes[$ue->getId()]->moyennePacPenalisee,
                             ['style' => 'numerique3']);
                         $this->myExcelWriter->writeCellXY($colonne + 1, $ligne,
-                            $sousCommissionEtudiant->moyenneUes[$ue->getId()]->decision,
+                            $sousCommissionEtudiant->moyenneUes[$ue->getId()]->decisionPenalisee,
                             ['style' => 'HORIZONTAL_CENTER']);
                         $this->myExcelWriter->colorCellRange($colonne + 1, $ligne,
-                            $this->getStyleDecisionUe($sousCommissionEtudiant->moyenneUes[$ue->getId()]->decision));
+                            $this->getStyleDecisionUe($sousCommissionEtudiant->moyenneUes[$ue->getId()]->decisionPenalisee));
                         $colonne += 2;
                         // $this->myExcelWriter->writeCellXY($colonne, $ligne, 'Année', ['style' => 'HORIZONTAL_CENTER']);
                         $this->myExcelWriter->writeCellXY($colonne, $ligne,
@@ -917,10 +917,12 @@ class SousCommissionExport
         }
 
         $tsem = [];
-        $precedent = $semestre->getPrecedent();
-        while (null !== $precedent) {
-            $tsem[] = $precedent;
-            $precedent = $precedent->getPrecedent();
+
+        foreach ($semestre->getSemestreLienDepart() as $se) {
+            if ($se->getSens() === SemestreLienEnum::PRECEDENT) {
+                $tsem[] = $se->getSemestreArrive();
+                $precedent = $se->getSemestreArrive();
+            }
         }
 
         /*foreach ($tsem as $prec) {

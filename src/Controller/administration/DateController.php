@@ -17,6 +17,7 @@ use App\Entity\Date;
 use App\Form\DatesType;
 use App\Repository\DateRepository;
 use App\Table\DateTableType;
+use JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -25,7 +26,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class DateController extends BaseController
 {
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     #[Route('/', name: 'administration_date_index', options: ['expose' => true], methods: ['GET', 'POST'])]
     public function index(Request $request): Response
@@ -114,7 +115,7 @@ class DateController extends BaseController
 
         return $this->render('administration/date/new.html.twig', [
             'date' => $date,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -153,7 +154,7 @@ class DateController extends BaseController
 
         return $this->render('administration/date/edit.html.twig', [
             'date' => $date,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
