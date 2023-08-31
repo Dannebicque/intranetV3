@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/api/PersonnelApiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/03/2023 06:51
+ * @lastUpdate 31/08/2023 11:28
  */
 
 namespace App\Controller\api;
@@ -38,7 +38,7 @@ class PersonnelApiController extends BaseController
     #[Route(path: '/enseignants/{type}', name: 'api_enseignants_type', options: ['expose' => true])]
     public function getEnseignantsByType($type): Response
     {
-        $this->denyAccessUnlessGranted('ROLE_PERMANENT');
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         $personnels = $this->personnelRepository->findByType(
             $type,
