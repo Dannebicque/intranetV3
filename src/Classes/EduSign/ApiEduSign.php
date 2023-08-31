@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/ApiEduSign.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/08/2023 15:58
+ * @lastUpdate 31/08/2023 16:00
  */
 
 namespace App\Classes\EduSign;
 
+use App\Classes\EduSign\DTO\EduSignCourse;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpClient\HttpClient;
 
