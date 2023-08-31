@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/UserController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2023 16:11
+ * @lastUpdate 31/08/2023 17:14
  */
 
 namespace App\Controller;
@@ -45,9 +45,21 @@ class UserController extends BaseController
         //todo: utilisé ou?
         $departements = $this->getUser()->getPersonnelDepartements();
 
-        return $this->render('tool_bar/_liste_departements.html.twig', [
-            'departements' => $departements,
-        ]);
+        $departementsArray = [];
+        foreach ($departements as $departement) {
+            $t['defaut'] = $departement->getDefaut();
+            $d = $departement->getDepartement();
+            $t['uuid'] = $d->getUuidString();
+            $t['couleur'] = $d->getCouleur();
+            $t['libelleInitiales'] = $d->libelleInitiales();
+            $departementsArray[] = $t;
+        }
+
+        return $this->json($departementsArray);
+
+//        return $this->render('tool_bar/_liste_departements.html.twig', [
+//            'departements' => $departements,
+//        ]);
     }
 
     /**
