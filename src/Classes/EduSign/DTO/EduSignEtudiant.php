@@ -4,10 +4,10 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/DTO/EduSignEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/08/2023 15:58
+ * @lastUpdate 31/08/2023 15:56
  */
 
-namespace App\Classes\EduSign;
+namespace App\Classes\EduSign\DTO;
 
 class EduSignEtudiant
 {

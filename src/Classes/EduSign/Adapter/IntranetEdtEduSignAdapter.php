@@ -4,12 +4,12 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/Adapter/IntranetEdtEduSignAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/08/2023 14:42
+ * @lastUpdate 31/08/2023 15:57
  */
 
 namespace App\Classes\EduSign\Adapter;
 
-use App\Classes\EduSign\EduSignCourse;
+use App\Classes\EduSign\DTO\EduSignCourse;
 use Carbon\Carbon;
 
 class IntranetEdtEduSignAdapter
