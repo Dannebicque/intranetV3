@@ -1,0 +1,38 @@
+<div{{ attributes }}>
+    <div class="row">
+        <div class="col-sm-12 col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4>Actuellement</h4>
+                </div>
+                <div class="card-body">
+                    {% if this.currentEvent != null %}
+
+                    {% else %}
+
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4>A venir</h4>
+                </div>
+                <div class="card-body">
+                    {% if this.nextEvent != null %}
+                        {% if this.sameDay %}
+                            Heure (en gros)... jour en petit
+                        {% else %}
+                            Jour en gros... heure en petit
+                        {% endif %}
+
+                    {% else %}
+
+                    {% endif %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
