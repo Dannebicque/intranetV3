@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/Scolarite.php
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/Scolarite.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 31/08/2023 17:46
  */
 
 namespace App\DTO;
@@ -21,7 +21,7 @@ class Scolarite
 
     public function __construct(\App\Entity\Scolarite $scolarite)
     {
-        $this->decision = $scolarite->getDecision();
+        $this->decision = $scolarite->getDecision()->value;
         $this->styleDecision = $this->getStyle($scolarite->getDecision());
         $this->moyenne = $scolarite->getMoyenne();
         $this->styleMoyenne = $this->getStyleNote($scolarite->getMoyenne());
