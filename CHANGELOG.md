@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.8](https://github.com/Dannebicque/intranetV3/compare/v3.14.7...v3.14.8) (2023-08-31)
+
+
+### Bug Fixes
+
+* Edt ([91cd2eb](https://github.com/Dannebicque/intranetV3/commit/91cd2eb5af0d7eb0e7114ced6e5408ac6f494439))
+* nettoyage ([4e7e06f](https://github.com/Dannebicque/intranetV3/commit/4e7e06f0cd207726d6934c6742d3b695338efefa))
+* template ([11486c7](https://github.com/Dannebicque/intranetV3/commit/11486c7f780bc74a893878867e8e904fe88af691))
+
 ### [3.14.7](https://github.com/Dannebicque/intranetV3/compare/v3.14.6...v3.14.7) (2023-08-31)
 
 
