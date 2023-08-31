@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Source/EdtAde.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/09/2022 18:34
+ * @lastUpdate 31/08/2023 11:23
  */
 
 namespace App\Components\SourceEdt\Source;
@@ -37,5 +37,15 @@ class EdtAde extends AbstractEdt implements EdtInterface
     ): EvenementEdtCollection {
         // TODO: Implement recupereEdtJourBorne() method.
         return new EvenementEdtCollection();
+    }
+
+    public function getNextEvent(): ?EvenementEdt
+    {
+        // TODO: Implement getNextEvent() method.
+    }
+
+    public function getCurrentEvent(): ?EvenementEdt
+    {
+        // TODO: Implement getCurrentEvent() method.
     }
 }

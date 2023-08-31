@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/EdtManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/10/2022 17:19
+ * @lastUpdate 31/08/2023 11:23
  */
 
 namespace App\Classes\Edt;
@@ -200,5 +200,31 @@ class EdtManager
             case self::EDT_ADE:
                 return [];
         }
+    }
+
+    public function getCurrentEvent(): ?EvenementEdt
+    {
+        $tEvents = [];
+        foreach ($this->tabSources as $source) {
+            $event = $source->getCurrentEvent();
+            if (null !== $event) {
+                $tEvents[] = $event;
+            }
+        }
+
+        return count($tEvents) === 1 ? $tEvents[0] : null;
+    }
+
+    public function getNextEvent(): ?EvenementEdt
+    {
+        $tEvents = [];
+        foreach ($this->tabSources as $source) {
+            $event = $source->getNextEvent();
+            if (null !== $event) {
+                $tEvents[] = $event;
+            }
+        }
+
+        return count($tEvents) === 1 ? $tEvents[0] : null;
     }
 }

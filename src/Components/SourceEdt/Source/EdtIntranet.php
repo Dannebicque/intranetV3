@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Source/EdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/09/2022 18:35
+ * @lastUpdate 31/08/2023 11:23
  */
 
 namespace App\Components\SourceEdt\Source;
@@ -169,5 +169,17 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
 //                $this->planning = $this->transformeJour($pl);
 //                break;
         }
+    }
+
+    public function getNextEvent(): ?EvenementEdt
+    {
+        // TODO: Implement getNextEvent() method.
+        return null;
+    }
+
+    public function getCurrentEvent(): ?EvenementEdt
+    {
+        // TODO: Implement getCurrentEvent() method.
+        return null;
     }
 }

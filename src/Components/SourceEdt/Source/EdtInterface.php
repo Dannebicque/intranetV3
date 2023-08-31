@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Source/EdtInterface.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/09/2022 18:52
+ * @lastUpdate 31/08/2023 11:23
  */
 
 /*
@@ -25,4 +25,8 @@ interface EdtInterface
     public function find(int $event, array $matieres = [], array $groupes = []): EvenementEdt;
 
     public function recupereEdtJourBorne(Semestre $semestre, array $matieres, int $jourSemaine, int $semaineFormation, array $groupes): EvenementEdtCollection;
+
+    public function getNextEvent(): ?EvenementEdt;
+
+    public function getCurrentEvent(): ?EvenementEdt;
 }

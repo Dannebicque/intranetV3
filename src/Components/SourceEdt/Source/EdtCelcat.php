@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Source/EdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/11/2022 21:39
+ * @lastUpdate 31/08/2023 11:23
  */
 
 namespace App\Components\SourceEdt\Source;
@@ -141,5 +141,17 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
         }
 
         return false;
+    }
+
+    public function getNextEvent(): ?EvenementEdt
+    {
+        // TODO: Implement getNextEvent() method.
+        return null;
+    }
+
+    public function getCurrentEvent(): ?EvenementEdt
+    {
+        // TODO: Implement getCurrentEvent() method.
+        return null;
     }
 }

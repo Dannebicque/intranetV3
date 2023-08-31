@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/07/2023 18:25
+ * @lastUpdate 31/08/2023 11:23
  */
 
 /*
@@ -98,6 +98,7 @@ class MyEdtImport
             while (!feof($handle)) {
                 /* On lit la ligne courante */
                 $phrase = fgetcsv($handle, 1024);
+
                 /*
                  * 0 => semaine,
                  * 1 => jour,
@@ -113,6 +114,9 @@ class MyEdtImport
                  * 11 => groupe
                  *
                  */
+
+                //todo: importer toutes les semaines en un seul fichier => comment gérer la suppression des semaines ?
+                //todo: CMFI (sur 2 TD => Gérer la saisie depuis EDT et sa prise en compte ? lien avec la structure des groupes?
 
                 if ($phrase !== false && count($phrase) === 12) {
                     if (null === $this->calendrier) {

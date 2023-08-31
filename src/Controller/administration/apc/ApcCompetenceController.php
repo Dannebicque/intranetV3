@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcCompetenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/08/2023 08:55
+ * @lastUpdate 31/08/2023 11:23
  */
 
 namespace App\Controller\administration\apc;
@@ -74,17 +74,21 @@ class ApcCompetenceController extends BaseController
         ]);
     }
 
-    #[Route(path: '/{id}/edit', name: 'administration_apc_competence_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, ApcCompetence $apcCompetence): Response
+    #[Route(path: '/{id}/edit/{diplome}', name: 'administration_apc_competence_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, ApcCompetence $apcCompetence, ?Diplome $diplome = null): Response
     {
+        if (null !== $diplome) {
+            $diplome = $apcCompetence->getApcReferentiel()->getDiplomes()->first();
+        }
+
         $form = $this->createForm(ApcCompetenceType::class, $apcCompetence);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $this->entityManager->flush();
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'apc.competence.edit.success.flash');
 
-            return $this->redirectToRoute('administration_apc_competence_index',
-                ['diplome' => $apcCompetence->getApcReferentiel()->getDiplomes()?->getId()]);//Todo: a revoir, pas de diplome
+            return $this->redirectToRoute('administration_apc_referentiel_index',
+                ['diplome' => $diplome->getId()]);
         }
 
         return $this->render('apc/apc_competence/edit.html.twig', [

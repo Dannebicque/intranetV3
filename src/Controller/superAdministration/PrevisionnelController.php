@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/PrevisionnelController.php
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 09:03
+ * @lastUpdate 31/08/2023 16:13
  */
 
 namespace App\Controller\superAdministration;
@@ -15,7 +15,11 @@ use App\Classes\Previsionnel\PrevisionnelSynthese;
 use App\Controller\BaseController;
 use App\Entity\Personnel;
 use App\Exception\AnneeUniversitaireNotFoundException;
+use App\Repository\AnneeUniversitaireRepository;
+use App\Repository\DepartementRepository;
 use App\Repository\PersonnelRepository;
+use App\Repository\PrevisionnelRepository;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -25,20 +29,49 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/administratif')]
 class PrevisionnelController extends BaseController
 {
-    #[Route(path: '/previsionnel/{annee}', name: 'sa_previsionnel_index')]
-    public function index(PersonnelRepository $personnelRepository, int $annee = 0): Response
+    #[Route(path: '/previsionnel', name: 'sa_previsionnel_index')]
+    public function index(
+        DepartementRepository        $departementRepository,
+        AnneeUniversitaireRepository $anneeUniversitaireRepository,
+        PersonnelRepository          $personnelRepository): Response
     {
-        if (0 === $annee) {
-            if (date('m') >= 7 && (int) date('m') <= 12) {
-                $annee = (int) date('Y');
-            } else {
-                $annee = (int) date('Y') - 1;
-            }
+
+
+        $anneeU = $anneeUniversitaireRepository->findOneBy(['active' => true]);
+        if (null !== $anneeU) {
+            $annee = $anneeU;
+        } else {
+            throw new AnneeUniversitaireNotFoundException();
         }
 
+
         return $this->render('super-administration/previsionnel/index.html.twig', [
-            'annee' => $annee,
+            'annees' => $anneeUniversitaireRepository->findAll(),
+            'departements' => $departementRepository->findActifs(),
             'personnels' => $personnelRepository->findAll(),
+            'annee' => $annee
+        ]);
+    }
+
+    #[Route(path: '/previsionnel/affiche', name: 'sa_previsionnel_affiche')]
+    public function affichePrevisionnel(
+        PersonnelRepository    $personnelRepository,
+        PrevisionnelManager    $previsionnelManager,
+        PrevisionnelRepository $previsionnelRepository,
+        Request                $request
+    ): Response
+    {
+        $intervenant = $request->query->get('intervenant');
+        $matiere = $request->query->get('matiere');
+        $diplome = $request->query->get('diplome');
+        $departement = $request->query->get('departement');
+        $annee = $request->query->get('annee');
+        $personnel = $personnelRepository->find($intervenant);
+
+
+        $previsionnels = $previsionnelManager->getPrevisionnelEnseignantAnnee($personnel, $annee);
+        return $this->render('super-administration/previsionnel/_affiche.html.twig', [
+            'previsionnels' => $previsionnels
         ]);
     }
 
