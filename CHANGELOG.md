@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.1](https://github.com/Dannebicque/intranetV3/compare/v3.14.0...v3.14.1) (2023-08-31)
+
+
+### Features
+
+* previsionnel partie Département. Affichage synthese par intervenant + mises en forme ([cffe8e7](https://github.com/Dannebicque/intranetV3/commit/cffe8e7cbe8361f90ae7f14dac1c4fa6ce491ec9))
+* réécriture de la saisie des absences avec Stimulus ([8a620f6](https://github.com/Dannebicque/intranetV3/commit/8a620f6c56b185cb140c75f987d90e853d62e66b))
+
+
+### Bug Fixes
+
+* [#147](https://github.com/Dannebicque/intranetV3/issues/147) Droits plus stricts ([fab623c](https://github.com/Dannebicque/intranetV3/commit/fab623c98d2ef3eb4fdb387d48b71840afc0cdd2))
+* préselection des choix dans la configuration des questionnaires + qq améliorations d'affichage ([f22a7ce](https://github.com/Dannebicque/intranetV3/commit/f22a7ce8ca7eedba2ef508338808bde39625c4f9))
+* TD sur 4 TP (AD) ([4e95d59](https://github.com/Dannebicque/intranetV3/commit/4e95d59d34663bc9ac63bff0e01a328ebd54b7e7))
+
 ## [3.14.0](https://github.com/Dannebicque/intranetV3/compare/v3.13.5...v3.14.0) (2023-08-02)
 
 
