@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.4](https://github.com/Dannebicque/intranetV3/compare/v3.14.3...v3.14.4) (2023-08-31)
+
+
+### Bug Fixes
+
+* namespace edusign ([70b9134](https://github.com/Dannebicque/intranetV3/commit/70b9134b03ef9b03f9e41627e8d7fa6c7f11fafd))
+
 ### [3.14.3](https://github.com/Dannebicque/intranetV3/compare/v3.14.2...v3.14.3) (2023-08-31)
 
 ### [3.14.2](https://github.com/Dannebicque/intranetV3/compare/v3.14.1...v3.14.2) (2023-08-31)
