@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.9](https://github.com/Dannebicque/intranetV3/compare/v3.14.8...v3.14.9) (2023-08-31)
+
+
+### Bug Fixes
+
+* choix département ([658bf97](https://github.com/Dannebicque/intranetV3/commit/658bf97ba3f841b51d3d55690e4451e763481614))
+* nettoyage ([054f9c0](https://github.com/Dannebicque/intranetV3/commit/054f9c010f94f79d66e1585c299d09893feaaa76))
+
 ### [3.14.8](https://github.com/Dannebicque/intranetV3/compare/v3.14.7...v3.14.8) (2023-08-31)
 
 
