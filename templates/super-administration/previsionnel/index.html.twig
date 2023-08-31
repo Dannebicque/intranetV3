@@ -8,6 +8,7 @@
     <div class="header-action">
         <div class="buttons">
             exporter / importer
+            Synthèse globale des profs (liste CM/TD/TP + Total + total maj + primes + ecart service
             <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
                title="{{ 'atitle.retour_administration'|trans }}">
                 <i class="{{ iconDashboard }}"><span class="sr-only">dashboard</span></i>
@@ -15,38 +16,117 @@
         </div>
     </div>
 {% endblock %}
-{# todo: par formation, module, semestre, enseignant #}
+
+{% block stimulus %}
+    {{ stimulus_controller('sadm--previsionnel', {
+        url:path('sa_previsionnel_affiche')
+    }) }}
+{% endblock %}
+
 {% block content %}
     <div class="row">
         <div class="col-sm-12">
             <div class="card">
                 <h4 class="card-title">{{ 'sadm.previsionnel.index.par_enseignant'|trans }}</h4>
                 <div class="card-body">
-                    <div class="form-group">
-                        <label class="sr-only" for="sadm_previPersonnel">{{ 'choisir.intervenant'|trans }}</label>
-                        <select class="form-select selectpicker" data-annee="{{ annee }}"
-                                id="sadm_previPersonnel">
-                            <option value="">{{ 'choisir.intervenant'|trans }}</option>
-                            {% for personnel in personnels %}
-                                <option value="{{ personnel.id }}">{{ personnel.display }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="sadm_change_annee_temp_previsionnel">{{ 'change_annee_temp_previsionnel'|trans }}</label>
-                        <select id="sadm_change_annee_temp_previsionnel" class="form-select">
-                            <option value="0">{{ 'change_annee_temp_previsionnel'|trans }}</option>
-                            {% for anne in 2017..'now'|date('Y')+4 %}
-                                <option value="{{ anne }}" {% if annee == anne %}selected{% endif %}>{{ anne }}</option>
-                            {% endfor %}
-                        </select>
+                    <div class="row">
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label for="sadm_previAnnee">Année Universitaire</label>
+                                <select id="sadm_previAnnee" class="form-select"
+                                        {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
+                                        {{ stimulus_action('sadm--previsionnel', 'changeFiltre', 'change', {
+                                            type:'annee'
+                                        }) }}
+                                >
+                                    <option value="">{{ 'change_annee_temp_previsionnel'|trans }}</option>
+                                    {% for anne in annees %}
+                                        <option value="{{ anne.annee }}"
+                                                {% if annee.id == anne.id %}selected{% endif %}>{{ anne.displayAnneeUniversitaire }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label for="sadm_previDepartement">Département</label>
+                                <select class="form-select"
+                                        {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
+                                        {{ stimulus_action('sadm--previsionnel', 'changeFiltre', 'change', {
+                                            type:'departement'
+                                        }) }}
+                                        id="sadm_previDepartement">
+                                    <option value="">Choisir un département</option>
+                                    {% for departement in departements %}
+                                        <option value="{{ departement.id }}">{{ departement.libelle }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label for="sadm_previDiplome">Diplôme</label>
+                                <select class="form-select"
+                                        {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
+                                        {{ stimulus_action('sadm--previsionnel', 'changeFiltre', 'change', {
+                                            type:'diplome'
+                                        }) }}
+                                        id="sadm_previDiplome">
+                                    <option value="">Choisir département</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label for="sadm_previMatiere">Matière</label>
+                                <select class="form-select"
+                                        {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
+                                        {{ stimulus_action('sadm--previsionnel', 'changeFiltre', 'change', {
+                                            type:'matiere'
+                                        }) }}
+                                        id="sadm_previMatiere">
+                                    <option value="">Choisir diplôme ou département</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="form-group">
+                                <label for="sadm_previPersonnel">Intervenant</label>
+                                <select class="form-select"
+                                        {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
+                                        {{ stimulus_action('sadm--previsionnel', 'changeFiltre', 'change', {
+                                            type:'intervenant'
+                                        }) }}
+                                        id="sadm_previPersonnel">
+                                    <option value="">{{ 'choisir.intervenant'|trans }}</option>
+                                    {% for personnel in personnels %}
+                                        <option value="{{ personnel.id }}">{{ personnel.display }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-2 d-grid">
+                            <button class="btn btn-outline-danger d-block"
+                                    {{ stimulus_action('sadm--previsionnel', 'clearFiltre') }}
+                            >Effacer filtres
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    {{ render(controller('App\\Controller\\superAdministration\\PrevisionnelController::personnel', {'personnel':2,
-        'annee':2019})
-    ) }}
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <h4 class="card-title">{{ 'sadm.previsionnel.index.par_enseignant'|trans }}</h4>
+                <div class="card-body" {{ stimulus_target('sadm--previsionnel', 'content') }}>
+                    <div class="alert alert-info">
+                        Choisir au moins un filtre en plus de l'année universitaire
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

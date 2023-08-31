@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 28/07/2023 15:33
+// @lastUpdate 31/08/2023 11:23
 
 @import "./theme-troyes.scss";
 @import "./theme-rcc.scss";
@@ -122,6 +122,10 @@ fieldset legend {
 
 .absent {
   background-color: #f96868;
+}
+
+.present {
+  background-color: #56d317;
 }
 
 .carre {

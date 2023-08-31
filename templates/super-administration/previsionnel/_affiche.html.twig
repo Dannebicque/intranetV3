@@ -1,0 +1,32 @@
+<table class="table">
+    <thead>
+    <tr>
+        <th>Intervenant</th>
+        <th>Service</th>
+        <th>CM</th>
+        <th>TD</th>
+        <th>TP</th>
+        <th>Total</th>
+        <th>Total Maj.</th>
+        <th>Primes/HRS</th>
+        <th>Total</th>
+        <th>Etat</th>
+        <th>&nbsp;</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for previ in previsionnels %}
+        <td>{{ previ.personnel_nom }} {{ previ.personnel_prenom }}</td>
+        <td>{{ previ.nbHeuresServices }}</td>
+        <td>{{ totalCm }}</td>
+        <td>{{ totalTd }}</td>
+        <td>{{ totalTp }}</td>
+        <td>Total</td>
+        <td>Total Maj.</td>
+        <td>Primes/HRS</td>
+        <td>Total</td>
+        <td>Etat</td>
+        <td>&nbsp;</td>
+    {% endfor %}
+    </tbody>
+</table>

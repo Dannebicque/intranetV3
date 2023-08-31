@@ -18,7 +18,12 @@
 {% endblock %}
 
 {% block stimulus %}
-    {{ stimulus_controller('absences') }}
+    {{ stimulus_controller('absences', {
+        saisieDesPresents: user_data.user.configuration['saisieDesPresents'] is defined ? user_data.user
+        .configuration['saisieDesPresents'] : null,
+        validationSaisieAbsence : user_data.user.configuration['validationSaisieAbsence'] is defined ? user_data.user
+        .configuration['validationSaisieAbsence'] : null
+    }) }}
 {% endblock %}
 
 {% block content %}

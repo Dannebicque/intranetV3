@@ -5,6 +5,8 @@
 {% endblock %}
 
 {% block content %}
+    {{ component('ShortEdtComponent') }}
+
     <div class="row">
         <div class="col-sm-12 col-md-8">
             <div class="card">
@@ -12,9 +14,13 @@
                     <h4 class="card-title">{{ 'dernieres.actualites.departement.heading'|trans }}</h4>
                     {% if user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %}
                         <div class="card-header-actions">
-                            <a href="{{ path('administration_actualite_new') }}" class="btn btn-sm btn-primary"
-                               title="{{ 'atitle.deposer_nouvelle_actualite'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"><i
-                                        class="{{ iconAdd }}"></i><span class="sr-only">{{ 'atitle.deposer_nouvelle_actualite'|trans }}</span></a>
+                            <a href="{{ path('administration_actualite_new') }}"
+                               class="btn btn-sm btn-primary"
+                               title="{{ 'atitle.deposer_nouvelle_actualite'|trans }}"
+                               data-bs-toggle="tooltip" data-bs-placement="bottom">
+                                <i class="{{ iconAdd }}"></i>
+                                <span class="sr-only">{{ 'atitle.deposer_nouvelle_actualite'|trans }}</span>
+                            </a>
                         </div>
                     {% endif %}
                 </header>

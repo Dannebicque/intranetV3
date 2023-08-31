@@ -1,20 +1,14 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/PersonnelTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 31/08/2023 16:15
  */
 
 namespace App\Table;
 
-use DavidAnnebicque\TableBundle\Widget\Type\ButtonType;
-use DavidAnnebicque\TableBundle\Widget\Type\ExportDropdownType;
-use DavidAnnebicque\TableBundle\Widget\Type\RowDeleteLinkType;
-use DavidAnnebicque\TableBundle\Widget\Type\RowEditLinkType;
-use DavidAnnebicque\TableBundle\Widget\Type\RowShowLinkType;
-use DavidAnnebicque\TableBundle\Widget\WidgetBuilder;
 use App\Entity\Departement;
 use App\Entity\Personnel;
 use App\Entity\PersonnelDepartement;
@@ -26,6 +20,12 @@ use DavidAnnebicque\TableBundle\Column\PropertyColumnType;
 use DavidAnnebicque\TableBundle\Column\WidgetColumnType;
 use DavidAnnebicque\TableBundle\TableBuilder;
 use DavidAnnebicque\TableBundle\TableType;
+use DavidAnnebicque\TableBundle\Widget\Type\ButtonType;
+use DavidAnnebicque\TableBundle\Widget\Type\ExportDropdownType;
+use DavidAnnebicque\TableBundle\Widget\Type\RowDeleteLinkType;
+use DavidAnnebicque\TableBundle\Widget\Type\RowEditLinkType;
+use DavidAnnebicque\TableBundle\Widget\Type\RowShowLinkType;
+use DavidAnnebicque\TableBundle\Widget\WidgetBuilder;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -148,6 +148,8 @@ class PersonnelTableType extends TableType
 
         if ('administratif' === $typeAccess) {
             $builder->setLoadUrl('sa_rh_index');
+            $builder->addColumn('nbHeuresService', PropertyColumnType::class,
+                ['label' => 'table.service']);
             $builder->addColumn('numero_harpege', PropertyColumnType::class,
                 ['label' => 'table.numero_harpege']);
             $builder->addColumn('username', PropertyColumnType::class,

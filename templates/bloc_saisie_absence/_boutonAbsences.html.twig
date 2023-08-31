@@ -1,0 +1,42 @@
+{% if groupe.etudiants|length >0 %}
+    <div class="row">
+        {% if (user_data.user.configuration['validationSaisieAbsence'] is defined and user_data.user
+        .configuration['validationSaisieAbsence'] == true) or (user_data.user.configuration['saisieDesPresents'] is defined and user_data.user
+        .configuration['saisieDesPresents'] == true) %}
+            <div class="col-6 d-grid d-block">
+                <button class="btn btn-primary"
+                        {{ stimulus_action('absences', 'pasabsent', 'click', {groupe: groupe.id}) }}
+                >
+                    Appel réalisé, aucun absent dans ce groupe ? ({{ groupe.etudiants|length }} étudiants
+                    présents)
+                </button>
+            </div>
+            {% if (user_data.user.configuration['validationSaisieAbsence'] is defined and user_data.user
+            .configuration['validationSaisieAbsence'] == true) %}
+                <div class="col-6 d-grid d-block">
+                    <button class="btn btn-success"
+                            {{ stimulus_action('absences', 'valideAbsents', 'click', {groupe: groupe.id}) }}
+                    >
+                        Valider la saisie des absents
+                    </button>
+                </div>
+            {% elseif user_data.user.configuration['saisieDesPresents'] is defined and user_data.user
+            .configuration['saisieDesPresents'] == true %}
+                <button class="btn btn-success"
+                        {{ stimulus_action('absences', 'validePresents', 'click', {groupe: groupe.id}) }}
+                >
+                    Valider la saisie des présents (une confirmation des absents va s'afficher)
+                </button>
+            {% endif %}
+        {% else %}
+            <div class="col-12 d-grid d-block">
+                <button class="btn btn-primary"
+                        {{ stimulus_action('absences', 'pasabsent', 'click', {groupe: groupe.id}) }}
+                >
+                    Appel réalisé, aucun absent dans ce groupe ? ({{ groupe.etudiants|length }} étudiants
+                    présents)
+                </button>
+            </div>
+        {% endif %}
+    </div>
+{% endif %}

@@ -1,18 +1,18 @@
-// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 12/12/2022 15:22
+// @lastUpdate 31/08/2023 16:15
 import '@fortawesome/fontawesome-pro/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-pro/scss/brands.scss'
 import '@fortawesome/fontawesome-pro/scss/solid.scss'
 import $ from 'jquery'
 import PerfectScrollbar from 'perfect-scrollbar'
 import * as bootstrap from 'bootstrap'
-import InPlaceEdit from './inPlaceEdit'
 import flatpickr from 'flatpickr'
 import { French } from 'flatpickr/dist/l10n/fr'
 import Routing from 'fos-router'
+import InPlaceEdit from './inPlaceEdit'
 
 import { addCallout, getParentByTagName } from './util'
 
@@ -20,7 +20,7 @@ import '../css/app.scss'
 
 import SelectComplete from '../components/SelectComplete'
 import SelectChangeWidget from '../components/SelectChangeWidget'
-import { get, post } from './fetch'
+import { post } from './fetch'
 
 export const LANG = document.querySelector('html').getAttribute('lang')
 
@@ -42,63 +42,10 @@ window.addEventListener('load', () => { // le dom est chargé
   const currentTheme = localStorage.getItem('theme')
   const menuDarkTheme = document.getElementById('darkMode')
 
-  //toast
+  // toast
   toasts.forEach((toast) => {
     addCallout(toast.text, toast.type)
   })
-
-  // menu changement de département
-  if (document.getElementById('changeDepartement')) {
-    document.getElementById('changeDepartement').addEventListener('click', async (e) => {
-      const zone = document.getElementById('listeChangeDepartement')
-      zone.innerHtml = `<a href="#" class="dropdown-item col-12">${window.da.loaderStimulus}</a>`// todo: ne s'affiche pas ? faire tout le header avec stimulus ? Avec Turbo?
-
-      await get(Routing.generate('user_get_departements'), {}).then((data) => {
-        let html = ''
-        data.forEach((departement) => {
-          let isDefault = ''
-          if (departement.defaut === true) {
-            isDefault = 'is-default'
-          }
-          html += `<a class="dropdown-item ${isDefault} col-4"\n`
-            + `href="${Routing.generate('security_change_departement', { departement: departement.uuid })}">\n`
-            + '<div class="avatar-departement"\n'
-            + `style="background-color: ${departement.couleur}">\n`
-            + `<span class="initials">${departement.libelleInitiales}</span>\n`
-            + '</div>\n'
-            + '</a>'
-        })
-        zone.innerHTML = html
-      })
-    })
-  }
-
-  if (menuDarkTheme !== null) {
-    menuDarkTheme.addEventListener('click', () => {
-      document.body.classList.toggle('dark-theme')
-      // Let's say the theme is equal to light
-      let theme = 'light'
-      // If the body contains the .dark-theme class...
-      if (document.body.classList.contains('dark-theme')) {
-        // ...then let's make the theme dark
-        theme = 'dark'
-        menuDarkTheme.innerHTML = '<i class="fas fa-adjust"></i> Dark Mode Off'
-      } else {
-        menuDarkTheme.innerHTML = '<i class="fas fa-adjust"></i> Dark Mode On'
-      }
-      // Then save the choice in localStorage
-      localStorage.setItem('theme', theme)
-    })
-
-    // If the current theme in localStorage is "dark"...
-    if (currentTheme === 'dark') {
-      // ...then use the .dark-theme class
-      document.body.classList.add('dark-theme')
-      menuDarkTheme.innerHTML = '<i class="fas fa-adjust"></i> Dark Mode Off'
-    } else {
-      menuDarkTheme.innerHTML = '<i class="fas fa-adjust"></i> Dark Mode On'
-    }
-  }
 
   document.querySelectorAll('.changeAnneeUniversitaire').forEach((elem) => {
     elem.addEventListener('click', (e) => {

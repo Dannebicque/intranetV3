@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/absences_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/08/2023 14:49
+// @lastUpdate 31/08/2023 16:15
 
 import { Controller } from '@hotwired/stimulus'
 import Routing from 'fos-router'
@@ -11,11 +11,16 @@ import { post } from '../js/fetch'
 import { addCallout } from '../js/util'
 
 export default class extends Controller {
-  static values = {}
+  static values = {
+    saisieDesPresents: Boolean,
+    validationSaisieAbsence: Boolean,
+  }
 
   static targets = ['listeEtudiantsAbsences']
 
   tabAbsences = []
+
+  tabPresents = []
 
   async connect() {
     await this._updateAffichage()
@@ -136,7 +141,19 @@ export default class extends Controller {
     })
   }
 
-  etudiant(event) {
+  etudiantPresent(event) {
+    this.tabPresents.push(event.currentTarget.id)
+    event.currentTarget.classList.toggle('present')
+    console.log(this.tabPresents)
+  }
+
+  etudiantPreAbsent(event) {
+    this.tabAbsences.push(event.currentTarget.id)
+    event.currentTarget.classList.toggle('absent')
+    console.log(this.tabAbsences)
+  }
+
+  etudiantAbsent(event) {
     const heure = document.getElementById('absence-heure').value
     const duree = document.getElementById('absence-duree').value
     const date = document.getElementById('absence-date').value

@@ -1,8 +1,8 @@
-// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/util.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/11/2022 07:01
+// @lastUpdate 31/08/2023 11:23
 
 import Swal from 'sweetalert2'
 import $ from 'jquery'
@@ -44,9 +44,11 @@ $(document).on('click', '.supprimer', function (e) {
   e.preventDefault()
   const url = $(this).attr('href')
   const csrf = $(this).data('csrf')
+  const message = `${$(this).data('message')}\r\n`
+
   Swal.fire({
     title: 'Confirmer la suppression ?',
-    text: 'L\'opération ne pourra pas être annulée.',
+    text: `${message} L'opération ne pourra pas être annulée.`,
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
@@ -89,20 +91,19 @@ $(document).on('click', '.supprimer', function (e) {
               })
             }
           })
-        } else {
-          Swal.fire({
-            title: 'Erreur lors de la suppression!',
-            text: 'Merci de renouveler l\'opération',
-            icon: 'error',
-            confirmButtonText: 'OK',
-            customClass: {
-              confirmButton: 'btn btn-primary',
-              cancelButton: 'btn btn-secondary',
-            },
-            buttonsStyling: false,
-          })
-          addCallout('Erreur lors de la tentative de suppression', 'danger')
         }
+        Swal.fire({
+          title: 'Erreur lors de la suppression!',
+          text: 'Merci de renouveler l\'opération',
+          icon: 'error',
+          confirmButtonText: 'OK',
+          customClass: {
+            confirmButton: 'btn btn-primary',
+            cancelButton: 'btn btn-secondary',
+          },
+          buttonsStyling: false,
+        })
+        addCallout('Erreur lors de la tentative de suppression', 'danger')
       })
 
       // $.ajax({

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Enquetes/MyEnqueteDiplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:27
+ * @lastUpdate 31/08/2023 16:15
  */
 
 /*
@@ -16,25 +16,18 @@ namespace App\Classes\Enquetes;
 use App\Classes\Configuration;
 use App\Classes\Excel\MyExcelWriter;
 use App\Components\Questionnaire\TypeQuestion\TypeLibre;
-use App\Entity\QuestionnaireQuizz;
 use App\Repository\EtudiantRepository;
-use App\Repository\QuestionnaireEtudiantReponseRepository;
-use App\Repository\QuestionnaireEtudiantRepository;
-use App\Repository\QuestionnaireQuizzRepository;
-use App\Repository\QuestionnaireReponseRepository;
 use App\Repository\RddDiplomeRepository;
 use App\Utils\Tools;
-use function array_key_exists;
 use Carbon\Carbon;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use function array_key_exists;
 
 class MyEnqueteDiplome
 {
-    private readonly ?QuestionnaireQuizz $questionnaire;
     private array $etudiantsReponses;
-    private array $reponses;
     private readonly array $AllEtudiants;
 
     /**
@@ -43,37 +36,18 @@ class MyEnqueteDiplome
     public function __construct(
         Configuration $configuration,
         private readonly RddDiplomeRepository $rddDiplomeRepository,
-        private readonly QuestionnaireReponseRepository $questionnaireReponseRepository,
-        QuestionnaireQuizzRepository $questionnaireQuizzRepository,
-        QuestionnaireEtudiantRepository $questionnaireEtudiantRepository,
-        private readonly QuestionnaireEtudiantReponseRepository $questionnaireEtudiantReponse,
         private readonly MyExcelWriter $myExcelWriter,
         private readonly EtudiantRepository $etudiantRepository
     ) {
         $this->AllEtudiants = $this->rddDiplomeRepository->getEtudiantAvecQuestionnaire();
-        $this->questionnaire = $questionnaireQuizzRepository->find($configuration->get('ENQUETE_DIPLOME'));
-        if (null !== $this->questionnaire) {
-            $reponses = $questionnaireEtudiantRepository->findByQuestionnaire($this->questionnaire);
-            $this->reponses = [];
-            foreach ($reponses as $reponse) {
-                $this->reponses[$reponse->getEtudiant()->getNumEtudiant()] = $reponse;
-            }
-        }
     }
 
     public function export(): StreamedResponse
     {
-        $tReponses = $this->questionnaireReponseRepository->findByQuizzArray($this->questionnaire);
+        //todo: a refaire... + export des réponses
         $this->myExcelWriter->createSheet('enquete');
         $tEnTete = ['nom', 'prenom', 'Dernière mise à jour', 'tel', 'mail', 'codeEtape', 'diplome', 'adresse', 'Complément', 'Code Postal', 'ville', 'pays'];
         $tEnTeteId = [];
-
-        foreach ($this->questionnaire->getSections() as $section) {
-            foreach ($section->getSection()->getQualiteSectionQuestions() as $question) {
-                $tEnTete[] = $question->getQuestion()->getLibelle();
-                $tEnTeteId[] = $question->getQuestion();
-            }
-        }
 
         $this->myExcelWriter->ecritLigne($tEnTete, 1, 1);
 
@@ -82,7 +56,6 @@ class MyEnqueteDiplome
         foreach ($this->AllEtudiants as $etudiant) {
             if (array_key_exists($etudiant->getNumEtudiant(), $this->reponses)) {
                 $reponse = $this->reponses[$etudiant->getNumEtudiant()];
-                $reponses = $this->questionnaireEtudiantReponse->findByQuizzEtudiant($reponse);
                 $t = [
                     $reponse->getEtudiant()->getNom(),
                     $reponse->getEtudiant()->getPrenom(),
