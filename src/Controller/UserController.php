@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/UserController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/06/2023 07:51
+ * @lastUpdate 31/08/2023 16:11
  */
 
 namespace App\Controller;
@@ -42,6 +42,7 @@ class UserController extends BaseController
     #[Route(path: '/liste-departement', name: 'user_get_departements', options: ['expose' => true])]
     public function listeDepartements(): Response
     {
+        //todo: utilisé ou?
         $departements = $this->getUser()->getPersonnelDepartements();
 
         return $this->render('tool_bar/_liste_departements.html.twig', [

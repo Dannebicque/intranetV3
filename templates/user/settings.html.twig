@@ -24,7 +24,6 @@
         <div class="tab-pane active show" id="vosInformations">
             <div class="card">
                 <h4 class="card-title">{{ 'settings.vos.informations'|trans }}</h4>
-
                 <div class="card-body">
                     {% form_theme form 'form/my-form.html.twig' %}
                     {{ form_start(form) }}
@@ -70,7 +69,7 @@
                                     <div class="col-4">
                                         <div class="form-group">
                                             <label for="password_2" class="required">Répéter le nouveau mot de
-                                                                                     passe</label>
+                                                passe</label>
                                             <input type="password"
                                                    id="password_2"
                                                    name="password_2"
@@ -79,7 +78,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="d-grid">
+                                <div class="d-grid mt-2">
                                     <button class="btn d-block btn-success" id="valideNewpassword">
                                         Enregistrer la modification du mot de passe
                                     </button>
@@ -90,77 +89,82 @@
                 {% endif %}
 
                 <div class="card">
-                    <h4 class="card-title">{{ 'settings.vos.parametres'|trans }}</h4>
+                    <h4 class="card-title">{{ 'settings.vos.parametres.absences'|trans }}</h4>
                     <div class="card-body">
                         {% if user.typeUser == 'permanent' %}
-                            <div class="row">
-                                <div class="col-6">
-                                    <div class="media">
-                                        <div class="media-body">
-                                            <p><strong>{{ 'table.validationSaisieAbsence'|trans }}</strong></p>
-                                            <p>{{ 'help.validationSaisieAbsence'|trans }}</p>
-                                        </div>
-                                        <label class="switch" for="validationSaisieAbsence">
-                                            <input type="checkbox" {{ (user_data.user.configuration
-                                            .validationSaisieAbsence is
-                                            defined and user_data.user.configuration.validationSaisieAbsence == true) ?
-                                            'checked': '' }}
-                                                   class="changeConfigurationPersonne"
-                                                   name="validationSaisieAbsence"
-                                                   id="validationSaisieAbsence">
-                                            <span class="switch-indicator"></span>
-                                        </label>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <p><strong>{{ 'table.validationSaisieAbsence'|trans }}</strong></p>
+                                        <p>{{ 'help.validationSaisieAbsence'|trans }}</p>
                                     </div>
-                                </div>
-                                <div class="col-6">
-                                    <div class="media">
-                                        <div class="media-body">
-                                            <p><strong>{{ 'table.saisieDesPresents'|trans }}</strong></p>
-                                            <p>{{ 'help.saisieDesPresents'|trans }}</p>
-                                        </div>
-                                        <label class="switch" for="saisieDesPresents">
-                                            <input type="checkbox" {{ (user_data.user.configuration.saisieDesPresents is
-                                            defined and user_data.user.configuration.saisieDesPresents == true) ?
-                                            'checked': '' }}
-                                                   class="changeConfigurationPersonne"
-                                                   name="saisieDesPresents"
-                                                   id="saisieDesPresents">
-                                            <span class="switch-indicator"></span>
-                                        </label>
-                                    </div>
+                                    <label class="switch" for="validationSaisieAbsence">
+                                        <input type="checkbox" {{ (user_data.user.configuration
+                                        .validationSaisieAbsence is
+                                        defined and user_data.user.configuration.validationSaisieAbsence == true) ?
+                                        'checked': '' }}
+                                               class="changeConfigurationPersonne"
+                                               name="validationSaisieAbsence"
+                                               id="validationSaisieAbsence">
+                                        <span class="switch-indicator"></span>
+                                    </label>
                                 </div>
                             </div>
+                            <div class="col-6">
+                                <div class="media">
+                                    <div class="media-body">
+                                        <p><strong>{{ 'table.saisieDesPresents'|trans }}</strong></p>
+                                        <p>{{ 'help.saisieDesPresents'|trans }}</p>
+                                    </div>
+                                    <label class="switch" for="saisieDesPresents">
+                                        <input type="checkbox" {{ (user_data.user.configuration.saisieDesPresents is
+                                        defined and user_data.user.configuration.saisieDesPresents == true) ?
+                                        'checked': '' }}
+                                               class="changeConfigurationPersonne"
+                                               name="saisieDesPresents"
+                                               id="saisieDesPresents">
+                                        <span class="switch-indicator"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="card">
+                    <h4 class="card-title">{{ 'settings.vos.parametres.departements'|trans }}</h4>
+                    <div class="card-body">
 
+                        <table class="table table-striped">
+                            <thead>
+                            <tr>
+                                <th>{{ 'table.departement'|trans }}</th>
+                                <th>{{ 'table.diplomes'|trans }}</th>
+                                <th>{{ 'table.par.defaut'|trans }}</th>
+                            </tr>
+                            </thead>
 
-                            <table class="table table-striped">
-                                <thead>
+                            {% for departement in user.personnelDepartements %}
                                 <tr>
-                                    <th>{{ 'table.departement'|trans }}</th>
-                                    <th>{{ 'table.diplomes'|trans }}</th>
-                                    <th>{{ 'table.par.defaut'|trans }}</th>
+                                    <td>{{ departement.departement.libelle }}</td>
+                                    <td>{% for diplome in departement.departement.diplomes %}{{ diplome.display }}, {% endfor %}</td>
+                                    <td>
+                                        <div class="form-check">
+                                            <label for="pardefaut_{{ departement.departement.uuidString }}"
+                                                   class="sr-only">
+                                                {{ departement.departement.libelle }} par défaut
+                                            </label>
+                                            <input class="form-check-input departementParDefaut" type="radio"
+                                                   name="pardefaut"
+                                                   id="pardefaut_{{ departement.departement.uuidString }}"
+                                                   value="{{ departement.departement.uuidString }}"
+                                                   {% if departement.defaut == true %}checked{% endif %}>
+                                        </div>
+                                    </td>
                                 </tr>
-                                </thead>
-
-                                {% for departement in user.personnelDepartements %}
-                                    <tr>
-                                        <td>{{ departement.departement.libelle }}</td>
-                                        <td>{% for diplome in departement.departement.diplomes %}{{ diplome.display }}, {% endfor %}</td>
-                                        <td>
-                                            <div class="form-check">
-                                                <label for="pardefaut_{{ departement.departement.uuidString }}"
-                                                       class="sr-only">
-                                                    {{ departement.departement.libelle }} par défaut
-                                                </label>
-                                                <input class="form-check-input departementParDefaut" type="radio" name="pardefaut"
-                                                       id="pardefaut_{{ departement.departement.uuidString }}"
-                                                       value="{{ departement.departement.uuidString }}"
-                                                       {% if departement.defaut == true %}checked{% endif %}>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                            </table>
+                            {% endfor %}
+                        </table>
                         {% else %}
                             <div class="alert alert-danger">{{ 'erreur.type.user'|trans }}</div>
                         {% endif %}
