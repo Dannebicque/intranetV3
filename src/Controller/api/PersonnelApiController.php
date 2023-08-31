@@ -67,6 +67,7 @@ class PersonnelApiController extends BaseController
     #[Route(path: '/enseignants', name: 'api_enseignants_departement', options: ['expose' => true])]
     public function getEnseignantsByDepartement(): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_PERMANENT');
         $personnels = $this->personnelRepository->findByDepartement(
             $this->getDepartement()
         );
@@ -107,6 +108,7 @@ class PersonnelApiController extends BaseController
     #[Route(path: '/personnel/departement/add/{slug}/{departement}', name: 'api_personnel_add_to_departement', options: ['expose' => true])]
     public function addPersonnelToDepartement(PersonnelDepartementRepository $personnelDepartementRepository, $slug, ?Departement $departement = null): Response
     {
+        $this->denyAccessUnlessGranted('ROLE_PERMANENT');
         $personnel = $this->personnelRepository->findOneBySlug($slug);
         $departement ??= $this->dataUserSession->getDepartement();
         if (null !== $personnel && null !== $departement) {
