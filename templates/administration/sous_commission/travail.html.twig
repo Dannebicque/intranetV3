@@ -98,7 +98,7 @@
                                            data-field="decision"
                                            data-href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'semestre'}) }}"
                                            title="Modifier la décision">
-                                            {{ sc.etudiant(etudiant.id).decision }}</a>
+                                            {{ sc.etudiant(etudiant.id).decision.value }}</a>
                                     </td>
                                     <td>
                                         <a class="editable"
@@ -144,7 +144,7 @@
                                 {% for ue in sc.ues %}
                                     <td>{{ sc.ue(etudiant.id, ue.id).moyenne|number_format(3) }}</td>
                                 {% endfor %}
-                                <td>{{ sc.etudiant(etudiant.id).decision }}</td>
+                                <td>{{ sc.etudiant(etudiant.id).decision.value }}</td>
                                 <td>{{ sc.etudiant(etudiant.id).proposition }}</td>
                                 <td>{{ sc.etudiant(etudiant.id).nbAbsences }}</td>
                                 {% for matiere in sc.matieres %}

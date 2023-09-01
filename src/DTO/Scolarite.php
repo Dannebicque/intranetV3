@@ -4,16 +4,17 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/Scolarite.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2023 17:48
+ * @lastUpdate 01/09/2023 11:48
  */
 
 namespace App\DTO;
 
 use App\Entity\Constantes;
+use App\Enums\DecisionSemestreEnum;
 
 class Scolarite
 {
-    public ?string $decision;
+    public ?DecisionSemestreEnum $decision;
     public array $parcoursUe = [];
     public ?string $styleDecision;
     public ?float $moyenne;
@@ -21,8 +22,8 @@ class Scolarite
 
     public function __construct(\App\Entity\Scolarite $scolarite)
     {
-        $this->decision = $scolarite->getDecision()->value;
-        $this->styleDecision = $this->getStyle($scolarite->getDecision()->value);
+        $this->decision = $scolarite->getDecision();
+        $this->styleDecision = $this->getStyle($scolarite->getDecision());
         $this->moyenne = $scolarite->getMoyenne();
         $this->styleMoyenne = $this->getStyleNote($scolarite->getMoyenne());
 
@@ -31,9 +32,10 @@ class Scolarite
         }
     }
 
-    private function getStyle(string $decision): string
+    private function getStyle(DecisionSemestreEnum $decision): string
     {
-        return match ($decision) {
+        //todo: pourrait utiliser le color de l'enum?
+        return match ($decision->value) {
             Constantes::SEMESTRE_VALIDE => 'badge bg-success',
             Constantes::SEMESTRE_NON_VALIDE => 'badge bg-danger',
             Constantes::SEMESTRE_VCA, Constantes::SEMESTRE_VCJ => 'badge bg-warning',
