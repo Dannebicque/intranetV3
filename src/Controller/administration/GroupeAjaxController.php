@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/GroupeAjaxController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2022 08:14
+ * @lastUpdate 02/09/2023 13:48
  */
 
 namespace App\Controller\administration;
@@ -28,9 +28,9 @@ class GroupeAjaxController extends BaseController
     #[Route(path: '/update/{id}', name: 'administration_groupe_ajax_edit', options: ['expose' => true], methods: ['POST'])]
     public function update(MyGroupes $myGroupes, Request $request, Groupe $groupe): ?JsonResponse
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $groupe->getTypeGroupe()?->getSemestre());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $groupe->getTypeGroupe()?->getSemestres()->first());
         $name = JsonRequest::getValueFromRequest($request, 'field');
-        $value =JsonRequest::getValueFromRequest($request, 'value');
+        $value = JsonRequest::getValueFromRequest($request, 'value');
         $update = $myGroupes->update($groupe, $name, $value);
 
         return $update ? new JsonResponse('', Response::HTTP_OK) : new JsonResponse('erreur',
@@ -44,9 +44,15 @@ class GroupeAjaxController extends BaseController
     public function updateParent(GroupeRepository $groupeRepository, Request $request): ?JsonResponse
     {
         $groupe = $groupeRepository->find(JsonRequest::getValueFromRequest($request, 'groupe'));
-        $parent = $groupeRepository->find(JsonRequest::getValueFromRequest($request, 'parent'));
-        if (null !== $groupe && null !== $parent) {
-            $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $groupe->getTypeGroupe()?->getSemestre());
+
+        if (null !== $groupe) {
+            $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $groupe->getTypeGroupe()?->getSemestres()->first());
+            $parent = JsonRequest::getValueFromRequest($request, 'parent');
+            if ($parent !== "") {
+                $parent = $groupeRepository->find($parent);
+            } else {
+                $parent = null;
+            }
 
             $groupe->setParent($parent);
             $this->entityManager->flush();
@@ -61,13 +67,13 @@ class GroupeAjaxController extends BaseController
     public function updateTypeGroupe(
         TypeGroupeRepository $typeGroupeRepository,
         GroupeRepository $groupeRepository,
-        Request $request
-    ): ?JsonResponse {
+        Request          $request
+    ): ?JsonResponse
+    {
         $groupe = $groupeRepository->find(JsonRequest::getValueFromRequest($request, 'groupe'));
         $typegroupe = $typeGroupeRepository->find(JsonRequest::getValueFromRequest($request, 'typegroupe'));
         if (null !== $groupe && null !== $typegroupe) {
-            $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $typegroupe->getSemestre());
-
+            $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $typegroupe->getSemestres()->first());
             $groupe->setTypeGroupe($typegroupe);
             $this->entityManager->flush();
 
@@ -81,14 +87,20 @@ class GroupeAjaxController extends BaseController
     public function updateParcours(
         ApcParcoursRepository $apcParcoursRepository,
         ParcourRepository $parcourRepository,
-        GroupeRepository $groupeRepository,
-        Request $request
-    ): ?JsonResponse {
+        GroupeRepository  $groupeRepository,
+        Request           $request
+    ): ?JsonResponse
+    {
         $groupe = $groupeRepository->find(JsonRequest::getValueFromRequest($request, 'groupe'));
-        $diplome = $groupe->getTypeGroupe()->getDiplome();
 
-        if ($diplome === null && $groupe !== null) {
-            $diplome = $groupe->getTypeGroupe()->getSemestre()->getDiplome();
+        if ($groupe === null) {
+            return new JsonResponse('Groupe non trouvé', Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        $diplome = $groupe->getTypeGroupe()?->getSemestres()->first()->getDiplome();
+
+        if ($diplome === null) {
+            return new JsonResponse('Diplome non trouvé', Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         if ($diplome->isApc()) {
@@ -99,7 +111,6 @@ class GroupeAjaxController extends BaseController
 
         if (null !== $parcours) {
             $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $groupe->getTypeGroupe()->getSemestre());
-
 
             if ($diplome->isApc()) {
                 $groupe->setApcParcours($parcours);
