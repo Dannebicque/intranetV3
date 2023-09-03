@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.11](https://github.com/Dannebicque/intranetV3/compare/v3.14.10...v3.14.11) (2023-09-03)
+
+
+### Bug Fixes
+
+* divers correctifs ([f3177da](https://github.com/Dannebicque/intranetV3/commit/f3177dad490d2356b561a7653ca2c8ee8201b1f9))
+* Groupes et sécurisation des accés ([92cf4a0](https://github.com/Dannebicque/intranetV3/commit/92cf4a04f708a127955ba18f45ffea8c7a7b2c99))
+* Usage de l'enum sur les décisions ([5df1bc7](https://github.com/Dannebicque/intranetV3/commit/5df1bc7c83325e41f3f83befad64eb912cb17fcc))
+
 ### [3.14.10](https://github.com/Dannebicque/intranetV3/compare/v3.14.9...v3.14.10) (2023-09-01)
 
 
