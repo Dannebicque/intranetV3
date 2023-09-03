@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/sadm/previsionnel_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 31/08/2023 16:15
+// @lastUpdate 31/08/2023 17:01
 
 import { Controller } from '@hotwired/stimulus'
 
