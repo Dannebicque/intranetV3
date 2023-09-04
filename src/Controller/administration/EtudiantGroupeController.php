@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EtudiantGroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2022 11:35
+ * @lastUpdate 04/09/2023 12:12
  */
 
 namespace App\Controller\administration;
@@ -43,8 +43,8 @@ class EtudiantGroupeController extends BaseController
     #[Route(path: '/affecte/{typeGroupe}', name: 'administration_etudiant_groupe_affecte', options: ['expose' => true])]
     public function affecte(GroupeRepository $groupeRepository, EtudiantRepository $etudiantRepository, TypeGroupe $typeGroupe): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $typeGroupe->getSemestre());
-        $etudiants = $etudiantRepository->findByOrdreSemestreAndDiplome($typeGroupe->getSemestre()->getOrdreLmd(), $typeGroupe->getSemestre()->getDiplome());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $typeGroupe->getSemestres()->first());
+        $etudiants = $etudiantRepository->findByOrdreSemestreAndDiplome($typeGroupe->getSemestres()->first()->getOrdreLmd(), $typeGroupe->getSemestres()->first()->getDiplome());
         $groupes = $groupeRepository->findByTypeGroupe($typeGroupe);
 
         return $this->render('administration/etudiant_groupe/affecte.html.twig', [
