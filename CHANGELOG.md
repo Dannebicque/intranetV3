@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.16](https://github.com/Dannebicque/intranetV3/compare/v3.14.15...v3.14.16) (2023-09-04)
+
+
+### Bug Fixes
+
+* Decision à convertir ([b68e1a5](https://github.com/Dannebicque/intranetV3/commit/b68e1a5306bf3c143c60a9e1cf16bd6732fda9de))
+* Mes cours et sérialization ([30d6f6a](https://github.com/Dannebicque/intranetV3/commit/30d6f6acb61e161da0b1460bc9a6603bb0d04713))
+
 ### [3.14.15](https://github.com/Dannebicque/intranetV3/compare/v3.14.14...v3.14.15) (2023-09-04)
 
 
