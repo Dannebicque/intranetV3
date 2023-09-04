@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/LiveTwig/PersonnelMesCoursComponent.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2023 19:57
+ * @lastUpdate 04/09/2023 20:02
  */
 
 namespace App\Components\LiveTwig;
@@ -44,34 +44,15 @@ class PersonnelMesCoursComponent
 
     #[LiveAction]
     public function changeSemestre(
-        #[LiveArg] int $semestre)
+        #[LiveArg] int $semestre): void
     {
         $this->semestre = $this->semestreRepository->find($semestre);
         $this->getPrevisionnelSemestre();
     }
 
-    public function getPrevisionnelSemestre()
+    public function getPrevisionnelSemestre(): void
     {
         $this->previsionnels = $this->myPrevisionnel->getPrevisionnelPersonnelSemestre($this->dataUserSession->getUser(),
             $this->semestre, $this->dataUserSession->getAnneePrevisionnel());
     }
-
-//    public function dehydrateAddress(array $addressDto)
-//    {
-//        // NOTE: should the user be forced to json_encode() to return a scalar
-//        // SEE BELOW
-//        return [
-//            'street1' => $addressDto->street1,
-//            'street2' => $addressDto->street2,
-//            'city' => $addressDto->city,
-//        ];
-//    }
-//    public function hydrateAddress(array $address)
-//    {
-//        return new AddressDto(
-//            $address['street1'],
-//            $address['street2'],
-//            $address['city']
-//        );
-//    }
 }
