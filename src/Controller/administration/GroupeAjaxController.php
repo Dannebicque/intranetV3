@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/GroupeAjaxController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/09/2023 13:48
+ * @lastUpdate 04/09/2023 10:49
  */
 
 namespace App\Controller\administration;
@@ -110,7 +110,7 @@ class GroupeAjaxController extends BaseController
         }
 
         if (null !== $parcours) {
-            $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $groupe->getTypeGroupe()->getSemestre());
+            $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $typegroupe->getSemestres()->first());
 
             if ($diplome->isApc()) {
                 $groupe->setApcParcours($parcours);
