@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.14](https://github.com/Dannebicque/intranetV3/compare/v3.14.13...v3.14.14) (2023-09-04)
+
+
+### Bug Fixes
+
+* Bornes MMI ([6c5f89f](https://github.com/Dannebicque/intranetV3/commit/6c5f89f2fc511c9b3f14c97f8e02fdf31f9e2e5d))
+* EvenementEdt sans index de début ([3d16ec2](https://github.com/Dannebicque/intranetV3/commit/3d16ec21e6fc0997c658d5b6644878a36185c51e))
+* Gestion des parcours ([e1668cc](https://github.com/Dannebicque/intranetV3/commit/e1668cc8ded77f91d927d7dcb4bf6ce02aa61baf))
+* Site perso uniquement sur étudiant ([c377d78](https://github.com/Dannebicque/intranetV3/commit/c377d787196a98d7b31586cd22ae35fb4224bf1d))
+* Traduction types décisions ([6129daf](https://github.com/Dannebicque/intranetV3/commit/6129dafc7c1ddf79803319a2ecf1a049b7759597))
+* Typegroupe et semestre ([37efac1](https://github.com/Dannebicque/intranetV3/commit/37efac1a535269bd17bc8b3959169407cf1d309d))
+
 ### [3.14.13](https://github.com/Dannebicque/intranetV3/compare/v3.14.12...v3.14.13) (2023-09-04)
 
 
