@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantScolarite.php
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Etudiant/EtudiantScolarite.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/07/2021 15:55
+ * @lastUpdate 04/09/2023 19:25
  */
 
 /*
@@ -18,6 +18,7 @@ use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Scolarite;
 use App\Entity\Semestre;
+use App\Enums\DecisionSemestreEnum;
 use App\Repository\ScolariteRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -103,8 +104,8 @@ class EtudiantScolarite
                 // si non ??? Créer mais comment associer à une sous-comm?
                 $scolarite = new Scolarite($this->etudiant, $this->semestre, $this->anneeUniversitaire);
             }
-
-            $scolarite->setDecision($this->getDecisionFromEtat($etat));
+//todo: possible de manipuler DecisionEnum tout le long ?
+            $scolarite->setDecision(DecisionSemestreEnum::tryFrom($this->getDecisionFromEtat($etat)));
             $scolarite->setProposition($etat);
             $this->entityManger->persist($scolarite);
         }
