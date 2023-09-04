@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/LiveTwig/PersonnelMesCoursComponent.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/07/2023 13:56
+ * @lastUpdate 04/09/2023 19:57
  */
 
 namespace App\Components\LiveTwig;
@@ -28,7 +28,6 @@ class PersonnelMesCoursComponent
     #[LiveProp(writable: true)]
     public ?Semestre $semestre = null;
 
-    #[LiveProp(writable: true, useSerializerForHydration: true)]
     /** @var Previsionnel[] */
     public ?array $previsionnels = [];
 
