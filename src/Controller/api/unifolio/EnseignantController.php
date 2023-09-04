@@ -27,34 +27,33 @@ class EnseignantController extends BaseController
     {
         $this->checkAccessApi($request);
 
-        $enseignants = $personnelRepository->findAll();
+        $username = $request->query->get('username');
+
+        $enseignant = $personnelRepository->findOneBy(['username' => $username]);
 
         $tabEnseignant = [];
 
-        foreach ($enseignants as $enseignant) {
+    if($enseignant) {
 
-            //Récupérer les départements liés à l'enseignant en utilisant la méthode findDepartementPersonnel()
-            $departements = [];
-            foreach ($departementRepository->findDepartementPersonnel($enseignant) as $departement) {
-                $departements[] = [
-                    'id' => $departement->getId(),
-                    'libelle' => $departement->getLibelle(),
-                ];
-            }
-
-
-            $tabEnseignant[$enseignant->getId()] = [
-                'id' => $enseignant->getId(),
-                'nom' => $enseignant->getNom(),
-                'prenom' => $enseignant->getPrenom(),
-                'username' => $enseignant->getUsername(),
-                'mail_perso' => $enseignant->getMailPerso(),
-                'mail_univ' => $enseignant->getMailUniv(),
-                'telephone' => $enseignant->getTel1(),
-                'departements' => $departements,
+        $departements = [];
+        foreach ($departementRepository->findDepartementPersonnel($enseignant) as $departement) {
+            $departements[] = [
+                'id' => $departement->getId(),
+                'libelle' => $departement->getLibelle(),
             ];
         }
 
+        $tabEnseignant[$enseignant->getId()] = [
+            'id' => $enseignant->getId(),
+            'nom' => $enseignant->getNom(),
+            'prenom' => $enseignant->getPrenom(),
+            'username' => $enseignant->getUsername(),
+            'mail_perso' => $enseignant->getMailPerso(),
+            'mail_univ' => $enseignant->getMailUniv(),
+            'telephone' => $enseignant->getTel1(),
+            'departements' => $departements,
+        ];
+    }
         return $this->json($tabEnseignant);
     }
 }
