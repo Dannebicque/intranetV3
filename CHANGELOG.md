@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.13](https://github.com/Dannebicque/intranetV3/compare/v3.14.12...v3.14.13) (2023-09-04)
+
+
+### Bug Fixes
+
+* Gestion des parcours ([4202c1e](https://github.com/Dannebicque/intranetV3/commit/4202c1e9b0b80a5b321c09683efae428f4d5df1e))
+
 ### [3.14.12](https://github.com/Dannebicque/intranetV3/compare/v3.14.11...v3.14.12) (2023-09-03)
 
 
