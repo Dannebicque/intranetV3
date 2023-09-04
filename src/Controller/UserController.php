@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/UserController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2023 17:14
+ * @lastUpdate 04/09/2023 19:41
  */
 
 namespace App\Controller;
@@ -35,7 +35,7 @@ class UserController extends BaseController
             'user' => $this->getUser(),
             'onglet' => $onglet,
             'monprofil' => true,
-            'siteperso' => $this->getUser()->getSemestre()?->getDiplome()?->getOptEspacePersoVisible(),
+            'siteperso' => $this->getUser() instanceof Etudiant ? $this->getUser()->getSemestre()?->getDiplome()?->getOptEspacePersoVisible() : false,
         ]);
     }
 
