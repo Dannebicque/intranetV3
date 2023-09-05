@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/administration/QuestionnaireQualiteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/01/2023 13:03
+ * @lastUpdate 03/09/2023 21:15
  */
 
 namespace App\Controller\questionnaire\administration;
@@ -12,6 +12,7 @@ namespace App\Controller\questionnaire\administration;
 use App\Components\Questionnaire\QuestionnaireRegistry;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
+use App\Entity\QuestChoixEtudiant;
 use App\Entity\QuestQuestionnaire;
 use App\Repository\QuestChoixRepository;
 use Symfony\Component\HttpFoundation\Request;
@@ -120,6 +121,30 @@ class QuestionnaireQualiteController extends BaseController
         }
 
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'actualite.delete.error.flash');
+
+        return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    #[Route('/supprimer/{questionnaire}', name: 'supprimer')]
+    public function supprimeQuestionnaireEtudiant(
+        Request            $request,
+        QuestChoixEtudiant $questionnaire
+    ): Response
+    {
+        $id = $questionnaire->getId();
+        if ($this->isCsrfTokenValid('delete' . $id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
+            // suppression des réponses
+            $reponses = $questionnaire->getQuestionnaireEtudiantReponses();
+            foreach ($reponses as $reponse) {
+                $this->entityManager->remove($reponse);
+            }
+            $this->entityManager->remove($questionnaire);
+            $this->entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'questionnaire.delete.success.flash');
+
+            return $this->json($id, Response::HTTP_OK);
+        }
+        $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'questionnaire.delete.success.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }

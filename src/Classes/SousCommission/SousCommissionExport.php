@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/08/2023 10:07
+ * @lastUpdate 01/09/2023 12:19
  */
 
 namespace App\Classes\SousCommission;
@@ -968,7 +968,7 @@ class SousCommissionExport
                     ['style' => 'numerique3']);
                 ++$colonne;
                 $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                    $ssCommTravail->etudiant($etu->getId())->getDecision());
+                    $ssCommTravail->etudiant($etu->getId())->getDecision()->value);
                 ++$colonne;
                 $this->myExcelWriter->writeCellXY($colonne, $ligne,
                     $ssCommTravail->etudiant($etu->getId())->getProposition());

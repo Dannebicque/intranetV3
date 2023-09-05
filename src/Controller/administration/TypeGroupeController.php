@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/TypeGroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/01/2023 10:38
+ * @lastUpdate 01/09/2023 19:06
  */
 
 namespace App\Controller\administration;
@@ -34,7 +34,6 @@ class TypeGroupeController extends BaseController
     ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
         $diplome = $this->getDiplomeFromSemestre($semestre);
-
 
         return $this->render('administration/type_groupe/_listeSemestre.html.twig', [
             'semestre' => $semestre,

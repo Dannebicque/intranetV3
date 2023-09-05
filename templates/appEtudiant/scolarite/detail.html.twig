@@ -25,7 +25,7 @@
             <h4>Synthèse</h4>
             <div class="row">
                 <div class="col-sm-12 col-md-4">Moyenne semestre : {{ scolarite.moyenne|number_format(3) }}</div>
-                <div class="col-sm-12 col-md-4">Décision du semestre : {{ scolarite.decision }}</div>
+                <div class="col-sm-12 col-md-4">Décision du semestre : {{ scolarite.decision.value }}</div>
                 <div class="col-sm-12 col-md-4">Proposition : {{ scolarite.proposition }}</div>
             </div>
             <div class="row">

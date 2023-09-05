@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/ScolariteType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/07/2023 18:28
+ * @lastUpdate 04/09/2023 19:32
  */
 
 namespace App\Form;
@@ -66,6 +66,7 @@ class ScolariteType extends AbstractType
                 'class' => DecisionSemestreEnum::class,
                 'choice_label' => static fn(BackedEnum $choice): string => $choice->value,
                 'label' => 'label.decision.semestre',
+                'translation_domain' => 'messages',
             ])
             ->add('proposition', TextType::class, [
                 'label' => 'label.proposition',

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionSauvegarde.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/06/2022 08:30
+ * @lastUpdate 01/09/2023 11:52
  */
 
 /*
@@ -19,11 +19,12 @@ use App\Entity\AnneeUniversitaire;
 use App\Entity\Scolarite;
 use App\Entity\ScolaritePromo;
 use App\Entity\Semestre;
+use App\Enums\DecisionSemestreEnum;
 use App\Repository\ScolaritePromoRepository;
 use App\Repository\ScolariteRepository;
-use function array_key_exists;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
+use function array_key_exists;
 
 class SousCommissionSauvegarde
 {
@@ -69,8 +70,8 @@ class SousCommissionSauvegarde
                             $scSemestre->setMoyenne($scEtudiant->moyenneSemestre);
                         }
                     }
-
-                    $scSemestre->setDecision($scEtudiant->decision);
+//todo: passer par Enum toute la chaine...
+                    $scSemestre->setDecision(DecisionSemestreEnum::tryFrom($scEtudiant->decision));
                     $scSemestre->setProposition($scEtudiant->proposition);
                     $scSemestre->setNbAbsences($scEtudiant->nbAbsences());
                     $tUe = [];

@@ -1310,6 +1310,8 @@ help:
   opt_synthese: 'Permettre aux personnels de voir les sous-commissions en "temps réel"'
   opt_update_celcat: 'Permettre la synchronisation de l''emploi du temps avec Celcat'
   respRi: 'Définir le responsable des RI, pour l''édition les informations'
+  ppn_semestre: 'messages'
+  semestre_actif: 'messages'
 
 heure: Heure
 heures: heures
@@ -1646,6 +1648,9 @@ previsionnel:
   import.success.flash: 'Prévisionnel importé avec succès'
   delete.success.flash: 'Prévisionnel supprimé avec succès'
   delete.error.flash: 'Erreur lors de la suppression du prévisionnel'
+  synthese:
+    personnel:
+      heading: 'Synthèse par intervenant'
 
 prochains.evenements.heading: 'Prochains événements'
 professionalisation: Professionalisation
@@ -1844,6 +1849,8 @@ settings:
   heading: Paramètres
   vos.informations: 'Vos informations'
   vos.parametres: 'Vos paramètres'
+  vos.parametres.absences: 'Votre saisie des absences'
+  vos.parametres.departements: 'Vos départements'
   votre.password: 'Modifier votre mot de passe'
 
 simulation.sous-commission: 'Simulation Sous-commission'
@@ -2243,6 +2250,8 @@ table:
   heure_evaluation: Heure évaluation
   validationSaisieAbsence: Etape de validation lors de la saisie des absences
   saisieDesPresents: Saisir les présents plutôt que les absents
+  semestre_actif: 'messages'
+  ppn_semestre: 'messages'
 
 type_bac:
   g: 'Série générale'
@@ -2425,3 +2434,14 @@ structure:
   groupes: 'Structure des groupes'
 ddn.etudiant: 'Date de naissance'
 age.etudiant: 'Age'
+label.E.C.: En cours
+label.V: Validé
+label.NV: Non validé
+label.DEM: Démission
+label.REO: Réorientation
+label.VCJ: VCJ
+label.VCA: VCA
+label.BL: Blanchiment
+label.DR: Décision reportée
+
+

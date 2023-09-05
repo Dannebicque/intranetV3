@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/TypeGroupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/07/2023 13:56
+ * @lastUpdate 02/09/2023 13:29
  */
 
 namespace App\Entity;
@@ -46,9 +46,11 @@ class TypeGroupe extends BaseEntity
     private bool $mutualise = false;
 
     #[ORM\ManyToOne(inversedBy: 'typeGroupes')]
+    /** @deprecated */
     private ?Diplome $diplome;
 
     #[ORM\Column(nullable: true)]
+    /** @deprecated */
     private ?int $ordreSemestre;
 
     #[ORM\ManyToMany(targetEntity: Semestre::class, inversedBy: 'typeGroupess')]
@@ -63,8 +65,8 @@ class TypeGroupe extends BaseEntity
         ?Semestre $semestre
     ) {
         $this->groupes = new ArrayCollection();
-        $this->ordreSemestre = $semestre->getOrdreLmd();
-        $this->diplome = $semestre->getDiplome()->getParent() ?? $semestre->getDiplome();
+//        $this->ordreSemestre = $semestre->getOrdreLmd();
+//        $this->diplome = $semestre->getDiplome()->getParent() ?? $semestre->getDiplome();
         $this->semestres = new ArrayCollection();
     }
 
@@ -169,6 +171,7 @@ class TypeGroupe extends BaseEntity
         return null !== $this->getSemestre() ? $this->getSemestre()->getLibelle().' | '.$this->getLibelle() : $this->getLibelle();
     }
 
+    /** @deprecated */
     public function getDisplaySemestreDiplome(): string
     {
             return 'S'.$this->ordreSemestre.' | '.$this->getDiplome()?->getDisplayCourt();
@@ -200,11 +203,13 @@ class TypeGroupe extends BaseEntity
         return $this;
     }
 
+    /** @deprecated */
     public function getDiplome(): ?Diplome
     {
         return $this->diplome;
     }
 
+    /** @deprecated */
     public function setDiplome(?Diplome $diplome): self
     {
         $this->diplome = $diplome;
@@ -212,11 +217,13 @@ class TypeGroupe extends BaseEntity
         return $this;
     }
 
+    /** @deprecated */
     public function getOrdreSemestre(): ?int
     {
         return $this->ordreSemestre;
     }
 
+    /** @deprecated */
     public function setOrdreSemestre(?int $ordreSemestre): self
     {
         $this->ordreSemestre = $ordreSemestre;

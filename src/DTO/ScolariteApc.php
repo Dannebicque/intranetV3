@@ -4,19 +4,21 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/ScolariteApc.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2023 17:40
+ * @lastUpdate 01/09/2023 11:48
  */
 
 namespace App\DTO;
 
+use App\Enums\DecisionSemestreEnum;
+
 class ScolariteApc
 {
-    public ?string $decision;
+    public ?DecisionSemestreEnum $decision;
     public array $moyenneUes = [];
 
     public function __construct(\App\Entity\Scolarite $scolarite, array $ues = [])
     {
-        $this->decision = $scolarite->getDecision()->value;
+        $this->decision = $scolarite->getDecision();
 
         foreach ($scolarite->getMoyennesUes() as $key => $moyenneUe) {
             if (isset($ues[$key])) {

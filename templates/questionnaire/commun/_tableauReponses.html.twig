@@ -58,20 +58,20 @@
                     </a>
                 {% endif %}
                 {% if is_granted('ROLE_QUALITE') %}
-                    {#                    <a href="{{ path('administratif_enquete_etudiant_voir_modifier', #}
-                    {#                        {questionnaire: quizzEtudiant[questionnaire.id][etudiant.id].id}) }}" #}
-                    {#                       class="btn btn-warning btn-outline btn-square" #}
+                    {#                                        <a href="{{ path('administratif_enquete_etudiant_voir_modifier', #}
+                    {#                                            {questionnaire: quizzEtudiant[questionnaire.id][etudiant.id].id}) }}" #}
+                    {#                                           class="btn btn-warning btn-outline btn-square" #}
+                    {#                                           data-bs-toggle="tooltip" data-bs-placement="bottom" #}
+                    {#                                           title="{{ 'atitle.voir_modifier'|trans }}"> #}
+                    {#                                            <i class="{{ iconEdit }}"></i> #}
+                    {#                                        </a> #}
+                    {#       todo: revoir le code de suppression              <a href="{{ path('administratif_enquete_etudiant_supprimer', #}
+                    {#                        {questionnaire: element.id}) }}" data-csrf="{{ csrf_token('delete' ~ element.id) }}" #}
+                    {#                       class="btn btn-danger btn-outline btn-square supprimer" #}
                     {#                       data-bs-toggle="tooltip" data-bs-placement="bottom" #}
-                    {#                       title="{{ 'atitle.voir_modifier'|trans }}"> #}
-                    {#                        <i class="{{ iconEdit }}"></i> #}
+                    {#                       title="{{ 'atitle.supprimer'|trans }}"> #}
+                    {#                        <i class="{{ iconDelete }}"></i> #}
                     {#                    </a> #}
-                    <a href="{{ path('administratif_enquete_etudiant_supprimer',
-                        {questionnaire: element.id}) }}" data-csrf="{{ csrf_token('delete' ~ element.id) }}"
-                       class="btn btn-danger btn-outline btn-square supprimer"
-                       data-bs-toggle="tooltip" data-bs-placement="bottom"
-                       title="{{ 'atitle.supprimer'|trans }}">
-                        <i class="{{ iconDelete }}"></i>
-                    </a>
                 {% else %}
                     -
                 {% endif %}

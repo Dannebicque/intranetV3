@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/09/2022 12:24
+ * @lastUpdate 04/09/2023 19:23
  */
 
 namespace App\Classes\Celcat;
@@ -20,10 +20,10 @@ use App\Repository\DiplomeRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use App\Utils\Tools;
-use function array_key_exists;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use function array_key_exists;
 
 class MyCelcat
 {
@@ -236,7 +236,7 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
         $groupes = $this->groupeRepository->findAll();
         $this->tGroupes = [];
         foreach ($groupes as $groupe) {
-            $this->tGroupes[$groupe->getCodeApogee()] = $groupe->getTypeGroupe()?->getSemestre();
+            $this->tGroupes[$groupe->getCodeApogee()] = $groupe->getTypeGroupe()?->getSemestre(); //todo: plusieurs semestre ?
         }
     }
 

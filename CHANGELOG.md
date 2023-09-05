@@ -2,6 +2,67 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.16](https://github.com/Dannebicque/intranetV3/compare/v3.14.15...v3.14.16) (2023-09-04)
+
+
+### Bug Fixes
+
+* Decision à convertir ([b68e1a5](https://github.com/Dannebicque/intranetV3/commit/b68e1a5306bf3c143c60a9e1cf16bd6732fda9de))
+* Mes cours et sérialization ([30d6f6a](https://github.com/Dannebicque/intranetV3/commit/30d6f6acb61e161da0b1460bc9a6603bb0d04713))
+
+### [3.14.15](https://github.com/Dannebicque/intranetV3/compare/v3.14.14...v3.14.15) (2023-09-04)
+
+
+### Bug Fixes
+
+* Mes cours et sérialization ([644da60](https://github.com/Dannebicque/intranetV3/commit/644da60c03c430788e0623592ee329a924c3da19))
+
+### [3.14.14](https://github.com/Dannebicque/intranetV3/compare/v3.14.13...v3.14.14) (2023-09-04)
+
+
+### Bug Fixes
+
+* Bornes MMI ([6c5f89f](https://github.com/Dannebicque/intranetV3/commit/6c5f89f2fc511c9b3f14c97f8e02fdf31f9e2e5d))
+* EvenementEdt sans index de début ([3d16ec2](https://github.com/Dannebicque/intranetV3/commit/3d16ec21e6fc0997c658d5b6644878a36185c51e))
+* Gestion des parcours ([e1668cc](https://github.com/Dannebicque/intranetV3/commit/e1668cc8ded77f91d927d7dcb4bf6ce02aa61baf))
+* Site perso uniquement sur étudiant ([c377d78](https://github.com/Dannebicque/intranetV3/commit/c377d787196a98d7b31586cd22ae35fb4224bf1d))
+* Traduction types décisions ([6129daf](https://github.com/Dannebicque/intranetV3/commit/6129dafc7c1ddf79803319a2ecf1a049b7759597))
+* Typegroupe et semestre ([37efac1](https://github.com/Dannebicque/intranetV3/commit/37efac1a535269bd17bc8b3959169407cf1d309d))
+
+### [3.14.13](https://github.com/Dannebicque/intranetV3/compare/v3.14.12...v3.14.13) (2023-09-04)
+
+
+### Bug Fixes
+
+* Gestion des parcours ([4202c1e](https://github.com/Dannebicque/intranetV3/commit/4202c1e9b0b80a5b321c09683efae428f4d5df1e))
+
+### [3.14.12](https://github.com/Dannebicque/intranetV3/compare/v3.14.11...v3.14.12) (2023-09-03)
+
+
+### Bug Fixes
+
+* page document ([9e11f87](https://github.com/Dannebicque/intranetV3/commit/9e11f87e602f168a733aa8be9f3840ac86331a68))
+
+### [3.14.11](https://github.com/Dannebicque/intranetV3/compare/v3.14.10...v3.14.11) (2023-09-03)
+
+
+### Bug Fixes
+
+* divers correctifs ([f3177da](https://github.com/Dannebicque/intranetV3/commit/f3177dad490d2356b561a7653ca2c8ee8201b1f9))
+* Groupes et sécurisation des accés ([92cf4a0](https://github.com/Dannebicque/intranetV3/commit/92cf4a04f708a127955ba18f45ffea8c7a7b2c99))
+* Usage de l'enum sur les décisions ([5df1bc7](https://github.com/Dannebicque/intranetV3/commit/5df1bc7c83325e41f3f83befad64eb912cb17fcc))
+
+### [3.14.10](https://github.com/Dannebicque/intranetV3/compare/v3.14.9...v3.14.10) (2023-09-01)
+
+
+### Bug Fixes
+
+* choix département ([2a8d3b9](https://github.com/Dannebicque/intranetV3/commit/2a8d3b9ac4a931528b2d4c6c89bc0a3ab28c93af))
+* choix département ([24846d6](https://github.com/Dannebicque/intranetV3/commit/24846d67707059cb49a145f9401d98b5864bba7a))
+* choix département ([8a113d2](https://github.com/Dannebicque/intranetV3/commit/8a113d2b8921a46692d6773070cd65f2c8d6789a))
+* Erreur lien ([1c7b763](https://github.com/Dannebicque/intranetV3/commit/1c7b763815b7f830bd44a53444ed692c054db970))
+* Usage de l'enum sur les décisions ([02d612a](https://github.com/Dannebicque/intranetV3/commit/02d612a4dfafa70cbf0eeaf5913a673c7346c190))
+
 ### [3.14.9](https://github.com/Dannebicque/intranetV3/compare/v3.14.8...v3.14.9) (2023-08-31)
 
 

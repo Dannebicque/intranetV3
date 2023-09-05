@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyExportListing.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/10/2022 15:34
+ * @lastUpdate 04/09/2023 19:39
  */
 
 /*
@@ -23,7 +23,6 @@ use App\Entity\Personnel;
 use App\Entity\TypeGroupe;
 use App\Repository\GroupeRepository;
 use App\Repository\TypeGroupeRepository;
-use function count;
 use Doctrine\Common\Collections\Collection;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use PhpOffice\PhpSpreadsheet\Exception;
@@ -36,6 +35,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use function count;
 
 class MyExportListing
 {
@@ -121,7 +121,7 @@ class MyExportListing
             $this->colonnesEnTete[] = $ec;
         }
 
-        $semestre = $this->typeGroupe->getSemestre() ? $this->typeGroupe->getSemestre()->getLibelle() : 'sans-semestre';
+        $semestre = $this->typeGroupe->getSemestre() ? $this->typeGroupe->getSemestre()->getLibelle() : 'sans-semestre';//todo plusieurs semestre ???
 
         switch ($this->exportTypeDocument) {
             case Constantes::TYPEDOCUMENT_LISTE:
@@ -303,8 +303,8 @@ class MyExportListing
     private function writeSpecialHeader(Groupe $groupe): void
     {
         // gérer les infos par le diplôme
-        $anneeU = $groupe->getTypeGroupe()->getSemestre()->getAnneeUniversitaire()->displayAnneeUniversitaire();
-        $diplome = $groupe->getTypeGroupe()->getSemestre()->getDiplome();
+        $anneeU = $groupe->getTypeGroupe()->getSemestres()->first()->getAnneeUniversitaire()->displayAnneeUniversitaire();
+        $diplome = $groupe->getTypeGroupe()->getSemestres()->first()->getDiplome();
         $this->myExcelWriter->writeCellName('J1', 'Année Universitaire - '.$anneeU,
             ['style' => 'HORIZONTAL_RIGHT']);
         $this->myExcelWriter->writeCellName('J4',
