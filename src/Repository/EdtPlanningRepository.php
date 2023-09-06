@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/11/2022 13:51
+ * @lastUpdate 05/09/2023 12:05
  */
 
 namespace App\Repository;
@@ -16,10 +16,10 @@ use App\Entity\Etudiant;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Enums\TypeGroupeEnum;
-use function array_key_exists;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
+use function array_key_exists;
 
 /**
  * @method EdtPlanning|null find($id, $lockMode = null, $lockVersion = null)
@@ -84,7 +84,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->setParameters(['semaine' => $semaine,
                 'idMatiere' => $idModule,
                 'typeMatiere' => $typeModule,
-                'anneeUniversitaire' => $anneeUniversitaire->getId(), ])
+                'anneeUniversitaire' => $anneeUniversitaire->getId(),])
             ->orderBy('p.jour', Criteria::ASC)
             ->addOrderBy('p.debut', Criteria::ASC)
             ->addOrderBy('p.groupe', Criteria::ASC)
@@ -170,6 +170,33 @@ class EdtPlanningRepository extends ServiceEntityRepository
                 ->addOrderBy('p.debut', Criteria::ASC)
                 ->getQuery()
                 ->getResult();
+        }
+
+        return null;
+    }
+
+    public function findEdtEtuCmFi(Etudiant $user, int $semaine, AnneeUniversitaire $anneeUniversitaire): ?array
+    {
+        if (null !== $user->getSemestre() && $user->getSemestre()->getOrdreLmd() === 3) {
+            $this->groupes($user);
+            if ($this->groupetp <= 4) {
+                return $this->createQueryBuilder('p')
+                    ->where('p.semaine = :semaine')
+                    ->andWhere('p.ordreSemestre = :promo')
+                    ->andWhere('p.diplome = :diplome')
+                    ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
+                    ->andWhere('p.groupe = 41')
+                    ->setParameters([
+                        'semaine' => $semaine,
+                        'promo' => $user->getSemestre()->getOrdreLmd(),
+                        'diplome' => null !== $user->getDiplome()->getParent() ? $user->getDiplome()->getParent()->getId() : $user->getDiplome()->getId(),
+                        'anneeUniversitaire' => $anneeUniversitaire->getId(),
+                    ])
+                    ->orderBy('p.jour', Criteria::ASC)
+                    ->addOrderBy('p.debut', Criteria::ASC)
+                    ->getQuery()
+                    ->getResult();
+            }
         }
 
         return null;
@@ -347,7 +374,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
             }
             foreach ($diplome->getSemestres() as $semestre) {
                 if (true === $semestre->isActif()) {
-                    $ors[] = '('.$query->expr()->orx('(p.ordreSemestre = '.$query->expr()->literal($semestre->getOrdreLmd()).' AND p.diplome = '.$query->expr()->literal($dip->getId()).')').')';
+                    $ors[] = '(' . $query->expr()->orx('(p.ordreSemestre = ' . $query->expr()->literal($semestre->getOrdreLmd()) . ' AND p.diplome = ' . $query->expr()->literal($dip->getId()) . ')') . ')';
                 }
             }
         }
@@ -370,7 +397,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
             $pl['fin'] = $event->getFin();
             $pl['commentaire'] = $event->getCommentaire();
             if (null !== $matiere) {
-                $pl['ical'] = $matiere->libelle.' ('.$matiere->codeMatiere.') '.$event->getDisplayGroupe();
+                $pl['ical'] = $matiere->libelle . ' (' . $matiere->codeMatiere . ') ' . $event->getDisplayGroupe();
             } else {
                 $pl['ical'] = '';
             }
@@ -404,7 +431,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
                 $pl['fin'] = $event->getFin();
                 $pl['commentaire'] = '';
                 if (null !== $matiere) {
-                    $pl['ical'] = $matiere->libelle.' ('.$matiere->codeMatiere.') '.$event->getDisplayGroupe();
+                    $pl['ical'] = $matiere->libelle . ' (' . $matiere->codeMatiere . ') ' . $event->getDisplayGroupe();
                 } else {
                     $pl['ical'] = $event->getTexte();
                 }
@@ -423,8 +450,8 @@ class EdtPlanningRepository extends ServiceEntityRepository
         $i = 0;
         foreach ($departement->getDiplomes() as $diplome) {
             foreach ($diplome->getSemestres() as $semestre) {
-                $quer = $quer->orWhere('p.ordreSemestre = :semestre'.$i)
-                    ->setParameter('semestre'.$i, $semestre->getOrdreLmd());
+                $quer = $quer->orWhere('p.ordreSemestre = :semestre' . $i)
+                    ->setParameter('semestre' . $i, $semestre->getOrdreLmd());
                 ++$i;
             }
         }
@@ -450,10 +477,11 @@ class EdtPlanningRepository extends ServiceEntityRepository
     }
 
     public function findEdtSemestreSemaine(
-        Semestre $semestre,
-        int $semaine,
+        Semestre           $semestre,
+        int                $semaine,
         AnneeUniversitaire $anneeUniversitaire
-    ): array {
+    ): array
+    {
         return $this->createQueryBuilder('p')
             ->where('p.ordreSemestre = :semestre')
             ->andWhere('p.semaine = :semaine')

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtBorne.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/11/2022 15:12
+ * @lastUpdate 05/09/2023 11:48
  */
 
 /*
@@ -103,7 +103,12 @@ class MyEdtBorne
                 $semestre, $this->data['jsem'], $tMatieres, $groupes);
             $tab = [];
             foreach ($planning->getEvents() as $pl) {
-                $tab[$pl->ordreGroupe][$pl->gridStart] = $pl;
+                if ($pl->ordreGroupe === 41) {
+                    $tab[1][$pl->gridStart] = $pl;
+                } else {
+                    $tab[$pl->ordreGroupe][$pl->gridStart] = $pl;
+                }
+
             }
             $this->data['planning'] = $tab;
             $this->data['p1']['groupes'] = $this->groupeRepository->findAllGroupes($semestre);

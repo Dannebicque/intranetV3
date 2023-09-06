@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.17](https://github.com/Dannebicque/intranetV3/compare/v3.14.16...v3.14.17) (2023-09-05)
+
+
+### Bug Fixes
+
+* Affichage EDT ([abcc2bc](https://github.com/Dannebicque/intranetV3/commit/abcc2bcea906a560c98e92350bddd8739eb4cf19))
+* Bornes et groupes CM FI ([a3b5521](https://github.com/Dannebicque/intranetV3/commit/a3b55213664d2c98ab87ee3ff29b20f05e944b07))
+
 ### [3.14.16](https://github.com/Dannebicque/intranetV3/compare/v3.14.15...v3.14.16) (2023-09-04)
 
 
