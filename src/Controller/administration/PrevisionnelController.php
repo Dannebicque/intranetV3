@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/08/2023 15:41
+ * @lastUpdate 10/09/2023 17:42
  */
 
 namespace App\Controller\administration;
@@ -43,7 +43,8 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/administration/service-previsionnel')]
 class PrevisionnelController extends BaseController
 {
-    #[Route('/annee/{annee}', name: 'administration_previsionnel_index', options: ['expose' => true])]
+    #[Route('/annee/{annee}', name: 'administration_previsionnel_index_old', options: ['expose' => true])]
+    /** @deprecated */
     public function index(TypeMatiereManager $typeMatiereManager, ?int $annee = 0): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
@@ -62,6 +63,7 @@ class PrevisionnelController extends BaseController
     }
 
     #[Route('/matiere/{matiere}/{type}/{annee}', name: 'administration_previsionnel_matiere', options: ['expose' => true])]
+    /** @deprecated */
     public function matiere(
         PrevisionnelManager $previsionnelManager,
         TypeMatiereManager $typeMatiereManager,
@@ -93,6 +95,7 @@ class PrevisionnelController extends BaseController
     }
 
     #[Route('/semestre/{semestre}/{annee}', name: 'administration_previsionnel_semestre', options: ['expose' => true])]
+    /** @deprecated */
     public function semestre(
         PrevisionnelManager $previsionnelManager,
         PrevisionnelSynthese $previsionnelSynthese,
@@ -119,6 +122,7 @@ class PrevisionnelController extends BaseController
     }
 
     #[Route('/personnel/{personnel}/{annee}', name: 'administration_previsionnel_personnel', options: ['expose' => true])]
+    /** @deprecated */
     public function personnel(
         PrevisionnelManager $previsionnelManager,
         HrsManager $hrsManager,
@@ -151,6 +155,7 @@ class PrevisionnelController extends BaseController
     }
 
     #[Route('/ajax/edit/{id}', name: 'administration_previsionnel_ajax_edit', options: ['expose' => true])]
+    /** @deprecated */
     public function edit(
         PrevisionnelManager $previsionnelManager,
         Request $request,
@@ -165,10 +170,9 @@ class PrevisionnelController extends BaseController
             Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    #[Route('/new', name: 'administration_previsionnel_new', methods: ['GET', 'POST'])]
+    #[Route('/', name: 'administration_previsionnel_index', methods: ['GET', 'POST'])]
     public function create(): RedirectResponse|Response
     {
-
         return $this->render('administration/previsionnel/new.html.twig');
     }
 
@@ -200,6 +204,11 @@ class PrevisionnelController extends BaseController
 
         if ($type === 'synthese-personnel') {
             return $this->render('previsionnel/administration/_synthesePersonnel.html.twig', [
+            ]);
+        }
+
+        if ($type === 'actions') {
+            return $this->render('previsionnel/administration/_actions.html.twig', [
             ]);
         }
 

@@ -1651,6 +1651,8 @@ previsionnel:
   synthese:
     personnel:
       heading: 'Synthèse par intervenant'
+  actions:
+    heading: 'Autres opérations'
 
 prochains.evenements.heading: 'Prochains événements'
 professionalisation: Professionalisation

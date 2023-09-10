@@ -1,0 +1,77 @@
+<div class="card">
+    <h4 class="card-title">{{ 'adm.previsionnel.duplicate.annee.heading'|trans }}</h4>
+    <div class="card-body">
+        <form action="{{ path('administration_previsionnel_duplicate_annee') }}" method="post" class="form">
+
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label for="annee_depart">Année à copier</label>
+                        <select name="annee_depart" id="annee_depart" class="form-select">
+                            <option value="">Choisir</option>
+                            {% for annee in 2017..'now'|date('Y')+2 %}
+                                <option value="{{ annee }}">{{ annee }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <label for="annee_destination">Année de destination</label>
+                        <select name="annee_destination" id="annee_destination" class="form-select">
+                            <option value="">Choisir</option>
+                            {% for annee in 2017..'now'|date('Y')+4 %}
+                                <option value="{{ annee }}">{{ annee }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12">
+                    <div class="custom-controls-stacked">
+                        <div class="custom-control custom-checkbox">
+                            <input type="checkbox" class="custom-control-input" id="annee_concerver"
+                                   name="annee_concerver" value="true">
+                            <label class="custom-control-label" for="annee_concerver">Conserver les données dans l'année
+                                de destination ? (par défaut la copie remplace l'ensemble des données)</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-sm-12 d-grid">
+                    <button class="btn d-block btn-success" type="submit">
+                        Dupliquer le prévisionnel de l'année
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="card card-danger">
+    <h4 class="card-title">{{ 'adm.previsionnel.supprimer.annee.heading'|trans }}</h4>
+    <div class="card-body">
+        <form action="{{ path('administration_previsionnel_supprimer_annee') }}" method="POST" class="form"
+              onsubmit="return confirm('Vous allez supprimer les données du prévisionnel pour l\'année ' +
+                   'selectionnée. Veuillez confirmer ?');">
+            <div class="row">
+                <div class="col-md-6 col-sm-12">
+                    <div class="form-group">
+                        <input type="hidden" value="{{ csrf_token('supprimer') }}" name="_token">
+                        <label class="sr-only" for="annee_supprimer">{{ 'choisir'|trans }}</label>
+                        <select name="annee_supprimer" id="annee_supprimer" class="form-select">
+                            <option value="">Choisir</option>
+                            {% for annee in 2017..'now'|date('Y')+2 %}
+                                <option value="{{ annee }}">{{ annee }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-12 d-grid">
+                    <button class="btn d-block btn-warning" type="submit">
+                        Supprimer les données pour l'année selectionnée
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
