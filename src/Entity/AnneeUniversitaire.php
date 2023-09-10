@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/AnneeUniversitaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/07/2023 13:56
+ * @lastUpdate 10/09/2023 16:46
  */
 
 namespace App\Entity;
@@ -39,7 +39,7 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
     /**
      * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Departement>
      */
-    /** @Deprecated */
+    /** @deprecated */
     #[ORM\OneToMany(mappedBy: 'anneeUniversitairePrepare', targetEntity: Departement::class)]
     private Collection $departements;
 
