@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Previsionnel/PrevisionnelExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 10/09/2023 17:19
  */
 
 namespace App\Classes\Previsionnel;
@@ -148,7 +148,7 @@ class PrevisionnelExport
             ++$colonne;
             // CODE ELEMENT*
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne,
-                $previ->getTypeHrs() ? $previ->getTypeHrs()->getType() : 'non défini');
+                $previ->getTypeHrs() ? $previ->getTypeHrs()->getType()->value : 'non défini');
             ++$colonne;
             // LIBELLE ELEMENT
             if (null !== $previ->getTypeHrs()) {
