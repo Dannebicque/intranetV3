@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.20](https://github.com/Dannebicque/intranetV3/compare/v3.14.19...v3.14.20) (2023-09-10)
+
+
+### Features
+
+* Nouvelle page prévisionnel ([107b5ab](https://github.com/Dannebicque/intranetV3/commit/107b5abd7798286c9c686ef86306689280112b8b))
+
+
+### Bug Fixes
+
+* Division par 0 ([76d0593](https://github.com/Dannebicque/intranetV3/commit/76d0593bdbf60aa0d16338cbc9c1818317becc22))
+* export HRS ([16be7f7](https://github.com/Dannebicque/intranetV3/commit/16be7f73c84162302dee923dfe91369a0c0b8254))
+
 ### [3.14.19](https://github.com/Dannebicque/intranetV3/compare/v3.14.18...v3.14.19) (2023-09-10)
 
 
