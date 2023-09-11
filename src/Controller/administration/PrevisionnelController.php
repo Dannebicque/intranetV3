@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/09/2023 17:42
+ * @lastUpdate 11/09/2023 21:24
  */
 
 namespace App\Controller\administration;
@@ -25,7 +25,6 @@ use App\Enums\TypeHrsEnum;
 use App\Exception\AnneeUniversitaireNotFoundException;
 use App\Exception\MatiereNotFoundException;
 use App\Exception\PersonnelNotFoundException;
-use App\Exception\SemestreNotFoundException;
 use App\Form\ImportPrevisionnelType;
 use App\Repository\HrsRepository;
 use App\Repository\PersonnelRepository;
@@ -225,7 +224,7 @@ class PrevisionnelController extends BaseController
         $annee = $request->query->get('annee');
 
         if ($matiere === null) {
-            throw new MatiereNotFoundException();
+            return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         //récupérer le prévisionnel déjà existant matière/année
@@ -251,7 +250,7 @@ class PrevisionnelController extends BaseController
         $annee = $request->query->get('annee');
 
         if ($personnel === null) {
-            throw new PersonnelNotFoundException();
+            return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         //récupérer le prévisionnel déjà existant matière/année
@@ -286,7 +285,7 @@ class PrevisionnelController extends BaseController
         $annee = $request->query->get('annee');
 
         if ($semestre === null) {
-            throw new SemestreNotFoundException();
+            return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
         }
 
         //récupérer le prévisionnel déjà existant matière/année

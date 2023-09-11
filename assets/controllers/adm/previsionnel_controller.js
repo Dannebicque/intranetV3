@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/adm/previsionnel_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/08/2023 15:41
+// @lastUpdate 11/09/2023 21:21
 
 import { Controller } from '@hotwired/stimulus'
 import { addCallout } from '../../js/util'
@@ -290,28 +290,28 @@ export default class extends Controller {
   async _updateMatiere(params) {
     this.contentAddTarget.innerHTML = window.da.loaderStimulus
     await fetch(`${this.urlChangeMatiereValue}?${params.toString()}`, {}).then((response) => response.text()).then((html) => {
-      this.contentAddTarget.innerHTML = html
+      this.contentAddTarget.innerHTML = html !== 'false' ? html : ''
     })
   }
 
   async _updateSynthesePersonnel(params) {
     this.contentAddTarget.innerHTML = window.da.loaderStimulus
     await fetch(`${this.urlChangeSynthesePersonnelValue}?${params.toString()}`, {}).then((response) => response.text()).then((html) => {
-      this.contentAddTarget.innerHTML = html
+      this.contentAddTarget.innerHTML = html !== 'false' ? html : ''
     })
   }
 
   async _updatePersonnel(params) {
     this.contentAddTarget.innerHTML = window.da.loaderStimulus
     await fetch(`${this.urlChangePersonnelValue}?${params.toString()}`, {}).then((response) => response.text()).then((html) => {
-      this.contentAddTarget.innerHTML = html
+      this.contentAddTarget.innerHTML = html !== 'false' ? html : ''
     })
   }
 
   async _updateSemestre(params) {
     this.contentAddTarget.innerHTML = window.da.loaderStimulus
     await fetch(`${this.urlChangeSemestreValue}?${params.toString()}`, {}).then((response) => response.text()).then((html) => {
-      this.contentAddTarget.innerHTML = html
+      this.contentAddTarget.innerHTML = html !== 'false' ? html : ''
     })
   }
 
