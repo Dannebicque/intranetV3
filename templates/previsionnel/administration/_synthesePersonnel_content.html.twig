@@ -3,10 +3,12 @@
     <tr>
         <th>Personnel</th>
         <th>Catégorie</th>
+        <th>Service</th>
         <th>CM</th>
         <th>TD</th>
         <th>TP</th>
         <th>Total</th>
+        <th>Ecart</th>
     </tr>
     </thead>
     <tbody>
@@ -14,10 +16,12 @@
         <tr>
             <th>{{ previsionnel.display }}</th>
             <td>{{ previsionnel.type|badgeStatut }}</td>
+            <td>{{ previsionnel.nbHeuresService|nombreHeure }}</td>
             <td class="previcm">{{ previsionnel.totalCM|nombreHeure }}</td>
             <td class="previtd">{{ previsionnel.totalTD|nombreHeure }}</td>
             <td class="previtp">{{ previsionnel.totalTP|nombreHeure }}</td>
             <td>{{ previsionnel.total|nombreHeure }}</td>
+            <td>{{ (previsionnel.total - previsionnel.nbHeuresService)|badgeDiffence }}</td>
         </tr>
     {% endfor %}
 
@@ -32,14 +36,14 @@
         </td>
     </tr>
     <tr>
-        <th colspan="2">Total</th>
+        <th colspan="3">Total</th>
         <th class="previcm">{{ synthesePrevisionnel.totalCM|nombreHeure }}</th>
         <th class="previtd">{{ synthesePrevisionnel.totalTD|nombreHeure }}</th>
         <th class="previtp">{{ synthesePrevisionnel.totalTP|nombreHeure }}</th>
         <th>{{ synthesePrevisionnel.total|nombreHeure }}</th>
     </tr>
     <tr>
-        <td colspan="8" class="bg-complementary">
+        <td colspan="9" class="bg-complementary">
             <div class="d-grid ">
                 <span class="btn d-block text-white">
                     Répartition
@@ -48,13 +52,13 @@
         </td>
     </tr>
     <tr>
-        <td colspan="2"></td>
+        <td colspan="3"></td>
         <th colspan="2">Permanent</th>
         <th colspan="2">Vacataire</th>
         <th colspan="2">Autres</th>
     </tr>
     <tr>
-        <td colspan="2">Répartition</td>
+        <td colspan="3">Répartition</td>
         <td colspan="2">{{ synthesePrevisionnel.pourcentagePermanent|pourcentage }}</td>
         <td colspan="2">{{ synthesePrevisionnel.pourcentageVacataire|pourcentage }}</td>
         <td colspan="2">{{ synthesePrevisionnel.pourcentageAutre|pourcentage }}</td>
