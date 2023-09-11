@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Twig/HtmlExtension.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/08/2023 15:41
+ * @lastUpdate 11/09/2023 21:15
  */
 
 namespace App\Twig;
@@ -25,9 +25,24 @@ class HtmlExtension extends AbstractExtension
         return [
             new TwigFilter('fqn', $this->fqn(...)),
             new TwigFilter('nombreHeure', $this->nombreHeure(...)),
+            new TwigFilter('badgeDiffence', $this->badgeDiffence(...), ['is_safe' => ['html']]),
             new TwigFilter('deuxDigits', $this->deuxDigits(...)),
             new TwigFilter('badgeYesNo', $this->badgeYesNo(...), ['is_safe' => ['html']]),
         ];
+    }
+
+
+    // fonction qui affiche un badge danger si négatif, succes si 0 et info au dessus
+    public function badgeDiffence(float $value): string
+    {
+        if ($value < 0) {
+            return '<span class="badge bg-danger"><i class="fas fa-arrow-down me-1"></i> ' . number_format($value, 2, ',', ' ') . ' h' . '</span>';
+        }
+        if ($value > 0) {
+            return '<span class="badge bg-success"><i class="fas fa-arrow-up me-1"></i> ' . number_format($value, 2, ',', ' ') . ' h' . '</span>';
+        }
+
+        return '<span class="badge bg-info"><i class="fas fa-arrow-right me-1"></i> ' . number_format($value, 2, ',', ' ') . ' h' . '</span>';
     }
 
     public function nombreHeure(float $value): string
