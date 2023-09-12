@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Matieres/MatiereManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/09/2023 12:16
+ * @lastUpdate 12/09/2023 13:03
  */
 
 namespace App\Classes\Matieres;
@@ -12,6 +12,7 @@ namespace App\Classes\Matieres;
 use App\Adapter\MatiereMatiereAdapter;
 use App\DTO\Matiere;
 use App\DTO\MatiereCollection;
+use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Repository\MatiereRepository;
@@ -62,5 +63,12 @@ class MatiereManager extends AbstractMatiereManager implements MatiereInterface
         $matiere = $this->matiereRepository->findOneBy(['codeElement' => $code]);
 
         return $this->matiereAdapter->single($matiere);
+    }
+
+    public function findByDepartement(Departement $departement): MatiereCollection
+    {
+        $data = $this->matiereRepository->findByDepartement($departement);
+
+        return $this->matiereAdapter->collection($data);
     }
 }
