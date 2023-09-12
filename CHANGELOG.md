@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.24](https://github.com/Dannebicque/intranetV3/compare/v3.14.23...v3.14.24) (2023-09-12)
+
+
+### Bug Fixes
+
+* MatiereManager.php ([cf433cf](https://github.com/Dannebicque/intranetV3/commit/cf433cf32bd21fc5a2a5f9ee258d2f7beef1a2ad))
+
 ### [3.14.23](https://github.com/Dannebicque/intranetV3/compare/v3.14.22...v3.14.23) (2023-09-12)
 
 
