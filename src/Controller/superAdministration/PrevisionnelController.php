@@ -4,21 +4,26 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/09/2023 19:08
+ * @lastUpdate 12/09/2023 12:16
  */
 
 namespace App\Controller\superAdministration;
 
 use App\Classes\Hrs\HrsManager;
+use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\Previsionnel\PrevisionnelManager;
 use App\Classes\Previsionnel\PrevisionnelSynthese;
 use App\Controller\BaseController;
+use App\DTO\PrevisionnelSynthesePersonnels;
 use App\Entity\Personnel;
+use App\Enums\TypeHrsEnum;
 use App\Exception\AnneeUniversitaireNotFoundException;
 use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\DepartementRepository;
+use App\Repository\HrsRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\PrevisionnelRepository;
+use App\Repository\TypeHrsRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -55,8 +60,12 @@ class PrevisionnelController extends BaseController
 
     #[Route(path: '/previsionnel/affiche', name: 'sa_previsionnel_affiche')]
     public function affichePrevisionnel(
-        PersonnelRepository    $personnelRepository,
-        PrevisionnelManager    $previsionnelManager,
+        DepartementRepository $departementRepository,
+        HrsRepository         $hrsRepository,
+        TypeHrsRepository     $typeHrsRepository,
+        TypeMatiereManager    $typeMatiereManager,
+        PrevisionnelManager   $previsionnelManager,
+        PersonnelRepository   $personnelRepository,
         PrevisionnelRepository $previsionnelRepository,
         Request                $request
     ): Response
@@ -64,14 +73,46 @@ class PrevisionnelController extends BaseController
         $intervenant = $request->query->get('intervenant');
         $matiere = $request->query->get('matiere');
         $diplome = $request->query->get('diplome');
-        $departement = $request->query->get('departement');
-        $annee = $request->query->get('annee');
+        $departement = $request->query->get('departement', null);
+        $annee = (int)$request->query->get('annee');
         $personnel = $personnelRepository->find($intervenant);
 
+        $previsionnel = [];
+        $hrsCollection = [];
+//        if (null !== $personnel) {
+//            $previsionnel = $previsionnelManager->getPrevisionnelPersonnelAnneeCollection($personnel, $annee);
+//
+//            $hrs = $hrsRepository->getPersonnelAnnee($personnel, $annee);
+//            $hrsCollection = new HrsCollection();
+//            foreach ($hrs as $hr) {
+//                $hrsCollection->addHrs($hr);
+//            }
+//        }
+        if (null !== $departement && $departement !== "") {
+            $departement = $departementRepository->find($departement);
+            $previsionnel = $previsionnelManager->getPrevisionnelDepartement($departement, $annee);
+            $synthesePrevisionnel = new PrevisionnelSynthesePersonnels();
+            foreach ($previsionnel as $previsionnelPersonnel) {
+                $synthesePrevisionnel->addPrevisionnelPersonnel($previsionnelPersonnel);
+            }
+        } else {
+            //récupérer pour tous les départements sur l'année du prévisionnel
+            $previsionnel = $previsionnelManager->getPrevisionnelAllDepartementAnnee($annee);
+            $synthesePrevisionnel = new PrevisionnelSynthesePersonnels();
+            foreach ($previsionnel as $previsionnelPersonnel) {
+                $synthesePrevisionnel->addPrevisionnelPersonnel($previsionnelPersonnel);
+            }
+        }
 
-        $previsionnels = $previsionnelManager->getPrevisionnelEnseignantAnnee($personnel, $annee);
         return $this->render('super-administration/previsionnel/_affiche.html.twig', [
-            'previsionnels' => $previsionnels
+            'personnel' => $personnel,
+            'matieres' => $typeMatiereManager->findAll(),
+            'annee' => $annee,
+            'previsionnel' => $previsionnel,
+            'synthesePrevisionnel' => $synthesePrevisionnel,
+            'primes' => $hrsCollection,
+            'typesHrs' => $typeHrsRepository->findAll(),
+            'categorieHrs' => TypeHrsEnum::cases()
         ]);
     }
 

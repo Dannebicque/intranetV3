@@ -4,11 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtBorne.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/09/2023 11:48
- */
-
-/*
- * Pull your hearder here, for exemple, Licence header.
+ * @lastUpdate 10/09/2023 16:46
  */
 
 namespace App\Classes\Edt;

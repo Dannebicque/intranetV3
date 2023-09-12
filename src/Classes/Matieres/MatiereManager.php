@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Matieres/MatiereManager.php
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Matieres/MatiereManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/10/2021 11:35
+ * @lastUpdate 12/09/2023 12:16
  */
 
 namespace App\Classes\Matieres;
@@ -12,7 +12,6 @@ namespace App\Classes\Matieres;
 use App\Adapter\MatiereMatiereAdapter;
 use App\DTO\Matiere;
 use App\DTO\MatiereCollection;
-use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Repository\MatiereRepository;
@@ -30,6 +29,13 @@ class MatiereManager extends AbstractMatiereManager implements MatiereInterface
         return null !== $matiere ? $this->matiereAdapter->single($matiere) : null;
     }
 
+    public function findAll(): MatiereCollection
+    {
+        $matieres = $this->matiereRepository->findAll();
+
+        return $this->matiereAdapter->collection($matieres);
+    }
+
     public function findBySemestre(Semestre $semestre): MatiereCollection
     {
         $data = $this->matiereRepository->findBySemestre($semestre);
@@ -37,9 +43,9 @@ class MatiereManager extends AbstractMatiereManager implements MatiereInterface
         return $this->matiereAdapter->collection($data);
     }
 
-    public function findByDepartement(Departement $departement): MatiereCollection
+    public function findByAnneeUniversitaire(int $anneeUniversitaire): MatiereCollection
     {
-        $data = $this->matiereRepository->findByDepartement($departement);
+        $data = $this->matiereRepository->findByAnneeUniversitaire($anneeUniversitaire);
 
         return $this->matiereAdapter->collection($data);
     }

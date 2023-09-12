@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Previsionnel/PrevisionnelRessourceManager.php
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Previsionnel/PrevisionnelRessourceManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2021 22:50
+ * @lastUpdate 12/09/2023 11:18
  */
 
 namespace App\Classes\Previsionnel;
@@ -94,5 +94,12 @@ class PrevisionnelRessourceManager extends AbstractPrevisionnelManager implement
     public function findByDiplomeToDelete(Diplome $diplome, int $annee): array
     {
         return $this->previsionnelRepository->findByDiplomeToDelete($diplome, $annee);
+    }
+
+    public function findByAnneeUniversitaire(int $annee = 0): PrevisionnelCollection
+    {
+        $data = $this->previsionnelRepository->findByAnneeUniversitaire($annee);
+
+        return $this->previsionnelRessourceAdapter->collection($data);
     }
 }

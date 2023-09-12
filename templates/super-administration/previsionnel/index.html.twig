@@ -15,6 +15,13 @@
         </div>
     </div>
 {% endblock %}
+
+{% block stimulus %}
+    {{ stimulus_controller('sadm--previsionnel', {
+        url: path('sa_previsionnel_affiche')
+    }) }}
+{% endblock %}
+
 {# todo: par formation, module, semestre, enseignant #}
 {% block content %}
     <div class="row">
