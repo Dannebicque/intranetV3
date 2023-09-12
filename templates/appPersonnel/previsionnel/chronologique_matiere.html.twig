@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block header %}
-    {{ 'application.votre.previsionnel.chronologique.heading'|trans }}
+    {{ 'application.previsionnel.chronologique.matiere.heading'|trans }}
 {% endblock %}
 
 {% block headeractions %}
@@ -27,7 +27,14 @@
         <header class="card-header">
             <h4 class="card-title"><strong>{{ 'service.chronologique.heading'|trans }}</strong>
                 | {{ user_data.user.display }} | ({{ 'periode'|trans }}
-                : {{ user_data.departement.optAnneePrevisionnel }})</h4>
+                : {{ user_data.departement.optAnneePrevisionnel }}) | {% set seen = [] %}
+                {% for cours in chronologique %}
+                    {% if matieres[cours.typeIdMatiere] not in seen %}
+                        {% set seen = seen|merge([matieres[cours.typeIdMatiere]]) %}
+                        {{ matieres[cours.typeIdMatiere] is defined ? matieres[cours.typeIdMatiere].display :
+                            '-Matière inconnue-' }}
+                    {% endif %}
+                {% endfor %}</h4>
             <ul class="card-controls">
                 <li class="dropdown">
                     <a data-bs-toggle="dropdown" href="#"><i class="fas fa-ellipsis-h rotate-90"></i></a>
@@ -41,7 +48,7 @@
         <div class="card-body">
 
             {% set seen = [] %}
-            {% for cours in chronologique %}
+            {% for cours in chronologiqueComplet %}
                 {% if matieres[cours.typeIdMatiere] not in seen %}
                     {% set seen = seen|merge([matieres[cours.typeIdMatiere]]) %}
                     <a href="{{ path('previsionnel_chronologique_matiere', {matiere: cours.typeIdMatiere}) }}">
@@ -52,6 +59,11 @@
                     </a>
                 {% endif %}
             {% endfor %}
+            <a href="{{ path('previsionnel_chronologique')}}">
+                <button class="btn btn-secondary" style="margin: 10px">
+                    Revenir à votre service chronologique
+                </button>
+            </a>
 
             <table class="table table-bordered table-condensed">
                 <thead>
@@ -59,7 +71,7 @@
                     <th>{{ 'table.date'|trans }}</th>
                     <th>{{ 'table.jour'|trans }}</th>
                     <th>{{ 'table.heure'|trans }}</th>
-                    <th>{{ 'table.matiere'|trans }}</th>
+                    <th>{{ 'table.personnel'|trans }}</th>
                     <th>{{ 'table.type_cours'|trans }}</th>
                     <th>{{ 'table.groupe'|trans }}</th>
                 </tr>
@@ -70,10 +82,7 @@
                         <td>{{ cours.date }}</td>
                         <td>{{ cours.jour }}</td>
                         <td>{{ cours.heureTexte }}</td>
-                        <td>
-                            {{ matieres[cours.typeIdMatiere] is defined ? matieres[cours.typeIdMatiere].display :
-                            '-Matière inconnue-' }}
-                        </td>
+                        <td>{{ cours.personnel }}</td>
                         <td>{{ cours.type_cours }}</td>
                         <td>{{ cours.groupe }}</td>
                     </tr>

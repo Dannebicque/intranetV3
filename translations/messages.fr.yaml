@@ -740,7 +740,8 @@ app:
 
 application:
   vos.stages.et.alternances.heading: 'Liste de vos suivis de stage et d''alternace'
-
+  votre.previsionnel.chronologique.heading: 'Votre service réalisé chronologique'
+  previsionnel.chronologique.matiere.heading: 'Service chronologique par matière'
 applications:
   etudiant:
     carnet.heading: 'Cahier de texte'
