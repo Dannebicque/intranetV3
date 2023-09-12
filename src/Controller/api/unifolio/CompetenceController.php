@@ -35,7 +35,7 @@ class CompetenceController extends BaseController
                 'libelle' => $competence->getLibelle(),
                 'nom_court' => $competence->getNomCourt(),
                 'couleur' => $competence->getCouleur(),
-                'referentiel' => $competence->getApcReferentiel()->getLibelle(),
+                'referentiel' => $competence->getApcReferentiel()->getId(),
             ];
         }
 
