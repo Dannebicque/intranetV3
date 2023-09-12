@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.23](https://github.com/Dannebicque/intranetV3/compare/v3.14.22...v3.14.23) (2023-09-12)
+
+
+### Features
+
+* badge différence ([8510800](https://github.com/Dannebicque/intranetV3/commit/85108008b21fbd73ddce44f96e4beb0b111d4723))
+* Erreur si liste vide sur prévisionnel ([0fe4c8a](https://github.com/Dannebicque/intranetV3/commit/0fe4c8aafa4a56c59838d279a7c773b10ec188b4))
+* synthèse prévisionnel en super admin ([c15340a](https://github.com/Dannebicque/intranetV3/commit/c15340abdf7bc316be72b63d0d3400079e821a99))
+
 ### [3.14.22](https://github.com/Dannebicque/intranetV3/compare/v3.14.21...v3.14.22) (2023-09-11)
 
 
