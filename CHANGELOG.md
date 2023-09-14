@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.26](https://github.com/Dannebicque/intranetV3/compare/v3.14.24...v3.14.26) (2023-09-14)
+
+
+### Bug Fixes
+
+* Edition sur Code + coe Element SAE/Ressource ([08f9c22](https://github.com/Dannebicque/intranetV3/commit/08f9c22a627fc75cc31d1f2ad2f91e3b79a76c62))
+* Edition sur Code + coe Element SAE/Ressource ([7a98896](https://github.com/Dannebicque/intranetV3/commit/7a988960b5c00864aa02f1ac08e9934f5e19589a))
+
 ### [3.14.25](https://github.com/Dannebicque/intranetV3/compare/v3.14.24...v3.14.25) (2023-09-14)
 
 
