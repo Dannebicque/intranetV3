@@ -161,7 +161,7 @@ class TypeDocumentController extends BaseController
             }
 
             if (Document::ORIGINAUX === $source) {
-                return $this->redirectToRoute('sa_qualite_type_document_edit',
+                return $this->redirectToRoute('sa_qualite_type_document_index',
                     ['id' => $typeDocument->getId(), 'source' => Document::ORIGINAUX]);
             }
 

@@ -58,7 +58,7 @@
                 <td>{% for i in 0..rang %}&nbsp;{% endfor %}{{ type_document_enfant.libelle }}</td>
                 <td>{{ type_document_enfant.documents|length }}</td>
                 <td>
-                    {{ include('document/type_document/_btnTable.html.twig', {type_document: type_document_enfant}) }}
+                    {{ include('document/type_document/_btnTable.html.twig', {type_document: type_document_enfant, source:source}) }}
                 </td>
             </tr>
             {% set rang = rang + 2 %}
@@ -88,7 +88,7 @@
                         <td>{{ type_document.libelle }}</td>
                         <td>{{ type_document.documents|length }}</td>
                         <td>
-                            {{ include('document/type_document/_btnTable.html.twig') }}
+                            {{ include('document/type_document/_btnTable.html.twig',{source:source}) }}
                         </td>
                     </tr>
                     {{ macros.menu_categories(type_document.enfants, source, 2) }}
