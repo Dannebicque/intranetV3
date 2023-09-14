@@ -26,7 +26,7 @@ class ReferentielController extends BaseController
     {
         $this->checkAccessApi($request);
 
-        $referentiels = $referentielRepository->findAll();
+        $referentiels = $referentielRepository->findBy(['anneePublication' => 2022]);
 
         $tabApcReferentiel = [];
 
@@ -36,7 +36,7 @@ class ReferentielController extends BaseController
                 'libelle' => $referentiel->getLibelle(),
                 'description' => $referentiel->getDescription(),
                 'annee' => $referentiel->getAnneePublication(),
-                'departement' => $referentiel->getDepartement()->getLibelle(),
+                'departement' => $referentiel->getDepartement()->getId(),
             ];
         }
         return $this->json($tabApcReferentiel);

@@ -19,17 +19,20 @@ class EtudiantController extends BaseController
 {
     #[Route(path: '/api/unifolio/etudiant', name: 'api_etudiant_liste')]
     public function listeEtudiant(
-        Request $request,
+        Request            $request,
         EtudiantRepository $etudiantRepository,
     ): JsonResponse
     {
         $this->checkAccessApi($request);
 
-        $etudiants = $etudiantRepository->findAll();
+        $username = $request->query->get('username');
+
+        $etudiant = $etudiantRepository->findOneBy(['username' => $username]);
 
         $tabEtudiant = [];
 
-        foreach ($etudiants as $etudiant) {
+        if ($etudiant) {
+
             $groupes = [];
             foreach ($etudiant->getGroupes() as $groupe) {
                 $groupes[] = [
@@ -44,8 +47,7 @@ class EtudiantController extends BaseController
                     'id' => $semestre->getId(),
                     'libelle' => $semestre->getLibelle(),
                 ];
-            }
-            else {
+            } else {
                 $semestre = null;
             }
 

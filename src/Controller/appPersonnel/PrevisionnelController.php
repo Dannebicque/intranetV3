@@ -17,6 +17,11 @@ use App\Classes\ServiceRealise\ServiceRealiseCelcat;
 use App\Classes\ServiceRealise\ServiceRealiseIntranet;
 use App\Controller\BaseController;
 use App\Exception\DepartementNotFoundException;
+use App\Repository\ApcRessourceRepository;
+use App\Repository\MatiereRepository;
+use App\Repository\PrevisionnelRepository;
+use App\Utils\Tools;
+use App\Utils\ToolsMatiere;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -67,6 +72,34 @@ class PrevisionnelController extends BaseController
 
         return $this->render('appPersonnel/previsionnel/chronologique.html.twig', [
             'chronologique' => $chronologique->getServiceRealiserParEnseignant($this->getUser(), $this->getAnneeUniversitaire()),
+            'matieres' => $matieres,
+        ]);
+    }
+
+    #[Route(path: '/chronologique/{matiere}', name: 'previsionnel_chronologique_matiere')]
+    public function chronologiqueMatiere(TypeMatiereManager $typeMatiereManager, ServiceRealiseIntranet $serviceRealiseIntranet, ServiceRealiseCelcat $serviceRealiseCelcat, $matiere): Response
+    {
+
+        $type = ToolsMatiere::getType($matiere);
+        $id = ToolsMatiere::getId($matiere);
+
+        if (null === $this->getDepartement()) {
+            throw new DepartementNotFoundException();
+        }
+        $matieres = $typeMatiereManager->findByDepartementArray($this->getDepartement());
+
+        if (true === $this->getDepartement()->getOptUpdateCelcat()) {
+            $chronologique = $serviceRealiseCelcat;
+            $chronologiqueComplet = $serviceRealiseCelcat;
+        } else {
+            $chronologique = $serviceRealiseIntranet;
+            $chronologiqueComplet = $serviceRealiseIntranet;
+        }
+
+
+        return $this->render('appPersonnel/previsionnel/chronologique_matiere.html.twig', [
+            'chronologique' => $chronologique->getServiceRealiseParMatiere($id, $type, $this->getAnneeUniversitaire()),
+            'chronologiqueComplet' => $chronologique->getServiceRealiserParEnseignant($this->getUser(), $this->getAnneeUniversitaire()),
             'matieres' => $matieres,
         ]);
     }

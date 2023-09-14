@@ -13,10 +13,12 @@ use App\Classes\Groupes\GenereTypeGroupe;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Diplome;
+use App\Entity\Evaluation;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use App\Enums\TypeGroupeEnum;
 use App\Exception\DiplomeNotFoundException;
+use App\Repository\EvaluationRepository;
 use App\Repository\SemestreRepository;
 use App\Utils\JsonRequest;
 use App\Utils\Tools;
@@ -150,10 +152,17 @@ class TypeGroupeController extends BaseController
     }
 
     #[Route(path: '/supprimer/{id}', name: 'administration_type_groupe_delete', methods: ['DELETE'])]
-    public function delete(Request $request, TypeGroupe $typeGroupe): Response
+    public function delete(Request $request, TypeGroupe $typeGroupe, EvaluationRepository $evaluationRepository): Response
     {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $typeGroupe->getSemestre());
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $typeGroupe?->getSemestres()->first());
         $id = $typeGroupe->getId();
+        $evaluations = $evaluationRepository->findBy(['typeGroupe' => $typeGroupe]);
+        foreach ($evaluations as $evaluation) {
+            /** @var Evaluation $evaluation */
+            $evaluation->setTypeGroupe(null);
+            $evaluationRepository->save();
+        }
+
         if ($this->isCsrfTokenValid('delete' . $id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $this->entityManager->remove($typeGroupe);
             $this->entityManager->flush();

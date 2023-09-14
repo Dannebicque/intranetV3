@@ -30,11 +30,24 @@ class NiveauController extends BaseController
         $tabApcNiveau = [];
 
         foreach ($niveaux as $niveau) {
+
+            $parcours = [];
+            foreach ($niveau->getApcParcoursNiveaux() as $apcParcours) {
+                $parcours[] = [
+                    'id' => $apcParcours->getParcours()->getId(),
+                    'libelle' => $apcParcours->getParcours()->getLibelle(),
+                    'code' => $apcParcours->getParcours()->getCode(),
+                    'actif' => $apcParcours->getParcours()->getActif(),
+                    'referentiel' => $apcParcours->getParcours()->getApcReferentiel()->getLibelle(),
+                ];
+            }
+
             $tabApcNiveau[$niveau->getId()] = [
                 'id' => $niveau->getId(),
                 'libelle' => $niveau->getLibelle(),
                 'ordre' => $niveau->getOrdre(),
                 'competences' => $niveau->getCompetence()->getId(),
+                'parcours' => $parcours,
             ];
         }
         return $this->json($tabApcNiveau);
