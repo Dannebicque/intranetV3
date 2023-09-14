@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/PrevisionnelSynthesePersonnels.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/08/2023 15:20
+ * @lastUpdate 10/09/2023 17:28
  */
 
 namespace App\DTO;
@@ -77,18 +77,18 @@ class PrevisionnelSynthesePersonnels
     public function pourcentagePermanent(): float
     {
         $total = $this->types[CategorieIutEnum::PERMANENT->value]['cm'] + $this->types[CategorieIutEnum::PERMANENT->value]['td'] + $this->types[CategorieIutEnum::PERMANENT->value]['tp'] + $this->types[CategorieIutEnum::ADMINISTRATIF->value]['cm'] + $this->types[CategorieIutEnum::ADMINISTRATIF->value]['td'] + $this->types[CategorieIutEnum::ADMINISTRATIF->value]['tp'];
-        return $total / $this->total() * 100;
+        return $this->total() > 0.0 ? $total / $this->total() * 100 : 0;
     }
 
     public function pourcentageVacataire(): float
     {
         $total = $this->types[CategorieIutEnum::VACATAIRE->value]['cm'] + $this->types[CategorieIutEnum::VACATAIRE->value]['td'] + $this->types[CategorieIutEnum::VACATAIRE->value]['tp'];
-        return $total / $this->total() * 100;
+        return $this->total() > 0.0 ? $total / $this->total() * 100 : 0;
     }
 
     public function pourcentageAutre(): float
     {
         $total = $this->types[CategorieIutEnum::AUTRE->value]['cm'] + $this->types[CategorieIutEnum::AUTRE->value]['td'] + $this->types[CategorieIutEnum::AUTRE->value]['tp'];
-        return $total / $this->total() * 100;
+        return $this->total() > 0.0 ? $total / $this->total() * 100 : 0;
     }
 }

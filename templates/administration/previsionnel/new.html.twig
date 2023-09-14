@@ -43,12 +43,21 @@
                         {{ stimulus_action('adm--previsionnel', 'changeType', 'click', {type:'synthese-personnel'}) }}
                    role="tab"> {{ 'previsionnel.synthese.personnel.heading'|trans }}</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" data-bs-toggle="tab"
+                   href="#"
+                        {{ stimulus_action('adm--previsionnel', 'changeType', 'click', {type:'actions'}) }}
+                   role="tab"> {{ 'previsionnel.actions.heading'|trans }}</a>
+            </li>
         </ul>
 
         <div class="buttons">
             <a href="{{ path('administration_previsionnel_import') }}" class="btn btn-info btn-sm btn-float"
                title="{{ 'atitle.import_previsionnel'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
             ><i class="fas fa-file-import"></i></a>
+            <a href="{{ path('administration_previsionnel_export_omega') }}" class="btn btn-info btn-sm btn-float"
+               title="{{ 'atitle.export_omega'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
+            ><i class="fas fa-table"></i></a>
             <a href="{{ path('administration_previsionnel_index') }}" class="btn btn-primary btn-float"
                title="{{ 'atitle.retour_liste'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
             ><i class="fas fa-arrow-left"></i></a>
@@ -60,187 +69,10 @@
     <div {{ stimulus_target('adm--previsionnel', 'content') }}>
 
     </div>
-
-    {#    <div class="card"> #}
-    {#        <h4 class="card-title">{{ 'adm.previsionnel.new.heading'|trans }}</h4> #}
-    {#        <div class="card-body"> #}
-    {#            <form method="post"> #}
-    {#                <div class="row"> #}
-    {#                    <div class="col-md-6 col-sm-12"> #}
-    {#                        <div class="form-group"> #}
-    {#                            <label class="form-label required" for="previsionnel_matiere">{{ 'choisir.matiere'|trans }}</label> #}
-    {#                            <select class="form-select selectpicker" id="previsionnel_matiere" name="previsionnel_matiere"> #}
-    {#                                <option value="">{{ 'choisir.matiere'|trans }}</option> #}
-    {#                                {% for matiere in matieres %} #}
-    {#                                    <option value="{{ matiere.typeIdMatiere }}"> #}
-    {#                                        {{ matiere.display }} #}
-    {#                                    </option> #}
-    {#                                {% endfor %} #}
-    {#                            </select> #}
-    {#                        </div> #}
-    {#                    </div> #}
-    {#                    <div class="col-md-6 col-sm-12"> #}
-    {#                        <label class="form-label required" #}
-    {#                               for="previsionnel_annee_previsionnel">{{ 'label.annee_previsionnel'|trans }}</label> #}
-    {#                        <select class="form-select selectpicker" id="previsionnel_annee_previsionnel" #}
-    {#                                name="previsionnel_annee_previsionnel"> #}
-    {#                            {% for annee in 'now'|date('Y')-5..'now'|date('Y')+5 %} #}
-    {#                                <option value="{{ annee }}" #}
-    {#                                        {% if annee == user_data.getAnneePrevisionnel %}selected{% endif %}>{{ annee }}</option> #}
-    {#                            {% endfor %} #}
-    {#                        </select> #}
-    {#                    </div> #}
-    {#                </div> #}
-    {#                <input type="hidden" name="nbLignes" id="nbLigne" value="1"/> #}
-
-    {#                <div class="alert alert-success"> #}
-    {#                    {{ 'volume.matiere'|trans }} : <p id="volumeMatiere">{{ 'choisir.dabord.une.matiere'|trans }}</p> #}
-    {#                </div> #}
-    {#                <br/> #}
-    {#                <div class="alert alert-info"> #}
-    {#                    * {{ 'explication.volume.horaire'|trans }} #}
-    {#                    ** {{ 'nb.seance.indicatif'|trans }} #}
-    {#                </div> #}
-    {#                <table class="table" id="tabheures" style="display: none"> #}
-    {#                    <thead> #}
-    {#                    <tr> #}
-    {#                        <th rowspan="2">{{ 'intervenant'|trans }}</th> #}
-    {#                        <th colspan="3">{{ 'cm'|trans }}</th> #}
-    {#                        <th colspan="3" style="text-align:center;background-color: #68C39F">{{ 'td'|trans }}</th> #}
-    {#                        <th colspan="3" style="text-align:center;background-color: #FFC052">{{ 'tp'|trans }}</th> #}
-    {#                    </tr> #}
-    {#                    <tr> #}
-    {#                        <th style="width: 8%">{{ 'nb.h.gr.'|trans }}*</th> #}
-    {#                        <th style="width: 8%">{{ 'nb.gr.'|trans }}</th> #}
-    {#                        <th style="width: 8%">1.5**</th> #}
-    {#                        <th style="background-color: #68C39F;width: 8%">{{ 'nb.h.gr.'|trans }}*</th> #}
-    {#                        <th style="background-color: #68C39F;width: 8%">{{ 'nb.gr.'|trans }}</th> #}
-    {#                        <td style="background-color: #68C39F;width: 8%">1.5**</td> #}
-    {#                        <th style="background-color: #FFC052;width: 8%">{{ 'nb.h.gr.'|trans }}*</th> #}
-    {#                        <th style="background-color: #FFC052;width: 8%">{{ 'nb.gr.'|trans }}</th> #}
-    {#                        <th style="background-color: #FFC052;width: 8%">1.5**</th> #}
-    {#                    </tr> #}
-    {#                    </thead> #}
-    {#                    <tbody> #}
-    {#                    <tr> #}
-    {#                        <td> #}
-    {#                            <label for="intervenant_1" class="sr-only">intervenant 1</label> #}
-    {#                            <select class="form-select selectpicker" name="intervenant_1" id="intervenant_1" #}
-    {#                            > #}
-    {#                                <option value="">{{ 'choisir.intervenant'|trans }}</option> #}
-    {#                                {% for personnel in user_data.personnels %} #}
-    {#                                    <option value="{{ personnel.id }}">{{ personnel.displayPr }}</option> #}
-    {#                                {% endfor %} #}
-    {#                            </select> #}
-    {#                        </td> #}
-    {#                        <td> #}
-    {#                            <label for="cm_1" class="sr-only">Nb Heures CM</label> #}
-    {#                            <input type="text" value="0" name="cm_1" id="cm_1" data-ligne="1" #}
-    {#                                   class="form-control chgcm"></td> #}
-    {#                        <td> #}
-    {#                            <label for="gr_cm_1" class="sr-only">Nb groupe CM</label> #}
-    {#                            <input type="number" value="0" name="gr_cm_1" id="gr_cm_1" data-ligne="1" #}
-    {#                                   class="form-control chgcm"> #}
-    {#                        </td> #}
-    {#                        <td id="ind_cm_1">0</td> #}
-    {#                        <td style="background-color: #68C39F"> #}
-    {#                            <label for="td_1" class="sr-only">Nb Heures TD</label> #}
-    {#                            <input type="text" value="0" name="td_1" id="td_1" #}
-    {#                                                                     data-ligne="1" #}
-    {#                                                                     class="form-control chgtd"></td> #}
-    {#                        <td style="background-color: #68C39F"> #}
-    {#                            <label for="gr_td_1" class="sr-only">Nb groupe TD</label> #}
-    {#                            <input type="number" value="0" name="gr_td_1" id="gr_td_1" #}
-    {#                                                                     data-ligne="1" class="form-control chgtd"></td> #}
-    {#                        <td style="background-color: #68C39F" id="ind_td_1">0</td> #}
-    {#                        <td style="background-color: #FFC052"> #}
-    {#                            <label for="tp_1" class="sr-only">Nb Heures TP</label> #}
-    {#                            <input type="text" value="0" name="tp_1" id="tp_1" #}
-    {#                                                                     data-ligne="1" #}
-    {#                                                                     class="form-control chgtp"></td> #}
-    {#                        <td style="background-color: #FFC052"> #}
-    {#                            <label for="gr_tp_1" class="sr-only">Nb groupe TP</label> #}
-    {#                            <input type="number" value="0" name="gr_tp_1" id="gr_tp_1" #}
-    {#                                   data-ligne="1" class="form-control chgtp"></td> #}
-    {#                        <td style="background-color: #FFC052" id="ind_tp_1">0</td> #}
-    {#                    </tr> #}
-
-    {#                    <tr id="ligneAdd"> #}
-    {#                        <td colspan="6"> #}
-    {#                            &nbsp; #}
-    {#                        </td> #}
-    {#                        <td colspan="4"> #}
-    {#                            <div class="d-grid"> #}
-    {#                            <button class="btn d-block btn-primary" id="addIntervenantPrevisionnel"><i #}
-    {#                                        class="fas fa-plus"></i>{{ 'ajouter.intervenant'|trans }} #}
-    {#                            </button> #}
-    {#                            </div> #}
-    {#                        </td> #}
-    {#                    </tr> #}
-    {#                    </tbody> #}
-    {#                    <tfoot> #}
-    {#                    <tr> #}
-    {#                        <td rowspan="2">{{ 'synthese'|trans }}</td> #}
-    {#                        <td colspan="2">{{ 'total.cm'|trans }}</td> #}
-    {#                        <td id="totalCm">0</td> #}
-    {#                        <td style="background-color: #68C39F" colspan="2">{{ 'total.td'|trans }}</td> #}
-    {#                        <td style="background-color: #68C39F" id="totalTd">0</td> #}
-    {#                        <td style="background-color: #FFC052" colspan="2">{{ 'total.tp'|trans }}</td> #}
-    {#                        <td style="background-color: #FFC052" id="totalTp">0</td> #}
-    {#                    </tr> #}
-    {#                    <tr> #}
-
-    {#                        <td colspan="2">{{ 'total.eq.td'|trans }}</td> #}
-    {#                        <td id="totalEqTd">0</td> #}
-    {#                        <td colspan="2">{{ 'total.etudiant'|trans }}</td> #}
-    {#                        <td id="totalEtu">0</td> #}
-    {#                        <td colspan="3">&nbsp;</td> #}
-    {#                        #}{#                        <td colspan="2">{{ 'total.matiere'|trans }}</td> #}
-    {#                        #}{#                        <td id="totalMatiere">0</td> #}
-    {#                    </tr> #}
-    {#                    <tr> #}
-    {#                        <td rowspan="2">{{ 'verificiation'|trans }}</td> #}
-    {#                        <td colspan="3">{{ 'cm.maquette'|trans }}</td> #}
-    {#                        <td style="background-color: #68C39F" colspan="3">{{ 'td.maquette'|trans }}</td> #}
-    {#                        <td style="background-color: #FFC052" colspan="3">{{ 'table.ppn.maquette'|trans }}</td> #}
-    {#                    </tr> #}
-    {#                    <tr> #}
-    {#                        <td id="cmMaquette">Choisir</td> #}
-    {#                        <td id="totalHeuresCm">une</td> #}
-    {#                        <td id="diffCm">matière</td> #}
-    {#                        <td id="tdMaquette" style="background-color: #68C39F">Choisir</td> #}
-    {#                        <td id="totalHeuresTd" style="background-color: #68C39F">une</td> #}
-    {#                        <td id="diffTd" style="background-color: #68C39F">matière</td> #}
-    {#                        <td id="tpMaquette" style="background-color: #FFC052">Choisir</td> #}
-    {#                        <td id="totalHeuresTp" style="background-color: #FFC052">une</td> #}
-    {#                        <td id="diffTp" style="background-color: #FFC052">matière</td> #}
-    {#                    </tr> #}
-    {#                    </tfoot> #}
-
-    {#                </table> #}
-
-    {#                <div class="form-group"> #}
-    {#                    <label class="form-label" #}
-    {#                           for="previsionnel_commentaire">{{ 'label.previsionnel_commentaire'|trans }}</label> #}
-    {#                    <textarea name="previsionnel_commentaire" #}
-    {#                              id="previsionnel_commentaire" #}
-    {#                              class="form-control" #}
-    {#                              rows="4" #}
-    {#                              placeholder="Indiquez vos commentaires ici... Uniquement les contraintes d'organisation du module, le déroulement des évaluations, ..."></textarea> #}
-    {#                </div> #}
-
-    {#                <button class="btn btn-success">{{ 'sauvegarder'|trans }}</button> #}
-    {#            </form> #}
-    {#        </div> #}
-    {#    </div> #}
 {% endblock %}
 
-{# {% block stylesheets %} #}
-{#    {{ parent() }} #}
-{#    {{ encore_entry_link_tags('adm.previsionnel') }} #}
-{# {% endblock %} #}
-
-{# {% block javascripts %} #}
-{#    {{ parent() }} #}
-{#    {{ encore_entry_script_tags('adm.previsionnel') }} #}
-{# {% endblock %} #}
+{% block fabactions %}
+    {{ include('composants/fab-button-help.html.twig', {
+        href:path('help_article', {sujet: 'administration_previsionnel'}),
+    }) }}
+{% endblock %}

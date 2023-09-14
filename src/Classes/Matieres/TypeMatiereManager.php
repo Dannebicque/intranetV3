@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Matieres/TypeMatiereManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 15:07
+ * @lastUpdate 11/09/2023 23:04
  */
 
 namespace App\Classes\Matieres;
@@ -242,5 +242,16 @@ class TypeMatiereManager
         }
 
         return $tMatieres;
+    }
+
+    public function findAll()
+    {
+        $t = [];
+        foreach ($this->managers as $manager) {
+            $matieres = $manager->findAll();
+            $t[] = $matieres->toArray();
+        }
+
+        return array_merge(...$t);
     }
 }

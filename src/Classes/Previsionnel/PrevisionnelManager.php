@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Previsionnel/PrevisionnelManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/08/2023 10:22
+ * @lastUpdate 12/09/2023 11:18
  */
 
 namespace App\Classes\Previsionnel;
@@ -302,5 +302,33 @@ class PrevisionnelManager
             $collection->add($previ);
         }
         return $collection;
+    }
+
+    public function getPrevisionnelPersonnelAnneeCollection(Personnel $personnel, int|null $annee): PrevisionnelCollection
+    {
+        $t = [];
+        foreach ($this->managers as $manager) {
+            $previs = $manager->getPrevisionnelPersonnelAnnee($personnel, $annee);
+            $t[] = $previs;
+        }
+
+        $collection = new PrevisionnelCollection();
+        foreach ($t as $previs) {
+            foreach ($previs->previsionnels as $previ) {
+                $collection->add($previ);
+            }
+        }
+        return $collection;
+    }
+
+    public function getPrevisionnelAllDepartementAnnee(int $anneeUniversitaire = 0)
+    {
+        $t = [];
+        foreach ($this->managers as $manager) {
+            $previs = $manager->findByAnneeUniversitaire($anneeUniversitaire);
+            $t[] = $previs->toArray();
+        }
+
+        return array_merge(...$t);
     }
 }

@@ -2,12 +2,14 @@
     <thead>
     <tr>
         <th>Intervenant</th>
+        <th>Catégorie</th>
         <th>Service</th>
         <th>CM</th>
         <th>TD</th>
         <th>TP</th>
         <th>Total</th>
         <th>Total Maj.</th>
+        <th>Ecart</th>
         <th>Primes/HRS</th>
         <th>Total</th>
         <th>Etat</th>
@@ -15,18 +17,69 @@
     </tr>
     </thead>
     <tbody>
-    {% for previ in previsionnels %}
-        <td>{{ previ.personnel_nom }} {{ previ.personnel_prenom }}</td>
-        <td>{{ previ.nbHeuresServices }}</td>
-        <td>{{ totalCm }}</td>
-        <td>{{ totalTd }}</td>
-        <td>{{ totalTp }}</td>
-        <td>Total</td>
+    {% for previsionnel in synthesePrevisionnel.personnelsTries %}
+        <tr>
+            <th>{{ previsionnel.display }}</th>
+            <td>{{ previsionnel.type|badgeStatut }}</td>
+            <td>{{ previsionnel.nbHeuresService|nombreHeure }}</td>
+            <td class="previcm">{{ previsionnel.totalCM|nombreHeure }}</td>
+            <td class="previtd">{{ previsionnel.totalTD|nombreHeure }}</td>
+            <td class="previtp">{{ previsionnel.totalTP|nombreHeure }}</td>
+            <td>{{ previsionnel.total|nombreHeure }}</td>
+            <td>Total Maj.</td>
+            <td>{{ (previsionnel.total - previsionnel.nbHeuresService)|badgeDiffence }}</td>
+            <td>Primes/HRS</td>
+            <td>Total</td>
+            <td>Etat</td>
+            <td></td>
+        </tr>
+    {% endfor %}
+
+    <tr>
+        <td colspan="12" class="bg-complementary">
+            <div class="d-grid ">
+                <span class="btn d-block text-white">
+                    Synthèse
+                </span>
+            </div>
+
+        </td>
+    </tr>
+    <tr>
+        <th colspan="3">Total</th>
+        <th class="previcm">{{ synthesePrevisionnel.totalCM|nombreHeure }}</th>
+        <th class="previtd">{{ synthesePrevisionnel.totalTD|nombreHeure }}</th>
+        <th class="previtp">{{ synthesePrevisionnel.totalTP|nombreHeure }}</th>
+        <th>{{ synthesePrevisionnel.total|nombreHeure }}</th>
         <td>Total Maj.</td>
+        <td></td>
         <td>Primes/HRS</td>
         <td>Total</td>
         <td>Etat</td>
-        <td>&nbsp;</td>
-    {% endfor %}
+        <td></td>
+    </tr>
+    <tr>
+        <td colspan="13" class="bg-complementary">
+            <div class="d-grid ">
+                <span class="btn d-block text-white">
+                    Répartition
+                </span>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="3"></td>
+        <th colspan="3">Permanent</th>
+        <th colspan="3">Vacataire</th>
+        <th colspan="3">Autres</th>
+        <th></th>
+    </tr>
+    <tr>
+        <td colspan="3">Répartition</td>
+        <td colspan="3">{{ synthesePrevisionnel.pourcentagePermanent|pourcentage }}</td>
+        <td colspan="3">{{ synthesePrevisionnel.pourcentageVacataire|pourcentage }}</td>
+        <td colspan="3">{{ synthesePrevisionnel.pourcentageAutre|pourcentage }}</td>
+        <td></td>
+    </tr>
     </tbody>
 </table>

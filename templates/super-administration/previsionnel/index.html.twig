@@ -8,7 +8,6 @@
     <div class="header-action">
         <div class="buttons">
             exporter / importer
-            Synthèse globale des profs (liste CM/TD/TP + Total + total maj + primes + ecart service
             <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
                title="{{ 'atitle.retour_administration'|trans }}">
                 <i class="{{ iconDashboard }}"><span class="sr-only">dashboard</span></i>
@@ -19,10 +18,11 @@
 
 {% block stimulus %}
     {{ stimulus_controller('sadm--previsionnel', {
-        url:path('sa_previsionnel_affiche')
+        url: path('sa_previsionnel_affiche')
     }) }}
 {% endblock %}
 
+{# todo: par formation, module, semestre, enseignant #}
 {% block content %}
     <div class="row">
         <div class="col-sm-12">

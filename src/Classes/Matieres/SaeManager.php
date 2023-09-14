@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Matieres/SaeManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/09/2022 16:08
+ * @lastUpdate 11/09/2023 23:05
  */
 
 namespace App\Classes\Matieres;
@@ -32,6 +32,13 @@ class SaeManager extends AbstractMatiereManager implements MatiereInterface
         $matiere = $this->apcSaeRepository->find($id);
 
         return $this->saeAdapter->single($matiere);
+    }
+
+    public function findAll(): MatiereCollection
+    {
+        $matieres = $this->apcSaeRepository->findAll();
+
+        return $this->saeAdapter->collection($matieres);
     }
 
     public function findBySemestre(Semestre $semestre): MatiereCollection

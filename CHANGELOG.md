@@ -2,6 +2,58 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.24](https://github.com/Dannebicque/intranetV3/compare/v3.14.23...v3.14.24) (2023-09-12)
+
+
+### Bug Fixes
+
+* MatiereManager.php ([cf433cf](https://github.com/Dannebicque/intranetV3/commit/cf433cf32bd21fc5a2a5f9ee258d2f7beef1a2ad))
+
+### [3.14.23](https://github.com/Dannebicque/intranetV3/compare/v3.14.22...v3.14.23) (2023-09-12)
+
+
+### Features
+
+* badge différence ([8510800](https://github.com/Dannebicque/intranetV3/commit/85108008b21fbd73ddce44f96e4beb0b111d4723))
+* Erreur si liste vide sur prévisionnel ([0fe4c8a](https://github.com/Dannebicque/intranetV3/commit/0fe4c8aafa4a56c59838d279a7c773b10ec188b4))
+* synthèse prévisionnel en super admin ([c15340a](https://github.com/Dannebicque/intranetV3/commit/c15340abdf7bc316be72b63d0d3400079e821a99))
+
+### [3.14.22](https://github.com/Dannebicque/intranetV3/compare/v3.14.21...v3.14.22) (2023-09-11)
+
+
+### Bug Fixes
+
+* Synthèse par intervenant ([66084a1](https://github.com/Dannebicque/intranetV3/commit/66084a1fc6b55bcd5a51c52e630c0aac00b00971))
+
+### [3.14.21](https://github.com/Dannebicque/intranetV3/compare/v3.14.20...v3.14.21) (2023-09-10)
+
+### [3.14.20](https://github.com/Dannebicque/intranetV3/compare/v3.14.19...v3.14.20) (2023-09-10)
+
+
+### Features
+
+* Nouvelle page prévisionnel ([107b5ab](https://github.com/Dannebicque/intranetV3/commit/107b5abd7798286c9c686ef86306689280112b8b))
+
+
+### Bug Fixes
+
+* Division par 0 ([76d0593](https://github.com/Dannebicque/intranetV3/commit/76d0593bdbf60aa0d16338cbc9c1818317becc22))
+* export HRS ([16be7f7](https://github.com/Dannebicque/intranetV3/commit/16be7f73c84162302dee923dfe91369a0c0b8254))
+
+### [3.14.19](https://github.com/Dannebicque/intranetV3/compare/v3.14.18...v3.14.19) (2023-09-10)
+
+
+### Bug Fixes
+
+* typo ([bf6b33b](https://github.com/Dannebicque/intranetV3/commit/bf6b33b5db9b8759b985e1d93ccba07c4c710af3))
+
+### [3.14.18](https://github.com/Dannebicque/intranetV3/compare/v3.14.17...v3.14.18) (2023-09-10)
+
+
+### Bug Fixes
+
+* Type de placement ([ac1ff91](https://github.com/Dannebicque/intranetV3/commit/ac1ff91cb79c23d622813ef019aa631f9ef49ae9))
+
 ### [3.14.17](https://github.com/Dannebicque/intranetV3/compare/v3.14.16...v3.14.17) (2023-09-05)
 
 

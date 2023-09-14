@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/PrevisionnelMatiereRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/08/2023 15:41
+ * @lastUpdate 12/09/2023 11:19
  */
 
 namespace App\Repository;
@@ -200,6 +200,27 @@ class PrevisionnelMatiereRepository extends PrevisionnelRepository
             ->setParameter('diplome', $diplome->getId())
             ->andWhere('p.annee = :annee')
             ->setParameter('annee', $annee);
+
+        return $query->getQuery()
+            ->getResult();
+    }
+
+    public function findByAnneeUniversitaire(int $annee): array
+    {
+        $query = $this->createQueryBuilder('p')
+            ->leftJoin(Personnel::class, 'pers', 'WITH', 'p.personnel = pers.id')
+            ->innerJoin(Matiere::class, 'm', 'WITH', 'p.idMatiere = m.id')
+            ->select('p.id as id_previsionnel, p.annee, p.referent, p.nbHCm, p.nbHTd, p.nbHTp, p.nbGrCm, p.nbGrTd, p.nbGrTp, m.id as id_matiere, m.libelle, m.codeMatiere, m.codeElement as matiere_code_element, pers.id as id_personnel, pers.statut, pers.nom, pers.prenom, pers.numeroHarpege, pers.mailUniv, pers.nbHeuresService, s.id as id_semestre, s.libelle as libelle_semestre, a.id as id_annee, a.libelle as libelle_annee, a.codeEtape as annee_code_etape, a.libelleLong as annee_libelle_long, d.id as id_diplome, d.libelle as libelle_diplome')
+            ->innerJoin(Ue::class, 'u', 'WITH', 'm.ue = u.id')
+            ->innerJoin(Semestre::class, 's', 'WITH', 'u.semestre = s.id')
+            ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
+            ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
+            ->andWhere('p.typeMatiere = :type')
+            ->setParameter('type', self::TYPE)
+            ->andWhere('p.annee = :annee')
+            ->setParameter('annee', $annee)
+            ->orderBy('pers.nom', Criteria::ASC)
+            ->addOrderBy('pers.prenom', Criteria::ASC);
 
         return $query->getQuery()
             ->getResult();
