@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Matieres/SaeManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/09/2023 23:05
+ * @lastUpdate 14/09/2023 17:05
  */
 
 namespace App\Classes\Matieres;
@@ -94,7 +94,8 @@ class SaeManager extends AbstractMatiereManager implements MatiereInterface
     {
         $method = 'set'.$name;
         if (method_exists($apcSae, $method)) {
-            $apcSae->$method(Tools::convertToFloat($value));
+            $value = Tools::adaptDataToTypeMethod($apcSae, $method, $value);
+            $apcSae->$method($value);
             $this->entityManager->flush();
 
             return true;

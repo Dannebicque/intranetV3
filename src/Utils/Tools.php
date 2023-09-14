@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Utils/Tools.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/01/2023 17:57
+ * @lastUpdate 14/09/2023 17:07
  */
 
 /*
@@ -23,6 +23,43 @@ use function ord;
 
 abstract class Tools
 {
+
+    public static function adaptDataToTypeMethod(
+        object $class,
+        string $method,
+        mixed  $value
+    ): mixed
+    {
+        $types = self::getMethodParameterTypes($class, $method);
+        if ($types[0] === 'int') {
+            return (int)$value;
+        }
+
+        if ($types[0] === 'float' || $types[0] === 'double' || $types[0] === 'mixed') {
+            return Tools::convertToFloat($value);
+        }
+
+        if ($types[0] === 'string') {
+            return (string)$value;
+        }
+
+        return $value;
+    }
+
+    private static function getMethodParameterTypes($className, $methodName)
+    {
+        $method = new \ReflectionMethod($className, $methodName);
+        $parameters = $method->getParameters();
+
+        $types = [];
+        foreach ($parameters as $parameter) {
+            $type = $parameter->getType();
+            $types[] = $type ? $type->getName() : 'unknown';
+        }
+
+        return $types;
+    }
+
     /**
      * @throws Exception
      */

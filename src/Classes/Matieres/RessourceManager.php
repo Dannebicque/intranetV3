@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Matieres/RessourceManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/09/2023 23:05
+ * @lastUpdate 14/09/2023 17:05
  */
 
 namespace App\Classes\Matieres;
@@ -83,11 +83,13 @@ class RessourceManager extends AbstractMatiereManager implements MatiereInterfac
         return $this->ressourceAdapter->collection($data);
     }
 
-    public function update(string $name, mixed $value, ApcRessource $apcRessource): bool
+    public function update(string $name, mixed $value, ApcRessource $apcRessource, string $type = 'float'): bool
     {
-        $method = 'set'.$name;
+        $method = 'set' . $name;
         if (method_exists($apcRessource, $method)) {
-            $apcRessource->$method(Tools::convertToFloat($value));
+
+            $value = Tools::adaptDataToTypeMethod($apcRessource, $method, $value);
+            $apcRessource->$method($value);
             $this->entityManager->flush();
 
             return true;
@@ -95,4 +97,6 @@ class RessourceManager extends AbstractMatiereManager implements MatiereInterfac
 
         return false;
     }
+
+
 }
