@@ -463,6 +463,7 @@ adm:
     modification.heading: 'Modification d''un type de document'
     new.heading: 'Création d''un type de document'
     show.heading: 'Détails d''un type de document'
+    edit.heading: 'Edition d''un type de document'
   type_groupe:
     modification.heading: 'Modification d''un type de groupe'
     new.heading: 'Création d''un type de groupe'
@@ -765,6 +766,7 @@ dashboard: Dashboard
 ajouter.sous.diplome: Ajouter un sous diplôme (parcours de B.U.T.)
 
 atitle:
+  edit: 'Editer'
   export_pdf: Export en PDF
   retour_plan_cours: Retour à la liste des plans de cours
   nouveau_diplome: Nouveau diplôme

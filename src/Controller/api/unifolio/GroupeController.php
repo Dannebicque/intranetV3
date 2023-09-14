@@ -12,17 +12,19 @@ namespace App\Controller\api\unifolio;
 use App\Controller\BaseController;
 use App\Repository\GroupeRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class GroupeController extends BaseController
 {
     #[Route(path: '/api/unifolio/groupe/', name: 'api_groupe_liste')]
     public function listeGroupe(
+        Request $request,
         GroupeRepository $groupeRepository,
 
     ): JsonResponse
     {
-//        $this->checkAccessApi($request);
+        $this->checkAccessApi($request);
 
         $groupes = $groupeRepository->findAll();
 
