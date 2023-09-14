@@ -21,7 +21,7 @@
         <tr {% if ressource.suspendu == true %}class="bg-pale-warning"{% endif %} id="ligne_{{ ressource.id }}">
             <td>
                 <a class="editable"
-                   data-field="codeMatiere"
+                   data-field="CodeMatiere"
                    data-href="{{ path('administration_apc_ressources_ajax_edit', {id:ressource.id}) }}"
                    title="Corriger le code matière">
                     {{ ressource.codeMatiere }}</a>
@@ -32,7 +32,7 @@
             </td>
             <td>
                 <a class="editable"
-                   data-field="codeElement"
+                   data-field="CodeElement"
                    data-href="{{ path('administration_apc_ressources_ajax_edit', {id:ressource.id}) }}"
                    title="Corriger le code matière">
                     {{ ressource.codeElement }}</a>

@@ -21,14 +21,14 @@
         <tr id="ligne_{{ apc_sae.id }}" {% if apc_sae.suspendu == true %}class="bg-pale-warning"{% endif %}>
             <td>
                 <a class="editable"
-                   data-field="codeMatiere"
+                   data-field="CodeMatiere"
                    data-href="{{ path('administration_apc_sae_ajax_edit', {id:apc_sae.id}) }}"
                    title="Corriger le volume horaire">
                     {{ apc_sae.codeMatiere }}</a>
             </td>
             <td>
                 <a class="editable"
-                   data-field="codeElement"
+                   data-field="CodeElement"
                    data-href="{{ path('administration_apc_sae_ajax_edit', {id:apc_sae.id}) }}"
                    title="Corriger le volume horaire">
                     {{ apc_sae.codeElement }}</a>
