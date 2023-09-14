@@ -4,12 +4,6 @@
         <div class="card-header-actions" style="">
             {% if settings('MODIFICATION_PPN') == 1 %}
                 <span>
-{#                     <a href="{{ path('administration_mcc_but',{diplome:diplome.id}) }}"#}
-{#                        class="btn btn-sm btn btn-success" title="MCC, Volumes Horaires et coefficients"#}
-{#                        data-bs-toggle="tooltip"#}
-{#                        data-bs-placement="bottom"><i class="fas fa-table"></i>#}
-{#                        MCC, Volumes Horaires et coefficients#}
-{#                     </a>#}
                      <a href="{{ path('administration_apc_referentiel_formation_grille',{diplome:diplome.id}) }}"
                         class="btn btn-sm btn btn-success" title="Coefficients des ressources et des SAÉ"
                         data-bs-toggle="tooltip"

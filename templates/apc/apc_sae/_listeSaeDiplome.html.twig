@@ -19,8 +19,20 @@
     <tbody>
     {% for apc_sae in apc_saes|filter(apc_sae => apc_sae.hasSemestre(semestre) == true) %}
         <tr id="ligne_{{ apc_sae.id }}" {% if apc_sae.suspendu == true %}class="bg-pale-warning"{% endif %}>
-            <td>{{ apc_sae.codeMatiere }}</td>
-            <td>{{ apc_sae.codeElement }}</td>
+            <td>
+                <a class="editable"
+                   data-field="codeMatiere"
+                   data-href="{{ path('administration_apc_sae_ajax_edit', {id:apc_sae.id}) }}"
+                   title="Corriger le volume horaire">
+                    {{ apc_sae.codeMatiere }}</a>
+            </td>
+            <td>
+                <a class="editable"
+                   data-field="codeElement"
+                   data-href="{{ path('administration_apc_sae_ajax_edit', {id:apc_sae.id}) }}"
+                   title="Corriger le volume horaire">
+                    {{ apc_sae.codeElement }}</a>
+            </td>
             <td>{{ apc_sae.libelle }}</td>
             <td>
                 {% for competence in apc_sae.apcSaeCompetences %}

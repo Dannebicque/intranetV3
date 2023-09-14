@@ -19,12 +19,24 @@
     <tbody>
     {% for ressource in ressources|filter(ressource => ressource.hasSemestre(semestre) == true) %}
         <tr {% if ressource.suspendu == true %}class="bg-pale-warning"{% endif %} id="ligne_{{ ressource.id }}">
-            <td>{{ ressource.codeMatiere }} {% if ressource.isParent %}
+            <td>
+                <a class="editable"
+                   data-field="codeMatiere"
+                   data-href="{{ path('administration_apc_ressources_ajax_edit', {id:ressource.id}) }}"
+                   title="Corriger le code matière">
+                    {{ ressource.codeMatiere }}</a>
+                {% if ressource.isParent %}
                 <span class="badge bg-primary">Res. Parent</span>{% endif %}
                 {% if ressource.isEnfant %}
                     <span class="badge bg-info">Res. Enfant</span>{% endif %}
             </td>
-            <td>{{ ressource.codeElement }}</td>
+            <td>
+                <a class="editable"
+                   data-field="codeElement"
+                   data-href="{{ path('administration_apc_ressources_ajax_edit', {id:ressource.id}) }}"
+                   title="Corriger le code matière">
+                    {{ ressource.codeElement }}</a>
+            </td>
             <td>{{ ressource.libelle }}</td>
             <td>
                 {% for competence in ressource.apcRessourceCompetences %}
