@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class GroupeController extends BaseController
 {
-    #[Route(path: '/api/unifolio/groupe/', name: 'api_groupe_liste')]
+    #[Route(path: '/api/unifolio/groupe', name: 'api_groupe_liste')]
     public function listeGroupe(
         Request $request,
         GroupeRepository $groupeRepository,
