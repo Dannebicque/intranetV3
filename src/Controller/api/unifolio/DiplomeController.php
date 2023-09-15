@@ -42,10 +42,11 @@ class DiplomeController extends BaseController
 
     #[Route(path: '/api/unifolio/diplome/', name: 'api_diplome_all')]
     public function allDiplome(
+        Request          $request,
         DiplomeRepository $diplomeRepository
     ): JsonResponse
     {
-//        $this->checkAccessApi($request);
+        $this->checkAccessApi($request);
 
         $diplomes = $diplomeRepository->findAll();
 
@@ -70,10 +71,10 @@ class DiplomeController extends BaseController
                     'id' => $diplome->getId(),
                     'libelle' => $diplome->getLibelle(),
                     'sigle' => $diplome->getSigle(),
-                    'departement' => $diplome->getDepartement()->getLibelle(),
+                    'departement' => $diplome->getDepartement()->getId(),
                     'type' => $diplome->getTypeDiplome()->getId(),
                     'parcours' => $apcParcours,
-                    'referentiel' => $diplome->getReferentiel()->getLibelle(),
+                    'referentiel' => $diplome->getReferentiel()->getId(),
                 ];
             }
         }

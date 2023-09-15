@@ -39,7 +39,13 @@ class GroupeController extends BaseController
                     'id' => $type->getId(),
                     'libelle' => $type->getLibelle(),
                 ];
-                $semestre = $type->getSemestre()->getCodeElement();
+//                $semestre = $type->getSemestre()->getCodeElement();
+                $semestres = [];
+                foreach ($type->getSemestres() as $semestre) {
+                    $semestres[] = [
+                        'code' => $semestre->getCodeElement(),
+                    ];
+                }
             } else {
                 $typeGroupes = [];
             }
@@ -62,7 +68,7 @@ class GroupeController extends BaseController
                     'ordre' => $groupe->getOrdre(),
                     'type' => $typeGroupes,
                     'parcours' => $parcoursGroupes,
-                    'semestre' => $semestre,
+                    'semestres' => $semestres,
                 ];
             }
 
