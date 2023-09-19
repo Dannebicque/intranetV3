@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.30](https://github.com/Dannebicque/intranetV3/compare/v3.14.29...v3.14.30) (2023-09-19)
+
+
+### Bug Fixes
+
+* filtre liste matières rttrapages ([aba34d9](https://github.com/Dannebicque/intranetV3/commit/aba34d9b39f5fd4eb2a14c3dfc0fc4c82c7123cf))
+
 ### [3.14.29](https://github.com/Dannebicque/intranetV3/compare/v3.14.27...v3.14.29) (2023-09-19)
 
 
