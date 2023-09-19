@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/RattrapageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/12/2022 12:09
+ * @lastUpdate 19/09/2023 21:08
  */
 
 namespace App\Controller\appEtudiant;
@@ -28,11 +28,25 @@ class RattrapageController extends BaseController
     public function index(TypeMatiereManager $typeMatiereManager, RattrapageRepository $rattrapageRepository, Request $request): RedirectResponse|Response
     {
         $rattrapage = new Rattrapage($this->getUser());
+
+        if ($this->getUser()->getSemestre()?->getDiplome()?->isApc()) {
+            $matieres = $typeMatiereManager->findByReferentielOrdreSemestreArray($this->getEtudiantSemestre(), $this->getUser()->getSemestre()?->getDiplome()?->getReferentiel());
+        } else {
+            $matieres = $typeMatiereManager->findBySemestreArray($this->getEtudiantSemestre());
+        }
+
+        $t = [];
+        foreach ($matieres as $matiere) {
+            $t[$matiere->display] = $matiere->getTypeIdMatiere();
+        }
+
+
         $form = $this->createForm(
             RattrapageType::class,
             $rattrapage,
             [
                 'semestre' => $this->getUser()->getSemestre(),
+                'matieres' => $t,
                 'locale' => $request->getLocale(),
                 'attr' => [
                     'data-provide' => 'validation',
@@ -52,10 +66,11 @@ class RattrapageController extends BaseController
             return $this->redirectToRoute('application_index', ['onglet' => 'rattrapage']);
         }
 
+
         return $this->render('appEtudiant/rattrapage/index.html.twig', [
             'form' => $form,
             'rattrapages' => $rattrapageRepository->findByEtudiant($this->getUser()),
-            'matieres' => $typeMatiereManager->findBySemestreArray($this->getEtudiantSemestre()),
+            'matieres' => $matieres,
         ]);
     }
 }

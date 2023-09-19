@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/RattrapageType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/09/2022 09:34
+ * @lastUpdate 19/09/2023 21:06
  */
 
 namespace App\Form;
@@ -38,6 +38,7 @@ class RattrapageType extends AbstractType
     {
         $this->semestre = $options['semestre'];
         $locale = $options['locale'];
+        $matieres = $options['matieres'];
 
         $builder
             ->add('dateEval', DatePickerType::class, [
@@ -53,7 +54,7 @@ class RattrapageType extends AbstractType
                 'attr' => ['maxlength' => 20, 'placeholder' => 'Par ex. 1h30'],
                 'help' => 'help.duree_evaluation', ])
             ->add('typeIdMatiere', ChoiceType::class, [
-                'choices' => $this->typeMatiereManager->findBySemestreChoiceType($this->semestre),
+                'choices' => $matieres,
                 'label' => 'label.matiere',
                 'required' => true,
                 'expanded' => false,
@@ -85,6 +86,7 @@ class RattrapageType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Rattrapage::class,
             'semestre' => null,
+            'matieres' => [],
             'translation_domain' => 'form',
             'locale' => 'fr', ]);
     }
