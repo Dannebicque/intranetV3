@@ -1,16 +1,16 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Command/UpdateTypegroupeCommand.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/10/2022 10:14
+ * @lastUpdate 19/09/2023 20:59
  */
 
 namespace App\Command;
 
-use App\Repository\SemestreRepository;
-use App\Repository\TypeGroupeRepository;
+use App\Entity\Groupe;
+use App\Repository\EtudiantRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -22,12 +22,12 @@ use Symfony\Component\Console\Style\SymfonyStyle;
     name: 'app:update-typegroupe',
     description: 'Add a short description for your command',
 )]
+/** @deprecated */
 class UpdateTypegroupeCommand extends Command
 {
     public function __construct(
         protected EntityManagerInterface $entityManager,
-        protected TypeGroupeRepository $typeGroupeRepository,
-        protected SemestreRepository $semestreRepository
+        protected EtudiantRepository $etudiantRepository,
     ) {
         parent::__construct();
     }
@@ -36,21 +36,16 @@ class UpdateTypegroupeCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $tgs = $this->typeGroupeRepository->findAll();
+        $etudiants = $this->etudiantRepository->findEtudiantEnFormation();
 
-        foreach ($tgs as $tg) {
-            if ($tg->getDiplome() === null && $tg->getSemestre() !== null) {
-                $tg->addSemestre($tg->getSemestre());
-                $tg->getSemestre()->addTypeGroupess($tg);
-                $this->entityManager->persist($tg);
-            } else {
-                $semestres = $this->semestreRepository->findByDiplomeEtNumero($tg->getDiplome(), $tg->getOrdreSemestre());
-                // nouveau système temporaire... récupérer tous les semestre des diplomes...
-                //ajouter les semestres
-                foreach ($semestres as $semestre) {
-                    $tg->addSemestre($semestre);
-                    $semestre->addTypeGroupess($tg);
-                    $this->entityManager->persist($tg);
+        foreach ($etudiants as $etudiant) {
+            //récupérer le groupes et vérifier si le semestre du type de groupe est le même que celui de l'étudiant.
+            $groupes = $etudiant->getGroupes();
+            /** @var Groupe $groupe */
+            foreach ($groupes as $groupe) {
+                if (!$groupe->getTypeGroupe()?->getSemestres()->contains($etudiant->getSemestre())) {
+                    $etudiant->removeGroupe($groupe);
+                    $groupe->removeEtudiant($etudiant);
                 }
             }
         }

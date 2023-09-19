@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EtudiantRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/12/2022 09:55
+ * @lastUpdate 19/09/2023 20:56
  */
 
 namespace App\Repository;
@@ -206,6 +206,7 @@ class EtudiantRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('e')
             ->where('e.anneeSortie = 0')
+            ->andWhere('e.semestre IS NOT NULL')
             ->getQuery()
             ->getResult();
     }
