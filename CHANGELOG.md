@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.29](https://github.com/Dannebicque/intranetV3/compare/v3.14.27...v3.14.29) (2023-09-19)
+
+
+### Bug Fixes
+
+* command pour nettoyer les gorupes ([3be9494](https://github.com/Dannebicque/intranetV3/commit/3be9494640d697aa18c8fc83735e0dde89d8795c))
+* lien sur prévisionnel ([f0ae2e1](https://github.com/Dannebicque/intranetV3/commit/f0ae2e1e9974fc51b0834427e6a41753d2e54a43))
+
 ### [3.14.28](https://github.com/Dannebicque/intranetV3/compare/v3.14.27...v3.14.28) (2023-09-17)
 
 
