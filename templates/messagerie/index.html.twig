@@ -1,10 +1,10 @@
-{% if is_granted('ROLE_PERMANENT') %}
-    <div class="row" {{ stimulus_controller('application--messagerie',{
-        urlNouveauMessage:path('messagerie_nouveau'),
-        urlTypeDestinataire:path('messagerie_nouveau_type_destinataire'),
-        urlFiltreMessage:path('messagerie_filtre_messages')
-    }) }}>
+<div class="row" {{ stimulus_controller('application--messagerie',{
+    urlNouveauMessage:path('messagerie_nouveau'),
+    urlTypeDestinataire:path('messagerie_nouveau_type_destinataire'),
+    urlFiltreMessage:path('messagerie_filtre_messages')
+}) }}>
 
+    {% if is_granted('ROLE_PERMANENT') %}
         <div class="col-md-2">
             {{ include('messagerie/_sidebar.html.twig') }}
         </div>
@@ -12,24 +12,12 @@
         <div class="col-md-10"
                 {{ stimulus_target('application--messagerie', 'content') }}
         >
-
         </div>
-    </div>
-{% else %}
+    {% else %}
 
-    <div class="row">
-        <div class="col-12">
-            <div class="media-list media-list-divided media-list-hover" data-provide="selectall" id="messages-liste">
-                {% if param != '' %}
-                    {{ render(controller(
-                        'App\\Controller\\MessagerieController::message', {message:param}
-                    )) }}
-                {% else %}
-                    {{ render(controller(
-                        'App\\Controller\\MessagerieController::listeMessages'
-                    )) }}
-                {% endif %}
-            </div>
+        <div class="col-md-12"
+                {{ stimulus_target('application--messagerie', 'content') }}
+        >
         </div>
-    </div>
-{% endif %}
+    {% endif %}
+</div>
