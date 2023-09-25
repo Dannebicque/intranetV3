@@ -45,6 +45,7 @@
                         <td>
                             <a href="{{ path('user_profil', {'type': 'etudiant', slug: absence.etudiant.slug, onglet: 'absences'}) }}"
                                class="btn btn-info btn-outline btn-square" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                               target="_blank"
                                title="{{ 'details.des.absences'|trans }}"><i class="fas
                          fa-eye"></i></a>
                             {% if absence.personnel.id == user_data.user.id and semestre.diplome.optSupprAbsence == true %}
@@ -105,10 +106,10 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {{ encore_entry_link_tags('absences') }}
+    {#    {{ encore_entry_link_tags('absences') }} #}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
-    {{ encore_entry_script_tags('absences') }}
+    {#    {{ encore_entry_script_tags('absences') }} #}
 {% endblock %}
