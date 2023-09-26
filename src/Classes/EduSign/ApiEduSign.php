@@ -105,23 +105,30 @@ class ApiEduSign
         // convertit JSON en tableau associatif PHP
         $data = json_decode($content, true);
 
+//        if (! isset($data['result']['ID'])) {
+//            throw new \Exception('API did not return an ID for ' . $enseignant->email);
+//        }
+
         // accéder à la valeur de l'ID
         $id = "";
         if (isset($data['result']) && isset($data['result']['ID'])) {
             $id = $data['result']['ID'];
         }
-        dump($statusCode);
-        dump($id);
+//        dump($statusCode);
+//        dump($id);
 
         $personnel = $this->personnelRepository->findOneBy(['mailUniv' => $enseignant->email]);
-        dump($personnel);
+//        if (null === $personnel) {
+//            throw new \Exception('Personnel not found for ' . $enseignant->email);
+//        }
+//        dump($personnel);
         $personnel->setIdEduSign($id);
         $this->personnelRepository->save($personnel);
-
         $this->eventDispatcher->dispatch(new Event(), 'enseignant.added');
+
 
 //        dump($enseignant);
 //        dump($statusCode);
-//        dump($content);
+        dump($content);
     }
 }
