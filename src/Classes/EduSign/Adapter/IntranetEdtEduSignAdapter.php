@@ -10,6 +10,7 @@
 namespace App\Classes\EduSign\Adapter;
 
 use App\Classes\EduSign\DTO\EduSignCourse;
+use App\DTO\EvenementEdt;
 use Carbon\Carbon;
 
 class IntranetEdtEduSignAdapter
@@ -19,19 +20,22 @@ class IntranetEdtEduSignAdapter
     /**
      * @param $edt
      */
-    public function __construct($edt)
+    public function __construct(EvenementEdt $edt)
     {
         $this->course = new EduSignCourse();
         //complète l'objet $this->>course avec des données fictive pour le test
-        $this->course->name = "Advanced Physics";
-        $this->course->description = "An advanced course about Physics.";
+        $this->course->name = $edt->matiere;
+//        $this->course->description = $edt->texte;
+        $this->course->description = "hello";
         $this->course->start = Carbon::createFromFormat("Y-m-d\TH:i:s", "2023-08-02T09:00:00");
-        $this->course->end = Carbon::createFromFormat("Y-m-d\TH:i:s", "2023-08-02T11:00:00");;
-        $this->course->professor = "e2cgowr119ay62";
+//        $this->course->end = $edt->heureFin;
+        $this->course->end = Carbon::createFromFormat("Y-m-d\TH:i:s", "2023-08-02T09:00:00");
+//        $this->course->end = $edt->heureFin;
+        $this->course->professor = $edt->personnelObjet->getIdEduSign();
 //        $this->course->professor_signature = "http://example.com/signature1.png";
 //        $this->course->professor_2 = "PhysicsProfessor2";
 //        $this->course->professor_signature_2 = "http://example.com/signature2.png";
-        $this->course->classroom = "B305";
+        $this->course->classroom = $edt->salle;
 //        $this->course->school_group = ["physicsMajors2023", "scienceMajors2023"];
         $this->course->max_students = 30;
 //        $this->course->zoom = true;

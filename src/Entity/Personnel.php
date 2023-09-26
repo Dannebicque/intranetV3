@@ -263,6 +263,9 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     #[ORM\ManyToMany(targetEntity: PlanCours::class, mappedBy: 'intervenants')]
     private Collection $plansCours;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $idEduSign = null;
+
     /**
      * @throws JsonException
      */
@@ -1505,5 +1508,21 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         }
 
         return $this;
+    }
+
+    public function getIdEduSign(): ?string
+    {
+        return $this->idEduSign;
+    }
+
+    public function setIdEduSign(?string $idEduSign): static
+    {
+        $this->idEduSign = $idEduSign;
+        return $this;
+    }
+
+    public function getMailUniv(): ?string
+    {
+        return $this->mailUniv;
     }
 }

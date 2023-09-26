@@ -14,12 +14,19 @@ use App\Entity\Personnel;
 
 class IntranetEnseignantEduSignAdapter
 {
-    private EduSignEnseignant $enseignant;
+    private ?EduSignEnseignant $enseignant;
 
+    /**
+     * @param $enseignant
+     */
     public function __construct(Personnel $enseignant)
     {
         $this->enseignant = new EduSignEnseignant();
-
+        $this->enseignant->firstname = $enseignant->getPrenom();
+        $this->enseignant->lastname = $enseignant->getNom();
+        $this->enseignant->email = $enseignant->getMailUniv();
+        $this->enseignant->speciality = null;
+        $this->enseignant->api_id = $enseignant->getId();
     }
 
     public function getEnseignant(): ?EduSignEnseignant

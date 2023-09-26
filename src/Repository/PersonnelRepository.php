@@ -217,4 +217,10 @@ class PersonnelRepository extends ServiceEntityRepository
             ->addOrderBy('p.prenom', Criteria::ASC)
             ->groupBy('p.id');;
     }
+
+    public function save(Personnel $personnel): void
+    {
+        $this->_em->persist($personnel);
+        $this->_em->flush();
+    }
 }

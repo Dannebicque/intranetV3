@@ -10,16 +10,24 @@
 namespace App\Classes\EduSign;
 
 use App\Classes\EduSign\DTO\EduSignCourse;
+use App\Classes\EduSign\DTO\EduSignEnseignant;
+use App\Repository\PersonnelRepository;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Contracts\EventDispatcher\Event;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class ApiEduSign
 {
     private string $cleApi;
 
     public function __construct(
-        ParameterBagInterface $parameterBag)
+        ParameterBagInterface            $parameterBag,
+        PersonnelRepository              $personnelRepository,
+        private EventDispatcherInterface $eventDispatcher
+    )
     {
+        $this->personnelRepository = $personnelRepository;
         $this->cleApi = $parameterBag->get('api_edu_sign');
     }
 
@@ -45,7 +53,6 @@ class ApiEduSign
     public function addGroupe(EduSignGroupe $groupe)
     {
         $client = HttpClient::create();
-
         $response = $client->request('POST', 'https://ext.edusign.fr/v1/group', [
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -93,9 +100,28 @@ class ApiEduSign
         ]);
 
         $statusCode = $response->getStatusCode();
-        $content = $response->getContent();
 
+        $content = $response->getContent();
+        // convertit JSON en tableau associatif PHP
+        $data = json_decode($content, true);
+
+        // accéder à la valeur de l'ID
+        $id = "";
+        if (isset($data['result']) && isset($data['result']['ID'])) {
+            $id = $data['result']['ID'];
+        }
         dump($statusCode);
-        dump($content);
+        dump($id);
+
+        $personnel = $this->personnelRepository->findOneBy(['mailUniv' => $enseignant->email]);
+        dump($personnel);
+        $personnel->setIdEduSign($id);
+        $this->personnelRepository->save($personnel);
+
+        $this->eventDispatcher->dispatch(new Event(), 'enseignant.added');
+
+//        dump($enseignant);
+//        dump($statusCode);
+//        dump($content);
     }
 }
