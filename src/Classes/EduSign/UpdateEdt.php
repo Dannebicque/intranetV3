@@ -59,8 +59,13 @@ class UpdateEdt
             // Retourner l'id du personnel pour le mettre à jour
             $id = $enseignant->getId();
 
-            $this->eventDispatcher->dispatch(new EnseignantAddedEvent($id));
+//            $this->eventDispatcher->dispatch(new EnseignantAddedEvent($id));
 
+            if (!empty($enseignant->getIdEduSign()) || $enseignant->getIdEduSign() != '') {
+                $this->sendUpdate();
+            } else {
+                $this->eventDispatcher->dispatch(new EnseignantAddedEvent($id));
+            }
         }
     }
 

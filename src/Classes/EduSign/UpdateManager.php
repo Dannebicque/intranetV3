@@ -10,8 +10,8 @@ class UpdateManager implements EventSubscriberInterface
 {
     public function __construct(
         private UpdateEnseignant $updateEnseignant,
-//        private UpdateEdt $updateEdt,
-        private EventDispatcherInterface $eventDispatcher
+        private UpdateEdt $updateEdt,
+//        private EventDispatcherInterface $eventDispatcher
     ) {
         $this->updateEnseignant->setUpdateManager($this);
 //        $this->updateEdt->setUpdateManager($this);
@@ -25,7 +25,10 @@ class UpdateManager implements EventSubscriberInterface
 
     public static function getSubscribedEvents()
     {
-        return [EnseignantAddedEvent::class => 'onEnseignantAdded'];
+        return [
+            EnseignantUpdatedEvent::class => 'onEnseignantUpdated',
+            EnseignantAddedEvent::class => 'onEnseignantAdded'
+        ];
     }
 
     public function updateEnseignant($id)
@@ -33,9 +36,14 @@ class UpdateManager implements EventSubscriberInterface
         $this->updateEnseignant->update($id);
     }
 
-    public function updateEdt()
+//    public function updateEdt()
+//    {
+//        // Dispatch Event here
+//        $this->eventDispatcher->dispatch(new Event(), 'enseignant.updated');
+//    }
+
+    public function onEnseignantUpdated(EnseignantUpdatedEvent $event)
     {
-        // Dispatch Event here
-        $this->eventDispatcher->dispatch(new Event(), 'enseignant.updated');
+        $this->updateEdt->sendUpdate();
     }
 }

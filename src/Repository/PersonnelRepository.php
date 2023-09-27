@@ -39,6 +39,12 @@ class PersonnelRepository extends ServiceEntityRepository
         parent::__construct($registry, Personnel::class);
     }
 
+    // méthode pour récupérer l'entity manager
+    public function getEntityManager()
+    {
+        return $this->_em;
+    }
+
     public function findByType(string $type, Departement $departement, string $filtreAdm = 'commun'): array
     {
         $query = $this->createQueryBuilder('p')
@@ -215,7 +221,7 @@ class PersonnelRepository extends ServiceEntityRepository
             ->setParameter('annee', $anneeUniversitaire->getAnnee())
             ->orderBy('p.nom', Criteria::ASC)
             ->addOrderBy('p.prenom', Criteria::ASC)
-            ->groupBy('p.id');;
+            ->groupBy('p.id');
     }
 
     public function save(Personnel $personnel): void

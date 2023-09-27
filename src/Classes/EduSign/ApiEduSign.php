@@ -118,13 +118,17 @@ class ApiEduSign
 //        dump($id);
 
         $personnel = $this->personnelRepository->findOneBy(['mailUniv' => $enseignant->email]);
-//        if (null === $personnel) {
-//            throw new \Exception('Personnel not found for ' . $enseignant->email);
-//        }
+        if (null === $personnel) {
+            throw new \Exception('Personnel not found for ' . $enseignant->email);
+        }
 //        dump($personnel);
-        $personnel->setIdEduSign($id);
-        $this->personnelRepository->save($personnel);
         $this->eventDispatcher->dispatch(new Event(), 'enseignant.added');
+
+        if ($personnel->getIdEduSign() != $id) {
+            $personnel->setIdEduSign($id);
+            $this->personnelRepository->save($personnel);
+        }
+            $this->eventDispatcher->dispatch(new EnseignantUpdatedEvent($id));
 
 
 //        dump($enseignant);
