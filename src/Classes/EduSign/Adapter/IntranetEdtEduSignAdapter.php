@@ -27,9 +27,9 @@ class IntranetEdtEduSignAdapter
         $this->course->name = $edt->matiere;
 //        $this->course->description = $edt->texte;
         $this->course->description = "hello";
-        $this->course->start = Carbon::createFromFormat("Y-m-d\TH:i:s", "2023-08-02T09:00:00");
+        $this->course->start = Carbon::createFromFormat("H:i:s", $edt->heureDebut);
 //        $this->course->end = $edt->heureFin;
-        $this->course->end = Carbon::createFromFormat("Y-m-d\TH:i:s", "2023-08-02T09:00:00");
+        $this->course->end = Carbon::createFromFormat("H:i:s", $edt->heureFin);
 //        $this->course->end = $edt->heureFin;
         $this->course->professor = $edt->personnelObjet->getIdEduSign();
 //        $this->course->professor_signature = "http://example.com/signature1.png";

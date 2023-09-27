@@ -47,34 +47,48 @@ class UpdateEdt
     public function update()
     {
         //todo: pour chaque dept
-        $departements = $this->departementRepository->findBy(['actif' => 1]);
+        $departements = $this->departementRepository->findActifs();
         $semestres = [];
         foreach ($departements as $departement) {
-            $semestre = $this->semestreRepository->findByDepartementActif($departement);
-            $semestres[] = $semestre;
+            $semestreArrays = $this->semestreRepository->findByDepartementActif($departement);
+            foreach ($semestreArrays as $semestreArray) {
+                $semestres[] = $semestreArray;
+            }
         }
+        dump($semestres);
 
         foreach ($semestres as $semestre) {
+            // récupérer la date d'aujourd'hui
+            $today = new \DateTime('now');
+            // récupérer le prochain samedi
+            $saturday = new \DateTime('next saturday');
+
 
             $matieres = $this->typeMatiereManager->findByReferentielOrdreSemestre($semestre, $semestre->getDiplome()->getReferentiel());
 
-//        //récupère les edt de l'intranet depuis EdtManager.php
+            //récupère les edt de l'intranet depuis EdtManager.php
             $edt = $this->edtManager->getPlanningSemestre($semestre, $matieres, $semestre->getAnneeUniversitaire(), []);
 
             foreach ($edt->evenements as $evenement) {
-                $this->evenement = $evenement;
+                $evenementJour = \DateTime::createFromFormat('Y-m-d', $evenement->jour);
+                if ($evenementJour >= $today && $evenementJour <= $saturday) {
+                    $this->evenement = $evenement;
 
-                $enseignant = $evenement->personnelObjet;
-                $enseignant = $this->personnelRepository->find($enseignant);
-                // Retourner l'id du personnel pour le mettre à jour
-                $id = $enseignant->getId();
+                    $enseignant = $evenement->personnelObjet;
+                    $enseignant = $this->personnelRepository->find($enseignant);
+                    // Retourner l'id du personnel pour le mettre à jour
+                    $id = $enseignant->getId();
 
-//            $this->eventDispatcher->dispatch(new EnseignantAddedEvent($id));
 
-                if (!empty($enseignant->getIdEduSign()) || $enseignant->getIdEduSign() != '') {
-                    $this->sendUpdate();
+                    if (!empty($enseignant->getIdEduSign()) || $enseignant->getIdEduSign() != '') {
+                        $this->sendUpdate();
+                    } else {
+                        $this->eventDispatcher->dispatch(new EnseignantAddedEvent($id));
+                    }
                 } else {
-                    $this->eventDispatcher->dispatch(new EnseignantAddedEvent($id));
+                    dump($evenementJour);
+                    dump($today);
+                    dump($saturday);
                 }
             }
         }
