@@ -13,6 +13,7 @@ use App\Classes\Edt\EdtManager;
 use App\Classes\EduSign\Adapter\IntranetEdtEduSignAdapter;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\DTO\EvenementEdt;
+use App\Repository\DepartementRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -31,7 +32,8 @@ class UpdateEdt
         protected SemestreRepository        $semestreRepository,
         protected PersonnelRepository       $personnelRepository,
         protected UpdateEnseignant          $updateEnseignant,
-        private EventDispatcherInterface $eventDispatcher,
+        protected DepartementRepository     $departementRepository,
+        private EventDispatcherInterface    $eventDispatcher,
     )
     {
         $eventDispatcher->addListener(EnseignantUpdatedEvent::class, [$this, 'onEnseignantUpdated']);
@@ -45,26 +47,35 @@ class UpdateEdt
     public function update()
     {
         //todo: pour chaque dept
-        $semestre = $this->semestreRepository->find(101);
-        $matieres = $this->typeMatiereManager->findByReferentielOrdreSemestre($semestre, $semestre->getDiplome()->getReferentiel());
+        $departements = $this->departementRepository->findBy(['actif' => 1]);
+        $semestres = [];
+        foreach ($departements as $departement) {
+            $semestre = $this->semestreRepository->findByDepartementActif($departement);
+            $semestres[] = $semestre;
+        }
+
+        foreach ($semestres as $semestre) {
+
+            $matieres = $this->typeMatiereManager->findByReferentielOrdreSemestre($semestre, $semestre->getDiplome()->getReferentiel());
 
 //        //récupère les edt de l'intranet depuis EdtManager.php
-        $edt = $this->edtManager->getPlanningSemestre($semestre, $matieres, $semestre->getAnneeUniversitaire(), []);
+            $edt = $this->edtManager->getPlanningSemestre($semestre, $matieres, $semestre->getAnneeUniversitaire(), []);
 
-        foreach ($edt->evenements as $evenement) {
-            $this->evenement = $evenement;
+            foreach ($edt->evenements as $evenement) {
+                $this->evenement = $evenement;
 
-            $enseignant = $evenement->personnelObjet;
-            $enseignant = $this->personnelRepository->find($enseignant);
-            // Retourner l'id du personnel pour le mettre à jour
-            $id = $enseignant->getId();
+                $enseignant = $evenement->personnelObjet;
+                $enseignant = $this->personnelRepository->find($enseignant);
+                // Retourner l'id du personnel pour le mettre à jour
+                $id = $enseignant->getId();
 
 //            $this->eventDispatcher->dispatch(new EnseignantAddedEvent($id));
 
-            if (!empty($enseignant->getIdEduSign()) || $enseignant->getIdEduSign() != '') {
-                $this->sendUpdate();
-            } else {
-                $this->eventDispatcher->dispatch(new EnseignantAddedEvent($id));
+                if (!empty($enseignant->getIdEduSign()) || $enseignant->getIdEduSign() != '') {
+                    $this->sendUpdate();
+                } else {
+                    $this->eventDispatcher->dispatch(new EnseignantAddedEvent($id));
+                }
             }
         }
     }
