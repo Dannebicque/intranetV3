@@ -18,6 +18,7 @@ use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\EventDispatcher\Event;
+use function PHPUnit\Framework\isEmpty;
 
 class UpdateEdt
 {
@@ -55,7 +56,6 @@ class UpdateEdt
                 $semestres[] = $semestreArray;
             }
         }
-        dump($semestres);
 
         foreach ($semestres as $semestre) {
             // récupérer la date d'aujourd'hui
@@ -70,8 +70,14 @@ class UpdateEdt
             $edt = $this->edtManager->getPlanningSemestre($semestre, $matieres, $semestre->getAnneeUniversitaire(), []);
 
             foreach ($edt->evenements as $evenement) {
-                $evenementJour = \DateTime::createFromFormat('Y-m-d', $evenement->jour);
+//                $evenementJour = \DateTime::createFromFormat('Y-m-d', $evenement->jour);
+                $evenementJour = \DateTime::createFromFormat('Y-m-d', "2023-09-28", new \DateTimeZone('Europe/Paris'));
+//                dump($evenement->jour);
+//                dump($today);
+//                dump($saturday);
+//                die();
                 if ($evenementJour >= $today && $evenementJour <= $saturday) {
+                    dump('ok');
                     $this->evenement = $evenement;
 
                     $enseignant = $evenement->personnelObjet;
@@ -79,16 +85,16 @@ class UpdateEdt
                     // Retourner l'id du personnel pour le mettre à jour
                     $id = $enseignant->getId();
 
-
-                    if (!empty($enseignant->getIdEduSign()) || $enseignant->getIdEduSign() != '') {
-                        $this->sendUpdate();
-                    } else {
+                    if ($enseignant->getIdEduSign() != '' || isEmpty($enseignant->getIdEduSign())) {
                         $this->eventDispatcher->dispatch(new EnseignantAddedEvent($id));
+                    } else {
+                        $this->sendUpdate();
                     }
                 } else {
-                    dump($evenementJour);
-                    dump($today);
-                    dump($saturday);
+//                    dump($evenementJour);
+//                    dump($today);
+//                    dump($saturday);
+                    dump('error');
                 }
             }
         }
@@ -97,7 +103,8 @@ class UpdateEdt
     public function sendUpdate()
     {
         $course = (new IntranetEdtEduSignAdapter($this->evenement))->getCourse();
-
+        dump('hello');
+//        die();
         $this->apiEduSign->addCourse($course);
     }
 }

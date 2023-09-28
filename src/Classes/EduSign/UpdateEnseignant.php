@@ -34,5 +34,6 @@ class UpdateEnseignant
         $this->apiEduSign->addEnseignant($enseignant);
 
         // Dispatch Event here
-        $this->eventDispatcher->dispatch(new EnseignantUpdatedEvent($id));    }
+        $this->eventDispatcher->dispatch(new EnseignantUpdatedEvent($id));
+    }
 }

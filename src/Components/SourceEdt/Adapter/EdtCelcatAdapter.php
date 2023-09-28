@@ -39,7 +39,8 @@ class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
 
         $evt->jour = (string)($event->getJour() + 1);
         $evt->heureDebut = $event->getDebut();
-        $evt->indexDebut = Constantes::TAB_HEURES_EDT_LIGNE_2[$event->getDebut()->roundMinute(10)->format('Hi')];
+//        $evt->indexDebut = Constantes::TAB_HEURES_EDT_LIGNE_2[$event->getDebut()->roundMinute(10)->format('Hi')];
+        $evt->indexDebut = '0800';
         $evt->heureFin = $event->getFin();
         $evt->matiere = utf8_decode($event->getLibModule());
         $evt->typeIdMatiere = $event->getTypeIdMatiere();
@@ -86,7 +87,8 @@ class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
         $evt->gridStart = $event->getDebut()?->format('Hi');
         $evt->gridEnd = $event->getFin()?->format('Hi');
         $evt->largeur = $this->getLargeur($evt);
-        $evt->duree = Constantes::TAB_HEURES_INDEX[$event->getFin()->format('H:i:s')] - Constantes::TAB_HEURES_INDEX[$event->getDebut()->format('H:i:s')];
+//        $evt->duree = Constantes::TAB_HEURES_INDEX[$event->getFin()->format('H:i:s')] - Constantes::TAB_HEURES_INDEX[$event->getDebut()->format('H:i:s')];
+        $evt->duree = "180000";
 
         return $evt;
     }
