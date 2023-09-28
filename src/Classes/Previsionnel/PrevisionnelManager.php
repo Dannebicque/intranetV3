@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Previsionnel/PrevisionnelManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/09/2023 11:18
+ * @lastUpdate 28/09/2023 08:31
  */
 
 namespace App\Classes\Previsionnel;
@@ -123,8 +123,16 @@ class PrevisionnelManager
         return array_merge(...$t); // todo: ca retourne un array ? comment retourner une collection ? Add ?
     }
 
-    public function getPrevisionnelPersonnelSemestre(Personnel $personnel, Semestre $semestre, int $annee): array
+    public function getPrevisionnelPersonnelSemestre(Personnel $personnel, ?Semestre $semestre, ?int $annee): array
     {
+        if (null === $semestre) {
+            return [];
+        }
+
+        if (null === $annee) {
+            return [];
+        }
+
         $t = [];
         foreach ($this->managers as $manager) {
             $previs = $manager->getPrevisionnelPersonnelSemestre($personnel, $semestre, $annee);
