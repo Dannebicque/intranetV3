@@ -71,10 +71,10 @@ class UpdateEdt
 
             foreach ($edt->evenements as $evenement) {
 //                $evenementJour = \DateTime::createFromFormat('Y-m-d', $evenement->jour);
-                $evenementJour = \DateTime::createFromFormat('Y-m-d', "2023-09-28", new \DateTimeZone('Europe/Paris'));
-//                dump($evenement->jour);
-//                dump($today);
-//                dump($saturday);
+                $evenementJour = \DateTime::createFromFormat('Y-m-d H:i:s', $evenement->heureDebut, new \DateTimeZone('Europe/Paris'));
+                dump('day : '.$evenement->heureDebut);
+                dump($today);
+                dump($saturday);
 //                die();
                 if ($evenementJour >= $today && $evenementJour <= $saturday) {
                     dump('ok');

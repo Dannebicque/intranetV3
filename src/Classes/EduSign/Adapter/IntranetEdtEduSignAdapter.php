@@ -28,27 +28,14 @@ class IntranetEdtEduSignAdapter
 //        $this->course->description = $edt->texte;
         $this->course->description = "hello";
 
-//dump($edt->dateObjet);
-//dump('oups');
-//dump($edt->date);
-//dump($edt->dateObjet." ".$edt->heureDebut);
+dump("date".$edt->date);
+dump("debut".$edt->heureDebut);
+dump("fin".$edt->heureFin);
 //die();
         // todo: récupérer les bonnes dates :)
-//        $this->course->start = Carbon::createFromFormat("Y-m-d H:i:s", $edt->date." ".$edt->heureDebut);
-//        $this->course->end = Carbon::createFromFormat("Y-m-d  H:i:s", $edt->date." ".$edt->heureFin);
+        $this->course->start = Carbon::createFromFormat("Y-m-d H:i:s", $edt->heureDebut);
+        $this->course->end = Carbon::createFromFormat("Y-m-d  H:i:s", $edt->heureFin);
 
-
-        $dateStart = new \DateTime($edt->date);
-        $heureDebut = new \DateTime($edt->heureDebut);
-
-        $start = $dateStart->format('Y-m-d') . ' ' . $heureDebut->format('H:i:s');
-        $this->course->start = Carbon::createFromFormat("Y-m-d H:i:s", $start);
-
-        $dateEnd = new \DateTime($edt->date);
-        $heureFin = new \DateTime($edt->heureFin);
-
-        $end = $dateEnd->format('Y-m-d') . ' ' . $heureFin->format('H:i:s');
-        $this->course->end = Carbon::createFromFormat("Y-m-d H:i:s", $end);
 
         $this->course->professor = $edt->personnelObjet->getIdEduSign();
 //        $this->course->professor_signature = "http://example.com/signature1.png";
