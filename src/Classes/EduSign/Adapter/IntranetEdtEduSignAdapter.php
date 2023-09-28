@@ -28,9 +28,9 @@ class IntranetEdtEduSignAdapter
 //        $this->course->description = $edt->texte;
         $this->course->description = "hello";
 
-dump("date".$edt->date);
-dump("debut".$edt->heureDebut);
-dump("fin".$edt->heureFin);
+//dump("date".$edt->date);
+//dump("debut".$edt->heureDebut);
+//dump("fin".$edt->heureFin);
 //die();
         // todo: récupérer les bonnes dates :)
         $this->course->start = Carbon::createFromFormat("Y-m-d H:i:s", $edt->heureDebut);

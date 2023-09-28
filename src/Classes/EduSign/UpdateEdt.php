@@ -70,14 +70,14 @@ class UpdateEdt
             $edt = $this->edtManager->getPlanningSemestre($semestre, $matieres, $semestre->getAnneeUniversitaire(), []);
 
             foreach ($edt->evenements as $evenement) {
-//                $evenementJour = \DateTime::createFromFormat('Y-m-d', $evenement->jour);
                 $evenementJour = \DateTime::createFromFormat('Y-m-d H:i:s', $evenement->heureDebut, new \DateTimeZone('Europe/Paris'));
-                dump('day : '.$evenement->heureDebut);
-                dump($today);
-                dump($saturday);
+//                dump('day : '.$evenement->heureDebut);
+//                dump($today);
+//                dump($saturday);
 //                die();
                 if ($evenementJour >= $today && $evenementJour <= $saturday) {
                     dump('ok');
+                    die();
                     $this->evenement = $evenement;
 
                     $enseignant = $evenement->personnelObjet;
@@ -94,7 +94,7 @@ class UpdateEdt
 //                    dump($evenementJour);
 //                    dump($today);
 //                    dump($saturday);
-                    dump('error');
+                    dump('evenement hors d\'échéance');
                 }
             }
         }
@@ -103,8 +103,6 @@ class UpdateEdt
     public function sendUpdate()
     {
         $course = (new IntranetEdtEduSignAdapter($this->evenement))->getCourse();
-        dump('hello');
-//        die();
         $this->apiEduSign->addCourse($course);
     }
 }
