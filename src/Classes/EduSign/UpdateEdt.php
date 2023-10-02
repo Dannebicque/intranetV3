@@ -16,6 +16,7 @@ use App\DTO\EvenementEdt;
 use App\Repository\DepartementRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
+use Carbon\Carbon;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Contracts\EventDispatcher\Event;
 use function PHPUnit\Framework\isEmpty;
@@ -59,41 +60,46 @@ class UpdateEdt
 
         foreach ($semestres as $semestre) {
             // récupérer la date d'aujourd'hui
-            $today = new \DateTime('now');
+            $today = new Carbon('now');
             // récupérer le prochain samedi
-            $saturday = new \DateTime('next saturday');
+            $saturday = new Carbon('next saturday');
 
+            $semaine = 6;
 
             $matieres = $this->typeMatiereManager->findByReferentielOrdreSemestre($semestre, $semestre->getDiplome()->getReferentiel());
 
             //récupère les edt de l'intranet depuis EdtManager.php
-            $edt = $this->edtManager->getPlanningSemestre($semestre, $matieres, $semestre->getAnneeUniversitaire(), []);
+            $edt = $this->edtManager->getPlanningSemestreSemaine($semestre, $semaine, $semestre->getAnneeUniversitaire(), $matieres, []);
 
             foreach ($edt->evenements as $evenement) {
-                $evenementJour = \DateTime::createFromFormat('Y-m-d H:i:s', $evenement->heureDebut, new \DateTimeZone('Europe/Paris'));
-//                dump('day : '.$evenement->heureDebut);
-//                dump($today);
-//                dump($saturday);
+
+//                $evenementJour = \DateTime::createFromFormat('Y-m-d H:i:s', $evenement->heureDebut, new \DateTimeZone('Europe/Paris'));
+
+                dump('------------');
+//                dump($evenement->personnelObjet);
+//                dump($evenement->dateObjet);
+//                dump($semestre->getAnneeUniversitaire());
 //                die();
-                if ($evenementJour >= $today && $evenementJour <= $saturday) {
+
+                if ($evenement->dateObjet->isBetween($today, $saturday)) {
                     dump('ok');
-                    die();
+//                    die();
                     $this->evenement = $evenement;
 
                     $enseignant = $evenement->personnelObjet;
-                    $enseignant = $this->personnelRepository->find($enseignant);
+
                     // Retourner l'id du personnel pour le mettre à jour
                     $id = $enseignant->getId();
 
-                    if ($enseignant->getIdEduSign() != '' || isEmpty($enseignant->getIdEduSign())) {
-                        $this->eventDispatcher->dispatch(new EnseignantAddedEvent($id));
-                    } else {
-                        $this->sendUpdate();
+                    if ($enseignant) {
+                            dump($enseignant->getIdEduSign());
+                        if ($enseignant->getIdEduSign() == '' || $enseignant->getIdEduSign() == null) {
+//                            $this->eventDispatcher->dispatch(new EnseignantAddedEvent($id));
+                        } else {
+                            $this->sendUpdate();
+                        }
                     }
                 } else {
-//                    dump($evenementJour);
-//                    dump($today);
-//                    dump($saturday);
                     dump('evenement hors d\'échéance');
                 }
             }

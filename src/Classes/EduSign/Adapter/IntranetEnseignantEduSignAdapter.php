@@ -27,8 +27,12 @@ class IntranetEnseignantEduSignAdapter
         $this->enseignant->email = $enseignant->getMailUniv();
         $this->enseignant->speciality = null;
         $this->enseignant->api_id = $enseignant->getId();
-        //todo: récupérer les dept de l'enseignant
-        $this->enseignant->tags = ['enseignant'];
+        //todo: récupérer les dept de l'enseignant et faire un Manager pr faire la requête vers la bonne adresse ?
+        $departements = $enseignant->getDepartements();
+        foreach ($departements as $departement) {
+            // ajouter les dept dans les tags
+            $this->enseignant->tags[] = $departement->getLibelle();
+        }
     }
 
     public function getEnseignant(): ?EduSignEnseignant

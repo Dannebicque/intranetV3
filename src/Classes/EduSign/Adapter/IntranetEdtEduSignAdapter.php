@@ -23,7 +23,7 @@ class IntranetEdtEduSignAdapter
     public function __construct(EvenementEdt $edt)
     {
         $this->course = new EduSignCourse();
-        //complète l'objet $this->>course avec des données fictive pour le test
+        //complète l'objet $this->course avec des données fictive pour le test
         $this->course->name = $edt->matiere;
 //        $this->course->description = $edt->texte;
         $this->course->description = "hello";
@@ -32,10 +32,13 @@ class IntranetEdtEduSignAdapter
 //dump("debut".$edt->heureDebut);
 //dump("fin".$edt->heureFin);
 //die();
-        // todo: récupérer les bonnes dates :)
-        $this->course->start = Carbon::createFromFormat("Y-m-d H:i:s", $edt->heureDebut);
-        $this->course->end = Carbon::createFromFormat("Y-m-d  H:i:s", $edt->heureFin);
 
+        // todo: récupérer les bonnes dates
+        // ici -> date de l'edt + heure de début et de fin
+        $debut = Carbon::createFromFormat("Y-m-d H:i:s", $edt->dateObjet->format('Y-m-d') . " " . $edt->heureDebut->format('H:i:s'));
+        $this->course->start = $debut;
+        $fin = Carbon::createFromFormat("Y-m-d H:i:s", $edt->dateObjet->format('Y-m-d') . " " . $edt->heureFin->format('H:i:s'));
+        $this->course->end = $fin;
 
         $this->course->professor = $edt->personnelObjet->getIdEduSign();
 //        $this->course->professor_signature = "http://example.com/signature1.png";

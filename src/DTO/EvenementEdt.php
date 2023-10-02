@@ -191,4 +191,11 @@ class EvenementEdt
 
         return null;
     }
+
+    public function getJour(): string
+    {
+        return $this->jour;
+    }
+
+
 }

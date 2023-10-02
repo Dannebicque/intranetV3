@@ -114,8 +114,8 @@ class ApiEduSign
         if (isset($data['result']) && isset($data['result']['ID'])) {
             $id = $data['result']['ID'];
         }
-//        dump($statusCode);
-//        dump($id);
+        dump($statusCode);
+        dump($id);
 
         $personnel = $this->personnelRepository->findOneBy(['mailUniv' => $enseignant->email]);
         if (null === $personnel) {

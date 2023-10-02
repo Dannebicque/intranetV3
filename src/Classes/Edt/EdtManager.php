@@ -64,6 +64,31 @@ class EdtManager
         }
     }
 
+    public function getPlanningSemestreSemaine(
+        Semestre $semestre,
+        int $semaine,
+        AnneeUniversitaire $anneeUniversitaire,
+        array $matieres,
+        array $groupes
+    ): ?EvenementEdtCollection {
+        switch ($this->getSourceEdt($semestre)) {
+            case self::EDT_CELCAT:
+                $this->source = self::EDT_CELCAT;
+
+                return $this->edtCelcat->getPlanningSemestreSemaine($semestre, $semaine, $anneeUniversitaire, $matieres, $groupes);
+            case self::EDT_INTRANET:
+                $this->source = self::EDT_INTRANET;
+
+                return $this->edtIntranet->getPlanningSemestreSemaine($semestre, $semaine, $anneeUniversitaire, $matieres, $groupes);
+            case self::EDT_ADE:
+                $this->source = self::EDT_INTRANET;
+
+                return $this->edtAde->getPlanningSemestreSemaine($semestre, $semaine, $anneeUniversitaire, $matieres, $groupes);
+            default:
+                return null;
+        }
+    }
+
     public function initSemestre(
         Semestre $semestre,
         Calendrier $semaine,
