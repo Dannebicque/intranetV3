@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/EvenementEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2023 19:22
+ * @lastUpdate 03/10/2023 07:03
  */
 
 namespace App\DTO;
@@ -157,7 +157,7 @@ class EvenementEdt
 
     public function isEvaluation(bool $long = true): string
     {
-        if (null === $this->typeIdMatiere) {
+        if (null === $this->typeIdMatiere || '_0' === $this->typeIdMatiere) {
             $matiere = $this->texte;
         } else {
             if ($long) {
