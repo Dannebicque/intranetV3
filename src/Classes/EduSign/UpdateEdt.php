@@ -13,6 +13,7 @@ use App\Classes\Edt\EdtManager;
 use App\Classes\EduSign\Adapter\IntranetEdtEduSignAdapter;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\DTO\EvenementEdt;
+use App\Repository\ApcReferentielRepository;
 use App\Repository\DepartementRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
@@ -36,6 +37,7 @@ class UpdateEdt
         protected UpdateEnseignant          $updateEnseignant,
         protected DepartementRepository     $departementRepository,
         private EventDispatcherInterface    $eventDispatcher,
+        protected ApcReferentielRepository  $apcReferentielRepository,
     )
     {
         $eventDispatcher->addListener(EnseignantUpdatedEvent::class, [$this, 'onEnseignantUpdated']);
@@ -66,7 +68,13 @@ class UpdateEdt
 
             $semaine = 6;
 
-            $matieres = $this->typeMatiereManager->findByReferentielOrdreSemestre($semestre, $semestre->getDiplome()->getReferentiel());
+            $referentiel = $this->apcReferentielRepository->findOneBy(['id' => $semestre->getDiplome()->getReferentiel()]);
+
+            if ($referentiel !== null) {
+
+                $matieres = $this->typeMatiereManager->findByReferentielOrdreSemestreArray($semestre, $referentiel);
+
+            }
 
             //récupère les edt de l'intranet depuis EdtManager.php
             $edt = $this->edtManager->getPlanningSemestreSemaine($semestre, $semaine, $semestre->getAnneeUniversitaire(), $matieres, []);
@@ -89,7 +97,7 @@ class UpdateEdt
                     $enseignant = $evenement->personnelObjet;
 
                     // Retourner l'id du personnel pour le mettre à jour
-                    $id = $enseignant->getId();
+//                    $id = $enseignant->getId();
 
                     if ($enseignant) {
                             dump($enseignant->getIdEduSign());
