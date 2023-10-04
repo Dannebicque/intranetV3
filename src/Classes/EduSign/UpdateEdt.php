@@ -54,13 +54,14 @@ class UpdateEdt
         $departements = $this->departementRepository->findActifs();
         $semestres = [];
         foreach ($departements as $departement) {
-            $semestreArrays = $this->semestreRepository->findByDepartementActif($departement);
+            $semestreArrays = $this->semestreRepository->findByDepartementActifFc($departement);
             foreach ($semestreArrays as $semestreArray) {
                 $semestres[] = $semestreArray;
             }
         }
 
         foreach ($semestres as $semestre) {
+
             // récupérer la date d'aujourd'hui
             $today = new Carbon('now');
             // récupérer le prochain samedi
@@ -81,13 +82,7 @@ class UpdateEdt
 
             foreach ($edt->evenements as $evenement) {
 
-//                $evenementJour = \DateTime::createFromFormat('Y-m-d H:i:s', $evenement->heureDebut, new \DateTimeZone('Europe/Paris'));
-
                 dump('------------');
-//                dump($evenement->personnelObjet);
-//                dump($evenement->dateObjet);
-//                dump($semestre->getAnneeUniversitaire());
-//                die();
 
                 if ($evenement->dateObjet->isBetween($today, $saturday)) {
                     dump('ok');
@@ -96,11 +91,8 @@ class UpdateEdt
 
                     $enseignant = $evenement->personnelObjet;
 
-                    // Retourner l'id du personnel pour le mettre à jour
-//                    $id = $enseignant->getId();
-
                     if ($enseignant) {
-                            dump($enseignant->getIdEduSign());
+                        dump($enseignant->getIdEduSign());
                         if ($enseignant->getIdEduSign() == '' || $enseignant->getIdEduSign() == null) {
 //                            $this->eventDispatcher->dispatch(new EnseignantAddedEvent($id));
                         } else {

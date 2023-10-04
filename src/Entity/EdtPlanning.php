@@ -75,6 +75,9 @@ class EdtPlanning extends BaseEntity
     #[ORM\ManyToOne(inversedBy: 'edtPlannings')]
     private ?Diplome $diplome = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $idEduSign = null;
+
     public function getOrdre(): ?string
     {
         return $this->ordre;
@@ -378,6 +381,18 @@ class EdtPlanning extends BaseEntity
     public function setDiplome(?Diplome $diplome): self
     {
         $this->diplome = $diplome;
+
+        return $this;
+    }
+
+    public function getIdEduSign(): ?string
+    {
+        return $this->idEduSign;
+    }
+
+    public function setIdEduSign(?string $idEduSign): static
+    {
+        $this->idEduSign = $idEduSign;
 
         return $this;
     }

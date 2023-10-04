@@ -11,6 +11,7 @@ namespace App\Classes\EduSign;
 
 use App\Classes\EduSign\DTO\EduSignCourse;
 use App\Classes\EduSign\DTO\EduSignEnseignant;
+use App\Repository\EdtPlanningRepository;
 use App\Repository\PersonnelRepository;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpClient\HttpClient;
@@ -24,10 +25,12 @@ class ApiEduSign
     public function __construct(
         ParameterBagInterface            $parameterBag,
         PersonnelRepository              $personnelRepository,
+        EdtPlanningRepository            $edtPlanningRepository,
         private EventDispatcherInterface $eventDispatcher
     )
     {
         $this->personnelRepository = $personnelRepository;
+        $this->edtPlanningRepository = $edtPlanningRepository;
         $this->cleApi = $parameterBag->get('api_edu_sign');
     }
 
@@ -46,8 +49,27 @@ class ApiEduSign
         $statusCode = $response->getStatusCode();
         $content = $response->getContent();
 
-        dump($statusCode);
-        dump($content);
+        //todo: récupérer l'id edusign et l'assigner à l'objet
+        $data = json_decode($content, true);
+        // accéder à la valeur de l'ID
+        $id = "";
+        if (isset($data['result']) && isset($data['result']['ID'])) {
+            $id = $data['result']['ID'];
+        }
+        dump($id);
+
+        $edt = $this->edtPlanningRepository->findOneBy(['id' => $course->api_id]);
+        if (null === $edt) {
+            throw new \Exception('Personnel not found for ' . $edt->api_id);
+        }
+
+        if ($edt->getIdEduSign() != $id) {
+            $edt->setIdEduSign($id);
+            $this->edtPlanningRepository->save($edt);
+        }
+
+//        dump($statusCode);
+//        dump($content);
     }
 
     public function addGroupe(EduSignGroupe $groupe)
@@ -83,7 +105,6 @@ class ApiEduSign
         $statusCode = $response->getStatusCode();
         $content = $response->getContent();
 
-        dump($statusCode);
         dump($content);
     }
 

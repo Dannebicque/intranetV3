@@ -497,4 +497,10 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function save(EdtPlanning $edtPlanning): void
+    {
+        $this->_em->persist($edtPlanning);
+        $this->_em->flush();
+    }
 }
