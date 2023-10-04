@@ -24,7 +24,8 @@ class IntranetEnseignantEduSignAdapter
         $this->enseignant = new EduSignEnseignant();
         $this->enseignant->firstname = $enseignant->getPrenom();
         $this->enseignant->lastname = $enseignant->getNom();
-        $this->enseignant->email = $enseignant->getMailUniv();
+//        $this->enseignant->email = $enseignant->getMailUniv();
+        $this->enseignant->email = $enseignant->getId().'@edu-sign.fr';
         $this->enseignant->speciality = null;
         $this->enseignant->api_id = $enseignant->getId();
         //todo: récupérer les dept de l'enseignant et faire un Manager pr faire la requête vers la bonne adresse ?
