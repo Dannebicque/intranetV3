@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtBorne.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/09/2023 16:46
+ * @lastUpdate 04/10/2023 07:42
  */
 
 namespace App\Classes\Edt;
@@ -81,9 +81,15 @@ class MyEdtBorne
             throw new SemestreNotFoundException();
         }
 
+        $anneeUniversitaire = $semestre->getAnneeUniversitaire();
+
+        if (null === $anneeUniversitaire) {
+            throw new SemestreNotFoundException();
+        }
+
         $semaine = $this->calendrierRepository->findOneBy([
             'semaineReelle' => $this->data['semaine'],
-            'anneeUniversitaire' => $semestre->getAnneeUniversitaire()?->getId(),
+            'anneeUniversitaire' => $anneeUniversitaire->getId(),
         ]);
 
         $groupes = $this->groupeRepository->findByDiplomeAndOrdreSemestre($semestre->getDiplome(), $semestre->getOrdreLmd());
@@ -96,7 +102,7 @@ class MyEdtBorne
         }
         if (null !== $semaine) {
             $planning = $this->edtManager->recupereEDTBornes($semaine->getSemaineFormation(),
-                $semestre, $this->data['jsem'], $tMatieres, $groupes);
+                $semestre, $this->data['jsem'], $tMatieres, $groupes, $anneeUniversitaire);
             $tab = [];
             foreach ($planning->getEvents() as $pl) {
                 if ($pl->ordreGroupe === 41) {

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/09/2023 12:05
+ * @lastUpdate 04/10/2023 07:42
  */
 
 namespace App\Repository;
@@ -335,18 +335,20 @@ class EdtPlanningRepository extends ServiceEntityRepository
         return $planning;
     }
 
-    public function recupereEdtBorne(int $numSemaine, Semestre $semestre, int $jour): array
+    public function recupereEdtBorne(int $numSemaine, Semestre $semestre, int $jour, AnneeUniversitaire $anneeUniversitaire): array
     {
         return $this->createQueryBuilder('p')
             ->where('p.semaine = :semaine')
             ->andWhere('p.jour = :jour ')
             ->andWhere('p.ordreSemestre = :semestre')
             ->andWhere('p.diplome = :diplome')
+            ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
             ->setParameters([
                 'diplome' => null !== $semestre->getDiplome()->getParent() ? $semestre->getDiplome()->getParent()->getId() : $semestre->getDiplome(),
                 'semaine' => $numSemaine,
                 'jour' => $jour,
                 'semestre' => $semestre->getOrdreLmd(),
+                'anneeUniversitaire' => $anneeUniversitaire->getId(),
             ])
             ->orderBy('p.jour', Criteria::ASC)
             ->addOrderBy('p.debut', Criteria::ASC)

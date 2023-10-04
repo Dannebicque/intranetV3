@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Source/EdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2023 11:23
+ * @lastUpdate 04/10/2023 07:44
  */
 
 namespace App\Components\SourceEdt\Source;
@@ -48,7 +48,8 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
         array $matieres,
         int $jourSemaine,
         int $semaineFormation,
-        array $groupes
+        array              $groupes,
+        AnneeUniversitaire $anneeUniversitaire
     ): EvenementEdtCollection {
         // TODO: Implement recupereEdtJourBorne() method.
         return new EvenementEdtCollection();

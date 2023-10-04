@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Source/EdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2023 11:23
+ * @lastUpdate 04/10/2023 07:42
  */
 
 namespace App\Components\SourceEdt\Source;
@@ -44,9 +44,9 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
         return $this->edtIntranetAdapter->single($evt, $matieres, $this->transformeGroupe($groupes));
     }
 
-    public function recupereEdtJourBorne(Semestre $semestre, array $matieres, int $jourSemaine, int $semaineFormation, array $groupes): EvenementEdtCollection
+    public function recupereEdtJourBorne(Semestre $semestre, array $matieres, int $jourSemaine, int $semaineFormation, array $groupes, AnneeUniversitaire $anneeUniversitaire): EvenementEdtCollection
     {
-        $evts = $this->edtPlanningRepository->recupereEdtBorne($semaineFormation, $semestre, $jourSemaine);
+        $evts = $this->edtPlanningRepository->recupereEdtBorne($semaineFormation, $semestre, $jourSemaine, $anneeUniversitaire);
 
         return $this->edtIntranetAdapter->collection($evts, $matieres, $this->transformeGroupe($groupes));
     }

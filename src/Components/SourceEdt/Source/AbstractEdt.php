@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Source/AbstractEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/09/2022 18:52
+ * @lastUpdate 25/09/2023 15:30
  */
 
 namespace App\Components\SourceEdt\Source;
@@ -102,7 +102,9 @@ abstract class AbstractEdt
     {
         $t = [];
         foreach ($this->evenements->evenements as $evt) {
-            $t[$evt->jour][$evt->indexDebut] = $evt;
+            if (null !== $evt->jour && null !== $evt->indexDebut) {
+                $t[$evt->jour][$evt->indexDebut] = $evt;
+            }
         }
 
         return $t;

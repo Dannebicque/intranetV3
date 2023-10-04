@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/BorneController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2023 13:41
+ * @lastUpdate 04/10/2023 07:45
  */
 
 namespace App\Controller;
@@ -13,39 +13,38 @@ use App\Classes\Edt\MyEdtBorne;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Entity\Borne;
 use App\Entity\Constantes;
-use App\Entity\Semestre;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class BorneController extends AbstractController
 {
-    #[Route(path: '/borne/{semestre1}/{semestre2}', name: 'borne')]
-
-    /** @deprecated */
-    public function index(
-        TypeMatiereManager $typeMatiereManager,
-        MyEdtBorne $myEdtBorne,
-        Semestre $semestre1,
-        Semestre $semestre2
-    ): Response {
-        $myEdtBorne->init();
-        $myEdtBorne->calculSemestre($semestre1, $semestre2, $semestre1->getAnneeUniversitaire(), $typeMatiereManager);
-        // récupération des messages
-        $messages = [];
-        $messages[] = $semestre1->getBornes();
-        $messages[] = $semestre2->getBornes();
-        $response = new Response();
-        $response->headers->set('Access-Control-Allow-Origin', '*');
-        $content = $this->renderView('borne/index.html.twig', [
-            't' => $myEdtBorne->getData(),
-            'messages' => $messages,
-            'lignes' => Constantes::TAB_CRENEAUX,
-        ]);
-        $response->setContent($content);
-
-        return $response;
-    }
+//    #[Route(path: '/borne/{semestre1}/{semestre2}', name: 'borne')]
+//
+//    /** @deprecated */
+//    public function index(
+//        TypeMatiereManager $typeMatiereManager,
+//        MyEdtBorne $myEdtBorne,
+//        Semestre $semestre1,
+//        Semestre $semestre2
+//    ): Response {
+//        $myEdtBorne->init();
+//        $myEdtBorne->calculSemestre($semestre1, $semestre2, $semestre1->getAnneeUniversitaire(), $typeMatiereManager);
+//        // récupération des messages
+//        $messages = [];
+//        $messages[] = $semestre1->getBornes();
+//        $messages[] = $semestre2->getBornes();
+//        $response = new Response();
+//        $response->headers->set('Access-Control-Allow-Origin', '*');
+//        $content = $this->renderView('borne/index.html.twig', [
+//            't' => $myEdtBorne->getData(),
+//            'messages' => $messages,
+//            'lignes' => Constantes::TAB_CRENEAUX,
+//        ]);
+//        $response->setContent($content);
+//
+//        return $response;
+//    }
 
     /**
      * @throws \App\Exception\SemestreNotFoundException
@@ -56,19 +55,14 @@ class BorneController extends AbstractController
         $nbBornes = [
             1 => [
                 'zone1' => ['type' => 'semestre', 'valeur' => 79],
-                // 'zone2' => ['type' => 'semestre', 'valeur' => 10],
                 'zone3' => ['type' => 'message', 'valeur' => Borne::class],
             ],
             2 => [
                 'zone1' => ['type' => 'semestre', 'valeur' => 101],
-                // 'zone2' => ['type' => 'semestre', 'valeur' => 5],
-                // 'zone2' => ['type' => 'message', 'valeur' => Message::class],
                 'zone3' => ['type' => 'message', 'valeur' => Borne::class],
             ],
             3 => [
                 'zone1' => ['type' => 'semestre', 'valeur' => 103],
-                //'zone2' => ['type' => 'semestre', 'valeur' => 2],
-                // 'zone2' => ['type' => 'message', 'valeur' => Message::class],
                 'zone3' => ['type' => 'message', 'valeur' => Borne::class],
             ],
         ];
