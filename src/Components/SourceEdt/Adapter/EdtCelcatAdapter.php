@@ -89,6 +89,7 @@ class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
         $evt->largeur = $this->getLargeur($evt);
 //        $evt->duree = Constantes::TAB_HEURES_INDEX[$event->getFin()->format('H:i:s')] - Constantes::TAB_HEURES_INDEX[$event->getDebut()->format('H:i:s')];
         $evt->duree = "180000";
+        $event->idEduSign = $evt->getIdEduSign();
 
         return $evt;
     }

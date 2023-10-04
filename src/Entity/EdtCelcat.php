@@ -84,6 +84,9 @@ class EdtCelcat extends BaseEntity
     #[ORM\ManyToOne(inversedBy: 'edtCelcats')]
     private ?Personnel $personnel = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $idEduSign = null;
+
     public function getEventId(): ?int
     {
         return $this->eventId;
@@ -325,6 +328,18 @@ class EdtCelcat extends BaseEntity
     public function setPersonnel(?Personnel $personnel): self
     {
         $this->personnel = $personnel;
+
+        return $this;
+    }
+
+    public function getIdEduSign(): ?string
+    {
+        return $this->idEduSign;
+    }
+
+    public function setIdEduSign(?string $idEduSign): static
+    {
+        $this->idEduSign = $idEduSign;
 
         return $this;
     }

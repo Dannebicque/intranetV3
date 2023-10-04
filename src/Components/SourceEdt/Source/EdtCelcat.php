@@ -36,6 +36,13 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
         return $this->edtCelcatAdapter->collection($evts, $matieres, $groupes);
     }
 
+    public function getPlanningEduSign(Semestre $semestre, array $matieres, AnneeUniversitaire $anneeUniversitaire, array $groupes): EvenementEdtCollection
+    {
+        $evts = $this->edtCelcatRepository->findEdtEduSign();
+
+        return $this->edtCelcatAdapter->collection($evts, $matieres, $groupes);
+    }
+
     public function find(int $event, array $matieres = [], array $groupes = []): EvenementEdt
     {
         $evt = $this->edtCelcatRepository->find($event);

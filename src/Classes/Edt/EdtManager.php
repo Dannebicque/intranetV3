@@ -89,6 +89,24 @@ class EdtManager
         }
     }
 
+    public function getPlanningEduSign(Semestre $semestre,
+                                       array $matieres,
+                                       AnneeUniversitaire $anneeUniversitaire,
+                                       array $groupes ) : ?EvenementEdtCollection {
+        switch ($this->getSourceEdt($semestre)) {
+            case self::EDT_CELCAT:
+                $this->source = self::EDT_CELCAT;
+
+                return $this->edtCelcat->getPlanningEduSign($semestre, $matieres, $anneeUniversitaire, $groupes);
+            case self::EDT_INTRANET:
+                $this->source = self::EDT_INTRANET;
+
+                return $this->edtIntranet->getPlanningEduSign($semestre, $matieres, $anneeUniversitaire, $groupes);
+            default:
+                return null;
+        }
+    }
+
     public function initSemestre(
         Semestre $semestre,
         Calendrier $semaine,

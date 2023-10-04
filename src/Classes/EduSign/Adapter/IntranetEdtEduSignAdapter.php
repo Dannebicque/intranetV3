@@ -43,6 +43,7 @@ class IntranetEdtEduSignAdapter
         $this->course->max_students = 30;
 //        $this->course->zoom = true;
         $this->course->api_id = $edt->id;
+        $this->course->id_edu_sign = $edt->idEduSign;
     }
 
     public function getCourse(): ?EduSignCourse

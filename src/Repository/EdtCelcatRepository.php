@@ -207,4 +207,11 @@ class EdtCelcatRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findEdtEduSign() {
+        return $this->createQueryBuilder('p')
+            ->where('p.idEduSign IS NOT NULL')
+            ->getQuery()
+            ->getResult();
+    }
 }

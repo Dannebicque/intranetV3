@@ -49,7 +49,6 @@ class ApiEduSign
         $statusCode = $response->getStatusCode();
         $content = $response->getContent();
 
-        //todo: récupérer l'id edusign et l'assigner à l'objet
         $data = json_decode($content, true);
         // accéder à la valeur de l'ID
         $id = "";
@@ -60,16 +59,40 @@ class ApiEduSign
 
         $edt = $this->edtPlanningRepository->findOneBy(['id' => $course->api_id]);
         if (null === $edt) {
-            throw new \Exception('Personnel not found for ' . $edt->api_id);
+            throw new \Exception('Course not found for ' . $edt->api_id);
         }
 
-        if ($edt->getIdEduSign() != $id) {
+        if ($edt->getIdEduSign() == null) {
             $edt->setIdEduSign($id);
             $this->edtPlanningRepository->save($edt);
         }
 
 //        dump($statusCode);
 //        dump($content);
+    }
+
+    public function deleteCourse(EduSignCourse $course)
+    {
+        $client = HttpClient::create();
+
+        $response = $client->request('DELETE', 'https://ext.edusign.fr/v1/course/'.$course->id_edu_sign, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $this->cleApi,
+            ],
+        ]);
+
+        $statusCode = $response->getStatusCode();
+        $content = $response->getContent();
+
+        $edt = $this->edtPlanningRepository->findOneBy(['idEduSign' => $course->api_id]);
+        if ($edt) {
+            $edt->setIdEduSign(null);
+            $this->edtPlanningRepository->save($edt);
+        }
+
+        dump($statusCode);
+        dump($content);
     }
 
     public function addGroupe(EduSignGroupe $groupe)

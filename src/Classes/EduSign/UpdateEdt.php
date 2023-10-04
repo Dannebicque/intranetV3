@@ -15,6 +15,7 @@ use App\Classes\Matieres\TypeMatiereManager;
 use App\DTO\EvenementEdt;
 use App\Repository\ApcReferentielRepository;
 use App\Repository\DepartementRepository;
+use App\Repository\EdtPlanningRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Carbon\Carbon;
@@ -36,6 +37,7 @@ class UpdateEdt
         protected PersonnelRepository       $personnelRepository,
         protected UpdateEnseignant          $updateEnseignant,
         protected DepartementRepository     $departementRepository,
+        protected EdtPlanningRepository     $edtPlanningRepository,
         private EventDispatcherInterface    $eventDispatcher,
         protected ApcReferentielRepository  $apcReferentielRepository,
     )
@@ -85,19 +87,27 @@ class UpdateEdt
                 dump('------------');
 
                 if ($evenement->dateObjet->isBetween($today, $saturday)) {
-                    dump('ok');
-//                    die();
-                    $this->evenement = $evenement;
 
-                    $enseignant = $evenement->personnelObjet;
+                    $course = $this->edtPlanningRepository->findOneBy(['id' => $evenement->id]);
 
-                    if ($enseignant) {
-                        dump($enseignant->getIdEduSign());
-                        if ($enseignant->getIdEduSign() == '' || $enseignant->getIdEduSign() == null) {
+                    if ($course->getIdEduSign() !== null) {
+
+                        $this->evenement = $evenement;
+
+                        $enseignant = $evenement->personnelObjet;
+
+                        if ($enseignant) {
+                            dump($enseignant->getIdEduSign());
+                            if ($enseignant->getIdEduSign() == '' || $enseignant->getIdEduSign() == null) {
 //                            $this->eventDispatcher->dispatch(new EnseignantAddedEvent($id));
-                        } else {
-                            $this->sendUpdate();
+                            } else {
+                                $this->sendUpdate();
+                            }
                         }
+                    } else {
+                        dump($course->getIdEduSign());
+                        die();
+                        dump('cours déjà envoyé');
                     }
                 } else {
                     dump('evenement hors d\'échéance');
