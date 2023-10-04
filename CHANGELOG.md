@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.35](https://github.com/Dannebicque/intranetV3/compare/v3.14.34...v3.14.35) (2023-10-04)
+
+
+### Bug Fixes
+
+* Filtre par salle ([ac023c1](https://github.com/Dannebicque/intranetV3/commit/ac023c1dbe4356596b55933d480aa4c420a2bc7d))
+
 ### [3.14.34](https://github.com/Dannebicque/intranetV3/compare/v3.14.33...v3.14.34) (2023-10-04)
 
 
