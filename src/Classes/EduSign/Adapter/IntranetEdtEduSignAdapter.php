@@ -34,7 +34,9 @@ class IntranetEdtEduSignAdapter
         $fin = Carbon::createFromFormat("Y-m-d H:i:s", $edt->dateObjet->format('Y-m-d') . " " . $edt->heureFin->format('H:i:s'));
         $this->course->end = $fin;
 
-        $this->course->professor = $edt->personnelObjet->getIdEduSign();
+        if ($edt->personnelObjet !== null) {
+            $this->course->professor = $edt->personnelObjet->getIdEduSign();
+        }
 //        $this->course->professor_signature = "http://example.com/signature1.png";
 //        $this->course->professor_2 = "PhysicsProfessor2";
 //        $this->course->professor_signature_2 = "http://example.com/signature2.png";

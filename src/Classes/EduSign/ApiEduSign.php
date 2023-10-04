@@ -55,7 +55,6 @@ class ApiEduSign
         if (isset($data['result']) && isset($data['result']['ID'])) {
             $id = $data['result']['ID'];
         }
-        dump($id);
 
         $edt = $this->edtPlanningRepository->findOneBy(['id' => $course->api_id]);
         if (null === $edt) {
@@ -67,8 +66,8 @@ class ApiEduSign
             $this->edtPlanningRepository->save($edt);
         }
 
-//        dump($statusCode);
-//        dump($content);
+        dump($statusCode);
+        dump($content);
     }
 
     public function deleteCourse(EduSignCourse $course)
@@ -85,7 +84,7 @@ class ApiEduSign
         $statusCode = $response->getStatusCode();
         $content = $response->getContent();
 
-        $edt = $this->edtPlanningRepository->findOneBy(['idEduSign' => $course->api_id]);
+        $edt = $this->edtPlanningRepository->findOneBy(['idEduSign' => $course->id_edu_sign]);
         if ($edt) {
             $edt->setIdEduSign(null);
             $this->edtPlanningRepository->save($edt);

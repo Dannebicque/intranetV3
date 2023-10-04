@@ -85,12 +85,14 @@ class UpdateEdt
             foreach ($edt->evenements as $evenement) {
 
                 dump('------------');
+                dump('ok');
 
                 if ($evenement->dateObjet->isBetween($today, $saturday)) {
 
-                    $course = $this->edtPlanningRepository->findOneBy(['id' => $evenement->id]);
+//                    $course = $this->edtPlanningRepository->findOneBy(['id' => $evenement->id]);
+                    $course = (new IntranetEdtEduSignAdapter($evenement))->getCourse();
 
-                    if ($course->getIdEduSign() !== null) {
+                    if ($course->id_edu_sign == null) {
 
                         $this->evenement = $evenement;
 
@@ -105,8 +107,6 @@ class UpdateEdt
                             }
                         }
                     } else {
-                        dump($course->getIdEduSign());
-                        die();
                         dump('cours déjà envoyé');
                     }
                 } else {
