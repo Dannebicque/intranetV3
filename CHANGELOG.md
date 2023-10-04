@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.34](https://github.com/Dannebicque/intranetV3/compare/v3.14.33...v3.14.34) (2023-10-04)
+
+
+### Bug Fixes
+
+* Affichage EDT bornes ([02a789b](https://github.com/Dannebicque/intranetV3/commit/02a789bb5e83bdd743b342887f65970341181b9c))
+
 ### [3.14.33](https://github.com/Dannebicque/intranetV3/compare/v3.14.32...v3.14.33) (2023-10-03)
 
 
