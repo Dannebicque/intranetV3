@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/09/2023 12:05
+ * @lastUpdate 04/10/2023 21:53
  */
 
 namespace App\Classes\Edt;
@@ -35,7 +35,7 @@ use function count;
 class MyEdtIntranet extends BaseEdt
 {
     protected ?AnneeUniversitaire $anneeUniversitaire = null;
-    protected string $couleur;
+    protected ?string $couleur = '';
     private array $tab = [];
     private array $matieres = [];
     private array $tabCouleur = [];
@@ -469,7 +469,7 @@ class MyEdtIntranet extends BaseEdt
                 $tab[$p->getJour()][$i]['texte'] = 'xx';
             }
 
-            $tab[$p->getJour()][$debut]['texte'] = $this->isEvaluation($p).'<br />'.$p->getSemestre()->getAnnee()->getLibelle().' <br /> '.$p->getDisplayGroupe();
+            $tab[$p->getJour()][$debut]['texte'] = $this->isEvaluation($p) . '<br />Semes x <br /> ' . $p->getDisplayGroupe();
 
             if (null !== $p->getIntervenant()) {
                 $tab[$p->getJour()][$debut]['texte'] .= ' <br /> '.$p->getIntervenant()->getNom();
