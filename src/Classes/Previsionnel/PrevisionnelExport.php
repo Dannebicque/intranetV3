@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Previsionnel/PrevisionnelExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/09/2023 17:19
+ * @lastUpdate 05/10/2023 16:58
  */
 
 namespace App\Classes\Previsionnel;
@@ -84,7 +84,7 @@ class PrevisionnelExport
             $this->myExcelWriter->writeCellXY($colonne, $this->ligne, $previ->matiere_code_element);
             ++$colonne;
             // LIBELLE ELEMENT
-            $this->myExcelWriter->writeCellXY($colonne, $this->ligne, $previ->matiere_libelle);
+            $this->myExcelWriter->writeCellXY($colonne, $this->ligne, $previ->matiere_code . ' | ' . $previ->matiere_libelle);
             ++$colonne;
 
             if (null !== $previ->personnel_id) {
