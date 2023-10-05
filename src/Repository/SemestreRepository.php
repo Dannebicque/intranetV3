@@ -196,4 +196,17 @@ class SemestreRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function findSemestreEduSign() {
+        return $this->createQueryBuilder('s')
+            ->where('s.idEduSign IS NOT NULL')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function save(Semestre $semestre): void
+    {
+        $this->_em->persist($semestre);
+        $this->_em->flush();
+    }
 }

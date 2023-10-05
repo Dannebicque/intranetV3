@@ -265,4 +265,10 @@ class GroupeRepository extends ServiceEntityRepository
             ->orderBy('t.libelle', Criteria::ASC)
             ->addOrderBy('g.libelle', Criteria::ASC);
     }
+
+    public function save(Groupe $groupe): void
+    {
+        $this->_em->persist($groupe);
+        $this->_em->flush();
+    }
 }

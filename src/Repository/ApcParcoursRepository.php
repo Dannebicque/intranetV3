@@ -11,6 +11,7 @@ namespace App\Repository;
 
 use App\Entity\ApcParcours;
 use App\Entity\Diplome;
+use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -41,5 +42,16 @@ class ApcParcoursRepository extends ServiceEntityRepository
             ->where('apc.apcReferentiel = :referentiel')
             ->setParameter('referentiel', $diplome->getReferentiel()->getId())
             ->orderBy('apc.libelle', 'ASC');
+    }
+
+    public function findBySemestre(Semestre $semestre) {
+        return $this->createQueryBuilder('apc')
+//            ->innerJoin('apc.apcParcoursNiveaux', 'apcn')
+//            ->innerJoin('apcn.niveau', 'n')
+//            ->innerJoin('n.semestre', 's')
+            ->where('s.id = :semestre')
+            ->setParameter('semestre', $semestre->getId())
+            ->getQuery()
+            ->getResult();
     }
 }

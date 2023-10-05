@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Classes\EduSign\GroupeInterface;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Repository\SemestreRepository;
 use App\Utils\Tools;
@@ -21,7 +22,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: SemestreRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class Semestre extends BaseEntity implements Stringable
+class Semestre extends BaseEntity implements Stringable, GroupeInterface
 {
     use LifeCycleTrait;
 
@@ -235,6 +236,9 @@ class Semestre extends BaseEntity implements Stringable
 
     #[ORM\ManyToMany(targetEntity: TypeGroupe::class, mappedBy: 'semestres')]
     private Collection $typeGroupess;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $idEduSign = null;
 
     public function __construct()
     {
@@ -1416,6 +1420,18 @@ class Semestre extends BaseEntity implements Stringable
         if ($this->typeGroupess->removeElement($typeGroupess)) {
             $typeGroupess->removeSemestre($this);
         }
+
+        return $this;
+    }
+
+    public function getIdEduSign(): ?string
+    {
+        return $this->idEduSign;
+    }
+
+    public function setIdEduSign(?string $idEduSign): static
+    {
+        $this->idEduSign = $idEduSign;
 
         return $this;
     }

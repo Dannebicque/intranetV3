@@ -92,4 +92,12 @@ class DiplomeRepository extends ServiceEntityRepository
             ->andWhere('d.departement = :departement')
             ->setParameter('departement', $departement->getId());
     }
+
+    public function findAllWithEduSign(): array
+    {
+        return $this->createQueryBuilder('d')
+            ->where('d.keyEduSign IS NOT NULL')
+            ->getQuery()
+            ->getResult();
+    }
 }

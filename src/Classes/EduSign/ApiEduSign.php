@@ -11,8 +11,12 @@ namespace App\Classes\EduSign;
 
 use App\Classes\EduSign\DTO\EduSignCourse;
 use App\Classes\EduSign\DTO\EduSignEnseignant;
+use App\Classes\EduSign\DTO\EduSignGroupe;
+use App\Entity\Groupe;
 use App\Repository\EdtPlanningRepository;
+use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
+use App\Repository\SemestreRepository;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\EventDispatcher\Event;
@@ -24,8 +28,10 @@ class ApiEduSign
 
     public function __construct(
         ParameterBagInterface            $parameterBag,
-        PersonnelRepository              $personnelRepository,
-        EdtPlanningRepository            $edtPlanningRepository,
+        protected PersonnelRepository              $personnelRepository,
+        protected EdtPlanningRepository            $edtPlanningRepository,
+        protected SemestreRepository               $semestreRepository,
+        protected GroupeRepository                 $groupeRepository,
         private EventDispatcherInterface $eventDispatcher
     )
     {
@@ -107,6 +113,33 @@ class ApiEduSign
 
         $statusCode = $response->getStatusCode();
         $content = $response->getContent();
+
+        $data = json_decode($content, true);
+        // accéder à la valeur de l'ID
+        $id = "";
+        if (isset($data['result']) && isset($data['result']['ID'])) {
+            $id = $data['result']['ID'];
+        }
+
+        $semestre = $this->semestreRepository->findOneBy(['id' => $groupe->api_id]);
+        if ($semestre && null === $semestre) {
+            throw new \Exception('Group not found for ' . $semestre->api_id);
+        }
+
+        if ($semestre && $semestre->getIdEduSign() == null) {
+            $semestre->setIdEduSign($id);
+            $this->semestreRepository->save($semestre);
+        }
+
+        $groupeAdd = $this->groupeRepository->findOneBy(['id' => $groupe->api_id]);
+        if ($groupeAdd && null === $groupeAdd) {
+            throw new \Exception('Group not found for ' . $groupeAdd->api_id);
+        }
+
+        if ($groupeAdd && $groupeAdd->getIdEduSign() == null) {
+            $groupeAdd->setIdEduSign($id);
+            $this->groupeRepository->save($groupeAdd);
+        }
 
         dump($statusCode);
         dump($content);
