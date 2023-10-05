@@ -26,6 +26,7 @@ class IntranetEdtEduSignAdapter
         //complète l'objet $this->course avec des données fictive pour le test
         $this->course->name = $edt->matiere;
 //        $this->course->description = $edt->texte;
+        //todo: diplome, parcours, semestre, grp, type de cours
         $this->course->description = "hello";
 
         // ici -> date de l'edt + heure de début et de fin
@@ -46,6 +47,7 @@ class IntranetEdtEduSignAdapter
 //        $this->course->zoom = true;
         $this->course->api_id = $edt->id;
         $this->course->id_edu_sign = $edt->idEduSign;
+        $this->course->type_edt = $edt->getTypeIdEvent();
     }
 
     public function getCourse(): ?EduSignCourse
