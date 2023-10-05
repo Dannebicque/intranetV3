@@ -134,6 +134,9 @@ class Diplome extends BaseEntity implements Serializable
     #[Vich\UploadableField(mapping: 'logo', fileNameProperty: 'logoPartenaire')]
     private ?File $logoFile = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $keyEduSign = null;
+
     public function __construct(#[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'diplomes')] private ?Departement $departement, ?Diplome $diplome = null)
     {
         $this->hrs = new ArrayCollection();
@@ -729,6 +732,18 @@ class Diplome extends BaseEntity implements Serializable
     public function setLogoPartenaire(?string $logoPartenaire): self
     {
         $this->logoPartenaire = $logoPartenaire;
+
+        return $this;
+    }
+
+    public function getKeyEduSign(): ?string
+    {
+        return $this->keyEduSign;
+    }
+
+    public function setKeyEduSign(?string $keyEduSign): static
+    {
+        $this->keyEduSign = $keyEduSign;
 
         return $this;
     }
