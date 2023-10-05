@@ -16,10 +16,15 @@ class IntranetEtudiantEduSignAdapter
 {
     private EduSignEtudiant $etudiant;
 
-    public function __construct(Etudiant $etudiant)
+    public function __construct(Etudiant $etudiant, array $groupes = [])
     {
         $this->etudiant = new EduSignEtudiant();
 
+        $this->etudiant->firstname = $etudiant->getPrenom();
+        $this->etudiant->lastname = $etudiant->getNom();
+        $this->etudiant->email = $etudiant->getMailUniv();
+        $this->etudiant->groups = $groupes;
+        $this->etudiant->api_id = $etudiant->getId();
     }
 
     public function getEtudiant(): ?EduSignEtudiant

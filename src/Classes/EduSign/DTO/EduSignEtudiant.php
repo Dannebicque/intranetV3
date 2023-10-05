@@ -48,6 +48,7 @@ class EduSignEtudiant
     public ?string $api_type = '';
     public ?string $badge_id = '';
     public ?array $student_follower_id = [];
+    public ?string $id_edu_sign = '';
 
     public function toArray(): array
     {
@@ -55,18 +56,19 @@ class EduSignEtudiant
             'FIRSTNAME' => $this->firstname,
             'LASTNAME' => $this->lastname,
             'EMAIL' => $this->email,
-            'FILE_NUMBER' => $this->file_number,
-            'PHOTO' => $this->photo,
-            'PHONE' => $this->phone,
+//            'FILE_NUMBER' => $this->file_number,
+//            'PHOTO' => $this->photo,
+//            'PHONE' => $this->phone,
             'GROUPS' => $this->groups,
-            'TRAINING_NAME' => $this->training_name,
-            'COMPANY' => $this->company,
+//            'TRAINING_NAME' => $this->training_name,
+//            'COMPANY' => $this->company,
             'TAGS' => $this->tags,
-            'SEND_EMAIL_CREDENTIALS' => $this->send_email_credentials,
+//            'SEND_EMAIL_CREDENTIALS' => $this->send_email_credentials,
             'API_ID' => $this->api_id,
-            'API_TYPE' => $this->api_type,
-            'BADGE_ID' => $this->badge_id,
-            'STUDENT_FOLLOWER_ID' => $this->student_follower_id,
+//            'API_TYPE' => $this->api_type,
+//            'BADGE_ID' => $this->badge_id,
+//            'STUDENT_FOLLOWER_ID' => $this->student_follower_id,
+            'ID_EDU_SIGN' => $this->id_edu_sign,
         ];
     }
 }

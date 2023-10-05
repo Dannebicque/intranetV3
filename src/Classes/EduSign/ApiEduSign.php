@@ -11,6 +11,7 @@ namespace App\Classes\EduSign;
 
 use App\Classes\EduSign\DTO\EduSignCourse;
 use App\Classes\EduSign\DTO\EduSignEnseignant;
+use App\Classes\EduSign\DTO\EduSignEtudiant;
 use App\Classes\EduSign\DTO\EduSignGroupe;
 use App\Entity\Groupe;
 use App\Repository\EdtPlanningRepository;
@@ -159,6 +160,23 @@ class ApiEduSign
 
         $statusCode = $response->getStatusCode();
         $content = $response->getContent();
+
+        $data = json_decode($content, true);
+        // accéder à la valeur de l'ID
+        $id = "";
+        if (isset($data['result']) && isset($data['result']['ID'])) {
+            $id = $data['result']['ID'];
+        }
+
+        $etudiant = $this->semestreRepository->findOneBy(['id' => $etudiant->api_id]);
+        if ($etudiant && null === $etudiant) {
+            throw new \Exception('Etudiant not found for ' . $etudiant->api_id);
+        }
+
+        if ($etudiant && $etudiant->getIdEduSign() == null) {
+            $etudiant->setIdEduSign($id);
+            $this->semestreRepository->save($etudiant);
+        }
 
         dump($content);
     }
