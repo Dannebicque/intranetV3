@@ -27,29 +27,32 @@ class UpdateEtudiant
 
     public function update()
     {
-        $diplomesBut = $this->diplomeRepository->findAllWithEduSign();
-
-        foreach ($diplomesBut as $diplome) {
-            $semestres = $this->semestreRepository->findByDiplome($diplome);
+//        $diplomesBut = $this->diplomeRepository->findAllWithEduSign();
+//
+//        foreach ($diplomesBut as $diplome) {
+//            $semestres = $this->semestreRepository->findByDiplome($diplome);
+            $semestres = $this->semestreRepository->findSemestreEduSign();
 
             foreach ($semestres as $semestre) {
                 $etudiants = $this->etudiantRepository->findBySemestre($semestre);
 
                 foreach ($etudiants as $etudiant) {
-
                     $groupes = [];
+                    $groupes[] = $etudiant->getSemestre()->getIdEduSign();
                     foreach ($etudiant->getGroupes() as $groupe) {
                         $groupes[] = $groupe->getIdEduSign();
                     }
+//                    dump($groupes);
+//                    die();
 
                     $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiant, $groupes))->getEtudiant();
-                    if ($etudiantEduSign->id_edu_sign == null) {
+                    if ($etudiant->getIdEduSign() == null) {
                         $this->apiEduSign->addEtudiant($etudiantEduSign);
                     } else {
                         dump('etudiant déjà envoyé');
                     }
                 }
             }
-        }
+//        }
     }
 }

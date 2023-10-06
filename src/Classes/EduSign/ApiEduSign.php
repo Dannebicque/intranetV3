@@ -15,6 +15,7 @@ use App\Classes\EduSign\DTO\EduSignEtudiant;
 use App\Classes\EduSign\DTO\EduSignGroupe;
 use App\Entity\Groupe;
 use App\Repository\EdtPlanningRepository;
+use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
@@ -33,6 +34,7 @@ class ApiEduSign
         protected EdtPlanningRepository            $edtPlanningRepository,
         protected SemestreRepository               $semestreRepository,
         protected GroupeRepository                 $groupeRepository,
+        protected EtudiantRepository               $etudiantRepository,
         private EventDispatcherInterface $eventDispatcher
     )
     {
@@ -104,6 +106,7 @@ class ApiEduSign
     public function addGroupe(EduSignGroupe $groupe)
     {
         $client = HttpClient::create();
+
         $response = $client->request('POST', 'https://ext.edusign.fr/v1/group', [
             'headers' => [
                 'Content-Type' => 'application/json',
@@ -146,6 +149,30 @@ class ApiEduSign
         dump($content);
     }
 
+    public function deleteGroupe(EduSignGroupe $groupe)
+    {
+        $client = HttpClient::create();
+
+        $response = $client->request('DELETE', 'https://ext.edusign.fr/v1/group/'.$groupe->id_edu_sign, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $this->cleApi,
+            ],
+        ]);
+
+        $statusCode = $response->getStatusCode();
+        $content = $response->getContent();
+
+        $groupe = $this->groupeRepository->findOneBy(['idEduSign' => $groupe->id_edu_sign]);
+        if ($groupe) {
+            $groupe->setIdEduSign(null);
+            $this->groupeRepository->save($groupe);
+        }
+
+        dump($statusCode);
+        dump($content);
+    }
+
     public function addEtudiant(EduSignEtudiant $etudiant)
     {
         $client = HttpClient::create();
@@ -159,6 +186,7 @@ class ApiEduSign
         ]);
 
         $statusCode = $response->getStatusCode();
+        dump($statusCode);
         $content = $response->getContent();
 
         $data = json_decode($content, true);
@@ -168,14 +196,14 @@ class ApiEduSign
             $id = $data['result']['ID'];
         }
 
-        $etudiant = $this->semestreRepository->findOneBy(['id' => $etudiant->api_id]);
+        $etudiant = $this->etudiantRepository->findOneBy(['id' => $etudiant->api_id]);
         if ($etudiant && null === $etudiant) {
             throw new \Exception('Etudiant not found for ' . $etudiant->api_id);
         }
 
         if ($etudiant && $etudiant->getIdEduSign() == null) {
             $etudiant->setIdEduSign($id);
-            $this->semestreRepository->save($etudiant);
+            $this->etudiantRepository->save($etudiant);
         }
 
         dump($content);

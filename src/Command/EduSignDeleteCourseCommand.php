@@ -14,7 +14,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
     name: 'edusign:delete-courses',
     description: 'suppression des cours sur edusign',
 )]
-class EduSignDeleteCommand extends Command
+class EduSignDeleteCourseCommand extends Command
 {
     public function __construct(
         private DeleteCourse $deleteCourse,

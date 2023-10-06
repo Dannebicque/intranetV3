@@ -309,4 +309,10 @@ class EtudiantRepository extends ServiceEntityRepository
             ->orderBy('e.nom', Criteria::ASC)
             ->addOrderBy('e.prenom', Criteria::ASC);
     }
+
+    public function save(Etudiant $etudiant): void
+    {
+        $this->_em->persist($etudiant);
+        $this->_em->flush();
+    }
 }

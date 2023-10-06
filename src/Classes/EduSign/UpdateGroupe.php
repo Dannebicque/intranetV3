@@ -35,7 +35,7 @@ class UpdateGroupe
 //                $annee = $semestre->getAnnee();
 //                if ($annee->isOptAlternance() == true) {
                 $groupe = (new IntranetGroupeEduSignAdapter($semestre))->getGroupe();
-                if ($groupe->id_edu_sign == null) {
+                if ($semestre->getIdEduSign() == null) {
                     $this->apiEduSign->addGroupe($groupe);
                 } else {
                     dump('groupe déjà envoyé');
@@ -57,7 +57,7 @@ class UpdateGroupe
                         if ($semestre->getOrdreLmd() == $parent->getOrdreLmd()) {
 
                             $groupea = (new IntranetGroupeEduSignAdapter($groupe, $parent->getIdEduSign()))->getGroupe();
-                            if ($groupea->id_edu_sign == null) {
+                            if ($groupe->getIdEduSign() == null) {
                                 $this->apiEduSign->addGroupe($groupea);
                             } else {
                                 dump('groupe déjà envoyé');
