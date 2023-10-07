@@ -186,7 +186,6 @@ class ApiEduSign
         ]);
 
         $statusCode = $response->getStatusCode();
-        dump($statusCode);
         $content = $response->getContent();
 
         $data = json_decode($content, true);
@@ -206,6 +205,7 @@ class ApiEduSign
             $this->etudiantRepository->save($etudiant);
         }
 
+        dump($statusCode);
         dump($content);
     }
 

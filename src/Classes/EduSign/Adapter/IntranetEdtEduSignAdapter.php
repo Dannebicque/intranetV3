@@ -20,7 +20,7 @@ class IntranetEdtEduSignAdapter
     /**
      * @param $edt
      */
-    public function __construct(EvenementEdt $edt)
+    public function __construct(EvenementEdt $edt, string $groupe = '')
     {
         $this->course = new EduSignCourse();
         //complète l'objet $this->course avec des données fictive pour le test
@@ -42,7 +42,7 @@ class IntranetEdtEduSignAdapter
 //        $this->course->professor_2 = "PhysicsProfessor2";
 //        $this->course->professor_signature_2 = "http://example.com/signature2.png";
         $this->course->classroom = $edt->salle;
-        $this->course->school_group = [$edt->diplome->getSigle()];
+        $this->course->school_group = [$groupe];
         $this->course->max_students = 30;
 //        $this->course->zoom = true;
         $this->course->api_id = $edt->id;

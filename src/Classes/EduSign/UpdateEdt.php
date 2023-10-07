@@ -65,11 +65,16 @@ class UpdateEdt
         foreach ($semestres as $semestre) {
 
             // récupérer la date d'aujourd'hui
-            $today = new Carbon('now');
+//            $today = new Carbon('now');
             // récupérer le prochain samedi
-            $saturday = new Carbon('next saturday');
+//            $saturday = new Carbon('next saturday');
 
-            $semaine = 6;
+            // créer un élément Carbon pour le 09/10/2023
+            $today = Carbon::create(2023, 10, 9);
+            // créer un élément Carbon pour le 15/10/2023
+            $saturday = Carbon::create(2023, 10, 15);
+
+            $semaine = 7;
 
             $referentiel = $this->apcReferentielRepository->findOneBy(['id' => $semestre->getDiplome()->getReferentiel()]);
 
@@ -88,7 +93,9 @@ class UpdateEdt
                 dump('ok');
 
                 if ($evenement->dateObjet->isBetween($today, $saturday)) {
-
+                    dump($evenement->groupe);
+                    dump($evenement->groupeObjet);
+                    die();
 //                    $course = $this->edtPlanningRepository->findOneBy(['id' => $evenement->id]);
                     $course = (new IntranetEdtEduSignAdapter($evenement))->getCourse();
 
@@ -118,7 +125,8 @@ class UpdateEdt
 
     public function sendUpdate()
     {
-        $course = (new IntranetEdtEduSignAdapter($this->evenement))->getCourse();
+        $groupe = $this->evenement->groupeObjet->getIdEduSign();
+        $course = (new IntranetEdtEduSignAdapter($this->evenement, $groupe))->getCourse();
         $this->apiEduSign->addCourse($course);
     }
 }
