@@ -54,4 +54,10 @@ class ApcParcoursRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function save(ApcParcours $apcParcours): void
+    {
+        $this->_em->persist($apcParcours);
+        $this->_em->flush();
+    }
 }

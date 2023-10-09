@@ -100,4 +100,10 @@ class DiplomeRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function save(Diplome $diplome): void
+    {
+        $this->_em->persist($diplome);
+        $this->_em->flush();
+    }
 }

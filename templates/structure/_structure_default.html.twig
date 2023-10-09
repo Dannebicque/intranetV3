@@ -17,6 +17,18 @@
                                                                         data-bs-toggle="tooltip" data-bs-placement="bottom"
 
                                                                         title="{{ 'atitle.modifier'|trans }}"></i></a>
+            {% if diplome.actif == 1 %}
+                <a href="{{ path('administration_diplome_activate', {id: diplome.id}) }}"
+                   class="btn btn-secondary btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                   title="{{ 'atitle.desactiver'|trans }}"><i class="fa
+                       fa-eye-slash"></i></a>
+            {% else %}
+                <a href="{{ path('administration_diplome_activate', {id: diplome.id}) }}"
+                   class="btn btn-secondary btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                   title="{{ 'atitle.active'|trans }}"><i class="fa
+                       fa-eye"></i></a>
+            {% endif %}
+
             {% if is_granted('ROLE_SUPER_ADMIN') %}
                 {% if diplome.actif == true %}
                     <a href="{{ path(baseurl ~ 'diplome_activate', {'diplome': diplome.id, etat:0}) }}"

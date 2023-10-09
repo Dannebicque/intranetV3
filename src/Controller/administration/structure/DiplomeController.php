@@ -14,6 +14,8 @@ use App\Entity\Constantes;
 use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Form\DiplomeType;
+use App\Repository\ApcParcoursRepository;
+use App\Repository\DiplomeRepository;
 use function count;
 use Symfony\Component\Form\Exception\LogicException;
 use Symfony\Component\HttpFoundation\Request;
@@ -96,12 +98,12 @@ class DiplomeController extends BaseController
     public function delete(Request $request, Diplome $diplome): Response
     {
         $id = $diplome->getId();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN')) &&
+        if ($this->isCsrfTokenValid('delete' . $id, $request->server->get('HTTP_X_CSRF_TOKEN')) &&
             0 === count($diplome->getAnnees()) &&
             0 === count($diplome->getSemestres()) &&
             0 === count($diplome->getPpns()) &&
             0 === count($diplome->getHrs()) &&
-            0 === count( $diplome->getReferentiel()?->getApcComptences())) {
+            0 === count($diplome->getReferentiel()?->getApcComptences())) {
             $this->entityManager->remove($diplome);
             $this->entityManager->flush();
             $this->addFlashBag(
@@ -114,5 +116,23 @@ class DiplomeController extends BaseController
         $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'diplome.delete.error.flash');
 
         return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+    }
+
+    #[Route(path: '/{id}/activate', name: 'administration_diplome_activate', methods: 'GET|POST')]
+    public function activate(
+        Diplome               $diplome,
+        DiplomeRepository     $diplomeRepository,
+        ApcParcoursRepository $apcParcoursRepository,
+    ): Response
+    {
+        $diplome->setActif(!$diplome->getActif());
+        $diplomeRepository->save($diplome);
+        $apcParcours = $diplome->getApcParcours();
+        if ($apcParcours !== null) {
+                $apcParcours->setActif($diplome->getActif());
+                $apcParcoursRepository->save($apcParcours);
+            }
+
+        return $this->redirectToRoute('administration_structure_index');
     }
 }
