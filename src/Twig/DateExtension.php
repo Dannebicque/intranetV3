@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Twig/DateExtension.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/07/2023 08:11
+ * @lastUpdate 09/10/2023 09:18
  */
 
 namespace App\Twig;
@@ -46,8 +46,12 @@ class DateExtension extends AbstractExtension
         ];
     }
 
-    public function age(CarbonInterface $dateNaissance): string
+    public function age(?CarbonInterface $dateNaissance): string
     {
+        if (null === $dateNaissance) {
+            return '';
+        }
+
         return (string)Carbon::instance($dateNaissance)->age;
     }
 
