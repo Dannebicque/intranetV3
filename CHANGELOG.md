@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.38](https://github.com/Dannebicque/intranetV3/compare/v3.14.37...v3.14.38) (2023-10-10)
+
+
+### Bug Fixes
+
+* Année universitaire ([b5b6b20](https://github.com/Dannebicque/intranetV3/commit/b5b6b20861425ade51af54ad779c88111bedb4ec))
+
 ### [3.14.37](https://github.com/Dannebicque/intranetV3/compare/v3.14.36...v3.14.37) (2023-10-09)
 
 
