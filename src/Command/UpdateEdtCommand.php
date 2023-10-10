@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Command/UpdateEdtCommand.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/12/2022 12:09
+ * @lastUpdate 10/10/2023 16:21
  */
 
 namespace App\Command;
@@ -37,7 +37,7 @@ class UpdateEdtCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $diplomes = $this->diplomeRepository->findAllWithCelcat();
-        $annee = $this->anneeUniversitaireRepository->find(5); // todo: en argument
+        $annee = $this->anneeUniversitaireRepository->find(6); // todo: en argument
 
 
         if (null !== $annee) {
