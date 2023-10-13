@@ -13,7 +13,9 @@ use App\Classes\EduSign\DTO\EduSignCourse;
 use App\Classes\EduSign\DTO\EduSignEnseignant;
 use App\Classes\EduSign\DTO\EduSignEtudiant;
 use App\Classes\EduSign\DTO\EduSignGroupe;
+use App\Entity\Departement;
 use App\Entity\Groupe;
+use App\Entity\Personnel;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
@@ -30,11 +32,11 @@ class ApiEduSign
 
     public function __construct(
         ParameterBagInterface            $parameterBag,
-        protected PersonnelRepository              $personnelRepository,
-        protected EdtPlanningRepository            $edtPlanningRepository,
-        protected SemestreRepository               $semestreRepository,
-        protected GroupeRepository                 $groupeRepository,
-        protected EtudiantRepository               $etudiantRepository,
+        protected PersonnelRepository    $personnelRepository,
+        protected EdtPlanningRepository  $edtPlanningRepository,
+        protected SemestreRepository     $semestreRepository,
+        protected GroupeRepository       $groupeRepository,
+        protected EtudiantRepository     $etudiantRepository,
         private EventDispatcherInterface $eventDispatcher
     )
     {
@@ -43,14 +45,14 @@ class ApiEduSign
         $this->cleApi = $parameterBag->get('api_edu_sign');
     }
 
-    public function addCourse(EduSignCourse $course)
+    public function addCourse(EduSignCourse $course, string $cleApi)
     {
         $client = HttpClient::create();
 
         $response = $client->request('POST', 'https://ext.edusign.fr/v1/course', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $this->cleApi,
+                'Authorization' => 'Bearer ' . $cleApi,
             ],
             'json' => ['course' => $course->toArray()],
         ]);
@@ -75,15 +77,13 @@ class ApiEduSign
             $this->edtPlanningRepository->save($edt);
         }
 
-        dump($statusCode);
-        dump($content);
     }
 
     public function deleteCourse(EduSignCourse $course)
     {
         $client = HttpClient::create();
 
-        $response = $client->request('DELETE', 'https://ext.edusign.fr/v1/course/'.$course->id_edu_sign, [
+        $response = $client->request('DELETE', 'https://ext.edusign.fr/v1/course/' . $course->id_edu_sign, [
             'headers' => [
                 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . $this->cleApi,
@@ -99,18 +99,16 @@ class ApiEduSign
             $this->edtPlanningRepository->save($edt);
         }
 
-        dump($statusCode);
-        dump($content);
     }
 
-    public function addGroupe(EduSignGroupe $groupe)
+    public function addGroupe(EduSignGroupe $groupe, $cleApi)
     {
         $client = HttpClient::create();
 
         $response = $client->request('POST', 'https://ext.edusign.fr/v1/group', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $this->cleApi,
+                'Authorization' => 'Bearer ' . $cleApi,
             ],
             'json' => ['group' => $groupe->toArray()],
         ]);
@@ -145,15 +143,13 @@ class ApiEduSign
             $this->groupeRepository->save($groupeAdd);
         }
 
-        dump($statusCode);
-        dump($content);
     }
 
     public function deleteGroupe(EduSignGroupe $groupe)
     {
         $client = HttpClient::create();
 
-        $response = $client->request('DELETE', 'https://ext.edusign.fr/v1/group/'.$groupe->id_edu_sign, [
+        $response = $client->request('DELETE', 'https://ext.edusign.fr/v1/group/' . $groupe->id_edu_sign, [
             'headers' => [
                 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . $this->cleApi,
@@ -169,22 +165,18 @@ class ApiEduSign
             $this->groupeRepository->save($groupe);
         }
 
-        dump($statusCode);
-        dump($content);
     }
 
-    public function addEtudiant(EduSignEtudiant $etudiant)
+    public function addEtudiant(EduSignEtudiant $etudiant, $cleApi)
     {
         $client = HttpClient::create();
-
         $response = $client->request('POST', 'https://ext.edusign.fr/v1/student', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $this->cleApi,
+                'Authorization' => 'Bearer ' . $cleApi,
             ],
             'json' => ['student' => $etudiant->toArray()],
         ]);
-
         $statusCode = $response->getStatusCode();
         $content = $response->getContent();
 
@@ -200,23 +192,20 @@ class ApiEduSign
             throw new \Exception('Etudiant not found for ' . $etudiant->api_id);
         }
 
-        if ($etudiant && $etudiant->getIdEduSign() == null) {
+        if ($etudiant && $etudiant->getIdEduSign() === null) {
             $etudiant->setIdEduSign($id);
             $this->etudiantRepository->save($etudiant);
         }
-
-        dump($statusCode);
-        dump($content);
     }
 
-    public function addEnseignant(EduSignEnseignant $enseignant)
+    public function addEnseignant(EduSignEnseignant $enseignant, Personnel $personnel, Departement $departement, $cleApi)
     {
         $client = HttpClient::create();
 
         $response = $client->request('POST', 'https://ext.edusign.fr/v1/professor', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $this->cleApi,
+                'Authorization' => 'Bearer ' . $cleApi,
             ],
             'json' => ['professor' => $enseignant->toArray(), 'dontSendCredentials' => $enseignant->dontSendCredentials],
         ]);
@@ -227,34 +216,20 @@ class ApiEduSign
         // convertit JSON en tableau associatif PHP
         $data = json_decode($content, true);
 
-//        if (! isset($data['result']['ID'])) {
-//            throw new \Exception('API did not return an ID for ' . $enseignant->email);
-//        }
-
         // accéder à la valeur de l'ID
         $id = "";
         if (isset($data['result']) && isset($data['result']['ID'])) {
             $id = $data['result']['ID'];
         }
-        dump($statusCode);
-        dump($id);
 
-        $personnel = $this->personnelRepository->findOneBy(['mailUniv' => $enseignant->email]);
-        if (null === $personnel) {
-            throw new \Exception('Personnel not found for ' . $enseignant->email);
+        $jsonId[$departement->getId()] = $id;
+        $existingId = $personnel->getIdEduSign();
+
+        if ($existingId !== null && is_array($existingId)) {
+            $personnel->setIdEduSign(array_merge($existingId, $jsonId));
+        } else {
+            $personnel->setIdEduSign($jsonId);
         }
-//        dump($personnel);
-        $this->eventDispatcher->dispatch(new Event(), 'enseignant.added');
-
-        if ($personnel->getIdEduSign() != $id) {
-            $personnel->setIdEduSign($id);
-            $this->personnelRepository->save($personnel);
-        }
-            $this->eventDispatcher->dispatch(new EnseignantUpdatedEvent($id));
-
-
-//        dump($enseignant);
-//        dump($statusCode);
-        dump($content);
+        $this->personnelRepository->save($personnel);
     }
 }

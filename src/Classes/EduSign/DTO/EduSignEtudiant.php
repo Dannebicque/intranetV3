@@ -44,6 +44,7 @@ class EduSignEtudiant
     public ?string $company = '';
     public ?array $tags = [];
     public ?bool $send_email_credentials = false;
+    public ?bool $new_password_needed = false;
     public ?string $api_id = '';
     public ?string $api_type = '';
     public ?string $badge_id = '';
@@ -56,19 +57,20 @@ class EduSignEtudiant
             'FIRSTNAME' => $this->firstname,
             'LASTNAME' => $this->lastname,
             'EMAIL' => $this->email,
-//            'FILE_NUMBER' => $this->file_number,
-//            'PHOTO' => $this->photo,
-//            'PHONE' => $this->phone,
+            'FILE_NUMBER' => $this->file_number,
+            'PHOTO' => $this->photo,
+            'PHONE' => $this->phone,
             'GROUPS' => $this->groups,
-//            'TRAINING_NAME' => $this->training_name,
-//            'COMPANY' => $this->company,
+            'TRAINING_NAME' => $this->training_name,
+            'COMPANY' => $this->company,
             'TAGS' => $this->tags,
-//            'SEND_EMAIL_CREDENTIALS' => $this->send_email_credentials,
             'API_ID' => $this->api_id,
-//            'API_TYPE' => $this->api_type,
-//            'BADGE_ID' => $this->badge_id,
-//            'STUDENT_FOLLOWER_ID' => $this->student_follower_id,
-            'ID_EDU_SIGN' => $this->id_edu_sign,
+            'API_TYPE' => $this->api_type,
+            'BADGE_ID' => $this->badge_id,
+            'STUDENT_FOLLOWER_ID' => $this->student_follower_id,
+//            'ID_EDU_SIGN' => $this->id_edu_sign,
+            'SEND_EMAIL_CREDENTIALS' => $this->send_email_credentials,
+            'NEW_PASSWORD_NEEDED' => $this->new_password_needed,
         ];
     }
 }

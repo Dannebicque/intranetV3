@@ -23,17 +23,14 @@ class UpdateEnseignant
         $this->updateManager = $updateManager;
     }
 
-    public function update($id)
+    public function update($personnel, $departement, $cleApi)
     {
-        //récupère les éléments
-        $personnel = $this->personnelRepository->find($id);
-
         //construit les objets associés selon le modèle EduSign
         $enseignant = (new IntranetEnseignantEduSignAdapter($personnel))->getEnseignant();
         //envoi une requete pour ajouter les éléments
-        $this->apiEduSign->addEnseignant($enseignant);
+        $this->apiEduSign->addEnseignant($enseignant, $personnel, $departement, $cleApi);
 
         // Dispatch Event here
-        $this->eventDispatcher->dispatch(new EnseignantUpdatedEvent($id));
+//        $this->eventDispatcher->dispatch(new EnseignantUpdatedEvent($enseignant));
     }
 }

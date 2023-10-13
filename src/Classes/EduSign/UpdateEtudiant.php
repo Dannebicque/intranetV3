@@ -34,6 +34,9 @@ class UpdateEtudiant
             $semestres = $this->semestreRepository->findSemestreEduSign();
 
             foreach ($semestres as $semestre) {
+
+            $diplome = $semestre->getDiplome();
+            $cleApi = $diplome->getCleApi();
                 $etudiants = $this->etudiantRepository->findBySemestre($semestre);
 
                 foreach ($etudiants as $etudiant) {
@@ -42,12 +45,11 @@ class UpdateEtudiant
                     foreach ($etudiant->getGroupes() as $groupe) {
                         $groupes[] = $groupe->getIdEduSign();
                     }
-//                    dump($groupes);
-//                    die();
 
                     $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiant, $groupes))->getEtudiant();
+
                     if ($etudiant->getIdEduSign() == null) {
-                        $this->apiEduSign->addEtudiant($etudiantEduSign);
+                        $this->apiEduSign->addEtudiant($etudiantEduSign, $cleApi);
                     } else {
                         dump('etudiant déjà envoyé');
                     }
