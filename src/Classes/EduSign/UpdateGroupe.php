@@ -31,7 +31,7 @@ class UpdateGroupe
 
         foreach ($diplomes as $diplome) {
 
-            $cleApi = $diplome->getCleApi();
+            $cleApi = $diplome->getKeyEduSign();
 
             $semestres = $this->semestreRepository->findByDiplome($diplome);
             foreach ($semestres as $semestre) {
