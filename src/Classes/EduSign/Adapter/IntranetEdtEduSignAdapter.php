@@ -20,14 +20,16 @@ class IntranetEdtEduSignAdapter
     /**
      * @param $edt
      */
-    public function __construct(EvenementEdt $edt, string $groupe = '')
+    public function __construct(EvenementEdt $edt)
     {
+        $dept = $edt->semestre->getDiplome()->getDepartement()->getId();
+
         $this->course = new EduSignCourse();
         //complète l'objet $this->course avec des données fictive pour le test
         $this->course->name = $edt->matiere;
 //        $this->course->description = $edt->texte;
         //todo: diplome, parcours, semestre, grp, type de cours
-        $this->course->description = "hello";
+//        $this->course->description = "hello";
 
         // ici -> date de l'edt + heure de début et de fin
         $debut = Carbon::createFromFormat("Y-m-d H:i:s", $edt->dateObjet->format('Y-m-d') . " " . $edt->heureDebut->format('H:i:s'));
@@ -36,13 +38,20 @@ class IntranetEdtEduSignAdapter
         $this->course->end = $fin;
 
         if ($edt->personnelObjet !== null) {
-            $this->course->professor = $edt->personnelObjet->getIdEduSign();
+            $idEduSign = $edt->personnelObjet->getIdEduSign();
+
+            if ($idEduSign !== null && array_key_exists($dept, $idEduSign)) {
+                $this->course->professor = $idEduSign[$dept];
+            } else {
+                $this->course->professor = null;
+            }
         }
+
 //        $this->course->professor_signature = "http://example.com/signature1.png";
 //        $this->course->professor_2 = "PhysicsProfessor2";
 //        $this->course->professor_signature_2 = "http://example.com/signature2.png";
         $this->course->classroom = $edt->salle;
-        $this->course->school_group = [$groupe];
+        $this->course->school_group = [$edt->groupeObjet->getIdEduSign()];
         $this->course->max_students = 30;
 //        $this->course->zoom = true;
         $this->course->api_id = $edt->id;

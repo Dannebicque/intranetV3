@@ -27,16 +27,19 @@ class UpdateGroupe
 
     public function update()
     {
-        $diplomesBut = $this->diplomeRepository->findAllWithEduSign();
+        $diplomes = $this->diplomeRepository->findAllWithEduSign();
 
-        foreach ($diplomesBut as $diplome) {
+        foreach ($diplomes as $diplome) {
+
+            $cleApi = $diplome->getCleApi();
+
             $semestres = $this->semestreRepository->findByDiplome($diplome);
             foreach ($semestres as $semestre) {
 //                $annee = $semestre->getAnnee();
 //                if ($annee->isOptAlternance() == true) {
                 $groupe = (new IntranetGroupeEduSignAdapter($semestre))->getGroupe();
                 if ($semestre->getIdEduSign() == null) {
-                    $this->apiEduSign->addGroupe($groupe);
+                    $this->apiEduSign->addGroupe($groupe, $cleApi);
                 } else {
                     dump('groupe déjà envoyé');
                 }
@@ -58,7 +61,7 @@ class UpdateGroupe
 
                             $groupea = (new IntranetGroupeEduSignAdapter($groupe, $parent->getIdEduSign()))->getGroupe();
                             if ($groupe->getIdEduSign() == null) {
-                                $this->apiEduSign->addGroupe($groupea);
+                                $this->apiEduSign->addGroupe($groupea, $cleApi);
                             } else {
                                 dump('groupe déjà envoyé');
                             }

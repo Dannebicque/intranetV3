@@ -15,7 +15,9 @@ use App\Classes\Matieres\TypeMatiereManager;
 use App\DTO\EvenementEdt;
 use App\Repository\ApcReferentielRepository;
 use App\Repository\DepartementRepository;
+use App\Repository\DiplomeRepository;
 use App\Repository\EdtPlanningRepository;
+use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Carbon\Carbon;
@@ -38,12 +40,11 @@ class UpdateEdt
         protected UpdateEnseignant          $updateEnseignant,
         protected DepartementRepository     $departementRepository,
         protected EdtPlanningRepository     $edtPlanningRepository,
-        private EventDispatcherInterface    $eventDispatcher,
+        protected GroupeRepository          $groupeRepository,
+        protected DiplomeRepository         $diplomeRepository,
         protected ApcReferentielRepository  $apcReferentielRepository,
     )
-    {
-        $eventDispatcher->addListener(EnseignantUpdatedEvent::class, [$this, 'onEnseignantUpdated']);
-    }
+    {}
 
     public function onEnseignantUpdated(EnseignantUpdatedEvent $event)
     {
@@ -52,72 +53,72 @@ class UpdateEdt
 
     public function update()
     {
-        //todo: pour chaque dept
-        $departements = $this->departementRepository->findActifs();
-        $semestres = [];
-        foreach ($departements as $departement) {
-            $semestreArrays = $this->semestreRepository->findByDepartementActifFc($departement);
-            foreach ($semestreArrays as $semestreArray) {
-                $semestres[] = $semestreArray;
-            }
-        }
+        $diplomes = $this->diplomeRepository->findAllWithEduSign();
 
-        foreach ($semestres as $semestre) {
+        foreach ($diplomes as $diplome) {
 
-            // récupérer la date d'aujourd'hui
-//            $today = new Carbon('now');
-            // récupérer le prochain samedi
-//            $saturday = new Carbon('next saturday');
+            $this->cleApi = $diplome->getKeyEduSign();
 
-            // créer un élément Carbon pour le 09/10/2023
-            $today = Carbon::create(2023, 10, 9);
-            // créer un élément Carbon pour le 15/10/2023
-            $saturday = Carbon::create(2023, 10, 15);
+            $semestres = $this->semestreRepository->findByDiplome($diplome);
+            foreach ($semestres as $semestre) {
 
-            $semaine = 7;
+//                $today = Carbon::create('now');
+                $today = Carbon::create(2023, 10, 16);
+//                $saturday = Carbon::create('next saturday');
+                $saturday = Carbon::create(2023, 10, 20);
 
-            $referentiel = $this->apcReferentielRepository->findOneBy(['id' => $semestre->getDiplome()->getReferentiel()]);
+//                $semaine = 8;
+                $semaine = 8;
 
-            if ($referentiel !== null) {
+                $referentiel = $this->apcReferentielRepository->findOneBy(['id' => $semestre->getDiplome()->getReferentiel()]);
 
-                $matieres = $this->typeMatiereManager->findByReferentielOrdreSemestreArray($semestre, $referentiel);
-
-            }
-
-            //récupère les edt de l'intranet depuis EdtManager.php
-            $edt = $this->edtManager->getPlanningSemestreSemaine($semestre, $semaine, $semestre->getAnneeUniversitaire(), $matieres, []);
-
-            foreach ($edt->evenements as $evenement) {
-
-                dump('------------');
-                dump('ok');
-
-                if ($evenement->dateObjet->isBetween($today, $saturday)) {
-                    dump($evenement->groupe);
-                    dump($evenement->groupeObjet);
-                    die();
-//                    $course = $this->edtPlanningRepository->findOneBy(['id' => $evenement->id]);
-                    $course = (new IntranetEdtEduSignAdapter($evenement))->getCourse();
-
-                    if ($course->id_edu_sign == null) {
-
-                        $this->evenement = $evenement;
-
-                        $enseignant = $evenement->personnelObjet;
-
-                        if ($enseignant) {
-                            dump($enseignant->getIdEduSign());
-                            if ($enseignant->getIdEduSign() == '' || $enseignant->getIdEduSign() == null) {
-//                            $this->eventDispatcher->dispatch(new EnseignantAddedEvent($id));
-                            } else {
-                                $this->sendUpdate();
-                            }
+                if ($referentiel !== null) {
+                    $matieres = $this->typeMatiereManager->findByReferentielOrdreSemestreArray($semestre, $referentiel);
+                    $matieresSemestre = [];
+                    foreach ($matieres as $matiere) {
+                        if ($matiere->getSemestres()->contains($semestre)) {
+                            dump('ok');
+                            $matieresSemestre[$matiere->getTypeIdMatiere()] = $matiere;
                         }
-                    } else {
-                        dump('cours déjà envoyé');
                     }
                 } else {
-                    dump('evenement hors d\'échéance');
+                    $matieresSemestre = [];
+                }
+
+                $groupes = $this->groupeRepository->findBySemestre($semestre);
+
+                //récupère les edt de l'intranet depuis EdtManager.php
+                $edt = $this->edtManager->getPlanningSemestreSemaine($semestre, $semaine, $semestre->getAnneeUniversitaire(), $matieresSemestre, $groupes);
+
+                foreach ($edt->evenements as $evenement) {
+
+                    if (!($evenement->matiere === null || $evenement->matiere === "Inconnue" || $evenement->groupeObjet === null || $evenement->personnelObjet === null)) {
+
+                        if ($evenement->dateObjet->isBetween($today, $saturday)) {
+
+                            $course = (new IntranetEdtEduSignAdapter($evenement))->getCourse();
+
+                            if ($course->id_edu_sign == null) {
+
+                                $this->evenement = $evenement;
+
+                                $enseignant = $evenement->personnelObjet;
+
+                                $departement = $semestre->getDiplome()->getDepartement();
+                                if ($enseignant) {
+                                    if ($enseignant->getIdEduSign() == '' || $enseignant->getIdEduSign() == null || !array_key_exists($departement->getId(), $enseignant->getIdEduSign())) {
+                                        $this->updateEnseignant->update($enseignant, $departement, $this->cleApi);
+                                    }
+                                    $this->sendUpdate();
+
+                                }
+                            } else {
+                                dump('cours déjà envoyé');
+                            }
+                        } else {
+                            dump('evenement hors d\'échéance');
+                        }
+                    }
                 }
             }
         }
@@ -125,8 +126,7 @@ class UpdateEdt
 
     public function sendUpdate()
     {
-        $groupe = $this->evenement->groupeObjet->getIdEduSign();
-        $course = (new IntranetEdtEduSignAdapter($this->evenement, $groupe))->getCourse();
-        $this->apiEduSign->addCourse($course);
+        $course = (new IntranetEdtEduSignAdapter($this->evenement))->getCourse();
+        $this->apiEduSign->addCourse($course, $this->cleApi);
     }
 }
