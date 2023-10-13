@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/Adapter/IntranetEdtEduSignAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2023 15:57
+ * @lastUpdate 13/10/2023 11:40
  */
 
 namespace App\Classes\EduSign\Adapter;
@@ -51,7 +51,13 @@ class IntranetEdtEduSignAdapter
 //        $this->course->professor_2 = "PhysicsProfessor2";
 //        $this->course->professor_signature_2 = "http://example.com/signature2.png";
         $this->course->classroom = $edt->salle;
-        $this->course->school_group = [$edt->groupeObjet->getIdEduSign()];
+
+        if ($edt->type_cours === 'TD') {
+            $this->course->school_group = [$edt->groupeObjet->getParent()?->getIdEduSign()];
+        } else {
+            $this->course->school_group = [$edt->groupeObjet->getParent()?->getIdEduSign()];
+        }
+
         $this->course->max_students = 30;
 //        $this->course->zoom = true;
         $this->course->api_id = $edt->id;
