@@ -1,16 +1,9 @@
 <?php
 
-/*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/Sites/intranetV3/src/Command/EduSignGroupeCommand.php
- * @author davidannebicque
- * @project intranetV3
- * @lastUpdate 01/08/2023 15:58
- */
-
 namespace App\Command;
 
-use App\Classes\EduSign\UpdateGroupe;
+use App\Classes\EduSign\DeleteCourse;
+use App\Classes\EduSign\UpdateEdt;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -18,13 +11,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
-    name: 'edusign:update-groupe',
-    description: 'Mise à jour des groupes',
+    name: 'edusign:delete-courses',
+    description: 'suppression des cours sur edusign',
 )]
-class EduSignGroupeCommand extends Command
+class EduSignDeleteCourseCommand extends Command
 {
     public function __construct(
-        private UpdateGroupe $updateGroupe,
+        private DeleteCourse $deleteCourse,
     )
     {
         parent::__construct();
@@ -40,9 +33,9 @@ class EduSignGroupeCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $this->updateGroupe->update();//boucler sur département pour chaque update (ou diplome)
+        $this->deleteCourse->delete();//boucler sur département pour chaque update (ou diplome)
 
-        $io->success('Groupes mis à jour sur EduSign.');
+        $io->success('Cours supprimés sur EduSign.');
 
         return Command::SUCCESS;
     }

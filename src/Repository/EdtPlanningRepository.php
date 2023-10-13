@@ -499,4 +499,17 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function save(EdtPlanning $edtPlanning): void
+    {
+        $this->_em->persist($edtPlanning);
+        $this->_em->flush();
+    }
+
+    public function findEdtEduSign() {
+        return $this->createQueryBuilder('p')
+            ->where('p.idEduSign IS NOT NULL')
+            ->getQuery()
+            ->getResult();
+    }
 }

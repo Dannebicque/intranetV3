@@ -1,30 +1,39 @@
 <?php
-/*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/UpdateEnseignant.php
- * @author davidannebicque
- * @project intranetV3
- * @lastUpdate 01/08/2023 15:09
- */
 
 namespace App\Classes\EduSign;
 
 use App\Classes\EduSign\Adapter\IntranetEnseignantEduSignAdapter;
+use App\Repository\PersonnelRepository;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+use Symfony\Contracts\EventDispatcher\Event;
 
 class UpdateEnseignant
 {
-    public function __construct(private readonly ApiEduSign $apiEduSign)
+
+    public function __construct(
+        private readonly ApiEduSign $apiEduSign,
+        protected PersonnelRepository $personnelRepository,
+        private EventDispatcherInterface $eventDispatcher
+    )
     {
     }
 
-    public function update()
+    public function setUpdateManager(UpdateManager $updateManager): void
     {
-        //récupére les éléments du diplôme
-        //construit les objets associés selon le modèle EduSign
-        $enseignant = null;
-        $enseignant = (new IntranetEnseignantEduSignAdapter($enseignant))->getEnseignant();
+        $this->updateManager = $updateManager;
+    }
 
+    public function update($id)
+    {
+        //récupère les éléments
+        $personnel = $this->personnelRepository->find($id);
+
+        //construit les objets associés selon le modèle EduSign
+        $enseignant = (new IntranetEnseignantEduSignAdapter($personnel))->getEnseignant();
         //envoi une requete pour ajouter les éléments
         $this->apiEduSign->addEnseignant($enseignant);
+
+        // Dispatch Event here
+        $this->eventDispatcher->dispatch(new EnseignantUpdatedEvent($id));
     }
 }

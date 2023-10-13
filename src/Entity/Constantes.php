@@ -141,6 +141,7 @@ class Constantes
         '19:30:00' => 24,
         '20:00:00' => 25,
         '20:30:00' => 26,
+        '09:29:00' => 27,
     ];
 
     final public const METHODE_CALCUL_MOY_MODULE = 'moymodules';

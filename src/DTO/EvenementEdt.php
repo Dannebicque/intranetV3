@@ -61,10 +61,21 @@ class EvenementEdt
     public string $heureTexte = '';
     public ?Diplome $diplome;
     public ?int $ordreSemestre;
+    public ?string $idEduSign = null;
 
     public function getDisplay(): void
     {
         // générer un affichage
+    }
+
+    public function getIdEduSign(): ?string
+    {
+        return $this->idEduSign;
+    }
+
+    public function setIdEduSign(?string $idEduSign): void
+    {
+        $this->idEduSign = $idEduSign;
     }
 
     public function getMatiere(): ?string
@@ -191,4 +202,11 @@ class EvenementEdt
 
         return null;
     }
+
+    public function getJour(): string
+    {
+        return $this->jour;
+    }
+
+
 }

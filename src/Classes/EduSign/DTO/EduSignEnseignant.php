@@ -25,9 +25,9 @@ class EduSignEnseignant
      * "dontSendCredentials": false // false if you want to send an email with the credentials to the teacher
      * }
      */
-    public string $firstname;
-    public string $lastname;
-    public string $email;
+    public ?string $firstname = '';
+    public ?string $lastname = '';
+    public ?string $email = '';
     public ?string $speciality = '';
     public ?string $api_id = '';
     public ?string $api_type = '';

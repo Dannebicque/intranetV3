@@ -193,6 +193,9 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: ConpereEtudiant::class)]
     private Collection $conpereEtudiants;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $idEduSign = null;
+
     /**
      * @throws Exception
      */
@@ -1083,6 +1086,18 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
                 $conpereEtudiant->setEtudiant(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getIdEduSign(): ?string
+    {
+        return $this->idEduSign;
+    }
+
+    public function setIdEduSign(?string $idEduSign): static
+    {
+        $this->idEduSign = $idEduSign;
 
         return $this;
     }

@@ -12,6 +12,7 @@ namespace App\Repository;
 use App\Entity\Annee;
 use App\Entity\Departement;
 use App\Entity\Diplome;
+use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Criteria;
@@ -183,5 +184,30 @@ class SemestreRepository extends ServiceEntityRepository
         }
 
         return $query;
+    }
+
+    public function findByDepartementActifFc(Departement $departement): array {
+        return $this->createQueryBuilder('s')
+            ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
+            ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
+            ->where('d.departement = :departement')
+            ->andWhere('s.actif = 1')
+            ->andWhere('a.optAlternance = 1')
+            ->setParameter('departement', $departement)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findSemestreEduSign() {
+        return $this->createQueryBuilder('s')
+            ->where('s.idEduSign IS NOT NULL')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function save(Semestre $semestre): void
+    {
+        $this->_em->persist($semestre);
+        $this->_em->flush();
     }
 }

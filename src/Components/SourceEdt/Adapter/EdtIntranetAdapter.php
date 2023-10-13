@@ -74,6 +74,7 @@ class EdtIntranetAdapter extends AbstractEdtAdapter implements EdtAdapterInterfa
         $event->groupe = $evt->getDisplayGroupe();
         $event->type_cours = $evt->getType();
         $event->duree = $evt->getFin() - $evt->getDebut();
+        $event->idEduSign = $evt->getIdEduSign();
 
         return $event;
     }

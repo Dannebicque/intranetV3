@@ -265,4 +265,18 @@ class GroupeRepository extends ServiceEntityRepository
             ->orderBy('t.libelle', Criteria::ASC)
             ->addOrderBy('g.libelle', Criteria::ASC);
     }
+
+    public function findAllEduSign(): array
+    {
+        return $this->createQueryBuilder('g')
+            ->where('g.idEduSign IS NOT NULL')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function save(Groupe $groupe): void
+    {
+        $this->_em->persist($groupe);
+        $this->_em->flush();
+    }
 }

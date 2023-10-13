@@ -9,6 +9,7 @@
 
 namespace App\Entity;
 
+use App\Classes\EduSign\GroupeInterface;
 use App\Repository\GroupeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -17,7 +18,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: GroupeRepository::class)]
-class Groupe extends BaseEntity
+class Groupe extends BaseEntity implements GroupeInterface
 {
     #[Groups(groups: ['groupe_administration'])]
     #[ORM\Column(type: Types::STRING, length: 50)]
@@ -70,6 +71,9 @@ class Groupe extends BaseEntity
 
     #[ORM\OneToMany(mappedBy: 'groupe', targetEntity: PlanCoursHistoriqueEdt::class)]
     private Collection $planCoursHistoriqueEdts;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $idEduSign = null;
 
     public function __construct()
     {
@@ -369,5 +373,17 @@ class Groupe extends BaseEntity
         }
 
         return false;
+    }
+
+    public function getIdEduSign(): ?string
+    {
+        return $this->idEduSign;
+    }
+
+    public function setIdEduSign(?string $idEduSign): static
+    {
+        $this->idEduSign = $idEduSign;
+
+        return $this;
     }
 }

@@ -30,6 +30,7 @@ class EduSignGroupe
     public ?string $parent = '';
     public ?string $api_id = '';
     public ?string $api_type = '';
+    public ?string $id_edu_sign = '';
 
     public function toArray(): array
     {
@@ -40,6 +41,7 @@ class EduSignGroupe
             'PARENT' => $this->parent,
             'API_ID' => $this->api_id,
             'API_TYPE' => $this->api_type,
+            'ID_EDU_SIGN' => $this->id_edu_sign,
         ];
     }
 }
