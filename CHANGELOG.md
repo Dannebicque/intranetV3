@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.40](https://github.com/Dannebicque/intranetV3/compare/v3.14.39...v3.14.40) (2023-10-16)
+
+
+### Bug Fixes
+
+* bug edt celcat ([43c2425](https://github.com/Dannebicque/intranetV3/commit/43c2425216188bdd565cbe70b11d10079e07c826))
+
 ### [3.14.39](https://github.com/Dannebicque/intranetV3/compare/v3.14.38...v3.14.39) (2023-10-16)
 
 
