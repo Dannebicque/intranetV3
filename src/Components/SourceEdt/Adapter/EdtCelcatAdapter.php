@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Adapter/EdtCelcatAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/10/2023 09:48
+ * @lastUpdate 16/10/2023 10:08
  */
 
 namespace App\Components\SourceEdt\Adapter;
@@ -88,7 +88,7 @@ class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
         $evt->largeur = $this->getLargeur($evt);
 //        $evt->duree = Constantes::TAB_HEURES_INDEX[$event->getFin()->format('H:i:s')] - Constantes::TAB_HEURES_INDEX[$event->getDebut()->format('H:i:s')];
         $evt->duree = "180000";
-        $event->idEduSign = $event->getIdEduSign();
+        $evt->idEduSign = $event->getIdEduSign();
 
         return $evt;
     }
