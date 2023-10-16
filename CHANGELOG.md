@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.39](https://github.com/Dannebicque/intranetV3/compare/v3.14.38...v3.14.39) (2023-10-16)
+
+
+### Bug Fixes
+
+* bug edt celcat ([0537598](https://github.com/Dannebicque/intranetV3/commit/05375986e1f836a745aa592bd789035bc7dacf84))
+* Gestion des TD/TP Edusign ([6165627](https://github.com/Dannebicque/intranetV3/commit/616562720c147ea8b41e9de6b14c171bb38fd60e))
+
 ### [3.14.38](https://github.com/Dannebicque/intranetV3/compare/v3.14.37...v3.14.38) (2023-10-10)
 
 
