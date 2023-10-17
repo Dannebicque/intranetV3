@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/TypeGroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/09/2023 19:06
+ * @lastUpdate 17/10/2023 18:23
  */
 
 namespace App\Controller\administration;
@@ -112,7 +112,7 @@ class TypeGroupeController extends BaseController
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
         $etat = Tools::convertToBool(JsonRequest::getValueFromRequest($request, 'defaut'));
         if (true === $etat) {
-            foreach ($semestre->getTypeGroupes() as $tg) {
+            foreach ($semestre->getTypeGroupess() as $tg) {
                 if ($tg->getId() === $typegroupe->getId()) {
                     $tg->setDefaut(true);
                 } else {
