@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.42](https://github.com/Dannebicque/intranetV3/compare/v3.14.41...v3.14.42) (2023-10-23)
+
+
+### Features
+
+* ajout d'un champ sur la description du stage ([28cc4a3](https://github.com/Dannebicque/intranetV3/commit/28cc4a30152aae1ec60921e955778f52c3fc7be7))
+
+
+### Bug Fixes
+
+* type groupe par défaut ([d7372f0](https://github.com/Dannebicque/intranetV3/commit/d7372f043a2fee4c6498b61ed1bb7ae30adfb4fd))
+
 ### [3.14.41](https://github.com/Dannebicque/intranetV3/compare/v3.14.40...v3.14.41) (2023-10-17)
 
 
