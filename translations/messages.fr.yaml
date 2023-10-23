@@ -2034,6 +2034,7 @@ table:
   duree_demi_journee: 'Durée en demi-journée'
   duree_stage: 'Durée du stage'
   dureeHebdomadaire: 'Durée de travail hebdomadaire'
+  commentaireDureeHebdomadaire: 'Commentaire sur la durée de travail hebdomadaire'
   dureeJoursStage: 'Nombre de jours de stage'
   email: E-mail
   entreprise_vacataire: 'Entreprise (vacataire)'

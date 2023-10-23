@@ -163,6 +163,17 @@
                     </td>
                 </tr>
                 <tr>
+                    <th>{{ 'table.commentaireDureeHebdomadaire'|trans }}</th>
+                    <td><a class="editable"
+                           data-field="commentaireDureeHebdomadaire"
+                           data-type="text"
+                           data-href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
+                           title="Corriger le commentaire sur la durée hebdomadaire">
+                            {{ stageEtudiant.commentaireDureeHebdomadaire }}
+                        </a>
+                    </td>
+                </tr>
+                <tr>
                     <th>{{ 'table.dureeJoursStage'|trans }}</th>
                     <td><a class="editable"
                            data-field="dureeJoursStage"
