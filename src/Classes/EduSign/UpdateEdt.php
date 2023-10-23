@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/UpdateEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/10/2023 09:46
+ * @lastUpdate 23/10/2023 09:49
  */
 
 namespace App\Classes\EduSign;
@@ -64,7 +64,7 @@ class UpdateEdt
                 $saturday = Carbon::create(2023, 10, 27);
 
 //                $semaine = 8;
-                $semaine = 8;
+                $semaine = 9;
 
                 $referentiel = $this->apcReferentielRepository->findOneBy(['id' => $semestre->getDiplome()->getReferentiel()]);
 
