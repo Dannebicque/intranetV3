@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.43](https://github.com/Dannebicque/intranetV3/compare/v3.14.42...v3.14.43) (2023-10-23)
+
+
+### Bug Fixes
+
+* update EDT edusign ([5d53b69](https://github.com/Dannebicque/intranetV3/commit/5d53b69840da8315d51e8b9bbad947402b21ed1c))
+
 ### [3.14.42](https://github.com/Dannebicque/intranetV3/compare/v3.14.41...v3.14.42) (2023-10-23)
 
 
