@@ -26,8 +26,8 @@ use Carbon\Carbon;
 class UpdateEdt
 {
 
-    private $evenement;
-    private UpdateManager $updateManager;
+    private ?EvenementEdt $evenement;
+    private ?string $cleApi;
 
     public function __construct(
         private readonly ApiEduSign         $apiEduSign,
@@ -46,12 +46,7 @@ class UpdateEdt
     {
     }
 
-    public function onEnseignantUpdated(EnseignantUpdatedEvent $event)
-    {
-        $this->sendUpdate();
-    }
-
-    public function update()
+    public function update() : void
     {
         $diplomes = $this->diplomeRepository->findAllWithEduSign();
 
@@ -64,8 +59,8 @@ class UpdateEdt
 
                 $today = Carbon::create('now');
                 $saturday = Carbon::create('next saturday');
-
                 $semaineReelle = date('W');
+
                 $eventSemaine = $this->CalendrierRepository->findOneBy(['semaineReelle' => $semaineReelle, 'anneeUniversitaire' => $semestre->getAnneeUniversitaire()]);
                 $semaine = $eventSemaine->getSemaineFormation();
 
@@ -89,19 +84,17 @@ class UpdateEdt
                 //récupère les edt de l'intranet depuis EdtManager.php
                 $edt = $this->edtManager->getPlanningSemestreSemaine($semestre, $semaine, $semestre->getAnneeUniversitaire(), $matieresSemestre, $groupes);
 
-                foreach ($edt->evenements as $evenement) {
+                foreach ($edt->evenements as $this->evenement) {
 
-                    if (!($evenement->matiere === null || $evenement->matiere === "Inconnue" || $evenement->groupeObjet === null || $evenement->personnelObjet === null)) {
+                    if (!($this->evenement->matiere === null || $this->evenement->matiere === "Inconnue" || $this->evenement->groupeObjet === null || $this->evenement->personnelObjet === null)) {
 
-                        if ($evenement->dateObjet->isBetween($today, $saturday)) {
+                        if ($this->evenement->dateObjet->isBetween($today, $saturday)) {
 
-                            $course = (new IntranetEdtEduSignAdapter($evenement))->getCourse();
+                            $course = (new IntranetEdtEduSignAdapter($this->evenement))->getCourse();
 
                             if ($course->id_edu_sign == null) {
 
-                                $this->evenement = $evenement;
-
-                                $enseignant = $evenement->personnelObjet;
+                                $enseignant = $this->evenement->personnelObjet;
 
                                 $departement = $semestre->getDiplome()->getDepartement();
                                 if ($enseignant) {
@@ -123,7 +116,7 @@ class UpdateEdt
         }
     }
 
-    public function sendUpdate()
+    public function sendUpdate() : void
     {
         $course = (new IntranetEdtEduSignAdapter($this->evenement))->getCourse();
         $this->apiEduSign->addCourse($course, $this->cleApi);
