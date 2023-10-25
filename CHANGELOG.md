@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.44](https://github.com/Dannebicque/intranetV3/compare/v3.14.43...v3.14.44) (2023-10-25)
+
+
+### Features
+
+* Accès aux anciennes fiches alternance ([c704177](https://github.com/Dannebicque/intranetV3/commit/c7041775c1dfbd38474778d56986dc42cb9b475a))
+
+
+### Bug Fixes
+
+* période d'interruption sur stage ([9857eab](https://github.com/Dannebicque/intranetV3/commit/9857eab5167376d9a80fd495a856c69b2845a67e))
+* période d'interruption sur stage ([a50eab5](https://github.com/Dannebicque/intranetV3/commit/a50eab548a1f616a89d3367594992cf20eaa836c))
+* update EDT edusign ([920dc4c](https://github.com/Dannebicque/intranetV3/commit/920dc4c94510a06955f7022859cc7487161bb0ea))
+
 ### [3.14.43](https://github.com/Dannebicque/intranetV3/compare/v3.14.42...v3.14.43) (2023-10-23)
 
 
