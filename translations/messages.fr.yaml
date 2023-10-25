@@ -2015,6 +2015,7 @@ table:
   dateFin: 'Date de fin'
   dateFinPublication: 'Date de fin de publication'
   dateFinStage: 'Date de fin de stage'
+  periodesInterruptions: 'Période(s) d''interruption(s)'
   dateLundi: 'Date du lundi'
   datenaissance: 'Date de naissance'
   datesFlexibles: 'Dates Flexibles'

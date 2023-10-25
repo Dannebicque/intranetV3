@@ -152,6 +152,18 @@
                     </td>
                 </tr>
                 <tr>
+                    <th>{{ 'table.periodesInterruptions'|trans }}</th>
+                    <td>
+                        <a class="editable"
+                           data-field="periodesInterruptions"
+                           data-type="text"
+                           data-href="{{ path('administration_stage_etudiant_ajax_edit', {id:stageEtudiant.id}) }}"
+                           title="Corriger les périodes d'interruptions">
+                            {{ stageEtudiant.periodesInterruptions ? stageEtudiant.periodesInterruptions : '' }}
+                        </a>
+                    </td>
+                </tr>
+                <tr>
                     <th>{{ 'table.dureeHebdomadaire'|trans }}</th>
                     <td><a class="editable"
                            data-field="dureeHebdomadaire"

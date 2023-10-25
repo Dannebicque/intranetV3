@@ -1,0 +1,116 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'adm.alternance.index.heading'|trans({'%annee%': annee.libelle}) }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('administration_alternance_index', {annee:annee.id}) }}" class="btn btn-primary btn-float"
+               data-bs-toggle="tooltip"
+               data-bs-placement="bottom" title="{{ 'atitle.retour'|trans }}"><i class="{{ iconRetour }}"><span
+                            class="sr-only">Retour</span></i></a>
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip"
+               data-bs-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span
+                            class="sr-only">Administration</span></i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.alternance.index.heading'|trans({'%annee%': annee.libelle}) }}</h4>
+        <div class="card-body">
+            lien vers les anciennes ? ou onglet ?
+            Bouton pour initialiser toutes les alternances
+            <table class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th>{{ 'table.etudiant'|trans }}</th>
+                    <th>{{ 'table.anneeUniversitaire'|trans }}</th>
+                    <th>{{ 'table.type_contrat'|trans }}</th>
+                    <th>{{ 'table.entreprise'|trans }}</th>
+                    <th>{{ 'table.tuteur_entreprise'|trans }}</th>
+                    <th>{{ 'table.tuteur_universitaire'|trans }}</th>
+                    <th>{{ 'table.fiche_suivi'|trans }}</th>
+                    <th>{{ 'table.actions'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for alternance in alternances %}
+                    {% set etudiant = alternance.etudiant %}
+                    <tr>
+                        <td>
+                            <a href="{{ path('user_profil', {slug:etudiant.slug, type:'etudiant'}) }}"
+                               target="_blank">{{ etudiant.displayPr }}</a>
+                        </td>
+
+                        <td>{{ alternance.anneeUniversitaire != null ? alternance.anneeUniversitaire.displayAnneeUniversitaire : 'erreur' }}</td>
+                        <td>{{ alternance.typeContrat }}</td>
+                        <td>{{ alternance.entreprise ? alternance.entreprise.raisonSociale : 'non.defini'|trans }}</td>
+                        <td>{{ alternance.tuteur ? alternance.tuteur.display : 'non.defini'|trans }}</td>
+                        <td>
+                            {{ alternance.tuteurUniversitaire != null ? alternance.tuteurUniversitaire.displayPr : 'erreur' }}
+                        </td>
+                        <td>{{ alternance.alternanceFicheSuivis|length }}</td>
+                        <td>
+                            <a href="{{ path('administration_alternance_show', {'id': alternance.id}) }}"
+                               class="btn btn-info btn-outline btn-square"
+                               data-bs-toggle="tooltip" data-bs-placement="bottom"
+                               target="_blank"
+                               title="{{ 'atitle.details'|trans }}">
+                                <i class="{{ iconShow }}"></i>
+                                <span class="sr-only">{{ 'atitle.details'|trans }}</span>
+                            </a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            réinitilaiser (avec ou sans archivage), suivi (liste des suivis de l'étudiant
+        </div>
+    </div>
+{% endblock %}
+
+{% block fabactions %}
+    {{ include('composants/fab-buttons.html.twig', {boutons:[
+        {type: 'info',
+            href: path('administration_alternance_export', {annee:annee.id, _format:'pdf'}),
+            title: 'exporter.pdf'|trans,
+            icone : "fa fa-file-pdf"
+        },
+        {
+            type:'info',
+            href:path('administration_alternance_export', {annee:annee.id, _format:'csv'}),
+            title: 'exporter.csv'|trans,
+            icone: 'fa fa-file-csv'
+        },
+        {
+            type:'info',
+            href:path('administration_alternance_export', {annee:annee.id, _format:'xlsx'}),
+            title: 'exporter.xls'|trans,
+            icone: 'fa fa-file-excel'
+        },
+        {
+            type:'info',
+            href:path('help_article', {sujet: 'administration_alternance'}),
+            title: 'aide'|trans,
+            icone: 'fa fa-question'
+        }
+    ]}) }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('adm.alternances') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('adm.alternances') }}
+{% endblock %}

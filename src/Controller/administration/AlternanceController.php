@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AlternanceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/06/2023 22:54
+ * @lastUpdate 25/10/2023 15:25
  */
 
 namespace App\Controller\administration;
@@ -150,6 +150,18 @@ class AlternanceController extends BaseController
                     $annee->getDiplome()?->getAnneeUniversitaire()),
                 'annee' => $annee,
                 'etudiants' => $etudiants,
+            ]);
+    }
+
+    #[Route(path: '/ancienne/{annee}', name: 'administration_alternance_view_old', requirements: ['annee' => '\d+'], methods: 'GET')]
+    public function old(EtudiantRepository $etudiantRepository, AlternanceRepository $alternanceRepository, Annee $annee): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $annee);
+
+        return $this->render('administration/alternance/old.html.twig',
+            [
+                'alternances' => $alternanceRepository->getByOldByAnnee($annee),
+                'annee' => $annee,
             ]);
     }
 
