@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/AlternanceRepository.php
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/AlternanceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:08
+ * @lastUpdate 25/10/2023 15:31
  */
 
 namespace App\Repository;
@@ -121,5 +121,18 @@ class AlternanceRepository extends ServiceEntityRepository
             ->setParameter('etudiant', $etudiant->getId())
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function getByOldByAnnee(Annee $annee): array
+    {
+        return $this->createQueryBuilder('a')
+            ->join('a.etudiant', 'e')
+            ->andWhere('a.annee = :annee')
+            ->setParameter('annee', $annee->getId())
+            ->orderBy('a.anneeUniversitaire', 'DESC')
+            ->addOrderBy('e.nom', 'ASC')
+            ->addOrderBy('e.prenom', 'ASC')
+            ->getQuery()
+            ->getResult();
     }
 }

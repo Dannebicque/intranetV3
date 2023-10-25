@@ -7,6 +7,10 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
+            <a href="{{ path('administration_alternance_view_old', {annee: annee.id}) }}" class="btn btn-info btn-sm
+            btn-float" title="{{ 'atitle.view_old'|trans }}" data-bs-toggle="tooltip"
+               data-bs-placement="bottom"><i class="fa fa-eye"></i></a>
+
             <a href="{{ path('administration_alternance_init_all', {annee: annee.id}) }}" class="btn btn-info btn-sm
             btn-float initAllAlternance" title="{{ 'atitle.init_all'|trans }}" data-bs-toggle="tooltip"
                data-bs-placement="bottom"><i class="fa fa-magic"></i></a>
