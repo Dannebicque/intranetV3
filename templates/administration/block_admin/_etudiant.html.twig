@@ -30,34 +30,6 @@
 
                     {% endfor %}
 
-                    {#                    <a data-bs-toggle="modal" data-bs-target="#semestreFc"> #}
-                    {#                        Activer un semestre #}
-                    {#                    </a> #}
-
-                    {#                    <!-- Modal --> #}
-                    {#                    <div class="modal fade modal-lg" id="semestreFc" tabindex="-1" aria-labelledby="semestreFcLabel" aria-hidden="true"> #}
-                    {#                        <div class="modal-dialog"> #}
-                    {#                            <div class="modal-content"> #}
-                    {#                                <div class="modal-header"> #}
-                    {#                                    <h5 class="modal-title" id="semestreFcLabel">Sélectionner un ou plusieurs semestres à activer</h5> #}
-                    {#                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> #}
-                    {#                                </div> #}
-                    {#                                <div class="modal-body"> #}
-                    {#                                    {% for semestre in user_data.semestres|filter(semestre => semestre.actif == false) %} #}
-                    {#                                        {% if semestre.annee.optAlternance == true %} #}
-                    {#                                            <p>{{ semestre.displayAvecTypeDiplome }}</p> #}
-                    {#                                            <a class="btn btn-info btn-sm" href="{{ path('administration_semestre_actif',{semestre:semestre.id, actif:1}) }}"><i class="fa fa-eye"></i></a> #}
-                    {#                                            <a class="btn btn-primary btn-sm" href="{{ path('administration_semestre_index', {'semestre': semestre.id } ) }}"><i class="fa fa-edit"></i></a> #}
-                    {#                                        {% endif %} #}
-                    {#                                    {% endfor %} #}
-                    {#                                </div> #}
-                    {#                                <div class="modal-footer"> #}
-                    {#                                    <button type="button" class="btn btn-primary">Retour</button> #}
-                    {#                                </div> #}
-                    {#                            </div> #}
-                    {#                        </div> #}
-                    {#                    </div> #}
-
                 </div>
 
 
@@ -79,35 +51,6 @@
                         {% endif %}
 
                     {% endfor %}
-
-                    {#                    <a data-bs-toggle="modal" data-bs-target="#semestreFi"> #}
-                    {#                        Activer un semestre #}
-                    {#                    </a> #}
-
-                    {#                    <!-- Modal --> #}
-                    {#                    <div class="modal fade modal-lg" id="semestreFi" tabindex="-1" aria-labelledby="semestreFiLabel" aria-hidden="true"> #}
-                    {#                        <div class="modal-dialog"> #}
-                    {#                            <div class="modal-content"> #}
-                    {#                                <div class="modal-header"> #}
-                    {#                                    <h5 class="modal-title" id="semestreFiLabel">Sélectionner un ou plusieurs semestres à activer</h5> #}
-                    {#                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> #}
-                    {#                                </div> #}
-                    {#                                <div class="modal-body"> #}
-                    {#                                    {% for semestre in user_data.semestres|filter(semestre => semestre.actif == false) %} #}
-                    {#                                        {% if semestre.annee.optAlternance == false %} #}
-                    {#                                            <p>{{ semestre.displayAvecTypeDiplome }}</p> #}
-                    {#                                            <a class="btn btn-info btn-sm" href="{{ path('administration_semestre_actif',{semestre:semestre.id, actif:1}) }}"><i class="fa fa-eye"></i></a> #}
-                    {#                                            <a class="btn btn-primary btn-sm" href="{{ path('administration_semestre_index', {'semestre': semestre.id } ) }}"><i class="fa fa-edit"></i></a> #}
-                    {#                                            <hr> #}
-                    {#                                        {% endif %} #}
-                    {#                                    {% endfor %} #}
-                    {#                                </div> #}
-                    {#                                <div class="modal-footer"> #}
-                    {#                                    <button type="button" class="btn btn-primary">Retour</button> #}
-                    {#                                </div> #}
-                    {#                            </div> #}
-                    {#                        </div> #}
-                    {#                    </div> #}
 
                 </div>
 
