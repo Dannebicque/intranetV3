@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.45](https://github.com/Dannebicque/intranetV3/compare/v3.14.44...v3.14.45) (2023-10-26)
+
+
+### Bug Fixes
+
+* Filtre prévi affichage unique ([8e94e68](https://github.com/Dannebicque/intranetV3/commit/8e94e687b76b0b6d72609611696329a8421f727d))
+
 ### [3.14.44](https://github.com/Dannebicque/intranetV3/compare/v3.14.43...v3.14.44) (2023-10-25)
 
 
