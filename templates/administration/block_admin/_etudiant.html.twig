@@ -24,15 +24,16 @@
 
                         {% if semestre.annee.optAlternance == true %}
 
-                        <a href="{{ path('administration_semestre_index', {'semestre': semestre.id } )}}">{{ semestre.displayAvecTypeDiplome }}</a>
+                            <a href="{{ path('administration_semestre_index', {'semestre': semestre.id } ) }}">{{ semestre.displayAvecTypeDiplome }}</a>
 
                         {% endif %}
 
                     {% endfor %}
+
                 </div>
 
 
-                                <div class="col-lg-3 col-10 d-grid d-block mb-2 etudiant_bloc">
+                <div class="col-lg-3 col-10 d-grid d-block mb-2 etudiant_bloc">
                     <div class="admin_links_bloc_header">
                         <i class="fa-solid fa-user-graduate fa-2x"></i>
                         <h4>Formation Initiale</h4>
@@ -45,11 +46,12 @@
 
                         {% if semestre.annee.optAlternance == false %}
 
-                            <a href="{{ path('administration_semestre_index', {'semestre': semestre.id } )}}">{{ semestre.displayAvecTypeDiplome }}</a>
+                            <a href="{{ path('administration_semestre_index', {'semestre': semestre.id } ) }}">{{ semestre.displayAvecTypeDiplome }}</a>
 
                         {% endif %}
 
                     {% endfor %}
+
                 </div>
 
                 <div class="col-lg-3 col-10 d-grid d-block mb-2 etudiant_bloc">
@@ -64,8 +66,71 @@
                     <a href="{{ path('administration_etudiant_index') }}">Tous les étudiants</a>
                     <a href="{{ path('administration_cohorte_index') }}">Cohortes</a>
                     <a href="{{ path('administration_statistique_index') }}">Statistiques</a>
-                    <a href="{{ path('administration_sous_commission_mise_a_jour') }}">Mise à jour d’une sous-commission</a>
-                    <a href="{{ path('administration_etudiant_semestre_add') }}" methods="_POST">Ajouter des étudiants</a>
+                    <a href="{{ path('administration_sous_commission_mise_a_jour') }}">Mise à jour d’une
+                        sous-commission</a>
+                    <a href="{{ path('administration_etudiant_semestre_add') }}" methods="_POST">Ajouter des
+                        étudiants</a>
+                    <a data-bs-toggle="modal" data-bs-target="#semestreAction">
+                        Activer/Désactiver des semestres
+                    </a>
+                </div>
+
+                <!-- Modal -->
+                <div class="modal fade modal-lg" id="semestreAction" tabindex="-1" aria-labelledby="semestreActionLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="semestreActionLabel">Sélectionner un ou plusieurs semestres
+                                    à
+                                    activer</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                {% for semestre in user_data.semestres %}
+                                    {% if semestre.actif == true %}
+                                        {% set actif = 0 %}
+                                    {% else %}
+                                        {% set actif = 1 %}
+                                    {% endif %}
+                                    <div {{ stimulus_controller('adm--semestre', {url:path('administration_semestre_actif', {semestre:semestre.id, actif:actif})}) }}
+                                    style="display: flex; justify-content: space-between; align-items: center">
+                                        <p>
+                                            {% if semestre.actif == true %}
+                                                <span class="semestre-active badge bg-success">Actif</span>
+                                            {% else %}
+                                                <span class="semestre-active badge bg-danger">Inactif</span>
+                                            {% endif %}
+                                            <span class="semestre-detail semestre-detail">
+                                                {{ semestre.displayAvecTypeDiplome }}
+                                            </span>
+                                        </p>
+                                        {% if semestre.actif == true %}
+                                            <button {{ stimulus_action('adm--semestre', 'toggle', 'click') }}
+                                                    value="{{ semestre }}"
+                                                    data-actif="0"
+                                                    class="btn btn-primary btn-sm"
+                                                    data-bs-toggle="tooltip" data-bs-placement="left"
+                                                    title="{{ 'atitle.masquer_semestre'|trans }}"><i
+                                                        class="semestre-btn-active fa fa-eye-slash"></i>
+                                            </button>
+                                        {% else %}
+                                            <button {{ stimulus_action('adm--semestre', 'toggle', 'click') }}
+                                                    value="{{ semestre }}"
+                                                    data-actif="1"
+                                                    class="btn btn-primary btn-sm"
+                                                    data-bs-toggle="tooltip" data-bs-placement="left"
+                                                    title="{{ 'atitle.afficher_semestre'|trans }}"><i
+                                                        class="semestre-btn-active fa fa-eye"></i>
+                                            </button>
+                                        {% endif %}
+                                    </div>
+                                    <hr>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
             </div>
