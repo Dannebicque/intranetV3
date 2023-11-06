@@ -16,6 +16,7 @@ use App\Classes\EduSign\DTO\EduSignGroupe;
 use App\Entity\Departement;
 use App\Entity\Groupe;
 use App\Entity\Personnel;
+use App\Repository\EdtCelcatRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
@@ -23,8 +24,6 @@ use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpClient\HttpClient;
-use Symfony\Contracts\EventDispatcher\Event;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class ApiEduSign
 {
@@ -34,14 +33,12 @@ class ApiEduSign
         ParameterBagInterface            $parameterBag,
         protected PersonnelRepository    $personnelRepository,
         protected EdtPlanningRepository  $edtPlanningRepository,
+        protected EdtCelcatRepository  $edtCelcatRepository,
         protected SemestreRepository     $semestreRepository,
         protected GroupeRepository       $groupeRepository,
         protected EtudiantRepository     $etudiantRepository,
-        private EventDispatcherInterface $eventDispatcher
     )
     {
-        $this->personnelRepository = $personnelRepository;
-        $this->edtPlanningRepository = $edtPlanningRepository;
         $this->cleApi = $parameterBag->get('api_edu_sign');
     }
 
@@ -52,7 +49,7 @@ class ApiEduSign
         $response = $client->request('POST', 'https://ext.edusign.fr/v1/course', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $cleApi,
+                'Authorization' => 'Bearer ' . $this->cleApi,
             ],
             'json' => ['course' => $course->toArray()],
         ]);
@@ -67,7 +64,14 @@ class ApiEduSign
             $id = $data['result']['ID'];
         }
 
-        $edt = $this->edtPlanningRepository->findOneBy(['id' => $course->api_id]);
+        if (str_contains($course->type_edt, 'intranet')) {
+            $edt = $this->edtPlanningRepository->findOneBy(['id' => $course->api_id]);
+        } elseif (str_contains($course->type_edt, 'celcat')) {
+            $edt = $this->edtCelcatRepository->findOneBy(['id' => $course->api_id]);
+        } else {
+            $edt = null;
+        }
+
         if (null === $edt) {
             throw new \Exception('Course not found for ' . $edt->api_id);
         }
@@ -108,7 +112,7 @@ class ApiEduSign
         $response = $client->request('POST', 'https://ext.edusign.fr/v1/group', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $cleApi,
+                'Authorization' => 'Bearer ' . $this->cleApi,
             ],
             'json' => ['group' => $groupe->toArray()],
         ]);
@@ -173,7 +177,7 @@ class ApiEduSign
         $response = $client->request('POST', 'https://ext.edusign.fr/v1/student', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $cleApi,
+                'Authorization' => 'Bearer ' . $this->cleApi,
             ],
             'json' => ['student' => $etudiant->toArray()],
         ]);
@@ -205,7 +209,7 @@ class ApiEduSign
         $response = $client->request('POST', 'https://ext.edusign.fr/v1/professor', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $cleApi,
+                'Authorization' => 'Bearer ' . $this->cleApi,
             ],
             'json' => ['professor' => $enseignant->toArray(), 'dontSendCredentials' => $enseignant->dontSendCredentials],
         ]);

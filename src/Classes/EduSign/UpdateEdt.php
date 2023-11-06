@@ -46,7 +46,7 @@ class UpdateEdt
     {
     }
 
-    public function update() : void
+    public function update(): void
     {
         $diplomes = $this->diplomeRepository->findAllWithEduSign();
 
@@ -71,7 +71,6 @@ class UpdateEdt
                     $matieresSemestre = [];
                     foreach ($matieres as $matiere) {
                         if ($matiere->getSemestres()->contains($semestre)) {
-                            dump('ok');
                             $matieresSemestre[$matiere->getTypeIdMatiere()] = $matiere;
                         }
                     }
@@ -102,7 +101,6 @@ class UpdateEdt
                                         $this->updateEnseignant->update($enseignant, $departement, $this->cleApi);
                                     }
                                     $this->sendUpdate();
-
                                 }
                             } else {
                                 dump('cours déjà envoyé');
@@ -116,7 +114,7 @@ class UpdateEdt
         }
     }
 
-    public function sendUpdate() : void
+    public function sendUpdate(): void
     {
         $course = (new IntranetEdtEduSignAdapter($this->evenement))->getCourse();
         $this->apiEduSign->addCourse($course, $this->cleApi);

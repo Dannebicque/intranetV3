@@ -52,8 +52,8 @@ class EduSignCourse
     public int|null $max_students = null;
     public ?bool $zoom = false;
     public ?string $api_id = '';
-
     public ?string $id_edu_sign = '';
+    public ?string $type_edt = '';
 
     public function toArray(): array
     {
@@ -72,6 +72,7 @@ class EduSignCourse
             'ZOOM' => $this->zoom,
             'API_ID' => $this->api_id,
             'ID_EDU_SIGN' => $this->id_edu_sign,
+            'TYPE' => $this->type_edt,
         ];
     }
 
