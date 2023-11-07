@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/ApiEduSign.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/11/2023 07:29
+ * @lastUpdate 07/11/2023 07:30
  */
 
 namespace App\Classes\EduSign;
@@ -64,8 +64,10 @@ class ApiEduSign
 
         if (str_contains($course->type_edt, 'intranet')) {
             $edt = $this->edtPlanningRepository->findOneBy(['id' => $course->api_id]);
+            $rep = $this->edtPlanningRepository;
         } elseif (str_contains($course->type_edt, 'celcat')) {
             $edt = $this->edtCelcatRepository->findOneBy(['id' => $course->api_id]);
+            $rep = $this->edtCelcatRepository;
         } else {
             $edt = null;
         }
@@ -76,7 +78,7 @@ class ApiEduSign
 
         if ($edt->getIdEduSign() == null) {
             $edt->setIdEduSign($id);
-            $this->edtPlanningRepository->save($edt);
+            $rep->save($edt);
         }
 
     }
