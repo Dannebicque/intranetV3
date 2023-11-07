@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtCelcatRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/12/2022 18:12
+ * @lastUpdate 07/11/2023 07:32
  */
 
 namespace App\Repository;
@@ -213,5 +213,11 @@ class EdtCelcatRepository extends ServiceEntityRepository
             ->where('p.idEduSign IS NOT NULL')
             ->getQuery()
             ->getResult();
+    }
+
+    public function save(EdtCelcat $edtCelcat): void
+    {
+        $this->_em->persist($edtCelcat);
+        $this->_em->flush();
     }
 }
