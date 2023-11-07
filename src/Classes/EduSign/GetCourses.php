@@ -20,6 +20,7 @@ use App\Repository\SemestreRepository;
 use Carbon\Carbon;
 use DateInterval;
 use DateTime;
+use DateTimeZone;
 
 class GetCourses
 {
@@ -105,15 +106,71 @@ class GetCourses
         }
     }
 
-    public function getCourseBetween($debut, $fin) {
+    public function getCourseBetween(string $debut, string $fin): void {
+        $diplomes = $this->diplomeRepository->findAllWithEduSign();
 
+        foreach ($diplomes as $diplome) {
+
+            $cleApi = $diplome->getKeyEduSign();
+
+            $semestres = $this->semestreRepository->findByDiplome($diplome);
+            foreach ($semestres as $semestre) {
+
+                $debut = Carbon::create($debut);
+
+                $fin = Carbon::create($fin);
+
+                $semaineReelle = date('W');
+
+                $eventSemaine = $this->CalendrierRepository->findOneBy(['semaineReelle' => $semaineReelle, 'anneeUniversitaire' => $semestre->getAnneeUniversitaire()]);
+                $semaine = $eventSemaine->getSemaineFormation();
+
+                $referentiel = $this->apcReferentielRepository->findOneBy(['id' => $semestre->getDiplome()->getReferentiel()]);
+
+                if ($referentiel !== null) {
+                    $matieres = $this->typeMatiereManager->findByReferentielOrdreSemestreArray($semestre, $referentiel);
+                    $matieresSemestre = [];
+                    foreach ($matieres as $matiere) {
+                        if ($matiere->getSemestres()->contains($semestre)) {
+                            $matieresSemestre[$matiere->getTypeIdMatiere()] = $matiere;
+                        }
+                    }
+                } else {
+                    $matieresSemestre = [];
+                }
+
+                $groupes = $this->groupeRepository->findBySemestre($semestre);
+
+                $edt = $this->edtManager->getPlanningSemestreSemaine($semestre, $semaine, $semestre->getAnneeUniversitaire(), $matieresSemestre, $groupes);
+
+                foreach ($edt->evenements as $evenement) {
+                    if (!($evenement->matiere === null || $evenement->matiere === "Inconnue" || $evenement->groupeObjet === null || $evenement->personnelObjet === null)) {
+
+                        if ($evenement->dateObjet->isBetween($debut, $fin)) {
+
+                            $id = $evenement->getIdEduSign();
+
+                            if ($id !== null) {
+                                $course = $this->apiEduSign->getCourses($id, $cleApi);
+                                $this->newAbsence($course);
+                            } else {
+                                dump('evenement sans id EduSign');
+                            }
+                        } else {
+                            dump('evenement hors d\'échéance');
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public function newAbsence(
         $course,
     )
     {
-        $enseignant = $this->personnelRepository->findOneBy(['idEduSign' => $course['PROFESSOR']]);
+        $enseignant = $this->personnelRepository->findByIdEdusign($course['PROFESSOR']);
+
         if (!empty($course['STUDENTS'])) {
             foreach ($course['STUDENTS'] as $student) {
                 if ($student['state'] === false) {
@@ -130,7 +187,8 @@ class GetCourses
 
                         $etudiant = $this->etudiantRepository->findOneBy(['idEduSign' => $student['studentId']]);
 
-                        $startRaw = Carbon::parse($student['start']);
+                        $startRaw = Carbon::parse($student['start'], 'UTC');
+                        $startRaw->setTimezone(new DateTimeZone('Europe/Paris'));
                         $endRaw = Carbon::parse($student['end']);
 
                         $startFormat = $startRaw->format('Y-m-d H:i:s');
@@ -162,10 +220,9 @@ class GetCourses
                         $newAbsence->setIdEduSign($student['_id']);
 
                         $this->absenceRepository->save($newAbsence);
-                        die();
+                        dump('absence enregistrée');
                     } else {
                         dump('absence déjà enregistrée');
-                        die();
                     }
                 }
             }
