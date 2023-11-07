@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/ApiEduSign.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2023 16:00
+ * @lastUpdate 07/11/2023 07:29
  */
 
 namespace App\Classes\EduSign;
@@ -14,7 +14,6 @@ use App\Classes\EduSign\DTO\EduSignEnseignant;
 use App\Classes\EduSign\DTO\EduSignEtudiant;
 use App\Classes\EduSign\DTO\EduSignGroupe;
 use App\Entity\Departement;
-use App\Entity\Groupe;
 use App\Entity\Personnel;
 use App\Repository\EdtCelcatRepository;
 use App\Repository\EdtPlanningRepository;
@@ -39,7 +38,6 @@ class ApiEduSign
         protected EtudiantRepository     $etudiantRepository,
     )
     {
-        $this->cleApi = $parameterBag->get('api_edu_sign');
     }
 
     public function addCourse(EduSignCourse $course, string $cleApi)
@@ -49,7 +47,7 @@ class ApiEduSign
         $response = $client->request('POST', 'https://ext.edusign.fr/v1/course', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $this->cleApi,
+                'Authorization' => 'Bearer ' . $cleApi,
             ],
             'json' => ['course' => $course->toArray()],
         ]);
@@ -112,7 +110,7 @@ class ApiEduSign
         $response = $client->request('POST', 'https://ext.edusign.fr/v1/group', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $this->cleApi,
+                'Authorization' => 'Bearer ' . $cleApi,
             ],
             'json' => ['group' => $groupe->toArray()],
         ]);
@@ -177,7 +175,7 @@ class ApiEduSign
         $response = $client->request('POST', 'https://ext.edusign.fr/v1/student', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $this->cleApi,
+                'Authorization' => 'Bearer ' . $cleApi,
             ],
             'json' => ['student' => $etudiant->toArray()],
         ]);
@@ -209,7 +207,7 @@ class ApiEduSign
         $response = $client->request('POST', 'https://ext.edusign.fr/v1/professor', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $this->cleApi,
+                'Authorization' => 'Bearer ' . $cleApi,
             ],
             'json' => ['professor' => $enseignant->toArray(), 'dontSendCredentials' => $enseignant->dontSendCredentials],
         ]);
