@@ -61,6 +61,9 @@ class Absence extends BaseEntity
     #[ORM\ManyToOne(targetEntity: Semestre::class, inversedBy: 'absences')]
     private ?Semestre $semestre = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $id_edu_sign = null;
+
     /**
      * Absence constructor.
      *
@@ -194,6 +197,18 @@ class Absence extends BaseEntity
     public function setSemestre(?Semestre $semestre): self
     {
         $this->semestre = $semestre;
+
+        return $this;
+    }
+
+    public function getIdEduSign(): ?string
+    {
+        return $this->id_edu_sign;
+    }
+
+    public function setIdEduSign(?string $id_edu_sign): static
+    {
+        $this->id_edu_sign = $id_edu_sign;
 
         return $this;
     }

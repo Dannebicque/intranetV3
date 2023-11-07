@@ -38,6 +38,7 @@ class ApiEduSign
         protected EtudiantRepository     $etudiantRepository,
     )
     {
+        $this->cleApi = $parameterBag->get('api_edu_sign');
     }
 
     public function addCourse(EduSignCourse $course, string $cleApi)
@@ -235,5 +236,29 @@ class ApiEduSign
             $personnel->setIdEduSign($jsonId);
         }
         $this->personnelRepository->save($personnel);
+    }
+
+    public function getCourses(?string $id, string $cleApi)
+    {
+        $client = HttpClient::create();
+
+        $response = $client->request('GET', 'https://ext.edusign.fr/v1/course/' . $id, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $cleApi,
+            ]
+        ]);
+
+        $statusCode = $response->getStatusCode();
+        $content = $response->getContent();
+        // convertit JSON en tableau associatif PHP
+        $data = json_decode($content, true);
+
+        $course = "";
+        if (isset($data['result'])) {
+            $course = $data['result'];
+        }
+
+        return $course;
     }
 }
