@@ -224,6 +224,15 @@ class PersonnelRepository extends ServiceEntityRepository
             ->groupBy('p.id');
     }
 
+    public function findByIdEdusign(string $cle): ?Personnel
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.idEduSign LIKE :cle')
+            ->setParameter('cle', '%'.$cle.'%')
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     public function save(Personnel $personnel): void
     {
         $this->_em->persist($personnel);

@@ -266,4 +266,10 @@ class AbsenceRepository extends ServiceEntityRepository
     {
         return $this->getBySemestre($semestre, $anneeUniversitaire);
     }
+
+    public function save(Absence $absence): void
+    {
+        $this->_em->persist($absence);
+        $this->_em->flush();
+    }
 }
