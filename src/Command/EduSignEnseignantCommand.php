@@ -19,7 +19,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
     name: 'edusign:update-enseignant',
-    description: 'Mise à jour de l\'emploi du temps',
+    description: 'Mise à jour des enseignants',
 )]
 class EduSignEnseignantCommand extends Command
 {
@@ -42,7 +42,7 @@ class EduSignEnseignantCommand extends Command
 
         $this->updateEnseignant->update();//boucler sur département pour chaque update (ou diplome)
 
-        $io->success('Emploi du temps mis à jour sur EduSign.');
+        $io->success('Enseignants récupérés sur EduSign.');
 
         return Command::SUCCESS;
     }

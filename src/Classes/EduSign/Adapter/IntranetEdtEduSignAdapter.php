@@ -55,7 +55,7 @@ class IntranetEdtEduSignAdapter
         if ($edt->type_cours === 'TD') {
             $this->course->school_group = [$edt->groupeObjet->getParent()?->getIdEduSign()];
         } else {
-            $this->course->school_group = [$edt->groupeObjet->getParent()?->getIdEduSign()];
+            $this->course->school_group = [$edt->groupeObjet->getIdEduSign()];
         }
 
         $this->course->max_students = 30;

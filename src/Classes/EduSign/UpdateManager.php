@@ -9,8 +9,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 class UpdateManager implements EventSubscriberInterface
 {
     public function __construct(
-        private UpdateEnseignant $updateEnseignant,
-        private UpdateEdt $updateEdt,
+        private CreateEnseignant $updateEnseignant,
+        private UpdateEdt        $updateEdt,
 //        private EventDispatcherInterface $eventDispatcher
     ) {
         $this->updateEnseignant->setUpdateManager($this);

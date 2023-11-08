@@ -35,7 +35,7 @@ class UpdateEdt
         private readonly TypeMatiereManager $typeMatiereManager,
         protected SemestreRepository        $semestreRepository,
         protected PersonnelRepository       $personnelRepository,
-        protected UpdateEnseignant          $updateEnseignant,
+        protected CreateEnseignant          $createEnseignant,
         protected DepartementRepository     $departementRepository,
         protected EdtPlanningRepository     $edtPlanningRepository,
         protected GroupeRepository          $groupeRepository,
@@ -99,7 +99,7 @@ class UpdateEdt
                                 if ($enseignant) {
                                     // todo: vérifier si l'enseignant possède déjà un id edusign identique à celui d'edusign
                                     if ($enseignant->getIdEduSign() == '' || $enseignant->getIdEduSign() == null || !array_key_exists($departement->getId(), $enseignant->getIdEduSign())) {
-                                        $this->updateEnseignant->update($enseignant, $departement, $this->cleApi);
+                                        $this->createEnseignant->update($enseignant, $departement, $this->cleApi);
                                     }
                                     $this->sendUpdate();
                                 }
