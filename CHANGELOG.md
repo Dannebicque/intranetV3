@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.46](https://github.com/Dannebicque/intranetV3/compare/v3.14.45...v3.14.46) (2023-11-08)
+
+
+### Bug Fixes
+
+* cle api edusign ([0332132](https://github.com/Dannebicque/intranetV3/commit/03321320d70292c1521ea6e87d0f210047c9c578))
+* cle api edusign ([dc15251](https://github.com/Dannebicque/intranetV3/commit/dc1525187535e6431172fe095deb29be20435931))
+* cle api edusign ([6ad22c1](https://github.com/Dannebicque/intranetV3/commit/6ad22c1377826da98bf679038abee0b527102aef))
+* formulaire de modification d'un stage ([2ba9542](https://github.com/Dannebicque/intranetV3/commit/2ba9542dcf31fbef2424cadff5de3f69223a2e2d))
+* Relance + affichage des questionnaires ([174b8db](https://github.com/Dannebicque/intranetV3/commit/174b8db3e9470f8bb544ca3219a8d1b8c39a9495))
+
 ### [3.14.45](https://github.com/Dannebicque/intranetV3/compare/v3.14.44...v3.14.45) (2023-10-26)
 
 
