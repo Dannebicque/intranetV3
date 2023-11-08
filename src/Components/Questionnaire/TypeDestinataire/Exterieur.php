@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeDestinataire/Exterieur.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/01/2023 11:04
+ * @lastUpdate 08/11/2023 17:47
  */
 
 namespace App\Components\Questionnaire\TypeDestinataire;
@@ -151,21 +151,6 @@ class Exterieur extends AbstractTypeDestinataire implements TypeDestinataireInte
         return $this->choixUser;
     }
 
-    public function sendMail(QuestChoixInterface $choixUser, MailerFromTwig $myMailer): void
-    {
-//        $myMailer->initEmail();
-//        $myMailer->setTemplate('mails/qualite-complete-etudiant.html.twig',
-//            ['questionnaire' => $this->questionnaire, 'user' => $choixUser]);
-//        $myMailer->sendMessage($choixUser->getPersonnel()->getMails(),
-//            'Accusé réception questionnaire '.$this->questionnaire->getLibelle());
-//
-//        $myMailer->initEmail();
-//        $myMailer->setTemplate('mails/qualite-complete-responsable.html.twig',
-//            ['questionnaire' => $this->questionnaire, 'etudiant' => $choixUser->getPersonnel()]);
-//        $myMailer->sendMessage($choixUser->getPersonnel()->getDiplome()->getOptResponsableQualite()->getMails(),
-//            'Accusé réception questionnaire '.$this->questionnaire->getLibelle());
-    }
-
     public function sauvegardeReponse(QuestChoixInterface $choixUser, string $cleReponse, string $cleQuestion): void
     {
         $this->abstractSauvegardeReponse($choixUser, $cleReponse, $cleQuestion, 'exterieur');
@@ -179,5 +164,25 @@ class Exterieur extends AbstractTypeDestinataire implements TypeDestinataireInte
     public function getReponses(): ReponsesUser
     {
         return $this->abstractGetReponses('exterieur');
+    }
+
+    public function sendMailAccuse(QuestChoixInterface $choixUser, MailerFromTwig $myMailer): void
+    {
+    }
+
+    public function sendRelanceIndividuelle(int $choix): void
+    {
+        $data = $this->questChoixExterieurRepository->findOneBy(
+            [
+                'questionnaire' => $this->questionnaire,
+                'id' => $choix,
+            ]
+        );
+
+        if ($data !== null) {
+            $event = new QualiteRelanceEvent($this->questionnaire);
+            $event->setUser($data);
+            $this->eventDispatcher->dispatch($event, QualiteRelanceEvent::SEND_RELANCE);
+        }
     }
 }

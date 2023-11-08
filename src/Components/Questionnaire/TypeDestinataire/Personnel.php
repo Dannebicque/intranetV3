@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeDestinataire/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/01/2023 14:59
+ * @lastUpdate 08/11/2023 17:46
  */
 
 namespace App\Components\Questionnaire\TypeDestinataire;
@@ -14,6 +14,7 @@ use App\Components\Questionnaire\DTO\ReponsesUser;
 use App\Components\Questionnaire\Interfaces\QuestChoixInterface;
 use App\Components\Questionnaire\Interfaces\TypeDestinataireInterface;
 use App\Entity\QuestChoixPersonnel;
+use App\Event\QualiteRelanceEvent;
 use App\Repository\PersonnelRepository;
 use App\Repository\QuestChoixPersonnelRepository;
 use App\Repository\QuestChoixRepository;
@@ -117,7 +118,7 @@ class Personnel extends AbstractTypeDestinataire implements TypeDestinataireInte
         return $this->choixUser;
     }
 
-    public function sendMail(QuestChoixInterface $choixUser, MailerFromTwig $myMailer): void
+    public function sendMailAccuse(QuestChoixInterface $choixUser, MailerFromTwig $myMailer): void
     {
         $myMailer->initEmail();
         $myMailer->setTemplate('mails/qualite-complete-etudiant.html.twig',
@@ -145,5 +146,21 @@ class Personnel extends AbstractTypeDestinataire implements TypeDestinataireInte
     public function getReponses(): ReponsesUser
     {
         return $this->abstractGetReponses('personnel');
+    }
+
+    public function sendRelanceIndividuelle(int $choix): void
+    {
+        $data = $this->questChoixPersonnelRepository->findOneBy(
+            [
+                'questionnaire' => $this->questionnaire,
+                'id' => $choix,
+            ]
+        );
+
+        if ($data !== null) {
+            $event = new QualiteRelanceEvent($this->questionnaire);
+            $event->setUser($data);
+            $this->eventDispatcher->dispatch($event, QualiteRelanceEvent::SEND_RELANCE);
+        }
     }
 }

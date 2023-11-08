@@ -34,6 +34,11 @@
                 </td>
                 <td>Envoyé
                     le {{ element.dateEnvoi|format_datetime('short','short') }}</td>
+            {% elseif element.envoye == null %}
+                <td>
+                    <span class="badge bg-danger">Non Envoyé</span>
+                </td>
+                <td>-</td>
             {% else %}
                 <td>
                     <span class="badge bg-warning">En cours</span>
