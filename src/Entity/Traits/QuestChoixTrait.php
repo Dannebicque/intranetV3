@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Traits/QuestChoixTrait.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2023 13:02
+ * @lastUpdate 08/11/2023 17:31
  */
 
 namespace App\Entity\Traits;
@@ -98,6 +98,6 @@ trait QuestChoixTrait
 
     public function commence(): bool
     {
-        return null !== $this->dateCommence;
+        return null !== $this->getDateCommence();
     }
 }

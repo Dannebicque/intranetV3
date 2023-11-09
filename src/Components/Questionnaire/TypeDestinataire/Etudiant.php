@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeDestinataire/Etudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/03/2023 14:52
+ * @lastUpdate 08/11/2023 17:47
  */
 
 namespace App\Components\Questionnaire\TypeDestinataire;
@@ -14,7 +14,6 @@ use App\Components\Questionnaire\DTO\ReponsesUser;
 use App\Components\Questionnaire\Interfaces\QuestChoixInterface;
 use App\Components\Questionnaire\Interfaces\TypeDestinataireInterface;
 use App\Entity\QuestChoixEtudiant;
-use App\Entity\QuestQuestionnaire;
 use App\Event\QualiteRelanceEvent;
 use App\Repository\EtudiantRepository;
 use App\Repository\QuestChoixEtudiantRepository;
@@ -119,7 +118,7 @@ class Etudiant extends AbstractTypeDestinataire implements TypeDestinataireInter
         return $this->choixUser;
     }
 
-    public function sendMail(QuestChoixInterface $choixUser, MailerFromTwig $myMailer): void
+    public function sendMailAccuse(QuestChoixInterface $choixUser, MailerFromTwig $myMailer): void
     {
         $myMailer->initEmail();
         $myMailer->setTemplate('mails/qualite-complete-etudiant.html.twig',
@@ -154,7 +153,7 @@ class Etudiant extends AbstractTypeDestinataire implements TypeDestinataireInter
         return $this->abstractGetAllReponses('etudiant');
     }
 
-    public function sendRelanceIndividuelle(int $choix, QuestQuestionnaire $questionnaire)
+    public function sendRelanceIndividuelle(int $choix): void
     {
         $data = $this->questChoixEtudiantRepository->findOneBy(
             [
