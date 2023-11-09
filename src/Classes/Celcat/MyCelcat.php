@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/11/2023 17:01
+ * @lastUpdate 09/11/2023 17:11
  */
 
 namespace App\Classes\Celcat;
@@ -191,7 +191,7 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
                 $event->setType(utf8_encode($type));
 
                 $event->setCodeModule(odbc_result($result, 7));
-                $event->setLibModule(utf8_encode(odbc_result($result, 8)));
+                $event->setLibModule((odbc_result($result, 8)));
                 if (array_key_exists($event->getCodeModule(), $this->tMatieres)) {
                     $event->setTypeMatiere($this->tMatieres[$event->getCodeModule()]->typeMatiere);
                     $event->setIdMatiere($this->tMatieres[$event->getCodeModule()]->id);
