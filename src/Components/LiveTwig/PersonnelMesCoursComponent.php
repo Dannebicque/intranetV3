@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/LiveTwig/PersonnelMesCoursComponent.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/10/2023 15:12
+ * @lastUpdate 09/11/2023 19:51
  */
 
 namespace App\Components\LiveTwig;
@@ -29,7 +29,7 @@ class PersonnelMesCoursComponent
     public ?Semestre $semestre = null;
 
     /** @var Previsionnel[] */
-    public ?array $previsionnels = [];
+    public array $previsionnels = [];
 
     public function __construct(
         protected DataUserSession $dataUserSession,
@@ -52,8 +52,12 @@ class PersonnelMesCoursComponent
 
     public function getPrevisionnelSemestre(): void
     {
-        $previs = $this->myPrevisionnel->getPrevisionnelPersonnelSemestre($this->dataUserSession->getUser(),
-            $this->semestre, $this->dataUserSession->getAnneePrevisionnel());
+        $previs = $this->myPrevisionnel->getPrevisionnelPersonnelSemestre(
+            $this->dataUserSession->getUser(),
+            $this->semestre, $this->dataUserSession->getAnneePrevisionnel()
+        );
+
+        $this->previsionnels = [];
 
         // filtre le tableau pour n'avoir qu'une seule fois les éléments
         foreach ($previs as $prev) {
