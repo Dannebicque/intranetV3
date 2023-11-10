@@ -48,6 +48,7 @@ class ParcoursController extends BaseController
                 'actif' => $apcParcours->getActif(),
                 'referentiel' => $apcParcours->getApcReferentiel()->getId(),
                 'niveaux' => $niveaux,
+                'formation_continue' => $apcParcours->isFormationContinue(),
             ];
         }
         return $this->json($tabApcParcours);
