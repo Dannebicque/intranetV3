@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2023 19:23
+ * @lastUpdate 09/11/2023 17:11
  */
 
 namespace App\Classes\Celcat;
 
+use App\Classes\GetSemestreFromGroupe;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Calendrier;
@@ -190,7 +191,7 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
                 $event->setType(utf8_encode($type));
 
                 $event->setCodeModule(odbc_result($result, 7));
-                $event->setLibModule(utf8_encode(odbc_result($result, 8)));
+                $event->setLibModule((odbc_result($result, 8)));
                 if (array_key_exists($event->getCodeModule(), $this->tMatieres)) {
                     $event->setTypeMatiere($this->tMatieres[$event->getCodeModule()]->typeMatiere);
                     $event->setIdMatiere($this->tMatieres[$event->getCodeModule()]->id);
@@ -236,7 +237,7 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
         $groupes = $this->groupeRepository->findAll();
         $this->tGroupes = [];
         foreach ($groupes as $groupe) {
-            $this->tGroupes[$groupe->getCodeApogee()] = $groupe->getTypeGroupe()?->getSemestre(); //todo: plusieurs semestre ?
+            $this->tGroupes[$groupe->getCodeApogee()] = GetSemestreFromGroupe::getSemestreFromGroupe($groupe);
         }
     }
 

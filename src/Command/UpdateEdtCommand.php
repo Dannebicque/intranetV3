@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Command/UpdateEdtCommand.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/10/2023 16:21
+ * @lastUpdate 09/11/2023 17:04
  */
 
 namespace App\Command;
@@ -37,8 +37,7 @@ class UpdateEdtCommand extends Command
         $io = new SymfonyStyle($input, $output);
 
         $diplomes = $this->diplomeRepository->findAllWithCelcat();
-        $annee = $this->anneeUniversitaireRepository->find(6); // todo: en argument
-
+        $annee = $this->anneeUniversitaireRepository->findActive();
 
         if (null !== $annee) {
             $this->myCelcat->getData($annee);
@@ -52,11 +51,11 @@ class UpdateEdtCommand extends Command
 
             $io->success('Emplois du temps synchronisés avec Celcat');
 
-            return (int)Command::SUCCESS;
+            return Command::SUCCESS;
         }
 
         $io->error('Aucune année universitaire trouvée');
 
-        return (int)Command::FAILURE;
+        return Command::FAILURE;
     }
 }

@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.47](https://github.com/Dannebicque/intranetV3/compare/v3.14.46...v3.14.47) (2023-11-09)
+
+
+### Bug Fixes
+
+* Semestre du groupe en fonction du parcours + Mise à jour du bon semestre dans Celcat ([12391d4](https://github.com/Dannebicque/intranetV3/commit/12391d4fb39babc6b6e5363485c5636dd075b770))
+
 ### [3.14.46](https://github.com/Dannebicque/intranetV3/compare/v3.14.45...v3.14.46) (2023-11-08)
 
 
