@@ -107,7 +107,7 @@
             <div class="card">
                 <header class="card-header">
                     <h4 class="card-title">{{ 'adm.apc.parcours.heading'|trans({ '%diplome%': diplome.libelle}) }}</h4>
-                    <div class="card-header-actions" style="">
+                    <div class="card-header-actions">
                 <span>
                     <a href="{{ path('administration_apc_parcours_new', {diplome:diplome.id}) }}" class="btn
                     btn-sm btn btn-info"
@@ -133,7 +133,7 @@
                     <div class="tab-content">
                         {% for parcour in parcours %}
                             <div class="tab-pane {% if loop.first %}fade active show{% endif %}" id="parcour_{{ parcour.id }}">
-                                {{ include('apc/_parcour.html.twig', {parcour: parcour}) }}
+                                {{ include('apc/_parcour.html.twig', {parcour: parcour, diplome:diplome}) }}
                             </div>
                         {% endfor %}
                     </div>
