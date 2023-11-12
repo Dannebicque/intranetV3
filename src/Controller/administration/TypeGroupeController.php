@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/TypeGroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/10/2023 18:23
+ * @lastUpdate 12/11/2023 18:15
  */
 
 namespace App\Controller\administration;
@@ -32,13 +32,17 @@ class TypeGroupeController extends BaseController
 {
     #[Route(path: '/liste/{semestre}', name: 'administration_type_groupe_liste_semestre', options: ['expose' => true], methods: ['GET'])]
     public function listeSemestre(
-        Semestre $semestre
-    ): Response {
+        SemestreRepository $semestreRepository,
+        Semestre           $semestre
+    ): Response
+    {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
         $diplome = $this->getDiplomeFromSemestre($semestre);
+        $semestres = $semestreRepository->findByDiplomeEtNumero($diplome, $semestre->getOrdreLmd());
 
         return $this->render('administration/type_groupe/_listeSemestre.html.twig', [
             'semestre' => $semestre,
+            'semestres' => $semestres,
             'diplome' => $diplome,
             'typeGroupes' => $semestre->getTypeGroupess(),
             'typeGroupeEnum' => TypeGroupeEnum::cases(),
@@ -52,7 +56,8 @@ class TypeGroupeController extends BaseController
     public function generationAutomatique(
         GenereTypeGroupe $genereTypeGroupe,
         Semestre $semestre
-    ): Response {
+    ): Response
+    {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
 
         $genereTypeGroupe->generer($semestre, $this->getDiplomeFromSemestre($semestre));
@@ -63,9 +68,10 @@ class TypeGroupeController extends BaseController
     #[Route(path: '/new/{semestre}', name: 'administration_type_groupe_new', options: ['expose' => true], methods: ['POST'])]
     public function new(
         SemestreRepository $semestreRepository,
-        Request $request,
+        Request  $request,
         Semestre $semestre
-    ): Response {
+    ): Response
+    {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
         $typeGroupe = new TypeGroupe($semestre);
         $typeGroupe->setLibelle(JsonRequest::getValueFromRequest($request, 'libelle'));
@@ -133,6 +139,42 @@ class TypeGroupeController extends BaseController
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
         $etat = Tools::convertToBool(JsonRequest::getValueFromRequest($request, 'mutualise'));
         $typegroupe->setMutualise($etat);
+        $this->entityManager->flush();
+
+        return new JsonResponse(true, Response::HTTP_OK);
+    }
+
+    #[Route(path: '/update-semestres/{typegroupe}',
+        name: 'administration_type_groupe_semestres',
+        options: ['expose' => true],
+        methods: ['POST'])]
+    public function updateSemestres(
+        SemestreRepository $semestreRepository,
+        Request            $request, TypeGroupe $typegroupe): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $typegroupe->getSemestres()->first());
+        $semestres = JsonRequest::getValueFromRequest($request, 'semestres');
+
+        $tSemestres = [];
+
+        foreach ($typegroupe->getSemestres() as $semestre) {
+            if (!in_array($semestre->getId(), $semestres)) {
+                $typegroupe->removeSemestre($semestre);
+                $semestre->removeTypeGroupess($typegroupe);
+            } else {
+                $tSemestres[] = $semestre->getId();
+            }
+        }
+
+        $semestres = array_diff($semestres, $tSemestres);
+        foreach ($semestres as $idSemestre) {
+            $semestre = $semestreRepository->find($idSemestre);
+            if ($semestre !== null) {
+                $typegroupe->addSemestre($semestre);
+                $semestre->addTypeGroupess($typegroupe);
+            }
+        }
+
         $this->entityManager->flush();
 
         return new JsonResponse(true, Response::HTTP_OK);

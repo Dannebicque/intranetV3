@@ -2,7 +2,7 @@
     <header class="card-header">
         <h4 class="card-title">{{ 'adm.typegroupe.semestre.index.heading'|trans }} {{ semestre.libelle }} |
             {{ diplome.displayCourt }}</h4>
-        <div class="card-header-actions" style="">
+        <div class="card-header-actions">
             <a class="btn btn-sm btn-primary"
                title="{{ 'generation.automatique'|trans }}"
                data-bs-toggle="tooltip"
@@ -21,6 +21,7 @@
                 <th>Type</th>
                 <th>Défauts?</th>
                 <th>Mutualisé?</th>
+                <th>Semestres</th>
                 <th></th>
             </tr>
             </thead>
@@ -39,8 +40,8 @@
                                 data-typegroupe="{{ tg.id }}">
                             <option value="" selected>Type de type de Groupe</option>
                             {% for type in typeGroupeEnum %}
-                                <option value="{{ type.value }}" {% if tg.type.value == type.value %}selected{% endif
-                                %}>
+                                <option value="{{ type.value }}"
+                                        {% if tg.type.value == type.value %}selected{% endif %}>
                                     {{ type.value }}
                                 </option>
                             {% endfor %}
@@ -68,6 +69,22 @@
                                    data-semestre="{{ semestre.id }}">
                             <span class="switch-indicator"></span>
                         </label>
+                    </td>
+                    <td>
+                        <label class="sr-only" for="semestres_{{ tg.id }}">Semestre par parcours</label>
+                        <select multiple class="form-select" id="semestres_{{ tg.id }}"
+                                name="semestres_{{ tg.id }}[]"
+                                data-typegroupe="{{ tg.id }}"
+                                {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
+                                data-action="change->groupes-adm#changeSemestres"
+                        >
+                            {% for sem in semestres %}
+                                <option value="{{ sem.id }}"
+                                        {% if tg.semestres.contains(sem) %}selected{% endif %}>
+                                    {{ sem.libelle }}
+                                </option>
+                            {% endfor %}
+                        </select>
                     </td>
                     <td class="text-right table-actions">
                         <a class="table-action hover-primary duplicate-type_groupe"
