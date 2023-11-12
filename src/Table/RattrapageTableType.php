@@ -1,23 +1,14 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/RattrapageTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 12/11/2023 11:32
  */
 
 namespace App\Table;
 
-use DavidAnnebicque\TableBundle\Adapter\EntityAdapter;
-use DavidAnnebicque\TableBundle\Column\DateColumnType;
-use DavidAnnebicque\TableBundle\Column\WidgetColumnType;
-use DavidAnnebicque\TableBundle\TableBuilder;
-use DavidAnnebicque\TableBundle\TableType;
-use DavidAnnebicque\TableBundle\Widget\Type\ButtonType;
-use DavidAnnebicque\TableBundle\Widget\Type\ExportDropdownType;
-use DavidAnnebicque\TableBundle\Widget\Type\RowDeleteLinkType;
-use DavidAnnebicque\TableBundle\Widget\WidgetBuilder;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
@@ -31,6 +22,15 @@ use App\Table\ColumnType\GroupeEtudiantColumnType;
 use App\Table\ColumnType\MatiereColumnType;
 use App\Table\ColumnType\PersonnelColumnType;
 use App\Table\ColumnType\StatusAbsenceColumnType;
+use DavidAnnebicque\TableBundle\Adapter\EntityAdapter;
+use DavidAnnebicque\TableBundle\Column\DateColumnType;
+use DavidAnnebicque\TableBundle\Column\WidgetColumnType;
+use DavidAnnebicque\TableBundle\TableBuilder;
+use DavidAnnebicque\TableBundle\TableType;
+use DavidAnnebicque\TableBundle\Widget\Type\ButtonType;
+use DavidAnnebicque\TableBundle\Widget\Type\ExportDropdownType;
+use DavidAnnebicque\TableBundle\Widget\Type\RowDeleteLinkType;
+use DavidAnnebicque\TableBundle\Widget\WidgetBuilder;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -99,7 +99,7 @@ class RattrapageTableType extends TableType
         ]);
         $builder->addColumn('heureEval', DateColumnType::class, [
             'order' => 'DESC',
-            'format' => 'h:i',
+            'format' => 'H:i',
             'label' => 'table.heure_evaluation',
             'translation_domain' => 'messages',
         ]);
