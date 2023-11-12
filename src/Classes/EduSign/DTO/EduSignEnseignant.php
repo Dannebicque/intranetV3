@@ -25,6 +25,7 @@ class EduSignEnseignant
      * "dontSendCredentials": false // false if you want to send an email with the credentials to the teacher
      * }
      */
+    public ?string $id = '';
     public ?string $firstname = '';
     public ?string $lastname = '';
     public ?string $email = '';
@@ -37,6 +38,7 @@ class EduSignEnseignant
     public function toArray(): array
     {
         return [
+            'ID' => $this->id,
             'FIRSTNAME' => $this->firstname,
             'LASTNAME' => $this->lastname,
             'EMAIL' => $this->email,

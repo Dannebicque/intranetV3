@@ -84,14 +84,14 @@ class ApiEduSign
 
     }
 
-    public function deleteCourse(EduSignCourse $course)
+    public function deleteCourse(EduSignCourse $course, string $cleApi)
     {
         $client = HttpClient::create();
 
         $response = $client->request('DELETE', 'https://ext.edusign.fr/v1/course/' . $course->id_edu_sign, [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $this->cleApi,
+                'Authorization' => 'Bearer ' . $cleApi,
             ],
         ]);
 
@@ -106,7 +106,7 @@ class ApiEduSign
 
     }
 
-    public function addGroupe(EduSignGroupe $groupe, $cleApi)
+    public function addGroupe(EduSignGroupe $groupe, string $cleApi)
     {
         $client = HttpClient::create();
 
@@ -150,14 +150,14 @@ class ApiEduSign
 
     }
 
-    public function deleteGroupe(EduSignGroupe $groupe)
+    public function deleteGroupe(EduSignGroupe $groupe, string $cleApi)
     {
         $client = HttpClient::create();
 
         $response = $client->request('DELETE', 'https://ext.edusign.fr/v1/group/' . $groupe->id_edu_sign, [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $this->cleApi,
+                'Authorization' => 'Bearer ' . $cleApi,
             ],
         ]);
 
@@ -236,6 +236,41 @@ class ApiEduSign
             $personnel->setIdEduSign($jsonId);
         }
         $this->personnelRepository->save($personnel);
+    }
+
+    public function getEnseignant(string $cleApi)
+    {
+        $client = HttpClient::create();
+
+        $response = $client->request('GET', 'https://ext.edusign.fr/v1/professor', [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $cleApi,
+            ]
+        ]);
+
+        $content = $response->getContent();
+        // convertit JSON en tableau associatif PHP
+        $data = json_decode($content, true);
+
+        $intervenants = "";
+        if (isset($data['result'])) {
+            $intervenants = $data['result'];
+        }
+        return $intervenants;
+    }
+
+    public function updateEnseignant(EduSignEnseignant $enseignant, string $cleApi)
+    {
+        $client = HttpClient::create();
+
+        $response = $client->request('PATCH', 'https://ext.edusign.fr/v1/professor/', [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $cleApi,
+            ],
+            'json' => ['professor' => $enseignant->toArray()],
+        ]);
     }
 
     public function getCourses(?string $id, string $cleApi)

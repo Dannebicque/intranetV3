@@ -32,7 +32,7 @@ class GetCourses
         protected SemestreRepository           $semestreRepository,
         protected PersonnelRepository          $personnelRepository,
         protected EtudiantRepository           $etudiantRepository,
-        protected UpdateEnseignant             $updateEnseignant,
+        protected CreateEnseignant             $updateEnseignant,
         protected DepartementRepository        $departementRepository,
         protected EdtPlanningRepository        $edtPlanningRepository,
         protected EdtCelcatRepository          $edtCelcatRepository,

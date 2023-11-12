@@ -2,35 +2,92 @@
 
 namespace App\Classes\EduSign;
 
-use App\Classes\EduSign\Adapter\IntranetEnseignantEduSignAdapter;
+use App\Classes\EduSign\DTO\EduSignEnseignant;
+use App\Repository\DiplomeRepository;
 use App\Repository\PersonnelRepository;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
-use Symfony\Contracts\EventDispatcher\Event;
 
 class UpdateEnseignant
 {
-
     public function __construct(
-        private readonly ApiEduSign $apiEduSign,
+        private readonly ApiEduSign   $apiEduSign,
         protected PersonnelRepository $personnelRepository,
-        private EventDispatcherInterface $eventDispatcher
+        protected DiplomeRepository   $diplomeRepository,
+        protected EduSignEnseignant   $edusignEnseignant,
     )
     {
     }
 
-    public function setUpdateManager(UpdateManager $updateManager): void
+    public function update()
     {
-        $this->updateManager = $updateManager;
-    }
+        $diplomes = $this->diplomeRepository->findAllWithEduSign();
 
-    public function update($personnel, $departement, $cleApi)
-    {
-        //construit les objets associés selon le modèle EduSign
-        $enseignant = (new IntranetEnseignantEduSignAdapter($personnel))->getEnseignant();
-        //envoi une requete pour ajouter les éléments
-        $this->apiEduSign->addEnseignant($enseignant, $personnel, $departement, $cleApi);
+        foreach ($diplomes as $diplome) {
+            $this->cleApi = $diplome->getKeyEduSign();
+            $intervenants = $this->apiEduSign->getEnseignant($this->cleApi);
 
-        // Dispatch Event here
-//        $this->eventDispatcher->dispatch(new EnseignantUpdatedEvent($enseignant));
+            foreach ($intervenants as $intervenant) {
+
+                $enseignant = $this->personnelRepository->findOneBy(['mailUniv' => $intervenant['EMAIL']]);
+
+                if ($enseignant === null) {
+                    $enseignant = $this->personnelRepository->findOneBy(['mailPerso' => $intervenant['EMAIL']]);
+                    if ($enseignant === null) {
+                        dump('enseignant non trouvé dans l\'intranet');
+                        dump($diplome->getSigle());
+                        dump($intervenant['FIRSTNAME'] . ' ' . $intervenant['LASTNAME']);
+                        dump($intervenant['EMAIL']);
+                        dump('-------------');
+                    }
+                }
+                if ($enseignant !== null) {
+                    if ($intervenant['API_ID'] !== '') {
+                        if ($intervenant['API_ID'] !== strval($enseignant->getId())) {
+                            dump('enseignant trouvé mais pas le bon');
+                        } else {
+                            dump('enseignant trouvé');
+                            dump($enseignant->getNom() . ' ' . $enseignant->getPrenom());
+                            dump('-------------');
+                        }
+
+                    } elseif ($intervenant['API_ID'] === '') {
+                        dump('enseignant trouvé mais pas d\'API_ID');
+                        // construire un objet EduSignEnseignant pour le passer en paramètre
+                        $this->edusignEnseignant->id = $intervenant['ID'];
+                        $this->edusignEnseignant->firstname = $enseignant->getPrenom();
+                        $this->edusignEnseignant->lastname = $enseignant->getNom();
+                        $this->edusignEnseignant->email = $intervenant['EMAIL'];
+                        $this->edusignEnseignant->speciality = null;
+                        $this->edusignEnseignant->api_id = $enseignant->getId();
+                        $this->edusignEnseignant->tags[] = null;
+
+                        $this->apiEduSign->updateEnseignant($this->edusignEnseignant, $this->cleApi);
+
+                        dump('enseignant mis à jour' . $enseignant->getNom() . ' ' . $enseignant->getPrenom());
+
+                    }
+                    $departement = $diplome->getDepartement();
+                    $departementId = $departement->getId();
+
+                    // Si departement fait partie des départements d'un enseignant
+                    $existingIdEduSign = $enseignant->getIdEduSign();
+
+                    if ($existingIdEduSign === null || !array_key_exists($departementId, $existingIdEduSign)) {
+
+                        $jsonId = [$departementId => $intervenant['ID']];
+
+                        if ($existingIdEduSign === null) {
+                            // Si idEduSign est null, le définir comme le nouveau tableau $jsonId
+                            $enseignant->setIdEduSign($jsonId);
+                        } else {
+                            // Autrement, ajoute le nouveau tableau $jsonId à l'ancien tableau $existingIdEduSign
+                            $enseignant->setIdEduSign($existingIdEduSign + $jsonId);
+                        }
+
+                        $this->personnelRepository->save($enseignant);
+                        dump('enseignant mis à jour dans l\'intranet ' . $enseignant->getNom() . ' ' . $enseignant->getPrenom());
+                    }
+                }
+            }
+        }
     }
 }
