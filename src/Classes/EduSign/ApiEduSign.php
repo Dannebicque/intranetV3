@@ -258,7 +258,6 @@ class ApiEduSign
         if (isset($data['result'])) {
             $course = $data['result'];
         }
-
         return $course;
     }
 }
