@@ -4,12 +4,13 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/TrombinoscopeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/08/2023 08:48
+ * @lastUpdate 12/11/2023 15:04
  */
 
 namespace App\Controller;
 
 use App\Classes\Configuration;
+use App\Classes\GetGroupeFromSemestre;
 use App\Classes\MyExport;
 use App\Classes\MyExportListing;
 use App\Classes\MySerializer;
@@ -135,12 +136,12 @@ class TrombinoscopeController extends BaseController
 
         $groupes = null;
         if (null !== $typegroupe) {
-            $groupes = $groupeRepository->findByTypeGroupe($typegroupe);
+            $groupes = GetGroupeFromSemestre::GetGroupeFromSemestre($semestre, $typegroupe);
         } else {
             foreach ($typeGroupes as $typeGroupe) {
                 if (true === $typeGroupe->getDefaut()) {
                     $typegroupe = $typeGroupe;
-                    $groupes = $typeGroupe->getGroupes();
+                    $groupes = GetGroupeFromSemestre::GetGroupeFromSemestre($semestre, $typegroupe);
                 }
             }
         }
