@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/UpdateEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/11/2023 07:28
+ * @lastUpdate 13/11/2023 21:17
  */
 
 namespace App\Classes\EduSign;
@@ -57,8 +57,8 @@ class UpdateEdt
             $semestres = $this->semestreRepository->findByDiplome($diplome);
             foreach ($semestres as $semestre) {
 
-                $today = Carbon::create('yesterday');
-                $saturday = Carbon::create('next saturday');
+                $today = Carbon::today();
+                $saturday = $today->next('saturday');
                 $semaineReelle = date('W');
 
                 $eventSemaine = $this->CalendrierRepository->findOneBy(['semaineReelle' => $semaineReelle, 'anneeUniversitaire' => $semestre->getAnneeUniversitaire()]);
