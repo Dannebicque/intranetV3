@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcParcoursNiveauController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/08/2022 18:25
+ * @lastUpdate 10/11/2023 11:49
  */
 
 namespace App\Controller\administration\apc;
@@ -13,6 +13,7 @@ use App\Controller\BaseController;
 use App\Entity\ApcNiveau;
 use App\Entity\ApcParcours;
 use App\Entity\ApcParcoursNiveau;
+use App\Entity\Diplome;
 use App\Repository\ApcComptenceRepository;
 use App\Repository\ApcParcoursNiveauRepository;
 use Symfony\Component\HttpFoundation\Response;
@@ -45,8 +46,13 @@ class ApcParcoursNiveauController extends BaseController
         return $this->json(true);
     }
 
-    #[Route(path: '/configuration/{parcours}', name: 'apc_parcours_niveau_new', methods: ['GET', 'POST'])]
-    public function new(ApcParcoursNiveauRepository $apcParcoursNiveauRepository, ApcComptenceRepository $apcComptenceRepository, ApcParcours $parcours): Response
+    #[Route(path: '/configuration/{parcours}/{diplome}', name: 'apc_parcours_niveau_new', methods: ['GET', 'POST'])]
+    public function new(
+        ApcParcoursNiveauRepository $apcParcoursNiveauRepository,
+        ApcComptenceRepository      $apcComptenceRepository,
+        ApcParcours                 $parcours,
+        Diplome                     $diplome
+    ): Response
     {
         $competences = $apcComptenceRepository->findByReferentiel($parcours->getApcReferentiel());
         $tabNiveaux = $apcParcoursNiveauRepository->findNiveauByParcoursArray($parcours);
@@ -55,6 +61,7 @@ class ApcParcoursNiveauController extends BaseController
             'parcours' => $parcours,
             'comptences' => $competences,
             'tabNiveauxId' => $tabNiveaux,
+            'diplome' => $diplome
         ]);
     }
 }

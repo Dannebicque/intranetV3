@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/groupes-adm_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 29/01/2023 10:38
+// @lastUpdate 12/11/2023 18:15
 
 import { Controller } from '@hotwired/stimulus'
 import Routing from 'fos-router'
@@ -66,7 +66,6 @@ export default class extends Controller {
   }
 
   async updateGroupe(e) {
-    console.log(e.params)
     post(Routing.generate('administration_groupe_ajax_edit', { id: e.params.id }), {
       field: e.params.field,
       value: e.currentTarget.value,
@@ -92,16 +91,7 @@ export default class extends Controller {
       && document.getElementById('groupe_ordre').value.trim() !== '') {
       const { semestre } = e.currentTarget.dataset
       const data = new FormData($('#form_groupe')[0])
-      // post(
-      //   Routing.generate('administration_groupe_new', { semestre }),
-      //
-      //     data
-      //   },
-      // ).then(() => {
-      //   this._listeGroupe()
-      //   addCallout('Mise à jour du parcours associé au groupe', 'success')
-      //
-      // })
+
       $.ajax({
         url: Routing.generate('administration_groupe_new', { semestre }),
         data,
@@ -140,7 +130,6 @@ export default class extends Controller {
   }
 
   addTypeGroupe(e) {
-    console.log('add')
     e.preventDefault()
     if (document.getElementById('typegroupe_libelle').value.trim() !== ''
       && document.getElementById('typegroupe_type').value.trim() !== '') {
@@ -202,6 +191,23 @@ export default class extends Controller {
       semestre,
       typegroupe: e.currentTarget.dataset.type_groupe,
     }), { mutualise: e.currentTarget.value }).then(() => {
+      addCallout('Type de groupe mutualisé enregistrée', 'success')
+    }).catch(() => {
+      addCallout('Erreur lors de l\'enregistrement', 'danger')
+    })
+  }
+
+  async changeSemestres(e) {
+    console.log(e)
+    console.log(e.target.tomselect.items)
+
+    const { typegroupe } = e.currentTarget.dataset
+    e.preventDefault()
+    e.stopPropagation()
+
+    post(Routing.generate('administration_type_groupe_semestres', {
+      typegroupe,
+    }), { semestres: e.target.tomselect.items }).then(() => {
       addCallout('Type de groupe mutualisé enregistrée', 'success')
     }).catch(() => {
       addCallout('Erreur lors de l\'enregistrement', 'danger')

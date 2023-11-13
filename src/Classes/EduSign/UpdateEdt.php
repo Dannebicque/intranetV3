@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/UpdateEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/08/2023 14:42
+ * @lastUpdate 13/11/2023 07:28
  */
 
 namespace App\Classes\EduSign;
@@ -118,6 +118,8 @@ class UpdateEdt
     public function sendUpdate(): void
     {
         $course = (new IntranetEdtEduSignAdapter($this->evenement))->getCourse();
-        $this->apiEduSign->addCourse($course, $this->cleApi);
+        if ($course !== null) {
+            $this->apiEduSign->addCourse($course, $this->cleApi);
+        }
     }
 }

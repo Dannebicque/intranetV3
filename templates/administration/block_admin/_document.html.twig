@@ -1,15 +1,17 @@
 <div class="col-md-6 col-lg-6 col-sm-12">
     <div class="card administration">
-        <header class="card-header">
+        <header class="card-header" style="justify-content: space-between">
+            <div class="card-header-actions" style="">
                 <i class="fa-solid fa-file-lines fa-2x"></i>
                 <h2 class="card-title">{{ 'adm.documents'|trans }}</h2>
+            </div>
 
-{#            <div class="card-header-actions" style="">#}
-{#                <a href="{{ path('administration_document_new') }}" class="btn btn-sm btn-info"#}
-{#                   title="Ajouter un document" data-bs-toggle="tooltip" data-bs-placement="bottom">#}
-{#                    <i class="fas fa-plus"></i><span#}
-{#                            class="sr-only">ajouter un document</span></a>#}
-{#            </div>#}
+            <div class="card-header-actions" style="">
+                <a href="{{ path('administration_document_new') }}" class="btn btn-sm btn-primary text-white"
+                   title="Ajouter un document" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                    <i class="fas fa-plus"></i><span
+                            class="sr-only">ajouter un document</span></a>
+            </div>
         </header>
 
         <div class="card-body">
@@ -20,17 +22,7 @@
                     <a href="{{ path('administration_type_document_index', {source:constant
                         ('App\\Entity\\Document::DOCUMENTS')}) }}">Gestion des catégories de documents</a>
                     <a href="{{ path('administration_document_new') }}">Ajouter un document</a>
-
-{#                    <a href="{{ path('administration_document_index', {source: constant#}
-{#                        ('App\\Entity\\Document::DOCUMENTS')}) }}"#}
-{#                       class="btn btn-primary"> {{ 'adm.gerer.les.documents'|trans }}</a>#}
                 </div>
-{#                <div class="col-12 d-grid d-block mb-2">#}
-{#                    <a href="{{ path('administration_type_document_index', {source:constant#}
-{#                        ('App\\Entity\\Document::DOCUMENTS')}) }}"#}
-{#                       class="btn btn-primary"> {{ 'adm.gerer.les.categories.de.document'|trans }}</a>#}
-
-{#                </div>#}
             </div>
         </div>
     </div>
