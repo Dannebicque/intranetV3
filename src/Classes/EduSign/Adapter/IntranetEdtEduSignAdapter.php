@@ -53,10 +53,12 @@ class IntranetEdtEduSignAdapter
 //        $this->course->professor_signature_2 = "http://example.com/signature2.png";
             $this->course->classroom = $edt->salle;
 
-            if ($edt->type_cours === 'TD') {
-                $this->course->school_group = [$edt->groupeObjet->getParent()?->getIdEduSign()];
-            } else {
-                $this->course->school_group = [$edt->groupeObjet->getIdEduSign()];
+            if ($edt->groupeObjet !== null) {
+                if ($edt->type_cours === 'TD') {
+                    $this->course->school_group = [$edt->groupeObjet->getParent()?->getIdEduSign()];
+                } else {
+                    $this->course->school_group = [$edt->groupeObjet->getIdEduSign()];
+                }
             }
 
             $this->course->max_students = 30;

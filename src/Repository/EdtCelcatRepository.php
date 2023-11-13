@@ -86,18 +86,19 @@ class EdtCelcatRepository extends ServiceEntityRepository
                 if ($i > 1) {
                     $this->chaine .= ' OR ';
                 }
-                $this->chaine .= 'p.codeGroupe = :gr'.$i;
+                $this->chaine .= 'p.codeGroupe = :gr' . $i;
 
-                $this->params['gr'.$i] = $groupe->getCodeApogee();
+                $this->params['gr' . $i] = $groupe->getCodeApogee();
                 ++$i;
             }
         }
     }
 
     public function deleteDepartement(
-        int $codeCelcatDepartement,
+        int                 $codeCelcatDepartement,
         ?AnneeUniversitaire $anneeUniversitaire
-    ): array|int {
+    ): array|int
+    {
         if (null === $anneeUniversitaire) {
             throw new InvalidArgumentException('L\'année universitaire n\'est pas définie');
         }
@@ -180,35 +181,48 @@ class EdtCelcatRepository extends ServiceEntityRepository
         return $t;
     }
 
-    public function findEdtSemestreSemaine(Semestre $semestre, int $semaineFormationIUT, AnneeUniversitaire $anneeUniversitaire): array
-    {
+//    public function findEdtSemestreSemaine(Semestre $semestre, int $semaineFormationIUT, AnneeUniversitaire $anneeUniversitaire): array
+//    {
+//        $query = $this->createQueryBuilder('p')
+//            ->innerJoin(Semestre::class, 's', 'WITH', 'p.semestre = s.id')
+//            ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
+//            ->where('p.semaineFormation = :semaine')
+//            ->andWhere('s.ordreLmd = :semestre')
+//            ->andWhere('p.anneeUniversitaire = :annee')
+//            ->andWhere('a.diplome = :diplome')
+//            ->setParameters([
+//                'semaine' => $semaineFormationIUT,
+//                'semestre' => $semestre->getOrdreLmd(),
+//                'annee' => $anneeUniversitaire->getId(),])
+//            ->setParameter('diplome', null !== $semestre->getDiplome()->getParent() ? $semestre->getDiplome()->getParent()->getId() : $semestre->getDiplome()->getId())
+//            ->orderBy('p.jour', Criteria::ASC)
+//            ->addOrderBy('p.debut', Criteria::ASC)
+//            ->addOrderBy('p.codeGroupe', Criteria::ASC);
+//
+//        return $query->getQuery()
+//            ->getResult();
+//    }
+
+public function findEdtSemestreSemaine(Semestre $semestre, int $semaineFormationIUT, AnneeUniversitaire $anneeUniversitaire) {
         $query = $this->createQueryBuilder('p')
-            ->innerJoin(Semestre::class, 's', 'WITH', 'p.semestre = s.id')
-            ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
-            ->where('p.semaineFormation = :semaine')
-            ->andWhere('s.ordreLmd = :semestre')
+            ->where('p.semestre = :semestre')
+            ->andwhere('p.semaineFormation = :semaine')
             ->andWhere('p.anneeUniversitaire = :annee')
             ->setParameters([
                 'semaine' => $semaineFormationIUT,
-                'semestre' => $semestre->getOrdreLmd(),
-                'annee' => $anneeUniversitaire->getId(), ])
+                'semestre' => $semestre,
+                'annee' => $anneeUniversitaire])
             ->orderBy('p.jour', Criteria::ASC)
             ->addOrderBy('p.debut', Criteria::ASC)
             ->addOrderBy('p.codeGroupe', Criteria::ASC);
 
-        $ors = [];
-        $diplome = $semestre->getDiplome()->getParent() ?? $semestre->getDiplome();
-        foreach ($diplome->getEnfants() as $dip) {
-            $ors[] = '('.$query->expr()->orx('a.diplome = '.$query->expr()->literal($dip->getId())).')';
-        }
-        $ors[] = '('.$query->expr()->orx('a.diplome = '.$query->expr()->literal($diplome->getId())).')';
-
-        return $query->andWhere(implode(' OR ', $ors))
-            ->getQuery()
+        return $query->getQuery()
             ->getResult();
-    }
 
-    public function findEdtEduSign() {
+}
+
+    public function findEdtEduSign()
+    {
         return $this->createQueryBuilder('p')
             ->where('p.idEduSign IS NOT NULL')
             ->getQuery()
