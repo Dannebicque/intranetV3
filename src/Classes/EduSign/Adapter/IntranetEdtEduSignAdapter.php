@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/Adapter/IntranetEdtEduSignAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/11/2023 07:26
+ * @lastUpdate 13/11/2023 07:28
  */
 
 namespace App\Classes\EduSign\Adapter;
@@ -15,7 +15,7 @@ use Carbon\Carbon;
 
 class IntranetEdtEduSignAdapter
 {
-    private ?EduSignCourse $course;
+    private ?EduSignCourse $course = null;
 
     /**
      * @param $edt
