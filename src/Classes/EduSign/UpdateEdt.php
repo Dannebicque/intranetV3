@@ -57,25 +57,19 @@ class UpdateEdt
             $semestres = $this->semestreRepository->findByDiplome($diplome);
             foreach ($semestres as $semestre) {
 
-                $today = Carbon::create('now');
+                $today = Carbon::create('yesterday');
                 $saturday = Carbon::create('next saturday');
                 $semaineReelle = date('W');
 
                 $eventSemaine = $this->CalendrierRepository->findOneBy(['semaineReelle' => $semaineReelle, 'anneeUniversitaire' => $semestre->getAnneeUniversitaire()]);
                 $semaine = $eventSemaine->getSemaineFormation();
 
-                $referentiel = $this->apcReferentielRepository->findOneBy(['id' => $semestre->getDiplome()->getReferentiel()]);
-
-                if ($referentiel !== null) {
-                    $matieres = $this->typeMatiereManager->findByReferentielOrdreSemestreArray($semestre, $referentiel);
-                    $matieresSemestre = [];
-                    foreach ($matieres as $matiere) {
-                        if ($matiere->getSemestres()->contains($semestre)) {
-                            $matieresSemestre[$matiere->getTypeIdMatiere()] = $matiere;
-                        }
+                $matieres = $this->typeMatiereManager->findBySemestre($semestre);
+                $matieresSemestre = [];
+                foreach ($matieres as $matiere) {
+                    if ($matiere->getSemestres()->contains($semestre)) {
+                        $matieresSemestre[$matiere->getTypeIdMatiere()] = $matiere;
                     }
-                } else {
-                    $matieresSemestre = [];
                 }
 
                 $groupes = $this->groupeRepository->findBySemestre($semestre);
@@ -85,9 +79,10 @@ class UpdateEdt
 
                 foreach ($edt->evenements as $this->evenement) {
 
-                    if (!($this->evenement->matiere === null || $this->evenement->matiere === "Inconnue" || $this->evenement->groupeObjet === null || $this->evenement->personnelObjet === null)) {
+                    if (!($this->evenement->matiere === null || $this->evenement->matiere === "Inconnue" || $this->evenement->groupeObjet === null || $this->evenement->personnelObjet === null || $this->evenement->semestre === null)) {
 
                         if ($this->evenement->dateObjet->isBetween($today, $saturday)) {
+
 
                             $course = (new IntranetEdtEduSignAdapter($this->evenement))->getCourse();
 

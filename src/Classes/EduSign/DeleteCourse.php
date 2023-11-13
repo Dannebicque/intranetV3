@@ -7,12 +7,14 @@ use App\Classes\EduSign\Adapter\IntranetEdtEduSignAdapter;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Repository\ApcReferentielRepository;
 use App\Repository\DepartementRepository;
+use App\Repository\DiplomeRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\SemestreRepository;
 use Carbon\Carbon;
 
 class DeleteCourse
 {
+    private ?string $cleApi;
 
     public function __construct(
         private readonly ApiEduSign        $apiEduSign,
@@ -22,42 +24,39 @@ class DeleteCourse
         protected ApcReferentielRepository $apcReferentielRepository,
         protected TypeMatiereManager       $typeMatiereManager,
         protected EdtManager               $edtManager,
+        protected DiplomeRepository        $diplomeRepository,
     )
     {
     }
 
     public function delete()
     {
-        $departements = $this->departementRepository->findActifs();
-        $semestres = [];
-        foreach ($departements as $departement) {
-            $semestreArrays = $this->semestreRepository->findByDepartementActifFc($departement);
-            foreach ($semestreArrays as $semestreArray) {
-                $semestres[] = $semestreArray;
-            }
-        }
+        $diplomes = $this->diplomeRepository->findAllWithEduSign();
 
-        foreach ($semestres as $semestre) {
+        foreach ($diplomes as $diplome) {
 
-            $referentiel = $this->apcReferentielRepository->findOneBy(['id' => $semestre->getDiplome()->getReferentiel()]);
+            $cleApi = $diplome->getKeyEduSign();
 
-            if ($referentiel !== null) {
+            $semestres = $this->semestreRepository->findByDiplome($diplome);
+            foreach ($semestres as $semestre) {
 
-                $matieres = $this->typeMatiereManager->findByReferentielOrdreSemestreArray($semestre, $referentiel);
+                $referentiel = $this->apcReferentielRepository->findOneBy(['id' => $semestre->getDiplome()->getReferentiel()]);
 
-            } else {
-                $matieres = [];
-            }
-//        $edt = $this->edtPlanningRepository->findEdtEduSign();
-            //récupère les edt de l'intranet depuis EdtManager.php
-            $edt = $this->edtManager->getPlanningEduSign($semestre, $matieres, $semestre->getAnneeUniversitaire() , []);
+                if ($referentiel !== null) {
 
-            foreach ($edt->evenements as $evenement) {
-                dump('------------');
-                $course = (new IntranetEdtEduSignAdapter($evenement))->getCourse();
-//                dump($course);
-//                die();
-                $this->apiEduSign->deleteCourse($course);
+                    $matieres = $this->typeMatiereManager->findByReferentielOrdreSemestreArray($semestre, $referentiel);
+                } else {
+                    $matieres = [];
+                }
+                //récupère les edt de l'intranet depuis EdtManager.php
+                $edt = $this->edtManager->getPlanningEduSign($semestre, $matieres, $semestre->getAnneeUniversitaire(), []);
+
+                foreach ($edt->evenements as $evenement) {
+                    dump('------------');
+                    $course = (new IntranetEdtEduSignAdapter($evenement))->getCourse();
+
+                    $this->apiEduSign->deleteCourse($course, $cleApi);
+                }
             }
         }
     }
