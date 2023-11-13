@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/PersonnelRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/01/2023 13:43
+ * @lastUpdate 13/11/2023 09:13
  */
 
 namespace App\Repository;
@@ -224,18 +224,18 @@ class PersonnelRepository extends ServiceEntityRepository
             ->groupBy('p.id');
     }
 
-    public function findByIdEdusign(string $cle): ?Personnel
-    {
-        return $this->createQueryBuilder('p')
-            ->where('p.idEduSign LIKE :cle')
-            ->setParameter('cle', '%'.$cle.'%')
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
-
     public function save(Personnel $personnel): void
     {
         $this->_em->persist($personnel);
         $this->_em->flush();
+    }
+
+    public function findByIdEdusign(string $cle): ?Personnel
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.idEduSign LIKE :cle')
+            ->setParameter('cle', '%' . $cle . '%')
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }
