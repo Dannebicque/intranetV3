@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.50](https://github.com/Dannebicque/intranetV3/compare/v3.14.49...v3.14.50) (2023-11-13)
+
+
+### Bug Fixes
+
+* calcul date de départ à minuit + une semaine ([6c7b17e](https://github.com/Dannebicque/intranetV3/commit/6c7b17e562c4cca82a8d6091c28e43a61a3b8251))
+* doublons de méthode suite commit ([9482fde](https://github.com/Dannebicque/intranetV3/commit/9482fdeaf4ac44f9c81bd1cf7fb4549dc193b3cf))
+* semestre null sur EDT ([c6f0c3c](https://github.com/Dannebicque/intranetV3/commit/c6f0c3ce1afee59ed07c02936b71ad71b6ac5798))
+* semestre null sur EDT ([fb4e236](https://github.com/Dannebicque/intranetV3/commit/fb4e2361bae280a30352b04a6641cde87e1aa50b))
+
 ### [3.14.49](https://github.com/Dannebicque/intranetV3/compare/v3.14.48...v3.14.49) (2023-11-12)
 
 
