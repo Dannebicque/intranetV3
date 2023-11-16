@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/EvenementEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/10/2023 07:03
+ * @lastUpdate 16/11/2023 20:12
  */
 
 namespace App\DTO;
@@ -166,7 +166,7 @@ class EvenementEdt
         return $this->isEvaluation(false) . '<br />' . $this->salle . '<br />' . $inter . '<br />' . $this->groupe;
     }
 
-    public function isEvaluation(bool $long = true): string
+    public function isEvaluation(bool $long = true): ?string
     {
         if (null === $this->typeIdMatiere || '_0' === $this->typeIdMatiere) {
             $matiere = $this->texte;
