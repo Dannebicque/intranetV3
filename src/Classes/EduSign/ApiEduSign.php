@@ -48,7 +48,7 @@ class ApiEduSign
         $response = $client->request('POST', 'https://ext.edusign.fr/v1/course', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $this->cleApi,
+                'Authorization' => 'Bearer ' . $cleApi,
             ],
             'json' => ['course' => $course->toArray()],
         ]);
@@ -90,7 +90,7 @@ class ApiEduSign
         $response = $client->request('PATCH', 'https://ext.edusign.fr/v1/professor/', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $this->cleApi,
+                'Authorization' => 'Bearer ' . $cleApi,
             ],
             'json' => ['course' => $course->toArray()],
         ]);
@@ -103,7 +103,7 @@ class ApiEduSign
         $response = $client->request('GET', 'https://ext.edusign.fr/v1/course/' . $id, [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $this->cleApi,
+                'Authorization' => 'Bearer ' . $cleApi,
             ]
         ]);
 
@@ -149,7 +149,7 @@ class ApiEduSign
         $response = $client->request('DELETE', 'https://ext.edusign.fr/v1/course/' . $course->id_edu_sign, [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $this->cleApi,
+                'Authorization' => 'Bearer ' . $cleApi,
             ],
         ]);
 
@@ -171,7 +171,7 @@ class ApiEduSign
         $response = $client->request('POST', 'https://ext.edusign.fr/v1/group', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $this->cleApi,
+                'Authorization' => 'Bearer ' . $cleApi,
             ],
             'json' => ['group' => $groupe->toArray()],
         ]);
@@ -215,7 +215,7 @@ class ApiEduSign
         $response = $client->request('DELETE', 'https://ext.edusign.fr/v1/group/' . $groupe->id_edu_sign, [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $this->cleApi,
+                'Authorization' => 'Bearer ' . $cleApi,
             ],
         ]);
 
@@ -236,7 +236,7 @@ class ApiEduSign
         $response = $client->request('POST', 'https://ext.edusign.fr/v1/student', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $this->cleApi,
+                'Authorization' => 'Bearer ' . $cleApi,
             ],
             'json' => ['student' => $etudiant->toArray()],
         ]);
@@ -268,7 +268,7 @@ class ApiEduSign
         $response = $client->request('POST', 'https://ext.edusign.fr/v1/professor', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $this->cleApi,
+                'Authorization' => 'Bearer ' . $cleApi,
             ],
             'json' => ['professor' => $enseignant->toArray(), 'dontSendCredentials' => $enseignant->dontSendCredentials],
         ]);
@@ -303,7 +303,7 @@ class ApiEduSign
         $response = $client->request('GET', 'https://ext.edusign.fr/v1/professor', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $this->cleApi,
+                'Authorization' => 'Bearer ' . $cleApi,
             ]
         ]);
 
@@ -325,7 +325,7 @@ class ApiEduSign
         $response = $client->request('PATCH', 'https://ext.edusign.fr/v1/professor/', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $this->cleApi,
+                'Authorization' => 'Bearer ' . $cleApi,
             ],
             'json' => ['professor' => $enseignant->toArray()],
         ]);
