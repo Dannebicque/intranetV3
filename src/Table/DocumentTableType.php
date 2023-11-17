@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/DocumentTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/01/2023 17:48
+ * @lastUpdate 17/11/2023 10:14
  */
 
 namespace App\Table;
@@ -60,7 +60,7 @@ class DocumentTableType extends TableType
             $this->base_url = 'sa_qualite_documents_';
             $builder->addFilter('typeDocument', EntityType::class, [
                 'class' => TypeDocument::class,
-                'query_builder' => fn (TypeDocumentRepository $repository) => $repository->findByOriginauxBuilder(),
+                'query_builder' => fn(TypeDocumentRepository $repository) => $repository->findByOriginauxBuilder(),
                 'choice_label' => 'libelle',
                 'label' => 'Type de document',
                 'required' => false,
@@ -74,14 +74,14 @@ class DocumentTableType extends TableType
         } else {
             $builder->addFilter('semestres', EntityType::class, [
                 'class' => Semestre::class,
-                'query_builder' => fn (SemestreRepository $repository) => $repository->findByDepartementBuilder($this->departement),
+                'query_builder' => fn(SemestreRepository $repository) => $repository->findByDepartementBuilder($this->departement),
                 'choice_label' => 'display',
                 'label' => 'Semestre(s)',
                 'required' => false,
             ]);
             $builder->addFilter('typeDocument', EntityType::class, [
                 'class' => TypeDocument::class,
-                'query_builder' => fn (TypeDocumentRepository $repository) => $repository->findByDepartementBuilder($this->departement),
+                'query_builder' => fn(TypeDocumentRepository $repository) => $repository->findByDepartementBuilder($this->departement),
                 'choice_label' => 'libelle',
                 'label' => 'Type de document',
                 'required' => false,
@@ -94,7 +94,7 @@ class DocumentTableType extends TableType
             ]);
         }
 
-        $builder->setLoadUrl($this->base_url.'index', ['source' => $this->source]);
+        $builder->setLoadUrl($this->base_url . 'index', ['source' => $this->source]);
 
         $builder->addWidget('export', ExportDropdownType::class, [
             'route' => 'administration_document_export',
@@ -123,29 +123,29 @@ class DocumentTableType extends TableType
         $builder->addColumn('links', WidgetColumnType::class, [
             'build' => function (WidgetBuilder $builder, Document $s) {
                 $builder->add('duplicate', RowDuplicateLinkType::class, [
-                    'route' => $this->base_url.'duplicate',
+                    'route' => $this->base_url . 'duplicate',
                     'route_params' => ['id' => $s->getUuidString(), 'source' => $this->source],
                     'xhr' => false,
                 ]);
                 $builder->add('show', RowShowLinkType::class, [
-                    'route' => $this->base_url.'show',
+                    'route' => $this->base_url . 'show',
                     'route_params' => [
                         'id' => $s->getUuidString(), 'source' => $this->source,
                     ],
                     'xhr' => false,
                 ]);
                 $builder->add('edit', RowEditLinkType::class, [
-                    'route' => $this->base_url.'edit',
+                    'route' => $this->base_url . 'edit',
                     'route_params' => [
                         'id' => $s->getUuidString(), 'source' => $this->source,
                     ],
                     'xhr' => false,
                 ]);
                 $builder->add('delete', RowDeleteLinkType::class, [
-                    'route' => $this->base_url.'delete',
+                    'route' => $this->base_url . 'delete',
                     'route_params' => ['id' => $s->getUuidString(), 'source' => $this->source],
                     'attr' => [
-                        'data-csrf' => $this->csrfToken->getToken('delete'.$s->getUuidString()),
+                        'data-csrf' => $this->csrfToken->getToken('delete' . $s->getUuidString()),
                     ],
                 ]);
             },
@@ -156,11 +156,12 @@ class DocumentTableType extends TableType
             'fetch_join_collection' => false,
             'query' => function (QueryBuilder $qb, array $formData) {
                 if (Document::DOCUMENTS === $this->source) {
-                    $qb->innerJoin('e.semestres', 'c')// récupération de la jointure dans la table dédiée
+                    $qb->join('e.semestres', 'c')// récupération de la jointure dans la table dédiée
                     ->innerJoin(Semestre::class, 's', 'WITH', 'c.id = s.id')
-                        ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
+                        ->innerJoin(Annee::class, 'a', 'WITH', 'c.annee = a.id')
                         ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
                         ->where('d.departement = :departement')
+                        ->distinct(true)
                         ->setParameter('departement', $this->departement->getId());
                 } else {
                     $qb->innerJoin(TypeDocument::class, 't', 'WITH', 'e.typeDocument = t.id')
@@ -170,7 +171,7 @@ class DocumentTableType extends TableType
                 if (isset($formData['search'])) {
                     $qb->andWhere('LOWER(e.libelle) LIKE :search');
                     $qb->orWhere('LOWER(e.libelle) LIKE :search');
-                    $qb->setParameter('search', '%'.$formData['search'].'%');
+                    $qb->setParameter('search', '%' . $formData['search'] . '%');
                 }
 
                 if (isset($formData['typeDocument'])) {
