@@ -55,7 +55,9 @@ class DeleteCourse
                     dump('------------');
                     $course = (new IntranetEdtEduSignAdapter($evenement))->getCourse();
 
-                    $this->apiEduSign->deleteCourse($course, $cleApi);
+                    if ($course !== null) {
+                        $this->apiEduSign->deleteCourse($course, $cleApi);
+                    }
                 }
             }
         }
