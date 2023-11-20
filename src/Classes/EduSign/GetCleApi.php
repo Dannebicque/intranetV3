@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/GetCleApi.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/11/2023 08:52
+ * @lastUpdate 20/11/2023 09:08
  */
 
 namespace App\Classes\EduSign;
@@ -22,10 +22,8 @@ class GetCleApi
     {
         // détection de l'environnement, si 'dev' alors prendre la clé dans le fichier .env.local, sinon prendre la clé passé en paramètre
         if ('dev' === $this->parameterBag->get('APP_ENV')) {
-            dd($this->parameterBag->get('API_EDUSIGN'));
             return $this->parameterBag->get('API_EDUSIGN');
         }
-        dd($cle);
         return $cle;
     }
 }
