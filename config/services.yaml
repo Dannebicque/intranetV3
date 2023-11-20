@@ -7,6 +7,8 @@ parameters:
   router.request_context.scheme: 'https'
   locale: fr
   BASE_URL: '%env(resolve:BASE_URL)%'
+  APP_ENV: '%env(resolve:APP_ENV)%'
+  API_EDUSIGN: '%env(resolve:API_EDUSIGN)%'
   apogee.login: '%env(resolve:APOGEE_LOGIN)%'
   apogee.password: '%env(resolve:APOGEE_PASSWORD)%'
   apogee.string: '%env(resolve:APOGEE_STRING)%'
