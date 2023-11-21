@@ -229,6 +229,28 @@ public function findEdtSemestreSemaine(Semestre $semestre, int $semaineFormation
             ->getResult();
     }
 
+    public function findOneCours($date, $debut, $fin, $salle, $personnel)
+    {
+        $debut = $debut->format('H:i:s');
+        $fin = $fin->format('H:i:s');
+
+        return $this->createQueryBuilder('p')
+            ->where('p.dateCours = :date')
+            ->andWhere('p.debut LIKE :debut')
+            ->andWhere('p.fin LIKE :fin')
+            ->andWhere('p.libSalle = :salle')
+            ->andWhere('p.personnel = :personnel')
+            ->setParameters([
+                'date' => $date,
+                'debut' => '%'.$debut.'%',
+                'fin' => '%'.$fin.'%',
+                'salle' => $salle,
+                'personnel' => $personnel,
+            ])
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
     public function save(EdtCelcat $edtCelcat): void
     {
         $this->_em->persist($edtCelcat);

@@ -29,14 +29,14 @@ class ApiEduSign
     private string $cleApi;
 
     public function __construct(
+        ParameterBagInterface           $parameterBag,
+        protected PersonnelRepository   $personnelRepository,
+        protected EdtPlanningRepository $edtPlanningRepository,
+        protected EdtCelcatRepository   $edtCelcatRepository,
+        protected SemestreRepository    $semestreRepository,
+        protected GroupeRepository      $groupeRepository,
+        protected EtudiantRepository    $etudiantRepository,
         protected GetCleApi $getCleApi,
-        ParameterBagInterface            $parameterBag,
-        protected PersonnelRepository    $personnelRepository,
-        protected EdtPlanningRepository  $edtPlanningRepository,
-        protected EdtCelcatRepository  $edtCelcatRepository,
-        protected SemestreRepository     $semestreRepository,
-        protected GroupeRepository       $groupeRepository,
-        protected EtudiantRepository     $etudiantRepository,
     )
     {
         $this->cleApi = $parameterBag->get('api_edu_sign');
@@ -82,7 +82,65 @@ class ApiEduSign
             $edt->setIdEduSign($id);
             $rep->save($edt);
         }
+    }
 
+    public function updateCourse(EduSignCourse $course, string $cleApi)
+    {
+        $client = HttpClient::create();
+
+        $response = $client->request('PATCH', 'https://ext.edusign.fr/v1/professor/', [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $cleApi,
+            ],
+            'json' => ['course' => $course->toArray()],
+        ]);
+    }
+
+    public function getCourses(?string $id, string $cleApi)
+    {
+        $client = HttpClient::create();
+
+        $response = $client->request('GET', 'https://ext.edusign.fr/v1/course/' . $id, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $cleApi,
+            ]
+        ]);
+
+        $statusCode = $response->getStatusCode();
+        $content = $response->getContent();
+        // convertit JSON en tableau associatif PHP
+        $data = json_decode($content, true);
+
+        $course = "";
+        if (isset($data['result'])) {
+            $course = $data['result'];
+        }
+        return $course;
+    }
+
+    public function getAllCourses(string $cleApi)
+    {
+        $client = HttpClient::create();
+
+        $response = $client->request('GET', 'https://ext.edusign.fr/v1/course', [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $cleApi,
+            ]
+        ]);
+
+        $statusCode = $response->getStatusCode();
+        $content = $response->getContent();
+        // convertit JSON en tableau associatif PHP
+        $data = json_decode($content, true);
+
+        $courses = "";
+        if (isset($data['result'])) {
+            $courses = $data['result'];
+        }
+        return $courses;
     }
 
     public function deleteCourse(EduSignCourse $course, string $cleApi)
@@ -273,6 +331,7 @@ class ApiEduSign
             'json' => ['professor' => $enseignant->toArray()],
         ]);
     }
+
 
     public function getCourses(?string $id, string $cleApi)
     {
