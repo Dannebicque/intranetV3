@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/ApiEduSign.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/11/2023 07:30
+ * @lastUpdate 20/11/2023 08:52
  */
 
 namespace App\Classes\EduSign;
@@ -36,6 +36,7 @@ class ApiEduSign
         protected SemestreRepository    $semestreRepository,
         protected GroupeRepository      $groupeRepository,
         protected EtudiantRepository    $etudiantRepository,
+        protected GetCleApi $getCleApi,
     )
     {
         $this->cleApi = $parameterBag->get('api_edu_sign');
@@ -48,7 +49,7 @@ class ApiEduSign
         $response = $client->request('POST', 'https://ext.edusign.fr/v1/course', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $cleApi,
+                'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
             ],
             'json' => ['course' => $course->toArray()],
         ]);
@@ -149,7 +150,7 @@ class ApiEduSign
         $response = $client->request('DELETE', 'https://ext.edusign.fr/v1/course/' . $course->id_edu_sign, [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $cleApi,
+                'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
             ],
         ]);
 
@@ -171,7 +172,7 @@ class ApiEduSign
         $response = $client->request('POST', 'https://ext.edusign.fr/v1/group', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $cleApi,
+                'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
             ],
             'json' => ['group' => $groupe->toArray()],
         ]);
@@ -215,7 +216,7 @@ class ApiEduSign
         $response = $client->request('DELETE', 'https://ext.edusign.fr/v1/group/' . $groupe->id_edu_sign, [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $cleApi,
+                'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
             ],
         ]);
 
@@ -236,7 +237,7 @@ class ApiEduSign
         $response = $client->request('POST', 'https://ext.edusign.fr/v1/student', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $cleApi,
+                'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
             ],
             'json' => ['student' => $etudiant->toArray()],
         ]);
@@ -268,7 +269,7 @@ class ApiEduSign
         $response = $client->request('POST', 'https://ext.edusign.fr/v1/professor', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $cleApi,
+                'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
             ],
             'json' => ['professor' => $enseignant->toArray(), 'dontSendCredentials' => $enseignant->dontSendCredentials],
         ]);
@@ -303,7 +304,7 @@ class ApiEduSign
         $response = $client->request('GET', 'https://ext.edusign.fr/v1/professor', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $cleApi,
+                'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
             ]
         ]);
 
@@ -325,10 +326,33 @@ class ApiEduSign
         $response = $client->request('PATCH', 'https://ext.edusign.fr/v1/professor/', [
             'headers' => [
                 'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $cleApi,
+                'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
             ],
             'json' => ['professor' => $enseignant->toArray()],
         ]);
     }
 
+
+    public function getCourses(?string $id, string $cleApi)
+    {
+        $client = HttpClient::create();
+
+        $response = $client->request('GET', 'https://ext.edusign.fr/v1/course/' . $id, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
+            ]
+        ]);
+
+        $statusCode = $response->getStatusCode();
+        $content = $response->getContent();
+        // convertit JSON en tableau associatif PHP
+        $data = json_decode($content, true);
+
+        $course = "";
+        if (isset($data['result'])) {
+            $course = $data['result'];
+        }
+        return $course;
+    }
 }

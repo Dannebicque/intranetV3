@@ -68,11 +68,21 @@ class UpdateEnseignant
                     $departement = $diplome->getDepartement();
                     $departementId = $departement->getId();
 
-                    // Si departement fait partie des départements d'un enseignant
+
                     $existingIdEduSign = $enseignant->getIdEduSign();
 
-                    if ($existingIdEduSign === null || !array_key_exists($departementId, $existingIdEduSign)) {
+// Supprimer les entrées avec des valeurs nulles
+                    if($existingIdEduSign !== null) {
+                        foreach($existingIdEduSign as $key => $value) {
+                            if($value === null || $value === '') {
+                                unset($existingIdEduSign[$key]);
+                            }
+                        }
+                        $enseignant->setIdEduSign($existingIdEduSign);
+                        $this->personnelRepository->save($enseignant);
+                    }
 
+                    if ($existingIdEduSign === null || !array_key_exists($departementId, $existingIdEduSign)) {
                         $jsonId = [$departementId => $intervenant['ID']];
 
                         if ($existingIdEduSign === null) {

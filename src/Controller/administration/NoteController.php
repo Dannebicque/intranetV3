@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/NoteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/11/2022 11:06
+ * @lastUpdate 19/11/2023 14:21
  */
 
 namespace App\Controller\administration;
@@ -48,6 +48,14 @@ class NoteController extends BaseController
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
 
         return $notesExport->exportXlsToutesLesNotes($semestre, $this->getAnneeUniversitaire());
+    }
+
+    #[Route(path: '/all/semestre-parcours/{semestre}/export.{_format}', name: 'administration_all_notes_parcours_export', requirements: ['_format' => 'csv|xlsx|pdf'], methods: 'GET')]
+    public function exportAllNotesParcours(NotesExport $notesExport, Semestre $semestre, string $_format): ?Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre);
+
+        return $notesExport->exportXlsToutesLesNotesParcours($semestre, $this->getAnneeUniversitaire());
     }
 
     public function analyse(
