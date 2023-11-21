@@ -54,8 +54,12 @@ class IntranetEdtEduSignAdapter
             $this->course->classroom = $edt->salle;
 
             if ($edt->groupeObjet !== null) {
-                if ($edt->type_cours === 'TD') {
-                    $this->course->school_group = [$edt->groupeObjet->getParent()?->getIdEduSign()];
+                if ($edt->source === 'intranet') {
+                    if ($edt->type_cours === 'TD') {
+                        $this->course->school_group = [$edt->groupeObjet->getParent()?->getIdEduSign()];
+                    } else {
+                        $this->course->school_group = [$edt->groupeObjet->getIdEduSign()];
+                    }
                 } else {
                     $this->course->school_group = [$edt->groupeObjet->getIdEduSign()];
                 }
