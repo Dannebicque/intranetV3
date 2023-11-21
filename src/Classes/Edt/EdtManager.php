@@ -21,6 +21,8 @@ use App\Entity\Groupe;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Enums\TypeGroupeEnum;
+use App\Repository\EdtCelcatRepository;
+use App\Repository\EdtPlanningRepository;
 
 class EdtManager
 {
@@ -35,7 +37,9 @@ class EdtManager
         private readonly EdtIntranet $edtIntranet,
         private readonly EdtCelcat $edtCelcat,
         private readonly EdtAde $edtAde,
-        private SourceEdtRegistry $sourceEdtRegistry
+        private SourceEdtRegistry $sourceEdtRegistry,
+        private EdtPlanningRepository $edtPlanningRepository,
+        private EdtCelcatRepository $edtCelcatRepository,
     ) {
         $this->tabSources = $this->sourceEdtRegistry->getSourcesEdt();
     }
@@ -271,4 +275,14 @@ class EdtManager
 
         return count($tEvents) === 1 ? $tEvents[0] : null;
     }
+
+    public function saveCourseEduSign($source, $course)
+    {
+        if ($source === 'intranet') {
+            $this->edtPlanningRepository->save($course, true);
+        } elseif ($source === 'celcat') {
+            $this->edtCelcatRepository->save($course, true);
+        }
+    }
+
 }

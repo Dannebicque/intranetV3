@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.54](https://github.com/Dannebicque/intranetV3/compare/v3.14.53...v3.14.54) (2023-11-19)
+
+
+### Features
+
+* Export de toutes les notes sans filtre de parcours ([83a52a8](https://github.com/Dannebicque/intranetV3/commit/83a52a8f49935352a6bfa8ffd8fe696c425a0e0a))
+
 ### [3.14.53](https://github.com/Dannebicque/intranetV3/compare/v3.14.52...v3.14.53) (2023-11-17)
 
 

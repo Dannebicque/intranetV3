@@ -133,6 +133,10 @@
                                                class="dropdown-item"><i
                                                         class="fas fa-file-export"></i>{{ 'exporter.xlsx'|trans }}
                                             </a>
+                                            <a href="{{ path('administration_all_notes_parcours_export', {semestre:semestre.id, _format:'xlsx'}) }}"
+                                               class="dropdown-item"><i
+                                                        class="fas fa-file-export"></i>Export tous parcours (xlsx)
+                                            </a>
                                         </div>
                                     </li>
                                 </ul>

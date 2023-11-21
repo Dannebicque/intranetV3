@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Matieres/TypeMatiereManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/09/2023 23:04
+ * @lastUpdate 19/11/2023 15:08
  */
 
 namespace App\Classes\Matieres;
@@ -184,19 +184,6 @@ class TypeMatiereManager
         return $t;
     }
 
-//    public function findByCodeApogeeOrId(?EvenementEdt $planning, ?ApcReferentiel $referentiel): ?\App\DTO\Matiere
-//    {
-//        if (null === $planning) {
-//            return null;
-//        }
-//
-//        return match ($planning->source) {
-//            EdtManager::EDT_CELCAT => $this->findByCodeApogee($planning->codeelement, $referentiel),
-//            EdtManager::EDT_INTRANET => $this->getMatiereFromSelect($planning->typeIdMatiere),
-//            default => null,
-//        };
-//    }
-
     public function findBySemestreAndReferentiel(Semestre $semestre, ?ApcReferentiel $referentiel): array
     {
         $t = [];
@@ -244,7 +231,7 @@ class TypeMatiereManager
         return $tMatieres;
     }
 
-    public function findAll()
+    public function findAll(): array
     {
         $t = [];
         foreach ($this->managers as $manager) {

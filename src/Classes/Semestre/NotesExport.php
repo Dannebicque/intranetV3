@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Semestre/NotesExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/11/2022 17:15
+ * @lastUpdate 19/11/2023 15:09
  */
 
 /*
@@ -17,12 +17,14 @@ use App\Classes\Excel\MyExcelWriter;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Semestre;
+use App\Repository\EtudiantRepository;
 use App\Repository\EvaluationRepository;
 use App\Repository\NoteRepository;
-use function array_key_exists;
+use Doctrine\Common\Collections\Collection;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use function array_key_exists;
 
 class NotesExport
 {
@@ -30,17 +32,20 @@ class NotesExport
      * NotesExport constructor.
      */
     public function __construct(
-        private readonly MyExcelWriter $myExcel,
-        private readonly NoteRepository $noteRepository,
+        private readonly MyExcelWriter      $myExcel,
+        private readonly NoteRepository     $noteRepository,
         private readonly EvaluationRepository $evaluationRepository,
-        private readonly TypeMatiereManager $typeMatiereManager
-    ) {
+        private readonly TypeMatiereManager $typeMatiereManager,
+        private readonly EtudiantRepository $etudiantRepository
+    )
+    {
     }
 
     public function exportXlsToutesLesNotes(
         Semestre $semestre,
         AnneeUniversitaire $anneeUniversitaire
-    ): StreamedResponse {
+    ): StreamedResponse
+    {
         $this->myExcel->createSheet('semestre ' . $semestre->getLibelle());
         $matieres = $this->typeMatiereManager->findBySemestreArray($semestre,
             $semestre->getDiplome()?->getReferentiel());
@@ -51,6 +56,34 @@ class NotesExport
             $semestre->getOrdreLmd(), $anneeUniversitaire);
         $notes = $this->noteRepository->findByEtudiantSemestreArray($matieres, $anneeUniversitaire, $etudiants);
 
+        return $this->genereFicheXls($matieres, $evaluations, $notes, $etudiants, $semestre);
+    }
+
+    public function exportXlsToutesLesNotesParcours(
+        Semestre           $semestre,
+        AnneeUniversitaire $anneeUniversitaire
+    ): StreamedResponse
+    {
+        $this->myExcel->createSheet('semestre ' . $semestre->getLibelle());
+        if ($semestre->getDiplome()->isApc()) {
+            $matieres = $this->typeMatiereManager->findByReferentielOrdreSemestre($semestre, $semestre->getDiplome()?->getReferentiel());
+            foreach ($matieres as $matiere) {
+                $matieres[$matiere->getTypeIdMatiere()] = $matiere;
+            }
+        } else {
+            $matieres = $this->typeMatiereManager->findBySemestreArray($semestre);
+        }
+
+        $etudiants = $this->etudiantRepository->findByOrdreSemestreAndDiplome($semestre->getOrdreLmd(), $semestre->getDiplome());
+        $evaluations = $this->evaluationRepository->findByReferentielOrdreSemestre($semestre->getDiplome()?->getReferentiel(),
+            $semestre->getOrdreLmd(), $anneeUniversitaire);
+        $notes = $this->noteRepository->findByEtudiantSemestreArray($matieres, $anneeUniversitaire, $etudiants);
+
+        return $this->genereFicheXls($matieres, $evaluations, $notes, $etudiants, $semestre);
+    }
+
+    private function genereFicheXls(array $matieres, array $evaluations, array $notes, array|Collection $etudiants, Semestre $semestre): StreamedResponse
+    {
         $ligne = 2;
         $colonne = 4;
         $this->myExcel->writeCellName('C2', 'Module');
@@ -98,7 +131,7 @@ class NotesExport
                         if ($notes[$etu->getId()][$eval->getId()]['note'] < 0 || $notes[$etu->getId()][$eval->getId()]['note'] > 20) {
                             $this->myExcel->colorCellRange($colonne, $ligne, 'ffffcc00');
                         }
-                    }else {
+                    } else {
                         $this->myExcel->writeCellXY($colonne, $ligne,
                             '-');
                     }
@@ -108,11 +141,11 @@ class NotesExport
             }
         }
 
-        // EXPORT
+// EXPORT
         $writer = new Xlsx($this->myExcel->getSpreadsheet());
 
         return new StreamedResponse(
-            static function() use ($writer) {
+            static function () use ($writer) {
                 $writer->save('php://output');
             },
             Response::HTTP_OK,

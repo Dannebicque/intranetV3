@@ -39,10 +39,11 @@ class EduSignCourse
      * }
      */
 
-    public string $name;
-    public string $description = '';
-    public CarbonInterface $start;
-    public CarbonInterface $end;
+    public ?string $id = '';
+    public ?string $name = '';
+    public ?string $description = '';
+    public ?CarbonInterface $start;
+    public ?CarbonInterface $end;
     public ?string $professor = '';
     public ?string $professor_signature = '';
     public ?string $professor_2 = '';
@@ -58,6 +59,7 @@ class EduSignCourse
     public function toArray(): array
     {
         return [
+            'ID' => $this->id,
             'NAME' => $this->name,
             'DESCRIPTION' => $this->description,
             'START' => $this->start->format('Y-m-d\TH:i:s'),
