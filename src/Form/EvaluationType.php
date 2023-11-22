@@ -90,8 +90,11 @@ class EvaluationType extends AbstractType
                     'label' => 'label.commentaire',
                     'help' => 'help.commentaire_evaluation',
                     'disabled' => $autorise,
-                    'required' => false,
-                    'attr' => ['maxlength' => 255],
+                    'required' => true,
+                    'attr' => [
+                  'maxlength' => 255,
+                  'minlength' => 3
+                  ],
                 ])
             ->add('visible', YesNoType::class,
                 ['label' => 'label.evaluation.visible', 'help' => 'help.evaluation.visible'])
