@@ -60,6 +60,7 @@ class EtudiantController extends BaseController
                 'mail_perso' => $etudiant->getMailPerso(),
                 'telephone' => $etudiant->getTel1(),
                 'semestre' => $semestre,
+                'annee_sortie' => $etudiant->getAnneeSortie(),
                 'groupes' => $groupes,
             ];
         }
