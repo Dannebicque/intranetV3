@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/ApiEduSign.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/11/2023 18:35
+ * @lastUpdate 07/11/2023 07:30
  */
 
 namespace App\Classes\EduSign;
@@ -94,28 +94,28 @@ class ApiEduSign
         ]);
     }
 
-//    public function getCourses(?string $id, string $cleApi)
-//    {
-//        $client = HttpClient::create();
-//
-//        $response = $client->request('GET', 'https://ext.edusign.fr/v1/course/' . $id, [
-//            'headers' => [
-//                'Content-Type' => 'application/json',
-//                'Authorization' => 'Bearer ' . $cleApi,
-//            ]
-//        ]);
-//
-//        $statusCode = $response->getStatusCode();
-//        $content = $response->getContent();
-//        // convertit JSON en tableau associatif PHP
-//        $data = json_decode($content, true);
-//
-//        $course = "";
-//        if (isset($data['result'])) {
-//            $course = $data['result'];
-//        }
-//        return $course;
-//    }
+    public function getCourses(?string $id, string $cleApi)
+    {
+        $client = HttpClient::create();
+
+        $response = $client->request('GET', 'https://ext.edusign.fr/v1/course/' . $id, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
+            ]
+        ]);
+
+        $statusCode = $response->getStatusCode();
+        $content = $response->getContent();
+        // convertit JSON en tableau associatif PHP
+        $data = json_decode($content, true);
+
+        $course = "";
+        if (isset($data['result'])) {
+            $course = $data['result'];
+        }
+        return $course;
+    }
 
     public function getAllCourses(string $cleApi)
     {
@@ -283,14 +283,31 @@ class ApiEduSign
             $id = $data['result']['ID'];
         }
 
-        $jsonId[$departement->getId()] = $id;
-        $existingId = $personnel->getIdEduSign();
+        $departementId = $departement->getId();
+        $existingIdEduSign = $personnel->getIdEduSign();
 
-        if ($existingId !== null && is_array($existingId)) {
-            $personnel->setIdEduSign(array_merge($existingId, $jsonId));
-        } else {
-            $personnel->setIdEduSign($jsonId);
+        // Supprimer les entrées avec des valeurs nulles
+        if ($existingIdEduSign !== null) {
+            foreach ($existingIdEduSign as $key => $value) {
+                if ($value === null || $value === '') {
+                    unset($existingIdEduSign[$key]);
+                }
+            }
+            $personnel->setIdEduSign($existingIdEduSign);
+            $this->personnelRepository->save($personnel);
         }
+        if ($existingIdEduSign === null || !array_key_exists($departementId, $existingIdEduSign)) {
+            $jsonId = [$departementId => $id];
+
+            if ($existingIdEduSign === null) {
+                // Si idEduSign est null, le définir comme le nouveau tableau $jsonId
+                $personnel->setIdEduSign($jsonId);
+            } else {
+                // Autrement, ajoute le nouveau tableau $jsonId à l'ancien tableau $existingIdEduSign
+                $personnel->setIdEduSign($existingIdEduSign + $jsonId);
+            }
+        }
+
         $this->personnelRepository->save($personnel);
     }
 
@@ -329,27 +346,4 @@ class ApiEduSign
         ]);
     }
 
-
-    public function getCourses(?string $id, string $cleApi)
-    {
-        $client = HttpClient::create();
-
-        $response = $client->request('GET', 'https://ext.edusign.fr/v1/course/' . $id, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
-            ]
-        ]);
-
-        $statusCode = $response->getStatusCode();
-        $content = $response->getContent();
-        // convertit JSON en tableau associatif PHP
-        $data = json_decode($content, true);
-
-        $course = "";
-        if (isset($data['result'])) {
-            $course = $data['result'];
-        }
-        return $course;
-    }
 }
