@@ -23,46 +23,85 @@ class EtudiantController extends BaseController
         EtudiantRepository $etudiantRepository,
     ): JsonResponse
     {
-        $this->checkAccessApi($request);
+//        $this->checkAccessApi($request);
 
         $username = $request->query->get('username');
+        $semestreId = $request->query->get('semestre');
 
-        $etudiant = $etudiantRepository->findOneBy(['username' => $username]);
+        if ($username) {
+            $etudiant = $etudiantRepository->findOneBy(['username' => $username]);
 
-        $tabEtudiant = [];
+            $tabEtudiant = [];
+            if ($etudiant) {
 
-        if ($etudiant) {
+                $groupes = [];
+                foreach ($etudiant->getGroupes() as $groupe) {
+                    $groupes[] = [
+                        'id' => $groupe->getId(),
+                        'libelle' => $groupe->getLibelle(),
+                    ];
+                }
 
-            $groupes = [];
-            foreach ($etudiant->getGroupes() as $groupe) {
-                $groupes[] = [
-                    'id' => $groupe->getId(),
-                    'libelle' => $groupe->getLibelle(),
+                $semestre = $etudiant->getSemestre();
+                if (null !== $semestre) {
+                    $semestre = [
+                        'id' => $semestre->getId(),
+                        'libelle' => $semestre->getLibelle(),
+                    ];
+                } else {
+                    $semestre = null;
+                }
+
+                $tabEtudiant[$etudiant->getId()] = [
+                    'id' => $etudiant->getId(),
+                    'nom' => $etudiant->getNom(),
+                    'prenom' => $etudiant->getPrenom(),
+                    'username' => $etudiant->getUsername(),
+                    'mail_univ' => $etudiant->getMailUniv(),
+                    'mail_perso' => $etudiant->getMailPerso(),
+                    'telephone' => $etudiant->getTel1(),
+                    'semestre' => $semestre,
+                    'annee_sortie' => $etudiant->getAnneeSortie(),
+                    'groupes' => $groupes,
                 ];
             }
+        } elseif ($semestreId) {
+            $etudiants = $etudiantRepository->findBy(['semestre' => $semestreId]);
 
-            $semestre = $etudiant->getSemestre();
-            if (null !== $semestre) {
-                $semestre = [
-                    'id' => $semestre->getId(),
-                    'libelle' => $semestre->getLibelle(),
+            $tabEtudiant = [];
+            foreach ($etudiants as $etudiant) {
+
+                $groupes = [];
+                foreach ($etudiant->getGroupes() as $groupe) {
+                    $groupes[] = [
+                        'id' => $groupe->getId(),
+                        'libelle' => $groupe->getLibelle(),
+                    ];
+                }
+
+                $semestre = $etudiant->getSemestre();
+                if (null !== $semestre) {
+                    $semestre = [
+                        'id' => $semestre->getId(),
+                        'libelle' => $semestre->getLibelle(),
+                    ];
+                } else {
+                    $semestre = null;
+                }
+
+                $tabEtudiant[$etudiant->getId()] = [
+                    'id' => $etudiant->getId(),
+                    'nom' => $etudiant->getNom(),
+                    'prenom' => $etudiant->getPrenom(),
+                    'username' => $etudiant->getUsername(),
+                    'mail_univ' => $etudiant->getMailUniv(),
+                    'mail_perso' => $etudiant->getMailPerso(),
+                    'telephone' => $etudiant->getTel1(),
+                    'semestre' => $semestre,
+                    'annee_sortie' => $etudiant->getAnneeSortie(),
+                    'groupes' => $groupes,
                 ];
-            } else {
-                $semestre = null;
             }
-
-            $tabEtudiant[$etudiant->getId()] = [
-                'id' => $etudiant->getId(),
-                'nom' => $etudiant->getNom(),
-                'prenom' => $etudiant->getPrenom(),
-                'username' => $etudiant->getUsername(),
-                'mail_univ' => $etudiant->getMailUniv(),
-                'mail_perso' => $etudiant->getMailPerso(),
-                'telephone' => $etudiant->getTel1(),
-                'semestre' => $semestre,
-                'annee_sortie' => $etudiant->getAnneeSortie(),
-                'groupes' => $groupes,
-            ];
         }
 
         return $this->json($tabEtudiant);
