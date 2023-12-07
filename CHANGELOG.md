@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.55](https://github.com/Dannebicque/intranetV3/compare/v3.14.54...v3.14.55) (2023-12-07)
+
+
+### Features
+
+* Clé EduSign selon l'environnement ([bc6bb58](https://github.com/Dannebicque/intranetV3/commit/bc6bb586f75e368ca749c4230d1cde323f3cab72))
+* Clé EduSign selon l'environnement ([cfc1a08](https://github.com/Dannebicque/intranetV3/commit/cfc1a08125ca100385aeac0202fdbb067252604f))
+* Clé EduSign selon l'environnement ([0b393b9](https://github.com/Dannebicque/intranetV3/commit/0b393b980bdfe6911620634bdc13aa98b0a6e106))
+
+
+### Bug Fixes
+
+* doublons si plusieurs salles sur plusieurs semaines ([5a5d466](https://github.com/Dannebicque/intranetV3/commit/5a5d4668a256ccaab6f5032d1a4b89d843ea099d))
+
 ### [3.14.54](https://github.com/Dannebicque/intranetV3/compare/v3.14.53...v3.14.54) (2023-11-19)
 
 
