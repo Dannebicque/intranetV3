@@ -9,25 +9,29 @@ export default class extends Controller {
     }
 
     connect() {
-        console.log('Hello from semestre controller')
+        // console.log('Hello from semestre controller')
     }
 
     async toggle(event) {
-        console.log('click')
         const _value = event.currentTarget.value
         const actif = event.currentTarget.dataset.actif
 
         const params = new URLSearchParams({
-            semestre: _value,
+            // semestre: _value,
             actif: actif,
         })
-        const response = await fetch(`${this.urlValue}`)
+        const response = await fetch(`${this.urlValue}?${params.toString()}`)
         // Met à jour la vue avec les données du semestre mis à jour.
         this.updateView(_value)
+
+        this.dispatch('semestre:updated:'+_value, {
+            detail: {
+                semestre: _value,
+            },
+        })
     }
 
     updateView(semestre) {
-        console.log('updateView')
         // Sélectionne les éléments nécessaires dans le DOM.
         const semestreActifElement = this.element.querySelector('.semestre-active');
         const semestreActifBtn = this.element.querySelector('.semestre-btn-active');
@@ -39,6 +43,7 @@ export default class extends Controller {
             semestreActifElement.classList.add('bg-danger');
             semestreActifBtn.classList.remove('fa-eye-slash');
             semestreActifBtn.classList.add('fa-eye');
+            semestreActifBtn.dataset.actif = 0;
 
         } else {
             semestreActifElement.textContent = 'Actif';
@@ -46,6 +51,7 @@ export default class extends Controller {
             semestreActifElement.classList.add('bg-success');
             semestreActifBtn.classList.remove('fa-eye');
             semestreActifBtn.classList.add('fa-eye-slash');
+            semestreActifBtn.dataset.actif = 1;
         }
     }
 }

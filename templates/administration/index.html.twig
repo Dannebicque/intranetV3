@@ -19,11 +19,72 @@
 {% endblock %}
 
 {% block content %}
-    <div class="row block_admin">
     {% if user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data
         .isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_RP') %}
+        <div class="row block_admin" {{ stimulus_controller('adm--semestre-maj', {url:path('administration_bloc_etudiant')}) }}>
 
-        {{ include('administration/block_admin/_etudiant.html.twig') }}
+            <div  {{ stimulus_target('adm--semestre-maj', 'bloc_etudiant') }}>
+            {{ include('administration/block_admin/_etudiant.html.twig') }}
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade modal-lg" id="semestreAction" tabindex="-1" aria-labelledby="semestreActionLabel"
+                 aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="semestreActionLabel">Sélectionner un ou plusieurs semestres
+                                à
+                                activer</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            {% for semestre in user_data.semestres %}
+                                {% if semestre.actif == true %}
+                                    {% set actif = 0 %}
+                                {% else %}
+                                    {% set actif = 1 %}
+                                {% endif %}
+                                <div {{ stimulus_controller('adm--semestre', {url:path('administration_semestre_actif', {semestre:semestre.id})}) }}
+                                        data-action="adm--semestre:semestre:updated:{{ semestre.id }}@window->adm--semestre-maj#toggle"
+                                        style="display: flex; justify-content: space-between; align-items: center">
+                                    <p>
+                                        {% if semestre.actif == true %}
+                                            <span class="semestre-active badge bg-success">Actif</span>
+                                        {% else %}
+                                            <span class="semestre-active badge bg-danger">Inactif</span>
+                                        {% endif %}
+                                        <span class="semestre-detail semestre-detail">
+                                                {{ semestre.displayAvecTypeDiplome }}
+                                            </span>
+                                    </p>
+                                    {% if semestre.actif == true %}
+                                        <button {{ stimulus_action('adm--semestre', 'toggle', 'click') }}
+                                                value="{{ semestre.id }}"
+                                                data-actif="0"
+                                                class="btn btn-primary btn-sm"
+                                                data-bs-toggle="tooltip" data-bs-placement="left"
+                                                title="{{ 'atitle.masquer_semestre'|trans }}"><i
+                                                    class="semestre-btn-active fa fa-eye-slash"></i>
+                                        </button>
+                                    {% else %}
+                                        <button {{ stimulus_action('adm--semestre', 'toggle', 'click') }}
+                                                value="{{ semestre.id }}"
+                                                data-actif="1"
+                                                class="btn btn-primary btn-sm"
+                                                data-bs-toggle="tooltip" data-bs-placement="left"
+                                                title="{{ 'atitle.afficher_semestre'|trans }}"><i
+                                                    class="semestre-btn-active fa fa-eye"></i>
+                                        </button>
+                                    {% endif %}
+                                </div>
+                                <hr>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="row block_admin">
             {{ include('administration/block_admin/_personnels.html.twig') }}
