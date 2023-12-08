@@ -13,9 +13,11 @@ use App\Controller\BaseController;
 use App\Entity\Semestre;
 use App\Repository\AbsenceJustificatifRepository;
 use App\Repository\RattrapageRepository;
+use App\Utils\Tools;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -25,9 +27,11 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/administration/semestre')]
 class SemestreController extends BaseController
 {
-    #[Route(path: '/active/{semestre}/{actif}', name: 'administration_semestre_actif', methods: ['GET'])]
-    public function activeSemestre(Semestre $semestre, bool $actif): RedirectResponse
+    #[Route(path: '/active/{semestre}', name: 'administration_semestre_actif', methods: ['GET'])]
+    public function activeSemestre(Semestre $semestre, Request $request): RedirectResponse
     {
+        $actif = (bool)$request->query->get('actif');
+
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $semestre);
         $semestre->setActif($actif);
         $this->entityManager->persist($semestre);

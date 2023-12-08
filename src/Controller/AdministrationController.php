@@ -48,4 +48,10 @@ class AdministrationController extends BaseController
             ]
         );
     }
+
+    #[Route(path: '/_etudiant', name: 'administration_bloc_etudiant')]
+    public function blocEtudiant(): Response
+    {
+        return $this->render('administration/block_admin/_etudiant.html.twig');
+    }
 }
