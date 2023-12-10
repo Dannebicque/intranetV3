@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/12/2023 18:39
+ * @lastUpdate 10/12/2023 18:45
  */
 
 namespace App\Classes\Celcat;
@@ -135,7 +135,6 @@ class MyCelcat
                 $eventId = odbc_result($result, 1);
                 $this->createEvent($result, $anneeUniversitaire, $diplome->getCodeCelcatDepartement(), $eventId);
             }
-
             $this->entityManger->flush();
         }
     }
@@ -188,6 +187,7 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
 
         for ($i = 0; $i < $lg; ++$i) {
             if ('Y' === $semaines[$i] || 'y' === $semaines[$i]) {
+
                 $semaine = $i;
                 $jour = odbc_result($result, 2);
                 $codeGroupe = odbc_result($result, 13);
@@ -206,7 +206,6 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
                     $event->setTypeMatiere($this->tMatieres[$event->getCodeModule()]->typeMatiere);
                     $event->setIdMatiere($this->tMatieres[$event->getCodeModule()]->id);
                 }
-
                 $event->setCodePersonnel(odbc_result($result, 9));
                 $event->setLibPersonnel(utf8_encode(odbc_result($result, 10)));
                 if (array_key_exists($event->getCodePersonnel(), $this->tPersonnels)) {
