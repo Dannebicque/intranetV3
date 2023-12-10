@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/12/2023 11:15
+ * @lastUpdate 10/12/2023 18:39
  */
 
 namespace App\Classes\Celcat;
@@ -161,7 +161,6 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
                 $groupes[$gr]->addEtudiant($etudiants[$etu]);
             }
         }
-
         $this->entityManger->flush();
     }
 
@@ -178,7 +177,8 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
         $debut = explode(' ', (string) odbc_result($result, 3));
         $fin = explode(' ', (string) odbc_result($result, 4));
         $type = mb_substr(odbc_result($result, 6), 1, -1);
-        if (odbc_result($result, 16) !== '' || odbc_result($result, 16) !== null) {
+
+        if (odbc_result($result, 16) !== null) {
             $semaines = odbc_result($result, 16);
         } else {
             $semaines = odbc_result($result, 5);
