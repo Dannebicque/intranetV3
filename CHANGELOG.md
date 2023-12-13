@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.59](https://github.com/Dannebicque/intranetV3/compare/v3.14.58...v3.14.59) (2023-12-13)
+
+
+### Features
+
+* Export des absences sur tous les parcours d'un même numéro de semestre ([c847b6a](https://github.com/Dannebicque/intranetV3/commit/c847b6a7d4b704450097a79c86a89cabf611f28b))
+
+
+### Bug Fixes
+
+* Annuler décision absence justificatif ([fc3fa0f](https://github.com/Dannebicque/intranetV3/commit/fc3fa0f37213587d71bb2e879aa28a5a6142c75a))
+* nom du fichier export des absences ([a16f917](https://github.com/Dannebicque/intranetV3/commit/a16f91778e18f82e3000317e901032e9119cd253))
+
 ### [3.14.58](https://github.com/Dannebicque/intranetV3/compare/v3.14.57...v3.14.58) (2023-12-13)
 
 
