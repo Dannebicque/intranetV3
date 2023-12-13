@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.58](https://github.com/Dannebicque/intranetV3/compare/v3.14.57...v3.14.58) (2023-12-13)
+
+
+### Features
+
+* Export des absences sur tous les parcours d'un même numéro de semestre ([3b6cdf0](https://github.com/Dannebicque/intranetV3/commit/3b6cdf06c43bffd10f5f1760f457c1efedc7c958))
+
+
+### Bug Fixes
+
+* Affichage RDD ([9440b61](https://github.com/Dannebicque/intranetV3/commit/9440b6103f3e8215f719034979890ca1c4f10dbc))
+
 ### [3.14.57](https://github.com/Dannebicque/intranetV3/compare/v3.14.56...v3.14.57) (2023-12-11)
 
 
