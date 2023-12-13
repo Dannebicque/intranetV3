@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/09/2022 14:20
+ * @lastUpdate 13/12/2023 15:20
  */
 
 namespace App\Controller\administration;
@@ -188,6 +188,24 @@ class AbsenceController extends BaseController
 //                'personnel' => ['nom', 'prenom'],
 //            ]
 //        );
+    }
+
+    #[Route('/all/semestre-parcours/{semestre}/export.{_format}',
+        name: 'administration_all_absences_parcours_export',
+        requirements: ['_format' => 'csv|xlsx|pdf'])]
+    public function exportAllAbsencesParcours(
+        MyExport           $myExport,
+        MyExportListing    $myExportListing,
+        TypeMatiereManager $typeMatiereManager,
+        AbsenceRepository  $absenceRepository,
+        Semestre           $semestre,
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
+        $matieres = $typeMatiereManager->findBySemestreArray($semestre);
+        $absences = $absenceRepository->getByOrdreSemestreAndDiplome($semestre, $semestre->getAnneeUniversitaire());
+
+        return $myExportListing->exportExcelAbsence($absences, $matieres, 'absences_' . $semestre->getLibelle());
     }
 
     #[Route('/ajax/justifie/{absence}/{etat}', name: 'administration_absences_justifie', options: ['expose' => true])]

@@ -79,6 +79,10 @@
                                             <a href="{{ path('administration_all_absences_semestre_export', {semestre:semestre.id, _format:'xlsx'}) }}"
                                                class="dropdown-item"><i
                                                         class="fas fa-file-export"></i>{{ 'exporter.xls'|trans }}</a>
+                                            <a href="{{ path('administration_all_absences_parcours_export', {semestre:semestre.id, _format:'xlsx'}) }}"
+                                               class="dropdown-item"><i
+                                                        class="fas fa-file-export"></i>Export tous parcours (xlsx)
+                                            </a>
                                         </div>
                                     </li>
                                 </ul>

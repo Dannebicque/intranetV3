@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyExportListing.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2023 19:39
+ * @lastUpdate 13/12/2023 15:19
  */
 
 /*
@@ -251,6 +251,7 @@ class MyExportListing
         $this->myExcelWriter->writeCellName('H1', 'Matière (SAE/Ressource/Matière)');
         $this->myExcelWriter->writeCellName('I1', 'Nom Enseignant');
         $this->myExcelWriter->writeCellName('J1', 'Prénom Enseignant');
+        $this->myExcelWriter->writeCellName('K1', 'Prénom Enseignant');
         $ligne = 2;
 
         /** @var \App\Entity\Absence $absence */
@@ -271,6 +272,7 @@ class MyExportListing
 
             $this->myExcelWriter->writeCellXY(9, $ligne, $absence->getPersonnel()?->getNom());
             $this->myExcelWriter->writeCellXY(10, $ligne, $absence->getPersonnel()?->getPrenom());
+            $this->myExcelWriter->writeCellXY(11, $ligne, $absence->getEtudiant()?->getSemestre()?->display());
 
             ++$ligne;
         }

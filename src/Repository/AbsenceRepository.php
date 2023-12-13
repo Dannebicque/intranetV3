@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/AbsenceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/12/2022 08:10
+ * @lastUpdate 13/12/2023 15:20
  */
 
 namespace App\Repository;
@@ -12,17 +12,19 @@ namespace App\Repository;
 use App\DTO\Matiere;
 use App\Entity\Absence;
 use App\Entity\AbsenceJustificatif;
+use App\Entity\Annee;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Departement;
+use App\Entity\Diplome;
 use App\Entity\Etudiant;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
-use Carbon\CarbonImmutable;
-use function array_key_exists;
 use Carbon\Carbon;
+use Carbon\CarbonImmutable;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
+use function array_key_exists;
 
 /**
  * @method Absence|null find($id, $lockMode = null, $lockVersion = null)
@@ -271,5 +273,25 @@ class AbsenceRepository extends ServiceEntityRepository
     {
         $this->_em->persist($absence);
         $this->_em->flush();
+    }
+
+    public function getByOrdreSemestreAndDiplome(Semestre $semestre, AnneeUniversitaire $anneeCourante)
+    {
+        $referentiel = $semestre->getDiplome()?->getReferentiel();
+
+        return $this->createQueryBuilder('a')
+            ->innerJoin(Semestre::class, 's', 'WITH', 'a.semestre = s.id')
+            ->innerJoin(Annee::class, 'an', 'WITH', 'an.id = s.annee')
+            ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = an.diplome')
+            ->where('s.ordreLmd = :semestre')
+            ->andWhere('d.referentiel = :referentiel')
+            ->setParameter('referentiel', $referentiel->getId())
+            ->setParameter('semestre', $semestre->getOrdreLmd())
+            ->andWhere('a.anneeUniversitaire = :annee')
+            ->setParameter('semestre', $semestre->getId())
+            ->setParameter('annee', $anneeCourante->getId())
+            ->orderBy('a.dateHeure', Criteria::DESC)
+            ->getQuery()
+            ->getResult();
     }
 }
