@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/AbsenceJustificatifTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/12/2022 09:14
+ * @lastUpdate 13/12/2023 16:51
  */
 
 namespace App\Table;
@@ -92,7 +92,7 @@ class AbsenceJustificatifTableType extends TableType
         $builder->addColumn('etudiantGroupes', GroupeEtudiantColumnType::class,
             ['label' => 'table.groupe']);
         $builder->addColumn('periodeAbsence', DatePeriodeJustificatifColumnType::class,
-            ['label' => 'table.periodeAbsence']);
+            ['label' => 'table.periodeAbsence', 'order' => false]);//todo: order by date début
         $builder->addColumn('created', DateColumnType::class, [
             'order' => 'DESC',
             'format' => 'd/m/Y',
@@ -132,16 +132,30 @@ class AbsenceJustificatifTableType extends TableType
                 switch ($s->getEtat()) {
                     case AbsenceJustificatif::ACCEPTE:
                         $builder->add('demande.acceptee', ButtonType::class, [
-                            'class' => 'btn btn-outline btn-success me-1',
+                            'class' => 'btn btn-outline btn-success me-1 bx_' . $s->getUuidString(),
                             'title' => 'demande.acceptee',
                             'text' => 'demande.acceptee',
+                        ]);
+                        $builder->add('demande.annuler', ButtonType::class, [
+                            'class' => 'btn btn-outline btn-warning me-1 justificatif-annuler bx_' . $s->getUuidString(),
+                            'title' => 'Annuler l\'état accepté',
+                            'icon' => 'fas fa-rotate-left',
+                            'text' => false,
+                            'attr' => ['data-justificatif' => $s->getUuidString()],
                         ]);
                         break;
                     case AbsenceJustificatif::REFUSE:
                         $builder->add('demande.refusee', ButtonType::class, [
-                            'class' => 'btn btn-outline btn-danger me-1',
+                            'class' => 'btn btn-outline btn-danger me-1 bx_' . $s->getUuidString(),
                             'title' => 'demande.refusee',
                             'text' => 'demande.refusee',
+                        ]);
+                        $builder->add('demande.annuler', ButtonType::class, [
+                            'class' => 'btn btn-outline btn-warning me-1 justificatif-annuler bx_' . $s->getUuidString(),
+                            'title' => 'Annuler l\'état refusé',
+                            'icon' => 'fas fa-rotate-left',
+                            'text' => false,
+                            'attr' => ['data-justificatif' => $s->getUuidString()],
                         ]);
                         break;
                     case AbsenceJustificatif::DEPOSE:

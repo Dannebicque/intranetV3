@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AbsenceJustificatifController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/09/2022 09:23
+ * @lastUpdate 13/12/2023 16:51
  */
 
 namespace App\Controller\administration;
@@ -134,7 +134,7 @@ class AbsenceJustificatifController extends BaseController
         ]);
     }
 
-    #[Route('/{id}', name: 'administration_absence_justificatif_delete', methods: ['DELETE', 'POST'])]
+    #[Route('/{id}', name: 'administration_absence_justificatif_delete', methods: ['DELETE', 'POST'], options: ['expose' => true])]
     public function delete(
         EventDispatcherInterface $eventDispatcher,
         Request $request,
@@ -184,6 +184,8 @@ class AbsenceJustificatifController extends BaseController
         AbsenceJustificatif $absenceJustificatif,
         EventDispatcherInterface $eventDispatcher
     ): void {
+        //gérer le annuler
+
         if (AbsenceJustificatif::ACCEPTE === $etat) {
             $event = new JustificatifEvent($absenceJustificatif);
             // Justification des absences

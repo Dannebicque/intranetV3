@@ -1,8 +1,8 @@
-// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/adm.justificatifs.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/07/2022 13:30
+// @lastUpdate 13/12/2023 16:48
 import $ from 'jquery'
 import Routing from 'fos-router'
 import { addCallout } from '../util'
@@ -15,11 +15,11 @@ $(document).on('click', '.justificatif-accepte', function (e) {
       const bx = $(`.bx_${justificatif}`)
       const parent = bx.parent()
       bx.remove()
-      let html = '<a href="#" class="btn btn-success btn-outline"><i class="ti-check"></i>Accepté</a>'
+      let html = `<a href="#" class="btn btn-success btn-outline bx_${justificatif}">Demande Acceptée</a>`
       html = `${html}<button data-justificatif="${justificatif}"
-        class="btn btn-danger btn-outline btn-square justificatif-annuler bx_${justificatif}" data-provide="tooltip" data-placement="bottom"
+        class="btn btn-warning btn-outline btn-square justificatif-annuler bx_${justificatif}" data-provide="tooltip" data-placement="bottom"
         title="Annuler">
-          <i class="material-icons">undo</i></button>`
+          <i class="fas fa-rotate-left"></i></button>`
       parent.prepend(html)
       addCallout('Justificatif d\'absence validé !', 'success')
     },
@@ -37,10 +37,10 @@ $(document).on('click', '.justificatif-refuse', function (e) {
       const bx = $(`.bx_${justificatif}`)
       const parent = bx.parent()
       bx.remove()
-      let html = '<a href="#" class="btn btn-warning btn-outline"><i class="ti-check"></i>Refusé</a>'
+      let html = `<a href="#" class="btn btn-warning btn-outline bx_${justificatif}">Demande Refusée</a>`
       html = `${html}<button data-justificatif="${justificatif}"
         class="btn btn-danger btn-outline btn-square justificatif-annuler bx_${justificatif}" data-provide="tooltip" data-placement="bottom"
-        title="Annuler"><i class="material-icons">undo</i></button>`
+        title="Annuler"><i class="fas fa-rotate-left"></i></button>`
       parent.prepend(html)
       addCallout('Justificatif d\'absence refusé !', 'success')
     },
@@ -62,17 +62,13 @@ $(document).on('click', '.justificatif-annuler', function (e) {
         class="btn btn-success btn-outline btn-square justificatif-accepte bx_${justificatif}" data-provide="tooltip"
         data-justificatif="${justificatif}"
         data-placement="bottom" title="atitle.accepter.le.justificatif">
-        <i class="ti-check"></i></a>
+        <i class="fas fa-check"></i> Accepter</a> 
         <a href="#"
-           class="btn btn-warning btn-outline btn-square justificatif-refuse bx_${justificatif}" data-provide="tooltip"
+           class="btn btn-danger btn-outline btn-square justificatif-refuse bx_${justificatif}" data-provide="tooltip"
            data-justificatif="${justificatif}"
            data-placement="bottom" title="atitle.refuser.le.justificatif">
-           <i class="ti-na"></i>
-        </a>
-        <a href="${Routing.generate('administration_absence_justificatif_delete', { id: justificatif })}" data-csrf="{{ csrf_token('delete' ~ justificatif.uuidString) }}"
-        class="btn btn-danger btn-outline btn-square supprimer bx_${justificatif}"><i
-                                               class="ti-close" data-provide="tooltip" data-placement="bottom"
-                                               title="atitle.supprimer"></i></a>`
+           <i class="fas fa-ban"></i> Refuser
+        </a>`
       parent.prepend(html)
       addCallout('Etat du justificatif d\'absence annulé !', 'success')
     },
