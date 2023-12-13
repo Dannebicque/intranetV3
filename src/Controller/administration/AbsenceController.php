@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/12/2023 15:35
+ * @lastUpdate 13/12/2023 15:37
  */
 
 namespace App\Controller\administration;
@@ -210,7 +210,7 @@ class AbsenceController extends BaseController
             $tMatieres[$matiere->getTypeIdMatiere()] = $matiere;
         }
 
-        return $myExportListing->exportExcelAbsence($absences, $tMatieres, 'absences_' . $semestre->getLibelle());
+        return $myExportListing->exportExcelAbsence($absences, $tMatieres, 'absences_S' . $semestre->getOrdreLmd());
     }
 
     #[Route('/ajax/justifie/{absence}/{etat}', name: 'administration_absences_justifie', options: ['expose' => true])]
