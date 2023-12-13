@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/12/2023 15:20
+ * @lastUpdate 13/12/2023 15:35
  */
 
 namespace App\Controller\administration;
@@ -202,10 +202,15 @@ class AbsenceController extends BaseController
     ): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
-        $matieres = $typeMatiereManager->findBySemestreArray($semestre);
-        $absences = $absenceRepository->getByOrdreSemestreAndDiplome($semestre, $semestre->getAnneeUniversitaire());
+        $matieres = $typeMatiereManager->findByReferentielOrdreSemestre($semestre, $semestre->getDiplome()?->getReferentiel());
+        $absences = $absenceRepository->getByOrdreSemestreAndDiplome($semestre, $this->getAnneeUniversitaire());
 
-        return $myExportListing->exportExcelAbsence($absences, $matieres, 'absences_' . $semestre->getLibelle());
+        $tMatieres = [];
+        foreach ($matieres as $matiere) {
+            $tMatieres[$matiere->getTypeIdMatiere()] = $matiere;
+        }
+
+        return $myExportListing->exportExcelAbsence($absences, $tMatieres, 'absences_' . $semestre->getLibelle());
     }
 
     #[Route('/ajax/justifie/{absence}/{etat}', name: 'administration_absences_justifie', options: ['expose' => true])]

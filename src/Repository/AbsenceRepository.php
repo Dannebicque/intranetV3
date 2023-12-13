@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/AbsenceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/12/2023 15:20
+ * @lastUpdate 13/12/2023 15:35
  */
 
 namespace App\Repository;
@@ -275,11 +275,11 @@ class AbsenceRepository extends ServiceEntityRepository
         $this->_em->flush();
     }
 
-    public function getByOrdreSemestreAndDiplome(Semestre $semestre, AnneeUniversitaire $anneeCourante)
+    public function getByOrdreSemestreAndDiplome(Semestre $semestre, AnneeUniversitaire $anneeCourante): array
     {
         $referentiel = $semestre->getDiplome()?->getReferentiel();
 
-        return $this->createQueryBuilder('a')
+        $query = $this->createQueryBuilder('a')
             ->innerJoin(Semestre::class, 's', 'WITH', 'a.semestre = s.id')
             ->innerJoin(Annee::class, 'an', 'WITH', 'an.id = s.annee')
             ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = an.diplome')
@@ -288,10 +288,10 @@ class AbsenceRepository extends ServiceEntityRepository
             ->setParameter('referentiel', $referentiel->getId())
             ->setParameter('semestre', $semestre->getOrdreLmd())
             ->andWhere('a.anneeUniversitaire = :annee')
-            ->setParameter('semestre', $semestre->getId())
             ->setParameter('annee', $anneeCourante->getId())
-            ->orderBy('a.dateHeure', Criteria::DESC)
-            ->getQuery()
+            ->orderBy('a.dateHeure', Criteria::DESC);
+
+        return $query->getQuery()
             ->getResult();
     }
 }
