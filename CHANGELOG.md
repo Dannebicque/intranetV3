@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.60](https://github.com/Dannebicque/intranetV3/compare/v3.14.59...v3.14.60) (2024-01-06)
+
+
+### Bug Fixes
+
+* Affichage RDD ([cb31c0b](https://github.com/Dannebicque/intranetV3/commit/cb31c0b66ea1838fbd47bb75630d2c4f94460228))
+* export notes, triés par matières ([8da5265](https://github.com/Dannebicque/intranetV3/commit/8da5265f14da59d79c4e72e46a83a3ba97b2cdd4))
+
 ### [3.14.59](https://github.com/Dannebicque/intranetV3/compare/v3.14.58...v3.14.59) (2023-12-13)
 
 
