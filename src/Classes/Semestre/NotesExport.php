@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Semestre/NotesExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/11/2023 15:09
+ * @lastUpdate 06/01/2024 13:48
  */
 
 /*
@@ -93,8 +93,23 @@ class NotesExport
         $this->myExcel->writeCellName('C6', 'Commentaire évaluation');
         $this->myExcel->writeCellName('C7', 'Coefficient');
 
+        $tEvaluation = [];
         foreach ($evaluations as $eval) {
             if (0 !== $eval->getIdMatiere() && isset($matieres[$eval->getTypeIdMatiere()])) {
+                $matiere = $matieres[$eval->getTypeIdMatiere()];
+                if (!array_key_exists($matiere->codeMatiere, $tEvaluation)) {
+                    $tEvaluation[$matiere->codeMatiere] = [];
+                }
+                $tEvaluation[$matiere->codeMatiere][] = $eval;
+            }
+        }
+
+        //trier selon la clé
+        ksort($tEvaluation);
+
+
+        foreach ($tEvaluation as $evals) {
+            foreach ($evals as $eval) {
                 $matiere = $matieres[$eval->getTypeIdMatiere()];
                 if (null !== $matiere) {
                     $this->myExcel->writeCellXY($colonne, $ligne, $matiere->codeMatiere);
