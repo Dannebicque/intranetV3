@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EvaluationRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/11/2022 10:25
+ * @lastUpdate 07/01/2024 11:54
  */
 
 namespace App\Repository;
@@ -58,10 +58,10 @@ class EvaluationRepository extends ServiceEntityRepository
             ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
             ->where('s.ordreLmd = :semestre')
             ->andWhere('d.referentiel = :referentiel')
-            ->andWhere('n.annee = :annee')
+            ->andWhere('n.id = :annee')
             ->setParameter('referentiel', $referentiel->getId())
             ->setParameter('semestre', $semestre)
-            ->setParameter('annee', $annee->getAnnee())
+            ->setParameter('annee', $annee->getId())
             ->orderBy('e.dateEvaluation', Criteria::ASC)
             ->getQuery()
             ->getResult();
