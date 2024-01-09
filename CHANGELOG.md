@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.63](https://github.com/Dannebicque/intranetV3/compare/v3.14.62...v3.14.63) (2024-01-09)
+
+
+### Bug Fixes
+
+* abbr sur matière dans l'affichage des notes ([9673122](https://github.com/Dannebicque/intranetV3/commit/9673122db262aea4542d94eb3b1241c8e9a28c19))
+
 ### [3.14.62](https://github.com/Dannebicque/intranetV3/compare/v3.14.61...v3.14.62) (2024-01-09)
 
 
