@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Semestre/NotesExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/01/2024 08:53
+ * @lastUpdate 09/01/2024 09:03
  */
 
 /*
@@ -137,8 +137,8 @@ class NotesExport
             $this->myExcel->writeCellXY(2, $ligne, $etu->getPrenom());
             $this->myExcel->writeCellXY(3, $ligne, $etu->getNumetudiant());
 
-            foreach ($tEvaluation as $eval) {
-                if (0 !== $eval->getIdMatiere() && isset($matieres[$eval->getTypeIdMatiere()])) {
+            foreach ($tEvaluation as $evals) {
+                foreach ($evals as $eval) {
                     if (array_key_exists($etu->getId(), $notes) && array_key_exists($eval->getId(),
                             $notes[$etu->getId()])) {
                         $this->myExcel->writeCellXY($colonne, $ligne,
@@ -151,6 +151,7 @@ class NotesExport
                             '-');
                     }
                     ++$colonne;
+
                 }
 
             }
