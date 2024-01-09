@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.61](https://github.com/Dannebicque/intranetV3/compare/v3.14.60...v3.14.61) (2024-01-09)
+
+
+### Bug Fixes
+
+* optimisation requete ([c355094](https://github.com/Dannebicque/intranetV3/commit/c355094f970a079b620407d4bde1f4dc53d55121))
+* ouverture RDD ([edfdc3f](https://github.com/Dannebicque/intranetV3/commit/edfdc3f2433e2fc1bb3b2609489173ff27fb6440))
+
 ### [3.14.60](https://github.com/Dannebicque/intranetV3/compare/v3.14.59...v3.14.60) (2024-01-06)
 
 
