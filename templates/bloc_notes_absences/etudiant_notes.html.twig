@@ -29,8 +29,14 @@
             {% if notes != null and notes|length > 0 %}
                 {% for note in notes|filter(note => (note.evaluation.visible == true and note.evaluation.parent == null)) %}
                     <tr>
-                        <td>{{ matieres[note.evaluation.typeIdMatiere] is defined ? matieres[note.evaluation
-                            .typeIdMatiere].codeMatiere : '-' }}</td>
+                        <td>
+                            {% if matieres[note.evaluation.typeIdMatiere] is defined %}
+                                <abbr title="{{ matieres[note.evaluation.typeIdMatiere].libelle }}">
+                                    {{ matieres[note.evaluation.typeIdMatiere].codeMatiere }}</abbr>
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
                         <td>{{ note.evaluation.libelle is defined ? note.evaluation.libelle : note.evaluation.id }}</td>
                         <td class="hide">
                             {{ note.evaluation.dateEvaluation ? note.evaluation.dateEvaluation|format_date('long') : '' }}
