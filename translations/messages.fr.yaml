@@ -1315,6 +1315,9 @@ help:
   respRi: 'Définir le responsable des RI, pour l''édition les informations'
   ppn_semestre: 'messages'
   semestre_actif: 'messages'
+  opt_rattrapage: 'Les étudiants peuvent déposer leurs demandes de rattrapage sur l''intranet'
+  opt_mail_rattrapage: 'Un email est envoyé au directeur des études en cas de demande de rattrapage'
+
 
 heure: Heure
 heures: heures
@@ -2257,8 +2260,10 @@ table:
   heure_evaluation: Heure évaluation
   validationSaisieAbsence: Etape de validation lors de la saisie des absences
   saisieDesPresents: Saisir les présents plutôt que les absents
-  semestre_actif: 'messages'
+  semestre_actif: Semestre actif ?
   ppn_semestre: 'messages'
+  opt_rattrapage: Module rattrapage activé
+  opt_mail_rattrapage: Envoi d'un mail au responsable du diplôme à chaque nouvelle demande de rattrapage
 
 type_bac:
   g: 'Série générale'

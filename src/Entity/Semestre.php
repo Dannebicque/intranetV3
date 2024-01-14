@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/08/2023 10:10
+ * @lastUpdate 14/01/2024 17:22
  */
 
 namespace App\Entity;
@@ -239,6 +239,12 @@ class Semestre extends BaseEntity implements Stringable, GroupeInterface
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $idEduSign = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $optRattrapage = false;
+
+    #[ORM\Column(nullable: true)]
+    private ?bool $optMailRattrapage = false;
 
     public function __construct()
     {
@@ -687,13 +693,13 @@ class Semestre extends BaseEntity implements Stringable, GroupeInterface
         return $this;
     }
 
-    #[Deprecated]
+    /** @deprecated */
     public function getTypeGroupes(): Collection
     {
         return $this->typeGroupes;
     }
 
-    #[Deprecated]
+    /** @deprecated */
     public function addTypeGroupe(TypeGroupe $typeGroupe): self
     {
         if (!$this->typeGroupes->contains($typeGroupe)) {
@@ -704,7 +710,7 @@ class Semestre extends BaseEntity implements Stringable, GroupeInterface
         return $this;
     }
 
-    #[Deprecated]
+    /** @deprecated */
     public function removeTypeGroupe(TypeGroupe $typeGroupe): self
     {
         if ($this->typeGroupes->contains($typeGroupe)) {
@@ -1432,6 +1438,30 @@ class Semestre extends BaseEntity implements Stringable, GroupeInterface
     public function setIdEduSign(?string $idEduSign): static
     {
         $this->idEduSign = $idEduSign;
+
+        return $this;
+    }
+
+    public function isOptRattrapage(): ?bool
+    {
+        return $this->optRattrapage ?? true;
+    }
+
+    public function setOptRattrapage(?bool $optRattrapage): static
+    {
+        $this->optRattrapage = $optRattrapage;
+
+        return $this;
+    }
+
+    public function isOptMailRattrapage(): ?bool
+    {
+        return $this->optMailRattrapage ?? false;
+    }
+
+    public function setOptMailRattrapage(?bool $optMailRattrapage): static
+    {
+        $this->optMailRattrapage = $optMailRattrapage;
 
         return $this;
     }

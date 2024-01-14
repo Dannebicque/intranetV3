@@ -44,69 +44,100 @@
             </select>
         </div>
 
-        <div class="media">
-            <div class="media-body">
-                <p><strong>{{ 'table.opt_suppr_absence'|trans }}</strong></p>
-                <p>{{ 'help.opt_suppr_absence'|trans }}</p>
-            </div>
-            <label class="switch" for="optSupprAbsence_{{ diplome.id }}">
-                <input type="checkbox" {{ diplome.optSupprAbsence ? 'checked': '' }}
-                       class="changeOption"
-                       name="optSupprAbsence"
-                       id="optSupprAbsence_{{ diplome.id }}"
-                       data-type="diplome"
-                       data-id="{{ diplome.id }}">
-                <span class="switch-indicator"></span>
-            </label>
-        </div>
+        <twig:SwitchOptionComponent
+                label="{{ 'table.opt_suppr_absence'|trans }}"
+                help="{{ 'help.opt_suppr_absence'|trans }}"
+                cle="optSupprAbsence_{{ diplome.id }}"
+                value="{{ diplome.optSupprAbsence }}"
+                type="diplome"
+                id="{{ diplome.id }}"></twig:SwitchOptionComponent>
 
-        <div class="media">
-            <div class="media-body">
-                <p><strong>{{ 'table.opt_espace_perso_visible'|trans }}</strong></p>
-                <p>{{ 'help.opt_espace_perso_visible'|trans }}</p>
-            </div>
-            <label class="switch" for="optEspacePersoVisible_{{ diplome.id }}">
-                <input type="checkbox" {{ diplome.optEspacePersoVisible ? 'checked': '' }}
-                       class="changeOption"
-                       name="optEspacePersoVisible"
-                       id="optEspacePersoVisible_{{ diplome.id }}"
-                       data-type="diplome"
-                       data-id="{{ diplome.id }}">
-                <span class="switch-indicator"></span>
-            </label>
-        </div>
+        {#        <div class="media"> #}
+        {#            <div class="media-body"> #}
+        {#                <p><strong>{{ 'table.opt_suppr_absence'|trans }}</strong></p> #}
+        {#                <p>{{ 'help.opt_suppr_absence'|trans }}</p> #}
+        {#            </div> #}
+        {#            <label class="switch" for="optSupprAbsence_{{ diplome.id }}"> #}
+        {#                <input type="checkbox" {{ diplome.optSupprAbsence ? 'checked': '' }} #}
+        {#                       class="changeOption" #}
+        {#                       name="optSupprAbsence" #}
+        {#                       id="optSupprAbsence_{{ diplome.id }}" #}
+        {#                       data-type="diplome" #}
+        {#                       data-id="{{ diplome.id }}"> #}
+        {#                <span class="switch-indicator"></span> #}
+        {#            </label> #}
+        {#        </div> #}
 
-        <div class="media">
-            <div class="media-body">
-                <p><strong>{{ 'table.opt_dilpome_decale'|trans }}</strong></p>
-                <p>{{ 'help.opt_dilpome_decale'|trans }}</p>
-            </div>
-            <label class="switch" for="optDilpomeDecale_{{ diplome.id }}">
-                <input type="checkbox" {{ diplome.optDilpomeDecale ? 'checked': '' }}
-                       class="changeOption"
-                       name="optDilpomeDecale"
-                       id="optDilpomeDecale_{{ diplome.id }}"
-                       data-type="diplome"
-                       data-id="{{ diplome.id }}">
-                <span class="switch-indicator"></span>
-            </label>
-        </div>
+        <twig:SwitchOptionComponent
+                label="{{ 'table.opt_espace_perso_visible'|trans }}"
+                help="{{ 'help.opt_espace_perso_visible'|trans }}"
+                cle="optEspacePersoVisible_{{ diplome.id }}"
+                value="{{ diplome.optEspacePersoVisible }}"
+                type="diplome"
+                id="{{ diplome.id }}"></twig:SwitchOptionComponent>
+        {#        <div class="media"> #}
+        {#            <div class="media-body"> #}
+        {#                <p><strong>{{ 'table.opt_espace_perso_visible'|trans }}</strong></p> #}
+        {#                <p>{{ 'help.opt_espace_perso_visible'|trans }}</p> #}
+        {#            </div> #}
+        {#            <label class="switch" for="optEspacePersoVisible_{{ diplome.id }}"> #}
+        {#                <input type="checkbox" {{ diplome.optEspacePersoVisible ? 'checked': '' }} #}
+        {#                       class="changeOption" #}
+        {#                       name="optEspacePersoVisible" #}
+        {#                       id="optEspacePersoVisible_{{ diplome.id }}" #}
+        {#                       data-type="diplome" #}
+        {#                       data-id="{{ diplome.id }}"> #}
+        {#                <span class="switch-indicator"></span> #}
+        {#            </label> #}
+        {#        </div> #}
 
-        <div class="media">
-            <div class="media-body">
-                <p><strong>{{ 'table.opt_anonymat'|trans }}</strong></p>
-                <p>{{ 'help.opt_anonymat'|trans }}</p>
-            </div>
-            <label class="switch" for="optAnonymat_{{ diplome.id }}">
-                <input type="checkbox" {{ diplome.optAnonymat ? 'checked': '' }}
-                       class="changeOption"
-                       name="optAnonymat"
-                       id="optAnonymat_{{ diplome.id }}"
-                       data-type="diplome"
-                       data-id="{{ diplome.id }}">
-                <span class="switch-indicator"></span>
-            </label>
-        </div>
+        <twig:SwitchOptionComponent
+                label="{{ 'table.opt_dilpome_decale'|trans }}"
+                help="{{ 'help.opt_dilpome_decale'|trans }}"
+                cle="optDilpomeDecale_{{ diplome.id }}"
+                value="{{ diplome.optDilpomeDecale }}"
+                type="diplome"
+                id="{{ diplome.id }}"></twig:SwitchOptionComponent>
+
+        {#        <div class="media"> #}
+        {#            <div class="media-body"> #}
+        {#                <p><strong>{{ 'table.opt_dilpome_decale'|trans }}</strong></p> #}
+        {#                <p>{{ 'help.opt_dilpome_decale'|trans }}</p> #}
+        {#            </div> #}
+        {#            <label class="switch" for="optDilpomeDecale_{{ diplome.id }}"> #}
+        {#                <input type="checkbox" {{ diplome.optDilpomeDecale ? 'checked': '' }} #}
+        {#                       class="changeOption" #}
+        {#                       name="optDilpomeDecale" #}
+        {#                       id="optDilpomeDecale_{{ diplome.id }}" #}
+        {#                       data-type="diplome" #}
+        {#                       data-id="{{ diplome.id }}"> #}
+        {#                <span class="switch-indicator"></span> #}
+        {#            </label> #}
+        {#        </div> #}
+
+        <twig:SwitchOptionComponent
+                label="{{ 'table.opt_anonymat'|trans }}"
+                help="{{ 'help.opt_anonymat'|trans }}"
+                cle="optAnonymat_{{ diplome.id }}"
+                value="{{ diplome.optAnonymat }}"
+                type="diplome"
+                id="{{ diplome.id }}"></twig:SwitchOptionComponent>
+
+        {#        <div class="media"> #}
+        {#            <div class="media-body"> #}
+        {#                <p><strong>{{ 'table.opt_anonymat'|trans }}</strong></p> #}
+        {#                <p>{{ 'help.opt_anonymat'|trans }}</p> #}
+        {#            </div> #}
+        {#            <label class="switch" for="optAnonymat_{{ diplome.id }}"> #}
+        {#                <input type="checkbox" {{ diplome.optAnonymat ? 'checked': '' }} #}
+        {#                       class="changeOption" #}
+        {#                       name="optAnonymat" #}
+        {#                       id="optAnonymat_{{ diplome.id }}" #}
+        {#                       data-type="diplome" #}
+        {#                       data-id="{{ diplome.id }}"> #}
+        {#                <span class="switch-indicator"></span> #}
+        {#            </label> #}
+        {#        </div> #}
 
     </div>
     <div class="col-md-6">
@@ -133,22 +164,28 @@
             </select>
         </div>
 
-
-        <div class="media">
-            <div class="media-body">
-                <p><strong>{{ 'table.opt_commentaires_releve'|trans }}</strong></p>
-                <p>{{ 'help.opt_commentaires_releve'|trans }}</p>
-            </div>
-            <label class="switch" for="optCommentairesReleve_{{ diplome.id }}">
-                <input type="checkbox" {{ diplome.optCommentairesReleve ? 'checked': '' }}
-                       class="changeOption"
-                       name="optCommentairesReleve"
-                       id="optCommentairesReleve_{{ diplome.id }}"
-                       data-type="diplome"
-                       data-id="{{ diplome.id }}">
-                <span class="switch-indicator"></span>
-            </label>
-        </div>
+        <twig:SwitchOptionComponent
+                label="{{ 'table.opt_commentaires_releve'|trans }}"
+                help="{{ 'help.opt_commentaires_releve'|trans }}"
+                cle="optCommentairesReleve_{{ diplome.id }}"
+                value="{{ diplome.optCommentairesReleve }}"
+                type="diplome"
+                id="{{ diplome.id }}"></twig:SwitchOptionComponent>
+        {#        <div class="media"> #}
+        {#            <div class="media-body"> #}
+        {#                <p><strong>{{ 'table.opt_commentaires_releve'|trans }}</strong></p> #}
+        {#                <p>{{ 'help.opt_commentaires_releve'|trans }}</p> #}
+        {#            </div> #}
+        {#            <label class="switch" for="optCommentairesReleve_{{ diplome.id }}"> #}
+        {#                <input type="checkbox" {{ diplome.optCommentairesReleve ? 'checked': '' }} #}
+        {#                       class="changeOption" #}
+        {#                       name="optCommentairesReleve" #}
+        {#                       id="optCommentairesReleve_{{ diplome.id }}" #}
+        {#                       data-type="diplome" #}
+        {#                       data-id="{{ diplome.id }}"> #}
+        {#                <span class="switch-indicator"></span> #}
+        {#            </label> #}
+        {#        </div> #}
 
 
         <div class="media">
@@ -173,21 +210,28 @@
             </select>
         </div>
 
-        <div class="media">
-            <div class="media-body">
-                <p><strong>{{ 'table.opt_qualite'|trans }}</strong></p>
-                <p>{{ 'help.opt_qualite'|trans }}</p>
-            </div>
-            <label class="switch" for="optCertifieQualite_{{ diplome.id }}">
-                <input type="checkbox" {{ diplome.optCertifieQualite ? 'checked': '' }}
-                       class="changeOption"
-                       name="optCertifieQualite"
-                       id="optCertifieQualite_{{ diplome.id }}"
-                       data-type="diplome"
-                       data-id="{{ diplome.id }}">
-                <span class="switch-indicator"></span>
-            </label>
-        </div>
+        <twig:SwitchOptionComponent
+                label="{{ 'table.opt_qualite'|trans }}"
+                help="{{ 'help.opt_qualite'|trans }}"
+                cle="optCertifieQualite_{{ diplome.id }}"
+                value="{{ diplome.optCertifieQualite }}"
+                type="diplome"
+                id="{{ diplome.id }}"></twig:SwitchOptionComponent>
+        {#        <div class="media"> #}
+        {#            <div class="media-body"> #}
+        {#                <p><strong>{{ 'table.opt_qualite'|trans }}</strong></p> #}
+        {#                <p>{{ 'help.opt_qualite'|trans }}</p> #}
+        {#            </div> #}
+        {#            <label class="switch" for="optCertifieQualite_{{ diplome.id }}"> #}
+        {#                <input type="checkbox" {{ diplome.optCertifieQualite ? 'checked': '' }} #}
+        {#                       class="changeOption" #}
+        {#                       name="optCertifieQualite" #}
+        {#                       id="optCertifieQualite_{{ diplome.id }}" #}
+        {#                       data-type="diplome" #}
+        {#                       data-id="{{ diplome.id }}"> #}
+        {#                <span class="switch-indicator"></span> #}
+        {#            </label> #}
+        {#        </div> #}
 
         <div class="media">
             <div class="media-body">
@@ -210,20 +254,28 @@
                 {% endfor %}
             </select>
         </div>
-        <div class="media">
-            <div class="media-body">
-                <p><strong>{{ 'table.opt_update_celcat'|trans }}</strong></p>
-                <p>{{ 'help.opt_update_celcat'|trans }}</p>
-            </div>
-            <label class="switch" for="optUpdateCelcat_{{ diplome.id }}">
-                <input type="checkbox" {{ diplome.optUpdateCelcat ? 'checked': '' }}
-                       class="changeOption"
-                       name="optUpdateCelcat"
-                       id="optUpdateCelcat_{{ diplome.id }}"
-                       data-type="diplome"
-                       data-id="{{ diplome.id }}">
-                <span class="switch-indicator"></span>
-            </label>
-        </div>
+
+        <twig:SwitchOptionComponent
+                label="{{ 'table.opt_update_celcat'|trans }}"
+                help="{{ 'help.opt_update_celcat'|trans }}"
+                cle="optUpdateCelcat_{{ diplome.id }}"
+                value="{{ diplome.optUpdateCelcat }}"
+                type="diplome"
+                id="{{ diplome.id }}"></twig:SwitchOptionComponent>
+        {#        <div class="media"> #}
+        {#            <div class="media-body"> #}
+        {#                <p><strong>{{ 'table.opt_update_celcat'|trans }}</strong></p> #}
+        {#                <p>{{ 'help.opt_update_celcat'|trans }}</p> #}
+        {#            </div> #}
+        {#            <label class="switch" for="optUpdateCelcat_{{ diplome.id }}"> #}
+        {#                <input type="checkbox" {{ diplome.optUpdateCelcat ? 'checked': '' }} #}
+        {#                       class="changeOption" #}
+        {#                       name="optUpdateCelcat" #}
+        {#                       id="optUpdateCelcat_{{ diplome.id }}" #}
+        {#                       data-type="diplome" #}
+        {#                       data-id="{{ diplome.id }}"> #}
+        {#                <span class="switch-indicator"></span> #}
+        {#            </label> #}
+        {#        </div> #}
     </div>
 </div>

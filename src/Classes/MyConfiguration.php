@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyConfiguration.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyConfiguration.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 06/01/2024 19:11
  */
 
 /*
@@ -62,6 +62,10 @@ class MyConfiguration
 
     private function transformeValue(mixed $value): Personnel|bool|string|AnneeUniversitaire|null
     {
+        if (is_bool($value)) {
+            return $value;
+        }
+
         if ('false' === $value) {
             return false;
         }

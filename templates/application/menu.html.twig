@@ -20,12 +20,14 @@
             {# todo: décomposer en deux entrées #}
             <li class="nav-item">
                 <a class="nav-link changeapplication {% if onglet == 'salle_examen' %}active{% endif %}"
-                   href="{{ path('application_personnel_salle_examen_index') }}" role="tab">{{ 'menu.salle_examen'|trans }}</a>
+                   href="{{ path('application_personnel_salle_examen_index') }}"
+                   role="tab">{{ 'menu.salle_examen'|trans }}</a>
             </li>
 
             <li class="nav-item">
                 <a class="nav-link changeapplication {% if onglet == 'plan_cours' %}active{% endif %}"
-                   href="{{ path('application_personnel_plan_cours_index') }}" role="tab">{{ 'menu.plan_cours'|trans }}</a>
+                   href="{{ path('application_personnel_plan_cours_index') }}"
+                   role="tab">{{ 'menu.plan_cours'|trans }}</a>
             </li>
 
             {#            <li class="nav-item"> #}
@@ -63,35 +65,38 @@
                        role="tab">{{ 'menu.stages'|trans }}</a>
                 </li>
             {% endif %}
-{#            <li class="nav-item ">#}
-{#                <a class="nav-link changeapplication {% if onglet == 'carnet' %}active{% endif %}"#}
-{#                   href="{{ path('application_etudiant_carnet_index') }}" role="tab">{{ 'menu.carnet'|trans }}</a>#}
-{#            </li>#}
+            {#            <li class="nav-item "> #}
+            {#                <a class="nav-link changeapplication {% if onglet == 'carnet' %}active{% endif %}" #}
+            {#                   href="{{ path('application_etudiant_carnet_index') }}" role="tab">{{ 'menu.carnet'|trans }}</a> #}
+            {#            </li> #}
             <li class="nav-item ">
                 <a class="nav-link changeapplication {% if onglet == 'projet' %}active{% endif %}"
                    href="{{ path('application_etudiant_projet_index') }}" role="tab">{{ 'menu.projet'|trans }}</a>
             </li>
 
-            <li class="nav-item ">
-                <a class="nav-link changeapplication {% if onglet == 'rattrapage' %}active{% endif %}"
-                   href="{{ path('application_etudiant_rattrapage_index') }}"
-                   role="tab">{{ 'menu.rattrapage'|trans }}</a>
-            </li>
+            {% if user_data.user.semestre.optRattrapage == true %}
+                <li class="nav-item ">
+                    <a class="nav-link changeapplication {% if onglet == 'rattrapage' %}active{% endif %}"
+                       href="{{ path('application_etudiant_rattrapage_index') }}"
+                       role="tab">{{ 'menu.rattrapage'|trans }}</a>
+                </li>
+            {% endif %}
 
-{#            <li class="nav-item ">#}
-{#                <a class="nav-link changeapplication {% if onglet == 'quizz' %}active{% endif %}"#}
-{#                   href="{{ path('application_etudiant_quizz_index') }}" role="tab">{{ 'menu.quizz'|trans }}</a>#}
-{#            </li>#}
-{#            {% if user_data.departement.optMateriel == true %}#}
-{#                <li class="nav-item ">#}
-{#                    <a class="nav-link changeapplication {% if onglet == 'emprunt' %}active{% endif %}"#}
-{#                       href="{{ path('application_etudiant_emprunt_index') }}" role="tab">{{ 'menu.emprunt'|trans }}</a>#}
-{#                </li>#}
-{#            {% endif %}#}
+            {#            <li class="nav-item "> #}
+            {#                <a class="nav-link changeapplication {% if onglet == 'quizz' %}active{% endif %}" #}
+            {#                   href="{{ path('application_etudiant_quizz_index') }}" role="tab">{{ 'menu.quizz'|trans }}</a> #}
+            {#            </li> #}
+            {#            {% if user_data.departement.optMateriel == true %} #}
+            {#                <li class="nav-item "> #}
+            {#                    <a class="nav-link changeapplication {% if onglet == 'emprunt' %}active{% endif %}" #}
+            {#                       href="{{ path('application_etudiant_emprunt_index') }}" role="tab">{{ 'menu.emprunt'|trans }}</a> #}
+            {#                </li> #}
+            {#            {% endif %} #}
         {% endif %}
     </ul>
     <div class="buttons">
-        <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
+        <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip"
+           data-bs-placement="bottom"
            title="{{ 'atitle.retour_dashboard'|trans }}">
             <i class="{{ iconDashboard }}"><span class="sr-only">dashboard</span></i>
         </a>

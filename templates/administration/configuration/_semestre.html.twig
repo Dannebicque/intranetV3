@@ -1,21 +1,14 @@
 {{ semestre.libelle }}
 <div class="row">
     <div class="col-md-6">
-        <div class="media">
-            <div class="media-body">
-                <p><strong>{{ 'table.semestre_actif'|trans }}</strong></p>
-                <p>{{ 'help.semestre_actif'|trans }}</p>
-            </div>
-            <label class="switch" for="actif_{{ semestre.id }}">
-                <input type="checkbox" {{ semestre.actif ? 'checked': '' }}
-                       class="changeOption"
-                       name="actif_{{ semestre.id }}"
-                       id="actif_{{ semestre.id }}"
-                       data-type="semestre"
-                       data-id="{{ semestre.id }}">
-                <span class="switch-indicator"></span>
-            </label>
-        </div>
+
+        <twig:SwitchOptionComponent
+                label="{{ 'table.semestre_actif'|trans }}"
+                help="{{ 'help.semestre_actif'|trans }}"
+                cle="actif_{{ semestre.id }}"
+                value="{{ semestre.actif }}"
+                type="semestre"
+                id="{{ semestre.id }}"></twig:SwitchOptionComponent>
 
         <div class="media">
             <div class="media-body">
@@ -42,21 +35,13 @@
             </select>
         </div>
 
-        <div class="media">
-            <div class="media-body">
-                <p><strong>{{ 'table.opt_mail_releve'|trans }}</strong></p>
-                <p>{{ 'help.opt_mail_releve'|trans }}</p>
-            </div>
-            <label class="switch" for="optMailReleve_{{ semestre.id }}">
-                <input type="checkbox" {{ semestre.optMailReleve ? 'checked': '' }}
-                       class="changeOption"
-                       name="optMailReleve_{{ semestre.id }}"
-                       id="optMailReleve_{{ semestre.id }}"
-                       data-type="semestre"
-                       data-id="{{ semestre.id }}">
-                <span class="switch-indicator"></span>
-            </label>
-        </div>
+        <twig:SwitchOptionComponent
+                label="{{ 'table.opt_mail_releve'|trans }}"
+                help="{{ 'help.opt_mail_releve'|trans }}"
+                cle="optMailReleve_{{ semestre.id }}"
+                value="{{ semestre.optMailReleve }}"
+                type="semestre"
+                id="{{ semestre.id }}"></twig:SwitchOptionComponent>
 
         <div class="media">
             <div class="media-body">
@@ -78,21 +63,13 @@
             </select>
         </div>
 
-        <div class="media">
-            <div class="media-body">
-                <p><strong>{{ 'table.opt_mail_modification_note'|trans }}</strong></p>
-                <p>{{ 'help.opt_mail_modification_note'|trans }}</p>
-            </div>
-            <label class="switch" for="optMailModificationNote_{{ semestre.id }}">
-                <input type="checkbox" {{ semestre.optMailModificationNote ? 'checked': '' }}
-                       class="changeOption"
-                       name="optMailModificationNote_{{ semestre.id }}"
-                       id="optMailModificationNote_{{ semestre.id }}"
-                       data-type="semestre"
-                       data-id="{{ semestre.id }}">
-                <span class="switch-indicator"></span>
-            </label>
-        </div>
+        <twig:SwitchOptionComponent
+                label="{{ 'table.opt_mail_modification_note'|trans }}"
+                help="{{ 'help.opt_mail_modification_note'|trans }}"
+                cle="optMailModificationNote_{{ semestre.id }}"
+                value="{{ semestre.optMailModificationNote }}"
+                type="semestre"
+                id="{{ semestre.id }}"></twig:SwitchOptionComponent>
 
         <div class="media">
             <div class="media-body">
@@ -115,22 +92,13 @@
                 {% endfor %}
             </select>
         </div>
-
-        <div class="media">
-            <div class="media-body">
-                <p><strong>{{ 'table.opt_mail_absence_responsable'|trans }}</strong></p>
-                <p>{{ 'help.opt_mail_absence_responsable'|trans }}</p>
-            </div>
-            <label class="switch" for="optMailAbsenceResp_{{ semestre.id }}">
-                <input type="checkbox" {{ semestre.optMailAbsenceResp ? 'checked': '' }}
-                       class="changeOption"
-                       name="optMailAbsenceResp_{{ semestre.id }}"
-                       id="optMailAbsenceResp_{{ semestre.id }}"
-                       data-type="semestre"
-                       data-id="{{ semestre.id }}">
-                <span class="switch-indicator"></span>
-            </label>
-        </div>
+        <twig:SwitchOptionComponent
+                label="{{ 'table.opt_mail_absence_responsable'|trans }}"
+                help="{{ 'help.opt_mail_absence_responsable'|trans }}"
+                cle="optMailAbsenceResp_{{ semestre.id }}"
+                value="{{ semestre.optMailAbsenceResp }}"
+                type="semestre"
+                id="{{ semestre.id }}"></twig:SwitchOptionComponent>
 
         <div class="media">
             <div class="media-body">
@@ -153,103 +121,152 @@
                 {% endfor %}
             </select>
         </div>
-        <div class="media">
-            <div class="media-body">
-                <p><strong>{{ 'table.opt_mail_assistante_justificatif_absence'|trans }}</strong></p>
-                <p>{{ 'help.opt_mail_assistante_justificatif_absence'|trans }}</p>
-            </div>
-            <label class="switch" for="optMailAssistanteJustificatifAbsence_{{
-            semestre.id }}">
-                <input type="checkbox" {{ semestre.optMailAssistanteJustificatifAbsence ? 'checked': '' }}
-                       class="changeOption"
-                       name="optMailAssistanteJustificatifAbsence_{{ semestre.id }}"
-                       id="optMailAssistanteJustificatifAbsence_{{ semestre.id }}"
-                       data-type="semestre"
-                       data-id="{{ semestre.id }}">
-                <span class="switch-indicator"></span>
-            </label>
-        </div>
+
+        <twig:SwitchOptionComponent
+                label="{{ 'table.opt_mail_assistante_justificatif_absence'|trans }}"
+                help="{{ 'help.opt_mail_assistante_justificatif_absence'|trans }}"
+                cle="optMailAssistanteJustificatifAbsence_{{ semestre.id }}"
+                value="{{ semestre.optMailAssistanteJustificatifAbsence }}"
+                type="semestre"
+                id="{{ semestre.id }}"></twig:SwitchOptionComponent>
+
+        <twig:SwitchOptionComponent
+                label="{{ 'table.opt_rattrapage'|trans }}"
+                help="{{ 'help.opt_rattrapage'|trans }}"
+                cle="optRattrapage_{{ semestre.id }}"
+                value="{{ semestre.optRattrapage }}"
+                type="semestre"
+                id="{{ semestre.id }}"></twig:SwitchOptionComponent>
+
+        <twig:SwitchOptionComponent
+                label="{{ 'table.opt_mail_rattrapage'|trans }}"
+                help="{{ 'help.opt_mail_rattrapage'|trans }}"
+                cle="optMailRattrapage_{{ semestre.id }}"
+                value="{{ semestre.optMailRattrapage }}"
+                type="semestre"
+                id="{{ semestre.id }}"></twig:SwitchOptionComponent>
+
     </div>
     <div class="col-md-6">
-        <div class="media">
-            <div class="media-body">
-                <p><strong>{{ 'table.opt_evaluation_pre_initialisee'|trans }}</strong>
-                </p>
-                <p>{{ 'help.opt_evaluation_pre_initialisee'|trans }}</p>
-            </div>
-            <label class="switch" for="optEvaluationPreInitialisee_{{ semestre.id }}">
-                <input type="checkbox" {{ semestre.optEvaluationPreInitialisee ? 'checked': '' }}
-                       class="changeOption"
-                       name="optEvaluationPreInitialisee_{{ semestre.id }}"
-                       id="optEvaluationPreInitialisee_{{ semestre.id }}"
-                       data-type="semestre"
-                       data-id="{{ semestre.id }}">
-                <span class="switch-indicator"></span>
-            </label>
-        </div>
-        <div class="media">
-            <div class="media-body">
-                <p><strong>{{ 'table.opt_evaluation_visible'|trans }}</strong></p>
-                <p>{{ 'help.opt_evaluation_visible'|trans }}</p>
-            </div>
-            <label class="switch" for="optEvaluationVisible_{{ semestre.id }}">
-                <input type="checkbox" {{ semestre.optEvaluationVisible ? 'checked': '' }}
-                       class="changeOption"
-                       name="optEvaluationVisible_{{ semestre.id }}"
-                       id="optEvaluationVisible_{{ semestre.id }}"
-                       data-type="semestre"
-                       data-id="{{ semestre.id }}">
-                <span class="switch-indicator"></span>
-            </label>
-        </div>
 
-        <div class="media">
-            <div class="media-body">
-                <p><strong>{{ 'table.opt_evaluation_modifiable'|trans }}</strong></p>
-                <p>{{ 'help.opt_evaluation_modifiable'|trans }}</p>
-            </div>
-            <label class="switch" for="optEvaluationModifiable_{{ semestre.id }}">
-                <input type="checkbox" {{ semestre.optEvaluationModifiable ? 'checked': '' }}
-                       class="changeOption"
-                       name="optEvaluationModifiable_{{ semestre.id }}"
-                       id="optEvaluationModifiable_{{ semestre.id }}"
-                       data-type="semestre"
-                       data-id="{{ semestre.id }}">
-                <span class="switch-indicator"></span>
-            </label>
-        </div>
+        <twig:SwitchOptionComponent
+                label="{{ 'table.opt_evaluation_pre_initialisee'|trans }}"
+                help="{{ 'help.opt_evaluation_pre_initialisee'|trans }}"
+                cle="optEvaluationPreInitialisee_{{ semestre.id }}"
+                value="{{ semestre.optEvaluationPreInitialisee }}"
+                type="semestre"
+                id="{{ semestre.id }}"></twig:SwitchOptionComponent>
 
-        <div class="media">
-            <div class="media-body">
-                <p><strong>{{ 'table.opt_mail_absence_etudiant'|trans }}</strong></p>
-                <p>{{ 'help.opt_mail_absence_etudiant'|trans }}</p>
-            </div>
-            <label class="switch" for="optMailAbsenceEtudiant_{{ semestre.id }}">
-                <input type="checkbox" {{ semestre.optMailAbsenceEtudiant ? 'checked': '' }}
-                       class="changeOption"
-                       name="optMailAbsenceEtudiant_{{ semestre.id }}"
-                       id="optMailAbsenceEtudiant_{{ semestre.id }}"
-                       data-type="semestre"
-                       data-id="{{ semestre.id }}">
-                <span class="switch-indicator"></span>
-            </label>
-        </div>
+        {#        <div class="media"> #}
+        {#            <div class="media-body"> #}
+        {#                <p><strong>{{ 'table.opt_evaluation_pre_initialisee'|trans }}</strong> #}
+        {#                </p> #}
+        {#                <p>{{ 'help.opt_evaluation_pre_initialisee'|trans }}</p> #}
+        {#            </div> #}
+        {#            <label class="switch" for="optEvaluationPreInitialisee_{{ semestre.id }}"> #}
+        {#                <input type="checkbox" {{ semestre.optEvaluationPreInitialisee ? 'checked': '' }} #}
+        {#                       class="changeOption" #}
+        {#                       name="optEvaluationPreInitialisee_{{ semestre.id }}" #}
+        {#                       id="optEvaluationPreInitialisee_{{ semestre.id }}" #}
+        {#                       data-type="semestre" #}
+        {#                       data-id="{{ semestre.id }}"> #}
+        {#                <span class="switch-indicator"></span> #}
+        {#            </label> #}
+        {#        </div> #}
 
-        <div class="media">
-            <div class="media-body">
-                <p><strong>{{ 'table.opt_penalite_absence'|trans }}</strong></p>
-                <p>{{ 'help.opt_penalite_absence'|trans }}</p>
-            </div>
-            <label class="switch" for="optPenaliteAbsence_{{ semestre.id }}">
-                <input type="checkbox" {{ semestre.optPenaliteAbsence ? 'checked': '' }}
-                       class="changeOption"
-                       name="optPenaliteAbsence_{{ semestre.id }}"
-                       id="optPenaliteAbsence_{{ semestre.id }}"
-                       data-type="semestre"
-                       data-id="{{ semestre.id }}">
-                <span class="switch-indicator"></span>
-            </label>
-        </div>
+        <twig:SwitchOptionComponent
+                label="{{ 'table.opt_evaluation_visible'|trans }}"
+                help="{{ 'help.opt_evaluation_visible'|trans }}"
+                cle="optEvaluationVisible_{{ semestre.id }}"
+                value="{{ semestre.optEvaluationVisible }}"
+                type="semestre"
+                id="{{ semestre.id }}"></twig:SwitchOptionComponent>
+        {#        <div class="media"> #}
+        {#            <div class="media-body"> #}
+        {#                <p><strong>{{ 'table.opt_evaluation_visible'|trans }}</strong></p> #}
+        {#                <p>{{ 'help.opt_evaluation_visible'|trans }}</p> #}
+        {#            </div> #}
+        {#            <label class="switch" for="optEvaluationVisible_{{ semestre.id }}"> #}
+        {#                <input type="checkbox" {{ semestre.optEvaluationVisible ? 'checked': '' }} #}
+        {#                       class="changeOption" #}
+        {#                       name="optEvaluationVisible_{{ semestre.id }}" #}
+        {#                       id="optEvaluationVisible_{{ semestre.id }}" #}
+        {#                       data-type="semestre" #}
+        {#                       data-id="{{ semestre.id }}"> #}
+        {#                <span class="switch-indicator"></span> #}
+        {#            </label> #}
+        {#        </div> #}
+
+        <twig:SwitchOptionComponent
+                label="{{ 'table.opt_evaluation_modifiable'|trans }}"
+                help="{{ 'help.opt_evaluation_modifiable'|trans }}"
+                cle="optEvaluationModifiable_{{ semestre.id }}"
+                value="{{ semestre.optEvaluationModifiable }}"
+                type="semestre"
+                id="{{ semestre.id }}"></twig:SwitchOptionComponent>
+
+        {#        <div class="media"> #}
+        {#            <div class="media-body"> #}
+        {#                <p><strong>{{ 'table.opt_evaluation_modifiable'|trans }}</strong></p> #}
+        {#                <p>{{ 'help.opt_evaluation_modifiable'|trans }}</p> #}
+        {#            </div> #}
+        {#            <label class="switch" for="optEvaluationModifiable_{{ semestre.id }}"> #}
+        {#                <input type="checkbox" {{ semestre.optEvaluationModifiable ? 'checked': '' }} #}
+        {#                       class="changeOption" #}
+        {#                       name="optEvaluationModifiable_{{ semestre.id }}" #}
+        {#                       id="optEvaluationModifiable_{{ semestre.id }}" #}
+        {#                       data-type="semestre" #}
+        {#                       data-id="{{ semestre.id }}"> #}
+        {#                <span class="switch-indicator"></span> #}
+        {#            </label> #}
+        {#        </div> #}
+
+        <twig:SwitchOptionComponent
+                label="{{ 'table.opt_mail_absence_etudiant'|trans }}"
+                help="{{ 'help.opt_mail_absence_etudiant'|trans }}"
+                cle="optMailAbsenceEtudiant_{{ semestre.id }}"
+                value="{{ semestre.optMailAbsenceEtudiant }}"
+                type="semestre"
+                id="{{ semestre.id }}"></twig:SwitchOptionComponent>
+
+        {#        <div class="media"> #}
+        {#            <div class="media-body"> #}
+        {#                <p><strong>{{ 'table.opt_mail_absence_etudiant'|trans }}</strong></p> #}
+        {#                <p>{{ 'help.opt_mail_absence_etudiant'|trans }}</p> #}
+        {#            </div> #}
+        {#            <label class="switch" for="optMailAbsenceEtudiant_{{ semestre.id }}"> #}
+        {#                <input type="checkbox" {{ semestre.optMailAbsenceEtudiant ? 'checked': '' }} #}
+        {#                       class="changeOption" #}
+        {#                       name="optMailAbsenceEtudiant_{{ semestre.id }}" #}
+        {#                       id="optMailAbsenceEtudiant_{{ semestre.id }}" #}
+        {#                       data-type="semestre" #}
+        {#                       data-id="{{ semestre.id }}"> #}
+        {#                <span class="switch-indicator"></span> #}
+        {#            </label> #}
+        {#        </div> #}
+
+        <twig:SwitchOptionComponent
+                label="{{ 'table.opt_penalite_absence'|trans }}"
+                help="{{ 'help.opt_penalite_absence'|trans }}"
+                cle="optPenaliteAbsence_{{ semestre.id }}"
+                value="{{ semestre.optPenaliteAbsence }}"
+                type="semestre"
+                id="{{ semestre.id }}"></twig:SwitchOptionComponent>
+        {#        <div class="media"> #}
+        {#            <div class="media-body"> #}
+        {#                <p><strong>{{ 'table.opt_penalite_absence'|trans }}</strong></p> #}
+        {#                <p>{{ 'help.opt_penalite_absence'|trans }}</p> #}
+        {#            </div> #}
+        {#            <label class="switch" for="optPenaliteAbsence_{{ semestre.id }}"> #}
+        {#                <input type="checkbox" {{ semestre.optPenaliteAbsence ? 'checked': '' }} #}
+        {#                       class="changeOption" #}
+        {#                       name="optPenaliteAbsence_{{ semestre.id }}" #}
+        {#                       id="optPenaliteAbsence_{{ semestre.id }}" #}
+        {#                       data-type="semestre" #}
+        {#                       data-id="{{ semestre.id }}"> #}
+        {#                <span class="switch-indicator"></span> #}
+        {#            </label> #}
+        {#        </div> #}
 
         <div class="media">
             <div class="media-body">
@@ -287,23 +304,33 @@
             </select>
         </div>
 
-        <div class="media">
-            <div class="media-body">
-                <p><strong>Afficher le bilan de semestre (uniquement en B.U .T.)</strong></p>
-                <p>Affiche un onglet, dans le profil, visible des étudiants avec le
+        <twig:SwitchOptionComponent
+                label="Afficher le bilan de semestre (uniquement en B.U .T.)"
+                help="Affiche un onglet, dans le profil, visible des étudiants avec le
                    détail des notes et des moyennes pour le B.U.T. Par défaut les
-                   ensiegnants y ont toujours accès.</p>
-            </div>
-            <label class="switch" for="optBilanSemestre_{{ semestre.id }}">
-                <input type="checkbox" {{ semestre.optBilanSemestre ? 'checked': '' }}
-                       class="changeOption"
-                       name="optBilanSemestre_{{ semestre.id }}"
-                       id="optBilanSemestre_{{ semestre.id }}"
-                       data-type="semestre"
-                       data-id="{{ semestre.id }}">
-                <span class="switch-indicator"></span>
-            </label>
-        </div>
+                   ensiegnants y ont toujours accès."
+                cle="optBilanSemestre_{{ semestre.id }}"
+                value="{{ semestre.optBilanSemestre }}"
+                type="semestre"
+                id="{{ semestre.id }}"></twig:SwitchOptionComponent>
+
+        {#        <div class="media"> #}
+        {#            <div class="media-body"> #}
+        {#                <p><strong>Afficher le bilan de semestre (uniquement en B.U .T.)</strong></p> #}
+        {#                <p>Affiche un onglet, dans le profil, visible des étudiants avec le #}
+        {#                   détail des notes et des moyennes pour le B.U.T. Par défaut les #}
+        {#                   ensiegnants y ont toujours accès.</p> #}
+        {#            </div> #}
+        {#            <label class="switch" for="optBilanSemestre_{{ semestre.id }}"> #}
+        {#                <input type="checkbox" {{ semestre.optBilanSemestre ? 'checked': '' }} #}
+        {#                       class="changeOption" #}
+        {#                       name="optBilanSemestre_{{ semestre.id }}" #}
+        {#                       id="optBilanSemestre_{{ semestre.id }}" #}
+        {#                       data-type="semestre" #}
+        {#                       data-id="{{ semestre.id }}"> #}
+        {#                <span class="switch-indicator"></span> #}
+        {#            </label> #}
+        {#        </div> #}
 
     </div>
 </div>

@@ -1,7 +1,7 @@
 <div class="card">
     <header class="card-header">
         <h4 class="card-title">{{ 'bloc.note.etu.heading'|trans }}</h4>
-        {% if is_granted('ROLE_ETUDIANT') %}
+        {% if is_granted('ROLE_ETUDIANT') and user_data.user.semestre.optRattrapage %}
             <div class="card-header-actions">
                 <a href="{{ path('application_index', {'onglet': 'rattrapage'}) }}" class="btn btn-sm btn-primary"
                    title="Faire une demande de rattrapage"

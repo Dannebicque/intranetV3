@@ -1,21 +1,30 @@
 {{ annee.libelle }}
 <div class="row">
     <div class="col-md-6">
-        <div class="media">
-            <div class="media-body">
-                <p><strong>{{ 'table.opt_alternance'|trans }}</strong></p>
-                <p>{{ 'help.opt_alternance'|trans }}</p>
-            </div>
-            <label class="switch" for="optAlternance_{{ annee.id }}">
-                <input type="checkbox" {{ annee.optAlternance ? 'checked': '' }}
-                       class="changeOption"
-                       name="optAlternance_{{ annee.id }}"
-                       id="optAlternance_{{ annee.id }}"
-                       data-type="annee"
-                       data-id="{{ annee.id }}">
-                <span class="switch-indicator"></span>
-            </label>
-        </div>
+        <twig:SwitchOptionComponent
+                label="{{ 'table.opt_alternance'|trans }}"
+                help="{{ 'help.opt_alternance'|trans }}"
+                cle="optAlternance_{{ annee.id }}"
+                value="{{ annee.optAlternance }}"
+                type="annee"
+                id="{{ annee.id }}"></twig:SwitchOptionComponent>
+
+
+        {#        <div class="media"> #}
+        {#            <div class="media-body"> #}
+        {#                <p><strong>{{ 'table.opt_alternance'|trans }}</strong></p> #}
+        {#                <p>{{ 'help.opt_alternance'|trans }}</p> #}
+        {#            </div> #}
+        {#            <label class="switch" for="optAlternance_{{ annee.id }}"> #}
+        {#                <input type="checkbox" {{ annee.optAlternance ? 'checked': '' }} #}
+        {#                       class="changeOption" #}
+        {#                       name="optAlternance_{{ annee.id }}" #}
+        {#                       id="optAlternance_{{ annee.id }}" #}
+        {#                       data-type="annee" #}
+        {#                       data-id="{{ annee.id }}"> #}
+        {#                <span class="switch-indicator"></span> #}
+        {#            </label> #}
+        {#        </div> #}
     </div>
     <div class="col-md-6">
 

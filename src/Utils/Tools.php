@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Utils/Tools.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/09/2023 17:07
+ * @lastUpdate 07/12/2023 11:15
  */
 
 /*
@@ -46,7 +46,7 @@ abstract class Tools
         return $value;
     }
 
-    private static function getMethodParameterTypes($className, $methodName)
+    private static function getMethodParameterTypes($className, string $methodName): array
     {
         $method = new \ReflectionMethod($className, $methodName);
         $parameters = $method->getParameters();

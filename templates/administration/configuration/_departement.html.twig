@@ -3,102 +3,68 @@
     <div class="card-body">
         <div class="row">
             <div class="col-md-6">
-                <div class="media">
-                    <div class="media-body">
-                        <p><strong>{{ 'table.opt_edt'|trans }}</strong></p>
-                        <p>{{ 'help.opt_edt'|trans }}</p>
-                    </div>
-                    <label class="switch" for="optEdt">
-                        <input type="checkbox" {{ user_data.departement.optEdt ? 'checked': '' }}
-                               class="changeOption"
-                               name="optEdt"
-                               id="optEdt"
-                               data-type="departement"
-                               data-id="{{ user_data.departement.id }}">
-                        <span class="switch-indicator"></span>
-                    </label>
-                </div>
-
-                <div class="media">
-                    <div class="media-body">
-                        <p><strong>{{ 'table.opt_stage'|trans }}</strong></p>
-                        <p>{{ 'help.opt_stage'|trans }}</p>
-                    </div>
-                    <label class="switch" for="optStage">
-                        <input type="checkbox" {{ user_data.departement.optStage ? 'checked': '' }}
-                               class="changeOption"
-                               name="optStage"
-                               id="optStage"
-                               data-type="departement"
-                               data-id="{{ user_data.departement.id }}">
-                        <span class="switch-indicator"></span>
-                    </label>
-                </div>
-
-                <div class="media">
-                    <div class="media-body">
-                        <p><strong>{{ 'table.opt_messagerie'|trans }}</strong></p>
-                        <p>{{ 'help.opt_messagerie'|trans }}</p>
-                    </div>
-                    <label class="switch" for="optMessagerie">
-                        <input type="checkbox" {{ user_data.departement.optMessagerie ? 'checked': '' }}
-                               class="changeOption"
-                               name="optMessagerie"
-                               id="optMessagerie"
-                               data-type="departement"
-                               data-id="{{ user_data.departement.id }}">
-                        <span class="switch-indicator"></span>
-                    </label>
-                </div>
+                <twig:SwitchOptionComponent
+                        id="{{ user_data.departement.id }}"
+                        cle="optEdt"
+                        label="{{ 'table.opt_edt'|trans }}"
+                        help="{{ 'help.opt_edt'|trans }}"
+                        type="departement"
+                        value="{{ user_data.departement.optEdt }}"
+                ></twig:SwitchOptionComponent>
+                <twig:SwitchOptionComponent
+                        id="{{ user_data.departement.id }}"
+                        label="{{ 'table.opt_stage'|trans }}"
+                        help="{{ 'help.opt_stage'|trans }}"
+                        cle="optStage"
+                        type="departement"
+                        value="{{ user_data.departement.optStage }}"
+                ></twig:SwitchOptionComponent>
+                <twig:SwitchOptionComponent
+                        id="{{ user_data.departement.id }}"
+                        cle="optMessagerie"
+                        label="{{ 'table.opt_messagerie'|trans }}"
+                        help="{{ 'help.opt_messagerie'|trans }}"
+                        type="departement"
+                        value="{{ user_data.departement.optMessagerie }}"
+                ></twig:SwitchOptionComponent>
             </div>
             <div class="col-md-6">
-                <div class="media">
-                    <div class="media-body">
-                        <p><strong>{{ 'table.opt_agence'|trans }}</strong></p>
-                        <p>{{ 'help.opt_agence'|trans }}</p>
-                    </div>
-                    <label class="switch" for="optAgence">
-                        <input type="checkbox" {{ user_data.departement.optAgence ? 'checked': '' }}
-                               class="changeOption"
-                               name="optAgence"
-                               id="optAgence"
-                               data-type="departement"
-                               data-id="{{ user_data.departement.id }}">
-                        <span class="switch-indicator"></span>
-                    </label>
-                </div>
+                <twig:SwitchOptionComponent
+                        id="{{ user_data.departement.id }}"
+                        cle="optAgence"
+                        label="{{ 'table.opt_agence'|trans }}"
+                        help="{{ 'help.opt_agence'|trans }}"
+                        type="departement"
+                        value="{{ user_data.departement.optAgence }}"
+                ></twig:SwitchOptionComponent>
+                <twig:SwitchOptionComponent
+                        id="{{ user_data.departement.id }}"
+                        cle="optMateriel"
+                        label="{{ 'table.opt_materiel'|trans }}"
+                        help="{{ 'help.opt_materiel'|trans }}"
+                        type="departement"
+                        value="{{ user_data.departement.optMateriel }}"
+                ></twig:SwitchOptionComponent>
+                <twig:SwitchOptionComponent
+                        id="{{ user_data.departement.id }}"
+                        cle="optSynthese"
+                        label="{{ 'table.opt_synthese'|trans }}"
+                        help="{{ 'help.opt_synthese'|trans }}"
+                        type="departement"
+                        value="{{ user_data.departement.optSynthese }}"
+                ></twig:SwitchOptionComponent>
 
-                <div class="media">
-                    <div class="media-body">
-                        <p><strong>{{ 'table.opt_materiel'|trans }}</strong></p>
-                        <p>{{ 'help.opt_materiel'|trans }}</p>
-                    </div>
-                    <label class="switch" for="optMateriel">
-                        <input type="checkbox" {{ user_data.departement.optMateriel ? 'checked': '' }}
-                               class="changeOption"
-                               name="optMateriel"
-                               id="optMateriel"
-                               data-type="departement"
-                               data-id="{{ user_data.departement.id }}">
-                        <span class="switch-indicator"></span>
-                    </label>
-                </div>
 
-                <div class="media">
-                    <div class="media-body">
-                        <p><strong>{{ 'table.opt_synthese'|trans }}</strong></p>
-                        <p>{{ 'help.opt_synthese'|trans }}</p>
-                    </div>
-                    <label class="switch" for="optSynthese">
-                        <input type="checkbox" {{ user_data.departement.optSynthese ? 'checked': '' }}
-                               class="changeOption"
-                               name="optSynthese"
-                               id="optSynthese"
-                               data-type="departement"
-                               data-id="{{ user_data.departement.id }}">
-                        <span class="switch-indicator"></span>
-                    </label>
-                </div>
+                {#                <twig:SelectOptionComponent #}
+                {#                        id="{{user_data.departement.id }}" #}
+                {#                        cle="respRi" #}
+                {#                        label="{{ 'table.respRi'|trans }}" #}
+                {#                        help="{{ 'help.respRi'|trans }}" #}
+                {#                        type="departement" #}
+                {#                        entity="pers" #}
+                {#                        value="{{ user_data.departement.respRi != null ? user_data.departement.respRi.id : null }}" #}
+                {#                        liste="{{ user_data.personnels }}" #}
+                {#                ></twig:SelectOptionComponent> #}
 
                 <div class="media">
                     <div class="media-body">
