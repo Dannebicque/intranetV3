@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.65](https://github.com/Dannebicque/intranetV3/compare/v3.14.64...v3.14.65) (2024-01-14)
+
+
+### Bug Fixes
+
+* Augmentation de la taille du commentaire sur une note ([861c61f](https://github.com/Dannebicque/intranetV3/commit/861c61f23a319e3a72e4d0a540d05dc671937b7d))
+
 ### [3.14.64](https://github.com/Dannebicque/intranetV3/compare/v3.14.63...v3.14.64) (2024-01-09)
 
 
