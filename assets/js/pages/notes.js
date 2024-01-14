@@ -1,25 +1,25 @@
-// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/notes.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/07/2022 13:30
+// @lastUpdate 14/01/2024 15:51
 import $ from 'jquery'
-import { addCallout } from '../util'
 import Routing from 'fos-router'
+import { addCallout } from '../util'
 
 $('.savegroupe').click(function () {
   const groupe = $(this).attr('id')
   const notes = { notes: [] }
-  let erreur = false
+  const erreur = false
   $('.noteetudiant:input').each(function () {
     if ($(this).hasClass(groupe)) // vérifier que c'est le groupe concerné
     {
       const $id = $(this).data('etudiant')
       const blCommentaire = $(`#com_${$id}`)
-      if (blCommentaire.val().length > 255) {
-        erreur = true
-        blCommentaire.addClass('is-invalid')
-      }
+      // if (blCommentaire.val().length > 255) {
+      //   erreur = true
+      //   blCommentaire.addClass('is-invalid')
+      // }
 
       const obj = {
         id: $id,
