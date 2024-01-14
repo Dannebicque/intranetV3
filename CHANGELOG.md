@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.69](https://github.com/Dannebicque/intranetV3/compare/v3.14.68...v3.14.69) (2024-01-14)
+
+
+### Features
+
+* Composant Swicth ([3f76bb5](https://github.com/Dannebicque/intranetV3/commit/3f76bb5caac733567dcaa86b7e827fe02de04340))
+
 ### [3.14.68](https://github.com/Dannebicque/intranetV3/compare/v3.14.67...v3.14.68) (2024-01-14)
 
 
