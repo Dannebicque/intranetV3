@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.68](https://github.com/Dannebicque/intranetV3/compare/v3.14.67...v3.14.68) (2024-01-14)
+
+
+### Features
+
+* Mail si ajout d'un rattrapage ([8cc1733](https://github.com/Dannebicque/intranetV3/commit/8cc17338ac842bf0fcf3a5220a237e12b7d18d76))
+* option pour activer/désactiver les rattrapages ([8d79f5a](https://github.com/Dannebicque/intranetV3/commit/8d79f5aeb49b605e2c8157c04f298b80e51b6115))
+
 ### [3.14.67](https://github.com/Dannebicque/intranetV3/compare/v3.14.66...v3.14.67) (2024-01-14)
 
 
