@@ -1,0 +1,17 @@
+<div{{ attributes }}>
+    <!-- component html -->
+    <div class="media">
+        <div class="media-body">
+            <p><strong>{{ this.label }}</strong></p>
+            <p>{{ this.help }}</p>
+        </div>
+        <label class="switch" for="{{ this.cle }}">
+            <input type="checkbox" {{ this.value ? 'checked': '' }}
+                   data-action="live#action"
+                   data-action-name="changeOption"
+                   name="{{ this.cle }}"
+                   id="{{ this.cle }}">
+            <span class="switch-indicator"></span>
+        </label>
+    </div>
+</div>
