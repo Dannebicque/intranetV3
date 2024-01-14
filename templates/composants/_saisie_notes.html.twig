@@ -156,10 +156,10 @@
                                     {% if  autorise == true and evaluation.modifiable == true %}
                                         <label class="sr-only" for="com_{{ etudiant.id }}">Commentaire pour {{ etudiant
                                             .display }}</label>
-                                        <input type="text" name="com_{{ etudiant.id }}" id="com_{{ etudiant.id }}"
-                                               maxlength="255"
+                                        <textarea type="text" name="com_{{ etudiant.id }}" id="com_{{ etudiant.id }}"
                                                class="form-control groupe_{{ groupe.id }}"
-                                               value="{% if notes[etudiant.id] is defined %}{{ notes[etudiant.id].commentaire }}{% endif %}"/>
+                                                  rows="1"
+                                        >{% if notes[etudiant.id] is defined %}{{ notes[etudiant.id].commentaire }}{% endif %}</textarea>
                                     {% else %}
                                         {% if notes[etudiant.id] is defined %}{{ notes[etudiant.id].commentaire }}{% endif %}
                                     {% endif %}
