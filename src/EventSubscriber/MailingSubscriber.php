@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/MailingSubscriber.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/EventSubscriber/MailingSubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/10/2021 09:38
+ * @lastUpdate 14/01/2024 17:48
  */
 
 namespace App\EventSubscriber;
@@ -41,6 +41,7 @@ class MailingSubscriber implements EventSubscriberInterface
             NoteEvent::UPDATED => 'onMailNoteModificationResponsable',
             EvaluationEvent::ADDED => 'onMailNewTranscriptResponsable',
             RattrapageEvent::DECISION => 'onMailDecisionRattrapage',
+            RattrapageEvent::RATTRAPAGE_MAIL_DEMANDE => 'onMailDemandeRattrapage',
             JustificatifEvent::DECISION => 'onMailDecisionJustificatif',
             JustificatifEvent::DELETED => 'onMailDeleteJustificatif',
             JustificatifEvent::ADDED => 'onMailAddedJustificatif',
@@ -169,6 +170,27 @@ class MailingSubscriber implements EventSubscriberInterface
                 ['justificatif' => $absenceJustificatif]);
             $this->myMailer->sendMessage($absenceJustificatif->getEtudiant()->getMails(),
                 'Justificatif d\'absence supprimé');
+        }
+    }
+
+    public function onMailDemandeRattrapage(RattrapageEvent $event)
+    {
+        $rattrapage = $event->getRattrapage();
+        $matiere = $this->typeMatiereManager->getMatiere($rattrapage->getIdMatiere(), $rattrapage->getTypeMatiere());
+        if (null !== $rattrapage->getEtudiant() && null !== $matiere && $rattrapage->getSemestre() !== null) {
+            $mails = [];
+            if ($rattrapage->getPersonnel() !== null) {
+                $mails[] = $rattrapage->getPersonnel()->getMailUniv();
+            }
+
+            if ($rattrapage->getSemestre()->getDiplome()?->getAssistantDiplome() !== null) {
+                $mails[] = $rattrapage->getSemestre()->getDiplome()?->getAssistantDiplome()?->getMailUniv();
+            }
+            $this->myMailer->initEmail();
+
+            $this->myMailer->setTemplate('mails/rattrapage_demande.html.twig',
+                ['rattrapage' => $rattrapage, 'matiere' => $matiere]);
+            $this->myMailer->sendMessage($mails, 'Nouvelle demande de rattrapage déposée');
         }
     }
 

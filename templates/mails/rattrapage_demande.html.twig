@@ -1,0 +1,22 @@
+<p>Bonjour,</p>
+
+<p>Une nouvelle demande de rattrapage a été faite par {{ rattrapage.etudiant.displayPr }} pour l'évaluation
+    "{{ matiere.display }}"
+    du {{ rattrapage.dateEval != null ? rattrapage.dateEval|format_date('long') : 'date non précisée' }}.</p>
+
+<p>Vous pouvez : </p>
+
+<ul>
+    <li> Accepter la demande en cliquant sur ce lien : <a
+                href="{{ url('administration_rattrapage_change_etat', {uuid: rattrapage.uuidString, etat: 'a'}) }}">Accepter
+            la demande</a></li>
+    <li> Refuser la demande en cliquant sur ce lien : <a
+                href="{{ url('administration_rattrapage_change_etat', {uuid: rattrapage.uuidString, etat: 'r'}) }}">Refuser
+            la demande</a></li>
+    <li> Consulter les demandes en cliquant sur ce lien : <a
+                href="{{ url('administration_rattrapage_semestre_index', {semestre: rattrapage.semestre.id}) }}">Voir
+            les demandes</a></li>
+</ul>
+
+<p>Ce message est un message automatique envoyé depuis l'intranet de l'{{ settings('NOM_IUT') }}. Aucune réponse ne
+    pourra être prise en compte.</p>

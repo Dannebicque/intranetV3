@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/RattrapageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/09/2023 21:08
+ * @lastUpdate 14/01/2024 17:39
  */
 
 namespace App\Controller\appEtudiant;
@@ -12,6 +12,7 @@ namespace App\Controller\appEtudiant;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Controller\BaseController;
 use App\Entity\Rattrapage;
+use App\Event\RattrapageEvent;
 use App\Form\RattrapageType;
 use App\Repository\RattrapageRepository;
 use App\Utils\ToolsMatiere;
@@ -19,13 +20,14 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 #[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_ETUDIANT')]
 #[Route(path: '/application/etudiant/rattrapage')]
 class RattrapageController extends BaseController
 {
     #[Route(path: '/', name: 'application_etudiant_rattrapage_index')]
-    public function index(TypeMatiereManager $typeMatiereManager, RattrapageRepository $rattrapageRepository, Request $request): RedirectResponse|Response
+    public function index(EventDispatcherInterface $eventDispatcher, TypeMatiereManager $typeMatiereManager, RattrapageRepository $rattrapageRepository, Request $request): RedirectResponse|Response
     {
         $rattrapage = new Rattrapage($this->getUser());
 
@@ -62,6 +64,12 @@ class RattrapageController extends BaseController
             $rattrapage->setIdMatiere(ToolsMatiere::getId($request->request->all()['rattrapage']['typeIdMatiere']));
             $this->entityManager->persist($rattrapage);
             $this->entityManager->flush();
+
+            if ($this->getEtudiantSemestre()?->isOptMailRattrapage()) {
+                $event = new RattrapageEvent($rattrapage);
+                $eventDispatcher->dispatch($event, RattrapageEvent::RATTRAPAGE_MAIL_DEMANDE);
+            }
+
 
             return $this->redirectToRoute('application_index', ['onglet' => 'rattrapage']);
         }
