@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Note.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/06/2022 15:44
+ * @lastUpdate 14/01/2024 15:08
  */
 
 namespace App\Entity;
@@ -36,7 +36,7 @@ class Note extends BaseEntity
     #[ORM\Column(type: Types::FLOAT)]
     private ?float $note = null;
 
-    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $commentaire = null;
 
     /**
