@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/QuestChoix.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/01/2023 16:35
+ * @lastUpdate 16/01/2024 08:06
  */
 
 namespace App\Entity;
@@ -108,5 +108,10 @@ class QuestChoix extends BaseEntity
         $this->complement = $complement;
 
         return $this;
+    }
+
+    public function getCleTypeDestinataire(): string
+    {
+        return $this->getTypeDestinataire() . '_' . $this->getIdQuestChoix();
     }
 }
