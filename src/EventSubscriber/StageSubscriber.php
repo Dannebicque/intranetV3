@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/StageSubscriber.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/EventSubscriber/StageSubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 20:09
+ * @lastUpdate 16/01/2024 13:26
  */
 
 namespace App\EventSubscriber;
@@ -155,7 +155,7 @@ class StageSubscriber implements EventSubscriberInterface
         $assistante = $stageEtudiant->getStagePeriode()?->getSemestre()?->getDiplome()?->getAssistantDiplome();
         $mailAssistante = $assistante?->getMailUniv();
         $this->mailerFromTwig->initEmail();
-        $this->mailerFromTwig->setTemplate('mails/stages/stage_convention_envoyee.txt.twig', ['stageEtudiant' => $stageEtudiant, 'assistante' => $assistante]);
+        $this->mailerFromTwig->setTemplate('mails/stages/stage_convention_envoyee.txt.twig', ['stageEtudiant' => $stageEtudiant, 'assistante' => $assistante, 'mailAssistante' => $mailAssistante]);
         $this->mailerFromTwig->attachFile($this->dir.'Convention-'.$stageEtudiant->getEtudiant()->getNom().'.pdf');
         $this->mailerFromTwig->attachFile($this->dir.'modes_operatoires_signature_pdf.pdf');
         $this->mailerFromTwig->sendMessage($stageEtudiant->getEtudiant()->getMails(), 'Convention de stage pour signature', ['replyTo' => $mailAssistante]);
