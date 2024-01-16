@@ -52,7 +52,7 @@
         <h4 class="card-title">{{ 'adm.qualite.resultats.heading'|trans }}</h4>
         <div class="card-body">
             <div class="row">
-                <div class="col-4 d-grid">
+                <div class="col-3 d-grid">
                     <a href="{{ path('adm_questionnaire_qualite_resultats_export', {id: questionnaire.id, type:type}) }}"
                        class="btn btn-success d-block">
                         <i class="fas fa-download"></i>
@@ -60,13 +60,21 @@
                     </a>
                 </div>
 
-                <div class="col-4 d-grid">
+                <div class="col-3 d-grid">
+                    <a href="{{ path('adm_questionnaire_qualite_resultats_export_brut', {id: questionnaire.id, type:type}) }}"
+                       class="btn btn-success d-block">
+                        <i class="fas fa-download"></i>
+                        Télécharger les résultats bruts (xlsx)
+                    </a>
+                </div>
+
+                <div class="col-3 d-grid">
                     <a href="{{ path('adm_questionnaire_qualite_resultats_resultats', {id: questionnaire.id, type:type,
                         type_view:'tableaux'}) }}"
                        class="btn
  btn-info d-block"><i class="fas fa-table"></i> Voir sous forme tableau</a>
                 </div>
-                <div class="col-4 d-grid">
+                <div class="col-3 d-grid">
                     <a href="{{ path('adm_questionnaire_qualite_resultats_resultats', {id: questionnaire.id, type:type,
                         type_view:'graphiques'}) }}"
                        class="btn btn-success d-block"><i class="fas fa-chart-bar"></i> Voir sous forme graphique</a>

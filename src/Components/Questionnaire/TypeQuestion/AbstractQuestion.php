@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeQuestion/AbstractQuestion.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/01/2023 11:25
+ * @lastUpdate 16/01/2024 09:02
  */
 
 namespace App\Components\Questionnaire\TypeQuestion;
@@ -100,6 +100,15 @@ abstract class AbstractQuestion
     public function getReponses(): array
     {
         return $this->reponses->getReponses();
+    }
+
+    public function getReponsesArray(): array
+    {
+        $t = [];
+        foreach ($this->reponses->getReponses() as $reponse) {
+            $t[$reponse->id] = $reponse->libelle;
+        }
+        return $t;
     }
 
     protected function removeReponses(QuestQuestion $question, EntityManagerInterface $entityManager): void

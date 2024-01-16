@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/administration/QuestionnaireResultatController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/01/2023 16:36
+ * @lastUpdate 16/01/2024 13:28
  */
 
 namespace App\Controller\questionnaire\administration;
@@ -14,6 +14,7 @@ use App\Components\Questionnaire\Adapter\SectionQualiteEntityAdapter;
 use App\Components\Questionnaire\DTO\AbstractQuestionnaire;
 use App\Components\Questionnaire\Questionnaire;
 use App\Components\Questionnaire\QuestionnaireExportExcel;
+use App\Components\Questionnaire\QuestionnaireExportExcelBrut;
 use App\Components\Questionnaire\Section\AbstractSection;
 use App\Controller\BaseController;
 use App\Entity\QuestQuestionnaire;
@@ -51,6 +52,41 @@ class QuestionnaireResultatController extends BaseController
         $questionnaire->calculResultats($questionnaire->getListeChoix());
 
         return $questionnaireExportExcel->exportExcel($questionnaire, $questionnaireQualite);
+    }
+
+    #[Route('/export-brut/{id}.xlsx', name: 'export_brut', methods: ['GET'])]
+    public function exportExcelBrut(
+        QuestionnaireExportExcelBrut $questionnaireExportExcel,
+        QuestChoixRepository         $questChoixRepository,
+        Questionnaire                $questionnaire,
+        QuestQuestionnaire           $questionnaireQualite
+    ): Response
+    {
+        $reponsesEtudiants = $questChoixRepository->findByQuestionnaire($questionnaireQualite);
+        $tReponses = [];
+        foreach ($reponsesEtudiants as $reponsesEtudiant) {
+            if (!array_key_exists($reponsesEtudiant->getCleTypeDestinataire(), $tReponses)) {
+                $tReponses[$reponsesEtudiant->getCleTypeDestinataire()] = [];
+            }
+
+            $tReponses[$reponsesEtudiant->getCleTypeDestinataire()][$reponsesEtudiant->getQuestion()->getCle()] = $reponsesEtudiant;
+        }
+
+
+        $questionnaire->createQuestionnaire(QuestQuestionnaire::class,
+            (new QuestionnaireQualiteAdapter($questionnaireQualite))->getQuestionnaire(),
+            [
+                'mode' => AbstractQuestionnaire::MODE_RESULTAT_EXCEL,
+            ]);
+        $questionnaire->AddSpecialSection(AbstractSection::INTRODUCTION);
+        foreach ($questionnaireQualite->getQuestSections() as $section) {
+            $questionnaire->addSection((new SectionQualiteEntityAdapter($section))->getSection());
+        }
+
+        $questionnaire->AddSpecialSection(AbstractSection::END);
+        $questionnaire->calculResultats($questionnaire->getListeChoix());
+
+        return $questionnaireExportExcel->exportExcel($questionnaire, $questionnaireQualite, $tReponses);
     }
 
     #[Route('/affiche-{type_view}/{id}', name: 'resultats', requirements: ['type_view' => 'graphiques|tableaux'], methods: ['GET'])]
