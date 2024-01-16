@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.70](https://github.com/Dannebicque/intranetV3/compare/v3.14.69...v3.14.70) (2024-01-16)
+
+
+### Features
+
+* Export brut des enquetes ([c6c16d2](https://github.com/Dannebicque/intranetV3/commit/c6c16d2a2c5819052c44dae3f7ed872e6bb95bb0))
+
+
+### Bug Fixes
+
+* mail pour signature stage ([7ca8832](https://github.com/Dannebicque/intranetV3/commit/7ca88325f853a14a5a8a4c7c2707c35c8914cd61))
+
 ### [3.14.69](https://github.com/Dannebicque/intranetV3/compare/v3.14.68...v3.14.69) (2024-01-14)
 
 
