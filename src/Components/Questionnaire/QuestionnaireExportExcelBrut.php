@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/QuestionnaireExportExcelBrut.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/01/2024 13:28
+ * @lastUpdate 17/01/2024 08:52
  */
 
 namespace App\Components\Questionnaire;
@@ -67,8 +67,9 @@ class QuestionnaireExportExcelBrut
             if ($questSection->typeSection !== StartSection::class && $questSection->typeSection !== EndSection::class) {
                 foreach ($questSection->getQuestions() as $questQuestion) {
                     $this->myExcelWriter->writeCellXY($col, $ligne, $questQuestion->libelle);
+                    ++$col;
                 }
-                ++$col;
+
             }
         }
         $ligne++;
@@ -76,16 +77,17 @@ class QuestionnaireExportExcelBrut
 
             $col = 2;
             $this->myExcelWriter->writeCellXY(1, $ligne, $key);
+
             foreach ($questionnaire->getSections() as $questSection) {
                 if ($questSection->typeSection !== StartSection::class && $questSection->typeSection !== EndSection::class) {
+
                     foreach ($questSection->getQuestions() as $questQuestion) {
                         if (array_key_exists($questQuestion->cle, $reponse)) {
                             $this->myExcelWriter->writeCellXY($col, $ligne, $this->writeExcelReponses($questQuestion, $reponse[$questQuestion->cle]));
-                        } else {
-                            $this->myExcelWriter->writeCellXY($col, $ligne, 'erreur?');
                         }
+                        ++$col;
                     }
-                    ++$col;
+
                 }
             }
 

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/administration/QuestionnaireResultatController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/01/2024 13:28
+ * @lastUpdate 17/01/2024 08:53
  */
 
 namespace App\Controller\questionnaire\administration;
@@ -69,7 +69,7 @@ class QuestionnaireResultatController extends BaseController
                 $tReponses[$reponsesEtudiant->getCleTypeDestinataire()] = [];
             }
 
-            $tReponses[$reponsesEtudiant->getCleTypeDestinataire()][$reponsesEtudiant->getQuestion()->getCle()] = $reponsesEtudiant;
+            $tReponses[$reponsesEtudiant->getCleTypeDestinataire()][$reponsesEtudiant->getQuestion()?->getCle()] = $reponsesEtudiant;
         }
 
 
