@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.73](https://github.com/Dannebicque/intranetV3/compare/v3.14.72...v3.14.73) (2024-01-22)
+
+
+### Bug Fixes
+
+* Messagerie personnel si pas de nom dans libre ([b4a7e97](https://github.com/Dannebicque/intranetV3/commit/b4a7e97bf65674e290fa63e0f9b0098f77136226))
+
 ### [3.14.72](https://github.com/Dannebicque/intranetV3/compare/v3.14.71...v3.14.72) (2024-01-17)
 
 
