@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/09/2023 12:19
+ * @lastUpdate 22/01/2024 17:38
  */
 
 namespace App\Classes\SousCommission;
@@ -730,7 +730,7 @@ class SousCommissionExport
                     ++$colonne;
                 }
                 $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                    $ssCommTravail->etudiant($etu->getId())->getDecision());
+                    $ssCommTravail->etudiant($etu->getId())->getDecision()->value);
                 ++$colonne;
                 $this->myExcelWriter->writeCellXY($colonne, $ligne,
                     $ssCommTravail->etudiant($etu->getId())->getProposition());
