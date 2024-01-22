@@ -90,7 +90,7 @@
                                                    data-field="decision_{{ ue.id }}"
                                                    data-href="{{ path('administration_ss_comm_ajax_edit', {id:sc.etudiant(etudiant.id).id, type:'ue'}) }}"
                                                    title="Modifier la décision de l'UE">
-                                                    {{ sc.ue(etudiant.id, ue.id).decision.value }}</a>
+                                                    {{ sc.ue(etudiant.id, ue.id).decision }}</a>
                                             {% else %}
                                                 ??
                                             {% endif %}
