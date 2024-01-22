@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/MessagerieController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/07/2023 16:34
+ * @lastUpdate 22/01/2024 11:46
  */
 
 namespace App\Controller;
@@ -218,7 +218,7 @@ class MessagerieController extends BaseController
             Message::MESSAGE_TYPE_SEMESTRE => $req['messageToSemestre'],
             Message::MESSAGE_TYPE_GROUPE => $req['messageToGroupe'],
             Message::MESSAGE_TYPE_ETUDIANT => $req['messageToLibreEtudiant'],
-            Message::MESSAGE_TYPE_PERMANENT => [$req['messageToPersonnel'], $req['messageToLibrePersonnel']],
+            Message::MESSAGE_TYPE_PERMANENT => [$req['messageToPersonnel'], $req['messageToLibrePersonnel'] ?? []],
             Message::MESSAGE_TYPE_MATIERE => $req['messageToMatiere'],
             default => null,
         };
