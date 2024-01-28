@@ -1,8 +1,8 @@
-// Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/absences_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 31/08/2023 16:15
+// @lastUpdate 28/01/2024 16:25
 
 import { Controller } from '@hotwired/stimulus'
 import Routing from 'fos-router'
@@ -51,7 +51,9 @@ export default class extends Controller {
     e.preventDefault()
     e.stopPropagation()
 
-    document.querySelectorAll('.absChangeTypeGroupe').forEach((btn) => {
+    const absChangeTypeGroupe = document.querySelectorAll('.absChangeTypeGroupe') || []
+
+    absChangeTypeGroupe.forEach((btn) => {
       btn.classList.remove('btn-primary')
     })
 
@@ -70,7 +72,7 @@ export default class extends Controller {
     let heure = document.getElementById('absence-heure').value
     const absenceMatiere = document.getElementById('absence-matiere').value
 
-    const buttons = document.querySelectorAll('.pasabsent')
+    const buttons = document.querySelectorAll('.pasabsent') || []
     buttons.forEach((btn) => {
       btn.disabled = false
     })
@@ -86,9 +88,10 @@ export default class extends Controller {
 
         let hasAbsence = false
         const tAbsences = data.absences
+        const objAbsences = Object.entries(tAbsences) || []
 
-        Object.entries(tAbsences).forEach(([d, tAbsence]) => {
-          if (d === date && typeof tAbsence[heure] !== 'undefined') {
+        objAbsences.forEach(([d, tAbsence]) => {
+          if (d === date && tAbsence[heure] !== undefined) {
             tAbsence[heure].forEach((abs) => {
               if (document.querySelector(`#etu_${abs}`)) {
                 document.querySelector(`#etu_${abs}`).classList.add('absent')
@@ -104,9 +107,10 @@ export default class extends Controller {
           })
         } else {
           const tAppel = data.etatAppel
+          const objAppel = Object.entries(tAppel) || []
 
-          Object.entries(tAppel).forEach(([a, etatAppel]) => {
-            if (a === date && etatAppel[heure] !== 'undefined') {
+          objAppel.forEach(([a, etatAppel]) => {
+            if (a === date && etatAppel[heure] !== undefined) {
               etatAppel[heure].forEach((appel) => {
                 const appelButton = Array.from(buttons).find((btn) => btn.dataset.groupe === appel)
                 if (appelButton) appelButton.disabled = true
@@ -135,7 +139,7 @@ export default class extends Controller {
   }
 
   _clearAbsences() {
-    const etudiants = document.querySelectorAll('.etudiant')
+    const etudiants = document.querySelectorAll('.etudiant') || []
     etudiants.forEach((etudiant) => {
       etudiant.classList.remove('absent')
     })
@@ -144,13 +148,11 @@ export default class extends Controller {
   etudiantPresent(event) {
     this.tabPresents.push(event.currentTarget.id)
     event.currentTarget.classList.toggle('present')
-    console.log(this.tabPresents)
   }
 
   etudiantPreAbsent(event) {
     this.tabAbsences.push(event.currentTarget.id)
     event.currentTarget.classList.toggle('absent')
-    console.log(this.tabAbsences)
   }
 
   etudiantAbsent(event) {
