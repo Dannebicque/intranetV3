@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.74](https://github.com/Dannebicque/intranetV3/compare/v3.14.73...v3.14.74) (2024-01-28)
+
+
+### Bug Fixes
+
+* export grand jury ([534f8ee](https://github.com/Dannebicque/intranetV3/commit/534f8ee9e3f3c47d609967dbbe1a674b91fbe70f))
+* export grand jury ([d3f4c77](https://github.com/Dannebicque/intranetV3/commit/d3f4c779408789be692f75ac66971162ebd32fd4))
+* Js sur abences ([2c4d177](https://github.com/Dannebicque/intranetV3/commit/2c4d17717996432f47a9157e76b01f4a600a4983))
+
 ### [3.14.73](https://github.com/Dannebicque/intranetV3/compare/v3.14.72...v3.14.73) (2024-01-22)
 
 
