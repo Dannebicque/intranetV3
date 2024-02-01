@@ -149,7 +149,7 @@
                                 {% for ue in sc.ues %}
                                     <td>{{ sc.ue(etudiant.id, ue.id).moyenne|number_format(3) }}</td>
                                 {% endfor %}
-                                <td>{{ sc.etudiant(etudiant.id).decision }}</td>
+                                <td>{{ sc.etudiant(etudiant.id).decision.value }}</td>
                                 <td>{{ sc.etudiant(etudiant.id).proposition }}</td>
                                 <td>{{ sc.etudiant(etudiant.id).nbAbsences }}</td>
                                 {% for matiere in sc.matieres %}
