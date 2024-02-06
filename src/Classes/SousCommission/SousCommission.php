@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommission.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/05/2022 14:27
+ * @lastUpdate 06/02/2024 14:14
  */
 
 namespace App\Classes\SousCommission;
@@ -18,6 +18,7 @@ use App\Entity\Constantes;
 use App\Entity\Scolarite;
 use App\Entity\ScolaritePromo;
 use App\Entity\Semestre;
+use App\Enums\DecisionSemestreEnum;
 use App\Utils\Tools;
 use function array_key_exists;
 
@@ -111,7 +112,7 @@ class SousCommission extends AbstractSousCommission implements SousCommissionInt
     {
         switch ($field) {
             case 'decision':
-                $scolarite->setDecision($value);
+                $scolarite->setDecision(DecisionSemestreEnum::tryFrom($value));
                 break;
             case 'proposition':
                 $scolarite->setProposition($value);
