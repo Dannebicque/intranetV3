@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.76](https://github.com/Dannebicque/intranetV3/compare/v3.14.75...v3.14.76) (2024-02-06)
+
+
+### Bug Fixes
+
+* Sauvegarde des décisions de semestre ([6872809](https://github.com/Dannebicque/intranetV3/commit/68728093bb1ae09615f6534b13881a79f9c9e664))
+
 ### [3.14.75](https://github.com/Dannebicque/intranetV3/compare/v3.14.74...v3.14.75) (2024-02-01)
 
 
