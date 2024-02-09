@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/01/2024 17:38
+ * @lastUpdate 09/02/2024 12:08
  */
 
 namespace App\Classes\SousCommission;
@@ -710,7 +710,7 @@ class SousCommissionExport
                 $this->myExcelWriter->ecritLigne([
                     $etu->getNumEtudiant(),
                     ucfirst($etu->getNom()) . ' ' . ucfirst($etu->getPrenom()),
-                    $etu->getDateNaissance()->format('d/m/Y'),
+                    $etu->getDateNaissance()?->format('d/m/Y'),
                     $etu->getCivilite(),
                     null !== $etu->getBac() ? $etu->getBac()->getLibelle() : 'err',
                     $etu->getAnneeBac(),
