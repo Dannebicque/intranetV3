@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/plan_cours/personnel/PlanCoursController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/07/2023 22:22
+ * @lastUpdate 11/02/2024 14:11
  */
 
 namespace App\Controller\plan_cours\personnel;
@@ -16,8 +16,9 @@ use App\Components\PlanCours\PlanCoursRegistry;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Previsionnel;
-use App\Repository\PlanCoursSaeRepository;
-use App\Repository\PrevisionnelRepository;
+use App\Enums\PlanCoursEnum;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -32,9 +33,13 @@ class PlanCoursController extends BaseController
     ): Response {
         $previsionnels = $previsionnelManager->getPrevisionnelEnseignantAnnee($this->getUser(),
             $this->getAnneeUniversitaire()?->getAnnee());
+        $tPrevisionnel = [];
+        foreach ($previsionnels as $previsionnel) {
+            $tPrevisionnel[$previsionnel->getTypeIdMatiere()] = $previsionnel;
+        }
 
         return $this->render('plan_cours/personnel/plan_cours/index.html.twig', [
-            'previsionnels' => $previsionnels,
+            'previsionnels' => $tPrevisionnel,
             'plansCours' => $planCours->getPlansCoursPrevisionnel($previsionnels, $this->getUser(),
                 $this->getAnneeUniversitaire()),
         ]);
@@ -45,7 +50,6 @@ class PlanCoursController extends BaseController
      */
     #[Route('/edit/{previsionnel}', name: 'app_plan_cours_apc_new', methods: ['GET', 'POST'])]
     public function new(
-        PlanCoursRegistry $planCoursRegistry,
         TypeMatiereManager $typeMatiereManager,
         Request $request,
         Previsionnel $previsionnel
@@ -64,23 +68,28 @@ class PlanCoursController extends BaseController
      */
     #[Route('/step/{previsionnel}', name: 'app_plan_cours_apc_step', methods: ['GET', 'POST'])]
     public function step(
-        PrevisionnelRepository $previsionnelRepository,
         PlanCoursRegistry $planCoursRegistry,
         TypeMatiereManager $typeMatiereManager,
         Request $request,
-        Previsionnel $previsionnel
+        Previsionnel $previsionnel,
+        PlanCours    $cPlanCours
     ): Response {
         $step = $request->query->get('step');
         $planCoursManager = $planCoursRegistry->getPlanCours($previsionnel->getTypeMatiere());
-        $matiere = $typeMatiereManager->getMatiereFromSelect($previsionnel->getTypeIdMatiere());
         if (null === $planCoursManager) {
             throw new \Exception('Plan de cours non trouvé');
+        }
+
+        $matiere = $typeMatiereManager->getMatiereFromSelect($previsionnel->getTypeIdMatiere());
+
+        if (null === $matiere) {
+            throw new \Exception('Matière non trouvée');
         }
 
         $planCours = $planCoursManager->createPlanCours(
             $matiere,
             $this->getAnneeUniversitaire(),
-            $this->getUser()); // todo: récupérer si déjà existant ??
+            $this->getUser());
 
         $form = $this->createForm(constant(get_class($planCoursManager) . '::FORM_STEP_' . $step), $planCours, [
             'previsionnel' => $previsionnel,
@@ -94,8 +103,18 @@ class PlanCoursController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted()) {
-            $planCoursManager->add($planCours, true);
-            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'plan_cours.add.success.flash');
+
+
+            if ($step === "3" && $request->request->has('btn_valide') && $request->request->get('btn_valide') === 'transmettre') {
+                $planCours->setEtatPlanCours(PlanCoursEnum::COMPLET);
+                $planCoursManager->add($planCours, true);
+                $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'plan_cours.add-transmis.success.flash');
+                return $this->redirectToRoute('application_index', ['onglet' => 'plan_cours'], Response::HTTP_SEE_OTHER);
+            } else {
+                $planCours->setEtatPlanCours(PlanCoursEnum::EN_COURS);
+                $planCoursManager->add($planCours, true);
+                $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'plan_cours.add.success.flash');
+            }
 
             return $this->redirectToRoute('app_plan_cours_apc_new', [
                 'previsionnel' => $previsionnel->getId(),
@@ -103,27 +122,78 @@ class PlanCoursController extends BaseController
             ], Response::HTTP_SEE_OTHER);
         }
 
+        $matieresArray = $typeMatiereManager->findByReferentielOrdreSemestreArray($matiere->getSemestres()->first(), $matiere->getSemestres()->first()->getDiplome()->getReferentiel());
+
         return $this->render('components/plan_cours/_step' . $step . '.html.twig', parameters: [
             'plan_cours' => $planCours,
             'form' => $form,
             'matiere' => $matiere,
             'previsionnel' => $previsionnel,
             'step' => $step,
+            'matieresArray' => $matieresArray,
             'template' => constant(get_class($planCoursManager) . '::TEMPLATE_FORM_STEP_' . $step),
+            'listePlansCours' => $cPlanCours->getPlansCoursSemestre($matiere->getSemestres()->first(), $this->getUser(),
+                $this->getAnneeUniversitaire()),
         ]);
     }
 
-    #[Route('/{id}', name: 'app_plan_cours_apc_show', methods: ['GET'])]
-    public function show($planCoursApc): Response
+    #[Route('/recopie/{previsionnel}', name: 'app_plan_cours_recopie', methods: ['POST'])]
+    public function recopiePlanCours(
+        EntityManagerInterface $entityManager,
+        Request                $request,
+        PlanCoursRegistry      $planCoursRegistry,
+        Previsionnel           $previsionnel,
+    ): Response
     {
+
+        $planCoursManager = $planCoursRegistry->getPlanCours($previsionnel->getTypeMatiere());
+        if (null === $planCoursManager) {
+            throw new \Exception('Plan de cours non trouvé');
+        }
+
+        $planCoursOrigin = $planCoursManager->getRepository()->find($request->request->get('recopiePlan'));
+
+        if ($planCoursOrigin) {
+            //recopie des données de planCoursOrigin dans planCours
+            $planCours = $planCoursManager->recopiePlanCours($planCoursOrigin, $previsionnel);
+            $entityManager->persist($planCours);
+            $entityManager->flush();
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'plan_cours.recopie.success.flash');
+        }
+
+        return $this->redirectToRoute('app_plan_cours_apc_new', [
+            'previsionnel' => $previsionnel->getId(),
+            'step' => 1
+        ], Response::HTTP_SEE_OTHER);
+    }
+
+    #[Route('/{previsionnel}', name: 'app_plan_cours_apc_show', methods: ['GET'])]
+    public function show(
+        PlanCoursRegistry  $planCoursRegistry,
+        TypeMatiereManager $typeMatiereManager,
+        Previsionnel       $previsionnel
+    ): Response
+    {
+        $planCoursManager = $planCoursRegistry->getPlanCours($previsionnel->getTypeMatiere());
+        $matiere = $typeMatiereManager->getMatiereFromSelect($previsionnel->getTypeIdMatiere());
+        if (null === $planCoursManager) {
+            throw new \Exception('Plan de cours non trouvé');
+        }
+
+        $planCours = $planCoursManager->createPlanCours(
+            $matiere,
+            $this->getAnneeUniversitaire(),
+            $this->getUser());
+
         return $this->render('plan_cours/personnel/plan_cours/show.html.twig', [
-            'plan_cours_apc' => $planCoursApc,
+            'pc' => $planCours,
+            'matiere' => $matiere,
+            'template' => constant(get_class($planCoursManager) . '::TEMPLATE_SHOW'),
         ]);
     }
 
     #[Route('/export/{id}.pdf', name: 'app_plan_cours_export_pdf', methods: ['GET'])]
     public function export(
-        PlanCoursSaeRepository $planCoursSaeRepository,
         TypeMatiereManager $typeMatiereManager,
         PlanCoursRegistry $planCoursRegistry,
         Previsionnel $previsionnel
@@ -134,7 +204,13 @@ class PlanCoursController extends BaseController
             throw new \Exception('Plan de cours non trouvé');
         }
 
-        return $planCoursManager->export($matiere, $this->getAnneeUniversitaire(), $this->getDepartement());
+        $pe = $planCoursManager->export($matiere, $this->getAnneeUniversitaire(), $this->getDepartement());
+
+        if ($pe === null) {
+            $this->addFlashBag(Constantes::FLASHBAG_ERROR, 'plan_cours.export.error.flash');
+            return new JsonResponse(['error' => 'Erreur lors de l\'export du plan de cours'], Response::HTTP_BAD_REQUEST);
+        }
+        return $pe;
     }
 
     #[Route('/{id}', name: 'app_plan_cours_apc_delete', methods: ['POST'])]

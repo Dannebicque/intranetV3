@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/PlanCours/Source/PlanCoursRessource.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/01/2023 16:10
+ * @lastUpdate 11/02/2024 14:11
  */
 
 namespace App\Components\PlanCours\Source;
@@ -17,7 +17,10 @@ use App\DTO\Matiere;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Departement;
 use App\Entity\Personnel;
+use App\Enums\PlanCoursEnum;
 use App\Repository\PlanCoursRessourceRepository;
+use Carbon\Carbon;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 
 class PlanCoursRessource extends AbstractPlanCours implements PlanCoursInterface
 {
@@ -60,6 +63,56 @@ class PlanCoursRessource extends AbstractPlanCours implements PlanCoursInterface
         return $obj;
     }
 
+    public function recopiePlanCours($plancours, \App\Entity\Previsionnel $previsionnel): \App\Entity\PlanCoursRessource
+    {
+        $obj = $this->planCoursRessourceRepository->findOneBy([
+            'typeMatiere' => $previsionnel->getTypeMatiere(),
+            'idMatiere' => $previsionnel->getIdMatiere(),
+            'anneeUniversitaire' => $plancours->getAnneeUniversitaire(),
+        ]);
+
+        if (null === $obj) {
+            $obj = new \App\Entity\PlanCoursRessource();
+        }
+
+        $obj->setIdMatiere($previsionnel->getIdMatiere());
+        $obj->setTypeMatiere($previsionnel->getTypeMatiere());
+        $obj->setResponsable($plancours->getResponsable());
+        $obj->setAnneeUniversitaire($plancours->getAnneeUniversitaire());
+        $obj->setDescription($plancours->getDescription());
+        $obj->setNbNotes($plancours->getNbNotes() ?? 0);
+        $obj->setCmPrevu($plancours->getCmPrevu() ?? 0.0);
+        $obj->setTdPrevu($plancours->getTdPrevu() ?? 0.0);
+        $obj->setTpPrevu($plancours->getTpPrevu() ?? 0.0);
+        $obj->setCmRealise($plancours->getCmRealise() ?? 0.0);
+        $obj->setTdRealise($plancours->getTdRealise() ?? 0.0);
+        $obj->setTpRealise($plancours->getTpRealise() ?? 0.0);
+        $obj->setBibliographie($plancours->getBibliographie());
+        $obj->setPlanSuivi($plancours->isPlanSuivi());
+        $obj->setPlanSuiviCommentaire($plancours->getPlanSuiviCommentaire());
+        $obj->setObjectifsAtteints($plancours->isObjectifsAtteints());
+        $obj->setObjectifsFAtteintsCommentaire($plancours->getObjectifsFAtteintsCommentaire());
+        $obj->setCompetencesAcquises($plancours->isCompetencesAcquises());
+        $obj->setCompetencesAcquisesCommentaire($plancours->getCompetencesAcquisesCommentaire());
+        $obj->setCommentairesStep1($plancours->getCommentairesStep1());
+        $obj->setCommentairesStep2($plancours->getCommentairesStep2());
+        $obj->setCommentairesStep3($plancours->getCommentairesStep3());
+        $obj->setModalitesEvaluations($plancours->getModalitesEvaluations());
+        $obj->setModeEvaluationCommentaire($plancours->getModeEvaluationCommentaire());
+        $obj->setCreated(new Carbon());
+        $obj->setUpdated(new Carbon());
+        $obj->setEtatPlanCours(PlanCoursEnum::EN_COURS);
+
+        //dupliquer planCoursSequence et planCoursRealise, intervenants, fichierPlanCours et FichierPlanCoursFile
+
+        foreach ($plancours->getInterVenants() as $intervenant) {
+            $obj->addIntervenant($intervenant);
+        }
+
+
+        return $obj;
+    }
+
     public function add($planCoursRessource): void
     {
         $this->planCoursRessourceRepository->add($planCoursRessource, true);
@@ -70,14 +123,13 @@ class PlanCoursRessource extends AbstractPlanCours implements PlanCoursInterface
         return $this->planCoursRessourceRepository;
     }
 
-    public function export(Matiere $matiere, AnneeUniversitaire $anneeUniversitaire, Departement $departement)
+    public function export(Matiere $matiere, AnneeUniversitaire $anneeUniversitaire, Departement $departement): ?PdfResponse
     {
         $obj = $this->planCoursRessourceRepository->findOneBy([
             'typeMatiere' => $matiere->typeMatiere,
             'idMatiere' => $matiere->id,
             'anneeUniversitaire' => $anneeUniversitaire,
         ]);
-
         if (null !== $obj) {
             return $this->myPDF::generePdf('components/plan_cours/pdf/ressource.html.twig',
                 [
@@ -89,5 +141,6 @@ class PlanCoursRessource extends AbstractPlanCours implements PlanCoursInterface
                 'plan_cours_ressource_' . $matiere->codeMatiere);
         }
 
+        return null;
     }
 }

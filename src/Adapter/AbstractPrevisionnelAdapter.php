@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Adapter/AbstractPrevisionnelAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/08/2023 14:43
+ * @lastUpdate 11/02/2024 14:11
  */
 
 namespace App\Adapter;

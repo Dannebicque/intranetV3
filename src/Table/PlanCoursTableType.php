@@ -1,26 +1,25 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/PlanCoursTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 11/02/2024 14:11
  */
 
 namespace App\Table;
 
 use App\Classes\Previsionnel\PrevisionnelManager;
+use App\Entity\Diplome;
+use App\Entity\Semestre;
+use App\Enums\PlanCoursEnum;
+use App\Repository\SemestreRepository;
+use BackedEnum;
 use DavidAnnebicque\TableBundle\Column\PropertyColumnType;
 use DavidAnnebicque\TableBundle\DTO\TableResult;
 use DavidAnnebicque\TableBundle\DTO\TableState;
 use DavidAnnebicque\TableBundle\TableBuilder;
 use DavidAnnebicque\TableBundle\TableType;
-use App\Entity\Diplome;
-use App\Entity\Semestre;
-use App\Enums\PlanCoursEnum;
-use App\Repository\SemestreRepository;
-use App\Table\ColumnType\StatusBadgeEnumColumnType;
-use BackedEnum;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -77,11 +76,11 @@ class PlanCoursTableType extends TableType
         $builder->addColumn('personnel_display', PropertyColumnType::class,
             ['label' => 'table.personnel', 'translation_domain' => 'messages']);
 
-        $builder->addColumn('etatPlanCours', StatusBadgeEnumColumnType::class,
-            [
-                'label' => 'table.etat_plan_cours',
-                'translation_domain' => 'messages',
-            ]);
+//        $builder->addColumn('etatPlanCours', StatusBadgeEnumColumnType::class,
+//            [
+//                'label' => 'table.etat_plan_cours',
+//                'translation_domain' => 'messages',
+//            ]);
 
         $builder->setLoadUrl('administration_plan_cours_diplome', ['diplome' => $this->diplome->getId()]);
 

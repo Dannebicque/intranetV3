@@ -7,6 +7,10 @@
     <i class="fas fa-floppy-disk"></i> {{ button_label|default('label.save'|trans) }}
 </button>
 
+<button class="btn btn-success" value="transmettre" name="btn_valide">
+    <i class="fas fa-floppy-disk"></i> Sauvegarder et transmettre
+</button>
+
 
 {% if button_label is defined and button_label == 'update'|trans %}
     <button class="btn btn-success" value="redirect_to_index" name="btn_update">

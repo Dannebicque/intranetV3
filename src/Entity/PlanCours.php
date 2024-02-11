@@ -1,16 +1,17 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/PlanCours.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/01/2023 11:38
+ * @lastUpdate 11/02/2024 14:11
  */
 
 namespace App\Entity;
 
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\MatiereTrait;
+use App\Enums\PlanCoursEnum;
 use Carbon\Carbon;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -41,10 +42,10 @@ abstract class PlanCours
     #[ORM\ManyToOne(inversedBy: 'planCours')]
     protected ?AnneeUniversitaire $anneeUniversitaire = null;
 
-    #[ORM\OneToMany(mappedBy: 'planCours', targetEntity: PlanCoursSequence::class)]
+    #[ORM\OneToMany(mappedBy: 'planCours', targetEntity: PlanCoursSequence::class, cascade: ['persist'])]
     protected Collection $planCoursSequences;
 
-    #[ORM\OneToMany(mappedBy: 'planCours', targetEntity: PlanCoursRealise::class)]
+    #[ORM\OneToMany(mappedBy: 'planCours', targetEntity: PlanCoursRealise::class, cascade: ['persist'])]
     protected Collection $planCoursRealises;
 
     #[ORM\Column(nullable: true)]
@@ -112,6 +113,9 @@ abstract class PlanCours
 
     #[ORM\ManyToMany(targetEntity: Personnel::class, inversedBy: 'plansCours')]
     private Collection $intervenants;
+
+    #[ORM\Column(length: 30, enumType: PlanCoursEnum::class, nullable: true)]
+    private ?PlanCoursEnum $etatPlanCours = null;
 
 
     public function __construct()
@@ -490,6 +494,18 @@ abstract class PlanCours
     public function removeIntervenant(Personnel $intervenant): self
     {
         $this->intervenants->removeElement($intervenant);
+
+        return $this;
+    }
+
+    public function getEtatPlanCours(): ?PlanCoursEnum
+    {
+        return $this->etatPlanCours ?? PlanCoursEnum::NONE;
+    }
+
+    public function setEtatPlanCours(PlanCoursEnum $etatPlanCours): static
+    {
+        $this->etatPlanCours = $etatPlanCours;
 
         return $this;
     }

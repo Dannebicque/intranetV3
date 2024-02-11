@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/Previsionnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/08/2023 13:48
+ * @lastUpdate 06/02/2024 21:05
  */
 
 namespace App\DTO;
@@ -37,7 +37,6 @@ class Previsionnel
     public float $nbHeuresService;
     public int $semestre_id;
     public ?string $semestre_libelle = '';
-    public PlanCoursEnum $etatPlanCours = PlanCoursEnum::COMPLET;
     public int $annee_id;
     public ?string $annee_libelle = '';
     public int $diplome_id;
@@ -45,6 +44,8 @@ class Previsionnel
     public ?string $annee_code_etape = '';
     public ?string $annee_libelle_long = '';
     public mixed $objPrevisionnel;
+
+    public PlanCoursEnum $etat_plan_cours;
 
     public function getNbSeanceCm(): string
     {

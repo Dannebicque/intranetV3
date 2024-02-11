@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/PlanCours/Source/PlanCoursSAE.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/01/2023 16:10
+ * @lastUpdate 11/02/2024 14:11
  */
 
 namespace App\Components\PlanCours\Source;
@@ -18,6 +18,7 @@ use App\Entity\AnneeUniversitaire;
 use App\Entity\Departement;
 use App\Entity\Personnel;
 use App\Repository\PlanCoursSaeRepository;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 
 class PlanCoursSAE extends AbstractPlanCours implements PlanCoursInterface
 {
@@ -25,6 +26,7 @@ class PlanCoursSAE extends AbstractPlanCours implements PlanCoursInterface
     public const FORM_STEP_1 = PlanCoursSaeStep1Type::class;
     public const FORM_STEP_2 = PlanCoursSaeStep2Type::class;
     public const FORM_STEP_3 = PlanCoursSaeStep3Type::class;
+    public const TEMPLATE_SHOW = 'show_sae.html.twig';
     public const TEMPLATE_FORM_STEP_1 = 'plan_cours_sae_1.html.twig';
     public const TEMPLATE_FORM_STEP_2 = 'plan_cours_sae_2.html.twig';
     public const TEMPLATE_FORM_STEP_3 = 'plan_cours_sae_3.html.twig';
@@ -63,6 +65,7 @@ class PlanCoursSAE extends AbstractPlanCours implements PlanCoursInterface
         return $obj;
     }
 
+
     public function add($planCours): void
     {
         $this->planCoursSaeRepository->add($planCours, true);
@@ -77,7 +80,8 @@ class PlanCoursSAE extends AbstractPlanCours implements PlanCoursInterface
         Matiere $matiere,
         AnneeUniversitaire $anneeUniversitaire,
         Departement $departement
-    ) {
+    ): ?PdfResponse
+    {
         $obj = $this->planCoursSaeRepository->findOneBy([
             'typeMatiere' => $matiere->typeMatiere,
             'idMatiere' => $matiere->id,
@@ -94,5 +98,6 @@ class PlanCoursSAE extends AbstractPlanCours implements PlanCoursInterface
                 ],
                 'plan_cours_sae_' . $matiere->codeMatiere);
         }
+        return null;
     }
 }

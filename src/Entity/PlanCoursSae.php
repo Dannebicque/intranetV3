@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/PlanCoursSae.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/12/2022 13:30
+ * @lastUpdate 06/02/2024 19:24
  */
 
 namespace App\Entity;
@@ -16,8 +16,6 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity(repositoryClass: PlanCoursSaeRepository::class)]
 class PlanCoursSae extends PlanCours
 {
-
-
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 

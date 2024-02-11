@@ -1,3 +1,27 @@
+<form action="{{ path('app_plan_cours_recopie', {previsionnel: previsionnel.id}) }}" method="post">
+    <div class="row mb-2">
+
+        <div class="col-6">
+            <div class="form-group">
+                <label for="recopiePlan">Reprendre les éléments du plan de cours suivant :</label>
+                <select class="form-select" id="recopiePlan" name="recopiePlan">
+                    <option value="">Choisir un plan de cours</option>
+                    {% for plan in listePlansCours %}
+                        <option value="{{ plan.id }}">{{ matieresArray[plan.typeIdMatiere].display }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="col-6 d-grid">
+            <button class="btn btn-warning d-block" type="submit"
+                    onclick="return confirm('Etes-vous sûr de vouloir recopier les éléments du plan de cours sélectionné ?');"
+            >Recopier les éléments
+            </button>
+        </div>
+
+    </div>
+</form>
+
 <ul class="nav nav-process nav-process-sm nav-process-block">
     <li class="nav-item {% if step == 1 %}processing{% else %}complete{% endif %}">
         <a class="nav-link" href="#" {{ stimulus_action('plan_cours--new', 'changeStep', 'click', {

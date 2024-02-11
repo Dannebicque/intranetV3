@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/PlanCours/Form/PlanCoursStep1Type.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/01/2023 16:10
+ * @lastUpdate 11/02/2024 14:11
  */
 
 namespace App\Components\PlanCours\Form;
@@ -22,6 +22,9 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PlanCoursStep1Type extends AbstractType
 {
+    private mixed $previsionnel;
+    private mixed $anneeUniversitaire;
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $this->previsionnel = $options['previsionnel'];
@@ -33,7 +36,7 @@ class PlanCoursStep1Type extends AbstractType
                 'choice_label' => 'displayPr',
                 'label' => 'Auteur/Responsable : ',
                 'required' => true,
-                'attr' => ['disabled' => true],
+                //   'attr' => ['disabled' => true],
             ])
             ->add('intervenants', EntityType::class, [
                 'class' => Personnel::class,

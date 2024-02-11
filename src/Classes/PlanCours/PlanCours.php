@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/PlanCours/PlanCours.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/01/2023 11:52
+ * @lastUpdate 11/02/2024 12:47
  */
 
 namespace App\Classes\PlanCours;
@@ -12,6 +12,7 @@ namespace App\Classes\PlanCours;
 use App\Components\PlanCours\PlanCoursManager;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Personnel;
+use App\Entity\Semestre;
 
 class PlanCours
 {
@@ -37,5 +38,10 @@ class PlanCours
         }
 
         return $plansCoursPrevisionnels;
+    }
+
+    public function getPlansCoursSemestre(Semestre $semestre, Personnel $personnel, ?AnneeUniversitaire $anneeUniversitaire): array
+    {
+        return $this->planCoursManager->findByIntervenantsAndSemestre($personnel, $semestre, $anneeUniversitaire);
     }
 }
