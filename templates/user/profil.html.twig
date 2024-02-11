@@ -100,43 +100,39 @@
 
                         </li>
                     {% endif %}
-                    {#                    <li>#}
-                    {#                        <span class="text-muted">Tweets</span><br>#}
-                    {#                        <span class="fs-22">165</span>#}
-                    {#                    </li>#}
                 </ul>
             </div>
 
-            {% if user.typeUser|lower == 'etudiant' %}
-                <div class="card">
-                    <div class="card-body">
-                        <div class="flexbox align-items-baseline mb-20">
-                            <h6 class="text-uppercase ls-2">{{ 'amis'|trans }}</h6>
-                            <small>{{ user.etudiantDemande|length }}</small>
-                        </div>
+            {#            {% if user.typeUser|lower == 'etudiant' %} #}
+            {#                <div class="card"> #}
+            {#                    <div class="card-body"> #}
+            {#                        <div class="flexbox align-items-baseline mb-20"> #}
+            {#                            <h6 class="text-uppercase ls-2">{{ 'amis'|trans }}</h6> #}
+            {#                            <small>{{ user.etudiantDemande|length }}</small> #}
+            {#                        </div> #}
 
-                        <div class="gap-items-2 gap-y">
-                            {% for favori in user.etudiantDemande|slice(0, 8)|filter(favori => favori
-                                .etudiantDemande.id != user.id) %}
-                                <a class="avatar"
-                                   href="{{ path('user_profil', {type: 'etudiant', slug: favori.etudiantDemande.slug}) }}"
-                                   title="{{ favori.etudiantDemande.display }}"
-                                   target="_blank"
-                                ><img src="{{ asset('upload/etudiants/'~favori.etudiantDemande.photoName)|imagine_filter('avatar') }}"
-                                      alt="{{ favori.etudiantDemande.display }}"></a>
-                            {% else %}
-                                <div class="alert alert-info">
-                                    Fonctionnalité à venir
-                                </div>
-                            {% endfor %}
-                            {% if user.etudiantDemande|length > 8 %}
-                                {% set nb = user.etudiantDemande - 8 %}
-                                <a class="avatar avatar-more" href="#">+{{ nb }}</a>
-                            {% endif %}
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
+            {#                        <div class="gap-items-2 gap-y"> #}
+            {#                            {% for favori in user.etudiantDemande|slice(0, 8)|filter(favori => favori #}
+            {#                                .etudiantDemande.id != user.id) %} #}
+            {#                                <a class="avatar" #}
+            {#                                   href="{{ path('user_profil', {type: 'etudiant', slug: favori.etudiantDemande.slug}) }}" #}
+            {#                                   title="{{ favori.etudiantDemande.display }}" #}
+            {#                                   target="_blank" #}
+            {#                                ><img src="{{ asset('upload/etudiants/'~favori.etudiantDemande.photoName)|imagine_filter('avatar') }}" #}
+            {#                                      alt="{{ favori.etudiantDemande.display }}"></a> #}
+            {#                            {% else %} #}
+            {#                                <div class="alert alert-info"> #}
+            {#                                    Fonctionnalité à venir #}
+            {#                                </div> #}
+            {#                            {% endfor %} #}
+            {#                            {% if user.etudiantDemande|length > 8 %} #}
+            {#                                {% set nb = user.etudiantDemande - 8 %} #}
+            {#                                <a class="avatar avatar-more" href="#">+{{ nb }}</a> #}
+            {#                            {% endif %} #}
+            {#                        </div> #}
+            {#                    </div> #}
+            {#                </div> #}
+            {#            {% endif %} #}
         </div>
     </div>
 {% endblock %}
