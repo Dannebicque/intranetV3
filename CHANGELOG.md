@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.77](https://github.com/Dannebicque/intranetV3/compare/v3.14.76...v3.14.77) (2024-02-13)
+
+
+### Features
+
+* Plan de cours ([96abe44](https://github.com/Dannebicque/intranetV3/commit/96abe44c5273a19cb9d8b82b9d2de20ed134f615))
+
+
+### Bug Fixes
+
+* Export apogée ([f5fb523](https://github.com/Dannebicque/intranetV3/commit/f5fb5230b6857679eec9d8d416cea6835731f3a6))
+* suppression gestion ami non utilisée ([02f87c8](https://github.com/Dannebicque/intranetV3/commit/02f87c8e877d6d62a62995a0365abebc7110c58a))
+
 ### [3.14.76](https://github.com/Dannebicque/intranetV3/compare/v3.14.75...v3.14.76) (2024-02-06)
 
 
