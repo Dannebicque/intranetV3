@@ -12,6 +12,8 @@ window.addEventListener('load', () => { // le dom est chargé
   horloge();
   setInterval(horloge, 1000);
   autoRefresh(10);
+  findOverflowedSessions();
+  setInterval(scrollOverflowedSessions, 6000);
 })
 
 function autoRefresh(minutes) {
@@ -70,4 +72,49 @@ function initLocalClocks() {
       }
     }
   }
+}
+
+const overflowedSessions = [];
+
+function scrollOverflowedSessions() {
+  overflowedSessions.forEach((session) => {
+    scroll(session.container, session.overflowAmount, 4000);
+  });
+
+  function scroll(element, amount, duration, onDone) {
+    var start = element.scrollTop,
+        startTime = performance.now()
+
+    if (start - amount == 0)
+      amount = 0
+
+    function animateScroll(){
+      now = performance.now();
+      t = (now - startTime) / duration;
+
+      element.scrollTop = lerp(start, amount, easeInOutQuad(t));
+
+      if( t < 1 )
+        window.requestAnimationFrame(animateScroll);
+      else {
+        element.scrollTop = amount;
+        onDone && onDone();
+      }
+    };
+
+    animateScroll();
+  }
+
+  function easeInOutQuad(t){ return t<.5 ? 2*t*t : -1+(4-2*t)*t };
+  function lerp(start, end, t){ return (1-t)*start+t*end }
+}
+
+function findOverflowedSessions() {
+  document.querySelectorAll('.session').forEach((session) => {
+    const sessionHeight = session.offsetHeight
+    const sessionBodyHeight = session.querySelector('.session-body').offsetHeight
+    if (sessionBodyHeight > sessionHeight) {
+      overflowedSessions.push({container:session, overflowAmount: sessionBodyHeight - sessionHeight})
+    }
+  })
 }
