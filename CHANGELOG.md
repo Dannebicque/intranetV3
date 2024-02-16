@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.14.78](https://github.com/Dannebicque/intranetV3/compare/v3.14.77...v3.14.78) (2024-02-16)
+
+
+### Features
+
+* Suppression agenda.js non utilisé et ajout d'un controller stimuluas load_content (équivalent load en jquery) ([a42c673](https://github.com/Dannebicque/intranetV3/commit/a42c67346a1a0d6fcaeaeff27307ba28e79b40d7))
+* suppression de adm.quizz non utilisé ([46da0cb](https://github.com/Dannebicque/intranetV3/commit/46da0cb5246d9d82379e8aa4e5b1de85fcce5612))
+* suppression de la partie créneaux de cours non utilisé ([41370cb](https://github.com/Dannebicque/intranetV3/commit/41370cb623df7a2f3368e37e94c0a57cd078cc44))
+* suppression de la partie planning non utilisée ([7aa4fb4](https://github.com/Dannebicque/intranetV3/commit/7aa4fb4808e2295845b736d148b73052f0c36945))
+
+
+### Bug Fixes
+
+* Blocs actualités et dates masqués si pas d'éléments ([eb015d6](https://github.com/Dannebicque/intranetV3/commit/eb015d626dc2a6f7271432fd35ee70279236f77b))
+* bornes ([19ba811](https://github.com/Dannebicque/intranetV3/commit/19ba8115ceb1b1d437f799cbfea0297ae2705512))
+* Chronologique si vide ([6b1b2cf](https://github.com/Dannebicque/intranetV3/commit/6b1b2cf1f0fb32594f4bc76080de578c35ac3754))
+* Edt responsive et navigable pour les profs ([f7756fd](https://github.com/Dannebicque/intranetV3/commit/f7756fda8dadb137c21baab522c8e9704db63005))
+
 ### [3.14.77](https://github.com/Dannebicque/intranetV3/compare/v3.14.76...v3.14.77) (2024-02-13)
 
 

@@ -37,11 +37,6 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-pro": "^6.0.0",
-    "@fullcalendar/core": "^6.1.10",
-    "@fullcalendar/daygrid": "^6.1.10",
-    "@fullcalendar/icalendar": "^6.1.10",
-    "@fullcalendar/list": "^6.1.10",
-    "@fullcalendar/timegrid": "^6.1.10",
     "@hotwired/stimulus": "^3.0.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.2.2",
@@ -63,7 +58,7 @@
     "unreleased": true,
     "commitLimit": false
   },
-  "version": "3.14.77",
+  "version": "3.14.78",
   "author": "David Annebicque",
   "name": "intranetv3",
   "repository": {
