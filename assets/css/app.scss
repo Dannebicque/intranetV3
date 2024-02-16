@@ -1,8 +1,8 @@
-// Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 31/08/2023 11:23
+// @lastUpdate 16/02/2024 16:01
 
 @import "./theme-troyes.scss";
 @import "./theme-rcc.scss";
@@ -828,4 +828,24 @@ td.bg-disabled {
 .bg-complementary {
   background-color: var(--colorIUTComplementaire) !important;
   color: var(--colorIUT) !important;
+}
+
+.end-2px {
+  right: 2px !important;
+}
+
+.max-height-300px {
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.jour_grand {
+  font-size: 1.5em;
+  text-align: center;
+  font-weight: bold;
+}
+
+.heure_petit {
+  font-size: 1em;
+  text-align: center;
 }

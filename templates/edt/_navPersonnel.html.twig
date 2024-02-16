@@ -1,3 +1,4 @@
+{% set aujourdhui = 'now'|date('N') %}
 <div class="row">
     <div class="col-md-3 col-sm-12 mt-2 ">
         <div class="input-group">
@@ -54,14 +55,23 @@
     <div class="col-sm-12  mt-2 d-grid d-block">
         <div class="btn-group hide-on-large">
             <a class="btn btn-primary w-25" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jour précédent"
-               id="jourPrecedent">
+                    {{ stimulus_action('edt-personnel', 'changeJour', 'click', {jour:aujourdhui-1}) }}
+               id="jourPrecedentPersonnel"
+            >
                 <i class="fa fa-caret-left"></i><span class="sr-only">Jour précédent</span>
             </a>
             <a class="btn btn-secondary" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom"
-               title="Aujourd'hui" id="jourCourant">
+               title="Aujourd'hui" id="jourCourantPersonnel"
+                    {# todo: si pas la même semaine que le jour alors aujourd'hui == reclacul EDT sauf si samedi ou dimanche, sinon juste repositionner sur le bon jours #}
+                    {{ stimulus_action('edt-personnel', 'changeJour', 'click', {jour:aujourdhui}) }}
+            >
                 <i class="fa fa-calendar"></i> Aujourd'hui
             </a>
-            <a class="btn btn-primary w-25" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Jour suivant" id="jourSuivant">
+            <a class="btn btn-primary w-25" href="#" data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="Jour suivant"
+                    {{ stimulus_action('edt-personnel', 'changeJour', 'click', {jour:aujourdhui+1}) }}
+               id="jourSuivantPersonnel"
+            >
                 <i class="fa fa-caret-right"></i><span class="sr-only">Jour suivant</span>
             </a>
         </div>
