@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block content %}
-    {{ component('ShortEdtComponent') }}
+    {#    {{ component('ShortEdtComponent') }} #}
 
     <div class="row">
         <div class="col-sm-12 col-md-8">
@@ -52,7 +52,7 @@
                 <header class="card-header">
                     <h4 class="card-title">{{ 'prochains.evenements.heading'|trans }}</h4>
                     {% if user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %}
-                        <div class="card-header-actions" style="">
+                        <div class="card-header-actions">
                             <a href="{{ path('administration_date_new') }}" class="btn btn-sm btn-primary"
                                title="{{ 'atitle.deposer_nouvel_evenement'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"><i
                                         class="{{ iconAdd }}"></i><span class="sr-only">{{ 'atitle.deposer_nouvel_evenement'|trans }}</span></a>
@@ -76,8 +76,6 @@
                             <li class="alert alert-info">{{ 'pas.encore.date'|trans }}</li>
                         {% endfor %}
                     </ol>
-                    <a href="{{ path('planning_index', {annee: user_data.anneeUniversitaire}) }}"
-                       class="pull-right">{{ 'voir.planning'|trans }}</a>
                 </div>
             </div>
         </div>
@@ -88,6 +86,11 @@
                     {{ render_esi(controller(
                         'App\\Controller\\EdtController::dashboardPersonnel'
                     )) }}
+                    <div {{ stimulus_controller('fullcalendar', {
+                        url: url('edt_intervenant_synchro_ical', {'_format': 'json', code: user_data.user.code}),
+                    }) }}>
+                        <div {{ stimulus_target('fullcalendar', 'calendar') }}></div>
+                    </div>
                 {% elseif is_granted('ROLE_ETUDIANT') %}
                     {{ render_esi(controller(
                         'App\\Controller\\EdtController::dashboardEtudiant'

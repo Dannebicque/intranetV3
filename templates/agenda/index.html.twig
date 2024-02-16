@@ -43,9 +43,6 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {% if is_granted('ROLE_PERMANENT') %}
-        {{ encore_entry_script_tags('agenda') }}
-    {% endif %}
 {% endblock %}
 
 

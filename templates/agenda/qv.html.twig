@@ -3,9 +3,18 @@
 {% block qvTitle %}Service Chronologique{% endblock %}
 
 {% block qvBody %}
+    <div {{ stimulus_controller('load_content', {
+        url: path('agenda_qv_previ')
+    }) }}>
     <div class="row">
         <div class="col-sm-12">
+            <label for="chronologiqueMatiere" class="form-label">
+                Choisir un prévisionnel
+            </label>
             <select class="form-select selectpicker"
+                    {{ stimulus_action(
+                        'load_content',
+                        'change') }}
                     id="chronologiqueMatiere">
                 <option value="">Choisir une matière</option>
                 {% for previsionnel in previsionnels %}
@@ -17,9 +26,12 @@
     </div>
     <br>
     <div class="row">
-        <div class="col-sm-12" id="afficheChronologique">
+        <div class="col-sm-12"
+                {{ stimulus_target('load_content', 'content') }}
+        >
             <div class="alert alert-info">Choisir une matière de votre service</div>
         </div>
+    </div>
     </div>
 {% endblock %}
 

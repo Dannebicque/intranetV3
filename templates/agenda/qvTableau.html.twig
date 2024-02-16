@@ -15,7 +15,7 @@
             <td>{{ loop.index }}</td>
             <td>{{ chrono.date }}</td>
             <td>{{ chrono.jour }}</td>
-            <td>{{ chrono.heure }}</td>
+            <td>{{ chrono.heureDebut|date('H:i') }}</td>
             <td>{{ chrono.type_cours }}</td>
             <td>{{ chrono.groupe }}</td>
         </tr>

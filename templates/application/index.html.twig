@@ -76,15 +76,9 @@
 {% block stylesheets %}
     {{ parent() }}
     {{ encore_entry_link_tags('applications') }}
-    {% if not is_granted('ROLE_ETUDIANT') %}
-        {{ encore_entry_link_tags('creneaux') }}
-    {% endif %}
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     {{ encore_entry_script_tags('applications') }}
-    {% if not is_granted('ROLE_ETUDIANT') %}
-        {{ encore_entry_script_tags('creneaux') }}
-    {% endif %}
 {% endblock %}
