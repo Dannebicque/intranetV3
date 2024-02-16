@@ -7,9 +7,6 @@
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-            <a href="{{ path('planning_index',{annee:user_data.departement.optAnneePrevisionnel}) }}"
-               class="btn btn-info btn-sm btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
-               title="{{ 'atitle.planning_annuel'|trans }}"><i class="fas fa-calendar"></i></a>
             <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
                title="{{ 'atitle.retour_dashboard'|trans }}">
                 <i class="{{ iconDashboard }}"><span class="sr-only">dashboard</span></i>

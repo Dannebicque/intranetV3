@@ -1,8 +1,8 @@
-// Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/webpack.config.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/08/2023 14:39
+// @lastUpdate 16/02/2024 08:28
 
 const Encore = require('@symfony/webpack-encore')
 const path = require('path')
@@ -41,7 +41,6 @@ Encore
   .addEntry('agenda', './assets/js/pages/agenda.js')
   .addEntry('applications', './assets/js/pages/applications.js')
   .addEntry('profil', './assets/js/pages/profil.js')
-  .addEntry('planning', './assets/js/pages/planning.js')
   .addEntry('adm.configuration', './assets/js/pages/adm.configuration.js')
   .addEntry('adm.quizz', './assets/js/pages/adm.quizz.js')
   .addEntry('adm.groupe', './assets/js/pages/adm.groupe.js')
