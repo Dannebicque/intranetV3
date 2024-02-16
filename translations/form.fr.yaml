@@ -156,6 +156,7 @@ initiales: Initiales
 j: Jour
 Jour: Jour
 label:
+  etat_justficatif: 'Etat du justificatif'
   maxChoix: 'Nombre maximum de choix'
   type_question: Type de question
   type_chainee: Question avec sous-questions
@@ -546,6 +547,7 @@ Minute: Minute
 motif: Motif
 fichier: Fichier
 M.: M.
+etudiant: Etudiant
 mail_perso: 'Email personnel'
 mail_univ: 'Email université (ou professionnel)'
 Motif: Motif

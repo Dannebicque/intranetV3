@@ -6,14 +6,7 @@
 
 {% block headerright %}
     <div class="right gap-items-2">
-        {% for sem in user_data.semestresActifs %}
-            <a href="{{ path('administration_absence_justificatif_new', {semestre:sem.id}) }}"
-               class="btn btn-round {% if sem.id == semestre.id %}btn-primary{% endif %}"
-               title="{{ 'atitle.changer.semestre'|trans }}"
-               data-bs-toggle="tooltip"
-               data-bs-placement="bottom"
-            >{{ sem.libelle }}</a>
-        {% endfor %}
+        {{ include('administration/_navSemestre.html.twig', {path_name: 'administration_absence_justificatif_new'}) }}
     </div>
 {% endblock %}
 
