@@ -1,13 +1,13 @@
-// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/edt-personnel-controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/11/2022 20:44
+// @lastUpdate 16/02/2024 16:01
 
 import { Controller } from '@hotwired/stimulus'
+import flatpickr from 'flatpickr'
 import { post } from '../js/fetch'
 import { addCallout } from '../js/util'
-import flatpickr from 'flatpickr'
 
 export default class extends Controller {
   static targets = ['etatAppel', 'zoneEdt']
@@ -40,6 +40,37 @@ export default class extends Controller {
     this._getEdt(this.filtreValue, this.valeurValue, this.semaineValue)
   }
 
+  changeJour(e) {
+    e.preventDefault()
+    let { jour } = e.params
+    let afficheJour = jour
+    let jourSuivant = parseInt(jour, 10) + 1
+    let jourPrecedent = parseInt(jour, 10) - 1
+    if (jour <= 0) {
+      jour = 1
+      afficheJour = 5
+      jourPrecedent = 5
+      jourSuivant = 1
+    }
+
+    if (jour > 5) {
+      jour = 5
+      afficheJour = 1
+      jourPrecedent = 5
+      jourSuivant = 2
+    }
+
+    document.querySelectorAll('.jourEdt').forEach((elem) => {
+      elem.style.display = 'none'
+    })
+
+    document.getElementById(`jour${afficheJour}`).style.display = 'block'
+
+    // mettre à jour l'attribut dans les liens
+    document.getElementById('jourPrecedentPersonnel').setAttribute('data-edt-personnel-jour-param', jourPrecedent)
+    document.getElementById('jourSuivantPersonnel').setAttribute('data-edt-personnel-jour-param', jourSuivant)
+  }
+
   async _getEdtSemestre(valeur, semaine) {
     this.zoneEdtTarget.innerHTML = window.da.loaderStimulus
     const params = new URLSearchParams({
@@ -65,12 +96,11 @@ export default class extends Controller {
       this.zoneEdtTarget.innerHTML = await response.text()
       this._updateJs()
     }
-
   }
 
   _updateJs() {
     document.querySelectorAll('.flatdatepicker_week').forEach((elem) => {
-      let options = []
+      const options = []
       options.dateFormat = 'W'
       options.weekNumbers = true
       options.locale = da.LANG
@@ -80,12 +110,12 @@ export default class extends Controller {
 
   btnPasAbsent(e) {
     e.preventDefault()
-    const event = e.currentTarget.dataset.event
+    const { event } = e.currentTarget.dataset
     const btn = e.currentTarget
 
-    post(this.urlPasDAbsentValue, { event: event, semestre: btn.dataset.semestre }).then((data) => {
+    post(this.urlPasDAbsentValue, { event, semestre: btn.dataset.semestre }).then((data) => {
       if (data === true) {
-        const element = document.getElementById('pointage' + event)
+        const element = document.getElementById(`pointage${event}`)
         btn.disabled = true
         element.classList.remove('btn-danger')
         element.firstElementChild.classList.remove('fa-times')

@@ -1,8 +1,8 @@
-// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/_edt.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 31/12/2022 15:35
+// @lastUpdate 16/02/2024 16:01
 
 //.semestre_borne {
 //  max-height: 80vh;
@@ -279,5 +279,13 @@
   background: #ccc;
   color: #000;
   box-shadow: none;
+}
+
+.jour {
+  background-color: var(--colorIUTComplementaire);
+  color: white;
+  padding: 1px;
+  margin-bottom: 2px;
+  text-align: center;
 }
 
