@@ -42,7 +42,7 @@
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
     {% block javascripts %}
         <script>
-        let toasts = {{ app.session.flashbag.get('toast')|json_encode|raw }};
+          let toasts = {{ app.session.flashbag.get('toast')|json_encode|raw }};
         </script>
         {{ encore_entry_script_tags('app') }}
         <script src="{{ asset('bundles/davidannebicquetable/table.js') }}" defer></script>
@@ -69,7 +69,7 @@
 
     <!-- Sidebar -->
     <aside class="sidebar sidebar-expand-lg sidebar-iconic" id="sidebar">
-        <header class="sidebar-header" style="background-color: white">
+    <header class="sidebar-header bg-white">
         <span class="logo text-cente">
           <a href="{% block link_homepage %}{{ path('default_homepage') }}{% endblock %}" class="div_logo">
               <img src="{{ asset('upload/logo/'~settings('LOGO_INTRANET_IUT')) }}"
@@ -94,21 +94,14 @@
                             <span class="title">{{ 'menu.trombinoscope'|trans }}</span>
                         </a>
                     </li>
-
-                    <li class="menu-item" id="menu-agenda">
-                        {% if user_data.departement.optEdt == true %}
+                    {% if user_data.departement.optEdt == true %}
+                        <li class="menu-item" id="menu-agenda">
                             <a class="menu-link" href="{{ path('agenda_index') }}">
                                 <i class="{{ iconAgenda }} fa-2x"><span class="sr-only">calendar</span></i>
                                 <span class="title">{{ 'menu.agenda'|trans }}</span>
                             </a>
-                        {% else %}
-                            <a class="menu-link" href="{{ path('planning_index', {annee:user_data.anneeUniversitaire
-                            .annee}) }}">
-                                <i class="{{ iconAgenda }} fa-2x"><span class="sr-only">calendar</span></i>
-                                <span class="title">{{ 'menu.agenda'|trans }}</span>
-                            </a>
-                        {% endif %}
-                    </li>
+                        </li>
+                    {% endif %}
 
                     <li class="menu-item" id="menu-application">
                         <a class="menu-link" href="{{ path('application_index') }}">
@@ -152,11 +145,11 @@
 
             </ul>
 
-            <div class="ps-scrollbar-x-rail" style="left: 0; bottom: 0;">
-                <div class="ps-scrollbar-x" tabindex="0" style="left: 0; width: 0;"></div>
+            <div class="ps-scrollbar-x-rail start-0 bottom-0">
+                <div class="ps-scrollbar-x start-0 w-0" tabindex="0"></div>
             </div>
-            <div class="ps-scrollbar-y-rail" style="top: 0; right: 2px;">
-                <div class="ps-scrollbar-y" tabindex="0" style="top: 0; height: 0;"></div>
+            <div class="ps-scrollbar-y-rail top-0 end-2px">
+                <div class="ps-scrollbar-y top-0 h-0" tabindex="0"></div>
             </div>
         </nav>
     </aside>
@@ -183,7 +176,7 @@
                       data-bs-placement="bottom"
                 ><i class="fas fa-th-large"></i></span>
                 <div class="dropdown-menu dropdown-grid">
-                    <div class="row" style="max-height: 300px; overflow-y: auto">
+                    <div class="row max-height-300px">
                         <a class="dropdown-item col-4" href="{{ path('default_homepage') }}">
                             <span class="fas fa-home fa-3x fa-color-home"></span>
                             <span class="title">Dashboard</span>
@@ -218,7 +211,7 @@
                     <i class="fas fa-random"></i>
                 </span>
                     <div class="dropdown-menu dropdown-grid">
-                        <div class="row" style="max-height: 300px; overflow-y: auto" id="listeChangeDepartement">
+                        <div class="row max-height-300px" id="listeChangeDepartement">
                         </div>
                     </div>
                 </div>
