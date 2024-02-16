@@ -42,7 +42,7 @@
 
             {% set seen = [] %}
             {% for cours in chronologique %}
-                {% if matieres[cours.typeIdMatiere] not in seen %}
+                {% if matieres[cours.typeIdMatiere] is defined and matieres[cours.typeIdMatiere] not in seen %}
                     {% set seen = seen|merge([matieres[cours.typeIdMatiere]]) %}
                     <a href="{{ path('previsionnel_chronologique_matiere', {matiere: cours.typeIdMatiere}) }}">
                         <button class="btn btn-secondary" style="margin: 10px">
