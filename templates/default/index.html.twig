@@ -8,77 +8,85 @@
     {#    {{ component('ShortEdtComponent') }} #}
 
     <div class="row">
-        <div class="col-sm-12 col-md-8">
-            <div class="card">
-                <header class="card-header">
-                    <h4 class="card-title">{{ 'dernieres.actualites.departement.heading'|trans }}</h4>
-                    {% if user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %}
-                        <div class="card-header-actions">
-                            <a href="{{ path('administration_actualite_new') }}"
-                               class="btn btn-sm btn-primary"
-                               title="{{ 'atitle.deposer_nouvelle_actualite'|trans }}"
-                               data-bs-toggle="tooltip" data-bs-placement="bottom">
-                                <i class="{{ iconAdd }}"></i>
-                                <span class="sr-only">{{ 'atitle.deposer_nouvelle_actualite'|trans }}</span>
-                            </a>
-                        </div>
-                    {% endif %}
-                </header>
-                <div class="card-body">
-                    <ol class="timeline timeline-activity timeline-point-sm timeline-content-right text-left w-100">
-                        {% for actualite in actualites %}
-                            <li class="timeline-block">
-                                <div class="timeline-point timeline-point-primary">
-                                    <span class="badge badge-ring bg-primary"></span>
-                                </div>
-                                <div class="timeline-content">
-                                    <time datetime="{{ actualite.updated|date('Y-m-d') }}" class="text-complementaire">{{ actualite
-                                        .updated|format_datetime('short', 'short') }}</time>
-                                    <p><strong>{{ actualite.titre }}</strong> : {{ actualite.texte|raw }}
-                                    </p>
-                                </div>
-                            </li>
-                        {% else %}
-                            <li class="alert alert-info">{{ 'pas.encore.actualite'|trans }}</li>
-                        {% endfor %}
-                    </ol>
-                    <a href="{{ path('actualite_liste') }}"
-                       class="pull-right">{{ 'voir.anciennes.actualites'|trans }}</a>
+        {% if actualites is defined and actualites|length > 0 %}
+            <div class="col-sm-12 col-md-8">
+                <div class="card">
+                    <header class="card-header">
+                        <h4 class="card-title">{{ 'dernieres.actualites.departement.heading'|trans }}</h4>
+                        {% if user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %}
+                            <div class="card-header-actions">
+                                <a href="{{ path('administration_actualite_new') }}"
+                                   class="btn btn-sm btn-primary"
+                                   title="{{ 'atitle.deposer_nouvelle_actualite'|trans }}"
+                                   data-bs-toggle="tooltip" data-bs-placement="bottom">
+                                    <i class="{{ iconAdd }}"></i>
+                                    <span class="sr-only">{{ 'atitle.deposer_nouvelle_actualite'|trans }}</span>
+                                </a>
+                            </div>
+                        {% endif %}
+                    </header>
+                    <div class="card-body">
+                        <ol class="timeline timeline-activity timeline-point-sm timeline-content-right text-left w-100">
+                            {% for actualite in actualites %}
+                                <li class="timeline-block">
+                                    <div class="timeline-point timeline-point-primary">
+                                        <span class="badge badge-ring bg-primary"></span>
+                                    </div>
+                                    <div class="timeline-content">
+                                        <time datetime="{{ actualite.updated|date('Y-m-d') }}"
+                                              class="text-complementaire">{{ actualite
+                                            .updated|format_datetime('short', 'short') }}</time>
+                                        <p><strong>{{ actualite.titre }}</strong> : {{ actualite.texte|raw }}
+                                        </p>
+                                    </div>
+                                </li>
+                            {% else %}
+                                <li class="alert alert-info">{{ 'pas.encore.actualite'|trans }}</li>
+                            {% endfor %}
+                        </ol>
+                        <a href="{{ path('actualite_liste') }}"
+                           class="pull-right">{{ 'voir.anciennes.actualites'|trans }}</a>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-12 col-md-4">
-            <div class="card">
-                <header class="card-header">
-                    <h4 class="card-title">{{ 'prochains.evenements.heading'|trans }}</h4>
-                    {% if user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %}
-                        <div class="card-header-actions">
-                            <a href="{{ path('administration_date_new') }}" class="btn btn-sm btn-primary"
-                               title="{{ 'atitle.deposer_nouvel_evenement'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"><i
-                                        class="{{ iconAdd }}"></i><span class="sr-only">{{ 'atitle.deposer_nouvel_evenement'|trans }}</span></a>
-                        </div>
-                    {% endif %}
-                </header>
-                <div class="card-body">
-                    <ol class="timeline timeline-activity timeline-point-sm timeline-content-right text-left w-100">
-                        {% for date in dates %}
-                            <li class="timeline-block">
-                                <div class="timeline-point timeline-point-primary">
-                                    <span class="badge badge-ring {{ date.couleurBadge }}"></span>
-                                </div>
-                                <div class="timeline-content">
-                                    <time datetime="{{ date.dateDebut|date('Y-m-d') }}" class="text-complementaire">{{ date
-                                        .dateDebut|format_date('short') }} {{ date.heureDebut|format_time('short') }}</time>
-                                    <p>{{ date.libelle }} : {{ date.texte }}</p>
-                                </div>
-                            </li>
-                        {% else %}
-                            <li class="alert alert-info">{{ 'pas.encore.date'|trans }}</li>
-                        {% endfor %}
-                    </ol>
+        {% endif %}
+        {% if dates is defined and dates|length > 0 %}
+            <div class="col-sm-12 col-md-4">
+                <div class="card">
+                    <header class="card-header">
+                        <h4 class="card-title">{{ 'prochains.evenements.heading'|trans }}</h4>
+                        {% if user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %}
+                            <div class="card-header-actions">
+                                <a href="{{ path('administration_date_new') }}" class="btn btn-sm btn-primary"
+                                   title="{{ 'atitle.deposer_nouvel_evenement'|trans }}" data-bs-toggle="tooltip"
+                                   data-bs-placement="bottom"><i
+                                            class="{{ iconAdd }}"></i><span
+                                            class="sr-only">{{ 'atitle.deposer_nouvel_evenement'|trans }}</span></a>
+                            </div>
+                        {% endif %}
+                    </header>
+                    <div class="card-body">
+                        <ol class="timeline timeline-activity timeline-point-sm timeline-content-right text-left w-100">
+                            {% for date in dates %}
+                                <li class="timeline-block">
+                                    <div class="timeline-point timeline-point-primary">
+                                        <span class="badge badge-ring {{ date.couleurBadge }}"></span>
+                                    </div>
+                                    <div class="timeline-content">
+                                        <time datetime="{{ date.dateDebut|date('Y-m-d') }}"
+                                              class="text-complementaire">{{ date
+                                            .dateDebut|format_date('short') }} {{ date.heureDebut|format_time('short') }}</time>
+                                        <p>{{ date.libelle }} : {{ date.texte }}</p>
+                                    </div>
+                                </li>
+                            {% else %}
+                                <li class="alert alert-info">{{ 'pas.encore.date'|trans }}</li>
+                            {% endfor %}
+                        </ol>
+                    </div>
                 </div>
             </div>
-        </div>
+        {% endif %}
 
         <div class="col-sm-12">
             {% if user_data.departement.optEdt == true %}
@@ -86,11 +94,6 @@
                     {{ render_esi(controller(
                         'App\\Controller\\EdtController::dashboardPersonnel'
                     )) }}
-                    <div {{ stimulus_controller('fullcalendar', {
-                        url: url('edt_intervenant_synchro_ical', {'_format': 'json', code: user_data.user.code}),
-                    }) }}>
-                        <div {{ stimulus_target('fullcalendar', 'calendar') }}></div>
-                    </div>
                 {% elseif is_granted('ROLE_ETUDIANT') %}
                     {{ render_esi(controller(
                         'App\\Controller\\EdtController::dashboardEtudiant'
@@ -155,7 +158,8 @@
                         <div class="col-md-3 col-sm-6 text-center">
                             <a href="{{ user_data.departement.siteWeb }}" target="_blank"><img
                                         src="{{ asset('upload/logo/'~user_data.departement.logoName) }}"
-                                        alt="{{ user_data.departement.libelle }}" class="img-rounded" width="90px"/><br/>
+                                        alt="{{ user_data.departement.libelle }}" class="img-rounded"
+                                        width="90px"/><br/>
                                 {{ user_data.departement.libelle }}
                             </a>
                         </div>
