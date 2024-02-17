@@ -8,17 +8,16 @@
     "ext-bcmath": "*",
     "ext-json": "*",
     "ext-zip": "*",
+    "apereo/phpcas": "^1.6",
     "bugsnag/bugsnag-symfony": "^1.13",
     "composer/package-versions-deprecated": "^1.11",
-    "davidannebicque/table-bundle": "*@dev",
+    "dannebicque/table-bundle": "0.1",
     "doctrine/annotations": "^1.14",
     "doctrine/doctrine-bundle": "^2.10",
     "doctrine/doctrine-migrations-bundle": "^3.2",
     "doctrine/orm": "^2.15.0",
-    "endroid/qr-code-bundle": "^4.3",
     "erusev/parsedown": "^1.7",
     "friendsofsymfony/jsrouting-bundle": "^3.3",
-    "apereo/phpcas": "^1.6",
     "knplabs/knp-snappy-bundle": "^1.9",
     "liip/imagine-bundle": "^2.11",
     "nesbot/carbon": "^2.68",
@@ -35,7 +34,7 @@
     "symfony/expression-language": "^6.3",
     "symfony/flex": "^2.3",
     "symfony/form": "^6.3",
-    "symfony/framework-bundle": "^6.3",
+    "symfony/http-client": "^6.3",
     "symfony/ldap": "^6.3",
     "symfony/mailer": "^6.3",
     "symfony/messenger": "^6.3",
@@ -64,7 +63,7 @@
     "twig/extra-bundle": "^3.6",
     "twig/intl-extra": "^3.6",
     "twig/markdown-extra": "^3.6",
-    "vich/uploader-bundle": "^1.23"
+    "vich/uploader-bundle": "^2.3.1"
   },
   "config": {
     "preferred-install": {
@@ -74,10 +73,10 @@
     "optimize-autoloader": true,
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true,
-      "endroid/installer": true,
       "symfony/flex": true,
       "symfony/runtime": true,
-      "phpstan/extension-installer": true
+      "phpstan/extension-installer": true,
+      "endroid/installer": true
     }
   },
   "autoload": {

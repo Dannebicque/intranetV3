@@ -31,6 +31,7 @@ doctrine:
 
     orm:
         auto_generate_proxy_classes: true
+        enable_lazy_ghost_objects: true
         default_entity_manager: default
         entity_managers:
             default:

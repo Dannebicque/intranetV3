@@ -1,4 +1,0 @@
-endroid_qr_code:
-    default:
-        writer: Endroid\QrCode\Writer\PngWriter
-
