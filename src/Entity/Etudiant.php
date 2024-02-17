@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Etudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/07/2023 15:47
+ * @lastUpdate 16/02/2024 23:15
  */
 
 namespace App\Entity;
@@ -159,13 +159,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     #[ORM\Column(type: Types::INTEGER)]
     private int $anneeSortie = 0;
 
-    /**
-     * @var Collection<int, EmpruntEtudiant>
-     */
-    #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: EmpruntEtudiant::class)]
-    #[ORM\OrderBy(value: ['created' => 'DESC'])]
-    private Collection $emprunts;
-
     #[ORM\ManyToOne(targetEntity: Departement::class, inversedBy: 'etudiants')]
     private ?Departement $departement = null;
 
@@ -220,7 +213,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         $this->promotion = (int) date('Y');
         $this->anneeBac = (int) date('Y');
         $this->typeUser = 'ETU';
-        $this->emprunts = new ArrayCollection();
         $this->projetEtudiants = new ArrayCollection();
         $this->commentaires = new ArrayCollection();
         $this->conpereEtudiants = new ArrayCollection();
@@ -872,69 +864,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     {
         $this->setMailUniv($ldap['mail']);
         $this->setUsername($ldap['login']);
-    }
-
-    /**
-     * @return Collection|Emprunt[]
-     */
-    public function getEmprunts(): Collection
-    {
-        return $this->emprunts;
-    }
-
-    public function addEmprunt(EmpruntEtudiant $emprunt): self
-    {
-        if (!$this->emprunts->contains($emprunt)) {
-            $this->emprunts[] = $emprunt;
-            $emprunt->setEtudiant($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEmprunt(EmpruntEtudiant $emprunt): self
-    {
-        // Todo: revoir la partie emprunt
-        if ($this->emprunts->contains($emprunt)) {
-            $this->emprunts->removeElement($emprunt);
-            // set the owning side to null (unless already changed)
-            if ($emprunt->getEtudiant() === $this) {
-                $emprunt->setEtudiant(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|EmpruntEtudiant[]
-     */
-    public function getEmpruntEtudiants(): Collection
-    {
-        return $this->emprunts;
-    }
-
-    public function addEmpruntEtudiant(EmpruntEtudiant $empruntEtudiant): self
-    {
-        if (!$this->emprunts->contains($empruntEtudiant)) {
-            $this->emprunts[] = $empruntEtudiant;
-            $empruntEtudiant->setEtudiant($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEmpruntEtudiant(EmpruntEtudiant $empruntEtudiant): self
-    {
-        if ($this->emprunts->contains($empruntEtudiant)) {
-            $this->emprunts->removeElement($empruntEtudiant);
-            // set the owning side to null (unless already changed)
-            if ($empruntEtudiant->getEtudiant() === $this) {
-                $empruntEtudiant->setEtudiant(null);
-            }
-        }
-
-        return $this;
     }
 
     public function getDepartement(): ?Departement

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/08/2023 16:01
+ * @lastUpdate 16/02/2024 23:15
  */
 
 namespace App\Entity;
@@ -66,7 +66,7 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     #[ORM\Column(type: Types::STRING, length: 20, nullable: true)]
     protected ?string $bureau2 = null;
 
-    #[ORM\Column(type: Types::INTEGER, nullable: true)]
+    #[ORM\Column(nullable: true)]
     protected ?string $numeroHarpege = null;
 
     #[ORM\Column(type: Types::STRING, length: 10, nullable: true)]
@@ -170,12 +170,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
 
     #[ORM\Column(type: Types::STRING, length: 20, nullable: true)]
     private ?string $couleur = null;
-
-    /**
-     * @var Collection<int, EmpruntPersonnel>
-     */
-    #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: EmpruntPersonnel::class)]
-    private Collection $emprunts;
 
     /**
      * @var Collection<int, Departement>
@@ -288,7 +282,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         $this->alternances = new ArrayCollection();
         $this->departements = new ArrayCollection();
         $this->quizzQuestions = new ArrayCollection();
-        $this->emprunts = new ArrayCollection();
         $this->documentsFavoris = new ArrayCollection();
         $this->projetPeriodes = new ArrayCollection();
         $this->materielCommuns = new ArrayCollection();
@@ -938,37 +931,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     }
 
     /**
-     * @return Collection|EmpruntPersonnel[]
-     */
-    public function getEmpruntPersonnels(): Collection
-    {
-        return $this->emprunts;
-    }
-
-    public function addEmpruntPersonnel(EmpruntPersonnel $empruntPersonnel): self
-    {
-        if (!$this->emprunts->contains($empruntPersonnel)) {
-            $this->emprunts[] = $empruntPersonnel;
-            $empruntPersonnel->setPersonnel($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEmpruntPersonnel(EmpruntPersonnel $empruntPersonnel): self
-    {
-        if ($this->emprunts->contains($empruntPersonnel)) {
-            $this->emprunts->removeElement($empruntPersonnel);
-            // set the owning side to null (unless already changed)
-            if ($empruntPersonnel->getPersonnel() === $this) {
-                $empruntPersonnel->setPersonnel(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection|Departement[]
      */
     public function getDepartements(): Collection
@@ -1028,37 +990,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
             // set the owning side to null (unless already changed)
             if ($quizzQuestion->getAuteur() === $this) {
                 $quizzQuestion->setAuteur(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|EmpruntPersonnel[]
-     */
-    public function getEmprunts(): Collection
-    {
-        return $this->emprunts;
-    }
-
-    public function addEmprunt(EmpruntPersonnel $emprunt): self
-    {
-        if (!$this->emprunts->contains($emprunt)) {
-            $this->emprunts[] = $emprunt;
-            $emprunt->setPersonnel($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEmprunt(EmpruntPersonnel $emprunt): self
-    {
-        if ($this->emprunts->contains($emprunt)) {
-            $this->emprunts->removeElement($emprunt);
-            // set the owning side to null (unless already changed)
-            if ($emprunt->getPersonnel() === $this) {
-                $emprunt->setPersonnel(null);
             }
         }
 

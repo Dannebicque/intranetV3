@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Departement.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/08/2023 15:37
+ * @lastUpdate 16/02/2024 23:13
  */
 
 namespace App\Entity;
@@ -133,12 +133,6 @@ class Departement extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'departement', targetEntity: Hrs::class)]
     private Collection $hrs;
 
-    /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\TypeMateriel>
-     */
-    #[ORM\OneToMany(mappedBy: 'departement', targetEntity: TypeMateriel::class)]
-    private Collection $typeMateriels;
-
     #[ORM\Column(type: Types::BOOLEAN)]
     private bool $actif = true;
 
@@ -147,12 +141,6 @@ class Departement extends BaseEntity
 
     #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class, inversedBy: 'departements')]
     private ?AnneeUniversitaire $anneeUniversitairePrepare = null;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Emprunt>
-     */
-    #[ORM\OneToMany(mappedBy: 'departement', targetEntity: Emprunt::class)]
-    private Collection $emprunts;
 
     #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'departements')]
     private ?Personnel $respMateriel = null;
@@ -187,8 +175,6 @@ class Departement extends BaseEntity
         $this->diplomes = new ArrayCollection();
         $this->salleExamens = new ArrayCollection();
         $this->hrs = new ArrayCollection();
-        $this->typeMateriels = new ArrayCollection();
-        $this->emprunts = new ArrayCollection();
         $this->etudiants = new ArrayCollection();
         $this->bCDemandes = new ArrayCollection();
         $this->bornes = new ArrayCollection();
@@ -588,37 +574,6 @@ class Departement extends BaseEntity
         return $this;
     }
 
-    /**
-     * @return Collection|TypeMateriel[]
-     */
-    public function getTypeMateriels(): Collection
-    {
-        return $this->typeMateriels;
-    }
-
-    public function addTypeMateriel(TypeMateriel $typeMateriel): self
-    {
-        if (!$this->typeMateriels->contains($typeMateriel)) {
-            $this->typeMateriels[] = $typeMateriel;
-            $typeMateriel->setDepartement($this);
-        }
-
-        return $this;
-    }
-
-    public function removeTypeMateriel(TypeMateriel $typeMateriel): self
-    {
-        if ($this->typeMateriels->contains($typeMateriel)) {
-            $this->typeMateriels->removeElement($typeMateriel);
-            // set the owning side to null (unless already changed)
-            if ($typeMateriel->getDepartement() === $this) {
-                $typeMateriel->setDepartement(null);
-            }
-        }
-
-        return $this;
-    }
-
     public function getActif(): ?bool
     {
         return $this->actif;
@@ -651,37 +606,6 @@ class Departement extends BaseEntity
     public function setAnneeUniversitairePrepare(?AnneeUniversitaire $anneeUniversitairePrepare): self
     {
         $this->anneeUniversitairePrepare = $anneeUniversitairePrepare;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Emprunt[]
-     */
-    public function getEmprunts(): Collection
-    {
-        return $this->emprunts;
-    }
-
-    public function addEmprunt(Emprunt $emprunt): self
-    {
-        if (!$this->emprunts->contains($emprunt)) {
-            $this->emprunts[] = $emprunt;
-            $emprunt->setDepartement($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEmprunt(Emprunt $emprunt): self
-    {
-        if ($this->emprunts->contains($emprunt)) {
-            $this->emprunts->removeElement($emprunt);
-            // set the owning side to null (unless already changed)
-            if ($emprunt->getDepartement() === $this) {
-                $emprunt->setDepartement(null);
-            }
-        }
 
         return $this;
     }
