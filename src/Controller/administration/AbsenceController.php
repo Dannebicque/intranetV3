@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/12/2023 15:37
+ * @lastUpdate 17/02/2024 07:09
  */
 
 namespace App\Controller\administration;
@@ -29,7 +29,7 @@ use App\Utils\Tools;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 #[Route('/administration/absence')]
@@ -292,9 +292,18 @@ class AbsenceController extends BaseController
         TypeMatiereManager $manager,
         MyAbsences $myAbsences,
     ): Response {
+
+        $absences = $myAbsences->getAbsencesTempsReel($this->getDepartement());
+
+        if ($absences === null || count($absences) === 0) {
+            $matieres = [];
+        } else {
+            $matieres = $manager->findByDepartementArray($this->getDepartement());
+        }
+
         return $this->render('administration/absences/liste_temps_reel.html.twig', [
-            'absences' => $myAbsences->getAbsencesTempsReel($this->getDepartement()),
-            'matieres' => $manager->findByDepartementArray($this->getDepartement()),
+            'absences' => $absences,
+            'matieres' => $matieres,
         ]);
     }
 }

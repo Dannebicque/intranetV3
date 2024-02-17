@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/AdministrationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/09/2022 09:06
+ * @lastUpdate 17/02/2024 07:21
  */
 
 namespace App\Controller;
@@ -12,7 +12,7 @@ namespace App\Controller;
 use App\Repository\ProjetPeriodeRepository;
 use App\Repository\StagePeriodeRepository;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Class AdministrationController.
@@ -25,20 +25,10 @@ class AdministrationController extends BaseController
         StagePeriodeRepository $stagePeriodeRepository,
         ProjetPeriodeRepository $projetPeriodeRepository
     ): Response {
-        $tperiodes = [];
-        foreach ($this->dataUserSession->getDiplomes() as $diplome) {
-            $periodes = $stagePeriodeRepository->findByDiplome($diplome, $this->getAnneeUniversitaire());
-            foreach ($periodes as $periode) {
-                $tperiodes[] = $periode;
-            }
-        }
-        $projetPeriodes = [];
-        foreach ($this->dataUserSession->getDiplomes() as $diplome) {
-            $periodes = $projetPeriodeRepository->findByDiplome($diplome, $this->getAnneeUniversitaire());
-            foreach ($periodes as $periode) {
-                $projetPeriodes[$periode->getId()] = $periode;
-            }
-        }
+
+        $tperiodes = $stagePeriodeRepository->findByDepartementAndAnneeUniversitaire($this->dataUserSession->getDepartement(), $this->getAnneeUniversitaire());
+        $projetPeriodes = $projetPeriodeRepository->findByDepartementAndAnneeUniversitaire($this->dataUserSession->getDepartement(), $this->getAnneeUniversitaire());
+
 
         return $this->render(
             'administration/index.html.twig',

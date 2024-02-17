@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ProjetPeriodeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/09/2022 09:46
+ * @lastUpdate 17/02/2024 07:20
  */
 
 namespace App\Repository;
@@ -80,5 +80,22 @@ class ProjetPeriodeRepository extends ServiceEntityRepository
             ->orderBy('p.libelle', Criteria::ASC)
             ->getQuery()
             ->getResult();
+    }
+
+    public function findByDepartementAndAnneeUniversitaire(Departement $departement, AnneeUniversitaire $anneeUniversitaire): array
+    {
+        $query = $this->createQueryBuilder('p')
+            ->innerJoin('p.semestres', 's')
+            ->addSelect('s')
+            ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
+            ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
+            ->where('d.departement = :departement')
+            ->andWhere('p.anneeUniversitaire = :annee')
+            ->setParameter('departement', $departement->getId())
+            ->setParameter('annee', $anneeUniversitaire->getId())
+            ->orderBy('p.anneeUniversitaire', Criteria::DESC)
+            ->addOrderBy('p.libelle', Criteria::ASC);
+
+        return $query->getQuery()->getResult();
     }
 }

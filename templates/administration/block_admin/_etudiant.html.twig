@@ -9,51 +9,51 @@
                 'App\\Controller\\administration\\AbsenceController::listeTempsReel'
             )) }}
 
-                <div class="row">
-                    <div class="col-lg-3 col-10 d-grid d-block mb-2 etudiant_bloc">
-                        <div class="admin_links_bloc_header">
-                            <i class="fa-solid fa-user-graduate fa-2x"></i>
-                            <h4>Formation Continue</h4>
-                            <small>Gestion des absences, des notes, des étudiants, des fins de semestres,
-                                des alternances et des PPN</small>
-                        </div>
-
-                        <hr>
-
-                        {% for semestre in user_data.semestres|filter(semestre => semestre.actif == true) %}
-
-                            {% if semestre.annee.optAlternance == true %}
-
-                                <a href="{{ path('administration_semestre_index', {'semestre': semestre.id } ) }}">{{ semestre.displayAvecTypeDiplome }}</a>
-
-                            {% endif %}
-
-                        {% endfor %}
-
+            <div class="row">
+                <div class="col-lg-3 col-10 d-grid d-block mb-2 etudiant_bloc">
+                    <div class="admin_links_bloc_header">
+                        <i class="fa-solid fa-user-graduate fa-2x"></i>
+                        <h4>Formation Continue</h4>
+                        <small>Gestion des absences, des notes, des étudiants, des fins de semestres,
+                            des alternances et des PPN</small>
                     </div>
 
+                    <hr>
 
-                    <div class="col-lg-3 col-10 d-grid d-block mb-2 etudiant_bloc">
-                        <div class="admin_links_bloc_header">
-                            <i class="fa-solid fa-user-graduate fa-2x"></i>
-                            <h4>Formation Initiale</h4>
-                            <small>Gestion des absences, des notes, des étudiants, des fins de semestres, des
-                                stages</small>
-                        </div>
+                    {% for semestre in user_data.semestresActifs %}
 
-                        <hr>
+                        {% if semestre.annee.optAlternance == true %}
 
-                        {% for semestre in user_data.semestres|filter(semestre => semestre.actif == true) %}
+                            <a href="{{ path('administration_semestre_index', {'semestre': semestre.id } ) }}">{{ semestre.displayAvecTypeDiplome }}</a>
 
-                            {% if semestre.annee.optAlternance == false %}
+                        {% endif %}
 
-                                <a href="{{ path('administration_semestre_index', {'semestre': semestre.id } ) }}">{{ semestre.displayAvecTypeDiplome }}</a>
+                    {% endfor %}
 
-                            {% endif %}
+                </div>
 
-                        {% endfor %}
 
+                <div class="col-lg-3 col-10 d-grid d-block mb-2 etudiant_bloc">
+                    <div class="admin_links_bloc_header">
+                        <i class="fa-solid fa-user-graduate fa-2x"></i>
+                        <h4>Formation Initiale</h4>
+                        <small>Gestion des absences, des notes, des étudiants, des fins de semestres, des
+                            stages</small>
                     </div>
+
+                    <hr>
+
+                    {% for semestre in user_data.semestresActifs %}
+
+                        {% if semestre.annee.optAlternance == false %}
+
+                            <a href="{{ path('administration_semestre_index', {'semestre': semestre.id } ) }}">{{ semestre.displayAvecTypeDiplome }}</a>
+
+                        {% endif %}
+
+                    {% endfor %}
+
+                </div>
 
                 <div class="col-lg-3 col-10 d-grid d-block mb-2 etudiant_bloc">
                     <div class="admin_links_bloc_header">

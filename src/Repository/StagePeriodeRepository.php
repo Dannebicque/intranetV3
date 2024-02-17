@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/StagePeriodeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/12/2022 20:24
+ * @lastUpdate 17/02/2024 07:18
  */
 
 namespace App\Repository;
@@ -86,6 +86,22 @@ class StagePeriodeRepository extends ServiceEntityRepository
             ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
             ->where('d.departement = :departement')
             ->setParameter('departement', $departement->getId())
+            ->orderBy('p.anneeUniversitaire', Criteria::DESC)
+            ->addOrderBy('p.numeroPeriode', Criteria::ASC);
+
+        return $query->getQuery()->getResult();
+    }
+
+    public function findByDepartementAndAnneeUniversitaire(Departement $departement, AnneeUniversitaire $anneeUniversitaire): array
+    {
+        $query = $this->createQueryBuilder('p')
+            ->innerJoin(Semestre::class, 's', 'WITH', 'p.semestre = s.id')
+            ->innerJoin(Annee::class, 'a', 'WITH', 's.annee = a.id')
+            ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
+            ->where('d.departement = :departement')
+            ->andWhere('p.anneeUniversitaire = :annee')
+            ->setParameter('departement', $departement->getId())
+            ->setParameter('annee', $anneeUniversitaire->getId())
             ->orderBy('p.anneeUniversitaire', Criteria::DESC)
             ->addOrderBy('p.numeroPeriode', Criteria::ASC);
 

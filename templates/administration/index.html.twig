@@ -112,14 +112,9 @@
             {{ include('administration/block_admin/_projet.html.twig') }}
             {{ include('administration/block_admin/_salle.html.twig') }}
         </div>
-        <div class="row block_admin">
-        {% if user_data.departement.optMateriel %}
-            {{ include('administration/block_admin/_materiel.html.twig') }}
-        {% endif %}
     {% else %}
         {% if user_data.isGoodDepartement('ROLE_QUALITE') %}
             {{ include('administration/block_admin/_etudiant.html.twig') }}
-            </div>
             <div class="row block_admin">
                 {{ include('administration/block_admin/_qualite.html.twig') }}
                 {{ include('administration/block_admin/_personnels.html.twig') }}
