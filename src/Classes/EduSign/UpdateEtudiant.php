@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/UpdateEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/08/2023 15:09
+ * @lastUpdate 16/02/2024 22:39
  */
 
 namespace App\Classes\EduSign;
@@ -25,7 +25,7 @@ class UpdateEtudiant
     {
     }
 
-    public function update()
+    public function update(): void
     {
 //        $diplomesBut = $this->diplomeRepository->findAllWithEduSign();
 //

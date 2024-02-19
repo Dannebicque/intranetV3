@@ -1,4 +1,11 @@
 <?php
+/*
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/ExportEtudiant.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 19/02/2024 17:28
+ */
 
 namespace App\Classes\EduSign;
 
@@ -22,7 +29,8 @@ class ExportEtudiant
     {
     }
 
-    public function genereFichier() {
+    public function genereFichier(): StreamedResponse
+    {
         $this->myExcelWriter->createSheet('edusign-etudiants');
 
         $this->ecritEtudiant();
@@ -76,12 +84,13 @@ class ExportEtudiant
 //        }
 //    }
 
-        public function ecritEtudiant() {
+    public function ecritEtudiant(): void
+    {
         $semestres = $this->semestreRepository->findSemestreEduSign();
         $sheet = $this->myExcelWriter->getSpreadsheet()->getActiveSheet();
 
         // nb max d'éléments dans les tableaux
-            $maxItems = 0;
+        $maxItems = 0;
 
         foreach ($semestres as $semestre) {
             $etudiants = $this->etudiantRepository->findBySemestre($semestre);
@@ -102,85 +111,85 @@ class ExportEtudiant
             }
         }
 
-            // Calculate $maxItems first
-            // Add your existing logic for calculating $maxItems
+        // Calculate $maxItems first
+        // Add your existing logic for calculating $maxItems
 
-            // headers
-            $headers = [
-                'FIRSTNAME',
-                'LASTNAME',
-                'EMAIL',
-                'FILE_NUMBER',
-                'PHOTO',
-                'PHONE',
-            ];
+        // headers
+        $headers = [
+            'FIRSTNAME',
+            'LASTNAME',
+            'EMAIL',
+            'FILE_NUMBER',
+            'PHOTO',
+            'PHONE',
+        ];
 
-            // Dynamically add GROUP headers
-            for ($i = 1; $i <= $maxItems; ++$i) {
-                $headers[] = "GROUP$i";
-            }
+        // Dynamically add GROUP headers
+        for ($i = 1; $i <= $maxItems; ++$i) {
+            $headers[] = "GROUP$i";
+        }
 
-            $headers = array_merge($headers, [
-                'TRAINING_NAME',
-                'COMPANY',
-            ]);
+        $headers = array_merge($headers, [
+            'TRAINING_NAME',
+            'COMPANY',
+        ]);
 
-            // Dynamically add TAG headers
-            for ($i = 1; $i <= $maxItems; ++$i) {
-                $headers[] = "TAG$i";
-            }
+        // Dynamically add TAG headers
+        for ($i = 1; $i <= $maxItems; ++$i) {
+            $headers[] = "TAG$i";
+        }
 
-            $headers = array_merge($headers, [
-                'SEND_EMAIL_CREDENTIALS',
-                'NEW_PASSWORD_NEEDED',
-                'API_ID',
-                'API_TYPE',
-                'BADGE_ID',
-                'ID_EDU_SIGN',
-                'STUDENT_FOLLOWER_ID',
-            ]);
+        $headers = array_merge($headers, [
+            'SEND_EMAIL_CREDENTIALS',
+            'NEW_PASSWORD_NEEDED',
+            'API_ID',
+            'API_TYPE',
+            'BADGE_ID',
+            'ID_EDU_SIGN',
+            'STUDENT_FOLLOWER_ID',
+        ]);
 
-            // Write headers
-            $headerColumnIndex = 1;
-            foreach ($headers as $header) {
-                $headerColumnLetter = Coordinate::stringFromColumnIndex($headerColumnIndex);
-                $sheet->setCellValue("$headerColumnLetter" . "1", $header);
-                ++$headerColumnIndex;
-            }
+        // Write headers
+        $headerColumnIndex = 1;
+        foreach ($headers as $header) {
+            $headerColumnLetter = Coordinate::stringFromColumnIndex($headerColumnIndex);
+            $sheet->setCellValue("$headerColumnLetter" . "1", $header);
+            ++$headerColumnIndex;
+        }
 
-            // Commence à la ligne 2
-            $row = 2;
-            foreach ($semestres as $semestre) {
-                $etudiants = $this->etudiantRepository->findBySemestre($semestre);
+        // Commence à la ligne 2
+        $row = 2;
+        foreach ($semestres as $semestre) {
+            $etudiants = $this->etudiantRepository->findBySemestre($semestre);
 
-                foreach ($etudiants as $etudiant) {
-                    $groupes = [];
-                    $groupes[] = $etudiant->getSemestre()->getLibelle();
-                    foreach ($etudiant->getGroupes() as $groupe) {
-                        $groupes[] = $groupe->getLibelle();
-                    }
+            foreach ($etudiants as $etudiant) {
+                $groupes = [];
+                $groupes[] = $etudiant->getSemestre()->getLibelle();
+                foreach ($etudiant->getGroupes() as $groupe) {
+                    $groupes[] = $groupe->getLibelle();
+                }
 
-                    $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiant, $groupes))->getEtudiant();
+                $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiant, $groupes))->getEtudiant();
 
-                    $col = 1;
-                    foreach ($etudiantEduSign as $value) {
-                        if (is_array($value)) {
-                            for ($i = 0; $i < $maxItems; ++$i) {
-                                $colLetter = Coordinate::stringFromColumnIndex($col);
-                                $subValue = $i < count($value) ? $value[$i] : '';
-                                $sheet->setCellValue("$colLetter$row", $subValue);
-                                ++$col;
-                            }
-                        } else {
+                $col = 1;
+                foreach ($etudiantEduSign as $value) {
+                    if (is_array($value)) {
+                        for ($i = 0; $i < $maxItems; ++$i) {
                             $colLetter = Coordinate::stringFromColumnIndex($col);
-                            $sheet->setCellValue("$colLetter$row", $value);
+                            $subValue = $i < count($value) ? $value[$i] : '';
+                            $sheet->setCellValue("$colLetter$row", $subValue);
                             ++$col;
                         }
+                    } else {
+                        $colLetter = Coordinate::stringFromColumnIndex($col);
+                        $sheet->setCellValue("$colLetter$row", $value);
+                        ++$col;
                     }
-
-                    ++$row;
                 }
+
+                ++$row;
             }
+        }
     }
 
 }

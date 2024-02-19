@@ -1,4 +1,11 @@
 <?php
+/*
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/DeleteGroupe.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 16/02/2024 22:37
+ */
 
 namespace App\Classes\EduSign;
 
@@ -8,7 +15,6 @@ use App\Repository\SemestreRepository;
 
 class DeleteGroupe
 {
-
     public function __construct(
         private readonly ApiEduSign        $apiEduSign,
         protected GroupeRepository         $groupeRepository,
@@ -17,7 +23,7 @@ class DeleteGroupe
 
     }
 
-    public function delete()
+    public function delete(): void
     {
         $groupes = $this->groupeRepository->findAllEduSign();
         $parents = $this->semestreRepository->findSemestreEduSign();

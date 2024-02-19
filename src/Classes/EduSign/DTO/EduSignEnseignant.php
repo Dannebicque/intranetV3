@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/DTO/EduSignEnseignant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2023 15:56
+ * @lastUpdate 16/02/2024 22:34
  */
 
 namespace App\Classes\EduSign\DTO;
@@ -48,5 +48,4 @@ class EduSignEnseignant
             'TAGS' => $this->tags,
         ];
     }
-
 }

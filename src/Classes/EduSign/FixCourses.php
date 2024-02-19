@@ -1,4 +1,11 @@
 <?php
+/*
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/FixCourses.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 16/02/2024 22:38
+ */
 
 namespace App\Classes\EduSign;
 
@@ -46,7 +53,7 @@ class FixCourses
     {
     }
 
-    public function fixCourse()
+    public function fixCourse(): void
     {
         $diplomes = $this->diplomeRepository->findAllWithEduSign();
 
@@ -62,9 +69,11 @@ class FixCourses
                     if ($diplome->isOptUpdateCelcat() === true) {
                         $this->source = 'celcat';
                         $cours = (new EduSignEdtCelcatAdapter($course, $enseignant))->getCourse();
-                        $date = Carbon::createFromFormat("Y-m-d H:i:s", $cours->date);
+                        if ($cours !== null) {
+                            $date = Carbon::createFromFormat("Y-m-d H:i:s", $cours->date);
 
-                        $coursIntranet = $this->edtCelcatRepository->findOneCours($date, $cours->heureDebut, $cours->heureFin, $cours->salle, $cours->personnelObjet);
+                            $coursIntranet = $this->edtCelcatRepository->findOneCours($date, $cours->heureDebut, $cours->heureFin, $cours->salle, $cours->personnelObjet);
+                        }
                     } else {
                         $this->source = 'intranet';
                         $cours = (new EduSignEdtIntranetAdapter($course, $enseignant))->getCourse();
@@ -102,5 +111,4 @@ class FixCourses
             }
         }
     }
-
 }

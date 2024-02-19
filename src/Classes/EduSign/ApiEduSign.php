@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/ApiEduSign.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/11/2023 07:30
+ * @lastUpdate 16/02/2024 22:34
  */
 
 namespace App\Classes\EduSign;
@@ -39,7 +39,7 @@ class ApiEduSign
     {
     }
 
-    public function addCourse(EduSignCourse $course, string $cleApi)
+    public function addCourse(EduSignCourse $course, string $cleApi): void
     {
         $client = HttpClient::create();
 
@@ -81,7 +81,7 @@ class ApiEduSign
         }
     }
 
-    public function updateCourse(EduSignCourse $course, string $cleApi)
+    public function updateCourse(EduSignCourse $course, string $cleApi): void
     {
         $client = HttpClient::create();
 
@@ -94,7 +94,7 @@ class ApiEduSign
         ]);
     }
 
-    public function getCourses(?string $id, string $cleApi)
+    public function getCourses(?string $id, string $cleApi): mixed
     {
         $client = HttpClient::create();
 
@@ -117,7 +117,7 @@ class ApiEduSign
         return $course;
     }
 
-    public function getAllCourses(string $cleApi)
+    public function getAllCourses(string $cleApi): mixed
     {
         $client = HttpClient::create();
 
@@ -140,7 +140,7 @@ class ApiEduSign
         return $courses;
     }
 
-    public function deleteCourse(EduSignCourse $course, string $cleApi)
+    public function deleteCourse(EduSignCourse $course, string $cleApi): void
     {
         $client = HttpClient::create();
 
@@ -162,7 +162,7 @@ class ApiEduSign
 
     }
 
-    public function addGroupe(EduSignGroupe $groupe, string $cleApi)
+    public function addGroupe(EduSignGroupe $groupe, string $cleApi): void
     {
         $client = HttpClient::create();
 
@@ -206,7 +206,7 @@ class ApiEduSign
 
     }
 
-    public function deleteGroupe(EduSignGroupe $groupe, string $cleApi)
+    public function deleteGroupe(EduSignGroupe $groupe, string $cleApi): void
     {
         $client = HttpClient::create();
 
@@ -259,7 +259,7 @@ class ApiEduSign
         }
     }
 
-    public function addEnseignant(EduSignEnseignant $enseignant, Personnel $personnel, Departement $departement, $cleApi)
+    public function addEnseignant(EduSignEnseignant $enseignant, Personnel $personnel, Departement $departement, $cleApi): void
     {
         $client = HttpClient::create();
 
@@ -311,7 +311,7 @@ class ApiEduSign
         $this->personnelRepository->save($personnel);
     }
 
-    public function getEnseignant(string $cleApi)
+    public function getEnseignant(string $cleApi): mixed
     {
         $client = HttpClient::create();
 
@@ -333,7 +333,7 @@ class ApiEduSign
         return $intervenants;
     }
 
-    public function updateEnseignant(EduSignEnseignant $enseignant, string $cleApi)
+    public function updateEnseignant(EduSignEnseignant $enseignant, string $cleApi): void
     {
         $client = HttpClient::create();
 

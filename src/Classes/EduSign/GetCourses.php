@@ -1,4 +1,11 @@
 <?php
+/*
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/GetCourses.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 16/02/2024 22:38
+ */
 
 namespace App\Classes\EduSign;
 
@@ -46,7 +53,7 @@ class GetCourses
     {
     }
 
-    public function getCourse()
+    public function getCourse(): void
     {
         $diplomes = $this->diplomeRepository->findAllWithEduSign();
 
@@ -165,9 +172,7 @@ class GetCourses
         }
     }
 
-    public function newAbsence(
-        $course,
-    )
+    public function newAbsence(array $course): void
     {
         $enseignant = $this->personnelRepository->findByIdEdusign($course['PROFESSOR']);
 

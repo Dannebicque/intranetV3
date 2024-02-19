@@ -1,18 +1,24 @@
 <?php
+/*
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/Adapter/EduSignEdtCelcatAdapter.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 16/02/2024 22:30
+ */
 
 namespace App\Classes\EduSign\Adapter;
 
 use App\DTO\EvenementEdt;
+use App\Entity\Personnel;
 use Carbon\Carbon;
 use DateTimeZone;
 
 class EduSignEdtCelcatAdapter
 {
+    private EvenementEdt $cours;
 
-    /**
-     * @param $course
-     */
-    public function __construct($course, $enseignant)
+    public function __construct(array $course, Personnel $enseignant)
     {
         $startRaw = Carbon::parse($course['START'], 'UTC');
         $startRaw->setTimezone(new DateTimeZone('Europe/Paris'));

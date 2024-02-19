@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/UpdateGroupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/08/2023 15:09
+ * @lastUpdate 19/02/2024 17:28
  */
 
 namespace App\Classes\EduSign;
@@ -25,7 +25,7 @@ class UpdateGroupe
     {
     }
 
-    public function update()
+    public function update(): void
     {
         $diplomes = $this->diplomeRepository->findAllWithEduSign();
 
@@ -55,7 +55,7 @@ class UpdateGroupe
             }
             foreach ($groupes as $groupe) {
 
-                if ($groupe->getTypeGroupe()->getLibelle() == 'TD' || 'TP') {
+                if ($groupe->getTypeGroupe()->getLibelle() === 'TD' || $groupe->getTypeGroupe()->getLibelle() === 'TP') {
                     foreach ($groupe->getTypeGroupe()->getSemestres() as $semestre) {
                         if ($semestre->getOrdreLmd() == $parent->getOrdreLmd()) {
 

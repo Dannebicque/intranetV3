@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/Adapter/IntranetEdtEduSignAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/11/2023 07:28
+ * @lastUpdate 16/02/2024 22:34
  */
 
 namespace App\Classes\EduSign\Adapter;
@@ -17,9 +17,6 @@ class IntranetEdtEduSignAdapter
 {
     private ?EduSignCourse $course = null;
 
-    /**
-     * @param $edt
-     */
     public function __construct(EvenementEdt $edt)
     {
         if ($edt->semestre !== null && $edt->semestre->getDiplome() !== null && $edt->semestre->getDiplome()->getDepartement() !== null) {

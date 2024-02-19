@@ -1,4 +1,11 @@
 <?php
+/*
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/DeleteCourse.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 19/02/2024 17:28
+ */
 
 namespace App\Classes\EduSign;
 
@@ -10,12 +17,9 @@ use App\Repository\DepartementRepository;
 use App\Repository\DiplomeRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\SemestreRepository;
-use Carbon\Carbon;
 
 class DeleteCourse
 {
-    private ?string $cleApi;
-
     public function __construct(
         private readonly ApiEduSign        $apiEduSign,
         protected EdtPlanningRepository    $edtPlanningRepository,
@@ -29,7 +33,7 @@ class DeleteCourse
     {
     }
 
-    public function delete()
+    public function delete(): void
     {
         $diplomes = $this->diplomeRepository->findAllWithEduSign();
 
@@ -52,7 +56,6 @@ class DeleteCourse
                 $edt = $this->edtManager->getPlanningEduSign($semestre, $matieres, $semestre->getAnneeUniversitaire(), []);
 
                 foreach ($edt->evenements as $evenement) {
-                    dump('------------');
                     $course = (new IntranetEdtEduSignAdapter($evenement))->getCourse();
 
                     if ($course !== null) {

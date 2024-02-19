@@ -1,10 +1,15 @@
 <?php
+/*
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/UpdateManager.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 19/02/2024 17:28
+ */
 
 namespace App\Classes\EduSign;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
-use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
-use Symfony\Contracts\EventDispatcher\Event;
 
 class UpdateManager implements EventSubscriberInterface
 {
@@ -17,7 +22,7 @@ class UpdateManager implements EventSubscriberInterface
 //        $this->updateEdt->setUpdateManager($this);
     }
 
-    public function onEnseignantAdded(EnseignantAddedEvent $event)
+    public function onEnseignantAdded(EnseignantAddedEvent $event): void
     {
         $enseignant = $event->getEnseignant();
 //        $this->updateEnseignant($enseignant);
@@ -25,7 +30,7 @@ class UpdateManager implements EventSubscriberInterface
 
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return [
             EnseignantUpdatedEvent::class => 'onEnseignantUpdated',
@@ -44,7 +49,7 @@ class UpdateManager implements EventSubscriberInterface
 //        $this->eventDispatcher->dispatch(new Event(), 'enseignant.updated');
 //    }
 
-    public function onEnseignantUpdated(EnseignantUpdatedEvent $event)
+    public function onEnseignantUpdated(EnseignantUpdatedEvent $event): void
     {
         $this->updateEdt->sendUpdate();
     }

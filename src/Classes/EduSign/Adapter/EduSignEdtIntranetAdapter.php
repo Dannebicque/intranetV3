@@ -1,10 +1,16 @@
 <?php
+/*
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/Adapter/EduSignEdtIntranetAdapter.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 19/02/2024 17:28
+ */
 
 namespace App\Classes\EduSign\Adapter;
 
-use _PHPStan_7c8075089\Nette\Utils\DateTime;
 use App\DTO\EvenementEdt;
-use App\Repository\PersonnelRepository;
+use App\Entity\Personnel;
 use Carbon\Carbon;
 use DateTimeZone;
 
@@ -12,10 +18,7 @@ class EduSignEdtIntranetAdapter
 {
     private EvenementEdt $cours;
 
-    /**
-     * @param $course
-     */
-    public function __construct($course, $enseignant)
+    public function __construct(array $course, Personnel $enseignant)
     {
         $startRaw = Carbon::parse($course['START'], 'UTC');
         $startRaw->setTimezone(new DateTimeZone('Europe/Paris'));
@@ -40,9 +43,8 @@ class EduSignEdtIntranetAdapter
         $this->cours->salle = $course['CLASSROOM'];
     }
 
-        public
-        function getCourse(): ?EvenementEdt
-        {
+    public function getCourse(): ?EvenementEdt
+    {
         return $this->cours;
-        }
     }
+}
