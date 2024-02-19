@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/BorneController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/02/2024 14:32
+ * @lastUpdate 19/02/2024 17:50
  */
 
 namespace App\Controller;
@@ -15,37 +15,10 @@ use App\Entity\Borne;
 use App\Entity\Constantes;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class BorneController extends AbstractController
 {
-//    #[Route(path: '/borne/{semestre1}/{semestre2}', name: 'borne')]
-//
-//    /** @deprecated */
-//    public function index(
-//        TypeMatiereManager $typeMatiereManager,
-//        MyEdtBorne $myEdtBorne,
-//        Semestre $semestre1,
-//        Semestre $semestre2
-//    ): Response {
-//        $myEdtBorne->init();
-//        $myEdtBorne->calculSemestre($semestre1, $semestre2, $semestre1->getAnneeUniversitaire(), $typeMatiereManager);
-//        // récupération des messages
-//        $messages = [];
-//        $messages[] = $semestre1->getBornes();
-//        $messages[] = $semestre2->getBornes();
-//        $response = new Response();
-//        $response->headers->set('Access-Control-Allow-Origin', '*');
-//        $content = $this->renderView('borne/index.html.twig', [
-//            't' => $myEdtBorne->getData(),
-//            'messages' => $messages,
-//            'lignes' => Constantes::TAB_CRENEAUX,
-//        ]);
-//        $response->setContent($content);
-//
-//        return $response;
-//    }
-
     /**
      * @throws \App\Exception\SemestreNotFoundException
      */
