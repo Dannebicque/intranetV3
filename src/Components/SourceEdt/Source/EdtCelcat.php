@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Source/EdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/10/2023 07:44
+ * @lastUpdate 16/02/2024 16:09
  */
 
 namespace App\Components\SourceEdt\Source;
@@ -15,6 +15,7 @@ use App\DTO\EvenementEdt;
 use App\DTO\EvenementEdtCollection;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Constantes;
+use App\Entity\Etudiant;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Repository\EdtCelcatRepository;
@@ -151,15 +152,27 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
         return false;
     }
 
-    public function getNextEvent(): ?EvenementEdt
+    public function getCurrentEventEtudiant(Etudiant $user, AnneeUniversitaire $anneeUniversitaire): ?EvenementEdt
     {
-        // TODO: Implement getNextEvent() method.
+        // TODO: Implement getCurrentEventEtudiant() method.
         return null;
     }
 
-    public function getCurrentEvent(): ?EvenementEdt
+    public function getNextEventEtudiant(Etudiant $user, AnneeUniversitaire $anneeUniversitaire): ?EvenementEdt
     {
-        // TODO: Implement getCurrentEvent() method.
+        // TODO: Implement getNextEventEtudiant() method.
+        return null;
+    }
+
+    public function getCurrentEventPersonnel(Personnel $user, AnneeUniversitaire $anneeUniversitaire): ?EvenementEdt
+    {
+        // TODO: Implement getCurrentEventPersonnel() method.
+        return null;
+    }
+
+    public function getNextEventPersonnel(Personnel $user, AnneeUniversitaire $anneeUniversitaire): ?EvenementEdt
+    {
+        // TODO: Implement getNextEventPersonnel() method.
         return null;
     }
 }
