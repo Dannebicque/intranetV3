@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/PlanCours/Form/PlanCoursSaeStep1Type.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/01/2023 15:57
+ * @lastUpdate 19/02/2024 14:48
  */
 
 namespace App\Components\PlanCours\Form;
@@ -26,6 +26,7 @@ class PlanCoursSaeStep1Type extends PlanCoursStep1Type
                 'required' => false,
                 'attr' => ['rows' => 10, 'class' => 'tinyMce'],
             ])
+            //todo: reprendre le texte de la SAE dans document qualité
             ->add('miseEnOeuvre', TextareaType::class, [
                 'label' => 'Mise en oeuvre de la SAE :',
                 'help' => 'Modalités de mise en oeuvre de la SAE (travail individuel, en groupe, nombre de collègues impliqués, …)',

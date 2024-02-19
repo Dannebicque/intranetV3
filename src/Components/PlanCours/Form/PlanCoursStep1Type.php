@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/PlanCours/Form/PlanCoursStep1Type.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/02/2024 14:11
+ * @lastUpdate 19/02/2024 14:41
  */
 
 namespace App\Components\PlanCours\Form;
@@ -68,6 +68,7 @@ class PlanCoursStep1Type extends AbstractType
             ])
             ->add('commentaires_step1', TextareaType::class, [
                 'label' => 'Commentaire libre :',
+                'help' => 'Commentaire libre sur le plan de cours pour cette étape 1',
                 'required' => false,
                 'attr' => ['rows' => 10, 'class' => 'tinyMce'],
             ]);

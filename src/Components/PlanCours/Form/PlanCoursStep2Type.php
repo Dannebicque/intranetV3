@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/PlanCours/Form/PlanCoursStep2Type.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/01/2023 15:55
+ * @lastUpdate 19/02/2024 14:41
  */
 
 namespace App\Components\PlanCours\Form;
@@ -43,6 +43,7 @@ class PlanCoursStep2Type extends AbstractType
             ])
             ->add('commentaires_step2', TextareaType::class, [
                 'label' => 'Commentaire libre :',
+                'help' => 'Commentaire libre sur le plan de cours pour cette étape 2',
                 'required' => false,
                 'attr' => ['rows' => 10, 'class' => 'tinyMce'],
             ]);

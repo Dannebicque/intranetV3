@@ -5,17 +5,15 @@
     pouvez combiner les saisies.
 </div>
 
-{{ form_row(form.commentaires_step2) }}
-
-<div class="divider">Saisie des séquences</div>
+<div class="divider">1. Saisie des séquences</div>
 {{ form_row(form.planCoursSequences) }}
 
-<div class="divider">Upload d'un fichier</div>
+<div class="divider">2. Upload d'un fichier</div>
 {{ form_row(form.fichierPlanCoursFile) }}
 
-<div class="divider">Saisie libre</div>
+<div class="divider">3. Saisie libre</div>
 {{ form_row(form.saisiePlanCours) }}
 
 
 
-
+{# todo: suppression commentaire libre sur step2 #}
