@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/mcc/superAdmin/MccTypeEpreuveController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/12/2022 12:43
+ * @lastUpdate 16/02/2024 22:17
  */
 
 namespace App\Controller\mcc\superAdmin;
@@ -16,7 +16,7 @@ use App\Form\MccTypeEpreuveType;
 use App\Repository\MccTypeEpreuveRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/administratif/mcc/type-epreuve', name: 'sa_mcc_type_epreuve_')]
 class MccTypeEpreuveController extends BaseController
@@ -43,7 +43,7 @@ class MccTypeEpreuveController extends BaseController
             return $this->redirectToRoute('sa_mcc_type_epreuve_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('mcc/superAdmin/type_epreuve/new.html.twig', [
+        return $this->render('mcc/superAdmin/type_epreuve/new.html.twig', [
             'mcc_type_epreuve' => $mccTypeEpreuve,
             'form' => $form,
         ]);
@@ -73,7 +73,7 @@ class MccTypeEpreuveController extends BaseController
             return $this->redirectToRoute('sa_mcc_type_epreuve_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('mcc/superAdmin/type_epreuve/edit.html.twig', [
+        return $this->render('mcc/superAdmin/type_epreuve/edit.html.twig', [
             'mcc_type_epreuve' => $mccTypeEpreuve,
             'form' => $form,
         ]);

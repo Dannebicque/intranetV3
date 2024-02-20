@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtCompareController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/10/2022 18:54
+ * @lastUpdate 16/02/2024 22:17
  */
 
 namespace App\Controller\administration;
@@ -17,7 +17,7 @@ use App\Exception\MatiereNotFoundException;
 use App\Repository\CalendrierRepository;
 use App\Repository\EdtPlanningRepository;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route(path: '/administration/emploi-du-temps/compare')]
 class EdtCompareController extends BaseController

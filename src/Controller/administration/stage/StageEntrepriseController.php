@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/stage/StageEntrepriseController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/09/2022 09:23
+ * @lastUpdate 20/02/2024 18:55
  */
 
 namespace App\Controller\administration\stage;
@@ -17,9 +17,9 @@ use App\Entity\StageEtudiant;
 use App\Entity\StagePeriode;
 use App\Repository\StageEtudiantRepository;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
-use function array_key_exists;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
+use function array_key_exists;
 
 /**
  * Class StageEntrepriseController.

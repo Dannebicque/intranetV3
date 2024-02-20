@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/administration/QuestionnaireResultatController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/01/2024 08:53
+ * @lastUpdate 16/02/2024 22:17
  */
 
 namespace App\Controller\questionnaire\administration;
@@ -21,7 +21,7 @@ use App\Entity\QuestQuestionnaire;
 use App\Repository\QuestChoixRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/{type}/questionnaire/qualite/resultats', name: 'adm_questionnaire_qualite_resultats_', requirements: ['type' => 'administratif|administration'], defaults: ['type' => 'administratif'])]
 class QuestionnaireResultatController extends BaseController

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/ImportDiplomeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/07/2022 10:00
+ * @lastUpdate 16/02/2024 22:17
  */
 
 namespace App\Controller\superAdministration;
@@ -17,7 +17,7 @@ use App\Entity\Diplome;
 use App\Repository\PpnRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route(path: '/administratif/diplome-import')]
 class ImportDiplomeController extends BaseController

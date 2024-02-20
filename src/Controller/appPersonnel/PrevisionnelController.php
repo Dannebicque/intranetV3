@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/07/2023 12:29
+ * @lastUpdate 20/02/2024 18:55
  */
 
 namespace App\Controller\appPersonnel;
@@ -17,13 +17,9 @@ use App\Classes\ServiceRealise\ServiceRealiseCelcat;
 use App\Classes\ServiceRealise\ServiceRealiseIntranet;
 use App\Controller\BaseController;
 use App\Exception\DepartementNotFoundException;
-use App\Repository\ApcRessourceRepository;
-use App\Repository\MatiereRepository;
-use App\Repository\PrevisionnelRepository;
-use App\Utils\Tools;
 use App\Utils\ToolsMatiere;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Class PrevisionnelController.

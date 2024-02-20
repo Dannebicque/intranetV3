@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/BaseController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 16/02/2024 22:02
  */
 
 namespace App\Controller;
@@ -17,8 +17,8 @@ use App\Entity\Departement;
 use App\Entity\Etudiant;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
-use DavidAnnebicque\TableBundle\DTO\Table;
-use DavidAnnebicque\TableBundle\TableFactory;
+use Dannebicque\TableBundle\DTO\Table;
+use Dannebicque\TableBundle\TableFactory;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

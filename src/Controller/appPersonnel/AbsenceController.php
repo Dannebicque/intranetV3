@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/12/2022 12:09
+ * @lastUpdate 17/02/2024 06:42
  */
 
 namespace App\Controller\appPersonnel;
@@ -30,7 +30,7 @@ use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/application/personnel/absence')]
@@ -78,12 +78,12 @@ class AbsenceController extends BaseController
         EdtManager $edtManager,
         MyGroupes $myGroupes,
         int $event,
+        Semestre $semestre,
         string $source = EdtManager::EDT_INTRANET,
-        Semestre $semestre
     ): Response {
-        if ($semestre->getDiplome()->isApc()) {
+        if ($semestre->getDiplome()?->isApc()) {
             $groupes = $groupeRepository->findByDiplomeAndOrdreSemestre($semestre->getDiplome(), $semestre->getOrdreLmd());
-            $matieres = $typeMatiereManager->findBySemestreAndReferentiel($semestre, $semestre->getDiplome()->getReferentiel());
+            $matieres = $typeMatiereManager->findBySemestreAndReferentiel($semestre, $semestre->getDiplome()?->getReferentiel());
         } else {
             $groupes = $groupeRepository->findBySemestre($semestre);
             $matieres = $typeMatiereManager->findBySemestreArray($semestre);

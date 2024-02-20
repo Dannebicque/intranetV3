@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/administration/QualiteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/12/2022 17:04
+ * @lastUpdate 16/02/2024 22:17
  */
 
 namespace App\Controller\questionnaire\administration;
@@ -20,7 +20,7 @@ use App\Entity\QuestQuestionnaire;
 use App\Table\QualiteTableType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 /** todo: sujet du mail : titre de l'évaluation. Envoi du mail (manuel) ou automatique à l'heure d'ouverture si possible ? */
 #[Route('/{type}/qualite', requirements: ['type' => 'administratif|administration'], defaults: ['type' => 'administratif'])]

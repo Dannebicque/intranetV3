@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcParcoursNiveauController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/11/2023 11:49
+ * @lastUpdate 16/02/2024 22:17
  */
 
 namespace App\Controller\administration\apc;
@@ -17,7 +17,7 @@ use App\Entity\Diplome;
 use App\Repository\ApcComptenceRepository;
 use App\Repository\ApcParcoursNiveauRepository;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route(path: '/apc/parcours/niveau', name: 'administration_')]
 class ApcParcoursNiveauController extends BaseController

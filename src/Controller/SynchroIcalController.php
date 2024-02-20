@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/SynchroIcalController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/09/2022 09:23
+ * @lastUpdate 16/02/2024 22:17
  */
 
 namespace App\Controller;
@@ -16,7 +16,7 @@ use Carbon\Carbon;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Class EdtController.
@@ -36,10 +36,20 @@ class SynchroIcalController extends AbstractController
             $ical = $myEdtExport->export($personnel, $_format, 'Personnel', $personnel->getAnneeUniversitaire());
             $timestamp = Carbon::now();
 
-            return new Response($ical, Response::HTTP_OK, [
-                'Content-Type' => 'text/calendar; charset=utf-8',
-                'Content-Disposition' => 'inline; filename="ical'.$timestamp->format('YmdHis').'.ics"',
-            ]);
+            if ($_format === 'ics') {
+
+                return new Response($ical, Response::HTTP_OK, [
+                    'Content-Type' => 'text/calendar; charset=utf-8',
+                    'Content-Disposition' => 'inline; filename="ical' . $timestamp->format('YmdHis') . '.ics"',
+                ]);
+            }
+
+            if ($_format === 'json') {
+                return new Response($ical, Response::HTTP_OK, [
+                    'Content-Type' => 'application/json; charset=utf-8',
+                    'Content-Disposition' => 'inline; filename="ical' . $timestamp->format('YmdHis') . '.json"',
+                ]);
+            }
         }
 
         return new Response(null, Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -49,7 +59,7 @@ class SynchroIcalController extends AbstractController
      * @throws NonUniqueResultException
      */
     #[Route(path: '/etudiant/{code}.{_format}', name: 'edt_etudiant_synchro_ical')]
-    public function synchroEtudiantIcal(MyEdtExport $myEdtExport, EtudiantRepository $etudiantRepository, string $code,string  $_format): Response
+    public function synchroEtudiantIcal(MyEdtExport $myEdtExport, EtudiantRepository $etudiantRepository, string $code, string $_format): Response
     {
         $etudiant = $etudiantRepository->findByCode($code);
         if (null !== $etudiant && null !== $etudiant->getAnneeUniversitaire()) {
@@ -58,7 +68,7 @@ class SynchroIcalController extends AbstractController
 
             return new Response($ical, Response::HTTP_OK, [
                 'Content-Type' => 'text/calendar; charset=utf-8',
-                'Content-Disposition' => 'inline; filename="ical'.$timestamp->format('YmdHis').'.ics"',
+                'Content-Disposition' => 'inline; filename="ical' . $timestamp->format('YmdHis') . '.ics"',
             ]);
         }
 

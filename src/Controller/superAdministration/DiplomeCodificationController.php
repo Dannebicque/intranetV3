@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/DiplomeCodificationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/08/2022 17:48
+ * @lastUpdate 16/02/2024 22:17
  */
 
 namespace App\Controller\superAdministration;
@@ -13,7 +13,7 @@ use App\Controller\BaseController;
 use App\Entity\Diplome;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route(path: '/administratif/structure/diplome/codification', name: 'sa_diplome_codification_')]
 class DiplomeCodificationController extends BaseController

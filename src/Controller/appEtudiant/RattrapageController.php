@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/RattrapageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/01/2024 17:39
+ * @lastUpdate 16/02/2024 22:17
  */
 
 namespace App\Controller\appEtudiant;
@@ -19,7 +19,7 @@ use App\Utils\ToolsMatiere;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 #[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_ETUDIANT')]

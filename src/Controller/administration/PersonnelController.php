@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/PersonnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/09/2022 09:11
+ * @lastUpdate 20/02/2024 18:55
  */
 
 namespace App\Controller\administration;
@@ -19,11 +19,11 @@ use App\Form\PersonnelType;
 use App\Repository\PersonnelDepartementRepository;
 use App\Repository\PersonnelRepository;
 use App\Table\PersonnelDepartementTableType;
-use function count;
-use function in_array;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
+use function count;
+use function in_array;
 
 #[Route('/administration/personnel', name: 'administration_personnel_')]
 class PersonnelController extends BaseController

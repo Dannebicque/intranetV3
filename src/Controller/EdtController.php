@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/11/2022 21:05
+ * @lastUpdate 20/02/2024 18:55
  */
 
 namespace App\Controller;
@@ -29,7 +29,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -42,12 +42,13 @@ use Twig\Error\SyntaxError;
 class EdtController extends BaseController
 {
     public function __construct(
-        private readonly Calendrier $calendrier,
-        private readonly EdtManager $edtManager,
+        private readonly Calendrier    $calendrier,
+        private readonly EdtManager    $edtManager,
         private readonly TypeMatiereManager $typeMatiereManager,
         private readonly MyEdtIntranet $myEdtIntranet,
-        private readonly MyEdtCelcat $myEdtCelcat
-    ) {
+        private readonly MyEdtCelcat   $myEdtCelcat
+    )
+    {
     }
 
     /**
@@ -55,7 +56,8 @@ class EdtController extends BaseController
      */
     public function dashboardPersonnel(
         int $semaine = 0
-    ): Response {
+    ): Response
+    {
         return $this->render('edt/_intervenant2.html.twig', [
             'filtre' => 'prof',
             'semaine' => $semaine,
@@ -64,14 +66,68 @@ class EdtController extends BaseController
         ]);
     }
 
+    #[Route(path: '/ajax/edt-personnel.json', name: 'edt_personnel_json')]
+    public function edtPersonnelJson(
+        EdtManager                 $edtManager,
+        AbsenceEtatAppelRepository $absenceEtatAppelRepository,
+        AbsenceRepository          $absenceRepository,
+        Request                    $request,
+    ): Response
+    {
+        $semaine = 0;
+        $filtre = 'prof';
+        $valeur = $this->getUser()->getId();
+
+        $source = null !== $this->getDepartement() && $this->getDepartement()->isOptUpdateCelcat() ? 'celcat' : 'intranet';
+        $calendrier = $this->calendrier->calculSemaine($semaine, $this->getAnneeUniversitaire());
+        $matieres = $this->typeMatiereManager->findByDepartementArray($this->getDepartement());
+        $edt = $edtManager->initPersonnel($source, $calendrier, $this->getUser(),
+            $this->getAnneeUniversitaire(), $matieres);
+        // récupération des absences ou des marquages de "pas d'absence"
+        $suiviAppel[] = $absenceEtatAppelRepository->findBySemaineAndUserArray($calendrier->semaineFormationLundi,
+            $this->getUser());
+        $suiviAppel[] = $absenceRepository->findBySemaineAndUserArray($calendrier->semaineFormationLundi,
+            $this->getUser());
+        $suiviAppel = array_merge_recursive(...$suiviAppel);
+
+        $tJsonEdt = [];
+
+        foreach ($edt as $ed) {
+            foreach ($ed as $e) {
+                $tJsonEdt[] = [
+                    'id' => $e->id,
+                    'title' => $e->matiere,
+                    'start' => $e->dateObjet->format('Y-m-d') . ' ' . $e->heureDebut->format('H:i:s'),
+                    'end' => $e->dateObjet->format('Y-m-d') . ' ' . $e->heureFin->format('H:i:s'),
+                    'backgroundColor' => $e->couleur,
+                    // 'description' => $e->texteEvt(),
+                ];
+            }
+        }
+
+        return $this->json($tJsonEdt);
+
+//        return $this->render('edt/_edt_intervenant.html.twig', [
+//            'edt' => $edt,
+//            'filtre' => $filtre,
+//            'calendrier' => $calendrier,
+//            'semaine' => $semaine,
+//            'valeur' => $valeur,
+//            'tabHeures' => Constantes::TAB_HEURES_EDT_2,
+//            'suiviAppel' => $suiviAppel,
+//            'source' => 'intranet',
+//        ]);
+    }
+
     #[Route(path: '/ajax/edt-personnel', name: 'edt_personnel_ajax')]
     public function edtPersonnel(
-        EdtManager $edtManager,
+        EdtManager        $edtManager,
         AbsenceEtatAppelRepository $absenceEtatAppelRepository,
         AbsenceRepository $absenceRepository,
-        Request $request,
-    ): Response {
-        $semaine = (int) $request->query->get('semaine');
+        Request           $request,
+    ): Response
+    {
+        $semaine = (int)$request->query->get('semaine');
         $filtre = $request->query->get('filtre');
         $valeur = $request->query->get('valeur');
 
@@ -100,11 +156,12 @@ class EdtController extends BaseController
     }
 
     public function navPersonnel(
-        string $filtre,
-        string $valeur,
+        string    $filtre,
+        string    $valeur,
         Calendrier $calendrier,
         ?Semestre $semestre = null
-    ): Response {
+    ): Response
+    {
         return $this->render('edt/_navPersonnel.html.twig', [
             'filtre' => $filtre,
             'valeur' => $valeur,
@@ -115,11 +172,12 @@ class EdtController extends BaseController
 
     #[Route(path: '/ajax/edt-personnel-semestre', name: 'edt_personnel_semestre_ajax')]
     public function personnelSemestre(
-        Request $request,
+        Request          $request,
         GroupeRepository $groupeRepository,
         SemestreRepository $semestreRepository,
-    ): Response {
-        $semaine = (int) $request->query->get('semaine');
+    ): Response
+    {
+        $semaine = (int)$request->query->get('semaine');
         $valeur = $request->query->get('valeur');
         $semestre = $semestreRepository->find($valeur);
 
@@ -252,9 +310,9 @@ class EdtController extends BaseController
     public function exportEtudiantSemaine(MyPDF $myPDF, int $semaine = 0): RedirectResponse|StreamedResponse|PdfResponse
     {
         if (0 === $semaine) {
-            $semaine = (int) date('W');
+            $semaine = (int)date('W');
         }
-        if ($semaine !== (int) date('W') && $semaine !== ((int) date('W') + 1)) {
+        if ($semaine !== (int)date('W') && $semaine !== ((int)date('W') + 1)) {
             return $this->redirectToRoute('erreur_666');
         }
         if (null !== $this->getUser()->getDiplome() && $this->getUser()->getDiplome()->isOptUpdateCelcat()) {
@@ -286,9 +344,10 @@ class EdtController extends BaseController
     public function detailEvent(
         MyEdtIntranet $myEdt,
         EdtPlanningRepository $edtPlanningRepository,
-        $event,
-        $type
-    ): ?Response {
+                      $event,
+                      $type
+    ): ?Response
+    {
         if ('planning' === $type) {
             $pl = $edtPlanningRepository->find($event);
 
