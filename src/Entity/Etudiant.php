@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Etudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 23:15
+ * @lastUpdate 20/02/2024 18:46
  */
 
 namespace App\Entity;
@@ -78,18 +78,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
      */
     #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: Rattrapage::class)]
     private Collection $rattrapages;
-
-    /**
-     * @var Collection<int, Favori>
-     */
-    #[ORM\OneToMany(mappedBy: 'etudiantDemandeur', targetEntity: Favori::class)]
-    private Collection $etudiantDemande;
-
-    /**
-     * @var Collection<int, Favori>
-     */
-    #[ORM\OneToMany(mappedBy: 'etudiantDemande', targetEntity: Favori::class)]
-    private Collection $etudiantDemandeur;
 
     /**
      * @var Collection<int, Scolarite>
@@ -370,68 +358,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
             // set the owning side to null (unless already changed)
             if ($rattrapage->getEtudiant() === $this) {
                 $rattrapage->setEtudiant(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Favori[]
-     */
-    public function getEtudiantDemande(): Collection
-    {
-        return $this->etudiantDemande;
-    }
-
-    public function addEtudiantDemande(Favori $etudiantDemande): self
-    {
-        if (!$this->etudiantDemande->contains($etudiantDemande)) {
-            $this->etudiantDemande[] = $etudiantDemande;
-            $etudiantDemande->setEtudiantDemandeur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEtudiantDemande(Favori $etudiantDemande): self
-    {
-        if ($this->etudiantDemande->contains($etudiantDemande)) {
-            $this->etudiantDemande->removeElement($etudiantDemande);
-            // set the owning side to null (unless already changed)
-            if ($etudiantDemande->getEtudiantDemandeur() === $this) {
-                $etudiantDemande->setEtudiantDemandeur(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Favori[]
-     */
-    public function getEtudiantDemandeur(): Collection
-    {
-        return $this->etudiantDemandeur;
-    }
-
-    public function addEtudiantDemandeur(Favori $etudiantDemandeur): self
-    {
-        if (!$this->etudiantDemandeur->contains($etudiantDemandeur)) {
-            $this->etudiantDemandeur[] = $etudiantDemandeur;
-            $etudiantDemandeur->setEtudiantDemande($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEtudiantDemandeur(Favori $etudiantDemandeur): self
-    {
-        if ($this->etudiantDemandeur->contains($etudiantDemandeur)) {
-            $this->etudiantDemandeur->removeElement($etudiantDemandeur);
-            // set the owning side to null (unless already changed)
-            if ($etudiantDemandeur->getEtudiantDemande() === $this) {
-                $etudiantDemandeur->setEtudiantDemande(null);
             }
         }
 
