@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Section/Section.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/01/2023 18:08
+ * @lastUpdate 16/02/2024 22:43
  */
 
 namespace App\Components\Questionnaire\Section;
@@ -74,7 +74,7 @@ class Section extends AbstractSection
         $this->questions->addQuestion($question);
     }
 
-    public function calculResultatsQuestions(array $options = [], ListeChoix $listeChoix): void
+    public function calculResultatsQuestions(array $options, ListeChoix $listeChoix): void
     {
         foreach ($this->section->questions as $question) {
             $questionnaireQuestionAdapter = new QuestionnaireQuestionAdapter($this->questionnaireRegistry,
