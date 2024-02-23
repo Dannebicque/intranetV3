@@ -1,29 +1,40 @@
-// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/adm.alternances.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/07/2022 13:30
+// @lastUpdate 23/02/2024 18:48
 import $ from 'jquery'
 import Swal from 'sweetalert2'
-import { addCallout } from '../util'
 import Routing from 'fos-router'
+import { addCallout } from '../util'
+import { get } from '../fetch'
 
-$(document).on('change', '.tuteurUniversitaireAlternance', function (e) {
-  e.preventDefault()
-  e.stopPropagation()
-  $.ajax({
-    url: Routing.generate('administration_alternance_update_tuteur_universitaire', {
-      alternance: $(this).data('alternance'),
-      personnel: $(this).val(),
-    }),
-    success() {
-      addCallout('Tuteur universitaire enregistré !', 'success')
-    },
-    error() {
-      addCallout('Une erreur est survenue !', 'danger')
-    },
-  })
-})
+document.querySelectorAll('.tuteurUniversitaireAlternance').forEach((element) => {
+  element.addEventListener('change', function (e) {
+    e.preventDefault()
+    e.stopPropagation()
+
+    const alternance = this.getAttribute('data-alternance')
+    const personnel = this.value
+
+    const url = Routing.generate('administration_alternance_update_tuteur_universitaire', {
+      alternance,
+      personnel,
+    })
+
+    get(url)
+      .then((response) => {
+        if (!response.ok) throw new Error(`HTTP error ${response.status}`)
+        return response.text()
+      })
+      .then(() => {
+        addCallout('Tuteur universitaire enregistré !', 'success')
+      })
+      .catch(() => {
+        addCallout('Une erreur est survenue !', 'danger')
+      })
+  });
+});
 
 $(document).on('click', '.initAllAlternance', function (e) {
   e.preventDefault()

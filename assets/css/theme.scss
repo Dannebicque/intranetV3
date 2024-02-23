@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/theme.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 15/02/2024 19:49
+// @lastUpdate 23/02/2024 18:48
 /* @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme.css */
 /* @author davidannebicque */
 /* @project intranetV3 */
@@ -10272,7 +10272,7 @@ body .topbar-secondary + main {
 }
 
 body {
-    background-color: var(--body);
+  background-color: var(--body) !important;
     color: var(--police);
 }
 
