@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/02/2024 12:08
+ * @lastUpdate 23/02/2024 18:29
  */
 
 namespace App\Classes\SousCommission;
@@ -916,7 +916,7 @@ class SousCommissionExport
             ++$colonne;
         }
 
-        $tsem = [];
+        $tsem = []; //todo: a finaliser
 
         foreach ($semestre->getSemestreLienDepart() as $se) {
             if ($se->getSens() === SemestreLienEnum::PRECEDENT) {

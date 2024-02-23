@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyEvaluation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/06/2023 14:38
+ * @lastUpdate 23/02/2024 18:39
  */
 
 /*
@@ -385,7 +385,7 @@ class MyEvaluation
             // on récupère l'en-tête
             $phrase = fgetcsv($handle, 1024, ';');
 
-            if (in_array('num_etudiant', $phrase, false) && in_array('note', $phrase, false)) {
+            if (in_array('num_etudiant', $phrase, true) && in_array('note', $phrase, true)) {
                 // on vérifie que les clés existent.
                 foreach ($phrase as $key) {
                     $ordre[] = $key;

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/02/2024 18:58
+ * @lastUpdate 23/02/2024 18:43
  */
 
 /*
@@ -125,7 +125,7 @@ class MyEdtExport
         foreach ($edt as $pl) {
             if (null !== $pl['date']) {
                 $temp['id'] = $pl['id'];
-                $temp['start'] = $this->myIcal->getDtstartJson($pl['date'], $pl['debut']);;
+                $temp['start'] = $this->myIcal->getDtstartJson($pl['date'], $pl['debut']);
                 $temp['end'] = $this->myIcal->getDtendJson($pl['date'], $pl['fin']);
                 $temp['description'] = $pl['commentaire'];
                 $temp['title'] = $pl['ical']; // soit typeIdMatiere si Intranet, sinon OK pour Celcat...

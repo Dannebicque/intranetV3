@@ -1,28 +1,28 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/ScolariteDiplomesTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 23/02/2024 18:43
  */
 
 namespace App\Table;
 
-use DavidAnnebicque\TableBundle\Adapter\EntityAdapter;
-use DavidAnnebicque\TableBundle\Column\BooleanColumnType;
-use DavidAnnebicque\TableBundle\Column\EntityColumnType;
-use DavidAnnebicque\TableBundle\Column\PropertyColumnType;
-use DavidAnnebicque\TableBundle\Column\WidgetColumnType;
-use DavidAnnebicque\TableBundle\DTO\Table;
-use DavidAnnebicque\TableBundle\TableBuilder;
-use DavidAnnebicque\TableBundle\TableType;
-use DavidAnnebicque\TableBundle\Widget\Type\RowShowLinkType;
-use DavidAnnebicque\TableBundle\Widget\WidgetBuilder;
 use App\Entity\Diplome;
 use App\Form\Type\DiplomeEntityType;
 use App\Form\Type\SearchType;
 use App\Form\Type\TypeDiplomeEntityType;
+use Dannebicque\TableBundle\Adapter\EntityAdapter;
+use Dannebicque\TableBundle\Column\BooleanColumnType;
+use Dannebicque\TableBundle\Column\EntityColumnType;
+use Dannebicque\TableBundle\Column\PropertyColumnType;
+use Dannebicque\TableBundle\Column\WidgetColumnType;
+use Dannebicque\TableBundle\DTO\Table;
+use Dannebicque\TableBundle\TableBuilder;
+use Dannebicque\TableBundle\TableType;
+use Dannebicque\TableBundle\Widget\Type\RowShowLinkType;
+use Dannebicque\TableBundle\Widget\WidgetBuilder;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 

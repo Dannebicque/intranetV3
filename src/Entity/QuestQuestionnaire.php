@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/QuestQuestionnaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/08/2023 17:01
+ * @lastUpdate 23/02/2024 18:39
  */
 
 namespace App\Entity;
@@ -275,6 +275,8 @@ class QuestQuestionnaire extends BaseEntity
         if ($this->typeDestinataire === Exterieur::class) {
             return 'exterieur';
         }
+
+        return 'inconnu';
     }
 
     public function isEnvoye(): ?bool

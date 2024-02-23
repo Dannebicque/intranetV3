@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/MccRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/12/2022 12:43
+ * @lastUpdate 23/02/2024 18:43
  */
 
 namespace App\Repository;
@@ -52,11 +52,13 @@ class MccRepository extends ServiceEntityRepository
     public function findByMatiereAndAnneeUniversitaire(
         Matiere $matiere,
         AnneeUniversitaire $getAnneeUniversitaire
-    ) {
+    ): array
+    {
         return $this->createQueryBuilder('mcc')
-            ->where('mcc.typeMatiere = :typeMatiere')
+            ->join('mcc.typeEpreuve', 'te')
+            ->where('te.anneeUniversitaire = :anneeUniversitaire')
+            ->andWhere('mcc.typeMatiere = :typeMatiere')
             ->andWhere('mcc.idMatiere = :idMatiere')
-            ->andWhere('mcc.anneeUniversitaire = :anneeUniversitaire')
             ->setParameter('typeMatiere', $matiere->typeMatiere)
             ->setParameter('idMatiere', $matiere->id)
             ->setParameter('anneeUniversitaire', $getAnneeUniversitaire->getId())
@@ -77,7 +79,7 @@ class MccRepository extends ServiceEntityRepository
                 $t[$q->getTypeIdMatiere()]['pourcentage'] = 0;
             }
 
-            $t[$q->getTypeIdMatiere()]['nbNotes']++;
+            ++$t[$q->getTypeIdMatiere()]['nbNotes'];
             $t[$q->getTypeIdMatiere()]['pourcentage'] += $q->getCoefficient();
         }
 
@@ -95,15 +97,13 @@ class MccRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param \App\Entity\AnneeUniversitaire $anneeUniversitaire
-     * @param array                          $matieres
-     *
      * @return float|int|mixed|string
      */
     private function getMccBySemestre(AnneeUniversitaire $anneeUniversitaire, array $matieres): mixed
     {
         $query = $this->createQueryBuilder('mcc')
-            ->where('mcc.anneeUniversitaire = :anneeUniversitaire')
+            ->join('mcc.typeEpreuve', 'te')
+            ->where('te.anneeUniversitaire = :anneeUniversitaire')
             ->setParameter('anneeUniversitaire', $anneeUniversitaire->getId());
 
         $query->andWhere(implode(' OR ', $this->getOrs($matieres, $query)));

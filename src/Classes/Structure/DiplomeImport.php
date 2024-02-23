@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Structure/DiplomeImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/08/2022 14:57
+ * @lastUpdate 23/02/2024 18:39
  */
 
 namespace App\Classes\Structure;
@@ -34,7 +34,6 @@ use App\Entity\Ue;
 use App\Repository\TypeDiplomeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use RuntimeException;
-use SimpleXMLElement;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
 class DiplomeImport

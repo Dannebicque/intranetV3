@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/CreateEnseignant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/02/2024 17:28
+ * @lastUpdate 23/02/2024 18:43
  */
 
 namespace App\Classes\EduSign;
@@ -21,7 +21,7 @@ class CreateEnseignant
 
     public function __construct(
         private readonly ApiEduSign $apiEduSign,
-        protected PersonnelRepository $personnelRepository,)
+        protected PersonnelRepository $personnelRepository)
     {
     }
 

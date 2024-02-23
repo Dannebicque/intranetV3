@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Structure/DiplomeExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/08/2022 17:24
+ * @lastUpdate 23/02/2024 18:39
  */
 
 namespace App\Classes\Structure;
@@ -35,8 +35,7 @@ class DiplomeExport
             ]);
             $name = 'but-'.$diplome->getSigle();
         } else {
-            $xmlContent = $this->twig->render('xml/export-referentiel.xml.twig', [
-            ]);
+            $xmlContent = $this->twig->render('xml/export-referentiel.xml.twig');
             $name = 'structure-'.$diplome->getSigle();
         }
 
@@ -65,8 +64,7 @@ class DiplomeExport
             ]);
             $name = 'but-pn-'.$diplome->getSigle();
         } else {
-            $xmlContent = $this->twig->render('xml/export-programme.xml.twig', [
-            ]);
+            $xmlContent = $this->twig->render('xml/export-programme.xml.twig');
             $name = 'ppn-'.$diplome->getSigle();
         }
 

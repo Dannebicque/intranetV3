@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Groupes/GenereGroupes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2022 15:35
+ * @lastUpdate 23/02/2024 18:43
  */
 
 namespace App\Classes\Groupes;
@@ -59,10 +59,9 @@ class GenereGroupes
             $tds[$i] = $this->genereTd($cms, $i);
         }
 
-        $tps = [];
         for ($i = 1; $i <= $nbTp; $i = $i+2) {
-            $tps[$i] = $this->genereTp($tds, $i);
-            $tps[$i+1] = $this->genereTp($tds, $i+1);
+            $this->genereTp($tds, $i);
+            $this->genereTp($tds, $i + 1);
         }
 
         $this->entityManager->flush();
@@ -90,9 +89,7 @@ class GenereGroupes
         $codeApogee = 'R'.substr($this->diplome->getSigle(), 0, 2).$this->semestre->getOrdreLmd().'TD'.$ordre;
         $td->setTypeGroupe($this->tgTd);
         $td->setLibelle($code);
-        //$td->setLibelle($this->genereCodeTd($ordre));
         $td->setOrdre($ordre);
-        //$td->setCodeApogee($this->semestre->getCodeElement().'TD0'.$ordre);
         $td->setCodeApogee($codeApogee);
         $td->setParent($cm);
         $this->entityManager->persist($td);
@@ -104,7 +101,6 @@ class GenereGroupes
     {
         $idTd = (int) ($ordre - floor($ordre / 2));
 
-        //$libelle = $this->genereCodeTp($idTd, $ordre);
         if (0 === $ordre % 2) {
             $ordreTp = 'B';
         } else {

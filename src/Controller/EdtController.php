@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/02/2024 18:55
+ * @lastUpdate 23/02/2024 18:39
  */
 
 namespace App\Controller;
@@ -242,8 +242,7 @@ class EdtController extends BaseController
             ]);
         }
 
-        return $this->render('edt/_error.html.twig', [
-        ]);
+        return $this->render('edt/_error.html.twig');
     }
 
     #[Route(path: '/intervenant/export/semaine/{semaine}', name: 'edt_intervenant_export_semaine_courante')]

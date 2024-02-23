@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/EdtManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/02/2024 17:43
+ * @lastUpdate 23/02/2024 18:43
  */
 
 namespace App\Classes\Edt;
@@ -34,20 +34,22 @@ class EdtManager
 
     public function __construct(
         private readonly EdtIntranet $edtIntranet,
-        private readonly EdtCelcat $edtCelcat,
-        private SourceEdtRegistry $sourceEdtRegistry,
+        private readonly EdtCelcat   $edtCelcat,
+        private SourceEdtRegistry    $sourceEdtRegistry,
         private EdtPlanningRepository $edtPlanningRepository,
-        private EdtCelcatRepository $edtCelcatRepository,
-    ) {
+        private EdtCelcatRepository  $edtCelcatRepository,
+    )
+    {
         $this->tabSources = $this->sourceEdtRegistry->getSourcesEdt();
     }
 
     public function getPlanningSemestre(
         Semestre $semestre,
-        array $matieres,
+        array    $matieres,
         AnneeUniversitaire $anneeUniversitaire,
-        array $groupes
-    ): ?EvenementEdtCollection {
+        array    $groupes
+    ): ?EvenementEdtCollection
+    {
         switch ($this->getSourceEdt($semestre)) {
             case self::EDT_CELCAT:
                 $this->source = self::EDT_CELCAT;
@@ -64,11 +66,12 @@ class EdtManager
 
     public function getPlanningSemestreSemaine(
         Semestre $semestre,
-        int $semaine,
+        int      $semaine,
         AnneeUniversitaire $anneeUniversitaire,
-        array $matieres,
-        array $groupes
-    ): ?EvenementEdtCollection {
+        array    $matieres,
+        array    $groupes
+    ): ?EvenementEdtCollection
+    {
         switch ($this->getSourceEdt($semestre)) {
             case self::EDT_CELCAT:
                 $this->source = self::EDT_CELCAT;
@@ -84,9 +87,10 @@ class EdtManager
     }
 
     public function getPlanningEduSign(Semestre $semestre,
-                                       array $matieres,
+                                       array    $matieres,
                                        AnneeUniversitaire $anneeUniversitaire,
-                                       array $groupes ) : ?EvenementEdtCollection {
+                                       array    $groupes): ?EvenementEdtCollection
+    {
         switch ($this->getSourceEdt($semestre)) {
             case self::EDT_CELCAT:
                 $this->source = self::EDT_CELCAT;
@@ -102,12 +106,13 @@ class EdtManager
     }
 
     public function initSemestre(
-        Semestre $semestre,
+        Semestre   $semestre,
         Calendrier $semaine,
         AnneeUniversitaire $anneeUniversitaire,
-        array $matieres = [],
-        array $groupes = [],
-    ): EvenementEdtCollection {
+        array      $matieres = [],
+        array      $groupes = [],
+    ): EvenementEdtCollection
+    {
         switch ($this->getSourceEdt($semestre)) {
             case self::EDT_CELCAT:
                 $this->source = self::EDT_CELCAT;
@@ -138,13 +143,14 @@ class EdtManager
     }
 
     public function recupereEDTBornes(
-        int $semaineFormation,
+        int      $semaineFormation,
         Semestre $semestre,
-        string $jourSemaine,
-        array $matieres,
+        string   $jourSemaine,
+        array    $matieres,
         array              $groupes,
         AnneeUniversitaire $anneeUniversitaire
-    ): EvenementEdtCollection {
+    ): EvenementEdtCollection
+    {
         return $this->getManager($this->getSourceEdt($semestre))?->recupereEdtJourBorne($semestre, $matieres,
             $jourSemaine, $semaineFormation, $groupes, $anneeUniversitaire);
     }
@@ -171,12 +177,13 @@ class EdtManager
     }
 
     public function initPersonnel(
-        string $source,
-        Calendrier $calendrier,
-        Personnel $user,
-        ?AnneeUniversitaire $anneeUniversitaire,
-        array $matieres,
-    ): array {
+        string             $source,
+        Calendrier         $calendrier,
+        Personnel          $user,
+        AnneeUniversitaire $anneeUniversitaire,
+        array              $matieres,
+    ): array
+    {
         switch ($source) {
             case self::EDT_CELCAT:
                 $this->source = self::EDT_CELCAT;
@@ -191,21 +198,18 @@ class EdtManager
         }
     }
 
-    public function transformeGroupe(Semestre $semestre, array $groupes)
+    public function transformeGroupe(Semestre $semestre, array $groupes): array
     {
+        $tGroupes = [];
         switch ($this->getSourceEdt($semestre)) {
             case self::EDT_CELCAT:
-                $tGroupes = [];
-
                 foreach ($groupes as $groupe) {
                     if ($groupe instanceof Groupe) {
                         $tGroupes[$groupe->getCodeApogee()] = $groupe;
                     }
                 }
-
-                return $tGroupes;
+                break;
             case self::EDT_INTRANET:
-                $tGroupes = [];
                 foreach ($groupes as $groupe) {
                     if ($groupe instanceof Groupe) {
                         if (TypeGroupeEnum::TYPE_GROUPE_TP === $groupe->getTypeGroupe()->getType()) {
@@ -213,23 +217,26 @@ class EdtManager
                         }
                     }
                 }
-
-                return $tGroupes;
+                break;
         }
+
+        return $tGroupes;
     }
 
-    public function transformeMatieres(Semestre $semestre, array $matieres)
+    public function transformeMatieres(Semestre $semestre, array $matieres): array
     {
+        $tMatieres = [];
+
         switch ($this->getSourceEdt($semestre)) {
             case self::EDT_CELCAT:
             case self::EDT_INTRANET:
-                $tMatieres = [];
                 foreach ($matieres as $matiere) {
                     $tMatieres[$matiere->getTypeIdMatiere()] = $matiere;
                 }
-
-                return $tMatieres;
+            break;
         }
+
+        return $tMatieres;
     }
 
     public function getCurrentEvent(UserInterface $user, AnneeUniversitaire $anneeUniversitaire): ?EvenementEdt

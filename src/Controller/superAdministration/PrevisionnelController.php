@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 23/02/2024 18:40
  */
 
 namespace App\Controller\superAdministration;
@@ -73,7 +73,7 @@ class PrevisionnelController extends BaseController
         $intervenant = $request->query->get('intervenant');
         $matiere = $request->query->get('matiere');
         $diplome = $request->query->get('diplome');
-        $departement = $request->query->get('departement', null);
+        $departement = $request->query->get('departement');
         $annee = (int)$request->query->get('annee');
         $personnel = $personnelRepository->find($intervenant);
 

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/AbsenceJustificatifTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/12/2023 16:51
+ * @lastUpdate 16/02/2024 22:10
  */
 
 namespace App\Table;
@@ -23,18 +23,18 @@ use App\Table\ColumnType\EtudiantColumnType;
 use App\Table\ColumnType\GroupeEtudiantColumnType;
 use App\Table\ColumnType\StatusBadgeEnumColumnType;
 use BackedEnum;
-use DavidAnnebicque\TableBundle\Adapter\EntityAdapter;
-use DavidAnnebicque\TableBundle\Column\CheckBoxColumnType;
-use DavidAnnebicque\TableBundle\Column\DateColumnType;
-use DavidAnnebicque\TableBundle\Column\PropertyColumnType;
-use DavidAnnebicque\TableBundle\Column\WidgetColumnType;
-use DavidAnnebicque\TableBundle\TableBuilder;
-use DavidAnnebicque\TableBundle\TableType;
-use DavidAnnebicque\TableBundle\Widget\Type\ButtonType;
-use DavidAnnebicque\TableBundle\Widget\Type\ExportDropdownType;
-use DavidAnnebicque\TableBundle\Widget\Type\RowDeleteLinkType;
-use DavidAnnebicque\TableBundle\Widget\Type\StimulusButtonModalType;
-use DavidAnnebicque\TableBundle\Widget\WidgetBuilder;
+use Dannebicque\TableBundle\Adapter\EntityAdapter;
+use Dannebicque\TableBundle\Column\CheckBoxColumnType;
+use Dannebicque\TableBundle\Column\DateColumnType;
+use Dannebicque\TableBundle\Column\PropertyColumnType;
+use Dannebicque\TableBundle\Column\WidgetColumnType;
+use Dannebicque\TableBundle\TableBuilder;
+use Dannebicque\TableBundle\TableType;
+use Dannebicque\TableBundle\Widget\Type\ButtonType;
+use Dannebicque\TableBundle\Widget\Type\ExportDropdownType;
+use Dannebicque\TableBundle\Widget\Type\RowDeleteLinkType;
+use Dannebicque\TableBundle\Widget\Type\StimulusButtonModalType;
+use Dannebicque\TableBundle\Widget\WidgetBuilder;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;

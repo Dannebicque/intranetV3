@@ -5,7 +5,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Twig/Components/SwitchOptionComponent.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/01/2024 18:01
+ * @lastUpdate 23/02/2024 18:16
  */
 
 namespace App\Twig\Components;
@@ -17,7 +17,7 @@ use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
-#[AsLiveComponent()]
+#[AsLiveComponent]
 final class SwitchOptionComponent
 {
     use DefaultActionTrait;

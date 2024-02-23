@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/api/unifolio/AnneeUniversitaireController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 23/02/2024 18:29
  */
 
 namespace App\Controller\api\unifolio;
@@ -17,7 +17,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class AnneeUniversitaireController extends BaseController
 {
     #[Route(path: '/api/unifolio/anneeUniversitaire/liste', name: 'api_anneeUniversitaire_liste')]
-    public function listeAnneeUniversitaire(
+    public function liste_annee_universitaire(
         Request $request,
         AnneeUniversitaire $anneeUniversitaire
     )

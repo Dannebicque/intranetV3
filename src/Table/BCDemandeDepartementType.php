@@ -1,29 +1,29 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/BCDemandeDepartementType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 23/02/2024 18:43
  */
 
 namespace App\Table;
 
-use DavidAnnebicque\TableBundle\Adapter\EntityAdapter;
-use DavidAnnebicque\TableBundle\Column\DateColumnType;
-use DavidAnnebicque\TableBundle\Column\PropertyColumnType;
-use DavidAnnebicque\TableBundle\Column\WidgetColumnType;
-use DavidAnnebicque\TableBundle\TableBuilder;
-use DavidAnnebicque\TableBundle\TableType;
-use DavidAnnebicque\TableBundle\Widget\Type\RowDeleteLinkType;
-use DavidAnnebicque\TableBundle\Widget\Type\RowDuplicateLinkType;
-use DavidAnnebicque\TableBundle\Widget\Type\RowEditLinkType;
-use DavidAnnebicque\TableBundle\Widget\Type\RowShowLinkType;
-use DavidAnnebicque\TableBundle\Widget\WidgetBuilder;
 use App\Entity\BCDemande;
 use App\Entity\Departement;
 use App\Form\Type\DatePickerType;
 use App\Form\Type\SearchType;
+use Dannebicque\TableBundle\Adapter\EntityAdapter;
+use Dannebicque\TableBundle\Column\DateColumnType;
+use Dannebicque\TableBundle\Column\PropertyColumnType;
+use Dannebicque\TableBundle\Column\WidgetColumnType;
+use Dannebicque\TableBundle\TableBuilder;
+use Dannebicque\TableBundle\TableType;
+use Dannebicque\TableBundle\Widget\Type\RowDeleteLinkType;
+use Dannebicque\TableBundle\Widget\Type\RowDuplicateLinkType;
+use Dannebicque\TableBundle\Widget\Type\RowEditLinkType;
+use Dannebicque\TableBundle\Widget\Type\RowShowLinkType;
+use Dannebicque\TableBundle\Widget\WidgetBuilder;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;

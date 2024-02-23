@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Groupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/07/2023 07:57
+ * @lastUpdate 16/02/2024 16:09
  */
 
 namespace App\Entity;
@@ -216,6 +216,7 @@ class Groupe extends BaseEntity implements GroupeInterface
 
     public function getDisplaySemestre(): string
     {
+        //todo: a revoir, plus de semestre dans le groupe. Ou est-ce utilisé ?
         if (null !== $this->getTypeGroupe() && null !== $this->getTypeGroupe()->getSemestre()) {
             return $this->getTypeGroupe()->getSemestre()->display().' | '.$this->getLibelle();
         }

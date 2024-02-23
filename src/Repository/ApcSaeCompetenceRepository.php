@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcSaeCompetenceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/12/2022 15:39
+ * @lastUpdate 23/02/2024 18:43
  */
 
 namespace App\Repository;
@@ -32,7 +32,7 @@ class ApcSaeCompetenceRepository extends ServiceEntityRepository
 
     public function findfBySemestre(Semestre $semestre): array
     {
-        $query = $this->createQueryBuilder('a')
+        return $this->createQueryBuilder('a')
             ->innerJoin(ApcSae::class, 'r', 'WITH', 'a.sae = r.id')
             ->innerJoin(ApcCompetence::class, 'c', 'WITH', 'a.competence = c.id')
             ->innerJoin('r.semestres', 's')
@@ -42,8 +42,6 @@ class ApcSaeCompetenceRepository extends ServiceEntityRepository
             ->setParameter('referentiel', $semestre->getDiplome()->getReferentiel())
             ->getQuery()
             ->getResult();
-
-        return $query;
     }
 
     public function findBySemestreArray(Semestre $semestre): array

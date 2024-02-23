@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/EtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 23/02/2024 18:39
  */
 
 namespace App\Controller\superAdministration;
@@ -32,7 +32,7 @@ class EtudiantController extends BaseController
     #[Route(path: '/', name: 'sa_etudiant_index')]
     public function index(): Response
     {
-        return $this->render('super-administration/etudiant/index.html.twig', []);
+        return $this->render('super-administration/etudiant/index.html.twig');
     }
 
     /**

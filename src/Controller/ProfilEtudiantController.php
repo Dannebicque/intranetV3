@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/ProfilEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 23/02/2024 18:40
  */
 
 namespace App\Controller;
@@ -301,8 +301,7 @@ class ProfilEtudiantController extends BaseController
             ]);
         }
 
-        return $this->render('user/composants/_semestre_vide.html.twig', [
-        ]);
+        return $this->render('user/composants/_semestre_vide.html.twig');
     }
 
     #[Route(path: '/profil/{slug}/stages', name: 'profil_etudiant_stages')]

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/MentionsController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 23/02/2024 18:39
  */
 
 namespace App\Controller;
@@ -22,14 +22,12 @@ class MentionsController extends AbstractController
     #[Route(path: '/', name: 'mentions_index')]
     public function index(): Response
     {
-        return $this->render('mentions/index.html.twig', [
-        ]);
+        return $this->render('mentions/index.html.twig');
     }
 
     #[Route(path: '/about', name: 'mentions_about')]
     public function about(): Response
     {
-        return $this->render('mentions/about.html.twig', [
-        ]);
+        return $this->render('mentions/about.html.twig');
     }
 }

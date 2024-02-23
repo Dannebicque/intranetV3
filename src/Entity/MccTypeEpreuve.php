@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/MccTypeEpreuve.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/12/2022 11:12
+ * @lastUpdate 23/02/2024 18:16
  */
 
 namespace App\Entity;
@@ -20,6 +20,10 @@ class MccTypeEpreuve extends BaseEntity
     #[ORM\Column(length: 255)]
     private ?string $libelle = null;
 
+
+    #[ORM\ManyToOne]
+    private ?AnneeUniversitaire $anneeUniversitaire = null;
+
     #[ORM\OneToMany(mappedBy: 'typeEpreuve', targetEntity: Mcc::class)]
     private Collection $mccs;
 
@@ -31,6 +35,17 @@ class MccTypeEpreuve extends BaseEntity
         $this->mccs = new ArrayCollection();
     }
 
+    public function getAnneeUniversitaire(): ?AnneeUniversitaire
+    {
+        return $this->anneeUniversitaire;
+    }
+
+    public function setAnneeUniversitaire(?AnneeUniversitaire $anneeUniversitaire): self
+    {
+        $this->anneeUniversitaire = $anneeUniversitaire;
+
+        return $this;
+    }
 
     public function getLibelle(): ?string
     {

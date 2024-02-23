@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 23/02/2024 18:40
  */
 
 namespace App\Controller\administration;
@@ -202,13 +202,11 @@ class PrevisionnelController extends BaseController
         }
 
         if ($type === 'synthese-personnel') {
-            return $this->render('previsionnel/administration/_synthesePersonnel.html.twig', [
-            ]);
+            return $this->render('previsionnel/administration/_synthesePersonnel.html.twig');
         }
 
         if ($type === 'actions') {
-            return $this->render('previsionnel/administration/_actions.html.twig', [
-            ]);
+            return $this->render('previsionnel/administration/_actions.html.twig');
         }
 
         return $this->render('_stepError.html.twig');
@@ -358,6 +356,7 @@ class PrevisionnelController extends BaseController
         TypeMatiereManager     $typeMatiereManager,
         Request                $request): Response
     {
+        //todo: reprendre et finaliser nouveau prévisionnel. Reporter sur affichage prof application
 //        $personnel = $personnelRepository->find($request->request->get('intervenant'));
 //        $matiere = $typeMatiereManager->getMatiereFromSelect($request->request->get('matiere'));
 //        $annee = $request->request->get('annee');

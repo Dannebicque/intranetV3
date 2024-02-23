@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Enquetes/MyEnqueteDiplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 31/08/2023 16:15
+ * @lastUpdate 23/02/2024 18:18
  */
 
 /*
@@ -29,10 +29,9 @@ class MyEnqueteDiplome
 {
     private array $etudiantsReponses;
     private readonly array $AllEtudiants;
+    private array $reponses;
 
-    /**
-     * MyEnqueteDiplome constructor.
-     */
+
     public function __construct(
         Configuration $configuration,
         private readonly RddDiplomeRepository $rddDiplomeRepository,
@@ -40,6 +39,7 @@ class MyEnqueteDiplome
         private readonly EtudiantRepository $etudiantRepository
     ) {
         $this->AllEtudiants = $this->rddDiplomeRepository->getEtudiantAvecQuestionnaire();
+        $this->reponses = [];
     }
 
     public function export(): StreamedResponse
@@ -218,23 +218,5 @@ class MyEnqueteDiplome
         $this->etudiantsReponses = $tEtudiant;
 
         return $this;
-    }
-
-    public function getQuestionnaire(): ?QuestionnaireQuizz
-    {
-        return $this->questionnaire;
-    }
-
-    public function getEtudiantsReponses(): array
-    {
-        return $this->etudiantsReponses;
-    }
-
-    /**
-     * @return \App\Entity\QuestionnaireEtudiant[]|int|mixed|string
-     */
-    public function getReponses(): mixed
-    {
-        return $this->reponses;
     }
 }

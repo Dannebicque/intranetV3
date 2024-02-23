@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/RhController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 23/02/2024 18:40
  */
 
 namespace App\Controller\superAdministration;
@@ -33,8 +33,7 @@ class RhController extends BaseController
     #[Route(path: '/', name: 'sa_rh_index')]
     public function index(Request $request): Response
     {
-        $table = $this->createTable(PersonnelTableType::class, [
-        ]);
+        $table = $this->createTable(PersonnelTableType::class);
         $table->handleRequest($request);
         if ($table->isCallback()) {
             return $table->getCallbackResponse();
@@ -69,12 +68,10 @@ class RhController extends BaseController
                 '(|(supannEmpId='.$username.')(uid='.$username.')(mail='.$username.')(sn='.$username.'))');
             $results = $query->execute();
 
-            return $this->render('super-administration/rh/liste-result.html.twig', [
-            ]);
+            return $this->render('super-administration/rh/liste-result.html.twig');
         }
 
-        return $this->render('super-administration/rh/import.html.twig', [
-        ]);
+        return $this->render('super-administration/rh/import.html.twig');
     }
 
     #[Route(path: '/{id}/edit', name: 'sa_rh_personnel_edit', options: ['expose' => true], methods: 'GET|POST')]

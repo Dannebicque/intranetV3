@@ -1,17 +1,16 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/AppelSuiviTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 23/02/2024 18:43
  */
 
 namespace App\Table;
 
 use App\Classes\Edt\EdtManager;
 use App\Classes\Matieres\TypeMatiereManager;
-use DavidAnnebicque\TableBundle\Widget\Type\ExportDropdownType;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Rattrapage;
 use App\Entity\Semestre;
@@ -20,12 +19,13 @@ use App\Form\Type\SearchType;
 use App\Repository\GroupeRepository;
 use App\Table\ColumnType\MatiereColumnType;
 use App\Table\ColumnType\StatusAppelFaitColumnType;
-use DavidAnnebicque\TableBundle\Column\DateColumnType;
-use DavidAnnebicque\TableBundle\Column\PropertyColumnType;
-use DavidAnnebicque\TableBundle\DTO\TableResult;
-use DavidAnnebicque\TableBundle\DTO\TableState;
-use DavidAnnebicque\TableBundle\TableBuilder;
-use DavidAnnebicque\TableBundle\TableType;
+use Dannebicque\TableBundle\Column\DateColumnType;
+use Dannebicque\TableBundle\Column\PropertyColumnType;
+use Dannebicque\TableBundle\DTO\TableResult;
+use Dannebicque\TableBundle\DTO\TableState;
+use Dannebicque\TableBundle\TableBuilder;
+use Dannebicque\TableBundle\TableType;
+use Dannebicque\TableBundle\Widget\Type\ExportDropdownType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 

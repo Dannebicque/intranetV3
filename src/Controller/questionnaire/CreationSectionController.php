@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/CreationSectionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 23/02/2024 18:32
  */
 
 namespace App\Controller\questionnaire;
@@ -201,6 +201,8 @@ class CreationSectionController extends BaseController
                     'allQuestions' => $allQuestions,
                 ]);
         }
+
+        return $this->json(false);
     }
 
     #[Route('/{section}/transition-question-update-liste/{question}', name: 'transition_question_update_liste')]

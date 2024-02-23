@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/mcc/administration/MccController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 23/02/2024 18:32
  */
 
 namespace App\Controller\mcc\administration;
@@ -125,6 +125,8 @@ class MccController extends BaseController
 
             return $this->json(true);
         }
+
+        return $this->json(false);
     }
 
     #[Route('/supprimer', name: 'suppr', methods: ['DELETE'])]

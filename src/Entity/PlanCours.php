@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/PlanCours.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/02/2024 14:11
+ * @lastUpdate 23/02/2024 18:16
  */
 
 namespace App\Entity;
@@ -33,7 +33,7 @@ abstract class PlanCours
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
-    #[ORM\Column()]
+    #[ORM\Column]
     protected ?int $id = null;
 
     #[ORM\ManyToOne(inversedBy: 'planCours')]

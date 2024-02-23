@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/BaseController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:02
+ * @lastUpdate 23/02/2024 18:39
  */
 
 namespace App\Controller;
@@ -152,11 +152,7 @@ class BaseController extends AbstractController
 
     protected function hasAccessOriginaux(): bool
     {
-        if (!$this->isEtudiant() && true == $this->getUser()->isAccessOriginaux()) {
-            return true;
-        }
-
-        return false;
+        return !$this->isEtudiant() && true === $this->getUser()->isAccessOriginaux();
     }
 
     protected function checkAccessApi(Request $request): void

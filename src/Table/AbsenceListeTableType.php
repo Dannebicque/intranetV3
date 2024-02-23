@@ -1,32 +1,32 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/AbsenceListeTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 23/02/2024 18:43
  */
 
 namespace App\Table;
 
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyAbsences;
-use DavidAnnebicque\TableBundle\Column\BadgeSeuilColumnType;
-use DavidAnnebicque\TableBundle\Column\PropertyColumnType;
-use DavidAnnebicque\TableBundle\Column\WidgetColumnType;
-use DavidAnnebicque\TableBundle\DTO\TableResult;
-use DavidAnnebicque\TableBundle\DTO\TableState;
-use DavidAnnebicque\TableBundle\TableBuilder;
-use DavidAnnebicque\TableBundle\TableType;
-use DavidAnnebicque\TableBundle\Widget\Type\ExportDropdownType;
-use DavidAnnebicque\TableBundle\Widget\Type\RowLinkType;
-use DavidAnnebicque\TableBundle\Widget\WidgetBuilder;
 use App\DTO\AbsencesEtudiant;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Semestre;
 use App\Form\Type\SearchType;
 use App\Table\ColumnType\EtudiantColumnType;
 use App\Table\ColumnType\GroupeEtudiantColumnType;
+use Dannebicque\TableBundle\Column\BadgeSeuilColumnType;
+use Dannebicque\TableBundle\Column\PropertyColumnType;
+use Dannebicque\TableBundle\Column\WidgetColumnType;
+use Dannebicque\TableBundle\DTO\TableResult;
+use Dannebicque\TableBundle\DTO\TableState;
+use DavidAnnebicque\TableBundle\TableBuilder;
+use DavidAnnebicque\TableBundle\TableType;
+use DavidAnnebicque\TableBundle\Widget\Type\ExportDropdownType;
+use DavidAnnebicque\TableBundle\Widget\Type\RowLinkType;
+use DavidAnnebicque\TableBundle\Widget\WidgetBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AbsenceListeTableType extends TableType

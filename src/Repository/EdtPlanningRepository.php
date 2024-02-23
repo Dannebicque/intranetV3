@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/10/2023 07:42
+ * @lastUpdate 23/02/2024 18:43
  */
 
 namespace App\Repository;
@@ -16,6 +16,7 @@ use App\Entity\Etudiant;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use App\Enums\TypeGroupeEnum;
+use Carbon\Carbon;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\Persistence\ManagerRegistry;
@@ -397,6 +398,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
             $pl['debut'] = $event->getDebut();
             $pl['date'] = $event->getDate();
             $pl['fin'] = $event->getFin();
+            $pl['couleur'] = $event->getSemestre()?->getAnnee()?->getCouleur();
             $pl['commentaire'] = $event->getCommentaire();
             if (null !== $matiere) {
                 $pl['ical'] = $matiere->libelle . ' (' . $matiere->codeMatiere . ') ' . $event->getDisplayGroupe();
@@ -510,6 +512,27 @@ class EdtPlanningRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('p')
             ->where('p.idEduSign IS NOT NULL')
             ->getQuery()
+            ->getResult();
+    }
+
+    public function findEdtProfNextEvent(?int $prof, AnneeUniversitaire $anneeUniversitaire)
+    {
+        $query = $this->createQueryBuilder('p')
+            ->where('p.intervenant = :idprof')
+            ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
+            ->andWhere('p.date >= :date')
+            ->setParameter('anneeUniversitaire', $anneeUniversitaire->getId())
+            ->setParameter('idprof', $prof)
+            ->setParameter('date', Carbon::now()->format('Y-m-d'));
+
+
+        $query->orderBy('p.semaine', Criteria::ASC)
+            ->addOrderBy('p.jour', Criteria::ASC)
+            ->addOrderBy('p.debut', Criteria::ASC)
+            ->addOrderBy('p.groupe', Criteria::ASC)
+            ->setMaxResults(1);
+
+        return $query->getQuery()
             ->getResult();
     }
 }

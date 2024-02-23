@@ -1,31 +1,31 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/PersonnelDepartementTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 23/02/2024 18:43
  */
 
 namespace App\Table;
 
-use DavidAnnebicque\TableBundle\Adapter\EntityAdapter;
-use DavidAnnebicque\TableBundle\Column\ColumnType;
-use DavidAnnebicque\TableBundle\Column\PropertyColumnType;
-use DavidAnnebicque\TableBundle\Column\WidgetColumnType;
-use DavidAnnebicque\TableBundle\TableBuilder;
-use DavidAnnebicque\TableBundle\TableType;
-use DavidAnnebicque\TableBundle\Widget\Type\ExportDropdownType;
-use DavidAnnebicque\TableBundle\Widget\Type\RowDeleteLinkType;
-use DavidAnnebicque\TableBundle\Widget\Type\RowEditLinkType;
-use DavidAnnebicque\TableBundle\Widget\Type\RowShowLinkType;
-use DavidAnnebicque\TableBundle\Widget\Type\StimulusButtonModalType;
-use DavidAnnebicque\TableBundle\Widget\WidgetBuilder;
 use App\Entity\Departement;
 use App\Entity\Personnel;
 use App\Entity\PersonnelDepartement;
 use App\Form\Type\SearchType;
 use App\Table\ColumnType\TypePersonnelColumnType;
+use Dannebicque\TableBundle\Adapter\EntityAdapter;
+use Dannebicque\TableBundle\Column\ColumnType;
+use Dannebicque\TableBundle\Column\PropertyColumnType;
+use Dannebicque\TableBundle\Column\WidgetColumnType;
+use Dannebicque\TableBundle\TableBuilder;
+use Dannebicque\TableBundle\TableType;
+use Dannebicque\TableBundle\Widget\Type\ExportDropdownType;
+use Dannebicque\TableBundle\Widget\Type\RowDeleteLinkType;
+use Dannebicque\TableBundle\Widget\Type\RowEditLinkType;
+use Dannebicque\TableBundle\Widget\Type\RowShowLinkType;
+use Dannebicque\TableBundle\Widget\Type\StimulusButtonModalType;
+use Dannebicque\TableBundle\Widget\WidgetBuilder;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\OptionsResolver\OptionsResolver;

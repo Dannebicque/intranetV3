@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/PlanCoursTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/02/2024 14:11
+ * @lastUpdate 16/02/2024 22:10
  */
 
 namespace App\Table;
@@ -15,11 +15,11 @@ use App\Entity\Semestre;
 use App\Enums\PlanCoursEnum;
 use App\Repository\SemestreRepository;
 use BackedEnum;
-use DavidAnnebicque\TableBundle\Column\PropertyColumnType;
-use DavidAnnebicque\TableBundle\DTO\TableResult;
-use DavidAnnebicque\TableBundle\DTO\TableState;
-use DavidAnnebicque\TableBundle\TableBuilder;
-use DavidAnnebicque\TableBundle\TableType;
+use Dannebicque\TableBundle\Column\PropertyColumnType;
+use Dannebicque\TableBundle\DTO\TableResult;
+use Dannebicque\TableBundle\DTO\TableState;
+use Dannebicque\TableBundle\TableBuilder;
+use Dannebicque\TableBundle\TableType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\OptionsResolver\OptionsResolver;

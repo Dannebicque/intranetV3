@@ -1,25 +1,19 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/PlanCours/Form/PlanCoursRessourceStep3Type.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/01/2023 13:20
+ * @lastUpdate 23/02/2024 18:43
  */
 
 namespace App\Components\PlanCours\Form;
 
 use App\Entity\PlanCoursRessource;
-use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class PlanCoursRessourceStep3Type extends PlanCoursStep3Type
 {
-    public function buildForm(FormBuilderInterface $builder, array $options): void
-    {
-        parent::buildForm($builder, $options);
-    }
-
     public function configureOptions(OptionsResolver $resolver): void
     {
         parent::configureOptions($resolver);

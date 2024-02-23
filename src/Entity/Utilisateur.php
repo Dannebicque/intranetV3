@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Utilisateur.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/05/2022 16:34
+ * @lastUpdate 23/02/2024 18:43
  */
 
 namespace App\Entity;
@@ -12,12 +12,12 @@ namespace App\Entity;
 use Carbon\CarbonInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use const JSON_THROW_ON_ERROR;
 use JsonException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use const JSON_THROW_ON_ERROR;
 
 #[Vich\Uploadable]
 #[ORM\MappedSuperclass]
@@ -404,5 +404,10 @@ abstract class Utilisateur implements UserInterface, PasswordAuthenticatedUserIn
     public function serialize(): string
     {
         return serialize($this->__serialize());
+    }
+
+    public function code(): string
+    {
+        return md5($this->getSlug());
     }
 }
