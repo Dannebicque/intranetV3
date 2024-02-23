@@ -1316,7 +1316,7 @@ help:
   ppn_semestre: 'messages'
   semestre_actif: 'messages'
   opt_rattrapage: 'Les étudiants peuvent déposer leurs demandes de rattrapage sur l''intranet'
-  opt_mail_rattrapage: 'Un email est envoyé au directeur des études en cas de demande de rattrapage'
+  opt_mail_rattrapage: 'Un email est envoyé à l''assistant(e) et à l''enseignant(e) en cas de demande de rattrapage'
 
 
 heure: Heure
@@ -2263,7 +2263,7 @@ table:
   semestre_actif: Semestre actif ?
   ppn_semestre: 'messages'
   opt_rattrapage: Module rattrapage activé
-  opt_mail_rattrapage: Envoi d'un mail au responsable du diplôme à chaque nouvelle demande de rattrapage
+  opt_mail_rattrapage: Envoi d'un mail à chaque nouvelle demande de rattrapage
 
 type_bac:
   g: 'Série générale'
