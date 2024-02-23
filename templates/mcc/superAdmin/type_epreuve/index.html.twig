@@ -18,15 +18,17 @@
             <table class="table table-striped table-bordered">
                 <thead>
                 <tr>
+                    <th>Année Universitaire</th>
                     <th>Libelle</th>
                     <th>Type Diplôme</th>
-                    <th>Actions</th>
+                    <th>&nbsp;</th>
                 </tr>
                 </thead>
-                </thead>
+                {# todo: bouton pour dupliquer les épreuves sur une année universitaire #}
                 <tbody>
                 {% for mcc_type_epreuve in mcc_type_epreuves %}
                     <tr id="ligne_{{ mcc_type_epreuve.id }}">
+                        <td>{{ mcc_type_epreuve.anneeUniversitaire.displayAnneeUniversitaire }}</td>
                         <td>{{ mcc_type_epreuve.libelle }}</td>
                         <td>{{ mcc_type_epreuve.typeDiplome != null ? mcc_type_epreuve.typeDiplome.libelle :
                             'non.defini'|trans }}</td>

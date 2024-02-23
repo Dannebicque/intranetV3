@@ -4,7 +4,7 @@
             Structure du diplome
             : {{ diplome.typediplome.sigle ~' | ' ~ diplome.libelle ~' | ' ~ diplome.codeDiplome ~' | ' ~ diplome.codeVersion ~' | ' ~ diplome.codeDepartement }}
         </h4>
-        <div class="card-header-actions" style="">
+        <div class="card-header-actions">
             .<a href="{{ path(baseurl ~ 'diplome_duplicate', {'id': diplome.id}) }}"
                 class="btn btn-success btn-outline btn-square btn-xs" data-bs-toggle="tooltip" data-bs-placement="bottom"
                 title="{{ 'atitle.dupliquer'|trans }}"><i class="{{ iconDuplicate }}"></i></a>

@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}TypeIntervenant index{% endblock %}
+
+{% block body %}
+    <h1>TypeIntervenant index</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Sigle</th>
+            <th>Libelle_long</th>
+            <th>MaxHeureService</th>
+            <th>CategorieIUT</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for type_intervenant in type_intervenants %}
+            <tr>
+                <td>{{ type_intervenant.id }}</td>
+                <td>{{ type_intervenant.sigle }}</td>
+                <td>{{ type_intervenant.libelleLong }}</td>
+                <td>{{ type_intervenant.maxHeureService }}</td>
+                <td>{{ type_intervenant.categorieIUT }}</td>
+                <td>
+                    <a href="{{ path('app_type_intervenant_show', {'id': type_intervenant.id}) }}">show</a>
+                    <a href="{{ path('app_type_intervenant_edit', {'id': type_intervenant.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_type_intervenant_new') }}">Create new</a>
+{% endblock %}

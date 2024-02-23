@@ -49,11 +49,6 @@
                     <td>{{ borne.url }}</td>
                 </tr>
                 <tr>
-                    <th>{{ 'table.qrcode'|trans }}</th>
-                    <td>{% if borne.url|trim != '' or borne.url != null %}<img src="{{ qr_code_data_uri(borne.url, {
-                            writer: 'svg', size: 150 }) }}" alt="QRcode de l'événement" />{% endif %}</td>
-                </tr>
-                <tr>
                     <th>{{ 'table.dateDebutPublication'|trans }}</th>
                     <td>{{ borne.dateDebutPublication ? borne.dateDebutPublication|format_datetime('long', 'short') : '' }}</td>
                 </tr>

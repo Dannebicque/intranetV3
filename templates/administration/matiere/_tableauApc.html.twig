@@ -1,7 +1,7 @@
 <div class="card">
     <header class="card-header">
         <h4 class="card-title">{{ 'adm.ressources.et.sae.index.heading'|trans }} | {{ diplome.displayCourt }}</h4>
-        <div class="card-header-actions" style="">
+        <div class="card-header-actions">
             {% if settings('MODIFICATION_PPN') == 1 %}
                 <span>
                      <a href="{{ path('administration_apc_referentiel_formation_grille',{diplome:diplome.id}) }}"

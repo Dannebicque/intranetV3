@@ -52,7 +52,7 @@
         <div class="dropdown d-none d-md-block">
             <span class="topbar-btn" data-bs-toggle="dropdown">Ressources/SAE</span>
             <div class="dropdown-menu dropdown-grid">
-                <div class="row" style="max-height: 300px; overflow-y: auto">
+                <div class="row max-height-300px">
                     {% for i in 1..6 %}
                         <a class="dropdown-item col-4" href="{{ path('but_ressources_saes', { diplome:diplome.sigle|lower,
                             semestre:i}) }}">Semestre {{ i }}</a>

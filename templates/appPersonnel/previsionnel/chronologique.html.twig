@@ -39,7 +39,7 @@
         </header>
 
         <div class="card-body">
-
+            {# todo: liste déroulante + stimulus load_content #}
             {% set seen = [] %}
             {% for cours in chronologique %}
                 {% if matieres[cours.typeIdMatiere] is defined and matieres[cours.typeIdMatiere] not in seen %}
