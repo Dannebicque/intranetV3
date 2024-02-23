@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Diplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/07/2023 08:06
+ * @lastUpdate 23/02/2024 19:12
  */
 
 namespace App\Entity;
@@ -16,7 +16,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Serializable;
 use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 use function chr;
@@ -25,7 +24,7 @@ use function ord;
 #[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: DiplomeRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class Diplome extends BaseEntity implements Serializable
+class Diplome extends BaseEntity
 {
     use ApogeeTrait;
     use LifeCycleTrait;
@@ -562,18 +561,17 @@ class Diplome extends BaseEntity implements Serializable
         return $this;
     }
 
-    public function serialize(): string
+    public function __serialize(): array
     {
         // Ajouté pour le problème de connexion avec le usernametoken
-        return serialize([
+        return [
             $this->getId(),
             $this->getLibelle(),
-        ]);
+        ];
     }
 
-    public function unserialize($data): ?bool
+    public function __unserialize(array $data): void
     {
-        return null;
     }
 
     public function isOptUpdateCelcat(): ?bool

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/AbsenceJustificatif.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/05/2022 14:37
+ * @lastUpdate 23/02/2024 19:11
  */
 
 namespace App\Entity;
@@ -20,7 +20,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
-use Serializable;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -29,7 +28,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ORM\Entity(repositoryClass: AbsenceJustificatifRepository::class)]
 #[ORM\HasLifecycleCallbacks]
 #[Vich\Uploadable]
-class AbsenceJustificatif extends BaseEntity implements Serializable
+class AbsenceJustificatif extends BaseEntity
 {
     use UuidTrait;
     use LifeCycleTrait;
@@ -310,15 +309,5 @@ class AbsenceJustificatif extends BaseEntity implements Serializable
         $this->semestre = $semestre;
 
         return $this;
-    }
-
-    public function serialize(): array|string|null
-    {
-        return $this->__serialize();
-    }
-
-    public function unserialize(string $data): void
-    {
-        $this->__unserialize($data);
     }
 }
