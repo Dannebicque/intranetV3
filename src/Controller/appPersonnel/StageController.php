@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/StageController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Controller\appPersonnel;
@@ -19,12 +19,13 @@ use App\Repository\AlternanceRepository;
 use App\Repository\StageEtudiantRepository;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * Class StageController.
  */
 #[Route(path: '/application/personnel')]
-#[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_PERMANENT')]
+#[IsGranted('ROLE_PERMANENT')]
 class StageController extends BaseController
 {
     #[Route(path: '/stage/', name: 'application_personnel_stage_index')]

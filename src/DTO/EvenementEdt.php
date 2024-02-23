@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/EvenementEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/11/2023 20:12
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\DTO;
@@ -15,6 +15,7 @@ use App\Entity\Groupe;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use Carbon\CarbonInterface;
+use DateInterval;
 
 class EvenementEdt
 {
@@ -115,7 +116,7 @@ class EvenementEdt
         return $h / 30;
     }
 
-    public function dureeObjet(): \DateInterval
+    public function dureeObjet(): DateInterval
     {
         $d = $this->heureDebut;
 

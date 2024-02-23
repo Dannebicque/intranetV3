@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/stage/etudiant/FormulaireController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 23/02/2024 21:35
  */
 
 // src/Controller/FormulaireController.php
@@ -25,6 +25,7 @@ use App\Form\stage\StageAdresseFormType;
 use App\Repository\ContactRepository;
 use App\Repository\StageEtudiantRepository;
 use Carbon\Carbon;
+use DateInterval;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -322,7 +323,7 @@ class FormulaireController extends BaseController
             } elseif ('Saturday' == $date_debut->format('l') || 'Sunday' == $date_debut->format('l')) {
                 --$interval;
             }
-            $date_debut->add(new \DateInterval('P1D'));
+            $date_debut->add(new DateInterval('P1D'));
         }
 
         return $this->json(['duree' => $interval]);

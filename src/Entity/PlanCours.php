@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/PlanCours.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 18:16
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Entity;
@@ -114,7 +114,7 @@ abstract class PlanCours
     #[ORM\ManyToMany(targetEntity: Personnel::class, inversedBy: 'plansCours')]
     private Collection $intervenants;
 
-    #[ORM\Column(length: 30, enumType: PlanCoursEnum::class, nullable: true)]
+    #[ORM\Column(length: 30, nullable: true, enumType: PlanCoursEnum::class)]
     private ?PlanCoursEnum $etatPlanCours = null;
 
 
@@ -455,7 +455,7 @@ abstract class PlanCours
     }
 
     /**
-     * @return \Symfony\Component\HttpFoundation\File\File|null
+     * @return File|null
      */
     public function getFichierPlanCoursFile(): ?File
     {
@@ -463,7 +463,7 @@ abstract class PlanCours
     }
 
     /**
-     * @param \Symfony\Component\HttpFoundation\File\File|null $fichierPlanCoursFile
+     * @param File|null $fichierPlanCoursFile
      */
     public function setFichierPlanCoursFile(?File $fichierPlanCoursFile): void
     {

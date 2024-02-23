@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcSae.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/07/2023 15:35
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Entity;
@@ -27,7 +27,7 @@ class ApcSae extends AbstractMatiere implements MatiereEntityInterface
     final public const SOURCE = 'sae';
 
     /**
-     * @return \App\Entity\Semestre|null
+     * @return Semestre|null
      *
      */
     /** @deprecated */
@@ -52,19 +52,19 @@ class ApcSae extends AbstractMatiere implements MatiereEntityInterface
     private ?string $livrables = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcSaeCompetence>
+     * @var Collection<int, ApcSaeCompetence>
      */
     #[ORM\OneToMany(mappedBy: 'sae', targetEntity: ApcSaeCompetence::class, cascade: ['persist', 'remove'])]
     private Collection $apcSaeCompetences;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcSaeRessource>
+     * @var Collection<int, ApcSaeRessource>
      */
     #[ORM\OneToMany(mappedBy: 'sae', targetEntity: ApcSaeRessource::class, cascade: ['persist', 'remove'])]
     private Collection $apcSaeRessources;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcSaeApprentissageCritique>
+     * @var Collection<int, ApcSaeApprentissageCritique>
      */
     #[ORM\OneToMany(mappedBy: 'sae', targetEntity: ApcSaeApprentissageCritique::class, cascade: ['persist', 'remove'])]
     private Collection $apcSaeApprentissageCritiques;
@@ -325,7 +325,7 @@ class ApcSae extends AbstractMatiere implements MatiereEntityInterface
     }
 
     /**
-     * @param \App\Entity\Semestre|null $semestre
+     * @param Semestre|null $semestre
      */
     /** @deprecated */
     public function setSemestre(?Semestre $semestre): void

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/MessageHandler/ExportReleveHandler.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/05/2022 12:07
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\MessageHandler;
@@ -16,31 +16,35 @@ use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 #[AsMessageHandler]
-class ExportReleveHandler
+readonly class ExportReleveHandler
 {
     /**
      * ExportReleveHandler constructor.
      */
     public function __construct(
-        private readonly Configuration $configuration,
-        private readonly EtudiantExportReleve $etudiantExportReleve,
-        private readonly SemestreRepository $semestreRepository,
-        private readonly AnneeUniversitaireRepository $anneeUniversitaireRepository,
-        private readonly MailerInterface $mailer,
-        private readonly PersonnelRepository $personnelRepository)
+        private Configuration                $configuration,
+        private EtudiantExportReleve         $etudiantExportReleve,
+        private SemestreRepository           $semestreRepository,
+        private AnneeUniversitaireRepository $anneeUniversitaireRepository,
+        private MailerInterface              $mailer,
+        private PersonnelRepository          $personnelRepository)
     {
     }
 
     /**
-     * @throws \Twig\Error\SyntaxError
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\LoaderError
+     * @throws SyntaxError
+     * @throws TransportExceptionInterface
+     * @throws RuntimeError
+     * @throws LoaderError
      */
     public function __invoke(ExportReleve $exportReleve): void
     {

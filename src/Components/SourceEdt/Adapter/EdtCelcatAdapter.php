@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Adapter/EdtCelcatAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/10/2023 15:16
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Components\SourceEdt\Adapter;
@@ -96,15 +96,10 @@ class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
 
     private function getLargeur(mixed $evt)
     {
-        switch (trim($evt->type_cours)) {
-            case 'cm':
-            case 'CM':
-                return $evt->semestre->getNbgroupeTpEdt();
-            case 'TD':
-            case 'td':
-                return 2;
-            default:
-                return 1;
-        }
+        return match (trim($evt->type_cours)) {
+            'cm', 'CM' => $evt->semestre->getNbgroupeTpEdt(),
+            'TD', 'td' => 2,
+            default => 1,
+        };
     }
 }

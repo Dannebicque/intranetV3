@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyGroupes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/10/2022 21:21
+ * @lastUpdate 23/02/2024 21:41
  */
 
 /*
@@ -20,17 +20,18 @@ use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use App\Enums\TypeGroupeEnum;
+use App\Exception\SemestreNotFoundException;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\ParcourRepository;
 use App\Repository\SemestreRepository;
 use App\Repository\TypeGroupeRepository;
-use function array_key_exists;
-use function count;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use function is_array;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use function array_key_exists;
+use function count;
+use function is_array;
 
 class MyGroupes
 {
@@ -56,7 +57,7 @@ class MyGroupes
     }
 
     /**
-     * @throws \App\Exception\SemestreNotFoundException
+     * @throws SemestreNotFoundException
      */
     public function getGroupesSemestre(int $ordreSemestre, Diplome $diplome, ?string $defaut = null): self
     {

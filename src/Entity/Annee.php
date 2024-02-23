@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Annee.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Entity;
@@ -48,7 +48,7 @@ class Annee extends BaseEntity
     private ?Diplome $diplome = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Semestre>
+     * @var Collection<int, Semestre>
      */
     #[ORM\OneToMany(mappedBy: 'annee', targetEntity: Semestre::class)]
     #[ORM\OrderBy(value: ['ordreLmd' => 'ASC'])]
@@ -58,7 +58,7 @@ class Annee extends BaseEntity
     private bool $actif = true;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Alternance>
+     * @var Collection<int, Alternance>
      */
     #[ORM\OneToMany(mappedBy: 'annee', targetEntity: Alternance::class)]
     private Collection $alternances;
@@ -67,13 +67,13 @@ class Annee extends BaseEntity
     private ?string $couleur = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcNiveau>
+     * @var Collection<int, ApcNiveau>
      */
     #[ORM\OneToMany(mappedBy: 'annee', targetEntity: ApcNiveau::class)]
     private Collection $apcNiveaux;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<\App\Entity\AlternancePlanning>
+     * @var Collection<AlternancePlanning>
      */
     #[ORM\OneToMany(mappedBy: 'annee', targetEntity: AlternancePlanning::class)]
     private Collection $alternancePlannings;

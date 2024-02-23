@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/12/2023 18:45
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Classes\Celcat;
@@ -21,6 +21,7 @@ use App\Repository\DiplomeRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use App\Utils\Tools;
+use Carbon\CarbonInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -69,7 +70,7 @@ class MyCelcat
 
             $td = explode(' ', $date);
 
-            /** @var \Carbon\CarbonInterface $objDate */
+            /** @var CarbonInterface $objDate */
             $objDate = Tools::convertDateToObject($td[0]);
             $cal->setDateLundi($objDate);
             $cal->setSemaineReelle($objDate->weekOfYear);
@@ -111,7 +112,7 @@ class MyCelcat
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function addEvents(Diplome $diplome, AnneeUniversitaire $anneeUniversitaire): void
     {
@@ -164,7 +165,7 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     private function createEvent(
         mixed $result,

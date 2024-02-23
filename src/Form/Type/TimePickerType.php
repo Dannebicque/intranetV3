@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/Type/TimePickerType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 17:41
+ * @lastUpdate 23/02/2024 21:41
  */
 
 namespace App\Form\Type;
@@ -13,7 +13,8 @@ use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use DateTime;
 use DateTimeInterface;
-use function is_a;
+use Exception;
+use JsonException;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -21,11 +22,12 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use function is_a;
 
 class TimePickerType extends AbstractType
 {
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function buildView(FormView $view, FormInterface $form, array $options): void
     {
@@ -97,7 +99,7 @@ class TimePickerType extends AbstractType
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     private function toDate(mixed $value, string $outputFormat = 'H:i'): ?string
     {

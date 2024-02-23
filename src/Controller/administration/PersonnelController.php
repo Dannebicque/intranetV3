@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/PersonnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/02/2024 18:55
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Controller\administration;
@@ -19,6 +19,7 @@ use App\Form\PersonnelType;
 use App\Repository\PersonnelDepartementRepository;
 use App\Repository\PersonnelRepository;
 use App\Table\PersonnelDepartementTableType;
+use JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -29,7 +30,7 @@ use function in_array;
 class PersonnelController extends BaseController
 {
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     #[Route('/', name: 'index', options: ['expose' => true], methods: ['GET', 'POST'])]
     public function index(Request $request): Response

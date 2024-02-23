@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/PlanCours/Source/PlanCoursRessource.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/02/2024 14:11
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Components\PlanCours\Source;
@@ -17,6 +17,7 @@ use App\DTO\Matiere;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Departement;
 use App\Entity\Personnel;
+use App\Entity\Previsionnel;
 use App\Enums\PlanCoursEnum;
 use App\Repository\PlanCoursRessourceRepository;
 use Carbon\Carbon;
@@ -63,7 +64,7 @@ class PlanCoursRessource extends AbstractPlanCours implements PlanCoursInterface
         return $obj;
     }
 
-    public function recopiePlanCours($plancours, \App\Entity\Previsionnel $previsionnel): \App\Entity\PlanCoursRessource
+    public function recopiePlanCours($plancours, Previsionnel $previsionnel): \App\Entity\PlanCoursRessource
     {
         $obj = $this->planCoursRessourceRepository->findOneBy([
             'typeMatiere' => $previsionnel->getTypeMatiere(),

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Etudiant/EtudiantImport.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Etudiant/EtudiantImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/09/2021 14:41
+ * @lastUpdate 23/02/2024 21:41
  */
 
 /*
@@ -19,19 +19,20 @@ use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use App\Repository\BacRepository;
 use App\Utils\Tools;
+use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use function array_key_exists;
 use function count;
-use Doctrine\ORM\EntityManagerInterface;
 use function is_array;
 
-class EtudiantImport
+readonly class EtudiantImport
 {
-    private readonly array $tBac;
+    private array $tBac;
 
     public function __construct(
-        BacRepository $bacRepository,
-        private readonly MyLdap $myLdap,
-        private readonly EntityManagerInterface $entity)
+        BacRepository                  $bacRepository,
+        private MyLdap                 $myLdap,
+        private EntityManagerInterface $entity)
     {
         $this->tBac = $bacRepository->getApogeeArray();
     }
@@ -126,7 +127,7 @@ class EtudiantImport
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     private function createEtudiantFromCsv(bool|array $ligne, Semestre $semestre): void
     {

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Diplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 19:12
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Entity;
@@ -69,19 +69,19 @@ class Diplome extends BaseEntity
     private int $codeCelcatDepartement = 0;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Hrs>
+     * @var Collection<int, Hrs>
      */
     #[ORM\OneToMany(mappedBy: 'diplome', targetEntity: Hrs::class)]
     private Collection $hrs;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Ppn>
+     * @var Collection<int, Ppn>
      */
     #[ORM\OneToMany(mappedBy: 'diplome', targetEntity: Ppn::class)]
     private Collection $ppns;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Annee>
+     * @var Collection<int, Annee>
      */
     #[ORM\OneToMany(mappedBy: 'diplome', targetEntity: Annee::class)]
     #[ORM\OrderBy(value: ['ordre' => 'ASC', 'libelle' => 'ASC'])]

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/AnneeUniversitaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/09/2023 16:46
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Entity;
@@ -37,44 +37,44 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
     private ?string $commentaire = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Departement>
+     * @var Collection<int, Departement>
      */
     /** @deprecated */
     #[ORM\OneToMany(mappedBy: 'anneeUniversitairePrepare', targetEntity: Departement::class)]
     private Collection $departements;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Calendrier>
+     * @var Collection<int, Calendrier>
      */
     #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: Calendrier::class)]
     private Collection $calendriers;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Scolarite>
+     * @var Collection<int, Scolarite>
      */
     #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: Scolarite::class)]
     private Collection $scolarites;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ScolaritePromo>
+     * @var Collection<int, ScolaritePromo>
      */
     #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: ScolaritePromo::class)]
     private Collection $scolaritePromos;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Diplome>
+     * @var Collection<int, Diplome>
      */
     #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: Diplome::class)]
     private Collection $diplomes;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\StagePeriode>
+     * @var Collection<int, StagePeriode>
      */
     #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: StagePeriode::class)]
     private Collection $stagePeriodes;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Evaluation>
+     * @var Collection<int, Evaluation>
      */
     #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: Evaluation::class)]
     private Collection $evaluations;
@@ -83,25 +83,25 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
     private bool $active = false;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ProjetPeriode>
+     * @var Collection<int, ProjetPeriode>
      */
     #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: ProjetPeriode::class)]
     private Collection $projetPeriodes;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<\App\Entity\Personnel>
+     * @var Collection<Personnel>
      */
     #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: Personnel::class)]
     private Collection $personnels;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<\App\Entity\AlternancePlanning>
+     * @var Collection<AlternancePlanning>
      */
     #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: AlternancePlanning::class)]
     private Collection $planningAlternances;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\AnneeUniversitaireSemestre>
+     * @var Collection<int, AnneeUniversitaireSemestre>
      */
     #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: AnneeUniversitaireSemestre::class)]
     private Collection $anneeUniversitaireSemestres;

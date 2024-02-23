@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/EdtManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 18:43
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Classes\Edt;
@@ -30,7 +30,7 @@ class EdtManager
     final public const EDT_INTRANET = 'intranet';
     protected string $source;
 
-    private array $tabSources = [];
+    private array $tabSources;
 
     public function __construct(
         private readonly EdtIntranet $edtIntranet,

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/CreationSectionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 18:32
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Controller\questionnaire;
@@ -69,9 +69,7 @@ class CreationSectionController extends BaseController
                     'questionnaire' => $section->getQuestionnaire(),
                 ]);
                 $section->setOrdre($section->getOrdre() - 1);
-                if (null !== $sectionOld) {
-                    $sectionOld->setOrdre($sectionOld->getOrdre() + 1);
-                }
+                $sectionOld?->setOrdre($sectionOld->getOrdre() + 1);
 
                 $this->entityManager->flush();
 
@@ -83,9 +81,7 @@ class CreationSectionController extends BaseController
                 ]);
 
                 $section->setOrdre($section->getOrdre() + 1);
-                if (null !== $sectionOld) {
-                    $sectionOld->setOrdre($sectionOld->getOrdre() - 1);
-                }
+                $sectionOld?->setOrdre($sectionOld->getOrdre() - 1);
                 $this->entityManager->flush();
 
                 return $this->json(true);
@@ -185,24 +181,22 @@ class CreationSectionController extends BaseController
     {
         $typeAction = $request->query->get('typeAction');
         $allQuestions = $questionRepository->findByQuestionnaire($section->getQuestionnaire());
-        switch ($typeAction) {
-            case 'declenchement':
-                return $this->render('questionnaire/creation/section/_typAction_declenchement.html.twig', [
-                    'typeAction' => $typeAction,
-                    'section' => $section,
-                    'question' => $question,
-                    'allQuestions' => $allQuestions,
-                ]);
-            case 'masquage':
-                return $this->render('questionnaire/creation/section/_typAction_masquage.html.twig', [
-                    'typeAction' => $typeAction,
-                    'section' => $section,
-                    'question' => $question,
-                    'allQuestions' => $allQuestions,
-                ]);
-        }
+        return match ($typeAction) {
+            'declenchement' => $this->render('questionnaire/creation/section/_typAction_declenchement.html.twig', [
+                'typeAction' => $typeAction,
+                'section' => $section,
+                'question' => $question,
+                'allQuestions' => $allQuestions,
+            ]),
+            'masquage' => $this->render('questionnaire/creation/section/_typAction_masquage.html.twig', [
+                'typeAction' => $typeAction,
+                'section' => $section,
+                'question' => $question,
+                'allQuestions' => $allQuestions,
+            ]),
+            default => $this->json(false),
+        };
 
-        return $this->json(false);
     }
 
     #[Route('/{section}/transition-question-update-liste/{question}', name: 'transition_question_update_liste')]

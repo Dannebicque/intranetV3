@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyScolarite.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyScolarite.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/05/2021 09:12
+ * @lastUpdate 23/02/2024 21:41
  */
 
 namespace App\Classes;
@@ -16,19 +16,19 @@ use App\Repository\EtudiantRepository;
 use App\Repository\SemestreRepository;
 use App\Repository\UeRepository;
 use App\Utils\Tools;
-use function array_key_exists;
-use function count;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use function array_key_exists;
+use function count;
 
-class MyScolarite
+readonly class MyScolarite
 {
     public function __construct(
-        private readonly MyUpload $myUpload,
-        private readonly EntityManagerInterface $entityManager,
-        private readonly SemestreRepository $semestreRepository,
-        private readonly UeRepository $ueRepository,
-        private readonly EtudiantRepository $etudiantRepository
+        private MyUpload               $myUpload,
+        private EntityManagerInterface $entityManager,
+        private SemestreRepository     $semestreRepository,
+        private UeRepository           $ueRepository,
+        private EtudiantRepository     $etudiantRepository
     ) {
     }
 

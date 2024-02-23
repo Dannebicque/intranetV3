@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EvaluationInitialisationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/02/2024 18:55
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Controller\administration;
@@ -12,6 +12,7 @@ namespace App\Controller\administration;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\Previsionnel\PrevisionnelManager;
 use App\Controller\BaseController;
+use App\DTO\Matiere;
 use App\Entity\Evaluation;
 use App\Entity\Semestre;
 use App\Repository\EvaluationRepository;
@@ -71,7 +72,7 @@ class EvaluationInitialisationController extends BaseController
                 $tPersonnels[$tg->getId()] = $tg;
             }
 
-            /** @var \App\DTO\Matiere $matiere */
+            /** @var Matiere $matiere */
             foreach ($matieres as $matiere) {
                 $nbNotes = $matiere->nbNotes;
                 for ($i = 1; $i <= $nbNotes; ++$i) {

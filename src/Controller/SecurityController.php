@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/SecurityController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Controller;
@@ -18,6 +18,7 @@ use App\Repository\PersonnelDepartementRepository;
 use App\Repository\PersonnelRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -100,7 +101,7 @@ class SecurityController extends AbstractController
 
     /**
      * @throws TransportExceptionInterface
-     * @throws \Exception
+     * @throws Exception
      */
     #[Route(path: '/connexion/init-password/{user}', name: 'security_password_init', options: ['expose' => true])]
     public function initPassword(
@@ -164,7 +165,7 @@ class SecurityController extends AbstractController
     }
 
     #[Route(path: '/change-departement/{departement}', name: 'security_change_departement', options: ['expose' => true])]
-    public function changeDepartement(Request $request, RequestStack $session, #[\Symfony\Bridge\Doctrine\Attribute\MapEntity(mapping: ['departement' => 'uuid'])]
+    public function changeDepartement(Request $request, RequestStack $session, #[MapEntity(mapping: ['departement' => 'uuid'])]
     Departement                               $departement): Response
     {
         $session->getSession()->set('departement', $departement->getUuidString());

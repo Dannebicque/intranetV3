@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/PlanCoursSae.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/02/2024 19:24
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Entity;
@@ -43,11 +43,6 @@ class PlanCoursSae extends PlanCours
     public function __construct()
     {
         parent::__construct();
-    }
-
-    public function getId(): ?int
-    {
-        return $this->id;
     }
 
     public function getDescription(): ?string

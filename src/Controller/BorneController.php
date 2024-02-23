@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/BorneController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/02/2024 17:50
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Controller;
@@ -13,6 +13,7 @@ use App\Classes\Edt\MyEdtBorne;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Entity\Borne;
 use App\Entity\Constantes;
+use App\Exception\SemestreNotFoundException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -20,7 +21,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class BorneController extends AbstractController
 {
     /**
-     * @throws \App\Exception\SemestreNotFoundException
+     * @throws SemestreNotFoundException
      */
     #[Route(path: '/borne-edt/{numBorne}', name: 'borne2')]
     public function borne(TypeMatiereManager $typeMatiereManager, MyEdtBorne $myEdtBorne, int $numBorne = 1): Response

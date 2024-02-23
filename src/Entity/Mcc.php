@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Mcc.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 16:09
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Entity;
@@ -25,7 +25,7 @@ class Mcc extends BaseEntity
     #[ORM\Column]
     private ?float $coefficient = null;
 
-    #[ORM\ManyToOne(inversedBy: 'mccs', fetch: 'EAGER')]
+    #[ORM\ManyToOne(fetch: 'EAGER', inversedBy: 'mccs')]
     private ?MccTypeEpreuve $typeEpreuve = null;
 
     public function __clone(): void

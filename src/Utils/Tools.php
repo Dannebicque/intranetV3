@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Utils/Tools.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/12/2023 11:15
+ * @lastUpdate 23/02/2024 21:35
  */
 
 /*
@@ -16,6 +16,7 @@ namespace App\Utils;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Exception;
+use ReflectionMethod;
 use RuntimeException;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 use function chr;
@@ -48,7 +49,7 @@ abstract class Tools
 
     private static function getMethodParameterTypes($className, string $methodName): array
     {
-        $method = new \ReflectionMethod($className, $methodName);
+        $method = new ReflectionMethod($className, $methodName);
         $parameters = $method->getParameters();
 
         $types = [];

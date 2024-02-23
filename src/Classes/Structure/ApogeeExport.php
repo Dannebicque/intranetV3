@@ -1,16 +1,18 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Structure/ApogeeExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Classes\Structure;
 
 use App\Classes\Excel\MyExcelWriter;
 use App\Entity\Diplome;
+use App\Entity\Semestre;
+use App\Entity\Ue;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -48,7 +50,7 @@ class ApogeeExport
 
     private function genereFichierApogee(): void
     {
-        /** @var \App\Entity\Semestre $semestre */
+        /** @var Semestre $semestre */
         foreach ($this->diplome->getSemestres() as $semestre) {
             $this->myExcelWriter->createSheet($semestre->getLibelle());
             $this->myExcelWriter->writeCellXY(1, 1, 'B.U.T. : ', [
@@ -114,7 +116,7 @@ class ApogeeExport
             $this->myExcelWriter->writeCellName('E12', 'ECTS');
 
             $ligne = 13;
-            /** @var \App\Entity\Ue $ue */
+            /** @var Ue $ue */
             foreach ($semestre->getUes() as $ue) {
                 $this->myExcelWriter->writeCellXY($colonne, $ligne, $ue->getApcCompetence()->getNomCourt());
                 ++$colonne;

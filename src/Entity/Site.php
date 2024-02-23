@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Site.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 21:28
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Entity;
@@ -35,13 +35,13 @@ class Site extends BaseEntity
     private Collection $ufrs;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Salle>
+     * @var Collection<int, Salle>
      */
     #[ORM\OneToMany(mappedBy: 'site', targetEntity: Salle::class)]
     private Collection $salles;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Ufr>
+     * @var Collection<int, Ufr>
      */
     #[ORM\OneToMany(mappedBy: 'sitePrincipal', targetEntity: Ufr::class)]
     private Collection $ufrPrincipales;

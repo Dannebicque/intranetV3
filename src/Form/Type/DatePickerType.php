@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/Type/DatePickerType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/12/2022 16:25
+ * @lastUpdate 23/02/2024 21:41
  */
 
 namespace App\Form\Type;
@@ -13,7 +13,7 @@ use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use DateTime;
 use DateTimeInterface;
-use function is_a;
+use Exception;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -22,6 +22,7 @@ use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\OptionsResolver\Options;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use function is_a;
 
 class DatePickerType extends AbstractType
 {
@@ -96,7 +97,7 @@ class DatePickerType extends AbstractType
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     private function toDate(mixed $value, string $outputFormat = 'Y-m-d'): ?string
     {

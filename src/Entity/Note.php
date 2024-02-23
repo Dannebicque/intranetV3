@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Note.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/01/2024 15:08
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Entity;
@@ -40,7 +40,7 @@ class Note extends BaseEntity
     private ?string $commentaire = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ModificationNote>
+     * @var Collection<int, ModificationNote>
      */
     #[ORM\OneToMany(mappedBy: 'note', targetEntity: ModificationNote::class)]
     private Collection $modificationNotes;

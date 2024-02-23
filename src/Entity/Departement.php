@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Departement.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 23:13
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Entity;
@@ -96,39 +96,39 @@ class Departement extends BaseEntity
     private int $optAnneePrevisionnel;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\TypeDocument>
+     * @var Collection<int, TypeDocument>
      */
     #[MaxDepth(1)]
     #[ORM\OneToMany(mappedBy: 'departement', targetEntity: TypeDocument::class)]
     private Collection $typeDocuments;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\PersonnelDepartement>
+     * @var Collection<int, PersonnelDepartement>
      */
     #[ORM\OneToMany(mappedBy: 'departement', targetEntity: PersonnelDepartement::class)]
     private Collection $personnelDepartements;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Actualite>
+     * @var Collection<int, Actualite>
      */
     #[ORM\OneToMany(mappedBy: 'departement', targetEntity: Actualite::class)]
     private Collection $actualites;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Diplome>
+     * @var Collection<int, Diplome>
      */
     #[ORM\OneToMany(mappedBy: 'departement', targetEntity: Diplome::class)]
     #[ORM\OrderBy(value: ['libelle' => 'ASC', 'actif' => 'DESC'])]
     private Collection $diplomes;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\SalleExamen>
+     * @var Collection<int, SalleExamen>
      */
     #[ORM\OneToMany(mappedBy: 'departement', targetEntity: SalleExamen::class)]
     private Collection $salleExamens;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Hrs>
+     * @var Collection<int, Hrs>
      */
     #[ORM\OneToMany(mappedBy: 'departement', targetEntity: Hrs::class)]
     private Collection $hrs;
@@ -146,18 +146,18 @@ class Departement extends BaseEntity
     private ?Personnel $respMateriel = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Etudiant>
+     * @var Collection<int, Etudiant>
      */
     #[ORM\OneToMany(mappedBy: 'departement', targetEntity: Etudiant::class)]
     private Collection $etudiants;
     /**
-     * @var \Doctrine\Common\Collections\Collection<\App\Entity\BCDemande>
+     * @var Collection<BCDemande>
      */
     #[ORM\OneToMany(mappedBy: 'departement', targetEntity: BCDemande::class)]
     private Collection $bCDemandes;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<\App\Entity\Borne>
+     * @var Collection<Borne>
      */
     #[ORM\OneToMany(mappedBy: 'departement', targetEntity: Borne::class)]
     private Collection $bornes;

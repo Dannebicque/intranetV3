@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyMaterielCommun.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyMaterielCommun.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 09:03
+ * @lastUpdate 23/02/2024 21:35
  */
 
 /*
@@ -16,13 +16,13 @@ namespace App\Classes;
 use App\Entity\Constantes;
 use App\Repository\MaterielCommunPretRepository;
 
-class MyMaterielCommun
+readonly class MyMaterielCommun
 {
     /**
      * MyMaterielCommun constructor.
      */
     public function __construct(
-        private readonly MaterielCommunPretRepository $materielCommunPretRepository
+        private MaterielCommunPretRepository $materielCommunPretRepository
     ) {
     }
 

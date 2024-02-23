@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/administration/QualiteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Controller\questionnaire\administration;
@@ -18,6 +18,7 @@ use App\Components\Questionnaire\Section\AbstractSection;
 use App\Controller\BaseController;
 use App\Entity\QuestQuestionnaire;
 use App\Table\QualiteTableType;
+use JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -27,7 +28,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class QualiteController extends BaseController
 {
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     #[Route('/', name: 'administration_qualite_index', options: ['expose' => true], methods: ['GET', 'POST'])]
     public function index(Request $request): Response

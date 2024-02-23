@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/TypeDiplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/12/2022 11:12
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Entity;
@@ -24,7 +24,7 @@ class TypeDiplome extends BaseEntity
     use LifeCycleTrait;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Diplome>
+     * @var Collection<int, Diplome>
      */
     #[ORM\OneToMany(mappedBy: 'typeDiplome', targetEntity: Diplome::class)]
     private Collection $diplomes;

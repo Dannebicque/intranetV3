@@ -1,16 +1,19 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Logger/Twig/LogsExtension.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/07/2023 22:21
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Components\Logger\Twig;
 
 use App\Components\Logger\LogHelper;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -37,9 +40,9 @@ class LogsExtension extends AbstractExtension
     }
 
     /**
-     * @throws \Twig\Error\SyntaxError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\LoaderError
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
      */
     public function loggerRender(): string
     {

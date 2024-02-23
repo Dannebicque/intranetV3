@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/EventSubscriber/RegistrationNotifySubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 18:29
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\EventSubscriber;
@@ -22,12 +22,12 @@ use Symfony\Component\Routing\RouterInterface;
 /**
  * Envoi un mail de bienvenue à chaque creation d'un utilisateur.
  */
-class RegistrationNotifySubscriber implements EventSubscriberInterface
+readonly class RegistrationNotifySubscriber implements EventSubscriberInterface
 {
     /**
      * RegistrationNotifySubscriber constructor.
      */
-    public function __construct(private readonly EntityManagerInterface $entityManager, private readonly RouterInterface $router)
+    public function __construct(private EntityManagerInterface $entityManager, private RouterInterface $router)
     {
     }
 

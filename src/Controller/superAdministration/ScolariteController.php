@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/ScolariteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Controller\superAdministration;
@@ -17,6 +17,8 @@ use App\Entity\Semestre;
 use App\Exception\AnneeUniversitaireNotFoundException;
 use App\Repository\SemestreRepository;
 use App\Table\ScolariteDiplomesTableType;
+use JsonException;
+use PhpOffice\PhpSpreadsheet\Reader\Exception;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -30,7 +32,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class ScolariteController extends BaseController
 {
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     #[Route(path: '/', name: 'sa_scolarite_index')]
     public function index(
@@ -75,9 +77,9 @@ class ScolariteController extends BaseController
 
     /**
      * @throws \PhpOffice\PhpSpreadsheet\Exception
-     * @throws \App\Exception\AnneeUniversitaireNotFoundException
+     * @throws AnneeUniversitaireNotFoundException
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
-     * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
+     * @throws Exception
      */
     #[Route(path: '/genere-apogee/{semestre}', name: 'sa_scolarite_semestre_genere_apogee', requirements: ['semestre' => '\d+'], methods: ['POST'])]
     public function genereFichierApogee(SousCommissionExport $sousCommissionExport, Request $request, Semestre $semestre): RedirectResponse|StreamedResponse

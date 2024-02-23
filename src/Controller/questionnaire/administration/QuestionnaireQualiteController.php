@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/administration/QuestionnaireQualiteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Controller\questionnaire\administration;
@@ -14,6 +14,7 @@ use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\QuestChoixEtudiant;
 use App\Entity\QuestQuestionnaire;
+use App\Exception\SemestreNotFoundException;
 use App\Repository\QuestChoixRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,7 +24,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class QuestionnaireQualiteController extends BaseController
 {
     /**
-     * @throws \App\Exception\SemestreNotFoundException
+     * @throws SemestreNotFoundException
      */
     #[Route('/{id}/detail', name: 'detail', methods: ['GET'])]
     public function detail(

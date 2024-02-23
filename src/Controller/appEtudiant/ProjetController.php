@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/ProjetController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Controller\appEtudiant;
@@ -16,6 +16,7 @@ use App\Event\ProjetEvent;
 use App\Form\ProjetEtudiantEtudiantType;
 use App\Repository\ProjetPeriodeRepository;
 use Carbon\Carbon;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -45,7 +46,7 @@ class ProjetController extends BaseController
     }
 
     #[Route(path: '/formulaire/{projetEtudiant}', name: 'application_etudiant_projet_formulaire', methods: 'GET|POST')]
-    public function create(EventDispatcherInterface $eventDispatcher, Request $request, #[\Symfony\Bridge\Doctrine\Attribute\MapEntity(mapping: ['projetEtudiant' => 'uuid'])]
+    public function create(EventDispatcherInterface $eventDispatcher, Request $request, #[MapEntity(mapping: ['projetEtudiant' => 'uuid'])]
     ProjetEtudiant                                  $projetEtudiant): Response
     {
         if (null !== $projetEtudiant->getProjetPeriode()) {

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/CreationQuestionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Controller\questionnaire;
@@ -108,9 +108,7 @@ class CreationQuestionController extends BaseController
                     'section' => $question->getSection(),
                 ]);
                 $question->setOrdre($question->getOrdre() - 1);
-                if (null !== $questionOld) {
-                    $questionOld->setOrdre($questionOld->getOrdre() + 1);
-                }
+                $questionOld?->setOrdre($questionOld->getOrdre() + 1);
 
                 $this->entityManager->flush();
                 break;
@@ -120,9 +118,7 @@ class CreationQuestionController extends BaseController
                     'section' => $question->getSection(),
                 ]);
                 $question->setOrdre($question->getOrdre() + 1);
-                if (null !== $questionOld) {
-                    $questionOld->setOrdre($questionOld->getOrdre() - 1);
-                }
+                $questionOld?->setOrdre($questionOld->getOrdre() - 1);
                 $this->entityManager->flush();
                 break;
         }

@@ -1,18 +1,19 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Apogee/ApogeeEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:52
+ * @lastUpdate 23/02/2024 21:41
  */
 
 namespace App\Classes\Apogee;
 
 use App\Entity\Annee;
 use App\Utils\Tools;
-use function array_key_exists;
+use Exception;
 use PDOStatement;
+use function array_key_exists;
 
 class ApogeeEtudiant extends Apogee
 {
@@ -28,7 +29,7 @@ class ApogeeEtudiant extends Apogee
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function transformeApogeeToArray(?array $data, ?array $tBac): array
     {

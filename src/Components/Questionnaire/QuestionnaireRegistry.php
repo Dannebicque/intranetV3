@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/QuestionnaireRegistry.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/01/2023 13:30
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Components\Questionnaire;
@@ -49,7 +49,7 @@ class QuestionnaireRegistry
     }
 
     /**
-     * @throws \App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException
+     * @throws TypeQuestionNotFoundException
      */
     public function getTypeQuestion(string $name): mixed
     {
@@ -61,7 +61,7 @@ class QuestionnaireRegistry
     }
 
     /**
-     * @throws \App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException
+     * @throws TypeQuestionNotFoundException
      */
     public function getTypeSection(string $name): mixed
     {
@@ -82,7 +82,7 @@ class QuestionnaireRegistry
     }
 
     /**
-     * @throws \App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException
+     * @throws TypeQuestionNotFoundException
      */
     public function getSectionAdapter(string $name): mixed
     {

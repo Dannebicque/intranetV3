@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/ProjetSubscriber.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/EventSubscriber/ProjetSubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/05/2021 16:57
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\EventSubscriber;
@@ -14,6 +14,7 @@ use App\Entity\Notification;
 use App\Event\ProjetEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Routing\RouterInterface;
 
 class ProjetSubscriber implements EventSubscriberInterface
@@ -42,7 +43,7 @@ class ProjetSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function sendMail(ProjetEvent $event, ?string $codeEvent): void
     {

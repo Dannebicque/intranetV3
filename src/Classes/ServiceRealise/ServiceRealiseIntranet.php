@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/ServiceRealise/ServiceRealiseIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/08/2022 08:47
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Classes\ServiceRealise;
@@ -16,9 +16,9 @@ use App\Entity\EdtPlanning;
 use App\Interfaces\UtilisateurInterface;
 use App\Repository\EdtPlanningRepository;
 
-class ServiceRealiseIntranet implements ServiceRealiseInterface
+readonly class ServiceRealiseIntranet implements ServiceRealiseInterface
 {
-    public function __construct(private readonly EdtPlanningRepository $edtPlanningRepository)
+    public function __construct(private EdtPlanningRepository $edtPlanningRepository)
     {
     }
 

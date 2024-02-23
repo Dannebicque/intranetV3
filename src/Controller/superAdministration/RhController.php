@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/RhController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 18:40
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Controller\superAdministration;
@@ -28,7 +28,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class RhController extends BaseController
 {
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     #[Route(path: '/', name: 'sa_rh_index')]
     public function index(Request $request): Response

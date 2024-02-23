@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2022 19:15
+ * @lastUpdate 23/02/2024 21:40
  */
 
 /*
@@ -18,6 +18,7 @@ use App\Entity\Annee;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\CelcatEvent;
 use App\Entity\Constantes;
+use App\Entity\EdtCelcat;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
 use App\Entity\Personnel;
@@ -30,7 +31,7 @@ use function array_key_exists;
 class MyEdtCelcat extends BaseEdt
 {
     /**
-     * @var \App\Entity\AnneeUniversitaire
+     * @var AnneeUniversitaire
      */
     protected AnneeUniversitaire $anneeUniversitaire;
     private ?Annee $annee = null;
@@ -117,7 +118,7 @@ class MyEdtCelcat extends BaseEdt
         }
 
         $tab = [];
-        /** @var \App\Entity\EdtCelcat $p */
+        /** @var EdtCelcat $p */
         foreach ($pl as $p) {
             // todo: passer par le DTO???
             if (array_key_exists($p->getCodeGroupe(), $gr)) {
@@ -156,7 +157,7 @@ class MyEdtCelcat extends BaseEdt
         // prof ou étudiant
         $tab = [];
 
-        /** @var \App\Entity\EdtCelcat $p */
+        /** @var EdtCelcat $p */
         foreach ($pl as $p) {
             // todo: passer en partie par le manager ?
             $evt = new EvenementEdt();
@@ -196,7 +197,7 @@ class MyEdtCelcat extends BaseEdt
         return $this;
     }
 
-    private function getTypeIdMatiere(\App\Entity\EdtCelcat $p)
+    private function getTypeIdMatiere(EdtCelcat $p)
     {
         if (array_key_exists($p->getCodeModule(), $this->matieres)) {
             return $this->matieres[$p->getCodeModule()]->getTypeIdMatiere();

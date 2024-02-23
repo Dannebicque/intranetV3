@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/StageEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/12/2022 16:04
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Entity;
@@ -157,7 +157,7 @@ class StageEtudiant extends BaseEntity
     private ?string $commentaireDureeHebdomadaire = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\StageAvenant>
+     * @var Collection<int, StageAvenant>
      */
     #[ORM\OneToMany(mappedBy: 'stageEtudiant', targetEntity: StageAvenant::class)]
     private Collection $stageAvenants;

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Security/AccessDeniedHandler.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:52
+ * @lastUpdate 23/02/2024 21:40
  */
 
 // src/Security/AccessDeniedHandler.php
@@ -17,17 +17,20 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Http\Authorization\AccessDeniedHandlerInterface;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
-class AccessDeniedHandler implements AccessDeniedHandlerInterface
+readonly class AccessDeniedHandler implements AccessDeniedHandlerInterface
 {
-    public function __construct(private readonly Environment $twig)
+    public function __construct(private Environment $twig)
     {
     }
 
     /**
-     * @throws \Twig\Error\SyntaxError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\LoaderError
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
      */
     public function handle(Request $request, AccessDeniedException $accessDeniedException): ?Response
     {
@@ -39,6 +42,6 @@ class AccessDeniedHandler implements AccessDeniedHandlerInterface
             'exception' => $accessDeniedException,
         ]);
 
-        return new Response($content, \Symfony\Component\HttpFoundation\Response::HTTP_FORBIDDEN);
+        return new Response($content, Response::HTTP_FORBIDDEN);
     }
 }

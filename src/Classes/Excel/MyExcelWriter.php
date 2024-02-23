@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Excel/MyExcelWriter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/06/2022 12:19
+ * @lastUpdate 23/02/2024 21:41
  */
 
 /*
@@ -13,8 +13,6 @@
 
 namespace App\Classes\Excel;
 
-use function array_key_exists;
-use function is_array;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
@@ -25,6 +23,8 @@ use PhpOffice\PhpSpreadsheet\Style\NumberFormat;
 use PhpOffice\PhpSpreadsheet\Worksheet\PageSetup;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 use Symfony\Contracts\Translation\TranslatorInterface;
+use function array_key_exists;
+use function is_array;
 
 class MyExcelWriter
 {
@@ -185,7 +185,7 @@ class MyExcelWriter
     }
 
     /**
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws Exception
      */
     public function setCellEnteteStyle(int $col, int $lig): void
     {
@@ -210,7 +210,7 @@ class MyExcelWriter
     }
 
     /**
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws Exception
      */
     public function borderCells(string $cells): void
     {
@@ -244,7 +244,7 @@ class MyExcelWriter
     }
 
     /**
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws Exception
      */
     public function mergeCells(string $cells): void
     {

@@ -1,20 +1,21 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Utils/JsonRequest.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Utils/JsonRequest.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/07/2021 08:57
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Utils;
 
+use JsonException;
 use Symfony\Component\HttpFoundation\Request;
 
 abstract class JsonRequest
 {
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     public static function getFromRequest(Request $request): array
     {
@@ -27,7 +28,7 @@ abstract class JsonRequest
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     public static function getValueFromRequest(Request $request, string $value): mixed
     {

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/ImportDiplomeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Controller\superAdministration;
@@ -15,6 +15,7 @@ use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Diplome;
 use App\Repository\PpnRepository;
+use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -23,7 +24,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class ImportDiplomeController extends BaseController
 {
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     #[Route(path: '/{id}', name: 'sa_diplome_import_index')]
     public function index(

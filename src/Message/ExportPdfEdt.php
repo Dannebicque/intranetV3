@@ -1,20 +1,20 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Message/ExportPdfEdt.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Message/ExportPdfEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:59
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Message;
 
-class ExportPdfEdt
+readonly class ExportPdfEdt
 {
     /**
      * ExportPdfEdt constructor.
      */
-    public function __construct(private readonly array $personnels, private readonly int $departement, private readonly int $personnel)
+    public function __construct(private array $personnels, private int $departement, private int $personnel)
     {
     }
 

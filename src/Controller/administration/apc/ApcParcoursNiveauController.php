@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcParcoursNiveauController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Controller\administration\apc;
@@ -16,6 +16,7 @@ use App\Entity\ApcParcoursNiveau;
 use App\Entity\Diplome;
 use App\Repository\ApcComptenceRepository;
 use App\Repository\ApcParcoursNiveauRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -23,7 +24,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class ApcParcoursNiveauController extends BaseController
 {
     /**
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     #[Route(path: '/ajax/{parcours}/{etat}/{niveau}', name: 'apc_parcours_niveau_ajax', options: ['expose' => true])]
     public function ajax(ApcParcoursNiveauRepository $apcParcoursNiveauRepository, ApcParcours $parcours, $etat, ApcNiveau $niveau): Response

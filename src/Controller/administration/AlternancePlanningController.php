@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AlternancePlanningController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Controller\administration;
@@ -13,6 +13,7 @@ use App\Classes\Calendrier;
 use App\Controller\BaseController;
 use App\Entity\Annee;
 use App\Repository\AlternancePlanningRepository;
+use Exception;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -20,7 +21,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class AlternancePlanningController extends BaseController
 {
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     #[Route('/{annee}', name: 'administration_alternance_planning_index', requirements: ['annee' => "\d+"], methods: ['GET'])]
     public function index(

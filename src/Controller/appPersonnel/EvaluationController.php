@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/EvaluationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Controller\appPersonnel;
@@ -14,6 +14,7 @@ use App\Classes\MyEvaluation;
 use App\Controller\BaseController;
 use App\Entity\Evaluation;
 use App\Entity\Semestre;
+use App\Exception\MatiereNotFoundException;
 use App\Repository\GroupeRepository;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
@@ -85,7 +86,7 @@ class EvaluationController extends BaseController
      * @throws SyntaxError
      * @throws LoaderError
      * @throws RuntimeError
-     * @throws \App\Exception\MatiereNotFoundException
+     * @throws MatiereNotFoundException
      */
     #[Route(path: '/export/{uuid}/{type}-{semestre}.{_format}', name: 'application_personnel_evaluation_export', requirements: ['evaluation' => '\d+', '_format' => 'csv|xlsx|pdf'])]
     public function exportEvaluation(GroupeRepository $groupeRepository, MyEvaluation $myEvaluation, #[MapEntity(mapping: ['uuid' => 'uuid'])]
@@ -93,7 +94,7 @@ class EvaluationController extends BaseController
     {
         // todo: tester au niveau évaluation
         // todo: supprimer semestre s'il est dans évaluation ensuite...
-        $t = explode('_', (string) $type);
+        $t = explode('_', $type);
         if ('groupe' === $t[0]) {
             $grp = $groupeRepository->find($t[1]);
             $data = [$grp];

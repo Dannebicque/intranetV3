@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/PersonnelDepartement.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:28
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Entity;
@@ -12,6 +12,7 @@ namespace App\Entity;
 use App\Repository\PersonnelDepartementRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use JsonException;
 
 #[ORM\Entity(repositoryClass: PersonnelDepartementRepository::class)]
 class PersonnelDepartement extends BaseEntity
@@ -93,7 +94,7 @@ class PersonnelDepartement extends BaseEntity
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function clearRole(): self
     {

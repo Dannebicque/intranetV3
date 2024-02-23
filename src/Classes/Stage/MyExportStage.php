@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Stage/MyExportStage.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:52
+ * @lastUpdate 23/02/2024 21:35
  */
 
 /*
@@ -20,12 +20,12 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-class MyExportStage
+readonly class MyExportStage
 {
     /**
      * MyExport constructor.
      */
-    public function __construct(private readonly MyExcelWriter $myExcelWriter)
+    public function __construct(private MyExcelWriter $myExcelWriter)
     {
     }
 

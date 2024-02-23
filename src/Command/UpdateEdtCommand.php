@@ -1,17 +1,19 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Command/UpdateEdtCommand.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/11/2023 17:04
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Command;
 
 use App\Classes\Celcat\MyCelcat;
+use App\Entity\Diplome;
 use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\DiplomeRepository;
+use DateTime;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -42,9 +44,9 @@ class UpdateEdtCommand extends Command
         if (null !== $annee) {
             $this->myCelcat->getData($annee);
             $this->myCelcat->truncateTableEdtCelcat();
-            /** @var \App\Entity\Diplome $diplome */
+            /** @var Diplome $diplome */
             foreach ($diplomes as $diplome) {
-                $date = new \DateTime();
+                $date = new DateTime();
                 $io->text($date->format('d/m/Y H:i:s').' | Mise à jour du diplome '.$diplome->getLibelle());
                 $this->myCelcat->addEvents($diplome, $annee);
             }

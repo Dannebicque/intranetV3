@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AbsenceJustificatifController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Controller\administration;
@@ -134,7 +134,7 @@ class AbsenceJustificatifController extends BaseController
         ]);
     }
 
-    #[Route('/{id}', name: 'administration_absence_justificatif_delete', methods: ['DELETE', 'POST'], options: ['expose' => true])]
+    #[Route('/{id}', name: 'administration_absence_justificatif_delete', options: ['expose' => true], methods: ['DELETE', 'POST'])]
     public function delete(
         EventDispatcherInterface $eventDispatcher,
         Request $request,

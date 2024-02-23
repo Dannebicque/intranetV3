@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/MessageHandler/ExportPdfEdtHandler.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/MessageHandler/ExportPdfEdtHandler.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 19:44
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\MessageHandler;
@@ -15,28 +15,33 @@ use App\Message\ExportPdfEdt;
 use App\Repository\DepartementRepository;
 use App\Repository\PersonnelRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
-#[\Symfony\Component\Messenger\Attribute\AsMessageHandler]
-class ExportPdfEdtHandler
+#[AsMessageHandler]
+readonly class ExportPdfEdtHandler
 {
     /**
      * ExportReleveHandler constructor.
      */
     public function __construct(
-        private readonly Configuration $configuration,
-        private readonly MyEdtExport $myEdtExport,
-        private readonly DepartementRepository $departementRepository,
-        private readonly MailerInterface $mailer,
-        private readonly PersonnelRepository $personnelRepository
+        private Configuration         $configuration,
+        private MyEdtExport           $myEdtExport,
+        private DepartementRepository $departementRepository,
+        private MailerInterface       $mailer,
+        private PersonnelRepository   $personnelRepository
     ) {
     }
     /**
-     * @throws \Twig\Error\SyntaxError
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\LoaderError
+     * @throws SyntaxError
+     * @throws TransportExceptionInterface
+     * @throws RuntimeError
+     * @throws LoaderError
      */
     public function __invoke(ExportPdfEdt $exportPdfEdt)
     {

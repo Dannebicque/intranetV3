@@ -1,10 +1,15 @@
 <?php
+/*
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Command/EduSignDeleteGroupeCommand.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 23/02/2024 21:40
+ */
 
 namespace App\Command;
 
-use App\Classes\EduSign\DeleteCourse;
 use App\Classes\EduSign\DeleteGroupe;
-use App\Classes\EduSign\UpdateEdt;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

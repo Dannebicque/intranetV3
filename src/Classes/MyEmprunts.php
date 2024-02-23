@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyEmprunts.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/05/2022 14:41
+ * @lastUpdate 23/02/2024 21:41
  */
 
 namespace App\Classes;
@@ -21,14 +21,15 @@ use App\Event\EmpruntEvent;
 use App\Repository\EmpruntRepository;
 use App\Repository\MaterielRepository;
 use App\Utils\Tools;
-use function array_key_exists;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use function array_key_exists;
 
 class MyEmprunts
 {
@@ -193,7 +194,7 @@ class MyEmprunts
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function empruntDemande(
         Request $request,

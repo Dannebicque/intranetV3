@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Matiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/07/2023 07:57
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Entity;
@@ -70,7 +70,7 @@ class Matiere extends AbstractMatiere implements MatiereEntityInterface
     private ?Matiere $matiereParent = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Matiere>
+     * @var Collection<int, Matiere>
      */
     #[ORM\OneToMany(mappedBy: 'matiereParent', targetEntity: Matiere::class)]
     private Collection $matiereEnfants;

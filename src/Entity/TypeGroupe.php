@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/TypeGroupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/09/2023 13:29
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Entity;
@@ -30,7 +30,7 @@ class TypeGroupe extends BaseEntity
     private ?string $libelle = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Groupe>
+     * @var Collection<int, Groupe>
      */
     #[ORM\OneToMany(mappedBy: 'typeGroupe', targetEntity: Groupe::class, fetch: 'EAGER', orphanRemoval: true)]
     #[ORM\OrderBy(value: ['ordre' => 'ASC'])]

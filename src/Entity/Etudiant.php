@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Etudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/02/2024 18:46
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Entity;
@@ -18,6 +18,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
+use JsonException;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\HttpFoundation\File\File;
@@ -48,7 +49,7 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     private ?Semestre $semestre = null;
 
     /**
-     * @var Collection<int, \App\Entity\Note>
+     * @var Collection<int, Note>
      */
     #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: Note::class)]
     private Collection $notes;
@@ -774,7 +775,7 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function updateFromApogee(?array $dataApogee): void
     {

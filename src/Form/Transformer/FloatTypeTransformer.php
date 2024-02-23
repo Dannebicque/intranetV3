@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/Transformer/FloatTypeTransformer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 14:55
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Form\Transformer;
@@ -20,7 +20,7 @@ class FloatTypeTransformer implements DataTransformerInterface
         return $value; // No conversion required
     }
 
-    public function reverseTransform($value): mixed
+    public function reverseTransform($value): float
     {
         $convert = Tools::convertToFloat($value);
         if (null === $convert) {

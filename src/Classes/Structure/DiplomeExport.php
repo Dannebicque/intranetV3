@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Structure/DiplomeExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 18:39
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Classes\Structure;
@@ -13,17 +13,20 @@ use App\Entity\Diplome;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
-class DiplomeExport
+readonly class DiplomeExport
 {
-    public function __construct(private readonly Environment $twig, private readonly ApogeeExport $apogeeExport)
+    public function __construct(private Environment $twig, private ApogeeExport $apogeeExport)
     {
     }
 
     /**
-     * @throws \Twig\Error\SyntaxError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\LoaderError
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
      */
     public function exportRefentiel(Diplome $diplome): Response
     {
@@ -52,9 +55,9 @@ class DiplomeExport
     }
 
     /**
-     * @throws \Twig\Error\SyntaxError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\LoaderError
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
      */
     public function exportProgramme(Diplome $diplome): Response
     {

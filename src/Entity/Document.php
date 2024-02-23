@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Document.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/05/2022 14:38
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Entity;
@@ -89,7 +89,7 @@ class Document extends BaseEntity
     private Collection $semestres;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\DocumentFavori>
+     * @var Collection<int, DocumentFavori>
      */
     #[ORM\OneToMany(mappedBy: 'document', targetEntity: DocumentFavori::class)]
     private Collection $documentsFavoris;

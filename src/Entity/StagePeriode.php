@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/StagePeriode.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 19:12
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Entity;
@@ -91,13 +91,13 @@ class StagePeriode extends BaseEntity
     private bool $copieAssistant = true;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\StagePeriodeInterruption>
+     * @var Collection<int, StagePeriodeInterruption>
      */
     #[ORM\OneToMany(mappedBy: 'stagePeriode', targetEntity: StagePeriodeInterruption::class, cascade: ['persist', 'remove'])]
     private Collection $stagePeriodeInterruptions;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\StagePeriodeSoutenance>
+     * @var Collection<int, StagePeriodeSoutenance>
      */
     #[ORM\OneToMany(mappedBy: 'stagePeriode', targetEntity: StagePeriodeSoutenance::class, cascade: ['persist', 'remove'])]
     private Collection $stagePeriodeSoutenances;
@@ -113,13 +113,13 @@ class StagePeriode extends BaseEntity
     private Collection $stagePeriodeOffres;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\StageEtudiant>
+     * @var Collection<int, StageEtudiant>
      */
     #[ORM\OneToMany(mappedBy: 'stagePeriode', targetEntity: StageEtudiant::class, cascade: ['persist', 'remove'], fetch: 'EAGER')]
     private Collection $stageEtudiants;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\StageMailTemplate>
+     * @var Collection<int, StageMailTemplate>
      */
     #[ORM\OneToMany(mappedBy: 'stagePeriode', targetEntity: StageMailTemplate::class, cascade: ['persist', 'remove'])]
     private Collection $stageMailTemplates;

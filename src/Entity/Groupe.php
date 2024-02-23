@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Groupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 16:09
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Entity;
@@ -41,7 +41,7 @@ class Groupe extends BaseEntity implements GroupeInterface
     private Collection $etudiants;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Groupe>
+     * @var Collection<int, Groupe>
      */
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Groupe::class, cascade: ['remove'])]
     private Collection $enfants;
@@ -55,13 +55,13 @@ class Groupe extends BaseEntity implements GroupeInterface
     private ?Parcour $parcours = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<\App\Entity\AbsenceEtatAppel>
+     * @var Collection<AbsenceEtatAppel>
      */
     #[ORM\OneToMany(mappedBy: 'groupe', targetEntity: AbsenceEtatAppel::class)]
     private Collection $absenceEtatAppels;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<\App\Entity\ApcRessourceEnfants>
+     * @var Collection<ApcRessourceEnfants>
      */
     #[ORM\ManyToMany(targetEntity: ApcRessourceEnfants::class, mappedBy: 'groupes')]
     private Collection $apcRessourceEnfants;

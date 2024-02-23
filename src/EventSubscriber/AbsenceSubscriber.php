@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/AbsenceSubscriber.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/EventSubscriber/AbsenceSubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:20
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\EventSubscriber;
@@ -21,12 +21,12 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 /**
  * Envoi un mail de bienvenue à chaque creation d'un utilisateur.
  */
-class AbsenceSubscriber implements EventSubscriberInterface
+readonly class AbsenceSubscriber implements EventSubscriberInterface
 {
     /**
      * RegistrationNotifySubscriber constructor.
      */
-    public function __construct(private readonly EntityManagerInterface $entityManager, private readonly AbsenceRepository $absenceRepository, private readonly AbsenceJustificatifRepository $absenceJustificatifRepository)
+    public function __construct(private EntityManagerInterface $entityManager, private AbsenceRepository $absenceRepository, private AbsenceJustificatifRepository $absenceJustificatifRepository)
     {
     }
 

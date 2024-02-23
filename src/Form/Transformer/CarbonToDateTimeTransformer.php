@@ -1,16 +1,17 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/Transformer/CarbonToDateTimeTransformer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 14:55
+ * @lastUpdate 23/02/2024 21:36
  */
 
 namespace App\Form\Transformer;
 
 use Carbon\Carbon;
 use DateTime;
+use DateTimeInterface;
 use Symfony\Component\Form\DataTransformerInterface;
 use Symfony\Component\Form\Exception\UnexpectedTypeException;
 
@@ -21,7 +22,7 @@ class CarbonToDateTimeTransformer implements DataTransformerInterface
         return $value; // No conversion required
     }
 
-    public function reverseTransform($value): mixed
+    public function reverseTransform($value): ?DateTimeInterface
     {
         if (null === $value) {
             return null;

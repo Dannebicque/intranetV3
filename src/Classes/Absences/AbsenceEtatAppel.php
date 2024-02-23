@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Absences/AbsenceEtatAppel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 18:43
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Classes\Absences;
@@ -16,17 +16,18 @@ use App\Repository\AbsenceEtatAppelRepository;
 use App\Utils\Tools;
 use App\Utils\ToolsMatiere;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 
-class AbsenceEtatAppel
+readonly class AbsenceEtatAppel
 {
     public function __construct(
-        private readonly AbsenceEtatAppelRepository $absenceEtatAppelRepository,
-        private readonly EntityManagerInterface $entityManager
+        private AbsenceEtatAppelRepository $absenceEtatAppelRepository,
+        private EntityManagerInterface     $entityManager
     ) {
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function enregistreAppelFait(array $data): bool
     {
@@ -51,7 +52,7 @@ class AbsenceEtatAppel
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     private function verifieIfExist(array $data): ?\App\Entity\AbsenceEtatAppel
     {

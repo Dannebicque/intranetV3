@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtRealiseController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Controller\administration;
@@ -42,7 +42,7 @@ class EdtRealiseController extends BaseController
     }
 
     /**
-     * @throws \App\Exception\MatiereNotFoundException
+     * @throws MatiereNotFoundException
      */
     #[Route(path: '/service-realise/{matiere}/{personnel}', name: 'administration_edt_service_realise_affiche', options: ['expose' => true], methods: ['POST', 'GET'])]
     public function serviceRealisePersonnelMatiere(TypeMatiereManager $typeMatiereManager, MyEdtCompare $myEdtCompare, $matiere, Personnel $personnel): Response

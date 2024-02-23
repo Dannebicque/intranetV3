@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Semestre/NotesExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/01/2024 09:03
+ * @lastUpdate 23/02/2024 21:35
  */
 
 /*
@@ -26,17 +26,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use function array_key_exists;
 
-class NotesExport
+readonly class NotesExport
 {
     /**
      * NotesExport constructor.
      */
     public function __construct(
-        private readonly MyExcelWriter      $myExcel,
-        private readonly NoteRepository     $noteRepository,
-        private readonly EvaluationRepository $evaluationRepository,
-        private readonly TypeMatiereManager $typeMatiereManager,
-        private readonly EtudiantRepository $etudiantRepository
+        private MyExcelWriter        $myExcel,
+        private NoteRepository       $noteRepository,
+        private EvaluationRepository $evaluationRepository,
+        private TypeMatiereManager   $typeMatiereManager,
+        private EtudiantRepository   $etudiantRepository
     )
     {
     }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/TypeGroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Controller\administration;
@@ -50,7 +50,7 @@ class TypeGroupeController extends BaseController
     }
 
     /**
-     * @throws \App\Exception\DiplomeNotFoundException
+     * @throws DiplomeNotFoundException
      */
     #[Route(path: '/generation-automatique/{semestre}', name: 'administration_type_groupe_semestre_generation_auto', requirements: ['semestre' => '\d+'], methods: ['GET'])]
     public function generationAutomatique(

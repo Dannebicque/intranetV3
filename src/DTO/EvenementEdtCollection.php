@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/EvenementEdtCollection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/09/2022 21:31
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\DTO;
@@ -13,7 +13,7 @@ use App\Entity\Constantes;
 
 class EvenementEdtCollection
 {
-    /** @var \App\DTO\EvenementEdt[] */
+    /** @var EvenementEdt[] */
     public array $evenements = [];
 
     public function add(EvenementEdt $event): void
@@ -22,7 +22,7 @@ class EvenementEdtCollection
     }
 
     /**
-     * @return \App\DTO\EvenementEdt[]
+     * @return EvenementEdt[]
      */
     public function getEvents(): array
     {

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 18:29
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Entity;
@@ -1412,10 +1412,5 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     {
         $this->idEduSign = $idEduSign;
         return $this;
-    }
-
-    public function getMailUniv(): ?string
-    {
-        return $this->mailUniv;
     }
 }

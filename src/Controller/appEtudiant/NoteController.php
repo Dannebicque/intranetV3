@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/NoteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Controller\appEtudiant;
@@ -25,8 +25,8 @@ use Symfony\Component\Routing\Attribute\Route;
 class NoteController extends BaseController
 {
     /**
-     * @throws \App\Exception\MatiereNotFoundException
-     * @throws \App\Exception\EvaluationNotFoundException
+     * @throws MatiereNotFoundException
+     * @throws EvaluationNotFoundException
      */
     #[Route(path: '/details/{id}', name: 'app_etudiant_note_detail')]
     public function details(TypeMatiereManager $typeMatiereManager, MyEvaluation $myEvaluation, Note $note): Response

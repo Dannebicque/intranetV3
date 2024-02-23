@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/ApiEduSign.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:34
+ * @lastUpdate 23/02/2024 21:36
  */
 
 namespace App\Classes\EduSign;
@@ -21,6 +21,7 @@ use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
+use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpClient\HttpClient;
 
@@ -57,7 +58,7 @@ class ApiEduSign
         $data = json_decode($content, true);
         // accéder à la valeur de l'ID
         $id = "";
-        if (isset($data['result']) && isset($data['result']['ID'])) {
+        if (isset($data['result']['ID'])) {
             $id = $data['result']['ID'];
         }
 
@@ -72,7 +73,7 @@ class ApiEduSign
         }
 
         if (null === $edt) {
-            throw new \Exception('Course not found for ' . $edt->api_id);
+            throw new Exception('Course not found for ' . $edt->api_id);
         }
 
         if ($edt->getIdEduSign() == null) {
@@ -180,13 +181,13 @@ class ApiEduSign
         $data = json_decode($content, true);
         // accéder à la valeur de l'ID
         $id = "";
-        if (isset($data['result']) && isset($data['result']['ID'])) {
+        if (isset($data['result']['ID'])) {
             $id = $data['result']['ID'];
         }
 
         $semestre = $this->semestreRepository->findOneBy(['id' => $groupe->api_id]);
         if ($semestre && null === $semestre) {
-            throw new \Exception('Group not found for ' . $semestre->api_id);
+            throw new Exception('Group not found for ' . $semestre->api_id);
         }
 
         if ($semestre && $semestre->getIdEduSign() == null) {
@@ -196,7 +197,7 @@ class ApiEduSign
 
         $groupeAdd = $this->groupeRepository->findOneBy(['id' => $groupe->api_id]);
         if ($groupeAdd && null === $groupeAdd) {
-            throw new \Exception('Group not found for ' . $groupeAdd->api_id);
+            throw new Exception('Group not found for ' . $groupeAdd->api_id);
         }
 
         if ($groupeAdd && $groupeAdd->getIdEduSign() == null) {
@@ -244,13 +245,13 @@ class ApiEduSign
         $data = json_decode($content, true);
         // accéder à la valeur de l'ID
         $id = "";
-        if (isset($data['result']) && isset($data['result']['ID'])) {
+        if (isset($data['result']['ID'])) {
             $id = $data['result']['ID'];
         }
 
         $etudiant = $this->etudiantRepository->findOneBy(['id' => $etudiant->api_id]);
         if ($etudiant && null === $etudiant) {
-            throw new \Exception('Etudiant not found for ' . $etudiant->api_id);
+            throw new Exception('Etudiant not found for ' . $etudiant->api_id);
         }
 
         if ($etudiant && $etudiant->getIdEduSign() === null) {
@@ -279,7 +280,7 @@ class ApiEduSign
 
         // accéder à la valeur de l'ID
         $id = "";
-        if (isset($data['result']) && isset($data['result']['ID'])) {
+        if (isset($data['result']['ID'])) {
             $id = $data['result']['ID'];
         }
 

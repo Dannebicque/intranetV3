@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/CelcatCalendrierController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Controller\superAdministration;
@@ -18,6 +18,7 @@ use App\Entity\Constantes;
 use App\Form\CelcatCalendrierType;
 use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\CalendrierRepository;
+use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -72,7 +73,7 @@ class CelcatCalendrierController extends BaseController
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     #[Route(path: '/new/year', name: 'sa_celcat_calendrier_new_year', methods: 'GET|POST')]
     public function createNewYear(MyCelcat $myCelcat, Request $request, AnneeUniversitaireRepository $anneeUniversitaireRepository): Response

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionSauvegarde.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/09/2023 11:52
+ * @lastUpdate 23/02/2024 21:35
  */
 
 /*
@@ -26,16 +26,16 @@ use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use function array_key_exists;
 
-class SousCommissionSauvegarde
+readonly class SousCommissionSauvegarde
 {
     /**
      * SousCommissionSauvegarde constructor.
      */
     public function __construct(
-        private readonly Configuration $configuration,
-        private readonly ScolaritePromoRepository $scolaritePromoRepository,
-        private readonly ScolariteRepository $scolariteRepository,
-        private readonly EntityManagerInterface $entityManager)
+        private Configuration            $configuration,
+        private ScolaritePromoRepository $scolaritePromoRepository,
+        private ScolariteRepository      $scolariteRepository,
+        private EntityManagerInterface   $entityManager)
     {
     }
 

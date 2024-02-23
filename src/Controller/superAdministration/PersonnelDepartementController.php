@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/PersonnelDepartementController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/02/2024 18:55
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Controller\superAdministration;
@@ -14,6 +14,7 @@ use App\Entity\Constantes;
 use App\Entity\Departement;
 use App\Entity\PersonnelDepartement;
 use App\Repository\PersonnelDepartementRepository;
+use JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -54,7 +55,7 @@ class PersonnelDepartementController extends BaseController
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     #[Route(path: '/modifier-droit/{pf}', name: 'sa_personnel_departement_modifier_droit', options: ['expose' => true])]
     public function modifierDroits(Request $request, PersonnelDepartement $pf): Response

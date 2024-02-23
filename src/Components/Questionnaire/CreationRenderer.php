@@ -1,17 +1,21 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/CreationRenderer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/01/2023 15:18
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Components\Questionnaire;
 
 use App\Entity\QuestQuestion;
 use App\Entity\QuestSection;
+use JsonException;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class CreationRenderer
 {
@@ -22,10 +26,10 @@ class CreationRenderer
     }
 
     /**
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
-     * @throws \Twig\Error\LoaderError
-     * @throws \JsonException
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws LoaderError
+     * @throws JsonException
      */
     public function sectionCreationRender(QuestSection $section): string
     {
@@ -33,10 +37,10 @@ class CreationRenderer
     }
 
     /**
-     * @throws \Twig\Error\SyntaxError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\LoaderError
-     * @throws \JsonException
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
+     * @throws JsonException
      */
     public function questionCreationRender(QuestQuestion $question): string
     {
@@ -45,7 +49,7 @@ class CreationRenderer
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     private function viewSection(QuestSection $section): array
     {
@@ -60,7 +64,7 @@ class CreationRenderer
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     private function viewQuestion(QuestQuestion $question): array
     {

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Questionnaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/01/2023 13:31
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Components\Questionnaire;
@@ -24,6 +24,9 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class Questionnaire
 {
@@ -206,9 +209,9 @@ class Questionnaire
     }
 
     /**
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
-     * @throws \Twig\Error\LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws LoaderError
      */
     public function wizardPage(string $template = 'components/questionnaire/_wizard.html.twig', array $options = []): Response
     {
@@ -263,7 +266,7 @@ class Questionnaire
     }
 
     /**
-     * @return \App\Components\Questionnaire\DTO\ListeChoix
+     * @return ListeChoix
      */
     public function getListeChoix(): ListeChoix
     {

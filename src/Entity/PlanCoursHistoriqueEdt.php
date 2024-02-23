@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/PlanCoursHistoriqueEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/09/2022 21:01
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Entity;
@@ -12,6 +12,7 @@ namespace App\Entity;
 use App\Entity\Traits\LifeCycleTrait;
 use App\Entity\Traits\MatiereTrait;
 use App\Repository\PlanCoursHistoriqueEdtRepository;
+use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -26,7 +27,7 @@ class PlanCoursHistoriqueEdt extends BaseEntity
     private ?string $commentaire = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $dateCours = null;
+    private ?DateTimeInterface $dateCours = null;
 
     #[ORM\ManyToOne(inversedBy: 'planCoursHistoriqueEdts')]
     private ?Personnel $enseignant = null;
@@ -49,12 +50,12 @@ class PlanCoursHistoriqueEdt extends BaseEntity
         return $this;
     }
 
-    public function getDateCours(): ?\DateTimeInterface
+    public function getDateCours(): ?DateTimeInterface
     {
         return $this->dateCours;
     }
 
-    public function setDateCours(\DateTimeInterface $dateCours): self
+    public function setDateCours(DateTimeInterface $dateCours): self
     {
         $this->dateCours = $dateCours;
 

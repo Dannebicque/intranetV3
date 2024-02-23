@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/ApogeeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Controller\administration;
@@ -17,6 +17,7 @@ use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\BacRepository;
 use App\Repository\EtudiantRepository;
 use App\Repository\SemestreRepository;
+use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -27,7 +28,7 @@ class ApogeeController extends BaseController
     private array $etudiants;
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     #[Route('/import/diplome/{type}', name: 'administration_apogee_maj', methods: ['GET', 'POST'])]
     public function importMaj(
@@ -79,7 +80,7 @@ class ApogeeController extends BaseController
     }
 
     /**
-     * @throws \App\Exception\SemestreNotFoundException
+     * @throws SemestreNotFoundException
      */
     #[Route('/import/etudiant', name: 'administration_apogee_un_etudiant', methods: ['GET', 'POST'])]
     public function importEtudiant(

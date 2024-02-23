@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/02/2024 18:55
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Controller\appPersonnel;
@@ -20,12 +20,13 @@ use App\Exception\DepartementNotFoundException;
 use App\Utils\ToolsMatiere;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * Class PrevisionnelController.
  */
 #[Route(path: '/application/personnel/previsionnel')]
-#[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_PERMANENT')]
+#[IsGranted('ROLE_PERMANENT')]
 class PrevisionnelController extends BaseController
 {
     #[Route(path: '/', name: 'previsionnel_index')]
@@ -51,7 +52,7 @@ class PrevisionnelController extends BaseController
     }
 
     /**
-     * @throws \App\Exception\DepartementNotFoundException
+     * @throws DepartementNotFoundException
      */
     #[Route(path: '/chronologique', name: 'previsionnel_chronologique')]
     public function chronologique(TypeMatiereManager $typeMatiereManager, ServiceRealiseIntranet $serviceRealiseIntranet, ServiceRealiseCelcat $serviceRealiseCelcat): Response

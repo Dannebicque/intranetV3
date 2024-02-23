@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/10/2023 21:53
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Classes\Edt;
@@ -590,7 +590,7 @@ class MyEdtIntranet extends BaseEdt
     }
 
     /**
-     * @throws \App\Exception\MatiereNotFoundException
+     * @throws MatiereNotFoundException
      */
     public function addCours(Request $request, AnneeUniversitaire $anneeUniversitaire): EdtPlanning
     {
@@ -606,7 +606,7 @@ class MyEdtIntranet extends BaseEdt
     }
 
     /**
-     * @throws \App\Exception\MatiereNotFoundException
+     * @throws MatiereNotFoundException
      */
     public function updateCours(
         Request $request,
@@ -617,7 +617,7 @@ class MyEdtIntranet extends BaseEdt
     }
 
     /**
-     * @throws \App\Exception\MatiereNotFoundException
+     * @throws MatiereNotFoundException
      */
     private function updatePl(
         $request,

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 18:40
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Controller\administration;
@@ -459,7 +459,7 @@ class PrevisionnelController extends BaseController
 
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     #[Route('/import', name: 'administration_previsionnel_import', methods: ['GET', 'POST'])]
     public function import(PrevisionnelImport $myPrevisionnel, Request $request): Response

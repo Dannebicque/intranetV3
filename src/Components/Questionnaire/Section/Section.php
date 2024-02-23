@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Section/Section.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:43
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Components\Questionnaire\Section;
@@ -12,6 +12,7 @@ namespace App\Components\Questionnaire\Section;
 use App\Components\Questionnaire\Adapter\QuestionnaireQuestionAdapter;
 use App\Components\Questionnaire\DTO\ListeChoix;
 use App\Components\Questionnaire\DTO\ReponsesUser;
+use App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException;
 use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
 
 class Section extends AbstractSection
@@ -48,7 +49,7 @@ class Section extends AbstractSection
     }
 
     /**
-     * @throws \App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException
+     * @throws TypeQuestionNotFoundException
      */
     public function prepareQuestions(array $options = [], ?ReponsesUser $reponsesUser = null): void
     {

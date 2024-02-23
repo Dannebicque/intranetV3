@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/ColumnType/TypeQuestionColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:08
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Table\ColumnType;
 
+use App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException;
 use App\Components\Questionnaire\QuestionnaireRegistry;
 use Dannebicque\TableBundle\Column\PropertyColumnType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -24,7 +25,7 @@ class TypeQuestionColumnType extends PropertyColumnType
     }
 
     /**
-     * @throws \App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException
+     * @throws TypeQuestionNotFoundException
      */
     public function renderProperty(mixed $value, array $options): string
     {

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 18:29
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Classes\SousCommission;
@@ -648,7 +648,7 @@ class SousCommissionExport
     }
 
     /**
-     * @throws \App\Exception\SemestreNotFoundException
+     * @throws SemestreNotFoundException
      */
     public function exportGrandJuryApc(
         ScolaritePromo     $scolaritePromo,
@@ -779,7 +779,7 @@ class SousCommissionExport
     }
 
     /**
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws Exception
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
      */

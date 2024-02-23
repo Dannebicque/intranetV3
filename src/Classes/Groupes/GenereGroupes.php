@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Groupes/GenereGroupes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 18:43
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Classes\Groupes;
@@ -20,7 +20,7 @@ use Doctrine\ORM\EntityManagerInterface;
 class GenereGroupes
 {
     /**
-     * @var \App\Entity\Diplome
+     * @var Diplome
      */
     protected Diplome $diplome;
     private Semestre $semestre;
