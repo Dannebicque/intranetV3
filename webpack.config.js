@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/webpack.config.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/02/2024 09:38
+// @lastUpdate 23/02/2024 19:43
 
 const Encore = require('@symfony/webpack-encore')
 const path = require('path')
@@ -75,6 +75,9 @@ Encore
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
   .splitEntryChunks()
 
+  // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
+  .enableStimulusBridge('./assets/controllers.json')
+
   // will require an extra script tag for runtime.js
   // but, you probably want this, unless you're building a single-page app
   .enableSingleRuntimeChunk()
@@ -88,7 +91,7 @@ Encore
   // enables @babel/preset-env polyfills
   .configureBabelPresetEnv((config) => {
     config.useBuiltIns = 'usage'
-    config.corejs = 3
+    config.corejs = '3.23'
   })
   .addPlugin(new FosRouting())
   .enableSassLoader()

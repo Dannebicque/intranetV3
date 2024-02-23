@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "webpack-notifier": "^1.15.0",
     "@babel/core": "^7.19.3",
     "@babel/preset-env": "^7.19.4",
     "@dannebicque/table-bundle": "file:vendor/dannebicque/table-bundle/assets",

@@ -4,3 +4,9 @@ cas_return:
 live_component:
   resource: '@LiveComponentBundle/config/routes.php'
   prefix: '/{_locale}/_components'
+
+controllers:
+  resource:
+    path: ../src/Controller/
+    namespace: App\Controller
+  type: attribute
