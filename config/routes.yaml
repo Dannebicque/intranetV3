@@ -1,3 +1,14 @@
+controllers:
+  resource:
+    path: ../src/Controller/
+    namespace: App\Controller
+  type: attribute
+  prefix: /{_locale}
+  defaults:
+    _locale: fr
+  requirements:
+    _locale: fr|en
+
 cas_return:
   path: /sso/cas
 
@@ -5,8 +16,24 @@ live_component:
   resource: '@LiveComponentBundle/config/routes.php'
   prefix: '/{_locale}/_components'
 
-controllers:
-  resource:
-    path: ../src/Controller/
-    namespace: App\Controller
-  type: attribute
+homepage:
+  path: /
+  controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
+  defaults:
+    path: /fr/tableau-de-bord
+    permanent: true
+
+fr_homepage:
+  path: /fr
+  controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
+  defaults:
+    path: /fr/tableau-de-bord
+    permanent: true
+
+en_homepage:
+  path: /en
+  controller: Symfony\Bundle\FrameworkBundle\Controller\RedirectController::urlRedirectAction
+  defaults:
+    path: /en/tableau-de-bord
+    permanent: true
+

@@ -3,11 +3,7 @@
         "@dannebicque/table-bundle": {
             "table": {
                 "enabled": true,
-                "fetch": "eager",
-                "autoimport": {
-                    "dist/bootstrap4-theme.css": false,
-                    "dist/bootstrap5-theme.css": true
-                }
+                "fetch": "eager"
             }
         },
         "@symfony/ux-autocomplete": {
