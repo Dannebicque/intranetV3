@@ -1,19 +1,17 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/EventSubscriber/RegistrationNotifySubscriber.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/EventSubscriber/RegistrationNotifySubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 23/02/2024 18:29
  */
 
 namespace App\EventSubscriber;
 
 use App\Entity\Absence;
-use App\Entity\Etudiant;
 use App\Entity\Notification;
 use App\Event\AbsenceEvent;
-use App\Event\CarnetEvent;
 use App\Event\JustificatifEvent;
 use App\Event\NoteEvent;
 use App\Event\RattrapageEvent;
@@ -40,29 +38,9 @@ class RegistrationNotifySubscriber implements EventSubscriberInterface
             AbsenceEvent::ADDED => 'onAbsenceAdded',
             AbsenceEvent::REMOVED => 'onAbsenceRemoved',
             AbsenceEvent::JUSTIFIED => 'onAbsenceJustified',
-            CarnetEvent::ADDED => 'onCarnetAdded',
             RattrapageEvent::DECISION => 'onDecisionRattrapge',
             JustificatifEvent::DECISION => 'onDecisionJustficatif',
         ];
-    }
-
-    public function onCarnetAdded(CarnetEvent $event): void
-    {
-        $cahier = $event->getCahierTexte();
-
-        if (null !== $cahier->getSemestre()) {
-            /** @var Etudiant $etudiant */
-            foreach ($cahier->getSemestre()->getEtudiants() as $etudiant) {
-                $notif = new Notification();
-                $notif->setEtudiant($etudiant);
-                $notif->setTypeUser(Notification::ETUDIANT);
-                $notif->setType(CarnetEvent::ADDED);
-                $notif->setUrl($this->router->generate('application_etudiant_carnet_show', ['id' => $cahier->getId()]));
-                $this->entityManager->persist($notif);
-            }
-
-            $this->entityManager->flush();
-        }
     }
 
     public function onNoteAdded(NoteEvent $event): void

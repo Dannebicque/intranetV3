@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 23:15
+ * @lastUpdate 23/02/2024 18:29
  */
 
 namespace App\Entity;
@@ -124,12 +124,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
 
     #[ORM\Column(type: Types::FLOAT)]
     private float $nbHeuresService = 192;
-
-    /**
-     * @var Collection<int, CahierTexte>
-     */
-    #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: CahierTexte::class)]
-    private Collection $cahierTextes;
 
     /**
      * @var Collection<int, Notification>
@@ -272,7 +266,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         $this->evaluationsAuteur = new ArrayCollection();
         $this->evaluationsAutorise = new ArrayCollection();
         $this->modificationNotes = new ArrayCollection();
-        $this->cahierTextes = new ArrayCollection();
         $this->notifications = new ArrayCollection();
         $this->personnelDepartements = new ArrayCollection();
         $this->messages = new ArrayCollection();
@@ -601,37 +594,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     public function setNbHeuresService(float $nbHeuresService = 192): self
     {
         $this->nbHeuresService = $nbHeuresService;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|CahierTexte[]
-     */
-    public function getCahierTextes(): Collection
-    {
-        return $this->cahierTextes;
-    }
-
-    public function addCahierTexte(CahierTexte $cahierTexte): self
-    {
-        if (!$this->cahierTextes->contains($cahierTexte)) {
-            $this->cahierTextes[] = $cahierTexte;
-            $cahierTexte->setPersonnel($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCahierTexte(CahierTexte $cahierTexte): self
-    {
-        if ($this->cahierTextes->contains($cahierTexte)) {
-            $this->cahierTextes->removeElement($cahierTexte);
-            // set the owning side to null (unless already changed)
-            if ($cahierTexte->getPersonnel() === $this) {
-                $cahierTexte->setPersonnel(null);
-            }
-        }
 
         return $this;
     }

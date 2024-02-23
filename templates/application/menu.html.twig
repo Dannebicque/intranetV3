@@ -29,16 +29,6 @@
                    href="{{ path('application_personnel_plan_cours_index') }}"
                    role="tab">{{ 'menu.plan_cours'|trans }}</a>
             </li>
-
-            {#            <li class="nav-item"> #}
-            {#                <a class="nav-link changeapplication {% if onglet == 'carnet' %}active{% endif %}" #}
-            {#                   href="{{ path('application_personnel_carnet_index') }}" role="tab">{{ 'menu.carnet'|trans }}</a> #}
-            {#            </li> #}
-
-            {#            <li class="nav-item"> #}
-            {#                <a class="nav-link changeapplication {% if onglet == 'quizz' %}active{% endif %}" #}
-            {#                   href="{{ path('application_personnel_quizz_index') }}" role="tab">{{ 'menu.quizz'|trans }}</a> #}
-            {#            </li> #}
         {% else %}
             <li class="nav-item ">
                 <a class="nav-link changeapplication {% if onglet == 'messagerie' %}active{% endif %}"
@@ -81,17 +71,6 @@
                        role="tab">{{ 'menu.rattrapage'|trans }}</a>
                 </li>
             {% endif %}
-
-            {#            <li class="nav-item "> #}
-            {#                <a class="nav-link changeapplication {% if onglet == 'quizz' %}active{% endif %}" #}
-            {#                   href="{{ path('application_etudiant_quizz_index') }}" role="tab">{{ 'menu.quizz'|trans }}</a> #}
-            {#            </li> #}
-            {#            {% if user_data.departement.optMateriel == true %} #}
-            {#                <li class="nav-item "> #}
-            {#                    <a class="nav-link changeapplication {% if onglet == 'emprunt' %}active{% endif %}" #}
-            {#                       href="{{ path('application_etudiant_emprunt_index') }}" role="tab">{{ 'menu.emprunt'|trans }}</a> #}
-            {#                </li> #}
-            {#            {% endif %} #}
         {% endif %}
     </ul>
     <div class="buttons">

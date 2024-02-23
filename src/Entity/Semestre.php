@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/01/2024 17:22
+ * @lastUpdate 23/02/2024 18:29
  */
 
 namespace App\Entity;
@@ -113,12 +113,6 @@ class Semestre extends BaseEntity implements Stringable, GroupeInterface
 
     #[ORM\ManyToMany(targetEntity: Borne::class, mappedBy: 'semestres')]
     private Collection $bornes;
-
-    /**
-     * @var Collection<int, \App\Entity\CahierTexte>
-     */
-    #[ORM\OneToMany(mappedBy: 'semestre', targetEntity: CahierTexte::class)]
-    private Collection $cahierTextes;
 
     /**
      * @var Collection<int, \App\Entity\Ue>
@@ -269,7 +263,6 @@ class Semestre extends BaseEntity implements Stringable, GroupeInterface
         $this->hrs = new ArrayCollection();
         $this->parcours = new ArrayCollection();
         $this->bornes = new ArrayCollection();
-        $this->cahierTextes = new ArrayCollection();
         $this->ues = new ArrayCollection();
         $this->typeGroupes = new ArrayCollection();
         $this->stagePeriodes = new ArrayCollection();
@@ -632,37 +625,6 @@ class Semestre extends BaseEntity implements Stringable, GroupeInterface
     public function update(?string $name, mixed $value): void
     {
         Tools::updateFields($name, $value, $this);
-    }
-
-    /**
-     * @return Collection|CahierTexte[]
-     */
-    public function getCahierTextes(): Collection
-    {
-        return $this->cahierTextes;
-    }
-
-    public function addCahierTexte(CahierTexte $cahierTexte): self
-    {
-        if (!$this->cahierTextes->contains($cahierTexte)) {
-            $this->cahierTextes[] = $cahierTexte;
-            $cahierTexte->setSemestre($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCahierTexte(CahierTexte $cahierTexte): self
-    {
-        if ($this->cahierTextes->contains($cahierTexte)) {
-            $this->cahierTextes->removeElement($cahierTexte);
-            // set the owning side to null (unless already changed)
-            if ($cahierTexte->getSemestre() === $this) {
-                $cahierTexte->setSemestre(null);
-            }
-        }
-
-        return $this;
     }
 
     public function getUes(): Collection

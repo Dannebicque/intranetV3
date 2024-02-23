@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/AideController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 23/02/2024 18:29
  */
 
 namespace App\Controller;
@@ -24,7 +24,6 @@ class AideController extends AbstractController
         $tab = [
             'login' => '01-etudiant/01-etudiant',
             'administration_stage_periode' => 'url',
-            'application_personnel_carnet' => 'url',
             'administration_absence_liste' => 'url',
             'administration_absence_suivi' => 'url',
             'administration_justificatif_absence' => 'url',
