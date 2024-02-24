@@ -1,10 +1,10 @@
 // Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
-// @file /Users/davidannebicque/Sites/intranetV3/cypress/e2e/dashboard.cy.js
+// @file /Users/davidannebicque/Sites/intranetV3/cypress/e2e/administration.cy.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/02/2024 10:04
+// @lastUpdate 24/02/2024 10:05
 
-describe('Dashboard', () => {
+describe('Partie Administration', () => {
   beforeEach(() => {
     cy.login('annebi01')
   })
