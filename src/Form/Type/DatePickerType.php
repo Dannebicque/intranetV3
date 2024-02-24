@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/Type/DatePickerType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:41
+ * @lastUpdate 24/02/2024 08:37
  */
 
 namespace App\Form\Type;
@@ -57,9 +57,7 @@ class DatePickerType extends AbstractType
 
             function ($value) use ($options) {
                 if ('' !== $value && null !== $value) {
-                    $date = Carbon::createFromFormat($options['format'], $value);
-
-                    return false === $date ? null : $date;
+                    return Carbon::createFromFormat($options['format'], $value);
                 }
 
                 return null;

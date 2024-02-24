@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/RddController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 24/02/2024 08:39
  */
 
 namespace App\Controller;
@@ -19,6 +19,7 @@ use App\Utils\Tools;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
+use Exception;
 use Ramsey\Uuid\Uuid;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -41,6 +42,7 @@ class RddController extends AbstractController
 
     /**
      * @throws NonUniqueResultException
+     * @throws Exception
      */
     #[Route('/', name: 'identification')]
     public function identification(

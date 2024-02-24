@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/PlanCours/Source/PlanCoursSAE.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/02/2024 14:11
+ * @lastUpdate 24/02/2024 08:59
  */
 
 namespace App\Components\PlanCours\Source;
@@ -71,7 +71,7 @@ class PlanCoursSAE extends AbstractPlanCours implements PlanCoursInterface
         $this->planCoursSaeRepository->add($planCours, true);
     }
 
-    public function getRepository()
+    public function getRepository(): PlanCoursSaeRepository
     {
         return $this->planCoursSaeRepository;
     }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcReferentiel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 24/02/2024 08:48
  */
 
 namespace App\Entity;
@@ -206,11 +206,9 @@ class ApcReferentiel extends BaseEntity
 
     public function removeDiplome(Diplome $diplome): self
     {
-        if ($this->diplomes->removeElement($diplome)) {
-            // set the owning side to null (unless already changed)
-            if ($diplome->getReferentiel() === $this) {
-                $diplome->setReferentiel(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->diplomes->removeElement($diplome) && $diplome->getReferentiel() === $this) {
+            $diplome->setReferentiel(null);
         }
 
         return $this;
@@ -248,11 +246,9 @@ class ApcReferentiel extends BaseEntity
 
     public function removePpn(Ppn $ppn): self
     {
-        if ($this->ppns->removeElement($ppn)) {
-            // set the owning side to null (unless already changed)
-            if ($ppn->getApcReferentiel() === $this) {
-                $ppn->setApcReferentiel(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->ppns->removeElement($ppn) && $ppn->getApcReferentiel() === $this) {
+            $ppn->setApcReferentiel(null);
         }
 
         return $this;

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/PlanCours.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 24/02/2024 08:51
  */
 
 namespace App\Entity;
@@ -169,11 +169,9 @@ abstract class PlanCours
 
     public function removePlanCoursSequence(PlanCoursSequence $planCoursSequence): self
     {
-        if ($this->planCoursSequences->removeElement($planCoursSequence)) {
-            // set the owning side to null (unless already changed)
-            if ($planCoursSequence->getPlanCours() === $this) {
-                $planCoursSequence->setPlanCours(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->planCoursSequences->removeElement($planCoursSequence) && $planCoursSequence->getPlanCours() === $this) {
+            $planCoursSequence->setPlanCours(null);
         }
 
         return $this;
@@ -199,11 +197,9 @@ abstract class PlanCours
 
     public function removePlanCoursRealise(PlanCoursRealise $planCoursRealise): self
     {
-        if ($this->planCoursRealises->removeElement($planCoursRealise)) {
-            // set the owning side to null (unless already changed)
-            if ($planCoursRealise->getPlanCours() === $this) {
-                $planCoursRealise->setPlanCours(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->planCoursRealises->removeElement($planCoursRealise) && $planCoursRealise->getPlanCours() === $this) {
+            $planCoursRealise->setPlanCours(null);
         }
 
         return $this;

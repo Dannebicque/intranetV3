@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Groupes/GenereGroupes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 24/02/2024 08:52
  */
 
 namespace App\Classes\Groupes;
@@ -59,7 +59,7 @@ class GenereGroupes
             $tds[$i] = $this->genereTd($cms, $i);
         }
 
-        for ($i = 1; $i <= $nbTp; $i = $i+2) {
+        for ($i = 1; $i <= $nbTp; $i += 2) {
             $this->genereTp($tds, $i);
             $this->genereTp($tds, $i + 1);
         }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcReferentielFormationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 24/02/2024 08:48
  */
 
 namespace App\Controller\administration\apc;
@@ -115,10 +115,8 @@ class ApcReferentielFormationController extends BaseController
                     $this->entityManager->persist($obj);
                 } elseif (Tools::convertToFloat($value) > 0) { // existe et > 0 on met à jour
                     $obj->setCoefficient(Tools::convertToFloat($value));
-                } else { // existe et <=0 on supprime
-                    if ($obj !== null) {
-                        $this->entityManager->remove($obj);
-                    }
+                } else if ($obj !== null) {
+                    $this->entityManager->remove($obj);
                 }
                 $this->entityManager->flush();
             } else {
@@ -140,10 +138,8 @@ class ApcReferentielFormationController extends BaseController
                     $this->entityManager->persist($obj);
                 } elseif (Tools::convertToFloat($value) > 0) {
                     $obj->setCoefficient(Tools::convertToFloat($value));
-                } else {
-                    if ($obj !== null) {
-                        $this->entityManager->remove($obj);
-                    }
+                } else if ($obj !== null) {
+                    $this->entityManager->remove($obj);
                 }
                 $this->entityManager->flush();
             } else {

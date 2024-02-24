@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Adapter/QuestionnaireQuestionAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 24/02/2024 08:51
  */
 
 namespace App\Components\Questionnaire\Adapter;
@@ -91,13 +91,11 @@ class QuestionnaireQuestionAdapter
                         $this->question->reponsesUser[$questionEnfant->getId()] = $reponsesUser->getReponse($questionEnfant->getCle());
                     }
                 }
+            } else if ('' !== $this->question->valeur_config) {
+                $this->question->reponsesUser[$this->question->id]['c' . $this->question->valeur_config] = $reponsesUser->getReponse($this->question->cle,
+                    'c' . $this->question->valeur_config);
             } else {
-                if ('' !== $this->question->valeur_config) {
-                    $this->question->reponsesUser[$this->question->id]['c' . $this->question->valeur_config] = $reponsesUser->getReponse($this->question->cle,
-                        'c' . $this->question->valeur_config);
-                } else {
-                    $this->question->reponseUser = $reponsesUser->getReponse($this->question->cle);
-                }
+                $this->question->reponseUser = $reponsesUser->getReponse($this->question->cle);
             }
         }
 

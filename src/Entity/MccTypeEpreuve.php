@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/MccTypeEpreuve.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 18:16
+ * @lastUpdate 24/02/2024 08:51
  */
 
 namespace App\Entity;
@@ -79,11 +79,9 @@ class MccTypeEpreuve extends BaseEntity
 
     public function removeMcc(Mcc $mcc): self
     {
-        if ($this->mccs->removeElement($mcc)) {
-            // set the owning side to null (unless already changed)
-            if ($mcc->getTypeEpreuve() === $this) {
-                $mcc->setTypeEpreuve(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->mccs->removeElement($mcc) && $mcc->getTypeEpreuve() === $this) {
+            $mcc->setTypeEpreuve(null);
         }
 
         return $this;

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/PlanCours/Source/PlanCoursRessource.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 24/02/2024 08:59
  */
 
 namespace App\Components\PlanCours\Source;
@@ -119,7 +119,7 @@ class PlanCoursRessource extends AbstractPlanCours implements PlanCoursInterface
         $this->planCoursRessourceRepository->add($planCoursRessource, true);
     }
 
-    public function getRepository()
+    public function getRepository(): PlanCoursRessourceRepository
     {
         return $this->planCoursRessourceRepository;
     }

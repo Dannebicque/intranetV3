@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/QuestionnaireController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 24/02/2024 08:39
  */
 
 namespace App\Controller\questionnaire;
@@ -13,6 +13,7 @@ use App\Classes\Mail\MailerFromTwig;
 use App\Components\Questionnaire\Adapter\QuestionnaireQualiteAdapter;
 use App\Components\Questionnaire\Adapter\SectionQualiteEntityAdapter;
 use App\Components\Questionnaire\DTO\AbstractQuestionnaire;
+use App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException;
 use App\Components\Questionnaire\Questionnaire;
 use App\Components\Questionnaire\QuestionnaireRegistry;
 use App\Components\Questionnaire\Section\AbstractSection;
@@ -112,6 +113,7 @@ class QuestionnaireController extends AbstractController
     /**
      * @throws NonUniqueResultException
      * @throws JsonException
+     * @throws TypeQuestionNotFoundException
      */
     #[Route(path: '/enquete-qualite/api/ajax/reponse/{uuidQuestionnaire}/{uuid}', name: 'api_questionnaire_qualite_ajax_reponse', options: ['expose' => true])]
     public function sauvegardeReponse(
@@ -143,6 +145,7 @@ class QuestionnaireController extends AbstractController
      * @throws NonUniqueResultException
      * @throws JsonException
      * @throws JsonException
+     * @throws TypeQuestionNotFoundException
      */
     #[Route(path: '/enquete-qualite/api/ajax/reponse-txt/{uuidQuestionnaire}/{uuid}', name: 'api_questionnaire_qualite_ajax_reponse_txt', options: ['expose' => true])]
     public function sauvegardeReponseTxt(

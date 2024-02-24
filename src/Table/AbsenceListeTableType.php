@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/AbsenceListeTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 18:43
+ * @lastUpdate 24/02/2024 07:57
  */
 
 namespace App\Table;
@@ -22,11 +22,11 @@ use Dannebicque\TableBundle\Column\PropertyColumnType;
 use Dannebicque\TableBundle\Column\WidgetColumnType;
 use Dannebicque\TableBundle\DTO\TableResult;
 use Dannebicque\TableBundle\DTO\TableState;
-use DavidAnnebicque\TableBundle\TableBuilder;
-use DavidAnnebicque\TableBundle\TableType;
-use DavidAnnebicque\TableBundle\Widget\Type\ExportDropdownType;
-use DavidAnnebicque\TableBundle\Widget\Type\RowLinkType;
-use DavidAnnebicque\TableBundle\Widget\WidgetBuilder;
+use Dannebicque\TableBundle\TableBuilder;
+use Dannebicque\TableBundle\TableType;
+use Dannebicque\TableBundle\Widget\Type\ExportDropdownType;
+use Dannebicque\TableBundle\Widget\Type\RowLinkType;
+use Dannebicque\TableBundle\Widget\WidgetBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class AbsenceListeTableType extends TableType

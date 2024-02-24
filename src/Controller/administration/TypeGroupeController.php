@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/TypeGroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 24/02/2024 09:27
  */
 
 namespace App\Controller\administration;
@@ -13,7 +13,6 @@ use App\Classes\Groupes\GenereTypeGroupe;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Diplome;
-use App\Entity\Evaluation;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use App\Enums\TypeGroupeEnum;
@@ -194,18 +193,18 @@ class TypeGroupeController extends BaseController
     }
 
     #[Route(path: '/supprimer/{id}', name: 'administration_type_groupe_delete', methods: ['DELETE'])]
-    public function delete(Request $request, TypeGroupe $typeGroupe, EvaluationRepository $evaluationRepository): Response
+    public function delete(
+        Request $request, TypeGroupe $typeGroupe, EvaluationRepository $evaluationRepository): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $typeGroupe?->getSemestres()->first());
         $id = $typeGroupe->getId();
-        $evaluations = $evaluationRepository->findBy(['typeGroupe' => $typeGroupe]);
-        foreach ($evaluations as $evaluation) {
-            /** @var Evaluation $evaluation */
-            $evaluation->setTypeGroupe(null);
-            $evaluationRepository->save();
-        }
 
         if ($this->isCsrfTokenValid('delete' . $id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
+            $evaluations = $evaluationRepository->findBy(['typeGroupe' => $typeGroupe]);
+            foreach ($evaluations as $evaluation) {
+                $evaluation->setTypeGroupe(null);
+            }
+
             $this->entityManager->remove($typeGroupe);
             $this->entityManager->flush();
             $this->addFlashBag(

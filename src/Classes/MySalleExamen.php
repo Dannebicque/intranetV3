@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MySalleExamen.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:27
+ * @lastUpdate 24/02/2024 09:27
  */
 
 /*
@@ -26,14 +26,14 @@ use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SalleExamenRepository;
 use App\Repository\TypeGroupeRepository;
-use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
-use function chr;
-use function count;
 use Doctrine\Common\Collections\Collection;
-use function in_array;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
+use function chr;
+use function count;
+use function in_array;
 
 class MySalleExamen
 {
@@ -86,7 +86,7 @@ class MySalleExamen
                 }
             }
         } else {
-            $grdetail = $this->groupeDefaut($this->matiere->semestre); // todo: comment récupérer le semestre sans dépendre de matière ? ou justement garder ca et afficher tous les groupes mutualisés
+            $grdetail = $this->groupeDefaut($semestre);
             $this->typeGroupe = $grdetail[0]->getTypeGroupe();
             $etudiants = $this->etudiantRepository->findBySemestre($semestre);
         }

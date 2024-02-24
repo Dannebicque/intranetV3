@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/EventSubscriber/MailingSubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 24/02/2024 08:59
  */
 
 namespace App\EventSubscriber;
@@ -174,7 +174,7 @@ class MailingSubscriber implements EventSubscriberInterface
         }
     }
 
-    public function onMailDemandeRattrapage(RattrapageEvent $event)
+    public function onMailDemandeRattrapage(RattrapageEvent $event): void
     {
         $rattrapage = $event->getRattrapage();
         $matiere = $this->typeMatiereManager->getMatiere($rattrapage->getIdMatiere(), $rattrapage->getTypeMatiere());

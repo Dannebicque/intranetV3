@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/StagePeriode.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 24/02/2024 08:30
  */
 
 namespace App\Entity;
@@ -575,7 +575,7 @@ class StagePeriode extends BaseEntity
 
     public function __serialize(): array
     {
-        return $this->getId();
+        return [$this->getId()];
     }
 
     public function __unserialize(array $data): void

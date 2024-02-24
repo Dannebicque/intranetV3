@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Excel/MyExcelMultiExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 24/02/2024 08:59
  */
 
 /*
@@ -360,7 +360,7 @@ readonly class MyExcelMultiExport
         }
     }
 
-    public function genereModeleExcelMutualise(Evaluation $evaluation, Matiere $matiere)
+    public function genereModeleExcelMutualise(Evaluation $evaluation, Matiere $matiere): void
     {
         $this->myExcelWriter->createSheet('import');
 

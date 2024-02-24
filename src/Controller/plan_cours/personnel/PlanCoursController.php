@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/plan_cours/personnel/PlanCoursController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 24/02/2024 08:39
  */
 
 namespace App\Controller\plan_cours\personnel;
@@ -48,7 +48,6 @@ class PlanCoursController extends BaseController
     }
 
     /**
-     * @throws PlanCoursNotFoundException
      */
     #[Route('/edit/{previsionnel}', name: 'app_plan_cours_apc_new', methods: ['GET', 'POST'])]
     public function new(

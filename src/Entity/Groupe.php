@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Groupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 24/02/2024 08:51
  */
 
 namespace App\Entity;
@@ -344,11 +344,9 @@ class Groupe extends BaseEntity implements GroupeInterface
 
     public function removePlanCoursHistoriqueEdt(PlanCoursHistoriqueEdt $planCoursHistoriqueEdt): self
     {
-        if ($this->planCoursHistoriqueEdts->removeElement($planCoursHistoriqueEdt)) {
-            // set the owning side to null (unless already changed)
-            if ($planCoursHistoriqueEdt->getGroupe() === $this) {
-                $planCoursHistoriqueEdt->setGroupe(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->planCoursHistoriqueEdts->removeElement($planCoursHistoriqueEdt) && $planCoursHistoriqueEdt->getGroupe() === $this) {
+            $planCoursHistoriqueEdt->setGroupe(null);
         }
 
         return $this;

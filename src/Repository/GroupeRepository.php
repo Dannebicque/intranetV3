@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/GroupeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/06/2023 15:03
+ * @lastUpdate 24/02/2024 08:55
  */
 
 namespace App\Repository;
@@ -114,11 +114,7 @@ class GroupeRepository extends ServiceEntityRepository
 
     public function getGroupesTP(Semestre $semestre): array
     {
-        if (null === $semestre->getDiplome()->getParent()) {
-            $diplome = $semestre->getDiplome();
-        } else {
-            $diplome = $semestre->getDiplome()->getParent();
-        }
+        $diplome = $semestre->getDiplome()?->getParent() ?? $semestre->getDiplome();
 
         return $this->createQueryBuilder('g')
             ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')
@@ -133,11 +129,7 @@ class GroupeRepository extends ServiceEntityRepository
 
     public function getGroupesTD(Semestre $semestre): array
     {
-        if (null === $semestre->getDiplome()->getParent()) {
-            $diplome = $semestre->getDiplome();
-        } else {
-            $diplome = $semestre->getDiplome()->getParent();
-        }
+        $diplome = $semestre->getDiplome()->getParent() ?? $semestre->getDiplome();
 
         return $this->createQueryBuilder('g')
             ->innerJoin(TypeGroupe::class, 't', 'WITH', 'g.typeGroupe = t.id')

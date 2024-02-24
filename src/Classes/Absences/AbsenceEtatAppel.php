@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Absences/AbsenceEtatAppel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 24/02/2024 08:59
  */
 
 namespace App\Classes\Absences;
@@ -102,7 +102,7 @@ readonly class AbsenceEtatAppel
         return $tab;
     }
 
-    public function getByMatiereArray(Matiere $mat, ?AnneeUniversitaire $anneeUniversitaire)
+    public function getByMatiereArray(Matiere $mat, ?AnneeUniversitaire $anneeUniversitaire): array
     {
         $data = $this->absenceEtatAppelRepository->findByMatiere($mat, $anneeUniversitaire);
         $tab = [];

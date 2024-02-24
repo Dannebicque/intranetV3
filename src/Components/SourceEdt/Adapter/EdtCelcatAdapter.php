@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Adapter/EdtCelcatAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 24/02/2024 08:59
  */
 
 namespace App\Components\SourceEdt\Adapter;
@@ -68,10 +68,8 @@ class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
 
         if (null !== $event->getSemestre()) {
             $evt->semestre = $event->getSemestre();
-        } else {
-            if (null !== $matiere) {
-                $evt->semestre = $matiere->getSemestres()[0];
-            }
+        } else if (null !== $matiere) {
+            $evt->semestre = $matiere->getSemestres()[0];
         }
 
         $evt->couleur = $evt->semestre?->getAnnee()->getCouleur();
@@ -94,7 +92,7 @@ class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
         return $evt;
     }
 
-    private function getLargeur(mixed $evt)
+    private function getLargeur(mixed $evt): int
     {
         return match (trim($evt->type_cours)) {
             'cm', 'CM' => $evt->semestre->getNbgroupeTpEdt(),

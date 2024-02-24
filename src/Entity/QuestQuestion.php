@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/QuestQuestion.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/08/2023 08:50
+ * @lastUpdate 24/02/2024 08:51
  */
 
 namespace App\Entity;
@@ -105,11 +105,9 @@ class QuestQuestion extends BaseEntity
 
     public function removeQuestReponse(QuestReponse $questReponse): self
     {
-        if ($this->questReponses->removeElement($questReponse)) {
-            // set the owning side to null (unless already changed)
-            if ($questReponse->getQuestion() === $this) {
-                $questReponse->setQuestion(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->questReponses->removeElement($questReponse) && $questReponse->getQuestion() === $this) {
+            $questReponse->setQuestion(null);
         }
 
         return $this;
@@ -231,11 +229,9 @@ class QuestQuestion extends BaseEntity
 
     public function removeQuestionsEnfant(QuestQuestion $questionsEnfant): self
     {
-        if ($this->questionsEnfants->removeElement($questionsEnfant)) {
-            // set the owning side to null (unless already changed)
-            if ($questionsEnfant->getQuestionParent() === $this) {
-                $questionsEnfant->setQuestionParent(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->questionsEnfants->removeElement($questionsEnfant) && $questionsEnfant->getQuestionParent() === $this) {
+            $questionsEnfant->setQuestionParent(null);
         }
 
         return $this;
@@ -298,11 +294,9 @@ class QuestQuestion extends BaseEntity
 
     public function removeQuestChoix(QuestChoix $questChoix): self
     {
-        if ($this->questChoixes->removeElement($questChoix)) {
-            // set the owning side to null (unless already changed)
-            if ($questChoix->getQuestion() === $this) {
-                $questChoix->setQuestion(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->questChoixes->removeElement($questChoix) && $questChoix->getQuestion() === $this) {
+            $questChoix->setQuestion(null);
         }
 
         return $this;

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/ServiceRealise/ServiceRealiseCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 24/02/2024 08:10
  */
 
 /*
@@ -16,7 +16,6 @@ namespace App\Classes\ServiceRealise;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\DTO\EvenementEdt;
 use App\Entity\AnneeUniversitaire;
-use App\Entity\CelcatEvent;
 use App\Entity\Personnel;
 use App\Exception\MatiereNotFoundException;
 use App\Interfaces\UtilisateurInterface;
@@ -62,9 +61,7 @@ readonly class ServiceRealiseCelcat implements ServiceRealiseInterface
         return $tabEvent;
     }
 
-    /**
-     * @param CelcatEvent $event
-     */
+
     public function convertToEvenementEdt($event): EvenementEdt
     {
         $ev = new EvenementEdt();

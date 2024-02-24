@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Section/Section.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 24/02/2024 08:39
  */
 
 namespace App\Components\Questionnaire\Section;
@@ -14,6 +14,7 @@ use App\Components\Questionnaire\DTO\ListeChoix;
 use App\Components\Questionnaire\DTO\ReponsesUser;
 use App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException;
 use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
+use JsonException;
 
 class Section extends AbstractSection
 {
@@ -50,6 +51,7 @@ class Section extends AbstractSection
 
     /**
      * @throws TypeQuestionNotFoundException
+     * @throws JsonException
      */
     public function prepareQuestions(array $options = [], ?ReponsesUser $reponsesUser = null): void
     {

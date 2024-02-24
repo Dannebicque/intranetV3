@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 24/02/2024 08:55
  */
 
 namespace App\Classes\Edt;
@@ -158,11 +158,8 @@ class MyEdtIntranet extends BaseEdt
     ): self {
         $this->anneeUniversitaire = $anneeUniversitaire;
         $semestres = $this->semestreRepository->findByDepartement($departement);
-        if ('' === $valeur) {
-            if ((is_countable($semestres) ? count($semestres) : 0) > 0) {
-                $valeur = $semestres[0]->getId();
-            }
-            // erreur
+        if (('' === $valeur) && (is_countable($semestres) ? count($semestres) : 0) > 0) {
+            $valeur = $semestres[0]->getId();
         }
 
         foreach ($semestres as $semestre) {
@@ -596,11 +593,14 @@ class MyEdtIntranet extends BaseEdt
     {
         $pl = new EdtPlanning();
         $semestre = $this->semestreRepository->find($request->request->get('promo'));
+        if ($semestre === null) {
+            throw new \Exception('Semestre non trouvé');
+        }
         $pl->setSemestre($semestre);
         $pl->setAnneeUniversitaire($anneeUniversitaire);
         $pl->setOrdreSemestre($semestre->getOrdreLmd());
         $pl->setSemaine($request->request->get('semaine'));
-        $pl->setDiplome($semestre->getDiplome()->getParent() === null ? $semestre->getDiplome() : $semestre->getDiplome()->getParent());
+        $pl->setDiplome($semestre->getDiplome()?->getParent() ?? $semestre->getDiplome());
 
         return $this->updatePl($request, $pl, $anneeUniversitaire);
     }
@@ -669,6 +669,11 @@ class MyEdtIntranet extends BaseEdt
             case TypeGroupeEnum::TYPE_GROUPE_TP:
                 $plann->setGroupe(trim($tc[1]));
                 break;
+            case TypeGroupeEnum::TYPE_GROUPE_VIDE:
+                throw new \Exception('To be implemented');
+                break;
+            case TypeGroupeEnum::TYPE_GROUPE_LV:
+                throw new \Exception('To be implemented');
         }
 
         $this->entityManager->persist($plann);

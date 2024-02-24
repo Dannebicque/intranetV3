@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Adapter/EdtIntranetAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/03/2023 21:03
+ * @lastUpdate 24/02/2024 08:59
  */
 
 namespace App\Components\SourceEdt\Adapter;
@@ -79,7 +79,7 @@ class EdtIntranetAdapter extends AbstractEdtAdapter implements EdtAdapterInterfa
         return $event;
     }
 
-    private function getLargeur(mixed $evt)
+    private function getLargeur(mixed $evt): int
     {
         switch ($evt->getType()) {
             case 'cm':

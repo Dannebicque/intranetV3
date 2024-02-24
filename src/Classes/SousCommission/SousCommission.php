@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommission.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/02/2024 14:14
+ * @lastUpdate 24/02/2024 08:35
  */
 
 namespace App\Classes\SousCommission;
@@ -145,6 +145,7 @@ class SousCommission extends AbstractSousCommission implements SousCommissionInt
         $scolarite->getMoyennesMatieres()[$idMatiere]['moyenne'] = match ($code) {
             'moyenne' => Tools::convertToFloat($value),
         };
+        //todo: pas de sauvegarde ? où utilisé ?
     }
 
     public function getBySemestreAnneeUniversitaire(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): ?ScolaritePromo

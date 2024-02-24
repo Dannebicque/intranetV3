@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Annee.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 24/02/2024 08:46
  */
 
 namespace App\Entity;
@@ -72,22 +72,12 @@ class Annee extends BaseEntity
     #[ORM\OneToMany(mappedBy: 'annee', targetEntity: ApcNiveau::class)]
     private Collection $apcNiveaux;
 
-    /**
-     * @var Collection<AlternancePlanning>
-     */
-    #[ORM\OneToMany(mappedBy: 'annee', targetEntity: AlternancePlanning::class)]
-    private Collection $alternancePlannings;
-
-    #[ORM\OneToMany(mappedBy: 'annee', targetEntity: ConpereEtudiant::class)]
-    private Collection $conpereEtudiants;
 
     public function __construct()
     {
         $this->semestres = new ArrayCollection();
         $this->alternances = new ArrayCollection();
         $this->apcNiveaux = new ArrayCollection();
-        $this->alternancePlannings = new ArrayCollection();
-        $this->conpereEtudiants = new ArrayCollection();
     }
 
     public function getLibelle(): ?string
@@ -296,63 +286,5 @@ class Annee extends BaseEntity
     public function setCodeVersion(?string $codeVersion): void
     {
         $this->codeVersion = $codeVersion;
-    }
-
-    /**
-     * @return Collection|AlternancePlanning[]
-     */
-    public function getAlternancePlannings(): Collection
-    {
-        return $this->alternancePlannings;
-    }
-
-    public function addAlternancePlanning(AlternancePlanning $alternancePlanning): self
-    {
-        if (!$this->alternancePlannings->contains($alternancePlanning)) {
-            $this->alternancePlannings[] = $alternancePlanning;
-            $alternancePlanning->setAnnee($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAlternancePlanning(AlternancePlanning $alternancePlanning): self
-    {
-        // set the owning side to null (unless already changed)
-        if ($this->alternancePlannings->removeElement($alternancePlanning) && $alternancePlanning->getAnnee() === $this) {
-            $alternancePlanning->setAnnee(null);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, ConpereEtudiant>
-     */
-    public function getConpereEtudiants(): Collection
-    {
-        return $this->conpereEtudiants;
-    }
-
-    public function addConpereEtudiant(ConpereEtudiant $conpereEtudiant): self
-    {
-        if (!$this->conpereEtudiants->contains($conpereEtudiant)) {
-            $this->conpereEtudiants->add($conpereEtudiant);
-            $conpereEtudiant->setAnnee($this);
-        }
-
-        return $this;
-    }
-
-    public function removeConpereEtudiant(ConpereEtudiant $conpereEtudiant): self
-    {
-        if ($this->conpereEtudiants->removeElement($conpereEtudiant)) {
-            // set the owning side to null (unless already changed)
-            if ($conpereEtudiant->getAnnee() === $this) {
-                $conpereEtudiant->setAnnee(null);
-            }
-        }
-
-        return $this;
     }
 }

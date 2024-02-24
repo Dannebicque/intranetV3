@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 24/02/2024 08:51
  */
 
 namespace App\Entity;
@@ -1289,7 +1289,7 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     {
         if (!$this->planCours->contains($planCour)) {
             $this->planCours[] = $planCour;
-            $planCour->setIntervenant($this);
+            $planCour->addIntervenant($this);
         }
 
         return $this;
@@ -1297,11 +1297,9 @@ class Personnel extends Utilisateur implements UtilisateurInterface
 
     public function removePlanCour(PlanCours $planCour): self
     {
-        if ($this->planCours->removeElement($planCour)) {
-            // set the owning side to null (unless already changed)
-            if ($planCour->getIntervenant() === $this) {
-                $planCour->setIntervenant(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->planCours->removeElement($planCour) && $planCour->getIntervenants() === $this) {
+            $planCour->addIntervenant(null);//todo: vérifier si c'est bien ça
         }
 
         return $this;
@@ -1336,11 +1334,9 @@ class Personnel extends Utilisateur implements UtilisateurInterface
 
     public function removePlanCoursHistoriqueEdt(PlanCoursHistoriqueEdt $planCoursHistoriqueEdt): self
     {
-        if ($this->planCoursHistoriqueEdts->removeElement($planCoursHistoriqueEdt)) {
-            // set the owning side to null (unless already changed)
-            if ($planCoursHistoriqueEdt->getEnseignant() === $this) {
-                $planCoursHistoriqueEdt->setEnseignant(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->planCoursHistoriqueEdts->removeElement($planCoursHistoriqueEdt) && $planCoursHistoriqueEdt->getEnseignant() === $this) {
+            $planCoursHistoriqueEdt->setEnseignant(null);
         }
 
         return $this;
@@ -1366,11 +1362,9 @@ class Personnel extends Utilisateur implements UtilisateurInterface
 
     public function removeEdtCelcat(EdtCelcat $edtCelcat): self
     {
-        if ($this->edtCelcats->removeElement($edtCelcat)) {
-            // set the owning side to null (unless already changed)
-            if ($edtCelcat->getPersonnel() === $this) {
-                $edtCelcat->setPersonnel(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->edtCelcats->removeElement($edtCelcat) && $edtCelcat->getPersonnel() === $this) {
+            $edtCelcat->setPersonnel(null);
         }
 
         return $this;

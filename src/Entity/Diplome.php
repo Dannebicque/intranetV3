@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Diplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 24/02/2024 08:48
  */
 
 namespace App\Entity;
@@ -623,11 +623,9 @@ class Diplome extends BaseEntity
 
     public function removeEnfant(self $enfant): self
     {
-        if ($this->enfants->removeElement($enfant)) {
-            // set the owning side to null (unless already changed)
-            if ($enfant->getParent() === $this) {
-                $enfant->setParent(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->enfants->removeElement($enfant) && $enfant->getParent() === $this) {
+            $enfant->setParent(null);
         }
 
         return $this;
@@ -677,11 +675,9 @@ class Diplome extends BaseEntity
 
     public function removeTypeGroupe(TypeGroupe $typeGroupe): self
     {
-        if ($this->typeGroupes->removeElement($typeGroupe)) {
-            // set the owning side to null (unless already changed)
-            if ($typeGroupe->getDiplome() === $this) {
-                $typeGroupe->setDiplome(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->typeGroupes->removeElement($typeGroupe) && $typeGroupe->getDiplome() === $this) {
+            $typeGroupe->setDiplome(null);
         }
 
         return $this;
@@ -712,11 +708,9 @@ class Diplome extends BaseEntity
 
     public function removeEdtPlanning(EdtPlanning $edtPlanning): self
     {
-        if ($this->edtPlannings->removeElement($edtPlanning)) {
-            // set the owning side to null (unless already changed)
-            if ($edtPlanning->getDiplome() === $this) {
-                $edtPlanning->setDiplome(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->edtPlannings->removeElement($edtPlanning) && $edtPlanning->getDiplome() === $this) {
+            $edtPlanning->setDiplome(null);
         }
 
         return $this;

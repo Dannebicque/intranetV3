@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/administration/QuestionnaireQualiteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 24/02/2024 08:39
  */
 
 namespace App\Controller\questionnaire\administration;
 
+use App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException;
 use App\Components\Questionnaire\QuestionnaireRegistry;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
@@ -25,6 +26,7 @@ class QuestionnaireQualiteController extends BaseController
 {
     /**
      * @throws SemestreNotFoundException
+     * @throws TypeQuestionNotFoundException
      */
     #[Route('/{id}/detail', name: 'detail', methods: ['GET'])]
     public function detail(

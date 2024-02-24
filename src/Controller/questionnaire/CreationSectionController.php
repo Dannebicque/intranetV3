@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/CreationSectionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 24/02/2024 07:57
  */
 
 namespace App\Controller\questionnaire;
@@ -35,6 +35,8 @@ class CreationSectionController extends BaseController
         QuestSection           $section
     ): Response
     {
+        $liste = [];
+
         switch ($request->query->get('action')) {
             case 'edit':
                 $form = $this->createForm(QuestSectionType::class, $section);

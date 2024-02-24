@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 24/02/2024 08:51
  */
 
 namespace App\Entity;
@@ -1288,11 +1288,9 @@ class Semestre extends BaseEntity implements Stringable, GroupeInterface
 
     public function removeSemestreLienDepart(SemestreLien $semestreLienDepart): self
     {
-        if ($this->semestreLienDepart->removeElement($semestreLienDepart)) {
-            // set the owning side to null (unless already changed)
-            if ($semestreLienDepart->getSemestreDepart() === $this) {
-                $semestreLienDepart->setSemestreDepart(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->semestreLienDepart->removeElement($semestreLienDepart) && $semestreLienDepart->getSemestreDepart() === $this) {
+            $semestreLienDepart->setSemestreDepart(null);
         }
 
         return $this;
@@ -1318,11 +1316,9 @@ class Semestre extends BaseEntity implements Stringable, GroupeInterface
 
     public function removeSemestreLienArrive(SemestreLien $semestreLienArrive): self
     {
-        if ($this->semestreLienArrive->removeElement($semestreLienArrive)) {
-            // set the owning side to null (unless already changed)
-            if ($semestreLienArrive->getSemestreArrive() === $this) {
-                $semestreLienArrive->setSemestreArrive(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->semestreLienArrive->removeElement($semestreLienArrive) && $semestreLienArrive->getSemestreArrive() === $this) {
+            $semestreLienArrive->setSemestreArrive(null);
         }
 
         return $this;

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/mcc/administration/MccController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 18:32
+ * @lastUpdate 24/02/2024 09:27
  */
 
 namespace App\Controller\mcc\administration;
@@ -103,7 +103,7 @@ class MccController extends BaseController
         $mcc = new Mcc();
         $mcc->setCoefficient($coefficient);
         $mcc->setTypeEpreuve($typeEpreuve);
-        $mcc->setAnneeUniversitaire($this->getAnneeUniversitaire());
+        // $mcc->setAnneeUniversitaire($this->getAnneeUniversitaire()); //todo: finaliser l'intégration de ces MCCC et la synchro avc ORéOF
         $mcc->setTypeIdMatiere($matiere);
 
         $this->entityManager->persist($mcc);

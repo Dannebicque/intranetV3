@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/EdtManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 24/02/2024 08:41
  */
 
 namespace App\Classes\Edt;
@@ -33,11 +33,11 @@ class EdtManager
     private array $tabSources;
 
     public function __construct(
-        private readonly EdtIntranet $edtIntranet,
-        private readonly EdtCelcat   $edtCelcat,
-        private SourceEdtRegistry    $sourceEdtRegistry,
-        private EdtPlanningRepository $edtPlanningRepository,
-        private EdtCelcatRepository  $edtCelcatRepository,
+        private readonly EdtIntranet           $edtIntranet,
+        private readonly EdtCelcat             $edtCelcat,
+        private readonly SourceEdtRegistry     $sourceEdtRegistry,
+        private readonly EdtPlanningRepository $edtPlanningRepository,
+        private readonly EdtCelcatRepository   $edtCelcatRepository,
     )
     {
         $this->tabSources = $this->sourceEdtRegistry->getSourcesEdt();

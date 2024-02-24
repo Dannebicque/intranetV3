@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ScolaritePromo.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 24/02/2024 08:39
  */
 
 namespace App\Entity;
@@ -38,7 +38,7 @@ class ScolaritePromo extends BaseEntity
     private float $moyenne = -0.01;
 
     /**
-     * @var Collection<int, Scolarite>|Scolarite[]
+     * @var Collection<int, Scolarite>
      */
     #[ORM\OneToMany(mappedBy: 'scolaritePromo', targetEntity: Scolarite::class)]
     private Collection $scolarites;

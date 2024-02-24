@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeQuestionRenderer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 24/02/2024 08:51
  */
 
 namespace App\Components\Questionnaire;
@@ -41,13 +41,10 @@ class TypeQuestionRenderer
         if (TypeChainee::class === $question::class) {
             $params['questionsEnfants'] = $question->questions;
             $params['reponsesEtudiant'] = $question->reponsesUser;
+        } else if ($question->valeur_config !== '') {
+            $params['reponsesEtudiant'] = $question->reponsesUser;
         } else {
-            if ($question->valeur_config !== '') {
-                $params['reponsesEtudiant'] = $question->reponsesUser;
-            } else {
-                $params['reponseEtudiant'] = $question->reponseUser;
-            }
-
+            $params['reponseEtudiant'] = $question->reponseUser;
         }
 
         $params['name'] = 'q' . $question->id;

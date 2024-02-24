@@ -4,12 +4,11 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/QuestionnaireMailsController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 24/02/2024 08:10
  */
 
 namespace App\Controller\questionnaire;
 
-use App\Classes\Enquetes\EnqueteRelance;
 use App\Components\Questionnaire\QuestionnaireRegistry;
 use App\Controller\BaseController;
 use App\Entity\Constantes;

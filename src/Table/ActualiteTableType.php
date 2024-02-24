@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/ActualiteTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 18:43
+ * @lastUpdate 24/02/2024 07:59
  */
 
 namespace App\Table;
@@ -16,15 +16,15 @@ use App\Form\Type\SearchType;
 use Dannebicque\TableBundle\Adapter\EntityAdapter;
 use Dannebicque\TableBundle\Column\DateColumnType;
 use Dannebicque\TableBundle\Column\PropertyColumnType;
-use DavidAnnebicque\TableBundle\Column\WidgetColumnType;
-use DavidAnnebicque\TableBundle\TableBuilder;
-use DavidAnnebicque\TableBundle\TableType;
-use DavidAnnebicque\TableBundle\Widget\Type\ExportDropdownType;
-use DavidAnnebicque\TableBundle\Widget\Type\RowDeleteLinkType;
-use DavidAnnebicque\TableBundle\Widget\Type\RowDuplicateLinkType;
-use DavidAnnebicque\TableBundle\Widget\Type\RowEditLinkType;
-use DavidAnnebicque\TableBundle\Widget\Type\RowShowLinkType;
-use DavidAnnebicque\TableBundle\Widget\WidgetBuilder;
+use Dannebicque\TableBundle\Column\WidgetColumnType;
+use Dannebicque\TableBundle\TableBuilder;
+use Dannebicque\TableBundle\TableType;
+use Dannebicque\TableBundle\Widget\Type\ExportDropdownType;
+use Dannebicque\TableBundle\Widget\Type\RowDeleteLinkType;
+use Dannebicque\TableBundle\Widget\Type\RowDuplicateLinkType;
+use Dannebicque\TableBundle\Widget\Type\RowEditLinkType;
+use Dannebicque\TableBundle\Widget\Type\RowShowLinkType;
+use Dannebicque\TableBundle\Widget\WidgetBuilder;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;

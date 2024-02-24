@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/CreationRenderer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 24/02/2024 08:39
  */
 
 namespace App\Components\Questionnaire;
 
+use App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException;
 use App\Entity\QuestQuestion;
 use App\Entity\QuestSection;
 use JsonException;
@@ -64,7 +65,8 @@ class CreationRenderer
     }
 
     /**
-     * @throws JsonException
+     * @throws JsonException|Exceptions\TypeQuestionNotFoundException
+     * @throws TypeQuestionNotFoundException
      */
     private function viewQuestion(QuestQuestion $question): array
     {

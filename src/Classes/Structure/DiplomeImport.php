@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Structure/DiplomeImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 18:39
+ * @lastUpdate 24/02/2024 08:59
  */
 
 namespace App\Classes\Structure;
@@ -34,6 +34,7 @@ use App\Entity\Ue;
 use App\Repository\TypeDiplomeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use RuntimeException;
+use SimpleXMLElement;
 use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
 class DiplomeImport
@@ -444,7 +445,7 @@ class DiplomeImport
         $this->log .= 'Semestre non trouvé : ' . $phrase[9] . '<br>';
     }
 
-    private function deleteCompetences()
+    private function deleteCompetences(): void
     {
         // suppression du référentiel de compétences associé au référentiel de compétences
         foreach ($this->referentiel->getApcComptences() as $competence) {

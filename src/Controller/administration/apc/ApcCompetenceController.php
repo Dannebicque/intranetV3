@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcCompetenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 24/02/2024 08:46
  */
 
 namespace App\Controller\administration\apc;
@@ -78,7 +78,7 @@ class ApcCompetenceController extends BaseController
     public function edit(Request $request, ApcCompetence $apcCompetence, ?Diplome $diplome = null): Response
     {
         if (null !== $diplome) {
-            $diplome = $apcCompetence->getApcReferentiel()->getDiplomes()->first();
+            $diplome = $apcCompetence->getApcReferentiel()?->getDiplomes()?->first();
         }
 
         $form = $this->createForm(ApcCompetenceType::class, $apcCompetence);
@@ -100,7 +100,7 @@ class ApcCompetenceController extends BaseController
     #[Route(path: '/{id}', name: 'administration_apc_competence_delete', methods: ['DELETE'])]
     public function delete(Request $request, ApcCompetence $apcCompetence): Response
     {
-        $diplome = $apcCompetence->getDiplome();
+        $diplome = $apcCompetence->getApcReferentiel()?->getDiplomes()->first();//todo: plusieurs diplômes, vers où rediriger ?
         if ($this->isCsrfTokenValid('delete'.$apcCompetence->getId(), $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $this->entityManager->remove($apcCompetence);
             $this->entityManager->flush();

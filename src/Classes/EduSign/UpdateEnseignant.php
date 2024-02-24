@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/UpdateEnseignant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:39
+ * @lastUpdate 24/02/2024 08:59
  */
 
 namespace App\Classes\EduSign;
@@ -48,7 +48,7 @@ class UpdateEnseignant
                 }
                 if ($enseignant !== null) {
                     if ($intervenant['API_ID'] !== '') {
-                        if ($intervenant['API_ID'] !== strval($enseignant->getId())) {
+                        if ($intervenant['API_ID'] !== (string)$enseignant->getId()) {
                             dump('enseignant trouvé mais pas le bon');
                         } else {
                             dump('enseignant trouvé');

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/api/unifolio/AnneeUniversitaireController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 18:29
+ * @lastUpdate 24/02/2024 08:59
  */
 
 namespace App\Controller\api\unifolio;
@@ -20,7 +20,7 @@ class AnneeUniversitaireController extends BaseController
     public function liste_annee_universitaire(
         Request $request,
         AnneeUniversitaire $anneeUniversitaire
-    )
+    ): void
     {
         $this->checkAccessApi($request);
 

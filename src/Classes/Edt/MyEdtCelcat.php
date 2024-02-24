@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 24/02/2024 08:10
  */
 
 /*
@@ -16,7 +16,6 @@ namespace App\Classes\Edt;
 use App\DTO\EvenementEdt;
 use App\Entity\Annee;
 use App\Entity\AnneeUniversitaire;
-use App\Entity\CelcatEvent;
 use App\Entity\Constantes;
 use App\Entity\EdtCelcat;
 use App\Entity\Etudiant;

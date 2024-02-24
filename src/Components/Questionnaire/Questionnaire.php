@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Questionnaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 24/02/2024 08:59
  */
 
 namespace App\Components\Questionnaire;
@@ -260,7 +260,7 @@ class Questionnaire
         }
     }
 
-    public function addChoix(QuestChoix $reponse)
+    public function addChoix(QuestChoix $reponse): void
     {
         $this->listeChoix->addChoix($reponse);
     }
@@ -273,7 +273,7 @@ class Questionnaire
         return $this->listeChoix;
     }
 
-    public function exportExcel()
+    public function exportExcel(): void
     {
 
 

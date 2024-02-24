@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 18:43
+ * @lastUpdate 24/02/2024 08:55
  */
 
 namespace App\Repository;
@@ -370,11 +370,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
         $ors = [];
 
         foreach ($departement->getDiplomes() as $diplome) {
-            if (null !== $diplome->getParent()) {
-                $dip = $diplome->getParent();
-            } else {
-                $dip = $diplome;
-            }
+            $dip = $diplome->getParent() ?? $diplome;
             foreach ($diplome->getSemestres() as $semestre) {
                 if (true === $semestre->isActif()) {
                     $ors[] = '(' . $query->expr()->orx('(p.ordreSemestre = ' . $query->expr()->literal($semestre->getOrdreLmd()) . ' AND p.diplome = ' . $query->expr()->literal($dip->getId()) . ')') . ')';

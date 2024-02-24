@@ -4,14 +4,13 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Structure/DiplomeExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 24/02/2024 09:27
  */
 
 namespace App\Classes\Structure;
 
 use App\Entity\Diplome;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -19,7 +18,7 @@ use Twig\Error\SyntaxError;
 
 readonly class DiplomeExport
 {
-    public function __construct(private Environment $twig, private ApogeeExport $apogeeExport)
+    public function __construct(private Environment $twig)
     {
     }
 
@@ -72,17 +71,5 @@ readonly class DiplomeExport
         }
 
         return $this->exportFichier($xmlContent, $name);
-    }
-
-    public function exportMaquetteApogee(Diplome $diplome): ?StreamedResponse
-    {
-        if (true === $diplome->isApc()) {
-            $this->apogeeExport->setDiplome($diplome);
-            $name = 'but-maquette-'.$diplome->getSigle().'.xlsx';
-
-            return $this->apogeeExport->export($name);
-        }
-
-        return null;
     }
 }

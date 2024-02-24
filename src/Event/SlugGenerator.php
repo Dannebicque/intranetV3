@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Event/SlugGenerator.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/08/2023 08:34
+ * @lastUpdate 24/02/2024 08:51
  */
 
 namespace App\Event;
@@ -40,11 +40,9 @@ class SlugGenerator implements EventSubscriber
 
         // if this subscriber only applies to certain entity types,
         // add some code to check the entity type as early as possible
-        if ($entity instanceof Utilisateur) {
-            if ('' !== $entity->getMailUniv() && null !== $entity->getMailUniv()) {
-                $tabSlug = explode('@', $entity->getMailUniv());
-                $entity->setSlug($tabSlug[0]);
-            }
+        if (($entity instanceof Utilisateur) && '' !== $entity->getMailUniv() && null !== $entity->getMailUniv()) {
+            $tabSlug = explode('@', $entity->getMailUniv());
+            $entity->setSlug($tabSlug[0]);
         }
 
         // ... get the entity information and log it somehow

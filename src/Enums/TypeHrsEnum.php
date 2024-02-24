@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Enums/TypeHrsEnum.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/07/2023 15:24
+ * @lastUpdate 24/02/2024 08:37
  */
 
 namespace App\Enums;
@@ -42,12 +42,8 @@ enum TypeHrsEnum: string
     public function getMaxHeures(): float
     {
         return match ($this) {
-            TypeHrsEnum::TYPE_HRS_HRS => 96,
-            TypeHrsEnum::TYPE_HRS_PCA => 96,
-            TypeHrsEnum::TYPE_HRS_PRP => 96,
-            TypeHrsEnum::TYPE_HRS_SUIVI => 0,
-            TypeHrsEnum::TYPE_HRS_AUTRE => 0,
-            default => 0,
+            TypeHrsEnum::TYPE_HRS_HRS, TypeHrsEnum::TYPE_HRS_PCA, TypeHrsEnum::TYPE_HRS_PRP => 96,
+            default => 0.0,
         };
     }
 }

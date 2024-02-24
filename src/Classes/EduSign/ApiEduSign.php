@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/ApiEduSign.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:36
+ * @lastUpdate 24/02/2024 08:59
  */
 
 namespace App\Classes\EduSign;
@@ -57,10 +57,7 @@ class ApiEduSign
 
         $data = json_decode($content, true);
         // accéder à la valeur de l'ID
-        $id = "";
-        if (isset($data['result']['ID'])) {
-            $id = $data['result']['ID'];
-        }
+        $id = $data['result']['ID'] ?? "";
 
         if (str_contains($course->type_edt, 'intranet')) {
             $edt = $this->edtPlanningRepository->findOneBy(['id' => $course->api_id]);
@@ -70,13 +67,14 @@ class ApiEduSign
             $rep = $this->edtCelcatRepository;
         } else {
             $edt = null;
+            $rep = null;
         }
 
         if (null === $edt) {
             throw new Exception('Course not found for ' . $edt->api_id);
         }
 
-        if ($edt->getIdEduSign() == null) {
+        if ($edt->getIdEduSign() == null && $rep !== null) {
             $edt->setIdEduSign($id);
             $rep->save($edt);
         }
@@ -111,11 +109,7 @@ class ApiEduSign
         // convertit JSON en tableau associatif PHP
         $data = json_decode($content, true);
 
-        $course = "";
-        if (isset($data['result'])) {
-            $course = $data['result'];
-        }
-        return $course;
+        return $data['result'] ?? "";
     }
 
     public function getAllCourses(string $cleApi): mixed
@@ -134,11 +128,7 @@ class ApiEduSign
         // convertit JSON en tableau associatif PHP
         $data = json_decode($content, true);
 
-        $courses = "";
-        if (isset($data['result'])) {
-            $courses = $data['result'];
-        }
-        return $courses;
+        return $data['result'] ?? "";
     }
 
     public function deleteCourse(EduSignCourse $course, string $cleApi): void
@@ -180,23 +170,20 @@ class ApiEduSign
 
         $data = json_decode($content, true);
         // accéder à la valeur de l'ID
-        $id = "";
-        if (isset($data['result']['ID'])) {
-            $id = $data['result']['ID'];
-        }
+        $id = $data['result']['ID'] ?? "";
 
         $semestre = $this->semestreRepository->findOneBy(['id' => $groupe->api_id]);
-        if ($semestre && null === $semestre) {
+        if (null === $semestre) {
             throw new Exception('Group not found for ' . $semestre->api_id);
         }
 
-        if ($semestre && $semestre->getIdEduSign() == null) {
+        if ($semestre->getIdEduSign() === null) {
             $semestre->setIdEduSign($id);
             $this->semestreRepository->save($semestre);
         }
 
         $groupeAdd = $this->groupeRepository->findOneBy(['id' => $groupe->api_id]);
-        if ($groupeAdd && null === $groupeAdd) {
+        if (null === $groupeAdd) {
             throw new Exception('Group not found for ' . $groupeAdd->api_id);
         }
 
@@ -229,7 +216,7 @@ class ApiEduSign
 
     }
 
-    public function addEtudiant(EduSignEtudiant $etudiant, $cleApi)
+    public function addEtudiant(EduSignEtudiant $etudiant, $cleApi): void
     {
         $client = HttpClient::create();
         $response = $client->request('POST', 'https://ext.edusign.fr/v1/student', [
@@ -244,10 +231,7 @@ class ApiEduSign
 
         $data = json_decode($content, true);
         // accéder à la valeur de l'ID
-        $id = "";
-        if (isset($data['result']['ID'])) {
-            $id = $data['result']['ID'];
-        }
+        $id = $data['result']['ID'] ?? "";
 
         $etudiant = $this->etudiantRepository->findOneBy(['id' => $etudiant->api_id]);
         if ($etudiant && null === $etudiant) {
@@ -279,10 +263,7 @@ class ApiEduSign
         $data = json_decode($content, true);
 
         // accéder à la valeur de l'ID
-        $id = "";
-        if (isset($data['result']['ID'])) {
-            $id = $data['result']['ID'];
-        }
+        $id = $data['result']['ID'] ?? "";
 
         $departementId = $departement->getId();
         $existingIdEduSign = $personnel->getIdEduSign();
@@ -327,11 +308,7 @@ class ApiEduSign
         // convertit JSON en tableau associatif PHP
         $data = json_decode($content, true);
 
-        $intervenants = "";
-        if (isset($data['result'])) {
-            $intervenants = $data['result'];
-        }
-        return $intervenants;
+        return $data['result'] ?? "";
     }
 
     public function updateEnseignant(EduSignEnseignant $enseignant, string $cleApi): void

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyIcal.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/02/2024 18:58
+ * @lastUpdate 24/02/2024 08:59
  */
 
 namespace App\Classes;
@@ -221,7 +221,7 @@ class MyIcal
         return $this->filevt;
     }
 
-    public function setColor(mixed $couleur)
+    public function setColor(mixed $couleur): void
     {
         $this->color = 'COLOR:' . $couleur;
     }

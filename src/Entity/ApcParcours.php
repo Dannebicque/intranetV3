@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcParcours.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 24/02/2024 08:48
  */
 
 namespace App\Entity;
@@ -172,11 +172,9 @@ class ApcParcours extends BaseEntity
 
     public function removeDiplome(Diplome $diplome): self
     {
-        if ($this->diplomes->removeElement($diplome)) {
-            // set the owning side to null (unless already changed)
-            if ($diplome->getApcParcours() === $this) {
-                $diplome->setApcParcours(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->diplomes->removeElement($diplome) && $diplome->getApcParcours() === $this) {
+            $diplome->setApcParcours(null);
         }
 
         return $this;
@@ -226,11 +224,9 @@ class ApcParcours extends BaseEntity
 
     public function removeGroupe(Groupe $groupe): self
     {
-        if ($this->groupes->removeElement($groupe)) {
-            // set the owning side to null (unless already changed)
-            if ($groupe->getApcParcours() === $this) {
-                $groupe->setApcParcours(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->groupes->removeElement($groupe) && $groupe->getApcParcours() === $this) {
+            $groupe->setApcParcours(null);
         }
 
         return $this;

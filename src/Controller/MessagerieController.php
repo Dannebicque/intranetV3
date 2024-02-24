@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/MessagerieController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 24/02/2024 08:55
  */
 
 namespace App\Controller;
@@ -137,7 +137,7 @@ class MessagerieController extends BaseController
         $filtre = $request->query->get('filtre', 'all');
         $page = $request->query->get('page');
 
-        $page = $page === null ? 0 : $page;
+        $page = $page ?? 0;
 
         if ('sent' === $filtre) {
             $messages = $messageRepository->findBy(['expediteur' => $this->getUser(), 'etat' => 'E'], ['created' => 'DESC']);

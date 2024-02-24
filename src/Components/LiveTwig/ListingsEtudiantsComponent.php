@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/LiveTwig/ListingsEtudiantsComponent.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/07/2023 13:56
+ * @lastUpdate 24/02/2024 09:27
  */
 
 namespace App\Components\LiveTwig;
@@ -46,7 +46,7 @@ class ListingsEtudiantsComponent
 
     #[LiveAction]
     public function changeSemestre(
-        #[LiveArg] int $semestre)
+        #[LiveArg] int $semestre): void
     {
         $this->semestre = $this->semestreRepository->find($semestre);
 

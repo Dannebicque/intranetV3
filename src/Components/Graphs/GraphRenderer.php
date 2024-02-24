@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Graphs/GraphRenderer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 24/02/2024 08:59
  */
 
 namespace App\Components\Graphs;
@@ -17,6 +17,7 @@ use Twig\Error\SyntaxError;
 
 class GraphRenderer
 {
+    //todo: encore utilisé ? Sinon finir et utiliser
     public function __construct(protected Environment $twig)
     {
     }
@@ -31,7 +32,7 @@ class GraphRenderer
         return $this->twig->render($graph->getOption('template'), $this->view($graph));
     }
 
-    private function view(Graph $graph)
+    private function view(Graph $graph): void
     {
     }
 

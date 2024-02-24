@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Command/EduSignDeleteGroupeCommand.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 24/02/2024 08:41
  */
 
 namespace App\Command;
@@ -23,7 +23,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class EduSignDeleteGroupeCommand extends Command
 {
     public function __construct(
-        private DeleteGroupe $deleteGroupe,
+        private readonly DeleteGroupe $deleteGroupe,
     )
     {
         parent::__construct();

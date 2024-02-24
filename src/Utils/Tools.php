@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Utils/Tools.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 24/02/2024 08:52
  */
 
 /*
@@ -37,7 +37,7 @@ abstract class Tools
         }
 
         if ($types[0] === 'float' || $types[0] === 'double' || $types[0] === 'mixed') {
-            return Tools::convertToFloat($value);
+            return self::convertToFloat($value);
         }
 
         if ($types[0] === 'string') {

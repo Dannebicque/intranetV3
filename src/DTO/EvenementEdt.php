@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/EvenementEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 24/02/2024 08:48
  */
 
 namespace App\DTO;
@@ -171,16 +171,12 @@ class EvenementEdt
     {
         if (null === $this->typeIdMatiere || '_0' === $this->typeIdMatiere) {
             $matiere = $this->texte;
+        } else if ($long) {
+            $matiere = $this->matiere;
+        } else if ('' !== $this->code_matiere) {
+            $matiere = $this->code_matiere;
         } else {
-            if ($long) {
-                $matiere = $this->matiere;
-            } else {
-                if ('' !== $this->code_matiere) {
-                    $matiere = $this->code_matiere;
-                } else {
-                    $matiere = 'Inconnue';
-                }
-            }
+            $matiere = 'Inconnue';
         }
 
         if (false === $this->evaluation) {

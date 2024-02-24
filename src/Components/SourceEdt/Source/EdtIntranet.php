@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Source/EdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/02/2024 17:43
+ * @lastUpdate 24/02/2024 09:27
  */
 
 namespace App\Components\SourceEdt\Source;
@@ -29,11 +29,11 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
     public const SOURCE = 'intranet';
 
     public function __construct(
-        private GroupeRepository            $groupeRepository,
-        private CalendrierRepository        $calendrierRepository,
-        private readonly EdtIntranetAdapter $adapter,
+        private readonly GroupeRepository     $groupeRepository,
+        private readonly CalendrierRepository $calendrierRepository,
+        private readonly EdtIntranetAdapter   $adapter,
         private readonly EdtPlanningRepository $edtPlanningRepository,
-        private readonly EdtIntranetAdapter $edtIntranetAdapter)
+        private readonly EdtIntranetAdapter   $edtIntranetAdapter)
     {
     }
 

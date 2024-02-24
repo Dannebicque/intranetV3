@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/stage/etudiant/FormulaireController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 24/02/2024 09:27
  */
 
 // src/Controller/FormulaireController.php
@@ -93,22 +93,20 @@ class FormulaireController extends BaseController
         ]);
 
         $form2->handleRequest($request);
-        if ($form2->isSubmitted()) {
-            if ($form2->isValid()) {
-                $stageEtudiantRepository->save($stageEtudiant, true);
+        if ($form2->isSubmitted() && $form2->isValid()) {
+            $stageEtudiantRepository->save($stageEtudiant, true);
 
-                if ('form_type_entreprise_suivant' == $request->request->get('button')) {
-                    return $this->json([
-                        'route' => $this->generateUrl('app_formulaireResponsable',
-                            ['stageEtudiant' => $stageEtudiant->getUuidString()]),
-                    ]);
-                } else {
-                    return $this->json([
-                        'route' => $this->generateUrl('app_stage_etudiant_formulaire',
-                            ['stageEtudiant' => $stageEtudiant->getUuidString()]),
-                    ]);
-                }
+            if ('form_type_entreprise_suivant' == $request->request->get('button')) {
+                return $this->json([
+                    'route' => $this->generateUrl('app_formulaireResponsable',
+                        ['stageEtudiant' => $stageEtudiant->getUuidString()]),
+                ]);
             }
+
+            return $this->json([
+                'route' => $this->generateUrl('app_stage_etudiant_formulaire',
+                    ['stageEtudiant' => $stageEtudiant->getUuidString()]),
+            ]);
         }
 
         return $this->render('stage/formulaire/index.html.twig',
@@ -140,22 +138,20 @@ class FormulaireController extends BaseController
         ]);
 
         $form3->handleRequest($request);
-        if ($form3->isSubmitted()) {
-            if ($form3->isValid()) {
-                $stageEtudiantRepository->save($stageEtudiant, true);
+        if ($form3->isSubmitted() && $form3->isValid()) {
+            $stageEtudiantRepository->save($stageEtudiant, true);
 
-                if ('responsable_suivant' === $request->request->get('button')) {
-                    return $this->json([
-                        'route' => $this->generateUrl('app_formulaireTuteur',
-                            ['stageEtudiant' => $stageEtudiant->getUuidString()]),
-                    ]);
-                } else {
-                    return $this->json([
-                        'route' => $this->generateUrl('app_formulaireEntreprise',
-                            ['stageEtudiant' => $stageEtudiant->getUuidString()]),
-                    ]);
-                }
+            if ('responsable_suivant' === $request->request->get('button')) {
+                return $this->json([
+                    'route' => $this->generateUrl('app_formulaireTuteur',
+                        ['stageEtudiant' => $stageEtudiant->getUuidString()]),
+                ]);
             }
+
+            return $this->json([
+                'route' => $this->generateUrl('app_formulaireEntreprise',
+                    ['stageEtudiant' => $stageEtudiant->getUuidString()]),
+            ]);
         }
 
         return $this->render('stage/formulaire/index.html.twig',
@@ -217,21 +213,21 @@ class FormulaireController extends BaseController
         ]);
 
         $form5->handleRequest($request);
-        if ($form5->isSubmitted()) {
-            if ($form5->isValid()) {
-                $stageEtudiantRepository->save($stageEtudiant, true);
+        if ($form5->isSubmitted() && $form5->isValid()) {
+            $stageEtudiantRepository->save($stageEtudiant, true);
 
-                if ('stage_adresse_form_suivant' === $request->request->get('button')) {
-                    return $this->json([
-                        'route' => $this->generateUrl('app_formulaireStage',
-                            ['stageEtudiant' => $stageEtudiant->getUuidString()]),
-                    ]);
-                } elseif ('stage_adresse_form_retour' === $request->request->get('button')) {
-                    return $this->json([
-                        'route' => $this->generateUrl('app_formulaireTuteur',
-                            ['stageEtudiant' => $stageEtudiant->getUuidString()]),
-                    ]);
-                }
+            if ('stage_adresse_form_suivant' === $request->request->get('button')) {
+                return $this->json([
+                    'route' => $this->generateUrl('app_formulaireStage',
+                        ['stageEtudiant' => $stageEtudiant->getUuidString()]),
+                ]);
+            }
+
+            if ('stage_adresse_form_retour' === $request->request->get('button')) {
+                return $this->json([
+                    'route' => $this->generateUrl('app_formulaireTuteur',
+                        ['stageEtudiant' => $stageEtudiant->getUuidString()]),
+                ]);
             }
         }
 
@@ -283,7 +279,7 @@ class FormulaireController extends BaseController
         $date_fin = Carbon::createFromFormat('d/m/Y', $tab['date2']); // new \DateTime($tab['date2']);
         $interval = $date_debut->diff($date_fin);
 
-        $interval = $interval->format('%y') * 365 + $interval->format('%m') * 30 + $interval->format('%d');
+        $interval = (int)$interval->format('%y') * 365 + (int)$interval->format('%m') * 30 + (int)$interval->format('%d');
 
         $annee1 = $date_debut->format('Y');
         $annee2 = $date_fin->format('Y');

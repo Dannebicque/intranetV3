@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/TypeDiplome.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 24/02/2024 08:51
  */
 
 namespace App\Entity;
@@ -178,11 +178,9 @@ class TypeDiplome extends BaseEntity
 
     public function removeApcReferentiel(ApcReferentiel $apcReferentiel): self
     {
-        if ($this->apcReferentiels->removeElement($apcReferentiel)) {
-            // set the owning side to null (unless already changed)
-            if ($apcReferentiel->getTypeDiplome() === $this) {
-                $apcReferentiel->setTypeDiplome(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->apcReferentiels->removeElement($apcReferentiel) && $apcReferentiel->getTypeDiplome() === $this) {
+            $apcReferentiel->setTypeDiplome(null);
         }
 
         return $this;
@@ -208,11 +206,9 @@ class TypeDiplome extends BaseEntity
 
     public function removeMccTypeEpreufe(MccTypeEpreuve $mccTypeEpreufe): self
     {
-        if ($this->mccTypeEpreuves->removeElement($mccTypeEpreufe)) {
-            // set the owning side to null (unless already changed)
-            if ($mccTypeEpreufe->getTypeDiplome() === $this) {
-                $mccTypeEpreufe->setTypeDiplome(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->mccTypeEpreuves->removeElement($mccTypeEpreufe) && $mccTypeEpreufe->getTypeDiplome() === $this) {
+            $mccTypeEpreufe->setTypeDiplome(null);
         }
 
         return $this;

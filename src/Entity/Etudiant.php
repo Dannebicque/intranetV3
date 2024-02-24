@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Etudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 24/02/2024 08:46
  */
 
 namespace App\Entity;
@@ -172,9 +172,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: Commentaire::class)]
     private Collection $commentaires;
 
-    #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: ConpereEtudiant::class)]
-    private Collection $conpereEtudiants;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $idEduSign = null;
 
@@ -188,8 +185,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         $this->notes = new ArrayCollection();
         $this->absences = new ArrayCollection();
         $this->rattrapages = new ArrayCollection();
-        $this->etudiantDemande = new ArrayCollection();
-        $this->etudiantDemandeur = new ArrayCollection();
         $this->scolarites = new ArrayCollection();
         $this->notifications = new ArrayCollection();
         $this->groupes = new ArrayCollection();
@@ -204,7 +199,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         $this->typeUser = 'ETU';
         $this->projetEtudiants = new ArrayCollection();
         $this->commentaires = new ArrayCollection();
-        $this->conpereEtudiants = new ArrayCollection();
     }
 
     public function setUuid(UuidInterface $uuid): self
@@ -911,36 +905,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         // set the owning side to null (unless already changed)
         if ($this->commentaires->removeElement($commentaire) && $commentaire->getEtudiant() === $this) {
             $commentaire->setEtudiant(null);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, ConpereEtudiant>
-     */
-    public function getConpereEtudiants(): Collection
-    {
-        return $this->conpereEtudiants;
-    }
-
-    public function addConpereEtudiant(ConpereEtudiant $conpereEtudiant): self
-    {
-        if (!$this->conpereEtudiants->contains($conpereEtudiant)) {
-            $this->conpereEtudiants->add($conpereEtudiant);
-            $conpereEtudiant->setEtudiant($this);
-        }
-
-        return $this;
-    }
-
-    public function removeConpereEtudiant(ConpereEtudiant $conpereEtudiant): self
-    {
-        if ($this->conpereEtudiants->removeElement($conpereEtudiant)) {
-            // set the owning side to null (unless already changed)
-            if ($conpereEtudiant->getEtudiant() === $this) {
-                $conpereEtudiant->setEtudiant(null);
-            }
         }
 
         return $this;
