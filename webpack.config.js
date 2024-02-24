@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/webpack.config.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/02/2024 19:43
+// @lastUpdate 24/02/2024 17:39
 
 const Encore = require('@symfony/webpack-encore')
 const path = require('path')
@@ -41,7 +41,6 @@ Encore
   .addEntry('applications', './assets/js/pages/applications.js')
   .addEntry('profil', './assets/js/pages/profil.js')
   .addEntry('adm.configuration', './assets/js/pages/adm.configuration.js')
-  .addEntry('adm.groupe', './assets/js/pages/adm.groupe.js')
   .addEntry('adm.edt', './assets/js/pages/adm.edt.js')
   .addEntry('adm.etudiants', './assets/js/pages/adm.etudiants.js')
   .addEntry('adm.apcCoefficients', './assets/js/pages/adm.apcCoefficients.js')
