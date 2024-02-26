@@ -202,7 +202,7 @@
             </div>
 
             {% if (is_granted('ROLE_PERMANENT') and user_data.departementMultiple == true) %}
-                <div class="dropdown d-none d-md-block">
+                <div class="dropdown">
                 <span class="topbar-btn" data-bs-toggle="dropdown" id="changeDepartement"
                       data-bs-placement="bottom"
                       data-controller="interface--tooltip"
@@ -219,7 +219,7 @@
             <div {{ stimulus_controller('lookup-search', {
                 url: path('recherche')
             }) }}>
-                <a class="topbar-btn d-none d-md-block" href="#" title="{{ 'rechercher'|trans }}"
+                <a class="topbar-btn" href="#" title="{{ 'rechercher'|trans }}"
                    data-bs-toggle="tooltip" data-bs-placement="bottom"
                    data-action="lookup-search#openModal"
                 >
