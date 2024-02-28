@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/SemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 28/02/2024 14:51
  */
 
 namespace App\Controller\superAdministration;
@@ -22,7 +22,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use function count;
 
-#[Route(path: '/administratif/structure/semestre')]
+#[Route(path: '/{type}/structure/semestre', requirements: ['type' => 'administratif|administration'], defaults: ['type' => 'administratif'])]
 class SemestreController extends BaseController
 {
     #[Route(path: '/new/{annee}', name: 'sa_semestre_new', methods: 'GET|POST')]

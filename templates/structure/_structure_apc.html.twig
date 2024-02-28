@@ -80,7 +80,7 @@ alternance (FC){% else %}Parcours en formation initiale (FI){% endif %}</span>
             <div class="row gap-y lignehover">
                 <div class="col-md-1"></div>
                 <div class="col-md-11 d-grid">
-                    <a href="{{ path('administration_apc_parcours_new', {diplome: diplome.id}) }}"
+                    <a href="{{ path('administration_apc_parcours_new', {diplome: diplome.id, type:type}) }}"
                        class="btn btn-success d-block" title="Ajouter un Parcours/Options"><i
                                 class="fa fa-plus-circle"></i> Ajouter un Parcours au diplôme {{ diplome.sigle }}</a>
                 </div>
@@ -120,14 +120,14 @@ alternance (FC){% else %}Parcours en formation initiale (FI){% endif %}</span>
                 {% if diplome.typeStructure != constant('App\\Entity\\Constantes::APC_TYPE_3') %}
                     <div class="tab-pane fade active show"
                          id="diplome{{ diplome.id }}">
-                        {{ include('structure/diplome/_apc_diplome_detail.html.twig', {diplome:diplome}) }}
+                        {{ include('structure/diplome/_apc_diplome_detail.html.twig', {diplome:diplome, type:type}) }}
                     </div>
                 {% endif %}
                 {% for dip in diplomes %}
                     <div class="tab-pane {% if  loop.first and diplome.typeStructure == constant
                         ('App\\Entity\\Constantes::APC_TYPE_3') %}fade active show{% endif %}"
                          id="diplome{{ dip.id }}">
-                        {{ include('structure/diplome/_apc_diplome_detail.html.twig', {diplome:dip}) }}
+                        {{ include('structure/diplome/_apc_diplome_detail.html.twig', {diplome:dip, type:type}) }}
 
                     </div>
                 {% endfor %}
@@ -136,8 +136,7 @@ alternance (FC){% else %}Parcours en formation initiale (FI){% endif %}</span>
                     <div id="ssdip_new_{{ diplome.id }}" class="row gap-y lignehover">
                         <div class="col-md-12 d-grid"><a
                                     href="{{ path(baseurl ~ 'diplome_new',{departement: diplome.departement.id,
-                                        diplome:diplome
-                                        .id}) }}"
+                                        diplome:diplome.id, type:type}) }}"
                                     class="btn d-block btn-success" data-iddip="{{ diplome.id }}"><i
                                         class="fa fa-plus-circle"></i> {{ 'ajouter.sous.diplome'|trans
                                     ({'%libelle%':diplome.libelle}) }}

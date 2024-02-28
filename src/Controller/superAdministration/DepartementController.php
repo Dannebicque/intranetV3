@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/DepartementController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 28/02/2024 14:51
  */
 
 namespace App\Controller\superAdministration;
@@ -20,7 +20,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[Route(path: '/administratif/structure/departement')]
+#[Route(path: '/{type}/structure/departement', requirements: ['type' => 'administratif|administration'], defaults: ['type' => 'administratif'])]
 class DepartementController extends BaseController
 {
     /**

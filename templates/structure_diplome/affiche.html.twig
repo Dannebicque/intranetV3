@@ -1,12 +1,14 @@
 {% if is_granted('ROLE_SUPER_ADMIN') %}
     {% set baseurl = 'sa_' %}
+    {% set type = 'administratif' %}
 {% else %}
     {% set baseurl = 'administration_' %}
+    {% set type = 'administration' %}
 {% endif %}
 
 {% if diplome.typeDiplome.apc == true %}
-    {{ include('structure/_structure_apc.html.twig') }}
+    {{ include('structure/_structure_apc.html.twig', {type:type}) }}
 {% else %}
-    {{ include('structure/_structure_default.html.twig') }}
+    {{ include('structure/_structure_default.html.twig', {type:type}) }}
 {% endif %}
 

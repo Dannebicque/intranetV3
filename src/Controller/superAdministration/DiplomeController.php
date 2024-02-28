@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/DiplomeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 28/02/2024 14:51
  */
 
 namespace App\Controller\superAdministration;
@@ -26,7 +26,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 use function count;
 
-#[Route(path: '/administratif/structure/diplome')]
+#[Route(path: '/{type}/structure/diplome', requirements: ['type' => 'administratif|administration'], defaults: ['type' => 'administratif'])]
 class DiplomeController extends BaseController
 {
     #[Route(path: '/liste', name: 'sa_diplome_liste', methods: 'GET|POST')]

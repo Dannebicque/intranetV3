@@ -2,8 +2,10 @@
 
 {% if is_granted('ROLE_SUPER_ADMIN') %}
     {% set baseurl = 'sa_' %}
+    {% set type = 'administratif' %}
 {% else %}
     {% set baseurl = 'administration_' %}
+    {% set type = 'administration' %}
 {% endif %}
 
 {% block header %}
@@ -12,7 +14,7 @@
 
 {% block stimulus %}
 {{ stimulus_controller('structure-diplome', {
-   'urlDiplome': path('structure_diplome_affiche')
+    'urlDiplome': path('structure_diplome_affiche', {type:type})
 }) }}
 {% endblock %}
 
@@ -32,17 +34,17 @@
 
         <div class="buttons">
             {% if is_granted('ROLE_SUPER_ADMIN') %}
-                <a href="{{ path(baseurl ~ 'diplome_new', {departement:departement.id}) }}"
+                <a href="{{ path(baseurl ~ 'diplome_new', {departement:departement.id, type:type}) }}"
                    class="btn btn-success btn-sm btn-float"
                    data-bs-toggle="tooltip" data-bs-placement="bottom"
                    title="{{ 'atitle.nouveau_diplome'|trans }}"><i class="{{ iconAdd }}"></i><span
                             class="sr-only">{{ 'atitle.nouveau_diplome'|trans }}</span></a>
-                <a href="{{ path(baseurl ~ 'departement_edit', {'id': departement.id}) }}"
+                <a href="{{ path(baseurl ~ 'departement_edit', {'id': departement.id, type:type}) }}"
                    class="btn btn-warning btn-sm btn-float"
                    data-bs-toggle="tooltip" data-bs-placement="bottom"
                    title="{{ 'atitle.modifier'|trans }}"><i class="{{ iconEdit }}"></i><span
                             class="sr-only">{{ 'atitle.modifier'|trans }}</span></a>
-                <a href="{{ path(baseurl ~ 'departement_show', {'id': departement.id}) }}"
+                <a href="{{ path(baseurl ~ 'departement_show', {'id': departement.id, type:type}) }}"
                    class="btn btn-info btn-sm btn-float"
                    data-bs-toggle="tooltip" data-bs-placement="bottom"
                    title="{{ 'atitle.voir'|trans }}"><i class="{{ iconShow }}"></i><span

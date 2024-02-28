@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/StructureDiplomeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 28/02/2024 15:01
  */
 
 namespace App\Controller;
@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[Route(path: '/{type}', requirements: ['type' => 'administratif|administration'], defaults: ['type' => 'administratif'])]
 class StructureDiplomeController extends AbstractController
 {
     /**
@@ -59,6 +60,7 @@ class StructureDiplomeController extends AbstractController
             'referentiel' => $referentiel,
             'parcours' => $parcours,
             'diplomes' => $diplome->getEnfants(),
+            'type' => $request->get('type')
         ]);
     }
 }
