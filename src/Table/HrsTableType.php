@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/HrsTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 18:43
+ * @lastUpdate 28/02/2024 12:51
  */
 
 namespace App\Table;
@@ -25,7 +25,6 @@ use Dannebicque\TableBundle\TableBuilder;
 use Dannebicque\TableBundle\TableType;
 use Dannebicque\TableBundle\Widget\Type\RowDeleteLinkType;
 use Dannebicque\TableBundle\Widget\Type\RowDuplicateLinkType;
-use Dannebicque\TableBundle\Widget\Type\RowEditLinkType;
 use Dannebicque\TableBundle\Widget\Type\StimulusButtonModalType;
 use Dannebicque\TableBundle\Widget\WidgetBuilder;
 use Doctrine\ORM\QueryBuilder;
@@ -95,13 +94,7 @@ class HrsTableType extends TableType
                     'modalUrl' => $this->router->generate('administration_hrs_show',
                         ['id' => $s->getId()]),
                 ]);
-                $builder->add('edit', RowEditLinkType::class, [
-                    'route' => 'administration_hrs_edit',
-                    'route_params' => [
-                        'id' => $s->getId(),
-                    ],
-                    'xhr' => false,
-                ]);
+
                 $builder->add('delete', RowDeleteLinkType::class, [
                     'route' => 'administration_hrs_delete',
                     'route_params' => ['id' => $s->getId()],
