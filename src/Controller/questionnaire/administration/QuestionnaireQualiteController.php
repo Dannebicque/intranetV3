@@ -4,18 +4,24 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/administration/QuestionnaireQualiteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:39
+ * @lastUpdate 28/02/2024 14:40
  */
 
 namespace App\Controller\questionnaire\administration;
 
 use App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException;
 use App\Components\Questionnaire\QuestionnaireRegistry;
+use App\Components\Questionnaire\TypeDestinataire\Etudiant;
+use App\Components\Questionnaire\TypeDestinataire\Exterieur;
+use App\Components\Questionnaire\TypeDestinataire\Personnel;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\QuestChoixEtudiant;
 use App\Entity\QuestQuestionnaire;
 use App\Exception\SemestreNotFoundException;
+use App\Repository\QuestChoixEtudiantRepository;
+use App\Repository\QuestChoixExterieurRepository;
+use App\Repository\QuestChoixPersonnelRepository;
 use App\Repository\QuestChoixRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -94,6 +100,9 @@ class QuestionnaireQualiteController extends BaseController
 
     #[Route('/{id}', name: 'delete', methods: ['DELETE'])]
     public function delete(
+        QuestChoixEtudiantRepository  $questChoixEtudiantRepository,
+        QuestChoixPersonnelRepository $questChoixPersonnelRepository,
+        QuestChoixExterieurRepository $questChoixExterieurRepository,
         QuestChoixRepository $questChoixRepository,
         Request $request,
         QuestQuestionnaire $questionnaireQualite
@@ -103,6 +112,26 @@ class QuestionnaireQualiteController extends BaseController
         if ($this->isCsrfTokenValid('delete' . $questionnaireQualite->getId(),
             $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             // suppression des choix et choixUser
+            $choix = $questChoixRepository->findByQuestionnaire($questionnaireQualite);
+            foreach ($choix as $c) {
+                $this->entityManager->remove($c);
+            }
+
+            switch ($questionnaireQualite->getTypeDestinataire()) {
+                case Etudiant::class:
+                    $qst = $questChoixEtudiantRepository->findByQuestionnaire($questionnaireQualite);
+                    break;
+                case Personnel::class:
+                    $qst = $questChoixPersonnelRepository->findByQuestionnaire($questionnaireQualite);
+                    break;
+                case Exterieur::class:
+                    $qst = $questChoixExterieurRepository->findByQuestionnaire($questionnaireQualite);
+                    break;
+            }
+
+            foreach ($qst as $c) {
+                $this->entityManager->remove($c);
+            }
 
             // suppression des sections
             // suppression des questions et réponses
