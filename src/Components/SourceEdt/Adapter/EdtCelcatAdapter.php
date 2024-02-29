@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Adapter/EdtCelcatAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:59
+ * @lastUpdate 29/02/2024 19:31
  */
 
 namespace App\Components\SourceEdt\Adapter;
@@ -40,7 +40,6 @@ class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
         $evt->jour = (string)($event->getJour() + 1);
         $evt->heureDebut = $event->getDebut();
         $evt->indexDebut = Constantes::TAB_HEURES_EDT_LIGNE_2[$event->getDebut()->roundMinute(10)->format('Hi')];
-//        $evt->indexDebut = '0800';
         $evt->heureFin = $event->getFin();
         $evt->matiere = utf8_decode($event->getLibModule());
         $evt->typeIdMatiere = $event->getTypeIdMatiere();
@@ -72,7 +71,7 @@ class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
             $evt->semestre = $matiere->getSemestres()[0];
         }
 
-        $evt->couleur = $evt->semestre?->getAnnee()->getCouleur();
+        $evt->couleur = $evt->semestre?->getAnnee()?->getCouleur();
         $evt->ordreSemestre = $evt->semestre?->getOrdreLmd();
 
         $evt->diplome = $event->getSemestre()?->getDiplome();
@@ -86,7 +85,6 @@ class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
         $evt->gridEnd = $event->getFin()?->format('Hi');
         $evt->largeur = $this->getLargeur($evt);
         $evt->duree = Constantes::TAB_HEURES_INDEX[$event->getFin()->format('H:i:s')] - Constantes::TAB_HEURES_INDEX[$event->getDebut()->format('H:i:s')];
-        //$evt->duree = "180000";
         $evt->idEduSign = $event->getIdEduSign();
 
         return $evt;

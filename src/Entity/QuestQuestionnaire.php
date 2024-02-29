@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/QuestQuestionnaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:51
+ * @lastUpdate 29/02/2024 19:08
  */
 
 namespace App\Entity;
@@ -208,18 +208,6 @@ class QuestQuestionnaire extends BaseEntity
     public function setDepartement(?Departement $departement): self
     {
         $this->departement = $departement;
-
-        return $this;
-    }
-
-    public function getConfiguration(): ?string
-    {
-        return $this->configuration;
-    }
-
-    public function setConfiguration(?string $configuration): self
-    {
-        $this->configuration = $configuration;
 
         return $this;
     }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/ApiEduSign.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:59
+ * @lastUpdate 29/02/2024 20:42
  */
 
 namespace App\Classes\EduSign;
@@ -22,13 +22,11 @@ use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Exception;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\HttpClient\HttpClient;
 
 class ApiEduSign
 {
     public function __construct(
-        ParameterBagInterface           $parameterBag,
         protected PersonnelRepository   $personnelRepository,
         protected EdtPlanningRepository $edtPlanningRepository,
         protected EdtCelcatRepository   $edtCelcatRepository,

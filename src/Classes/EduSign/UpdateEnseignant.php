@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/UpdateEnseignant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:59
+ * @lastUpdate 29/02/2024 19:10
  */
 
 namespace App\Classes\EduSign;
@@ -15,6 +15,8 @@ use App\Repository\PersonnelRepository;
 
 class UpdateEnseignant
 {
+    private string $cleApi = '';
+
     public function __construct(
         private readonly ApiEduSign   $apiEduSign,
         protected PersonnelRepository $personnelRepository,

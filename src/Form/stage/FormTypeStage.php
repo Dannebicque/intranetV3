@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/stage/FormTypeStage.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/01/2023 11:19
+ * @lastUpdate 29/02/2024 19:03
  */
 
 namespace App\Form\stage;
@@ -24,11 +24,10 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class FormTypeStage extends AbstractType
 {
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $this->flexible = $options['flexible'];
-
-        if (true === $this->flexible) {
+        if (true === $options['flexible']) {
             $builder->
             add('date_debut_stage', DatePickerType::class, ['label' => 'Date de début :'])
                 ->add('date_fin_stage', DatePickerType::class, ['label' => 'Date de fin  :'])

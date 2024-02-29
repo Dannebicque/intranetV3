@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/QuestQuestion.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:51
+ * @lastUpdate 29/02/2024 19:08
  */
 
 namespace App\Entity;
@@ -173,30 +173,6 @@ class QuestQuestion extends BaseEntity
         return $this;
     }
 
-    public function getConfiguration(): ?string
-    {
-        return $this->configuration;
-    }
-
-    public function setConfiguration(?string $configuration): self
-    {
-        $this->configuration = $configuration;
-
-        return $this;
-    }
-
-    public function getAuteur(): ?Personnel
-    {
-        return $this->auteur;
-    }
-
-    public function setAuteur(?Personnel $auteur): self
-    {
-        $this->auteur = $auteur;
-
-        return $this;
-    }
-
     public function getQuestionParent(): ?self
     {
         return $this->questionParent;
@@ -233,18 +209,6 @@ class QuestQuestion extends BaseEntity
         if ($this->questionsEnfants->removeElement($questionsEnfant) && $questionsEnfant->getQuestionParent() === $this) {
             $questionsEnfant->setQuestionParent(null);
         }
-
-        return $this;
-    }
-
-    public function getDepartement(): ?Departement
-    {
-        return $this->departement;
-    }
-
-    public function setDepartement(?Departement $departement): self
-    {
-        $this->departement = $departement;
 
         return $this;
     }
