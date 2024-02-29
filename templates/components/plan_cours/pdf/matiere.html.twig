@@ -43,7 +43,7 @@
             </td>
             <td style="text-align: center; width:{% if qualite is defined and qualite == true %}{% else %}60%{% endif %}">
                 {{ settings('NOM_IUT') }}<br>
-                PLAN DE COURS SAÉ
+                PLAN DE COURS MATIERE
             </td>
             <td style="text-align: center; width:{% if qualite is defined and qualite == true %}{% else %}20%{% endif %}">
 
@@ -61,14 +61,11 @@
 
         <tr>
             <td colspan="3" style="text-align: center">
-                <h1>{{ matiere.diplome.display }} <br>
-                    PARCOURS : {% if matiere.apcParcours.count == 0 %}Tronc Commun{% else %}{% for parc in matiere
-                    .apcParcours %}{{ parc != null ? parc.libelle : '-' }}{% if not loop.last %}, {% endif %}{% endfor %}{% endif %}
-                </h1>
-                <h2>SAÉ : {{ matiere.display }}<br>
+                <h1>{{ matiere.diplome.display }}</h1>
+                <h2>Matière : {{ matiere.display }}<br>
                     {{ anneeUniversitaire.displayAnneeUniversitaire }}</h2>
             </td>
         </tr>
     </table>
-    {{ include('components/plan_cours/show/_show_sae.html.twig') }}
+    {{ include('components/plan_cours/show/_show_matiere.html.twig') }}
 {% endblock %}

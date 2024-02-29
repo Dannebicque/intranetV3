@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/PrevisionnelMatiereRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/09/2023 11:19
+ * @lastUpdate 29/02/2024 12:11
  */
 
 namespace App\Repository;
@@ -14,6 +14,7 @@ use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Matiere;
 use App\Entity\Personnel;
+use App\Entity\PlanCoursMatiere;
 use App\Entity\Semestre;
 use App\Entity\Ue;
 use Doctrine\Common\Collections\Criteria;
@@ -112,8 +113,9 @@ class PrevisionnelMatiereRepository extends PrevisionnelRepository
         return $this->createQueryBuilder('p')
             ->leftJoin(Personnel::class, 'pers', 'WITH', 'p.personnel = pers.id')
             ->innerJoin(Matiere::class, 'm', 'WITH', 'p.idMatiere = m.id')
+            ->leftJoin(PlanCoursMatiere::class, 'pc', 'WITH', 'p.idMatiere = pc.idMatiere AND p.typeMatiere = pc.typeMatiere')
             ->innerJoin(Ue::class, 'u', 'WITH', 'm.ue = u.id')
-            ->select('p.id as id_previsionnel, p.annee, p.referent, p.nbHCm, p.nbHTd, p.nbHTp, p.nbGrCm, p.nbGrTd, p.nbGrTp, m.id as id_matiere, m.libelle, m.codeMatiere, m.codeElement as matiere_code_element, pers.id as id_personnel, pers.statut, pers.nom, pers.prenom, pers.numeroHarpege, pers.mailUniv, pers.nbHeuresService')
+            ->select('p.id as id_previsionnel, p.annee, p.referent, p.nbHCm, p.nbHTd, p.nbHTp, p.nbGrCm, p.nbGrTd, p.nbGrTp, m.id as id_matiere, m.libelle, m.codeMatiere, m.codeElement as matiere_code_element, pers.id as id_personnel, pers.statut, pers.nom, pers.prenom, pers.numeroHarpege, pers.mailUniv, pers.nbHeuresService, pc.id as id_plan_cours, pc.etatPlanCours as etat_plan_cours')
             ->where('p.annee = :annee')
             ->andWhere('u.semestre = :semestre')
             ->andWhere('p.typeMatiere = :type')

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/PlanCours/Source/PlanCoursSAE.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:59
+ * @lastUpdate 29/02/2024 10:18
  */
 
 namespace App\Components\PlanCours\Source;
@@ -26,7 +26,7 @@ class PlanCoursSAE extends AbstractPlanCours implements PlanCoursInterface
     public const FORM_STEP_1 = PlanCoursSaeStep1Type::class;
     public const FORM_STEP_2 = PlanCoursSaeStep2Type::class;
     public const FORM_STEP_3 = PlanCoursSaeStep3Type::class;
-    public const TEMPLATE_SHOW = 'show_sae.html.twig';
+    public const TEMPLATE_SHOW = '_show_sae.html.twig';
     public const TEMPLATE_FORM_STEP_1 = 'plan_cours_sae_1.html.twig';
     public const TEMPLATE_FORM_STEP_2 = 'plan_cours_sae_2.html.twig';
     public const TEMPLATE_FORM_STEP_3 = 'plan_cours_sae_3.html.twig';

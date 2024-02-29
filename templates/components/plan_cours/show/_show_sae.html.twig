@@ -1,4 +1,4 @@
-<h3>DESCRIPTION SAÉ</h3>
+<h3>1. DESCRIPTION SAÉ</h3>
 <h4>Responsable de la SAÉ :</h4>
 {{ pc.responsable != null ? pc.responsable.display : '-' }}
 
@@ -69,14 +69,42 @@
 <p style="text-align: justify">{{ pc.bibliographie|raw }}</p>
 
 
-<h3>PROGRESSION PÉDAGOGIQUE</h3>
-(au choix, possibilité d'utiliser la grille ci-dessous ou bien
-d'insérer son propre plan de cours dans un format libre)
-Programme prévu    Nombre d'heures envisagé    Commentaires éventuels
-Séquence 1 :
+<h3>2. PROGRESSION PÉDAGOGIQUE</h3>
 
+{% if pc.planCoursSequences|length > 0 %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th>N° Séquence</th>
+            <th>Programme</th>
+            <th>Nb Heures envisagées</th>
+            <th>Commentaire</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for seq in pc.planCoursSequences %}
+            <tr>
+                <td>{{ seq.ordre }}</td>
+                <td>{{ seq.programme|raw }}</td>
+                <td>{{ seq.nbHeures }}</td>
+                <td>{{ seq.commentaire|raw }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
 
-<h3>RÉALISATION</h3>
+{% if pc.fichierPlanCours != null %}
+    Fichier joint : <a href="{{ asset('upload/fichier-plan-cours/'~pc.fichierPlanCours) }}"
+                       target="_blank">{{ pc.fichierPlanCours }}</a>
+{% endif %}
+
+{% if pc.saisiePlanCours != null %}
+    Saisie libre du plan de cours : <br>
+    <p style="text-align: justify">{{ pc.saisiePlanCours|raw }}</p>
+{% endif %}
+
+<h3>3. RÉALISATION</h3>
 
 <h4>Le plan de cours a-t-il pu être suivi comme prévu ? (oui, non, pourquoi ?)</h4>
 <p style="text-align: justify"><strong>{{ pc.planSuivi == true ? 'Oui' : 'Non' }}</strong>. {{ pc

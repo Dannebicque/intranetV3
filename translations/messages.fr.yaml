@@ -137,6 +137,9 @@ actualite:
   liste.heading: 'Liste des actualités'
 
 adm:
+  plan_cours:
+    diplome.heading: 'Suivi des plans de cours'
+    index.heading: 'Suivi des plans de cours'
   mise.a.jour.ss.comm: 'Mise à jour d''une sous-commission'
   creneau_cours_menu: 'Créneaux de cours'
   attestation_deplacement: 'Gestion des attestations de déplacement'

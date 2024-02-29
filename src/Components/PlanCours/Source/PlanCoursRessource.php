@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/PlanCours/Source/PlanCoursRessource.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:59
+ * @lastUpdate 29/02/2024 10:18
  */
 
 namespace App\Components\PlanCours\Source;
@@ -29,6 +29,8 @@ class PlanCoursRessource extends AbstractPlanCours implements PlanCoursInterface
     public const FORM_STEP_1 = PlanCoursRessourceStep1Type::class;
     public const FORM_STEP_2 = PlanCoursRessourceStep2Type::class;
     public const FORM_STEP_3 = PlanCoursRessourceStep3Type::class;
+    public const TEMPLATE_SHOW = '_show_ressource.html.twig';
+
     public const TEMPLATE_FORM_STEP_1 = 'plan_cours_ressource_1.html.twig';
     public const TEMPLATE_FORM_STEP_2 = 'plan_cours_ressource_2.html.twig';
     public const TEMPLATE_FORM_STEP_3 = 'plan_cours_ressource_3.html.twig';

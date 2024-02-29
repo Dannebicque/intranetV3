@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/PlanCoursSequence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/08/2022 16:23
+ * @lastUpdate 29/02/2024 10:01
  */
 
 namespace App\Entity;
@@ -31,6 +31,9 @@ class PlanCoursSequence extends BaseEntity
 
     #[ORM\ManyToOne(inversedBy: 'planCoursSequences')]
     private ?PlanCours $planCours = null;
+
+    #[ORM\Column(length: 10, nullable: true)]
+    private ?string $ordre = null;
 
     public function getProgramme(): ?string
     {
@@ -76,6 +79,18 @@ class PlanCoursSequence extends BaseEntity
     public function setPlanCours(?PlanCours $planCours): self
     {
         $this->planCours = $planCours;
+
+        return $this;
+    }
+
+    public function getOrdre(): ?string
+    {
+        return $this->ordre;
+    }
+
+    public function setOrdre(?string $ordre): static
+    {
+        $this->ordre = $ordre;
 
         return $this;
     }
