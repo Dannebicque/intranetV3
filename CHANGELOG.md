@@ -2,6 +2,28 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.15.0](https://github.com/Dannebicque/intranetV3/compare/v3.14.79...v3.15.0) (2024-03-01)
+
+
+### Features
+
+* Plan de cours, affichage + admin ([5b2e15f](https://github.com/Dannebicque/intranetV3/commit/5b2e15f0f6e5d10d76bde5f6f96eac1cd9670021))
+
+
+### Bug Fixes
+
+* barre de recherche en mobile ([e1e6c7d](https://github.com/Dannebicque/intranetV3/commit/e1e6c7d96a795a8337cd0fc654ddd7651008ff8f))
+* dark mode sur editable ([226cdac](https://github.com/Dannebicque/intranetV3/commit/226cdac61f96b2b37f36369bb6776d6e74107dd1))
+* edition structure en admin (blocage des routes sur administratif uniquement) ([904731d](https://github.com/Dannebicque/intranetV3/commit/904731d39a4853d823d9f1019ca6637c37d97285))
+* mise à jour cypress ([ef840bd](https://github.com/Dannebicque/intranetV3/commit/ef840bdd7e5e0468a3b228290c26084984500924))
+* route inexistante HrsTableType.php ([8c96749](https://github.com/Dannebicque/intranetV3/commit/8c9674956649d333bbcc8b2e404b2f7e8683d9a1))
+* suppression bouton favori étudiant ([42d4592](https://github.com/Dannebicque/intranetV3/commit/42d4592ca6a396d648d74fb08eaf068efe3156e9))
+* Suppression d'un questionnaire qualité ([e653847](https://github.com/Dannebicque/intranetV3/commit/e65384720a10ad1c4efe9c35ae9f6465c30b9d4c))
+* suppression des anciennes bornes ([22dd1c3](https://github.com/Dannebicque/intranetV3/commit/22dd1c31889109ffa4bb37d259705cc919e49287))
+* suppression du format ADE pour les EDT ([56ff75f](https://github.com/Dannebicque/intranetV3/commit/56ff75ff225109d6198cfa3dd8cf8372c2648020))
+* template manquant ([91c9c14](https://github.com/Dannebicque/intranetV3/commit/91c9c1478c6ecb494ec3a1120c39baff27a04e36))
+* type de document par défaut ([202df77](https://github.com/Dannebicque/intranetV3/commit/202df77c49c8fbb67d8d8e89e641a55fd0a739f4))
+
 ### [3.14.79](https://github.com/Dannebicque/intranetV3/compare/v3.14.77...v3.14.79) (2024-02-19)
 
 
