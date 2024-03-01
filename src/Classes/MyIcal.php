@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyIcal.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:59
+ * @lastUpdate 29/02/2024 22:41
  */
 
 namespace App\Classes;
@@ -127,9 +127,9 @@ class MyIcal
 
     public function calculHeureEte(int $timestamp): string
     {
-        $annee_courante = strftime('%Y', $timestamp);
-        $mois_courant = strftime('%m', $timestamp);
-        $jour_courant = strftime('%d', $timestamp);
+        $annee_courante = date('%Y', $timestamp);
+        $mois_courant = date('%m', $timestamp);
+        $jour_courant = date('%d', $timestamp);
         $decalage_horaire = 0;
         $num_dernier_dimanche = [];
 
@@ -165,7 +165,7 @@ class MyIcal
         // Fonction utilisée pour les mois de mars et octobre (31 jours)
         for ($i = 31; $i > 1; --$i) {
             $ts = mktime(0, 0, 0, $mois, $i, $annee);
-            if ('7' === strftime('%u', $ts)) {
+            if ('7' === date('%u', $ts)) {
                 break;
             }
         }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DataFixtures/DepartementFixtures.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 29/02/2024 22:17
  */
 
 namespace App\DataFixtures;
@@ -65,7 +65,6 @@ class DepartementFixtures extends Fixture implements DependentFixtureInterface
         $diplome->setSigle('MMI');
         $diplome->setDepartement($departement);
         $diplome->setActif(true);
-        $diplome->setAnneeUniversitaire($this->getReference(AnneeUniversitaireFixture::ANNEE_UNIVERSITAIRE_REFERENCE));
         $diplome->setCodeDepartement('TS123');
         $diplome->setCodeDiplome('DTS123');
         $diplome->setCodeVersion('101');

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcSae.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 29/02/2024 21:53
  */
 
 namespace App\Entity;
@@ -25,22 +25,6 @@ class ApcSae extends AbstractMatiere implements MatiereEntityInterface
     use LifeCycleTrait;
 
     final public const SOURCE = 'sae';
-
-    /**
-     * @return Semestre|null
-     *
-     */
-    /** @deprecated */
-    public function getSemestre(): ?Semestre
-    {
-        return $this->semestre;
-    }
-
-    //(reason: 'Une SAE peut être commune  à plusieurs parcours. Le plus simple serait d\'avoir une gestion manytomany')
-
-    /** @deprecated */
-    #[ORM\ManyToOne(targetEntity: Semestre::class, fetch: 'EAGER')]
-    private ?Semestre $semestre = null;
 
     #[ORM\Column(type: Types::FLOAT)]
     private float $projetPpn = 0;
@@ -322,15 +306,6 @@ class ApcSae extends AbstractMatiere implements MatiereEntityInterface
     public function hasSemestre(Semestre $semestre): bool
     {
         return $this->getSemestres()->contains($semestre);
-    }
-
-    /**
-     * @param Semestre|null $semestre
-     */
-    /** @deprecated */
-    public function setSemestre(?Semestre $semestre): void
-    {
-        $this->semestre = $semestre;
     }
 
     public function getParcours(): array

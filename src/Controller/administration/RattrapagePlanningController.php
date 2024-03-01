@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/RattrapagePlanningController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 29/02/2024 22:46
  */
 
 namespace App\Controller\administration;
@@ -35,7 +35,7 @@ class RattrapagePlanningController extends BaseController
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $diplome);
 
         return $this->render('administration/rattrapagePlanning/index.html.twig', [
-            'rattrapages' => $rattrapageRepository->findValidByDiplome($diplome, $diplome->getAnneeUniversitaire()),
+            'rattrapages' => $rattrapageRepository->findValidByDiplome($diplome, $this->getAnneeUniversitaire()),
             'diplome' => $diplome,
             'matieres' => $typeMatiereManager->findByDiplomeArray($diplome),
             'options' => [
@@ -52,7 +52,7 @@ class RattrapagePlanningController extends BaseController
         MyExport $myExport, RattrapageRepository $rattrapageRepository, Diplome $diplome, string $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $diplome);
-        $rattrapages = $rattrapageRepository->findValidByDiplome($diplome, $diplome->getAnneeUniversitaire());
+        $rattrapages = $rattrapageRepository->findValidByDiplome($diplome, $this->getAnneeUniversitaire());
 
         $data = $mySerializer->getDataFromSerialization(
             $rattrapages,
@@ -114,7 +114,7 @@ class RattrapagePlanningController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $diplome);
         $valeur = $request->request->get('valeur');
-        $rattrapages = $rattrapageRepository->findValidByDiplome($diplome, $diplome->getAnneeUniversitaire());
+        $rattrapages = $rattrapageRepository->findValidByDiplome($diplome, $this->getAnneeUniversitaire());
         /** @var Rattrapage $rattrapage */
         foreach ($rattrapages as $rattrapage) {
             switch ($type) {

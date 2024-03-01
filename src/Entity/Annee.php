@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Annee.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:46
+ * @lastUpdate 29/02/2024 21:38
  */
 
 namespace App\Entity;
@@ -191,6 +191,7 @@ class Annee extends BaseEntity
 
     public function getAnneeUniversitaire(): ?int
     {
+        //todo: donc déprecated aussi?
         if (null !== $this->getDiplome() && null !== $this->getDiplome()->getAnneeUniversitaire()) {
             return $this->getDiplome()->getAnneeUniversitaire()->getAnnee();
         }
@@ -257,6 +258,7 @@ class Annee extends BaseEntity
 
     public function removeApcNiveau(ApcNiveau $apcNiveau): self
     {
+        //todo: deprecated ?? Sur une collection ?
         if ($this->apcNiveaux->contains($apcNiveau)) {
             $this->apcNiveaux->removeElement($apcNiveau);
             // set the owning side to null (unless already changed)

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Excel/MyExcelRead.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Excel/MyExcelRead.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 09:03
+ * @lastUpdate 29/02/2024 22:23
  */
 
 /*
@@ -62,10 +62,10 @@ class MyExcelRead
             $this->countColumns();
         }
 
-        if ('' !== $this->sheet->getCellByColumnAndRow(0, $this->line)->getValue()) {
+        if ('' !== $this->sheet->getCell([0, $this->line])->getValue()) {
             $t = [];
             for ($col = 0; $col < $this->nbColumns; ++$col) {
-                $t[$col] = $this->sheet->getCellByColumnAndRow($col, $this->line);
+                $t[$col] = $this->sheet->getCell([$col, $this->line]);
             }
             ++$this->line;
 
@@ -80,7 +80,7 @@ class MyExcelRead
         $fin = true;
         $i = 1;
         while (true === $fin) {
-            if ('' === $this->sheet->getCellByColumnAndRow($i, 1)->getValue()) {
+            if ('' === $this->sheet->getCell([$i, 1])->getValue()) {
                 $fin = false;
                 $this->nbColumns = $i;
             }
@@ -90,7 +90,7 @@ class MyExcelRead
 
     public function getCellColLigne(int $col, int $lig): Cell
     {
-        return $this->sheet->getCellByColumnAndRow($col, $lig);
+        return $this->sheet->getCell([$col, $lig]);
     }
 
     public function writeCellColLigne(int $col, int $lig, string $valeur): void

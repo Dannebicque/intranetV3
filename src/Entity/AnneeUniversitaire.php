@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/AnneeUniversitaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:48
+ * @lastUpdate 29/02/2024 21:42
  */
 
 namespace App\Entity;
@@ -35,13 +35,6 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
     #[Groups(groups: ['annee_universitaire'])]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $commentaire = null;
-
-    /**
-     * @var Collection<int, Departement>
-     */
-    /** @deprecated */
-    #[ORM\OneToMany(mappedBy: 'anneeUniversitairePrepare', targetEntity: Departement::class)]
-    private Collection $departements;
 
     /**
      * @var Collection<int, Calendrier>
@@ -108,7 +101,6 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
 
     public function __construct()
     {
-        $this->departements = new ArrayCollection();
         $this->setAnnee((int) date('Y'));
         $this->calendriers = new ArrayCollection();
         $this->scolarites = new ArrayCollection();
@@ -143,37 +135,6 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
     public function setCommentaire(string $commentaire): self
     {
         $this->commentaire = $commentaire;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Departement[]
-     */
-    public function getDepartements(): Collection
-    {
-        return $this->departements;
-    }
-
-    public function addDepartement(Departement $departement): self
-    {
-        if (!$this->departements->contains($departement)) {
-            $this->departements[] = $departement;
-            $departement->setAnneeUniversitairePrepare($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDepartement(Departement $departement): self
-    {
-        if ($this->departements->contains($departement)) {
-            $this->departements->removeElement($departement);
-            // set the owning side to null (unless already changed)
-            if ($departement->getAnneeUniversitairePrepare() === $this) {
-                $departement->setAnneeUniversitairePrepare(null);
-            }
-        }
 
         return $this;
     }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/AnneeUniversitaireController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/02/2024 18:55
+ * @lastUpdate 29/02/2024 21:42
  */
 
 namespace App\Controller\superAdministration;
@@ -133,7 +133,7 @@ class AnneeUniversitaireController extends BaseController
     {
         $id = $annee_universitaire->getId();
         if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
-            if (0 === count($annee_universitaire->getDepartements()) &&
+            if (
                 0 === count($annee_universitaire->getDiplomes()) &&
                 0 === count($annee_universitaire->getScolarites()) &&
                 0 === count($annee_universitaire->getEvaluations())) {

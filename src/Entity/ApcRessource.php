@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcRessource.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 29/02/2024 21:51
  */
 
 namespace App\Entity;
@@ -24,19 +24,6 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
     use LifeCycleTrait;
 
     final public const SOURCE = 'ressource';
-
-    /**
-     * @return Semestre|null
-     */
-    /** @deprecated */
-    public function getSemestre(): ?Semestre
-    {
-        return $this->semestre;
-    }
-
-    /** @deprecated(reason: 'Une ressource peut être commune  à plusieurs parcours. Le plus simple serait d\'avoir une gestion manytomany') */
-    #[ORM\ManyToOne(targetEntity: Semestre::class, fetch: 'EAGER')]
-    private ?Semestre $semestre = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $preRequis = null;
@@ -391,15 +378,6 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
         }
 
         return null;
-    }
-
-    /**
-     * @param Semestre|null $semestre
-     */
-    /** @deprecated */
-    public function setSemestre(?Semestre $semestre): void
-    {
-        $this->semestre = $semestre;
     }
 
     public function getParcours(): array

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/AlternanceType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/05/2022 18:28
+ * @lastUpdate 29/02/2024 21:36
  */
 
 namespace App\Form;
@@ -12,6 +12,7 @@ namespace App\Form;
 use App\Entity\Alternance;
 use App\Entity\Departement;
 use App\Entity\Personnel;
+use App\Form\stage\EntrepriseType;
 use App\Form\Type\DateRangeType;
 use App\Form\Type\EntityCompleteType;
 use App\Repository\PersonnelRepository;
@@ -51,7 +52,7 @@ class AlternanceType extends AbstractType
             ])
             ->add('dateRange', DateRangeType::class,
                 ['label' => 'label.dateRange.periode.alternance', 'mapped' => false, 'required' => true])
-            ->add('entreprise', EntrepriseType::class, ['label' => 'label.entreprise'])
+            ->add('entreprise', EntrepriseType::class, ['label' => 'label.entreprise', 'withResponsable' => true])
             ->add('tuteur', ContactType::class, ['label' => 'label.tuteur'])
             ->add('tuteurUniversitaire', EntityCompleteType::class, [
                 'label' => 'label.tuteur_universitaire',
