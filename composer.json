@@ -12,7 +12,7 @@
     "apereo/phpcas": "^1.6",
     "bugsnag/bugsnag-symfony": "^1.13",
     "composer/package-versions-deprecated": "^1.11",
-    "dannebicque/table-bundle": "^1.0",
+    "dannebicque/table-bundle": "^v1.0.*",
     "doctrine/annotations": "^1.14",
     "doctrine/doctrine-bundle": "^2.10",
     "doctrine/doctrine-migrations-bundle": "^3.2",
