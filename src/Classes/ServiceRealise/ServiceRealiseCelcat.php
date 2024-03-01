@@ -21,7 +21,7 @@ use App\Exception\MatiereNotFoundException;
 use App\Interfaces\UtilisateurInterface;
 use App\Repository\EdtCelcatRepository;
 
-readonly class ServiceRealiseCelcat implements ServiceRealiseInterface
+class ServiceRealiseCelcat implements ServiceRealiseInterface
 {
     public function __construct(
         private EdtCelcatRepository $celcatEventsRepository,

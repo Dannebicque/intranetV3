@@ -21,7 +21,7 @@ use Exception;
 use function array_key_exists;
 use function count;
 
-readonly class MyScolarite
+class MyScolarite
 {
     public function __construct(
         private MyUpload               $myUpload,

@@ -21,7 +21,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 /**
  * Envoi un mail de bienvenue à chaque creation d'un utilisateur.
  */
-readonly class AbsenceSubscriber implements EventSubscriberInterface
+class AbsenceSubscriber implements EventSubscriberInterface
 {
     /**
      * RegistrationNotifySubscriber constructor.

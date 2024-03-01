@@ -34,7 +34,7 @@ use function count;
 /**
  * Class MyExcelMultiExport.
  */
-readonly class MyExcelMultiExport
+class MyExcelMultiExport
 {
     public function __construct(
         private MyExcelWriter $myExcelWriter

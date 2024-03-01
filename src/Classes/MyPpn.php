@@ -18,7 +18,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use function array_key_exists;
 
-readonly class MyPpn
+class MyPpn
 {
     public function __construct(
         private MyUpload               $myUpload,

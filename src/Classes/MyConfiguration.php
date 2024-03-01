@@ -26,7 +26,7 @@ use Doctrine\ORM\EntityManagerInterface;
 /**
  * Class MyConfiguration.
  */
-readonly class MyConfiguration
+class MyConfiguration
 {
     /**
      * MyConfiguration constructor.

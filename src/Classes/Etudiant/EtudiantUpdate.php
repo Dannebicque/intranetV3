@@ -19,7 +19,7 @@ use App\Repository\DepartementRepository;
 use App\Repository\SemestreRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
-readonly class EtudiantUpdate
+class EtudiantUpdate
 {
     /**
      * EtudiantUpdate constructor.

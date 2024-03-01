@@ -9,7 +9,7 @@
 
 namespace App\Message;
 
-readonly class ExportReleve
+class ExportReleve
 {
     public function __construct(private int $semestre, private int $anneeUniversitaire, private int $personnel)
     {

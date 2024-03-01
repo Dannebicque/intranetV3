@@ -22,7 +22,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use function array_key_exists;
 
-readonly class MyExportRdd
+class MyExportRdd
 {
     /**
      * MyExport constructor.

@@ -16,7 +16,7 @@ namespace App\Classes;
 use App\Entity\Entreprise;
 use Doctrine\ORM\EntityManagerInterface;
 
-readonly class MyEntreprise
+class MyEntreprise
 {
     /**
      * MyAdresse constructor.

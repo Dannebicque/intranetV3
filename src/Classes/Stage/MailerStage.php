@@ -20,7 +20,7 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Twig\Error\LoaderError;
 use Twig\Error\SyntaxError;
 
-readonly class MailerStage
+class MailerStage
 {
     /**
      * MailerStage constructor.

@@ -25,7 +25,7 @@ use function array_key_exists;
 use function count;
 use function is_array;
 
-readonly class EtudiantImport
+class EtudiantImport
 {
     private array $tBac;
 

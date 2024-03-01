@@ -18,7 +18,7 @@ use App\Utils\ToolsMatiere;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 
-readonly class AbsenceEtatAppel
+class AbsenceEtatAppel
 {
     public function __construct(
         private AbsenceEtatAppelRepository $absenceEtatAppelRepository,

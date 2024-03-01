@@ -22,7 +22,7 @@ use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-readonly class MyExport
+class MyExport
 {
     public function __construct(
         private MyPDF              $myPDF,

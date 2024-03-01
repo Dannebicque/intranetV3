@@ -16,7 +16,7 @@ namespace App\Classes;
 use App\Entity\Constantes;
 use App\Repository\MaterielCommunPretRepository;
 
-readonly class MyMaterielCommun
+class MyMaterielCommun
 {
     /**
      * MyMaterielCommun constructor.

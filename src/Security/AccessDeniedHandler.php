@@ -21,7 +21,7 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-readonly class AccessDeniedHandler implements AccessDeniedHandlerInterface
+class AccessDeniedHandler implements AccessDeniedHandlerInterface
 {
     public function __construct(private Environment $twig)
     {

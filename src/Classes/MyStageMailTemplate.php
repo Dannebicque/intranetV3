@@ -20,7 +20,7 @@ use App\Repository\StageMailTemplateRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 
-readonly class MyStageMailTemplate
+class MyStageMailTemplate
 {
     public function __construct(
         private StageMailTemplateRepository $stageMailTemplateRepository,

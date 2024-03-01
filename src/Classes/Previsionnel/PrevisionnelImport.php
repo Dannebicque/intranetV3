@@ -22,7 +22,7 @@ use function array_key_exists;
 /**
  * Class PrevisionnelImport.
  */
-readonly class PrevisionnelImport
+class PrevisionnelImport
 {
     public function __construct(
         private TypeMatiereManager     $typeMatiereManager,

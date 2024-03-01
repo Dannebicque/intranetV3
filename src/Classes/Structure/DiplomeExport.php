@@ -16,7 +16,7 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-readonly class DiplomeExport
+class DiplomeExport
 {
     public function __construct(private Environment $twig)
     {

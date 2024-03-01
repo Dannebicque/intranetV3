@@ -17,7 +17,7 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 /**
  * Envoi un mail de bienvenue à chaque creation d'un utilisateur.
  */
-readonly class MaterielCommunReservationSubscriber implements EventSubscriberInterface
+class MaterielCommunReservationSubscriber implements EventSubscriberInterface
 {
     /**
      * RegistrationNotifySubscriber constructor.

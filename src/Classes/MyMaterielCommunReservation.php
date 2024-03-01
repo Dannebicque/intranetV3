@@ -19,7 +19,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
-readonly class MyMaterielCommunReservation
+class MyMaterielCommunReservation
 {
     /**
      * MyMaterielCommun constructor.

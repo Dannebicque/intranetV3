@@ -23,7 +23,7 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
 #[AsMessageHandler]
-readonly class ExportPdfEdtHandler
+class ExportPdfEdtHandler
 {
     /**
      * ExportReleveHandler constructor.

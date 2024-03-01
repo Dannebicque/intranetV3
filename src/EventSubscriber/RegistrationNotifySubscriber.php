@@ -22,7 +22,7 @@ use Symfony\Component\Routing\RouterInterface;
 /**
  * Envoi un mail de bienvenue à chaque creation d'un utilisateur.
  */
-readonly class RegistrationNotifySubscriber implements EventSubscriberInterface
+class RegistrationNotifySubscriber implements EventSubscriberInterface
 {
     /**
      * RegistrationNotifySubscriber constructor.

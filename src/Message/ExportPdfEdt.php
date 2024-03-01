@@ -9,7 +9,7 @@
 
 namespace App\Message;
 
-readonly class ExportPdfEdt
+class ExportPdfEdt
 {
     /**
      * ExportPdfEdt constructor.

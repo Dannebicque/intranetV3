@@ -26,7 +26,7 @@ use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use function array_key_exists;
 
-readonly class SousCommissionSauvegarde
+class SousCommissionSauvegarde
 {
     /**
      * SousCommissionSauvegarde constructor.

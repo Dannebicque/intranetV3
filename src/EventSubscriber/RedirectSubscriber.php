@@ -14,7 +14,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\Routing\RouterInterface;
 
-readonly class RedirectSubscriber implements EventSubscriberInterface
+class RedirectSubscriber implements EventSubscriberInterface
 {
     public function __construct(private RouterInterface $router)
     {

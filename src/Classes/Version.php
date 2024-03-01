@@ -11,7 +11,7 @@ namespace App\Classes;
 
 use Symfony\Component\HttpKernel\KernelInterface;
 
-readonly class Version
+class Version
 {
     private string $dir;
     private ?object $bugsnag;

@@ -24,7 +24,7 @@ use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
 #[AsMessageHandler]
-readonly class ExportReleveHandler
+class ExportReleveHandler
 {
     /**
      * ExportReleveHandler constructor.

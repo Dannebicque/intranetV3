@@ -12,7 +12,7 @@ namespace App\Classes;
 use App\Entity\Contact;
 use Doctrine\ORM\EntityManagerInterface;
 
-readonly class MyContact
+class MyContact
 {
     public function __construct(private EntityManagerInterface $entityManager)
     {

@@ -20,7 +20,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
-readonly class MyExportStage
+class MyExportStage
 {
     /**
      * MyExport constructor.

@@ -16,7 +16,7 @@ use App\Entity\EdtPlanning;
 use App\Interfaces\UtilisateurInterface;
 use App\Repository\EdtPlanningRepository;
 
-readonly class ServiceRealiseIntranet implements ServiceRealiseInterface
+class ServiceRealiseIntranet implements ServiceRealiseInterface
 {
     public function __construct(private EdtPlanningRepository $edtPlanningRepository)
     {
