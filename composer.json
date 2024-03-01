@@ -1,5 +1,6 @@
 {
   "name": "da/intranetv3",
+  "version": "3.14.79",
   "description": "Intranet, Version 3 de l'IUT de Troyes et de Reims Châlons Charleville.",
   "type": "project",
   "license": "MPL-2.0",
@@ -62,7 +63,10 @@
     "twig/extra-bundle": "^3.6",
     "twig/intl-extra": "^3.6",
     "twig/markdown-extra": "^3.6",
-    "vich/uploader-bundle": "^2.3.1"
+    "vich/uploader-bundle": "^2.3.1",
+    "ext-pdo": "*",
+    "ext-calendar": "*",
+    "ext-simplexml": "*"
   },
   "config": {
     "preferred-install": {
@@ -88,7 +92,7 @@
       "App\\Tests\\": "tests/"
     }
   },
-  "minimum-stability": "dev",
+  "minimum-stability": "stable",
   "replace": {
     "paragonie/random_compat": "2.*",
     "symfony/polyfill-ctype": "*",
@@ -138,8 +142,8 @@
   },
   "repositories": [
     {
-      "type": "path",
-      "url": "/Users/davidannebicque/Sites/table-bundle"
+      "type": "vcs",
+      "url": "https://github.com/Dannebicque/TableBundle.git"
     }
   ]
 }
