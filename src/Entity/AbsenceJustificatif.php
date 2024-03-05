@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/AbsenceJustificatif.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 19:11
+ * @lastUpdate 05/03/2024 17:51
  */
 
 namespace App\Entity;
@@ -70,7 +70,7 @@ class AbsenceJustificatif extends BaseEntity
     #[ORM\ManyToOne(targetEntity: Etudiant::class, fetch: 'EAGER', inversedBy: 'absenceJustificatifs')]
     private ?Etudiant $etudiant = null;
 
-    #[ORM\Column(type: Types::STRING, length: 50, nullable: true)]
+    #[ORM\Column(type: Types::STRING, length: 255, nullable: true)]
     private ?string $fichierName = '';
 
     #[Vich\UploadableField(mapping: 'justificatif', fileNameProperty: 'fichierName')]
