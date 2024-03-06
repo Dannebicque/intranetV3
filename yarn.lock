@@ -1226,7 +1226,7 @@
 "@symfony/ux-live-component@file:vendor/symfony/ux-live-component/assets":
   version "1.0.0"
   dependencies:
-    idiomorph "https://github.com/bigskysoftware/idiomorph.git"
+    idiomorph "^0.3.0"
 
 "@symfony/webpack-encore@^4.1.0":
   version "4.2.0"
@@ -4563,9 +4563,10 @@ icss-utils@^5.0.0, icss-utils@^5.1.0:
   resolved "https://registry.npmjs.org/icss-utils/-/icss-utils-5.1.0.tgz"
   integrity sha512-soFhflCVWLfRNOPU3iv5Z9VUdT44xFRbzjLsEzSr5AQmgqPMTHdU3PMT1Cf1ssx8fLNJDA1juftYl+PUcv3MqA==
 
-"idiomorph@https://github.com/bigskysoftware/idiomorph.git":
+idiomorph@^0.3.0:
   version "0.3.0"
-  resolved "git+ssh://git@github.com/bigskysoftware/idiomorph.git#8e40c42cc573609eb6863e72fa3403574974dd7d"
+  resolved "https://registry.yarnpkg.com/idiomorph/-/idiomorph-0.3.0.tgz#f6675bc5bef1a72c94021e43141a3f605d2d6288"
+  integrity sha512-UhV1Ey5xCxIwR9B+OgIjQa+1Jx99XQ1vQHUsKBU1RpQzCx1u+b+N6SOXgf5mEJDqemUI/ffccu6+71l2mJUsRA==
 
 ieee754@^1.1.13:
   version "1.2.1"
@@ -7784,9 +7785,9 @@ webpack-merge@^5.7.3:
     clone-deep "^4.0.1"
     wildcard "^2.0.0"
 
-webpack-notifier@^1.6.0:
+webpack-notifier@^1.15.0:
   version "1.15.0"
-  resolved "https://registry.npmjs.org/webpack-notifier/-/webpack-notifier-1.15.0.tgz"
+  resolved "https://registry.yarnpkg.com/webpack-notifier/-/webpack-notifier-1.15.0.tgz#72644a1a4ec96b3528704d28f79da5e70048e8ee"
   integrity sha512-N2V8UMgRB5komdXQRavBsRpw0hPhJq2/SWNOGuhrXpIgRhcMexzkGQysUyGStHLV5hkUlgpRiF7IUXoBqyMmzQ==
   dependencies:
     node-notifier "^9.0.0"

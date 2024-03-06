@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/03/2024 07:36
+ * @lastUpdate 06/03/2024 11:54
  */
 
 namespace App\Classes\SousCommission;
@@ -699,9 +699,11 @@ class SousCommissionExport
 
         foreach ($matieres as $m) {
             $this->myExcelWriter->writeCellXY($colonne, $ligne, $m->codeMatiere);
+            $this->myExcelWriter->writeCellXY($colonne, $ligne + 1, $m->codeElement);
             ++$colonne;
         }
 
+        ++$ligne;
         ++$ligne;
 
         foreach ($etudiants as $etu) {
