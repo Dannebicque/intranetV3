@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 06/03/2024 07:36
  */
 
 namespace App\Classes\SousCommission;
@@ -962,7 +962,7 @@ class SousCommissionExport
                         ['style' => 'numerique3']);
                 }
 
-                $colonne = 12;
+                $colonne = 13;
                 $this->myExcelWriter->writeCellXY($colonne, $ligne,
                     number_format($ssCommTravail->etudiant($etu->getId())->getMoyenne(), 3),
                     ['style' => 'numerique3']);
