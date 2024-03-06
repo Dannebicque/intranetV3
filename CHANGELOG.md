@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.15.1](https://github.com/Dannebicque/intranetV3/compare/v3.15.0...v3.15.1) (2024-03-06)
+
+
+### Bug Fixes
+
+* Export grand jury déclage d'une colonne ([6a50031](https://github.com/Dannebicque/intranetV3/commit/6a5003127559646ae49c79ccdc4a855b4be58d17))
+* taille fichier nommé ([eb6f379](https://github.com/Dannebicque/intranetV3/commit/eb6f379b951329761f5b5d1bf512a6fb527eede0))
+
 ## [3.15.0](https://github.com/Dannebicque/intranetV3/compare/v3.14.79...v3.15.0) (2024-03-01)
 
 
