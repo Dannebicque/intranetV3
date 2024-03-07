@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/LiveTwig/ListingsEtudiantsComponent.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 09:27
+ * @lastUpdate 07/03/2024 08:57
  */
 
 namespace App\Components\LiveTwig;
@@ -49,13 +49,14 @@ class ListingsEtudiantsComponent
         #[LiveArg] int $semestre): void
     {
         $this->semestre = $this->semestreRepository->find($semestre);
-
-        $this->findTypeGroupes();
+        if ($this->semestre !== null) {
+            $this->findTypeGroupes();
+        }
     }
 
     private function findTypeGroupes(): void
     {
-        $diplome = $this->semestre->getDiplome();
+        $diplome = $this->semestre?->getDiplome();
 
         if (null === $diplome) {
             throw new DiplomeNotFoundException();
