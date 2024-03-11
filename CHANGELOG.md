@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.15.2](https://github.com/Dannebicque/intranetV3/compare/v3.15.1...v3.15.2) (2024-03-11)
+
+
+### Features
+
+* ajout code ELP sur export ([ef6e2ce](https://github.com/Dannebicque/intranetV3/commit/ef6e2ce7c931e816302a134a149451c7725adb6d))
+* ajout code ELP sur export ([9fdbf6d](https://github.com/Dannebicque/intranetV3/commit/9fdbf6d2d291554ab3f4598f44b5120ed43b3914))
+* ajout code ELP sur export ([759156c](https://github.com/Dannebicque/intranetV3/commit/759156c57531d18b72e80cf31d35c8d3e14e7a28))
+
+
+### Bug Fixes
+
+* limite commentaire ([8ec4990](https://github.com/Dannebicque/intranetV3/commit/8ec49900d958dbaa2b507c4cf05b508323877ced))
+* MyIcal ([080e2f3](https://github.com/Dannebicque/intranetV3/commit/080e2f3fe9c56557678fc1e1a4163f8516f72d4c))
+
 ### [3.15.1](https://github.com/Dannebicque/intranetV3/compare/v3.15.0...v3.15.1) (2024-03-06)
 
 
