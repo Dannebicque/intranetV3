@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyIcal.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/02/2024 22:41
+ * @lastUpdate 11/03/2024 06:51
  */
 
 namespace App\Classes;
@@ -20,6 +20,7 @@ use function chr;
  */
 class MyIcal
 {
+    public const HOURS_TO_SECONDS = 3600;
     protected ?string $dtstart = null; // DTSTART: Date de début de l'événement
     protected ?string $dtend = null; // DTEND: Date de fin de l'événement
     protected ?string $summary = null; // SUMMARY: Titre de l'événement
@@ -127,33 +128,33 @@ class MyIcal
 
     public function calculHeureEte(int $timestamp): string
     {
-        $annee_courante = date('%Y', $timestamp);
-        $mois_courant = date('%m', $timestamp);
-        $jour_courant = date('%d', $timestamp);
+        $annee_courante = (int)date('Y', $timestamp);
+        $mois_courant = (int)date('m', $timestamp);
+        $jour_courant = (int)date('d', $timestamp);
         $decalage_horaire = 0;
         $num_dernier_dimanche = [];
 
         if (($mois_courant > 10) || ($mois_courant < 3)) {
-            $decalage_horaire = 3600;
+            $decalage_horaire = self::HOURS_TO_SECONDS;
         } elseif (($mois_courant > 3) && ($mois_courant < 10)) {
-            $decalage_horaire = 2 * 3600;
+            $decalage_horaire = 2 * self::HOURS_TO_SECONDS;
         } elseif (3 === (int) $mois_courant) {
             $num_dernier_dimanche[$annee_courante][$mois_courant] = $this->getDernierDimancheDuMois2($mois_courant,
                     $annee_courante);
 
             if ($jour_courant >= $num_dernier_dimanche[$annee_courante][$mois_courant]) {
-                $decalage_horaire = 2 * 3600;
+                $decalage_horaire = 2 * self::HOURS_TO_SECONDS;
             } else {
-                $decalage_horaire = 3600;
+                $decalage_horaire = self::HOURS_TO_SECONDS;
             }
         } elseif (10 === (int) $mois_courant) {
             $num_dernier_dimanche[$annee_courante][$mois_courant] = $this->getDernierDimancheDuMois2($mois_courant,
                     $annee_courante);
 
             if ($jour_courant >= $num_dernier_dimanche[$annee_courante][$mois_courant]) {
-                $decalage_horaire = 3600;
+                $decalage_horaire = self::HOURS_TO_SECONDS;
             } else {
-                $decalage_horaire = 2 * 3600;
+                $decalage_horaire = 2 * self::HOURS_TO_SECONDS;
             }
         }
 
@@ -165,7 +166,7 @@ class MyIcal
         // Fonction utilisée pour les mois de mars et octobre (31 jours)
         for ($i = 31; $i > 1; --$i) {
             $ts = mktime(0, 0, 0, $mois, $i, $annee);
-            if ('7' === date('%u', $ts)) {
+            if ('7' === date('N', $ts)) {
                 break;
             }
         }
