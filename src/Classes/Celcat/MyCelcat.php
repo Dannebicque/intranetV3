@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Celcat/MyCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:55
+ * @lastUpdate 12/03/2024 20:45
  */
 
 namespace App\Classes\Celcat;
@@ -216,7 +216,7 @@ INNER JOIN CT_STUDENT ON CT_STUDENT.student_id=CT_GROUP_STUDENT.student_id WHERE
                 $event->setLibGroupe(utf8_encode(odbc_result($result, 14)));
                 $event->setCodeSalle(odbc_result($result, 11));
                 $event->setLibSalle(utf8_encode(odbc_result($result, 12)));
-                $event->setDateCours($this->tCalendrier[$semaine]->addDays($jour));
+                $event->setDateCours($this->tCalendrier[$semaine]->addDays((int)$jour));
                 $event->setSemestre($this->tGroupes[$codeGroupe] ?? null);
                 $dt = explode(' ', (string) odbc_result($result, 15));
                 $event->setUpdateEvent(Tools::convertDateHeureToObject($dt[0], $dt[1]));
