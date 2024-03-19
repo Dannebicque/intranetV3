@@ -170,8 +170,12 @@ abstract class Tools
         return (new AsciiSlugger())->slug($texte);
     }
 
-    public static function personnaliseTexte(string $texte, array $config): string
+    public static function personnaliseTexte(string $texte, ?array $config = []): string
     {
+        if (null === $config) {
+            $config = [];
+        }
+
         foreach ($config as $key => $elt) {
             $texte = str_replace('{{'.$key.'}}', $elt, $texte);
         }
