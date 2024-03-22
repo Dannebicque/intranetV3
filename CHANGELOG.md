@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.15.3](https://github.com/Dannebicque/intranetV3/compare/v3.15.2...v3.15.3) (2024-03-22)
+
+
+### Bug Fixes
+
+* CMFI ([b6f1aa0](https://github.com/Dannebicque/intranetV3/commit/b6f1aa0869fc93e2d1ccafaae57a8f327f35d2c6))
+* CMFI ([0a3049d](https://github.com/Dannebicque/intranetV3/commit/0a3049dd6a169aacbca23c0fa9bab9fa21603c4a))
+* Export enquete ([0df2df4](https://github.com/Dannebicque/intranetV3/commit/0df2df4c89832721ae96353850c95d4416e011d1))
+* Import Celcat ([0d27655](https://github.com/Dannebicque/intranetV3/commit/0d27655f9ee122d89bde2df9972da863ae1e4906))
+* qv ([949ab7b](https://github.com/Dannebicque/intranetV3/commit/949ab7b093a0fdfe31999c526a7f3c4cc908ae6b))
+
 ### [3.15.2](https://github.com/Dannebicque/intranetV3/compare/v3.15.1...v3.15.2) (2024-03-11)
 
 
