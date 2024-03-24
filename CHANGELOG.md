@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.15.4](https://github.com/Dannebicque/intranetV3/compare/v3.15.3...v3.15.4) (2024-03-24)
+
+
+### Bug Fixes
+
+* bug questionnaire et configuration ([93041a0](https://github.com/Dannebicque/intranetV3/commit/93041a0db756b76687aeb8ad353fde4cd8a29eb7))
+
 ### [3.15.3](https://github.com/Dannebicque/intranetV3/compare/v3.15.2...v3.15.3) (2024-03-22)
 
 
