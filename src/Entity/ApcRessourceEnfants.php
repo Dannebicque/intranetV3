@@ -1,4 +1,11 @@
 <?php
+/*
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcRessourceEnfants.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 23/02/2024 21:40
+ */
 
 namespace App\Entity;
 
@@ -17,10 +24,10 @@ class ApcRessourceEnfants extends BaseEntity
     private ?ApcRessource $apcRessourceEnfant = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<\App\Entity\Groupe>
+     * @var Collection<Groupe>
      */
     #[ORM\ManyToMany(targetEntity: Groupe::class, inversedBy: 'apcRessourceEnfants')]
-    private \Doctrine\Common\Collections\Collection $groupes;
+    private Collection $groupes;
 
     public function __construct()
     {

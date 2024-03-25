@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/PlanCours/Source/PlanCoursRessource.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/02/2024 14:11
+ * @lastUpdate 29/02/2024 10:18
  */
 
 namespace App\Components\PlanCours\Source;
@@ -17,6 +17,7 @@ use App\DTO\Matiere;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Departement;
 use App\Entity\Personnel;
+use App\Entity\Previsionnel;
 use App\Enums\PlanCoursEnum;
 use App\Repository\PlanCoursRessourceRepository;
 use Carbon\Carbon;
@@ -28,6 +29,8 @@ class PlanCoursRessource extends AbstractPlanCours implements PlanCoursInterface
     public const FORM_STEP_1 = PlanCoursRessourceStep1Type::class;
     public const FORM_STEP_2 = PlanCoursRessourceStep2Type::class;
     public const FORM_STEP_3 = PlanCoursRessourceStep3Type::class;
+    public const TEMPLATE_SHOW = '_show_ressource.html.twig';
+
     public const TEMPLATE_FORM_STEP_1 = 'plan_cours_ressource_1.html.twig';
     public const TEMPLATE_FORM_STEP_2 = 'plan_cours_ressource_2.html.twig';
     public const TEMPLATE_FORM_STEP_3 = 'plan_cours_ressource_3.html.twig';
@@ -63,7 +66,7 @@ class PlanCoursRessource extends AbstractPlanCours implements PlanCoursInterface
         return $obj;
     }
 
-    public function recopiePlanCours($plancours, \App\Entity\Previsionnel $previsionnel): \App\Entity\PlanCoursRessource
+    public function recopiePlanCours($plancours, Previsionnel $previsionnel): \App\Entity\PlanCoursRessource
     {
         $obj = $this->planCoursRessourceRepository->findOneBy([
             'typeMatiere' => $previsionnel->getTypeMatiere(),
@@ -118,7 +121,7 @@ class PlanCoursRessource extends AbstractPlanCours implements PlanCoursInterface
         $this->planCoursRessourceRepository->add($planCoursRessource, true);
     }
 
-    public function getRepository()
+    public function getRepository(): PlanCoursRessourceRepository
     {
         return $this->planCoursRessourceRepository;
     }

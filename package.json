@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "webpack-notifier": "^1.15.0",
     "@babel/core": "^7.19.3",
     "@babel/preset-env": "^7.19.4",
     "@dannebicque/table-bundle": "file:vendor/dannebicque/table-bundle/assets",
@@ -13,13 +14,13 @@
     "chart.js": "^3.4.1 <3.9 || ^4.0",
     "core-js": "^3.23.0",
     "css-loader": "^6.5.1",
-    "cypress": "^10.9.0",
+    "cypress": "^13.6.4",
     "eslint": "^7.32.0 || ^8.2.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-cypress": "^2.12.1",
     "eslint-plugin-import": "^2.25.2",
     "file-loader": "^6.0.0",
-    "node-sass": "^7.0.1",
+    "node-sass": "^9.0.0",
     "perfect-scrollbar": "^1.5.0",
     "regenerator-runtime": "^0.13.9",
     "sass-loader": "^13.0.0",
@@ -40,7 +41,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-pro": "^6.0.0",
     "@hotwired/stimulus": "^3.0.0",
-    "babel-core": "^6.26.3",
+    "babel-core": "^4.7.16",
     "babel-loader": "^8.2.2",
     "babel-preset-es2015": "^6.24.1",
     "bootstrap": "^5.2.0",
@@ -52,15 +53,14 @@
     "stimulus-use": "^0.50.0",
     "sweetalert2": "^9.17.0",
     "tinymce": "^5.9.0",
-    "tom-select": "^2.2.2",
-    "webpack-notifier": "^1.6.0"
+    "tom-select": "^2.2.2"
   },
   "auto-changelog": {
     "template": "keepachangelog",
     "unreleased": true,
     "commitLimit": false
   },
-  "version": "3.14.79",
+  "version": "3.15.4",
   "author": "David Annebicque",
   "name": "intranetv3",
   "repository": {

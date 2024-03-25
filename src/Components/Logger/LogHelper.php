@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Logger/LogHelper.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/08/2022 19:01
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Components\Logger;
@@ -14,7 +14,7 @@ use Carbon\CarbonInterface;
 
 class LogHelper
 {
-    /** @var \App\Components\Logger\DTO\Log[] */
+    /** @var Log[] */
     private array $logs = [];
 
     public function __construct(

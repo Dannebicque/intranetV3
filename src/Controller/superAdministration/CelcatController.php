@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/CelcatController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/12/2022 12:09
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Controller\superAdministration;
@@ -17,7 +17,8 @@ use App\Repository\EdtCelcatRepository;
 use Exception;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route(path: '/administratif/celcat')]
 class CelcatController extends BaseController
@@ -30,7 +31,7 @@ class CelcatController extends BaseController
     }
 
     #[Route(path: '/', name: 'sa_celcat_index', methods: ['GET'])]
-    #[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_SUPER_ADMIN')]
+    #[IsGranted('ROLE_SUPER_ADMIN')]
     public function index(DiplomeRepository $diplomeRepository): Response
     {
         return $this->render('super-administration/celcat/index.html.twig', [
@@ -39,7 +40,7 @@ class CelcatController extends BaseController
     }
 
     #[Route(path: '/extraction', name: 'sa_celcat_extraction_code', methods: ['GET'])]
-    #[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_SUPER_ADMIN')]
+    #[IsGranted('ROLE_SUPER_ADMIN')]
     public function extraction(): Response
     {
         return $this->render('super-administration/celcat/extraction.html.twig', [
@@ -51,7 +52,7 @@ class CelcatController extends BaseController
      * @throws Exception
      */
     #[Route(path: '/update/{id}', name: 'sa_celcat_update_events', methods: ['GET'])]
-    #[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_SUPER_ADMIN')]
+    #[IsGranted('ROLE_SUPER_ADMIN')]
     public function update(EdtCelcatRepository $celcatEventsRepository, Diplome $diplome): RedirectResponse
     {
         // suppression des events existants pour le département

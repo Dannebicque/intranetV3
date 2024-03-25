@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Source/AbstractEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/09/2023 15:30
+ * @lastUpdate 24/02/2024 08:59
  */
 
 namespace App\Components\SourceEdt\Source;
@@ -110,8 +110,9 @@ abstract class AbstractEdt
         return $t;
     }
 
-    private function getEvenementsAsArrayPromo()
+    private function getEvenementsAsArrayPromo(): array
     {
+        return [];
     }
 
 

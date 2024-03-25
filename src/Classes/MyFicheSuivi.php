@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyFicheSuivi.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 10:31
+ * @lastUpdate 23/02/2024 21:35
  */
 
 /*
@@ -23,7 +23,7 @@ use Twig\Error\SyntaxError;
 
 class MyFicheSuivi
 {
-    public function __construct(private readonly MyPDF $myPdf)
+    public function __construct(private MyPDF $myPdf)
     {
     }
 

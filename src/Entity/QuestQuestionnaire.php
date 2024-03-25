@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/QuestQuestionnaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/08/2023 17:01
+ * @lastUpdate 29/02/2024 19:08
  */
 
 namespace App\Entity;
@@ -108,11 +108,9 @@ class QuestQuestionnaire extends BaseEntity
 
     public function removeQuestSection(QuestSection $questSection): self
     {
-        if ($this->questSections->removeElement($questSection)) {
-            // set the owning side to null (unless already changed)
-            if ($questSection->getQuestionnaire() === $this) {
-                $questSection->setQuestionnaire(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->questSections->removeElement($questSection) && $questSection->getQuestionnaire() === $this) {
+            $questSection->setQuestionnaire(null);
         }
 
         return $this;
@@ -214,18 +212,6 @@ class QuestQuestionnaire extends BaseEntity
         return $this;
     }
 
-    public function getConfiguration(): ?string
-    {
-        return $this->configuration;
-    }
-
-    public function setConfiguration(?string $configuration): self
-    {
-        $this->configuration = $configuration;
-
-        return $this;
-    }
-
     public function getAuteur(): ?Personnel
     {
         return $this->auteur;
@@ -275,6 +261,8 @@ class QuestQuestionnaire extends BaseEntity
         if ($this->typeDestinataire === Exterieur::class) {
             return 'exterieur';
         }
+
+        return 'inconnu';
     }
 
     public function isEnvoye(): ?bool

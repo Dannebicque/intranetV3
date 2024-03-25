@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Groupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/07/2023 07:57
+ * @lastUpdate 24/02/2024 08:51
  */
 
 namespace App\Entity;
@@ -41,7 +41,7 @@ class Groupe extends BaseEntity implements GroupeInterface
     private Collection $etudiants;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Groupe>
+     * @var Collection<int, Groupe>
      */
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Groupe::class, cascade: ['remove'])]
     private Collection $enfants;
@@ -55,13 +55,13 @@ class Groupe extends BaseEntity implements GroupeInterface
     private ?Parcour $parcours = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<\App\Entity\AbsenceEtatAppel>
+     * @var Collection<AbsenceEtatAppel>
      */
     #[ORM\OneToMany(mappedBy: 'groupe', targetEntity: AbsenceEtatAppel::class)]
     private Collection $absenceEtatAppels;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<\App\Entity\ApcRessourceEnfants>
+     * @var Collection<ApcRessourceEnfants>
      */
     #[ORM\ManyToMany(targetEntity: ApcRessourceEnfants::class, mappedBy: 'groupes')]
     private Collection $apcRessourceEnfants;
@@ -216,6 +216,7 @@ class Groupe extends BaseEntity implements GroupeInterface
 
     public function getDisplaySemestre(): string
     {
+        //todo: a revoir, plus de semestre dans le groupe. Ou est-ce utilisé ?
         if (null !== $this->getTypeGroupe() && null !== $this->getTypeGroupe()->getSemestre()) {
             return $this->getTypeGroupe()->getSemestre()->display().' | '.$this->getLibelle();
         }
@@ -343,11 +344,9 @@ class Groupe extends BaseEntity implements GroupeInterface
 
     public function removePlanCoursHistoriqueEdt(PlanCoursHistoriqueEdt $planCoursHistoriqueEdt): self
     {
-        if ($this->planCoursHistoriqueEdts->removeElement($planCoursHistoriqueEdt)) {
-            // set the owning side to null (unless already changed)
-            if ($planCoursHistoriqueEdt->getGroupe() === $this) {
-                $planCoursHistoriqueEdt->setGroupe(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->planCoursHistoriqueEdts->removeElement($planCoursHistoriqueEdt) && $planCoursHistoriqueEdt->getGroupe() === $this) {
+            $planCoursHistoriqueEdt->setGroupe(null);
         }
 
         return $this;

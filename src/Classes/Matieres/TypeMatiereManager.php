@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Matieres/TypeMatiereManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/11/2023 15:08
+ * @lastUpdate 24/02/2024 08:51
  */
 
 namespace App\Classes\Matieres;
@@ -190,10 +190,8 @@ class TypeMatiereManager
         foreach ($this->managers as $manager) {
             if ($manager instanceof MatiereManager) {
                 $matieres = $manager->findBySemestre($semestre);
-            } else {
-                if (null !== $referentiel) {
-                    $matieres = $manager->findBySemestreAndReferentiel($semestre, $referentiel);
-                }
+            } else if (null !== $referentiel) {
+                $matieres = $manager->findBySemestreAndReferentiel($semestre, $referentiel);
             }
 
             $t[] = $matieres->toArray();
@@ -208,10 +206,8 @@ class TypeMatiereManager
         foreach ($this->managers as $manager) {
             if ($manager instanceof MatiereManager) {
                 $matieres = $manager->findBySemestre($semestre);
-            } else {
-                if (null !== $referentiel) {
-                    $matieres = $manager->findByReferentielOrdreSemestre($referentiel, $semestre->getOrdreLmd());
-                }
+            } else if (null !== $referentiel) {
+                $matieres = $manager->findByReferentielOrdreSemestre($referentiel, $semestre->getOrdreLmd());
             }
 
             $t[] = $matieres->toArray();

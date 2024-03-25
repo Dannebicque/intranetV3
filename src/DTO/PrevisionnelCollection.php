@@ -1,17 +1,17 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/PrevisionnelCollection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/07/2023 13:56
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\DTO;
 
 class PrevisionnelCollection
 {
-    /** @var \App\DTO\Previsionnel[] */
+    /** @var Previsionnel[] */
     public array $previsionnels = [];
 
     public float $nbHCm = 0.0;
@@ -51,7 +51,7 @@ class PrevisionnelCollection
     }
 
     /**
-     * @return \App\DTO\Previsionnel[]
+     * @return Previsionnel[]
      */
     public function getPrevisionnels(): array
     {

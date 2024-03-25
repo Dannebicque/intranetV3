@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/EntrepriseType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/12/2022 10:26
+ * @lastUpdate 06/03/2024 11:54
  */
 
 namespace App\Form;
@@ -30,8 +30,7 @@ class EntrepriseType extends AbstractType
                 'help' => 'Le siret est obligatoire pour toutes les entreprise, sauf pour les organismes public.',
             ])
             ->add('adresse', AdresseType::class, ['label' => 'label.adresse'])
-            ->add('responsable', ContactType::class, ['label' => 'label.responsable'])
-        ;
+            ->add('responsable', ContactType::class, ['label' => 'label.responsable']);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

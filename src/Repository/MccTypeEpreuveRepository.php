@@ -1,16 +1,17 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/MccTypeEpreuveRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/12/2022 16:49
+ * @lastUpdate 16/02/2024 16:09
  */
 
 namespace App\Repository;
 
 use App\Entity\MccTypeEpreuve;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -46,28 +47,10 @@ class MccTypeEpreuveRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return MccTypeEpreuve[] Returns an array of MccTypeEpreuve objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('m')
-//            ->andWhere('m.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('m.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
-
-//    public function findOneBySomeField($value): ?MccTypeEpreuve
-//    {
-//        return $this->createQueryBuilder('m')
-//            ->andWhere('m.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function findByAnneeUniversitaireBuilder(mixed $anneeUniversitaire): QueryBuilder
+    {
+        return $this->createQueryBuilder('te')
+            ->where('te.anneeUniversitaire = :anneeUniversitaire')
+            ->setParameter('anneeUniversitaire', $anneeUniversitaire);
+    }
 }

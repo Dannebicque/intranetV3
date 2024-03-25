@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/mcc/administration/MccController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/12/2022 12:43
+ * @lastUpdate 24/02/2024 09:27
  */
 
 namespace App\Controller\mcc\administration;
@@ -22,7 +22,7 @@ use App\Utils\JsonRequest;
 use App\Utils\Tools;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('administration/mcc', name: 'administration_mcc_')]
 class MccController extends BaseController
@@ -76,7 +76,9 @@ class MccController extends BaseController
         }
 
         $mcc = new Mcc();
-        $form = $this->createForm(MccType::class, $mcc);
+        $form = $this->createForm(MccType::class, $mcc, [
+            'anneeUniversitaire' => $this->getAnneeUniversitaire(),
+        ]);
 
         $mccs = $mccRepository->findByMatiereAndAnneeUniversitaire($matiere, $this->getAnneeUniversitaire());
 
@@ -84,7 +86,7 @@ class MccController extends BaseController
             'semestre' => $semestre,
             'matiere' => $matiere,
             'mccs' => $mccs,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -101,7 +103,7 @@ class MccController extends BaseController
         $mcc = new Mcc();
         $mcc->setCoefficient($coefficient);
         $mcc->setTypeEpreuve($typeEpreuve);
-        $mcc->setAnneeUniversitaire($this->getAnneeUniversitaire());
+        // $mcc->setAnneeUniversitaire($this->getAnneeUniversitaire()); //todo: finaliser l'intégration de ces MCCC et la synchro avc ORéOF
         $mcc->setTypeIdMatiere($matiere);
 
         $this->entityManager->persist($mcc);
@@ -123,6 +125,8 @@ class MccController extends BaseController
 
             return $this->json(true);
         }
+
+        return $this->json(false);
     }
 
     #[Route('/supprimer', name: 'suppr', methods: ['DELETE'])]

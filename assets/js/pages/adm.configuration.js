@@ -2,32 +2,10 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/adm.configuration.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 06/01/2024 19:33
+// @lastUpdate 16/02/2024 16:09
 import $ from 'jquery'
 import Routing from 'fos-router'
 import { addCallout } from '../util'
-
-// $(document).on('change', '.changeOption', function (e) {
-//   e.preventDefault()
-//   e.stopPropagation()
-//
-//   $.ajax({
-//     url: Routing.generate('administration_configuration_change_option'),
-//     method: 'POST',
-//     data: {
-//       type: $(this).data('type'),
-//       value: $(this).prop('checked'),
-//       name: $(this).attr('name'),
-//       id: $(this).data('id'),
-//     },
-//     success() {
-//       addCallout('Configuration enregistrée', 'success')
-//     },
-//     error() {
-//       addCallout('Erreur lors de l\'enregistrement de la configuration', 'danger')
-//     },
-//   })
-// })
 
 $(document).on('change', '.changeOptionSelect', function () {
   $.ajax({

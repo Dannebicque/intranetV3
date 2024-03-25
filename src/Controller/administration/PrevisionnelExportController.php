@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/PrevisionnelExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/08/2022 09:12
+ * @lastUpdate 16/02/2024 22:17
  */
 
 namespace App\Controller\administration;
@@ -19,7 +19,7 @@ use App\Exception\MatiereNotFoundException;
 use App\Exception\SemestreNotFoundException;
 use App\Repository\SemestreRepository;
 use Symfony\Component\HttpFoundation\StreamedResponse;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Class PrevisionnelExportController.

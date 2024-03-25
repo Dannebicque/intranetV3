@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/administration/QualiteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/12/2022 17:04
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Controller\questionnaire\administration;
@@ -18,16 +18,17 @@ use App\Components\Questionnaire\Section\AbstractSection;
 use App\Controller\BaseController;
 use App\Entity\QuestQuestionnaire;
 use App\Table\QualiteTableType;
+use JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 /** todo: sujet du mail : titre de l'évaluation. Envoi du mail (manuel) ou automatique à l'heure d'ouverture si possible ? */
 #[Route('/{type}/qualite', requirements: ['type' => 'administratif|administration'], defaults: ['type' => 'administratif'])]
 class QualiteController extends BaseController
 {
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     #[Route('/', name: 'administration_qualite_index', options: ['expose' => true], methods: ['GET', 'POST'])]
     public function index(Request $request): Response

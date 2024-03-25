@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/QuestChoixExterieurRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/03/2023 17:22
+ * @lastUpdate 24/02/2024 08:20
  */
 
 namespace App\Repository;
@@ -58,5 +58,10 @@ class QuestChoixExterieurRepository extends ServiceEntityRepository
             ->setParameter('questionnaire', $questionnaire->getId())
             ->getQuery()
             ->getSingleScalarResult();
+    }
+
+    public function findByQuestionnaire(QuestQuestionnaire $questionnaire)
+    {
+        //todo: a faire, pour les questionnaires extérieurs ?
     }
 }

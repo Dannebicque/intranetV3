@@ -1,0 +1,137 @@
+<h3>1. DESCRIPTION RESSOURCE</h3>
+<h4>Responsable de la ressource :</h4>
+{{ pc.responsable != null ? pc.responsable.display : '-' }}
+
+<h4>Intervenants de la ressource :</h4>
+{% for intervenant in pc.intervenants %}
+    {{ intervenant.display }}{% if not loop.last %}, {% endif %}
+{% endfor %}
+
+<h4>Description et objectifs de la ressource :</h4>
+<p style="text-align: justify">{{ pc.description|raw }}</p>
+
+<h4>Compétences et Apprentissages critiques visés : </h4>
+<ul>
+    {% for ac in matiere.objet.apcRessourceApprentissageCritiques %}
+        <li>{{ ac.apprentissageCritique.libelle }} ({{ ac.apprentissageCritique.niveau.competence.nomCourt }})</li>
+    {% endfor %}
+</ul>
+
+<h4>Liste des SAE mobilisant la ressource :</h4>
+<ul>
+    {% for ac in matiere.objet.apcSaeRessources %}
+        <li>{{ ac.sae.display }}</li>
+    {% else %}
+        <li>Aucune SAE</li>
+    {% endfor %}
+</ul>
+
+<h4>Modalités d'évaluations envisagées :</h4>
+<p style="text-align: justify">
+    {{ pc.modalitesEvaluations|raw }}</p>
+
+
+<table style="width: 100%" class="table">
+    <tr>
+        <th>Nombre de notes prévu :</th>
+        <td>{{ pc.nbNotes }}</td>
+    </tr>
+</table>
+
+<h4>Nombre d’heures prévu :</h4>
+<table style="width: 100%" class="table">
+    <thead>
+    <tr>
+        <th style="width: 25%">CM</th>
+        <th style="width: 25%">TD</th>
+        <th style="width: 25%">TP</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td style="text-align: center">{{ pc.cmPrevu }} heure(s)</td>
+        <td style="text-align: center">{{ pc.tdPrevu }} heure(s)</td>
+        <td style="text-align: center">{{ pc.tpPrevu }} heure(s)</td>
+    </tr>
+    </tbody>
+</table>
+
+<h4>Bibliographie / webographie d’appui :</h4>
+<p style="text-align: justify">{{ pc.bibliographie|raw }}</p>
+
+<h4>Commentaires éventuels :</h4>
+<p style="text-align: justify">{{ pc.commentairesStep1|raw }}</p>
+
+<h3>2. PROGRESSION PÉDAGOGIQUE</h3>
+
+{% if pc.planCoursSequences|length > 0 %}
+    <table class="table">
+        <thead>
+        <tr>
+            <th>N° Séquence</th>
+            <th>Programme</th>
+            <th>Nb Heures envisagées</th>
+            <th>Commentaire</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for seq in pc.planCoursSequences %}
+            <tr>
+                <td>{{ seq.ordre }}</td>
+                <td>{{ seq.programme|raw }}</td>
+                <td>{{ seq.nbHeures }}</td>
+                <td>{{ seq.commentaire|raw }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+{% if pc.fichierPlanCours != null %}
+    Fichier joint : <a href="{{ asset('upload/fichier-plan-cours/'~pc.fichierPlanCours) }}"
+                       target="_blank">{{ pc.fichierPlanCours }}</a>
+{% endif %}
+
+{% if pc.saisiePlanCours != null %}
+    Saisie libre du plan de cours : <br>
+    <p style="text-align: justify">{{ pc.saisiePlanCours|raw }}</p>
+{% endif %}
+
+<h3>3. RÉALISATION</h3>
+
+<h4>Le plan de cours a-t-il pu être suivi comme prévu ? (oui, non, pourquoi ?)</h4>
+<p style="text-align: justify"><strong>{{ pc.planSuivi == true ? 'Oui' : 'Non' }}</strong>. {{ pc
+    .planSuiviCommentaire|raw }}</p>
+
+<h4>Les objectifs fixés ont-ils été atteints ? (oui, non, pourquoi ?)</h4>
+<p style="text-align: justify"><strong>{{ pc.objectifsAtteints == true ? 'Oui' : 'Non' }}</strong>. {{ pc
+    .objectifsFAtteintsCommentaire|raw }}</p>
+
+<h4>Les compétences ont-elles été acquises ? (oui, non, pourquoi ?)</h4>
+<p style="text-align: justify"><strong>{{ pc.competencesAcquises == true ? 'Oui' : 'Non' }}</strong>. {{ pc
+    .competencesAcquisesCommentaire|raw }}</p>
+
+
+<h4>Nombre d’heures réalisées :</h4>
+<table style="width: 100%" class="table">
+    <thead>
+    <tr>
+        <th style="width: 25%">CM</th>
+        <th style="width: 25%">TD</th>
+        <th style="width: 25%">TP</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td style="text-align: center">{{ pc.cmRealise }} heure(s)</td>
+        <td style="text-align: center">{{ pc.tdRealise }} heure(s)</td>
+        <td style="text-align: center">{{ pc.tpRealise }} heure(s)</td>
+    </tr>
+    </tbody>
+</table>
+
+<h4>Retour sur le mode d'évaluation (bilan, moyenne, …) :</h4>
+<p style="text-align: justify">{{ pc.modeEvaluationCommentaire|raw }}</p>
+
+<h4>Commentaires éventuels :</h4>
+<p style="text-align: justify">{{ pc.commentairesStep3|raw }}</p>

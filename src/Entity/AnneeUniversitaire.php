@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/AnneeUniversitaire.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/09/2023 16:46
+ * @lastUpdate 29/02/2024 21:42
  */
 
 namespace App\Entity;
@@ -37,44 +37,37 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
     private ?string $commentaire = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Departement>
-     */
-    /** @deprecated */
-    #[ORM\OneToMany(mappedBy: 'anneeUniversitairePrepare', targetEntity: Departement::class)]
-    private Collection $departements;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Calendrier>
+     * @var Collection<int, Calendrier>
      */
     #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: Calendrier::class)]
     private Collection $calendriers;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Scolarite>
+     * @var Collection<int, Scolarite>
      */
     #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: Scolarite::class)]
     private Collection $scolarites;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ScolaritePromo>
+     * @var Collection<int, ScolaritePromo>
      */
     #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: ScolaritePromo::class)]
     private Collection $scolaritePromos;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Diplome>
+     * @var Collection<int, Diplome>
      */
     #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: Diplome::class)]
     private Collection $diplomes;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\StagePeriode>
+     * @var Collection<int, StagePeriode>
      */
     #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: StagePeriode::class)]
     private Collection $stagePeriodes;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Evaluation>
+     * @var Collection<int, Evaluation>
      */
     #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: Evaluation::class)]
     private Collection $evaluations;
@@ -83,25 +76,19 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
     private bool $active = false;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ProjetPeriode>
+     * @var Collection<int, ProjetPeriode>
      */
     #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: ProjetPeriode::class)]
     private Collection $projetPeriodes;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<\App\Entity\Personnel>
+     * @var Collection<Personnel>
      */
     #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: Personnel::class)]
     private Collection $personnels;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<\App\Entity\AlternancePlanning>
-     */
-    #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: AlternancePlanning::class)]
-    private Collection $planningAlternances;
-
-    /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\AnneeUniversitaireSemestre>
+     * @var Collection<int, AnneeUniversitaireSemestre>
      */
     #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: AnneeUniversitaireSemestre::class)]
     private Collection $anneeUniversitaireSemestres;
@@ -112,12 +99,8 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
     #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: PlanCours::class)]
     private Collection $planCours;
 
-    #[ORM\OneToMany(mappedBy: 'anneeUniversitaire', targetEntity: ConpereEtudiant::class)]
-    private Collection $conpereEtudiants;
-
     public function __construct()
     {
-        $this->departements = new ArrayCollection();
         $this->setAnnee((int) date('Y'));
         $this->calendriers = new ArrayCollection();
         $this->scolarites = new ArrayCollection();
@@ -127,11 +110,9 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
         $this->evaluations = new ArrayCollection();
         $this->projetPeriodes = new ArrayCollection();
         $this->personnels = new ArrayCollection();
-        $this->planningAlternances = new ArrayCollection();
         $this->anneeUniversitaireSemestres = new ArrayCollection();
         $this->edtPlannings = new ArrayCollection();
         $this->planCours = new ArrayCollection();
-        $this->conpereEtudiants = new ArrayCollection();
     }
 
     public function getLibelle(): ?string
@@ -154,37 +135,6 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
     public function setCommentaire(string $commentaire): self
     {
         $this->commentaire = $commentaire;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Departement[]
-     */
-    public function getDepartements(): Collection
-    {
-        return $this->departements;
-    }
-
-    public function addDepartement(Departement $departement): self
-    {
-        if (!$this->departements->contains($departement)) {
-            $this->departements[] = $departement;
-            $departement->setAnneeUniversitairePrepare($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDepartement(Departement $departement): self
-    {
-        if ($this->departements->contains($departement)) {
-            $this->departements->removeElement($departement);
-            // set the owning side to null (unless already changed)
-            if ($departement->getAnneeUniversitairePrepare() === $this) {
-                $departement->setAnneeUniversitairePrepare(null);
-            }
-        }
 
         return $this;
     }
@@ -471,34 +421,6 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
     }
 
     /**
-     * @return Collection|AlternancePlanning[]
-     */
-    public function getAlternancePlannings(): Collection
-    {
-        return $this->planningAlternances;
-    }
-
-    public function addAlternancePlanning(AlternancePlanning $planningAlternance): self
-    {
-        if (!$this->planningAlternances->contains($planningAlternance)) {
-            $this->planningAlternances[] = $planningAlternance;
-            $planningAlternance->setAnneeUniversitaire($this);
-        }
-
-        return $this;
-    }
-
-    public function removeAlternancePlanning(AlternancePlanning $planningAlternance): self
-    {
-        // set the owning side to null (unless already changed)
-        if ($this->planningAlternances->removeElement($planningAlternance) && $planningAlternance->getAnneeUniversitaire() === $this) {
-            $planningAlternance->setAnneeUniversitaire(null);
-        }
-
-        return $this;
-    }
-
-    /**
      * @return Collection<int, AnneeUniversitaireSemestre>
      */
     public function getAnneeUniversitaireSemestres(): Collection
@@ -546,11 +468,9 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
 
     public function removeEdtPlanning(EdtPlanning $edtPlanning): self
     {
-        if ($this->edtPlannings->removeElement($edtPlanning)) {
-            // set the owning side to null (unless already changed)
-            if ($edtPlanning->getAnneeUniversitaire() === $this) {
-                $edtPlanning->setAnneeUniversitaire(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->edtPlannings->removeElement($edtPlanning) && $edtPlanning->getAnneeUniversitaire() === $this) {
+            $edtPlanning->setAnneeUniversitaire(null);
         }
 
         return $this;
@@ -576,41 +496,9 @@ class AnneeUniversitaire extends BaseEntity implements Stringable
 
     public function removePlanCour(PlanCours $planCour): self
     {
-        if ($this->planCours->removeElement($planCour)) {
-            // set the owning side to null (unless already changed)
-            if ($planCour->getAnneeUniversitaire() === $this) {
-                $planCour->setAnneeUniversitaire(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, ConpereEtudiant>
-     */
-    public function getConpereEtudiants(): Collection
-    {
-        return $this->conpereEtudiants;
-    }
-
-    public function addConpereEtudiant(ConpereEtudiant $conpereEtudiant): self
-    {
-        if (!$this->conpereEtudiants->contains($conpereEtudiant)) {
-            $this->conpereEtudiants->add($conpereEtudiant);
-            $conpereEtudiant->setAnneeUniversitaire($this);
-        }
-
-        return $this;
-    }
-
-    public function removeConpereEtudiant(ConpereEtudiant $conpereEtudiant): self
-    {
-        if ($this->conpereEtudiants->removeElement($conpereEtudiant)) {
-            // set the owning side to null (unless already changed)
-            if ($conpereEtudiant->getAnneeUniversitaire() === $this) {
-                $conpereEtudiant->setAnneeUniversitaire(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->planCours->removeElement($planCour) && $planCour->getAnneeUniversitaire() === $this) {
+            $planCour->setAnneeUniversitaire(null);
         }
 
         return $this;

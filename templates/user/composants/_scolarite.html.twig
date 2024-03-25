@@ -68,6 +68,23 @@
                             {% endif %}
                         </td>
                     </tr>
+                    {% if etudiant.semestre.diplome.typeDiplome.apc == true %}
+                        {% if parcour.semestre.ordreLmd is even %}
+                            <tr>
+                                <td colspan="2">Bilan BUT {{ parcour.semestre.annee.ordre }}</td>
+                                <td>
+                                    {% for ue in parcour.semestre.ues %}
+                                        <strong>UE {{ ue.numeroUe }}:</strong>
+                                        ??
+                                        <br>
+                                    {% endfor %}
+                                </td>
+                                <td>??</td>
+                                <td>??</td>
+                                <td>??</td>
+                            </tr>
+                        {% endif %}
+                    {% endif %}
                 {% endif %}
             {% endfor %}
 

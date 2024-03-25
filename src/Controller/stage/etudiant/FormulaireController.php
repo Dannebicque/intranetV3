@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/stage/etudiant/FormulaireController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/01/2023 11:21
+ * @lastUpdate 24/02/2024 09:27
  */
 
 // src/Controller/FormulaireController.php
@@ -25,10 +25,11 @@ use App\Form\stage\StageAdresseFormType;
 use App\Repository\ContactRepository;
 use App\Repository\StageEtudiantRepository;
 use Carbon\Carbon;
+use DateInterval;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class FormulaireController extends BaseController
@@ -92,22 +93,20 @@ class FormulaireController extends BaseController
         ]);
 
         $form2->handleRequest($request);
-        if ($form2->isSubmitted()) {
-            if ($form2->isValid()) {
-                $stageEtudiantRepository->save($stageEtudiant, true);
+        if ($form2->isSubmitted() && $form2->isValid()) {
+            $stageEtudiantRepository->save($stageEtudiant, true);
 
-                if ('form_type_entreprise_suivant' == $request->request->get('button')) {
-                    return $this->json([
-                        'route' => $this->generateUrl('app_formulaireResponsable',
-                            ['stageEtudiant' => $stageEtudiant->getUuidString()]),
-                    ]);
-                } else {
-                    return $this->json([
-                        'route' => $this->generateUrl('app_stage_etudiant_formulaire',
-                            ['stageEtudiant' => $stageEtudiant->getUuidString()]),
-                    ]);
-                }
+            if ('form_type_entreprise_suivant' == $request->request->get('button')) {
+                return $this->json([
+                    'route' => $this->generateUrl('app_formulaireResponsable',
+                        ['stageEtudiant' => $stageEtudiant->getUuidString()]),
+                ]);
             }
+
+            return $this->json([
+                'route' => $this->generateUrl('app_stage_etudiant_formulaire',
+                    ['stageEtudiant' => $stageEtudiant->getUuidString()]),
+            ]);
         }
 
         return $this->render('stage/formulaire/index.html.twig',
@@ -139,22 +138,20 @@ class FormulaireController extends BaseController
         ]);
 
         $form3->handleRequest($request);
-        if ($form3->isSubmitted()) {
-            if ($form3->isValid()) {
-                $stageEtudiantRepository->save($stageEtudiant, true);
+        if ($form3->isSubmitted() && $form3->isValid()) {
+            $stageEtudiantRepository->save($stageEtudiant, true);
 
-                if ('responsable_suivant' === $request->request->get('button')) {
-                    return $this->json([
-                        'route' => $this->generateUrl('app_formulaireTuteur',
-                            ['stageEtudiant' => $stageEtudiant->getUuidString()]),
-                    ]);
-                } else {
-                    return $this->json([
-                        'route' => $this->generateUrl('app_formulaireEntreprise',
-                            ['stageEtudiant' => $stageEtudiant->getUuidString()]),
-                    ]);
-                }
+            if ('responsable_suivant' === $request->request->get('button')) {
+                return $this->json([
+                    'route' => $this->generateUrl('app_formulaireTuteur',
+                        ['stageEtudiant' => $stageEtudiant->getUuidString()]),
+                ]);
             }
+
+            return $this->json([
+                'route' => $this->generateUrl('app_formulaireEntreprise',
+                    ['stageEtudiant' => $stageEtudiant->getUuidString()]),
+            ]);
         }
 
         return $this->render('stage/formulaire/index.html.twig',
@@ -216,21 +213,21 @@ class FormulaireController extends BaseController
         ]);
 
         $form5->handleRequest($request);
-        if ($form5->isSubmitted()) {
-            if ($form5->isValid()) {
-                $stageEtudiantRepository->save($stageEtudiant, true);
+        if ($form5->isSubmitted() && $form5->isValid()) {
+            $stageEtudiantRepository->save($stageEtudiant, true);
 
-                if ('stage_adresse_form_suivant' === $request->request->get('button')) {
-                    return $this->json([
-                        'route' => $this->generateUrl('app_formulaireStage',
-                            ['stageEtudiant' => $stageEtudiant->getUuidString()]),
-                    ]);
-                } elseif ('stage_adresse_form_retour' === $request->request->get('button')) {
-                    return $this->json([
-                        'route' => $this->generateUrl('app_formulaireTuteur',
-                            ['stageEtudiant' => $stageEtudiant->getUuidString()]),
-                    ]);
-                }
+            if ('stage_adresse_form_suivant' === $request->request->get('button')) {
+                return $this->json([
+                    'route' => $this->generateUrl('app_formulaireStage',
+                        ['stageEtudiant' => $stageEtudiant->getUuidString()]),
+                ]);
+            }
+
+            if ('stage_adresse_form_retour' === $request->request->get('button')) {
+                return $this->json([
+                    'route' => $this->generateUrl('app_formulaireTuteur',
+                        ['stageEtudiant' => $stageEtudiant->getUuidString()]),
+                ]);
             }
         }
 
@@ -282,7 +279,7 @@ class FormulaireController extends BaseController
         $date_fin = Carbon::createFromFormat('d/m/Y', $tab['date2']); // new \DateTime($tab['date2']);
         $interval = $date_debut->diff($date_fin);
 
-        $interval = $interval->format('%y') * 365 + $interval->format('%m') * 30 + $interval->format('%d');
+        $interval = (int)$interval->format('%y') * 365 + (int)$interval->format('%m') * 30 + (int)$interval->format('%d');
 
         $annee1 = $date_debut->format('Y');
         $annee2 = $date_fin->format('Y');
@@ -322,7 +319,7 @@ class FormulaireController extends BaseController
             } elseif ('Saturday' == $date_debut->format('l') || 'Sunday' == $date_debut->format('l')) {
                 --$interval;
             }
-            $date_debut->add(new \DateInterval('P1D'));
+            $date_debut->add(new DateInterval('P1D'));
         }
 
         return $this->json(['duree' => $interval]);

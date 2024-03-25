@@ -4,15 +4,16 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/Previsionnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/02/2024 21:05
+ * @lastUpdate 29/02/2024 11:37
  */
 
 namespace App\DTO;
 
+use AllowDynamicProperties;
 use App\Entity\Constantes;
 use App\Enums\PlanCoursEnum;
 
-class Previsionnel
+#[AllowDynamicProperties] class Previsionnel
 {
     public int $id;
     public ?int $personnel_id = null;
@@ -45,7 +46,8 @@ class Previsionnel
     public ?string $annee_libelle_long = '';
     public mixed $objPrevisionnel;
 
-    public PlanCoursEnum $etat_plan_cours;
+    public ?PlanCoursEnum $etatPlanCours = null;
+    public ?int $planCoursId = null;
 
     public function getNbSeanceCm(): string
     {

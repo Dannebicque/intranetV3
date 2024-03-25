@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/theme.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 15/02/2024 19:49
+// @lastUpdate 23/02/2024 21:32
 /* @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme.css */
 /* @author davidannebicque */
 /* @project intranetV3 */
@@ -6018,7 +6018,7 @@ progress {
 }
 
 .breadcrumb a {
-    color: #8b95a5;
+    color: var(--policeDark);
 }
 
 .breadcrumb a:hover {
@@ -6032,7 +6032,7 @@ progress {
 }
 
 .breadcrumb-item + .breadcrumb-item::before {
-    color: #8b95a5;
+    color: var(--policeDark);
 }
 
 .breadcrumb-arrow .breadcrumb-item + .breadcrumb-item::before {
@@ -10272,7 +10272,7 @@ body .topbar-secondary + main {
 }
 
 body {
-    background-color: var(--body);
+  background-color: var(--body) !important;
     color: var(--police);
 }
 
@@ -15666,7 +15666,7 @@ ul.flexbox {
 }
 
 .header-info .breadcrumb-item.active {
-    color: #4d5259;
+    color: var(--policeH);
 }
 
 .header-info .breadcrumb-item a {
@@ -15674,7 +15674,7 @@ ul.flexbox {
 }
 
 .header-info .breadcrumb-item a:hover {
-    color: #4d5259;
+    color: var(--policeH);
 }
 
 .header-action {

@@ -1,14 +1,15 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Apc/ApcCoefficient.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Apc/ApcCoefficient.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/07/2021 15:37
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Classes\Apc;
 
+use App\Entity\ApcRessource;
 use App\Entity\ApcSae;
 
 class ApcCoefficient
@@ -35,7 +36,7 @@ class ApcCoefficient
         }
 
         $tabs['ressources'] = [];
-        /** @var \App\Entity\ApcRessource $ressource */
+        /** @var ApcRessource $ressource */
         foreach ($ressources as $ressource) {
             $tabs['ressources'][$ressource->getid()] = [];
             $tabs['ressources'][$ressource->getid()]['total'] = 0;

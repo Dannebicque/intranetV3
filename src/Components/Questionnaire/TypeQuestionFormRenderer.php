@@ -1,17 +1,21 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Components/Questionnaire/TypeQuestionRenderer.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeQuestionFormRenderer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/10/2021 10:37
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Components\Questionnaire;
 
 use App\Entity\QuestQuestion;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Throwable;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 use Twig\TemplateWrapper;
 
 class TypeQuestionFormRenderer
@@ -27,7 +31,7 @@ class TypeQuestionFormRenderer
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function render(QuestQuestion $question, $form): string
     {
@@ -46,9 +50,9 @@ class TypeQuestionFormRenderer
     }
 
     /**
-     * @throws \Twig\Error\SyntaxError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\LoaderError
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
      */
     private function load(): TemplateWrapper
     {

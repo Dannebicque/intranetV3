@@ -1,15 +1,16 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Twig/PathExtension.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/07/2023 08:11
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Twig;
 
 use App\Classes\Configuration;
+use Symfony\Bundle\SecurityBundle\Security;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
@@ -20,7 +21,7 @@ class PathExtension extends AbstractExtension
 {
     protected Configuration $config;
 
-    public function __construct(protected \Symfony\Bundle\SecurityBundle\Security $security)
+    public function __construct(protected Security $security)
     {
     }
 

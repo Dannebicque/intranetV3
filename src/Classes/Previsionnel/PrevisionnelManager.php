@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Previsionnel/PrevisionnelManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/09/2023 08:31
+ * @lastUpdate 24/02/2024 08:59
  */
 
 namespace App\Classes\Previsionnel;
@@ -329,7 +329,7 @@ class PrevisionnelManager
         return $collection;
     }
 
-    public function getPrevisionnelAllDepartementAnnee(int $anneeUniversitaire = 0)
+    public function getPrevisionnelAllDepartementAnnee(int $anneeUniversitaire = 0): array
     {
         $t = [];
         foreach ($this->managers as $manager) {

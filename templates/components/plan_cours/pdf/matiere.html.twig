@@ -1,0 +1,71 @@
+{% extends 'pdf/basepdf.html.twig' %}
+
+{% block style %}
+    body {
+    font-family: "DejaVu Sans", sans-serif;
+    font-size: 14px;
+    line-height: 1.2;
+    }
+
+    h3 {
+    text-align:center;
+    border: 1px solid black;
+    padding: 5px;
+    }
+
+    h4 {
+    text-align:left;
+    }
+
+    table {
+    border-collapse: collapse;
+    width: 100%;
+    }
+
+    table td {
+    border: 1px solid black;
+    padding: 3px;
+    }
+
+    table th {
+    border: 1px solid black;
+    padding: 3px;
+    }
+{% endblock %}
+
+{% block content %}
+    <table style="width: 100%">
+        <tr>
+            <td style="text-align: center; width:{% if qualite is defined and qualite == true %}{% else %}20%{% endif %}">
+                <img
+                        src="{{ settings('BASE_PATH') }}{{ 'logo/'~ settings('LOGO_UNIVERSITE') }}" alt="logo"
+                        height="{{ size|default('70px') }}"/>
+            </td>
+            <td style="text-align: center; width:{% if qualite is defined and qualite == true %}{% else %}60%{% endif %}">
+                {{ settings('NOM_IUT') }}<br>
+                PLAN DE COURS MATIERE
+            </td>
+            <td style="text-align: center; width:{% if qualite is defined and qualite == true %}{% else %}20%{% endif %}">
+
+                {% if qualite is defined and qualite == true %}
+                    <img src="{{ settings('BASE_PATH') }}{{ 'logo/'~settings('LOGO_QUALITE') }}" alt="logo certificat
+                     qualité" height="{{ size|default('70px') }}" style="float:right"/>
+                {% else %}
+                    <img
+                            src="{{ settings('BASE_PATH') }}{{ 'logo/'~departement.logoName }}"
+                            alt="logo du département"
+                            height="{{ size|default('70px') }}"/>
+                {% endif %}
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="3" style="text-align: center">
+                <h1>{{ matiere.diplome.display }}</h1>
+                <h2>Matière : {{ matiere.display }}<br>
+                    {{ anneeUniversitaire.displayAnneeUniversitaire }}</h2>
+            </td>
+        </tr>
+    </table>
+    {{ include('components/plan_cours/show/_show_matiere.html.twig') }}
+{% endblock %}

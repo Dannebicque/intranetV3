@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/TypeHrsController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 20/02/2024 18:55
  */
 
 namespace App\Controller\superAdministration;
@@ -16,10 +16,10 @@ use App\Entity\Constantes;
 use App\Entity\TypeHrs;
 use App\Form\TypeHrsType;
 use App\Repository\TypeHrsRepository;
-use function count;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
+use function count;
 
 #[Route(path: '/administratif/type-hrs')]
 class TypeHrsController extends BaseController

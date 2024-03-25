@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/StructureDiplomeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/08/2022 17:26
+ * @lastUpdate 28/02/2024 15:01
  */
 
 namespace App\Controller;
@@ -15,12 +15,13 @@ use App\Repository\PpnRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
+#[Route(path: '/{type}', requirements: ['type' => 'administratif|administration'], defaults: ['type' => 'administratif'])]
 class StructureDiplomeController extends AbstractController
 {
     /**
-     * @throws \App\Exception\DiplomeNotFoundException
+     * @throws DiplomeNotFoundException
      */
     #[Route('/structure/diplome/affiche', name: 'structure_diplome_affiche')]
     public function index(
@@ -59,6 +60,7 @@ class StructureDiplomeController extends AbstractController
             'referentiel' => $referentiel,
             'parcours' => $parcours,
             'diplomes' => $diplome->getEnfants(),
+            'type' => $request->get('type')
         ]);
     }
 }

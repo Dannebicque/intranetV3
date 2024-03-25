@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/SousCommission/SousCommissionExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/02/2024 12:08
+ * @lastUpdate 06/03/2024 11:54
  */
 
 namespace App\Classes\SousCommission;
@@ -648,7 +648,7 @@ class SousCommissionExport
     }
 
     /**
-     * @throws \App\Exception\SemestreNotFoundException
+     * @throws SemestreNotFoundException
      */
     public function exportGrandJuryApc(
         ScolaritePromo     $scolaritePromo,
@@ -699,9 +699,11 @@ class SousCommissionExport
 
         foreach ($matieres as $m) {
             $this->myExcelWriter->writeCellXY($colonne, $ligne, $m->codeMatiere);
+            $this->myExcelWriter->writeCellXY($colonne, $ligne + 1, $m->codeElement);
             ++$colonne;
         }
 
+        ++$ligne;
         ++$ligne;
 
         foreach ($etudiants as $etu) {
@@ -779,7 +781,7 @@ class SousCommissionExport
     }
 
     /**
-     * @throws \PhpOffice\PhpSpreadsheet\Exception
+     * @throws Exception
      * @throws \PhpOffice\PhpSpreadsheet\Writer\Exception
      * @throws \PhpOffice\PhpSpreadsheet\Reader\Exception
      */
@@ -916,7 +918,7 @@ class SousCommissionExport
             ++$colonne;
         }
 
-        $tsem = [];
+        $tsem = []; //todo: a finaliser
 
         foreach ($semestre->getSemestreLienDepart() as $se) {
             if ($se->getSens() === SemestreLienEnum::PRECEDENT) {
@@ -962,7 +964,7 @@ class SousCommissionExport
                         ['style' => 'numerique3']);
                 }
 
-                $colonne = 12;
+                $colonne = 13;
                 $this->myExcelWriter->writeCellXY($colonne, $ligne,
                     number_format($ssCommTravail->etudiant($etu->getId())->getMoyenne(), 3),
                     ['style' => 'numerique3']);

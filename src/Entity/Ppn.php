@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Ppn.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/07/2023 13:56
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Entity;
@@ -29,7 +29,7 @@ class Ppn extends BaseEntity
     private int $annee;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Matiere>
+     * @var Collection<int, Matiere>
      */
     #[ORM\OneToMany(mappedBy: 'ppn', targetEntity: Matiere::class)]
     private Collection $matieres;
@@ -38,14 +38,14 @@ class Ppn extends BaseEntity
     private ?Diplome $diplome = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Semestre>
+     * @var Collection<int, Semestre>
      */
     /** @Deprecated(['reason' => 'La gestion du PPN se fait en lien avec l\'annee universitaire']) */
     #[ORM\OneToMany(mappedBy: 'ppnActif', targetEntity: Semestre::class)]
     private Collection $semestres;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\AnneeUniversitaireSemestre>
+     * @var Collection<int, AnneeUniversitaireSemestre>
      */
     #[ORM\OneToMany(mappedBy: 'ppn', targetEntity: AnneeUniversitaireSemestre::class)]
     private Collection $anneeUniversitaireSemestres;

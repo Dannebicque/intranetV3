@@ -1,12 +1,12 @@
-// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/profil.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/07/2022 13:30
+// @lastUpdate 20/02/2024 18:42
 import $ from 'jquery'
+import Routing from 'fos-router'
 import { addCallout } from '../util'
 import { post } from '../fetch'
-import Routing from 'fos-router'
 
 if (document.getElementById('changeSemestreNotes')) {
   changeSemestreNotes()
@@ -113,20 +113,6 @@ $(document).on('click', '.changeprofil', function (e) {
       // })
 
     }
-  })
-})
-
-$(document).on('change', '.addfavori', function (e) {
-  e.preventDefault()
-  e.stopPropagation()
-
-  $.ajax({
-    url: Routing.generate('user_add_favori'),
-    method: 'POST',
-    data: {
-      user: $(this).val(),
-      etat: $(this).prop('checked'),
-    },
   })
 })
 

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/QuestionnaireController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/08/2023 08:50
+ * @lastUpdate 24/02/2024 08:39
  */
 
 namespace App\Controller\questionnaire;
@@ -13,6 +13,7 @@ use App\Classes\Mail\MailerFromTwig;
 use App\Components\Questionnaire\Adapter\QuestionnaireQualiteAdapter;
 use App\Components\Questionnaire\Adapter\SectionQualiteEntityAdapter;
 use App\Components\Questionnaire\DTO\AbstractQuestionnaire;
+use App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException;
 use App\Components\Questionnaire\Questionnaire;
 use App\Components\Questionnaire\QuestionnaireRegistry;
 use App\Components\Questionnaire\Section\AbstractSection;
@@ -21,11 +22,13 @@ use App\Utils\JsonRequest;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
+use JsonException;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Class QualiteController.
@@ -42,7 +45,7 @@ class QuestionnaireController extends AbstractController
         Request $request,
         Questionnaire $questionnaire,
         QuestionnaireRegistry $questionnaireRegistry,
-        #[\Symfony\Bridge\Doctrine\Attribute\MapEntity(mapping: ['uuidQuestionnaire' => 'uuid'])]
+        #[MapEntity(mapping: ['uuidQuestionnaire' => 'uuid'])]
         QuestQuestionnaire $questQuestionnaire,
         string $uuid
     ): Response {
@@ -85,7 +88,7 @@ class QuestionnaireController extends AbstractController
     public function complet(
         QuestionnaireRegistry $questionnaireRegistry,
         MailerFromTwig $myMailer,
-        #[\Symfony\Bridge\Doctrine\Attribute\MapEntity(mapping: ['uuidQuestionnaire' => 'uuid'])]
+        #[MapEntity(mapping: ['uuidQuestionnaire' => 'uuid'])]
         QuestQuestionnaire $questQuestionnaire,
         string $uuid
     ): Response {
@@ -109,12 +112,13 @@ class QuestionnaireController extends AbstractController
 
     /**
      * @throws NonUniqueResultException
-     * @throws \JsonException
+     * @throws JsonException
+     * @throws TypeQuestionNotFoundException
      */
     #[Route(path: '/enquete-qualite/api/ajax/reponse/{uuidQuestionnaire}/{uuid}', name: 'api_questionnaire_qualite_ajax_reponse', options: ['expose' => true])]
     public function sauvegardeReponse(
         QuestionnaireRegistry $questionnaireRegistry,
-        #[\Symfony\Bridge\Doctrine\Attribute\MapEntity(mapping: ['uuidQuestionnaire' => 'uuid'])]
+        #[MapEntity(mapping: ['uuidQuestionnaire' => 'uuid'])]
         QuestQuestionnaire $questQuestionnaire,
         string $uuid,
         Request $request
@@ -139,13 +143,14 @@ class QuestionnaireController extends AbstractController
 
     /**
      * @throws NonUniqueResultException
-     * @throws \JsonException
-     * @throws \JsonException
+     * @throws JsonException
+     * @throws JsonException
+     * @throws TypeQuestionNotFoundException
      */
     #[Route(path: '/enquete-qualite/api/ajax/reponse-txt/{uuidQuestionnaire}/{uuid}', name: 'api_questionnaire_qualite_ajax_reponse_txt', options: ['expose' => true])]
     public function sauvegardeReponseTxt(
         QuestionnaireRegistry $questionnaireRegistry,
-        #[\Symfony\Bridge\Doctrine\Attribute\MapEntity(mapping: ['uuidQuestionnaire' => 'uuid'])]
+        #[MapEntity(mapping: ['uuidQuestionnaire' => 'uuid'])]
         QuestQuestionnaire $questQuestionnaire,
         string $uuid,
         Request $request

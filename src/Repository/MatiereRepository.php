@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/MatiereRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/08/2022 11:20
+ * @lastUpdate 24/02/2024 08:20
  */
 
 namespace App\Repository;
@@ -110,5 +110,10 @@ class MatiereRepository extends ServiceEntityRepository
             ->addOrderBy('m.libelle', Criteria::ASC)
             ->getQuery()
             ->getResult();
+    }
+
+    public function findByAnneeUniversitaire(int $anneeUniversitaire): array
+    {
+        return []; //todo: a faire récupérer des matières d'une année universitaire. Utilisé en LP
     }
 }

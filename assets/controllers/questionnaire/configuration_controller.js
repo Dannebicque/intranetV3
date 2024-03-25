@@ -1,8 +1,8 @@
-// Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/questionnaire/configuration_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 14/01/2023 15:16
+// @lastUpdate 24/03/2024 17:36
 
 import { Controller } from '@hotwired/stimulus'
 import { addCallout } from '../../js/util'
@@ -111,7 +111,7 @@ export default class extends Controller {
     }
 
     const params = new URLSearchParams({
-      typeaction: event.params.typeaction,
+      typeaction: event.params.typeAction,
     })
 
     if (erreur === false) {

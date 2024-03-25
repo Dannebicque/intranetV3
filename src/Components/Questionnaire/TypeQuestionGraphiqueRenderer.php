@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeQuestionGraphiqueRenderer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/08/2023 08:52
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Components\Questionnaire;
@@ -12,7 +12,11 @@ namespace App\Components\Questionnaire;
 use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
 use App\Components\Questionnaire\TypeQuestion\TypeChainee;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
+use Throwable;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 use Twig\TemplateWrapper;
 
 class TypeQuestionGraphiqueRenderer
@@ -28,7 +32,7 @@ class TypeQuestionGraphiqueRenderer
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function render(AbstractQuestion $question, int|string|null $ordre = 0): string
     {
@@ -59,9 +63,9 @@ class TypeQuestionGraphiqueRenderer
     }
 
     /**
-     * @throws \Twig\Error\SyntaxError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\LoaderError
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
      */
     private function load(): TemplateWrapper
     {

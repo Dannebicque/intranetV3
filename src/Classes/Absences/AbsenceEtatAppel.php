@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Absences/AbsenceEtatAppel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/07/2023 13:56
+ * @lastUpdate 24/02/2024 08:59
  */
 
 namespace App\Classes\Absences;
@@ -13,22 +13,21 @@ use App\DTO\Matiere;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Semestre;
 use App\Repository\AbsenceEtatAppelRepository;
-use App\Repository\AbsenceRepository;
 use App\Utils\Tools;
 use App\Utils\ToolsMatiere;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 
 class AbsenceEtatAppel
 {
     public function __construct(
-        private readonly AbsenceEtatAppelRepository $absenceEtatAppelRepository,
-        private readonly AbsenceRepository $absenceRepository,
-        private readonly EntityManagerInterface $entityManager
+        private AbsenceEtatAppelRepository $absenceEtatAppelRepository,
+        private EntityManagerInterface     $entityManager
     ) {
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function enregistreAppelFait(array $data): bool
     {
@@ -53,7 +52,7 @@ class AbsenceEtatAppel
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     private function verifieIfExist(array $data): ?\App\Entity\AbsenceEtatAppel
     {
@@ -103,7 +102,7 @@ class AbsenceEtatAppel
         return $tab;
     }
 
-    public function getByMatiereArray(Matiere $mat, ?AnneeUniversitaire $anneeUniversitaire)
+    public function getByMatiereArray(Matiere $mat, ?AnneeUniversitaire $anneeUniversitaire): array
     {
         $data = $this->absenceEtatAppelRepository->findByMatiere($mat, $anneeUniversitaire);
         $tab = [];

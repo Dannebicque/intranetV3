@@ -1,19 +1,19 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/DataFixtures/UserFixtures.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/DataFixtures/UserFixtures.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 10:40
+ * @lastUpdate 23/02/2024 21:41
  */
 
 namespace App\DataFixtures;
 
-use App\Entity\Etudiant;
 use App\Entity\Personnel;
 use Carbon\Carbon;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use JsonException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class UserFixtures extends Fixture
@@ -25,7 +25,7 @@ class UserFixtures extends Fixture
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function load(ObjectManager $manager): void
     {

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/PrevisionnelSynthesePersonnels.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/09/2023 17:28
+ * @lastUpdate 24/02/2024 08:52
  */
 
 namespace App\DTO;
@@ -67,7 +67,7 @@ class PrevisionnelSynthesePersonnels
 
     public function personnelsTries(): array
     {
-        usort($this->personnels, function ($a, $b) {
+        usort($this->personnels, static function ($a, $b) {
             return $a->display <=> $b->display;
         });
 

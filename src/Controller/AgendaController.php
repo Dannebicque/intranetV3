@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/AgendaController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 10:12
+ * @lastUpdate 16/02/2024 22:17
  */
 
 namespace App\Controller;
@@ -15,7 +15,7 @@ use App\Classes\ServiceRealise\ServiceRealiseIntranet;
 use App\Repository\PrevisionnelRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route(path: '/agenda')]
 class AgendaController extends BaseController

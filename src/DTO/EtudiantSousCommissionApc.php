@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/EtudiantSousCommissionApc.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/06/2023 09:57
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\DTO;
@@ -20,10 +20,10 @@ class EtudiantSousCommissionApc
     /** @var MoyenneMatiere[] */
     public array $moyenneMatieres = [];
 
-    /** @var \App\DTO\MoyenneUeApc[] */
+    /** @var MoyenneUeApc[] */
     public array $moyenneUes = [];
 
-    /** @var \App\DTO\MoyenneAnneeUeApc[] */
+    /** @var MoyenneAnneeUeApc[] */
     public array $moyenneAnneeUes = [];
 
     public float $bonification = 0;

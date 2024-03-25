@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/Calendrier.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:27
+ * @lastUpdate 23/02/2024 18:39
  */
 
 namespace App\Classes\Edt;
@@ -21,7 +21,6 @@ class Calendrier
 {
     public ?int $semaine = null;
     public array $tabJour;
-    private ?\App\Entity\Calendrier $calendrier = null;
     public ?int $semaineFormationIUT = null;
     public ?CarbonImmutable $semaineFormationLundi = null;
 
@@ -73,23 +72,23 @@ class Calendrier
             $this->excluVacances($semaine);
         }
 
-        $this->calendrier = $this->calendrierRepository->findOneBy([
+        $calendrier = $this->calendrierRepository->findOneBy([
             'semaineReelle' => $this->semaine,
             'anneeUniversitaire' => $anneeUniversitaire->getId(),
         ]);
-        if (null !== $this->calendrier) {
-            $this->semaineFormationIUT = $this->calendrier->getSemaineFormation();
-            $this->semaineFormationLundi = $this->calendrier->getDatelundi();
+        if (null !== $calendrier) {
+            $this->semaineFormationIUT = $calendrier->getSemaineFormation();
+            $this->semaineFormationLundi = $calendrier->getDatelundi();
         } else {
             // si la requete est vide, on prend la première...
-            $this->calendrier = $this->calendrierRepository->findOneBy([
+            $calendrier = $this->calendrierRepository->findOneBy([
                 'semaineFormation' => 1,
                 'anneeUniversitaire' => $anneeUniversitaire->getId(),
             ]);
-            if (null !== $this->calendrier) {
-                $this->semaineFormationIUT = $this->calendrier->getSemaineFormation();
-                $this->semaineFormationLundi = $this->calendrier->getDatelundi();
-                $this->semaine = $this->calendrier->getSemaineReelle();
+            if (null !== $calendrier) {
+                $this->semaineFormationIUT = $calendrier->getSemaineFormation();
+                $this->semaineFormationLundi = $calendrier->getDatelundi();
+                $this->semaine = $calendrier->getSemaineReelle();
             } else {
                 throw new RuntimeException('Erreur de semaine');
             }

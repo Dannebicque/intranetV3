@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/RddController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/01/2023 16:37
+ * @lastUpdate 24/02/2024 08:39
  */
 
 namespace App\Controller;
@@ -18,14 +18,18 @@ use App\Repository\RddDiplomeRepository;
 use App\Utils\Tools;
 use Carbon\Carbon;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
+use Exception;
 use Ramsey\Uuid\Uuid;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Address;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 #[Route('rdd', name: 'rdd_')]
 class RddController extends AbstractController
@@ -37,7 +41,8 @@ class RddController extends AbstractController
     }
 
     /**
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
+     * @throws Exception
      */
     #[Route('/', name: 'identification')]
     public function identification(
@@ -68,7 +73,7 @@ class RddController extends AbstractController
     }
 
     /**
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
     #[Route('/inscription/{numetudiant}/{diplome}', name: 'inscription')]
     public function inscription(

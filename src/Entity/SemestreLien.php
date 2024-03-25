@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/SemestreLien.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/08/2022 14:05
+ * @lastUpdate 24/02/2024 08:59
  */
 
 namespace App\Entity;
@@ -26,7 +26,7 @@ class SemestreLien extends BaseEntity
     #[ORM\Column(type: Types::STRING, length: 10, nullable: true, enumType: SemestreLienEnum::class)]
     private ?SemestreLienEnum $sens;
 
-    public function init(?Semestre $semestre_depart, ?Semestre $semestre_arrive, SemestreLienEnum $sens)
+    public function init(?Semestre $semestre_depart, ?Semestre $semestre_arrive, SemestreLienEnum $sens): void
     {
         $this->semestre_depart = $semestre_depart;
         $this->semestre_arrive = $semestre_arrive;

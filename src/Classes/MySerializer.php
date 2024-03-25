@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MySerializer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/11/2022 11:18
+ * @lastUpdate 24/02/2024 09:27
  */
 
 /*
@@ -13,11 +13,10 @@
 
 namespace App\Classes;
 
-use Doctrine\Common\Annotations\AnnotationReader;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Mapping\Factory\ClassMetadataFactory;
-use Symfony\Component\Serializer\Mapping\Loader\AnnotationLoader;
+use Symfony\Component\Serializer\Mapping\Loader\AttributeLoader;
 use Symfony\Component\Serializer\Normalizer\DataUriNormalizer;
 use Symfony\Component\Serializer\Normalizer\DateTimeNormalizer;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -33,7 +32,7 @@ class MySerializer
     public function serialize(array|Collection $data, array|string $groups): string
     {
         // pour prendre en compte les annotations groups et maxdepth
-        $classMetaDataFactory = new ClassMetadataFactory(new AnnotationLoader(new AnnotationReader()));
+        $classMetaDataFactory = new ClassMetadataFactory(new AttributeLoader());
 
         $encoder = new JsonEncoder();
         $normalizer = new ObjectNormalizer($classMetaDataFactory);

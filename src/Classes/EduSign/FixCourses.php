@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/FixCourses.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:38
+ * @lastUpdate 23/02/2024 18:43
  */
 
 namespace App\Classes\EduSign;
@@ -61,7 +61,7 @@ class FixCourses
 
             $cleApi = $diplome->getKeyEduSign();
 
-            $courses = $this->apiEduSign->getAllCourses($cleApi);;
+            $courses = $this->apiEduSign->getAllCourses($cleApi);
 
             foreach ($courses as $course) {
                 if ($course['API_ID'] === "") {

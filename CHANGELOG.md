@@ -2,6 +2,69 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.15.4](https://github.com/Dannebicque/intranetV3/compare/v3.15.3...v3.15.4) (2024-03-24)
+
+
+### Bug Fixes
+
+* bug questionnaire et configuration ([93041a0](https://github.com/Dannebicque/intranetV3/commit/93041a0db756b76687aeb8ad353fde4cd8a29eb7))
+
+### [3.15.3](https://github.com/Dannebicque/intranetV3/compare/v3.15.2...v3.15.3) (2024-03-22)
+
+
+### Bug Fixes
+
+* CMFI ([b6f1aa0](https://github.com/Dannebicque/intranetV3/commit/b6f1aa0869fc93e2d1ccafaae57a8f327f35d2c6))
+* CMFI ([0a3049d](https://github.com/Dannebicque/intranetV3/commit/0a3049dd6a169aacbca23c0fa9bab9fa21603c4a))
+* Export enquete ([0df2df4](https://github.com/Dannebicque/intranetV3/commit/0df2df4c89832721ae96353850c95d4416e011d1))
+* Import Celcat ([0d27655](https://github.com/Dannebicque/intranetV3/commit/0d27655f9ee122d89bde2df9972da863ae1e4906))
+* qv ([949ab7b](https://github.com/Dannebicque/intranetV3/commit/949ab7b093a0fdfe31999c526a7f3c4cc908ae6b))
+
+### [3.15.2](https://github.com/Dannebicque/intranetV3/compare/v3.15.1...v3.15.2) (2024-03-11)
+
+
+### Features
+
+* ajout code ELP sur export ([ef6e2ce](https://github.com/Dannebicque/intranetV3/commit/ef6e2ce7c931e816302a134a149451c7725adb6d))
+* ajout code ELP sur export ([9fdbf6d](https://github.com/Dannebicque/intranetV3/commit/9fdbf6d2d291554ab3f4598f44b5120ed43b3914))
+* ajout code ELP sur export ([759156c](https://github.com/Dannebicque/intranetV3/commit/759156c57531d18b72e80cf31d35c8d3e14e7a28))
+
+
+### Bug Fixes
+
+* limite commentaire ([8ec4990](https://github.com/Dannebicque/intranetV3/commit/8ec49900d958dbaa2b507c4cf05b508323877ced))
+* MyIcal ([080e2f3](https://github.com/Dannebicque/intranetV3/commit/080e2f3fe9c56557678fc1e1a4163f8516f72d4c))
+
+### [3.15.1](https://github.com/Dannebicque/intranetV3/compare/v3.15.0...v3.15.1) (2024-03-06)
+
+
+### Bug Fixes
+
+* Export grand jury déclage d'une colonne ([6a50031](https://github.com/Dannebicque/intranetV3/commit/6a5003127559646ae49c79ccdc4a855b4be58d17))
+* taille fichier nommé ([eb6f379](https://github.com/Dannebicque/intranetV3/commit/eb6f379b951329761f5b5d1bf512a6fb527eede0))
+
+## [3.15.0](https://github.com/Dannebicque/intranetV3/compare/v3.14.79...v3.15.0) (2024-03-01)
+
+
+### Features
+
+* Plan de cours, affichage + admin ([5b2e15f](https://github.com/Dannebicque/intranetV3/commit/5b2e15f0f6e5d10d76bde5f6f96eac1cd9670021))
+
+
+### Bug Fixes
+
+* barre de recherche en mobile ([e1e6c7d](https://github.com/Dannebicque/intranetV3/commit/e1e6c7d96a795a8337cd0fc654ddd7651008ff8f))
+* dark mode sur editable ([226cdac](https://github.com/Dannebicque/intranetV3/commit/226cdac61f96b2b37f36369bb6776d6e74107dd1))
+* edition structure en admin (blocage des routes sur administratif uniquement) ([904731d](https://github.com/Dannebicque/intranetV3/commit/904731d39a4853d823d9f1019ca6637c37d97285))
+* mise à jour cypress ([ef840bd](https://github.com/Dannebicque/intranetV3/commit/ef840bdd7e5e0468a3b228290c26084984500924))
+* route inexistante HrsTableType.php ([8c96749](https://github.com/Dannebicque/intranetV3/commit/8c9674956649d333bbcc8b2e404b2f7e8683d9a1))
+* suppression bouton favori étudiant ([42d4592](https://github.com/Dannebicque/intranetV3/commit/42d4592ca6a396d648d74fb08eaf068efe3156e9))
+* Suppression d'un questionnaire qualité ([e653847](https://github.com/Dannebicque/intranetV3/commit/e65384720a10ad1c4efe9c35ae9f6465c30b9d4c))
+* suppression des anciennes bornes ([22dd1c3](https://github.com/Dannebicque/intranetV3/commit/22dd1c31889109ffa4bb37d259705cc919e49287))
+* suppression du format ADE pour les EDT ([56ff75f](https://github.com/Dannebicque/intranetV3/commit/56ff75ff225109d6198cfa3dd8cf8372c2648020))
+* template manquant ([91c9c14](https://github.com/Dannebicque/intranetV3/commit/91c9c1478c6ecb494ec3a1120c39baff27a04e36))
+* type de document par défaut ([202df77](https://github.com/Dannebicque/intranetV3/commit/202df77c49c8fbb67d8d8e89e641a55fd0a739f4))
+
 ### [3.14.79](https://github.com/Dannebicque/intranetV3/compare/v3.14.77...v3.14.79) (2024-02-19)
 
 

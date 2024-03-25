@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Scolarite.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/07/2023 18:28
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Entity;
@@ -33,7 +33,7 @@ class Scolarite extends BaseEntity
     #[ORM\ManyToOne(targetEntity: Semestre::class)]
     private ?Semestre $semestre = null;
 
-    #[ORM\Column(type: Types::STRING, enumType: DecisionSemestreEnum::class, length: 10)]
+    #[ORM\Column(type: Types::STRING, length: 10, enumType: DecisionSemestreEnum::class)]
     private DecisionSemestreEnum $decision = DecisionSemestreEnum::SEMESTRE_EN_COURS;
 
     #[ORM\Column(type: Types::STRING, length: 10, nullable: true)]

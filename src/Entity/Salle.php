@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Salle.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 21:29
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Entity;
@@ -45,7 +45,7 @@ class Salle extends BaseEntity
     private ?Site $site = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\SalleExamen>
+     * @var Collection<int, SalleExamen>
      */
     #[ORM\OneToMany(mappedBy: 'salle', targetEntity: SalleExamen::class)]
     private Collection $salleExamens;

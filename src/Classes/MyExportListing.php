@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyExportListing.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/12/2023 15:19
+ * @lastUpdate 23/02/2024 21:35
  */
 
 /*
@@ -16,6 +16,7 @@ namespace App\Classes;
 use App\Classes\Excel\MyExcelWriter;
 use App\Classes\Pdf\MyPDF;
 use App\DTO\Matiere;
+use App\Entity\Absence;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
@@ -254,7 +255,7 @@ class MyExportListing
         $this->myExcelWriter->writeCellName('K1', 'Prénom Enseignant');
         $ligne = 2;
 
-        /** @var \App\Entity\Absence $absence */
+        /** @var Absence $absence */
         foreach ($absences as $absence) {
             $this->myExcelWriter->writeCellXY(1, $ligne, $absence->getDateHeure()?->format('d/m/Y H:i'));
             $this->myExcelWriter->writeCellXY(2, $ligne, $absence->getDuree()?->format('H:i'));

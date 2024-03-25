@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/plan_cours/personnel/PlanCoursRealiseController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/07/2023 22:22
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Controller\plan_cours\personnel;
@@ -13,10 +13,11 @@ use App\Components\PlanCours\Form\PlanCoursHistoriqueEdtType;
 use App\Entity\PlanCoursHistoriqueEdt;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/application/personnel/plan-cours', name: 'app_personnel_plan_cours_')]
-#[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_PERMANENT')]
+#[IsGranted('ROLE_PERMANENT')]
 class PlanCoursRealiseController extends AbstractController
 {
     #[Route('/realise', name: 'realise')]

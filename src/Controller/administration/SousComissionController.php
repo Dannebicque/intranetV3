@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/SousComissionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/06/2023 09:24
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Controller\administration;
@@ -37,7 +37,7 @@ use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 /**
@@ -224,7 +224,7 @@ class SousComissionController extends BaseController
     }
 
     /**
-     * @throws \App\Exception\SemestreNotFoundException
+     * @throws SemestreNotFoundException
      */
     #[Route(path: '/grand-jury/{scolaritePromo}', name: 'administration_sous_commission_exporter_grand_jury')]
     public function grandJury(SousCommissionExport $sousCommissionExport, ScolaritePromo $scolaritePromo): Response

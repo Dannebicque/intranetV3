@@ -1,14 +1,15 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Section/ConfigurableSection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/01/2023 18:08
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Components\Questionnaire\Section;
 
+use App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException;
 use App\Entity\Semestre;
 
 class ConfigurableSection extends AbstractSection
@@ -21,7 +22,7 @@ class ConfigurableSection extends AbstractSection
     public array $sections = []; // en mode configurable, on peut avoir la création de sections
 
     /**
-     * @throws \App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException
+     * @throws TypeQuestionNotFoundException
      */
     public function initConfigGlobale(?array $config = []): void
     {
@@ -36,7 +37,7 @@ class ConfigurableSection extends AbstractSection
     // todo: ajouter un libelle sur la section pour faciliter la gestion
 
     /**
-     * @throws \App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException
+     * @throws TypeQuestionNotFoundException
      */
     public function setSection(\App\Components\Questionnaire\DTO\Section $section, array $options = []): void // peut être passer par un dto car on dépend de la BDD...
     {

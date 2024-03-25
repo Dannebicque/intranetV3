@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/PersonnelRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/11/2023 09:13
+ * @lastUpdate 16/02/2024 22:52
  */
 
 namespace App\Repository;
@@ -18,6 +18,7 @@ use App\Entity\Previsionnel;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -40,7 +41,7 @@ class PersonnelRepository extends ServiceEntityRepository
     }
 
     // méthode pour récupérer l'entity manager
-    public function getEntityManager()
+    public function getEntityManager(): EntityManagerInterface
     {
         return $this->_em;
     }

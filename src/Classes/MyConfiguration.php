@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyConfiguration.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2024 19:11
+ * @lastUpdate 23/02/2024 21:35
  */
 
 /*
@@ -31,7 +31,7 @@ class MyConfiguration
     /**
      * MyConfiguration constructor.
      */
-    public function __construct(private readonly DepartementRepository $departementRepository, private readonly DiplomeRepository $diplomeRepository, private readonly AnneeRepository $anneeRepository, private readonly SemestreRepository $semestreRepository, private readonly PersonnelRepository $personnelRepository, private readonly AnneeUniversitaireRepository $anneeUniversitaireRepository, private readonly EntityManagerInterface $entityManager)
+    public function __construct(private DepartementRepository $departementRepository, private DiplomeRepository $diplomeRepository, private AnneeRepository $anneeRepository, private SemestreRepository $semestreRepository, private PersonnelRepository $personnelRepository, private AnneeUniversitaireRepository $anneeUniversitaireRepository, private EntityManagerInterface $entityManager)
     {
     }
 

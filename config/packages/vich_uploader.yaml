@@ -1,7 +1,7 @@
 vich_uploader:
     db_driver: orm
-    metadata:
-        type: attribute
+  #    metadata:
+  #        type: attribute
     mappings:
       documentFile:
         uri_prefix: /upload/documents

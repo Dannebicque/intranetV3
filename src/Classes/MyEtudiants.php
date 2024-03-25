@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEtudiants.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyEtudiants.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 23/02/2024 21:41
  */
 
 namespace App\Classes;
@@ -14,19 +14,19 @@ use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use App\Repository\BacRepository;
 use App\Utils\Tools;
-use function array_key_exists;
-use function count;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use function is_array;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use function array_key_exists;
+use function count;
+use function is_array;
 
 class MyEtudiants
 {
     /**
      * MyEtudiants constructor.
      */
-    public function __construct(private readonly EntityManagerInterface $entityManager, private readonly BacRepository $bacRepository, private readonly MyUpload $myUpload)
+    public function __construct(private EntityManagerInterface $entityManager, private BacRepository $bacRepository, private MyUpload $myUpload)
     {
     }
 

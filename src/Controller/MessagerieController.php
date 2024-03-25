@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/MessagerieController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/01/2024 11:46
+ * @lastUpdate 24/02/2024 08:55
  */
 
 namespace App\Controller;
@@ -30,7 +30,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use function count;
 use function is_array;
 
@@ -137,7 +137,7 @@ class MessagerieController extends BaseController
         $filtre = $request->query->get('filtre', 'all');
         $page = $request->query->get('page');
 
-        $page = $page === null ? 0 : $page;
+        $page = $page ?? 0;
 
         if ('sent' === $filtre) {
             $messages = $messageRepository->findBy(['expediteur' => $this->getUser(), 'etat' => 'E'], ['created' => 'DESC']);

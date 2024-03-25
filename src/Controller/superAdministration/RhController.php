@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/RhController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 15:08
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Controller\superAdministration;
@@ -19,7 +19,7 @@ use JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Ldap\Ldap;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Class RhController.
@@ -28,13 +28,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class RhController extends BaseController
 {
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     #[Route(path: '/', name: 'sa_rh_index')]
     public function index(Request $request): Response
     {
-        $table = $this->createTable(PersonnelTableType::class, [
-        ]);
+        $table = $this->createTable(PersonnelTableType::class);
         $table->handleRequest($request);
         if ($table->isCallback()) {
             return $table->getCallbackResponse();
@@ -69,12 +68,10 @@ class RhController extends BaseController
                 '(|(supannEmpId='.$username.')(uid='.$username.')(mail='.$username.')(sn='.$username.'))');
             $results = $query->execute();
 
-            return $this->render('super-administration/rh/liste-result.html.twig', [
-            ]);
+            return $this->render('super-administration/rh/liste-result.html.twig');
         }
 
-        return $this->render('super-administration/rh/import.html.twig', [
-        ]);
+        return $this->render('super-administration/rh/import.html.twig');
     }
 
     #[Route(path: '/{id}/edit', name: 'sa_rh_personnel_edit', options: ['expose' => true], methods: 'GET|POST')]

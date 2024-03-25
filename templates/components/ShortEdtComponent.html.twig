@@ -24,9 +24,26 @@
                 <div class="card-body">
                     {% if this.nextEvent != null %}
                         {% if this.sameDay %}
-                            Heure (en gros)... jour en petit
+                            <div class="col-4">
+                                <p class="jour_grand">à {{ this.nextEvent.heureDebut|date('H:i') }}</p>
+                                <p class="heure_petit">{{ this.nextEvent.date|date('d/m') }}</p>
+
+                            </div>
+                            <div class="col-6">
+                                <p class="jour_grand">{{ this.nextEvent.matiere }}</p>
+                                <p class="heure_petit">{{ this.nextEvent.salle }} | {{ this.nextEvent.groupe }}</p>
+                            </div>
                         {% else %}
-                            Jour en gros... heure en petit
+                            <div class="row">
+                                <div class="col-4">
+                                    <p class="jour_grand">le {{ this.nextEvent.date|date('d/m') }}</p>
+                                    <p class="heure_petit">{{ this.nextEvent.heureDebut|date('H:i') }}</p>
+                                </div>
+                                <div class="col-6">
+                                    <p class="jour_grand">{{ this.nextEvent.matiere }}</p>
+                                    <p class="heure_petit">{{ this.nextEvent.salle }} | {{ this.nextEvent.groupe }}</p>
+                                </div>
+                            </div>
                         {% endif %}
 
                     {% else %}

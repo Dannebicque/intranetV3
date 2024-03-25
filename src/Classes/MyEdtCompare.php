@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyEdtCompare.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyEdtCompare.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/10/2021 11:51
+ * @lastUpdate 23/02/2024 21:35
  */
 
 /*
@@ -15,13 +15,14 @@ namespace App\Classes;
 
 use App\Classes\Previsionnel\PrevisionnelManager;
 use App\DTO\Matiere;
+use App\Entity\EdtPlanning;
 use App\Entity\Personnel;
 use App\Repository\EdtPlanningRepository;
 
 class MyEdtCompare
 {
     /**
-     * @var \App\Entity\EdtPlanning[]
+     * @var EdtPlanning[]
      */
     private array $planning;
 

@@ -1,15 +1,15 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/ColumnType/MccPourcentageColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/12/2022 12:43
+ * @lastUpdate 16/02/2024 22:08
  */
 
 namespace App\Table\ColumnType;
 
-use DavidAnnebicque\TableBundle\Column\PropertyColumnType;
+use Dannebicque\TableBundle\Column\PropertyColumnType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class MccPourcentageColumnType extends PropertyColumnType
@@ -18,7 +18,7 @@ class MccPourcentageColumnType extends PropertyColumnType
     {
         $mccs = $options['mccs'];
         if (array_key_exists($value, $mccs)) {
-            if ($mccs[$value]['pourcentage'] === 100) {
+            if ($mccs[$value]['pourcentage'] == 100) {
                 return '<span class="badge bg-success"> ' . $mccs[$value]['pourcentage'] . '%</span> ';
             }
 

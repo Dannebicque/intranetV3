@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcSae.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/07/2023 15:35
+ * @lastUpdate 29/02/2024 21:53
  */
 
 namespace App\Entity;
@@ -26,22 +26,6 @@ class ApcSae extends AbstractMatiere implements MatiereEntityInterface
 
     final public const SOURCE = 'sae';
 
-    /**
-     * @return \App\Entity\Semestre|null
-     *
-     */
-    /** @deprecated */
-    public function getSemestre(): ?Semestre
-    {
-        return $this->semestre;
-    }
-
-    //(reason: 'Une SAE peut être commune  à plusieurs parcours. Le plus simple serait d\'avoir une gestion manytomany')
-
-    /** @deprecated */
-    #[ORM\ManyToOne(targetEntity: Semestre::class, fetch: 'EAGER')]
-    private ?Semestre $semestre = null;
-
     #[ORM\Column(type: Types::FLOAT)]
     private float $projetPpn = 0;
 
@@ -52,19 +36,19 @@ class ApcSae extends AbstractMatiere implements MatiereEntityInterface
     private ?string $livrables = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcSaeCompetence>
+     * @var Collection<int, ApcSaeCompetence>
      */
     #[ORM\OneToMany(mappedBy: 'sae', targetEntity: ApcSaeCompetence::class, cascade: ['persist', 'remove'])]
     private Collection $apcSaeCompetences;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcSaeRessource>
+     * @var Collection<int, ApcSaeRessource>
      */
     #[ORM\OneToMany(mappedBy: 'sae', targetEntity: ApcSaeRessource::class, cascade: ['persist', 'remove'])]
     private Collection $apcSaeRessources;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcSaeApprentissageCritique>
+     * @var Collection<int, ApcSaeApprentissageCritique>
      */
     #[ORM\OneToMany(mappedBy: 'sae', targetEntity: ApcSaeApprentissageCritique::class, cascade: ['persist', 'remove'])]
     private Collection $apcSaeApprentissageCritiques;
@@ -322,15 +306,6 @@ class ApcSae extends AbstractMatiere implements MatiereEntityInterface
     public function hasSemestre(Semestre $semestre): bool
     {
         return $this->getSemestres()->contains($semestre);
-    }
-
-    /**
-     * @param \App\Entity\Semestre|null $semestre
-     */
-    /** @deprecated */
-    public function setSemestre(?Semestre $semestre): void
-    {
-        $this->semestre = $semestre;
     }
 
     public function getParcours(): array

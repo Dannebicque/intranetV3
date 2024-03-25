@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyPpn.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyPpn.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/06/2021 17:48
+ * @lastUpdate 23/02/2024 21:41
  */
 
 namespace App\Classes;
@@ -14,18 +14,18 @@ use App\Entity\Matiere;
 use App\Repository\ParcourRepository;
 use App\Repository\PpnRepository;
 use App\Repository\UeRepository;
-use function array_key_exists;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use function array_key_exists;
 
 class MyPpn
 {
     public function __construct(
-        private readonly MyUpload $myUpload,
-        private readonly EntityManagerInterface $entityManager,
-        private readonly UeRepository $ueRepository,
-        private readonly PpnRepository $ppnRepository,
-        private readonly ParcourRepository $parcourRepository
+        private MyUpload               $myUpload,
+        private EntityManagerInterface $entityManager,
+        private UeRepository           $ueRepository,
+        private PpnRepository          $ppnRepository,
+        private ParcourRepository      $parcourRepository
     ) {
     }
 

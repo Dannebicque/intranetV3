@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Parcour.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/11/2022 10:34
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Entity;
@@ -28,7 +28,7 @@ class Parcour extends BaseEntity
     private ?string $libelle = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Matiere>
+     * @var Collection<int, Matiere>
      */
     #[ORM\OneToMany(mappedBy: 'parcours', targetEntity: Matiere::class)]
     private Collection $matieres;
@@ -37,7 +37,7 @@ class Parcour extends BaseEntity
     private ?string $codeElement = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Groupe>
+     * @var Collection<int, Groupe>
      */
     #[ORM\OneToMany(mappedBy: 'parcours', targetEntity: Groupe::class)]
     private Collection $groupes;

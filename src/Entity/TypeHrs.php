@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/TypeHrs.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/07/2023 15:24
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Entity;
@@ -30,11 +30,11 @@ class TypeHrs extends BaseEntity implements Stringable
     private ?string $libelle = null;
 
     #[Groups(['type_hrs_administration'])]
-    #[ORM\Column(type: Types::STRING, enumType: TypeHrsEnum::class, nullable: true, length: 20)]
+    #[ORM\Column(type: Types::STRING, length: 20, nullable: true, enumType: TypeHrsEnum::class)]
     private TypeHrsEnum|null $type = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Hrs>
+     * @var Collection<int, Hrs>
      */
     #[ORM\OneToMany(mappedBy: 'typeHrs', targetEntity: Hrs::class)]
     private Collection $hrs;

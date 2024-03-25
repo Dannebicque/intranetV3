@@ -1,17 +1,17 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/DTO/MatiereCollection.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/MatiereCollection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/05/2021 08:46
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\DTO;
 
 class MatiereCollection
 {
-    /** @var \App\DTO\Matiere[] */
+    /** @var Matiere[] */
     public array $matieres = [];
 
     public function add(Matiere $matiere): void
@@ -20,7 +20,7 @@ class MatiereCollection
     }
 
     /**
-     * @return \App\DTO\Matiere[]
+     * @return Matiere[]
      */
     public function getMatieres(): array
     {

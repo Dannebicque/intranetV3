@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Excel/MyExcelMultiExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/06/2023 08:03
+ * @lastUpdate 24/02/2024 08:59
  */
 
 /*
@@ -16,6 +16,7 @@ namespace App\Classes\Excel;
 use App\Classes\MyAbsences;
 use App\DTO\Matiere;
 use App\Entity\Absence;
+use App\Entity\AbsenceJustificatif;
 use App\Entity\Etudiant;
 use App\Entity\Evaluation;
 use App\Entity\Groupe;
@@ -36,7 +37,7 @@ use function count;
 class MyExcelMultiExport
 {
     public function __construct(
-        private readonly MyExcelWriter $myExcelWriter
+        private MyExcelWriter $myExcelWriter
     )
     {
     }
@@ -305,7 +306,7 @@ class MyExcelMultiExport
         ]);
         $ligne = 2;
         $colonne = 1;
-        /** @var \App\Entity\AbsenceJustificatif $justificatif */
+        /** @var AbsenceJustificatif $justificatif */
         foreach ($justificatifs as $justificatif) {
             $this->myExcelWriter->writeCellXY($colonne, $ligne, $justificatif->getEtudiant()?->getNumEtudiant());
             ++$colonne;
@@ -359,7 +360,7 @@ class MyExcelMultiExport
         }
     }
 
-    public function genereModeleExcelMutualise(Evaluation $evaluation, Matiere $matiere)
+    public function genereModeleExcelMutualise(Evaluation $evaluation, Matiere $matiere): void
     {
         $this->myExcelWriter->createSheet('import');
 

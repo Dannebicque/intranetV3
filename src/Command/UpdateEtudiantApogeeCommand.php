@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Command/UpdateEtudiantApogeeCommand.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/12/2022 12:09
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Command;
@@ -14,6 +14,7 @@ use App\Repository\AnneeRepository;
 use App\Repository\BacRepository;
 use App\Repository\EtudiantRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -43,7 +44,7 @@ class UpdateEtudiantApogeeCommand extends Command
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -68,6 +69,6 @@ class UpdateEtudiantApogeeCommand extends Command
             $this->entityManager->flush();
         }
 
-        return (int)Command::SUCCESS;
+        return Command::SUCCESS;
     }
 }

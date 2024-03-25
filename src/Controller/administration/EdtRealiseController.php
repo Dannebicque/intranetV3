@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EdtRealiseController.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtRealiseController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 19:44
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Controller\administration;
@@ -18,7 +18,7 @@ use App\Repository\CalendrierRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\PersonnelRepository;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Class EdtRealiseController.
@@ -42,7 +42,7 @@ class EdtRealiseController extends BaseController
     }
 
     /**
-     * @throws \App\Exception\MatiereNotFoundException
+     * @throws MatiereNotFoundException
      */
     #[Route(path: '/service-realise/{matiere}/{personnel}', name: 'administration_edt_service_realise_affiche', options: ['expose' => true], methods: ['POST', 'GET'])]
     public function serviceRealisePersonnelMatiere(TypeMatiereManager $typeMatiereManager, MyEdtCompare $myEdtCompare, $matiere, Personnel $personnel): Response

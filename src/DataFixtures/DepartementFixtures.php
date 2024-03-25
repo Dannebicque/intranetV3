@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/DataFixtures/DepartementFixtures.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/09/2022 19:05
+ * @lastUpdate 29/02/2024 22:17
  */
 
 namespace App\DataFixtures;
@@ -25,6 +25,7 @@ use Carbon\Carbon;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+use JsonException;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class DepartementFixtures extends Fixture implements DependentFixtureInterface
@@ -37,7 +38,7 @@ class DepartementFixtures extends Fixture implements DependentFixtureInterface
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function load(ObjectManager $manager): void
     {
@@ -64,7 +65,6 @@ class DepartementFixtures extends Fixture implements DependentFixtureInterface
         $diplome->setSigle('MMI');
         $diplome->setDepartement($departement);
         $diplome->setActif(true);
-        $diplome->setAnneeUniversitaire($this->getReference(AnneeUniversitaireFixture::ANNEE_UNIVERSITAIRE_REFERENCE));
         $diplome->setCodeDepartement('TS123');
         $diplome->setCodeDiplome('DTS123');
         $diplome->setCodeVersion('101');

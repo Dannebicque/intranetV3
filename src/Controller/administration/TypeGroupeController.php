@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/TypeGroupeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/11/2023 18:15
+ * @lastUpdate 24/02/2024 09:27
  */
 
 namespace App\Controller\administration;
@@ -13,7 +13,6 @@ use App\Classes\Groupes\GenereTypeGroupe;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Diplome;
-use App\Entity\Evaluation;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use App\Enums\TypeGroupeEnum;
@@ -25,7 +24,7 @@ use App\Utils\Tools;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route(path: '/administration/type-de-groupe')]
 class TypeGroupeController extends BaseController
@@ -50,7 +49,7 @@ class TypeGroupeController extends BaseController
     }
 
     /**
-     * @throws \App\Exception\DiplomeNotFoundException
+     * @throws DiplomeNotFoundException
      */
     #[Route(path: '/generation-automatique/{semestre}', name: 'administration_type_groupe_semestre_generation_auto', requirements: ['semestre' => '\d+'], methods: ['GET'])]
     public function generationAutomatique(
@@ -194,18 +193,18 @@ class TypeGroupeController extends BaseController
     }
 
     #[Route(path: '/supprimer/{id}', name: 'administration_type_groupe_delete', methods: ['DELETE'])]
-    public function delete(Request $request, TypeGroupe $typeGroupe, EvaluationRepository $evaluationRepository): Response
+    public function delete(
+        Request $request, TypeGroupe $typeGroupe, EvaluationRepository $evaluationRepository): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $typeGroupe?->getSemestres()->first());
         $id = $typeGroupe->getId();
-        $evaluations = $evaluationRepository->findBy(['typeGroupe' => $typeGroupe]);
-        foreach ($evaluations as $evaluation) {
-            /** @var Evaluation $evaluation */
-            $evaluation->setTypeGroupe(null);
-            $evaluationRepository->save();
-        }
 
         if ($this->isCsrfTokenValid('delete' . $id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
+            $evaluations = $evaluationRepository->findBy(['typeGroupe' => $typeGroupe]);
+            foreach ($evaluations as $evaluation) {
+                $evaluation->setTypeGroupe(null);
+            }
+
             $this->entityManager->remove($typeGroupe);
             $this->entityManager->flush();
             $this->addFlashBag(

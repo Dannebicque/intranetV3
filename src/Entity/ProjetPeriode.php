@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ProjetPeriode.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/07/2023 13:56
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Entity;
@@ -46,7 +46,7 @@ class ProjetPeriode extends BaseEntity
     private ?AnneeUniversitaire $anneeUniversitaire = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ProjetEtudiant>
+     * @var Collection<int, ProjetEtudiant>
      */
     #[ORM\OneToMany(mappedBy: 'projetPeriode', targetEntity: ProjetEtudiant::class)]
     private Collection $projetEtudiants;

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/LiveTwig/ListingsEtudiantsComponent.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/07/2023 13:56
+ * @lastUpdate 07/03/2024 08:57
  */
 
 namespace App\Components\LiveTwig;
@@ -46,16 +46,17 @@ class ListingsEtudiantsComponent
 
     #[LiveAction]
     public function changeSemestre(
-        #[LiveArg] int $semestre)
+        #[LiveArg] int $semestre): void
     {
         $this->semestre = $this->semestreRepository->find($semestre);
-
-        $this->findTypeGroupes();
+        if ($this->semestre !== null) {
+            $this->findTypeGroupes();
+        }
     }
 
     private function findTypeGroupes(): void
     {
-        $diplome = $this->semestre->getDiplome();
+        $diplome = $this->semestre?->getDiplome();
 
         if (null === $diplome) {
             throw new DiplomeNotFoundException();

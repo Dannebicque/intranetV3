@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/AlternanceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/12/2022 12:09
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Controller\appEtudiant;
@@ -17,13 +17,14 @@ use App\Repository\AlternanceRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 /**
  * Class AlternanceController.
  */
 #[Route(path: '/application/etudiant/alternance')]
-#[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_ETUDIANT')]
+#[IsGranted('ROLE_ETUDIANT')]
 class AlternanceController extends BaseController
 {
     /**

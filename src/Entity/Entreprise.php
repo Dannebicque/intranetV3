@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Entreprise.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/11/2022 07:46
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Entity;
@@ -41,13 +41,13 @@ class Entreprise extends BaseEntity
     private ?Contact $responsable = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\StageEtudiant>
+     * @var Collection<int, StageEtudiant>
      */
     #[ORM\OneToMany(mappedBy: 'entreprise', targetEntity: StageEtudiant::class)]
     private Collection $stageEtudiants;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ProjetEtudiant>
+     * @var Collection<int, ProjetEtudiant>
      */
     #[ORM\OneToMany(mappedBy: 'organisme', targetEntity: ProjetEtudiant::class)]
     private Collection $projetEtudiants;

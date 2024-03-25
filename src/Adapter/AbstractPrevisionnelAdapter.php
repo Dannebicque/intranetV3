@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Adapter/AbstractPrevisionnelAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/02/2024 14:11
+ * @lastUpdate 29/02/2024 11:37
  */
 
 namespace App\Adapter;
@@ -44,6 +44,8 @@ class AbstractPrevisionnelAdapter
         $p->annee_libelle_long = $previ['annee_libelle_long'] ?? '-';
         $p->diplome_id = $previ['id_diplome'] ?? 0;
         $p->diplome_libelle = $previ['libelle_diplome'] ?? '-';
+        $p->etatPlanCours = $previ['etat_plan_cours'] ?? null;
+        $p->planCoursId = $previ['id_plan_cours'] ?? null;
 
         return $p;
     }

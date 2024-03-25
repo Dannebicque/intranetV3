@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/GraphiqueController.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/GraphiqueController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/05/2021 17:31
+ * @lastUpdate 16/02/2024 22:17
  */
 
 namespace App\Controller;
@@ -13,7 +13,7 @@ use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyEvaluations;
 use App\Entity\Evaluation;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
 

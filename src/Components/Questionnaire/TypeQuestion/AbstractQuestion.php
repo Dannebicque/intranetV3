@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeQuestion/AbstractQuestion.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/01/2024 09:02
+ * @lastUpdate 24/02/2024 08:59
  */
 
 namespace App\Components\Questionnaire\TypeQuestion;
@@ -122,7 +122,8 @@ abstract class AbstractQuestion
     protected function sauvegardeReponses(
         QuestQuestion $question,
         ?EntityManagerInterface $entityManager
-    ) {
+    ): void
+    {
         if (array_key_exists('questReponses', $this->data) && null !== $entityManager) {
             $this->removeReponses($question, $entityManager);//todo: suppression des réponses existantes plus générale
             foreach ($this->data['questReponses'] as $reponse) {

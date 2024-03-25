@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/structure/SemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/08/2023 09:14
+ * @lastUpdate 16/02/2024 22:17
  */
 
 namespace App\Controller\administration\structure;
@@ -17,7 +17,7 @@ use App\Form\SemestreType;
 use Symfony\Component\Form\Exception\LogicException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use function count;
 
 #[Route(path: '/administration/structure/semestre')]

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcCompetence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/08/2022 17:55
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Entity;
@@ -35,7 +35,7 @@ class ApcCompetence extends BaseEntity
     private ?ApcReferentiel $apcReferentiel = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcComposanteEssentielle>
+     * @var Collection<int, ApcComposanteEssentielle>
      */
     #[ORM\OneToMany(mappedBy: 'competence', targetEntity: ApcComposanteEssentielle::class, cascade: [
         'persist',
@@ -44,25 +44,25 @@ class ApcCompetence extends BaseEntity
     private Collection $apcComposanteEssentielles;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcNiveau>
+     * @var Collection<int, ApcNiveau>
      */
     #[ORM\OneToMany(mappedBy: 'competence', targetEntity: ApcNiveau::class, cascade: ['persist', 'remove'])]
     private Collection $apcNiveaux;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcRessourceCompetence>
+     * @var Collection<int, ApcRessourceCompetence>
      */
     #[ORM\OneToMany(mappedBy: 'competence', targetEntity: ApcRessourceCompetence::class)]
     private Collection $apcRessourceCompetences;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcSaeCompetence>
+     * @var Collection<int, ApcSaeCompetence>
      */
     #[ORM\OneToMany(mappedBy: 'competence', targetEntity: ApcSaeCompetence::class)]
     private Collection $apcSaeCompetences;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcSituationProfessionnelle>
+     * @var Collection<int, ApcSituationProfessionnelle>
      */
     #[ORM\OneToMany(mappedBy: 'competence', targetEntity: ApcSituationProfessionnelle::class, cascade: [
         'persist',
@@ -71,7 +71,7 @@ class ApcCompetence extends BaseEntity
     private Collection $apcSituationProfessionnelles;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Ue>
+     * @var Collection<int, Ue>
      */
     #[ORM\OneToMany(mappedBy: 'apcCompetence', targetEntity: Ue::class)]
     private Collection $ue;

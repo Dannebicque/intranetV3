@@ -1,8 +1,8 @@
-// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/inPlaceEdit.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/11/2022 19:15
+// @lastUpdate 16/02/2024 16:09
 
 import { Popover } from 'bootstrap'
 import { addCallout } from './util'
@@ -129,11 +129,8 @@ export default class InPlaceEdit {
     form.addEventListener('submit', async (e) => {
       e.preventDefault()
       const newValue = element.value
-      console.log(this.route)
-      console.log(newValue)
 
       if (this.route !== '' && (this.value !== newValue)) {
-        console.log('submit')
         this.load(true)
         const response = await this.ajax(newValue)
         if (response.ok) {

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/api/unifolio/AnneeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/07/2023 08:42
+ * @lastUpdate 24/02/2024 09:12
  */
 
 namespace App\Controller\api\unifolio;
@@ -13,7 +13,7 @@ use App\Controller\BaseController;
 use App\Repository\AnneeRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class AnneeController extends BaseController
 {
@@ -30,14 +30,15 @@ class AnneeController extends BaseController
         $tabAnnee = [];
 
         foreach ($annees as $annee) {
-            $tabAnnee[$annee->getId()] = [
-                'id' => $annee->getId(),
+            $id = $annee->getId();
+            $tabAnnee[$id] = [
+                'id' => $id,
                 'libelle' => $annee->getLibelle(),
                 'ordre' => $annee->getOrdre(),
                 'libelle_long' => $annee->getLibelleLong(),
                 'opt_alternance' => $annee->getOptAlternance(),
                 'actif' => $annee->getActif(),
-                'diplome' => $annee->getDiplome()->getId(),
+                'diplome' => $annee->getDiplome()?->getId(),
             ];
         }
 

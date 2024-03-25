@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyEvaluation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/06/2023 14:38
+ * @lastUpdate 23/02/2024 21:40
  */
 
 /*
@@ -30,6 +30,9 @@ use Exception;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 use function array_key_exists;
 use function chr;
 use function count;
@@ -217,10 +220,10 @@ class MyEvaluation
     }
 
     /**
-     * @throws \App\Exception\MatiereNotFoundException
-     * @throws \Twig\Error\LoaderError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
+     * @throws MatiereNotFoundException
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
      */
     public function exportReleve(
         string $_format,
@@ -385,7 +388,7 @@ class MyEvaluation
             // on récupère l'en-tête
             $phrase = fgetcsv($handle, 1024, ';');
 
-            if (in_array('num_etudiant', $phrase, false) && in_array('note', $phrase, false)) {
+            if (in_array('num_etudiant', $phrase, true) && in_array('note', $phrase, true)) {
                 // on vérifie que les clés existent.
                 foreach ($phrase as $key) {
                     $ordre[] = $key;

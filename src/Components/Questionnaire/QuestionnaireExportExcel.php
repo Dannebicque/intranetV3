@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/QuestionnaireExportExcel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/07/2023 11:01
+ * @lastUpdate 24/02/2024 08:59
  */
 
 namespace App\Components\Questionnaire;
@@ -12,6 +12,7 @@ namespace App\Components\Questionnaire;
 use App\Classes\Configuration;
 use App\Classes\Excel\MyExcelWriter;
 use App\Components\Questionnaire\DTO\Reponse;
+use App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException;
 use App\Components\Questionnaire\Section\AbstractSection;
 use App\Components\Questionnaire\Section\EndSection;
 use App\Components\Questionnaire\Section\Section;
@@ -58,6 +59,7 @@ class QuestionnaireExportExcel
 
     /**
      * @throws Exception
+     * @throws TypeQuestionNotFoundException
      */
     public function exportExcel(Questionnaire $questionnaire, QuestQuestionnaire $questQuestionnaire): StreamedResponse
     {
@@ -375,7 +377,7 @@ class QuestionnaireExportExcel
         }
     }
 
-    private function writeConfigSectionGroupe(mixed $questSection)
+    private function writeConfigSectionGroupe(mixed $questSection): void
     {
         $this->myExcelWriter->writeCellXY(3, $this->ligne, '% satisfaction',
             ['wrap' => true, 'style' => 'HORIZONTAL_CENTER']);

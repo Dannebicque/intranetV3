@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Personnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 23:15
+ * @lastUpdate 24/02/2024 08:51
  */
 
 namespace App\Entity;
@@ -124,12 +124,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
 
     #[ORM\Column(type: Types::FLOAT)]
     private float $nbHeuresService = 192;
-
-    /**
-     * @var Collection<int, CahierTexte>
-     */
-    #[ORM\OneToMany(mappedBy: 'personnel', targetEntity: CahierTexte::class)]
-    private Collection $cahierTextes;
 
     /**
      * @var Collection<int, Notification>
@@ -272,7 +266,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
         $this->evaluationsAuteur = new ArrayCollection();
         $this->evaluationsAutorise = new ArrayCollection();
         $this->modificationNotes = new ArrayCollection();
-        $this->cahierTextes = new ArrayCollection();
         $this->notifications = new ArrayCollection();
         $this->personnelDepartements = new ArrayCollection();
         $this->messages = new ArrayCollection();
@@ -601,37 +594,6 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     public function setNbHeuresService(float $nbHeuresService = 192): self
     {
         $this->nbHeuresService = $nbHeuresService;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|CahierTexte[]
-     */
-    public function getCahierTextes(): Collection
-    {
-        return $this->cahierTextes;
-    }
-
-    public function addCahierTexte(CahierTexte $cahierTexte): self
-    {
-        if (!$this->cahierTextes->contains($cahierTexte)) {
-            $this->cahierTextes[] = $cahierTexte;
-            $cahierTexte->setPersonnel($this);
-        }
-
-        return $this;
-    }
-
-    public function removeCahierTexte(CahierTexte $cahierTexte): self
-    {
-        if ($this->cahierTextes->contains($cahierTexte)) {
-            $this->cahierTextes->removeElement($cahierTexte);
-            // set the owning side to null (unless already changed)
-            if ($cahierTexte->getPersonnel() === $this) {
-                $cahierTexte->setPersonnel(null);
-            }
-        }
 
         return $this;
     }
@@ -1327,7 +1289,7 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     {
         if (!$this->planCours->contains($planCour)) {
             $this->planCours[] = $planCour;
-            $planCour->setIntervenant($this);
+            $planCour->addIntervenant($this);
         }
 
         return $this;
@@ -1335,11 +1297,9 @@ class Personnel extends Utilisateur implements UtilisateurInterface
 
     public function removePlanCour(PlanCours $planCour): self
     {
-        if ($this->planCours->removeElement($planCour)) {
-            // set the owning side to null (unless already changed)
-            if ($planCour->getIntervenant() === $this) {
-                $planCour->setIntervenant(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->planCours->removeElement($planCour) && $planCour->getIntervenants() === $this) {
+            $planCour->addIntervenant(null);//todo: vérifier si c'est bien ça
         }
 
         return $this;
@@ -1374,11 +1334,9 @@ class Personnel extends Utilisateur implements UtilisateurInterface
 
     public function removePlanCoursHistoriqueEdt(PlanCoursHistoriqueEdt $planCoursHistoriqueEdt): self
     {
-        if ($this->planCoursHistoriqueEdts->removeElement($planCoursHistoriqueEdt)) {
-            // set the owning side to null (unless already changed)
-            if ($planCoursHistoriqueEdt->getEnseignant() === $this) {
-                $planCoursHistoriqueEdt->setEnseignant(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->planCoursHistoriqueEdts->removeElement($planCoursHistoriqueEdt) && $planCoursHistoriqueEdt->getEnseignant() === $this) {
+            $planCoursHistoriqueEdt->setEnseignant(null);
         }
 
         return $this;
@@ -1404,11 +1362,9 @@ class Personnel extends Utilisateur implements UtilisateurInterface
 
     public function removeEdtCelcat(EdtCelcat $edtCelcat): self
     {
-        if ($this->edtCelcats->removeElement($edtCelcat)) {
-            // set the owning side to null (unless already changed)
-            if ($edtCelcat->getPersonnel() === $this) {
-                $edtCelcat->setPersonnel(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->edtCelcats->removeElement($edtCelcat) && $edtCelcat->getPersonnel() === $this) {
+            $edtCelcat->setPersonnel(null);
         }
 
         return $this;
@@ -1450,10 +1406,5 @@ class Personnel extends Utilisateur implements UtilisateurInterface
     {
         $this->idEduSign = $idEduSign;
         return $this;
-    }
-
-    public function getMailUniv(): ?string
-    {
-        return $this->mailUniv;
     }
 }

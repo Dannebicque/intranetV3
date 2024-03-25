@@ -1,16 +1,17 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/ProjetEtudiantEtudiantType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/09/2022 09:47
+ * @lastUpdate 29/02/2024 22:42
  */
 
 namespace App\Form;
 
 use App\Entity\Etudiant;
 use App\Entity\ProjetEtudiant;
+use App\Form\stage\EntrepriseType;
 use App\Form\Type\YesNoType;
 use App\Repository\EtudiantRepository;
 use Doctrine\Common\Collections\Collection;
@@ -31,7 +32,7 @@ class ProjetEtudiantEtudiantType extends AbstractType
         $this->semestres = $options['semestres'];
 
         $builder
-            ->add('organisme', EntrepriseType::class)
+            ->add('organisme', EntrepriseType::class, ['label' => 'label.organisme', 'withResponsable' => true])
             ->add('sujet', TextareaType::class, ['label' => 'label.sujet'])
             ->add('activitesConfiees', TextareaType::class, ['label' => 'label.activitesConfiees'])
             ->add('etudiants', EntityType::class, [

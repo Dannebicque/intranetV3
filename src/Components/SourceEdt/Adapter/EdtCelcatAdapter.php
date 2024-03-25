@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Adapter/EdtCelcatAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/10/2023 15:16
+ * @lastUpdate 29/02/2024 19:31
  */
 
 namespace App\Components\SourceEdt\Adapter;
@@ -40,7 +40,6 @@ class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
         $evt->jour = (string)($event->getJour() + 1);
         $evt->heureDebut = $event->getDebut();
         $evt->indexDebut = Constantes::TAB_HEURES_EDT_LIGNE_2[$event->getDebut()->roundMinute(10)->format('Hi')];
-//        $evt->indexDebut = '0800';
         $evt->heureFin = $event->getFin();
         $evt->matiere = utf8_decode($event->getLibModule());
         $evt->typeIdMatiere = $event->getTypeIdMatiere();
@@ -68,13 +67,11 @@ class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
 
         if (null !== $event->getSemestre()) {
             $evt->semestre = $event->getSemestre();
-        } else {
-            if (null !== $matiere) {
-                $evt->semestre = $matiere->getSemestres()[0];
-            }
+        } else if (null !== $matiere) {
+            $evt->semestre = $matiere->getSemestres()[0];
         }
 
-        $evt->couleur = $evt->semestre?->getAnnee()->getCouleur();
+        $evt->couleur = $evt->semestre?->getAnnee()?->getCouleur();
         $evt->ordreSemestre = $evt->semestre?->getOrdreLmd();
 
         $evt->diplome = $event->getSemestre()?->getDiplome();
@@ -88,23 +85,17 @@ class EdtCelcatAdapter extends AbstractEdtAdapter implements EdtAdapterInterface
         $evt->gridEnd = $event->getFin()?->format('Hi');
         $evt->largeur = $this->getLargeur($evt);
         $evt->duree = Constantes::TAB_HEURES_INDEX[$event->getFin()->format('H:i:s')] - Constantes::TAB_HEURES_INDEX[$event->getDebut()->format('H:i:s')];
-        //$evt->duree = "180000";
         $evt->idEduSign = $event->getIdEduSign();
 
         return $evt;
     }
 
-    private function getLargeur(mixed $evt)
+    private function getLargeur(mixed $evt): int
     {
-        switch (trim($evt->type_cours)) {
-            case 'cm':
-            case 'CM':
-                return $evt->semestre->getNbgroupeTpEdt();
-            case 'TD':
-            case 'td':
-                return 2;
-            default:
-                return 1;
-        }
+        return match (trim($evt->type_cours)) {
+            'cm', 'CM' => $evt->semestre->getNbgroupeTpEdt(),
+            'TD', 'td' => 2,
+            default => 1,
+        };
     }
 }

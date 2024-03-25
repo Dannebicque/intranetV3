@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/PlanCours/Source/PlanCoursMatiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/01/2023 16:10
+ * @lastUpdate 29/02/2024 10:18
  */
 
 namespace App\Components\PlanCours\Source;
@@ -25,6 +25,8 @@ class PlanCoursMatiere extends AbstractPlanCours implements PlanCoursInterface
     public const FORM_STEP_1 = PlanCoursMatiereStep1Type::class;
     public const FORM_STEP_2 = PlanCoursMatiereStep2Type::class;
     public const FORM_STEP_3 = PlanCoursMatiereStep3Type::class;
+    public const TEMPLATE_SHOW = '_show_matiere.html.twig';
+
     public const TEMPLATE_FORM_STEP_1 = 'plan_cours_matiere_1.html.twig';
     public const TEMPLATE_FORM_STEP_2 = 'plan_cours_matiere_2.html.twig';
     public const TEMPLATE_FORM_STEP_3 = 'plan_cours_matiere_3.html.twig';
@@ -65,12 +67,12 @@ class PlanCoursMatiere extends AbstractPlanCours implements PlanCoursInterface
         $this->planCoursMatiereRepository->add($planCours);
     }
 
-    public function getRepository()
+    public function getRepository(): PlanCoursMatiereRepository
     {
         return $this->planCoursMatiereRepository;
     }
 
-    public function export(Matiere $matiere, AnneeUniversitaire $anneeUniversitaire, Departement $departement)
+    public function export(Matiere $matiere, AnneeUniversitaire $anneeUniversitaire, Departement $departement): void
     {
         // TODO: Implement export() method.
     }

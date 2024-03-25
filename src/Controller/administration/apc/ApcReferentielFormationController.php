@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcReferentielFormationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/09/2022 21:02
+ * @lastUpdate 24/02/2024 08:48
  */
 
 namespace App\Controller\administration\apc;
@@ -27,7 +27,7 @@ use App\Utils\Tools;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route(path: '/administration/referentiel-formation', name: 'administration_')]
 class ApcReferentielFormationController extends BaseController
@@ -115,10 +115,8 @@ class ApcReferentielFormationController extends BaseController
                     $this->entityManager->persist($obj);
                 } elseif (Tools::convertToFloat($value) > 0) { // existe et > 0 on met à jour
                     $obj->setCoefficient(Tools::convertToFloat($value));
-                } else { // existe et <=0 on supprime
-                    if ($obj !== null) {
-                        $this->entityManager->remove($obj);
-                    }
+                } else if ($obj !== null) {
+                    $this->entityManager->remove($obj);
                 }
                 $this->entityManager->flush();
             } else {
@@ -140,10 +138,8 @@ class ApcReferentielFormationController extends BaseController
                     $this->entityManager->persist($obj);
                 } elseif (Tools::convertToFloat($value) > 0) {
                     $obj->setCoefficient(Tools::convertToFloat($value));
-                } else {
-                    if ($obj !== null) {
-                        $this->entityManager->remove($obj);
-                    }
+                } else if ($obj !== null) {
+                    $this->entityManager->remove($obj);
                 }
                 $this->entityManager->flush();
             } else {

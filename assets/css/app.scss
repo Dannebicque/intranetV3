@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/02/2024 16:01
+// @lastUpdate 28/02/2024 14:44
 
 @import "./theme-troyes.scss";
 @import "./theme-rcc.scss";
@@ -323,7 +323,7 @@ th.th_titre {
 /* Partie Jeditable */
 .editable {
   border-bottom: 1px dashed;
-  color: var(--colorIUTComplementaire);
+  color: var(--colorTextA);
 }
 
 .editable-empty {

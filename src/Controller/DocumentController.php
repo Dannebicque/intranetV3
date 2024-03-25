@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/DocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/10/2022 20:23
+ * @lastUpdate 24/02/2024 18:06
  */
 
 namespace App\Controller;
@@ -17,7 +17,7 @@ use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/', name: 'document_')]
 class DocumentController extends BaseController
@@ -25,7 +25,7 @@ class DocumentController extends BaseController
     #[Route('{source}', name: 'index', requirements: [
         'source' => 'document|originaux',
     ], methods: ['GET'])]
-    public function index(string $source): Response
+    public function index(string $source = Document::DOCUMENTS): Response
     {
         if (Document::ORIGINAUX === $source && !$this->hasAccessOriginaux()) {
             throw new NotFoundHttpException();
@@ -39,7 +39,7 @@ class DocumentController extends BaseController
     #[Route('{source}/ajax/typedocument', name: 'typedocument_ajax', requirements: [
         'source' => 'document|originaux',
     ], options: ['expose' => true])]
-    public function typeDocument(TypeDocumentRepository $typeDocumentRepository, string $source): Response
+    public function typeDocument(TypeDocumentRepository $typeDocumentRepository, string $source = Document::DOCUMENTS): Response
     {
         if (Document::ORIGINAUX === $source && !$this->hasAccessOriginaux()) {
             throw new NotFoundHttpException();
@@ -60,7 +60,7 @@ class DocumentController extends BaseController
     #[Route('{source}/ajax/document/favori', name: 'ajax_favori', requirements: [
         'source' => 'document|originaux',
     ], options: ['expose' => true])]
-    public function documentsFavoris(MyDocument $myDocument, string $source): Response
+    public function documentsFavoris(MyDocument $myDocument, string $source = Document::DOCUMENTS): Response
     {
         if (Document::ORIGINAUX === $source && !$this->hasAccessOriginaux()) {
             throw new NotFoundHttpException();
@@ -72,6 +72,9 @@ class DocumentController extends BaseController
         return $this->render('document/public/_documents.html.twig', [
             'documents' => $documents,
             'listesFavoris' => $idDocuments,
+            'source' => $source,
+            'breadCrumbs' => [],
+            'typeDoc' => ['enfants' => []]
         ]);
     }
 

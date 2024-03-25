@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/Stage/MailerStage.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Stage/MailerStage.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/04/2021 18:55
+ * @lastUpdate 23/02/2024 21:35
  */
 
 /*
@@ -25,7 +25,7 @@ class MailerStage
     /**
      * MailerStage constructor.
      */
-    public function __construct(private readonly MailerFromTwig $mailerFromTwig, private readonly MailerFromDatabase $mailerFromDatabase)
+    public function __construct(private MailerFromTwig $mailerFromTwig, private MailerFromDatabase $mailerFromDatabase)
     {
     }
 

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/HrsRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/07/2023 16:00
+ * @lastUpdate 24/02/2024 08:59
  */
 
 namespace App\Repository;
@@ -96,7 +96,8 @@ class HrsRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByPersonnelAnnee(Personnel $personnel, float|bool|int|string|null $annee)
+    public function findByPersonnelAnnee(Personnel $personnel, float|bool|int|string|null $annee): array
     {
+        return [];//todo: utilisé ?
     }
 }

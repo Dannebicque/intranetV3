@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Source/EdtInterface.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/10/2023 07:42
+ * @lastUpdate 16/02/2024 16:09
  */
 
 /*
@@ -16,6 +16,8 @@ namespace App\Components\SourceEdt\Source;
 use App\DTO\EvenementEdt;
 use App\DTO\EvenementEdtCollection;
 use App\Entity\AnneeUniversitaire;
+use App\Entity\Etudiant;
+use App\Entity\Personnel;
 use App\Entity\Semestre;
 
 interface EdtInterface
@@ -26,7 +28,11 @@ interface EdtInterface
 
     public function recupereEdtJourBorne(Semestre $semestre, array $matieres, int $jourSemaine, int $semaineFormation, array $groupes, AnneeUniversitaire $anneeUniversitaire): EvenementEdtCollection;
 
-    public function getNextEvent(): ?EvenementEdt;
+    public function getCurrentEventEtudiant(Etudiant $user, AnneeUniversitaire $anneeUniversitaire): ?EvenementEdt;
 
-    public function getCurrentEvent(): ?EvenementEdt;
+    public function getNextEventEtudiant(Etudiant $user, AnneeUniversitaire $anneeUniversitaire): ?EvenementEdt;
+
+    public function getCurrentEventPersonnel(Personnel $user, AnneeUniversitaire $anneeUniversitaire): ?EvenementEdt;
+
+    public function getNextEventPersonnel(Personnel $user, AnneeUniversitaire $anneeUniversitaire): ?EvenementEdt;
 }

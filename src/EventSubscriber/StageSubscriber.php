@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/EventSubscriber/StageSubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/01/2024 13:26
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\EventSubscriber;
@@ -19,6 +19,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Routing\RouterInterface;
 use Twig\Error\LoaderError;
 use Twig\Error\SyntaxError;
@@ -61,7 +62,7 @@ class StageSubscriber implements EventSubscriberInterface
      * @throws LoaderError
      * @throws NonUniqueResultException
      * @throws SyntaxError
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function onChgtEtatStageAutorise(StageEvent $event): void
     {
@@ -90,7 +91,7 @@ class StageSubscriber implements EventSubscriberInterface
      * @throws LoaderError
      * @throws NonUniqueResultException
      * @throws SyntaxError
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function onChgtEtatStageConventionEnvoyee(StageEvent $event): void
     {
@@ -102,7 +103,7 @@ class StageSubscriber implements EventSubscriberInterface
      * @throws LoaderError
      * @throws NonUniqueResultException
      * @throws SyntaxError
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function onChgtEtatStageConventionRecue(StageEvent $event): void
     {
@@ -114,7 +115,7 @@ class StageSubscriber implements EventSubscriberInterface
      * @throws LoaderError
      * @throws NonUniqueResultException
      * @throws SyntaxError
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function onChgtEtatStageDepose(StageEvent $event): void
     {
@@ -141,7 +142,7 @@ class StageSubscriber implements EventSubscriberInterface
      * @throws LoaderError
      * @throws NonUniqueResultException
      * @throws SyntaxError
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function onChgtEtatStageValide(StageEvent $event): void
     {
@@ -165,7 +166,7 @@ class StageSubscriber implements EventSubscriberInterface
      * @throws LoaderError
      * @throws NonUniqueResultException
      * @throws SyntaxError
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function onChgtEtatStageRefus(StageEvent $event): void
     {
@@ -177,7 +178,7 @@ class StageSubscriber implements EventSubscriberInterface
      * @throws LoaderError
      * @throws NonUniqueResultException
      * @throws SyntaxError
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function onChgtEtatStageIncomplet(StageEvent $event): void
     {
@@ -189,7 +190,7 @@ class StageSubscriber implements EventSubscriberInterface
      * @throws LoaderError
      * @throws NonUniqueResultException
      * @throws SyntaxError
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function onChgtEtatStageImprime(StageEvent $event): void
     {
@@ -201,7 +202,7 @@ class StageSubscriber implements EventSubscriberInterface
      * @throws LoaderError
      * @throws NonUniqueResultException
      * @throws SyntaxError
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function sendMail(StageEvent $event, string $codeEvent): void
     {

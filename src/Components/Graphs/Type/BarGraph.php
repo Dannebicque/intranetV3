@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Graphs/Type/BarGraph.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/12/2022 10:36
+ * @lastUpdate 24/02/2024 08:59
  */
 
 namespace App\Components\Graphs\Type;
@@ -16,7 +16,7 @@ class BarGraph extends AbstractGraph
     public const SOURCE = 'bar';
     public const TYPE_CHAR = Chart::TYPE_BAR;
 
-    public function genereGraph($data)
+    public function genereGraph($data): Chart
     {
         $labels = [];
         $tabData = [];

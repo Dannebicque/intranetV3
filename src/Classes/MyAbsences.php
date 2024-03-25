@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyAbsences.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/09/2022 14:54
+ * @lastUpdate 17/02/2024 07:09
  */
 
 namespace App\Classes;
@@ -113,7 +113,7 @@ class MyAbsences
         return false;
     }
 
-    public function getAbsencesTempsReel(?Departement $departement): array
+    public function getAbsencesTempsReel(Departement $departement): array
     {
         return $this->absenceRepository->getAbsencesTempsReel($departement);
     }

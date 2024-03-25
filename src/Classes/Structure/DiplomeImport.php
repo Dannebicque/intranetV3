@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Structure/DiplomeImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/08/2022 14:57
+ * @lastUpdate 24/02/2024 08:59
  */
 
 namespace App\Classes\Structure;
@@ -445,7 +445,7 @@ class DiplomeImport
         $this->log .= 'Semestre non trouvé : ' . $phrase[9] . '<br>';
     }
 
-    private function deleteCompetences()
+    private function deleteCompetences(): void
     {
         // suppression du référentiel de compétences associé au référentiel de compétences
         foreach ($this->referentiel->getApcComptences() as $competence) {

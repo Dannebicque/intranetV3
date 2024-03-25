@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/CreationSectionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/08/2023 16:01
+ * @lastUpdate 24/02/2024 07:57
  */
 
 namespace App\Controller\questionnaire;
@@ -21,7 +21,7 @@ use App\Utils\JsonRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/{type}/questionnaire/creation/section', name: 'adm_questionnaire_creation_section_', requirements: ['type' => 'administratif|administration'], defaults: ['type' => 'administratif'])]
 class CreationSectionController extends BaseController
@@ -35,6 +35,8 @@ class CreationSectionController extends BaseController
         QuestSection           $section
     ): Response
     {
+        $liste = [];
+
         switch ($request->query->get('action')) {
             case 'edit':
                 $form = $this->createForm(QuestSectionType::class, $section);
@@ -69,9 +71,7 @@ class CreationSectionController extends BaseController
                     'questionnaire' => $section->getQuestionnaire(),
                 ]);
                 $section->setOrdre($section->getOrdre() - 1);
-                if (null !== $sectionOld) {
-                    $sectionOld->setOrdre($sectionOld->getOrdre() + 1);
-                }
+                $sectionOld?->setOrdre($sectionOld->getOrdre() + 1);
 
                 $this->entityManager->flush();
 
@@ -83,9 +83,7 @@ class CreationSectionController extends BaseController
                 ]);
 
                 $section->setOrdre($section->getOrdre() + 1);
-                if (null !== $sectionOld) {
-                    $sectionOld->setOrdre($sectionOld->getOrdre() - 1);
-                }
+                $sectionOld?->setOrdre($sectionOld->getOrdre() - 1);
                 $this->entityManager->flush();
 
                 return $this->json(true);
@@ -185,22 +183,22 @@ class CreationSectionController extends BaseController
     {
         $typeAction = $request->query->get('typeAction');
         $allQuestions = $questionRepository->findByQuestionnaire($section->getQuestionnaire());
-        switch ($typeAction) {
-            case 'declenchement':
-                return $this->render('questionnaire/creation/section/_typAction_declenchement.html.twig', [
-                    'typeAction' => $typeAction,
-                    'section' => $section,
-                    'question' => $question,
-                    'allQuestions' => $allQuestions,
-                ]);
-            case 'masquage':
-                return $this->render('questionnaire/creation/section/_typAction_masquage.html.twig', [
-                    'typeAction' => $typeAction,
-                    'section' => $section,
-                    'question' => $question,
-                    'allQuestions' => $allQuestions,
-                ]);
-        }
+        return match ($typeAction) {
+            'declenchement' => $this->render('questionnaire/creation/section/_typAction_declenchement.html.twig', [
+                'typeAction' => $typeAction,
+                'section' => $section,
+                'question' => $question,
+                'allQuestions' => $allQuestions,
+            ]),
+            'masquage' => $this->render('questionnaire/creation/section/_typAction_masquage.html.twig', [
+                'typeAction' => $typeAction,
+                'section' => $section,
+                'question' => $question,
+                'allQuestions' => $allQuestions,
+            ]),
+            default => $this->json(false),
+        };
+
     }
 
     #[Route('/{section}/transition-question-update-liste/{question}', name: 'transition_question_update_liste')]

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/ComparePrevisionnel/ComparePrevisionnelPersonnel.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/09/2022 18:52
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Classes\ComparePrevisionnel;
@@ -12,6 +12,7 @@ namespace App\Classes\ComparePrevisionnel;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\Previsionnel\PrevisionnelManager;
 use App\Components\SourceEdt\Source\AbstractEdt;
+use App\DTO\Previsionnel;
 use App\Entity\Departement;
 use App\Entity\Personnel;
 use App\Repository\EdtPlanningRepository;
@@ -42,7 +43,7 @@ class ComparePrevisionnelPersonnel extends ComparePrevisionnel
             $t[$ens->getId()] = [];
         }
 
-        /** @var \App\DTO\Previsionnel $p */
+        /** @var Previsionnel $p */
         foreach ($previsionnels as $p) {
             if (null !== $p &&
                 0 !== $p->personnel_id &&

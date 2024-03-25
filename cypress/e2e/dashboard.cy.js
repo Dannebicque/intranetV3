@@ -1,14 +1,12 @@
-// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/cypress/e2e/dashboard.cy.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/10/2022 22:37
+// @lastUpdate 24/02/2024 10:04
 
 describe('Dashboard', () => {
   beforeEach(() => {
-    cy.clearCookies()
-    cy.clearLocalStorage()
-    cy.login()
+    cy.login('annebi01')
   })
 
   it('Agenda', () => {
@@ -29,5 +27,15 @@ describe('Dashboard', () => {
   it('Documents', () => {
     cy.visit('/document')
     cy.contains('Documents')
+  })
+
+  it('Originaux', () => {
+    cy.visit('/originaux')
+    cy.contains('Documents')
+  })
+
+  it('Administration', () => {
+    cy.visit('/administration')
+    cy.contains('Administration')
   })
 })

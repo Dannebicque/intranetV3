@@ -1,17 +1,21 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeQuestionRenderer.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/01/2023 13:13
+ * @lastUpdate 24/02/2024 08:51
  */
 
 namespace App\Components\Questionnaire;
 
 use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
 use App\Components\Questionnaire\TypeQuestion\TypeChainee;
+use Throwable;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 use Twig\TemplateWrapper;
 
 class TypeQuestionRenderer
@@ -25,7 +29,7 @@ class TypeQuestionRenderer
     }
 
     /**
-     * @throws \Throwable
+     * @throws Throwable
      */
     public function render(AbstractQuestion $question, int|string|null $ordre = 0, int $loop = 0): string
     {
@@ -37,13 +41,10 @@ class TypeQuestionRenderer
         if (TypeChainee::class === $question::class) {
             $params['questionsEnfants'] = $question->questions;
             $params['reponsesEtudiant'] = $question->reponsesUser;
+        } else if ($question->valeur_config !== '') {
+            $params['reponsesEtudiant'] = $question->reponsesUser;
         } else {
-            if ($question->valeur_config !== '') {
-                $params['reponsesEtudiant'] = $question->reponsesUser;
-            } else {
-                $params['reponseEtudiant'] = $question->reponseUser;
-            }
-
+            $params['reponseEtudiant'] = $question->reponseUser;
         }
 
         $params['name'] = 'q' . $question->id;
@@ -64,9 +65,9 @@ class TypeQuestionRenderer
     }
 
     /**
-     * @throws \Twig\Error\SyntaxError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\LoaderError
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
      */
     private
     function load(): TemplateWrapper

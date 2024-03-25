@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcApprentissageCritique.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Entity;
@@ -29,13 +29,13 @@ class ApcApprentissageCritique extends BaseEntity
     private ?string $code = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcRessourceApprentissageCritique>
+     * @var Collection<int, ApcRessourceApprentissageCritique>
      */
     #[ORM\OneToMany(mappedBy: 'apprentissageCritique', targetEntity: ApcRessourceApprentissageCritique::class)]
     private Collection $apcRessourceApprentissageCritiques;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int,\App\Entity\ApcSaeApprentissageCritique>
+     * @var Collection<int,ApcSaeApprentissageCritique>
      */
     #[ORM\OneToMany(mappedBy: 'apprentissageCritique', targetEntity: ApcSaeApprentissageCritique::class)]
     private Collection $apcSaeApprentissageCritiques;

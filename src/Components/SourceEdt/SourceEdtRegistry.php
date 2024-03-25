@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/SourceEdtRegistry.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/09/2022 18:34
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Components\SourceEdt;
@@ -24,7 +24,7 @@ class SourceEdtRegistry
     }
 
     /**
-     * @throws \App\Components\SourceEdt\Exceptions\SourceEdtNotFoundException
+     * @throws SourceEdtNotFoundException
      */
     public function getSourceEdt(string $name): mixed
     {

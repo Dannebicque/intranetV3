@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/StageEtudiantRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/12/2022 12:06
+ * @lastUpdate 24/02/2024 08:59
  */
 
 namespace App\Repository;
@@ -107,7 +107,7 @@ class StageEtudiantRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function save(StageEtudiant $stageEtudiant, bool $flush = false)
+    public function save(StageEtudiant $stageEtudiant, bool $flush = false): void
     {
         $this->getEntityManager()->persist($stageEtudiant);
 
@@ -115,14 +115,4 @@ class StageEtudiantRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
-
-//
-//    public function remove(QuestChoixEtudiant $entity, bool $flush = false): void
-//    {
-//        $this->getEntityManager()->remove($entity);
-//
-//        if ($flush) {
-//            $this->getEntityManager()->flush();
-//        }
-//    }
 }

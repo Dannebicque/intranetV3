@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/SecurityController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/09/2022 16:26
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Controller;
@@ -18,6 +18,7 @@ use App\Repository\PersonnelDepartementRepository;
 use App\Repository\PersonnelRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -26,7 +27,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -100,7 +101,7 @@ class SecurityController extends AbstractController
 
     /**
      * @throws TransportExceptionInterface
-     * @throws \Exception
+     * @throws Exception
      */
     #[Route(path: '/connexion/init-password/{user}', name: 'security_password_init', options: ['expose' => true])]
     public function initPassword(
@@ -164,7 +165,7 @@ class SecurityController extends AbstractController
     }
 
     #[Route(path: '/change-departement/{departement}', name: 'security_change_departement', options: ['expose' => true])]
-    public function changeDepartement(Request $request, RequestStack $session, #[\Symfony\Bridge\Doctrine\Attribute\MapEntity(mapping: ['departement' => 'uuid'])]
+    public function changeDepartement(Request $request, RequestStack $session, #[MapEntity(mapping: ['departement' => 'uuid'])]
     Departement                               $departement): Response
     {
         $session->getSession()->set('departement', $departement->getUuidString());

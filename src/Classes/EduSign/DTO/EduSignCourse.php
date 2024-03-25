@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/DTO/EduSignCourse.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:34
+ * @lastUpdate 29/02/2024 19:03
  */
 
 namespace App\Classes\EduSign\DTO;
@@ -55,6 +55,7 @@ class EduSignCourse
     public ?string $api_id = '';
     public ?string $id_edu_sign = '';
     public ?string $type_edt = '';
+    public ?string $apiId = '';
 
     public ?string $id_matiere = '';
 

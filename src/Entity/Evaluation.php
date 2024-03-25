@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Evaluation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/11/2022 11:45
+ * @lastUpdate 23/02/2024 21:41
  */
 
 namespace App\Entity;
@@ -22,9 +22,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
-use function in_array;
 use Ramsey\Uuid\Uuid;
 use Symfony\Component\Validator\Constraints as Assert;
+use function in_array;
 
 #[ORM\Entity(repositoryClass: EvaluationRepository::class)]
 #[ORM\HasLifecycleCallbacks]
@@ -55,7 +55,7 @@ class Evaluation extends BaseEntity
     private ?string $commentaire = '';
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Note>
+     * @var Collection<int, Note>
      */
     #[ORM\OneToMany(mappedBy: 'evaluation', targetEntity: Note::class)]
     private Collection $notes;
@@ -64,7 +64,7 @@ class Evaluation extends BaseEntity
     private ?Evaluation $parent = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Evaluation>
+     * @var Collection<int, Evaluation>
      */
     #[ORM\OneToMany(mappedBy: 'parent', targetEntity: Evaluation::class)]
     private Collection $enfants;
