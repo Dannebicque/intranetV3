@@ -66,6 +66,8 @@ class IntranetEdtEduSignAdapter
             $this->course->api_id = $edt->id;
             $this->course->id_edu_sign = $edt->idEduSign;
             $this->course->type_edt = $edt->getTypeIdEvent();
+            $this->course->id_matiere = $edt->getIdMatiere();
+            $this->course->type_matiere = $edt->getTypeMatiere();
         }
     }
 
