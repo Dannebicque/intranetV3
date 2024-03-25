@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/DataUserSession.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/07/2023 08:33
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Classes;
@@ -25,6 +25,8 @@ use App\Repository\DiplomeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use JsonException;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -79,7 +81,7 @@ class DataUserSession
         protected PersonnelRepository $personnelRepository,
         protected DepartementRepository $departementRepository,
         protected TokenStorageInterface $user,
-        protected \Symfony\Bundle\SecurityBundle\Security $security,
+        protected Security $security,
         EventDispatcherInterface $eventDispatcher,
         RequestStack $requestStack
     ) {
@@ -195,7 +197,7 @@ class DataUserSession
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function isGoodDepartement(string $role): bool
     {
@@ -216,7 +218,7 @@ class DataUserSession
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function isGoodDepartementArray(array $roles): bool
     {

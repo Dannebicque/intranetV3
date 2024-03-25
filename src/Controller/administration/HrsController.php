@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/HrsController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/07/2023 16:59
+ * @lastUpdate 16/02/2024 22:17
  */
 
 namespace App\Controller\administration;
@@ -25,7 +25,7 @@ use JsonException;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/administration/service-previsionnel/hrs')]
 class HrsController extends BaseController

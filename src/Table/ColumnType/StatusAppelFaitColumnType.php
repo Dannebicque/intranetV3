@@ -1,15 +1,15 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/ColumnType/StatusAppelFaitColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/12/2022 08:05
+ * @lastUpdate 16/02/2024 22:08
  */
 
 namespace App\Table\ColumnType;
 
-use DavidAnnebicque\TableBundle\Column\PropertyColumnType;
+use Dannebicque\TableBundle\Column\PropertyColumnType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 

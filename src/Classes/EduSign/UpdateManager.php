@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/UpdateManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/02/2024 17:28
+ * @lastUpdate 24/02/2024 08:41
  */
 
 namespace App\Classes\EduSign;
@@ -14,8 +14,8 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 class UpdateManager implements EventSubscriberInterface
 {
     public function __construct(
-        private CreateEnseignant $updateEnseignant,
-        private UpdateEdt        $updateEdt,
+        private readonly CreateEnseignant $updateEnseignant,
+        private readonly UpdateEdt        $updateEdt,
 //        private EventDispatcherInterface $eventDispatcher
     ) {
         $this->updateEnseignant->setUpdateManager($this);

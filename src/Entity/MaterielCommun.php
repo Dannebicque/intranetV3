@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/MaterielCommun.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/05/2022 16:34
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Entity;
@@ -41,7 +41,7 @@ class MaterielCommun extends BaseEntity
     private ?File $photoFile = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\MaterielCommunPret>
+     * @var Collection<int, MaterielCommunPret>
      */
     #[ORM\OneToMany(mappedBy: 'materielCommun', targetEntity: MaterielCommunPret::class)]
     private Collection $materielCommunPrets;

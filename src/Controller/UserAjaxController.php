@@ -1,32 +1,27 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/UserAjaxController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/09/2022 14:44
+ * @lastUpdate 20/02/2024 18:46
  */
 
 namespace App\Controller;
 
 use App\Entity\Departement;
 use App\Entity\Etudiant;
-use App\Entity\Favori;
 use App\Entity\PersonnelDepartement;
 use App\Entity\Semestre;
 use App\Repository\DepartementRepository;
-use App\Repository\EtudiantRepository;
-use App\Repository\FavoriRepository;
 use App\Repository\PersonnelDepartementRepository;
 use App\Repository\SemestreRepository;
-use Doctrine\ORM\NonUniqueResultException;
-use Exception;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Class UserController.
@@ -34,42 +29,11 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route(path: '/utilisateur/ajax')]
 class UserAjaxController extends BaseController
 {
-    /**
-     * @throws NonUniqueResultException
-     * @throws Exception
-     */
-    #[Route(path: '/add-favori', name: 'user_add_favori', options: ['expose' => true])]
-    public function addFavori(FavoriRepository $favoriRepository, EtudiantRepository $etudiantRepository, Request $request): Response
-    {
-        $action = $request->request->get('etat');
-        $user = $etudiantRepository->findOneBySlug($request->request->get('user'));
-        if ($user && 'true' === $action) {
-            $fav = new Favori($this->getUser(), $user);
-
-            $this->entityManager->persist($fav);
-            $this->entityManager->flush();
-
-            return new Response('ok', Response::HTTP_OK);
-        }
-        if ($user && 'false' === $action) {
-            $fav = $favoriRepository->findBy([
-                'etudiantDemandeur' => $this->getUser()->getId(),
-                'etudiantDemande' => $user->getId(),
-            ]);
-            foreach ($fav as $f) {
-                $this->entityManager->remove($f);
-            }
-            $this->entityManager->flush();
-
-            return new Response('ok', Response::HTTP_OK);
-        }
-
-        return new Response('nok', Response::HTTP_INTERNAL_SERVER_ERROR);
-    }
-
     #[Route(path: '/change-defaut/{departement}', name: 'user_change_departement_defaut', options: ['expose' => true])]
-    public function changeDepartementDefaut(PersonnelDepartementRepository $personnelDepartementRepository, #[MapEntity(mapping: ['departement' => 'uuid'])]
-    Departement                                                            $departement): ?JsonResponse
+    public function changeDepartementDefaut(
+        PersonnelDepartementRepository $personnelDepartementRepository,
+        #[MapEntity(mapping: ['departement' => 'uuid'])]
+        Departement                    $departement): ?JsonResponse
     {
         if (null !== $this->getUser() && 'permanent' === $this->getUser()->getTypeUser()) {
             $pf = $personnelDepartementRepository->findByPersonnel($this->getUser());

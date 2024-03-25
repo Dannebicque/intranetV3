@@ -1,18 +1,16 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/StageFicheSuiviRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 08:16
+ * @lastUpdate 24/02/2024 09:27
  */
 
 namespace App\Repository;
 
 use App\Entity\StageFicheSuivi;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\OptimisticLockException;
-use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -31,8 +29,6 @@ class StageFicheSuiviRepository extends ServiceEntityRepository
     }
 
     /**
-     * @throws ORMException
-     * @throws OptimisticLockException
      */
     public function add(StageFicheSuivi $entity, bool $flush = true): void
     {
@@ -43,8 +39,6 @@ class StageFicheSuiviRepository extends ServiceEntityRepository
     }
 
     /**
-     * @throws ORMException
-     * @throws OptimisticLockException
      */
     public function remove(StageFicheSuivi $entity, bool $flush = true): void
     {

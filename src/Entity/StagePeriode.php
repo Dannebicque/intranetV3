@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/StagePeriode.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 10/05/2022 16:34
+ * @lastUpdate 24/02/2024 08:30
  */
 
 namespace App\Entity;
@@ -20,7 +20,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Exception;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
-use Serializable;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
@@ -28,7 +27,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[Vich\Uploadable]
 #[ORM\Entity(repositoryClass: StagePeriodeRepository::class)]
 #[ORM\HasLifecycleCallbacks]
-class StagePeriode extends BaseEntity implements Serializable
+class StagePeriode extends BaseEntity
 {
     use UuidTrait;
     use LifeCycleTrait;
@@ -92,13 +91,13 @@ class StagePeriode extends BaseEntity implements Serializable
     private bool $copieAssistant = true;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\StagePeriodeInterruption>
+     * @var Collection<int, StagePeriodeInterruption>
      */
     #[ORM\OneToMany(mappedBy: 'stagePeriode', targetEntity: StagePeriodeInterruption::class, cascade: ['persist', 'remove'])]
     private Collection $stagePeriodeInterruptions;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\StagePeriodeSoutenance>
+     * @var Collection<int, StagePeriodeSoutenance>
      */
     #[ORM\OneToMany(mappedBy: 'stagePeriode', targetEntity: StagePeriodeSoutenance::class, cascade: ['persist', 'remove'])]
     private Collection $stagePeriodeSoutenances;
@@ -114,13 +113,13 @@ class StagePeriode extends BaseEntity implements Serializable
     private Collection $stagePeriodeOffres;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\StageEtudiant>
+     * @var Collection<int, StageEtudiant>
      */
     #[ORM\OneToMany(mappedBy: 'stagePeriode', targetEntity: StageEtudiant::class, cascade: ['persist', 'remove'], fetch: 'EAGER')]
     private Collection $stageEtudiants;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\StageMailTemplate>
+     * @var Collection<int, StageMailTemplate>
      */
     #[ORM\OneToMany(mappedBy: 'stagePeriode', targetEntity: StageMailTemplate::class, cascade: ['persist', 'remove'])]
     private Collection $stageMailTemplates;
@@ -574,12 +573,12 @@ class StagePeriode extends BaseEntity implements Serializable
         return $this;
     }
 
-    public function serialize(): ?string
+    public function __serialize(): array
     {
-        return serialize($this->getId());
+        return [$this->getId()];
     }
 
-    public function unserialize($data): void
+    public function __unserialize(array $data): void
     {
         $this->uuid = unserialize($data, [self::class]);
     }

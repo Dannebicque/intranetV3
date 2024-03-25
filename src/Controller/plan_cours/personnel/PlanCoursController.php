@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/plan_cours/personnel/PlanCoursController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/02/2024 14:11
+ * @lastUpdate 24/02/2024 08:39
  */
 
 namespace App\Controller\plan_cours\personnel;
@@ -12,16 +12,18 @@ namespace App\Controller\plan_cours\personnel;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\PlanCours\PlanCours;
 use App\Classes\Previsionnel\PrevisionnelManager;
+use App\Components\PlanCours\Exceptions\PlanCoursNotFoundException;
 use App\Components\PlanCours\PlanCoursRegistry;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Previsionnel;
 use App\Enums\PlanCoursEnum;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/plan/cours/apc')]
 class PlanCoursController extends BaseController
@@ -46,7 +48,6 @@ class PlanCoursController extends BaseController
     }
 
     /**
-     * @throws \App\Components\PlanCours\Exceptions\PlanCoursNotFoundException
      */
     #[Route('/edit/{previsionnel}', name: 'app_plan_cours_apc_new', methods: ['GET', 'POST'])]
     public function new(
@@ -64,7 +65,7 @@ class PlanCoursController extends BaseController
     }
 
     /**
-     * @throws \App\Components\PlanCours\Exceptions\PlanCoursNotFoundException
+     * @throws PlanCoursNotFoundException
      */
     #[Route('/step/{previsionnel}', name: 'app_plan_cours_apc_step', methods: ['GET', 'POST'])]
     public function step(
@@ -77,13 +78,13 @@ class PlanCoursController extends BaseController
         $step = $request->query->get('step');
         $planCoursManager = $planCoursRegistry->getPlanCours($previsionnel->getTypeMatiere());
         if (null === $planCoursManager) {
-            throw new \Exception('Plan de cours non trouvé');
+            throw new Exception('Plan de cours non trouvé');
         }
 
         $matiere = $typeMatiereManager->getMatiereFromSelect($previsionnel->getTypeIdMatiere());
 
         if (null === $matiere) {
-            throw new \Exception('Matière non trouvée');
+            throw new Exception('Matière non trouvée');
         }
 
         $planCours = $planCoursManager->createPlanCours(
@@ -148,7 +149,7 @@ class PlanCoursController extends BaseController
 
         $planCoursManager = $planCoursRegistry->getPlanCours($previsionnel->getTypeMatiere());
         if (null === $planCoursManager) {
-            throw new \Exception('Plan de cours non trouvé');
+            throw new Exception('Plan de cours non trouvé');
         }
 
         $planCoursOrigin = $planCoursManager->getRepository()->find($request->request->get('recopiePlan'));
@@ -177,7 +178,7 @@ class PlanCoursController extends BaseController
         $planCoursManager = $planCoursRegistry->getPlanCours($previsionnel->getTypeMatiere());
         $matiere = $typeMatiereManager->getMatiereFromSelect($previsionnel->getTypeIdMatiere());
         if (null === $planCoursManager) {
-            throw new \Exception('Plan de cours non trouvé');
+            throw new Exception('Plan de cours non trouvé');
         }
 
         $planCours = $planCoursManager->createPlanCours(
@@ -201,7 +202,7 @@ class PlanCoursController extends BaseController
         $planCoursManager = $planCoursRegistry->getPlanCours($previsionnel->getTypeMatiere());
         $matiere = $typeMatiereManager->getMatiereFromSelect($previsionnel->getTypeIdMatiere());
         if (null === $planCoursManager) {
-            throw new \Exception('Plan de cours non trouvé');
+            throw new Exception('Plan de cours non trouvé');
         }
 
         $pe = $planCoursManager->export($matiere, $this->getAnneeUniversitaire(), $this->getDepartement());

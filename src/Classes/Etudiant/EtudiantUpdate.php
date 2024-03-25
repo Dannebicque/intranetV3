@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Etudiant/EtudiantUpdate.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/09/2022 14:42
+ * @lastUpdate 23/02/2024 21:35
  */
 
 /*
@@ -24,7 +24,7 @@ class EtudiantUpdate
     /**
      * EtudiantUpdate constructor.
      */
-    public function __construct(private readonly BacRepository $bacRepository, private readonly DepartementRepository $departementRepository, private readonly SemestreRepository $semestreRepository, private readonly EntityManagerInterface $entityManager, private readonly EtudiantGroupes $etudiantGroupes)
+    public function __construct(private BacRepository $bacRepository, private DepartementRepository $departementRepository, private SemestreRepository $semestreRepository, private EntityManagerInterface $entityManager, private EtudiantGroupes $etudiantGroupes)
     {
     }
 

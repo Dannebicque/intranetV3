@@ -1,26 +1,14 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/EtudiantSemestreTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 23/02/2024 18:43
  */
 
 namespace App\Table;
 
-use DavidAnnebicque\TableBundle\Adapter\EntityAdapter;
-use DavidAnnebicque\TableBundle\Column\PropertyColumnType;
-use DavidAnnebicque\TableBundle\Column\SelectColumnType;
-use DavidAnnebicque\TableBundle\Column\WidgetColumnType;
-use DavidAnnebicque\TableBundle\TableBuilder;
-use DavidAnnebicque\TableBundle\TableType;
-use DavidAnnebicque\TableBundle\Widget\Type\ExportDropdownType;
-use DavidAnnebicque\TableBundle\Widget\Type\RowDeleteLinkType;
-use DavidAnnebicque\TableBundle\Widget\Type\RowEditLinkType;
-use DavidAnnebicque\TableBundle\Widget\Type\RowShowLinkType;
-use DavidAnnebicque\TableBundle\Widget\Type\SelectChangeType;
-use DavidAnnebicque\TableBundle\Widget\WidgetBuilder;
 use App\Entity\Bac;
 use App\Entity\Departement;
 use App\Entity\Etudiant;
@@ -30,6 +18,18 @@ use App\Form\Type\SearchType;
 use App\Repository\GroupeRepository;
 use App\Repository\SemestreRepository;
 use App\Table\ColumnType\GroupeEtudiantColumnType;
+use Dannebicque\TableBundle\Adapter\EntityAdapter;
+use Dannebicque\TableBundle\Column\PropertyColumnType;
+use Dannebicque\TableBundle\Column\SelectColumnType;
+use Dannebicque\TableBundle\Column\WidgetColumnType;
+use Dannebicque\TableBundle\TableBuilder;
+use Dannebicque\TableBundle\TableType;
+use Dannebicque\TableBundle\Widget\Type\ExportDropdownType;
+use Dannebicque\TableBundle\Widget\Type\RowDeleteLinkType;
+use Dannebicque\TableBundle\Widget\Type\RowEditLinkType;
+use Dannebicque\TableBundle\Widget\Type\RowShowLinkType;
+use Dannebicque\TableBundle\Widget\Type\SelectChangeType;
+use Dannebicque\TableBundle\Widget\WidgetBuilder;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;

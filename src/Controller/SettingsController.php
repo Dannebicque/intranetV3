@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/SettingsController.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/SettingsController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 19:11
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Controller;
@@ -12,15 +12,16 @@ namespace App\Controller;
 use App\Entity\Personnel;
 use App\Repository\AnneeUniversitaireRepository;
 use App\Utils\JsonRequest;
+use JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/settings', name: 'settings_')]
 class SettingsController extends BaseController
 {
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     #[Route('/change-annee-universitaire', name: 'change_annee_universitaire', options: ['expose' => true], methods: ['POST'])]
     public function changeAnneeUniversitaire(
@@ -43,7 +44,7 @@ class SettingsController extends BaseController
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     #[Route('/change-configuration-personnel', name: 'configuration_personnel', options: ['expose' => true], methods: ['POST'])]
     public function changeConfigurationPersonnel(

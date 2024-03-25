@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/PlanCoursSaeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/02/2024 14:11
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Repository;
@@ -18,7 +18,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<\App\Entity\PlanCoursSae>
+ * @extends ServiceEntityRepository<PlanCoursSae>
  *
  * @method PlanCoursSae|null find($id, $lockMode = null, $lockVersion = null)
  * @method PlanCoursSae|null findOneBy(array $criteria, array $orderBy = null)

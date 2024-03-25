@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyMaterielCommunReservation.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyMaterielCommunReservation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/05/2021 09:11
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Classes;
@@ -24,7 +24,7 @@ class MyMaterielCommunReservation
     /**
      * MyMaterielCommun constructor.
      */
-    public function __construct(private readonly MaterielCommunRepository $materielCommunRepository, private readonly MaterielCommunPretRepository $materielCommunPretRepository, private readonly EntityManagerInterface $entityManager, private readonly EventDispatcherInterface $eventDispatcher)
+    public function __construct(private MaterielCommunRepository $materielCommunRepository, private MaterielCommunPretRepository $materielCommunPretRepository, private EntityManagerInterface $entityManager, private EventDispatcherInterface $eventDispatcher)
     {
     }
 

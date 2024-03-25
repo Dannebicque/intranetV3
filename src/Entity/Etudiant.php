@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Etudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 23:15
+ * @lastUpdate 24/02/2024 08:46
  */
 
 namespace App\Entity;
@@ -18,6 +18,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Exception;
+use JsonException;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 use Symfony\Component\HttpFoundation\File\File;
@@ -48,7 +49,7 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     private ?Semestre $semestre = null;
 
     /**
-     * @var Collection<int, \App\Entity\Note>
+     * @var Collection<int, Note>
      */
     #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: Note::class)]
     private Collection $notes;
@@ -78,18 +79,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
      */
     #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: Rattrapage::class)]
     private Collection $rattrapages;
-
-    /**
-     * @var Collection<int, Favori>
-     */
-    #[ORM\OneToMany(mappedBy: 'etudiantDemandeur', targetEntity: Favori::class)]
-    private Collection $etudiantDemande;
-
-    /**
-     * @var Collection<int, Favori>
-     */
-    #[ORM\OneToMany(mappedBy: 'etudiantDemande', targetEntity: Favori::class)]
-    private Collection $etudiantDemandeur;
 
     /**
      * @var Collection<int, Scolarite>
@@ -183,9 +172,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: Commentaire::class)]
     private Collection $commentaires;
 
-    #[ORM\OneToMany(mappedBy: 'etudiant', targetEntity: ConpereEtudiant::class)]
-    private Collection $conpereEtudiants;
-
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $idEduSign = null;
 
@@ -199,8 +185,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         $this->notes = new ArrayCollection();
         $this->absences = new ArrayCollection();
         $this->rattrapages = new ArrayCollection();
-        $this->etudiantDemande = new ArrayCollection();
-        $this->etudiantDemandeur = new ArrayCollection();
         $this->scolarites = new ArrayCollection();
         $this->notifications = new ArrayCollection();
         $this->groupes = new ArrayCollection();
@@ -215,7 +199,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         $this->typeUser = 'ETU';
         $this->projetEtudiants = new ArrayCollection();
         $this->commentaires = new ArrayCollection();
-        $this->conpereEtudiants = new ArrayCollection();
     }
 
     public function setUuid(UuidInterface $uuid): self
@@ -370,68 +353,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
             // set the owning side to null (unless already changed)
             if ($rattrapage->getEtudiant() === $this) {
                 $rattrapage->setEtudiant(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Favori[]
-     */
-    public function getEtudiantDemande(): Collection
-    {
-        return $this->etudiantDemande;
-    }
-
-    public function addEtudiantDemande(Favori $etudiantDemande): self
-    {
-        if (!$this->etudiantDemande->contains($etudiantDemande)) {
-            $this->etudiantDemande[] = $etudiantDemande;
-            $etudiantDemande->setEtudiantDemandeur($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEtudiantDemande(Favori $etudiantDemande): self
-    {
-        if ($this->etudiantDemande->contains($etudiantDemande)) {
-            $this->etudiantDemande->removeElement($etudiantDemande);
-            // set the owning side to null (unless already changed)
-            if ($etudiantDemande->getEtudiantDemandeur() === $this) {
-                $etudiantDemande->setEtudiantDemandeur(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection|Favori[]
-     */
-    public function getEtudiantDemandeur(): Collection
-    {
-        return $this->etudiantDemandeur;
-    }
-
-    public function addEtudiantDemandeur(Favori $etudiantDemandeur): self
-    {
-        if (!$this->etudiantDemandeur->contains($etudiantDemandeur)) {
-            $this->etudiantDemandeur[] = $etudiantDemandeur;
-            $etudiantDemandeur->setEtudiantDemande($this);
-        }
-
-        return $this;
-    }
-
-    public function removeEtudiantDemandeur(Favori $etudiantDemandeur): self
-    {
-        if ($this->etudiantDemandeur->contains($etudiantDemandeur)) {
-            $this->etudiantDemandeur->removeElement($etudiantDemandeur);
-            // set the owning side to null (unless already changed)
-            if ($etudiantDemandeur->getEtudiantDemande() === $this) {
-                $etudiantDemandeur->setEtudiantDemande(null);
             }
         }
 
@@ -848,7 +769,7 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function updateFromApogee(?array $dataApogee): void
     {
@@ -984,36 +905,6 @@ class Etudiant extends Utilisateur implements UtilisateurInterface
         // set the owning side to null (unless already changed)
         if ($this->commentaires->removeElement($commentaire) && $commentaire->getEtudiant() === $this) {
             $commentaire->setEtudiant(null);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, ConpereEtudiant>
-     */
-    public function getConpereEtudiants(): Collection
-    {
-        return $this->conpereEtudiants;
-    }
-
-    public function addConpereEtudiant(ConpereEtudiant $conpereEtudiant): self
-    {
-        if (!$this->conpereEtudiants->contains($conpereEtudiant)) {
-            $this->conpereEtudiants->add($conpereEtudiant);
-            $conpereEtudiant->setEtudiant($this);
-        }
-
-        return $this;
-    }
-
-    public function removeConpereEtudiant(ConpereEtudiant $conpereEtudiant): self
-    {
-        if ($this->conpereEtudiants->removeElement($conpereEtudiant)) {
-            // set the owning side to null (unless already changed)
-            if ($conpereEtudiant->getEtudiant() === $this) {
-                $conpereEtudiant->setEtudiant(null);
-            }
         }
 
         return $this;

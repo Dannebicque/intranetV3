@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/DocumentTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/11/2023 10:14
+ * @lastUpdate 24/02/2024 07:59
  */
 
 namespace App\Table;
@@ -20,20 +20,20 @@ use App\Repository\SemestreRepository;
 use App\Repository\TypeDocumentRepository;
 use App\Table\ColumnType\CategorieArticleColumnType;
 use App\Table\ColumnType\SemestresColumnType;
-use DavidAnnebicque\TableBundle\Adapter\EntityAdapter;
-use DavidAnnebicque\TableBundle\Column\BadgeColumnType;
-use DavidAnnebicque\TableBundle\Column\DateColumnType;
-use DavidAnnebicque\TableBundle\Column\PropertyColumnType;
-use DavidAnnebicque\TableBundle\Column\WidgetColumnType;
-use DavidAnnebicque\TableBundle\TableBuilder;
-use DavidAnnebicque\TableBundle\TableType;
-use DavidAnnebicque\TableBundle\Widget\Type\ExportDropdownType;
-use DavidAnnebicque\TableBundle\Widget\Type\LinkType;
-use DavidAnnebicque\TableBundle\Widget\Type\RowDeleteLinkType;
-use DavidAnnebicque\TableBundle\Widget\Type\RowDuplicateLinkType;
-use DavidAnnebicque\TableBundle\Widget\Type\RowEditLinkType;
-use DavidAnnebicque\TableBundle\Widget\Type\RowShowLinkType;
-use DavidAnnebicque\TableBundle\Widget\WidgetBuilder;
+use Dannebicque\TableBundle\Adapter\EntityAdapter;
+use Dannebicque\TableBundle\Column\BadgeColumnType;
+use Dannebicque\TableBundle\Column\DateColumnType;
+use Dannebicque\TableBundle\Column\PropertyColumnType;
+use Dannebicque\TableBundle\Column\WidgetColumnType;
+use Dannebicque\TableBundle\TableBuilder;
+use Dannebicque\TableBundle\TableType;
+use Dannebicque\TableBundle\Widget\Type\ExportDropdownType;
+use Dannebicque\TableBundle\Widget\Type\LinkType;
+use Dannebicque\TableBundle\Widget\Type\RowDeleteLinkType;
+use Dannebicque\TableBundle\Widget\Type\RowDuplicateLinkType;
+use Dannebicque\TableBundle\Widget\Type\RowEditLinkType;
+use Dannebicque\TableBundle\Widget\Type\RowShowLinkType;
+use Dannebicque\TableBundle\Widget\WidgetBuilder;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -161,7 +161,7 @@ class DocumentTableType extends TableType
                         ->innerJoin(Annee::class, 'a', 'WITH', 'c.annee = a.id')
                         ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
                         ->where('d.departement = :departement')
-                        ->distinct(true)
+                        ->distinct()
                         ->setParameter('departement', $this->departement->getId());
                 } else {
                     $qb->innerJoin(TypeDocument::class, 't', 'WITH', 'e.typeDocument = t.id')

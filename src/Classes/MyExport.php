@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/06/2023 08:03
+ * @lastUpdate 23/02/2024 21:40
  */
 
 /*
@@ -25,8 +25,8 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 class MyExport
 {
     public function __construct(
-        private readonly MyPDF $myPDF,
-        private readonly MyExcelMultiExport $excel
+        private MyPDF              $myPDF,
+        private MyExcelMultiExport $excel
     ) {
     }
 
@@ -48,7 +48,7 @@ class MyExport
     }
 
     /**
-     * @throws \App\Exception\SemestreNotFoundException
+     * @throws SemestreNotFoundException
      */
     public function genereModeleImportNote(?Evaluation $evaluation, Matiere $matiere): ?Response
     {

@@ -1,11 +1,11 @@
 <?php
 
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Command/EduSignEtudiantCommand.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/08/2023 15:58
+ * @lastUpdate 24/02/2024 08:41
  */
 
 namespace App\Command;
@@ -24,7 +24,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class EduSignEtudiantCommand extends Command
 {
     public function __construct(
-        private UpdateEtudiant $updateEtudiant,
+        private readonly UpdateEtudiant $updateEtudiant,
     )
     {
         parent::__construct();

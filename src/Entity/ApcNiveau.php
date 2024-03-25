@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcNiveau.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/07/2023 15:35
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Entity;
@@ -42,13 +42,13 @@ class ApcNiveau extends BaseEntity
     private ?Annee $annee = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcApprentissageCritique>
+     * @var Collection<int, ApcApprentissageCritique>
      */
     #[ORM\OneToMany(mappedBy: 'niveau', targetEntity: ApcApprentissageCritique::class, cascade: ['persist', 'remove'])]
     private Collection $apcApprentissageCritiques;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcParcoursNiveau>
+     * @var Collection<int, ApcParcoursNiveau>
      */
     #[ORM\OneToMany(mappedBy: 'niveau', targetEntity: ApcParcoursNiveau::class, cascade: ['persist', 'remove'] )]
     private Collection $apcParcoursNiveaux;

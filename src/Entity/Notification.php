@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Notification.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/11/2022 07:31
+ * @lastUpdate 23/02/2024 18:29
  */
 
 namespace App\Entity;
@@ -26,7 +26,6 @@ class Notification extends BaseEntity
     final public const ETUDIANT = 'e';
     final public const PERSONNEL = 'p';
     final public const TABICONE = [
-        'carnet.added' => 'fas fa-bookmark',
         'absence.removed' => 'fas fa-bookmark',
         'absence.added' => 'fas fa-bookmark',
         'absence.justified' => 'fas fa-check',
@@ -48,7 +47,6 @@ class Notification extends BaseEntity
     ];
 
     final public const TABCOLOR = [
-        'carnet.added' => 'info',
         'absence.removed' => 'success',
         'absence.added' => 'danger',
         'absence.justified' => 'success',

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/SemestreRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/09/2022 17:17
+ * @lastUpdate 23/02/2024 21:41
  */
 
 namespace App\Repository;
@@ -12,10 +12,10 @@ namespace App\Repository;
 use App\Entity\Annee;
 use App\Entity\Departement;
 use App\Entity\Diplome;
-use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\Criteria;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -122,7 +122,7 @@ class SemestreRepository extends ServiceEntityRepository
     }
 
     /**
-     * @throws \Doctrine\ORM\NonUniqueResultException
+     * @throws NonUniqueResultException
      */
     public function findByDiplomeEtNumero(Diplome $diplome, int $ordreSemestre): array
     {

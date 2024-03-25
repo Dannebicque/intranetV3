@@ -1,8 +1,8 @@
-// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/cypress/support/commands.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 08/10/2022 22:28
+// @lastUpdate 24/02/2024 09:57
 
 // ***********************************************
 // This example commands.js shows you how to
@@ -16,23 +16,21 @@
 //
 //
 // -- This is a parent command --
-Cypress.Commands.add('login', () => {
-  cy.visit('/connexion')
-  cy.contains('login')
-  cy.get('#username').type('annebi01')
-  cy.get('#password').type('test')
-  cy.get('button[name="connexionHorsUrca"]').click()
-  cy.contains('Intranet du département MMI')
+Cypress.Commands.add('login', (username, password = 'test') => {
+  cy.session(
+    username,
+    () => {
+      cy.visit('/connexion')
+      cy.contains('login')
+      cy.get('#username').type(username)
+      cy.get('#password').type(password)
+      cy.get('button[name="connexionHorsUrca"]').click()
+      cy.contains('Intranet du département MMI')
+    },
+    {
+      validate: () => {
+        cy.getCookie('PHPSESSID').should('exist')
+      },
+    },
+  )
 })
-//
-//
-// -- This is a child command --
-// Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) => { ... })
-//
-//
-// -- This is a dual command --
-// Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) => { ... })
-//
-//
-// -- This will overwrite an existing command --
-// Cypress.Commands.overwrite('visit', (originalFn, url, options) => { ... })

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Apogee/ApogeeSousCommission.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/09/2022 10:57
+ * @lastUpdate 29/02/2024 22:09
  */
 
 namespace App\Classes\Apogee;
@@ -63,7 +63,7 @@ class ApogeeSousCommission extends Apogee
         $maquetteSheet->getProtection()->setSheet(true);
         $i = 17;
         // nombre de lignes
-        while ('' != trim($maquetteSheet->getCellByColumnAndRow(1, $i)->getValue())) {
+        while ('' != trim($maquetteSheet->getCell([1, $i])->getValue())) {
             ++$i;
         }
         $v_nb_lig = $i - 1;
@@ -76,14 +76,14 @@ class ApogeeSousCommission extends Apogee
 
         foreach ($G_tab_apoC_Coord as $key => $name) {
             $val = $maquetteSheet->getCell(str_replace('$','',$name))->getValue();
-            $notesSheet->setCellValueByColumnAndRow($i, $j, $G_tab_apoC[$key]);
-            $notesSheet->setCellValueByColumnAndRow(($i + 1), $j, $val);
+            $notesSheet->setCellValue([$i, $j], $G_tab_apoC[$key]);
+            $notesSheet->setCellValue([($i + 1), $j], $val);
             ++$j;
         }
 
         // repere 2
         ++$j;
-        $notesSheet->setCellValueByColumnAndRow($i, $j, 'XX-APO_COLONNES-XX');
+        $notesSheet->setCellValue([$i, $j], 'XX-APO_COLONNES-XX');
         ++$j;
 
         // tableau des libelles
@@ -108,7 +108,7 @@ class ApogeeSousCommission extends Apogee
 
             // on est à la fin des codes on tague le fichier texte
             if (2 == $v_cell_occ) {
-                $notesSheet->setCellValueByColumnAndRow(1, $j, 'APO_COL_VAL_FIN');
+                $notesSheet->setCellValue([1, $j], 'APO_COL_VAL_FIN');
                 ++$j;
                 $v_cell_occ = 1;
             }
@@ -120,12 +120,12 @@ class ApogeeSousCommission extends Apogee
 
                 // colle les cellules transposées (en ligne)
                 foreach ($cellValues as $cellValue) {
-                    $notesSheet->setCellValueByColumnAndRow($i, $j, $cellValue[0]);
+                    $notesSheet->setCellValue([$i, $j], $cellValue[0]);
                     ++$i;
                 }
 
                 // conversion_adm_temoin
-                $cellule = $notesSheet->getCellByColumnAndRow(10, $j);
+                $cellule = $notesSheet->getCell([10, $j]);
                 if (empty($cellule->getValue()) && 0 == $v_cell_apo_col_val_fin) {
                     $cellule->setValue(1);
                 }
@@ -135,7 +135,7 @@ class ApogeeSousCommission extends Apogee
                 // -- fin conversion_adm_temoin --
 
                 if ('apol_a04_naissance' === mb_strtolower($G_tab_apoL[$key])) {
-                    $notesSheet->setCellValueByColumnAndRow(1, $j + 1, 'APO_COL_VAL_DEB');
+                    $notesSheet->setCellValue([1, $j + 1], 'APO_COL_VAL_DEB');
                     ++$j;
                 }
             }
@@ -157,7 +157,7 @@ class ApogeeSousCommission extends Apogee
 
         ++$j;
         ++$j;
-        $notesSheet->setCellValueByColumnAndRow(1, $j, 'XX-APO_VALEURS-XX');
+        $notesSheet->setCellValue([1, $j], 'XX-APO_VALEURS-XX');
         ++$j;
         // 1ere colonne
         $i = 1;
@@ -187,9 +187,9 @@ class ApogeeSousCommission extends Apogee
                 // colle les donnees dans la bonne colonne
                 foreach ($cellValues as $cellValue) {
                     if ('-0.01' === $cellValue[0]) {
-                        $notesSheet->setCellValueByColumnAndRow($i, $j, 0);
+                        $notesSheet->setCellValue([$i, $j], 0);
                     } else {
-                        $notesSheet->setCellValueByColumnAndRow($i, $j, $cellValue[0]);
+                        $notesSheet->setCellValue([$i, $j], $cellValue[0]);
                     }
 
                     if ('apol_a01_code' !== mb_strtolower($G_tab_apoL[$key]) && 'apol_a02_nom' !== mb_strtolower($G_tab_apoL[$key]) && 'apol_a03_prenom' !== mb_strtolower($G_tab_apoL[$key]) && 'apol_04_naissance' !== mb_strtolower($G_tab_apoL[$key])) {
@@ -203,7 +203,7 @@ class ApogeeSousCommission extends Apogee
                 $j = $k;
 
                 // colle le titre de la colonne
-                $notesSheet->setCellValueByColumnAndRow($i, $j, $val_titre);
+                $notesSheet->setCellValue([$i, $j], $val_titre);
             } else {// stoppe tout si derniere colonne
                 break;
             }

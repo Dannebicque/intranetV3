@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/api/EtudiantApiController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/03/2023 06:49
+ * @lastUpdate 16/02/2024 22:17
  */
 
 namespace App\Controller\api;
@@ -14,7 +14,7 @@ use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use App\Repository\EtudiantRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Class AgendaController.

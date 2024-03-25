@@ -1,4 +1,11 @@
 <?php
+/*
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Command/EduSignFixCourseCommand.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 24/02/2024 08:41
+ */
 
 namespace App\Command;
 
@@ -15,7 +22,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class EduSignFixCourseCommand extends Command
 {
     public function __construct(
-        private fixCourses $fixCourse,
+        private readonly fixCourses $fixCourse,
     )
     {
         parent::__construct();

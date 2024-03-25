@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/PlanCours/Form/PlanCoursStep2Type.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/02/2024 14:41
+ * @lastUpdate 29/02/2024 10:39
  */
 
 namespace App\Components\PlanCours\Form;
@@ -38,12 +38,6 @@ class PlanCoursStep2Type extends AbstractType
             ])
             ->add('saisiePlanCours', TextareaType::class, [
                 'label' => 'Saisie dans un format libre de votre plan de cours :',
-                'required' => false,
-                'attr' => ['rows' => 10, 'class' => 'tinyMce'],
-            ])
-            ->add('commentaires_step2', TextareaType::class, [
-                'label' => 'Commentaire libre :',
-                'help' => 'Commentaire libre sur le plan de cours pour cette étape 2',
                 'required' => false,
                 'attr' => ['rows' => 10, 'class' => 'tinyMce'],
             ]);

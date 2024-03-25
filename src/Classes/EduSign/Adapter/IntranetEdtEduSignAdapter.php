@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/Adapter/IntranetEdtEduSignAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:34
+ * @lastUpdate 24/02/2024 08:51
  */
 
 namespace App\Classes\EduSign\Adapter;
@@ -51,12 +51,8 @@ class IntranetEdtEduSignAdapter
             $this->course->classroom = $edt->salle;
 
             if ($edt->groupeObjet !== null) {
-                if ($edt->source === 'intranet') {
-                    if ($edt->type_cours === 'TD') {
-                        $this->course->school_group = [$edt->groupeObjet->getParent()?->getIdEduSign()];
-                    } else {
-                        $this->course->school_group = [$edt->groupeObjet->getIdEduSign()];
-                    }
+                if (($edt->source === 'intranet') && $edt->type_cours === 'TD') {
+                    $this->course->school_group = [$edt->groupeObjet->getParent()?->getIdEduSign()];
                 } else {
                     $this->course->school_group = [$edt->groupeObjet->getIdEduSign()];
                 }

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Alternance.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 14:27
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Entity;
@@ -70,7 +70,7 @@ class Alternance extends BaseEntity
     private ?CarbonInterface $dateFin = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\AlternanceFicheSuivi>
+     * @var Collection<int, AlternanceFicheSuivi>
      */
     #[ORM\OneToMany(mappedBy: 'alternance', targetEntity: AlternanceFicheSuivi::class)]
     private Collection $alternanceFicheSuivis;

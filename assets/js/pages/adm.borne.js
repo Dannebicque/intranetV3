@@ -1,28 +1,40 @@
-// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/adm.borne.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/07/2022 13:30
-import $ from 'jquery'
-import { addCallout } from '../util'
+// @lastUpdate 23/02/2024 18:48
 import Routing from 'fos-router'
+import { addCallout } from '../util'
+import { get } from '../fetch'
 
-$(document).on('click', '.visibiliteBorne', function () {
-  const btn = $(this)
-  $.ajax({
-    url: Routing.generate('administration_borne_visibilite', { id: btn.data('id') }),
-    success(data) {
-      if (data === false) {
-        addCallout('Message masqué avec succés !', 'success')
-        btn.removeClass('btn-success').addClass('btn-danger')
-        btn.children('i').removeClass('fa-eye').addClass('fa-eye-slash')
-        btn.attr('title', 'Message masqué. Rendre visible')
-      } else {
-        addCallout('Message affiché avec succés !', 'success')
-        btn.removeClass('btn-danger').addClass('btn-success')
-        btn.children('i').removeClass('fa-eye-slash').addClass('fa-eye')
-        btn.attr('title', 'Message affiché. Rendre invisible')
-      }
-    },
+document.querySelectorAll('.visibiliteBorne').forEach((element) => {
+  document.addEventListener('click', (event) => {
+    const btn = event.target
+    const id = btn.getAttribute('data-id')
+
+    // I assume that you have a 'Routing' global object as in symfony
+    const url = Routing.generate('administration_borne_visibilite', { id })
+
+    get(url)
+      .then((response) => response.json())
+      .then((data) => {
+        if (!data) {
+          addCallout('Message masqué avec succés !', 'success')
+          btn.classList.remove('btn-success')
+          btn.classList.add('btn-danger')
+          const icon = btn.querySelector('i')
+          icon.classList.remove('fa-eye')
+          icon.classList.add('fa-eye-slash')
+          btn.setAttribute('title', 'Message masqué. Rendre visible')
+        } else {
+          addCallout('Message affiché avec succés !', 'success')
+          btn.classList.remove('btn-danger')
+          btn.classList.add('btn-success')
+          const icon = btn.querySelector('i')
+          icon.classList.remove('fa-eye-slash')
+          icon.classList.add('fa-eye')
+          btn.setAttribute('title', 'Message affiché. Rendre invisible')
+        }
+      })
   })
 })

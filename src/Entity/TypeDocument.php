@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/TypeDocument.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:35
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Entity;
@@ -31,7 +31,7 @@ class TypeDocument extends BaseEntity
     private ?Departement $departement = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Document>
+     * @var Collection<int, Document>
      */
     #[ORM\OneToMany(mappedBy: 'typeDocument', targetEntity: Document::class)]
     private Collection $documents;

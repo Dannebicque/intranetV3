@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/AbsenceEtatAppelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/12/2022 12:09
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Controller\appPersonnel;
@@ -13,15 +13,17 @@ use App\Classes\Absences\AbsenceEtatAppel;
 use App\Controller\BaseController;
 use App\Repository\GroupeRepository;
 use App\Utils\JsonRequest;
+use JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_PERMANENT')]
+#[IsGranted('ROLE_PERMANENT')]
 class AbsenceEtatAppelController extends BaseController
 {
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     #[Route('/absence/etat/appel', name: 'app_personnel_absence_etat_appel', options: ['expose' => true])]
     public function enregistre(

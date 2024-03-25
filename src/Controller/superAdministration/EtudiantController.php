@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/superAdministration/EtudiantController.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/EtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/10/2021 20:09
+ * @lastUpdate 23/02/2024 18:39
  */
 
 namespace App\Controller\superAdministration;
@@ -21,7 +21,7 @@ use Exception;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Class ScolariteController.
@@ -32,7 +32,7 @@ class EtudiantController extends BaseController
     #[Route(path: '/', name: 'sa_etudiant_index')]
     public function index(): Response
     {
-        return $this->render('super-administration/etudiant/index.html.twig', []);
+        return $this->render('super-administration/etudiant/index.html.twig');
     }
 
     /**

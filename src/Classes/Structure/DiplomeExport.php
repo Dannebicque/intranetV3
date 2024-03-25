@@ -1,29 +1,31 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Structure/DiplomeExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/08/2022 17:24
+ * @lastUpdate 24/02/2024 09:27
  */
 
 namespace App\Classes\Structure;
 
 use App\Entity\Diplome;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\StreamedResponse;
 use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
 class DiplomeExport
 {
-    public function __construct(private readonly Environment $twig, private readonly ApogeeExport $apogeeExport)
+    public function __construct(private Environment $twig)
     {
     }
 
     /**
-     * @throws \Twig\Error\SyntaxError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\LoaderError
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
      */
     public function exportRefentiel(Diplome $diplome): Response
     {
@@ -35,8 +37,7 @@ class DiplomeExport
             ]);
             $name = 'but-'.$diplome->getSigle();
         } else {
-            $xmlContent = $this->twig->render('xml/export-referentiel.xml.twig', [
-            ]);
+            $xmlContent = $this->twig->render('xml/export-referentiel.xml.twig');
             $name = 'structure-'.$diplome->getSigle();
         }
 
@@ -53,9 +54,9 @@ class DiplomeExport
     }
 
     /**
-     * @throws \Twig\Error\SyntaxError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\LoaderError
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
      */
     public function exportProgramme(Diplome $diplome): Response
     {
@@ -65,23 +66,10 @@ class DiplomeExport
             ]);
             $name = 'but-pn-'.$diplome->getSigle();
         } else {
-            $xmlContent = $this->twig->render('xml/export-programme.xml.twig', [
-            ]);
+            $xmlContent = $this->twig->render('xml/export-programme.xml.twig');
             $name = 'ppn-'.$diplome->getSigle();
         }
 
         return $this->exportFichier($xmlContent, $name);
-    }
-
-    public function exportMaquetteApogee(Diplome $diplome): ?StreamedResponse
-    {
-        if (true === $diplome->isApc()) {
-            $this->apogeeExport->setDiplome($diplome);
-            $name = 'but-maquette-'.$diplome->getSigle().'.xlsx';
-
-            return $this->apogeeExport->export($name);
-        }
-
-        return null;
     }
 }

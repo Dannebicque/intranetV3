@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AlternanceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/10/2023 15:25
+ * @lastUpdate 29/02/2024 21:31
  */
 
 namespace App\Controller\administration;
@@ -24,7 +24,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use function count;
 
 #[Route(path: '/administration/alternance')]
@@ -48,7 +48,7 @@ class AlternanceController extends BaseController
             if (0 === count($exist)) {
                 $alternance = new Alternance();
                 $alternance->setEtudiant($etudiant);
-                $alternance->setAnneeUniversitaire($annee->getDiplome()?->getAnneeUniversitaire());
+                $alternance->setAnneeUniversitaire($this->getAnneeUniversitaire());
                 $alternance->setAnnee($annee);
                 $alternance->setEtat('init');
                 $this->entityManager->persist($alternance);
@@ -66,7 +66,7 @@ class AlternanceController extends BaseController
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $annee);
         $alternance = new Alternance();
         $alternance->setEtudiant($etudiant);
-        $alternance->setAnneeUniversitaire($annee->getDiplome()?->getAnneeUniversitaire());
+        $alternance->setAnneeUniversitaire($this->getAnneeUniversitaire());
         $alternance->setAnnee($annee);
         if ('init-false' === $action) {
             $alternance->setEtat(Alternance::ALTERNANCE_ETAT_SANS);
@@ -87,7 +87,7 @@ class AlternanceController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $annee);
         $alternances = $alternanceRepository->getByAnneeAndAnneeUniversitaire($annee,
-            $annee->getDiplome()?->getAnneeUniversitaire());
+            $this->getAnneeUniversitaire());
 
         $data = $mySerializer->getDataFromSerialization(
             $alternances,
@@ -147,7 +147,7 @@ class AlternanceController extends BaseController
         return $this->render('administration/alternance/index.html.twig',
             [
                 'alternances' => $alternanceRepository->getByAnneeAndAnneeUniversitaireArray($annee,
-                    $annee->getDiplome()?->getAnneeUniversitaire()),
+                    $this->getAnneeUniversitaire()),
                 'annee' => $annee,
                 'etudiants' => $etudiants,
             ]);

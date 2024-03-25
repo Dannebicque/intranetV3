@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/QuestionnaireExportExcelBrut.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/01/2024 08:52
+ * @lastUpdate 24/02/2024 08:39
  */
 
 namespace App\Components\Questionnaire;
 
 use App\Classes\Configuration;
 use App\Classes\Excel\MyExcelWriter;
+use App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException;
 use App\Components\Questionnaire\Section\EndSection;
 use App\Components\Questionnaire\Section\StartSection;
 use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
@@ -26,14 +27,6 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class QuestionnaireExportExcelBrut
 {
-    final public const SEUIL = 65;
-    final public const COLOR_QUALITE = 'bb1e10';
-    private array $resultatQuestion = [];
-    private int $ligne;
-
-    private int|float $nbReponses = 0;
-
-    private int|float $sommePourcentage = 0;
 
     public function __construct(
         private readonly QuestionnaireRegistry $questionnaireRegistry,
@@ -45,6 +38,7 @@ class QuestionnaireExportExcelBrut
 
     /**
      * @throws Exception
+     * @throws TypeQuestionNotFoundException
      */
     public function exportExcel(Questionnaire $questionnaire, QuestQuestionnaire $questQuestionnaire, $reponses): StreamedResponse
     {
@@ -116,8 +110,7 @@ class QuestionnaireExportExcelBrut
         if (is_array($reponse->getValeur())) {
             return implode(',', $reponse->getValeur());
         }
-//        dump($question->getReponsesArray());
-//        dd($reponse);
+
         $tCleReponse = explode('_', $reponse->getCleReponse());
         //récupérer le dernier element du tableau
         $cleReponse = $tCleReponse[count($tCleReponse) - 1];

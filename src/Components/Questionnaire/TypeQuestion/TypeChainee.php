@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/TypeQuestion/TypeChainee.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/01/2023 07:55
+ * @lastUpdate 23/02/2024 18:43
  */
 
 namespace App\Components\Questionnaire\TypeQuestion;
@@ -62,8 +62,8 @@ class TypeChainee extends AbstractQuestion
         parent::sauvegarde($question, $request, $entityManager);
         $parametres = $question->getParametre();
         $parametres['choix_autre'] = array_key_exists('choix_autre',
-            $this->data) ? (bool)$this->data['choix_autre'] : false;
-        $parametres['choix_nc'] = array_key_exists('choix_nc', $this->data) ? (bool)$this->data['choix_nc'] : false;
+                $this->data) && $this->data['choix_autre'];
+        $parametres['choix_nc'] = array_key_exists('choix_nc', $this->data) && $this->data['choix_nc'];
         $question->setParametre($parametres);
 
         $this->sauvegardeReponses($question, $entityManager);

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/DepartementController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/12/2022 12:09
+ * @lastUpdate 28/02/2024 14:51
  */
 
 namespace App\Controller\superAdministration;
@@ -17,9 +17,10 @@ use Exception;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[Route(path: '/administratif/structure/departement')]
+#[Route(path: '/{type}/structure/departement', requirements: ['type' => 'administratif|administration'], defaults: ['type' => 'administratif'])]
 class DepartementController extends BaseController
 {
     /**
@@ -83,7 +84,7 @@ class DepartementController extends BaseController
     }
 
     #[Route(path: '/activate/{departement}/{etat}', name: 'sa_departement_activate', methods: ['GET'])]
-    #[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_SUPER_ADMIN')]
+    #[IsGranted('ROLE_SUPER_ADMIN')]
     public function activate(Departement $departement, bool $etat): RedirectResponse
     {
         $departement->setActif($etat);

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appEtudiant/NoteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/03/2023 06:51
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Controller\appEtudiant;
@@ -16,7 +16,7 @@ use App\Entity\Note;
 use App\Exception\EvaluationNotFoundException;
 use App\Exception\MatiereNotFoundException;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Class NotesController.
@@ -25,8 +25,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class NoteController extends BaseController
 {
     /**
-     * @throws \App\Exception\MatiereNotFoundException
-     * @throws \App\Exception\EvaluationNotFoundException
+     * @throws MatiereNotFoundException
+     * @throws EvaluationNotFoundException
      */
     #[Route(path: '/details/{id}', name: 'app_etudiant_note_detail')]
     public function details(TypeMatiereManager $typeMatiereManager, MyEvaluation $myEvaluation, Note $note): Response

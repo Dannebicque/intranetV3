@@ -1,14 +1,15 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/AlternanceFicheSuiviType.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/AlternanceFicheSuiviType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/06/2021 10:28
+ * @lastUpdate 23/02/2024 18:29
  */
 
 namespace App\Form;
 
+use App\Entity\AbstractFicheSuivi;
 use App\Entity\AlternanceFicheSuivi;
 use App\Form\Type\DatePickerType;
 use Symfony\Component\Form\AbstractType;
@@ -26,8 +27,8 @@ class AlternanceFicheSuiviType extends AbstractType
             ->add('methode', ChoiceType::class, [
                 'label' => 'label.methode_entretien',
                 'choices' => [
-                    'telephone' => AlternanceFicheSuivi::VISITE_TELEPHONIQUE,
-                    'visite' => AlternanceFicheSuivi::VISITE_PHYSIQUE,
+                    'telephone' => AbstractFicheSuivi::VISITE_TELEPHONIQUE,
+                    'visite' => AbstractFicheSuivi::VISITE_PHYSIQUE,
                 ],
                 'expanded' => true,
             ])

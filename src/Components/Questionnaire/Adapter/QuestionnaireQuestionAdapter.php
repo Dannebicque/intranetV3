@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Adapter/QuestionnaireQuestionAdapter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/01/2023 22:37
+ * @lastUpdate 24/02/2024 08:51
  */
 
 namespace App\Components\Questionnaire\Adapter;
@@ -12,12 +12,14 @@ namespace App\Components\Questionnaire\Adapter;
 use App\Components\Graphs\GraphRegistry;
 use App\Components\Questionnaire\DTO\ListeChoix;
 use App\Components\Questionnaire\DTO\ReponsesUser;
+use App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException;
 use App\Components\Questionnaire\QuestionnaireRegistry;
 use App\Components\Questionnaire\Section\AbstractSection;
 use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
 use App\Components\Questionnaire\TypeQuestion\TypeChainee;
 use App\Entity\QuestQuestion;
 use App\Utils\Tools;
+use JsonException;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class QuestionnaireQuestionAdapter
@@ -31,8 +33,8 @@ class QuestionnaireQuestionAdapter
     }
 
     /**
-     * @throws \App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException
-     * @throws \JsonException
+     * @throws TypeQuestionNotFoundException
+     * @throws JsonException
      */
     public function createFromEntity(
         AbstractSection $abstractSection,
@@ -89,13 +91,11 @@ class QuestionnaireQuestionAdapter
                         $this->question->reponsesUser[$questionEnfant->getId()] = $reponsesUser->getReponse($questionEnfant->getCle());
                     }
                 }
+            } else if ('' !== $this->question->valeur_config) {
+                $this->question->reponsesUser[$this->question->id]['c' . $this->question->valeur_config] = $reponsesUser->getReponse($this->question->cle,
+                    'c' . $this->question->valeur_config);
             } else {
-                if ('' !== $this->question->valeur_config) {
-                    $this->question->reponsesUser[$this->question->id]['c' . $this->question->valeur_config] = $reponsesUser->getReponse($this->question->cle,
-                        'c' . $this->question->valeur_config);
-                } else {
-                    $this->question->reponseUser = $reponsesUser->getReponse($this->question->cle);
-                }
+                $this->question->reponseUser = $reponsesUser->getReponse($this->question->cle);
             }
         }
 

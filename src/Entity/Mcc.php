@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Mcc.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/12/2022 11:45
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Entity;
@@ -22,32 +22,16 @@ class Mcc extends BaseEntity
     use LifeCycleTrait;
     use MatiereTrait;
 
-    #[ORM\ManyToOne(inversedBy: 'mccs')]
-    private ?AnneeUniversitaire $anneeUniversitaire = null;
-
     #[ORM\Column]
     private ?float $coefficient = null;
 
-    #[ORM\ManyToOne(inversedBy: 'mccs', fetch: 'EAGER')]
+    #[ORM\ManyToOne(fetch: 'EAGER', inversedBy: 'mccs')]
     private ?MccTypeEpreuve $typeEpreuve = null;
 
     public function __clone(): void
     {
         $this->setCreated(Carbon::now());
         $this->setUpdated(Carbon::now());
-    }
-
-
-    public function getAnneeUniversitaire(): ?AnneeUniversitaire
-    {
-        return $this->anneeUniversitaire;
-    }
-
-    public function setAnneeUniversitaire(?AnneeUniversitaire $anneeUniversitaire): self
-    {
-        $this->anneeUniversitaire = $anneeUniversitaire;
-
-        return $this;
     }
 
     public function getCoefficient(): ?float

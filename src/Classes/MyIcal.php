@@ -1,27 +1,30 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyIcal.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:35
+ * @lastUpdate 11/03/2024 06:51
  */
 
 namespace App\Classes;
 
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
-use function chr;
 use DateTimeInterface;
+use function chr;
 
+//todo: extraire partie Json dans une autre classe...
 /**
  * Class MyIcal.
  */
 class MyIcal
 {
+    public const HOURS_TO_SECONDS = 3600;
     protected ?string $dtstart = null; // DTSTART: Date de début de l'événement
     protected ?string $dtend = null; // DTEND: Date de fin de l'événement
     protected ?string $summary = null; // SUMMARY: Titre de l'événement
+    protected ?string $color = null; // SUMMARY: Titre de l'événement
     protected ?string $location = null; // LOCATION: Lieu de l'événement
     protected ?string $description = null; // DESCRIPTION: Description de l'événement
     protected ?string $filevt;
@@ -103,6 +106,7 @@ class MyIcal
         $this->filevt .= $this->summary.chr(13).chr(10);
         $this->filevt .= $this->location.chr(13).chr(10);
         $this->filevt .= $this->description.chr(13).chr(10);
+        $this->filevt .= $this->color . chr(13) . chr(10);
         $this->filevt .= 'END:VEVENT'.chr(13).chr(10);
     }
 
@@ -111,42 +115,50 @@ class MyIcal
         $h = explode(':', $this->tabheure[$creneau]);
 
         $timestamp = mktime($h[0], $h[1], '00', $date->month, $date->day, $date->year);
-        $this->dtstart = 'DTSTART:'.$this->calculHeureEte($timestamp);
+        $this->dtstart = 'DTSTART:' . $this->dateToCal($this->calculHeureEte($timestamp));
+    }
+
+    public function getDtstartJson(CarbonInterface $date, $creneau): string
+    {
+        $h = explode(':', $this->tabheure[$creneau]);
+
+        $timestamp = mktime($h[0], $h[1], '00', $date->month, $date->day, $date->year);
+        return $this->dateToJson($timestamp);
     }
 
     public function calculHeureEte(int $timestamp): string
     {
-        $annee_courante = strftime('%Y', $timestamp);
-        $mois_courant = strftime('%m', $timestamp);
-        $jour_courant = strftime('%d', $timestamp);
+        $annee_courante = (int)date('Y', $timestamp);
+        $mois_courant = (int)date('m', $timestamp);
+        $jour_courant = (int)date('d', $timestamp);
         $decalage_horaire = 0;
         $num_dernier_dimanche = [];
 
         if (($mois_courant > 10) || ($mois_courant < 3)) {
-            $decalage_horaire = 3600;
+            $decalage_horaire = self::HOURS_TO_SECONDS;
         } elseif (($mois_courant > 3) && ($mois_courant < 10)) {
-            $decalage_horaire = 2 * 3600;
+            $decalage_horaire = 2 * self::HOURS_TO_SECONDS;
         } elseif (3 === (int) $mois_courant) {
             $num_dernier_dimanche[$annee_courante][$mois_courant] = $this->getDernierDimancheDuMois2($mois_courant,
                     $annee_courante);
 
             if ($jour_courant >= $num_dernier_dimanche[$annee_courante][$mois_courant]) {
-                $decalage_horaire = 2 * 3600;
+                $decalage_horaire = 2 * self::HOURS_TO_SECONDS;
             } else {
-                $decalage_horaire = 3600;
+                $decalage_horaire = self::HOURS_TO_SECONDS;
             }
         } elseif (10 === (int) $mois_courant) {
             $num_dernier_dimanche[$annee_courante][$mois_courant] = $this->getDernierDimancheDuMois2($mois_courant,
                     $annee_courante);
 
             if ($jour_courant >= $num_dernier_dimanche[$annee_courante][$mois_courant]) {
-                $decalage_horaire = 3600;
+                $decalage_horaire = self::HOURS_TO_SECONDS;
             } else {
-                $decalage_horaire = 2 * 3600;
+                $decalage_horaire = 2 * self::HOURS_TO_SECONDS;
             }
         }
 
-        return $this->dateToCal($timestamp - $decalage_horaire);
+        return $timestamp - $decalage_horaire;
     }
 
     public function getDernierDimancheDuMois2($mois, $annee): int
@@ -154,7 +166,7 @@ class MyIcal
         // Fonction utilisée pour les mois de mars et octobre (31 jours)
         for ($i = 31; $i > 1; --$i) {
             $ts = mktime(0, 0, 0, $mois, $i, $annee);
-            if ('7' === strftime('%u', $ts)) {
+            if ('7' === date('N', $ts)) {
                 break;
             }
         }
@@ -167,12 +179,25 @@ class MyIcal
         return date('Ymd\THis\Z', $timestamp);
     }
 
+    public function dateToJson($timestamp): string
+    {
+        return date('Y-m-d\TH:i:s', $timestamp);
+    }
+
     public function setDtend(CarbonInterface $date, $creneau): void
     {
         $h = explode(':', $this->tabheure[$creneau]);
 
         $timestamp = mktime($h[0], $h[1], '00', $date->month, $date->day, $date->year);
-        $this->dtend = 'DTEND:'.$this->calculHeureEte($timestamp);
+        $this->dtend = 'DTEND:' . $this->dateToCal($this->calculHeureEte($timestamp));
+    }
+
+    public function getDtendJson(CarbonInterface $date, $creneau): string
+    {
+        $h = explode(':', $this->tabheure[$creneau]);
+
+        $timestamp = mktime($h[0], $h[1], '00', $date->month, $date->day, $date->year);
+        return $this->dateToJson($timestamp);
     }
 
     public function setLocation($lieu): void
@@ -195,5 +220,10 @@ class MyIcal
         $this->filevt .= 'END:VCALENDAR'.chr(13).chr(10);
 
         return $this->filevt;
+    }
+
+    public function setColor(mixed $couleur): void
+    {
+        $this->color = 'COLOR:' . $couleur;
     }
 }

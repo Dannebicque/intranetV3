@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Enums/CategorieIutEnum.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/08/2023 15:19
+ * @lastUpdate 24/02/2024 08:31
  */
 
 namespace App\Enums;
@@ -20,15 +20,10 @@ enum CategorieIutEnum: string implements BadgeEnumInterface
     {
         //méthode temporaire en attendant la bascule complète avec l'entitée
         return match ($personnel_type) {
-            'ATER' => CategorieIutEnum::PERMANENT,
-            'PRAG' => CategorieIutEnum::PERMANENT,
-            'MCF' => CategorieIutEnum::PERMANENT,
-            'PRCE' => CategorieIutEnum::PERMANENT,
-            'contractuel' => CategorieIutEnum::PERMANENT,
-            'vacataire' => CategorieIutEnum::VACATAIRE,
-            'PRO' => CategorieIutEnum::VACATAIRE,
-            'ASS' => CategorieIutEnum::ADMINISTRATIF,
-            default => CategorieIutEnum::AUTRE,
+            'ATER', 'PRAG', 'MCF', 'PRCE', 'contractuel' => self::PERMANENT,
+            'vacataire', 'PRO' => self::VACATAIRE,
+            'ASS' => self::ADMINISTRATIF,
+            default => self::AUTRE,
         };
     }
 

@@ -3,6 +3,10 @@ filtre:
   typeDiplome: Type de diplôme
 
 table:
+  matiere_code_element: 'Code Element'
+  matiere_code: 'Code'
+  matiere_libelle: 'Libellé'
+  etat_plan_cours: 'Etat du plan de cours'
   contact_personnel: 'Contact/Entreprise'
   type: 'Type'
   questionnaireQuestionTags: 'Tags'

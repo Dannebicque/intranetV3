@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/02/2024 07:09
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Controller\administration;
@@ -26,6 +26,7 @@ use App\Repository\AbsenceRepository;
 use App\Repository\EtudiantRepository;
 use App\Table\AbsenceListeTableType;
 use App\Utils\Tools;
+use Exception;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,7 +37,7 @@ use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 class AbsenceController extends BaseController
 {
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     #[Route('/semestre/etudiant/{etudiant}',
         name: 'administration_absences_liste_absence_etudiant',
@@ -75,7 +76,7 @@ class AbsenceController extends BaseController
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     #[Route('/semestre/{semestre}/liste', name: 'administration_absences_semestre_liste', options: ['expose' => true])]
     public function liste(
@@ -138,7 +139,7 @@ class AbsenceController extends BaseController
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     #[Route('/semestre/{semestre}/export.{_format}',
         name: 'administration_absences_semestre_liste_export',

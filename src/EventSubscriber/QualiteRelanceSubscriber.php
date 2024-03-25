@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/EventSubscriber/QualiteRelanceSubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/12/2022 09:21
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\EventSubscriber;
@@ -12,6 +12,7 @@ namespace App\EventSubscriber;
 use App\Classes\Mail\MailerFromTwig;
 use App\Event\QualiteRelanceEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
 /**
  * Envoi un mail de bienvenue à chaque creation d'un utilisateur.
@@ -21,7 +22,7 @@ class QualiteRelanceSubscriber implements EventSubscriberInterface
     /**
      * RegistrationNotifySubscriber constructor.
      */
-    public function __construct(private readonly MailerFromTwig $mailer)
+    public function __construct(private MailerFromTwig $mailer)
     {
     }
 
@@ -34,7 +35,7 @@ class QualiteRelanceSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function onSendRelance(QualiteRelanceEvent $event): void
     {
@@ -55,7 +56,7 @@ class QualiteRelanceSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function onSendSynthese(QualiteRelanceEvent $event): void
     {

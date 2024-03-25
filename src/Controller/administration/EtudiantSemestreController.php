@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EtudiantSemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/09/2022 09:13
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Controller\administration;
@@ -18,9 +18,11 @@ use App\Entity\Semestre;
 use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\EtudiantRepository;
 use App\Table\EtudiantSemestreTableType;
+use Exception;
+use JsonException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Class EtudiantController.
@@ -65,7 +67,7 @@ class EtudiantSemestreController extends BaseController
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     #[Route(path: '/import/photo/zip/{semestre}', name: 'administration_etudiant_import_photo_zip', requirements: ['semestre' => '\d+'], methods: ['GET|POST'])]
     public function importPhotoZip(MyUpload $myUpload, Request $request, Semestre $semestre): Response
@@ -87,7 +89,7 @@ class EtudiantSemestreController extends BaseController
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     #[Route(path: '/{semestre}', name: 'administration_etudiant_semestre_index', requirements: ['semestre' => '\d+'])]
     public function semestre(Request $request, Semestre $semestre): Response

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStageMailTemplate.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyStageMailTemplate.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 23/02/2024 21:35
  */
 
 /*
@@ -23,8 +23,8 @@ use Doctrine\ORM\NonUniqueResultException;
 class MyStageMailTemplate
 {
     public function __construct(
-        private readonly StageMailTemplateRepository $stageMailTemplateRepository,
-        private readonly EntityManagerInterface $entityManager
+        private StageMailTemplateRepository $stageMailTemplateRepository,
+        private EntityManagerInterface      $entityManager
     ) {
     }
 

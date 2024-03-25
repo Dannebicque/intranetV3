@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/ImportDiplomeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/07/2022 10:00
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Controller\superAdministration;
@@ -15,15 +15,16 @@ use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Diplome;
 use App\Repository\PpnRepository;
+use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route(path: '/administratif/diplome-import')]
 class ImportDiplomeController extends BaseController
 {
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     #[Route(path: '/{id}', name: 'sa_diplome_import_index')]
     public function index(

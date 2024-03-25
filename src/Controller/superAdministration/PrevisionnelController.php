@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/09/2023 12:16
+ * @lastUpdate 23/02/2024 18:40
  */
 
 namespace App\Controller\superAdministration;
@@ -26,7 +26,7 @@ use App\Repository\PrevisionnelRepository;
 use App\Repository\TypeHrsRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Class PrevisionnelController.
@@ -73,7 +73,7 @@ class PrevisionnelController extends BaseController
         $intervenant = $request->query->get('intervenant');
         $matiere = $request->query->get('matiere');
         $diplome = $request->query->get('diplome');
-        $departement = $request->query->get('departement', null);
+        $departement = $request->query->get('departement');
         $annee = (int)$request->query->get('annee');
         $personnel = $personnelRepository->find($intervenant);
 

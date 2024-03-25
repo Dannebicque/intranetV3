@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Enums/DecisionUeEnum.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/07/2023 18:14
+ * @lastUpdate 24/02/2024 08:33
  */
 
 namespace App\Enums;
@@ -24,15 +24,9 @@ enum DecisionUeEnum: string
     public function color(): string
     {
         return match ($this) {
-            self::UE_EN_COURS => 'info',
-            self::UE_VALIDE => 'success',
+            self::UE_VALIDE, self::UE_VCJ, self::UE_VCA => 'success',
             self::UE_NON_VALIDE => 'danger',
-            self::UE_DEMISSIONNAIRE => 'warning',
-            self::UE_REORIENTE => 'warning',
-            self::UE_VCJ => 'success',
-            self::UE_VCA => 'success',
-            self::UE_BLANCHIMENT => 'info',
-            self::UE_DECISION_REPORTEE => 'info',
+            self::UE_DEMISSIONNAIRE, self::UE_REORIENTE => 'warning',
             default => 'info',
         };
     }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Utils/Tools.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/12/2023 11:15
+ * @lastUpdate 24/02/2024 08:52
  */
 
 /*
@@ -16,6 +16,7 @@ namespace App\Utils;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use Exception;
+use ReflectionMethod;
 use RuntimeException;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 use function chr;
@@ -36,7 +37,7 @@ abstract class Tools
         }
 
         if ($types[0] === 'float' || $types[0] === 'double' || $types[0] === 'mixed') {
-            return Tools::convertToFloat($value);
+            return self::convertToFloat($value);
         }
 
         if ($types[0] === 'string') {
@@ -48,7 +49,7 @@ abstract class Tools
 
     private static function getMethodParameterTypes($className, string $methodName): array
     {
-        $method = new \ReflectionMethod($className, $methodName);
+        $method = new ReflectionMethod($className, $methodName);
         $parameters = $method->getParameters();
 
         $types = [];
@@ -169,8 +170,12 @@ abstract class Tools
         return (new AsciiSlugger())->slug($texte);
     }
 
-    public static function personnaliseTexte(string $texte, array $config): string
+    public static function personnaliseTexte(string $texte, ?array $config = []): string
     {
+        if (null === $config) {
+            $config = [];
+        }
+
         foreach ($config as $key => $elt) {
             $texte = str_replace('{{'.$key.'}}', $elt, $texte);
         }

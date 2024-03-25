@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Enums/PlanCoursEnum.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Enums/PlanCoursEnum.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/04/2022 14:47
+ * @lastUpdate 29/02/2024 11:35
  */
 
 namespace App\Enums;
@@ -20,6 +20,15 @@ enum PlanCoursEnum: string implements BadgeEnumInterface
             self::NONE => 'danger',
             self::EN_COURS => 'warning',
             self::COMPLET => 'success',
+        };
+    }
+
+    public function libelle(): string
+    {
+        return match ($this) {
+            self::NONE => 'Aucun plan de cours',
+            self::EN_COURS => 'Plan de cours en cours',
+            self::COMPLET => 'Plan de cours complet',
         };
     }
 }

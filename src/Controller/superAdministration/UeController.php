@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/UeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/12/2022 12:09
+ * @lastUpdate 28/02/2024 15:11
  */
 
 namespace App\Controller\superAdministration;
@@ -19,10 +19,11 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use function count;
 
-#[Route(path: '/administratif/structure/unite-enseignement')]
+#[Route(path: '/{type}/structure/unite-enseignement', requirements: ['type' => 'administratif|administration'], defaults: ['type' => 'administratif'])]
 class UeController extends BaseController
 {
     #[Route(path: '/new/{semestre}', name: 'sa_ue_new', methods: 'GET|POST')]
@@ -45,7 +46,8 @@ class UeController extends BaseController
 
                 return $this->redirectToRoute(
                     'sa_structure_index',
-                    ['departement' => $ue->getSemestre()->getAnnee()->getDiplome()->getDepartement()->getId()]
+                    ['departement' => $ue->getSemestre()->getAnnee()->getDiplome()->getDepartement()->getId(),
+                        'type' => $request->get('type')]
                 );
             }
 
@@ -59,9 +61,11 @@ class UeController extends BaseController
     }
 
     #[Route(path: '/{id}', name: 'sa_ue_show', methods: 'GET')]
-    public function show(Ue $ue): Response
+    public function show(
+        Request $request,
+        Ue      $ue): Response
     {
-        return $this->render('structure/ue/show.html.twig', ['ue' => $ue]);
+        return $this->render('structure/ue/show.html.twig', ['ue' => $ue, 'type' => $request->get('type')]);
     }
 
     #[Route(path: '/{id}/edit', name: 'sa_ue_edit', methods: 'GET|POST')]
@@ -82,7 +86,7 @@ class UeController extends BaseController
 
                 return $this->redirectToRoute(
                     'sa_structure_index',
-                    ['departement' => $ue->getDiplome()->getDepartement()->getId()]
+                    ['departement' => $ue->getDiplome()->getDepartement()->getId(), 'type' => $request->get('type')]
                 );
             }
 
@@ -112,14 +116,16 @@ class UeController extends BaseController
     }
 
     #[Route(path: '/{id}/duplicate', name: 'sa_ue_duplicate', methods: 'GET|POST')]
-    public function duplicate(Ue $ue): Response
+    public function duplicate(
+        Request $request,
+        Ue      $ue): Response
     {
         $newUe = clone $ue;
         $newUe->setLibelle($newUe->getLibelle().' copie');
         $this->entityManager->persist($newUe);
         $this->entityManager->flush();
 
-        return $this->redirectToRoute('sa_ue_edit', ['id' => $newUe->getId()]);
+        return $this->redirectToRoute('sa_ue_edit', ['id' => $newUe->getId(), 'type' => $request->get('type')]);
     }
 
     #[Route(path: '/{id}', name: 'sa_ue_delete', methods: 'DELETE')]
@@ -148,7 +154,7 @@ class UeController extends BaseController
     }
 
     #[Route(path: '/activate/{ue}/{etat}', name: 'sa_ue_activate', methods: ['GET'])]
-    #[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_SUPER_ADMIN')]
+    #[IsGranted('ROLE_SUPER_ADMIN')]
     public function activate(Ue $ue, bool $etat): RedirectResponse
     {
         $ue->setActif($etat);

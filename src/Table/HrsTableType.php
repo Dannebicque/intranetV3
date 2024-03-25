@@ -1,25 +1,14 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/HrsTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 28/02/2024 12:51
  */
 
 namespace App\Table;
 
-use DavidAnnebicque\TableBundle\Adapter\EntityAdapter;
-use DavidAnnebicque\TableBundle\Column\EntityColumnType;
-use DavidAnnebicque\TableBundle\Column\PropertyColumnType;
-use DavidAnnebicque\TableBundle\Column\WidgetColumnType;
-use DavidAnnebicque\TableBundle\TableBuilder;
-use DavidAnnebicque\TableBundle\TableType;
-use DavidAnnebicque\TableBundle\Widget\Type\RowDeleteLinkType;
-use DavidAnnebicque\TableBundle\Widget\Type\RowDuplicateLinkType;
-use DavidAnnebicque\TableBundle\Widget\Type\RowEditLinkType;
-use DavidAnnebicque\TableBundle\Widget\Type\StimulusButtonModalType;
-use DavidAnnebicque\TableBundle\Widget\WidgetBuilder;
 use App\Entity\Departement;
 use App\Entity\Hrs;
 use App\Entity\Personnel;
@@ -28,6 +17,16 @@ use App\Form\Type\SearchType;
 use App\Repository\PersonnelRepository;
 use App\Repository\TypeHrsRepository;
 use App\Table\ColumnType\PersonnelColumnType;
+use Dannebicque\TableBundle\Adapter\EntityAdapter;
+use Dannebicque\TableBundle\Column\EntityColumnType;
+use Dannebicque\TableBundle\Column\PropertyColumnType;
+use Dannebicque\TableBundle\Column\WidgetColumnType;
+use Dannebicque\TableBundle\TableBuilder;
+use Dannebicque\TableBundle\TableType;
+use Dannebicque\TableBundle\Widget\Type\RowDeleteLinkType;
+use Dannebicque\TableBundle\Widget\Type\RowDuplicateLinkType;
+use Dannebicque\TableBundle\Widget\Type\StimulusButtonModalType;
+use Dannebicque\TableBundle\Widget\WidgetBuilder;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -95,13 +94,7 @@ class HrsTableType extends TableType
                     'modalUrl' => $this->router->generate('administration_hrs_show',
                         ['id' => $s->getId()]),
                 ]);
-                $builder->add('edit', RowEditLinkType::class, [
-                    'route' => 'administration_hrs_edit',
-                    'route_params' => [
-                        'id' => $s->getId(),
-                    ],
-                    'xhr' => false,
-                ]);
+
                 $builder->add('delete', RowDeleteLinkType::class, [
                     'route' => 'administration_hrs_delete',
                     'route_params' => ['id' => $s->getId()],

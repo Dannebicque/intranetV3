@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Previsionnel/PrevisionnelImport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/09/2022 11:45
+ * @lastUpdate 23/02/2024 21:41
  */
 
 namespace App\Classes\Previsionnel;
@@ -15,8 +15,9 @@ use App\Entity\Diplome;
 use App\Entity\Previsionnel;
 use App\Repository\PersonnelRepository;
 use App\Utils\Tools;
-use function array_key_exists;
 use Doctrine\ORM\EntityManagerInterface;
+use Exception;
+use function array_key_exists;
 
 /**
  * Class PrevisionnelImport.
@@ -24,16 +25,16 @@ use Doctrine\ORM\EntityManagerInterface;
 class PrevisionnelImport
 {
     public function __construct(
-        private readonly TypeMatiereManager $typeMatiereManager,
-        private readonly PrevisionnelManager $previsionnelManager,
-        private readonly EntityManagerInterface $entityManager,
-        private readonly PersonnelRepository $personnelRepository,
-        private readonly MyUpload $myUpload
+        private TypeMatiereManager     $typeMatiereManager,
+        private PrevisionnelManager    $previsionnelManager,
+        private EntityManagerInterface $entityManager,
+        private PersonnelRepository    $personnelRepository,
+        private MyUpload               $myUpload
     ) {
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function importCsv(array $data): bool
     {

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 23/02/2024 21:40
  */
 
 /*
@@ -42,17 +42,19 @@ class MyEdtExport
      * MyEdtExport constructor.
      */
     public function __construct(
+        protected EdtManager            $edtManager,
         protected EdtPlanningRepository $edtPlanningRepository,
-        protected EdtCelcatRepository $celcatEventsRepository,
-        protected CalendrierRepository $calendrierRepository,
-        private readonly MyEdtIntranet $myEdtIntranet,
-        private readonly MyEdtCelcat $myEdtCelcat,
-        protected MyIcal $myIcal,
-        private readonly MyPDF $myPDF,
+        protected EdtCelcatRepository   $celcatEventsRepository,
+        protected CalendrierRepository  $calendrierRepository,
+        private readonly MyEdtIntranet  $myEdtIntranet,
+        private readonly MyEdtCelcat    $myEdtCelcat,
+        protected MyIcal                $myIcal,
+        private readonly MyPDF          $myPDF,
         private readonly TypeMatiereManager $typeMatiereManager,
-        KernelInterface $kernel
-    ) {
-        $this->dir = $kernel->getProjectDir().'/public/upload/';
+        KernelInterface                 $kernel
+    )
+    {
+        $this->dir = $kernel->getProjectDir() . '/public/upload/';
     }
 
     public function export(UserInterface $user, string $_format, string $type, AnneeUniversitaire $anneeUniversitaire): bool|string
@@ -65,6 +67,12 @@ class MyEdtExport
                 $tabMatieresDepartement = $this->typeMatiereManager->findByDepartementArray($departement->getDepartement());
                 $temp[] = $this->edtPlanningRepository->getByPersonnelArray($user, $departement->getDepartement(),
                     $tabMatieresDepartement);
+//                $temp[] = $this->edtManager->initPersonnel(
+//                    'intranet',
+//                    $this->calendrier,
+//                    $user,
+//                    $anneeUniversitaire, $tabMatieresDepartement,
+//                );
             }
 
             $temp[] = $this->celcatEventsRepository->getByPersonnelArray($user);
@@ -79,12 +87,12 @@ class MyEdtExport
                 $max = $emaineActuelle->getSemaineFormation() + $nbSemaines;
                 if ($user->getDepartement()->isOptUpdateCelcat()) {
                     for ($i = $emaineActuelle->getSemaineFormation(); $i < $max; ++$i) {
-                        $temp[] = $this->celcatEventsRepository->getByEtudiantArray($user, $i,$user->getAnneeUniversitaire());
+                        $temp[] = $this->celcatEventsRepository->getByEtudiantArray($user, $i, $user->getAnneeUniversitaire());
                     }
                 } else {
                     if ($user->getSemestre()->getDiplome()->isApc()) {
                         $matieres = $this->typeMatiereManager->findByReferentielOrdreSemestre(
-                            $user->getSemestre(),$user->getSemestre()->getDiplome()->getReferentiel());
+                            $user->getSemestre(), $user->getSemestre()->getDiplome()->getReferentiel());
                     } else {
                         $matieres = $this->typeMatiereManager->findBySemestre($user->getSemestre());
                     }
@@ -106,8 +114,28 @@ class MyEdtExport
 
         return match ($_format) {
             'ics' => $this->genereIcal($edt),// todo: gérer avec le EvenementCollection
+            'json' => $this->genereJson($edt),// todo: gérer avec le EvenementCollection
             default => false,
         };
+    }
+
+    private function genereJson(array $edt): bool|string
+    {
+        $t = [];
+        foreach ($edt as $pl) {
+            if (null !== $pl['date']) {
+                $temp['id'] = $pl['id'];
+                $temp['start'] = $this->myIcal->getDtstartJson($pl['date'], $pl['debut']);
+                $temp['end'] = $this->myIcal->getDtendJson($pl['date'], $pl['fin']);
+                $temp['description'] = $pl['commentaire'];
+                $temp['title'] = $pl['ical']; // soit typeIdMatiere si Intranet, sinon OK pour Celcat...
+                $temp['extendedProps']['salle'] = $pl['salle'];
+                $temp['backgroundColor'] = $pl['couleur'];
+                $t[] = $temp;
+            }
+        }
+
+        return json_encode($t, JSON_PRETTY_PRINT);
     }
 
     private function genereIcal(mixed $edt): bool|string
@@ -119,6 +147,7 @@ class MyEdtExport
                 $this->myIcal->setDescription($pl['commentaire']);
                 $this->myIcal->setSummary($pl['ical']); // soit typeIdMatiere si Intranet, sinon OK pour Celcat...
                 $this->myIcal->setLocation($pl['salle']);
+                $this->myIcal->setColor($pl['couleur']);
                 $this->myIcal->addEvent($pl['id']);
             }
         }
@@ -136,7 +165,7 @@ class MyEdtExport
     public function getAllDocs(Departement $departement): array
     {
         // parcour fichiers
-        $folder = $this->dir.'pdfedt/'.$departement->getId().'/';
+        $folder = $this->dir . 'pdfedt/' . $departement->getId() . '/';
         $dossier = opendir($folder);
 
         $t = [];
@@ -161,9 +190,9 @@ class MyEdtExport
     }
 
     /**
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
-     * @throws \Twig\Error\LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws LoaderError
      */
     private function genereaAllPdf(string $source, ?Departement $departement): void
     {
@@ -180,7 +209,7 @@ class MyEdtExport
      */
     public function generePdf(Personnel $personnel, string $source, Departement $departement): void
     {
-        $dir = $this->dir.'pdfedt/'.$departement->getId().'/';
+        $dir = $this->dir . 'pdfedt/' . $departement->getId() . '/';
         Tools::checkDirectoryExist($dir);
         // todo: passer par le DTO Evenement, comme ca compatible avec celcat
         // todo: gérer l'année universitaire d'export
@@ -193,7 +222,7 @@ class MyEdtExport
                     'departement' => $departement,
                     'matieres' => $this->typeMatiereManager->findByDepartementArray($departement),
                 ],
-                $personnel->getId().'_'.$personnel->getInitiales(),
+                $personnel->getId() . '_' . $personnel->getInitiales(),
                 $dir);
         }
     }
@@ -219,12 +248,12 @@ class MyEdtExport
 
     public function compressDir(Departement $departement): string
     {
-        $dir = $this->dir.'pdfedt/'.$departement->getId().'/';
+        $dir = $this->dir . 'pdfedt/' . $departement->getId() . '/';
         Tools::checkDirectoryExist($dir);
         $zip = new ZipArchive();
-        $fileName = 'pdf-edt-'.date('YmdHis').'.zip';
+        $fileName = 'pdf-edt-' . date('YmdHis') . '.zip';
         // The name of the Zip documents.
-        $zipName = $this->dir.$fileName;
+        $zipName = $this->dir . $fileName;
 
         $zip->open($zipName, ZipArchive::CREATE);
         $tabFiles = [];
@@ -235,7 +264,7 @@ class MyEdtExport
             if ('.' !== $file && '..' !== $file) {
                 $tabFiles[] = $file;
                 $zip->addFile($file,
-                    'pdfEdt-'.$file.'.pdf');
+                    'pdfEdt-' . $file . '.pdf');
             }
         }
 
@@ -248,16 +277,16 @@ class MyEdtExport
 
         $response = new Response(file_get_contents($zipName));
         $response->headers->set('Content-Type', 'application/zip');
-        $response->headers->set('Content-Disposition', 'attachment;filename="'.$zipName.'"');
+        $response->headers->set('Content-Disposition', 'attachment;filename="' . $zipName . '"');
         $response->headers->set('Content-length', filesize($zipName));
 
         return $fileName;
     }
 
     /**
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\SyntaxError
-     * @throws \Twig\Error\LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     * @throws LoaderError
      */
     public function genereOneDocument(string $source, string $_format, Personnel $personnel, Departement $departement): void
     {

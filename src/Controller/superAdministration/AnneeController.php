@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/AnneeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/12/2022 12:09
+ * @lastUpdate 28/02/2024 14:51
  */
 
 namespace App\Controller\superAdministration;
@@ -18,10 +18,11 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use function count;
 
-#[Route(path: '/administratif/structure/annee')]
+#[Route(path: '/{type}/structure/annee', requirements: ['type' => 'administratif|administration'], defaults: ['type' => 'administratif'])]
 class AnneeController extends BaseController
 {
     #[Route(path: '/nouveau/{diplome}', name: 'sa_annee_new', methods: 'GET|POST')]
@@ -152,7 +153,7 @@ class AnneeController extends BaseController
     }
 
     #[Route(path: '/activate/{annee}/{etat}', name: 'sa_annee_activate', methods: ['GET'])]
-    #[\Symfony\Component\Security\Http\Attribute\IsGranted('ROLE_SUPER_ADMIN')]
+    #[IsGranted('ROLE_SUPER_ADMIN')]
     public function activate(Annee $annee, bool $etat): RedirectResponse
     {
         $annee->setActif($etat);

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/ReservationMaterielCommunController.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/ReservationMaterielCommunController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/10/2021 12:14
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Controller\administration;
@@ -14,9 +14,10 @@ use App\Classes\MyMaterielCommunReservation;
 use App\Controller\BaseController;
 use App\Repository\MaterielCommunPretRepository;
 use App\Repository\MaterielCommunRepository;
+use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 /**
  * Class AbsenceController.
@@ -42,7 +43,7 @@ class ReservationMaterielCommunController extends BaseController
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     #[Route(path: '/ajax/add', name: 'administration_reservation_materiel_commun_add', options: ['expose' => true], methods: ['POST'])]
     public function addReservation(MyMaterielCommunReservation $myReservationMaterielCommun, Request $request): Response

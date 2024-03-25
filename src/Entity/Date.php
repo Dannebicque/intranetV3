@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Date.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/05/2022 20:53
+ * @lastUpdate 29/02/2024 22:10
  */
 
 namespace App\Entity;
@@ -76,13 +76,6 @@ class Date extends BaseEntity
     #[Groups(groups: ['date_administration'])]
     #[ORM\Column(type: Types::BOOLEAN)]
     private bool $allday = false;
-
-    /**
-     * @deprecated
-     */
-    #[Groups(groups: ['date_administration'])]
-    #[ORM\Column(type: Types::STRING, length: 1)]
-    private string $qui = '-';
 
     #[ORM\ManyToOne(targetEntity: Departement::class)]
     private Departement $departement;
@@ -200,18 +193,6 @@ class Date extends BaseEntity
     public function setAllday(bool $allday): void
     {
         $this->allday = $allday;
-    }
-
-    /** @deprecated */
-    public function getQui(): ?string
-    {
-        return $this->qui;
-    }
-
-    /** @deprecated */
-    public function setQui(string $qui): void
-    {
-        $this->qui = $qui;
     }
 
     public function getDepartement(): ?Departement

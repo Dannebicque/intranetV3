@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/ServiceRealise/ServiceRealiseCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/09/2022 12:07
+ * @lastUpdate 24/02/2024 08:10
  */
 
 /*
@@ -16,7 +16,6 @@ namespace App\Classes\ServiceRealise;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\DTO\EvenementEdt;
 use App\Entity\AnneeUniversitaire;
-use App\Entity\CelcatEvent;
 use App\Entity\Personnel;
 use App\Exception\MatiereNotFoundException;
 use App\Interfaces\UtilisateurInterface;
@@ -25,13 +24,13 @@ use App\Repository\EdtCelcatRepository;
 class ServiceRealiseCelcat implements ServiceRealiseInterface
 {
     public function __construct(
-        private readonly EdtCelcatRepository $celcatEventsRepository,
-        private readonly TypeMatiereManager $typeMatiereManager
+        private EdtCelcatRepository $celcatEventsRepository,
+        private TypeMatiereManager  $typeMatiereManager
     ) {
     }
 
     /**
-     * @throws \App\Exception\MatiereNotFoundException
+     * @throws MatiereNotFoundException
      */
     public function getServiceRealiseParMatiere(int $idMatiere, string $type, AnneeUniversitaire $anneeUniversitaire): array
     {
@@ -62,9 +61,7 @@ class ServiceRealiseCelcat implements ServiceRealiseInterface
         return $tabEvent;
     }
 
-    /**
-     * @param CelcatEvent $event
-     */
+
     public function convertToEvenementEdt($event): EvenementEdt
     {
         $ev = new EvenementEdt();

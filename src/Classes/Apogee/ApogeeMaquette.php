@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Apogee/ApogeeMaquette.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/07/2022 11:56
+ * @lastUpdate 29/02/2024 21:57
  */
 
 namespace App\Classes\Apogee;
@@ -23,6 +23,7 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class ApogeeMaquette
 {
+    //todo: encore utilisé ?
     public function __construct(protected EntityManagerInterface $entityManager)
     {
     }

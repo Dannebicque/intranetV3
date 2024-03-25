@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyStageEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/11/2022 12:13
+ * @lastUpdate 24/02/2024 08:39
  */
 
 namespace App\Classes;
@@ -38,6 +38,7 @@ class MyStageEtudiant
 
     /**
      * @throws NonUniqueResultException
+     * @throws Exception
      */
     public function changeEtat(StagePeriode $stagePeriode, Etudiant $etudiant, string $etat): void
     {

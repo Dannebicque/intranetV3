@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Section/Section.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/01/2023 18:08
+ * @lastUpdate 24/02/2024 08:39
  */
 
 namespace App\Components\Questionnaire\Section;
@@ -12,7 +12,9 @@ namespace App\Components\Questionnaire\Section;
 use App\Components\Questionnaire\Adapter\QuestionnaireQuestionAdapter;
 use App\Components\Questionnaire\DTO\ListeChoix;
 use App\Components\Questionnaire\DTO\ReponsesUser;
+use App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException;
 use App\Components\Questionnaire\TypeQuestion\AbstractQuestion;
+use JsonException;
 
 class Section extends AbstractSection
 {
@@ -48,7 +50,8 @@ class Section extends AbstractSection
     }
 
     /**
-     * @throws \App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException
+     * @throws TypeQuestionNotFoundException
+     * @throws JsonException
      */
     public function prepareQuestions(array $options = [], ?ReponsesUser $reponsesUser = null): void
     {
@@ -74,7 +77,7 @@ class Section extends AbstractSection
         $this->questions->addQuestion($question);
     }
 
-    public function calculResultatsQuestions(array $options = [], ListeChoix $listeChoix): void
+    public function calculResultatsQuestions(array $options, ListeChoix $listeChoix): void
     {
         foreach ($this->section->questions as $question) {
             $questionnaireQuestionAdapter = new QuestionnaireQuestionAdapter($this->questionnaireRegistry,

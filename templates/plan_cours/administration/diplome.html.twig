@@ -1,6 +1,6 @@
 <div class="card">
     <header class="card-header">
-        <h4 class="card-title">{{ 'adm.plan-cours.diplome.heading'|trans }} | {{ diplome.libelle }}</h4>
+        <h4 class="card-title">{{ 'adm.plan_cours.diplome.heading'|trans }} | {{ diplome.libelle }}</h4>
         <div class="card-header-actions">
 
         </div>
@@ -9,73 +9,5 @@
 
     <div class="card-body">
         {{table_render(table)}}
-{#        <ul class="nav nav-tabs">#}
-{#            {% for semestre in semestres %}#}
-{#                <li class="nav-item">#}
-{#                    <a class="nav-link {% if loop.first %} active{% endif %}" data-bs-toggle="tab"#}
-{#                       href="#semestre{{ semestre.id }}">{{ semestre.libelle }}</a>#}
-{#                </li>#}
-{#            {% endfor %}#}
-{#        </ul>#}
-{#        <!-- Tab panes -->#}
-{#        <div class="tab-content">#}
-{#            {% for semestre in semestres %}#}
-{#                <div class="tab-pane {% if loop.first %}fade active show{% endif %}"#}
-{#                     id="semestre{{ semestre.id }}">#}
-
-{#                    <table class="table table-striped table-bordered">#}
-{#                        <thead>#}
-{#                        <tr>#}
-{#                            <th>{{ 'table.code_element'|trans }}</th>#}
-{#                            <th>{{ 'table.refmatiere'|trans }}</th>#}
-{#                            <th>{{ 'table.libelle'|trans }}</th>#}
-{#                            <th>Intervenant</th>#}
-{#                            <th>Plan de cours</th>#}
-{#                            <th>{{ 'table.actions'|trans }}</th>#}
-{#                        </tr>#}
-{#                        </thead>#}
-{#                        <tbody>#}
-{#                        {% for previsionnel in previsionnels[semestre.id] %}#}
-{#                            <tr#}
-{#                                id="ligne_{{ previsionnel.id }}">#}
-{#                                <td>{{ previsionnel.matiere_code_element }}</td>#}
-{#                                <td>{{ previsionnel.matiere_code }}</td>#}
-{#                                <td>{{ previsionnel.matiere_libelle }}</td>#}
-{#                                <td>{{ previsionnel.personnel_prenom }} {{ previsionnel.personnel_nom }}</td>#}
-{#                                <td></td>#}
-
-{#                                <td>#}
-
-
-{#                                    <a href="{{ path('administration_matiere_show', {'id': previsionnel.matiere_id}) }}"#}
-{#                                       class="btn btn-info btn-outline btn-square"#}
-{#                                       data-bs-toggle="tooltip"#}
-{#                                       data-bs-placement="bottom"#}
-{#                                       title="{{ 'atitle.details'|trans }}">#}
-{#                                        <i class="{{ iconShow }}"></i>#}
-{#                                        <span class="sr-only">{{ 'atitle.details'|trans }}</span>#}
-{#                                    </a>#}
-
-{#                                    <a href="{{ path('administration_matiere_edit', {'id': matiere.id}) }}"#}
-{#                                       class="btn btn-warning btn-outline btn-square"#}
-{#                                       data-bs-toggle="tooltip"#}
-{#                                       data-bs-placement="bottom"#}
-{#                                       title="{{ 'atitle.modifier'|trans }}">#}
-{#                                        <i class="{{ iconEdit }}"></i>#}
-{#                                        <span class="sr-only">{{ 'atitle.modifier'|trans }}</span>#}
-{#                                    </a>#}
-
-{#                                </td>#}
-{#                            </tr>#}
-{#                        {% else %}#}
-{#                            <tr class="bg-pale-warning">#}
-{#                                <td colspan="12">{{ 'no.record.found'|trans }}</td>#}
-{#                            </tr>#}
-{#                        {% endfor %}#}
-{#                        </tbody>#}
-{#                    </table>#}
-{#                </div>#}
-{#            {% endfor %}#}
-{#        </div>#}
     </div>
 </div>

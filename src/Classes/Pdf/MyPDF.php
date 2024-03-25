@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Pdf/MyPDF.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/05/2022 21:23
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Classes\Pdf;
@@ -105,9 +105,9 @@ class MyPDF
     }
 
     /**
-     * @throws \Twig\Error\SyntaxError
-     * @throws \Twig\Error\RuntimeError
-     * @throws \Twig\Error\LoaderError
+     * @throws SyntaxError
+     * @throws RuntimeError
+     * @throws LoaderError
      */
     public static function setFooterHtml(string $template, array $data = []): void
     {

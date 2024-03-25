@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/UpdateEnseignant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:39
+ * @lastUpdate 29/02/2024 19:10
  */
 
 namespace App\Classes\EduSign;
@@ -15,6 +15,8 @@ use App\Repository\PersonnelRepository;
 
 class UpdateEnseignant
 {
+    private string $cleApi = '';
+
     public function __construct(
         private readonly ApiEduSign   $apiEduSign,
         protected PersonnelRepository $personnelRepository,
@@ -48,7 +50,7 @@ class UpdateEnseignant
                 }
                 if ($enseignant !== null) {
                     if ($intervenant['API_ID'] !== '') {
-                        if ($intervenant['API_ID'] !== strval($enseignant->getId())) {
+                        if ($intervenant['API_ID'] !== (string)$enseignant->getId()) {
                             dump('enseignant trouvé mais pas le bon');
                         } else {
                             dump('enseignant trouvé');

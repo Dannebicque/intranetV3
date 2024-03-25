@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/PlanCoursTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/02/2024 14:11
+ * @lastUpdate 29/02/2024 12:11
  */
 
 namespace App\Table;
@@ -14,12 +14,16 @@ use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Enums\PlanCoursEnum;
 use App\Repository\SemestreRepository;
+use App\Table\ColumnType\StatusPCBadgeColumnType;
 use BackedEnum;
-use DavidAnnebicque\TableBundle\Column\PropertyColumnType;
-use DavidAnnebicque\TableBundle\DTO\TableResult;
-use DavidAnnebicque\TableBundle\DTO\TableState;
-use DavidAnnebicque\TableBundle\TableBuilder;
-use DavidAnnebicque\TableBundle\TableType;
+use Dannebicque\TableBundle\Column\PropertyColumnType;
+use Dannebicque\TableBundle\Column\WidgetColumnType;
+use Dannebicque\TableBundle\DTO\TableResult;
+use Dannebicque\TableBundle\DTO\TableState;
+use Dannebicque\TableBundle\TableBuilder;
+use Dannebicque\TableBundle\TableType;
+use Dannebicque\TableBundle\Widget\Type\RowShowLinkType;
+use Dannebicque\TableBundle\Widget\WidgetBuilder;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\EnumType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -63,24 +67,38 @@ class PlanCoursTableType extends TableType
         $builder->addColumn('matiere_code_element', PropertyColumnType::class, [
             'order' => 'ASC',
             'label' => 'table.matiere_code_element',
-            'translation_domain' => 'messages',
+            'translation_domain' => 'table',
         ]);
         $builder->addColumn('matiere_code', PropertyColumnType::class, [
             'order' => 'ASC',
             'label' => 'table.matiere_code',
-            'translation_domain' => 'messages',
+            'translation_domain' => 'table',
         ]);
         $builder->addColumn('matiere_libelle', PropertyColumnType::class,
-            ['label' => 'table.matiere_libelle', 'translation_domain' => 'messages']);
+            ['label' => 'table.matiere_libelle', 'translation_domain' => 'table']);
 
         $builder->addColumn('personnel_display', PropertyColumnType::class,
-            ['label' => 'table.personnel', 'translation_domain' => 'messages']);
+            ['label' => 'table.personnel', 'translation_domain' => 'table']);
 
-//        $builder->addColumn('etatPlanCours', StatusBadgeEnumColumnType::class,
-//            [
-//                'label' => 'table.etat_plan_cours',
-//                'translation_domain' => 'messages',
-//            ]);
+        $builder->addColumn('etatPlanCours', StatusPCBadgeColumnType::class,
+            [
+                'label' => 'table.etat_plan_cours',
+                'translation_domain' => 'table',
+            ]);
+
+        $builder->addColumn('links', WidgetColumnType::class, [
+            'build' => function (WidgetBuilder $builder, $s) {
+                if ($s->etatPlanCours !== null) {
+                    $builder->add('show', RowShowLinkType::class, [
+                        'route' => 'app_plan_cours_apc_show',
+                        'route_params' => [
+                            'previsionnel' => $s->id,
+                        ],
+                        'xhr' => false,
+                    ]);
+                }
+            },
+        ]);
 
         $builder->setLoadUrl('administration_plan_cours_diplome', ['diplome' => $this->diplome->getId()]);
 
@@ -89,7 +107,10 @@ class PlanCoursTableType extends TableType
             $semestres = $this->diplome->getSemestres();
             $t = [];
             foreach ($semestres as $semestre) {
-                $t[$semestre->getId()] = $this->previsionnelManager->getPrevisionnelSemestre($semestre, $this->annee);
+                $previsionnels = $this->previsionnelManager->getPrevisionnelSemestre($semestre, $this->annee);
+                foreach ($previsionnels as $previsionnel) {
+                    $t[$semestre->getId()][$previsionnel->getTypeIdMatiere()] = $previsionnel;
+                }
             }
             if (isset($formData['semestre']) && array_key_exists($formData['semestre'], $t)) {
                 // filtre par semestre

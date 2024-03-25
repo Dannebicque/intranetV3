@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/EventSubscriber/MailingSubscriber.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/01/2024 17:48
+ * @lastUpdate 24/02/2024 08:59
  */
 
 namespace App\EventSubscriber;
@@ -19,6 +19,7 @@ use App\Event\JustificatifEvent;
 use App\Event\NoteEvent;
 use App\Event\RattrapageEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
 /**
  * Envoi un mail de bienvenue à chaque creation d'un utilisateur.
@@ -49,7 +50,7 @@ class MailingSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function onMailAbsenceJustified(AbsenceEvent $event): void
     {
@@ -64,7 +65,7 @@ class MailingSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function onMailAbsenceAdded(AbsenceEvent $event): void
     {
@@ -95,7 +96,7 @@ class MailingSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function onMailAddedJustificatif(JustificatifEvent $event): void
     {
@@ -116,7 +117,7 @@ class MailingSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function onMailDecisionRattrapage(RattrapageEvent $event): void
     {
@@ -137,7 +138,7 @@ class MailingSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function onMailDecisionJustificatif(JustificatifEvent $event): void
     {
@@ -159,7 +160,7 @@ class MailingSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function onMailDeleteJustificatif(JustificatifEvent $event): void
     {
@@ -173,7 +174,7 @@ class MailingSubscriber implements EventSubscriberInterface
         }
     }
 
-    public function onMailDemandeRattrapage(RattrapageEvent $event)
+    public function onMailDemandeRattrapage(RattrapageEvent $event): void
     {
         $rattrapage = $event->getRattrapage();
         $matiere = $this->typeMatiereManager->getMatiere($rattrapage->getIdMatiere(), $rattrapage->getTypeMatiere());
@@ -195,7 +196,7 @@ class MailingSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function onMailAbsenceRemoved(AbsenceEvent $event): void
     {
@@ -225,7 +226,7 @@ class MailingSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function onMailNoteModificationResponsable(NoteEvent $event): void
     {
@@ -250,7 +251,7 @@ class MailingSubscriber implements EventSubscriberInterface
     }
 
     /**
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
     public function onMailNewTranscriptResponsable(EvaluationEvent $event): void
     {

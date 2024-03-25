@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/PlanCoursMatiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/10/2022 17:47
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Entity;
@@ -24,11 +24,6 @@ class PlanCoursMatiere extends PlanCours
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $modalitesEvaluations = null;
-
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getDescriptionMatiere(): ?string
     {

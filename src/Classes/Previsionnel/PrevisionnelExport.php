@@ -1,16 +1,17 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Previsionnel/PrevisionnelExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/10/2023 16:58
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Classes\Previsionnel;
 
 use App\Classes\Excel\MyExcelWriter;
 use App\DTO\Matiere;
+use App\DTO\Previsionnel;
 use App\Entity\Departement;
 use App\Utils\Tools;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
@@ -69,7 +70,7 @@ class PrevisionnelExport
     private function ecritPrevisionnel(
         array $previsionnels
     ): void {
-        /** @var \App\DTO\Previsionnel $previ */
+        /** @var Previsionnel $previ */
         foreach ($previsionnels as $previ) {
             $colonne = 1;
             // CODE VET

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/Questionnaire/Form/QuestionnaireQuestionTypeChainee.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/12/2022 17:46
+ * @lastUpdate 23/02/2024 18:43
  */
 
 namespace App\Components\Questionnaire\Form;
@@ -71,6 +71,6 @@ class QuestionnaireQuestionTypeChainee extends QuestionnaireQuestionType
                 'label' => '"Sous questions"" pour la question',
                 'by_reference' => false,
                 'max_items' => 0,
-            ]);;
+            ]);
     }
 }

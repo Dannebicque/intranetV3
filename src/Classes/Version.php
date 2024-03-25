@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Version.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2022 10:36
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Classes;
@@ -13,8 +13,8 @@ use Symfony\Component\HttpKernel\KernelInterface;
 
 class Version
 {
-    private readonly string $dir;
-    private readonly ?object $bugsnag;
+    private string $dir;
+    private ?object $bugsnag;
 
     public function __construct(KernelInterface $kernel)
     {

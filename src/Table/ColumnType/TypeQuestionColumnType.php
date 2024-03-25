@@ -1,16 +1,17 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/ColumnType/TypeQuestionColumnType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Table\ColumnType;
 
+use App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException;
 use App\Components\Questionnaire\QuestionnaireRegistry;
-use DavidAnnebicque\TableBundle\Column\PropertyColumnType;
+use Dannebicque\TableBundle\Column\PropertyColumnType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -24,7 +25,7 @@ class TypeQuestionColumnType extends PropertyColumnType
     }
 
     /**
-     * @throws \App\Components\Questionnaire\Exceptions\TypeQuestionNotFoundException
+     * @throws TypeQuestionNotFoundException
      */
     public function renderProperty(mixed $value, array $options): string
     {

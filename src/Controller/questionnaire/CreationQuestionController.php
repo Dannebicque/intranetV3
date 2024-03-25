@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/questionnaire/CreationQuestionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 06/01/2023 20:07
+ * @lastUpdate 23/02/2024 21:40
  */
 
 namespace App\Controller\questionnaire;
@@ -15,7 +15,7 @@ use App\Entity\QuestQuestion;
 use App\Repository\QuestQuestionRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class CreationQuestionController extends BaseController
 {
@@ -108,9 +108,7 @@ class CreationQuestionController extends BaseController
                     'section' => $question->getSection(),
                 ]);
                 $question->setOrdre($question->getOrdre() - 1);
-                if (null !== $questionOld) {
-                    $questionOld->setOrdre($questionOld->getOrdre() + 1);
-                }
+                $questionOld?->setOrdre($questionOld->getOrdre() + 1);
 
                 $this->entityManager->flush();
                 break;
@@ -120,9 +118,7 @@ class CreationQuestionController extends BaseController
                     'section' => $question->getSection(),
                 ]);
                 $question->setOrdre($question->getOrdre() + 1);
-                if (null !== $questionOld) {
-                    $questionOld->setOrdre($questionOld->getOrdre() - 1);
-                }
+                $questionOld?->setOrdre($questionOld->getOrdre() - 1);
                 $this->entityManager->flush();
                 break;
         }

@@ -1,33 +1,35 @@
-// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/adm.absences.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/07/2022 13:30
-import $ from 'jquery'
+// @lastUpdate 23/02/2024 18:48
+
 import Routing from 'fos-router'
+import { get } from '../fetch'
 
-$(document).on('change', '#justifier_etudiant', function () {
-  $('#listeJustifie').empty().load(Routing.generate('administration_absences_liste_absence_etudiant', { etudiant: $(this).val() }))
-})
+document.querySelector('#justifier_etudiant').addEventListener('change', function () {
+  const url = Routing.generate('administration_absences_liste_absence_etudiant', { etudiant: this.value })
 
-$(document).on('click', '.checkAbsence', function () {
-  const absence = $(this).data('absence')
+  get(url)
+    .then((response) => response.text())
+    .then((data) => {
+      document.querySelector('#listeJustifie').innerHTML = data
+    })
+});
 
-  let etat = 0
+document.querySelectorAll('.checkAbsence').forEach((element) => {
+  element.addEventListener('click', function () {
+    const absence = this.getAttribute('data-absence')
+    const etat = this.checked ? 1 : 0
+    const url = Routing.generate('administration_absences_justifie', { absence, etat })
 
-  if (($(this).is(':checked'))) {
-    etat = 1
-  }
-
-  $.ajax({
-    url: Routing.generate('administration_absences_justifie', { absence, etat }),
-    type: 'GET',
-    success(data) {
-      if (data) {
-        $(`#ligne_${absence}`).removeClass('bg-pale-warning').addClass('bg-pale-success')
-      } else {
-        $(`#ligne_${absence}`).removeClass('bg-pale-success').addClass('bg-pale-warning')
-      }
-    },
-  })
-})
+    get(url)
+      .then((response) => response.json())
+      .then((data) => {
+        document.querySelector(`#ligne_${absence}`)
+          .classList.remove('bg-pale-warning', 'bg-pale-success')
+        document.querySelector(`#ligne_${absence}`)
+          .classList.add(data ? 'bg-pale-success' : 'bg-pale-warning')
+      })
+  });
+});

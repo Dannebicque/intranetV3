@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Controller/administration/EtudiantImportController.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EtudiantImportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/10/2021 10:34
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Controller\administration;
@@ -12,9 +12,10 @@ namespace App\Controller\administration;
 use App\Classes\Etudiant\EtudiantImport;
 use App\Classes\MyUpload;
 use App\Controller\BaseController;
+use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/administration/etudiant/import')]
 class EtudiantImportController extends BaseController
@@ -22,7 +23,7 @@ class EtudiantImportController extends BaseController
     // todo: a finaliser ou inutile ?
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     #[Route('/liste_csv', name: 'administration_etudiant_import_liste_csv')]
     public function listeCsv(

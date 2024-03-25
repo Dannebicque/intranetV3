@@ -1,9 +1,15 @@
 <?php
+/*
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Command/EduSignDeleteCourseCommand.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 24/02/2024 08:41
+ */
 
 namespace App\Command;
 
 use App\Classes\EduSign\DeleteCourse;
-use App\Classes\EduSign\UpdateEdt;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -17,7 +23,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class EduSignDeleteCourseCommand extends Command
 {
     public function __construct(
-        private DeleteCourse $deleteCourse,
+        private readonly DeleteCourse $deleteCourse,
     )
     {
         parent::__construct();

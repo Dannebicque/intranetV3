@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/QuestSection.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/08/2023 10:03
+ * @lastUpdate 24/02/2024 08:51
  */
 
 namespace App\Entity;
@@ -93,11 +93,9 @@ class QuestSection extends BaseEntity
 
     public function removeQuestQuestion(QuestQuestion $questQuestion): self
     {
-        if ($this->questQuestions->removeElement($questQuestion)) {
-            // set the owning side to null (unless already changed)
-            if ($questQuestion->getSection() === $this) {
-                $questQuestion->setSection(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->questQuestions->removeElement($questQuestion) && $questQuestion->getSection() === $this) {
+            $questQuestion->setSection(null);
         }
 
         return $this;

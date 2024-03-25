@@ -1,10 +1,10 @@
-// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/formulaire_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/12/2022 16:36
+// @lastUpdate 29/02/2024 20:58
 
-import { Controller } from '@hotwired/stimulus';
+import { Controller } from '@hotwired/stimulus'
 import { Modal } from 'bootstrap'
 
 export default class extends Controller {
@@ -17,7 +17,6 @@ export default class extends Controller {
     const html = await fetch(this.urlValue)
     // On envoie le contenu de la page dont l'url a été récupéré (modal_vous.html.twig) dans le span "data-formulaire-target"
     this.outputTarget.innerHTML = await html.text()
-    console.log(html)
     const myModal = new Modal(document.getElementById('exampleModal'), {})
     myModal.show()
   }

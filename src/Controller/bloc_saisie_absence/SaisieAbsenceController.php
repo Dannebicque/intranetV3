@@ -1,15 +1,14 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/bloc_saisie_absence/SaisieAbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/12/2022 12:09
+ * @lastUpdate 20/02/2024 18:55
  */
 
 namespace App\Controller\bloc_saisie_absence;
 
-use App\Classes\Absences\AbsenceEtatAppel;
 use App\Classes\Etudiant\EtudiantAbsences;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Controller\BaseController;
@@ -17,18 +16,17 @@ use App\DTO\EvenementEdt;
 use App\DTO\Matiere;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
-use App\Repository\AbsenceEtatAppelRepository;
 use App\Repository\AbsenceRepository;
 use App\Repository\TypeGroupeRepository;
 use App\Utils\Tools;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
-use Symfony\Component\Security\Http\Attribute\IsGranted;
-use function count;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
+use function count;
 
 #[Route(path: '/application/personnel/absence/ajax')]
 #[IsGranted('ROLE_PERMANENT')]

@@ -1,15 +1,16 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Command/MessagesQualiteCommand.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/08/2023 08:45
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Command;
 
 use App\Classes\Mail\MailerFromTwig;
+use App\Entity\QuestQuestionnaire;
 use App\Repository\QuestQuestionnaireRepository;
 use DateTime;
 use Symfony\Component\Console\Attribute\AsCommand;
@@ -17,6 +18,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
 #[AsCommand(
     name: 'app:messages-qualite',
@@ -35,7 +37,7 @@ class MessagesQualiteCommand extends Command
     }
 
     /**
-     * @throws \Symfony\Component\Mailer\Exception\TransportExceptionInterface
+     * @throws TransportExceptionInterface
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
@@ -47,7 +49,7 @@ class MessagesQualiteCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $nbMessages = 0;
         $questionnaires = $this->questionnaireQualiteRepository->findInDate((new DateTime())->modify('+2 days')); // tous les questionnaires dans deux jours
-        /** @var \App\Entity\QuestQuestionnaire $questionnaire */
+        /** @var QuestQuestionnaire $questionnaire */
         foreach ($questionnaires as $questionnaire) {
             $dests = [
                 $questionnaire->getSemestre()?->getDiplome()?->getAssistantDiplome()?->getMailUniv(),

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/ProfilEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/04/2023 08:09
+ * @lastUpdate 23/02/2024 21:35
  */
 
 namespace App\Controller;
@@ -27,10 +27,11 @@ use App\Repository\ScolariteRepository;
 use App\Repository\StageEtudiantRepository;
 use App\Repository\UeRepository;
 use Exception;
+use JsonException;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
 
@@ -301,8 +302,7 @@ class ProfilEtudiantController extends BaseController
             ]);
         }
 
-        return $this->render('user/composants/_semestre_vide.html.twig', [
-        ]);
+        return $this->render('user/composants/_semestre_vide.html.twig');
     }
 
     #[Route(path: '/profil/{slug}/stages', name: 'profil_etudiant_stages')]
@@ -343,7 +343,7 @@ class ProfilEtudiantController extends BaseController
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     #[Route(path: '/profil/{slug}/ajout-commentaire', name: 'profil_etudiant_ajout_commentaire', options: ['expose' => true])]
     public function ajoutCommentaire(Request $request, #[MapEntity(mapping: ['slug' => 'slug'])]

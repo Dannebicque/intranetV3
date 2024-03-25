@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/QuestionnaireReponseType.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/QuestionnaireReponseType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/11/2021 17:36
+ * @lastUpdate 23/02/2024 18:43
  */
 
 namespace App\Form;
@@ -32,8 +32,7 @@ class QuestionnaireReponseType extends AbstractType
             ->add('valeur', TextType::class, [
                 'label' => 'Valeur',
                 'attr' => ['class' => 'form-control-sm', 'size' => 3],
-            ]);// ->add('alignement')
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

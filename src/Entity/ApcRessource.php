@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcRessource.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/07/2023 13:56
+ * @lastUpdate 29/02/2024 21:51
  */
 
 namespace App\Entity;
@@ -25,19 +25,6 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
 
     final public const SOURCE = 'ressource';
 
-    /**
-     * @return \App\Entity\Semestre|null
-     */
-    /** @deprecated */
-    public function getSemestre(): ?Semestre
-    {
-        return $this->semestre;
-    }
-
-    /** @deprecated(reason: 'Une ressource peut être commune  à plusieurs parcours. Le plus simple serait d\'avoir une gestion manytomany') */
-    #[ORM\ManyToOne(targetEntity: Semestre::class, fetch: 'EAGER')]
-    private ?Semestre $semestre = null;
-
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $preRequis = null;
 
@@ -45,19 +32,19 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
     private ?string $motsCles = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcRessourceCompetence>
+     * @var Collection<int, ApcRessourceCompetence>
      */
     #[ORM\OneToMany(mappedBy: 'ressource', targetEntity: ApcRessourceCompetence::class, cascade: ['persist', 'remove'])]
     private Collection $apcRessourceCompetences;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcRessourceApprentissageCritique>
+     * @var Collection<int, ApcRessourceApprentissageCritique>
      */
     #[ORM\OneToMany(mappedBy: 'ressource', targetEntity: ApcRessourceApprentissageCritique::class, cascade: ['persist', 'remove'])]
     private Collection $apcRessourceApprentissageCritiques;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcSaeRessource>
+     * @var Collection<int, ApcSaeRessource>
      */
     #[ORM\OneToMany(mappedBy: 'ressource', targetEntity: ApcSaeRessource::class, cascade: ['persist', 'remove'])]
     private Collection $apcSaeRessources;
@@ -66,13 +53,13 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
     private ?bool $ressourceParent = false;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcRessourceEnfants>
+     * @var Collection<int, ApcRessourceEnfants>
      */
     #[ORM\OneToMany(mappedBy: 'apcRessourceParent', targetEntity: ApcRessourceEnfants::class, cascade: ['persist', 'remove'])]
     private Collection $apcRessourceParentEnfants;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\ApcRessourceEnfants>
+     * @var Collection<int, ApcRessourceEnfants>
      */
     #[ORM\OneToMany(mappedBy: 'apcRessourceEnfant', targetEntity: ApcRessourceEnfants::class, cascade: ['persist', 'remove'])]
     private Collection $apcRessourceEnfantEnfants;
@@ -391,15 +378,6 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface
         }
 
         return null;
-    }
-
-    /**
-     * @param \App\Entity\Semestre|null $semestre
-     */
-    /** @deprecated */
-    public function setSemestre(?Semestre $semestre): void
-    {
-        $this->semestre = $semestre;
     }
 
     public function getParcours(): array

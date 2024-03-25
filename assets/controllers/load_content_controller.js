@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/load_content_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/02/2024 10:12
+// @lastUpdate 22/03/2024 08:22
 
 import { Controller } from '@hotwired/stimulus'
 
@@ -18,7 +18,6 @@ export default class extends Controller {
   static targets = ['content']
 
   connect() {
-    console.log(this.initialValue)
     if (this.initialValue !== '') {
       this._loadContent(this.initialValue)
     }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Departement.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 23:13
+ * @lastUpdate 29/02/2024 22:13
  */
 
 namespace App\Entity;
@@ -96,39 +96,39 @@ class Departement extends BaseEntity
     private int $optAnneePrevisionnel;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\TypeDocument>
+     * @var Collection<int, TypeDocument>
      */
     #[MaxDepth(1)]
     #[ORM\OneToMany(mappedBy: 'departement', targetEntity: TypeDocument::class)]
     private Collection $typeDocuments;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\PersonnelDepartement>
+     * @var Collection<int, PersonnelDepartement>
      */
     #[ORM\OneToMany(mappedBy: 'departement', targetEntity: PersonnelDepartement::class)]
     private Collection $personnelDepartements;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Actualite>
+     * @var Collection<int, Actualite>
      */
     #[ORM\OneToMany(mappedBy: 'departement', targetEntity: Actualite::class)]
     private Collection $actualites;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Diplome>
+     * @var Collection<int, Diplome>
      */
     #[ORM\OneToMany(mappedBy: 'departement', targetEntity: Diplome::class)]
     #[ORM\OrderBy(value: ['libelle' => 'ASC', 'actif' => 'DESC'])]
     private Collection $diplomes;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\SalleExamen>
+     * @var Collection<int, SalleExamen>
      */
     #[ORM\OneToMany(mappedBy: 'departement', targetEntity: SalleExamen::class)]
     private Collection $salleExamens;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Hrs>
+     * @var Collection<int, Hrs>
      */
     #[ORM\OneToMany(mappedBy: 'departement', targetEntity: Hrs::class)]
     private Collection $hrs;
@@ -139,25 +139,22 @@ class Departement extends BaseEntity
     #[ORM\Column(type: Types::BOOLEAN)]
     private bool $preparationAnnee = false;
 
-    #[ORM\ManyToOne(targetEntity: AnneeUniversitaire::class, inversedBy: 'departements')]
-    private ?AnneeUniversitaire $anneeUniversitairePrepare = null;
-
     #[ORM\ManyToOne(targetEntity: Personnel::class, inversedBy: 'departements')]
     private ?Personnel $respMateriel = null;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<int, \App\Entity\Etudiant>
+     * @var Collection<int, Etudiant>
      */
     #[ORM\OneToMany(mappedBy: 'departement', targetEntity: Etudiant::class)]
     private Collection $etudiants;
     /**
-     * @var \Doctrine\Common\Collections\Collection<\App\Entity\BCDemande>
+     * @var Collection<BCDemande>
      */
     #[ORM\OneToMany(mappedBy: 'departement', targetEntity: BCDemande::class)]
     private Collection $bCDemandes;
 
     /**
-     * @var \Doctrine\Common\Collections\Collection<\App\Entity\Borne>
+     * @var Collection<Borne>
      */
     #[ORM\OneToMany(mappedBy: 'departement', targetEntity: Borne::class)]
     private Collection $bornes;
@@ -168,7 +165,6 @@ class Departement extends BaseEntity
     public function __construct()
     {
         $this->setUuid(Uuid::uuid4());
-        $this->optAnneePrevisionnel = (int) date('Y');
         $this->typeDocuments = new ArrayCollection();
         $this->personnelDepartements = new ArrayCollection();
         $this->actualites = new ArrayCollection();
@@ -336,18 +332,6 @@ class Departement extends BaseEntity
     public function setRespri(?Personnel $respri): void
     {
         $this->respri = $respri;
-    }
-
-    /** @deprecated */
-    public function getOptAnneePrevisionnel(): int
-    {
-        return $this->optAnneePrevisionnel;
-    }
-
-    /** @deprecated */
-    public function setOptAnneePrevisionnel(int $optAnneePrevisionnel): void
-    {
-        $this->optAnneePrevisionnel = $optAnneePrevisionnel;
     }
 
     /**
@@ -598,18 +582,6 @@ class Departement extends BaseEntity
         return $this;
     }
 
-    public function getAnneeUniversitairePrepare(): ?AnneeUniversitaire
-    {
-        return $this->anneeUniversitairePrepare;
-    }
-
-    public function setAnneeUniversitairePrepare(?AnneeUniversitaire $anneeUniversitairePrepare): self
-    {
-        $this->anneeUniversitairePrepare = $anneeUniversitairePrepare;
-
-        return $this;
-    }
-
     public function getRespMateriel(): ?Personnel
     {
         return $this->respMateriel;
@@ -622,6 +594,9 @@ class Departement extends BaseEntity
         return $this;
     }
 
+    /**
+     * @deprecated
+     */
     public function getOptUpdateCelcat(): ?bool
     {
         return $this->optUpdateCelcat;
