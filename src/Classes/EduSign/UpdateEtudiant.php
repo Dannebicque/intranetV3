@@ -25,36 +25,38 @@ class UpdateEtudiant
     {
     }
 
-    public function update(): void
+    public function update(?string $keyEduSign): bool
     {
-//        $diplomesBut = $this->diplomeRepository->findAllWithEduSign();
-//
-//        foreach ($diplomesBut as $diplome) {
-//            $semestres = $this->semestreRepository->findByDiplome($diplome);
-            $semestres = $this->semestreRepository->findSemestreEduSign();
+        if ($keyEduSign === null) {
+            return false;
+        } else {
+            // on récupère les diplomes qui ont la clé EduSign
+            $diplomes = $this->diplomeRepository->findBy(['keyEduSign' => $keyEduSign]);
+            foreach ($diplomes as $diplome) {
+                $departement = $diplome->getDepartement();
+            }
+            $semestres = $this->semestreRepository->findSemestreEduSignDept($departement);
+        }
 
-            foreach ($semestres as $semestre) {
+        foreach ($semestres as $semestre) {
+            $cleApi = $keyEduSign;
+            $etudiants = $this->etudiantRepository->findBySemestre($semestre);
 
-            $diplome = $semestre->getDiplome();
-            $cleApi = $diplome->getKeyEduSign();
-                $etudiants = $this->etudiantRepository->findBySemestre($semestre);
+            foreach ($etudiants as $etudiant) {
+                $groupes = [];
+                $groupes[] = $etudiant->getSemestre()->getIdEduSign();
+                foreach ($etudiant->getGroupes() as $groupe) {
+                    $groupes[] = $groupe->getIdEduSign();
+                }
+//                dump($groupes);
 
-                foreach ($etudiants as $etudiant) {
-                    $groupes = [];
-                    $groupes[] = $etudiant->getSemestre()->getIdEduSign();
-                    foreach ($etudiant->getGroupes() as $groupe) {
-                        $groupes[] = $groupe->getIdEduSign();
-                    }
+                $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiant, $groupes))->getEtudiant();
 
-                    $etudiantEduSign = (new IntranetEtudiantEduSignAdapter($etudiant, $groupes))->getEtudiant();
-
-                    if ($etudiant->getIdEduSign() == null) {
-                        $this->apiEduSign->addEtudiant($etudiantEduSign, $cleApi);
-                    } else {
-                        dump('etudiant déjà envoyé');
-                    }
+                if ($etudiant->getIdEduSign() === null) {
+                    $this->apiEduSign->addEtudiant($etudiantEduSign, $cleApi);
                 }
             }
-//        }
+        }
+        return true;
     }
 }

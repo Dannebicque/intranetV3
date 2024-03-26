@@ -46,9 +46,13 @@ class UpdateEdt
     {
     }
 
-    public function update(): void
+    public function update(?string $keyEduSign): void
     {
+        if ($keyEduSign === null) {
         $diplomes = $this->diplomeRepository->findAllWithEduSign();
+        } else {
+            $diplomes = $this->diplomeRepository->findBy(['keyEduSign' => $keyEduSign]);
+        }
 
         foreach ($diplomes as $diplome) {
 

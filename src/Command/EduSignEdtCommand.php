@@ -31,12 +31,12 @@ class EduSignEdtCommand extends Command
     }
 
 
-    protected function configure(): void
+    public function configure(): void
     {
 
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): int
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
 

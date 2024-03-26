@@ -14,7 +14,9 @@ use App\Classes\EduSign\DTO\EduSignEnseignant;
 use App\Classes\EduSign\DTO\EduSignEtudiant;
 use App\Classes\EduSign\DTO\EduSignGroupe;
 use App\Entity\Departement;
+use App\Entity\Groupe;
 use App\Entity\Personnel;
+use App\Entity\Semestre;
 use App\Repository\EdtCelcatRepository;
 use App\Repository\EdtPlanningRepository;
 use App\Repository\EtudiantRepository;
@@ -33,7 +35,7 @@ class ApiEduSign
         protected SemestreRepository    $semestreRepository,
         protected GroupeRepository      $groupeRepository,
         protected EtudiantRepository    $etudiantRepository,
-        protected GetCleApi $getCleApi,
+        protected GetCleApi             $getCleApi,
     )
     {
     }
@@ -151,7 +153,7 @@ class ApiEduSign
 
     }
 
-    public function addGroupe(EduSignGroupe $groupe, string $cleApi): void
+    public function addGroupe(EduSignGroupe $groupe, string $cleApi, ?string $type): void
     {
         $client = HttpClient::create();
 
@@ -170,24 +172,22 @@ class ApiEduSign
         // accéder à la valeur de l'ID
         $id = $data['result']['ID'] ?? "";
 
-        $semestre = $this->semestreRepository->findOneBy(['id' => $groupe->api_id]);
-        if (null === $semestre) {
-            throw new Exception('Group not found for ' . $semestre->api_id);
-        }
-
-        if ($semestre->getIdEduSign() === null) {
-            $semestre->setIdEduSign($id);
-            $this->semestreRepository->save($semestre);
-        }
-
-        $groupeAdd = $this->groupeRepository->findOneBy(['id' => $groupe->api_id]);
-        if (null === $groupeAdd) {
-            throw new Exception('Group not found for ' . $groupeAdd->api_id);
-        }
-
-        if ($groupeAdd && $groupeAdd->getIdEduSign() == null) {
-            $groupeAdd->setIdEduSign($id);
-            $this->groupeRepository->save($groupeAdd);
+        if ($type === 'semestre') {
+            $semestre = $this->semestreRepository->findOneBy(['id' => $groupe->api_id]);
+            if ($semestre && $semestre instanceof Semestre) {
+                if ($semestre->getIdEduSign() === null) {
+                    $semestre->setIdEduSign($id);
+                    $this->semestreRepository->save($semestre);
+                }
+            }
+        } elseif($type === 'groupe') {
+            $groupeAdd = $this->groupeRepository->findOneBy(['id' => $groupe->api_id]);
+            if ($groupeAdd && $groupeAdd instanceof Groupe) {
+                if ($groupeAdd && $groupeAdd->getIdEduSign() === null) {
+                    $groupeAdd->setIdEduSign($id);
+                    $this->groupeRepository->save($groupeAdd);
+                }
+            }
         }
 
     }

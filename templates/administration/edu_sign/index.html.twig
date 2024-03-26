@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+
+{% block header %}
+    {{ 'adm.edusign.index.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip"
+               data-bs-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span
+                            class="sr-only">Administration</span></i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <div class="card-header d-flex flex-column align-items-start">
+            <h4 class="card-title">{{ 'adm.edusign.context.new'|trans }}</h4>
+            <small>Pour récupérer la clé API d'un département : https://edusign.app/school/settings/api</small>
+        </div>
+        <div class="card-body">
+            <div class="alert alert-info">
+                <span>{{ 'adm.edusign.context.info'|trans }}</span>
+            </div>
+            {% for dept in departements %}
+                <a href="{{ path('app_edu_sign_init', {'id': dept.id}) }}" class="btn btn-secondary">{{ dept.libelle }}</a>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="card">
+        <h4 class="card-title">{{ 'adm.edusign.commands.heading'|trans }}</h4>
+        <nav class="nav nav-tabs">
+            {% for departement in departements %}
+                <a class="nav-link {% if ((departementSelect != null and departementSelect
+                .id == departement.id) or (departementSelect == null)) %}active{% endif %}"
+                   href="{{ path('app_edu_sign', {'dept': departement.id}) }}">{{ departement.libelle }}</a>
+            {% endfor %}
+        </nav>
+        <div class="card-body">
+            <div class="alert alert-info">
+                <span>{{ 'adm.edusign.commands.info-create'|trans }}</span>
+            </div>
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    {{ 'adm.edusign.commands.create'|trans }}
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                    <li><a class="dropdown-item" href="{{ path('app_edu_sign_create_courses', {'opt': 1, 'dept': departementSelect}) }}">Pour la
+                            semaine en cours</a></li>
+                    <li><a class="dropdown-item" href="#">Pour la journée</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

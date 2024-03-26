@@ -13,6 +13,7 @@ namespace App\Command;
 use App\Classes\EduSign\UpdateGroupe;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -33,17 +34,19 @@ class EduSignGroupeCommand extends Command
 
     protected function configure(): void
     {
-
+        $this
+            ->addArgument('keyEduSign', InputArgument::OPTIONAL, 'Clé EduSign');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): int
-    {
-        $io = new SymfonyStyle($input, $output);
+protected function execute(InputInterface $input, OutputInterface $output): int
+{
+    $io = new SymfonyStyle($input, $output);
 
-        $this->updateGroupe->update();//boucler sur département pour chaque update (ou diplome)
+    $keyEduSign = $input->getArgument('keyEduSign');
+    $this->updateGroupe->update($keyEduSign);//boucler sur département pour chaque update (ou diplome)
 
-        $io->success('Groupes mis à jour sur EduSign.');
+    $io->success('Groupes mis à jour sur EduSign.');
 
-        return Command::SUCCESS;
-    }
+    return Command::SUCCESS;
+}
 }
