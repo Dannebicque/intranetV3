@@ -49,7 +49,7 @@ class UpdateEdt
     public function update(?string $keyEduSign): void
     {
         if ($keyEduSign === null) {
-        $diplomes = $this->diplomeRepository->findAllWithEduSign();
+            $diplomes = $this->diplomeRepository->findAllWithEduSign();
         } else {
             $diplomes = $this->diplomeRepository->findBy(['keyEduSign' => $keyEduSign]);
         }
@@ -101,11 +101,7 @@ class UpdateEdt
                                     }
                                     $this->sendUpdate();
                                 }
-                            } else {
-                                dump('cours déjà envoyé');
                             }
-                        } else {
-                            dump('evenement hors d\'échéance');
                         }
                     }
                 }

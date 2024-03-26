@@ -51,7 +51,7 @@
                     {{ 'adm.edusign.commands.create'|trans }}
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="{{ path('app_edu_sign_create_courses', {'opt': 1, 'dept': departementSelect}) }}">Pour la
+                    <li><a class="dropdown-item" href="{{ path('app_edu_sign_create_courses', {'opt': 1, 'id': departementSelect.id}) }}">Pour la
                             semaine en cours</a></li>
                     <li><a class="dropdown-item" href="#">Pour la journée</a></li>
                 </ul>

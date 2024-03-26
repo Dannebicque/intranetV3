@@ -15,6 +15,7 @@ use App\Classes\EduSign\UpdateEdt;
 use App\Classes\EduSign\UpdateEtudiant;
 use App\Classes\EduSign\UpdateGroupe;
 use App\Entity\Constantes;
+use App\Entity\Departement;
 use App\Repository\DepartementRepository;
 use App\Repository\DiplomeRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -46,8 +47,11 @@ class EduSignController extends BaseController
             $departements[$diplome->getDepartement()->getId()] = $this->departementRepository->find($diplome->getDepartement()->getId());
         }
 
-//        $departement = $request->query->get('dept');
-        $departement = $this->departementRepository->findOneBy(['id' => $request->query->get('dept')]);
+        if ($request->query->get('dept')) {
+            $departement = $this->departementRepository->findOneBy(['id' => $request->query->get('dept')]);
+        } else {
+            $departement = $departements[array_key_first($departements)];
+        }
 
         return $this->render('/administration/edu_sign/index.html.twig', [
             'departements' => $departements,
@@ -77,10 +81,10 @@ class EduSignController extends BaseController
         return $this->redirectToRoute('app_edu_sign');
     }
 
-    #[Route('/create-courses/{opt}', name: 'app_edu_sign_create_courses')]
+    #[Route('/create-courses/{opt}/{id}', name: 'app_edu_sign_create_courses')]
     public function createCourses(?int $opt, ?int $id, UpdateEdt $updateEdt): Response
     {
-        if ($opt === 1 && $id !== 0) {
+        if ($opt === 1 && $id !== null) {
             $departement = $this->departementRepository->find($id);
             $diplomes = $this->diplomeRepository->findByDepartement($departement);
             $keyEduSign = null;
