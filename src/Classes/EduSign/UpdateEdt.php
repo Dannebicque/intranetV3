@@ -95,7 +95,6 @@ class UpdateEdt
 
                                 $departement = $semestre->getDiplome()->getDepartement();
                                 if ($enseignant) {
-                                    // todo: vérifier si l'enseignant possède déjà un id edusign identique à celui d'edusign
                                     if ($enseignant->getIdEduSign() == '' || $enseignant->getIdEduSign() == null || !array_key_exists($departement->getId(), $enseignant->getIdEduSign())) {
                                         $this->createEnseignant->update($enseignant, $departement, $this->cleApi);
                                     }

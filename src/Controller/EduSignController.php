@@ -11,6 +11,7 @@
 
 namespace App\Controller;
 
+use App\Classes\EduSign\FixCourses;
 use App\Classes\EduSign\UpdateEdt;
 use App\Classes\EduSign\UpdateEtudiant;
 use App\Classes\EduSign\UpdateGroupe;
@@ -82,7 +83,7 @@ class EduSignController extends BaseController
     }
 
     #[Route('/create-courses/{opt}/{id}', name: 'app_edu_sign_create_courses')]
-    public function createCourses(?int $opt, ?int $id, UpdateEdt $updateEdt): Response
+    public function createCourses(?int $opt, ?int $id, UpdateEdt $updateEdt, FixCourses $fixCourses): Response
     {
         if ($opt === 1 && $id !== null) {
             $departement = $this->departementRepository->find($id);
@@ -95,6 +96,8 @@ class EduSignController extends BaseController
             }
             //créer les cours pour la semaine
             $updateEdt->update($keyEduSign);
+
+            $fixCourses->fixCourse($keyEduSign);
 
         } elseif ($opt === 2) {
             // créer les cours pour la journée
