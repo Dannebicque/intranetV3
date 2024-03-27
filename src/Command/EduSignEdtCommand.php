@@ -10,6 +10,7 @@
 
 namespace App\Command;
 
+use App\Classes\EduSign\FixCourses;
 use App\Classes\EduSign\UpdateEdt;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
@@ -25,6 +26,7 @@ class EduSignEdtCommand extends Command
 {
     public function __construct(
         private readonly UpdateEdt $updateEdt,
+        private readonly FixCourses $fixCourses,
     )
     {
         parent::__construct();
@@ -40,7 +42,8 @@ class EduSignEdtCommand extends Command
     {
         $io = new SymfonyStyle($input, $output);
 
-        $this->updateEdt->update();//boucler sur département pour chaque update (ou diplome)
+        $this->updateEdt->update(null, 1); // créer les cours
+        $this->fixCourses->fixCourse(null); // fix les cours
 
         $io->success('Emploi du temps mis à jour sur EduSign.');
 

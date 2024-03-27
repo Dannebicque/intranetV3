@@ -116,6 +116,9 @@ class FixCourses
                         $this->apiEduSign->updateCourse($this->edusignCourse, $cleApi);
                     } elseif ($coursIntranet === null && $course['API_ID'] !== null) {
                         $this->apiEduSign->deleteCourse($course['ID'], $cleApi);
+                    } elseif ($coursIntranet !== null && ($coursIntranet->getIdEduSign() === null && $course['API_ID'] !== null)) {
+                        $coursIntranet->setIdEduSign($course['ID']);
+                        $this->edtManager->saveCourseEduSign($this->source, $coursIntranet);
                     }
                 }
             }
