@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/LiveTwig/PersonnelMesCoursComponent.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/11/2023 19:51
+ * @lastUpdate 27/03/2024 19:31
  */
 
 namespace App\Components\LiveTwig;
@@ -16,7 +16,6 @@ use App\Entity\Semestre;
 use App\Repository\SemestreRepository;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
-use Symfony\UX\LiveComponent\Attribute\LiveArg;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
@@ -27,6 +26,9 @@ class PersonnelMesCoursComponent
 
     #[LiveProp(writable: true)]
     public ?Semestre $semestre = null;
+
+    #[LiveProp(writable: true)]
+    public $idsemestre = null;
 
     /** @var Previsionnel[] */
     public array $previsionnels = [];
@@ -43,10 +45,9 @@ class PersonnelMesCoursComponent
     }
 
     #[LiveAction]
-    public function changeSemestre(
-        #[LiveArg] int $semestre): void
+    public function changeSemestre(): void
     {
-        $this->semestre = $this->semestreRepository->find($semestre);
+        $this->semestre = $this->semestreRepository->find($this->idsemestre);
         $this->getPrevisionnelSemestre();
     }
 
