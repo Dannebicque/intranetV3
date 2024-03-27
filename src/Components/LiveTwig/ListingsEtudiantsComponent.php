@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/LiveTwig/ListingsEtudiantsComponent.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/03/2024 08:57
+ * @lastUpdate 27/03/2024 19:26
  */
 
 namespace App\Components\LiveTwig;
@@ -17,7 +17,6 @@ use App\Repository\SemestreRepository;
 use App\Repository\TypeGroupeRepository;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
-use Symfony\UX\LiveComponent\Attribute\LiveArg;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
@@ -28,6 +27,9 @@ class ListingsEtudiantsComponent
 
     #[LiveProp]
     public ?Semestre $semestre = null;
+
+    #[LiveProp(writable: true)]
+    public $idsemestre = null;
 
     #[LiveProp]
     /** @var TypeGroupe[] */
@@ -45,10 +47,9 @@ class ListingsEtudiantsComponent
     }
 
     #[LiveAction]
-    public function changeSemestre(
-        #[LiveArg] int $semestre): void
+    public function changeSemestre(): void
     {
-        $this->semestre = $this->semestreRepository->find($semestre);
+        $this->semestre = $this->semestreRepository->find($this->idsemestre);
         if ($this->semestre !== null) {
             $this->findTypeGroupes();
         }
