@@ -34,7 +34,7 @@ class ApprentissageCritiqueController extends BaseController
                 'id' => $apprentissageCritique->getId(),
                 'libelle' => $apprentissageCritique->getLibelle(),
                 'code' => $apprentissageCritique->getCode(),
-                'niveau' => $apprentissageCritique->getNiveau()->getLibelle(),
+                'niveau' => $apprentissageCritique->getNiveau()->getId(),
             ];
         }
         return $this->json($tabApcApprentissageCritique);

@@ -57,6 +57,10 @@ class EduSignCourse
     public ?string $type_edt = '';
     public ?string $apiId = '';
 
+    public ?string $id_matiere = '';
+
+    public ?string $type_matiere = '';
+
     public function toArray(): array
     {
         return [
@@ -76,6 +80,8 @@ class EduSignCourse
             'API_ID' => $this->api_id,
             'ID_EDU_SIGN' => $this->id_edu_sign,
             'TYPE' => $this->type_edt,
+            'ID_MATIERE' => $this->id_matiere,
+            'TYPE_MATIERE' => $this->type_matiere,
         ];
     }
 }

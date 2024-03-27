@@ -80,7 +80,7 @@ class UpdateEnseignant
 
                     $existingIdEduSign = $enseignant->getIdEduSign();
 
-// Supprimer les entrées avec des valeurs nulles
+                    // Supprimer les entrées avec des valeurs nulles
                     if($existingIdEduSign !== null) {
                         foreach($existingIdEduSign as $key => $value) {
                             if($value === null || $value === '') {

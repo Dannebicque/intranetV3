@@ -22,6 +22,7 @@ class IntranetEnseignantEduSignAdapter
         $this->enseignant->firstname = $enseignant->getPrenom();
         $this->enseignant->lastname = $enseignant->getNom();
         $this->enseignant->email = $enseignant->getMailUniv();
+//        $this->enseignant->email = $enseignant->getId().'@test.fr';
         $this->enseignant->speciality = null;
         $this->enseignant->api_id = $enseignant->getId();
         $departements = $enseignant->getDepartements();

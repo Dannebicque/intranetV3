@@ -38,7 +38,7 @@ class NiveauController extends BaseController
                     'libelle' => $apcParcours->getParcours()->getLibelle(),
                     'code' => $apcParcours->getParcours()->getCode(),
                     'actif' => $apcParcours->getParcours()->getActif(),
-                    'referentiel' => $apcParcours->getParcours()->getApcReferentiel()->getLibelle(),
+                    'referentiel' => $apcParcours->getParcours()->getApcReferentiel()->getId(),
                 ];
             }
 

@@ -12,6 +12,7 @@ namespace App\Classes\EduSign;
 use App\Classes\Edt\EdtManager;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Entity\Absence;
+use App\Event\AbsenceEvent;
 use App\Repository\AbsenceRepository;
 use App\Repository\AnneeUniversitaireRepository;
 use App\Repository\ApcReferentielRepository;
@@ -28,6 +29,7 @@ use Carbon\Carbon;
 use DateInterval;
 use DateTime;
 use DateTimeZone;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 
 class GetCourses
 {
@@ -49,8 +51,10 @@ class GetCourses
         protected AbsenceRepository            $absenceRepository,
         protected AnneeUniversitaireRepository $anneeUniversitaireRepository,
         protected CalendrierRepository         $CalendrierRepository,
+        protected EventDispatcherInterface     $eventDispatcher,
     )
     {
+
     }
 
     public function getCourse(): void
@@ -101,19 +105,22 @@ class GetCourses
                             if ($id !== null) {
                                 $course = $this->apiEduSign->getCourses($id, $cleApi);
                                 $this->newAbsence($course);
-                            } else {
-                                dump('evenement sans id EduSign');
                             }
-                        } else {
-                            dump('evenement hors d\'échéance');
+//                            else {
+//                                dump('evenement sans id EduSign');
+//                            }
                         }
+//                        else {
+//                            dump('evenement hors d\'échéance');
+//                        }
                     }
                 }
             }
         }
     }
 
-    public function getCourseBetween(string $debut, string $fin): void {
+    public function getCourseBetween(string $debut, string $fin): void
+    {
         $diplomes = $this->diplomeRepository->findAllWithEduSign();
 
         foreach ($diplomes as $diplome) {
@@ -159,13 +166,18 @@ class GetCourses
 
                             if ($id !== null) {
                                 $course = $this->apiEduSign->getCourses($id, $cleApi);
-                                $this->newAbsence($course);
-                            } else {
-                                dump('evenement sans id EduSign');
+//                                if (is_array($course) && isset($course['ID']) && $course['ID'] == "zf84nci0h3krqdw") {
+//                                    dump($course['STUDENTS']);
+                                    $this->newAbsence($course);
+//                                }
                             }
-                        } else {
-                            dump('evenement hors d\'échéance');
+//                            else {
+//                                dump('evenement sans id EduSign');
+//                            }
                         }
+//                        else {
+//                            dump('evenement hors d\'échéance');
+//                        }
                     }
                 }
             }
@@ -174,63 +186,72 @@ class GetCourses
 
     public function newAbsence(array $course): void
     {
-        $enseignant = $this->personnelRepository->findByIdEdusign($course['PROFESSOR']);
 
-        if (!empty($course['STUDENTS'])) {
-            foreach ($course['STUDENTS'] as $student) {
-                if ($student['state'] === false) {
-                    if ($this->edtPlanningRepository->findOneBy(['idEduSign' => $student['courseId']])) {
-                        $cours = $this->edtPlanningRepository->findOneBy(['idEduSign' => $student['courseId']]);
-                    } elseif ($this->edtCelcatRepository->findOneBy(['idEduSign' => $student['courseId']])) {
-                        $cours = $this->edtCelcatRepository->findOneBy(['idEduSign' => $student['courseId']]);
-                    } else {
-                        $cours = null;
-                    }
-                    $absence = $this->absenceRepository->findOneBy(['id_edu_sign' => $student['_id']]);
+//        if (is_array($course) && isset($course['ID']) && $course['ID'] == "zf84nci0h3krqdw") {
+//            dump($course);
+//        }
 
-                    if ($absence === null && $cours !== null) {
+//        if (!empty($course['PROFESSOR'])) {
 
-                        $etudiant = $this->etudiantRepository->findOneBy(['idEduSign' => $student['studentId']]);
+            $enseignant = $this->personnelRepository->findByIdEdusign($course['PROFESSOR']);
 
-                        $startRaw = Carbon::parse($student['start'], 'UTC');
-                        $startRaw->setTimezone(new DateTimeZone('Europe/Paris'));
-                        $endRaw = Carbon::parse($student['end']);
+//            if ($enseignant !== null) {
 
-                        $startFormat = $startRaw->format('Y-m-d H:i:s');
-                        $endFormat = $endRaw->format('Y-m-d H:i:s');
+                if (!empty($course['STUDENTS'])) {
+                    foreach ($course['STUDENTS'] as $student) {
+                        if ($student['state'] === false) {
 
-                        $start = Carbon::createFromFormat("Y-m-d H:i:s", $startFormat);
-                        $end = Carbon::createFromFormat("Y-m-d H:i:s", $endFormat);
+                            $etudiant = $this->etudiantRepository->findOneBy(['idEduSign' => $student['studentId']]);
 
-                        $dureeSecs = $endRaw->diffInSeconds($startRaw);
+                            $startRaw = Carbon::parse($student['start'], 'UTC');
+                            $startRaw->setTimezone(new DateTimeZone('Europe/Paris'));
+                            $endRaw = Carbon::parse($student['end']);
 
-                        $refDate = new DateTime('2023-01-01 00:00:00');
+                            $startFormat = $startRaw->format('Y-m-d H:i:s');
+                            $endFormat = $endRaw->format('Y-m-d H:i:s');
 
-                        $refDate->add(new DateInterval('PT' . $dureeSecs . 'S'));
+                            $start = Carbon::createFromFormat("Y-m-d H:i:s", $startFormat);
+                            $end = Carbon::createFromFormat("Y-m-d H:i:s", $endFormat);
 
-                        $dureeFormat = $refDate->format('Y-m-d H:i:s.u');
+                            $dureeSecs = $endRaw->diffInSeconds($startRaw);
 
-                        $duree = Carbon::createFromFormat("Y-m-d H:i:s.u", $dureeFormat);
+                            $refDate = new DateTime('2023-01-01 00:00:00');
 
-                        $newAbsence = new Absence();
-                        $newAbsence->setPersonnel($enseignant);
-                        $newAbsence->setEtudiant($etudiant);
-                        $newAbsence->setAnneeUniversitaire($this->anneeUniversitaireRepository->findOneBy(['active' => true]));
-                        $newAbsence->setDuree($duree);
-                        $newAbsence->setJustifie(false);
-                        $newAbsence->setDateHeure($start);
-                        $newAbsence->setTypeMatiere($cours->getTypeMatiere());
-                        $newAbsence->setIdMatiere($cours->getIdMatiere());
-                        $newAbsence->setSemestre($etudiant->getSemestre());
-                        $newAbsence->setIdEduSign($student['_id']);
+                            $refDate->add(new DateInterval('PT' . $dureeSecs . 'S'));
 
-                        $this->absenceRepository->save($newAbsence);
-                        dump('absence enregistrée');
-                    } else {
-                        dump('absence déjà enregistrée');
+                            $dureeFormat = $refDate->format('Y-m-d H:i:s.u');
+
+                            $duree = Carbon::createFromFormat("Y-m-d H:i:s.u", $dureeFormat);
+
+                            $newAbsence = new Absence();
+                            $newAbsence->setPersonnel($enseignant);
+                            $newAbsence->setEtudiant($etudiant);
+                            $newAbsence->setAnneeUniversitaire($this->anneeUniversitaireRepository->findOneBy(['active' => true]));
+                            $newAbsence->setDuree($duree);
+                            $newAbsence->setJustifie(false);
+                            $newAbsence->setDateHeure($start);
+                            // todo: ajouter code matière dans cours edusign
+//                        $newAbsence->setTypeMatiere($cours->getTypeMatiere());
+//                        $newAbsence->setIdMatiere($cours->getIdMatiere());
+
+                            $newAbsence->setTypeMatiere($course['TYPE_MATIERE']);
+                            $newAbsence->setIdMatiere($course['ID_MATIERE']);
+                            $newAbsence->setSemestre($etudiant->getSemestre());
+                            $newAbsence->setIdEduSign($student['_id']);
+
+
+                            $this->absenceRepository->save($newAbsence);
+                            dump('absence enregistrée');
+
+                            $event = new AbsenceEvent($newAbsence);
+                            $this->eventDispatcher->dispatch($event, AbsenceEvent::ADDED);
+                        } else {
+                            dump('absence déjà enregistrée');
+                        }
                     }
                 }
-            }
-        }
+//            }
+//        }
+//        }
     }
 }
