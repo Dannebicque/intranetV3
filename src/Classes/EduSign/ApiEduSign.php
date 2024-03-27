@@ -131,11 +131,11 @@ class ApiEduSign
         return $data['result'] ?? "";
     }
 
-    public function deleteCourse(EduSignCourse $course, string $cleApi): void
+    public function deleteCourse(?string $course, string $cleApi): void
     {
         $client = HttpClient::create();
 
-        $response = $client->request('DELETE', 'https://ext.edusign.fr/v1/course/' . $course->id_edu_sign, [
+        $response = $client->request('DELETE', 'https://ext.edusign.fr/v1/course/' . $course, [
             'headers' => [
                 'Content-Type' => 'application/json',
                 'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
@@ -145,7 +145,7 @@ class ApiEduSign
         $statusCode = $response->getStatusCode();
         $content = $response->getContent();
 
-        $edt = $this->edtPlanningRepository->findOneBy(['idEduSign' => $course->id_edu_sign]);
+        $edt = $this->edtPlanningRepository->findOneBy(['idEduSign' => $course]);
         if ($edt) {
             $edt->setIdEduSign(null);
             $this->edtPlanningRepository->save($edt);

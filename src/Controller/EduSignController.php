@@ -85,7 +85,7 @@ class EduSignController extends BaseController
     #[Route('/create-courses/{opt}/{id}', name: 'app_edu_sign_create_courses')]
     public function createCourses(?int $opt, ?int $id, UpdateEdt $updateEdt, FixCourses $fixCourses): Response
     {
-        if ($opt === 1 && $id !== null) {
+        if ($id !== null) {
             $departement = $this->departementRepository->find($id);
             $diplomes = $this->diplomeRepository->findByDepartement($departement);
             $keyEduSign = null;
@@ -95,13 +95,9 @@ class EduSignController extends BaseController
                 }
             }
             //créer les cours pour la semaine
-            $updateEdt->update($keyEduSign);
+            $updateEdt->update($keyEduSign, $opt);
 
             $fixCourses->fixCourse($keyEduSign);
-
-        } elseif ($opt === 2) {
-            // créer les cours pour la journée
-
         }
 
         return $this->redirectToRoute('app_edu_sign');

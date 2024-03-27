@@ -141,7 +141,7 @@ adm:
     index.heading: 'EduSign'
     context:
       new: 'Initialisation'
-      info: "Création des groupes, import des étudiants et enseignants"
+      info: "Création des groupes, import des étudiants"
     commands:
       heading: 'Gestion des cours'
       info-create: 'La création des cours se fait automatiquement tous les samedi pour la semaine suivante - mais vous pouvez forcer la création ici (par exemple si il y a un changement de dernière minute)'
