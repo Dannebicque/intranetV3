@@ -81,6 +81,7 @@ class FixCourses
                             $date = Carbon::createFromFormat("Y-m-d H:i:s", $cours->date);
                             // on retrouve le cours dans l'intranet
                             $coursIntranet = $this->edtCelcatRepository->findOneCours($date, $cours->heureDebut, $cours->heureFin, $cours->salle, $cours->personnelObjet);
+//                            dump($coursIntranet);
                         }
                     } else {
                         $this->source = 'intranet';
@@ -94,6 +95,7 @@ class FixCourses
                         $date = Carbon::createFromFormat("Y-m-d H:i:s", $cours->date);
                         // on retrouve le cours dans l'intranet
                         $coursIntranet = $this->edtPlanningRepository->findOneBy(['date' => $date, 'debut' => $start, 'fin' => $end, 'salle' => $cours->salle, 'intervenant' => $cours->personnelObjet]);
+//                        dump($coursIntranet);
                     }
 
                     $startRaw = Carbon::parse($course['START'], 'UTC');

@@ -22,6 +22,7 @@ use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Carbon\Carbon;
+use function PHPUnit\Framework\isEmpty;
 
 class UpdateEdt
 {
@@ -62,7 +63,7 @@ class UpdateEdt
             if ($opt === 1) {
                 $start = Carbon::today();
                 $end = Carbon::today()->next('saturday');
-            } elseif($opt === 2) {
+            } elseif ($opt === 2) {
                 $start = Carbon::create('yesterday');
                 $end = Carbon::create('today');
             }
@@ -91,10 +92,11 @@ class UpdateEdt
 
                         if ($this->evenement->dateObjet->isBetween($start, $end)) {
 
-
                             $course = (new IntranetEdtEduSignAdapter($this->evenement))->getCourse();
 
-                            if ($course->id_edu_sign == null) {
+                            $eduSignCourse = $this->apiEduSign->getCourseIdByApiId($this->evenement->id, $this->cleApi);
+
+                            if ($course->id_edu_sign == null && !$eduSignCourse) {
 
                                 $enseignant = $this->evenement->personnelObjet;
 

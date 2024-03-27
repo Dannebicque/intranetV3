@@ -93,6 +93,25 @@ class ApiEduSign
         ]);
     }
 
+    public function getCourseIdByApiId(string $apiId, string $cleApi): mixed
+    {
+        $client = HttpClient::create();
+
+        $response = $client->request('GET', 'https://ext.edusign.fr/v1/course/get-id/' . $apiId, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
+            ]
+        ]);
+
+        $statusCode = $response->getStatusCode();
+        $content = $response->getContent();
+        // convertit JSON en tableau associatif PHP
+        $data = json_decode($content, true);
+
+        return $data['result'] ?? "";
+    }
+
     public function getCourses(?string $id, string $cleApi): mixed
     {
         $client = HttpClient::create();
