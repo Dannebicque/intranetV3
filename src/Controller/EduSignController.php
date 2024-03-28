@@ -73,8 +73,28 @@ class EduSignController extends BaseController
                 }
             }
             $updateGroupe->update($keyEduSign);
-
             $updateEtudiant->update($keyEduSign);
+
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Les données ont été mises à jour sur EduSign');
+        }
+
+        return $this->redirectToRoute('app_edu_sign');
+    }
+
+    #[Route('/update/etudiants/{id}', name: 'app_edu_sign_update_etudiants')]
+    public function updateEtudiants(?int $id, UpdateGroupe $updateGroupe, UpdateEtudiant $updateEtudiant)
+    {
+        if ($id !== 0) {
+            $departement = $this->departementRepository->find($id);
+            $diplomes = $this->diplomeRepository->findByDepartement($departement);
+            $keyEduSign = null;
+            foreach ($diplomes as $diplome) {
+                if ($diplome->getKeyEduSign() !== null) {
+                    $keyEduSign = $diplome->getKeyEduSign();
+                }
+            }
+
+            $updateEtudiant->changeSemestre($keyEduSign);
 
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Les données ont été mises à jour sur EduSign');
         }

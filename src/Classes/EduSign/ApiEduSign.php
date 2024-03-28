@@ -261,6 +261,56 @@ class ApiEduSign
         }
     }
 
+    public function getAllEtudiants(string $cleApi): mixed
+    {
+        $client = HttpClient::create();
+
+        $response = $client->request('GET', 'https://ext.edusign.fr/v1/student', [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
+            ]
+        ]);
+
+        $content = $response->getContent();
+        // convertit JSON en tableau associatif PHP
+        $data = json_decode($content, true);
+
+        return $data['result'] ?? "";
+    }
+
+    public function getEtudiant(?string $etudiant, string $cleApi): mixed
+    {
+        $client = HttpClient::create();
+
+        $response = $client->request('GET', 'https://ext.edusign.fr/v1/student/'.$etudiant, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
+            ]
+        ]);
+
+        $content = $response->getContent();
+        // convertit JSON en tableau associatif PHP
+        $data = json_decode($content, true);
+
+        return $data['result'] ?? "";
+    }
+
+    public function updateEtudiant(EduSignEtudiant $etudiant, string $cleApi): void
+    {
+        $client = HttpClient::create();
+
+        $response = $client->request('PATCH', 'https://ext.edusign.fr/v1/student/', [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
+            ],
+            'json' => ['student' => $etudiant->toArray()],
+        ]);
+
+    }
+
     public function addEnseignant(EduSignEnseignant $enseignant, Personnel $personnel, Departement $departement, $cleApi): void
     {
         $client = HttpClient::create();
