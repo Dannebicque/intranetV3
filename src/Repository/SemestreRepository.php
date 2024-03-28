@@ -205,6 +205,18 @@ class SemestreRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findSemestreEduSignDept(Departement $departement)
+    {
+        return $this->createQueryBuilder('s')
+            ->innerJoin(Annee::class, 'a', 'WITH', 'a.id = s.annee')
+            ->innerJoin(Diplome::class, 'd', 'WITH', 'd.id = a.diplome')
+            ->where('d.departement = :departement')
+            ->andWhere('s.idEduSign IS NOT NULL')
+            ->setParameter('departement', $departement)
+            ->getQuery()
+            ->getResult();
+    }
+
     public function save(Semestre $semestre): void
     {
         $this->_em->persist($semestre);

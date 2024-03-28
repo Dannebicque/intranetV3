@@ -272,4 +272,13 @@ class EdtManager
 
         return count($tEvents) === 1 ? $tEvents[0] : null;
     }
+
+    public function saveCourseEduSign(?string $source, $cours): void
+    {
+        if ($source === 'intranet') {
+            $this->edtPlanningRepository->save($cours);
+        } elseif ($source === 'celcat') {
+            $this->edtCelcatRepository->save($cours);
+        }
+    }
 }

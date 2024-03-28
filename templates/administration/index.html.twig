@@ -23,8 +23,8 @@
         .isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_RP') %}
         <div class="row block_admin" {{ stimulus_controller('adm--semestre-maj', {url:path('administration_bloc_etudiant')}) }}>
 
-            <div  {{ stimulus_target('adm--semestre-maj', 'bloc_etudiant') }}>
-            {{ include('administration/block_admin/_etudiant.html.twig') }}
+            <div {{ stimulus_target('adm--semestre-maj', 'bloc_etudiant') }}>
+                {{ include('administration/block_admin/_etudiant.html.twig') }}
             </div>
 
             <!-- Modal -->
@@ -86,6 +86,7 @@
                 </div>
             </div>
         </div>
+
         <div class="row block_admin">
             {{ include('administration/block_admin/_personnels.html.twig') }}
             {{ include('administration/block_admin/_ppn.html.twig') }}
@@ -103,6 +104,9 @@
         </div>
         <div class="row block_admin">
             {{ include('administration/block_admin/_document.html.twig') }}
+            {#        {% if user_data.isGoodDepartement('ROLE_SUPER_ADMIN') %}#}
+            {{ include('administration/block_admin/_edusign.html.twig') }}
+            {#        {% endif %}#}
         </div>
         <div class="row block_admin">
             {{ include('administration/block_admin/_qualite.html.twig') }}
