@@ -1,9 +1,9 @@
 {% block type_qcu %}
     {{ block('libelle') }}
     {% if choix == null %}
-        <div class="alert alert-danger">
+        <twig:Alert type="danger">
             Cette question n'a pas de choix.
-        </div>
+        </twig:Alert>
     {% else %}
         <table class="table table-striped table-hover">
             <thead>

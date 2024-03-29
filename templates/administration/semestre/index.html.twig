@@ -37,9 +37,9 @@
     <div class="row">
         {% if semestre.actif == false %}
             <div class="col-sm-12">
-                <div class="alert alert-warning">Ce semestre n'est pas actif, <strong>aucune action ne peut être faite
+                <twig:Alert type="warning">Ce semestre n'est pas actif, <strong>aucune action ne peut être faite
                         par les enseignants</strong>.
-                </div>
+                </twig:Alert>
             </div>
         {% endif %}
 

@@ -22,11 +22,11 @@
                         {{ include('composants/stage_timeline.html.twig') }}
                     {% endif %}
 
-                    <div class="alert alert-warning">
+                    <twig:Alert type="warning">
                         <p>{{ stagePeriode.texteLibre }}</p>
-                    </div>
+                    </twig:Alert>
 
-                    <div class="alert alert-info">
+                    <twig:Alert type="info">
                             <div class="row">
                                 <div class="col-md-6 col-sm-12">
                                     <p>Période de stage du
@@ -75,31 +75,29 @@
                                     </ul>
                                 </div>
                             </div>
-                        </div>
+                    </twig:Alert>
                         {% if stageEtudiants[stagePeriode.id] is  not defined %}
-                            <div class="alert alert-warning">Imprimez <a
+                            <twig:Alert type="warning">Imprimez <a
                                         href="{{ asset('upload/fiche-renseignement/'~stagePeriode.documentName) }}"
                                         target="_blank">la fiche de stage</a> à faire compléter et signer par
                                                              l'entreprise.
-                                <strong>Ce document n'est pas la convention de stage !</strong></div>
+                                <strong>Ce document n'est pas la convention de stage !</strong></twig:Alert>
 <div class="d-grid">
                             <a href="{{ path('stage_offre_stage_index') }}" class="btn d-block btn-large
                             btn-info">Consultez les offres de stage</a>
 </div>
                         {% endif %}
                         {% if ((stageEtudiants[stagePeriode.id] is  defined) and (stageEtudiants[stagePeriode.id].etatStage is constant('ETAT_STAGE_AUTORISE', stageEtudiants[stagePeriode.id]) )) %}
-                            <div class="alert alert-warning"><p>Votre proposition a été acceptée le
+                            <twig:Alert type="warning"><p>Votre proposition a été acceptée le
                                     <strong>{{ stageEtudiants[stagePeriode.id].dateAutorise|format_date('long') }}</strong>.
-                                                                Vous devez maintenant remplir le formulaire.</p></div>
+                                    Vous devez maintenant remplir le formulaire.</p></twig:Alert>
                             <div class="d-grid">
-{#                            <a href="{{ path('application_etudiant_stage_formulaire', {stageEtudiant:stageEtudiants[stagePeriode.id].uuidString}) }}"#}
-{#                               class="btn d-block btn-large btn-info">[OLD] Compléter la proposition de stage</a>#}
                                 <a href="{{ path('app_stage_etudiant_formulaire', {stageEtudiant:stageEtudiants[stagePeriode.id]
                                 .uuidString}) }}"
                                class="btn d-block btn-large btn-info">Compléter la proposition de stage</a>
                             </div>
                         {% elseif ((stageEtudiants[stagePeriode.id] is  defined) and (stageEtudiants[stagePeriode.id].etatStage is constant('ETAT_STAGE_DEPOSE', stageEtudiants[stagePeriode.id]) )) %}
-                            <div class="alert alert-success">Vous avez complété le formulaire. Il est en cours de
+                            <twig:Alert type="success">Vous avez complété le formulaire. Il est en cours de
                                                              validation
                                                              par les responsables de stage. Vous recevrez un mail dés
                                                              que vous pourrez signer la
@@ -110,33 +108,33 @@
                                                                                                                         de
                                                                                                                         votre
                                                                                                                         stage</a>
-                            </div>
+                            </twig:Alert>
                         {% elseif ((stageEtudiants[stagePeriode.id] is  defined) and (stageEtudiants[stagePeriode.id].etatStage is constant('ETAT_STAGE_VALIDE', stageEtudiants[stagePeriode.id]) )) %}
-                            <div class="alert alert-success">Votre formulaire a été validé. La convention va être
+                            <twig:Alert type="success">Votre formulaire a été validé. La convention va être
                                                              imprimée
                                                              prochainement.
-                            </div>
+                            </twig:Alert>
                         {% elseif ((stageEtudiants[stagePeriode.id] is  defined) and (stageEtudiants[stagePeriode.id]
                             .etatStage is constant('ETAT_STAGE_CONVENTION_IMPRIMEE', stageEtudiants[stagePeriode.id]) )) %}
-                            <div class="alert alert-success">La convention est imprimée. Vous devez venir signer votre
+                            <twig:Alert type="success">La convention est imprimée. Vous devez venir signer votre
                                                              convention de stage
-                            </div>
+                            </twig:Alert>
                         {% elseif ((stageEtudiants[stagePeriode.id] is  defined) and (stageEtudiants[stagePeriode.id].etatStage is constant('ETAT_STAGE_CONVENTION_ENVOYEE', stageEtudiants[stagePeriode.id]) )) %}
-                            <div class="alert alert-success">Votre convention a été envoyée à l'entreprise pour
+                            <twig:Alert type="success">Votre convention a été envoyée à l'entreprise pour
                                                              signature
-                            </div>
+                            </twig:Alert>
                         {% elseif ((stageEtudiants[stagePeriode.id] is  defined) and (stageEtudiants[stagePeriode.id].etatStage is constant('ETAT_STAGE_CONVENTION_RECUE', stageEtudiants[stagePeriode.id]) )) %}
-                            <div class="alert alert-success">La convention est signée par l'ensemble des parties. Vous
+                            <twig:Alert type="success">La convention est signée par l'ensemble des parties. Vous
                                                              devez
                                                              venir récupérer votre exemplaire de convention de stage
                                                              signée
-                            </div>
+                            </twig:Alert>
                         {% endif %}
                     </div>
                 {% endfor %}
             </div>
         {% else %}
-            <div class="alert alert-info">Vous n'avez pas de période de stage à compléter sur ce semestre.</div>
+            <twig:Alert type="info">Vous n'avez pas de période de stage à compléter sur ce semestre.</twig:Alert>
         {% endif %}
     </div>
 </div>

@@ -64,10 +64,10 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="alert alert-danger">
+                <twig:Alert type="danger">
                     L'import d'une nouvelle maquette effacera les données déjà présentes dans la structure du diplome
                     "{{ diplome.libelle }}"
-                </div>
+                </twig:Alert>
                 <button type="submit" class="btn btn-success">Importer</button>
             </form>
         </div>

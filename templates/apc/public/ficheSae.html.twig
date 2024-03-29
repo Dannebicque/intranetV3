@@ -13,9 +13,9 @@
             {{ include('apc/apc_sae/_detail.html.twig') }}
         </div>
         <br>
-        <div class="alert alert-warning">
+        <twig:Alert type="warning">
             * Cette décomposition est propre à {{ settings('NOM_IUT') }} en fonction des contraintes et spécificités
             locales.
-        </div>
+        </twig:Alert>
     </div>
 {% endblock %}

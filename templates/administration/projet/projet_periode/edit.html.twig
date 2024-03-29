@@ -14,12 +14,12 @@
     <div class="card">
         <h4 class="card-title">{{ 'adm.projet_periode.modification.heading'|trans }}</h4>
         <div class="card-body">
-            <div class="alert alert-warning">
+            <twig:Alert type="warning">
                 La suppression d'une période de projet entrainera la suppression de toutes les données associées
                 (projet d'étudiants, offres de projets, ...). La suppression ne devrait être utilisée qu'en cas
                 d'erreur dans la création de la période. Il est préférable de conserver
                 cette période de projet et de créer une autre période de projet pour une nouvelle année universitaire.
-            </div>
+            </twig:Alert>
             <br>
             {% form_theme form 'form/my-form.html.twig' %}
             {{ form_start(form) }}

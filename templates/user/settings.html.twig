@@ -39,11 +39,11 @@
                     <div class="card">
                         <h4 class="card-title">{{ 'settings.votre.password'|trans }}</h4>
                         <div class="card-body">
-                            <div class="alert alert-warning">
+                            <twig:Alert type="warning">
                                 Attention ! Cette fonctionnalité n'est à utuliser que si vous n'utilisez pas le CAS de
                                 l'Université. Si vous utilisez le CAS la modification doit se faire sur votre bureau
                                 virtuel.
-                            </div>
+                            </twig:Alert>
                             <form>
                                 <div class="row">
                                     <div class="col-4">
@@ -166,7 +166,7 @@
                             {% endfor %}
                         </table>
                         {% else %}
-                            <div class="alert alert-danger">{{ 'erreur.type.user'|trans }}</div>
+                            <twig:Alert type="danger">{{ 'erreur.type.user'|trans }}</twig:Alert>
                         {% endif %}
                     </div>
                 </div>

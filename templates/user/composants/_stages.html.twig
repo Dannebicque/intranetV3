@@ -52,7 +52,7 @@
             {% else %}
                 <tr>
                     <td colspan="4">
-                        <div class="alert alert-info">Pas de stage en cours</div>
+                        <twig:Alert type="info">Pas de stage en cours</twig:Alert>
                     </td>
                 </tr>
             {% endfor %}
@@ -84,7 +84,7 @@
             {% else %}
                 <tr>
                     <td colspan="4">
-                        <div class="alert alert-info">Pas d'alternance en cours</div>
+                        <twig:Alert type="info">Pas d'alternance en cours</twig:Alert>
                     </td>
                 </tr>
             {% endfor %}
@@ -109,42 +109,42 @@
             </tr>
             </thead>
             {% for stage in stagesHistorique %}
-            <tr class="stage">
-                <td>{% if stage.stagePeriode != null %}{{ stage.stagePeriode.semestre.display }}{% else %} - {% endif %}</td>
-                <td>{{ stage.stagePeriode.anneeUniversitaire.annee }}</td>
-                <td>
-                    {% if stage.stagePeriode != null %}
-                        <a href="#"
-                                {{ stimulus_controller('modal', {
-                                    size: 'lg',
-                                    modalTitle: 'Informations sur la période',
-                                    modalUrl:
-                                    path('application_etudiant_stage_periode_info',
-                                        {'id': stage.id}) }) }}
-                           data-action="click->modal#openModal"
-                           class="btn btn-info btn-outline btn-xs"
-                           data-bs-toggle="tooltip"
-                           data-bs-placement="bottom"
-                           title="Informations sur la période"
-                        >
-                            {{ stage.stagePeriode.libelle }}
-                        </a>
-                    {% else %} - {% endif %}
-                </td>
-                <td>
-                    {% if stage.entreprise != null %}
-                    <a href="#"
-                       {{ stimulus_controller('modal', {
-                           size: 'lg',
-                           modalTitle: 'Informations sur l\'entreprise',
-                           modalUrl:  path('application_etudiant_stage_entreprise_info', {'id': stage.id}) }) }}
-                           data-action="click->modal#openModal"
-                           class="btn btn-info btn-outline btn-xs"
-                           data-bs-toggle="tooltip" data-bs-placement="bottom"
-                           title="Informations sur l'entreprise"
-                           >
-                            {{ stage.entreprise.raisonSociale }}
-                        </a>
+                <tr class="stage">
+                    <td>{% if stage.stagePeriode != null %}{{ stage.stagePeriode.semestre.display }}{% else %} - {% endif %}</td>
+                    <td>{{ stage.stagePeriode.anneeUniversitaire.annee }}</td>
+                    <td>
+                        {% if stage.stagePeriode != null %}
+                            <a href="#"
+                                    {{ stimulus_controller('modal', {
+                                        size: 'lg',
+                                        modalTitle: 'Informations sur la période',
+                                        modalUrl:
+                                        path('application_etudiant_stage_periode_info',
+                                            {'id': stage.id}) }) }}
+                               data-action="click->modal#openModal"
+                               class="btn btn-info btn-outline btn-xs"
+                               data-bs-toggle="tooltip"
+                               data-bs-placement="bottom"
+                               title="Informations sur la période"
+                            >
+                                {{ stage.stagePeriode.libelle }}
+                            </a>
+                        {% else %} - {% endif %}
+                    </td>
+                    <td>
+                        {% if stage.entreprise != null %}
+                            <a href="#"
+                                    {{ stimulus_controller('modal', {
+                                        size: 'lg',
+                                        modalTitle: 'Informations sur l\'entreprise',
+                                        modalUrl:  path('application_etudiant_stage_entreprise_info', {'id': stage.id}) }) }}
+                               data-action="click->modal#openModal"
+                               class="btn btn-info btn-outline btn-xs"
+                               data-bs-toggle="tooltip" data-bs-placement="bottom"
+                               title="Informations sur l'entreprise"
+                            >
+                                {{ stage.entreprise.raisonSociale }}
+                            </a>
                         {% else %} - {% endif %}
                     </td>
                     <td>{% if stage.tuteur != null %}{{ stage.tuteur.display }}{% else %}{{ 'non.defini'|trans }}{% endif %}</td>
@@ -152,47 +152,48 @@
             {% else %}
                 <tr>
                     <td colspan="5">
-                        <div class="alert alert-info">Pas de stage réalisé
-    </div>
-    </td>
-    </tr>
-    {% endfor %}
+                        <twig:Alert type="info">
+                            Pas de stage réalisé
+                        </twig:Alert>
+                    </td>
+                </tr>
+            {% endfor %}
 
-    {% for alternance in alternancesHistorique %}
-    <tr class="alternance">
-        <td>{% if alternance.annee != null %}{{ alternance.annee.libelle }}{% else %} - {% endif %}</td>
-        <td>{{ alternance.anneeUniversitaire }}</td>
-        <td>
-            Du {{ alternance.dateDebut ? alternance.dateDebut|format_datetime('long', 'short') : 'non.defini'|trans }}
-            au {{ alternance.dateFin ? alternance.dateFin|format_datetime('long', 'short') : 'non.defini'|trans }}</td>
-        <td>
-            {% if alternance.entreprise != null %}
-            <a href="#"
-                    {{ stimulus_controller('modal', {
-                    size: 'lg',
-                    modalTitle: 'Informations sur l\'entreprise',
-                    modalUrl:  path('application_etudiant_alternance_entreprise_info', {'id': alternance.id}) }) }}
-               data-action="click->modal#openModal"
-               class="btn btn-info btn-outline btn-xs"
-               data-bs-toggle="tooltip" data-bs-placement="bottom"
-               title="Informations sur l'entreprise"
-            >
-                {{ alternance.entreprise.raisonSociale }}
-            </a>
-            {% else %} - {% endif %}
-        </td>
-        <td>{% if alternance.tuteurUniversitaire != null %}{{ alternance.tuteurUniversitaire.displayPr }}{% else %}{{ 'non.defini'|trans }}{% endif %}</td>
-    </tr>
-    {% else %}
-    <tr>
-        <td colspan="5">
-            <div class="alert alert-info">Pas d'alternance réalisée</div>
-        </td>
-    </tr>
-    {% endfor %}
-    </table>
-    <div>
-        <span class="stage carre"> &nbsp;</span> Stage | <span class="alternance carre"> &nbsp;</span> Alternance
+            {% for alternance in alternancesHistorique %}
+                <tr class="alternance">
+                    <td>{% if alternance.annee != null %}{{ alternance.annee.libelle }}{% else %} - {% endif %}</td>
+                    <td>{{ alternance.anneeUniversitaire }}</td>
+                    <td>
+                        Du {{ alternance.dateDebut ? alternance.dateDebut|format_datetime('long', 'short') : 'non.defini'|trans }}
+                        au {{ alternance.dateFin ? alternance.dateFin|format_datetime('long', 'short') : 'non.defini'|trans }}</td>
+                    <td>
+                        {% if alternance.entreprise != null %}
+                            <a href="#"
+                                    {{ stimulus_controller('modal', {
+                                        size: 'lg',
+                                        modalTitle: 'Informations sur l\'entreprise',
+                                        modalUrl:  path('application_etudiant_alternance_entreprise_info', {'id': alternance.id}) }) }}
+                               data-action="click->modal#openModal"
+                               class="btn btn-info btn-outline btn-xs"
+                               data-bs-toggle="tooltip" data-bs-placement="bottom"
+                               title="Informations sur l'entreprise"
+                            >
+                                {{ alternance.entreprise.raisonSociale }}
+                            </a>
+                        {% else %} - {% endif %}
+                    </td>
+                    <td>{% if alternance.tuteurUniversitaire != null %}{{ alternance.tuteurUniversitaire.displayPr }}{% else %}{{ 'non.defini'|trans }}{% endif %}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">
+                        <twig:Alert type="info">Pas d'alternance réalisée</twig:Alert>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+        <div>
+            <span class="stage carre"> &nbsp;</span> Stage | <span class="alternance carre"> &nbsp;</span> Alternance
+        </div>
     </div>
-</div>
 </div>

@@ -1,9 +1,9 @@
 <form method="post" action="{{ path('administration_edt_action_upload') }}" enctype="multipart/form-data" class="form">
 <h4 class="card-title">Action | <strong>Importer</strong> un fichier EDT</h4>
 <div class="card-body">
-    <div class="alert alert-warning">Lorsque vous importez un fichier, la semaine concernée est
+    <twig:Alert type="warning">Lorsque vous importez un fichier, la semaine concernée est
         <strong>effacée sur les promos concernées uniquement !</strong>
-    </div>
+    </twig:Alert>
         <div class="form-group">
             <label for="evaluation">Fichier .csv</label>
             <input type="file" name="fichieredt" class="form-control">

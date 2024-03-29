@@ -19,14 +19,14 @@
         <h1 class="text-uppercase text-center fs-20">{{ 'security.login.connexion'|trans }}</h1>
         <br>
         {% if message %}
-            <div class="alert alert-danger">
+            <twig:Alert type="danger">
                 {{ message }}
-            </div>
+            </twig:Alert>
         {% endif %}
         {% if error %}
-            <div class="alert alert-danger">
+            <twig:Alert type="danger">
                 {{ error.messageKey|trans }}
-            </div>
+            </twig:Alert>
         {% endif %}
         <p>Etudiants, personnels de l'Université et vacataires, connectez-vous avec l'authentification de
            l'Université .</p>

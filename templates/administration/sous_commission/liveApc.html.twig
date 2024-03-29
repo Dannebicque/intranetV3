@@ -49,11 +49,11 @@ chaque UE, et pour l'année au global.
             {{ render(controller('App\\Controller\\administration\\NoteController::analyse', {semestre:semestre.id})) }}
             <br>
             {% if semestre.optPenaliteAbsence == true %}
-                <div class="alert alert-info">
+                <twig:Alert type="info">
                     Les moyennes affichées sont les moyennes avec les pénalités pour les absences. Survolez une note
                     pour
                     voir la moyenne sans ces pénalités.
-                </div>
+                </twig:Alert>
             {% endif %}
 
             <div class="table-responsive" style="height: 500px; overflow-y: auto">

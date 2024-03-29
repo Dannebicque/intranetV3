@@ -43,9 +43,9 @@
                 <div class="tab-pane {% if loop.first %}fade active show{% endif %}" id="semestre{{ semestre.id }}">
                     {{ include('bloc_previsionnel/_previ_semestre.html.twig') }}
 
-                    <div class="alert alert-info">* CM non majorés; ** CM majorés, TP=TD.
+                    <twig:Alert type="info">* CM non majorés; ** CM majorés, TP=TD.
                                                   Information indicative !
-                        </div>
+                    </twig:Alert>
                     </div>
                 {% endfor %}
             </div>

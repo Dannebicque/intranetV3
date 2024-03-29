@@ -37,13 +37,13 @@
                     .displayPr }) }}
         </h4>
         <div class="card-body">
-            <div class="alert alert-info">stage de <strong>{{ stage.etudiant.displayPr }}</strong>, dans
+            <twig:Alert type="info">stage de <strong>{{ stage.etudiant.displayPr }}</strong>, dans
                                           l'entreprise
                 <strong>{{ stage.entreprise.raisonSociale }}</strong>.<br>
                                           Contact Tuteur Entreprise : {{ stage.tuteur.display }}
                                           , {{ stage.tuteur.telephone|tel_format }}
                                           , {{ stage.tuteur.email|mailto }}
-            </div>
+            </twig:Alert>
             <table class="table table-striped table-bordered">
 
                 <thead>

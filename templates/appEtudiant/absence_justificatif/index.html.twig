@@ -8,8 +8,9 @@
         </div>
     </header>
     <div class="card-body">
-        <div class="alert alert-info">{{ 'app.etudiant.justificatif.explication.index'|trans }}
-        </div>
+        <twig:Alert type="info">
+            {{ 'app.etudiant.justificatif.explication.index'|trans }}
+        </twig:Alert>
         <table class="table table-striped table-bordered">
             <thead>
             <tr>
@@ -70,10 +71,10 @@
             {% endfor %}
             </tbody>
         </table>
-        <div class="alert alert-info">
+        <twig:Alert type="info">
             Vous devez déposer le justificatif original (ou une copie accompagnée de l'original) au secrétariat de
             votre département.
-        </div>
+        </twig:Alert>
     </div>
 </div>
 

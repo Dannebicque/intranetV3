@@ -26,13 +26,13 @@
     <div class="card">
         <h4 class="card-title">Importer un référentiel de compétence pour le diplôme : {{ diplome.libelle }}</h4>
         <div class="card-body">
-            <div class="alert alert-danger mt-2">
+            <twig:Alert type="danger">
                 <strong>Attention !!</strong>
                 <p>
                     Si un référentiel est déjà présent sur le PN (Programme National) selectionné, ce
                     nouveau référentiel sera ajouté.
                 </p>
-            </div>
+            </twig:Alert>
             <form class="form" action="{{ path('sa_apc_referentiel_import_import', {diplome:diplome.id}) }}"
                   method="post" enctype="multipart/form-data">
                 <div class="row">

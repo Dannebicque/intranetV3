@@ -31,7 +31,7 @@
             <h4 class="card-title"><strong>Sous commission</strong> | {{ semestre.display }}</h4>
         </div>
         <div class="card-body">
-            <div class="alert alert-info">
+            <twig:Alert type="info">
                 <strong>Information </strong>. Dans cette partie vous avez le résultat de la sous
                                              commission {{ semestre.display }}. Les données sont sauvegardées et
                                              peuvent être modifiée en fonction des décisions précises. A la fin
@@ -39,14 +39,14 @@
                                              résultats aux étudiants. Un ensemble de fonctionnalités sont
                                              disponibles à l'issue de cette sous-commission (courriers, relevé
                                              de note, ...).
-            </div>
+            </twig:Alert>
             <br/>
-            <div class="alert alert-danger">
+            <twig:Alert type="danger">
                 <strong>Attention</strong> Cette fonctionnalité est relativement gourmande en ressource, il est
                                            préférable de l'utiliser à bon escient et non pour avoir des
                                            simulations de l'année. Pour cela aller dans la rubrique application
                                            > Sous-Commission
-            </div>
+            </twig:Alert>
             <div style="overflow: auto; width: 100%; height: 500px">
                 <table class="table table-striped table-hover">
                     <thead>

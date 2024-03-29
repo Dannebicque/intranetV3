@@ -34,8 +34,8 @@
                     </div>
                 </div>
             {% else %}
-                <div class="alert alert-warning">Pas de résultats correspondant à la recherche
-                    <strong>{{ q }}</strong></div>
+                <twig:Alert type="warning">Pas de résultats correspondant à la recherche
+                    <strong>{{ q }}</strong></twig:Alert>
             {% endfor %}
         </div>
     </div>
@@ -74,8 +74,8 @@
                     </div>
                 </div>
             {% else %}
-                <div class="alert alert-warning">Pas de résultats correspondant à la recherche
-                    <strong>{{ q }}</strong></div>
+                <twig:Alert type="warning">Pas de résultats correspondant à la recherche
+                    <strong>{{ q }}</strong></twig:Alert>
             {% endfor %}
         </div>
     </div>
@@ -100,8 +100,8 @@
             </div>
             {% endif %}
         {% else %}
-            <div class="alert alert-warning">Pas de résultats correspondant à la recherche
-                <strong>{{ q }}</strong></div>
+            <twig:Alert type="warning">Pas de résultats correspondant à la recherche
+                <strong>{{ q }}</strong></twig:Alert>
         {% endfor %}
     </div>
 </div>

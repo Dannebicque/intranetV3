@@ -62,8 +62,9 @@
             </div>
         </div>
         <br/>
-        <div class="alert alert-warning">Soit pour cette semaine : {{ edt.total.CM }} heure(s) de CM (non
-                                         majorée), {{ edt.total.TD }} heure(s) de TD, {{ edt.total.TP }} heure(s) de TP
-        </div>
+        <twig:Alert type="warning">
+            Soit pour cette semaine : {{ edt.total.CM }} heure(s) de CM (non
+            majorée), {{ edt.total.TD }} heure(s) de TD, {{ edt.total.TP }} heure(s) de TP
+        </twig:Alert>
     </div>
 </div>

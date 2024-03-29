@@ -59,7 +59,7 @@
                 Apprentissage(s) critique(s) couvert(s)
             </legend>
             <div {{ stimulus_target('apc-sae-form', 'acSae') }}>
-                <div class="alert alert-warning">Indiquer un semestre et au moins une compétence</div>
+                <twig:Alert type="warning">Indiquer un semestre et au moins une compétence</twig:Alert>
             </div>
             <small id="apc_sae_competences_help" class="form-text text-muted">Ajoutez les compétences couvertes par la
                                                                               SAÉ.</small>
@@ -70,7 +70,7 @@
                 Ressources combinées
             </legend>
             <div {{ stimulus_target('apc-sae-form', 'ressourcesSae') }}>
-                <div class="alert alert-warning">Indiquer un semestre</div>
+                <twig:Alert type="warning">Indiquer un semestre</twig:Alert>
             </div>
             <small id="apc_sae_ressource_help" class="form-text text-muted">Ajoutez les ressources couvertes par la SAÉ
                                                                             .</small>

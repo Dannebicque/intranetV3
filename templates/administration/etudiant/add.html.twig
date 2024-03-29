@@ -96,11 +96,11 @@
                     <div class="card">
                         <h4 class="card-title">Récupérez depuis Apogée un étudiant</h4>
                         <div class="card-body">
-                            <div class="alert alert-info">
+                            <twig:Alert type="info">
                                 Cette fonctionnalité permet d'importer que des étudiants de manière cilbée (avec un
                                 numéro étudiant). Vous pouvez saisir plusieurs numéros en séparant par un ; (point
                                 virugule).
-                            </div>
+                            </twig:Alert>
                             <form class="form" action="{{ path('administration_apogee_un_etudiant') }}" method="post">
                                 <div class="row">
                                     <div class="col-sm-12 col-md-6">
@@ -166,7 +166,7 @@
                     <div class="card">
                         <h4 class="card-title">Import depuis une liste</h4>
                         <div class="card-body">
-                            <div class="alert alert-warning">
+                            <twig:Alert type="warning">
                                 Fichier csv (séparateur ";"). Télécharger un modèle ici :
                                 <a href="{{ asset('exemples/import_etudiant.csv') }}" target="_blank">Modèle d'import
                                                                                                       d'une liste
@@ -177,7 +177,7 @@
                                         <li>{{ semestre.display }} : {{ semestre.codeElement }}</li>
                                     {% endfor %}
                                 </ul>
-                            </div>
+                            </twig:Alert>
                             <form action="{{ path('administration_etudiant_import_liste_csv') }}" method="post"
                                   enctype="multipart/form-data">
                                 <div class="form-group">

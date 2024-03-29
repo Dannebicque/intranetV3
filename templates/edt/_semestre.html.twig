@@ -2,9 +2,9 @@
     .semaineFormationIUT }})</h4>
 
 {% if source == 'celcat' %}
-    <div class="alert alert-warning mb-2">
+    <twig:Alert type="warning">
         L'emploi du temps est récupéré depuis Celcat. Cette fonctionnalité est encore en cours de développement.
-    </div>
+    </twig:Alert>
 {% endif %}
         {{ render_esi(controller(
             'App\\Controller\\EdtController::navPersonnel', {filtre:filtre, valeur:valeur, semaine:semaine,

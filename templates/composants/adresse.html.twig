@@ -13,5 +13,5 @@
         <br/>{{ adresse.pays }}
     </p>
 {% else %}
-    <div class="alert alert-info">{{ 'aucune.adresse.fournie'|trans }}</div>
+    <twig:Alert type="info">{{ 'aucune.adresse.fournie'|trans }}</twig:Alert>
 {% endif %}

@@ -27,10 +27,10 @@
         <h4 class="card-title">{{ 'app.personnel.stage_fiche_suivi.new.heading'|trans({'%etudiant%': stage.etudiant
             .displayPr}) }}</h4>
         <div class="card-body">
-            <div class="alert alert-info">stage de <strong>{{ stage.etudiant.displayPr }}</strong>, dans
+            <twig:Alert type="info">stage de <strong>{{ stage.etudiant.displayPr }}</strong>, dans
                                           l'entreprise
                 <strong>{{ stage.entreprise.raisonSociale }}</strong>.
-            </div>
+            </twig:Alert>
             {{ include('composants/adm-form.html.twig') }}
         </div>
     </div>

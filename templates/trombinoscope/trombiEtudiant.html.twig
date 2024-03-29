@@ -138,9 +138,9 @@
                                     {% endfor %}
                                 {% else %}
                                     <div class="col-sm-12">
-                                        <div class="alert alert-warning">
+                                        <twig:Alert type="warning">
                                             {{ 'aucun.etudiant.groupe'|trans }}
-                                        </div>
+                                        </twig:Alert>
                                     </div>
                                 {% endif %}
                             </div>
@@ -148,18 +148,18 @@
                     {% endfor %}
                 </div>
             {% else %}
-                <div class="alert alert-warning">
+                <twig:Alert type="warning">
                     {{ 'aucun.groupe.dans.typegroupe'|trans }}
-                </div>
+                </twig:Alert>
             {% endif %}
         {% else %}
-            <div class="alert alert-warning">
+            <twig:Alert type="warning">
                 {{ 'aucun.groupe.par.defaut'|trans }}
-            </div>
+            </twig:Alert>
         {% endif %}
     </div>
 </div>
 
-<div class="alert alert-info mt-2">
+<twig:Alert type="info">
     * Cette information se base sur les étudiants associés aux semestres.
-</div>
+</twig:Alert>

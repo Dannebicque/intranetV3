@@ -19,7 +19,7 @@
 {% if button_label is defined and button_label == 'update'|trans %}
     <button class="btn btn-success" value="redirect_to_index" name="btn_update">{{ 'button_update_index'|trans }}</button>
 {% endif %}
-<div class="alert alert-info mt-2">
+<twig:Alert type="info">
     Tous les champs avec un <span class="text-red">*</span> sont obligatoires
-</div>
+</twig:Alert>
 {{ form_end(form) }}

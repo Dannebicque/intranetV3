@@ -1,13 +1,14 @@
 {% extends 'base.html.twig' %}
 
 {% block header %}
-{{ 'adm.personnel.add.titre'|trans }}
+    {{ 'adm.personnel.add.titre'|trans }}
 {% endblock %}
 
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
-            <a href="{{ path('administration_personnel_index', {type:'permanent'}) }}" class="btn btn-primary btn-float" title="{{ 'atitle.retour_liste'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
+            <a href="{{ path('administration_personnel_index', {type:'permanent'}) }}" class="btn btn-primary btn-float"
+               title="{{ 'atitle.retour_liste'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
             ><i class="fas fa-arrow-left"></i></a>
         </div>
     </div>
@@ -15,42 +16,54 @@
 
 {% block content %}
     <div class="card">
-    <h4 class="card-title">{{ 'adm.personnel.add.titre'|trans }}</h4>
+        <h4 class="card-title">{{ 'adm.personnel.add.titre'|trans }}</h4>
         <div class="card-body">
-            <div class="form-group">
-                <label class="form-label" for="login_urca">Login URCA, nom ou prénom du nouvel intervenant :</label>
+            <div {{ stimulus_controller('adm--personnel--add', {
+                urlListe : path('administration_personnel_search_personnel'),
+                urlAddPersonnel : path('administration_personnel_add_to_departement'),
+            }) }}>
+                <div class="form-group">
+                    <label class="form-label" for="login_urca_search">Login URCA, nom ou prénom du nouvel intervenant
+                        :</label>
 
-                <input type="text" name="login_urca" id="login_urca" class="form-control"
-                       placeholder="Saisissez les premiers caractères">
+                    <input type="text"
+                           name="login_urca"
+                            {{ stimulus_action('adm--personnel--add', 'search') }}
+                           id="login_urca_search"
+                           class="form-control"
+                           placeholder="Saisissez les premiers caractères">
 
+                </div>
+                <twig:Alert type="info">
+                    Vérifiez si l'intervenant est déjà présent dans l'intranet en saisissant les premières lettres de
+                    son
+                    prénom, nom ou login URCA. Si l'intervenant n'est pas présent, vous pouvez l'ajouter avec son numéro
+                    administratif une fois le dossier validé.
+                    <br>
+                    De manière exceptionnelle un intervenant peut être ajouté sans avoir d'information URCA. Il sera
+                    alors
+                    possible de lui attribuer un mot de passe provisoire.
+                </twig:Alert>
+                <br/>
+                <table class="table table-striped table-bordered">
+                    <thead>
+                    <tr>
+                        <th>{{ 'table.nom'|trans }}</th>
+                        <th>{{ 'table.prenom'|trans }}</th>
+                        <th>{{ 'table.numero_harpege'|trans }}</th>
+                        <th>{{ 'table.login'|trans }}</th>
+                        <th>{{ 'table.mail_univ'|trans }}</th>
+                        <th>{{ 'table.actions'|trans }}</th>
+                    </tr>
+                    </thead>
+                    <tbody id="result" {{ stimulus_target('adm--personnel--add', 'liste') }}>
+
+
+                    </tbody>
+                </table>
             </div>
-            <div class="alert alert-info">
-                Vérifiez si l'intervenant est déjà présent dans l'intranet en saisissant les premières lettres de son
-                prénom, nom ou login URCA. Si l'intervenant n'est pas présent, vous pouvez l'ajouter avec son numéro
-                administratif une fois le dossier validé.
-                <br>
-                De manière exceptionnelle un intervenant peut être ajouté sans avoir d'information URCA. Il sera alors
-                possible de lui attribuer un mot de passe provisoire.
-            </div>
-            <br/>
-            <table class="table table-striped table-bordered" id="table-resultat">
-                <thead>
-                <tr>
-                    <th>{{ 'table.nom'|trans }}</th>
-                <th>{{ 'table.prenom'|trans }}</th>
-                <th>{{ 'table.numero_harpege'|trans }}</th>
-                <th>{{ 'table.login'|trans }}</th>
-                <th>{{ 'table.mail_univ'|trans }}</th>
-                <th>{{ 'table.actions'|trans }}</th>
-            </tr>
-            </thead>
-            <tbody id="result">
-            <tr id="ligne-no-result">
-                <td colspan="6">Saisissez quelques caractères pour afficher des résultats</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
+
+        </div>
     </div>
 {% endblock %}
 

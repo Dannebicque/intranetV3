@@ -50,9 +50,9 @@
             <button class="btn btn-success">
                 <i class="fas fa-floppy-disk"></i> {{ button_label|default('label.save'|trans) }}
             </button>
-            <div class="alert alert-info mt-2">
+            <twig:Alert type="info">
                 Tous les champs avec un <span class="text-red">*</span> sont obligatoires
-            </div>
+            </twig:Alert>
             {{ form_end(form) }}
         </div>
     </div>

@@ -59,14 +59,14 @@
                     </div>
                     <div class="card-body">
                         {% if erreur is defined and erreur == true %}
-                            <div class="alert alert-danger">
+                            <twig:Alert type="danger">
                                 Nous n'avons pas pu vous identifier. Vérifier le formulaire et les informations saisies.
                                 En
                                 cas
                                 de difficulté, vous pouvez contacter la scolarité de l'IUT de Troyes : <a
                                         href="mailto:scolarite.iut-troyes@univ-reims.fr" target="_blank">
                                     Par email</a> ou 03 25 42 46 04.
-                            </div>
+                            </twig:Alert>
                             <br>
                         {% endif %}
                         <form action="{{ path('rdd_identification') }}" method="POST" class="form-horizontal

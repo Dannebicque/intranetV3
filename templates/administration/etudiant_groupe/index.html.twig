@@ -43,21 +43,21 @@
                     </div>
                 {% else %}
                     <div class="col-md-12">
-                        <div class="alert alert-warning">
+                        <twig:Alert type="warning">
                             Aucun groupe n'existe dans ce semestre. <a href="{{ path('administration_groupe_index',
                                 {semestre:semestre.id}) }}">
                                 Veuillez d'abord ajouter des types de groupe et des groupes.
                             </a>
-                        </div>
+                        </twig:Alert>
                     </div>
                 {% endfor %}
                 <br><br>
-                <div class="alert alert-info">
+                <twig:Alert class="info">
                     Vous pouvez ne remplir que le groupe de plus bas niveau (TP) et synchroniser pour remplir
                     automatiquement les groupes parents. Si les groupes sont saisis dans Apogée, vous pouvez aussi
                     les synchroniser (il faut attendre 24h entre la saisie dans Apogée et la possibilité de
                     synchroniser).
-                </div>
+                </twig:Alert>
             </div>
         </div>
     </div>
@@ -69,9 +69,9 @@
                 <div class="row">
 
                     <div class="col-md-12">
-                        <div class="alert alert-warning">
+                        <twig:Alert type="warning">
                             Veuillez choisir un type de groupe ci-dessus pour pouvoir affecer des étudiants aux groupes.
-                        </div>
+                        </twig:Alert>
                     </div>
 
                 </div>

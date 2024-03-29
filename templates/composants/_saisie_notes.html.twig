@@ -17,13 +17,13 @@
             </label>
         </div>
 
-        <div class="alert alert-info">L'import doit se faire au format xlsx ou csv (séparateur ; (point-virgule)). Le
+        <twig:Alert type="info">L'import doit se faire au format xlsx ou csv (séparateur ; (point-virgule)). Le
                                       fichier doit contenir les <strong>colonnes suivantes</strong> : Numéro
                                       étudiant (<i>num_etudiant</i>)
                                       , la note (<i>note</i>), le commentaire éventuel (<i>commentaire</i>). Les
                                       colonnes doivent être nommées (première ligne) ou
                                       respecter l'ordre précédent.
-        </div>
+        </twig:Alert>
         <a href="{{ path('application_personnel_note_import_modele',{evaluation:evaluation.id,
             semestre:evaluation.semestre.id}) }}" class="btn btn-info">
             Récupérer le fichier type pour le semestre
@@ -31,16 +31,16 @@
         <button class="btn btn-success">{{ button_label|default('label.importer.les.notes'|trans) }}</button>
     </form>
 {% else %}
-    <div class="alert alert-warning">
+    <twig:Alert type="warning">
         L'évaluation a été marquée comme non modifiable. Il n'est donc plus possible
         d'importer ou de modifier une note. Vous pouvez contacter le responsable de la
         formation en cas de besoin.
-    </div>
+    </twig:Alert>
 {% endif %}
 <br>
-<div class="alert alert-info">Dans le cas des modules optionnels (ou de parcours) seul les groupes ayant
+<twig:Alert type="info">Dans le cas des modules optionnels (ou de parcours) seul les groupes ayant
                               suivis cette option sont affichés.
-</div>
+</twig:Alert>
 {% if evaluation.modifiable == true %}
     <div class="divider">Ou, saisir les notes ci-dessous</div>
 {% endif %}
@@ -70,7 +70,7 @@
                 <div class="tab-pane {% if first == true %} active {% endif %}" id="gr{{ groupe.id }}">
                     {% set first = false %}
                     {% if import is defined %}
-                        <div class="alert alert-danger">
+                        <twig:Alert type="danger">
                             Cette page affiche la synthèse de l'import de vos notes. Merci de les vérifier.
                             Aucune note déjà existante n'a été modifée par l'import.
                             <strong>L'évaluation est pour le moment invisible des étudiants. <a
@@ -80,9 +80,9 @@
                                                                                          étudiants après
                                                                                          vérification de
                                                                                          l'import.</a></strong>
-                        </div>
+                        </twig:Alert>
                     {% elseif import is not defined and evaluation.visible == false %}
-                        <div class="alert alert-warning">
+                        <twig:Alert type="warning">
                             <strong>L'évaluation est pour le moment invisible des étudiants. <a
                                         href="{{ path('application_personnel_evaluation_visible', {uuid:
                                             evaluation.uuidString, etat: 'visible'}) }}">Cliquez ici pour la
@@ -90,22 +90,22 @@
                                                                                          après
                                                                                          vérification de
                                                                                          l'import.</a></strong>
-                        </div>
+                        </twig:Alert>
                     {% else %}
-                        <div class="alert alert-warning">
+                        <twig:Alert type="warning">
                             Naviguez dans les onglets. <strong>N'oubliez pas de sauvegarder chaque groupe.</strong>
                             Les
                             groupes non saisis pourront être complétés plus tard.
-                        </div>
+                        </twig:Alert>
                     {% endif %}
                     <br>
-                    <div class="alert alert-info">
+                    <twig:Alert type="info">
                         * Indiquez un étudiant absent que si son <strong>absence est justifiée</strong>. Il ne sera
                         pas
                         pénalisé par un 0. Laisser non coché si vous n'avez pas encore l'information. <br>
                         -0.01 indique une note non encore saisie.<br>
                         ** Le commentaire est limité à 255 caractères.
-                    </div>
+                    </twig:Alert>
                     <table class="table table-striped table-hover">
                         <thead>
                         <tr>

@@ -48,10 +48,10 @@
             </select>
         </div>
 
-        <div class="alert alert-info mt-2">
+        <twig:Alert type="info">
             Vous pouvez transférer un étudiant vers un autre département. Cela le rendra accessible par le
             département de destination qui pourra l'affecter à des groupes.
-        </div>
+        </twig:Alert>
         <div class="form-group">
             <label for="chgt_etudiant_departement">Département actuel</label>
             <select class="form-select" name="departement" id="chgt_etudiant_departement"
@@ -90,10 +90,10 @@
                                                      démissionnaire">Marquer l'étudiant {{ etudiant.displayPr }} comme
                                                                      démissionnaire</a>
 
-        <div class="alert alert-danger mt-2">
+        <twig:Alert type="danger">
             Si vous marquez l'étudiant comme démissionnaire, il sera retiré des groupes et des semestres, mais
             restera dans la formation pour un éventuel suivi ou statistiques.
-        </div>
+        </twig:Alert>
     </div>
 </div>
 

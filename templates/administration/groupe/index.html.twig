@@ -27,11 +27,11 @@
 {% endblock %}
 
 {% block content %}
-    <div class="alert alert-info mb-2">
+    <twig:Alert type="info">
         Dans le cadre des B.U.T. pour le semestre {{ semestre.ordreLmd }}, vous trouverez dans cette page tous les
         groupes pour l'ensemble des parcours (s'ils existent). Les modifications faites sur cette page sont répercutées
         sur les autres parcours du semestre {{ semestre.ordreLmd }}.
-    </div>
+    </twig:Alert>
 
     {% if (semestre.diplome.responsableDiplome.id == user_data.user.id and user_data.isGoodDepartement('ROLE_RP')) or user_data.isGoodDepartement
         ('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ASS') %}

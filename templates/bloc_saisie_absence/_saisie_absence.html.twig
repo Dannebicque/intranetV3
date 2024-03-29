@@ -1,4 +1,4 @@
-<div class="alert alert-info">
+<twig:Alert type="info">
     Vos paramètres de saisie sont les suivants :
     <ul>
         <li>
@@ -24,7 +24,7 @@
 
     Pour modidier ce comportement par défaut, <a href="{{ path('user_settings') }}" target="_blank">
         vous devez aller dans vos paramètres et actualiser cette page une fois les modifications faites</a>
-</div>
+</twig:Alert>
 
 
 <div class="card">
@@ -113,7 +113,7 @@
                                 </div>
                             {% else %}
                                 <div class="col-md-12">
-                                    <div class="alert alert-warning">
+                                    <twig:Alert type="warning">
                                         {% if user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement
                                             ('ROLE_DDE') %}
                                             Aucun groupe n'existe dans ce semestre. <a
@@ -131,7 +131,7 @@
                                             Aucun groupe n'existe dans ce semestre. Contactez les responsables du
                                             département.
                                         {% endif %}
-                                    </div>
+                                    </twig:Alert>
                                 </div>
                             {% endfor %}
                         {% else %}
@@ -160,7 +160,7 @@
         {% if event != null %}
             {{ include('api/absence/listeEtudiant.html.twig', {selectedTypeGroupe: groupes, numerogroupe: event.groupe}) }}
         {% else %}
-            <div class="alert alert-info">Choisir d'abord un groupe ci-dessus</div>
+            <twig:Alert type="info">Choisir d'abord un groupe ci-dessus</twig:Alert>
         {% endif %}
     </div>
 </div>

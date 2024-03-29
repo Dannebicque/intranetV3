@@ -42,11 +42,11 @@
             <p><strong>{{ 'site.universite'|trans }} :</strong> {{ user.siteUniv|link }}</p>
             <p><strong>{{ 'site.personnel'|trans }} :</strong> {{ user.sitePerso|link }}</p>
         {% else %}
-            <div class="alert alert-danger">Erreur de profil !</div>
+            <twig:Alert type="danger">Erreur de profil !</twig:Alert>
         {% endif %}
-        <div class="alert alert-info">Si vous constatez une erreur dans ces données, contactez le responsable de la
+        <twig:Alert type="info">Si vous constatez une erreur dans ces données, contactez le responsable de la
                                       formation.
-        </div>
+        </twig:Alert>
     </div>
 </div>
 
@@ -65,11 +65,11 @@
             </div>
         </header>
         <div class="card-body">
-            <div class="alert alert-info">Ces informations ne sont visibles que de vous et de la direction du
+            <twig:Alert type="info">Ces informations ne sont visibles que de vous et de la direction du
                                           département. {% if user.typeUser|lower == 'etudiant' %}Merci de maintenir ces
                     informations à jour, elles seront utilisées pour vous faire parvenir vos
                     relevés de notes.{% endif %}
-            </div>
+            </twig:Alert>
 
             <p><strong>{{ 'mail.personnel'|trans }} :</strong> {{ user.mailPerso|mailto }}</p>
             {% if user.typeUser|lower == 'etudiant' %}
@@ -95,10 +95,10 @@
         <div class="card">
             <h4 class="card-title">{{ 'commentaires.libres'|trans }}</h4>
             <div class="card-body">
-                <div class="alert alert-info">Ces informations ne sont visibles que de la direction du département et de
+                <twig:Alert type="info">Ces informations ne sont visibles que de la direction du département et de
                                               l'assitant(e). <strong>Dans le cadre du RGPD ces données pourraient être
                                                                      demandées par l'étudiant.</strong>
-                </div>
+                </twig:Alert>
                 <div>
                     {% for commentaire in user.commentaires %}
                         <div>
@@ -144,9 +144,9 @@
         <div class="card">
             <h4 class="card-title">{{ 'amenagements.particuliers'|trans }}</h4>
             <div class="card-body">
-                <div class="alert alert-info">Ces informations ne sont visibles que de vous et de l'équipe pédagogique.
+                <twig:Alert type="info">Ces informations ne sont visibles que de vous et de l'équipe pédagogique.
                                               N'hésitez pas à signaler les erreurs éventuelles.
-                </div>
+                </twig:Alert>
                 <p>{{ user.amenagementsParticuliers }}</p>
             </div>
         </div>

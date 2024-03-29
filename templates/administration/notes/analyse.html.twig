@@ -1,4 +1,4 @@
-<div class="alert alert-warning">
+<twig:Alert type="warning">
     <strong>Analyse des évaluations saisies :</strong><br>
     <p>
         Il y a {{ notesAvecAbsence|length }} notes présentes et marquées absentes, qui ne sont pas comptabilisées
@@ -11,12 +11,12 @@
         dans la moyenne. {% if  notesIncoherentes|length>0 %}
             <a href="#" id="voirDetailIncoherent">Voir le détail</a>{% endif %}
     </p>
-</div>
+</twig:Alert>
 
 <div id="detailIncoherent d-none">
-    <div class="alert alert-warning">
+    <twig:Alert type="warning">
         Les notes ci-dessous <strong>sont prises</strong> en compte dans la moyenne.
-    </div>
+    </twig:Alert>
     <br>
     <table class="table">
         <thead>
@@ -57,11 +57,11 @@
 </div>
 
 <div id="detailAbsent d-none">
-    <div class="alert alert-warning">
+    <twig:Alert class="warning">
         Les notes ci-dessous <strong>ne sont pas prises</strong> en compte dans la moyenne. <a href="">
             Supprimer toutes les absences pour lesquelles une note est présente.
         </a>
-    </div>
+    </twig:Alert>
     <br>
     <table class="table">
         <thead>

@@ -40,14 +40,14 @@
 
 {% block content %}
     {% if matiere.isEnfant %}
-        <div class="alert alert-info">
+        <twig:Alert type="info">
             Cette ressource/matière est associée à la ressource/matiere {{ matiere.parent.display }} Les notes seront
             comptabilisées dans cette ressource/matiere.
             {% if matiere.groupeEnfant != null %}
                 La saisie est limitée au groupe <strong>{{ matiere.groupeEnfant.display }}</strong> Pour saisir
                 d'autres groupes il faut accéder aux autres ressources/matières enfant de {{ matiere.parent.display }}
             {% endif %}
-        </div>
+        </twig:Alert>
     {% endif %}
     {% if matiere.nbNotes > 0 %}
         <div class="tab-content">
@@ -61,10 +61,10 @@
                                                ) {% if eval.libelle != '' %} - {{ eval.libelle }}{% endif %}</h4>
                         <div class="card-body">
                             {% if eval.visible == false %}
-                                <div class="alert alert-warning">
+                                <twig:Alert type="warning">
                                     Cette évaluation n'est pas visible des étudiants.
                                     {# todo: ajouter bouton on/off pour afficher masquer évaluation #}
-                                </div>
+                                </twig:Alert>
                             {% endif %}
                             <div class="overflow-auto">
                                 <table class="table table-striped table-bordered">

@@ -9,9 +9,9 @@
     <h2>Date d'ouverture du questionnaire</h2>
 
     {% if questionnaire.dateFermeture == null or questionnaire.dateOuverture == null %}
-        <div class="alert alert-warning mb-2" id="alertSend">
+        <twig:Alert type="warning" id="alertSend">
             Attention au moins une date n'est pas renseignée.
-        </div>
+        </twig:Alert>
     {% endif %}
     <div>
         <label for="dateOuverture">Date ouverture</label>
@@ -32,13 +32,13 @@
     <h2>Choix des destinataires</h2>
 
     {% if typeDestinataire == 'exterieur' %}
-        <div class="alert alert-info">
+        <twig:Alert type="info">
             <p>Vous avez choisi de lancer le questionnaire à des personnes extérieures à l'entreprise.</p>
             <p>Vous pouvez ajouter des destinataires en cliquant sur le bouton "Ajouter". L'envoi n'est effectif que si
                vous
                clique sur "Enregistrer et envoyer". Sinon, la liste est sauvegardée en attente de l'envoie.
             </p>
-        </div>
+        </twig:Alert>
     {% endif %}
 
     {% if typeDestinataire == 'etudiant' or typeDestinataire == 'personnel' %}

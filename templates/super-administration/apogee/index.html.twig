@@ -46,10 +46,10 @@
                     <div class="card">
                         <h4 class="card-title">Mettre à jour une promotion</h4>
                         <div class="card-body">
-                            <div class="alert alert-info">
+                            <twig:Alert type="info">
                                 Avec cette mise à jour, uniquement les étudiants manquants seront ajoutés. Toutes les
                                 données déjà présentes ne seront pas modifiées.
-                            </div>
+                            </twig:Alert>
                             <form class="form" action="{{ path('sa_apogee_maj', {type:'maj'}) }}" method="post">
                                 <div class="row">
                                     <div class="col-sm-12 col-md-6">
@@ -90,11 +90,11 @@
                     <div class="card">
                         <h4 class="card-title">Forcer un nouvel import</h4>
                         <div class="card-body">
-                            <div class="alert alert-warning">
+                            <twig:Alert type="warning">
                                 Cette fonctionnalité va mettre à jour les données des étudiants présents, et importer
                                 les étudiants manquants. Toutes les modifications (coordonnées, groupes, ...) peuvent
                                 être modifiées
-                            </div>
+                            </twig:Alert>
                             <form class="form" action="{{ path('sa_apogee_maj', {type:'force'}) }}" method="post">
                                 <div class="row">
                                     <div class="col-sm-12 col-md-6">
@@ -137,11 +137,11 @@
                     <div class="card">
                         <h4 class="card-title">Récupérer un étudiant manquant</h4>
                         <div class="card-body">
-                            <div class="alert alert-info">
+                            <twig:Alert type="info">
                                 Cette fonctionnalité permet d'importer que des étudiants de manière cilbée (avec un
                                 numéro étudiant). Vous pouvez saisir plusieurs numéros en séparant par un ; (point
                                 virugule).
-                            </div>
+                            </twig:Alert>
                             <form class="form" action="{{ path('sa_apogee_import_etudiant') }}" method="post">
                                 <div class="row">
                                     <div class="col-sm-12 col-md-6">
@@ -200,9 +200,9 @@
                         <div class="d-grid">
                             <button type="submit" class="btn d-block btn-warning">Importer les étudiants</button>
                         </div>
-                        <div class="alert alert-info">Le fichier doit contenir les données suivantes et les en-têtes
+                        <twig:Alert type="info">Le fichier doit contenir les données suivantes et les en-têtes
                                                       correctement nommées (<a href="">voir le fichier d'exemple</a>)
-                        </div>
+                        </twig:Alert>
                     </form>
                 </div>
             </div>

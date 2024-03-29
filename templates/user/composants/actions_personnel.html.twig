@@ -3,12 +3,12 @@
     <div class="card-body">
 
         <h5>Re/initialiation du compte</h5>
-        <div class="alert alert-info">
+        <twig:Alert type="info">
             Cette fonctionnalité ne devrait être eutilisée que pour les utilisateurs ne disposant pas d'accès URCA.
-        </div>
+        </twig:Alert>
         <br>
-        <a href="#" class="btn btn-warning" id="btnInit" data-personnel="{{ personnel.id }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
+        <a href="#" class="btn btn-warning" id="btnInit" data-personnel="{{ personnel.id }}" data-bs-toggle="tooltip"
+           data-bs-placement="bottom"
            title="Ré/initiliser le mot de passe"><i class="fa fa-magic"></i> Initialiser le mot de passe.</a>
-        {# listings d'interventions, ... différents exports. #}
     </div>
 </div>
