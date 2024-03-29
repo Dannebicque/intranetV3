@@ -11,6 +11,8 @@
 
 namespace App\Controller;
 
+use App\Classes\EduSign\ApiEduSign;
+use App\Classes\EduSign\CreateEnseignant;
 use App\Classes\EduSign\FixCourses;
 use App\Classes\EduSign\UpdateEdt;
 use App\Classes\EduSign\UpdateEtudiant;
@@ -19,6 +21,8 @@ use App\Entity\Constantes;
 use App\Entity\Departement;
 use App\Repository\DepartementRepository;
 use App\Repository\DiplomeRepository;
+use App\Repository\PersonnelDepartementRepository;
+use App\Repository\PersonnelRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -32,8 +36,11 @@ use function PHPUnit\Framework\throwException;
 class EduSignController extends BaseController
 {
     public function __construct(
-        protected DiplomeRepository     $diplomeRepository,
-        protected DepartementRepository $departementRepository,
+        protected DiplomeRepository              $diplomeRepository,
+        protected DepartementRepository          $departementRepository,
+        protected PersonnelDepartementRepository $personnelDepartementRepository,
+        protected PersonnelRepository            $personnelRepository,
+        protected CreateEnseignant               $createEnseignant,
     )
     {
 
@@ -54,9 +61,18 @@ class EduSignController extends BaseController
             $departement = $departements[array_key_first($departements)];
         }
 
+        $personnelsDepartement = $this->personnelDepartementRepository->findBy(['departement' => $departement]);
+
+        // Filter personnelsDepartement
+        $filteredPersonnelsDepartement = array_filter($personnelsDepartement, function ($p) use ($departement) {
+            $idEduSignArray = $p->getPersonnel()->getIdEduSign() ?? [];
+            return empty($idEduSignArray) || !array_key_exists($departement->getId(), $idEduSignArray);
+        });
+
         return $this->render('/administration/edu_sign/index.html.twig', [
             'departements' => $departements,
             'departementSelect' => $departement ?? null,
+            'personnelsDepartement' => $filteredPersonnelsDepartement,
         ]);
     }
 
@@ -118,6 +134,31 @@ class EduSignController extends BaseController
             $updateEdt->update($keyEduSign, $opt);
 
             $fixCourses->fixCourse($keyEduSign);
+        }
+
+        return $this->redirectToRoute('app_edu_sign');
+    }
+
+    #[Route('/create-personnel/{deptId}', name: 'app_edu_sign_create_personnel')]
+    public function createPersonnel(?int $deptId, Request $request)
+    {
+        if ($deptId !== 0) {
+            $departement = $this->departementRepository->find($deptId);
+            $diplomes = $this->diplomeRepository->findByDepartement($departement);
+            $keyEduSign = null;
+            foreach ($diplomes as $diplome) {
+                if ($diplome->getKeyEduSign() !== null) {
+                    $keyEduSign = $diplome->getKeyEduSign();
+                }
+            }
+
+            $personnelId = $request->get('personnel');
+
+            $personnel = $this->personnelRepository->find($personnelId);
+
+            $this->createEnseignant->update($personnel, $departement, $keyEduSign);
+
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Les données ont été mises à jour sur EduSign');
         }
 
         return $this->redirectToRoute('app_edu_sign');
