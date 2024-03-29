@@ -1,8 +1,8 @@
 <h3>...Questionnaire...</h3>{# todo: doit être paramétrable ? #}
 {% if questionnaire.options.mode == constant('App\\Components\\Questionnaire\\DTO\\AbstractQuestionnaire::MODE_APERCU') %}
-<div class="alert alert-info mt-2 mb-2">
+    <twig:Alert type="info">
     Le questionnaire est en <strong>mode Aperçu</strong>. Aucune réponse n'est sauvegardée.
-</div>
+    </twig:Alert>
 {% endif %}
 <form {{ stimulus_controller('wizard', {
     url: url,

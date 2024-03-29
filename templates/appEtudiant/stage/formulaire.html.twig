@@ -22,7 +22,7 @@
         {% form_theme form 'form/my-form.html.twig' %}
         {{ form_start(form) }}
         <h3 class="titre_rub">Vos informations</h3>
-        <div class="alert alert-warning">Merci de vérifier vos informations ci-dessous.</div>
+        <twig:Alert type="warning">Merci de vérifier vos informations ci-dessous.</twig:Alert>
         <div class="form-group row">
             <div class="col-sm-3" style="text-align: right">
                 <b>Organisme de sécurité sociale</b> <span class="required"
@@ -52,7 +52,7 @@
             </div>
         </div>
 
-        <div class="alert alert-danger">Merci de vérifier ou compléter vos coordonnées ci-dessous.</div>
+        <twig:Alert type="danger">Merci de vérifier ou compléter vos coordonnées ci-dessous.</twig:Alert>
 
         <div class="form-group row">
             <div class="col-sm-3" style="text-align: right">
@@ -136,13 +136,13 @@
             {{ form_row(form.dateRange) }}
             {{ form_row(form.dureeJoursStage) }}
         {% else %}
-          <div class="alert alert-info">Stage du
+            <twig:Alert type="info">Stage du
             <strong>{{ stageEtudiant.stagePeriode.dateDebut|format_date('long') }}</strong>
                                         au
             <strong>{{ stageEtudiant.stagePeriode.dateFin|format_time('none') }}</strong>,
                                         soit
             <strong>{{ stageEtudiant.stagePeriode.nbJours }}</strong> jour(s)
-          </div>
+            </twig:Alert>
         {% endif %}
 
         {{ form_row(form.serviceStageEntreprise) }}

@@ -16,7 +16,7 @@
     <button class="btn btn-success" value="redirect_to_index" name="btn_update">
         <i class="fas fa-floppy-disk-circle-arrow-right"></i> {{ 'button_update_index'|trans }}</button>
 {% endif %}
-<div class="alert alert-info mt-2">
+<twig:Alert type="info">
     Tous les champs avec un <span class="text-red">*</span> sont obligatoires
-</div>
+</twig:Alert>
 {{ form_end(form) }}

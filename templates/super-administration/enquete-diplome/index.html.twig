@@ -40,11 +40,11 @@
     <div class="card">
         <h4 class="card-title">Enquête des diplômés</h4>
         <div class="card-body">
-            <div class="alert alert-info">
+            <twig:Alert type="info">
                 Il y a {{ reponses|length }} réponses sur {{ nbAttendus|length }}
                 soit {{ pourcentageRetour|number_format
                     (2) }}%.
-            </div>
+            </twig:Alert>
             <br>
             <table class="table table-striped">
                 <thead>

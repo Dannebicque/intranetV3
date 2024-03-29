@@ -25,7 +25,7 @@
             </div>
             <div class="card-body">
                 {% if this.semestre == null %}
-                    <div class="alert alert-warning">Choisir un semestre pour accéder aux groupes.</div>
+                    <twig:Alert type="warning">Choisir un semestre pour accéder aux groupes.</twig:Alert>
                 {% else %}
                     <h4>Les listings du semestre {{ this.semestre }}{# semestre.libelle #}</h4>
                     <div class="row">
@@ -44,9 +44,9 @@
                                         </div>
                                     {% endfor %}
                                 {% else %}
-                                    <div class="alert alert-info">
+                                    <twig:Alert type="info">
                                         Aucun ensemble de groupe par défaut de défini.
-                                    </div>
+                                    </twig:Alert>
                                 {% endfor %}
                             </div>
                         </div>

@@ -1,8 +1,8 @@
 {% if mail != null %}
     {{ mail|raw }}
 {% else %}
-    <div class="alert alert-warning">
+    <twig:Alert type="warning">
         Pas de modèle personnalisé pour le courrier ou le mail. Peut être que les modifications n'ont pas été
         sauvegardées ?
-    </div>
+    </twig:Alert>
 {% endif %}

@@ -1,6 +1,5 @@
 <div class="row">
     <div class="col-sm-12">
-
         <strong>Suivi des absents en "temps réel" pour le {{ 'now'|date('d/m/Y') }}</strong>
         <table class="table">
             <thead>
@@ -24,11 +23,9 @@
             {% endfor %}
             </tbody>
         </table>
-        <div class="alert alert-info">
-            <p>
-                {{ absences|length }} absent(s) sur la demi-journée en cours. (avant 13h00 ou après 13h00)
-            </p>
-        </div>
+        <twig:Alert type="info">
+            {{ absences|length }} absent(s) sur la demi-journée en cours. (avant 13h00 ou après 13h00)
+        </twig:Alert>
     </div>
 </div>
 

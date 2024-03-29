@@ -96,14 +96,15 @@
     <div class="card card-warning">
         <h4 class="card-title">{{ 'adm.ppn.copie.heading'|trans }}</h4>
         <div class="card-body">
-            <div class="alert alert-info">Vous pouvez copier le contenu d'un PPN (matières) d'une version à une autre
+            <twig:Alert type="info">
+                Vous pouvez copier le contenu d'un PPN (matières) d'une version à une autre
                                           ici
-            </div>
+            </twig:Alert>
 
             {% if ppns|length < 2 %}
-                <div class="alert alert-warning">Vous devez avoir un PPN de destination pour copier un PPN vers un
+                <twig:Alert type="warning">Vous devez avoir un PPN de destination pour copier un PPN vers un
                                                  autre. <a href="{{ path('administration_ppn_new') }}">Créer un PPN</a>
-                </div>
+                </twig:Alert>
             {% else %}
                 <form action="{{ path('administration_ppn_copie_integrale') }}" method="post">
                     <div class="form-group">
@@ -130,9 +131,9 @@
                     </div>
                 </form>
                 <br>
-                <div class="alert alert-warning">La recopie du contenu d'un PPN vers un autre effacera le contenu
+                <twig:Alert type="warning">La recopie du contenu d'un PPN vers un autre effacera le contenu
                                                  initial du PPN de destination.
-                </div>
+                </twig:Alert>
             {% endif %}
         </div>
     </div>

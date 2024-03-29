@@ -78,17 +78,17 @@
                         {% else %}
                     <td colspan="5">
                         {% endif %}
-                        <div class="alert alert-info">Aucune absence n'a été saisie</div>
+                        <twig:Alert type="info">Aucune absence n'a été saisie</twig:Alert>
                     </td>
                 </tr>
             {% endfor %}
             </tbody>
         </table>
         {% if  user_data.isGoodDepartement('ROLE_ABS') or user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
-            <div class="alert alert-info">* Si la case est cochée, l'absence est justifiée.</div>
+            <twig:Alert type="info">* Si la case est cochée, l'absence est justifiée.</twig:Alert>
         {% endif %}
 
-        <div class="alert alert-warning">
+        <twig:Alert type="warning">
             {% if absences|length == 0 %}
                 Vous n'avez pas d'absence ou de cours manqué.
             {% else %}
@@ -102,6 +102,6 @@
                         .semestre.optPointPenaliteAbsence > 1 %}s{% endif %}.</strong>
                 {% endif %}
             {% endif %}
-        </div>
+        </twig:Alert>
     </div>
 </div>

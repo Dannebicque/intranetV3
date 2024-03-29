@@ -4,9 +4,9 @@
         {% if form is defined and form != null %}
             {{ include('composants/adm-form.html.twig') }}
         {% else %}
-            <div class="alert alert-info">
+            <twig:Alert type="info">
             Formulaire non disponible pour le moment.
-            </div>
+            </twig:Alert>
         {% endif %}
     </div>
 </div>

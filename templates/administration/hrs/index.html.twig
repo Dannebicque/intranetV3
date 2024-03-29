@@ -60,9 +60,9 @@
                 </div>
             </div>
             <div class="col-sm-12">
-                <div class="alert alert-info">
+                <twig:Alert type="info">
                     Les HRS/Primes s'appliquent par semestre OU par diplôme.
-                </div>
+                </twig:Alert>
                 {{ form_widget(form) }}
                 <button class="btn btn-success">{{ button_label|default('label.save'|trans) }}</button>
                 {{ form_end(form) }}

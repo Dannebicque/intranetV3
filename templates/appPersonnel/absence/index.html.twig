@@ -28,7 +28,7 @@
 
 {% block content %}
     {% if semestre == null %}
-        <div class="alert alert-info">Ce créneau ne peut pas faire l'objet d'une saisie d'absence</div>
+        <twig:Alert type="info">Ce créneau ne peut pas faire l'objet d'une saisie d'absence</twig:Alert>
     {% else %}
         {% if event is defined %}
             {{ render(controller('App\\Controller\\bloc_saisie_absence\\SaisieAbsenceController::index',

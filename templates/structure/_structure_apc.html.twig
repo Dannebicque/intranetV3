@@ -37,9 +37,9 @@
 
             <h4>Les parcours</h4>
             {% if referentiel == null %}
-                <div class="alert alert-warning">
+                <twig:Alert type="warning">
                     Aucun référentiel de compétence n'est associé à ce diplôme/PPN.
-                </div>
+                </twig:Alert>
             {% else %}
                 {% for parcour in parcours %}
                     <div class="row gap-y lignehover">

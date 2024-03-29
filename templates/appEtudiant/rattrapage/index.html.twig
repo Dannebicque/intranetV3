@@ -9,11 +9,11 @@
         </div>
     </header>
     <div class="card-body" id="bloc_add_rattrapage" style="display:none">
-        <div class="alert alert-info">Veuillez remplir complétement le formulaire ci-dessous. Une réponse vous
+        <twig:Alert type="info">Veuillez remplir complétement le formulaire ci-dessous. Une réponse vous
                                       sera donnée par mail dans les plus bref délais (sous réserve que le
                                       formulaire soit complet et
                                       exact).
-        </div>
+        </twig:Alert>
         {% form_theme form 'form/my-form.html.twig' %}
         {{ form_start(form) }}
         {{ form_widget(form) }}

@@ -33,10 +33,10 @@
             <button class="btn btn-success">{{ button_label|default('label.save'|trans) }}</button>
             {{ form_end(form) }}
             <br>
-            <div class="alert alert-warning">
+            <twig:Alert type="warning">
                 Le fichier doit être au format CSV (séparateur ;) et doit correspondre au formatage défini dans le
                 modèle joint. (<a href="{{ asset('exemples/matieres.xlsx') }}">télécharger un exemple</a>).
-            </div>
+            </twig:Alert>
         </div>
     </div>
 {% endblock %}

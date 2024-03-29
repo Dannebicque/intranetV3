@@ -1,8 +1,8 @@
 <h2>Ajouter une section</h2>
 <div {{ stimulus_target('questionnaire--creation', 'section') }}>
-    <div class="alert alert-info mb-2">
+    <twig:Alert type="info">
         Choissiez une section déjà existante pour la dupliquer dans ce questionnaire, ou ajoutez une section vide
-    </div>
+    </twig:Alert>
     <label for="selectSection" class="sr-only">Choisir une section à ajouter</label>
     <select class="form-select"
             id="selectSection"

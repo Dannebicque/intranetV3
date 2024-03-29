@@ -23,11 +23,11 @@
     <div class="card">
         <h4 class="card-title">{{ 'scolarite.rdd.index.heading'|trans }}</h4>
         <div class="card-body">
-            <div class="alert alert-info">
+            <twig:Alert type="info">
                 {% set pourcent = nbComplet/nbDiplomes*100 %}
                 Nombre de diplômé : <strong>{{ nbDiplomes }}</strong>. Nombre de réponses validées :
                 <strong>{{ nbComplet }}</strong> (soit {{ pourcent|number_format(2) }}%)
-            </div>
+            </twig:Alert>
             <br>
             <table class="table table-bordered">
                 <thead>

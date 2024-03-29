@@ -865,12 +865,12 @@
                                 {% if flexible == false %}
                                     <div class="row">
                                         <div class="col-12">
-                                            <div class="alert alert-info">
+                                            <twig:Alert type="info">
                                                 Stage du <strong>{{ stageEtudiant.dateDebutStage|date('d/m/Y') }}
                                                     au {{ stageEtudiant.dateFinStage|date('d/m/Y') }}</strong>, stage
                                                 d'une durée de
                                                 <strong>{{ stageEtudiant.dureeJoursStage }}</strong> jours
-                                            </div>
+                                            </twig:Alert>
                                         </div>
                                     </div>
                                 {% endif %}
@@ -999,9 +999,9 @@
                 {{ include('stage/formulaire/_processStage.html.twig') }}
 
                 <h2>Récapitulatif des informations saisies.</h2>
-                <div class="alert alert-warning">
+                    <twig:Alert type="warning">
                     Merci de bien vérifier vos informations et de valider définivement votre formulaire de stage.
-                </div>
+                    </twig:Alert>
                 <table class="table table-bordered">
                     <tr>
                         <th colspan="2" class="th_titre">Vos informations</th>

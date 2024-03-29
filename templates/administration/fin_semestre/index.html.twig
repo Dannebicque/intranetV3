@@ -25,9 +25,10 @@
 
         <h2 class="card-title"><strong>Décision</strong> de fin de semestre | {{ semestre.display }}</h2>
         <div class="card-body">
-            <div class="alert alert-info">La proposition est faite en fonction de la sous-commission de travail. Les
-                                          propositions correspondent aux propositions lorsque complétées.
-            </div>
+            <twig:Alert type="info">
+                La proposition est faite en fonction de la sous-commission de travail. Les
+                propositions correspondent aux propositions lorsque complétées.
+            </twig:Alert>
             <br/>
             <form action="{{ path('administration_fin_semestre_confirme',{semestre:semestre.id}) }}" method="post">
                 <table class="table table-stripped">

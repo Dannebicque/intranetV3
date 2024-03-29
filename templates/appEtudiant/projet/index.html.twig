@@ -21,11 +21,11 @@
                         {% else %}
                             {{ include('composants/_projet_timeline.html.twig') }}
                         {% endif %}
-                        <div class="alert alert-warning">
+                        <twig:Alert type="warning">
                             <p>{{ projetPeriode.texteLibre }}</p>
-                        </div>
+                        </twig:Alert>
 
-                        <div class="alert alert-info">
+                        <twig:Alert type="info">
                             <div class="row">
                                 <div class="col-md-6 col-sm-12">
                                     <p>Période de stage du
@@ -42,22 +42,16 @@
                                     </ul>
                                 </div>
                             </div>
-                        </div>
+                        </twig:Alert>
                         {% if projetsEtudiants[projetPeriode.id] is not defined %}
-                            {# <div class="alert alert-warning">Imprimez <a #}
-                            {# href="{{ asset('upload/fiche-renseignement/'~stagePeriode.documentName) }}" #}
-                            {# target="_blank">la fiche de stage</a> à faire compléter et signer par #}
-                            {# l'entreprise. #}
                             <strong>Ce document n'est pas la convention de stage !</strong>
-                            {# </div> #}
-
                         {% endif %}
                         {% if ((projetsEtudiants[projetPeriode.id] is defined) and
                             (projetsEtudiants[projetPeriode.id].etatProjet == constant
                             ('App\\Entity\\ProjetEtudiant::ETAT_PROJET_AUTORISE') )) %}
-                            <div class="alert alert-warning"><p>Votre proposition a été acceptée le
+                            <twig:Alert type="warning"><p>Votre proposition a été acceptée le
                                     <strong>{{ projetsEtudiants[projetPeriode.id].dateAutorise|format_date('long') }}</strong>.
-                                                                Vous devez maintenant remplir le formulaire.</p></div>
+                                    Vous devez maintenant remplir le formulaire.</p></twig:Alert>
                             <div class="d-grid">
                                 <a href="{{ path('application_etudiant_projet_formulaire',
                                     {projetEtudiant:projetsEtudiants[projetPeriode.id].uuidString}) }}"
@@ -66,19 +60,19 @@
                         {% elseif ((projetsEtudiants[projetPeriode.id] is  defined) and
                             (projetsEtudiants[projetPeriode.id].etatProjet == constant
                             ('App\\Entity\\ProjetEtudiant::ETAT_PROJET_DEPOSE') )) %}
-                            <div class="alert alert-success">Vous avez complété le formulaire. Il est en cours de
+                            <twig:Alert type="success">Vous avez complété le formulaire. Il est en cours de
                                                              validation
                                                              par les responsables du projet. Vous recevrez un mail dés
                                                              que vous pourrez signer la
                                                              convention.
-                            </div>
+                            </twig:Alert>
                         {% elseif ((projetsEtudiants[projetPeriode.id] is  defined) and
                             (projetsEtudiants[projetPeriode.id] == constant
                             ('App\\Entity\\ProjetEtudiant::ETAT_PROJET_VALIDE') )) %}
-                            <div class="alert alert-success">Votre formulaire a été validé. La convention va être
+                            <twig:Alert type="success">Votre formulaire a été validé. La convention va être
                                                              imprimée
                                                              prochainement.
-                            </div>
+                            </twig:Alert>
                         {% elseif ((projetsEtudiants[projetPeriode.id] is  defined) and
                             (projetsEtudiants[projetPeriode.id] == constant
                             ('App\\Entity\\ProjetEtudiant::ETAT_PROJET_IMPRIME') )) %}
@@ -90,7 +84,7 @@
                 {% endfor %}
             </div>
         {% else %}
-            <div class="alert alert-info">Vous n'avez pas de période de stage à compléter sur ce semestre.</div>
+            <twig:Alert type="info">Vous n'avez pas de période de stage à compléter sur ce semestre.</twig:Alert>
         {% endif %}
     </div>
 </div>

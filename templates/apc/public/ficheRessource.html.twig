@@ -15,12 +15,12 @@
     </div>
 
     <br>
-    <div class="alert alert-warning">
+    <twig:Alert type="warning">
         * Cette décomposition est propre à {{ settings('NOM_IUT') }} en fonction des contraintes et spécificités
         locales.
-    </div>
-    <br>
-    <div class="alert alert-warning">
+    </twig:Alert>
+
+    <twig:Alert class="warning">
         ** La répartition CM/TD (ressource) ou CM/TD/TP et Projet Tutoré est libre dans chaque département.
-    </div>
+    </twig:Alert>
 {% endblock %}

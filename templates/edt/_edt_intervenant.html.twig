@@ -10,10 +10,10 @@
     .semaineFormationIUT }})</h4>
 
 {% if source == 'celcat' %}
-    <div class="alert alert-warning mb-2">
+    <twig:Alert type="warning">
         L'emploi du temps est récupéré depuis Celcat. Cette fonctionnalité est encore en cours de développement.
         Les emplois du temps sont synchronisés chaque nuit.
-    </div>
+    </twig:Alert>
 {% endif %}
         {{ render(controller(
             'App\\Controller\\EdtController::navPersonnel', {filtre:filtre, valeur:valeur, calendrier:calendrier}
@@ -240,9 +240,9 @@
 
                     {% endfor %}
                 {% else %}
-                    <div class="alert alert-info">
+                    <twig:Alert type="info">
                         Pas d'informations pour ce jour
-                    </div>
+                    </twig:Alert>
                 {% endif %}
             </div>
         {% endfor %}

@@ -1,6 +1,6 @@
 <h4><strong>{{ ordre }}.</strong> {{ titre }}</h4>
 
-<div class="alert alert-info">{{ text_explicatif }}</div>
+<twig:Alert type="info">{{ text_explicatif }}</twig:Alert>
 
 {% for question in questions %}
     {% if options.mode == 'mode.resultat.tableau' %}
@@ -13,7 +13,7 @@
 {% endfor %}
 <br>
 {% if options.mode == 'mode.apercu' or options.mode == 'mode.etudiant' %}
-    <div class="alert alert-info">
+    <twig:Alert type="info">
         Les questions qui affichent un <span class="required-etoile">*</span> sont obligatoires.
-    </div>
+    </twig:Alert>
 {% endif %}

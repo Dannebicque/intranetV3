@@ -1,9 +1,9 @@
 {{ include('components/plan_cours/_header.html.twig') }}
 
-<div class="alert alert-info">
+<twig:Alert type="info">
     Vous disposez de 3 manières de joindre votre plan de cours. Choisissez celles qui vous conviennent le mieux, vous
     pouvez combiner les saisies.
-</div>
+</twig:Alert>
 
 <div class="divider">1. Saisie des séquences</div>
 {{ form_row(form.planCoursSequences) }}

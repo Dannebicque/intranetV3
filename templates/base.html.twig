@@ -337,12 +337,14 @@
         </header>
 
         <div class="main-content" id="mainContent">
+
             {% if not is_granted('ROLE_ETUDIANT') and user_data.anneeUniversitaire.active == false %}
-                <div class="alert alert-danger">
+                <twig:Alert type="danger" titre="Attention">
                     Attention ! Vous n'êtes pas sur l'année courante. Pour modifier, cliquer en haut, à droite sur la
                     liste déroulante.
-                </div>
+                </twig:Alert>
             {% endif %}
+
             {% block content %}
 
             {% endblock %}

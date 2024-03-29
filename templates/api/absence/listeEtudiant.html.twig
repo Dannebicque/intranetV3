@@ -45,9 +45,9 @@
 
                     {% else %}
                         <div class="col-sm-12">
-                            <div class="alert alert-warning">
+                            <twig:Alert type="warning">
                                 Aucun étudiant dans ce groupe.
-                            </div>
+                            </twig:Alert>
                         </div>
                     {% endfor %}
                 </div>
@@ -57,7 +57,7 @@
         {% endfor %}
     </div>
 {% else %}
-    <div class="alert alert-warning">
+    <twig:Alert type="warning">
         Aucun groupe dans ce type de groupe.
-    </div>
+    </twig:Alert>
 {% endif %}

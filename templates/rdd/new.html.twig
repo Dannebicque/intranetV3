@@ -34,10 +34,10 @@
 
                         <h3 class="titre_rub">Votre identité</h3>
                         {# {{ form_row(form.libelleDiplome) }} #}
-                        <div class="alert alert-info">
+                        <twig:Alert type="info">
                             Si vous constatez une erreur dans les informations ci-dessous, merci de contacter : <a href="mailto:scolarite.iut-troyes@univ-reims.fr" target="_blank">Par email</a> ou 03
                             25 42 46 46.
-                        </div>
+                        </twig:Alert>
                         <div class="row">
                             <div class="col-md-6 col-sm-12">
                                 {{ form_row(form.civilite) }}
@@ -50,10 +50,10 @@
                             </div>
                         </div>
                         <h3 class="titre_rub">Mise à jour de vos informations</h3>
-                        <div class="alert alert-info">
+                        <twig:Alert type="info">
                             L'adresse doit être celle où vous pourrez recevoir le diplôme, qui devrait être expédié
                             courant décembre.
-                        </div>
+                        </twig:Alert>
                         <div class="row">
                             <div class="col-md-6 col-sm-12">
                                 {{ form_row(form.adresse.adresse1) }}

@@ -4,10 +4,10 @@
     {{ texteDebut|raw }}
 </p>
 <hr class="w-100px">
-<div class="alert alert-info">
+<twig:Alert type="info">
     <p>Questionnaire à compléter entre le {{ dateOuverture|format_date
             ('short') }} et le {{ dateFermeture|format_date('short') }}.</p>
     <p><strong>Le questionnaire est anonyme et confidentiel.</strong></p>
     <i>Remarque : dans le questionnaire, le genre masculin est employé pour désigner les femmes et les hommes.</i>
-</div>
+</twig:Alert>
 

@@ -38,14 +38,16 @@
     <div class="card">
         <h4 class="card-title">{{ 'sadm.gestion.rh.import.heading'|trans }}</h4>
         <div class="card-body">
-            <div class="alert alert-info"><p>Importer un fichier csv (ou xlsx) contenant les données des personnels. Vous pouvez <a
+            <twig:Alert type="info"><p>Importer un fichier csv (ou xlsx) contenant les données des personnels. Vous
+                    pouvez <a
                             href="">récupérer un modèle ici</a>. Veuillez respecter l'ordre des colonnes, ne pas en
                     ajouter ni en supprimer. Laisser vide les données non connues.</p>
                 <p>Les personnels déjà présents ne seront ni supprimés ni modifiés.</p>
-            </div>
+            </twig:Alert>
             <br>
-            <div class="alert alert-warning">Le <strong>login est obligatoire</strong> pour permettre l'accès via le système
-                d'authentification de l'université.</div>
+            <twig:Alert type="warning">Le <strong>login est obligatoire</strong> pour permettre l'accès via le système
+                d'authentification de l'université.
+            </twig:Alert>
             <form class="form">
                 <div class="form-group">
                     <label for="fichier" class="required">{{ 'fichier.personnel.import'|trans }}</label>

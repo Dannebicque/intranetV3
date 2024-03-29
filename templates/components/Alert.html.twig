@@ -1,0 +1,15 @@
+<div{{ attributes }} class="mb-2 mt-2">
+    <!-- component html -->
+    <div class="alert alert-{{ this.type }} border border-2 d-flex align-items-center" role="alert">
+        <div class="bg-{{ this.type }} me-3 icon-item"><span class="fas {{ this.icone }} text-white fs-3"></span></div>
+        <div class="mb-0 flex-1">
+            {% if this.titre != null %}
+                <h4 class="alert-heading">{{ this.titre }}</h4>
+            {% endif %}
+            <p>
+                {% block content %}{% endblock %}
+            </p>
+        </div>
+        {#        <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button> #}
+    </div>
+</div>

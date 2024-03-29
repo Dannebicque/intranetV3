@@ -39,7 +39,7 @@
                 <div class="tab-content">
                     <div class="tab-pane fade active show" id="courrier">
                         <h4>Courrier d'accompagnement</h4>
-                        <div class="alert alert-info">
+                        <twig:Alert type="info">
                             Dans cette partie vous pouvez éditer le contenu du courrier d'accompagnement
                             envoyés avec la convention. Si vous laissez la zone de texte vide le courrier
                             par défaut sera généré. <a href="#"
@@ -56,7 +56,7 @@
                             </a>.
                             Vous avez à votre disposition tous les champs disponibles (équivalent aux champs de
                             fusion d'un publipostage word) pour générer votre mail.
-                        </div>
+                        </twig:Alert>
                         <input type="hidden"
                                value="courrier"
                                name="sujet_courrier"
@@ -69,9 +69,9 @@
 
                         <div class="row mt-10">
                             <div class="col-sm-12">
-                                <div class="alert alert-info">
+                                <twig:Alert type="info">
                                     Laisser vide pour utiliser le mail par défaut.
-                                </div>
+                                </twig:Alert>
                             </div>
                             <div class="col-sm-12 col-md-4 d-grid">
                                 <button data-type="courrier" class="btn btn-danger d-block resetDefaut"
@@ -106,7 +106,7 @@
                     {% for etat in etatsConvention %}
                         <div class="tab-pane fade" id="{{ etat }}">
                             <h4>{{ etat|trans }}</h4>
-                            <div class="alert alert-info">
+                            <twig:Alert type="info">
                                 Dans cette partie vous pouvez éditer le contenu des emails
                                 envoyés lors des différentes phases de la gestion de la
                                 convetion. Si vous laissez la zone de texte vide le mail
@@ -124,7 +124,7 @@
                                 </a>.
                                 Vous avez à votre disposition tous les champs disponibles (équivalent aux champs de
                                 fusion d'un publipostage word) pour générer votre mail.
-                            </div>
+                            </twig:Alert>
 
                             <div>
                                 <label for="sujet_{{ etat }}">Sujet du message : </label>
@@ -143,9 +143,9 @@
 
                             <div class="row mt-10">
                                 <div class="col-sm-12">
-                                    <div class="alert alert-info">
+                                    <twig:Alert type="info">
                                         Laisser vide pour utiliser le mail par défaut.
-                                    </div>
+                                    </twig:Alert>
                                 </div>
                                 <div class="col-sm-12 col-md-4 d-grid">
                                     <button data-type="{{ etat }}" data-periode="{{ stagePeriode.id }}" class="btn
