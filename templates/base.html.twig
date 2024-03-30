@@ -338,6 +338,14 @@
 
         <div class="main-content" id="mainContent">
 
+            <twig:Alert type="warning" titre="Migration terminée">
+                <p>La migration de l'intranet est terminée. Des ajustements et perturbations peuvent encore intervenir
+                    jusqu'au 01/04. Si vous rencontrez des soucis n'hésitez pas à me contacter :
+                    david.annebicque@univ-reims.fr.</p>
+                <p>Veuillez mettre à jour vos favoris avec la nouvelle adresse de l'intranet :
+                    https://intranet.iut-troyes.univ-reims.fr/fr/tableau-de-bord</p>
+            </twig:Alert>
+
             {% if not is_granted('ROLE_ETUDIANT') and user_data.anneeUniversitaire.active == false %}
                 <twig:Alert type="danger" titre="Attention">
                     Attention ! Vous n'êtes pas sur l'année courante. Pour modifier, cliquer en haut, à droite sur la
