@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 28/02/2024 14:44
+// @lastUpdate 30/03/2024 08:14
 
 @import "./theme-troyes.scss";
 @import "./theme-rcc.scss";
@@ -91,23 +91,23 @@ a .btn-round {
 
 .previcm {
   background-color: var(--colorCM) !important;
-  color: #3f4a59;
+  color: var(--policeDark);
 }
 
 
 .previtd {
   background-color: var(--colorTD) !important;
-  color: #3f4a59;
+  color: var(--policeDark);
 }
 
 .previtp {
   background-color: var(--colorTP) !important;
-  color: #3f4a59;
+  color: var(--policeDark);
 }
 
 .previprojet {
   background-color: var(--colorPTUT) !important;
-  color: #3f4a59;
+  color: var(--policeDark);
 }
 
 fieldset {

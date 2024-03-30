@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/appPersonnel/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 30/03/2024 08:05
  */
 
 namespace App\Controller\appPersonnel;
@@ -17,7 +17,9 @@ use App\Classes\ServiceRealise\ServiceRealiseCelcat;
 use App\Classes\ServiceRealise\ServiceRealiseIntranet;
 use App\Controller\BaseController;
 use App\Exception\DepartementNotFoundException;
+use App\Repository\SemestreRepository;
 use App\Utils\ToolsMatiere;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -34,10 +36,9 @@ class PrevisionnelController extends BaseController
     {
         $anneePrevisionnel = $this->dataUserSession->getAnneePrevisionnel();
         $personnel = $this->getUser();
-        $departement = $this->getDepartement();
-        $previsionnels = $myPrevisionnel->getPrevisionnelPersonnelDepartementAnneeArray($personnel, $departement,
+        $previsionnels = $myPrevisionnel->getPrevisionnelPersonnelDepartementAnneeArray($personnel, $this->getDepartement(),
             $anneePrevisionnel);
-        $hrs = $hrsManager->getHrsPersonnelDepartementAnnee($personnel, $departement, $anneePrevisionnel);
+        $hrs = $hrsManager->getHrsPersonnelDepartementAnnee($personnel, $this->getDepartement(), $anneePrevisionnel);
         $synthsePrevisionnel = $previsionnelSynthese->getSynthese($previsionnels, $personnel)
             ->getHrsEnseignant($hrs);
 
@@ -47,6 +48,35 @@ class PrevisionnelController extends BaseController
             'anneePrevisionnel' => $anneePrevisionnel,
             'semestres' => $this->dataUserSession->getSemestres(),
             'hrs' => $hrs,
+            'personnel' => $personnel,
+        ]);
+    }
+
+    #[Route(path: '/liste-semestre', name: 'previsionnel_semestre')]
+    public function listeSemestre(
+        Request             $request,
+        SemestreRepository  $semestreRepository,
+        PrevisionnelManager $myPrevisionnel): Response
+    {
+        $idsemestre = $request->query->get('semestre', null);
+        $anneePrevisionnel = $this->dataUserSession->getAnneePrevisionnel();
+        $personnel = $this->getUser();
+        if ($idsemestre === null) {
+            $previsionnels = [];
+        } else {
+            $semestre = $semestreRepository->find($idsemestre);
+            if ($semestre !== null) {
+
+                $previsionnels = $myPrevisionnel->getPrevisionnelPersonnelSemestre(
+                    $personnel,
+                    $semestre,
+                    $anneePrevisionnel);
+            }
+        }
+
+        return $this->render('bloc_previsionnel/_previ_semestre.html.twig', [
+            'previsionnels' => $previsionnels ?? [],
+            'anneePrevisionnel' => $anneePrevisionnel,
             'personnel' => $personnel,
         ]);
     }

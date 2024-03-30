@@ -1,9 +1,25 @@
-<div class="card">
+<div class="card" {{ stimulus_controller('app_personnel--previsionnel', {
+    url: path('previsionnel_semestre'),
+    semestre: semestres[0].id
+}) }}>
     <header class="card-header">
-        <h4 class="card-title"><strong>{{ 'service.previsionnel.heading'|trans }}</strong> | {{ personnel.display }}
-                                                                                           | ({{ 'periode'|trans }}
-                                                                                           : {{ anneePrevisionnel }}
-                                                                                           )</h4>
+        <h4 class="card-title">
+            <strong>{{ 'service.previsionnel.heading'|trans }}</strong> | {{ personnel.display }}
+            | ({{ 'periode'|trans }}
+            : {{ anneePrevisionnel }}
+            )
+        </h4>
+        <div class="card-header-actions text-end">
+            <label for="semestre" class="sr-only">Choix du semestre</label>
+            <select class="form-select"
+                    id="semestre" {{ stimulus_action('app_personnel--previsionnel', 'changeSemestre') }}>
+                {% for semestre in semestres %}
+                    <option {% if loop.first %}selected{% endif %}
+                            value="{{ semestre.id }}">{{ semestre.display }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
         <ul class="card-controls">
             <li class="dropdown">
                 <a data-bs-toggle="dropdown" href="#"><i class="fas fa-ellipsis-h rotate-90"></i></a>
@@ -24,35 +40,11 @@
         </ul>
     </header>
 
-    <div class="card-body">
-        <!-- Nav tabs -->
-        <ul class="nav nav-tabs">
-            {% for semestre in semestres %}
-                <li class="nav-item">
-                    <a class="nav-link {% if loop.first %} active{% endif %}" data-bs-toggle="tab"
-                       href="#semestre{{ semestre.id }}">{{ semestre.display }}</a>
-                </li>
-            {% endfor %}
-            {# feature: devrait afficher les semestres dans lesquels ont intervient ? Que faire si année de prévi
-                différente ? Possibilité de changer l'année pour l'enseignant. #}
-        </ul>
-
-        <!-- Tab panes -->
-        <div class="tab-content">
-            {% for semestre in semestres %}
-                <div class="tab-pane {% if loop.first %}fade active show{% endif %}" id="semestre{{ semestre.id }}">
-                    {{ include('bloc_previsionnel/_previ_semestre.html.twig') }}
-
-                    <twig:Alert type="info">* CM non majorés; ** CM majorés, TP=TD.
-                                                  Information indicative !
-                    </twig:Alert>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
+    <div class="card-body" {{ stimulus_target('app_personnel--previsionnel', 'liste') }}>
     </div>
+</div>
 
-    {{ include('bloc_previsionnel/hrs.html.twig') }}
+{{ include('bloc_previsionnel/hrs.html.twig') }}
 
     {{ include('bloc_previsionnel/total.html.twig') }}
 
