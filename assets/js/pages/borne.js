@@ -1,30 +1,22 @@
-// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/borne.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 22/06/2022 17:34
+// @lastUpdate 30/03/2024 16:33
 import '@fortawesome/fontawesome-pro/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-pro/scss/solid.scss'
 import '../../css/borne.scss'
 
-window.addEventListener('load', () => { // le dom est chargé
-  initLocalClocks();
-  horloge();
-  setInterval(horloge, 1000);
-  autoRefresh(10);
-  findOverflowedSessions();
-  setInterval(scrollOverflowedSessions, 6000);
-})
-
 function autoRefresh(minutes) {
   const hms = new Date()
-  let timeout = minutes * 60000;
-  setTimeout("location.reload(true);", timeout); 
+  const timeout = minutes * 60000
+  setTimeout('location.reload(true);', timeout)
 }
 
 function horloge() {
   const hms = new Date()
-  let h; let m;
+  let h
+  let m
   h = hms.getHours()
   m = hms.getMinutes()
   if (m < 10) {
@@ -74,39 +66,38 @@ function initLocalClocks() {
   }
 }
 
-const overflowedSessions = [];
+function easeInOutQuad(t) { return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t }
+
+const overflowedSessions = []
 
 function scrollOverflowedSessions() {
   overflowedSessions.forEach((session) => {
-    scroll(session.container, session.overflowAmount, 4000);
-  });
+    scroll(session.container, session.overflowAmount, 4000)
+  })
 
   function scroll(element, amount, duration, onDone) {
-    var start = element.scrollTop,
-        startTime = performance.now()
+    const start = element.scrollTop
+    const startTime = performance.now()
 
-    if (start - amount == 0)
-      amount = 0
+    if (start - amount == 0) amount = 0
 
-    function animateScroll(){
-      now = performance.now();
-      t = (now - startTime) / duration;
+    function animateScroll() {
+      now = performance.now()
+      t = (now - startTime) / duration
 
-      element.scrollTop = lerp(start, amount, easeInOutQuad(t));
+      element.scrollTop = lerp(start, amount, easeInOutQuad(t))
 
-      if( t < 1 )
-        window.requestAnimationFrame(animateScroll);
+      if (t < 1) window.requestAnimationFrame(animateScroll)
       else {
-        element.scrollTop = amount;
-        onDone && onDone();
+        element.scrollTop = amount
+        onDone && onDone()
       }
-    };
+    }
 
-    animateScroll();
+    animateScroll()
   }
 
-  function easeInOutQuad(t){ return t<.5 ? 2*t*t : -1+(4-2*t)*t };
-  function lerp(start, end, t){ return (1-t)*start+t*end }
+  function lerp(start, end, t) { return (1 - t) * start + t * end }
 }
 
 function findOverflowedSessions() {
@@ -114,7 +105,16 @@ function findOverflowedSessions() {
     const sessionHeight = session.offsetHeight
     const sessionBodyHeight = session.querySelector('.session-body').offsetHeight
     if (sessionBodyHeight > sessionHeight) {
-      overflowedSessions.push({container:session, overflowAmount: sessionBodyHeight - sessionHeight})
+      overflowedSessions.push({ container: session, overflowAmount: sessionBodyHeight - sessionHeight })
     }
   })
 }
+
+window.addEventListener('load', () => { // le dom est chargé
+  initLocalClocks()
+  horloge()
+  setInterval(horloge, 1000)
+  autoRefresh(10)
+  findOverflowedSessions()
+  setInterval(scrollOverflowedSessions, 6000)
+})

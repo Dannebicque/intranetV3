@@ -1,8 +1,8 @@
-// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/components/Toast.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/10/2022 18:18
+// @lastUpdate 30/03/2024 09:06
 
 import { Toast as ToastBs } from 'bootstrap'
 
@@ -20,7 +20,7 @@ class Toast {
     const div = document.createElement('div')
     div.innerHTML = html
     div.children[0].addEventListener('hidden.bs.toast', (elem) => {
-     // elem.currentTarget.remove() // supprimer le code HTML après l'event.
+      // elem.currentTarget.remove() // supprimer le code HTML après l'event.
     })
     document.body.append(div.children[0])
 
@@ -38,7 +38,7 @@ class Toast {
   }
 
   error(text, title = null, options = {}) {
-    this.createAndShow('danger', text, 'fas fa-times-circle', title, options)
+    this.createAndShow('danger', text, 'fa-times-circle', title, options)
   }
 
   warning(text, title = null, options = {}) {
@@ -46,11 +46,11 @@ class Toast {
   }
 
   success(text, title = null, options = {}) {
-    this.createAndShow('success', text, 'fas fa-check-circle', title, options)
+    this.createAndShow('success', text, 'fa-check-circle', title, options)
   }
 
   info(text, title = null, options = {}) {
-    this.createAndShow('info', text, 'fas fa-info-circle', title, options)
+    this.createAndShow('info', text, 'fa-info-circle', title, options)
   }
 }
 
