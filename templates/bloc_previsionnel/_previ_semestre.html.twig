@@ -1,9 +1,9 @@
 <table class="table table-bordered table-condensed">
     <thead>
     <tr>
-        <th class="cm">NB h*</th>
-        <th class="cm">NB Gr.</th>
-        <th class="cm">1.5**</th>
+        <th class="previcm cm">NB h*</th>
+        <th class="previcm cm">NB Gr.</th>
+        <th class="previcm cm">1.5**</th>
 
         <th class="previtd">NB h/ Gr.*</th>
         <th class="previtd">NB Gr.</th>
@@ -13,7 +13,7 @@
         <th class="previtp">NB Gr.</th>
         <th class="previtp">1.5**</th>
 
-        <th class="cm">tot. CM*</th>
+        <th class="previcm cm">tot. CM*</th>
         <th class="previtd">tot. TD</th>
         <th class="previtp">tot. TP</th>
 
@@ -22,11 +22,11 @@
     </tr>
     </thead>
     <tbody>
-    {% for previsionnel in previsionnels|filter(previsionnel => previsionnel.semestre_id == semestre.id) %}
+    {% for previsionnel in previsionnels %}
         <tr>
             <td colspan="11">
                 {{ previsionnel.matiere_code }} | {{ previsionnel.matiere_libelle }}
-                                                | {{ previsionnel.matiere_code_element }}
+                | {{ previsionnel.matiere_code_element }}
             </td>
 
             <td colspan="2">
@@ -48,11 +48,13 @@
             <td colspan="1">
                 {% if (user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE')) %}
                     <a href="{{ path('administration_previsionnel_duplicate', {id: previsionnel.id}) }}"
-                       class="btn btn-success btn-outline btn-sm btn-square" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                       class="btn btn-success btn-outline btn-sm btn-square" data-bs-toggle="tooltip"
+                       data-bs-placement="bottom"
                        title="{{ 'atitle.dupliquer'|trans }}"><i
                                 class="{{ iconDuplicate }}"></i></a>
                     <a href="{{ path('administration_previsionnel_delete', {id: previsionnel.id}) }}"
-                       class="btn btn-danger btn-outline btn-sm btn-square supprimer" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                       class="btn btn-danger btn-outline btn-sm btn-square supprimer" data-bs-toggle="tooltip"
+                       data-bs-placement="bottom"
 
                        data-csrf="{{ csrf_token('delete' ~ previsionnel.id) }}"
                        title="{{ 'atitle.supprimer'|trans }}"><i
@@ -62,19 +64,20 @@
         </tr>
         <tr id="ligne_{{ previsionnel.id }}">
             {% if (user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE')) %}
-                <td>
+                <td class="previcm">
                     <a class="editable"
                        data-field="NbHCm"
                        data-href="{{ path('administration_previsionnel_ajax_edit', {id:previsionnel.id}) }}"
                        title="Corriger le volume horaire">
                         {{ previsionnel.nbHCm }}</a> h
                 </td>
-                <td><a class="editable"
+                <td class="previcm">
+                    <a class="editable"
                        data-field="NbGrCm"
                        data-href="{{ path('administration_previsionnel_ajax_edit', {id:previsionnel.id}) }}"
                        title="Corriger le nombre de groupes">
                     {{ previsionnel.nbGrCm }}</td>
-                <td>{{ previsionnel.nbSeanceCm }}</td>
+                <td class="previcm">{{ previsionnel.nbSeanceCm }}</td>
                 <td class="previtd">
                     <a class="editable"
                        data-field="NbHTd"
@@ -105,17 +108,17 @@
                         {{ previsionnel.nbGrTp }}</a></td>
                 <td class="previtp">{{ previsionnel.nbSeanceTp }}</a></td>
 
-                <td>{{ previsionnel.totalHCm }} h</td>
+                <td class="previcm">{{ previsionnel.totalHCm }} h</td>
                 <td class="previtd">{{ previsionnel.totalHTd }} h</td>
                 <td class="previtp">{{ previsionnel.totalHTp }} h</td>
 
                 <td>{{ previsionnel.totalEqTd }} h</td>
                 <td>{{ previsionnel.totalEtudiant }} h</td>
             {% else %}
-                <td>{{ previsionnel.nbHCm }} h
+                <td class="previcm">{{ previsionnel.nbHCm }} h
                 </td>
-                <td>{{ previsionnel.nbGrCm }}</td>
-                <td>{{ previsionnel.nbSeanceCm }}</td>
+                <td class="previcm">{{ previsionnel.nbGrCm }}</td>
+                <td class="previcm">{{ previsionnel.nbSeanceCm }}</td>
                 <td class="previtd">{{ previsionnel.nbHTd }} h
                 </td>
                 <td class="previtd">{{ previsionnel.nbGrTd }}</td>
@@ -126,7 +129,7 @@
                 <td class="previtp">{{ previsionnel.nbGrTp }}</td>
                 <td class="previtp">{{ previsionnel.nbSeanceTp }}</td>
 
-                <td>{{ previsionnel.totalHCm }} h</td>
+                <td class="previcm">{{ previsionnel.totalHCm }} h</td>
                 <td class="previtd">{{ previsionnel.totalHTd }} h</td>
                 <td class="previtp">{{ previsionnel.totalHTp }} h</td>
 
@@ -136,8 +139,17 @@
         </tr>
     {% else %}
         <tr>
-            <td colspan="14">Pas de service</td>
+            <td colspan="14">
+                {% if semestre is defined %}
+                    Pas de service pour le semestre {{ semestre.display }}
+                {% else %}
+                    Choisir un semestre
+                {% endif %}
+            </td>
         </tr>
     {% endfor %}
     </tbody>
 </table>
+<twig:Alert type="info">* CM non majorés; ** CM majorés, TP=TD.
+    Information indicative !
+</twig:Alert>

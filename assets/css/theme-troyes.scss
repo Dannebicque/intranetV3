@@ -1,8 +1,8 @@
-// Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/theme-troyes.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 25/07/2023 13:56
+// @lastUpdate 30/03/2024 08:21
 
 body.troyes {
   --avatar-size: 2rem;
@@ -82,4 +82,9 @@ body.troyes.dark-theme {
   --colorYellow: #fcc525;
   --colorGray: #868e96;
   --colorDark: #465161;
+
+  --colorCM: #9a89b2; //todo: devrait être dans type de cours ?
+  --colorTD: #8adaba;
+  --colorTP: #b89c7e;
+  --colorPTUT: #f96197;
 }
