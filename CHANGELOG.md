@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.16.0](https://github.com/Dannebicque/intranetV3/compare/v3.15.4...v3.16.0) (2024-03-30)
+
+
+### Features
+
+* amélioration des blocs sur dashboard ([fa8df65](https://github.com/Dannebicque/intranetV3/commit/fa8df65832312d19d92ea40f19e4f14f53f86b50))
+* Utilisation d'un composant twig Alert ([a528ae4](https://github.com/Dannebicque/intranetV3/commit/a528ae490261efeb40049bb945b640515b0b494b))
+
+
+### Bug Fixes
+
+* Adresses sur convention ([e4dd74d](https://github.com/Dannebicque/intranetV3/commit/e4dd74da98498d21d7e5edec677bb31131b318f5))
+* previsionel app, amélioration affichage + stimulus ([d14f559](https://github.com/Dannebicque/intranetV3/commit/d14f559a4c8307a91f79f16ef55dbc80c0c0e469))
+
 ### [3.15.4](https://github.com/Dannebicque/intranetV3/compare/v3.15.3...v3.15.4) (2024-03-24)
 
 
