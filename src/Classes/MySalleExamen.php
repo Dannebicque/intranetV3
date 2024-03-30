@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MySalleExamen.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 09:27
+ * @lastUpdate 30/03/2024 16:30
  */
 
 /*
@@ -14,7 +14,7 @@
 namespace App\Classes;
 
 use App\Classes\Matieres\TypeMatiereManager;
-use App\Classes\Pdf\MyPDF;
+use App\Classes\Pdf\PdfManager;
 use App\DTO\Matiere;
 use App\Entity\Etudiant;
 use App\Entity\Groupe;
@@ -27,7 +27,7 @@ use App\Repository\PersonnelRepository;
 use App\Repository\SalleExamenRepository;
 use App\Repository\TypeGroupeRepository;
 use Doctrine\Common\Collections\Collection;
-use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -52,7 +52,7 @@ class MySalleExamen
         private readonly SalleExamenRepository $salleExamenRepository,
         private readonly GroupeRepository $groupeRepository,
         private readonly EtudiantRepository $etudiantRepository,
-        private readonly MyPDF $myPdf
+        private readonly PdfManager $myPdf
     ) {
     }
 
@@ -67,7 +67,8 @@ class MySalleExamen
         int|string $requestenseignant1,
         int|string $requestenseignant2,
         Semestre $semestre,
-    ): ?PdfResponse {
+    ): ?Response
+    {
         $this->matiere = $this->typeMatiereManager->getMatiereFromSelect($requestmatiere);
 
         if (null !== $this->salle && null !== $this->matiere) {
@@ -108,7 +109,7 @@ class MySalleExamen
                 'semestre' => $semestre,
             ];
 
-            return $this->myPdf::generePdf('pdf/placement.html.twig', $data, 'placement');
+            return $this->myPdf->pdf()::generePdf('pdf/placement.html.twig', $data, 'placement');
         }
 
         return null; // todo: afficher un lessage de salle trop petite ?

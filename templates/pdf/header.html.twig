@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+
+        #class_logo {
+            float: left;
+            width: 20%;
+        }
+
+        #class_logo img {
+            height: 1cm;
+        }
+
+        #class_titre {
+            float: right;
+            width: 80%;
+        }
+
+        header {
+            margin: 0;
+            bottom: 0;
+            width: 100%;
+            left: 0;
+            padding: 0.2cm;
+            background-color: #03a9f4;
+            color: white;
+            text-align: center;
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div id="class_logo">
+        <img src="data:image/jpeg;base64,{{ image }}" alt="logo">
+    </div>
+    <div id="class_titre">
+        <h1>{{ titre|raw }}</h1>
+    </div>
+</header>
+</body>
+</html>

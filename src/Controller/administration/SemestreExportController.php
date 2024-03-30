@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/SemestreExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 30/03/2024 16:30
  */
 
 namespace App\Controller\administration;
@@ -16,9 +16,9 @@ use App\Entity\Etudiant;
 use App\Entity\Scolarite;
 use App\Entity\Semestre;
 use App\Message\ExportReleve;
-use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Twig\Error\LoaderError;
@@ -52,7 +52,7 @@ class SemestreExportController extends BaseController
      */
     #[Route(path: '/provisoire/{slug}/{semestre}', name: 'administration_semestre_export_releve_provisoire')]
     public function exportReleveProvisoire(EtudiantExportReleve $etudiantExportReleve, #[MapEntity(mapping: ['slug' => 'slug'])]
-    Etudiant                                                    $etudiant, Semestre $semestre = null): PdfResponse
+    Etudiant $etudiant, Semestre $semestre = null): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $semestre ?: $etudiant->getSemestre());
         $etudiantExportReleve->setEtudiant($etudiant);
@@ -63,7 +63,7 @@ class SemestreExportController extends BaseController
 
     #[Route(path: '/definitif/{slug}/{scolarite}', name: 'administration_semestre_export_releve_definitif')]
     public function exportReleveDefinitif(EtudiantExportReleve $etudiantExportReleve, #[MapEntity(mapping: ['slug' => 'slug'])]
-    Etudiant                                                   $etudiant, Scolarite $scolarite): PdfResponse
+    Etudiant $etudiant, Scolarite $scolarite): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_NOTE', $etudiant->getSemestre());
         $etudiantExportReleve->setEtudiant($etudiant);

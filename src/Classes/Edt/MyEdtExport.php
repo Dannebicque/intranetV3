@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/MyEdtExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 30/03/2024 16:30
  */
 
 /*
@@ -15,7 +15,7 @@ namespace App\Classes\Edt;
 
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyIcal;
-use App\Classes\Pdf\MyPDF;
+use App\Classes\Pdf\PdfManager;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Departement;
 use App\Entity\Personnel;
@@ -49,7 +49,7 @@ class MyEdtExport
         private readonly MyEdtIntranet  $myEdtIntranet,
         private readonly MyEdtCelcat    $myEdtCelcat,
         protected MyIcal                $myIcal,
-        private readonly MyPDF          $myPDF,
+        private readonly PdfManager $myPDF,
         private readonly TypeMatiereManager $typeMatiereManager,
         KernelInterface                 $kernel
     )
@@ -215,7 +215,7 @@ class MyEdtExport
         // todo: gérer l'année universitaire d'export
         if ('intranet' === $source) {
             $planning = $this->edtPlanningRepository->findEdtProf($personnel->getId(), $personnel->getAnneeUniversitaire());
-            $this->myPDF::genereAndSavePdf('pdf/edt/planning.html.twig',
+            $this->myPDF->pdf()::genereAndSavePdf('pdf/edt/planning.html.twig',
                 [
                     'planning' => $planning,
                     'personnel' => $personnel,
@@ -241,8 +241,8 @@ class MyEdtExport
             $edt = $this->myEdtIntranet->initSemestre($semaine, $semestre, $semestre->getAnneeUniversitaire());
         }
 
-        $this->myPDF::addOptions(['orientation' => 'Landscape', 'fontHeightRatio' => 0.8]);
-        $this->myPDF::generePdf('pdf/edt/edtSemestre.html.twig',
+        $this->myPDF->pdf()::addOptions(['landscape' => true, 'fontHeightRatio' => 0.8]);
+        $this->myPDF->pdf()::generePdf('pdf/edt/edtSemestre.html.twig',
             ['edt' => $edt, 'semestre' => $semestre, 'departement' => $departement], $semestre->getLibelle());
     }
 

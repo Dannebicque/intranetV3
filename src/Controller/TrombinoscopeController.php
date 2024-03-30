@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/TrombinoscopeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 30/03/2024 16:27
  */
 
 namespace App\Controller;
@@ -14,7 +14,7 @@ use App\Classes\GetGroupeFromSemestre;
 use App\Classes\MyExport;
 use App\Classes\MyExportListing;
 use App\Classes\MySerializer;
-use App\Classes\Pdf\MyPDF;
+use App\Classes\Pdf\PdfManager;
 use App\Entity\Constantes;
 use App\Entity\Groupe;
 use App\Entity\Semestre;
@@ -24,7 +24,6 @@ use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use JsonException;
-use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use PhpOffice\PhpSpreadsheet\Exception;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\Response;
@@ -99,9 +98,9 @@ class TrombinoscopeController extends BaseController
      */
     #[Route(path: '/etudiant/export-image/{typeGroupe<\d+>}.pdf', name: 'trombinoscope_etudiant_image', methods: 'GET')]
     #[IsGranted('ROLE_PERMANENT')]
-    public function trombiEtudiantExportImage(MyPDF $myPDF, TypeGroupe $typeGroupe): PdfResponse
+    public function trombiEtudiantExportImage(PdfManager $myPDF, TypeGroupe $typeGroupe): Response
     {
-        return $myPDF::generePdf('pdf/trombinoscope.html.twig',
+        return $myPDF->pdf()::generePdf('pdf/trombinoscope.html.twig',
             [
                 'typeGroupe' => $typeGroupe,
                 'groupes' => $typeGroupe->getGroupes(),

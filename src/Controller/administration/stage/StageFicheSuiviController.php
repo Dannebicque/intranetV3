@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/stage/StageFicheSuiviController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 30/03/2024 16:27
  */
 
 namespace App\Controller\administration\stage;
@@ -17,7 +17,6 @@ use App\Entity\StageFicheSuivi;
 use App\Form\FicheSuiviType;
 use App\Repository\StageFicheSuiviRepository;
 use Exception;
-use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -75,7 +74,7 @@ class StageFicheSuiviController extends BaseController
      * @throws SyntaxError
      */
     #[Route(path: '/imprimer/{id}', name: 'administration_stage_fiche_suivi_export', methods: ['GET'])]
-    public function print(MyFicheSuivi $myStageFicheSuivi, StageFicheSuivi $stageFicheSuivi): PdfResponse
+    public function print(MyFicheSuivi $myStageFicheSuivi, StageFicheSuivi $stageFicheSuivi): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $stageFicheSuivi->getStage()?->getStagePeriode()?->getSemestre()?->getAnnee());
 

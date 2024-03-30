@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/webpack.config.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/02/2024 17:39
+// @lastUpdate 30/03/2024 14:06
 
 const Encore = require('@symfony/webpack-encore')
 const path = require('path')
@@ -34,6 +34,8 @@ Encore
    * Each entry will result in one JavaScript file (e.g. app.js)
    * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
    */
+  .addEntry('print', './assets/print.js')
+
   .addEntry('app', './assets/app.js')
   .addEntry('borne', './assets/js/pages/borne.js')
   .addEntry('tinyMce', './assets/js/tinyMce.js')

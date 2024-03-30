@@ -49,6 +49,7 @@ parameters:
   iconCompta: '%env(resolve:ICON_COMPTA)%' #fas fa-comments-dollar'
   api_key: '%env(resolve:API_KEY)%'
   api_edu_sign: '%env(resolve:API_EDUSIGN)%'
+  pdf_service: '%env(resolve:PDF_SERVICE)%'
 
 
 services:

@@ -4,13 +4,13 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/projet/ProjetEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 30/03/2024 16:27
  */
 
 namespace App\Controller\administration\projet;
 
 use App\Classes\MyProjetEtudiant;
-use App\Classes\Pdf\MyPDF;
+use App\Classes\Pdf\PdfManager;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
@@ -18,7 +18,6 @@ use App\Entity\ProjetEtudiant;
 use App\Entity\ProjetPeriode;
 use App\Form\ProjetEtudiantType;
 use Doctrine\ORM\NonUniqueResultException;
-use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -101,11 +100,11 @@ class ProjetEtudiantController extends BaseController
      * @throws SyntaxError
      */
     #[Route(path: '/convention/pdf/{id}', name: 'administration_projet_etudiant_convention_pdf', methods: 'GET')]
-    public function conventionPdf(MyPDF $myPDF, ProjetEtudiant $projetEtudiant): PdfResponse
+    public function conventionPdf(PdfManager $myPDF, ProjetEtudiant $projetEtudiant): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_PROJET', $projetEtudiant->getProjetPeriode()?->getSemestres()->first());
 
-        return $myPDF::generePdf('pdf/projetTutore/conventionProjet.html.twig',
+        return $myPDF->pdf()::generePdf('pdf/projetTutore/conventionProjet.html.twig',
             [
                 'projetEtudiant' => $projetEtudiant,
             ],

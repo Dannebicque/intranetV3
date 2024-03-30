@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Pdf/MyPDF.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 30/03/2024 16:30
  */
 
 namespace App\Classes\Pdf;
@@ -13,12 +13,13 @@ use App\Utils\Tools;
 use Carbon\Carbon;
 use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Knp\Snappy\Pdf;
+use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-class MyPDF
+class MyPDF implements PdfInterface
 {
     protected static array $options = [];
 
@@ -55,7 +56,7 @@ class MyPDF
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public static function generePdf(string $template, array $data, string $name): PdfResponse
+    public static function generePdf(string $template, array $data, string $name, array $options = [])
     {
         return self::genereOutputPdf($template, $data, $name);
     }
@@ -69,11 +70,14 @@ class MyPDF
         string $template,
         array $data,
         string $name,
-        string $dir
-    ): void {
+        string $dir, array $options = []
+    ): string
+    {
         $output = self::genereOutputPdf($template, $data, $name);
 
         file_put_contents($dir.Tools::slug($name).'.pdf', $output);
+
+        return $dir . Tools::slug($name) . '.pdf';
     }
 
     /**
@@ -81,7 +85,7 @@ class MyPDF
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    private static function genereOutputPdf(string $template, array $data, string $name): PdfResponse
+    private static function genereOutputPdf(string $template, array $data, string $name): Response|PdfResponse
     {
         $name = Tools::slug($name);
 

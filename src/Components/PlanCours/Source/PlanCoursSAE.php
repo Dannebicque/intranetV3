@@ -4,12 +4,12 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/PlanCours/Source/PlanCoursSAE.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/02/2024 10:18
+ * @lastUpdate 30/03/2024 16:27
  */
 
 namespace App\Components\PlanCours\Source;
 
-use App\Classes\Pdf\MyPDF;
+use App\Classes\Pdf\PdfManager;
 use App\Components\PlanCours\Form\PlanCoursSaeStep1Type;
 use App\Components\PlanCours\Form\PlanCoursSaeStep2Type;
 use App\Components\PlanCours\Form\PlanCoursSaeStep3Type;
@@ -18,7 +18,7 @@ use App\Entity\AnneeUniversitaire;
 use App\Entity\Departement;
 use App\Entity\Personnel;
 use App\Repository\PlanCoursSaeRepository;
-use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class PlanCoursSAE extends AbstractPlanCours implements PlanCoursInterface
 {
@@ -32,7 +32,7 @@ class PlanCoursSAE extends AbstractPlanCours implements PlanCoursInterface
     public const TEMPLATE_FORM_STEP_3 = 'plan_cours_sae_3.html.twig';
 
     public function __construct(
-        protected MyPDF $myPDF,
+        protected PdfManager $myPDF,
         protected PlanCoursSaeRepository $planCoursSaeRepository
     ) {
     }
@@ -80,7 +80,7 @@ class PlanCoursSAE extends AbstractPlanCours implements PlanCoursInterface
         Matiere $matiere,
         AnneeUniversitaire $anneeUniversitaire,
         Departement $departement
-    ): ?PdfResponse
+    ): ?Response
     {
         $obj = $this->planCoursSaeRepository->findOneBy([
             'typeMatiere' => $matiere->typeMatiere,
@@ -89,7 +89,7 @@ class PlanCoursSAE extends AbstractPlanCours implements PlanCoursInterface
         ]);
 
         if (null !== $obj) {
-            return $this->myPDF::generePdf('components/plan_cours/pdf/sae.html.twig',
+            return $this->myPDF->pdf()::generePdf('components/plan_cours/pdf/sae.html.twig',
                 [
                     'pc' => $obj,
                     'matiere' => $matiere,

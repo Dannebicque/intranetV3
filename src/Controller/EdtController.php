@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 18:39
+ * @lastUpdate 30/03/2024 16:27
  */
 
 namespace App\Controller;
@@ -15,7 +15,7 @@ use App\Classes\Edt\MyEdtCelcat;
 use App\Classes\Edt\MyEdtExport;
 use App\Classes\Edt\MyEdtIntranet;
 use App\Classes\Matieres\TypeMatiereManager;
-use App\Classes\Pdf\MyPDF;
+use App\Classes\Pdf\PdfManager;
 use App\Entity\Constantes;
 use App\Entity\Semestre;
 use App\Repository\AbsenceEtatAppelRepository;
@@ -24,7 +24,6 @@ use App\Repository\EdtPlanningRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\SemestreRepository;
 use Exception;
-use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -306,7 +305,7 @@ class EdtController extends BaseController
      * @throws Exception
      */
     #[Route(path: '/etudiant/export/semaine/{semaine}', name: 'edt_etudiant_export_semaine_courante')]
-    public function exportEtudiantSemaine(MyPDF $myPDF, int $semaine = 0): RedirectResponse|StreamedResponse|PdfResponse
+    public function exportEtudiantSemaine(PdfManager $myPDF, int $semaine = 0): RedirectResponse|StreamedResponse|Response
     {
         if (0 === $semaine) {
             $semaine = (int)date('W');
@@ -322,7 +321,7 @@ class EdtController extends BaseController
                 $this->getAnneeUniversitaire(), $semaine);
         }
 
-        return $myPDF->generePdf('pdf/edt/edtPersoSemaine.html.twig',
+        return $myPDF->pdf()::generePdf('pdf/edt/edtPersoSemaine.html.twig',
             ['edt' => $edt, 'tabHeures' => Constantes::TAB_HEURES],
             'export-semaine-edt');
     }

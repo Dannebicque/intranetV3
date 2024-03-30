@@ -4,18 +4,17 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/stage/StageAvenantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 30/03/2024 16:27
  */
 
 namespace App\Controller\administration\stage;
 
-use App\Classes\Pdf\MyPDF;
+use App\Classes\Pdf\PdfManager;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\StageAvenant;
 use App\Entity\StageEtudiant;
 use App\Form\StageAvenantType;
-use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -44,12 +43,12 @@ class StageAvenantController extends BaseController
      * @throws SyntaxError
      */
     #[Route(path: '/avenant/pdf/{id}', name: 'administration_stage_avenant_pdf', methods: 'GET')]
-    public function avenantPdf(MyPDF $myPDF, StageAvenant $stageAvenant): PdfResponse
+    public function avenantPdf(PdfManager $myPDF, StageAvenant $stageAvenant): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE',
             $stageAvenant->getStageEtudiant()?->getStagePeriode()?->getSemestre());
 
-        return $myPDF::generePdf('pdf/stage/avenantStage.html.twig',
+        return $myPDF->pdf()::generePdf('pdf/stage/avenantStage.html.twig',
             [
                 'stage_avenant' => $stageAvenant,
                 'proposition' => $stageAvenant->getStageEtudiant(),

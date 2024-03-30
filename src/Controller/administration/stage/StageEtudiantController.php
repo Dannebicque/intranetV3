@@ -4,13 +4,13 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/stage/StageEtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:55
+ * @lastUpdate 30/03/2024 16:27
  */
 
 namespace App\Controller\administration\stage;
 
 use App\Classes\MyStageEtudiant;
-use App\Classes\Pdf\MyPDF;
+use App\Classes\Pdf\PdfManager;
 use App\Controller\BaseController;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
@@ -23,7 +23,6 @@ use App\Repository\PersonnelRepository;
 use App\Repository\StageMailTemplateRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Exception;
-use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -142,14 +141,14 @@ class StageEtudiantController extends BaseController
      * @throws RuntimeError
      */
     #[Route(path: '/convention/pdf/{id}', name: 'administration_stage_etudiant_convention_pdf', methods: 'GET')]
-    public function conventionPdf(MyPDF $myPDF, StageEtudiant $stageEtudiant): PdfResponse
+    public function conventionPdf(PdfManager $myPDF, StageEtudiant $stageEtudiant): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stageEtudiant->getStagePeriode()?->getSemestre());
         // 1. regarder si convention existe dans le répertoire ? (un champ avec le nom dans la BDD ?)
         // 2. Si oui envoyer
         // 3. Si non générer et envoyer + sauvegarde
         // todo: prevoir bouton pour "regenerer" la convention
-        return $myPDF::generePdf('pdf/stage/conventionStagePDF.html.twig',
+        return $myPDF->pdf()::generePdf('pdf/stage/conventionStagePDF.html.twig',
             [
                 'proposition' => $stageEtudiant,
             ],
@@ -161,11 +160,11 @@ class StageEtudiantController extends BaseController
     public function envoyerConventionPdf(
         KernelInterface $kernel,
         EventDispatcherInterface $eventDispatcher,
-        MyPDF $myPDF, StageEtudiant $stageEtudiant): JsonResponse
+        PdfManager $myPDF, StageEtudiant $stageEtudiant): JsonResponse
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stageEtudiant->getStagePeriode()?->getSemestre());
 
-        $myPDF::genereAndSavePdf('pdf/stage/conventionStagePDF.html.twig',
+        $myPDF->pdf()::genereAndSavePdf('pdf/stage/conventionStagePDF.html.twig',
             [
                 'proposition' => $stageEtudiant,
             ],
@@ -185,11 +184,11 @@ class StageEtudiantController extends BaseController
      * @throws SyntaxError
      */
     #[Route(path: '/courrier/pdf/{id}', name: 'administration_stage_etudiant_courrier_pdf', methods: 'GET')]
-    public function courrierPdf(MyPDF $myPDF, StageEtudiant $stageEtudiant): PdfResponse
+    public function courrierPdf(PdfManager $myPDF, StageEtudiant $stageEtudiant): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stageEtudiant->getStagePeriode()?->getSemestre());
 
-        return $myPDF::generePdf('pdf/stage/baseCourrier.html.twig',
+        return $myPDF->pdf()::generePdf('pdf/stage/baseCourrier.html.twig',
             [
                 'stageEtudiant' => $stageEtudiant,
             ],
@@ -232,11 +231,11 @@ class StageEtudiantController extends BaseController
      * @throws SyntaxError
      */
     #[Route(path: '/fiche-enseignant/{id}', name: 'administration_stage_etudiant_fiche_enseignant', methods: 'GET')]
-    public function ficheEnseignant(MyPDF $myPDF, StageEtudiant $stageEtudiant): PdfResponse
+    public function ficheEnseignant(PdfManager $myPDF, StageEtudiant $stageEtudiant): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stageEtudiant->getStagePeriode()?->getSemestre());
 
-        return $myPDF::generePdf('pdf/fichePDFStage.html.twig',
+        return $myPDF->pdf()::generePdf('pdf/fichePDFStage.html.twig',
             [
                 'stageEtudiant' => $stageEtudiant,
             ],

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Utils/Tools.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:52
+ * @lastUpdate 30/03/2024 13:27
  */
 
 /*
@@ -21,6 +21,7 @@ use RuntimeException;
 use Symfony\Component\String\Slugger\AsciiSlugger;
 use function chr;
 use function ord;
+use function Symfony\Component\String\u;
 
 abstract class Tools
 {
@@ -252,5 +253,13 @@ abstract class Tools
         $dateFin = $dateObjet->copy()->setTime($heureFin->hour, $heureFin->minute);
 
         return $dateMaintenant->between($dateDebut, $dateFin);//todo: attention UTC ?
+    }
+
+    public static function FileName(string $string, int $size = 50)
+    {
+        $slugger = new AsciiSlugger();
+        $slug = $slugger->slug($string);
+
+        return u($slug)->truncate($size);
     }
 }

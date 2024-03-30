@@ -4,12 +4,12 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/PlanCours/Source/PlanCoursMatiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/02/2024 10:18
+ * @lastUpdate 30/03/2024 16:17
  */
 
 namespace App\Components\PlanCours\Source;
 
-use App\Classes\Pdf\MyPDF;
+use App\Classes\Pdf\PdfManager;
 use App\Components\PlanCours\Form\PlanCoursMatiereStep1Type;
 use App\Components\PlanCours\Form\PlanCoursMatiereStep2Type;
 use App\Components\PlanCours\Form\PlanCoursMatiereStep3Type;
@@ -32,7 +32,7 @@ class PlanCoursMatiere extends AbstractPlanCours implements PlanCoursInterface
     public const TEMPLATE_FORM_STEP_3 = 'plan_cours_matiere_3.html.twig';
 
     public function __construct(
-        protected MyPDF $myPDF,
+        protected PdfManager $myPDF,
         protected PlanCoursMatiereRepository $planCoursMatiereRepository
     ) {
     }

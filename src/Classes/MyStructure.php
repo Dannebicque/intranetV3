@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Classes/MyStructure.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyStructure.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/05/2021 14:41
+ * @lastUpdate 30/03/2024 16:17
  */
 
 /*
@@ -14,7 +14,7 @@
 namespace App\Classes;
 
 use App\Classes\Excel\MyExcelWriter;
-use App\Classes\Pdf\MyPDF;
+use App\Classes\Pdf\PdfManager;
 use App\Entity\Departement;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -25,7 +25,7 @@ class MyStructure
     protected Departement $departement;
 
     public function __construct(
-        private readonly MyPDF $myPdf,
+        private readonly PdfManager $myPdf,
         private readonly MyExcelWriter $myExcel)
     {
     }
@@ -41,7 +41,7 @@ class MyStructure
 
         switch ($_format) {
             case 'pdf':
-                $this->myPdf::generePdf('pdf/structure.html.twig', ['departement' => $departement], 'structure_departement');
+                $this->myPdf->pdf()::generePdf('pdf/structure.html.twig', ['departement' => $departement], 'structure_departement');
                 break;
             case 'xlsx':
                 break;

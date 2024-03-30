@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/PersonnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 30/03/2024 16:31
  */
 
 namespace App\Controller\administration;
@@ -74,7 +74,7 @@ class PersonnelController extends BaseController
         return $myExport->genereFichierGeneriqueFromData(
             $_format,
             $data,
-            'rattrapages_'.$this->getDepartement()?->getLibelle(),
+            'rattrapages_' . $this->getDepartement()?->getLibelle(),
         );
     }
 
@@ -91,7 +91,8 @@ class PersonnelController extends BaseController
         methods: ['GET', 'POST'])]
     public function create(
         Request $request
-    ): Response {
+    ): Response
+    {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         $personnel = new Personnel();
@@ -123,6 +124,53 @@ class PersonnelController extends BaseController
             'personnel' => $personnel,
             'form' => $form,
         ]);
+    }
+
+    #[Route('/recherche', name: 'search_personnel',
+        methods: ['GET'])]
+    public function recherche(
+        Request             $request,
+        PersonnelRepository $personnelRepository
+    ): Response
+    {
+        $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
+        if (!$request->query->has('search') || $request->query->get('search') === '') {
+            $personnels = [];
+        } else {
+            $personnels = $personnelRepository->search($request->query->get('search'));
+        }
+
+        return $this->render('administration/personnel/_personnel_add.html.twig', ['personnels' => $personnels]);
+    }
+
+    #[Route(path: '/personnel/departement/add/', name: 'add_to_departement')]
+    public function addPersonnelToDepartement(
+        PersonnelRepository            $personnelRepository,
+        PersonnelDepartementRepository $personnelDepartementRepository,
+        Request                        $request
+    ): Response
+    {
+        $slug = $request->request->get('slug');
+        $this->denyAccessUnlessGranted('ROLE_PERMANENT');
+        $personnel = $personnelRepository->findOneBySlug($slug);
+        $departement ??= $this->dataUserSession->getDepartement();
+        if (null !== $personnel && null !== $departement) {
+            $existe = $personnelDepartementRepository->findOneBy([
+                'departement' => $departement->getId(),
+                'personnel' => $personnel->getId(),
+            ]);
+            if (null === $existe) {
+                $pf = new PersonnelDepartement($personnel, $departement);
+                $this->entityManager->persist($pf);
+                $this->entityManager->flush();
+
+                return new Response(true, Response::HTTP_OK);
+            }
+
+            return new Response('Déjà dans la base', Response::HTTP_OK);
+        }
+
+        return new Response('Erreur', Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     #[Route('/{id}', name: 'show',
@@ -187,13 +235,14 @@ class PersonnelController extends BaseController
         methods: ['DELETE', 'POST'])]
     public function delete(
         PersonnelDepartementRepository $personnelDepartementRepository,
-        Request $request,
+        Request   $request,
         Personnel $personnel
-    ): Response {
+    ): Response
+    {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         $id = $personnel->getId();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
+        if ($this->isCsrfTokenValid('delete' . $id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $pf = $personnelDepartementRepository->findByPersonnelDepartement($personnel,
                 $this->getDepartement());
             foreach ($pf as $p) {
@@ -217,7 +266,8 @@ class PersonnelController extends BaseController
     public function gestionDroit(
         PersonnelDepartementRepository $personnelDepartementRepository,
         Personnel $personnel
-    ): Response {
+    ): Response
+    {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         $droits = $personnelDepartementRepository->findDroitsByPersonnelDepartement($personnel,
@@ -231,10 +281,11 @@ class PersonnelController extends BaseController
         name: 'departement_modifier_droit',
         options: ['expose' => true])]
     public function modifierDroits(
-        Request $request,
+        Request   $request,
         PersonnelDepartementRepository $personnelDepartementRepository,
         Personnel $personnel
-    ): Response {
+    ): Response
+    {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         $droit = $request->request->get('droit');
@@ -261,7 +312,7 @@ class PersonnelController extends BaseController
             // etrangement pas dans un département, on ajoute.
             $pf = new PersonnelDepartement($personnel, $this->getDepartement());
             $pf->setDepartement($this->getDepartement());
-            $pf->setAnnee((int) date('Y'));
+            $pf->setAnnee((int)date('Y'));
             $pf->addRole($droit);
         }
 

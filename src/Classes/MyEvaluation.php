@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyEvaluation.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 30/03/2024 16:30
  */
 
 /*
@@ -15,7 +15,7 @@ namespace App\Classes;
 
 use App\Classes\Excel\MyExcelMultiExport;
 use App\Classes\Matieres\TypeMatiereManager;
-use App\Classes\Pdf\MyPDF;
+use App\Classes\Pdf\PdfManager;
 use App\Entity\Constantes;
 use App\Entity\Etudiant;
 use App\Entity\Evaluation;
@@ -27,8 +27,8 @@ use App\Utils\Tools;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
-use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use PhpOffice\PhpSpreadsheet\IOFactory;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -54,7 +54,7 @@ class MyEvaluation
     public function __construct(
         private readonly TypeMatiereManager $typeMatiereManager,
         protected EntityManagerInterface $entityManager,
-        private readonly MyPDF $myPdf,
+        private readonly PdfManager $myPdf,
         private readonly MyExcelMultiExport $myExcelMultiExport,
         private readonly EtudiantRepository $etudiantRepository
     ) {
@@ -229,7 +229,8 @@ class MyEvaluation
         string $_format,
         Collection|array $groupes,
         Semestre $semestre
-    ): StreamedResponse|PdfResponse|null {
+    ): StreamedResponse|Response|null
+    {
         $notes = $this->getNotesTableau();
         $matiere = $this->typeMatiereManager->getMatiereFromSelect($this->evaluation->getTypeIdMatiere());
 
@@ -240,7 +241,7 @@ class MyEvaluation
         $name = 'releve-'.$matiere->codeMatiere;
         switch ($_format) {
             case Constantes::FORMAT_PDF:
-                return $this->myPdf::generePdf('pdf/releveEvaluation.html.twig', [
+                return $this->myPdf->pdf()::generePdf('pdf/releveEvaluation.html.twig', [
                     'evaluation' => $this->evaluation,
                     'groupes' => $groupes,
                     'notes' => $notes,

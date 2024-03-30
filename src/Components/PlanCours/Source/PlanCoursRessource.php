@@ -4,12 +4,12 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/PlanCours/Source/PlanCoursRessource.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/02/2024 10:18
+ * @lastUpdate 30/03/2024 16:27
  */
 
 namespace App\Components\PlanCours\Source;
 
-use App\Classes\Pdf\MyPDF;
+use App\Classes\Pdf\PdfManager;
 use App\Components\PlanCours\Form\PlanCoursRessourceStep1Type;
 use App\Components\PlanCours\Form\PlanCoursRessourceStep2Type;
 use App\Components\PlanCours\Form\PlanCoursRessourceStep3Type;
@@ -21,7 +21,7 @@ use App\Entity\Previsionnel;
 use App\Enums\PlanCoursEnum;
 use App\Repository\PlanCoursRessourceRepository;
 use Carbon\Carbon;
-use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class PlanCoursRessource extends AbstractPlanCours implements PlanCoursInterface
 {
@@ -36,7 +36,7 @@ class PlanCoursRessource extends AbstractPlanCours implements PlanCoursInterface
     public const TEMPLATE_FORM_STEP_3 = 'plan_cours_ressource_3.html.twig';
 
     public function __construct(
-        protected MyPDF $myPDF,
+        protected PdfManager $myPDF,
         protected PlanCoursRessourceRepository $planCoursRessourceRepository
     ) {
     }
@@ -126,7 +126,7 @@ class PlanCoursRessource extends AbstractPlanCours implements PlanCoursInterface
         return $this->planCoursRessourceRepository;
     }
 
-    public function export(Matiere $matiere, AnneeUniversitaire $anneeUniversitaire, Departement $departement): ?PdfResponse
+    public function export(Matiere $matiere, AnneeUniversitaire $anneeUniversitaire, Departement $departement): ?Response
     {
         $obj = $this->planCoursRessourceRepository->findOneBy([
             'typeMatiere' => $matiere->typeMatiere,
@@ -134,7 +134,7 @@ class PlanCoursRessource extends AbstractPlanCours implements PlanCoursInterface
             'anneeUniversitaire' => $anneeUniversitaire,
         ]);
         if (null !== $obj) {
-            return $this->myPDF::generePdf('components/plan_cours/pdf/ressource.html.twig',
+            return $this->myPDF->pdf()::generePdf('components/plan_cours/pdf/ressource.html.twig',
                 [
                     'pc' => $obj,
                     'matiere' => $matiere,

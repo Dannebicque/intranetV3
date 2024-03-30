@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyExport.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 30/03/2024 16:31
  */
 
 /*
@@ -14,18 +14,17 @@
 namespace App\Classes;
 
 use App\Classes\Excel\MyExcelMultiExport;
-use App\Classes\Pdf\MyPDF;
+use App\Classes\Pdf\PdfManager;
 use App\DTO\Matiere;
 use App\Entity\Evaluation;
 use App\Exception\SemestreNotFoundException;
-use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class MyExport
 {
     public function __construct(
-        private MyPDF              $myPDF,
+        private PdfManager $myPDF,
         private MyExcelMultiExport $excel
     ) {
     }
@@ -78,13 +77,13 @@ class MyExport
         return $this->excel->saveXlsx($nomFichier);
     }
 
-    public function genereFichierGeneriqueFromData(string $format, array $data, string $nomFichier): StreamedResponse|PdfResponse|null
+    public function genereFichierGeneriqueFromData(string $format, array $data, string $nomFichier): StreamedResponse|Response|null
     {
         $nomFichier .= '_'.date('d-m-Y_H\hi');
 
         return match ($format) {
             'csv' => $this->excel->genereExcelFromArray($data)->saveCsv($nomFichier),
-            'pdf' => $this->myPDF::generePdf('pdf/pdfExport.html.twig', ['data' => $data], $nomFichier),
+            'pdf' => $this->myPDF->pdf()::generePdf('pdf/pdfExport.html.twig', ['data' => $data], $nomFichier),
             'xlsx' => $this->excel->genereExcelFromArray($data)->saveXlsx($nomFichier),
             default => null,
         };

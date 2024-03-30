@@ -4,21 +4,19 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Etudiant/EtudiantExportReleve.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 30/03/2024 16:17
  */
 
 namespace App\Classes\Etudiant;
 
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\MyEvaluations;
-use App\Classes\Pdf\MyPDF;
+use App\Classes\Pdf\PdfManager;
 use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
 use App\Entity\Scolarite;
 use App\Entity\Semestre;
-use App\Repository\NoteRepository;
 use App\Utils\Tools;
-use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Twig\Error\LoaderError;
@@ -28,8 +26,6 @@ use ZipArchive;
 
 class EtudiantExportReleve
 {
-    public NoteRepository $noteRepository;
-
     private Etudiant $etudiant;
 
     private readonly string $dir;
@@ -40,7 +36,7 @@ class EtudiantExportReleve
     public function __construct(
         private readonly TypeMatiereManager $typeMatiereManager,
         private readonly EtudiantNotes $etudiantNotes,
-        private readonly MyPDF $myPdf,
+        private readonly PdfManager $myPdf,
         KernelInterface $kernel,
         private readonly MyEvaluations $myEvaluations
     ) {
@@ -57,12 +53,12 @@ class EtudiantExportReleve
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function exportReleveProvisoire(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): PdfResponse
+    public function exportReleveProvisoire(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): Response
     {
         $this->myEvaluations->getEvaluationsSemestre($semestre, $anneeUniversitaire);
         $matieres = $this->typeMatiereManager->findBySemestreArray($semestre);
 
-        return $this->myPdf::generePdf('pdf/releveProvisoire.html.twig', [
+        return $this->myPdf->pdf()::generePdf('pdf/releveProvisoire.html.twig', [
             'etudiant' => $this->etudiant,
             'notes' => $this->getNotesEtudiantSemestre($semestre, $anneeUniversitaire),
             'syntheses' => $this->myEvaluations->getStatistiques(),
@@ -85,9 +81,9 @@ class EtudiantExportReleve
      * @throws RuntimeError
      * @throws LoaderError
      */
-    public function exportReleveDefinitif(Scolarite $scolarite): PdfResponse
+    public function exportReleveDefinitif(Scolarite $scolarite): Response
     {
-        return $this->myPdf::generePdf('pdf/releveDefinitif.html.twig', [
+        return $this->myPdf->pdf()::generePdf('pdf/releveDefinitif.html.twig', [
             'scolarite' => $scolarite,
         ], 'releveNotedefinitif-'.Tools::slug($scolarite->getEtudiant()?->getNom()).'.pdf');
     }
@@ -117,7 +113,7 @@ class EtudiantExportReleve
             if (0 === $etudiant->getAnneeSortie()) {
                 $this->etudiant = $etudiant;
                 $nomFichier = 'releveNoteProvisoire-'.Tools::slug($this->etudiant->getNom()).'-'.$this->etudiant->getNumEtudiant();
-                $this->myPdf::genereAndSavePdf('pdf/releveProvisoire.html.twig', [
+                $this->myPdf->pdf()::genereAndSavePdf('pdf/releveProvisoire.html.twig', [
                     'etudiant' => $this->etudiant,
                     'notes' => $this->getNotesEtudiantSemestre($semestre, $anneeUniversitaire),
                     'syntheses' => $statistiques,

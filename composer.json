@@ -7,7 +7,10 @@
   "require": {
     "php": "^8.1",
     "ext-bcmath": "*",
+    "ext-calendar": "*",
     "ext-json": "*",
+    "ext-pdo": "*",
+    "ext-simplexml": "*",
     "ext-zip": "*",
     "apereo/phpcas": "^1.6",
     "bugsnag/bugsnag-symfony": "^1.13",
@@ -19,6 +22,7 @@
     "doctrine/orm": "^2.15.0",
     "erusev/parsedown": "^1.7",
     "friendsofsymfony/jsrouting-bundle": "^3.5",
+    "gotenberg/gotenberg-php": "dev-main",
     "knplabs/knp-snappy-bundle": "^1.9",
     "liip/imagine-bundle": "^2.11",
     "nesbot/carbon": "^3.0",
@@ -63,10 +67,7 @@
     "twig/extra-bundle": "^3.6",
     "twig/intl-extra": "^3.6",
     "twig/markdown-extra": "^3.6",
-    "vich/uploader-bundle": "^2.3.1",
-    "ext-pdo": "*",
-    "ext-calendar": "*",
-    "ext-simplexml": "*"
+    "vich/uploader-bundle": "^2.3.1"
   },
   "config": {
     "preferred-install": {
@@ -79,7 +80,8 @@
       "symfony/flex": true,
       "symfony/runtime": true,
       "phpstan/extension-installer": true,
-      "endroid/installer": true
+      "endroid/installer": true,
+      "php-http/discovery": true
     }
   },
   "autoload": {

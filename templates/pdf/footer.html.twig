@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * {
+            font-family: "DejaVu Sans", serif;
+            padding: 0;
+            margin: 0;
+        }
+
+        footer {
+            /*position: fixed;*/
+            /*bottom: 0;*/
+            /*left: 0;*/
+            /*right: 0;*/
+            /*height: 1.5cm;*/
+
+            /** Extra personal styles **/
+            margin: 0;
+            bottom: 0;
+            width: 100%;
+            left: 0;
+            padding: 0.2cm;
+            background-color: #03a9f4;
+            color: white;
+            text-align: center;
+            font-size: 10px;
+        }
+    </style>
+</head>
+<body>
+<footer>
+    {% block footer %}
+        <p><span class="pageNumber"></span> of <span class="totalPages"></span></p>
+        <p>Document généré le {{ 'now'|date('d/m/Y H:i') }} depuis l'intranet</p>
+        <p>Université de Reims Champagne-Ardenne</p>
+    {% endblock %}
+</footer>
+</body>
+</html>

@@ -4,13 +4,13 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcRessourceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 30/03/2024 16:27
  */
 
 namespace App\Controller\administration\apc;
 
 use App\Classes\Matieres\RessourceManager;
-use App\Classes\Pdf\MyPDF;
+use App\Classes\Pdf\PdfManager;
 use App\Controller\BaseController;
 use App\Entity\ApcRessource;
 use App\Entity\ApcRessourceApprentissageCritique;
@@ -30,7 +30,6 @@ use App\Repository\ApcSaeRessourceRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\SemestreRepository;
 use App\Utils\JsonRequest;
-use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -48,9 +47,9 @@ class ApcRessourceController extends BaseController
      * @throws LoaderError
      */
     #[Route(path: '/imprime/{id}.pdf', name: 'apc_ressource_export_one', methods: 'GET')]
-    public function exportOne(MyPDF $myPDF, ApcRessource $apcRessource): PdfResponse
+    public function exportOne(PdfManager $myPDF, ApcRessource $apcRessource): Response
     {
-        return $myPDF::generePdf(
+        return $myPDF->pdf()::generePdf(
             'pdf/apc/fiche_ressource.html.twig',
             ['apc_sae' => $apcRessource],
             'ressource'

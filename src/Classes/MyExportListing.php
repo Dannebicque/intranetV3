@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyExportListing.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 30/03/2024 16:30
  */
 
 /*
@@ -14,7 +14,7 @@
 namespace App\Classes;
 
 use App\Classes\Excel\MyExcelWriter;
-use App\Classes\Pdf\MyPDF;
+use App\Classes\Pdf\PdfManager;
 use App\DTO\Matiere;
 use App\Entity\Absence;
 use App\Entity\Constantes;
@@ -25,7 +25,6 @@ use App\Entity\TypeGroupe;
 use App\Repository\GroupeRepository;
 use App\Repository\TypeGroupeRepository;
 use Doctrine\Common\Collections\Collection;
-use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use PhpOffice\PhpSpreadsheet\Exception;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use PhpOffice\PhpSpreadsheet\Writer\Csv;
@@ -68,7 +67,7 @@ class MyExportListing
         private readonly DataUserSession $dataUserSession,
         KernelInterface $kernel,
         private readonly MyExcelWriter $myExcelWriter,
-        private readonly MyPDF $myPdf
+        private readonly PdfManager $myPdf
     ) {
         $this->base = $kernel->getProjectDir().'/';
     }
@@ -86,7 +85,8 @@ class MyExportListing
         mixed $exportFiltre,
         ?Matiere $matiere = null,
         ?Personnel $personnel = null
-    ): StreamedResponse|PdfResponse|null {
+    ): StreamedResponse|Response|null
+    {
         $this->exportTypeDocument = $exportTypeDocument;
         $this->exportChamps = $exportChamps;
         $this->matiere = $matiere;
@@ -471,15 +471,11 @@ class MyExportListing
         $this->myExcelWriter->getSheet()->getPageSetup()->setFitToPage(true);
     }
 
-    /**
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
-     */
-    private function exportPdf(): PdfResponse
+    private function exportPdf(): Response
     {
-        return $this->myPdf::generePdf('pdf/listing.html.twig',
+        return $this->myPdf->pdf()::generePdf('pdf/listing.html.twig',
             [
+                'titre' => 'titre',
                 'typeGroupe' => $this->typeGroupe,
                 'matiere' => $this->matiere,
                 'personnel' => $this->personnel,

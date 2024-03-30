@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EvaluationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 30/03/2024 16:30
  */
 
 namespace App\Controller\administration;
@@ -19,7 +19,6 @@ use App\Exception\MatiereNotFoundException;
 use App\Form\EvaluationType;
 use App\Repository\EvaluationRepository;
 use Exception;
-use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -61,7 +60,7 @@ class EvaluationController extends BaseController
      */
     #[Route(path: '/export/{semestre}/{uuid}.{_format}', name: 'administration_evaluation_export', methods: 'GET')]
     public function exportEvaluation(MyEvaluation $myEvaluation, #[MapEntity(mapping: ['uuid' => 'uuid'])]
-    Evaluation                                    $evaluation, string $_format, Semestre $semestre): StreamedResponse|PdfResponse|null
+    Evaluation $evaluation, string $_format, Semestre $semestre): StreamedResponse|Response|null
     {
         // todo: $semestre pourrait être supprimé s'il est dans évaluation
         $data = $evaluation->getTypeGroupe()->getGroupes();
