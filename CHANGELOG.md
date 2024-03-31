@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.17.0](https://github.com/Dannebicque/intranetV3/compare/v3.15.4...v3.17.0) (2024-03-31)
+
+
+### Features
+
+* Ajout de gotenberg pour les exports PDF ([47e8d97](https://github.com/Dannebicque/intranetV3/commit/47e8d97828c7dabbdf67737a907de0b2b2bcb471))
+* amélioration des blocs sur dashboard ([7d25684](https://github.com/Dannebicque/intranetV3/commit/7d25684aa78d8e41c4ae23ee4487b2ebb241f18b))
+* Utilisation d'un composant twig Alert ([577ff34](https://github.com/Dannebicque/intranetV3/commit/577ff34f79721adf4e326787a7a3bcbddb5e9c81))
+
+
+### Bug Fixes
+
+* Adresses sur convention ([5e56c57](https://github.com/Dannebicque/intranetV3/commit/5e56c57546716ca828f474c39499fe598dda07e4))
+* ci ([84ff8a2](https://github.com/Dannebicque/intranetV3/commit/84ff8a22c9259ff86364b1088792aeee6b8353bd))
+* correctif + qq suppressions jquery pour stimulus ([7233df5](https://github.com/Dannebicque/intranetV3/commit/7233df556b8892ef1e29cc6ab0440a0cf39d8f30))
+* message mise à jour ([e3c9910](https://github.com/Dannebicque/intranetV3/commit/e3c9910729fbadbadbab39b140b24d7eff2cca81))
+* previsionel app, amélioration affichage + stimulus ([773ca5c](https://github.com/Dannebicque/intranetV3/commit/773ca5ce8e18a525e1f4d0c518b6d2252a6f7596))
+* previsionel app, amélioration affichage + stimulus ([2f4754b](https://github.com/Dannebicque/intranetV3/commit/2f4754b9cc9e05694cfd8e6679c81b0283f2e041))
+
 ## [3.16.0](https://github.com/Dannebicque/intranetV3/compare/v3.15.4...v3.16.0) (2024-03-30)
 
 
