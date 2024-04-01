@@ -6,14 +6,7 @@
 
 {% block headerright %}
     <div class="right gap-items-2">
-        {% for periode in periodes %}
-            <a href="{{ path('administration_stage_periode_gestion', {uuid:periode.uuidString}) }}"
-               class="btn btn-round {% if periode.id == stagePeriode.id %}btn-primary{% endif %}"
-               title="{{ 'changer.de.stage_periode'|trans }}"
-               data-bs-toggle="tooltip" data-bs-placement="bottom"
-
-            >{{ periode.libelle }}</a>
-        {% endfor %}
+        {{ include('administration/_navStage.html.twig', {path_name: 'administration_stage_periode_gestion'}) }}
     </div>
 {% endblock %}
 

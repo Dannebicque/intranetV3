@@ -1,0 +1,15 @@
+<div class="btn-group">
+    <button id="btnGroupDrop1"
+            type="button"
+            class="btn btn-secondary dropdown-toggle"
+            title="{{ 'changer.de.stage_periode'|trans }}"
+            data-bs-placement="bottom"
+            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Changer de période de stage
+    </button>
+    <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+        {% for periode in periodes %}
+            <a class="dropdown-item" href="{{ path(path_name, {uuid:periode.uuidString}) }}">{{ periode.libelle }}</a>
+        {% endfor %}
+    </div>
+</div>
