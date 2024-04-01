@@ -36,6 +36,7 @@
     </style>
 </head>
 <body>
+{% if titre is defined and titre != '' %}
 <header>
     <div id="class_logo">
         <img src="data:image/jpeg;base64,{{ image }}" alt="logo">
@@ -44,5 +45,6 @@
         <h1>{{ titre|raw }}</h1>
     </div>
 </header>
+{% endif %}
 </body>
 </html>
