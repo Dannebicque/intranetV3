@@ -33,9 +33,10 @@ class EduSignEtudiant
      * }
      */
 
-    public string $firstname;
-    public string $lastname;
-    public string $email;
+    public ?string $id = '';
+    public ?string $firstname = '';
+    public ?string $lastname = '';
+    public ?string $email = '';
     public ?string $file_number = '';
     public ?string $photo = '';
     public ?string $phone = '';
@@ -54,6 +55,7 @@ class EduSignEtudiant
     public function toArray(): array
     {
         return [
+            'ID' => $this->id,
             'FIRSTNAME' => $this->firstname,
             'LASTNAME' => $this->lastname,
             'EMAIL' => $this->email,

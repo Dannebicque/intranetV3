@@ -137,6 +137,21 @@ actualite:
   liste.heading: 'Liste des actualités'
 
 adm:
+  edusign:
+    index.heading: 'EduSign'
+    context:
+      new: 'Initialisation'
+      update: 'Mise à jour des groupes'
+      info: "Création des groupes, import des étudiants"
+    commands:
+      heading: 'Gestion par département'
+      cours: 'Gestion des cours'
+      info-create: 'La création des cours se fait automatiquement tous les samedi pour la semaine suivante - mais vous pouvez forcer la création ici (par exemple si il y a un changement de dernière minute)'
+      info-update: 'Permet de faire la bascule entre les semestres'
+      create: 'Mettre à jour'
+    form:
+      enseignant:
+        heading: 'Ajouter un enseignant'
   plan_cours:
     diplome.heading: 'Suivi des plans de cours'
     index.heading: 'Suivi des plans de cours'

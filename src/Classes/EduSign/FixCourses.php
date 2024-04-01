@@ -53,26 +53,35 @@ class FixCourses
     {
     }
 
-    public function fixCourse(): void
+    public function fixCourse(?string $keyEduSign): void
     {
-        $diplomes = $this->diplomeRepository->findAllWithEduSign();
+        if ($keyEduSign === null) {
+            $diplomes = $this->diplomeRepository->findAllWithEduSign();
+        } else {
+            $diplomes = $this->diplomeRepository->findBy(['keyEduSign' => $keyEduSign]);
+        }
 
         foreach ($diplomes as $diplome) {
 
             $cleApi = $diplome->getKeyEduSign();
 
+            // on récupère tous les cours
             $courses = $this->apiEduSign->getAllCourses($cleApi);
 
             foreach ($courses as $course) {
-                if ($course['API_ID'] === "") {
-                    $enseignant = $this->personnelRepository->findByIdEdusign($course['PROFESSOR']);
+                // on récupère l'enseignant
+                $enseignant = $this->personnelRepository->findByIdEdusign($course['PROFESSOR']);
+
+                if ($enseignant !== null) {
+                    // si le cours vient de Celcat
                     if ($diplome->isOptUpdateCelcat() === true) {
                         $this->source = 'celcat';
                         $cours = (new EduSignEdtCelcatAdapter($course, $enseignant))->getCourse();
                         if ($cours !== null) {
                             $date = Carbon::createFromFormat("Y-m-d H:i:s", $cours->date);
-
+                            // on retrouve le cours dans l'intranet
                             $coursIntranet = $this->edtCelcatRepository->findOneCours($date, $cours->heureDebut, $cours->heureFin, $cours->salle, $cours->personnelObjet);
+//                            dump($coursIntranet);
                         }
                     } else {
                         $this->source = 'intranet';
@@ -84,14 +93,15 @@ class FixCourses
                         $endFormat = $cours->heureFin->format('H:i:s');
                         $end = Constantes::TAB_HEURES_INDEX[$endFormat];
                         $date = Carbon::createFromFormat("Y-m-d H:i:s", $cours->date);
-
+                        // on retrouve le cours dans l'intranet
                         $coursIntranet = $this->edtPlanningRepository->findOneBy(['date' => $date, 'debut' => $start, 'fin' => $end, 'salle' => $cours->salle, 'intervenant' => $cours->personnelObjet]);
+//                        dump($coursIntranet);
                     }
 
                     $startRaw = Carbon::parse($course['START'], 'UTC');
                     $endRaw = Carbon::parse($course['END'], 'UTC');
 
-                    if ($coursIntranet !== null) {
+                    if ($coursIntranet !== null && $course['API_ID'] === null) {
                         $coursIntranet->setIdEduSign($course['ID']);
                         $this->edtManager->saveCourseEduSign($this->source, $coursIntranet);
 
@@ -106,6 +116,11 @@ class FixCourses
                         $course['API_ID'] = $coursIntranet->getId();
 
                         $this->apiEduSign->updateCourse($this->edusignCourse, $cleApi);
+                    } elseif ($coursIntranet === null && $course['API_ID'] !== null) {
+                        $this->apiEduSign->deleteCourse($course['ID'], $cleApi);
+                    } elseif ($coursIntranet !== null && ($coursIntranet->getIdEduSign() === null && $course['API_ID'] !== null)) {
+                        $coursIntranet->setIdEduSign($course['ID']);
+                        $this->edtManager->saveCourseEduSign($this->source, $coursIntranet);
                     }
                 }
             }

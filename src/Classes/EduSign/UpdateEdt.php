@@ -22,6 +22,7 @@ use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Carbon\Carbon;
+use function PHPUnit\Framework\isEmpty;
 
 class UpdateEdt
 {
@@ -46,17 +47,26 @@ class UpdateEdt
     {
     }
 
-    public function update(): void
+    public function update(?string $keyEduSign, ?int $opt): void
     {
-        $diplomes = $this->diplomeRepository->findAllWithEduSign();
+        if ($keyEduSign === null) {
+            $diplomes = $this->diplomeRepository->findAllWithEduSign();
+        } else {
+            $diplomes = $this->diplomeRepository->findBy(['keyEduSign' => $keyEduSign]);
+        }
 
         foreach ($diplomes as $diplome) {
 
             $this->cleApi = $diplome->getKeyEduSign();
 
             $semestres = $this->semestreRepository->findByDiplome($diplome);
-            $today = Carbon::today();
-            $saturday = Carbon::today()->next('saturday');
+            if ($opt === 1) {
+                $start = Carbon::today();
+                $end = Carbon::today()->next('saturday');
+            } elseif ($opt === 2) {
+                $start = Carbon::create('yesterday');
+                $end = Carbon::create('today');
+            }
             $semaineReelle = date('W');
 
             foreach ($semestres as $semestre) {
@@ -80,28 +90,24 @@ class UpdateEdt
 
                     if (!($this->evenement->matiere === null || $this->evenement->matiere === "Inconnue" || $this->evenement->groupeObjet === null || $this->evenement->personnelObjet === null || $this->evenement->semestre === null)) {
 
-                        if ($this->evenement->dateObjet->isBetween($today, $saturday)) {
-
+                        if ($this->evenement->dateObjet->isBetween($start, $end)) {
 
                             $course = (new IntranetEdtEduSignAdapter($this->evenement))->getCourse();
 
-                            if ($course->id_edu_sign == null) {
+                            $eduSignCourse = $this->apiEduSign->getCourseIdByApiId($this->evenement->id, $this->cleApi);
+
+                            if ($course->id_edu_sign == null && !$eduSignCourse) {
 
                                 $enseignant = $this->evenement->personnelObjet;
 
                                 $departement = $semestre->getDiplome()->getDepartement();
                                 if ($enseignant) {
-                                    // todo: vérifier si l'enseignant possède déjà un id edusign identique à celui d'edusign
                                     if ($enseignant->getIdEduSign() == '' || $enseignant->getIdEduSign() == null || !array_key_exists($departement->getId(), $enseignant->getIdEduSign())) {
                                         $this->createEnseignant->update($enseignant, $departement, $this->cleApi);
                                     }
                                     $this->sendUpdate();
                                 }
-                            } else {
-                                dump('cours déjà envoyé');
                             }
-                        } else {
-                            dump('evenement hors d\'échéance');
                         }
                     }
                 }
