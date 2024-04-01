@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/EtudiantSemestreTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 18:43
+ * @lastUpdate 30/03/2024 18:35
  */
 
 namespace App\Table;
@@ -75,7 +75,7 @@ class EtudiantSemestreTableType extends TableType
             ['label' => 'table.nom', 'translation_domain' => 'messages', 'order' => 'ASC']);
         $builder->addColumn('prenom', PropertyColumnType::class,
             ['label' => 'table.prenom', 'translation_domain' => 'messages']);
-        $builder->addColumn('numetudiant', PropertyColumnType::class,
+        $builder->addColumn('numEtudiant', PropertyColumnType::class,
             ['label' => 'table.numetudiant', 'translation_domain' => 'messages']);
         $builder->addColumn('bac', SelectColumnType::class,
             [

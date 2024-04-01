@@ -42,10 +42,10 @@
     <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
     {% block javascripts %}
         <script>
-          let toasts = {{ app.session.flashbag.get('toast')|json_encode|raw }};
+          let toasts = {{ app.flashes('toast')|json_encode|raw }};
         </script>
         {{ encore_entry_script_tags('app') }}
-        <script src="{{ asset('bundles/dannebicquetable/table.js') }}" defer></script>
+        {#        <script src="{{ asset('bundles/dannebicquetable/table.js') }}" defer></script> #}
     {% endblock %}
     <script data-provide="sweetalert"></script>
     <noscript>Votre navigateur ne supporte pas le javascript. Celui-ci est indispensable pour le fonctionnement de

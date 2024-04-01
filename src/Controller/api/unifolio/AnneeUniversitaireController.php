@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/api/unifolio/AnneeUniversitaireController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:59
+ * @lastUpdate 30/03/2024 18:35
  */
 
 namespace App\Controller\api\unifolio;
@@ -23,8 +23,6 @@ class AnneeUniversitaireController extends BaseController
     ): void
     {
         $this->checkAccessApi($request);
-
-        $tabAnneeUniversitaire = [];
 
         foreach ($anneeUniversitaire as $anneeUniv) {
             $tabAnneeUniversitaire[$anneeUniv->getId()] = [

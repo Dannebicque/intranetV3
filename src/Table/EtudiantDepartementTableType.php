@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/EtudiantDepartementTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 18:43
+ * @lastUpdate 30/03/2024 18:35
  */
 
 namespace App\Table;
@@ -63,7 +63,7 @@ class EtudiantDepartementTableType extends TableType
             'route' => 'administration_all_etudiant_export',
         ]);
 
-        $builder->addColumn('numetudiant', PropertyColumnType::class,
+        $builder->addColumn('numEtudiant', PropertyColumnType::class,
             ['label' => 'table.numetudiant', 'translation_domain' => 'messages']);
         $builder->addColumn('nom', PropertyColumnType::class,
             ['label' => 'table.nom', 'translation_domain' => 'messages', 'order' => 'ASC']);
