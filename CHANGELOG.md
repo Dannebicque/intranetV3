@@ -2,6 +2,27 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.17.2](https://github.com/Dannebicque/intranetV3/compare/v3.17.1...v3.17.2) (2024-04-02)
+
+
+### Features
+
+* edusign - ajout manuel d'un enseignant ([9565277](https://github.com/Dannebicque/intranetV3/commit/9565277d161fefc6b8559578aa0c033b6cd48259))
+* edusign - bascule semestre groupes/etudiants ([815e1bf](https://github.com/Dannebicque/intranetV3/commit/815e1bf4111dcfcbaa20f378c848dd2eec13791e))
+* edusign - initialisation et imports par departement ([adc5b4e](https://github.com/Dannebicque/intranetV3/commit/adc5b4efe06e07c43e0ae353cc3321621f3fe2be))
+* edusign - initialisation et imports par departement ([ae170eb](https://github.com/Dannebicque/intranetV3/commit/ae170eb69323737b894159316a3b7b6cd5b0699e))
+* edusign - initialisation et imports par departement + creation et fix des cours ([6d8eb39](https://github.com/Dannebicque/intranetV3/commit/6d8eb396afd055e05d8d1a2023dc6c743444d1b6))
+* Navigation dans les périodes de stage ([53b777f](https://github.com/Dannebicque/intranetV3/commit/53b777f99700d421af06f465d834231b887839cc))
+
+
+### Bug Fixes
+
+* convention PDF ([d39505f](https://github.com/Dannebicque/intranetV3/commit/d39505f4a4a4c8dcc417bd8fd143d3e890e63796))
+* edusign - mail universitaire ([aef6a16](https://github.com/Dannebicque/intranetV3/commit/aef6a162fc35b33301b07c857fcd769bf38fcef5))
+* export PDF ([77f0ce7](https://github.com/Dannebicque/intranetV3/commit/77f0ce748f3625db64ebeaa4b65807a016a448e9))
+* export PDF ([e31e2ea](https://github.com/Dannebicque/intranetV3/commit/e31e2ea19d9a505970c42ba7f815c54036bda7da))
+* export Releve ([e977dae](https://github.com/Dannebicque/intranetV3/commit/e977dae6fa5d99a040dbf31a0c043f5b30483ccf))
+
 ### [3.17.1](https://github.com/Dannebicque/intranetV3/compare/v3.17.0...v3.17.1) (2024-04-01)
 
 
