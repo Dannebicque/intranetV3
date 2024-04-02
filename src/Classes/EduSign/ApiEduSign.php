@@ -40,7 +40,7 @@ class ApiEduSign
     {
     }
 
-    public function addCourse(EduSignCourse $course, string $cleApi): void
+    public function addCourse(EduSignCourse $course, string $cleApi): string
     {
         $client = HttpClient::create();
 
@@ -78,6 +78,8 @@ class ApiEduSign
             $edt->setIdEduSign($id);
             $rep->save($edt);
         }
+
+        return $content;
     }
 
     public function updateCourse(EduSignCourse $course, string $cleApi): void
