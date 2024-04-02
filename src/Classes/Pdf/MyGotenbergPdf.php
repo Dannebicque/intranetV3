@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Pdf/MyGotenbergPdf.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/04/2024 08:55
+ * @lastUpdate 02/04/2024 09:02
  */
 
 namespace App\Classes\Pdf;
@@ -50,7 +50,7 @@ class MyGotenbergPdf implements PdfInterface
 
         return new Response($reponse->getBody()->getContents(), 200, [
             'Content-Type' => 'application/pdf',
-            'Content-Disposition' => 'attachment; filename="--' . $name . '.pdf"',
+            'Content-Disposition' => 'attachment; filename="' . $name . '.pdf"',
         ]);
     }
 
