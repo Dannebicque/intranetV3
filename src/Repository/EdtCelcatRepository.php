@@ -229,7 +229,7 @@ public function findEdtSemestreSemaine(Semestre $semestre, int $semaineFormation
             ->getResult();
     }
 
-    public function findOneCours($date, $debut, $fin, $salle, $personnel)
+    public function findCours($date, $debut, $fin, $salle, $personnel)
     {
         $debut = $debut->format('H:i:s');
         $fin = $fin->format('H:i:s');
@@ -248,7 +248,7 @@ public function findEdtSemestreSemaine(Semestre $semestre, int $semaineFormation
                 'personnel' => $personnel,
             ])
             ->getQuery()
-            ->getOneOrNullResult();
+            ->getResult();
     }
 
     public function save(EdtCelcat $edtCelcat): void
