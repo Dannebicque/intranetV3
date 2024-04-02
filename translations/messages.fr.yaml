@@ -142,12 +142,14 @@ adm:
     context:
       new: 'Initialisation'
       update: 'Mise à jour des groupes'
+      change: 'Changement d''année'
       info: "Création des groupes, import des étudiants"
     commands:
       heading: 'Gestion par département'
       cours: 'Gestion des cours'
       info-create: 'La création des cours se fait automatiquement tous les samedi pour la semaine suivante - mais vous pouvez forcer la création ici (par exemple si il y a un changement de dernière minute)'
       info-update: 'Permet de faire la bascule entre les semestres'
+      info-annee: 'A lancer en début d''année universitaire'
       create: 'Mettre à jour'
     form:
       enseignant:

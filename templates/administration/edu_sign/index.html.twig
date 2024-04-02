@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'base-super_admin.html.twig' %}
 
 
 {% block header %}
@@ -20,7 +20,9 @@
     <div class="card">
         <div class="card-header d-flex flex-column align-items-start">
             <h4 class="card-title">{{ 'adm.edusign.context.new'|trans }}</h4>
-            <small>Pour récupérer la clé API d'un département : https://edusign.app/school/settings/api</small>
+            <small>Pour récupérer la clé API d'un département :
+                <a href="https://edusign.app/school/settings/api">https://edusign.app/school/settings/api</a>
+            </small>
         </div>
         <div class="card-body">
             <div class="alert alert-info">
@@ -45,8 +47,29 @@
                 <a href="{{ path('app_edu_sign_update_etudiants', {'id': dept.id}) }}"
                    class="btn btn-secondary">{{ dept.libelle }}</a>
             {% endfor %}
+            <hr>
+            <div class="alert alert-info">
+                <span>{{ 'adm.edusign.commands.info-annee'|trans }}</span>
+            </div>
+            <a href=""
+               class="btn btn-secondary">Changer d'année</a>
         </div>
     </div>
+
+{#    <div class="card">#}
+{#        <div class="card-header d-flex flex-column align-items-start">#}
+{#            <h4 class="card-title">{{ 'adm.edusign.context.change'|trans }}</h4>#}
+{#        </div>#}
+{#        <div class="card-body">#}
+{#            <div class="alert alert-info">#}
+{#                <span>{{ 'adm.edusign.commands.info-update'|trans }}</span>#}
+{#            </div>#}
+{#            {% for dept in departements %}#}
+{#                <a href="{{ path('app_edu_sign_update_etudiants', {'id': dept.id}) }}"#}
+{#                   class="btn btn-secondary">{{ dept.libelle }}</a>#}
+{#            {% endfor %}#}
+{#        </div>#}
+{#    </div>#}
 
     <div class="card">
         <h4 class="card-title">{{ 'adm.edusign.commands.heading'|trans }}</h4>

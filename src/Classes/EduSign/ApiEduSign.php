@@ -311,6 +311,27 @@ class ApiEduSign
 
     }
 
+    public function deleteEtudiant(int $etudiant, string $cleApi): void
+    {
+        $client = HttpClient::create();
+
+        $response = $client->request('DELETE', 'https://ext.edusign.fr/v1/student/' . $etudiant, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
+            ],
+        ]);
+
+        $statusCode = $response->getStatusCode();
+        $content = $response->getContent();
+
+        $etudiant = $this->etudiantRepository->findOneBy(['idEduSign' => $etudiant]);
+        if ($etudiant) {
+            $etudiant->setIdEduSign(null);
+            $this->etudiantRepository->save($etudiant);
+        }
+    }
+
     public function addEnseignant(EduSignEnseignant $enseignant, Personnel $personnel, Departement $departement, $cleApi): void
     {
         $client = HttpClient::create();

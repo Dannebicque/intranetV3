@@ -32,7 +32,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use function PHPUnit\Framework\throwException;
 
-#[Route('/administration/edusign')]
+#[Route('/administratif/edusign')]
 class EduSignController extends BaseController
 {
     public function __construct(
@@ -157,6 +157,27 @@ class EduSignController extends BaseController
             $personnel = $this->personnelRepository->find($personnelId);
 
             $this->createEnseignant->update($personnel, $departement, $keyEduSign);
+
+            $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Les données ont été mises à jour sur EduSign');
+        }
+
+        return $this->redirectToRoute('app_edu_sign');
+    }
+
+    #[Route('/update-annee/{id}', name: 'app_edu_sign_update_annee')]
+    public function updateAnnee(?int $id, UpdateGroupe $updateGroupe, UpdateEtudiant $updateEtudiant)
+    {
+        if ($id !== 0) {
+            $departement = $this->departementRepository->find($id);
+            $diplomes = $this->diplomeRepository->findByDepartement($departement);
+            $keyEduSign = null;
+            foreach ($diplomes as $diplome) {
+                if ($diplome->getKeyEduSign() !== null) {
+                    $keyEduSign = $diplome->getKeyEduSign();
+                }
+            }
+            $updateGroupe->update($keyEduSign);
+            $updateEtudiant->update($keyEduSign);
 
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'Les données ont été mises à jour sur EduSign');
         }
