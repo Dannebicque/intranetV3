@@ -28,23 +28,23 @@
             width: 100%;
             left: 0;
             padding: 0.2cm;
-            background-color: #03a9f4;
-            color: white;
+            /*background-color: #03a9f4;*/
+            /*color: white;*/
             text-align: center;
             font-size: 10px;
         }
     </style>
 </head>
 <body>
-{% if titre is defined and titre != '' %}
-<header>
-    <div id="class_logo">
-        <img src="data:image/jpeg;base64,{{ image }}" alt="logo">
-    </div>
-    <div id="class_titre">
-        <h1>{{ titre|raw }}</h1>
-    </div>
-</header>
+{% if titre is defined and titre != null %}
+    <header>
+        <div id="class_logo">
+            <img src="data:image/jpeg;base64,{{ image }}" alt="logo">
+        </div>
+        <div id="class_titre">
+            <h1>{{ titre|raw }}</h1>
+        </div>
+    </header>
 {% endif %}
 </body>
 </html>

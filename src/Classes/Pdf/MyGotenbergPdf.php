@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Pdf/MyGotenbergPdf.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/03/2024 16:30
+ * @lastUpdate 02/04/2024 08:55
  */
 
 namespace App\Classes\Pdf;
@@ -60,7 +60,7 @@ class MyGotenbergPdf implements PdfInterface
         self::configureOptions($resolver);
         self::$options = $resolver->resolve($options);
         $html = self::generateHtml($template, $data);
-        $title = $data['titre'] ?? '';
+        $title = $data['titre'] ?? null;
 
         $request = Gotenberg::chromium('http://localhost:3000')
             ->pdf()
@@ -119,7 +119,7 @@ class MyGotenbergPdf implements PdfInterface
         return Tools::FileName($name);
     }
 
-    private static function getHeader(string $titre = ''): string
+    private static function getHeader(?string $titre = null): string
     {
         $imageData = file_get_contents(self::$options['baseUrl'] . '/upload/logo/urca_petit.jpg');
         $base64Image = base64_encode($imageData);
