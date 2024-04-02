@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.17.3](https://github.com/Dannebicque/intranetV3/compare/v3.17.2...v3.17.3) (2024-04-02)
+
+
+### Features
+
+* affichage groupes ([7637daf](https://github.com/Dannebicque/intranetV3/commit/7637daf0b5680620626522312965afbc046f48e0))
+
+
+### Bug Fixes
+
+* autocomplete liste étudiant justificatif ([3e99691](https://github.com/Dannebicque/intranetV3/commit/3e99691f2d85cb978675e18f0dc175c7b859598a))
+* bug redirection route par défaut ([f7b6dcb](https://github.com/Dannebicque/intranetV3/commit/f7b6dcba4cebe4fb96e4ea6162b1b89f692ceff8))
+* messagerie personnel ([942a452](https://github.com/Dannebicque/intranetV3/commit/942a4529b68bbe44f92699504e09d2428c4aff9a))
+* pas d'erreur si plusieurs cours identiques ([b6faa4e](https://github.com/Dannebicque/intranetV3/commit/b6faa4ea3a2bf967adadbfa1302a093717fc4a2a))
+
 ### [3.17.2](https://github.com/Dannebicque/intranetV3/compare/v3.17.1...v3.17.2) (2024-04-02)
 
 
