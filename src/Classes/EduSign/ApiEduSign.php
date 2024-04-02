@@ -40,7 +40,7 @@ class ApiEduSign
     {
     }
 
-    public function addCourse(EduSignCourse $course, string $cleApi): void
+    public function addCourse(EduSignCourse $course, string $cleApi): string
     {
         $client = HttpClient::create();
 
@@ -78,6 +78,8 @@ class ApiEduSign
             $edt->setIdEduSign($id);
             $rep->save($edt);
         }
+
+        return $content;
     }
 
     public function updateCourse(EduSignCourse $course, string $cleApi): void
@@ -170,6 +172,24 @@ class ApiEduSign
             $this->edtPlanningRepository->save($edt);
         }
 
+    }
+
+    public function getAllGroups(string $cleApi): mixed
+    {
+        $client = HttpClient::create();
+
+        $response = $client->request('GET', 'https://ext.edusign.fr/v1/group', [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Authorization' => 'Bearer ' . $this->getCleApi->getCleApi($cleApi),
+            ]
+        ]);
+
+        $content = $response->getContent();
+        // convertit JSON en tableau associatif PHP
+        $data = json_decode($content, true);
+
+        return $data['result'] ?? "";
     }
 
     public function addGroupe(EduSignGroupe $groupe, string $cleApi, ?string $type): void

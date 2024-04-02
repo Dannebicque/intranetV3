@@ -80,7 +80,7 @@ class FixCourses
                         if ($cours !== null) {
                             $date = Carbon::createFromFormat("Y-m-d H:i:s", $cours->date);
                             // on retrouve le cours dans l'intranet
-                            $coursIntranet = $this->edtCelcatRepository->findOneCours($date, $cours->heureDebut, $cours->heureFin, $cours->salle, $cours->personnelObjet);
+                            $coursIntranet = $this->edtCelcatRepository->findCours($date, $cours->heureDebut, $cours->heureFin, $cours->salle, $cours->personnelObjet);
 //                            dump($coursIntranet);
                         }
                     } else {
@@ -101,7 +101,7 @@ class FixCourses
                     $startRaw = Carbon::parse($course['START'], 'UTC');
                     $endRaw = Carbon::parse($course['END'], 'UTC');
 
-                    if ($coursIntranet !== null && $course['API_ID'] === null) {
+                    if ($coursIntranet !== null && $course['API_ID'] === null && count($coursIntranet) === 1) {
                         $coursIntranet->setIdEduSign($course['ID']);
                         $this->edtManager->saveCourseEduSign($this->source, $coursIntranet);
 

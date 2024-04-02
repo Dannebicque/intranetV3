@@ -22,6 +22,7 @@ use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Carbon\Carbon;
+use Symfony\Component\HttpFoundation\Response;
 use function PHPUnit\Framework\isEmpty;
 
 class UpdateEdt
@@ -55,7 +56,10 @@ class UpdateEdt
             $diplomes = $this->diplomeRepository->findBy(['keyEduSign' => $keyEduSign]);
         }
 
+//        $bilan[] = ['type' => 'Mise à jour Edt'];
+
         foreach ($diplomes as $diplome) {
+//            $bilan[] = ['diplome' => $diplome->getLibelle()];
 
             $this->cleApi = $diplome->getKeyEduSign();
 
@@ -67,6 +71,7 @@ class UpdateEdt
                 $start = Carbon::create('yesterday');
                 $end = Carbon::create('today');
             }
+            $bilan['header'] = ['type' => 'Mise à jour Edt', 'diplome' => $diplome->getLibelle(), 'periode' => $start . '-' . $end];
             $semaineReelle = date('W');
 
             foreach ($semestres as $semestre) {
@@ -88,9 +93,9 @@ class UpdateEdt
 
                 foreach ($edt->evenements as $this->evenement) {
 
-                    if (!($this->evenement->matiere === null || $this->evenement->matiere === "Inconnue" || $this->evenement->groupeObjet === null || $this->evenement->personnelObjet === null || $this->evenement->semestre === null)) {
+                    if ($this->evenement->dateObjet->isBetween($start, $end)) {
 
-                        if ($this->evenement->dateObjet->isBetween($start, $end)) {
+                        if (!($this->evenement->matiere === null || $this->evenement->matiere === "Inconnue" || $this->evenement->groupeObjet === null || $this->evenement->personnelObjet === null || $this->evenement->semestre === null)) {
 
                             $course = (new IntranetEdtEduSignAdapter($this->evenement))->getCourse();
 
@@ -106,8 +111,12 @@ class UpdateEdt
                                         $this->createEnseignant->update($enseignant, $departement, $this->cleApi);
                                     }
                                     $this->sendUpdate();
+                                    $bilan['success'][] = ['id: ' . $this->evenement->id . ' - ' . $course->name . ' - ' . $enseignant->getPrenom() . ' ' . $enseignant->getNom() . ' - ' . $course->start . '|' . $course->end . ' - ' . $this->evenement->groupe . ' - ' . $this->sendUpdate()];
                                 }
                             }
+                        } else {
+                            $bilan['error'][] = ['id: ' . $this->evenement->id . ' - ' . $this->evenement->matiere . ' - ' . $this->evenement->groupe . ' - ' . $this->evenement->personnel . ' - ' . $this->evenement->salle . ' - ' . $this->evenement->date . ' - ' . $this->evenement->heureDebut . ' - ' . $this->evenement->heureFin. ' - cours incomplet'];
+
                         }
                     }
                 }
@@ -115,11 +124,15 @@ class UpdateEdt
         }
     }
 
-    public function sendUpdate(): void
+    public function sendUpdate(): mixed
     {
         $course = (new IntranetEdtEduSignAdapter($this->evenement))->getCourse();
         if ($course !== null) {
             $this->apiEduSign->addCourse($course, $this->cleApi);
+            $response = $this->apiEduSign->addCourse($course, $this->cleApi);
+        } else {
+            $response = 'cours non trouvé';
         }
+        return $response;
     }
 }

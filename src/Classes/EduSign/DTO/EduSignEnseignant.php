@@ -33,7 +33,7 @@ class EduSignEnseignant
     public ?string $api_id = '';
     public ?string $api_type = '';
     public ?array $tags = [];
-    public ?bool $dontSendCredentials = true;
+    public ?bool $dontSendCredentials = false;
 
     public function toArray(): array
     {
