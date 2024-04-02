@@ -144,6 +144,7 @@ adm:
       update: 'Mise à jour des groupes'
       change: 'Changement d''année'
       info: "Création des groupes, import des étudiants"
+      groups: "Gestion des groupes"
     commands:
       heading: 'Gestion par département'
       cours: 'Gestion des cours'

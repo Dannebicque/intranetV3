@@ -1,0 +1,67 @@
+{% extends 'base-super_admin.html.twig' %}
+
+
+{% block header %}
+    {{ 'adm.edusign.index.heading'|trans }}
+{% endblock %}
+
+{% block headeractions %}
+
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('app_edu_sign') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip"
+               data-bs-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconRetour }}"><span
+                            class="sr-only">EduSign</span></i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h4 class="card-title">Tableau des groupes</h4>
+    </div>
+    <div class="card-body">
+        <h5>Groupes intranet</h5>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Id</th>
+                <th>Libelle</th>
+                <th>Id Edusign</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for group in groupes %}
+                <tr>
+                    <td>{{ group.id }}</td>
+                    <td>{{ group.libelle }}</td>
+                    <td>{{ group.idEdusign }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="card-body">
+        <h5>Groupes Edusign</h5>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>Libelle</th>
+                <th>Id Edusign</th>
+                <th>Id</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for group in groupesEduSign %}
+                <tr>
+                    <td>{{ group['NAME'] }}</td>
+                    <td>{{ group['ID'] }}</td>
+                    <td>{{ group['API_ID'] }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

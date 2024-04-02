@@ -9,8 +9,8 @@
 
     <div class="header-action">
         <div class="buttons">
-            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip"
-               data-bs-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span
+            <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip"
+               data-bs-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconDashboard }}"><span
                             class="sr-only">Administration</span></i></a>
         </div>
     </div>
@@ -56,21 +56,6 @@
         </div>
     </div>
 
-{#    <div class="card">#}
-{#        <div class="card-header d-flex flex-column align-items-start">#}
-{#            <h4 class="card-title">{{ 'adm.edusign.context.change'|trans }}</h4>#}
-{#        </div>#}
-{#        <div class="card-body">#}
-{#            <div class="alert alert-info">#}
-{#                <span>{{ 'adm.edusign.commands.info-update'|trans }}</span>#}
-{#            </div>#}
-{#            {% for dept in departements %}#}
-{#                <a href="{{ path('app_edu_sign_update_etudiants', {'id': dept.id}) }}"#}
-{#                   class="btn btn-secondary">{{ dept.libelle }}</a>#}
-{#            {% endfor %}#}
-{#        </div>#}
-{#    </div>#}
-
     <div class="card">
         <h4 class="card-title">{{ 'adm.edusign.commands.heading'|trans }}</h4>
         <nav class="nav nav-tabs">
@@ -115,6 +100,13 @@
                 </select>
                 <button class="btn btn-primary">Valider</button>
             </form>
+        </div>
+        <hr>
+        <div class="card-body">
+            <h5 class="card-title">{{ 'adm.edusign.context.groups'|trans }}</h5>
+            <a href="{{ path('app_edu_sign_groupes', {'id': departementSelect.id}) }}"
+               class="btn btn-secondary">Afficher les groupes
+            </a>
         </div>
     </div>
 {% endblock %}

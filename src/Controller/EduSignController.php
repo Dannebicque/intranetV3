@@ -11,6 +11,7 @@
 
 namespace App\Controller;
 
+use App\Classes\EduSign\Adapter\IntranetGroupeEduSignAdapter;
 use App\Classes\EduSign\ApiEduSign;
 use App\Classes\EduSign\CreateEnseignant;
 use App\Classes\EduSign\FixCourses;
@@ -21,8 +22,10 @@ use App\Entity\Constantes;
 use App\Entity\Departement;
 use App\Repository\DepartementRepository;
 use App\Repository\DiplomeRepository;
+use App\Repository\GroupeRepository;
 use App\Repository\PersonnelDepartementRepository;
 use App\Repository\PersonnelRepository;
+use App\Repository\SemestreRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -41,6 +44,9 @@ class EduSignController extends BaseController
         protected PersonnelDepartementRepository $personnelDepartementRepository,
         protected PersonnelRepository            $personnelRepository,
         protected CreateEnseignant               $createEnseignant,
+        protected ApiEduSign                     $apiEduSign,
+        protected SemestreRepository             $semestreRepository,
+        protected GroupeRepository               $groupeRepository,
     )
     {
 
@@ -69,7 +75,7 @@ class EduSignController extends BaseController
             return empty($idEduSignArray) || !array_key_exists($departement->getId(), $idEduSignArray);
         });
 
-        return $this->render('/administration/edu_sign/index.html.twig', [
+        return $this->render('super-administration/edu_sign/index.html.twig', [
             'departements' => $departements,
             'departementSelect' => $departement ?? null,
             'personnelsDepartement' => $filteredPersonnelsDepartement,
@@ -183,5 +189,55 @@ class EduSignController extends BaseController
         }
 
         return $this->redirectToRoute('app_edu_sign');
+    }
+
+    #[Route('/groupes/{id}', name: 'app_edu_sign_groupes')]
+    public function showGroupes(?int $id)
+    {
+        $departement = $this->departementRepository->find($id);
+
+        $diplomes = $this->diplomeRepository->findByDepartement($departement);
+        $keyEduSign = null;
+        foreach ($diplomes as $diplome) {
+            if ($diplome->getKeyEduSign() !== null) {
+                $keyEduSign = $diplome->getKeyEduSign();
+                $groupesEduSign = $this->apiEduSign->getAllGroups($keyEduSign);
+
+                $semestres = $this->semestreRepository->findByDiplome($diplome);
+
+                foreach ($semestres as $semestre) {
+                    $groupes[] = $semestre;
+                }
+
+                foreach ($semestres as $parent) {
+                    // on vérifie si le groupe parent a un parcours pour récupérer les groupes
+                    $parcours = $parent->getDiplome()->getApcParcours();
+                    if ($parcours) {
+                        $groupesElement = $parcours->getGroupes();
+                    } else {
+                        $groupesElement = $this->groupeRepository->findBySemestre($parent);
+                    }
+                    foreach ($groupesElement as $groupe) {
+                        // on vérifie si le groupe est un TD ou un TP
+                        if ($groupe->getTypeGroupe() !== null && ($groupe->getTypeGroupe()->getLibelle() === 'TD' || $groupe->getTypeGroupe()->getLibelle() === 'TP')) {
+                            // on vérifie si le semestre du groupe est le même que le semestre parent
+                            foreach ($groupe->getTypeGroupe()->getSemestres() as $semestre) {
+                                if ($semestre === $parent) {
+                                    // on ajoute le groupe dans le tableau
+                                    $groupes[] = $groupe;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+
+        return $this->render('super-administration/edu_sign/groupes.html.twig', [
+            'departement' => $departement,
+            'groupesEduSign' => $groupesEduSign ?? null,
+            'groupes' => $groupes ?? null,
+        ]);
     }
 }
