@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/MessagerieController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:55
+ * @lastUpdate 02/04/2024 20:19
  */
 
 namespace App\Controller;
@@ -218,7 +218,7 @@ class MessagerieController extends BaseController
             Message::MESSAGE_TYPE_SEMESTRE => $req['messageToSemestre'],
             Message::MESSAGE_TYPE_GROUPE => $req['messageToGroupe'],
             Message::MESSAGE_TYPE_ETUDIANT => $req['messageToLibreEtudiant'],
-            Message::MESSAGE_TYPE_PERMANENT => [$req['messageToPersonnel'], $req['messageToLibrePersonnel'] ?? []],
+            Message::MESSAGE_TYPE_PERMANENT => [$req['messageToPersonnel'] ?? [], $req['messageToLibrePersonnel'] ?? []],
             Message::MESSAGE_TYPE_MATIERE => $req['messageToMatiere'],
             default => null,
         };
