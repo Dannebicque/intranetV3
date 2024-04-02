@@ -62,8 +62,10 @@ class UpdateEtudiant
                     foreach ($edusignEtudiants as $edusignEtudiant) {
                         $edusignEtudiant = $this->apiEduSign->getEtudiant($edusignEtudiant['ID'], $cleApi);
                         if ($edusignEtudiant['ID'] === $etudiant->getIdEduSign()) {
+                            if ($groupes === null) {
+                                $this->apiEduSign->deleteEtudiant($etudiant->getIdEduSign(), $cleApi);
+                            }
                             // si les les groupes des étudiants ne sont pas les mêmes dans edusign et dans la base de données, on ajoute le groupe manquant dans edusign
-//                            if ($edusignEtudiant['GROUPS'] !== $groupes) {
                             $this->apiEduSign->updateEtudiant($etudiantEduSign, $cleApi);
                         }
                     }
