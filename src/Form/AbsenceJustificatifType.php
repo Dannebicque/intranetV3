@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Form/AbsenceJustificatifType.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Form/AbsenceJustificatifType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/10/2021 10:38
+ * @lastUpdate 02/04/2024 21:59
  */
 
 namespace App\Form;
@@ -73,6 +73,7 @@ class AbsenceJustificatifType extends AbstractType
                 ->add('etudiant', EntityType::class, [
                     'label' => 'etudiant',
                     'class' => Etudiant::class,
+                    'autocomplete' => true,
                     'choice_label' => 'display',
                     'query_builder' => fn (EtudiantRepository $etudiantRepository) => $etudiantRepository->findBySemestreBuilder($this->semestre),
                 ])
