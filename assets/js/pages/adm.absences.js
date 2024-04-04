@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/adm.absences.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 23/02/2024 18:48
+// @lastUpdate 04/04/2024 21:26
 
 import Routing from 'fos-router'
 import { get } from '../fetch'
@@ -10,10 +10,10 @@ import { get } from '../fetch'
 document.querySelector('#justifier_etudiant').addEventListener('change', function () {
   const url = Routing.generate('administration_absences_liste_absence_etudiant', { etudiant: this.value })
 
-  get(url)
+  fetch(url)
     .then((response) => response.text())
     .then((data) => {
-      document.querySelector('#listeJustifie').innerHTML = data
+      document.getElementById('listeJustifie').innerHTML = data
     })
 });
 
