@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.17.5](https://github.com/Dannebicque/intranetV3/compare/v3.17.4...v3.17.5) (2024-04-04)
+
+
+### Features
+
+* liste sur matières ([5d0f676](https://github.com/Dannebicque/intranetV3/commit/5d0f676299a3c835bbea2003925ea46b5e11ed0d))
+
+
+### Bug Fixes
+
+* affichage des justificatifs ([9e9fa52](https://github.com/Dannebicque/intranetV3/commit/9e9fa52cde827d8ae67d19458531617283fe285b))
+* Ajout personnel ([25c8a71](https://github.com/Dannebicque/intranetV3/commit/25c8a71d20858594c93370892f86445bcff811ad))
+* Apoc SAe ou Ressource ([2436f3b](https://github.com/Dannebicque/intranetV3/commit/2436f3bfd2cdbf59dbecd4a2c1bdf3726d0cea9c))
+* SAE/Ressources ([a01d83f](https://github.com/Dannebicque/intranetV3/commit/a01d83f0c847b86f65048b087ef6911235600d06))
+
 ### [3.17.4](https://github.com/Dannebicque/intranetV3/compare/v3.17.3...v3.17.4) (2024-04-04)
 
 
