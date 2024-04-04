@@ -6,20 +6,36 @@
 {% endblock %}
 
 {% block headeractions %}
-
     <div class="header-action">
-        <nav class="nav nav-tabs">
-            {% for diplome in user_data.diplomes|filter(diplome => diplome.actif) %}
-                <a class="nav-link {% if (diplomeSelect == null and loop.first) or (diplomeSelect != null and diplomeSelect
-                .id==diplome.id) %}active{% endif %} change-diplome"
-                   href="#" data-diplome="{{ diplome.id }}">{{ diplome.displayCourt }}</a>
-            {% endfor %}
-        </nav>
-
         <div class="buttons">
 
             <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip"
-               data-bs-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
+               data-bs-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span
+                            class="sr-only">Administration</span></i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block headerright %}
+    <div class="right gap-items-2">
+        <div class="btn-group">
+            <button id="btnGroupDrop1"
+                    type="button"
+                    class="btn btn-secondary dropdown-toggle"
+                    title="{{ 'changer.de.diplome'|trans }}"
+                    data-bs-placement="bottom"
+                    data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Changer de diplôme
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                {% for diplome in user_data.diplomes|filter(diplome => diplome.actif) %}
+                    <a class="dropdown-item
+                    change-diplome
+{% if (diplomeSelect == null and loop.first) or (diplomeSelect != null and diplomeSelect
+                    .id==diplome.id) %}active{% endif %}
+" data-diplome="{{ diplome.id }}" href="#">{{ diplome.displayCourt }}</a>
+                {% endfor %}
+            </div>
         </div>
     </div>
 {% endblock %}
