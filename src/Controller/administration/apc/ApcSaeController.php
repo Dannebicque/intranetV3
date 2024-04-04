@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcSaeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/03/2024 16:27
+ * @lastUpdate 04/04/2024 15:56
  */
 
 namespace App\Controller\administration\apc;
@@ -303,7 +303,7 @@ class ApcSaeController extends BaseController
             }
 
             // sauvegarde des AC
-            $acs = $request->request->all()['ac'];
+            $acs = $request->request->all()['ac'] ?? [];
             if (is_array($acs)) {
                 foreach ($acs as $idAc) {
                     $ac = $apcApprentissageCritiqueRepository->find($idAc);
@@ -316,7 +316,7 @@ class ApcSaeController extends BaseController
                 $this->entityManager->remove($ac);
             }
 
-            $acs = $request->request->all()['ressources'];
+            $acs = $request->request->all()['ressources'] ?? [];
             if (is_array($acs)) {
                 foreach ($acs as $idAc) {
                     $res = $apcRessourceRepository->find($idAc);

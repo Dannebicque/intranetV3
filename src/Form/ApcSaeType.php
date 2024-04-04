@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/ApcSaeType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2022 16:28
+ * @lastUpdate 04/04/2024 08:53
  */
 
 namespace App\Form;
@@ -62,15 +62,15 @@ class ApcSaeType extends AbstractType
                     'required' => false,
                     'help' => 'Il est possible d\'utiliser la syntaxe Markdown dans ce bloc de texte',
                 ])
-            ->add('semestre', EntityType::class, [
+            ->add('semestres', EntityType::class, [
                 'class' => Semestre::class,
                 'attr' => ['data-action' => 'change->apc-sae-form#changeSemestre'],
                 'required' => true,
-                'data' => $this->semestre,
                 'choice_label' => 'display',
                 'query_builder' => fn (SemestreRepository $semestreRepository) => $semestreRepository->findAllSemestreByDiplomeApcBuilder($this->diplome),
                 'label' => 'label.semestre',
                 'expanded' => true,
+                'multiple' => true,//todo: collection à gérer ??
 
             ])
             ->add('competences', EntityType::class, [

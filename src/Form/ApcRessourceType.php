@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/ApcRessourceType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2022 15:08
+ * @lastUpdate 04/04/2024 08:53
  */
 
 namespace App\Form;
@@ -60,15 +60,14 @@ class ApcRessourceType extends AbstractType
             ->add('cmFormation', TextType::class, ['label' => 'label.cm_formation'])
             ->add('tdFormation', TextType::class, ['label' => 'label.td_formation'])
             ->add('tpFormation', TextType::class, ['label' => 'label.tp_formation'])
-            ->add('semestre', EntityType::class, [
+            ->add('semestres', EntityType::class, [
                 'class' => Semestre::class,
-                'data' => $this->semestre,
                 'required' => true,
                 'choice_label' => 'display',
                 'query_builder' => fn (SemestreRepository $semestreRepository) => $semestreRepository->findAllSemestreByDiplomeApcBuilder($this->diplome),
                 'label' => 'label.semestre',
                 'expanded' => true,
-                'mapped' => false,
+                'multiple' => true,
                 'attr' => ['data-action' => 'change->apc-ressource-form#changeSemestre'],
             ])
             ->add('competences', EntityType::class, [
