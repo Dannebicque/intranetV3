@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.17.4](https://github.com/Dannebicque/intranetV3/compare/v3.17.3...v3.17.4) (2024-04-04)
+
+
+### Features
+
+* Ajout d'un personnel. Correctif + passage avec Stimulus / JsonResponse Back et front ([24ac99f](https://github.com/Dannebicque/intranetV3/commit/24ac99fad2aa063daf5d32568a08d6ec56e6f88c))
+
 ### [3.17.3](https://github.com/Dannebicque/intranetV3/compare/v3.17.2...v3.17.3) (2024-04-02)
 
 
