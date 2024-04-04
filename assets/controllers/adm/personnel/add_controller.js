@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/adm/personnel/add_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 04/04/2024 10:47
+// @lastUpdate 04/04/2024 10:53
 
 import { Controller } from '@hotwired/stimulus'
 import { useDebounce } from 'stimulus-use'
@@ -45,7 +45,6 @@ export default class extends Controller {
       body,
     }).then((response) => {
       JsonResponse(response)
-      this._updateListe(document.getElementById('login_urca_search').value)
     })
   }
 }
