@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/components/Toast.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/03/2024 09:06
+// @lastUpdate 04/04/2024 10:46
 
 import { Toast as ToastBs } from 'bootstrap'
 
@@ -28,10 +28,8 @@ class Toast {
   }
 
   show(type, text, title = null, options = {}) {
-    console.log('show')
     const toastElList = [].slice.call(document.querySelectorAll('.my_toast'))
     toastElList.map((toastEl) => {
-      console.log(toastEl)
       const tst = new ToastBs(toastEl, options)
       tst.show()
     })

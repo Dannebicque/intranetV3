@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/PersonnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/03/2024 16:31
+ * @lastUpdate 04/04/2024 10:44
  */
 
 namespace App\Controller\administration;
 
+use App\Classes\JsonReponse;
 use App\Classes\MyExport;
 use App\Classes\MySerializer;
 use App\Controller\BaseController;
@@ -164,13 +165,13 @@ class PersonnelController extends BaseController
                 $this->entityManager->persist($pf);
                 $this->entityManager->flush();
 
-                return new Response(true, Response::HTTP_OK);
+                return JsonReponse::success('Enseignant/intervenant ajouté');
             }
 
-            return new Response('Déjà dans la base', Response::HTTP_OK);
+            return JsonReponse::success('Enseignant/intervenant déjà présent dans le département');
         }
 
-        return new Response('Erreur', Response::HTTP_INTERNAL_SERVER_ERROR);
+        return JsonReponse::error('Erreur lors de l\'ajout de l\'enseignant/intervenant : Département ou enseignant inexistant.');
     }
 
     #[Route('/{id}', name: 'show',
