@@ -132,12 +132,13 @@ class FixCourses
 
 //                            $bilan['success']['cours_maj']['intranet'][] = ['id' => $coursIntranet->getId(), 'debut' => $coursIntranet->getDebut(), 'fin' => $coursIntranet->getFin(), 'salle' => $coursIntranet->getSalle(), 'intervenant' => $coursIntranet->getIntervenant(), 'id_edusign' => $coursIntranet->getIdEduSign()];
                         }
-                    } elseif ($coursIntranet !== null && count($coursIntranet) > 1) {
-                        foreach ($coursIntranet as $cours) {
-                            //todo: qd meme ajouter le cours dans edusign ?
-                            $bilan['error']['Cours en double'] = ['id' => $cours->getId(), 'date' => $cours->getDate(), 'debut' => $cours->getDebut(), 'fin' => $cours->getFin(), 'salle' => $cours->getSalle(), 'intervenant' => $cours->getIntervenant()];
-                        }
                     }
+//                    elseif ($coursIntranet !== null && count($coursIntranet) > 1) {
+//                        foreach ($coursIntranet as $cours) {
+//                            //todo: qd meme ajouter le cours dans edusign ?
+//                            $bilan['error']['Cours en double'] = ['id' => $cours->getId(), 'date' => $cours->getDate(), 'debut' => $cours->getDebut(), 'fin' => $cours->getFin(), 'salle' => $cours->getSalle(), 'intervenant' => $cours->getIntervenant()];
+//                        }
+//                    }
                 }
             }
         }
