@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.17.6](https://github.com/Dannebicque/intranetV3/compare/v3.17.5...v3.17.6) (2024-04-05)
+
+
+### Bug Fixes
+
+* commande edusign ([8c67fe1](https://github.com/Dannebicque/intranetV3/commit/8c67fe19a02f8e886b4bdb5702b6680afd34c238))
+* edusign - modal confirmation ([af671d2](https://github.com/Dannebicque/intranetV3/commit/af671d2a3692eaf962544296a58347406128e41f))
+
 ### [3.17.5](https://github.com/Dannebicque/intranetV3/compare/v3.17.4...v3.17.5) (2024-04-04)
 
 
