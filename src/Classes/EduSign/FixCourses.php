@@ -109,23 +109,32 @@ class FixCourses
 
                             $this->edusignCourse->id = $course['ID'];
                             $this->edusignCourse->apiId = $coursIntranet->getId();
+                            $this->edusignCourse->api_id = $coursIntranet->getId();
                             $this->edusignCourse->name = $course['NAME'];
                             $this->edusignCourse->start = Carbon::createFromFormat("Y-m-d H:i:s", $startRaw);
                             $this->edusignCourse->end = Carbon::createFromFormat("Y-m-d H:i:s", $endRaw);
                             $this->edusignCourse->classroom = $course['CLASSROOM'];
                             $this->edusignCourse->professor = $course['PROFESSOR'];
                             $this->edusignCourse->school_group = $course['SCHOOL_GROUP'];
-                            $course['API_ID'] = $coursIntranet->getId();
 
                             $this->apiEduSign->updateCourse($this->edusignCourse, $cleApi);
+
+                            $bilan[$this->apiEduSign->updateCourse($this->edusignCourse, $cleApi)]['cours_maj']['intranet'][] = ['id' => $course['API_ID'], 'date' => $cours->date, 'debut' => $cours->heureDebut, 'fin' => $cours->heureFin, 'salle' => $cours->salle, 'intervenant' => $cours->personnelObjet];
+
                         } elseif ($coursIntranet === null && $course['API_ID'] !== null) {
                             $this->apiEduSign->deleteCourse($course['ID'], $cleApi);
+
+                            $bilan[$this->apiEduSign->deleteCourse($course['ID'], $cleApi)]['cours_supprimés']['edusign'][] = ['id' => $course['API_ID'], 'date' => $cours->date, 'debut' => $cours->heureDebut, 'fin' => $cours->heureFin, 'salle' => $cours->salle, 'intervenant' => $cours->personnelObjet];
+
                         } elseif ($coursIntranet !== null && ($coursIntranet->getIdEduSign() === null && $course['API_ID'] !== null)) {
                             $coursIntranet->setIdEduSign($course['ID']);
                             $this->edtManager->saveCourseEduSign($this->source, $coursIntranet);
+
+                            $bilan['success']['cours_maj']['intranet'][] = ['id' => $coursIntranet->getId(), 'debut' => $coursIntranet->getDebut(), 'fin' => $coursIntranet->getFin(), 'salle' => $coursIntranet->getSalle(), 'intervenant' => $coursIntranet->getIntervenant(), 'id_edusign' => $coursIntranet->getIdEduSign()];
                         }
                     } elseif ($coursIntranet !== null && count($coursIntranet) > 1) {
                         foreach ($coursIntranet as $cours) {
+                            //todo: qd meme ajouter le cours dans edusign ?
                             $bilan['error']['Cours en double'] = ['id' => $cours->getId(), 'date' => $cours->getDate(), 'debut' => $cours->getDebut(), 'fin' => $cours->getFin(), 'salle' => $cours->getSalle(), 'intervenant' => $cours->getIntervenant()];
                         }
                     }
