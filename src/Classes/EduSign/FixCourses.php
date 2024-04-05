@@ -130,7 +130,7 @@ class FixCourses
                             $coursIntranet->setIdEduSign($course['ID']);
                             $this->edtManager->saveCourseEduSign($this->source, $coursIntranet);
 
-                            $bilan['success']['cours_maj']['intranet'][] = ['id' => $coursIntranet->getId(), 'debut' => $coursIntranet->getDebut(), 'fin' => $coursIntranet->getFin(), 'salle' => $coursIntranet->getSalle(), 'intervenant' => $coursIntranet->getIntervenant(), 'id_edusign' => $coursIntranet->getIdEduSign()];
+//                            $bilan['success']['cours_maj']['intranet'][] = ['id' => $coursIntranet->getId(), 'debut' => $coursIntranet->getDebut(), 'fin' => $coursIntranet->getFin(), 'salle' => $coursIntranet->getSalle(), 'intervenant' => $coursIntranet->getIntervenant(), 'id_edusign' => $coursIntranet->getIdEduSign()];
                         }
                     } elseif ($coursIntranet !== null && count($coursIntranet) > 1) {
                         foreach ($coursIntranet as $cours) {
