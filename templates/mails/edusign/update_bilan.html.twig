@@ -1,0 +1,50 @@
+<h1>{{ dept }}</h1>
+<h2>Période : {{ periode }}</h2>
+
+<div style="border: solid 1px red; padding: 20px">
+    <h3>Erreurs</h3>
+    {% for key, error in errors %}
+        {% if key == "cours_incomplets" %}
+            <h4>{{ key }}</h4>
+            <table style="border-collapse: collapse">
+                <thead style="background-color: #dedede; border: solid 1px grey;">
+                <tr>
+                    <th>id</th>
+                    <th>matiere</th>
+                    <th>texte</th>
+                    <th>groupe</th>
+                    <th>semestre</th>
+                    <th>enseignant</th>
+                    <th>salle</th>
+                    <th>date</th>
+                    <th>horaires</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for datas in error %}
+                    <tr>
+                        {% for data in datas %}
+                            <td style="text-align: center; padding: 10px; margin: 0; border: solid 1px grey; {% if data == "null" or data == "empty" %} background-color: #ffa7a7 {% endif %}">{{ data }}</td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    {% endfor %}
+</div>
+
+
+{# <ul style="border: solid 1px orange; padding: 20px"> #}
+{#    <h3>Warning</h3> #}
+{#    {% for warning in warnings %} #}
+{#        <li>{{ warning }}</li> #}
+{#    {% endfor %} #}
+{# </ul> #}
+
+{# <ul style="border: solid 1px green; padding: 20px"> #}
+{#    <h3>Succès</h3> #}
+{#    {% for succes in success %} #}
+{#        <li>{{ succes }}</li> #}
+{#    {% endfor %} #}
+{# </ul> #}

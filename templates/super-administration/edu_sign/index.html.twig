@@ -10,7 +10,8 @@
     <div class="header-action">
         <div class="buttons">
             <a href="{{ path('super_admin_homepage') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip"
-               data-bs-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconDashboard }}"><span
+               data-bs-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i
+                        class="{{ iconDashboard }}"><span
                             class="sr-only">Administration</span></i></a>
         </div>
     </div>
@@ -29,8 +30,30 @@
                 <span>{{ 'adm.edusign.context.info'|trans }}</span>
             </div>
             {% for dept in departements %}
-                <a href="{{ path('app_edu_sign_init', {'id': dept.id}) }}"
-                   class="btn btn-secondary">{{ dept.libelle }}</a>
+                <button class="btn btn-secondary" type="button" data-bs-toggle="modal"
+                        data-bs-target="#initModal{{ dept.id }}">{{ dept.libelle }}</button>
+                <!-- Modal -->
+                <div class="modal fade" id="initModal{{ dept.id }}" tabindex="-1"
+                     aria-labelledby="initModalLabel{{ dept.id }}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="initModalLabel{{ dept.id }}">Initialisation du
+                                    département {{ dept.libelle }}</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Cette action va créer les groupes et importer les étudiants
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                <a href="{{ path('app_edu_sign_init', {'id': dept.id}) }}"
+                                   class="btn btn-primary">Confirmer</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             {% endfor %}
         </div>
     </div>
@@ -44,15 +67,61 @@
                 <span>{{ 'adm.edusign.commands.info-update'|trans }}</span>
             </div>
             {% for dept in departements %}
-                <a href="{{ path('app_edu_sign_update_etudiants', {'id': dept.id}) }}"
-                   class="btn btn-secondary">{{ dept.libelle }}</a>
+                <button class="btn btn-secondary" type="button" data-bs-toggle="modal"
+                        data-bs-target="#grpModal{{ dept.id }}">{{ dept.libelle }}</button>
+                <!-- Modal -->
+                <div class="modal fade" id="grpModal{{ dept.id }}" tabindex="-1"
+                     aria-labelledby="grpModalLabel{{ dept.id }}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="grpModalLabel{{ dept.id }}">Mise à jour des groupes
+                                    pour le département {{ dept.libelle }}</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Cette action va mettre à jour les étudiants et leurs groupes
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                <a href="{{ path('app_edu_sign_update_etudiants', {'id': dept.id}) }}"
+                                   class="btn btn-secondary">Confirmer</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             {% endfor %}
             <hr>
             <div class="alert alert-info">
                 <span>{{ 'adm.edusign.commands.info-annee'|trans }}</span>
             </div>
-            <a href=""
-               class="btn btn-secondary">Changer d'année</a>
+
+            <button class="btn btn-secondary" type="button" data-bs-toggle="modal"
+                    data-bs-target="#newYearModal">Changer d'année
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="newYearModal" tabindex="-1"
+                 aria-labelledby="newYearModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="newYearModalLabel">Mise à jour des groupes
+                                pour une nouvelle année</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            Cette action va mettre à jour les étudiants et leurs groupes
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                            <a href=""
+                               class="btn btn-secondary">Confirmer</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -76,14 +145,62 @@
                     {{ 'adm.edusign.commands.create'|trans }}
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item"
-                           href="{{ path('app_edu_sign_create_courses', {'opt': 1, 'id': departementSelect.id}) }}">Pour
-                            la
-                            semaine en cours</a></li>
-                    <li><a class="dropdown-item"
-                           href="{{ path('app_edu_sign_create_courses', {'opt': 2, 'id': departementSelect.id}) }}">Pour
-                            la journée</a></li>
+                    <li>
+                        <a class="dropdown-item" type="button" data-bs-toggle="modal"
+                           data-bs-target="#newCoursesWeekModal{{ departementSelect.id }}">Pour la semaine en cours</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" type="button" data-bs-toggle="modal"
+                           data-bs-target="#newCoursesDayModal{{ departementSelect.id }}">Pour la journée</a>
+                    </li>
                 </ul>
+
+                <!-- Modal -->
+                <div class="modal fade" id="newCoursesWeekModal{{ departementSelect.id }}" tabindex="-1"
+                     aria-labelledby="newCoursesWeekModalLabel{{ departementSelect.id }}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="newCoursesWeekModalLabel{{ departementSelect.id }}">
+                                    Mise à jour des cours de la semaine pour {{ departementSelect.libelle }}</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Cette action va créer les nouveaux cours et corriger les cours déjà existants si
+                                nécessaire
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                <a href="{{ path('app_edu_sign_create_courses', {'opt': 1, 'id': departementSelect.id}) }}"
+                                   class="btn btn-primary">Confirmer</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="newCoursesDayModal{{ departementSelect.id }}" tabindex="-1"
+                     aria-labelledby="newCoursesDayModalLabel{{ departementSelect.id }}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="newCoursesDayModalLabel{{ departementSelect.id }}">
+                                    Mise à jour des cours de la journée pour {{ departementSelect.libelle }}</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Cette action va créer les nouveaux cours et corriger les cours déjà existants si
+                                nécessaire
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                <a href="{{ path('app_edu_sign_create_courses', {'opt': 2, 'id': departementSelect.id}) }}"
+                                   class="btn btn-primary">Confirmer</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
         <hr>
