@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/UpdateEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/11/2023 09:31
+ * @lastUpdate 05/04/2024 11:43
  */
 
 namespace App\Classes\EduSign;
@@ -22,8 +22,6 @@ use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Carbon\Carbon;
-use Symfony\Component\HttpFoundation\Response;
-use function PHPUnit\Framework\isEmpty;
 
 class UpdateEdt
 {
@@ -48,7 +46,7 @@ class UpdateEdt
     {
     }
 
-    public function update(?string $keyEduSign, ?int $opt): array
+    public function update(?string $keyEduSign, ?int $opt, string $date = ''): array
     {
         if ($keyEduSign === null) {
             $diplomes = $this->diplomeRepository->findAllWithEduSign();
@@ -67,6 +65,9 @@ class UpdateEdt
             } elseif ($opt === 2) {
                 $start = Carbon::create('yesterday');
                 $end = Carbon::create('today');
+            } elseif ($opt === 3 && $date !== '') {
+                $start = Carbon::createFromFormat('d-m-Y', $date);
+                $end = Carbon::createFromFormat('d-m-Y', $date)?->next('saturday');
             }
             // changer le format de $start en d-m-Y
             $startFormat = $start->format('d/m/Y');
