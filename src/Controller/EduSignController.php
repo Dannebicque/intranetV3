@@ -26,12 +26,14 @@ use App\Repository\GroupeRepository;
 use App\Repository\PersonnelDepartementRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use function PHPUnit\Framework\throwException;
 
@@ -125,7 +127,7 @@ class EduSignController extends BaseController
     }
 
     #[Route('/create-courses/{opt}/{id}', name: 'app_edu_sign_create_courses')]
-    public function createCourses(?int $opt, ?int $id, UpdateEdt $updateEdt, FixCourses $fixCourses): Response
+    public function createCourses(?int $opt, ?int $id, UpdateEdt $updateEdt, FixCourses $fixCourses, MailerInterface $mailer): Response
     {
         if ($id !== null) {
             $departement = $this->departementRepository->find($id);
@@ -138,8 +140,23 @@ class EduSignController extends BaseController
             }
             //créer les cours pour la semaine
             $updateEdt->update($keyEduSign, $opt);
+//            dd($updateEdt->update($keyEduSign, $opt));
 
             $fixCourses->fixCourse($keyEduSign);
+
+            if ($updateEdt->update($keyEduSign, $opt) !== null) {
+                $data = $updateEdt->update($keyEduSign, $opt);
+            }
+            if ($fixCourses->fixCourse($keyEduSign) !== null) {
+                // ajouter le tableau retourné par la méthode fixCourse() dans le tableau data
+                $data['error']['fix'] = $fixCourses->fixCourse($keyEduSign);
+            }
+            if ($data !== null) {
+                // ajouter $departement->getLibelle() comme key du tableau data
+                $data['header']['dept'] = $departement->getLibelle();
+                $this->sendEmail($data, $mailer);
+            }
+
         }
 
         return $this->redirectToRoute('app_edu_sign');
@@ -233,11 +250,28 @@ class EduSignController extends BaseController
             }
         }
 
-
         return $this->render('super-administration/edu_sign/groupes.html.twig', [
             'departement' => $departement,
             'groupesEduSign' => $groupesEduSign ?? null,
             'groupes' => $groupes ?? null,
         ]);
+    }
+
+    private function sendEmail(array $data, MailerInterface $mailer)
+    {
+        $email = (new TemplatedEmail())
+            ->from('no-reply@univ-reims.fr')
+            ->to('cyndel.herolt@univ-reims.fr')
+            ->subject($data['header']['type'])
+            ->htmlTemplate('mails/edusign/update_bilan.html.twig')
+            ->context([
+                'dept' => $data['header']['dept'],
+                'periode' => $data['header']['periode'],
+                'success' => $data['success'] ?? [],
+                'errors' => $data['error'] ?? [],
+                'warnings' => $data['warning'] ?? [],
+            ]);
+
+        $mailer->send($email);
     }
 }

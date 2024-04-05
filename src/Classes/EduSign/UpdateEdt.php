@@ -48,7 +48,7 @@ class UpdateEdt
     {
     }
 
-    public function update(?string $keyEduSign, ?int $opt): void
+    public function update(?string $keyEduSign, ?int $opt): array
     {
         if ($keyEduSign === null) {
             $diplomes = $this->diplomeRepository->findAllWithEduSign();
@@ -68,7 +68,11 @@ class UpdateEdt
                 $start = Carbon::create('yesterday');
                 $end = Carbon::create('today');
             }
-            $bilan['header'] = ['type' => 'Mise à jour Edt', 'diplome' => $diplome->getLibelle(), 'periode' => $start . '-' . $end];
+            // changer le format de $start en d-m-Y
+            $startFormat = $start->format('d/m/Y');
+            // changer le format de $end en d-m-Y
+            $endFormat = $end->format('d/m/Y');
+            $bilan['header'] = ['type' => 'Mise à jour Edt', 'periode' => $startFormat . ' | ' . $endFormat];
             $semaineReelle = date('W');
 
             foreach ($semestres as $semestre) {
@@ -108,7 +112,7 @@ class UpdateEdt
                                         $this->createEnseignant->update($enseignant, $departement, $this->cleApi);
                                     }
                                     $this->sendUpdate();
-                                    $bilan['success'][] = ['id: ' . $this->evenement->id . ' - ' . $course->name . ' - ' . $enseignant->getPrenom() . ' ' . $enseignant->getNom() . ' - ' . $course->start . '|' . $course->end . ' - '. $this->evenement->semestre .'|'. $this->evenement->groupe . ' - ' . $this->sendUpdate()];
+                                    $bilan['success'][] = ['id: ' . $this->evenement->id . ' - ' . $course->name . ' - ' . $enseignant->getPrenom() . ' ' . $enseignant->getNom() . ' - ' . $course->start . '|' . $course->end . ' - ' . $this->evenement->semestre . '|' . $this->evenement->groupe . ' - ' . $this->sendUpdate()];
                                 }
                             }
                         } else {
@@ -173,13 +177,16 @@ class UpdateEdt
                                 $heureFin = $this->evenement->heureFin;
                             }
 
-                            $bilan['error']['cours incomplet'][] = ['id: ' . $id . ' - matiere : ' . $matiere . ' - groupe : ' . $groupe . ' - semestre : ' . $semestre . ' - enseignant : ' . $enseignant . ' - salle : ' . $salle . ' - horaires : ' . $heureDebut . ' - ' . $heureFin];
+                            if (($this->evenement->texteEvt() !== "PTUT") && ($this->evenement->texteEvt() !== "Entreprise") && ($this->evenement->texteEvt() !== "Inconnue") && ($this->evenement->texteEvt() !== "Stages")) {
+                                $bilan['error']['cours_incomplets'][] = ['id' => $id, 'matiere' => $matiere, 'texteEvt' => $this->evenement->texteEvt(), 'groupe' => $groupe, 'semestre' => $semestre, 'enseignant' => $enseignant, 'salle' => $salle, 'date' => $this->evenement->dateObjet, 'horaires' => $heureDebut . ' - ' . $heureFin];
+                            }
                         }
                     }
                 }
             }
         }
-        dd($bilan);
+        return $bilan;
+
     }
 
     public function sendUpdate(): mixed

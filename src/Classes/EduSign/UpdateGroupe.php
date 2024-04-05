@@ -40,6 +40,7 @@ class UpdateGroupe
             $cleApi = $diplome->getKeyEduSign();
 
             $semestres = $this->semestreRepository->findByDiplome($diplome);
+
             foreach ($semestres as $semestre) {
                 // on récupère les groupes du semestre
                 // et on créé des objets Groupe adaptés pour EduSign
@@ -48,6 +49,7 @@ class UpdateGroupe
                 if ($semestre->getIdEduSign() === null) {
                     // on envoie le groupe à EduSign
                     $this->apiEduSign->addGroupe($groupe, $cleApi, 'semestre');
+                    $bilan['success']['semestres'] = ['id' => $semestre->getId(), 'libelle' => $semestre->getLibelle(), 'idEduSign' => $semestre->getIdEduSign()];
                 }
             }
 

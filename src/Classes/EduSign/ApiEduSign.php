@@ -192,7 +192,7 @@ class ApiEduSign
         return $data['result'] ?? "";
     }
 
-    public function addGroupe(EduSignGroupe $groupe, string $cleApi, ?string $type): void
+    public function addGroupe(EduSignGroupe $groupe, string $cleApi, ?string $type): mixed
     {
         $client = HttpClient::create();
 
@@ -229,6 +229,7 @@ class ApiEduSign
             }
         }
 
+            return $content;
     }
 
     public function deleteGroupe(EduSignGroupe $groupe, string $cleApi): void
