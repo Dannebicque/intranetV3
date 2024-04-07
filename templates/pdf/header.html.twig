@@ -36,7 +36,7 @@
     </style>
 </head>
 <body>
-{% if titre is defined and titre != null %}
+{% if titre is defined and titre != null and titre != 'titre' %}
     <header>
         <div id="class_logo">
             <img src="data:image/jpeg;base64,{{ image }}" alt="logo">
