@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.17.7](https://github.com/Dannebicque/intranetV3/compare/v3.17.6...v3.17.7) (2024-04-08)
+
+
+### Bug Fixes
+
+* semestre qui ne dépend pas de Apc ([b5c4112](https://github.com/Dannebicque/intranetV3/commit/b5c41122cff438845dcbd201e688ae1700b4be61))
+* show des fiches SAE ou ressources qui ne dépend pas de Apc ([3950f59](https://github.com/Dannebicque/intranetV3/commit/3950f5921afe3ec0acd30e725a4784f198d8eac3))
+* titre header pdf ([2293adc](https://github.com/Dannebicque/intranetV3/commit/2293adc01470d31d006d1c38908550afa77c45f2))
+
 ### [3.17.6](https://github.com/Dannebicque/intranetV3/compare/v3.17.5...v3.17.6) (2024-04-05)
 
 
