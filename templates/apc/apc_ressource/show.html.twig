@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block headeractions %}
+    {% set semestre = apc_ressource.semestres|length > 0 and apc_ressource.semestres.first != null ? apc_ressource.semestres.first : null %}
     <div class="header-action">
         <div class="buttons">
             <a href="{{ path('administration_apc_ressource_export_one', {id: apc_ressource.id}) }}"
@@ -24,8 +25,7 @@
                 <i class="{{ iconDelete }}"></i>
                 <span class="sr-only">{{ 'atitle.supprimer'|trans }}</span>
             </a>
-            <a href="{{ path('administration_apc_ressource_edit', {id: apc_ressource.id, semestre: apc_ressource
-            .semestre.id}) }}"
+            <a href="{{ path('administration_apc_ressource_edit', {id: apc_ressource.id, semestre: semestre ? semestre.id : null}) }}"
                class="btn btn-warning btn-sm btn-float"
                title="{{ 'atitle.modifier'|trans }}"
                data-bs-toggle="tooltip" data-bs-placement="bottom"
