@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.17.8](https://github.com/Dannebicque/intranetV3/compare/v3.17.6...v3.17.8) (2024-04-08)
+
+
+### Bug Fixes
+
+* amélioration de la commande de mise à jour. ([501bad2](https://github.com/Dannebicque/intranetV3/commit/501bad2fabb9a71a0bda386f37d9a9ca735fc528))
+* edusign ([32841c8](https://github.com/Dannebicque/intranetV3/commit/32841c825cc85ce40b0bddb81331221132a0cb93))
+* edusign - get date cours ([f7bac7d](https://github.com/Dannebicque/intranetV3/commit/f7bac7d04883ec3b03fe16cca4316e25bff40eeb))
+* edusign - get date cours ([f0e66fd](https://github.com/Dannebicque/intranetV3/commit/f0e66fd1ae7cabd09291021a349b2072cf407a4f))
+* semestre qui ne dépend pas de Apc ([0359066](https://github.com/Dannebicque/intranetV3/commit/035906600ea195852ecb5397262a516f759f94ea))
+* show des fiches SAE ou ressources qui ne dépend pas de Apc ([0908d5a](https://github.com/Dannebicque/intranetV3/commit/0908d5a7eb4511c81dd185e7f859b72f56c58dc3))
+* titre header pdf ([1a3251d](https://github.com/Dannebicque/intranetV3/commit/1a3251d44815cd5d2b59a806a45fd512d05b50e0))
+
 ### [3.17.7](https://github.com/Dannebicque/intranetV3/compare/v3.17.6...v3.17.7) (2024-04-08)
 
 
