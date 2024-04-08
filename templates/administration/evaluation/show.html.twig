@@ -4,20 +4,6 @@
     {{ 'administration.evaluation.details.heading'|trans }}
 {% endblock %}
 
-
-{% block headerright %}
-    <div class="right gap-items-2">
-        {% for sem in user_data.semestresActifs %}
-            <a href="{{ path('administration_notes_semestre_index', {semestre:sem.id}) }}"
-               class="btn btn-round {% if sem.id == semestre.id %}btn-primary{% endif %}"
-               title="{{ 'atitle.changer.semestre'|trans }}"
-               data-bs-toggle="tooltip"
-               data-bs-placement="bottom"
-            >{{ sem.libelle }}</a>
-        {% endfor %}
-    </div>
-{% endblock %}
-
 {% block headeractions %}
     <div class="header-action">
         <div class="buttons">
