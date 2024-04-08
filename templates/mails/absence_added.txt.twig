@@ -1,17 +1,18 @@
+{% set semestre = absence.etudiant.semestre %}
+
 Bonjour {{ absence.etudiant.displayPr  }},
 
 Vous avez été comptabilisé(e) absent(e) par - {{ absence.personnel.displayPr  }} - dans le cours - {{ matiere
 .display }} - du - {{ absence.dateHeure|format_date('long') }} -, {{ absence.dateHeure|format_time('short') }}. Vous devez
 justifier de cette absence dans un délai de 5 jours après votre reprise des cours ! Passé ce délai cette absence sera considérée comme définitivement non justifiée.
 
-{%  if matiere.semestre.optPenaliteAbsence == true %}
+{%  if semestre.optPenaliteAbsence == true %}
 Dans l'immédiat, et sans justification de votre part dans les {{ settings('DELAI_JUSTIFICATION') }} jours, cette
 absence entraine une
-pénalité de {{ matiere
-.semestre.optPointPenaliteAbsence }} point sur le module {{ matiere.display }}. Cette pénalité s'ajoute aux éventuelles précédentes pénalités obtenues sur cette matière.
+pénalité de {{ semestre.optPointPenaliteAbsence }} point sur le module {{ matiere.display }}. Cette pénalité s'ajoute aux éventuelles précédentes pénalités obtenues sur cette matière.
 {% endif %}
 
-{% if matiere.semestre.annee.diplome.sigle == 'MMI' %} {# todo: mail a rendre personnalisable ? #}
+{% if semestre.annee.diplome.sigle == 'MMI' %} {# todo: mail a rendre personnalisable ? #}
 Si vous souhaitez contester cette absence, car vous etiez présent lors de cette séance de cours vous devez, dès à présent (et au plus tard sous 48 heures), contacter l'enseignant (de préférence par mail) qui vous à marqué absent, afin qu'il puisse confirmer ou supprimer cette absence. En dernier recours vous pouvez contacter le directeur des études.
 
 Une fois ce délai de 48 heures écoulé, cette absence sera considérée comme valide et vous devrez la justifier sous 5 jours, sinon la pénalité pour absence sera comptabilisée.
@@ -22,6 +23,6 @@ Vous pouvez suivre l'état de vos absences et les justifier en vous connectant s
 Cordialement,
 
 Le responsable du diplôme
-{{ matiere.semestre.annee.diplome.responsableDiplome.displayPr  }}
+{{ semestre.annee.diplome.responsableDiplome.displayPr  }}
 
 Ce message est un message automatique envoyé depuis l'intranet de l'{{ settings('NOM_IUT') }}. Aucune réponse ne pourra être prise en compte.
