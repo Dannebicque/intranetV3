@@ -1,8 +1,8 @@
-# Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+# Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
 # @file /Users/davidannebicque/Sites/intranetV3/update.sh
 # @author davidannebicque
 # @project intranetV3
-# @lastUpdate 18/11/2022 08:54
+# @lastUpdate 08/04/2024 17:57
 
 #!/usr/bin/env bash
 
@@ -12,12 +12,25 @@ echo "Git Pull"
 git pull origin main
 echo "end git pull"
 
+
+
 if test "$1" = "--assets"
 then
   echo "generation des assets"
-  yarn build
+  if command -v yarn > /dev/null 2>&1; then
+      echo "Yarn est disponible."
+      yarn build
+  else
+      echo "Yarn n'est pas disponible. Utiliser npm pour installer les dépendances."
+      npm run build
+  fi
+
+  $old_file = "public/build/print.*.css"
+  $new_file = "public/build/print.css"
+  mv $old_file $new_file
   echo "fin génératation des assets"
 fi
+
 
 echo "Nettoyage cache"
 #rm -R var/cache/prod
@@ -36,5 +49,9 @@ chmod -R 777 var/
 echo "Relance des workers"
 bin/console messenger:stop-workers
 echo "Fin relance des workers"
+
+
 echo "Fin mise à jour"
 rm maintenance.lock
+
+
