@@ -10,7 +10,7 @@
                         <select name="annee_depart" id="annee_depart" class="form-select">
                             <option value="">Choisir</option>
                             {% for annee in 2017..'now'|date('Y')+2 %}
-                                <option value="{{ annee }}">{{ annee }}</option>
+                                <option value="{{ annee }}">{{ annee }} | {{ annee + 1 }}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -21,7 +21,7 @@
                         <select name="annee_destination" id="annee_destination" class="form-select">
                             <option value="">Choisir</option>
                             {% for annee in 2017..'now'|date('Y')+4 %}
-                                <option value="{{ annee }}">{{ annee }}</option>
+                                <option value="{{ annee }}">{{ annee }} | {{ annee + 1 }}</option>
                             {% endfor %}
                         </select>
                     </div>
