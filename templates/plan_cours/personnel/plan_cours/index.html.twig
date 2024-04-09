@@ -16,7 +16,7 @@
             {% for previsionnel in previsionnels %}
                 <tr>
                     <td>{{ previsionnel.display }}</td>
-                    <td>{{ previsionnel.type_matiere }}</td>
+                    <td>{{ previsionnel.type_matiere|badgeTypeMatiere }}</td>
 
                     {% if plansCours[previsionnel.id] is defined %}
                         <td>
