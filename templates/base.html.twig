@@ -219,12 +219,15 @@
             <div {{ stimulus_controller('lookup-search', {
                 url: path('recherche')
             }) }}>
-                <a class="topbar-btn" href="#" title="{{ 'rechercher'|trans }}"
+                <a class="topbar-btn btn" href="#" title="{{ 'rechercher'|trans }}"
                    data-bs-toggle="tooltip" data-bs-placement="bottom"
-                   data-action="lookup-search#openModal"
+                   data-action="
+                    click->lookup-search#openModal
+                    global:openSearch@window->lookup-search#openModal"
                 >
                     <i class="fas fa-search"></i>
                     <span class="sr-only">Rechercher</span>
+                    <span {{ stimulus_target('global', 'search') }} class="hide-on-small">ctrl + k</span>
                 </a>
                 <!-- Fullscreen search -->
                 {{ include('recherche/_resultat.html.twig') }}
