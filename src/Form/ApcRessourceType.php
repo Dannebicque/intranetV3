@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/ApcRessourceType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/04/2024 08:53
+ * @lastUpdate 09/04/2024 14:17
  */
 
 namespace App\Form;
@@ -66,6 +66,9 @@ class ApcRessourceType extends AbstractType
                 'choice_label' => 'display',
                 'query_builder' => fn (SemestreRepository $semestreRepository) => $semestreRepository->findAllSemestreByDiplomeApcBuilder($this->diplome),
                 'label' => 'label.semestre',
+                'choice_attr' => function (Semestre $semestre) {
+                    return ['data-ordre' => $semestre->getOrdreLmd()];
+                },
                 'expanded' => true,
                 'multiple' => true,
                 'attr' => ['data-action' => 'change->apc-ressource-form#changeSemestre'],
