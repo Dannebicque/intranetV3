@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/UpdateEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/04/2024 11:43
+ * @lastUpdate 14/11/2023 09:31
  */
 
 namespace App\Classes\EduSign;
@@ -22,6 +22,8 @@ use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Carbon\Carbon;
+use Symfony\Component\HttpFoundation\Response;
+use function PHPUnit\Framework\isEmpty;
 
 class UpdateEdt
 {
@@ -46,7 +48,7 @@ class UpdateEdt
     {
     }
 
-    public function update(?string $keyEduSign, ?int $opt, string $date = ''): array
+    public function update(?string $keyEduSign, ?int $opt, string $date = ''): ?array
     {
         if ($keyEduSign === null) {
             $diplomes = $this->diplomeRepository->findAllWithEduSign();
@@ -113,80 +115,81 @@ class UpdateEdt
                                         $this->createEnseignant->update($enseignant, $departement, $this->cleApi);
                                     }
                                     $this->sendUpdate();
-                                    $bilan['success'][] = ['id: ' . $this->evenement->id . ' - ' . $course->name . ' - ' . $enseignant->getPrenom() . ' ' . $enseignant->getNom() . ' - ' . $course->start . '|' . $course->end . ' - ' . $this->evenement->semestre . '|' . $this->evenement->groupe . ' - ' . $this->sendUpdate()];
+//                                    $bilan['success'][] = ['id: ' . $this->evenement->id . ' - ' . $course->name . ' - ' . $enseignant->getPrenom() . ' ' . $enseignant->getNom() . ' - ' . $course->start . '|' . $course->end . ' - ' . $this->evenement->semestre . '|' . $this->evenement->groupe];
                                 }
                             }
-                        } else {
-                            //tester les données manquantes
-                            if ($this->evenement->id === null) {
-                                $id = 'null';
-                            } elseif ($this->evenement->id === '') {
-                                $id = 'empty';
-                            } else {
-                                $id = $this->evenement->id;
-                            }
-
-                            if ($this->evenement->groupeObjet === null) {
-                                $groupe = 'null';
-                            } else {
-                                $groupe = $this->evenement->groupeObjet->getLibelle();
-                            }
-
-                            if ($this->evenement->semestre === null) {
-                                $semestre = 'null';
-                            } elseif ($this->evenement->semestre === '') {
-                                $semestre = 'empty';
-                            } else {
-                                $semestre = $this->evenement->semestre->getLibelle();
-                            }
-
-                            if ($this->evenement->personnelObjet === null) {
-                                $enseignant = 'null';
-                            } else {
-                                $enseignant = $this->evenement->personnelObjet->getPrenom() . ' ' . $this->evenement->personnelObjet->getNom();
-                            }
-
-                            if ($this->evenement->matiere === '') {
-                                $matiere = 'empty';
-                            } elseif ($this->evenement->matiere === null) {
-                                $matiere = 'null';
-                            } else {
-                                $matiere = $this->evenement->matiere;
-                            }
-
-                            if ($this->evenement->salle === null) {
-                                $salle = 'null';
-                            } elseif ($this->evenement->salle === '') {
-                                $salle = 'empty';
-                            } else {
-                                $salle = $this->evenement->salle;
-                            }
-
-                            if ($this->evenement->heureDebut === null) {
-                                $heureDebut = 'null';
-                            } elseif ($this->evenement->heureDebut === '') {
-                                $heureDebut = 'empty';
-                            } else {
-                                $heureDebut = $this->evenement->heureDebut;
-                            }
-
-                            if ($this->evenement->heureFin === null) {
-                                $heureFin = 'null';
-                            } elseif ($this->evenement->heureFin === '') {
-                                $heureFin = 'empty';
-                            } else {
-                                $heureFin = $this->evenement->heureFin;
-                            }
-
-                            if (($this->evenement->texteEvt() !== "PTUT") && ($this->evenement->texteEvt() !== "Entreprise") && ($this->evenement->texteEvt() !== "Inconnue") && ($this->evenement->texteEvt() !== "Stages")) {
-                                $bilan['error']['cours_incomplets'][] = ['id' => $id, 'matiere' => $matiere, 'texteEvt' => $this->evenement->texteEvt(), 'groupe' => $groupe, 'semestre' => $semestre, 'enseignant' => $enseignant, 'salle' => $salle, 'date' => $this->evenement->dateObjet, 'horaires' => $heureDebut . ' - ' . $heureFin];
-                            }
                         }
+//                        else {
+//                            //tester les données manquantes
+//                            if ($this->evenement->id === null) {
+//                                $id = 'null';
+//                            } elseif ($this->evenement->id === '') {
+//                                $id = 'empty';
+//                            } else {
+//                                $id = $this->evenement->id;
+//                            }
+//
+//                            if ($this->evenement->groupeObjet === null) {
+//                                $groupe = 'null';
+//                            } else {
+//                                $groupe = $this->evenement->groupeObjet->getLibelle();
+//                            }
+//
+//                            if ($this->evenement->semestre === null) {
+//                                $semestre = 'null';
+//                            } elseif ($this->evenement->semestre === '') {
+//                                $semestre = 'empty';
+//                            } else {
+//                                $semestre = $this->evenement->semestre->getLibelle();
+//                            }
+//
+//                            if ($this->evenement->personnelObjet === null) {
+//                                $enseignant = 'null';
+//                            } else {
+//                                $enseignant = $this->evenement->personnelObjet->getPrenom() . ' ' . $this->evenement->personnelObjet->getNom();
+//                            }
+//
+//                            if ($this->evenement->matiere === '') {
+//                                $matiere = 'empty';
+//                            } elseif ($this->evenement->matiere === null) {
+//                                $matiere = 'null';
+//                            } else {
+//                                $matiere = $this->evenement->matiere;
+//                            }
+//
+//                            if ($this->evenement->salle === null) {
+//                                $salle = 'null';
+//                            } elseif ($this->evenement->salle === '') {
+//                                $salle = 'empty';
+//                            } else {
+//                                $salle = $this->evenement->salle;
+//                            }
+//
+//                            if ($this->evenement->heureDebut === null) {
+//                                $heureDebut = 'null';
+//                            } elseif ($this->evenement->heureDebut === '') {
+//                                $heureDebut = 'empty';
+//                            } else {
+//                                $heureDebut = $this->evenement->heureDebut;
+//                            }
+//
+//                            if ($this->evenement->heureFin === null) {
+//                                $heureFin = 'null';
+//                            } elseif ($this->evenement->heureFin === '') {
+//                                $heureFin = 'empty';
+//                            } else {
+//                                $heureFin = $this->evenement->heureFin;
+//                            }
+//
+//                            if (($this->evenement->texteEvt() !== "PTUT") && ($this->evenement->texteEvt() !== "Entreprise") && ($this->evenement->texteEvt() !== "Inconnue") && ($this->evenement->texteEvt() !== "Stages")) {
+//                                $bilan['error']['cours_incomplets'][] = ['id' => $id, 'matiere' => $matiere, 'texteEvt' => $this->evenement->texteEvt(), 'groupe' => $groupe, 'semestre' => $semestre, 'enseignant' => $enseignant, 'salle' => $salle, 'date' => $this->evenement->dateObjet, 'horaires' => $heureDebut . ' - ' . $heureFin];
+//                            }
+//                        }
                     }
                 }
             }
         }
-        return $bilan;
+        return $bilan ?? null;
 
     }
 
@@ -195,8 +198,10 @@ class UpdateEdt
         $course = (new IntranetEdtEduSignAdapter($this->evenement))->getCourse();
         if ($course !== null) {
             $this->apiEduSign->addCourse($course, $this->cleApi);
-            $response = $this->apiEduSign->addCourse($course, $this->cleApi);
-        } else {
+//            $response = $this->apiEduSign->addCourse($course, $this->cleApi);
+            $response = 'cours ajouté - id : ' . $this->evenement->id;
+        }
+        else {
             $response = 'cours non trouvé - id : ' . $this->evenement->id;
         }
         return $response;

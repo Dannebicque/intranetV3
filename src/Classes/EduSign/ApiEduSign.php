@@ -82,7 +82,7 @@ class ApiEduSign
         return $content;
     }
 
-    public function updateCourse(EduSignCourse $course, string $cleApi): void
+    public function updateCourse(EduSignCourse $course, string $cleApi): string
     {
         $client = HttpClient::create();
 
@@ -93,6 +93,11 @@ class ApiEduSign
             ],
             'json' => ['course' => $course->toArray()],
         ]);
+
+        $statusCode = $response->getStatusCode();
+        $content = $response->getContent();
+
+        return $content;
     }
 
     public function getCourseIdByApiId(string $apiId, string $cleApi): mixed
@@ -152,7 +157,7 @@ class ApiEduSign
         return $data['result'] ?? "";
     }
 
-    public function deleteCourse(?string $course, string $cleApi): void
+    public function deleteCourse(?string $course, string $cleApi): string
     {
         $client = HttpClient::create();
 
@@ -171,6 +176,8 @@ class ApiEduSign
             $edt->setIdEduSign(null);
             $this->edtPlanningRepository->save($edt);
         }
+
+        return $content;
 
     }
 

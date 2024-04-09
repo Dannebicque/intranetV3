@@ -35,6 +35,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use function PHPUnit\Framework\isEmpty;
 use function PHPUnit\Framework\throwException;
 
 #[Route('/administratif/edusign')]
@@ -144,18 +145,19 @@ class EduSignController extends BaseController
 
             $fixCourses->fixCourse($keyEduSign);
 
-            if ($updateEdt->update($keyEduSign, $opt) !== null) {
-                $data = $updateEdt->update($keyEduSign, $opt);
-            }
-            if ($fixCourses->fixCourse($keyEduSign) !== null) {
-                // ajouter le tableau retourné par la méthode fixCourse() dans le tableau data
-                $data['error']['fix'] = $fixCourses->fixCourse($keyEduSign);
-            }
-            if ($data !== null) {
-                // ajouter $departement->getLibelle() comme key du tableau data
-                $data['header']['dept'] = $departement->getLibelle();
-                $this->sendEmail($data, $mailer);
-            }
+//            if ($updateEdt->update($keyEduSign, $opt) !== null) {
+//                $data = $updateEdt->update($keyEduSign, $opt);
+//            }
+//            if ($fixCourses->fixCourse($keyEduSign) !== null) {
+//                // ajouter le tableau retourné par la méthode fixCourse() dans le tableau data
+//                $data['fix'] = $fixCourses->fixCourse($keyEduSign);
+//            }
+//            if (!empty($data)) {
+//                // ajouter $departement->getLibelle() comme key du tableau data
+//                $data['header']['dept'] = $departement->getLibelle();
+//                $this->sendEmail($data, $mailer);
+//            }
+//                dd($data);
 
         }
 
