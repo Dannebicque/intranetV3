@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.17.9](https://github.com/Dannebicque/intranetV3/compare/v3.17.8...v3.17.9) (2024-04-09)
+
+
+### Bug Fixes
+
+* Affichage de l'année universitaire de prévisionnel ([1ccd529](https://github.com/Dannebicque/intranetV3/commit/1ccd529e4140f307c43ac16532ea078e161abf48))
+* affichage des heures ([d66dc09](https://github.com/Dannebicque/intranetV3/commit/d66dc0905f852e78d4df005cb2c28362da5bb94d))
+* edusign update edt - doublons ([3b90377](https://github.com/Dannebicque/intranetV3/commit/3b90377db06b22fc2c06a20f8ad2d1768cbfec8a))
+* Remove semester selection buttons from evaluation page ([df43879](https://github.com/Dannebicque/intranetV3/commit/df438799f8e5bf0df34e20805f5b3ed4440b3c2a))
+
 ### [3.17.8](https://github.com/Dannebicque/intranetV3/compare/v3.17.6...v3.17.8) (2024-04-08)
 
 
