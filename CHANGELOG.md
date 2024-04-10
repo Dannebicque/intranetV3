@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.17.11](https://github.com/Dannebicque/intranetV3/compare/v3.17.10...v3.17.11) (2024-04-10)
+
+
+### Bug Fixes
+
+* Affichage des incoéhrences de note avec matière+ masquage par défaut ([114e3bf](https://github.com/Dannebicque/intranetV3/commit/114e3bf49a34919d1c484985905de3db9236ab68))
+
 ### [3.17.10](https://github.com/Dannebicque/intranetV3/compare/v3.17.9...v3.17.10) (2024-04-10)
 
 
