@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/NoteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 10/04/2024 14:37
  */
 
 namespace App\Controller\administration;
@@ -71,9 +71,15 @@ class NoteController extends BaseController
         $notesIncoherentes = $noteRepository->findBySemestreErreur($matieres,
             $this->getDataUserSession()->getAnneeUniversitaire());
 
+        $tMatieres = [];
+        foreach ($matieres as $matiere) {
+            $tMatieres[$matiere->getTypeIdMatiere()] = $matiere;
+        }
+
         return $this->render('administration/notes/analyse.html.twig', [
             'notesAvecAbsence' => $notesAvecAbsence,
             'notesIncoherentes' => $notesIncoherentes,
+            'matieres' => $tMatieres,
         ]);
     }
 
