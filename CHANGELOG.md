@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.17.10](https://github.com/Dannebicque/intranetV3/compare/v3.17.9...v3.17.10) (2024-04-10)
+
+
+### Features
+
+* recherche avec ctrl ou cmd + k ([493d499](https://github.com/Dannebicque/intranetV3/commit/493d4997866657619367cae4cff2ee7efa412545))
+
+
+### Bug Fixes
+
+* cosmétique sur détail d'un previsionnel ([40d1776](https://github.com/Dannebicque/intranetV3/commit/40d17764bf80530b54678b2098324b0182bb1298))
+* cosmétique sur la liste des plans de cours ([95c3d7f](https://github.com/Dannebicque/intranetV3/commit/95c3d7fc123850270f32cd36d06339f4910811d2))
+* Export des listes selon le type de groupe et le parcours ([ae8c18d](https://github.com/Dannebicque/intranetV3/commit/ae8c18db384035abd6e6a096c8405cfcced18f92))
+* Plan de cours séquence ([bc9aaa4](https://github.com/Dannebicque/intranetV3/commit/bc9aaa48f20942a76a22612fc6186244d9a353fc))
+* SAE/Ressources sur plusieurs semestre + filtre des semestres selon l'ordre + bug de reprise des AC ([2ce76c1](https://github.com/Dannebicque/intranetV3/commit/2ce76c1073fed3e934022e8cdbcd34f8bab21cd4))
+
 ### [3.17.9](https://github.com/Dannebicque/intranetV3/compare/v3.17.8...v3.17.9) (2024-04-09)
 
 
