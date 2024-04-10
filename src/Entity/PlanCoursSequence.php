@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/PlanCoursSequence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/02/2024 10:01
+ * @lastUpdate 10/04/2024 14:14
  */
 
 namespace App\Entity;
@@ -23,8 +23,8 @@ class PlanCoursSequence extends BaseEntity
     #[ORM\Column(type: Types::TEXT)]
     private ?string $programme = null;
 
-    #[ORM\Column]
-    private ?float $nbHeures = null;
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $nbHeures = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $commentaire = null;
@@ -47,12 +47,12 @@ class PlanCoursSequence extends BaseEntity
         return $this;
     }
 
-    public function getNbHeures(): ?float
+    public function getNbHeures(): ?string
     {
         return $this->nbHeures;
     }
 
-    public function setNbHeures(float $nbHeures): self
+    public function setNbHeures(string $nbHeures): self
     {
         $this->nbHeures = $nbHeures;
 

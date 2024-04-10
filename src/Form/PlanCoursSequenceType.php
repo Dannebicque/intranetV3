@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Form/PlanCoursSequenceType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/12/2022 17:36
+ * @lastUpdate 10/04/2024 14:32
  */
 
 namespace App\Form;
@@ -19,9 +19,15 @@ class PlanCoursSequenceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('programme')
-            ->add('nbHeures')
-            ->add('commentaire');
+            ->add('programme', null, ['label' => 'Programme', 'help' =>
+                'Programme de la séquence de cours'])
+            ->add('nbHeures', null, [
+                'label' => 'Nombre d\'heures',
+                'required' => true,
+                'help' => 'Nombre d\'heures de cours pour cette séquence',
+            ])
+            ->add('commentaire', null, ['label' => 'Commentaire', 'help' =>
+                'Commentaire libre sur la séquence de cours']);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
