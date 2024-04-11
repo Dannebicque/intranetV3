@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.17.12](https://github.com/Dannebicque/intranetV3/compare/v3.17.11...v3.17.12) (2024-04-11)
+
+
+### Bug Fixes
+
+* bouton pour ajouter un personnel ([5a904cd](https://github.com/Dannebicque/intranetV3/commit/5a904cddb55a370a648cb198c3c091509753d46f))
+
 ### [3.17.11](https://github.com/Dannebicque/intranetV3/compare/v3.17.10...v3.17.11) (2024-04-10)
 
 
