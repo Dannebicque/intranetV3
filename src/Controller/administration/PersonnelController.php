@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/PersonnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/04/2024 10:44
+ * @lastUpdate 11/04/2024 09:54
  */
 
 namespace App\Controller\administration;
@@ -134,14 +134,18 @@ class PersonnelController extends BaseController
         PersonnelRepository $personnelRepository
     ): Response
     {
+        $search = '';
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
         if (!$request->query->has('search') || $request->query->get('search') === '') {
             $personnels = [];
         } else {
             $personnels = $personnelRepository->search($request->query->get('search'));
+            $search = $request->query->get('search');
         }
 
-        return $this->render('administration/personnel/_personnel_add.html.twig', ['personnels' => $personnels]);
+        return $this->render('administration/personnel/_personnel_add.html.twig', [
+            'personnels' => $personnels,
+            'search' => $search]);
     }
 
     #[Route(path: '/personnel/departement/add/', name: 'add_to_departement')]

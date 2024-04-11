@@ -17,8 +17,25 @@
             </button>
         </td>
     </tr>
+    {% if loop.last %}
+        <tr id="ligne-no-result">
+            <td colspan="6">Intervenant non présent : <a href="{{ path('administration_personnel_create') }}"
+                                                         class="btn btn-success"><i class="{{ iconAdd }}"></i>
+                    Ajouter un intervenant</a>
+            </td>
+        </tr>
+    {% endif %}
 {% else %}
-    <tr id="ligne-no-result">
-        <td colspan="6">Saisissez quelques caractères pour afficher des résultats</td>
-    </tr>
+    {% if search == '' %}
+        <tr id="ligne-no-result">
+            <td colspan="6">Saisissez quelques caractères pour afficher des résultats</td>
+        </tr>
+    {% else %}
+        <tr id="ligne-no-result">
+            <td colspan="6">Aucun résultat : <a href="{{ path('administration_personnel_create') }}"
+                                                class="btn btn-success"><i class="{{ iconAdd }}"></i>
+                    Ajouter un intervenant</a>
+            </td>
+        </tr>
+    {% endif %}
 {% endfor %}
