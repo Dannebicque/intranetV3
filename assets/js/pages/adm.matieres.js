@@ -1,11 +1,11 @@
-// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/adm.matieres.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/07/2022 13:30
+// @lastUpdate 14/04/2024 11:54
 import $ from 'jquery'
-import { addCallout } from '../util'
 import Routing from 'fos-router'
+import { addCallout } from '../util'
 
 $('#matiere_semestre').change(function () {
   const semestreSelector = $(this)
@@ -86,8 +86,6 @@ $('#matiere_semestre').change(function () {
 
 $(document).on('click', '.change-diplome', function (e) {
   e.preventDefault()
-  $('.change-diplome').removeClass('active show')
-  $(this).addClass('active show')
   const $diplome = $(this).data('diplome')
   $.ajax({
     url: Routing.generate('administration_matiere_diplome', { diplome: $diplome }),

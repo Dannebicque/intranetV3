@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcRessourceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/04/2024 14:19
+ * @lastUpdate 14/04/2024 13:29
  */
 
 namespace App\Controller\administration\apc;
@@ -89,7 +89,7 @@ class ApcRessourceController extends BaseController
         $competences = JsonRequest::getValueFromRequest($request, 'competences');
         $t = [];
         if (0 !== count($semestres) && (null === $competences ? 0 : count($competences)) > 0) {
-            if (null !== JsonRequest::getValueFromRequest($request, 'ressource')) {
+            if (null !== JsonRequest::getValueFromRequest($request, 'ressource') && '' !== JsonRequest::getValueFromRequest($request, 'ressource')) {
                 $tabAcSae = $apcRessourceApprentissageCritiqueRepository->findArrayIdAc((int) JsonRequest::getValueFromRequest($request,
                     'ressource'));
             } else {
@@ -178,11 +178,8 @@ class ApcRessourceController extends BaseController
         ]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $semestre = $semestreRepository->find($request->request->all()['apc_ressource']['semestre']);
-            if (null !== $semestre) {
-                $apcRessource->addSemestre($semestre);
-                $semestre->addApcSemestresRessource($apcRessource);
-
+            $semestres = $request->request->all()['apc_ressource']['semestres'];
+            if (0 !== count($semestres)) {
                 $this->entityManager->persist($apcRessource);
 
                 $acs = $request->request->has('ac') ? $request->request->all()['ac'] : [];

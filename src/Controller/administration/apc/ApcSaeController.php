@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcSaeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/04/2024 14:35
+ * @lastUpdate 14/04/2024 13:29
  */
 
 namespace App\Controller\administration\apc;
@@ -83,7 +83,7 @@ class ApcSaeController extends BaseController
         $competences = JsonRequest::getValueFromRequest($request, 'competences');
         $t = [];
         if (0 !== count($semestres) && (null === $competences ? 0 : count($competences)) > 0) {
-            if (null !== JsonRequest::getValueFromRequest($request, 'sae')) {
+            if (null !== JsonRequest::getValueFromRequest($request, 'sae') && '' !== JsonRequest::getValueFromRequest($request, 'sae')) {
                 $tabAcSae = $apcSaeApprentissageCritiqueRepository->findArrayIdAc(JsonRequest::getValueFromRequest($request, 'sae'));
             } else {
                 $tabAcSae = [];
@@ -181,10 +181,8 @@ class ApcSaeController extends BaseController
         $form = $this->createForm(ApcSaeType::class, $apcSae, ['diplome' => $diplome]);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
-            $semestre = $semestreRepository->find($request->request->all()['apc_sae']['semestre']);
-            if (null !== $semestre) {
-                $apcSae->addSemestre($semestre);
-                $semestre->addApcSemestresSae($apcSae);
+            $semestres = $request->request->all()['apc_sae']['semestres'];
+            if (count($semestres) !== 0) {
                 $this->entityManager->persist($apcSae);
                 // sauvegarde des AC
                 $acs = $request->request->has('ac') ? $request->request->all()['ac'] : [];
