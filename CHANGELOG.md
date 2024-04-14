@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.17.13](https://github.com/Dannebicque/intranetV3/compare/v3.17.12...v3.17.13) (2024-04-14)
+
+
+### Bug Fixes
+
+* Ajouter/edition SAE/Ressources ([96a495c](https://github.com/Dannebicque/intranetV3/commit/96a495c36663b2b7a74f2ffd1573ca76e9203892))
+
 ### [3.17.12](https://github.com/Dannebicque/intranetV3/compare/v3.17.11...v3.17.12) (2024-04-11)
 
 
