@@ -1,8 +1,8 @@
-// Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/adm/previsionnel_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 11/09/2023 21:21
+// @lastUpdate 15/04/2024 22:06
 
 import { Controller } from '@hotwired/stimulus'
 import { addCallout } from '../../js/util'
@@ -202,6 +202,32 @@ export default class extends Controller {
       this._updateMatiere(params)
     } else {
       alert('Veuillez sélectionner un intervenant')
+    }
+  }
+
+  async ajoutMatiere(e) {
+    const matiere = document.getElementById('addMatiere').value
+    if (matiere !== '') {
+      // fetch pour l'ajouter et refresh
+      const { personnel } = e.params
+      const { annee } = e.params
+
+      const body = new FormData()
+      body.append('matiere', matiere)
+      body.append('annee', annee)
+      body.append('intervenant', personnel)
+
+      await fetch(this.urlAddMatiereValue, {
+        method: 'POST',
+        body,
+      })
+      const params = new URLSearchParams({
+        annee,
+        personnel,
+      })
+      this._updatePersonnel(params)
+    } else {
+      alert('Veuillez sélectionner une matière')
     }
   }
 

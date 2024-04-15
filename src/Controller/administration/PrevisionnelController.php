@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:40
+ * @lastUpdate 15/04/2024 22:06
  */
 
 namespace App\Controller\administration;
@@ -65,12 +65,13 @@ class PrevisionnelController extends BaseController
     /** @deprecated */
     public function matiere(
         PrevisionnelManager $previsionnelManager,
-        TypeMatiereManager $typeMatiereManager,
+        TypeMatiereManager  $typeMatiereManager,
         PrevisionnelSynthese $previsionnelSynthese,
-        int $matiere,
-        string $type,
-        ?int $annee = 0
-    ): Response {
+        int                 $matiere,
+        string              $type,
+        ?int                $annee = 0
+    ): Response
+    {
         if (0 === $annee) {
             if (null === $this->dataUserSession->getAnneePrevisionnel()) {
                 throw new AnneeUniversitaireNotFoundException();
@@ -98,9 +99,10 @@ class PrevisionnelController extends BaseController
     public function semestre(
         PrevisionnelManager $previsionnelManager,
         PrevisionnelSynthese $previsionnelSynthese,
-        Semestre $semestre,
-        ?int $annee = 0
-    ): Response {
+        Semestre            $semestre,
+        ?int                $annee = 0
+    ): Response
+    {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
         if (0 === $annee) {
             if (null === $this->dataUserSession->getAnneePrevisionnel()) {
@@ -124,11 +126,12 @@ class PrevisionnelController extends BaseController
     /** @deprecated */
     public function personnel(
         PrevisionnelManager $previsionnelManager,
-        HrsManager $hrsManager,
+        HrsManager          $hrsManager,
         PrevisionnelSynthese $previsionnelSynthese,
-        Personnel $personnel,
-        ?int $annee = 0
-    ): Response {
+        Personnel           $personnel,
+        ?int                $annee = 0
+    ): Response
+    {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
 
         if (0 === $annee) {
@@ -157,9 +160,10 @@ class PrevisionnelController extends BaseController
     /** @deprecated */
     public function edit(
         PrevisionnelManager $previsionnelManager,
-        Request $request,
+        Request      $request,
         Previsionnel $previsionnel
-    ): JsonResponse {
+    ): JsonResponse
+    {
         $name = $request->request->get('field');
         $value = $request->request->get('value');
 
@@ -179,7 +183,7 @@ class PrevisionnelController extends BaseController
     public function loadStep(
         PersonnelRepository $personnelRepository,
         TypeMatiereManager $typeMatiereManager,
-        Request $request): Response
+        Request            $request): Response
     {
         $type = $request->query->get('type');
 
@@ -356,27 +360,26 @@ class PrevisionnelController extends BaseController
         TypeMatiereManager     $typeMatiereManager,
         Request                $request): Response
     {
-        //todo: reprendre et finaliser nouveau prévisionnel. Reporter sur affichage prof application
-//        $personnel = $personnelRepository->find($request->request->get('intervenant'));
-//        $matiere = $typeMatiereManager->getMatiereFromSelect($request->request->get('matiere'));
-//        $annee = $request->request->get('annee');
-//
-//        if ($personnel === null) {
-//            throw new PersonnelNotFoundException();
-//        }
-//
-//        if ($matiere === null) {
-//            throw new MatiereNotFoundException();
-//        }
-//
-//        $previsionnel = new Previsionnel($annee, $personnel);
-//        $previsionnel->setTypeMatiere($matiere->typeMatiere);
-//        $previsionnel->setIdMatiere($matiere->id);
-//
-//        $entityManager->persist($previsionnel);
-//        $entityManager->flush();
-//
-//        return new JsonResponse(true, Response::HTTP_OK);
+        $personnel = $personnelRepository->find($request->request->get('intervenant'));
+        $matiere = $typeMatiereManager->getMatiereFromSelect($request->request->get('matiere'));
+        $annee = $request->request->get('annee');
+
+        if ($personnel === null) {
+            throw new PersonnelNotFoundException();
+        }
+
+        if ($matiere === null) {
+            throw new MatiereNotFoundException();
+        }
+
+        $previsionnel = new Previsionnel($annee, $personnel);
+        $previsionnel->setTypeMatiere($matiere->typeMatiere);
+        $previsionnel->setIdMatiere($matiere->id);
+
+        $entityManager->persist($previsionnel);
+        $entityManager->flush();
+
+        return new JsonResponse(true, Response::HTTP_OK);
     }
 
     #[Route('/new/ajax/change-intervenant/{id}', name: 'administration_previsionnel_change_intervenant', methods: ['POST'])]
@@ -421,6 +424,24 @@ class PrevisionnelController extends BaseController
         $entityManager->flush();
 
         return new JsonResponse(true, Response::HTTP_OK);
+    }
+
+    #[Route('/new/ajax/change-heure/{typeIdMatiere}', name: 'administration_previsionnel_change_heures', methods: ['POST'])]
+    public function changeHeure(
+        TypeMatiereManager     $typeMatiereManager,
+        EntityManagerInterface $entityManager,
+        Request                $request,
+        string                 $typeIdMatiere
+    ): Response
+    {
+        $name = $request->request->get('field');
+        $value = $request->request->get('value');
+        $manager = $typeMatiereManager->getManager($typeIdMatiere);
+        $objet = $manager->find($request->request->get('id'));
+        $update = $manager->update($name, $value, $objet);
+
+        return $update ? new JsonResponse(true, Response::HTTP_OK) : new JsonResponse(false,
+            Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
     #[Route('/new/ajax/change-data/{id}', name: 'administration_previsionnel_change_data', methods: ['POST'])]
@@ -494,7 +515,8 @@ class PrevisionnelController extends BaseController
         PersonnelRepository $personnelRepository,
         PrevisionnelManager $previsionnelManager,
         Request $request
-    ): Response {
+    ): Response
+    {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         $anneeDepart = $request->request->get('annee_depart');
@@ -538,11 +560,12 @@ class PrevisionnelController extends BaseController
     public function delete(
         Request $request,
         Previsionnel $previsionnel
-    ): Response {
+    ): Response
+    {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         $id = $previsionnel->getId();
-        if ($this->isCsrfTokenValid('delete'.$id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
+        if ($this->isCsrfTokenValid('delete' . $id, $request->server->get('HTTP_X_CSRF_TOKEN'))) {
             $this->entityManager->remove($previsionnel);
             $this->entityManager->flush();
 

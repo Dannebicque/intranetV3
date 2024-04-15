@@ -3,7 +3,14 @@
     <div class="row">
         <div class="col-sm-12 {{ col }} text-center">
             <strong>CM</strong><br>
-            {{ matiere.cmFormation|nombreHeure }}h
+            {#  todo:                passer le type de class pour avoir le bon objet. et avoir des updater avec interface  #}
+
+            <twig:Editable
+                    field="cmFormation"
+                    path="{{ url('administration_previsionnel_change_heures', {typeIdMatiere: matiere.typeIdMatiere}) }}"
+                    value="{{ matiere.cmFormation|nombreHeure }}"
+            >
+            </twig:Editable>
         </div>
         <div class="col-sm-12 {{ col }} text-center">
             <strong>TD</strong><br>

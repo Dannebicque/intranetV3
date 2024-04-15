@@ -60,7 +60,7 @@
                         <select name="annee_supprimer" id="annee_supprimer" class="form-select">
                             <option value="">Choisir</option>
                             {% for annee in 2017..'now'|date('Y')+2 %}
-                                <option value="{{ annee }}">{{ annee }}</option>
+                                <option value="{{ annee }}">{{ annee }} | {{ annee+1 }}</option>
                             {% endfor %}
                         </select>
                     </div>

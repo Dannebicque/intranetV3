@@ -174,12 +174,12 @@
             </td>
         </tr>
     {% endfor %}
-    <tr>
+    <tr id="ligneAdd">
         <td colspan="11" class="bg-complementary">
             <div class="row">
                 <div class="col-6">
-                    <label class="sr-only" for="addPersonnel">Choisir une matière/ressource/SAE à ajouter</label>
-                    <select id="addPersonnel"
+                    <label class="sr-only" for="addMatiere">Choisir une matière/ressource/SAE à ajouter</label>
+                    <select id="addMatiere"
                             {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
                             class="form-select"
                     >
@@ -199,7 +199,7 @@
                                     annee: annee,
                                 }) }}
                                 id="addMatierePrevisionnel"><i
-                                    class="fas fa-plus"></i> {{ 'ajouter.matiere'|trans }}
+                                    class="fas fa-plus"></i> Ajouter une matière/ressource/SAE
                         </button>
                     </div>
                 </div>
