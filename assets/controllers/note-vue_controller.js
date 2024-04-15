@@ -1,7 +1,7 @@
 import { Controller } from '@hotwired/stimulus'
 
 /**
- * @property {string} urlPointerNote
+ * @property {string} urlPointerNoteValue
  * @property {boolean} isVueValue
  * @property {HTMLInputElement} checkboxTarget
  * @property {HTMLElement} spinnerTarget
