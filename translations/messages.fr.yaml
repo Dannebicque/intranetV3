@@ -1423,6 +1423,7 @@ label:
   matiere: Matière
   personnel: Personnel
   photo: Photo
+  pointer: Pointer
   previsionnel_commentaire: 'Commentaire sur le prévisionnel'
   question.help: question.help
   save_and_continue: 'Sauvegarder et continuer'
