@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/adm/previsionnel_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 15/04/2024 22:06
+// @lastUpdate 16/04/2024 10:47
 
 import { Controller } from '@hotwired/stimulus'
 import { addCallout } from '../../js/util'
@@ -228,6 +228,34 @@ export default class extends Controller {
       this._updatePersonnel(params)
     } else {
       alert('Veuillez sélectionner une matière')
+    }
+  }
+
+  async ajoutMatierePersonnel(e) {
+    const matiere = document.getElementById('addMatiere').value
+    const intervenant = document.getElementById('addPersonnel').value
+    if (matiere !== '' && intervenant !== '') {
+      // fetch pour l'ajouter et refresh
+      const { annee } = e.params
+      const { semestre } = e.params
+
+      const body = new FormData()
+      body.append('matiere', matiere)
+      body.append('annee', annee)
+      body.append('semestre', semestre)
+      body.append('intervenant', intervenant)
+
+      await fetch(this.urlAddMatiereValue, {
+        method: 'POST',
+        body,
+      })
+      const params = new URLSearchParams({
+        annee,
+        semestre,
+      })
+      this._updateSemestre(params)
+    } else {
+      alert('Veuillez sélectionner une matière et un intervenant')
     }
   }
 

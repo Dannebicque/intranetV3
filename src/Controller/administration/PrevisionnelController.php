@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 15/04/2024 22:06
+ * @lastUpdate 16/04/2024 10:30
  */
 
 namespace App\Controller\administration;
@@ -223,7 +223,7 @@ class PrevisionnelController extends BaseController
         Request             $request): Response
     {
         $matiere = $typeMatiereManager->getMatiereFromSelect($request->query->get('matiere'));
-        $annee = $request->query->get('annee');
+        $annee = (int)$request->query->get('annee');
 
         if ($matiere === null) {
             return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
@@ -355,6 +355,35 @@ class PrevisionnelController extends BaseController
 
     #[Route('/new/ajax/add-matiere', name: 'administration_previsionnel_add_matiere', methods: ['POST'])]
     public function addMatiere(
+        EntityManagerInterface $entityManager,
+        PersonnelRepository    $personnelRepository,
+        TypeMatiereManager     $typeMatiereManager,
+        Request                $request): Response
+    {
+        $personnel = $personnelRepository->find($request->request->get('intervenant'));
+        $matiere = $typeMatiereManager->getMatiereFromSelect($request->request->get('matiere'));
+        $annee = $request->request->get('annee');
+
+        if ($personnel === null) {
+            throw new PersonnelNotFoundException();
+        }
+
+        if ($matiere === null) {
+            throw new MatiereNotFoundException();
+        }
+
+        $previsionnel = new Previsionnel($annee, $personnel);
+        $previsionnel->setTypeMatiere($matiere->typeMatiere);
+        $previsionnel->setIdMatiere($matiere->id);
+
+        $entityManager->persist($previsionnel);
+        $entityManager->flush();
+
+        return new JsonResponse(true, Response::HTTP_OK);
+    }
+
+    #[Route('/new/ajax/add-matiere', name: 'administration_previsionnel_add_matiere_personnel', methods: ['POST'])]
+    public function addMatierePersonnel(
         EntityManagerInterface $entityManager,
         PersonnelRepository    $personnelRepository,
         TypeMatiereManager     $typeMatiereManager,

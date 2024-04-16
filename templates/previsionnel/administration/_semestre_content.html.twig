@@ -200,7 +200,21 @@
     <tr id="ligneAdd">
         <td colspan="12" class="bg-complementary">
             <div class="row">
-                <div class="col-6">
+                <div class="col-4">
+                    <label class="sr-only" for="addMatiere">Choisir une matière à ajouter</label>
+                    <select id="addMatiere"
+                            {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
+                            class="form-select"
+                    >
+                        <option value="">{{ 'choisir.matiere'|trans }}</option>
+                        {% for matiere in matieres %}
+                            <option value="{{ matiere.typeIdMatiere }}">
+                                {{ matiere.display }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-4">
                     <label class="sr-only" for="addPersonnel">Choisir un intervenant à ajouter</label>
                     <select id="addPersonnel"
                             {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
@@ -214,10 +228,10 @@
                         {% endfor %}
                     </select>
                 </div>
-                <div class="col-6">
+                <div class="col-4">
                     <div class="d-grid ">
                         <button class="btn btn-success d-block text-white"
-                                {{ stimulus_action('adm--previsionnel', 'ajoutMatiere', 'click', {
+                                {{ stimulus_action('adm--previsionnel', 'ajoutMatierePersonnel', 'click', {
                                     semestre: semestre.id,
                                     annee: annee,
                                 }) }}
