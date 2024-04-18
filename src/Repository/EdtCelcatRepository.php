@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtCelcatRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/11/2023 07:32
+ * @lastUpdate 18/04/2024 17:54
  */
 
 namespace App\Repository;
@@ -16,7 +16,7 @@ use App\Entity\Etudiant;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Order;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\String\Exception\InvalidArgumentException;
 
@@ -44,9 +44,9 @@ class EdtCelcatRepository extends ServiceEntityRepository
             ->andWhere('p.personnel = :idprof')
             ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
             ->setParameters(['semaine' => $semaine, 'idprof' => $personnel->getId(), 'anneeUniversitaire' => $anneeUniversitaire])
-            ->orderBy('p.jour', Criteria::ASC)
-            ->addOrderBy('p.debut', Criteria::ASC)
-            ->addOrderBy('p.codeGroupe', Criteria::ASC)
+            ->orderBy('p.jour', Order::Ascending->value)
+            ->addOrderBy('p.debut', Order::Ascending->value)
+            ->addOrderBy('p.codeGroupe', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -69,8 +69,8 @@ class EdtCelcatRepository extends ServiceEntityRepository
             }
 
             $query->setParameters($this->params)
-                ->orderBy('p.jour', Criteria::ASC)
-                ->addOrderBy('p.debut', Criteria::ASC);
+                ->orderBy('p.jour', Order::Ascending->value)
+                ->addOrderBy('p.debut', Order::Ascending->value);
 
             return $query->getQuery()->getResult();
         }
@@ -124,9 +124,9 @@ class EdtCelcatRepository extends ServiceEntityRepository
                 'semestre' => $semestre->getOrdreLmd(),
                 'annee' => $anneeUniversitaire->getId(),
             ])
-            ->orderBy('p.jour', Criteria::ASC)
-            ->addOrderBy('p.debut', Criteria::ASC)
-            ->addOrderBy('p.codeGroupe', Criteria::ASC);
+            ->orderBy('p.jour', Order::Ascending->value)
+            ->addOrderBy('p.debut', Order::Ascending->value)
+            ->addOrderBy('p.codeGroupe', Order::Ascending->value);
 
         $ors = [];
         $diplome = $semestre->getDiplome()->getParent() ?? $semestre->getDiplome();
@@ -145,9 +145,9 @@ class EdtCelcatRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('p')
             ->where('p.codePersonnel = :idprof')
             ->setParameter('idprof', $user->getNumeroHarpege())
-            ->orderBy('p.jour', Criteria::ASC)
-            ->addOrderBy('p.debut', Criteria::ASC)
-            ->addOrderBy('p.libGroupe', Criteria::ASC)
+            ->orderBy('p.jour', Order::Ascending->value)
+            ->addOrderBy('p.debut', Order::Ascending->value)
+            ->addOrderBy('p.libGroupe', Order::Ascending->value)
             ->getQuery()
             ->getResult();
 
@@ -195,9 +195,9 @@ class EdtCelcatRepository extends ServiceEntityRepository
 //                'semestre' => $semestre->getOrdreLmd(),
 //                'annee' => $anneeUniversitaire->getId(),])
 //            ->setParameter('diplome', null !== $semestre->getDiplome()->getParent() ? $semestre->getDiplome()->getParent()->getId() : $semestre->getDiplome()->getId())
-//            ->orderBy('p.jour', Criteria::ASC)
-//            ->addOrderBy('p.debut', Criteria::ASC)
-//            ->addOrderBy('p.codeGroupe', Criteria::ASC);
+//            ->orderBy('p.jour', Order::Ascending)
+//            ->addOrderBy('p.debut', Order::Ascending)
+//            ->addOrderBy('p.codeGroupe', Order::Ascending);
 //
 //        return $query->getQuery()
 //            ->getResult();
@@ -212,9 +212,9 @@ public function findEdtSemestreSemaine(Semestre $semestre, int $semaineFormation
                 'semaine' => $semaineFormationIUT,
                 'semestre' => $semestre,
                 'annee' => $anneeUniversitaire])
-            ->orderBy('p.jour', Criteria::ASC)
-            ->addOrderBy('p.debut', Criteria::ASC)
-            ->addOrderBy('p.codeGroupe', Criteria::ASC);
+            ->orderBy('p.jour', Order::Ascending->value)
+            ->addOrderBy('p.debut', Order::Ascending->value)
+            ->addOrderBy('p.codeGroupe', Order::Ascending->value);
 
         return $query->getQuery()
             ->getResult();

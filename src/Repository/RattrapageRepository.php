@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/RattrapageRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/08/2022 09:25
+ * @lastUpdate 18/04/2024 17:54
  */
 
 namespace App\Repository;
@@ -16,7 +16,7 @@ use App\Entity\Etudiant;
 use App\Entity\Rattrapage;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
@@ -46,8 +46,8 @@ class RattrapageRepository extends ServiceEntityRepository
             ->andWhere('r.anneeUniversitaire = :anneeuniversitaire')
             ->setParameter('semestre', $semestre->getId())
             ->setParameter('anneeuniversitaire', $anneeUniversitaire->getId())
-            ->orderBy('e.nom', Criteria::ASC)
-            ->addOrderBy('e.prenom', Criteria::ASC)
+            ->orderBy('e.nom', Order::Ascending->value)
+            ->addOrderBy('e.prenom', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -57,8 +57,8 @@ class RattrapageRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('r')
             ->where('r.etudiant = :etudiant')
             ->setParameter('etudiant', $etudiant->getId())
-            ->orderBy('r.created', Criteria::DESC)
-            ->orderBy('r.dateEval', Criteria::DESC)
+            ->orderBy('r.created', Order::Descending->value)
+            ->addOrderBy('r.dateEval', Order::Descending->value)
             ->getQuery()
             ->getResult();
     }
@@ -96,9 +96,9 @@ class RattrapageRepository extends ServiceEntityRepository
             ->setParameter('diplome', $diplome->getId())
             ->setParameter('etat', 'A')
             ->setParameter('anneeuniversitaire', $annee)
-            ->orderBy('e.semestre.libelle', Criteria::ASC)
-            ->orderBy('e.nom', Criteria::ASC)
-            ->orderBy('e.prenom', Criteria::ASC)
+            ->orderBy('e.semestre.libelle', Order::Ascending->value)
+            ->addOrderBy('e.nom', Order::Ascending->value)
+            ->addOrderBy('e.prenom', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -110,8 +110,8 @@ class RattrapageRepository extends ServiceEntityRepository
             ->innerJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
             ->where('s.annee = :annee')
             ->setParameter('annee', $annee->getId())
-            ->orderBy('e.nom', Criteria::ASC)
-            ->orderBy('e.prenom', Criteria::ASC)
+            ->orderBy('e.nom', Order::Ascending->value)
+            ->addOrderBy('e.prenom', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -123,7 +123,7 @@ class RattrapageRepository extends ServiceEntityRepository
             ->andWhere('e.typeMatiere = :type')
             ->setParameter('matiere', $matiere)
             ->setParameter('type', $type)
-            ->orderBy('e.dateEval', Criteria::ASC);
+            ->orderBy('e.dateEval', Order::Ascending->value);
 
         if (null !== $annee) {
             $query->innerJoin(AnneeUniversitaire::class, 'u', 'WITH', 'e.anneeUniversitaire = u.id')

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcComptenceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 02/08/2023 09:14
+ * @lastUpdate 18/04/2024 17:52
  */
 
 namespace App\Repository;
@@ -13,6 +13,7 @@ use App\Entity\ApcCompetence;
 use App\Entity\ApcReferentiel;
 use App\Entity\Diplome;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -62,7 +63,7 @@ class ApcComptenceRepository extends ServiceEntityRepository
             ->join('c.apcReferentiel', 'r')
             ->where('c.apcReferentiel = :referentiel')
             ->setParameter('referentiel', $diplome->getReferentiel()->getId())
-            ->orderBy('c.couleur', 'ASC')
+            ->orderBy('c.couleur', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }

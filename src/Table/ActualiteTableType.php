@@ -25,7 +25,7 @@ use Dannebicque\TableBundle\Widget\Type\RowDuplicateLinkType;
 use Dannebicque\TableBundle\Widget\Type\RowEditLinkType;
 use Dannebicque\TableBundle\Widget\Type\RowShowLinkType;
 use Dannebicque\TableBundle\Widget\WidgetBuilder;
-use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
@@ -104,7 +104,7 @@ class ActualiteTableType extends TableType
             'query' => function (QueryBuilder $qb, array $formData) {
                 $qb->where('e.departement = :departement')
                     ->setParameter('departement', $this->departement->getId())
-                    ->orderBy('e.updated', Criteria::DESC);
+                    ->orderBy('e.updated', Order::Descending->value);
 
                 if (isset($formData['search'])) {
                     $qb->andWhere('LOWER(e.titre) LIKE :search');

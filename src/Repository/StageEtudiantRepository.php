@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/StageEtudiantRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:59
+ * @lastUpdate 18/04/2024 17:54
  */
 
 namespace App\Repository;
@@ -16,7 +16,7 @@ use App\Entity\Personnel;
 use App\Entity\StageEtudiant;
 use App\Entity\StagePeriode;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -102,7 +102,7 @@ class StageEtudiantRepository extends ServiceEntityRepository
             ->innerJoin(Entreprise::class, 'e', 'WITH', 's.entreprise = e.id')
             ->where('s.stagePeriode = :stagePeriode')
             ->setParameter('stagePeriode', $stagePeriode->getId())
-            ->orderBy('e.raisonSociale', Criteria::ASC)
+            ->orderBy('e.raisonSociale', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }

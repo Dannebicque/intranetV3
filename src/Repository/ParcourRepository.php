@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ParcourRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 08/05/2022 08:49
+ * @lastUpdate 18/04/2024 17:54
  */
 
 namespace App\Repository;
@@ -15,7 +15,7 @@ use App\Entity\Diplome;
 use App\Entity\Parcour;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -41,7 +41,7 @@ class ParcourRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('u')
             ->where('u.semestre = :semestre')
             ->setParameter('semestre', $semestre->getId())
-            ->orderBy('u.libelle', Criteria::ASC);
+            ->orderBy('u.libelle', Order::Ascending->value);
     }
 
     public function findBySemestre(Semestre $semestre): array

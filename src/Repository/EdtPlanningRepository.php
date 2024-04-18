@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/EdtPlanningRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/03/2024 14:11
+ * @lastUpdate 18/04/2024 17:54
  */
 
 namespace App\Repository;
@@ -18,7 +18,7 @@ use App\Entity\Semestre;
 use App\Enums\TypeGroupeEnum;
 use Carbon\Carbon;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Order;
 use Doctrine\Persistence\ManagerRegistry;
 use function array_key_exists;
 
@@ -51,10 +51,10 @@ class EdtPlanningRepository extends ServiceEntityRepository
             $query->andWhere('p.semaine = :semaine')
                 ->setParameter('semaine', $semaine);
         }
-        $query->orderBy('p.semaine', Criteria::ASC)
-            ->addOrderBy('p.jour', Criteria::ASC)
-            ->addOrderBy('p.debut', Criteria::ASC)
-            ->addOrderBy('p.groupe', Criteria::ASC);
+        $query->orderBy('p.semaine', Order::Ascending->value)
+            ->addOrderBy('p.jour', Order::Ascending->value)
+            ->addOrderBy('p.debut', Order::Ascending->value)
+            ->addOrderBy('p.groupe', Order::Ascending->value);
 
         return $query->getQuery()
             ->getResult();
@@ -68,9 +68,9 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->andWhere('p.diplome = :diplome')
             ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
             ->setParameters(['semaine' => $semaine, 'semestre' => $semestre->getOrdreLmd(), 'anneeUniversitaire' => $anneeUniversitaire->getId(), 'diplome' => null !== $semestre->getDiplome()->getParent() ? $semestre->getDiplome()->getParent()->getId() : $semestre->getDiplome()->getId()])
-            ->orderBy('p.jour', Criteria::ASC)
-            ->addOrderBy('p.debut', Criteria::ASC)
-            ->addOrderBy('p.groupe', Criteria::ASC)
+            ->orderBy('p.jour', Order::Ascending->value)
+            ->addOrderBy('p.debut', Order::Ascending->value)
+            ->addOrderBy('p.groupe', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -86,9 +86,9 @@ class EdtPlanningRepository extends ServiceEntityRepository
                 'idMatiere' => $idModule,
                 'typeMatiere' => $typeModule,
                 'anneeUniversitaire' => $anneeUniversitaire->getId(),])
-            ->orderBy('p.jour', Criteria::ASC)
-            ->addOrderBy('p.debut', Criteria::ASC)
-            ->addOrderBy('p.groupe', Criteria::ASC)
+            ->orderBy('p.jour', Order::Ascending->value)
+            ->addOrderBy('p.debut', Order::Ascending->value)
+            ->addOrderBy('p.groupe', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -100,9 +100,9 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->andWhere('p.jour = :jour')
             ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
             ->setParameters(['semaine' => $semaine, 'jour' => $jour, 'anneeUniversitaire' => $anneeUniversitaire->getId()])
-            ->orderBy('p.annee', Criteria::ASC)
-            ->addOrderBy('p.debut', Criteria::ASC)
-            ->addOrderBy('p.groupe', Criteria::ASC)
+            ->orderBy('p.annee', Order::Ascending->value)
+            ->addOrderBy('p.debut', Order::Ascending->value)
+            ->addOrderBy('p.groupe', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -114,9 +114,9 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->andWhere('p.salle = :salle')
             ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
             ->setParameters(['semaine' => $semaine, 'salle' => $salle, 'anneeUniversitaire' => $anneeUniversitaire->getId()])
-            ->orderBy('p.ordreSemestre', Criteria::ASC)
-            ->addOrderBy('p.debut', Criteria::ASC)
-            ->addOrderBy('p.groupe', Criteria::ASC)
+            ->orderBy('p.ordreSemestre', Order::Ascending->value)
+            ->addOrderBy('p.debut', Order::Ascending->value)
+            ->addOrderBy('p.groupe', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -143,7 +143,7 @@ class EdtPlanningRepository extends ServiceEntityRepository
                 'semaine' => $semaine,
                 'jour' => $jour,
             ])
-            ->orderBy('p.debut', 'ASC')
+            ->orderBy('p.debut', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -167,8 +167,8 @@ class EdtPlanningRepository extends ServiceEntityRepository
                     'diplome' => null !== $user->getDiplome()->getParent() ? $user->getDiplome()->getParent()->getId() : $user->getDiplome()->getId(),
                     'anneeUniversitaire' => $anneeUniversitaire->getId(),
                 ])
-                ->orderBy('p.jour', Criteria::ASC)
-                ->addOrderBy('p.debut', Criteria::ASC)
+                ->orderBy('p.jour', Order::Ascending->value)
+                ->addOrderBy('p.debut', Order::Ascending->value)
                 ->getQuery()
                 ->getResult();
         }
@@ -193,8 +193,8 @@ class EdtPlanningRepository extends ServiceEntityRepository
                         'diplome' => null !== $user->getDiplome()->getParent() ? $user->getDiplome()->getParent()->getId() : $user->getDiplome()->getId(),
                         'anneeUniversitaire' => $anneeUniversitaire->getId(),
                     ])
-                    ->orderBy('p.jour', Criteria::ASC)
-                    ->addOrderBy('p.debut', Criteria::ASC)
+                    ->orderBy('p.jour', Order::Ascending->value)
+                    ->addOrderBy('p.debut', Order::Ascending->value)
                     ->getQuery()
                     ->getResult();
             }
@@ -234,8 +234,8 @@ class EdtPlanningRepository extends ServiceEntityRepository
                 'jour' => $jour,
                 'semestre' => $semestre->getOrdreLmd(),
             ])
-            ->orderBy('p.jour', Criteria::ASC)
-            ->addOrderBy('p.debut', Criteria::ASC)
+            ->orderBy('p.jour', Order::Ascending->value)
+            ->addOrderBy('p.debut', Order::Ascending->value)
             ->getQuery()
             ->getResult();
 
@@ -351,8 +351,8 @@ class EdtPlanningRepository extends ServiceEntityRepository
                 'semestre' => $semestre->getOrdreLmd(),
                 'anneeUniversitaire' => $anneeUniversitaire->getId(),
             ])
-            ->orderBy('p.jour', Criteria::ASC)
-            ->addOrderBy('p.debut', Criteria::ASC)
+            ->orderBy('p.jour', Order::Ascending->value)
+            ->addOrderBy('p.debut', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -364,9 +364,9 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->andWhere('p.anneeUniversitaire = :anneeUniversitaire')
             ->setParameter('idprof', $user->getId())
             ->setParameter('anneeUniversitaire', $user->getAnneeUniversitaire()->getId())
-            ->orderBy('p.jour', Criteria::ASC)
-            ->addOrderBy('p.debut', Criteria::ASC)
-            ->addOrderBy('p.groupe', Criteria::ASC);
+            ->orderBy('p.jour', Order::Ascending->value)
+            ->addOrderBy('p.debut', Order::Ascending->value)
+            ->addOrderBy('p.groupe', Order::Ascending->value);
         $ors = [];
 
         foreach ($departement->getDiplomes() as $diplome) {
@@ -468,10 +468,10 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->setParameter('semestre', $semestre->getOrdreLmd())
             ->setParameter('anneeUniversitaire', $anneeUniversitaire->getId())
             ->setParameter('diplome', null !== $semestre->getDiplome()?->getParent() ? $semestre->getDiplome()?->getParent()?->getId() : $semestre->getDiplome()?->getId())
-            ->orderBy('p.semaine', Criteria::ASC)
-            ->addOrderBy('p.jour', Criteria::ASC)
-            ->addOrderBy('p.debut', Criteria::ASC)
-            ->addOrderBy('p.groupe', Criteria::ASC)
+            ->orderBy('p.semaine', Order::Ascending->value)
+            ->addOrderBy('p.jour', Order::Ascending->value)
+            ->addOrderBy('p.debut', Order::Ascending->value)
+            ->addOrderBy('p.groupe', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -491,9 +491,9 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->setParameter('diplome', null !== $semestre->getDiplome()->getParent() ? $semestre->getDiplome()->getParent()->getId() : $semestre->getDiplome()->getId())
             ->setParameter('semaine', $semaine)
             ->setParameter('anneeUniversitaire', $anneeUniversitaire->getId())
-            ->addOrderBy('p.jour', Criteria::ASC)
-            ->addOrderBy('p.debut', Criteria::ASC)
-            ->addOrderBy('p.groupe', Criteria::ASC)
+            ->addOrderBy('p.jour', Order::Ascending->value)
+            ->addOrderBy('p.debut', Order::Ascending->value)
+            ->addOrderBy('p.groupe', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -522,10 +522,10 @@ class EdtPlanningRepository extends ServiceEntityRepository
             ->setParameter('date', Carbon::now()->format('Y-m-d'));
 
 
-        $query->orderBy('p.semaine', Criteria::ASC)
-            ->addOrderBy('p.jour', Criteria::ASC)
-            ->addOrderBy('p.debut', Criteria::ASC)
-            ->addOrderBy('p.groupe', Criteria::ASC)
+        $query->orderBy('p.semaine', Order::Ascending->value)
+            ->addOrderBy('p.jour', Order::Ascending->value)
+            ->addOrderBy('p.debut', Order::Ascending->value)
+            ->addOrderBy('p.groupe', Order::Ascending->value)
             ->setMaxResults(1);
 
         return $query->getQuery()

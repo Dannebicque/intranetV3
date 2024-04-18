@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/AbsenceJustificatifRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:41
+ * @lastUpdate 18/04/2024 17:52
  */
 
 namespace App\Repository;
@@ -16,7 +16,7 @@ use App\Entity\AnneeUniversitaire;
 use App\Entity\Etudiant;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
@@ -43,7 +43,7 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
             ->andWhere('j.anneeUniversitaire = :annee')
             ->setParameter('semestre', $semestre->getId())
             ->setParameter('annee', $semestre->getAnneeUniversitaire())
-            ->orderBy('j.created', Criteria::DESC)
+            ->orderBy('j.created', Order::Descending->value)
             ->getQuery()
             ->getResult()
             ;
@@ -92,7 +92,7 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
             ->andWhere('j.anneeUniversitaire = :annee')
             ->setParameter('etudiant', $etudiant->getId())
             ->setParameter('annee', $etudiant->getAnneeUniversitaire())
-            ->orderBy('j.created', Criteria::DESC)
+            ->orderBy('j.created', Order::Descending->value)
             ->getQuery()
             ->getResult();
     }
@@ -104,7 +104,7 @@ class AbsenceJustificatifRepository extends ServiceEntityRepository
             ->innerJoin(Semestre::class, 's', 'WITH', 'e.semestre = s.id')
             ->where('s.annee = :annee')
             ->setParameter('annee', $annee->getId())
-            ->orderBy('j.created', Criteria::DESC)
+            ->orderBy('j.created', Order::Descending->value)
             ->getQuery()
             ->getResult();
     }

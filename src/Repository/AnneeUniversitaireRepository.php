@@ -4,13 +4,14 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/AnneeUniversitaireRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 18/04/2024 17:52
  */
 
 namespace App\Repository;
 
 use App\Entity\AnneeUniversitaire;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -29,7 +30,7 @@ class AnneeUniversitaireRepository extends ServiceEntityRepository
 
     public function findAll(): array
     {
-        return $this->findBy([], ['annee' => 'DESC']);
+        return $this->findBy([], ['annee' => Order::Descending->value]);
     }
 
     /**

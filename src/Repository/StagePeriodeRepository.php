@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/StagePeriodeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/02/2024 07:18
+ * @lastUpdate 18/04/2024 17:54
  */
 
 namespace App\Repository;
@@ -17,7 +17,7 @@ use App\Entity\Semestre;
 use App\Entity\StagePeriode;
 use App\Enums\SemestreLienEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -50,8 +50,8 @@ class StagePeriodeRepository extends ServiceEntityRepository
             ->andWhere('p.anneeUniversitaire = :annee')
             ->setParameter('annee', $anneeUniversitaire->getId())
             ->setParameter('diplome', $diplome->getId())
-            ->orderBy('p.anneeUniversitaire', Criteria::DESC)
-            ->addOrderBy('p.numeroPeriode', Criteria::ASC);
+            ->orderBy('p.anneeUniversitaire', Order::Descending->value)
+            ->addOrderBy('p.numeroPeriode', Order::Ascending->value);
     }
 
     public function findStageEtudiant(Semestre $semestre, AnneeUniversitaire $anneeUniversitaire): array
@@ -73,7 +73,7 @@ class StagePeriodeRepository extends ServiceEntityRepository
             ->setParameter('semestreCourant', $semestre->getId())
             ->setParameter('annee', $anneeUniversitaire->getId());
 
-        $query->orderBy('s.numeroPeriode', Criteria::ASC);
+        $query->orderBy('s.numeroPeriode', Order::Ascending->value);
 
         return $query->getQuery()->getResult();
     }
@@ -86,8 +86,8 @@ class StagePeriodeRepository extends ServiceEntityRepository
             ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
             ->where('d.departement = :departement')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('p.anneeUniversitaire', Criteria::DESC)
-            ->addOrderBy('p.numeroPeriode', Criteria::ASC);
+            ->orderBy('p.anneeUniversitaire', Order::Descending->value)
+            ->addOrderBy('p.numeroPeriode', Order::Ascending->value);
 
         return $query->getQuery()->getResult();
     }
@@ -102,8 +102,8 @@ class StagePeriodeRepository extends ServiceEntityRepository
             ->andWhere('p.anneeUniversitaire = :annee')
             ->setParameter('departement', $departement->getId())
             ->setParameter('annee', $anneeUniversitaire->getId())
-            ->orderBy('p.anneeUniversitaire', Criteria::DESC)
-            ->addOrderBy('p.numeroPeriode', Criteria::ASC);
+            ->orderBy('p.anneeUniversitaire', Order::Descending->value)
+            ->addOrderBy('p.numeroPeriode', Order::Ascending->value);
 
         return $query->getQuery()->getResult();
     }
@@ -119,7 +119,7 @@ class StagePeriodeRepository extends ServiceEntityRepository
 
         $query->setParameter('departement', $departement->getId())
             ->setParameter('annee', $annee->getId())
-            ->orderBy('p.numeroPeriode', Criteria::ASC);
+            ->orderBy('p.numeroPeriode', Order::Ascending->value);
 
         return $query;
     }

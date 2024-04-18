@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcParcoursRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 04/09/2022 10:40
+ * @lastUpdate 18/04/2024 17:52
  */
 
 namespace App\Repository;
@@ -13,6 +13,7 @@ use App\Entity\ApcParcours;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -33,7 +34,7 @@ class ApcParcoursRepository extends ServiceEntityRepository
     public function findAllBuilder(): QueryBuilder
     {
         return $this->createQueryBuilder('apc')
-            ->orderBy('apc.libelle', 'ASC');
+            ->orderBy('apc.libelle', Order::Ascending->value);
     }
 
     public function findByDiplomeBuilder(Diplome $diplome): QueryBuilder
@@ -41,7 +42,7 @@ class ApcParcoursRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('apc')
             ->where('apc.apcReferentiel = :referentiel')
             ->setParameter('referentiel', $diplome->getReferentiel()->getId())
-            ->orderBy('apc.libelle', 'ASC');
+            ->orderBy('apc.libelle', Order::Ascending->value);
     }
 
     public function findBySemestre(Semestre $semestre) {

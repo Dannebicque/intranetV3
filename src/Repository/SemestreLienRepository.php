@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/SemestreLienRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/08/2022 09:44
+ * @lastUpdate 18/04/2024 17:52
  */
 
 namespace App\Repository;
@@ -13,6 +13,7 @@ use App\Entity\Semestre;
 use App\Entity\SemestreLien;
 use App\Enums\SemestreLienEnum;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Order;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -66,7 +67,7 @@ class SemestreLienRepository extends ServiceEntityRepository
             ->andWhere('sl.sens = :sens')
             ->setParameter('semestre', $semestre)
             ->setParameter('sens', $sens)
-            ->orderBy('sa.libelle', 'ASC')
+            ->orderBy('sa.libelle', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }

@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcSaeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/11/2022 08:54
+ * @lastUpdate 18/04/2024 17:54
  */
 
 namespace App\Repository;
@@ -18,7 +18,7 @@ use App\Entity\Departement;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -52,8 +52,8 @@ class ApcSaeRepository extends ServiceEntityRepository
             ->where('a.diplome = :diplome')
             // ->andWhere('s.ppn_actif = m.ppn')
             ->setParameter('diplome', $diplome->getId())
-            ->orderBy('r.codeMatiere', Criteria::ASC)
-            ->addOrderBy('r.libelle', Criteria::ASC);
+            ->orderBy('r.codeMatiere', Order::Ascending->value)
+            ->addOrderBy('r.libelle', Order::Ascending->value);
     }
 
     public function findBySemestre(Semestre $semestre): array
@@ -66,8 +66,8 @@ class ApcSaeRepository extends ServiceEntityRepository
             ->addSelect('apcSaeCompetences')
             // ->andWhere('s.ppn_actif = m.ppn')
             ->setParameter('semestre', $semestre->getId())
-            ->orderBy('r.codeMatiere', Criteria::ASC)
-            ->addOrderBy('r.libelle', Criteria::ASC)
+            ->orderBy('r.codeMatiere', Order::Ascending->value)
+            ->addOrderBy('r.libelle', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -102,8 +102,8 @@ class ApcSaeRepository extends ServiceEntityRepository
             ->andWhere('d.referentiel = c.apcReferentiel')
             ->andWhere('a.actif = 1')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('r.codeMatiere', Criteria::ASC)
-            ->addOrderBy('r.libelle', Criteria::ASC)
+            ->orderBy('r.codeMatiere', Order::Ascending->value)
+            ->addOrderBy('r.libelle', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -125,7 +125,7 @@ class ApcSaeRepository extends ServiceEntityRepository
             ->innerJoin(ApcCompetence::class, 'c', 'WITH', 'cs.competence = c.id')
             ->where('c.apcReferentiel = :referentiel')
             ->setParameter('referentiel', $referentiel->getId())
-            ->orderBy('r.codeMatiere', Criteria::ASC)
+            ->orderBy('r.codeMatiere', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -141,7 +141,7 @@ class ApcSaeRepository extends ServiceEntityRepository
             ->andWhere('c.apcReferentiel = :referentiel')
             ->setParameter('referentiel', $referentiel->getId())
             ->setParameter('semestre', $semestre)
-            ->orderBy('r.codeMatiere', Criteria::ASC)
+            ->orderBy('r.codeMatiere', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -157,7 +157,7 @@ class ApcSaeRepository extends ServiceEntityRepository
             ->andWhere('c.apcReferentiel = :referentiel')
             ->setParameter('referentiel', $referentiel->getId())
             ->setParameter('semestre', $semestre->getId())
-            ->orderBy('r.codeMatiere', Criteria::ASC)
+            ->orderBy('r.codeMatiere', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ProjetPeriodeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/02/2024 07:20
+ * @lastUpdate 18/04/2024 17:54
  */
 
 namespace App\Repository;
@@ -16,7 +16,7 @@ use App\Entity\Diplome;
 use App\Entity\ProjetPeriode;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -43,8 +43,8 @@ class ProjetPeriodeRepository extends ServiceEntityRepository
             ->innerJoin(Diplome::class, 'd', 'WITH', 'a.diplome = d.id')
             ->where('d.departement = :departement')
             ->setParameter('departement', $departement->getId())
-            ->orderBy('p.anneeUniversitaire', Criteria::DESC)
-            ->addOrderBy('p.libelle', Criteria::ASC);
+            ->orderBy('p.anneeUniversitaire', Order::Descending->value)
+            ->addOrderBy('p.libelle', Order::Ascending->value);
 
         return $query->getQuery()->getResult();
     }
@@ -65,8 +65,8 @@ class ProjetPeriodeRepository extends ServiceEntityRepository
             ->andWhere('p.anneeUniversitaire = :annee')
             ->setParameter('annee', $anneeUniversitaire->getId())
             ->setParameter('diplome', $diplome->getId())
-            ->orderBy('p.anneeUniversitaire', Criteria::DESC)
-            ->addOrderBy('p.libelle', Criteria::ASC)
+            ->orderBy('p.anneeUniversitaire', Order::Descending->value)
+            ->addOrderBy('p.libelle', Order::Ascending->value)
             ;
     }
 
@@ -77,7 +77,7 @@ class ProjetPeriodeRepository extends ServiceEntityRepository
             ->addSelect('s')
             ->where('s.id = :semestre')
             ->setParameter('semestre', $semestre->getId())
-            ->orderBy('p.libelle', Criteria::ASC)
+            ->orderBy('p.libelle', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -93,8 +93,8 @@ class ProjetPeriodeRepository extends ServiceEntityRepository
             ->andWhere('p.anneeUniversitaire = :annee')
             ->setParameter('departement', $departement->getId())
             ->setParameter('annee', $anneeUniversitaire->getId())
-            ->orderBy('p.anneeUniversitaire', Criteria::DESC)
-            ->addOrderBy('p.libelle', Criteria::ASC);
+            ->orderBy('p.anneeUniversitaire', Order::Descending->value)
+            ->addOrderBy('p.libelle', Order::Ascending->value);
 
         return $query->getQuery()->getResult();
     }

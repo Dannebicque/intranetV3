@@ -1,16 +1,17 @@
 <?php
 /*
- * Copyright (c) 2021. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/htdocs/intranetV3/src/Repository/BacRepository.php
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/BacRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 07/02/2021 11:08
+ * @lastUpdate 18/04/2024 17:52
  */
 
 namespace App\Repository;
 
 use App\Entity\Bac;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Order;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -28,7 +29,7 @@ class BacRepository extends ServiceEntityRepository
 
     public function findAll(): array
     {
-        return $this->findBy([], ['libelle' => 'ASC']);
+        return $this->findBy([], ['libelle' => Order::Ascending->value]);
     }
 
     public function getApogeeArray(): array

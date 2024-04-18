@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/AlternanceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/10/2023 15:31
+ * @lastUpdate 18/04/2024 17:52
  */
 
 namespace App\Repository;
@@ -16,6 +16,7 @@ use App\Entity\Etudiant;
 use App\Entity\Personnel;
 use App\Entity\Semestre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Order;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -129,9 +130,9 @@ class AlternanceRepository extends ServiceEntityRepository
             ->join('a.etudiant', 'e')
             ->andWhere('a.annee = :annee')
             ->setParameter('annee', $annee->getId())
-            ->orderBy('a.anneeUniversitaire', 'DESC')
-            ->addOrderBy('e.nom', 'ASC')
-            ->addOrderBy('e.prenom', 'ASC')
+            ->orderBy('a.anneeUniversitaire', Order::Descending->value)
+            ->addOrderBy('e.nom', Order::Ascending->value)
+            ->addOrderBy('e.prenom', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }

@@ -1,4 +1,11 @@
 <?php
+/*
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/QuestSectionRepository.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 18/04/2024 17:52
+ */
 
 namespace App\Repository;
 
@@ -6,6 +13,7 @@ use App\Entity\Departement;
 use App\Entity\QuestQuestionnaire;
 use App\Entity\QuestSection;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Common\Collections\Order;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -48,7 +56,7 @@ class QuestSectionRepository extends ServiceEntityRepository
                 ->innerJoin(QuestQuestionnaire::class, 'q', 'WITH', 's.questionnaire = q.id')
                 ->where('q.departement = :departement')
                 ->setParameter('departement', $departement)
-                ->orderBy('s.titre', 'ASC')
+                ->orderBy('s.titre', Order::Ascending->value)
                 ->getQuery()
                 ->getResult();
         }
@@ -56,7 +64,7 @@ class QuestSectionRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('s')
             ->innerJoin(QuestQuestionnaire::class, 'q', 'WITH', 's.questionnaire = q.id')
             ->where('q.departement IS NULL')
-            ->orderBy('s.titre', 'ASC')
+            ->orderBy('s.titre', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -78,7 +86,7 @@ class QuestSectionRepository extends ServiceEntityRepository
             ->andWhere('s.ordre > :ordre')
             ->setParameter('questionnaire', $section->getQuestionnaire())
             ->setParameter('ordre', $section->getOrdre())
-            ->orderBy('s.ordre', 'ASC')
+            ->orderBy('s.ordre', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }

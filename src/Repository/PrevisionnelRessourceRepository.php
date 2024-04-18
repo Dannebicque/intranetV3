@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/PrevisionnelRessourceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 29/02/2024 12:11
+ * @lastUpdate 18/04/2024 17:54
  */
 
 namespace App\Repository;
@@ -16,7 +16,7 @@ use App\Entity\Diplome;
 use App\Entity\Personnel;
 use App\Entity\PlanCoursRessource;
 use App\Entity\Semestre;
-use Doctrine\Common\Collections\Criteria;
+use Doctrine\Common\Collections\Order;
 
 class PrevisionnelRessourceRepository extends PrevisionnelRepository
 {
@@ -78,8 +78,8 @@ class PrevisionnelRessourceRepository extends PrevisionnelRepository
             ->setParameter('departement', $departement->getId())
             ->andWhere('p.annee = :annee')
             ->setParameter('annee', $annee)
-            ->orderBy('pers.nom', Criteria::ASC)
-            ->addOrderBy('pers.prenom', Criteria::ASC);
+            ->orderBy('pers.nom', Order::Ascending->value)
+            ->addOrderBy('pers.prenom', Order::Ascending->value);
 
         return $query->getQuery()
             ->getResult();
@@ -98,8 +98,8 @@ class PrevisionnelRessourceRepository extends PrevisionnelRepository
             ->setParameter('type', self::TYPE)
             ->andWhere('p.annee = :annee')
             ->setParameter('annee', $annee)
-            ->orderBy('pers.nom', Criteria::ASC)
-            ->addOrderBy('pers.prenom', Criteria::ASC);
+            ->orderBy('pers.nom', Order::Ascending->value)
+            ->addOrderBy('pers.prenom', Order::Ascending->value);
 
         return $query->getQuery()
             ->getResult();
@@ -118,8 +118,8 @@ class PrevisionnelRessourceRepository extends PrevisionnelRepository
             ->setParameter('annee', $annee)
             ->setParameter('type', self::TYPE)
             ->setParameter('matiere', $matiere)
-            ->orderBy('pers.nom', Criteria::ASC)
-            ->addOrderBy('pers.prenom', Criteria::ASC)
+            ->orderBy('pers.nom', Order::Ascending->value)
+            ->addOrderBy('pers.prenom', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -138,7 +138,7 @@ class PrevisionnelRessourceRepository extends PrevisionnelRepository
             ->setParameter('type', self::TYPE)
             ->setParameter('annee', $annee)
             ->setParameter('semestre', $semestre->getId())
-            ->orderBy('m.codeMatiere', Criteria::ASC)
+            ->orderBy('m.codeMatiere', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -158,7 +158,7 @@ class PrevisionnelRessourceRepository extends PrevisionnelRepository
             ->setParameter('annee', $annee)
             ->setParameter('personnel', $personnel->getId())
             ->setParameter('semestre', $semestre->getId())
-            ->orderBy('m.codeMatiere', Criteria::ASC)
+            ->orderBy('m.codeMatiere', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
@@ -178,8 +178,8 @@ class PrevisionnelRessourceRepository extends PrevisionnelRepository
             ->setParameter('annee', $annee)
             ->setParameter('type', self::TYPE)
             ->setParameter('matiere', $matiere)
-            ->orderBy('pers.nom', Criteria::ASC)
-            ->addOrderBy('pers.prenom', Criteria::ASC)
+            ->orderBy('pers.nom', Order::Ascending->value)
+            ->addOrderBy('pers.prenom', Order::Ascending->value)
             ->getQuery()
             ->getResult();
     }
