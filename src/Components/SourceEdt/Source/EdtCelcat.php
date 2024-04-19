@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Source/EdtCelcat.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 16:09
+ * @lastUpdate 19/04/2024 18:06
  */
 
 namespace App\Components\SourceEdt\Source;
@@ -28,6 +28,19 @@ class EdtCelcat extends AbstractEdt implements EdtInterface
         private readonly EdtCelcatRepository $edtCelcatRepository,
         private readonly EdtCelcatAdapter $edtCelcatAdapter)
     {
+    }
+
+    public function getPlanningPersonnelSemaine(
+        Personnel          $personnel,
+        int                $semaine,
+        AnneeUniversitaire $anneeUniversitaire,
+        array              $matieres,
+        array              $groupes
+    ): EvenementEdtCollection
+    {
+        $edts = $this->edtCelcatRepository->findEdtProf($personnel->getId(), $semaine, $anneeUniversitaire);
+
+        return $this->edtCelcatAdapter->collection($edts, $matieres, $groupes);
     }
 
     public function getPlanningSemestre(Semestre $semestre, array $matieres, AnneeUniversitaire $anneeUniversitaire, array $groupes): EvenementEdtCollection

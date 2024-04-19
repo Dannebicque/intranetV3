@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Source/EdtIntranet.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 09:27
+ * @lastUpdate 19/04/2024 18:06
  */
 
 namespace App\Components\SourceEdt\Source;
@@ -35,6 +35,24 @@ class EdtIntranet extends AbstractEdt implements EdtInterface
         private readonly EdtPlanningRepository $edtPlanningRepository,
         private readonly EdtIntranetAdapter   $edtIntranetAdapter)
     {
+    }
+
+    public function getPlanningPersonnelSemaine(
+        Personnel          $personnel,
+        int                $semaine,
+        AnneeUniversitaire $anneeUniversitaire,
+        array              $matieres,
+        array              $groupes
+    ): EvenementEdtCollection
+    {
+        $evts = $this->edtPlanningRepository->findEdtProf($personnel->getId(), $anneeUniversitaire, $semaine);
+
+        $tGroupes = [];
+        foreach ($groupes as $groupe) {
+            $tGroupes[$groupe->getCodeApogee()] = $groupe;
+        }
+
+        return $this->adapter->collection($evts, $matieres, $tGroupes);
     }
 
     public function getPlanningSemestre(Semestre $semestre, array $matieres, AnneeUniversitaire $anneeUniversitaire, array $groupes): EvenementEdtCollection

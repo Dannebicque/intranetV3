@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Edt/EdtManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:41
+ * @lastUpdate 19/04/2024 18:06
  */
 
 namespace App\Classes\Edt;
@@ -62,6 +62,22 @@ class EdtManager
             default:
                 return null;
         }
+    }
+
+    public function getPlanningPersonnelSemaine(
+        Personnel          $personnel,
+        int                $semaine,
+        AnneeUniversitaire $anneeUniversitaire,
+        array              $matieres,
+        array              $groupes
+    ): ?array
+    {
+        foreach ($this->tabSources as $source) {
+            $planning[] = $source->getPlanningPersonnelSemaine($personnel, $semaine, $anneeUniversitaire, $matieres, $groupes);
+        }
+
+        return array_merge(...$planning);
+
     }
 
     public function getPlanningSemestreSemaine(

@@ -13,10 +13,13 @@
             {{ 'heading.edt.dashboard'|trans }}
         </h4>
         <div class="card-header-actions">
+            <button class="btn btn-secondary" {{ stimulus_action('edt-personnel', 'affichage', 'click', {mode:'tableau'}) }}>
+                <i class="fas fa-list"></i> Vue liste
+            </button>
             <ul class="card-controls">
                 <li class="dropdown">
                     <a data-bs-toggle="dropdown" href="#">
-                        <i class="fas fa-ellipsis-h rotate-90"
+                        <i class="fas fa-ellipsis-h"
                            data-bs-toggle="tooltip" data-bs-placement="bottom"
                            title="Options d'export ou de synchronisation"></i>
                         <span class="sr-only">Options d'export ou de synchronisation</span>

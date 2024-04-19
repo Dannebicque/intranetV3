@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Components/SourceEdt/Source/EdtInterface.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 16:09
+ * @lastUpdate 19/04/2024 18:06
  */
 
 /*
@@ -35,4 +35,12 @@ interface EdtInterface
     public function getCurrentEventPersonnel(Personnel $user, AnneeUniversitaire $anneeUniversitaire): ?EvenementEdt;
 
     public function getNextEventPersonnel(Personnel $user, AnneeUniversitaire $anneeUniversitaire): ?EvenementEdt;
+
+    public function getPlanningPersonnelSemaine(
+        Personnel          $personnel,
+        int                $semaine,
+        AnneeUniversitaire $anneeUniversitaire,
+        array              $matieres,
+        array              $groupes
+    ): EvenementEdtCollection;
 }

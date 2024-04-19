@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/edt-personnel-controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/02/2024 16:01
+// @lastUpdate 19/04/2024 18:06
 
 import { Controller } from '@hotwired/stimulus'
 import flatpickr from 'flatpickr'
@@ -24,6 +24,16 @@ export default class extends Controller {
 
   connect() {
     this._getEdt(this.filtreValue, this.valeurValue, this.semaineValue)
+  }
+
+  affichage(e) {
+    e.preventDefault()
+    this._getEdt(e.params.filtre, e.params.valeur, this.semaineValue, e.params.mode)
+
+    // changer le texte du bouton selon le mode
+    e.currentTarget.innerHTML = e.params.mode === 'tableau' ? '<i class="fas fa-table"></i> Vue grille' : '<i class="fas list"></i> Vue liste'
+    // changer data
+    e.currentTarget.setAttribute('data-edt-personnel-mode-param', e.params.mode === 'tableau' ? 'grille' : 'tableau')
   }
 
   changeWeek(e) {
@@ -82,7 +92,7 @@ export default class extends Controller {
     this._updateJs()
   }
 
-  async _getEdt(filtre, valeur, semaine) {
+  async _getEdt(filtre, valeur, semaine, mode = 'grille') {
     if (filtre === 'promo') {
       this._getEdtSemestre(valeur, semaine)
     } else {
@@ -91,6 +101,7 @@ export default class extends Controller {
         filtre,
         valeur,
         semaine,
+        mode,
       })
       const response = await fetch(`${this.urlEdtValue}?${params.toString()}`)
       this.zoneEdtTarget.innerHTML = await response.text()

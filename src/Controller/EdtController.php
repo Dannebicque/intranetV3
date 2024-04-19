@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/03/2024 16:27
+ * @lastUpdate 09/04/2024 07:30
  */
 
 namespace App\Controller;
@@ -129,6 +129,7 @@ class EdtController extends BaseController
         $semaine = (int)$request->query->get('semaine');
         $filtre = $request->query->get('filtre');
         $valeur = $request->query->get('valeur');
+        $mode = $request->query->get('mode');
 
         $source = null !== $this->getDepartement() && $this->getDepartement()->isOptUpdateCelcat() ? 'celcat' : 'intranet';
         $calendrier = $this->calendrier->calculSemaine($semaine, $this->getAnneeUniversitaire());
@@ -141,6 +142,19 @@ class EdtController extends BaseController
         $suiviAppel[] = $absenceRepository->findBySemaineAndUserArray($calendrier->semaineFormationLundi,
             $this->getUser());
         $suiviAppel = array_merge_recursive(...$suiviAppel);
+
+        if ($mode === 'tableau') {
+            return $this->render('edt/_edt_intervenant_tableau.html.twig', [
+                'edt' => $edt,
+                'filtre' => $filtre,
+                'calendrier' => $calendrier,
+                'semaine' => $semaine,
+                'valeur' => $valeur,
+                'tabHeures' => Constantes::TAB_HEURES_EDT_2,
+                'suiviAppel' => $suiviAppel,
+                'source' => 'intranet',
+            ]);
+        }
 
         return $this->render('edt/_edt_intervenant.html.twig', [
             'edt' => $edt,

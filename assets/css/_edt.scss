@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/_edt.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/02/2024 16:01
+// @lastUpdate 19/04/2024 17:57
 
 //.semestre_borne {
 //  max-height: 80vh;
@@ -240,6 +240,15 @@
 }
 
 .session-body a {
+  color: white;
+}
+
+.session-tableau-body {
+  text-align: left;
+  padding: .5em;
+}
+
+.session-tableau-body a {
   color: white;
 }
 
