@@ -1,3 +1,4 @@
+{# @deprecated #}
 <div class="row">
     <div class="col-md-12">
         <div class="card">
@@ -93,47 +94,107 @@
                         </tr>
                         <tr id="ligne_{{ previsionnel.id }}">
                             <td>
-                                <a class="editable"
-                                   data-field="nbHCm"
-                                   data-href="{{ path('administration_previsionnel_ajax_edit', {id:previsionnel.id}) }}"
-                                   title="Corriger le volume horaire">
-                                    {{ previsionnel.nbHCm }}</a> h
+                                <twig:Editable
+                                        titre="Corriger le volume horaire"
+                                        field="nbHCm"
+                                        id="{{ previsionnel.id }}"
+                                        className="{{ previsionnel|classFQN }}"
+                                        value="{{ previsionnel.nbHCm|number_format(2) }}"
+                                >
+                                </twig:Editable>
+                                {#                                #}
+                                {#                                <a class="editable" #}
+                                {#                                   data-field="nbHCm" #}
+                                {#                                   data-href="{{ path('administration_previsionnel_ajax_edit', {id:previsionnel.id}) }}" #}
+                                {#                                   title="Corriger le volume horaire"> #}
+                                {#                                    {{ previsionnel.nbHCm }}</a> h #}
                             </td>
                             <td>
-                                <a class="editable"
-                                   data-field="NbGrCm"
-                                   data-href="{{ path('administration_previsionnel_ajax_edit', {id:previsionnel.id}) }}"
-                                   title="Corriger le nombre de groupes">
-                                    {{ previsionnel.nbGrCm }}</a></td>
+                                <twig:Editable
+                                        titre="Corriger le nombre de groupes"
+                                        field="NbGrCm"
+                                        id="{{ previsionnel.id }}"
+                                        className="{{ previsionnel|classFQN }}"
+                                        value="{{ previsionnel.NbGrCm }}"
+                                >
+                                </twig:Editable>
+                                {#                                #}
+                                {#                                <a class="editable" #}
+                                {#                                   data-field="NbGrCm" #}
+                                {#                                   data-href="{{ path('administration_previsionnel_ajax_edit', {id:previsionnel.id}) }}" #}
+                                {#                                   title="Corriger le nombre de groupes"> #}
+                                {#                                    {{ previsionnel.nbGrCm }}</a> #}
+                            </td>
                             <td>{{ previsionnel.nbSeanceCm }}</td>
                             <td class="previtd">
-                                <a class="editable"
-                                   data-field="NbHTd"
-                                   data-href="{{ path('administration_previsionnel_ajax_edit', {id:previsionnel.id}) }}"
-                                   title="Corriger le volume horaire">
-                                    {{ previsionnel.nbHTd }}</a> h
+                                <twig:Editable
+                                        titre="Corriger le volume horaire"
+                                        field="nbHTd"
+                                        id="{{ previsionnel.id }}"
+                                        className="{{ previsionnel|classFQN }}"
+                                        value="{{ previsionnel.nbHTd|number_format(2) }}"
+                                >
+                                </twig:Editable>
+
+                                {#                                #}
+                                {#                                <a class="editable" #}
+                                {#                                   data-field="NbHTd" #}
+                                {#                                   data-href="{{ path('administration_previsionnel_ajax_edit', {id:previsionnel.id}) }}" #}
+                                {#                                   title="Corriger le volume horaire"> #}
+                                {#                                    {{ previsionnel.nbHTd }}</a> #}
+                                h
                             </td>
                             <td class="previtd">
-                                <a class="editable"
-                                   data-field="NbGrTd"
-                                   data-href="{{ path('administration_previsionnel_ajax_edit', {id:previsionnel.id}) }}"
-                                   title="Corriger le nombre de groupes">
-                                    {{ previsionnel.nbGrTd }}</a></td>
+                                <twig:Editable
+                                        titre="Corriger le nombre de groupes"
+                                        field="nbGrTd"
+                                        id="{{ previsionnel.id }}"
+                                        className="{{ previsionnel|classFQN }}"
+                                        value="{{ previsionnel.nbGrTd }}"
+                                >
+                                </twig:Editable>
+
+                                {#                                <a class="editable" #}
+                                {#                                   data-field="NbGrTd" #}
+                                {#                                   data-href="{{ path('administration_previsionnel_ajax_edit', {id:previsionnel.id}) }}" #}
+                                {#                                   title="Corriger le nombre de groupes"> #}
+                                {#                                    {{ previsionnel.nbGrTd }}</a> #}
+                            </td>
                             <td class="previtd">{{ previsionnel.nbSeanceTd }}</td>
 
                             <td class="previtp">
-                                <a class="editable"
-                                   data-field="NbHTp"
-                                   data-href="{{ path('administration_previsionnel_ajax_edit', {id:previsionnel.id}) }}"
-                                   title="Corriger le volume horaire">
-                                    {{ previsionnel.nbHTp }}</a> h
+                                <twig:Editable
+                                        titre="Corriger le volume horaire"
+                                        field="nbHTp"
+                                        id="{{ previsionnel.id }}"
+                                        className="{{ previsionnel|classFQN }}"
+                                        value="{{ previsionnel.nbHTp|number_format(2) }}"
+                                >
+                                </twig:Editable>
+
+                                {#                                <a class="editable" #}
+                                {#                                   data-field="NbHTp" #}
+                                {#                                   data-href="{{ path('administration_previsionnel_ajax_edit', {id:previsionnel.id}) }}" #}
+                                {#                                   title="Corriger le volume horaire"> #}
+                                {#                                    {{ previsionnel.nbHTp }}</a> #}
+                                h
                             </td>
                             <td class="previtp">
-                                <a class="editable"
-                                   data-field="NbGrTp"
-                                   data-href="{{ path('administration_previsionnel_ajax_edit', {id:previsionnel.id}) }}"
-                                   title="Corriger le nombre de groupes">
-                                    {{ previsionnel.nbGrTp }}</a></td>
+                                <twig:Editable
+                                        titre="Corriger le nombre de groupes"
+                                        field="nbGrTp"
+                                        id="{{ previsionnel.id }}"
+                                        className="{{ previsionnel|classFQN }}"
+                                        value="{{ previsionnel.nbGrTp }}"
+                                >
+                                </twig:Editable>
+
+                                {#                                <a class="editable" #}
+                                {#                                   data-field="NbGrTp" #}
+                                {#                                   data-href="{{ path('administration_previsionnel_ajax_edit', {id:previsionnel.id}) }}" #}
+                                {#                                   title="Corriger le nombre de groupes"> #}
+                                {#                                    {{ previsionnel.nbGrTp }}</a> #}
+                            </td>
                             <td class="previtp">{{ previsionnel.nbSeanceTp }}</td>
 
                             <td>{{ previsionnel.totalHCm }} h</td>

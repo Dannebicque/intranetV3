@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/UpdateEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:39
+ * @lastUpdate 19/04/2024 10:44
  */
 
 namespace App\Classes\EduSign;
@@ -75,7 +75,7 @@ class UpdateEtudiant
         return true;
     }
 
-    public function changeSemestre(?string $keyEduSign)
+    public function changeSemestre(?string $keyEduSign): bool
     {
         if ($keyEduSign === null) {
             return false;

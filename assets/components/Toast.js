@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/components/Toast.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 04/04/2024 10:46
+// @lastUpdate 19/04/2024 10:28
 
 import { Toast as ToastBs } from 'bootstrap'
 
@@ -19,7 +19,7 @@ class Toast {
 
     const div = document.createElement('div')
     div.innerHTML = html
-    div.children[0].addEventListener('hidden.bs.toast', (elem) => {
+    div.children[0].addEventListener('hidden.bs.toast', () => {
       // elem.currentTarget.remove() // supprimer le code HTML après l'event.
     })
     document.body.append(div.children[0])

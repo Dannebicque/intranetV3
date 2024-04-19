@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/ExportEtudiant.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:59
+ * @lastUpdate 18/04/2024 17:37
  */
 
 namespace App\Classes\EduSign;
@@ -153,7 +153,7 @@ class ExportEtudiant
         $headerColumnIndex = 1;
         foreach ($headers as $header) {
             $headerColumnLetter = Coordinate::stringFromColumnIndex($headerColumnIndex);
-            $sheet->setCellValue((string)$headerColumnLetter . "1", $header);
+            $sheet->setCellValue($headerColumnLetter . "1", $header);
             ++$headerColumnIndex;
         }
 

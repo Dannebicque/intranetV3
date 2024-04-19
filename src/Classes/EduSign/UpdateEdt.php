@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/UpdateEdt.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/11/2023 09:31
+ * @lastUpdate 18/04/2024 18:12
  */
 
 namespace App\Classes\EduSign;
@@ -22,8 +22,6 @@ use App\Repository\GroupeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Carbon\Carbon;
-use Symfony\Component\HttpFoundation\Response;
-use function PHPUnit\Framework\isEmpty;
 
 class UpdateEdt
 {
@@ -193,7 +191,7 @@ class UpdateEdt
 
     }
 
-    public function sendUpdate(): mixed
+    public function sendUpdate(): string
     {
         $course = (new IntranetEdtEduSignAdapter($this->evenement))->getCourse();
         if ($course !== null) {

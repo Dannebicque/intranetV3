@@ -4,17 +4,15 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/EduSign/UpdateGroupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/02/2024 17:28
+ * @lastUpdate 18/04/2024 18:12
  */
 
 namespace App\Classes\EduSign;
 
 use App\Classes\EduSign\Adapter\IntranetGroupeEduSignAdapter;
-use App\Entity\Departement;
 use App\Repository\DiplomeRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\SemestreRepository;
-use Symfony\Component\HttpFoundation\Response;
 
 class UpdateGroupe
 {

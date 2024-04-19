@@ -1,17 +1,15 @@
 <?php
 
 /*
- * This file is part of the Symfony package.
- *
- * (c) Fabien Potencier <fabien@symfony.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/EduSignController.php
+ * @author davidannebicque
+ * @project intranetV3
+ * @lastUpdate 19/04/2024 10:44
  */
 
 namespace App\Controller;
 
-use App\Classes\EduSign\Adapter\IntranetGroupeEduSignAdapter;
 use App\Classes\EduSign\ApiEduSign;
 use App\Classes\EduSign\CreateEnseignant;
 use App\Classes\EduSign\FixCourses;
@@ -19,7 +17,6 @@ use App\Classes\EduSign\UpdateEdt;
 use App\Classes\EduSign\UpdateEtudiant;
 use App\Classes\EduSign\UpdateGroupe;
 use App\Entity\Constantes;
-use App\Entity\Departement;
 use App\Repository\DepartementRepository;
 use App\Repository\DiplomeRepository;
 use App\Repository\GroupeRepository;
@@ -27,16 +24,11 @@ use App\Repository\PersonnelDepartementRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Output\NullOutput;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Attribute\Route;
-use function PHPUnit\Framework\isEmpty;
-use function PHPUnit\Framework\throwException;
 
 #[Route('/administratif/edusign')]
 class EduSignController extends BaseController
@@ -86,7 +78,7 @@ class EduSignController extends BaseController
     }
 
     #[Route('/init/{id}', name: 'app_edu_sign_init')]
-    public function init(?int $id, UpdateGroupe $updateGroupe, UpdateEtudiant $updateEtudiant)
+    public function init(?int $id, UpdateGroupe $updateGroupe, UpdateEtudiant $updateEtudiant): RedirectResponse
     {
         if ($id !== 0) {
             $departement = $this->departementRepository->find($id);
@@ -107,7 +99,7 @@ class EduSignController extends BaseController
     }
 
     #[Route('/update/etudiants/{id}', name: 'app_edu_sign_update_etudiants')]
-    public function updateEtudiants(?int $id, UpdateGroupe $updateGroupe, UpdateEtudiant $updateEtudiant)
+    public function updateEtudiants(?int $id, UpdateGroupe $updateGroupe, UpdateEtudiant $updateEtudiant): RedirectResponse
     {
         if ($id !== 0) {
             $departement = $this->departementRepository->find($id);
@@ -165,7 +157,7 @@ class EduSignController extends BaseController
     }
 
     #[Route('/create-personnel/{deptId}', name: 'app_edu_sign_create_personnel')]
-    public function createPersonnel(?int $deptId, Request $request)
+    public function createPersonnel(?int $deptId, Request $request): RedirectResponse
     {
         if ($deptId !== 0) {
             $departement = $this->departementRepository->find($deptId);
@@ -190,7 +182,7 @@ class EduSignController extends BaseController
     }
 
     #[Route('/update-annee/{id}', name: 'app_edu_sign_update_annee')]
-    public function updateAnnee(?int $id, UpdateGroupe $updateGroupe, UpdateEtudiant $updateEtudiant)
+    public function updateAnnee(?int $id, UpdateGroupe $updateGroupe, UpdateEtudiant $updateEtudiant): RedirectResponse
     {
         if ($id !== 0) {
             $departement = $this->departementRepository->find($id);
@@ -211,7 +203,7 @@ class EduSignController extends BaseController
     }
 
     #[Route('/groupes/{id}', name: 'app_edu_sign_groupes')]
-    public function showGroupes(?int $id)
+    public function showGroupes(?int $id): Response
     {
         $departement = $this->departementRepository->find($id);
 
@@ -259,7 +251,7 @@ class EduSignController extends BaseController
         ]);
     }
 
-    private function sendEmail(array $data, MailerInterface $mailer)
+    private function sendEmail(array $data, MailerInterface $mailer): void
     {
         $email = (new TemplatedEmail())
             ->from('no-reply@univ-reims.fr')

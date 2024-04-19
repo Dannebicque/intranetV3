@@ -78,26 +78,26 @@
         </span>
         </header>
 
-        <nav class="sidebar-navigation ps-container ps-theme-default" data-ps-id="9edea121-7e34-6d68-3caa-50294dffdd48">
+    <nav class="sidebar-navigation ps-container ps-theme-default">
             <ul class="menu">
                 {% block sidebar_menu %}
                     <li class="menu-item active" id="menu-tableau-de-bord">
                         <a class="menu-link" href="{{ path('default_homepage') }}">
-                            <i class="{{ iconDashboard }} fa-2x"><span class="sr-only">dashboard</span></i>
+                            <i class="{{ iconMenuDashboard }} fa-2x"><span class="sr-only">dashboard</span></i>
                             <span class="title">{{ 'menu.dashboard'|trans }}</span>
                         </a>
                     </li>
 
                     <li class="menu-item" id="menu-trombinoscope">
                         <a class="menu-link" href="{{ path('trombinoscope_index') }}">
-                            <i class="{{ iconTrombi }} fa-2x"><span class="sr-only">group</span></i>
+                            <i class="{{ iconMenuTrombi }} fa-2x"><span class="sr-only">group</span></i>
                             <span class="title">{{ 'menu.trombinoscope'|trans }}</span>
                         </a>
                     </li>
                     {% if user_data.departement.optEdt == true %}
                         <li class="menu-item" id="menu-agenda">
                             <a class="menu-link" href="{{ path('agenda_index') }}">
-                                <i class="{{ iconAgenda }} fa-2x"><span class="sr-only">calendar</span></i>
+                                <i class="{{ iconMenuAgenda }} fa-2x"><span class="sr-only">calendar</span></i>
                                 <span class="title">{{ 'menu.agenda'|trans }}</span>
                             </a>
                         </li>
@@ -105,7 +105,7 @@
 
                     <li class="menu-item" id="menu-application">
                         <a class="menu-link" href="{{ path('application_index') }}">
-                            <i class="{{ iconApplications }} fa-2x"><span class="sr-only">applications</span></i>
+                            <i class="{{ iconMenuApplications }} fa-2x"><span class="sr-only">applications</span></i>
                             <span class="title">{{ 'menu.applications'|trans }}</span>
                         </a>
                     </li>

@@ -242,7 +242,7 @@
                   })
 
                   function afficheErrors(errors, champ) {
-                    for (error in errors) {
+                    for (let error in errors) {
                       document.getElementById(champ + error).parentElement.innerHTML += '<div >' + errors[error] + '</div>'
                     }
                   }

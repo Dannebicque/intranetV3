@@ -1,0 +1,38 @@
+<div {{ attributes }}>
+    <!-- component html -->
+    <span class="editable">
+        {% if this.edition %}
+            <label for="{{ this.idInput }}" class="sr-only">Modifier la valeur</label>
+            <input id="{{ this.idInput }}" type="{{ this.type }}"
+                   data-model="norender|newValue"
+                   class="form-control">
+            <p>Valeur initialement saisie : {{ this.value }}</p>
+        {% else %}
+            {{ this.value }}
+        {% endif %}
+    </span>
+    {% if not this.edition %}
+        <button
+                data-action="live#action"
+                data-live-action-param="edit"
+                class="btn btn-small text-warning"
+        >
+            <i class="{{ iconEdit }}"></i>
+        </button>
+    {% else %}
+        <button
+                data-action="live#action"
+                data-live-action-param="abort"
+                class="btn btn-small text-danger"
+        >
+            <i class="fas fa-times"></i>
+        </button>
+        <button
+                data-action="live#action"
+                data-live-action-param="valide"
+                class="btn btn-small text-success"
+        >
+            <i class="fas fa-check"></i>
+        </button>
+    {% endif %}
+</div>

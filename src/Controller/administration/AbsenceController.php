@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/AbsenceController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 18/04/2024 17:39
  */
 
 namespace App\Controller\administration;
@@ -296,7 +296,7 @@ class AbsenceController extends BaseController
 
         $absences = $myAbsences->getAbsencesTempsReel($this->getDepartement());
 
-        if ($absences === null || count($absences) === 0) {
+        if (count($absences) === 0) {
             $matieres = [];
         } else {
             $matieres = $manager->findByDepartementArray($this->getDepartement());

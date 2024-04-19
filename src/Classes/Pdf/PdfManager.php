@@ -4,11 +4,12 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Pdf/PdfManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/03/2024 16:30
+ * @lastUpdate 18/04/2024 17:37
  */
 
 namespace App\Classes\Pdf;
 
+use Exception;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class PdfManager
@@ -19,21 +20,15 @@ class PdfManager
         private MyPDF                   $myPDF
     )
     {
-
     }
 
     public function pdf(): PdfInterface
     {
         //selon le paramètre de configuration pdf_service retourner le bon service
-        switch ($this->parameterBag->get('pdf_service')) {
-            case 'gotenberg':
-                return $this->myGotenbergPdf;
-            case 'wkhtmltopdf':
-                return $this->myPDF;
-            default:
-                throw new \Exception('Service de génération de PDF inconnu');
-        }
-
+        return match ($this->parameterBag->get('pdf_service')) {
+            'gotenberg' => $this->myGotenbergPdf,
+            'wkhtmltopdf' => $this->myPDF,
+            default => throw new Exception('Service de génération de PDF inconnu'),
+        };
     }
-
 }

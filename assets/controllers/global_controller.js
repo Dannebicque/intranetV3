@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/global_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 09/04/2024 11:41
+// @lastUpdate 19/04/2024 10:39
 
 import { Controller } from '@hotwired/stimulus'
 
@@ -11,8 +11,7 @@ export default class extends Controller {
 
   connect() {
     document.addEventListener('keydown', this.handleKeydown.bind(this))
-    const os = (navigator.platform.match(/mac|win|linux/i) || ['unknown'])[0].toLowerCase()
-    if (os === 'mac') {
+    if (navigator.userAgent.includes('Mac')) {
       this.searchTarget.innerText = 'cmd+k'
     } else {
       this.searchTarget.innerText = 'ctrl+k'

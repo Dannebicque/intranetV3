@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Enums/TypeMatiereEnum.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/04/2024 14:54
+ * @lastUpdate 19/04/2024 10:44
  */
 
 namespace App\Enums;
@@ -43,7 +43,7 @@ enum TypeMatiereEnum: string implements BadgeEnumInterface
         };
     }
 
-    public function getLibelle()
+    public function getLibelle(): string
     {
         return match ($this) {
             self::TYPE_MATIERE_SAE => 'SAE',

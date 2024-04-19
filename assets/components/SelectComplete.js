@@ -1,16 +1,15 @@
-// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/components/SelectComplete.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 24/08/2022 15:55
+// @lastUpdate 19/04/2024 10:28
 
 import TomSelect from 'tom-select'
 
 export default class SelectComplete extends HTMLSelectElement {
-
   constructor() {
     let options = {
-      maxOptions: null
+      maxOptions: null,
     }
     super()
     if (this.dataset.options) {

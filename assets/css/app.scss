@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/03/2024 08:14
+// @lastUpdate 18/04/2024 10:30
 
 @import "./theme-troyes.scss";
 @import "./theme-rcc.scss";
@@ -848,4 +848,9 @@ td.bg-disabled {
 .heure_petit {
   font-size: 1em;
   text-align: center;
+}
+
+.color-button-menu {
+  --fa-primary-color: var(--colorIUT);
+  --fa-secondary-color: var(--colorIUTComplementaire);
 }

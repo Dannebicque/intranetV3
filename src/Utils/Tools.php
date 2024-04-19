@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Utils/Tools.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/03/2024 13:27
+ * @lastUpdate 19/04/2024 17:48
  */
 
 /*
@@ -210,7 +210,7 @@ abstract class Tools
 
     public static function checkDirectoryExist(string $dir): bool
     {
-        if (!is_dir($dir) && !mkdir($dir)) {
+        if (!mkdir($dir) && !is_dir($dir)) {
             throw new RuntimeException(sprintf('Directory "%s" was not created', $dir));
         }
 
@@ -255,7 +255,7 @@ abstract class Tools
         return $dateMaintenant->between($dateDebut, $dateFin);//todo: attention UTC ?
     }
 
-    public static function FileName(string $string, int $size = 50)
+    public static function FileName(string $string, int $size = 50): string
     {
         $slugger = new AsciiSlugger();
         $slug = $slugger->slug($string);

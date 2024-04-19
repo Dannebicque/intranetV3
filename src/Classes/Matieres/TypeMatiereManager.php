@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Matieres/TypeMatiereManager.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:51
+ * @lastUpdate 09/04/2024 20:44
  */
 
 namespace App\Classes\Matieres;
@@ -236,5 +236,12 @@ class TypeMatiereManager
         }
 
         return array_merge(...$t);
+    }
+
+    public function getManager(string $typeIdMatiere)
+    {
+        $d = explode('_', $typeIdMatiere);
+
+        return $this->typeDeMatiere($d[0]);
     }
 }

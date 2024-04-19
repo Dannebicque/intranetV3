@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/adm/previsionnel_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 16/04/2024 10:47
+// @lastUpdate 19/04/2024 10:29
 
 import { Controller } from '@hotwired/stimulus'
 import { addCallout } from '../../js/util'
@@ -87,6 +87,8 @@ export default class extends Controller {
     }
     addCallout('Donnée actualisée', 'success')
     this._loadContent(type, params)
+
+    return true
   }
 
   async changePrime(e) {
