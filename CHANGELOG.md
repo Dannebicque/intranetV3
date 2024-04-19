@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.17.14](https://github.com/Dannebicque/intranetV3/compare/v3.17.13...v3.17.14) (2024-04-19)
+
+
+### Bug Fixes
+
+* Ajouter matière depuis prof dans prévisionnel ([dcd2a99](https://github.com/Dannebicque/intranetV3/commit/dcd2a99c198bc6bc634f97de55ec5934632ad9df))
+* Ajouter matière depuis prof dans prévisionnel ([3ace5c5](https://github.com/Dannebicque/intranetV3/commit/3ace5c5873f8fe8d0a17240843b5d8610e20da49))
+
 ### [3.17.13](https://github.com/Dannebicque/intranetV3/compare/v3.17.12...v3.17.13) (2024-04-14)
 
 
