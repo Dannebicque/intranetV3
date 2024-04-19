@@ -58,8 +58,8 @@
     "symfony/ux-autocomplete": "^2.10",
     "symfony/ux-chartjs": "^2.10",
     "symfony/ux-dropzone": "^2.10",
-    "symfony/ux-live-component": "^2.10",
-    "symfony/ux-twig-component": "^2.10",
+    "symfony/ux-live-component": "^2.16",
+    "symfony/ux-twig-component": "^2.16",
     "symfony/validator": "7.0.*",
     "symfony/webpack-encore-bundle": "^2.0",
     "symfony/workflow": "7.0.*",
@@ -94,7 +94,7 @@
       "App\\Tests\\": "tests/"
     }
   },
-  "minimum-stability": "dev",
+  "minimum-stability": "stable",
   "replace": {
     "paragonie/random_compat": "2.*",
     "symfony/polyfill-ctype": "*",
@@ -144,8 +144,8 @@
   },
   "repositories": [
     {
-      "type": "vcs",
-      "url": "https://github.com/Dannebicque/TableBundle.git"
+      "type": "path",
+      "url": "/Users/davidannebicque/Sites/table-bundle"
     }
   ]
 }

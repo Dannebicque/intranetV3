@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/webpack.config.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 30/03/2024 14:06
+// @lastUpdate 09/04/2024 16:35
 
 const Encore = require('@symfony/webpack-encore')
 const path = require('path')
@@ -70,8 +70,6 @@ Encore
   .addEntry('sadm.originaux', './assets/js/pages/sadm.originaux.js')
   .addEntry('sadm.anneeuniversitaire', './assets/js/pages/sadm.anneeuniversitaire.js')
   .addEntry('adm.reservation.materiel_commun', './assets/js/pages/adm.reservation.materiel_commun.js')
-
-  .enableStimulusBridge('./assets/controllers.json')
 
   // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
   .splitEntryChunks()
