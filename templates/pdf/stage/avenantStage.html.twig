@@ -220,7 +220,7 @@
         <strong>{{ proposition.dateFinStage|format_date('short') }}</strong>
         est prolongé jusqu’au
         <strong>{{ stage_avenant.nouvelleDateFin != null ? stage_avenant.nouvelleDateFin|format_date('short') :'__________' }}</strong>,
-        soit une durée totale de stage de <strong>{{ stage_avenant.nouvelleDureeJour }}</strong> jours.</p>
+        soit une durée totale de stage de <strong>{{ stage_avenant.nouvelleDureeJour }}</strong> jours.
         <p>Compte-tenu de l’impossibilité de réaliser le stage à distance et de l’obligation de confinement,
            il est entendu entre les parties que le stagiaire bénéficie d’une autorisation d’absence du <strong>
                 {{ stage_avenant.dateDebutAbsence != null ? stage_avenant.dateDebutAbsence|format_date('short'): '__________' }}</strong>

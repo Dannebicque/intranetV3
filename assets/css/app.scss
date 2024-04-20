@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 18/04/2024 10:30
+// @lastUpdate 20/04/2024 11:30
 
 @import "./theme-troyes.scss";
 @import "./theme-rcc.scss";
@@ -853,4 +853,20 @@ td.bg-disabled {
 .color-button-menu {
   --fa-primary-color: var(--colorIUT);
   --fa-secondary-color: var(--colorIUTComplementaire);
+}
+
+.w-15 {
+  width: 15%;
+}
+
+.w-20 {
+  width: 20%;
+}
+
+.w-30 {
+  width: 30%;
+}
+
+.w-40 {
+  width: 40%;
 }

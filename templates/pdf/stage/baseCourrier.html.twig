@@ -51,7 +51,7 @@
         </div>
         <div id="datecourrier">
             {{ stageEtudiant.etudiant.semestre.annee.diplome.departement.ufr.sitePrincipal.adresse.ville }},
-                                                                                                           le {{ 'now'|date
+            le {{ 'now'|date
                 ('d/m/Y') }}
         </div>
 
@@ -78,9 +78,11 @@
             {% endif %}
             {% if stageEtudiant.stagePeriode.responsables[0].signatureElectronique != null %}
                 <br/>
-                <img src="{{ settings('BASE_PATH') }}signature/{{ stageEtudiant.stagePeriode.responsables[0].signatureElectronique }}" width="100px"/>
+                <img src="{{ settings('BASE_PATH') }}signature/{{ stageEtudiant.stagePeriode.responsables[0].signatureElectronique }}"
+                     width="100px"
+                     alt="signature"
+                />
             {% endif %}
-            </td>
         </div>
     </div>
     <div style="text-align: right; position:fixed; bottom: 50px; right:15px; font-size:11px">

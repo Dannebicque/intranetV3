@@ -11,7 +11,9 @@
         <tr>
             <td>{{ enfant.apcRessourceEnfant.display }}</td>
             <td>
+                <label for="groupe_{{ enfant.apcRessourceEnfant.id }}" class="sr-only">Groupe</label>
                 <select class="form-select"
+                        id="groupe_{{ enfant.apcRessourceEnfant.id }}"
                         multiple
                         data-enfant="{{ enfant.apcRessourceEnfant.id }}"
                         data-action="change->apc-enfant#changeGroupe"

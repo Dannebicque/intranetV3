@@ -35,7 +35,9 @@
         </select>
     </td>
     <td>
+        <label class="sr-only" for="codeapogee_{{ groupe.id }}">Modifier le code apogée du groupe</label>
         <input type="text"
+               id="codeapogee_{{ groupe.id }}"
                data-action="change->groupes-adm#updateGroupe"
                data-groupes-adm-id-param="{{ groupe.id }}"
                data-groupes-adm-field-param="codeapogee"

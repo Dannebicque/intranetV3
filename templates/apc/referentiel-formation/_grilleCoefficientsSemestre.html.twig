@@ -16,13 +16,17 @@
                 <a href="#" title="{{ sae.display }}" data-bs-toggle="tooltip" data-bs-placement="bottom">{{ sae.codeMatiere }}</a>
             </td>
             <td>
-                <input type="number" value="{{ sae.nbNotes }}" class="form-control form-control-sm changeNbNotesSae"
+                <label for="nbNotes_{{ sae.id }}" class="sr-only">Nb. Notes</label>
+                <input id="nbNotes_{{ sae.id }}" type="number" value="{{ sae.nbNotes }}"
+                       class="form-control form-control-sm changeNbNotesSae"
                        min="0" max="20" data-matiere="{{ sae.id }}">
             </td>
 
             {% for niveau in niveaux %}
                 <td>
-                    <input type="text" class="form-control changeCoefficientSae" tabindex="{{ tabIndex }}"
+                    <label for="coefficient_{{ sae.id }}" class="sr-only">Coefficient</label>
+                    <input id="coefficient_{{ sae.id }}" type="text" class="form-control changeCoefficientSae"
+                           tabindex="{{ tabIndex }}"
                            data-matiere="{{ sae.id }}" data-competence="{{ niveau.competence.id }}"
                         value="{{ coefficients.saes[sae.id][niveau.competence.id] is defined ? coefficients
                         .saes[sae.id][niveau.competence.id] : 0 }}" />
@@ -38,13 +42,16 @@
                 <a href="#" title="{{ ressource.display }}" data-bs-toggle="tooltip" data-bs-placement="bottom">{{ ressource.codeMatiere }}</a>
             </td>
             <td>
-                <input type="number" value="{{ ressource.nbNotes }}" class="form-control form-control-sm
+                <label for="nbNotes_{{ ressource.id }}" class="sr-only">Nb. Notes</label>
+                <input id="nbNotes_{{ ressource.id }}" type="number" value="{{ ressource.nbNotes }}" class="form-control form-control-sm
                 changeNbNotesRessource" data-matiere="{{ ressource.id }}"
                        min="0" max="20">
             </td>
             {% for niveau in niveaux %}
                 <td>
-                    <input type="text" class="form-control changeCoefficientRessource" tabindex="{{ tabIndex }}"
+                    <label for="coefficient_{{ ressource.id }}" class="sr-only">Coefficient</label>
+                    <input id="coefficient_{{ ressource.id }}" type="text"
+                           class="form-control changeCoefficientRessource" tabindex="{{ tabIndex }}"
                            data-matiere="{{ ressource.id }}" data-competence="{{ niveau.competence.id }}"
                            value="{{ coefficients.ressources[ressource.id][niveau.competence.id] is defined ? coefficients
                            .ressources[ressource.id][niveau.competence.id] : 0 }}" />

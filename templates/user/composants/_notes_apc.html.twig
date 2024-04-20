@@ -7,6 +7,7 @@
             <a class="btn btn-info changeprofil" href="{{ path('profil_etudiant_apc', {slug: etudiant.slug}) }}"
                data-id="profil-notes-apc">
                 Revenir au semestre en cours</a>
+            <label for="changeSemestreNotes" class="sr-only">Change semestre précédent</label>
             <select class="form-select" id="changeSemestreNotes">
                 <option value="">Semestres précédents</option>
                 {% for prec in semestresPrecedents %}

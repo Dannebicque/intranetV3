@@ -4,23 +4,19 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/04/2024 10:30
+ * @lastUpdate 20/04/2024 11:37
  */
 
 namespace App\Controller\administration;
 
-use App\Classes\Hrs\HrsManager;
 use App\Classes\Matieres\TypeMatiereManager;
 use App\Classes\Previsionnel\PrevisionnelImport;
 use App\Classes\Previsionnel\PrevisionnelManager;
-use App\Classes\Previsionnel\PrevisionnelSynthese;
 use App\Controller\BaseController;
 use App\DTO\HrsCollection;
 use App\DTO\PrevisionnelSynthesePersonnels;
 use App\Entity\Constantes;
-use App\Entity\Personnel;
 use App\Entity\Previsionnel;
-use App\Entity\Semestre;
 use App\Enums\TypeHrsEnum;
 use App\Exception\AnneeUniversitaireNotFoundException;
 use App\Exception\MatiereNotFoundException;
@@ -57,101 +53,6 @@ class PrevisionnelController extends BaseController
 
         return $this->render('administration/previsionnel/index.html.twig', [
             'matieres' => $typeMatiereManager->findByDepartement($this->getDepartement()),
-            'annee' => $annee,
-        ]);
-    }
-
-    #[Route('/matiere/{matiere}/{type}/{annee}', name: 'administration_previsionnel_matiere', options: ['expose' => true])]
-    /** @deprecated */
-    public function matiere(
-        PrevisionnelManager $previsionnelManager,
-        TypeMatiereManager  $typeMatiereManager,
-        PrevisionnelSynthese $previsionnelSynthese,
-        int                 $matiere,
-        string              $type,
-        ?int                $annee = 0
-    ): Response
-    {
-        if (0 === $annee) {
-            if (null === $this->dataUserSession->getAnneePrevisionnel()) {
-                throw new AnneeUniversitaireNotFoundException();
-            }
-            $annee = $this->dataUserSession->getAnneePrevisionnel();
-        }
-
-        $mat = $typeMatiereManager->getMatiere($matiere, $type);
-
-        // $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $mat->semestre); //todo: gérer avec l'année ?
-
-        $previsionnel = $previsionnelManager->getPrevisionnelMatiere($matiere, $type, $annee);
-        $synthese = $previsionnelSynthese->getSyntheseMatiere($previsionnel);
-
-        return $this->render('administration/previsionnel/_matiere.html.twig', [
-            'previsionnel' => $previsionnel,
-            'synthese' => $synthese,
-            'annee' => $annee,
-            'matiere' => $mat,
-        ]);
-    }
-
-    #[Route('/semestre/{semestre}/{annee}', name: 'administration_previsionnel_semestre', options: ['expose' => true])]
-    /** @deprecated */
-    public function semestre(
-        PrevisionnelManager $previsionnelManager,
-        PrevisionnelSynthese $previsionnelSynthese,
-        Semestre            $semestre,
-        ?int                $annee = 0
-    ): Response
-    {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
-        if (0 === $annee) {
-            if (null === $this->dataUserSession->getAnneePrevisionnel()) {
-                throw new AnneeUniversitaireNotFoundException();
-            }
-            $annee = $this->dataUserSession->getAnneePrevisionnel();
-        }
-
-        $previsionnel = $previsionnelManager->getPrevisionnelSemestre($semestre, $annee);
-        $synthese = $previsionnelSynthese->getSyntheseSemestre($previsionnel);
-
-        return $this->render('administration/previsionnel/_semestre.html.twig', [
-            'previsionnel' => $previsionnel,
-            'annee' => $annee,
-            'semestre' => $semestre,
-            'synthese' => $synthese,
-        ]);
-    }
-
-    #[Route('/personnel/{personnel}/{annee}', name: 'administration_previsionnel_personnel', options: ['expose' => true])]
-    /** @deprecated */
-    public function personnel(
-        PrevisionnelManager $previsionnelManager,
-        HrsManager          $hrsManager,
-        PrevisionnelSynthese $previsionnelSynthese,
-        Personnel           $personnel,
-        ?int                $annee = 0
-    ): Response
-    {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
-
-        if (0 === $annee) {
-            if (null === $this->dataUserSession->getAnneePrevisionnel()) {
-                throw new AnneeUniversitaireNotFoundException();
-            }
-            $annee = $this->dataUserSession->getAnneePrevisionnel();
-        }
-
-        $previsionnels = $previsionnelManager->getPrevisionnelPersonnelDepartementAnneeArray($personnel,
-            $this->getDepartement(), $annee);
-        $hrs = $hrsManager->getHrsPersonnelDepartementAnnee($personnel, $this->getDepartement(), $annee);
-        $synthsePrevisionnel = $previsionnelSynthese->getSynthese($previsionnels, $personnel)
-            ->getHrsEnseignant($hrs);
-
-        return $this->render('administration/previsionnel/_personnel.html.twig', [
-            'synthsePrevisionnel' => $synthsePrevisionnel,
-            'previsionnels' => $previsionnels,
-            'personnel' => $personnel,
-            'hrs' => $hrs,
             'annee' => $annee,
         ]);
     }
