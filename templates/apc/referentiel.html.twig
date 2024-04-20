@@ -124,7 +124,11 @@
                             {% for parcour in parcours %}
                                 <li class="nav-item">
                                     <a class="nav-link {% if loop.first %}active{% endif %}" data-bs-toggle="tab"
-                                       href="#parcour_{{ parcour.id }}">{{ parcour.libelle }}</a>
+                                       href="#parcour_{{ parcour.id }}">{{ parcour.libelle }}
+                                        <span class="badge {% if parcour.actif == true %}bg-success{% else %}bg-danger{% endif %}">{% if parcour.actif == true %}Actif{% else %}non proposé{% endif %}</span>
+                                        <span class="badge {% if parcour.formationContinue == true %}bg-info{% else %}bg-primary{% endif %}">{% if parcour.formationContinue == true %}Parcours en formation continue ou
+alternance (FC){% else %}Parcours en formation initiale (FI){% endif %}</span>
+                                    </a>
                                 </li>
                             {% endfor %}
                         </ul>
@@ -187,6 +191,6 @@
       sae = {}
       ressource = {}
     </script>
-    {{ encore_entry_script_tags('apc') }}
+    {#    {{ encore_entry_script_tags('apc') }} #}
 {% endblock %}
 
