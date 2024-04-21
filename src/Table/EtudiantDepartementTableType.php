@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Table/EtudiantDepartementTableType.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 30/03/2024 18:35
+ * @lastUpdate 21/04/2024 08:38
  */
 
 namespace App\Table;
@@ -17,7 +17,6 @@ use App\Form\Type\SearchType;
 use App\Repository\SemestreRepository;
 use Dannebicque\TableBundle\Adapter\EntityAdapter;
 use Dannebicque\TableBundle\Column\PropertyColumnType;
-use Dannebicque\TableBundle\Column\SelectColumnType;
 use Dannebicque\TableBundle\Column\WidgetColumnType;
 use Dannebicque\TableBundle\TableBuilder;
 use Dannebicque\TableBundle\TableType;
@@ -88,16 +87,24 @@ class EtudiantDepartementTableType extends TableType
                 ]);
             },
         ]);
-        $builder->addColumn('bac', SelectColumnType::class,
-            [
-                'label' => 'table.bac',
-                'translation_domain' => 'messages',
-                'entity' => Bac::class,
-                'choice_label' => 'libelle',
-                'live_update' => true,
-                'live_update_path' => 'path_update',
-                'live_update_params' => [],
-            ]);
+        $builder->addColumn('bac', WidgetColumnType::class, [
+            'label' => 'table.bac',
+            'translation_domain' => 'messages',
+            'build' => function (WidgetBuilder $builder, Etudiant $s) {
+                $builder->add('bac', SelectChangeType::class, [
+                    'route' => 'adm_etudiant_edit_ajax',
+                    'route_params' => [
+                        'id' => $s->getId(),
+                    ],
+                    'post_params' => [
+                        'field' => 'bac',
+                    ],
+                    'value' => $s->getBac()?->getId(),
+                    'entity' => Bac::class,
+                    'choice_label' => 'libelle',
+                ]);
+            },
+        ]);
 
         $builder->setLoadUrl('administration_etudiant_index');
 

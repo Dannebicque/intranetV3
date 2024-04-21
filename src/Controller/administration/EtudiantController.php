@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EtudiantController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 21/04/2024 08:33
  */
 
 namespace App\Controller\administration;
@@ -131,6 +131,7 @@ class EtudiantController extends BaseController
     public function changeEtat(EtudiantScolarite $etudiantScolarite, #[MapEntity(mapping: ['uuid' => 'uuid'])]
     Etudiant                                     $etudiant, string $etat): JsonResponse
     {
+        //todo: utilisé ?
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $etudiant->getSemestre());
         $etudiantScolarite->setEtudiant($etudiant);
         $etudiantScolarite->changeEtat($etat);
