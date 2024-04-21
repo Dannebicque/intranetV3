@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/PersonnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 11/04/2024 09:54
+ * @lastUpdate 21/04/2024 09:59
  */
 
 namespace App\Controller\administration;
@@ -303,14 +303,14 @@ class PersonnelController extends BaseController
                 $pf[0]->removeRole($droit);
                 $this->entityManager->flush();
 
-                return $this->json($droit, Response::HTTP_OK);
+                return JsonReponse::success('Droits retirés');
             }
 
             // pas présent on ajoute
             $pf[0]->addRole($droit);
             $this->entityManager->flush();
 
-            return $this->json($droit, Response::HTTP_OK);
+            return JsonReponse::success('Droits ajoutés');
         }
 
         if (0 === (is_countable($pf) ? count($pf) : 0) && in_array($droit, Constantes::ROLE_LISTE, true)) {
