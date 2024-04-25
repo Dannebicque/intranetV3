@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/document/TypeDocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 25/04/2024 06:28
  */
 
 namespace App\Controller\document;
@@ -89,7 +89,7 @@ class TypeDocumentController extends BaseController
             $typeDocument->setOriginaux(true);
         } else {
             $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
-            $typeDocument = new TypeDocument($this->dataUserSession->getDepartement());
+            $typeDocument = new TypeDocument($this->getDepartement());
         }
 
         $form = $this->createForm(TypeDocumentType::class, $typeDocument, [

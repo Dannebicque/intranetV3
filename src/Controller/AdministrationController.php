@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/AdministrationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/02/2024 07:21
+ * @lastUpdate 24/04/2024 14:40
  */
 
 namespace App\Controller;
@@ -26,8 +26,8 @@ class AdministrationController extends BaseController
         ProjetPeriodeRepository $projetPeriodeRepository
     ): Response {
 
-        $tperiodes = $stagePeriodeRepository->findByDepartementAndAnneeUniversitaire($this->dataUserSession->getDepartement(), $this->getAnneeUniversitaire());
-        $projetPeriodes = $projetPeriodeRepository->findByDepartementAndAnneeUniversitaire($this->dataUserSession->getDepartement(), $this->getAnneeUniversitaire());
+        $tperiodes = $stagePeriodeRepository->findByDepartementAndAnneeUniversitaire($this->getDepartement(), $this->getAnneeUniversitaire());
+        $projetPeriodes = $projetPeriodeRepository->findByDepartementAndAnneeUniversitaire($this->getDepartement(), $this->getAnneeUniversitaire());
 
 
         return $this->render(

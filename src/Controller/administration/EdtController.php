@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 25/04/2024 06:24
  */
 
 namespace App\Controller\administration;
@@ -98,9 +98,9 @@ class EdtController extends BaseController
         MyEdtCelcat $myEdtCelcat
     ): Response {
         return $this->render('administration/edt/_edt-celcat.html.twig', [
-            'personnels' => $personnelRepository->findByDepartement($this->dataUserSession->getDepartement()),
+            'personnels' => $personnelRepository->findByDepartement($this->getDepartement()),
             'salles' => $salleRepository->findAll(),
-            'matieres' => $typeMatiereManager->findByDepartement($this->dataUserSession->getDepartement()),
+            'matieres' => $typeMatiereManager->findByDepartement($this->getDepartement()),
             'edt' => $myEdtCelcat->initAdministration(),
         ]);
     }

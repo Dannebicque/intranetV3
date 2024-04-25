@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/EdtExportController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 25/04/2024 06:24
  */
 
 namespace App\Controller\administration;
@@ -42,7 +42,7 @@ class EdtExportController extends BaseController
     public function voirPdf(MyEdtExport $myEdtExport): Response
     {
         return $this->render('administration/edtExport/voir.html.twig', [
-            'docs' => $myEdtExport->getAllDocs($this->dataUserSession->getDepartement()),
+            'docs' => $myEdtExport->getAllDocs($this->getDepartement()),
         ]);
     }
 

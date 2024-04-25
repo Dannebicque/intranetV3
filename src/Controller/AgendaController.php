@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/AgendaController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 25/04/2024 06:23
  */
 
 namespace App\Controller;
@@ -24,7 +24,7 @@ class AgendaController extends BaseController
     public function qv(PrevisionnelManager $previsionnelManager): Response
     {
         $previsionnel = $previsionnelManager->getPrevisionnelPersonnelDepartementAnneeArray($this->getUser(),
-            $this->dataUserSession->getDepartement(), $this->dataUserSession->getAnneePrevisionnel());
+            $this->getDepartement(), $this->dataUserSession->getAnneePrevisionnel());
 
         return $this->render('agenda/qv.html.twig', [
             'previsionnels' => $previsionnel,

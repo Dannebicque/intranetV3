@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/StructureController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 25/04/2024 06:26
  */
 
 namespace App\Controller\administration;
@@ -30,7 +30,7 @@ class StructureController extends BaseController
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
         return $this->render('structure/index.html.twig', [
-            'departement' => $this->dataUserSession->getDepartement(),
+            'departement' => $this->getDepartement(),
             'diplomeSelect' => null,
         ]);
     }

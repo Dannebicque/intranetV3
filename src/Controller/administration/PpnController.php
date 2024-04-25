@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/PpnController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 25/04/2024 06:26
  */
 
 namespace App\Controller\administration;
@@ -80,7 +80,7 @@ class PpnController extends BaseController
         $ppn = new Ppn();
         $ppn->setDiplome($diplome);
         $form = $this->createForm(PpnType::class, $ppn, [
-            'departement' => $this->dataUserSession->getDepartement(),
+            'departement' => $this->getDepartement(),
             'attr' => [
                 'data-provide' => 'validation',
             ],
@@ -113,7 +113,7 @@ class PpnController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $ppn->getDiplome());
         $form = $this->createForm(PpnType::class, $ppn, [
-            'departement' => $this->dataUserSession->getDepartement(),
+            'departement' => $this->getDepartement(),
             'attr' => [
                 'data-provide' => 'validation',
             ],

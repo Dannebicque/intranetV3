@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/PersonnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 21/04/2024 09:59
+ * @lastUpdate 25/04/2024 06:26
  */
 
 namespace App\Controller\administration;
@@ -64,7 +64,7 @@ class PersonnelController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
 
-        $personnels = $personnelRepository->findByDepartement($this->dataUserSession->getDepartement());
+        $personnels = $personnelRepository->findByDepartement($this->getDepartement());
 
         $data = $mySerializer->getDataFromSerialization(
             $personnels,
@@ -112,7 +112,7 @@ class PersonnelController extends BaseController
             $personnel->setAnneeUniversitaire($this->getAnneeUniversitaire());
             $this->entityManager->persist($personnel);
 
-            $personnelDepartement = new PersonnelDepartement($personnel, $this->dataUserSession->getDepartement());
+            $personnelDepartement = new PersonnelDepartement($personnel, $this->getDepartement());
             $this->entityManager->persist($personnelDepartement);
             $this->entityManager->flush();
 
@@ -158,7 +158,7 @@ class PersonnelController extends BaseController
         $slug = $request->request->get('slug');
         $this->denyAccessUnlessGranted('ROLE_PERMANENT');
         $personnel = $personnelRepository->findOneBySlug($slug);
-        $departement ??= $this->dataUserSession->getDepartement();
+        $departement ??= $this->getDepartement();
         if (null !== $personnel && null !== $departement) {
             $existe = $personnelDepartementRepository->findOneBy([
                 'departement' => $departement->getId(),

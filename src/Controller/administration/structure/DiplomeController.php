@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/structure/DiplomeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/02/2024 18:55
+ * @lastUpdate 25/04/2024 06:28
  */
 
 namespace App\Controller\administration\structure;
@@ -30,7 +30,7 @@ class DiplomeController extends BaseController
         Request $request, Departement $departement): Response
     {
         $diplome = new Diplome($departement);
-        $diplome->setDepartement($this->dataUserSession->getDepartement());
+        $diplome->setDepartement($this->getDepartement());
         $form = $this->createForm(DiplomeType::class, $diplome, [
             'departement' => $departement,
             'attr' => [

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/superAdministration/PpnController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 25/04/2024 06:28
  */
 
 namespace App\Controller\superAdministration;
@@ -97,7 +97,7 @@ class PpnController extends BaseController
     public function edit(Request $request, Ppn $ppn): Response
     {
         $form = $this->createForm(PpnType::class, $ppn, [
-            'departement' => $this->dataUserSession->getDepartement(),
+            'departement' => $this->getDepartement(),
             'attr' => [
                 'data-provide' => 'validation',
             ],

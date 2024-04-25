@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/04/2024 11:37
+ * @lastUpdate 25/04/2024 06:29
  */
 
 namespace App\Controller\administration;
@@ -18,7 +18,6 @@ use App\DTO\PrevisionnelSynthesePersonnels;
 use App\Entity\Constantes;
 use App\Entity\Previsionnel;
 use App\Enums\TypeHrsEnum;
-use App\Exception\AnneeUniversitaireNotFoundException;
 use App\Exception\MatiereNotFoundException;
 use App\Exception\PersonnelNotFoundException;
 use App\Form\ImportPrevisionnelType;
@@ -38,46 +37,25 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route('/administration/service-previsionnel')]
 class PrevisionnelController extends BaseController
 {
-    #[Route('/annee/{annee}', name: 'administration_previsionnel_index_old', options: ['expose' => true])]
-    /** @deprecated */
-    public function index(TypeMatiereManager $typeMatiereManager, ?int $annee = 0): Response
-    {
-        $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
-
-        if (0 === $annee) {
-            if (null === $this->dataUserSession->getAnneePrevisionnel()) {
-                throw new AnneeUniversitaireNotFoundException();
-            }
-            $annee = $this->dataUserSession->getAnneePrevisionnel();
-        }
-
-        return $this->render('administration/previsionnel/index.html.twig', [
-            'matieres' => $typeMatiereManager->findByDepartement($this->getDepartement()),
-            'annee' => $annee,
-        ]);
-    }
-
-    #[Route('/ajax/edit/{id}', name: 'administration_previsionnel_ajax_edit', options: ['expose' => true])]
-    /** @deprecated */
-    public function edit(
-        PrevisionnelManager $previsionnelManager,
-        Request      $request,
-        Previsionnel $previsionnel
-    ): JsonResponse
-    {
-        $name = $request->request->get('field');
-        $value = $request->request->get('value');
-
-        $update = $previsionnelManager->update($previsionnel, $name, $value);
-
-        return $update ? new JsonResponse(true, Response::HTTP_OK) : new JsonResponse(false,
-            Response::HTTP_INTERNAL_SERVER_ERROR);
-    }
-
     #[Route('/', name: 'administration_previsionnel_index', methods: ['GET', 'POST'])]
-    public function create(): RedirectResponse|Response
+    public function index(): RedirectResponse|Response
     {
         return $this->render('administration/previsionnel/new.html.twig');
+    }
+
+    private function prepareData($type, $personnelRepository, $typeMatiereManager): array
+    {
+        $dataMap = [
+            'matiere' => ['matieres' => $typeMatiereManager->findByDepartement($this->getDepartement())],
+            'enseignant' => ['personnels' => $personnelRepository->findByDepartement($this->getDepartement())],
+            'semestre' => ['semestres' => $this->getDataUserSession()->getSemestres()]
+        ];
+
+        if (array_key_exists($type, $dataMap)) {
+            return $dataMap[$type];
+        }
+
+        return [];
     }
 
     #[Route('/new/charge-step', name: 'administration_previsionnel_load_step', methods: ['GET', 'POST'])]
@@ -88,30 +66,17 @@ class PrevisionnelController extends BaseController
     {
         $type = $request->query->get('type');
 
-        if ($type === 'matiere') {
-            return $this->render('previsionnel/administration/_matiere.html.twig', [
-                'matieres' => $typeMatiereManager->findByDepartement($this->getDepartement()),
-            ]);
-        }
+        $templateMap = [
+            'matiere' => 'previsionnel/administration/_matiere.html.twig',
+            'enseignant' => 'previsionnel/administration/_enseignant.html.twig',
+            'semestre' => 'previsionnel/administration/_semestre.html.twig',
+            'synthese-personnel' => 'previsionnel/administration/_synthesePersonnel.html.twig',
+            'synthese-hrs' => 'previsionnel/administration/_syntheseHrs.html.twig',
+            'actions' => 'previsionnel/administration/_actions.html.twig'
+        ];
 
-        if ($type === 'enseignant') {
-            return $this->render('previsionnel/administration/_enseignant.html.twig', [
-                'personnels' => $personnelRepository->findByDepartement($this->getDepartement()),
-            ]);
-        }
-
-        if ($type === 'semestre') {
-            return $this->render('previsionnel/administration/_semestre.html.twig', [
-                'semestres' => $this->getDataUserSession()->getSemestres(),
-            ]);
-        }
-
-        if ($type === 'synthese-personnel') {
-            return $this->render('previsionnel/administration/_synthesePersonnel.html.twig');
-        }
-
-        if ($type === 'actions') {
-            return $this->render('previsionnel/administration/_actions.html.twig');
+        if (array_key_exists($type, $templateMap)) {
+            return $this->render($templateMap[$type], $this->prepareData($type, $personnelRepository, $typeMatiereManager));
         }
 
         return $this->render('_stepError.html.twig');
@@ -175,6 +140,29 @@ class PrevisionnelController extends BaseController
             'categorieHrs' => TypeHrsEnum::cases()
         ]);
     }
+
+    #[Route('/new/charge-content-hrs', name: 'administration_previsionnel_charge_content_hrs', methods: ['GET', 'POST'])]
+    public function loadContentHrs(
+        HrsRepository     $hrsRepository,
+        TypeHrsRepository $typeHrsRepository,
+        Request           $request): Response
+    {
+        $annee = $request->query->get('annee');
+
+        $hrs = $hrsRepository->findByDepartement($this->getDepartement(), $annee);
+        $hrsCollection = new HrsCollection();
+        foreach ($hrs as $hr) {
+            $hrsCollection->addHrs($hr);
+        }
+
+        return $this->render('previsionnel/administration/_syntheseHrs_content.html.twig', [
+            'annee' => $annee,
+            'primes' => $hrsCollection,
+            'typesHrs' => $typeHrsRepository->findAll(),
+            'categorieHrs' => TypeHrsEnum::cases()
+        ]);
+    }
+
 
     #[Route('/new/charge-content-semestre', name: 'administration_previsionnel_charge_content_semestre', methods: ['GET', 'POST'])]
     public function loadContentSemestre(

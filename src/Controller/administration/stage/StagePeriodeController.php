@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/stage/StagePeriodeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 25/04/2024 06:28
  */
 
 namespace App\Controller\administration\stage;
@@ -32,7 +32,7 @@ class StagePeriodeController extends BaseController
 
         return $this->render(
             'administration/stage/stage_periode/index.html.twig',
-            ['stage_periodes' => $stagePeriodeRepository->findByDepartement($this->dataUserSession->getDepartement())]
+            ['stage_periodes' => $stagePeriodeRepository->findByDepartement($this->getDepartement())]
         );
     }
 
@@ -42,7 +42,7 @@ class StagePeriodeController extends BaseController
         MyExport $myExport, StagePeriodeRepository $stagePeriodeRepository, string $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $this->getDepartement());
-        $stagePeriodes = $stagePeriodeRepository->findByDepartement($this->dataUserSession->getDepartement());
+        $stagePeriodes = $stagePeriodeRepository->findByDepartement($this->getDepartement());
         $data = $mySerializer->getDataFromSerialization(
             $stagePeriodes,
             ['numeroPeriode', 'libelle', 'numeroPeriode', 'dateDebut', 'dateFin', 'nbSemaines', 'nbJours', 'nbEcts'],
@@ -102,7 +102,7 @@ class StagePeriodeController extends BaseController
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
         $form = $this->createForm(StagePeriodeType::class, $stagePeriode, [
-            'departement' => $this->dataUserSession->getDepartement(),
+            'departement' => $this->getDepartement(),
             'attr' => [
                 'data-provide' => 'validation',
             ],

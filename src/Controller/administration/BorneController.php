@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/BorneController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 25/04/2024 06:23
  */
 
 namespace App\Controller\administration;
@@ -54,7 +54,7 @@ class BorneController extends BaseController
         MyExport $myExport, BorneRepository $borneRepository, string $_format): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ASS', $this->getDepartement());
-        $bornes = $borneRepository->findByDepartement($this->dataUserSession->getDepartement());
+        $bornes = $borneRepository->findByDepartement($this->getDepartement());
         $data = $mySerializer->getDataFromSerialization(
             $bornes,
             ['message', 'icone', 'couleur', 'url', 'dateDebutPublication', 'dateFinPublication'],
@@ -89,7 +89,7 @@ class BorneController extends BaseController
             BorneType::class,
             $borne,
             [
-                'departement' => $this->dataUserSession->getDepartement(),
+                'departement' => $this->getDepartement(),
                 'attr' => [
                     'data-provide' => 'validation',
                 ],
@@ -126,7 +126,7 @@ class BorneController extends BaseController
             BorneType::class,
             $borne,
             [
-                'departement' => $this->dataUserSession->getDepartement(),
+                'departement' => $this->getDepartement(),
                 'attr' => [
                     'data-provide' => 'validation',
                 ],

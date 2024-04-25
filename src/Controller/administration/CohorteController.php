@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/CohorteController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/02/2024 18:55
+ * @lastUpdate 25/04/2024 06:23
  */
 
 namespace App\Controller\administration;
@@ -31,7 +31,7 @@ class CohorteController extends BaseController
             $annee = (int) date('Y') - 1;
         }
         // on ne récupère la cohorte que de la departement.
-        $parcours = $scolariteRepository->findEtudiantsDepartement($annee, $this->dataUserSession->getDepartement());
+        $parcours = $scolariteRepository->findEtudiantsDepartement($annee, $this->getDepartement());
         $etudiants = [];
         /** @var Scolarite $parcour */
         foreach ($parcours as $parcour) {
