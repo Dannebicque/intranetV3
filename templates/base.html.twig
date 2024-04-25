@@ -53,11 +53,12 @@
     </noscript>
 </head>
 
-<body class="{{ settings('CODE_IUT') }}"
+<body class="{{ settings('CODE_IUT') }} {% block body %}{% endblock %}"
+        {% block body_complement %}{% endblock %}
         {{ stimulus_controller('global') }}
 >
 {% block full_body %}
-
+    {{ user_data.initDataUserSession(app.user) }}
     <!-- Preloader -->
     <div class="preloader" id="loader">
         <div class="spinner-dots">
@@ -358,6 +359,7 @@
             <!-- fin du bouton fab -->
         </div><!--/.main-content -->
 
+    {% block footer %}
         <!-- Footer -->
         <footer class="site-footer">
             <div class="row">
@@ -390,6 +392,7 @@
                 </div>
             </div>
         </footer><!-- END Footer -->
+    {% endblock %}
     </main>
     <!-- END Main container -->
 
