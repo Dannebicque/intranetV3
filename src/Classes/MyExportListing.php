@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/MyExportListing.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/04/2024 15:00
+ * @lastUpdate 25/04/2024 06:18
  */
 
 /*
@@ -70,6 +70,7 @@ class MyExportListing
         private readonly MyExcelWriter $myExcelWriter,
         private readonly PdfManager $myPdf
     ) {
+        //todo: a tester... dataUserSession ?
         $this->base = $kernel->getProjectDir().'/';
     }
 
