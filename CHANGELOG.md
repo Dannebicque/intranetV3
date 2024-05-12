@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.18.1](https://github.com/Dannebicque/intranetV3/compare/v3.18.0...v3.18.1) (2024-05-12)
+
+
+### Features
+
+* Export PN APC ([7e988ae](https://github.com/Dannebicque/intranetV3/commit/7e988aec4e48d6d83bd456fc4ec98db737f9c85f))
+
+
+### Bug Fixes
+
+* semestre et session ([02a262a](https://github.com/Dannebicque/intranetV3/commit/02a262ac268f073ddf4a7a20f34fc1ca56a92964))
+
 ## [3.18.0](https://github.com/Dannebicque/intranetV3/compare/v3.17.14...v3.18.0) (2024-05-12)
 
 
