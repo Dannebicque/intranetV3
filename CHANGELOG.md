@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.18.0](https://github.com/Dannebicque/intranetV3/compare/v3.17.14...v3.18.0) (2024-05-12)
+
+
+### Features
+
+* Edt en liste ([7f1836d](https://github.com/Dannebicque/intranetV3/commit/7f1836dfe753aefd5fbd63a2854bf8482da47e50))
+* Export PN APC ([21b1ea6](https://github.com/Dannebicque/intranetV3/commit/21b1ea6588fe8f772681cd6527341db32e4eee06))
+* Transformation adm.absences avec stimulus ([d55082c](https://github.com/Dannebicque/intranetV3/commit/d55082c120b863496319f665368e768d64f80b0b))
+
+
+### Bug Fixes
+
+* footer ([3e2094e](https://github.com/Dannebicque/intranetV3/commit/3e2094e647488fe0b942015c943efb3ceb81afc6))
+* Simplification base-speciale.html.twig ([03e276e](https://github.com/Dannebicque/intranetV3/commit/03e276e595fa98e10235ff0f881051b1b826a05c))
+* Suppression d'une dépendance jquery-collection + correctifs sur Collection pour APC ([b8bf3f8](https://github.com/Dannebicque/intranetV3/commit/b8bf3f826fce913216a77b816bdd3b1bc5952fd4))
+* suppression js inutile + correctif sur liste étudiant ([b5990a8](https://github.com/Dannebicque/intranetV3/commit/b5990a856ce1cb4538f241fdef92b1e54adb5d28))
+* suppression js inutile + stimulus pour droit personnels ([d3843e3](https://github.com/Dannebicque/intranetV3/commit/d3843e3978bc986b2b407ebf56b799c16f232399))
+* Utilisation de getDepartement de baseController plutôt que dataUserSession ([7c182a7](https://github.com/Dannebicque/intranetV3/commit/7c182a786067c5dc5c89bed9ad331cd7c3578c82))
+
 ### [3.17.14](https://github.com/Dannebicque/intranetV3/compare/v3.17.13...v3.17.14) (2024-04-19)
 
 
