@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/DataUserSession.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/04/2024 07:37
+ * @lastUpdate 12/05/2024 20:05
  */
 
 namespace App\Classes;
@@ -199,6 +199,8 @@ class DataUserSession
      */
     public function isGoodDepartement(string $role): bool
     {
+        $this->initDataUserSession($this->getUser());
+
         if (null !== $this->getUser() && !($this->getUser() instanceof Etudiant)) {
             /** @var PersonnelDepartement $rf */
             foreach ($this->getUser()->getPersonnelDepartements() as $rf) {
