@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/DataUserSession.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/02/2024 21:35
+ * @lastUpdate 25/04/2024 07:37
  */
 
 namespace App\Classes;
@@ -24,13 +24,12 @@ use App\Repository\DepartementRepository;
 use App\Repository\DiplomeRepository;
 use App\Repository\PersonnelRepository;
 use App\Repository\SemestreRepository;
-use Doctrine\ORM\NonUniqueResultException;
 use JsonException;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\EventDispatcher\GenericEvent;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
 use function count;
 use function in_array;
@@ -69,53 +68,52 @@ class DataUserSession
         return $this->type_user;
     }
 
-    /**
-     * DataUserSession constructor.
-     *
-     * @throws NonUniqueResultException
-     */
     public function __construct(
         protected SemestreRepository $semestreRepository,
         protected AnneeRepository $anneeRepository,
         protected DiplomeRepository $diplomeRepository,
         protected PersonnelRepository $personnelRepository,
         protected DepartementRepository $departementRepository,
-        protected TokenStorageInterface $user,
         protected Security $security,
-        EventDispatcherInterface $eventDispatcher,
-        RequestStack $requestStack
+        protected EventDispatcherInterface $eventDispatcher,
+        protected RequestStack             $requestStack
     ) {
-        if ($this->getUser() instanceof Etudiant) {
+    }
+
+    public function initDataUserSession(UserInterface $user): void
+    {
+        //todo: fait car session vide après connexion dans cette classe ?
+        if ($user instanceof Etudiant) {
             $this->type_user = 'e';
-            $this->departement = $this->departementRepository->findDepartementEtudiant($this->getUser());
+            $this->departement = $this->departementRepository->findDepartementEtudiant($user);
         } elseif ($this->getUser() instanceof Personnel) {
             $this->type_user = 'p';
-            if (null !== $requestStack->getSession()->get('departement')) {
-                $this->departement = $this->departementRepository->findOneBy(['uuid' => $requestStack->getSession()->get('departement')]);
+            if (null !== $this->requestStack->getSession()->get('departement')) {
+                $this->departement = $this->departementRepository->findOneBy(['uuid' => $this->requestStack->getSession()->get('departement')]);
             }
         } else {
             // ni étudiant, ni personnel... étrange
             $event = new GenericEvent('erreur-type-user');
-            $eventDispatcher->dispatch($event, Events::REDIRECT_TO_LOGIN);
+            $this->eventDispatcher->dispatch($event, Events::REDIRECT_TO_LOGIN);
         }
 
         if (null !== $this->departement) {
-            $this->semestres = $semestreRepository->findByDepartement($this->departement);
+            $this->semestres = $this->semestreRepository->findByDepartement($this->departement);
             $this->semestresActifs = [];
             foreach ($this->semestres as $semestre) {
                 if ($semestre->getActif()) {
                     $this->semestresActifs[] = $semestre;
                 }
             }
-            $this->diplomes = $diplomeRepository->findByDepartement($this->departement);
-            $this->annees = $anneeRepository->findByDepartement($this->departement);
+            $this->diplomes = $this->diplomeRepository->findByDepartement($this->departement);
+            $this->annees = $this->anneeRepository->findByDepartement($this->departement);
         }
     }
 
-    public function getUser(): Personnel|Etudiant|null
+    public function getUser(): Personnel|Etudiant|UserInterface|null
     {
-        if (null !== $this->user->getToken()) {
-            return $this->user->getToken()->getUser();
+        if (null !== $this->security->getUser()) {
+            return $this->security->getUser();
         }
 
         return null;

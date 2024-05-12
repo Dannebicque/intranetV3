@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/BaseController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 23/04/2024 18:36
+ * @lastUpdate 25/04/2024 06:41
  */
 
 namespace App\Controller;
@@ -37,6 +37,8 @@ class BaseController extends AbstractController
     protected TranslatorInterface $translator;
     protected BreadcrumbHelper $breadcrumbHelper;
     protected TableFactory $tableFactory;
+
+    private bool $isInit = false;
 
     public static function getSubscribedServices(): array
     {
@@ -129,7 +131,10 @@ class BaseController extends AbstractController
 
     public function getDepartement(): ?Departement
     {
-        $this->dataUserSession->initDataUserSession($this->getUser());
+        if ($this->isInit === false) {
+            $this->dataUserSession->initDataUserSession($this->getUser());
+            $this->isInit = true;
+        }
         return $this->dataUserSession->getDepartement();
     }
 
