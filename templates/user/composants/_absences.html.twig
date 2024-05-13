@@ -1,58 +1,68 @@
-{{ include('bloc_notes_absences/etudiant_absences.html.twig') }}
+<div
+        {% if  user_data.isGoodDepartement('ROLE_ABS') or user_data.isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_CDD') or user_data
+            .isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
+            {{ stimulus_controller('adm--justifier-absences', {
+                urlListeAbsences: path('administration_absences_liste_absence_etudiant'),
+                urlJustifierAbsence: path('administration_absences_justifie'),
+            }) }}
+        {% endif %}
+>
+    {{ include('bloc_notes_absences/etudiant_absences.html.twig') }}
+</div>
 
- {% if  user_data.isGoodDepartement('ROLE_ABS') or user_data.isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_CDD') or user_data
-     .isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
-     <div class="card">
-         <h4 class="card-title">Ajouter une absence</h4>
-         <div class="card-body">
-             <table class="table">
-                 <thead>
-                 <tr>
-                     <th class="w-20"><label for="jourabs">Date</label></th>
-                     <th class="w-20"><label for="heureabs">Heure</label></th>
-                     <th class="w-30"><label for="moduleabs">Matière</label></th>
-                     <th class="w-15"><label for="justifabs">Justifié ?</label></th>
-                     <th class="w-15">&nbsp;</th>
-                 </tr>
-                 </thead>
-                 <tbody>
-                 <tr>
-                     <td>
-                         <input placeholder="jj/mm/aaaa" name="jourabs" id="jourabs" class="form-control"
-                                value="{{ date("now")|date('Y-m-d') }}" type="date">
-                     </td>
-                     <td><select class="form-select heure" name="heureabs" id="heureabs">
-                             {% for i in 08..19 %}
-                                 <option value="{{ i }}:00">{{ i }}h00</option>
-                                 <option value="{{ i }}:15">{{ i }}h15</option>
-                                 <option value="{{ i }}:30">{{ i }}h30</option>
-                                 <option value="{{ i }}:45">{{ i }}h45</option>
-                             {% endfor %}
-                         </select></td>
-                     <td><select class="form-select" name="moduleabs" id="moduleabs"
-                                 {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
-                         >
-                             <option value="0">Choisir</option>
-                             {% for matiere in matieres %}
-                                 <option value="{{ matiere.typeIdMatiere }}">{{ matiere.display }}</option>
-                             {% endfor %}
-                         </select></td>
-                     <td>
-                         <input type="radio" id="justifabs" name="justifabs" value="true"> Oui |
-                         <input type="radio" name="justifabs" value="false" checked title="Justification de l'absence">
-                         Non
-                     </td>
-                     <td>
-                         <button class="btn btn-primary d-block" id="btnabs" data-etudiant="{{ etudiant.id }}">
-                             Ajouter
-                         </button>
-                     </td>
-                 </tr>
-                 </tbody>
-             </table>
-         </div>
-     </div>
- {% endif %}
+{% if  user_data.isGoodDepartement('ROLE_ABS') or user_data.isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_CDD') or user_data
+    .isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_ADMIN') %}
+    <div class="card">
+        <h4 class="card-title">Ajouter une absence</h4>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th class="w-20"><label for="jourabs">Date</label></th>
+                    <th class="w-20"><label for="heureabs">Heure</label></th>
+                    <th class="w-30"><label for="moduleabs">Matière</label></th>
+                    <th class="w-15"><label for="justifabs">Justifié ?</label></th>
+                    <th class="w-15">&nbsp;</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>
+                        <input placeholder="jj/mm/aaaa" name="jourabs" id="jourabs" class="form-control"
+                               value="{{ date("now")|date('Y-m-d') }}" type="date">
+                    </td>
+                    <td><select class="form-select heure" name="heureabs" id="heureabs">
+                            {% for i in 08..19 %}
+                                <option value="{{ i }}:00">{{ i }}h00</option>
+                                <option value="{{ i }}:15">{{ i }}h15</option>
+                                <option value="{{ i }}:30">{{ i }}h30</option>
+                                <option value="{{ i }}:45">{{ i }}h45</option>
+                            {% endfor %}
+                        </select></td>
+                    <td><select class="form-select" name="moduleabs" id="moduleabs"
+                                {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
+                        >
+                            <option value="0">Choisir</option>
+                            {% for matiere in matieres %}
+                                <option value="{{ matiere.typeIdMatiere }}">{{ matiere.display }}</option>
+                            {% endfor %}
+                        </select></td>
+                    <td>
+                        <input type="radio" id="justifabs" name="justifabs" value="true"> Oui |
+                        <input type="radio" name="justifabs" value="false" checked title="Justification de l'absence">
+                        Non
+                    </td>
+                    <td>
+                        <button class="btn btn-primary d-block" id="btnabs" data-etudiant="{{ etudiant.id }}">
+                            Ajouter
+                        </button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endif %}
 
 {# <div class="card"> #}
 {#    <h4 class="card-title">Planning</h4> #}
