@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/DataUserSession.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/05/2024 20:05
+ * @lastUpdate 13/05/2024 10:11
  */
 
 namespace App\Classes;
@@ -268,6 +268,8 @@ class DataUserSession
 
     public function getSemestresActifs(): array
     {
+        $this->initDataUserSession($this->getUser());
+
         return $this->semestresActifs;
     }
 }
