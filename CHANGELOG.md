@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.18.4](https://github.com/Dannebicque/intranetV3/compare/v3.18.3...v3.18.4) (2024-05-14)
+
+
+### Bug Fixes
+
+* session->departement ([e082b6f](https://github.com/Dannebicque/intranetV3/commit/e082b6f35bc74615b588e04631a0184026e12a65))
+
 ### [3.18.3](https://github.com/Dannebicque/intranetV3/compare/v3.18.2...v3.18.3) (2024-05-14)
 
 
