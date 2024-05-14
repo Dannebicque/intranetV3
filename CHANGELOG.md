@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.18.3](https://github.com/Dannebicque/intranetV3/compare/v3.18.2...v3.18.3) (2024-05-14)
+
+
+### Bug Fixes
+
+* controller stimulus sur absences du profil ([3c058cd](https://github.com/Dannebicque/intranetV3/commit/3c058cd5099266a509f84834f759d2777f41bd78))
+* semestre et session ([ad2b266](https://github.com/Dannebicque/intranetV3/commit/ad2b266f0c1838aeb74ad9e19d3e03e2a0057251))
+* semestre et session ([3c9efe3](https://github.com/Dannebicque/intranetV3/commit/3c9efe3e43dfff7960dc28fef1c6bb79f256f89f))
+
 ### [3.18.2](https://github.com/Dannebicque/intranetV3/compare/v3.18.1...v3.18.2) (2024-05-12)
 
 
