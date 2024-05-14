@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/DataUserSession.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 13/05/2024 18:29
+ * @lastUpdate 14/05/2024 21:05
  */
 
 namespace App\Classes;
@@ -154,6 +154,7 @@ class DataUserSession
      */
     public function getDepartement(): ?Departement
     {
+        $this->initDataUserSession($this->getUser());
         return $this->departement;
     }
 
