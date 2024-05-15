@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/GetSemestreFromGroupe.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 09/11/2023 17:01
+ * @lastUpdate 15/05/2024 19:42
  */
 
 namespace App\Classes;
@@ -21,6 +21,10 @@ abstract class GetSemestreFromGroupe
         }
 
         $semestres = $groupe->getTypeGroupe()?->getSemestres();
+
+        if (null === $semestres) {
+            return null;
+        }
 
         foreach ($semestres as $semestre) {
             if ($groupe->getApcParcours()?->getDiplomes()->contains($semestre->getDiplome())) {
