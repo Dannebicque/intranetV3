@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/stage/StagePeriodeGestionController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 28/05/2024 19:47
  */
 
 namespace App\Controller\administration\stage;
@@ -73,7 +73,7 @@ class StagePeriodeGestionController extends BaseController
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_STAGE', $stagePeriode->getSemestre());
         $periodes = [];
         foreach ($this->dataUserSession->getDiplomes() as $diplome) {
-            $pers = $stagePeriodeRepository->findByDiplome($diplome, $diplome->getAnneeUniversitaire());
+            $pers = $stagePeriodeRepository->findByDiplome($diplome, $this->getAnneeUniversitaire());
             foreach ($pers as $periode) {
                 $periodes[] = $periode;
             }

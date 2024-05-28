@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/DataUserSession.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 14/05/2024 21:05
+ * @lastUpdate 28/05/2024 19:47
  */
 
 namespace App\Classes;
@@ -138,6 +138,7 @@ class DataUserSession
      */
     public function getDiplomes(): ?array
     {
+        $this->initDataUserSession($this->getUser());
         return $this->diplomes;
     }
 
@@ -146,6 +147,7 @@ class DataUserSession
      */
     public function getAnnees(): array
     {
+        $this->initDataUserSession($this->getUser());
         return $this->annees;
     }
 
