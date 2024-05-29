@@ -24,11 +24,9 @@
         <div class="schedule-individual " aria-labelledby="schedule-heading">
             {{ include('edt/_header_edt2.html.twig') }}
             {% for ligne in 0..24 %}
-                <h2 class="{% if ligne is even %}time-slot{% endif %}" style="grid-row: time-{{ tabHeures[ligne][0] }};
-                        ">
-                    {% if ligne is even %}
-                        {{ tabHeures[ligne][1] }}
-                    {% endif %}</h2>
+                <h2 class="time-slot" style="grid-row: time-{{ tabHeures[ligne][0] }};">
+                    {{ tabHeures[ligne][1] }}
+                </h2>
                 {% for j in 1..5 %}
                     {% if edt[j][ligne] is defined %}
                         <div class="session {{ edt[j][ligne].couleurEdt }}" style="grid-column: track-{{ j }}; grid-row:
