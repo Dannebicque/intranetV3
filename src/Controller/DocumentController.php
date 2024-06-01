@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/DocumentController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 18:06
+ * @lastUpdate 01/06/2024 20:30
  */
 
 namespace App\Controller;
@@ -27,6 +27,14 @@ class DocumentController extends BaseController
     ], methods: ['GET'])]
     public function index(string $source = Document::DOCUMENTS): Response
     {
+
+        if ($source === Document::ORIGINAUX) {
+            $this->breadcrumbHelper->addItem('originaux', 'document_index', ['source' => Document::ORIGINAUX]);
+
+        } else {
+            $this->breadcrumbHelper->addItem('documents', 'document_index', ['source' => Document::DOCUMENTS]);
+        }
+
         if (Document::ORIGINAUX === $source && !$this->hasAccessOriginaux()) {
             throw new NotFoundHttpException();
         }

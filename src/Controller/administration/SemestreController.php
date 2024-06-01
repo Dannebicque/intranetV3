@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/SemestreController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 20/02/2024 18:55
+ * @lastUpdate 01/06/2024 21:40
  */
 
 namespace App\Controller\administration;
@@ -47,6 +47,8 @@ class SemestreController extends BaseController
     public function index(AbsenceJustificatifRepository $absenceJustificatifRepository, RattrapageRepository $rattrapageRepository, Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
+        $this->breadcrumbHelper->addAdministration()
+            ->addLastItem('Gestion du semestre ' . $semestre->getLibelle());
 
         return $this->render('administration/semestre/index.html.twig', [
             'semestre' => $semestre,
