@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/AgendaController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/04/2024 06:23
+ * @lastUpdate 01/06/2024 20:01
  */
 
 namespace App\Controller;
@@ -68,6 +68,8 @@ class AgendaController extends BaseController
     #[Route(path: '/{semaine}/{filtre}/{valeur}', name: 'agenda_index', requirements: ['semaine' => '\d+'], options: ['expose' => true])]
     public function index(int $semaine = 0, string $filtre = 'prof', string $valeur = ''): Response
     {
+        $this->breadcrumbHelper->addItem('agenda', 'agenda_index');
+
         if (0 === $semaine) {
             $semaine = (int) date('W');
         }

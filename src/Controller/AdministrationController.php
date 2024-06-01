@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/AdministrationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/04/2024 14:40
+ * @lastUpdate 01/06/2024 21:40
  */
 
 namespace App\Controller;
@@ -25,6 +25,8 @@ class AdministrationController extends BaseController
         StagePeriodeRepository $stagePeriodeRepository,
         ProjetPeriodeRepository $projetPeriodeRepository
     ): Response {
+
+        $this->breadcrumbHelper->addItem('administration', 'administration_index');
 
         $tperiodes = $stagePeriodeRepository->findByDepartementAndAnneeUniversitaire($this->getDepartement(), $this->getAnneeUniversitaire());
         $projetPeriodes = $projetPeriodeRepository->findByDepartementAndAnneeUniversitaire($this->getDepartement(), $this->getAnneeUniversitaire());
