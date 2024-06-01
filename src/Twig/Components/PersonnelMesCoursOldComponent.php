@@ -1,13 +1,13 @@
 <?php
 /*
  * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/Sites/intranetV3/src/Components/LiveTwig/PersonnelMesCoursComponent.php
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Twig/Components/PersonnelMesCoursOldComponent.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/03/2024 19:31
+ * @lastUpdate 29/05/2024 20:57
  */
 
-namespace App\Components\LiveTwig;
+namespace App\Twig\Components;
 
 use App\Classes\DataUserSession;
 use App\Classes\Previsionnel\PrevisionnelManager;
@@ -19,8 +19,8 @@ use Symfony\UX\LiveComponent\Attribute\LiveAction;
 use Symfony\UX\LiveComponent\Attribute\LiveProp;
 use Symfony\UX\LiveComponent\DefaultActionTrait;
 
-#[AsLiveComponent('personnel_mes_cours', csrf: false)]
-class PersonnelMesCoursComponent
+#[AsLiveComponent('personnel_mes_cours_old', csrf: false)]
+class PersonnelMesCoursOldComponent
 {
     use DefaultActionTrait;
 

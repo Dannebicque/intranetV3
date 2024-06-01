@@ -1,14 +1,10 @@
-{#<a class="nav-link changeprofil active"#}
-{#   href="{{ path('profil_personnel_timeline', {slug: user.slug}) }}"#}
-{#   id="profil-timeline">{{ 'tab.timeline'|trans }}</a>#}
 <a class="nav-link changeprofil active" href="{{ path('profil_personnel_about', {slug: user.slug}) }}"
    id="profil-about">{{ 'tab.a-propos'|trans }}</a>
 {% if (user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or (user.typeUser == user_data.user.typeUser and user.id == user_data.user.id)) %}
     <a class="nav-link changeprofil" href="{{ path('profil_personnel_previsionnel', {slug: user.slug}) }}"
        id="profil-previsionnel">{{ 'tab.previsionnel'|trans }}</a>
 {% endif %}
-{% if (user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data
-    .isGoodDepartement('ROLE_RP') or user_data.isGoodDepartement('ROLE_ASS')) %}
+{% if (user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data.isGoodDepartement('ROLE_RP') or user_data.isGoodDepartement('ROLE_ASS')) %}
     <a class="nav-link changeprofil" href="{{ path('profil_personnel_action', {slug: user.slug}) }}"
        id="profil-actions">{{ 'tab.actions'|trans }}</a>
 {% endif %}

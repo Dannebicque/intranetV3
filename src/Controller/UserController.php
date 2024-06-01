@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/UserController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 01/06/2024 22:21
  */
 
 namespace App\Controller;
@@ -31,6 +31,8 @@ class UserController extends BaseController
     #[Route(path: '/mon-profil/{onglet}', name: 'user_mon_profil')]
     public function monProfil(string $onglet = 'scolarite'): Response
     {
+        $this->breadcrumbHelper->addItem('Mon Profil', 'user_mon_profil', ['onglet' => $onglet]);
+
         return $this->render('user/profil.html.twig', [
             'user' => $this->getUser(),
             'onglet' => $onglet,
@@ -56,10 +58,6 @@ class UserController extends BaseController
         }
 
         return $this->json($departementsArray);
-
-//        return $this->render('tool_bar/_liste_departements.html.twig', [
-//            'departements' => $departements,
-//        ]);
     }
 
     /**
@@ -93,9 +91,11 @@ class UserController extends BaseController
         return $this->redirectToRoute('erreur_404');
     }
 
-    #[Route(path: '/settings', name: 'user_settings')]
+    #[Route(path: '/parametres', name: 'user_settings')]
     public function settings(Request $request): Response
     {
+        $this->breadcrumbHelper->addItem('Paramètres', 'user_settings');
+
         $user = $this->getUser();
         if ($user instanceof Personnel) {
             $form = $this->createForm(

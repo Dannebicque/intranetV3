@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/06/2024 20:42
+// @lastUpdate 01/06/2024 22:26
 
 @import "./theme-troyes.scss";
 @import "./theme-rcc.scss";
@@ -953,4 +953,11 @@ td.bg-disabled {
 
 small {
   color: var(--police);
+}
+
+fieldset {
+  border-color: #8b95a5;
+  border-radius: 0.375rem;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
 }

@@ -57,12 +57,12 @@
 
                     <h5 class="mt-2 mb-0 profil-nom">{{ user.displayPr }}</h5>
                     {% if user.typeUser|lower == 'etudiant' %}
-                        <h6 class="overlay" style="background-color: #FAB001;">
+                        <h6 class="overlay text-black" style="background-color: #FAB001;">
                             {{ user.diplome != null ? user.diplome.display() : 'Sans département' }}
                             <br>{% for gr in user.groupes %} {{ gr.libelle }}{% if not loop.last %}, {% endif %}
                             {% endfor %}</h6>
                     {% else %}
-                        <h6 class="overlay" style="background-color: #FAB001;">{{ user.typeUser|trans }}</h6>
+                        <h6 class="overlay text-dark" style="background-color: #FAB001;">{{ user.typeUser|trans }}</h6>
                     {% endif %}
                 </div>
                 <ul class="flexbox flex-justified text-center p-20">

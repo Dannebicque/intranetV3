@@ -1,5 +1,5 @@
+<h3 class="card-top-title">{{ 'vos.informations.identification'|trans }}</h3>
 <div class="card">
-    <h4 class="card-title">{{ 'vos.informations.identification'|trans }}</h4>
     <div class="card-body">
         {% if user.typeUser|lower == 'etudiant' %}
             <p><strong>{{ 'prenom.nom'|trans }} :</strong> {{ user.displayPr }}</p>
@@ -20,53 +20,77 @@
             <p><strong>{{ 'site.universite'|trans }} :</strong> {{ user.siteUniv|link }}</p>
 
         {% elseif user.typeUser|lower == 'permanent' or user.typeUser|lower == 'vacataire' %}
-            <p><strong>{{ 'prenom.nom'|trans }} :</strong> {{ user.displayPr }}</p>
-            {% if (is_granted('ROLE_PERMANENT') and (user_data.isGoodDepartement('ROLE_ASS') or user_data
-                .isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE'))) or (user.typeUser == user_data.user.typeUser and user.id == user_data.user.id) %}
-                <p><strong>{{ 'date.naissance'|trans }}
-                        : </strong> {{ user.dateNaissance != null ? user.dateNaissance|format_date('short') : 'non.defini'|trans }}
-                </p>
-            {% endif %}
-            {% if user.typeUser|lower == 'permanent' %}
-                <p><strong>{{ 'bureau'|trans }} :</strong> {{ user.bureau1 }} | {{ user.bureau2 }}</p>
-                <p><strong>{{ 'tel.pro'|trans }} :</strong> interne: {{ user.posteInterne }}
-                                                            | {{ user.telBureau|tel_format }}</p>
-            {% elseif user.typeUser|lower == 'vacataire' %}
-                <p><strong>{{ 'entreprise'|trans }} :</strong> {{ user.entreprise }} </p>
-                <p><strong>{{ 'tel.pro'|trans }} :</strong>{{ user.telBureau|tel_format }}</p>
-            {% endif %}
-            {% if not is_granted('ROLE_ETUDIANT') %}
-                <p><strong>{{ 'numero.harpege'|trans }} :</strong> {{ user.numeroHarpege }}</p>
-            {% endif %}
-            <p><strong>{{ 'mail.universite'|trans }} :</strong> {{ user.mailUniv|mailto }}</p>
-            <p><strong>{{ 'site.universite'|trans }} :</strong> {{ user.siteUniv|link }}</p>
-            <p><strong>{{ 'site.personnel'|trans }} :</strong> {{ user.sitePerso|link }}</p>
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <p><strong>{{ 'prenom.nom'|trans }} :</strong> {{ user.displayPr }}</p>
+                </div>
+
+                {% if (is_granted('ROLE_PERMANENT') and (user_data.isGoodDepartement('ROLE_ASS') or user_data
+                    .isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE'))) or (user.typeUser == user_data.user.typeUser and user.id == user_data.user.id) %}
+                    <div class="col-sm-12 col-md-6">
+                        <p><strong>{{ 'date.naissance'|trans }}
+                                : </strong> {{ user.dateNaissance != null ? user.dateNaissance|format_date('short') : 'non.defini'|trans }}
+                        </p>
+                    </div>
+                {% endif %}
+                {% if user.typeUser|lower == 'permanent' %}
+                    <div class="col-sm-12 col-md-6">
+                        <p><strong>{{ 'bureau'|trans }} :</strong> {{ user.bureau1 }} | {{ user.bureau2 }}</p>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <p><strong>{{ 'tel.pro'|trans }} :</strong> interne: {{ user.posteInterne }}
+                            | {{ user.telBureau|tel_format }}</p>
+                    </div>
+                {% elseif user.typeUser|lower == 'vacataire' %}
+                    <div class="col-sm-12 col-md-6">
+                        <p><strong>{{ 'entreprise'|trans }} :</strong> {{ user.entreprise }} </p>
+                    </div>
+                    <div class="col-sm-12 col-md-6">
+                        <p><strong>{{ 'tel.pro'|trans }} :</strong>{{ user.telBureau|tel_format }}</p>
+                    </div>
+                {% endif %}
+                <div class="col-sm-12 col-md-6">
+                    <p><strong>{{ 'numero.harpege'|trans }} :</strong> {{ user.numeroHarpege }}</p>
+                </div>
+                <div class="col-sm-12 col-md-6"></div>
+                <div class="col-sm-12 col-md-6">
+                    <p><strong>{{ 'mail.universite'|trans }} :</strong> {{ user.mailUniv|mailto }}</p>
+                </div>
+                <div class="col-sm-12 col-md-6"></div>
+                <div class="col-sm-12 col-md-6">
+                    <p><strong>{{ 'site.universite'|trans }} :</strong> {{ user.siteUniv|link }}</p>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <p><strong>{{ 'site.personnel'|trans }} :</strong> {{ user.sitePerso|link }}</p>
+                </div>
+            </div>
         {% else %}
             <twig:Alert type="danger">Erreur de profil !</twig:Alert>
         {% endif %}
-        <twig:Alert type="info">Si vous constatez une erreur dans ces données, contactez le responsable de la
-                                      formation.
+        <twig:Alert type="info">Si vous constatez une erreur dans ces données, contactez le responsable de
+            la
+            formation.
         </twig:Alert>
     </div>
 </div>
 
 
 {% if (is_granted('ROLE_PERMANENT') and (user_data.isGoodDepartement('ROLE_STA') or user_data.isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE'))) or (user.typeUser == user_data.user.typeUser and user.id == user_data.user.id) %}
+    <header class="card-top-header">
+        <h4 class="card-top-title">{{ 'donnees.personnelles'|trans }}</h4>
+        <div class="card-header-actions">
+            <a class="btn btn-warning"
+               title="{{ 'modifiez.vos.informations'|trans }}"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+               href="{{ path('user_settings') }}">
+                <i class="fas fa-edit"></i>
+            </a>
+        </div>
+    </header>
     <div class="card">
-        <header class="card-header">
-            <h4 class="card-title">{{ 'donnees.personnelles'|trans }}</h4>
-            <div class="card-header-actions">
-                <a class="btn btn-sm btn-warning"
-                   title="{{ 'modifiez.vos.informations'|trans }}"
-                   data-bs-toggle="tooltip" data-bs-placement="bottom"
-                   href="{{ path('user_settings') }}">
-                    <i class="fas fa-edit"></i>
-                </a>
-            </div>
-        </header>
         <div class="card-body">
             <twig:Alert type="info">Ces informations ne sont visibles que de vous et de la direction du
-                                          département. {% if user.typeUser|lower == 'etudiant' %}Merci de maintenir ces
+                département. {% if user.typeUser|lower == 'etudiant' %}Merci de maintenir ces
                     informations à jour, elles seront utilisées pour vous faire parvenir vos
                     relevés de notes.{% endif %}
             </twig:Alert>
@@ -90,75 +114,78 @@
     </div>
 {% endif %}
 
-{% if user.typeUser|lower == 'etudiant' %}
-    {% if ((user_data.isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE'))) %}
-        <div class="card">
-            <h4 class="card-title">{{ 'commentaires.libres'|trans }}</h4>
-            <div class="card-body">
-                <twig:Alert type="info">Ces informations ne sont visibles que de la direction du département et de
-                                              l'assitant(e). <strong>Dans le cadre du RGPD ces données pourraient être
-                                                                     demandées par l'étudiant.</strong>
-                </twig:Alert>
-                <div>
-                    {% for commentaire in user.commentaires %}
-                        <div>
-                            <p>{{ commentaire.texte }}</p>
-                            <div class="gap-items-4 mt-2">
-                                <a class="text-lighter hover-light" href="#">
-                                    <i class="{{ iconEdit }}"></i>
-                                </a>
-                                <a class="text-lighter hover-light" href="#">
-                                    <i class="{{ iconDuplicate }}"></i>
-                                </a>
-                                <a class="text-lighter hover-light" href="#">
-                                    <i class="{{ iconDelete }}"></i>
-                                </a>
+            {% if user.typeUser|lower == 'etudiant' %}
+                {% if ((user_data.isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE'))) %}
+                    <div class="card">
+                        <h4 class="card-title">{{ 'commentaires.libres'|trans }}</h4>
+                        <div class="card-body">
+                            <twig:Alert type="info">Ces informations ne sont visibles que de la direction du département
+                                et de
+                                l'assitant(e). <strong>Dans le cadre du RGPD ces données pourraient être
+                                    demandées par l'étudiant.</strong>
+                            </twig:Alert>
+                            <div>
+                                {% for commentaire in user.commentaires %}
+                                    <div>
+                                        <p>{{ commentaire.texte }}</p>
+                                        <div class="gap-items-4 mt-2">
+                                            <a class="text-lighter hover-light" href="#">
+                                                <i class="{{ iconEdit }}"></i>
+                                            </a>
+                                            <a class="text-lighter hover-light" href="#">
+                                                <i class="{{ iconDuplicate }}"></i>
+                                            </a>
+                                            <a class="text-lighter hover-light" href="#">
+                                                <i class="{{ iconDelete }}"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <hr class="hr-lg w-300px border-primary">
+                                    {% if loop.last %}
+                                        <div id="listeCommentaire"></div>
+                                    {% endif %}
+                                {% else %}
+                                    <div id="listeCommentaire">
+                                        Aucun commentaire.
+                                    </div>
+                                {% endfor %}
+                            </div>
+                            <div>
+                                <div class="form-group">
+                                    <label for="texteCommentaire" class="label">Texte du commentaire : </label>
+                                    <textarea class="form-control" id="texteCommentaire" rows="5"></textarea>
+                                </div>
+                                <div>
+                                    <button id="valideCommentaire" class="btn btn-success" data-slug="{{ user.slug }}">
+                                        Enregistrer
+                                    </button>
+                                </div>
                             </div>
                         </div>
-                        <hr class="hr-lg w-300px border-primary">
-                        {% if loop.last %}
-                            <div id="listeCommentaire"></div>
-                        {% endif %}
-                    {% else %}
-                        <div id="listeCommentaire">
-                            Aucun commentaire.
+                    </div>
+                {% endif %}
+
+
+                {% if (is_granted('ROLE_PERMANENT') and (user_data.isGoodDepartement('ROLE_STA') or user_data.isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE'))) or (user.typeUser == user_data.user.typeUser and user.id == user_data.user.id) %}
+                    <div class="card">
+                        <h4 class="card-title">{{ 'amenagements.particuliers'|trans }}</h4>
+                        <div class="card-body">
+                            <twig:Alert type="info">Ces informations ne sont visibles que de vous et de l'équipe
+                                pédagogique.
+                                N'hésitez pas à signaler les erreurs éventuelles.
+                            </twig:Alert>
+                            <p>{{ user.amenagementsParticuliers }}</p>
                         </div>
-                    {% endfor %}
-                </div>
-                <div>
-                    <div class="form-group">
-                        <label for="texteCommentaire" class="label">Texte du commentaire : </label>
-                        <textarea class="form-control" id="texteCommentaire" rows="5"></textarea>
                     </div>
-                    <div>
-                        <button id="valideCommentaire" class="btn btn-success" data-slug="{{ user.slug }}">Enregistrer
-                        </button>
+
+                    <div class="card">
+                        <h4 class="card-title">{{ 'parcours.scolaire'|trans }}</h4>
+                        <div class="card-body">
+                            <dl class="row">
+                                <dt class="col-sm-3">{{ 'bac'|trans }} :</dt>
+                                <dd class="col-sm-9">{{ user.bac ? user.bac.libelle : 'non-defini'|trans }} {{ 'obtenu.en'|trans }} {{ user.anneeBac }}</dd>
+                            </dl>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    {% endif %}
-
-
-    {% if (is_granted('ROLE_PERMANENT') and (user_data.isGoodDepartement('ROLE_STA') or user_data.isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE'))) or (user.typeUser == user_data.user.typeUser and user.id == user_data.user.id) %}
-        <div class="card">
-            <h4 class="card-title">{{ 'amenagements.particuliers'|trans }}</h4>
-            <div class="card-body">
-                <twig:Alert type="info">Ces informations ne sont visibles que de vous et de l'équipe pédagogique.
-                                              N'hésitez pas à signaler les erreurs éventuelles.
-                </twig:Alert>
-                <p>{{ user.amenagementsParticuliers }}</p>
-            </div>
-        </div>
-
-        <div class="card">
-            <h4 class="card-title">{{ 'parcours.scolaire'|trans }}</h4>
-            <div class="card-body">
-                <dl class="row">
-                    <dt class="col-sm-3">{{ 'bac'|trans }} :</dt>
-                    <dd class="col-sm-9">{{ user.bac ? user.bac.libelle : 'non-defini'|trans }} {{ 'obtenu.en'|trans }} {{ user.anneeBac }}</dd>
-                </dl>
-            </div>
-        </div>
-    {% endif %}
-{% endif %}
+                {% endif %}
+            {% endif %}

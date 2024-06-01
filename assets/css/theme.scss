@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/theme.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/06/2024 21:35
+// @lastUpdate 01/06/2024 23:01
 /* @file /Users/davidannebicque/htdocs/intranetV3/assets/css/theme.css */
 /* @author davidannebicque */
 /* @project intranetV3 */
@@ -15346,13 +15346,8 @@ ul.flexbox {
 .header-action .nav {
     white-space: nowrap;
     flex-wrap: nowrap;
-    margin-bottom: 0;
+  margin-bottom: 10px;
     border-bottom: none;
-    /*
-    @include media-down(sm) {
-      overflow-x: auto;
-    }
-    */
 }
 
 .header-action .nav-link {
@@ -15362,7 +15357,7 @@ ul.flexbox {
     font-weight: 500;
     letter-spacing: 1px;
     text-transform: uppercase;
-    padding: 0.75rem 1rem 1rem;
+  padding: 0.5rem;
     border-bottom: 3px solid transparent;
     color: rgba(77, 82, 89, 0.7);
   //background-color: transparent !important;

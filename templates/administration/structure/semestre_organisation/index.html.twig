@@ -1,0 +1,49 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'organisation.des.semestres.heading'|trans() }}
+{% endblock %}
+
+{% block headeractions %}
+    <div class="header-action">
+        <div class="buttons">
+            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip"
+               data-bs-placement="bottom"
+               title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <h4 class="card-title">{{ 'organisation.des.semestres.heading'|trans() }}</h4>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Semestre(s) précédent(s)</th>
+                    <th>Semestre</th>
+                    <th>Semestre(s) suivant(s)</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for semestre in semestres %}
+                    <tr>
+                        <td>
+                            {#                            {% for semestrePrecedent in semestre.semestresPrecedents %} #}
+                            {#                                {{ semestrePrecedent.nom }}<br> #}
+                            {#                            {% endfor %} #}
+                        </td>
+                        <td>{{ semestre.display }}</td>
+                        <td>
+                            {#                            {% for semestreSuivant in semestre.semestresSuivants %} #}
+                            {#                                {{ semestreSuivant.nom }}<br> #}
+                            {#                            {% endfor %} #}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

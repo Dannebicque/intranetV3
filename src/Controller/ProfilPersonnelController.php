@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/ProfilPersonnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 16/02/2024 22:17
+ * @lastUpdate 01/06/2024 22:15
  */
 
 namespace App\Controller;
@@ -27,7 +27,11 @@ class ProfilPersonnelController extends BaseController
     public function actions(#[MapEntity(mapping: ['slug' => 'slug'])]
                             Personnel $personnel): Response
     {
-        if (!($this->isGranted('ROLE_CDD') or $this->isGranted('ROLE_RP'))) {
+        if (!($this->dataUserSession->isGoodDepartement('ROLE_CDD') ||
+            $this->dataUserSession->isGoodDepartement('ROLE_DDE') ||
+            $this->dataUserSession->isGoodDepartement('ROLE_RP') ||
+            $this->dataUserSession->isGoodDepartement('ROLE_ASS')
+        )) {
             throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');
         }
 

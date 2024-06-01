@@ -23,11 +23,90 @@
     <div class="tab-content">
         <div class="tab-pane active show" id="vosInformations">
             <div class="card">
-                <h4 class="card-title">{{ 'settings.vos.informations'|trans }}</h4>
                 <div class="card-body">
                     {% form_theme form 'form/my-form.html.twig' %}
                     {{ form_start(form) }}
-                    {{ form_widget(form) }}
+                    <div class="row">
+                        <div class="col-sm-12 col-md-6">
+                            {{ form_row(form.civilite) }}
+                        </div>
+                        <div class="col-sm-12 col-md-6"></div>
+                        <div class="col-sm-12 col-md-6">
+                            {{ form_row(form.nom) }}
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            {{ form_row(form.prenom) }}
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            {{ form_row(form.date_naissance) }}
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            {{ form_row(form.numero_harpege) }}
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            {{ form_row(form.mail_univ) }}
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            {{ form_row(form.mail_perso) }}
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            {{ form_row(form.site_univ) }}
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            {{ form_row(form.site_perso) }}
+                        </div>
+                        <div class="col-sm-12 col-md-12">
+                            {{ form_row(form.statut) }}
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            {{ form_row(form.tel_bureau) }}
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            {{ form_row(form.poste_interne) }}
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            {{ form_row(form.tel1) }}
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            {{ form_row(form.tel2) }}
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            {{ form_row(form.bureau1) }}
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            {{ form_row(form.bureau2) }}
+                        </div>
+
+                        <div class="col-sm-12 col-md-12">
+                            {{ form_row(form.adresse) }}
+                        </div>
+
+                        <div class="col-sm-12 col-md-6">
+                            {{ form_row(form.responsabilites) }}
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            {{ form_row(form.domaines) }}
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            {{ form_row(form.signature) }}
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            {{ form_row(form.remarque) }}
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            {{ form_row(form.photoFile) }}
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            {{ form_row(form.cvFile) }}
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                            {{ form_row(form.entreprise) }}
+                        </div>
+                        <div class="col-sm-12 col-md-6">
+                        </div>
+
+
+                    </div>
                     <button class="btn btn-success">{{ button_label|default('label.save'|trans) }}</button>
                     {{ form_end(form) }}
                 </div>
@@ -133,7 +212,6 @@
                 </div>
 
                 <div class="card">
-                    <h4 class="card-title">{{ 'settings.vos.parametres.departements'|trans }}</h4>
                     <div class="card-body">
 
                         <table class="table table-striped">
