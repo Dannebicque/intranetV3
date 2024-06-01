@@ -105,7 +105,11 @@
         </div>
 
         {% if is_granted('ROLE_PERMANENT') %}
-            {{ component('personnel_mes_cours',{ semestre:  user_data.semestresActifs[0] }) }}
+            {#            {{ component('personnel_mes_cours_old',{ semestre:  user_data.semestresActifs[0] }) }} #}
+            {{ component('personnel_mes_cours', {
+                user: app.user,
+                departement: user_data.departement,
+            }) }}
         {% elseif is_granted('ROLE_ETUDIANT') %}
             <div class="col-12">
                 {{ render_esi(controller(
@@ -127,73 +131,6 @@
         {% if is_granted('ROLE_PERMANENT') %}
             {{ component('listings_etudiants') }}
         {% endif %}
-
-        <div class="col-md-6 col-sm-12">
-            <div class="card">
-                <h4 class="card-title">{{ 'liens.utiles.heading'|trans }}</h4>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-3 col-sm-6 text-center">
-                            <a href="{{ settings('SITE_UNIVERSITE') }}" target="_blank"><img
-                                        src="{{ asset('upload/logo/'~ settings('LOGO_UNIVERSITE')) }}"
-                                        alt="{{ settings('NOM_UNIVERSITE') }}" class="img-rounded"
-                                        width="90px"/><br/>
-                                {{ settings('NOM_UNIVERSITE') }}</a>
-                        </div>
-                        <div class="col-md-3 col-sm-6 text-center">
-                            <a href="https://{{ settings('SITE_IUT') }}"
-                               target="_blank"><img
-                                        src="{{ asset('upload/logo/' ~ settings('LOGO_IUT')) }}"
-                                        alt="{{ settings('NOM_IUT') }}" class="img-rounded"
-                                        width="90px"/><br/>
-                                {{ settings('NOM_IUT') }}</a>
-                        </div>
-                        <div class="col-md-3 col-sm-6 text-center">
-                            <a href="{{ settings('SITE_ENT') }}" target="_blank"><img
-                                        src="{{ asset('upload/logo/' ~ settings('LOGO_IUT')) }}"
-                                        alt="Bureau Virtuel / ENT" class="img-rounded" width="90px"/><br/>
-                                Bureau Virtuel / ENT
-                            </a>
-                        </div>
-                        <div class="col-md-3 col-sm-6 text-center">
-                            <a href="{{ user_data.departement.siteWeb }}" target="_blank"><img
-                                        src="{{ asset('upload/logo/'~user_data.departement.logoName) }}"
-                                        alt="{{ user_data.departement.libelle }}" class="img-rounded"
-                                        width="90px"/><br/>
-                                {{ user_data.departement.libelle }}
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6 col-sm-12">
-            <div class="card">
-                {# todo: notion d'organigramme ? #}
-                <h4 class="card-title">{{ 'contacts.heading'|trans }}</h4>
-                <div class="card-body">
-                    {% for diplome in user_data.diplomes|filter(diplome => diplome.actif == true) %}
-                        <h5>{{ diplome.typeDiplome.sigle }} {{ diplome.libelle }} ({{ diplome.sigle }})</h5>
-                        <dl class="row">
-                            {% if diplome.responsableDiplome != null %}
-                                <dt class="col-sm-4">Responsable :</dt>
-                                <dd class="col-sm-6"><a
-                                            href="{{ path('user_profil', {slug: diplome.responsableDiplome.slug,
-                                                type: 'personnel'}) }}"
-                                            target="_blank">{{ diplome.responsableDiplome.displayPr }}</a></dd>
-                            {% endif %}
-                            {% if diplome.assistantDiplome != null %}
-                                <dt class="col-sm-4">Assistant(e) :</dt>
-                                <dd class="col-sm-6"><a
-                                            href="{{ path('user_profil', {slug: diplome.assistantDiplome.slug, type:
-                                                'personnel'}) }}"
-                                            target="_blank">{{ diplome.assistantDiplome.displayPr }}</a></dd>
-                            {% endif %}
-                        </dl>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
     </div>
 {% endblock %}
 

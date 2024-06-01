@@ -4,18 +4,8 @@
     {{ 'administration.heading'|trans }}
 {% endblock %}
 
-{% block headeractions %}
-    <div class="header-action">
-        <div class="buttons">
-            <a href="{{ path('default_homepage') }}"
-               class="btn btn-primary btn-float"
-               data-bs-toggle="tooltip"
-               data-bs-placement="bottom"
-               title="{{ 'atitle.retour_dashboard'|trans }}">
-                <i class="{{ iconDashboard }}"><span class="sr-only">dashboard</span></i>
-            </a>
-        </div>
-    </div>
+{% block headerright %}
+
 {% endblock %}
 
 {% block content %}

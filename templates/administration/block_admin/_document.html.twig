@@ -1,19 +1,19 @@
 <div class="col-md-6 col-lg-6 col-sm-12">
+    <header class="card-top-header" style="justify-content: space-between">
+        <div class="card-header-actions" style="">
+            <h2 class="card-top-title">
+                <i class="fa-solid fa-file-lines text-primary"></i>
+                {{ 'adm.documents'|trans }}
+            </h2>
+        </div>
+        <div class="card-header-actions" style="">
+            <a href="{{ path('administration_document_new') }}" class="btn btn-sm btn-primary text-white"
+               title="Ajouter un document" data-bs-toggle="tooltip" data-bs-placement="bottom">
+                <i class="fas fa-plus"></i><span
+                        class="sr-only">ajouter un document</span></a>
+        </div>
+    </header>
     <div class="card administration">
-        <header class="card-header" style="justify-content: space-between">
-            <div class="card-header-actions" style="">
-                <i class="fa-solid fa-file-lines fa-2x"></i>
-                <h2 class="card-title">{{ 'adm.documents'|trans }}</h2>
-            </div>
-
-            <div class="card-header-actions" style="">
-                <a href="{{ path('administration_document_new') }}" class="btn btn-sm btn-primary text-white"
-                   title="Ajouter un document" data-bs-toggle="tooltip" data-bs-placement="bottom">
-                    <i class="fas fa-plus"></i><span
-                            class="sr-only">ajouter un document</span></a>
-            </div>
-        </header>
-
         <div class="card-body">
             <div class="row">
                 <div class="col-12 d-grid d-block mb-2">

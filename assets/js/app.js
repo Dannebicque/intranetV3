@@ -1,8 +1,8 @@
-// Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/app.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 31/08/2023 17:17
+// @lastUpdate 01/06/2024 18:36
 import '@fortawesome/fontawesome-pro/scss/fontawesome.scss'
 import '@fortawesome/fontawesome-pro/scss/brands.scss'
 import '@fortawesome/fontawesome-pro/scss/solid.scss'
@@ -53,7 +53,7 @@ window.addEventListener('load', () => { // le dom est chargé
       const zone = document.getElementById('listeChangeDepartement')
       zone.innerHtml = `<a href="#" class="dropdown-item col-12">${window.da.loaderStimulus}</a>`// todo: ne s'affiche pas ? faire tout le header avec stimulus ? Avec Turbo?
 
-      await get(Routing.generate('user_get_departements'), {}).then((data) => {
+      await get(Routing.generate('user_get_departements')).then((data) => {
         let html = ''
         data.forEach((departement) => {
           let isDefault = ''

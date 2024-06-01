@@ -1,10 +1,14 @@
 <div class="col-md-6 col-lg-6 col-sm-12">
+    <header class="card-top-header">
+
+        <h2 class="card-top-title">
+            <i class="fa-solid fa-briefcase text-primary"></i>
+            {{ 'adm.alternances'|trans }}
+        </h2>
+    </header>
     <div class="card administration">
-        <header class="card-header">
-            <i class="fa-solid fa-briefcase fa-2x"></i>
-            <h2 class="card-title">{{ 'adm.alternances'|trans }}</h2>
-        </header>
-        <div class="card-body">
+
+    <div class="card-body">
             <div class="row">
                 {% set alternance = false %}
                 {% for annee in user_data.annees|filter(annee => annee.optAlternance == true) %}

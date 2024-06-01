@@ -5,31 +5,25 @@
 {% endblock %}
 
 {% block headerright %}
-    <div class="right gap-items-2">
+    <div class="gap-items-2">
         {{ include('administration/_navSemestre.html.twig', {path_name: 'administration_semestre_index'}) }}
-    </div>
-{% endblock %}
 
-{% block headeractions %}
-    <div class="header-action">
-        <div class="buttons">
-            {% if semestre.actif == true %}
-                <a href="{{ path('administration_semestre_actif',{semestre:semestre.id, actif:0}) }}"
-                   class="btn btn-warning btn-sm btn-float"
-                   data-bs-toggle="tooltip" data-bs-placement="bottom"
-                   title="{{ 'atitle.masquer_semestre'|trans }}"><i class="fa fa-eye-slash"></i>
-                    <span class="sr-only">{{ 'atitle.masquer_semestre'|trans }}</span></a>
-            {% else %}
-                <a href="{{ path('administration_semestre_actif',{semestre:semestre.id, actif:1}) }}"
-                   class="btn btn-info btn-sm btn-float"
-                   data-bs-toggle="tooltip" data-bs-placement="bottom"
-                   title="{{ 'atitle.afficher_semestre'|trans }}"><i class="fa fa-eye"></i>
-                    <span class="sr-only">{{ 'atitle.afficher_semestre'|trans }}</span></a>
-            {% endif %}
-            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip"
-               data-bs-placement="bottom"
-               title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
-        </div>
+        {% if semestre.actif == true %}
+            <a href="{{ path('administration_semestre_actif',{semestre:semestre.id, actif:0}) }}"
+               class="btn btn-warning"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="{{ 'atitle.masquer_semestre'|trans }}"><i class="fa fa-eye-slash"></i>
+                <span class="sr-only">{{ 'atitle.masquer_semestre'|trans }}</span></a>
+        {% else %}
+            <a href="{{ path('administration_semestre_actif',{semestre:semestre.id, actif:1}) }}"
+               class="btn btn-info"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+               title="{{ 'atitle.afficher_semestre'|trans }}"><i class="fa fa-eye"></i>
+                <span class="sr-only">{{ 'atitle.afficher_semestre'|trans }}</span></a>
+        {% endif %}
+        <a href="{{ path('administration_index') }}" class="btn btn-primary" data-bs-toggle="tooltip"
+           data-bs-placement="bottom"
+           title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
     </div>
 {% endblock %}
 
@@ -50,44 +44,47 @@
                 .isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_ABS') or user_data.isGoodDepartement
                 ('ROLE_RP') %}
                 <div class="col-md-6 col-lg-6 col-sm-12">
+                    <header class="card-top-header">
+                        <div class="card-header-actions">
+                            <h4 class="card-top-title">
+                                <i class="fas fa-clock text-primary"></i>
+                                {{ 'gestion.des.absences'|trans|raw }}
+                            </h4>
+                        </div>
+                        <div class="card-header-actions">
+                            <a class="btn btn-primary btn-icon btn-icon-only"
+                               title="{{ 'saisir.absences'|trans }}"
+                               data-bs-toggle="tooltip" data-bs-placement="bottom"
+                               href="{{ path('administration_absences_semestre_saisie',{semestre:semestre.id}) }}"
+                            >
+                                <i class="fas fa-plus" style="color: white"></i>
+                            </a>
+                            <ul class="card-controls">
+                                <li class="dropdown">
+                                    <a data-bs-toggle="dropdown"
+                                       class="btn btn-secondary btn-icon btn-icon-only"
+                                       href="#"><i
+                                                class="fas fa-ellipsis-h"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        {#                                        <a href="{{ path('administration_all_absences_semestre_export', {semestre:semestre.id, _format:'pdf'}) }}" #}
+                                        {#                                           class="dropdown-item"><i #}
+                                        {#                                                    class="fa fa-file-pdf"></i>{{ 'exporter.pdf'|trans }}</a> #}
+                                        {#                                        <a href="{{ path('administration_all_absences_semestre_export', {semestre:semestre.id, _format:'csv'}) }}" #}
+                                        {#                                           class="dropdown-item"><i #}
+                                        {#                                                    class="fas fa-file-export"></i>{{ 'exporter.csv'|trans }}</a> #}
+                                        <a href="{{ path('administration_all_absences_semestre_export', {semestre:semestre.id, _format:'xlsx'}) }}"
+                                           class="dropdown-item"><i
+                                                    class="fas fa-file-export"></i>{{ 'exporter.xls'|trans }}</a>
+                                        <a href="{{ path('administration_all_absences_parcours_export', {semestre:semestre.id, _format:'xlsx'}) }}"
+                                           class="dropdown-item"><i
+                                                    class="fas fa-file-export"></i>Export tous parcours (xlsx)
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </header>
                     <div class="card administration">
-                        <header class="card-header" style="justify-content: space-between">
-                            <div class="card-header-actions">
-                                <i class="fas fa-clock fa-2x"></i>
-                                <h4 class="card-title">{{ 'gestion.des.absences'|trans|raw }}</h4>
-                            </div>
-                            <div class="card-header-actions">
-                                <a class="btn btn-primary btn-sm"
-                                   type="button"
-                                   title="{{ 'saisir.absences'|trans }}"
-                                   data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                   href="{{ path('administration_absences_semestre_saisie',{semestre:semestre.id}) }}"
-                                >
-                                    <i class="fas fa-plus" style="color: white"></i>
-                                </a>
-                                <ul class="card-controls">
-                                    <li class="dropdown">
-                                        <a data-bs-toggle="dropdown" href="#"><i
-                                                    class="fas fa-ellipsis-h rotate-90"></i></a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            {#                                        <a href="{{ path('administration_all_absences_semestre_export', {semestre:semestre.id, _format:'pdf'}) }}" #}
-                                            {#                                           class="dropdown-item"><i #}
-                                            {#                                                    class="fa fa-file-pdf"></i>{{ 'exporter.pdf'|trans }}</a> #}
-                                            {#                                        <a href="{{ path('administration_all_absences_semestre_export', {semestre:semestre.id, _format:'csv'}) }}" #}
-                                            {#                                           class="dropdown-item"><i #}
-                                            {#                                                    class="fas fa-file-export"></i>{{ 'exporter.csv'|trans }}</a> #}
-                                            <a href="{{ path('administration_all_absences_semestre_export', {semestre:semestre.id, _format:'xlsx'}) }}"
-                                               class="dropdown-item"><i
-                                                        class="fas fa-file-export"></i>{{ 'exporter.xls'|trans }}</a>
-                                            <a href="{{ path('administration_all_absences_parcours_export', {semestre:semestre.id, _format:'xlsx'}) }}"
-                                               class="dropdown-item"><i
-                                                        class="fas fa-file-export"></i>Export tous parcours (xlsx)
-                                            </a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </header>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12 d-block d-grid mb-2">
@@ -117,31 +114,35 @@
             {% if user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_ABS') or user_data.isGoodDepartement('ROLE_DDE') or user_data
                 .isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_NOTES') or user_data.isGoodDepartement('ROLE_RP') %}
                 <div class="col-md-6 col-sm-12">
+                    <header class="card-top-header">
+                        <div class="card-header-actions">
+                            <h4 class="card-top-title">
+                                <i class="fas fa-chart-pie text-primary"></i>
+                                {{ 'gestion.des.notes'|trans|raw }}
+                            </h4>
+                        </div>
+                        <div class="card-header-actions">
+                            <ul class="card-controls">
+                                <li class="dropdown">
+                                    <a data-bs-toggle="dropdown"
+                                       class="btn btn-icon btn-icon-only btn-secondary"
+                                       href="#"><i
+                                                class="fas fa-ellipsis-h"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="{{ path('administration_all_notes_export', {semestre:semestre.id, _format:'xlsx'}) }}"
+                                           class="dropdown-item"><i
+                                                    class="fas fa-file-export"></i>{{ 'exporter.xlsx'|trans }}
+                                        </a>
+                                        <a href="{{ path('administration_all_notes_parcours_export', {semestre:semestre.id, _format:'xlsx'}) }}"
+                                           class="dropdown-item"><i
+                                                    class="fas fa-file-export"></i>Export tous parcours (xlsx)
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </header>
                     <div class="card administration">
-                        <header class="card-header" style="justify-content: space-between">
-                            <div class="card-header-actions">
-                                <i class="fas fa-chart-pie fa-2x"></i>
-                                <h4 class="card-title">{{ 'gestion.des.notes'|trans|raw }}</h4>
-                            </div>
-                            <div class="card-header-actions">
-                                <ul class="card-controls">
-                                    <li class="dropdown">
-                                        <a data-bs-toggle="dropdown" href="#"><i
-                                                    class="fas fa-ellipsis-h rotate-90"></i></a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a href="{{ path('administration_all_notes_export', {semestre:semestre.id, _format:'xlsx'}) }}"
-                                               class="dropdown-item"><i
-                                                        class="fas fa-file-export"></i>{{ 'exporter.xlsx'|trans }}
-                                            </a>
-                                            <a href="{{ path('administration_all_notes_parcours_export', {semestre:semestre.id, _format:'xlsx'}) }}"
-                                               class="dropdown-item"><i
-                                                        class="fas fa-file-export"></i>Export tous parcours (xlsx)
-                                            </a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </header>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12 d-block d-grid mb-2">
@@ -181,43 +182,47 @@
             {% if user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data
                 .isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_RP') %}
                 <div class="col-md-6 col-sm-12">
-                    <div class="card administration">
-                        <header class="card-header" style="justify-content: space-between">
-                            <div class="card-header-actions">
-                                <i class="fas fa-user-graduate fa-2x"></i>
-                                <h4 class="card-title">{{ 'gestion.des.etudiants'|trans|raw }}</h4>
-                            </div>
-                            <div class="card-header-actions">
-                                <a href="{{ path('administration_etudiant_semestre_add', {semestre:semestre.id}) }}"
-                                   class="btn btn-primary btn-sm"
-                                   title="{{ 'Ajouter.des.etudiants'|trans }}"
-                                   data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                >
-                                    <i class="fas fa-plus" style="color: white"></i>
-                                </a>
-                                <ul class="card-controls">
-                                    <li class="dropdown">
-                                        <a data-bs-toggle="dropdown" href="#"><i
-                                                    class="fas fa-ellipsis-h rotate-90"></i></a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a href="{{ path('administration_etudiant_semestre_export', {semestre:semestre.id, _format:'pdf'}) }}"
-                                               class="dropdown-item"><i
-                                                        class="fa fa-file-pdf"></i>{{ 'exporter.pdf'|trans }}</a>
-                                            <a href="{{ path('administration_etudiant_semestre_export', {semestre:semestre.id, _format:'csv'}) }}"
-                                               class="dropdown-item"><i
-                                                        class="fas fa-file-export"></i>{{ 'exporter.csv'|trans }}</a>
-                                            <a href="{{ path('administration_etudiant_semestre_export', {semestre:semestre.id, _format:'xlsx'}) }}"
-                                               class="dropdown-item"><i
-                                                        class="fas fa-file-export"></i>{{ 'exporter.xls'|trans }}</a>
-                                            <a href="{{ path('administration_etudiant_import_photo', {semestre:semestre.id}) }}"
-                                               class="dropdown-item"><i
-                                                        class="fas fa-file-import"></i>{{ 'importer.photo'|trans }}</a>
+                    <header class="card-top-header" style="justify-content: space-between">
+                        <div class="card-header-actions">
+                            <h4 class="card-top-title">
+                                <i class="fas fa-user-graduate text-primary"></i>
+                                {{ 'gestion.des.etudiants'|trans|raw }}
+                            </h4>
+                        </div>
+                        <div class="card-header-actions">
+                            <a href="{{ path('administration_etudiant_semestre_add', {semestre:semestre.id}) }}"
+                               class="btn btn-primary"
+                               title="{{ 'Ajouter.des.etudiants'|trans }}"
+                               data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            >
+                                <i class="fas fa-plus" style="color: white"></i>
+                            </a>
+                            <ul class="card-controls">
+                                <li class="dropdown">
+                                    <a data-bs-toggle="dropdown" href="#"
+                                       class="btn btn-secondary"
+                                    ><i
+                                                class="fas fa-ellipsis-h"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="{{ path('administration_etudiant_semestre_export', {semestre:semestre.id, _format:'pdf'}) }}"
+                                           class="dropdown-item"><i
+                                                    class="fa fa-file-pdf"></i>{{ 'exporter.pdf'|trans }}</a>
+                                        <a href="{{ path('administration_etudiant_semestre_export', {semestre:semestre.id, _format:'csv'}) }}"
+                                           class="dropdown-item"><i
+                                                    class="fas fa-file-export"></i>{{ 'exporter.csv'|trans }}</a>
+                                        <a href="{{ path('administration_etudiant_semestre_export', {semestre:semestre.id, _format:'xlsx'}) }}"
+                                           class="dropdown-item"><i
+                                                    class="fas fa-file-export"></i>{{ 'exporter.xls'|trans }}</a>
+                                        <a href="{{ path('administration_etudiant_import_photo', {semestre:semestre.id}) }}"
+                                           class="dropdown-item"><i
+                                                    class="fas fa-file-import"></i>{{ 'importer.photo'|trans }}</a>
 
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </header>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </header>
+                    <div class="card administration">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12 d-block d-grid mb-2">
@@ -241,29 +246,31 @@
             {% if user_data.isGoodDepartement('ROLE_CDD') or user_data.isGoodDepartement('ROLE_DDE') or user_data
                 .isGoodDepartement('ROLE_ASS') or user_data.isGoodDepartement('ROLE_RP') or user_data.isGoodDepartement('ROLE_NOTES') %}
                 <div class="col-md-6 col-sm-12">
+                    <header class="card-top-header">
+                        <div class="card-header-actions">
+                            <h4 class="card-top-title">
+                                <i class="fas fa-calendar-alt text-primary"></i>
+                                {{ 'gerer.fin.semestre'|trans|raw }}
+                            </h4>
+                        </div>
+                        <div class="card-header-actions">
+                            <ul class="card-controls">
+                                <li class="dropdown">
+                                    <a data-bs-toggle="dropdown" href="#"><i
+                                                class="fas fa-ellipsis-h rotate-90"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <a href="{{ path('administration_scolarite_saisie_promo', {semestre:semestre
+                                        .id}) }}"
+                                           class="dropdown-item"><i
+                                                    class="fa fa-file-pdf"></i>Saisie des parcours de scolarité
+                                            pour un
+                                            semestre</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </header>
                     <div class="card administration">
-                        <header class="card-header" style="justify-content: space-between">
-                            <div class="card-header-actions">
-                                <i class="fas fa-calendar-alt fa-2x"></i>
-                                <h4 class="card-title">{{ 'gerer.fin.semestre'|trans|raw }}</h4>
-                            </div>
-                            <div class="card-header-actions">
-                                <ul class="card-controls">
-                                    <li class="dropdown">
-                                        <a data-bs-toggle="dropdown" href="#"><i
-                                                    class="fas fa-ellipsis-h rotate-90"></i></a>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a href="{{ path('administration_scolarite_saisie_promo', {semestre:semestre
-                                            .id}) }}"
-                                               class="dropdown-item"><i
-                                                        class="fa fa-file-pdf"></i>Saisie des parcours de scolarité
-                                                pour un
-                                                semestre</a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </header>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12 d-block d-grid mb-2">

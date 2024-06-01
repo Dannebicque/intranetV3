@@ -1,10 +1,14 @@
 <div class="col-md-6 col-lg-6 col-sm-12">
+    <header class="card-top-header">
+
+        <h2 class="card-top-title">
+            <i class="fa-solid fa-calendar-days text-primary"></i>
+            {{ 'adm.edt.menu'|trans }}
+        </h2>
+    </header>
     <div class="card administration">
-        <header class="card-header">
-                <i class="fa-solid fa-calendar-days fa-2x"></i>
-                <h2 class="card-title">{{ 'adm.edt.menu'|trans }}</h2>
-        </header>
-        <div class="card-body">
+
+    <div class="card-body">
             <div class="row">
                 <div class="col-12 d-grid d-block mb-2">
                     <a href="{{ path('administration_edt_index') }}">Gestion de l'emploi du temps</a>

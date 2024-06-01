@@ -1,17 +1,19 @@
 <div class="col-md-6 col-lg-6 col-sm-12">
-    <div class="card administration">
-        <header class="card-header" style="justify-content: space-between">
-            <div class="card-header-actions">
-                <i class="fa-solid fa-hammer fa-2x"></i>
-                <h2 class="card-title">{{ 'adm.projet'|trans }}</h2>
-            </div>
-            <div class="card-header-actions">
-                <a href="{{ path('administration_projet_periode_new') }}" class="btn btn-sm btn-primary"
-                   title="Créer un projet" data-bs-toggle="tooltip" data-bs-placement="bottom">
+    <header class="card-top-header" style="justify-content: space-between">
+        <div class="card-header-actions">
+            <h2 class="card-top-title">
+                <i class="fa-solid fa-hammer text-primary"></i>
+                {{ 'adm.projet'|trans }}
+            </h2>
+        </div>
+        <div class="card-header-actions">
+            <a href="{{ path('administration_projet_periode_new') }}" class="btn btn-sm btn-primary"
+               title="Créer un projet" data-bs-toggle="tooltip" data-bs-placement="bottom">
                 <i class="fas fa-plus" style="color: white"></i><span
                         class="sr-only">Créer un projet</span></a>
-            </div>
-        </header>
+        </div>
+    </header>
+    <div class="card administration">
         <div class="card-body">
             <div class="row">
                 {% for periode in projetPeriodes %}

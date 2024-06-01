@@ -157,16 +157,13 @@
     <!-- END Sidebar -->
 
     <!-- Topbar -->
-
-
     <header class="topbar">
-
         <div class="topbar-left">
             <span class="topbar-btn sidebar-toggler"><i>&#9776;</i></span>
             {% if is_granted('ROLE_PERMANENT') or is_granted('ROLE_ETUDIANT') %}
-                <a class="topbar-btn d-none d-md-block"
+                <a class="topbar-btn d-none d-md-block nomdepartement"
                    href="{{ block('link_homepage') }}">
-                    Département {{ user_data.departement.libelle }}
+                    {{ user_data.departement.libelle }}
                 </a>
             {% endif %}
 
@@ -273,22 +270,6 @@
                     </div>
                 </li>
 
-                <!-- Change language -->
-                {# <li> #}
-                {# {% if app.request.locale == 'en' %} #}
-                {# <a class="topbar-btn d-none d-md-block" href="{{ path #}
-                {# ('default_homepage',{'_locale':'fr'}) }}" data-bs-toggle="tooltip" data-bs-placement="bottom" #}
-                {# title="{{ 'passer.en.francais'|trans }}"><img src="{{ asset('assets/img/flag/fr.png') }}" #}
-                {# width="16px" alt="{{ 'passer.en.francais'|trans }}"></a> #}
-                {# {% else %} #}
-                {# <a href="{{ path('default_homepage',{'_locale':'en'}) }}" class="topbar-btn d-none d-md-block" data-bs-toggle="tooltip" data-bs-placement="bottom" #}
-                {# title="{{ 'passer.en.anglais'|trans }}" #}
-                {# ><img src="{{ asset('assets/img/flag/en.png') }}" width="16px" alt="{{ 'passer.en.anglais'|trans }}"></a> #}
-
-                {# {% endif %} #}
-                {# </li> #}
-                <!-- END Change language -->
-
                 <!-- Notifications -->
                 {{ render_esi(controller(
                     'App\\Controller\\ToolBarController::notifications'
@@ -311,7 +292,6 @@
     </header>
     <!-- END Topbar -->
 
-
     <!-- Main container -->
     <main class="main-container"
             {% block stimulus %}{% endblock %}
@@ -319,22 +299,28 @@
         <header class="header">
             <div class="header-info">
                 <div class="left">
-
                     <h1 class="header-title" id="header-title">
                         {% block header %}
                             <strong>No title</strong>
                         {% endblock %}
                     </h1>
+                </div>
+                <div class="right">
+                    <div class="right-btn">
+                        {% block headerright %}
+
+                        {% endblock %}
+                    </div>
+                </div>
+                <div class="header-breadcrumbs">
                     {% block breadcrumbs %}
                         <!-- breadcrumb -->
                         {{ breandcrumbs_render() }}
                         <!-- END breadcrumb -->
                     {% endblock %}
                 </div>
-                {% block headerright %}
-
-                {% endblock %}
             </div>
+
             {% block headeractions %}
 
             {% endblock %}

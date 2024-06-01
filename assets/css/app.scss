@@ -2,13 +2,21 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/04/2024 11:30
+// @lastUpdate 01/06/2024 20:42
 
 @import "./theme-troyes.scss";
 @import "./theme-rcc.scss";
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 
-$dropdown-link-hover-color:         var(--policeDark);
-$dropdown-link-hover-bg:            var(--colorIUT);
+.raleway-200 {
+  font-family: "Raleway", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 200;
+  font-style: normal;
+}
+
+$dropdown-link-hover-color: var(--policeDark);
+$dropdown-link-hover-bg: var(--colorIUT);
 
 @import "~bootstrap/scss/bootstrap";
 
@@ -817,12 +825,12 @@ td.bg-disabled {
 }
 
 .flex-1 {
-  flex:1
+  flex: 1
 }
 
 .card {
-  -webkit-box-shadow:0 7px 14px 0 rgba(65, 69, 88, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.07);
-  box-shadow:0 7px 14px 0 rgba(65, 69, 88, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.07);
+  -webkit-box-shadow: 0 7px 14px 0 rgba(65, 69, 88, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.07);
+  box-shadow: 0 7px 14px 0 rgba(65, 69, 88, 0.1), 0 3px 6px 0 rgba(0, 0, 0, 0.07);
 }
 
 .bg-complementary {
@@ -869,4 +877,80 @@ td.bg-disabled {
 
 .w-40 {
   width: 40%;
+}
+
+.card-top-title {
+  font-family: Raleway, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  margin-bottom: 10px;
+  font-size: 1.3em;
+  color: var(--colorIUTComplementaire);
+  height: 30px;
+}
+
+.breadcrumb {
+  background-color: var(--colorIUTComplementaire);
+  color: white;
+  font-size: 0.8em;
+  padding-left: 10px;
+}
+
+.breadcrumb-item {
+  color: var(--policeLight);
+}
+
+.header-breadcrumbs {
+  margin: 10px 0 10px 0;
+  //padding: 0 30px;
+  display: block;
+  -webkit-box-pack: justify;
+  width: 100%;
+}
+
+.btn-outline-primary {
+  color: var(--colorIUT);
+  border-color: var(--colorIUT);
+}
+
+.card-top-header {
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  align-items: center;
+  background-color: transparent;
+  border-bottom: 1px solid var(--borderCard);
+}
+
+.right-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* ajustez ceci comme nécessaire */
+}
+
+.btn-xs {
+  --bs-btn-padding-y: 0.25rem;
+  --bs-btn-padding-x: 0.5rem;
+  --bs-btn-font-size: 0.5rem;
+  --bs-btn-border-radius: 0.25rem;
+}
+
+.nomdepartement {
+  font-family: Raleway, sans-serif;
+  font-size: 1.5em;
+  font-weight: 400;
+  color: var(--colorIUTComplementaire);
+}
+
+.card-header-actions > .btn {
+  --bs-btn-padding-y: .25rem;
+  --bs-btn-padding-x: .5rem;
+  --bs-btn-font-size: .5rem;
+}
+
+small {
+  color: var(--police);
 }

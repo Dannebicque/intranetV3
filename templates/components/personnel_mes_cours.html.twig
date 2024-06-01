@@ -1,96 +1,83 @@
 <div class="col-md-12" {{ attributes }}>
+    <h3 class="card-top-title">{{ 'mes_cours.heading'|trans }}</h3>
     <div class="card">
-        <div class="card-header">
-            <h3 class="card-title">{{ 'mes_cours.heading'|trans }}</h3>
-            <div class="card-header-actions">
-                <label for="semestre_mes_cours" class="sr-only">Choisir un semestre</label>
-                <select id="semestre_mes_cours" class="form-select"
-                        data-action="live#action"
-                        data-model="idsemestre"
-                        data-live-action-param="changeSemestre()"
-                >
-                    {% for semestre in user_data.semestresActifs %}
-                        <option
-                                {% if this.semestre != null and semestre.id == this.semestre.id %}selected{% endif %}
-                                value="{{ semestre.id }}"
-                        >
-                            {{ semestre.display }}
-                        </option>
-                    {% endfor %}
-                </select>
-            </div>
-        </div>
-        <div class="card-body">
-            <h4>{{ 'vos.modules.du.semestre'|trans({'%semestre%':this.semestre.display}) }}</h4>
-            <div class="wrapper-notes-absences">
-                <div class="col-notes-header">{{ 'table.matiere'|trans }}</div>
-                <div class="col-notes-header">{{ 'table.previ'|trans }}</div>
-                <div class="col-notes-header">{{ 'table.absences'|trans }}</div>
-                <div class="col-notes-header">{{ 'table.notes'|trans }}</div>
-                <div class="col-notes-header">{{ 'table.exports'|trans }}</div>
+        <div class="card-body p-0">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>{{ 'table.matiere'|trans }}</th>
+                    <th>{{ 'table.semestre'|trans }}</th>
+                    <th>{{ 'table.previ'|trans }}</th>
+                    <th>{{ 'table.absences'|trans }}</th>
+                    <th>{{ 'table.notes'|trans }}</th>
+                    <th>{{ 'table.exports'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
                 {% for matiere in this.previsionnels %}
-                    <div>{{ matiere.display }}</div>
-                    <div class="d-grid d-block">
-                        <button
-                                {{ stimulus_controller('modal', {
-                                    size: 'lg',
-                                    modalTitle: 'previsionnel.et.intervenants.matiere'|trans({'%matiere%':matiere.display}),
-                                    modalUrl:  path('api_previsionnel_matiere', {'matiere': matiere
-                                    .matiere_id, type: matiere.type_matiere}) }) }}
-                                data-action="click->modal#openModal"
-                                class="btn btn-cyan h-100"
-                                data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                title="{{ 'previsionnel.et.intervenants.matiere'|trans({'%matiere%':matiere.display}) }}"
-                        >
-                            {{ 'voir.previsionnel.et.intervenants.matiere'|trans }}
-                        </button>
-                    </div>
-                    <div class="d-grid d-block">
-                        <a href="{{ path('application_personnel_absence_index',{semestre: this.semestre.id,
-                            matiere: matiere.typeIdMatiere}) }}"
-                           class="btn btn-cyan h-100"
-                           title="{{ 'saisir.voir.modifier.absences'|trans }}"
-                           data-bs-toggle="tooltip" data-bs-placement="bottom"
+                    <tr>
+                        <td>{{ matiere.display }}</td>
+                        <td>{{ matiere.semestre_libelle }}</td>
+                        <td>
+                            <a
+                                    href="#"
+                                    {{ stimulus_controller('modal', {
+                                        size: 'lg',
+                                        modalTitle: 'previsionnel.et.intervenants.matiere'|trans({'%matiere%':matiere.display}),
+                                        modalUrl:  path('api_previsionnel_matiere', {'matiere': matiere
+                                        .matiere_id, type: matiere.type_matiere}) }) }}
+                                    data-action="click->modal#openModal"
+                                    class="text-complementaire"
+                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                    title="{{ 'previsionnel.et.intervenants.matiere'|trans({'%matiere%':matiere.display}) }}"
+                            >
+                                {{ 'voir.previsionnel.et.intervenants.matiere'|trans }}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{{ path('application_personnel_absence_index',{semestre: matiere.semestre_id,
+                                matiere: matiere.typeIdMatiere}) }}"
+                               class="text-complementaire"
+                               title="{{ 'saisir.voir.modifier.absences'|trans }}"
+                               data-bs-toggle="tooltip" data-bs-placement="bottom"
 
-                        >
-                            {{ 'saisir.voir.modifier.absences'|trans }}
-                        </a></div>
-                    <div class="d-grid d-block">
-                        <a href="{{ path('application_personnel_note_index',{semestre: this.semestre.id,
-                            'matiere': matiere.typeIdMatiere}) }}"
-                           class="btn btn-cyan h-100"
-                           title="{{ 'saisir.voir.modifier.notes'|trans }}"
-                           data-bs-toggle="tooltip" data-bs-placement="bottom"
+                            >
+                                {{ 'saisir.voir.modifier.absences'|trans }}
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{{ path('application_personnel_note_index',{semestre: matiere.semestre_id,
+                                'matiere': matiere.typeIdMatiere}) }}"
+                               class="text-complementaire"
+                               title="{{ 'saisir.voir.modifier.notes'|trans }}"
+                               data-bs-toggle="tooltip" data-bs-placement="bottom"
 
-                        >
-                            {{ 'saisir.voir.modifier.notes'|trans }}
-                        </a></div>
-                    <div class="d-grid d-block">
-                        <button
-                                {{ stimulus_controller('modal', {
-                                    size: 'lg',
-                                    form: true,
-                                    formAction: path('export_listing'),
-                                    modalTitle: 'export.heading'|trans,
-                                    modalUrl:  path('api_export_document_matiere', {'matiere': matiere
-                                    .matiere_id, typeMatiere:matiere.type_matiere, semestre:this.semestre.id})
-                                }) }}
-                                data-action="click->modal#openModal"
-                                class="btn btn-cyan h-100"
-                                data-bs-toggle="tooltip" data-bs-placement="bottom"
-                                title="{{ 'atitle.export'|trans }}"
-                        >
-                            {{ 'choisir.export'|trans }}
-                        </button>
-                    </div>
-                {% else %}
-                    <div class="d-grid d-block">
-                        <twig:Alert type="info">
-                            Aucune donnée pour ce semestre.
-                        </twig:Alert>
-                    </div>
+                            >
+                                {{ 'saisir.voir.modifier.notes'|trans }}
+                            </a>
+                        </td>
+                        <td>
+                            <a
+                                    href="#"
+                                    {{ stimulus_controller('modal', {
+                                        size: 'lg',
+                                        form: true,
+                                        formAction: path('export_listing'),
+                                        modalTitle: 'export.heading'|trans,
+                                        modalUrl:  path('api_export_document_matiere', {'matiere': matiere
+                                        .matiere_id, typeMatiere:matiere.type_matiere, semestre:matiere.semestre_id})
+                                    }) }}
+                                    data-action="click->modal#openModal"
+                                    class="text-complementaire"
+                                    data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                    title="{{ 'atitle.export'|trans }}"
+                            >
+                                {{ 'choisir.export'|trans }}
+                            </a>
+                        </td>
+                    </tr>
                 {% endfor %}
-            </div>
+            </table>
         </div>
     </div>
 </div>

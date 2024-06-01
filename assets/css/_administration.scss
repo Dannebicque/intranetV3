@@ -2,11 +2,11 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/_administration.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 20/02/2024 18:32
+// @lastUpdate 30/05/2024 20:31
 
 @media screen and (min-width: 768px) {
   .block_admin {
-    margin-bottom: 25px;
+    margin-bottom: 75px;
 
     .administration {
       height: 100%;
@@ -17,7 +17,7 @@
 
 .administration {
   .etudiant_bloc {
-    margin: 25px 0;
+    margin: 75px 0;
     display: flex !important;
     flex-direction: column !important;
 

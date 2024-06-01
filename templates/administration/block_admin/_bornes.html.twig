@@ -1,10 +1,13 @@
 <div class="col-md-6 col-lg-6 col-sm-12">
+    <div class="card-top-header">
+        <h2 class="card-top-title">
+            <i class="fa-solid fa-globe text-primary"></i>
+            {{ 'adm.actualites.bornes'|trans }}
+        </h2>
+    </div>
     <div class="card administration">
-        <div class="card-header">
-            <i class="fa-solid fa-globe fa-2x"></i>
-            <h2 class="card-title">{{ 'adm.actualites.bornes'|trans }}</h2>
-        </div>
-        <div class="card-body">
+
+    <div class="card-body">
             <div class="row">
                 <div class="col-12 d-grid d-block mb-2">
                     <a href="{{ path('administration_actualite_index') }}">Gestion des actualités</a>

@@ -55,10 +55,7 @@
                        role="tab">{{ 'menu.stages'|trans }}</a>
                 </li>
             {% endif %}
-            {#            <li class="nav-item "> #}
-            {#                <a class="nav-link changeapplication {% if onglet == 'carnet' %}active{% endif %}" #}
-            {#                   href="{{ path('application_etudiant_carnet_index') }}" role="tab">{{ 'menu.carnet'|trans }}</a> #}
-            {#            </li> #}
+
             <li class="nav-item ">
                 <a class="nav-link changeapplication {% if onglet == 'projet' %}active{% endif %}"
                    href="{{ path('application_etudiant_projet_index') }}" role="tab">{{ 'menu.projet'|trans }}</a>
@@ -73,11 +70,4 @@
             {% endif %}
         {% endif %}
     </ul>
-    <div class="buttons">
-        <a href="{{ path('default_homepage') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip"
-           data-bs-placement="bottom"
-           title="{{ 'atitle.retour_dashboard'|trans }}">
-            <i class="{{ iconDashboard }}"><span class="sr-only">dashboard</span></i>
-        </a>
-    </div>
 </div>
