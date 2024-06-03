@@ -17,9 +17,6 @@
                class="btn btn-danger btn-sm btn-float supprimer" data-bs-toggle="tooltip" data-bs-placement="bottom"
                title="Supprimer toutes les demandes de rattrapage pour l'année {{ semestre
                .annee.libelle }}"><i class="{{ iconDelete }}"></i></a>
-            <a href="{{ path('administration_rattrapage_planning_index', {diplome: semestre.diplome.id}) }}"
-               class="btn btn-success btn-sm btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
-               title="{{ 'atitle.planning'|trans }}"><i class="fas fa-calendar-alt"></i></a>
             <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
                class="btn btn-primary btn-float" data-bs-toggle="tooltip" data-bs-placement="bottom"
                title="{{ 'atitle.retour_semestres'|trans }}"><i class="fas fa-arrow-left"></i></a>
