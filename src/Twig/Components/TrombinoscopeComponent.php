@@ -4,19 +4,21 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Twig/Components/TrombinoscopeComponent.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/06/2024 16:05
+ * @lastUpdate 03/06/2024 15:53
  */
 
 namespace App\Twig\Components;
 
 use App\Classes\DataUserSession;
 use App\Classes\GetGroupeFromSemestre;
+use App\Entity\Groupe;
 use App\Entity\Semestre;
 use App\Entity\TypeGroupe;
 use App\Exception\DiplomeNotFoundException;
 use App\Repository\EtudiantRepository;
 use App\Repository\GroupeRepository;
 use App\Repository\SemestreRepository;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\UX\LiveComponent\Attribute\AsLiveComponent;
 use Symfony\UX\LiveComponent\Attribute\LiveAction;
@@ -31,7 +33,7 @@ class TrombinoscopeComponent extends AbstractController
     #[LiveProp(writable: true)]
     public bool $separation = false;
 
-    #[LiveProp(writable: true)]
+    #[LiveProp(writable: true, onUpdated: 'onSemestreUpdated')]
     public ?Semestre $semestre = null;
 
     #[LiveProp(writable: true)]
@@ -44,8 +46,10 @@ class TrombinoscopeComponent extends AbstractController
     public string $recherche = '';
 
     #[LiveProp(writable: true)]
-    public $typeGroupes = [];
+    /** @var TypeGroupe[] */
+    public ?Collection $typeGroupes = null;
 
+    /** @var Groupe[] */
     #[LiveProp(writable: true)]
     public $groupes = [];
 

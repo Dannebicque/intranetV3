@@ -36,20 +36,18 @@
                     <label for="typegroupe" class="form-label">Type de Groupe</label>
                     <select class="form-select" id="typegroupe" data-model="typegroupe">
                         <option value="">Type Groupe</option>
-                        {#                        {% if this.typeGroupes != null %} #}
-                        {#                        {% for tg in this.typeGroupes %} #}
-                        {#                            <option value="{{ tg.id }}">{{ tg.display }}</option> #}
-                        {#                        {% endfor %} #}
-                        {#                        {% endif %} #}
+                        {% for tg in this.typeGroupes %}
+                            <option value="{{ tg.id }}">{{ tg.display }}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="col-2">
                     <label for="groupe" class="form-label">Groupe</label>
                     <select class="form-select" id="groupe" data-model="groupe">
                         <option value="">Groupe</option>
-                        {#                        {% for tg in this.groupes %} #}
-                        {#                            <option value="{{ tg.id }}">{{ tg.display }}</option> #}
-                        {#                        {% endfor %} #}
+                        {% for tg in this.groupes %}
+                            <option value="{{ tg.id }}">{{ tg.display }}</option>
+                        {% endfor %}
                     </select>
                 </div>
                 <div class="col-3">
