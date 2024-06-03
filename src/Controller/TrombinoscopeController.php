@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/TrombinoscopeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/05/2024 20:03
+ * @lastUpdate 03/06/2024 15:53
  */
 
 namespace App\Controller;
@@ -42,18 +42,17 @@ class TrombinoscopeController extends BaseController
     public function index(): Response
     {
         $this->breadcrumbHelper->addItem('trombinoscope', 'trombinoscope_index');
-        $this->dataUserSession->initDataUserSession($this->getUser()); //todo: pour palier le bug de la session qui ne fonctionne plus ??
-        $semestres = [];
-        foreach ($this->dataUserSession->getSemestresActifs() as $semestre) {
-            if (!array_key_exists($semestre->getOrdreLmd(), $semestres))
-            {
-                $semestres[$semestre->getOrdreLmd()] = [];
-            }
-            $semestres[$semestre->getOrdreLmd()][] = $semestre;
-        }
+//        $semestres = [];
+//        foreach ($this->dataUserSession->getSemestresActifs() as $semestre) {
+//            if (!array_key_exists($semestre->getOrdreLmd(), $semestres))
+//            {
+//                $semestres[$semestre->getOrdreLmd()] = [];
+//            }
+//            $semestres[$semestre->getOrdreLmd()][] = $semestre;
+//        }
 
         return $this->render('trombinoscope/index.html.twig', [
-            'semestres' => $semestres
+            // 'semestres' => $semestres
         ]);
     }
 
@@ -126,6 +125,7 @@ class TrombinoscopeController extends BaseController
 
     /**
      * @throws DiplomeNotFoundException
+     * @deprecated Utiliser le composant TrombinoscopeComponent
      */
     #[Route(path: '/etudiant/{semestre<\d+>}', name: 'trombinoscope_etudiant_semestre', options: ['expose' => true])]
     #[Route(path: '/etudiant/{semestre<\d+>}/{typegroupe<\d+>}', name: 'trombinoscope_etudiant_semestre_type_groupe', options: ['expose' => true])]

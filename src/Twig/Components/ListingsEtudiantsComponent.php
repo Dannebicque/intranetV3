@@ -1,13 +1,13 @@
 <?php
 /*
  * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
- * @file /Users/davidannebicque/Sites/intranetV3/src/Components/LiveTwig/ListingsEtudiantsComponent.php
+ * @file /Users/davidannebicque/Sites/intranetV3/src/Twig/Components/ListingsEtudiantsComponent.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/03/2024 19:26
+ * @lastUpdate 29/05/2024 20:57
  */
 
-namespace App\Components\LiveTwig;
+namespace App\Twig\Components;
 
 use App\Classes\DataUserSession;
 use App\Entity\Semestre;

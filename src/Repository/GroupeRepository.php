@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/GroupeRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 18/04/2024 17:54
+ * @lastUpdate 02/06/2024 11:50
  */
 
 namespace App\Repository;
@@ -223,10 +223,10 @@ class GroupeRepository extends ServiceEntityRepository
 
         $t = [];
         foreach ($query as $groupe) {
-            $t[$groupe->getId()] = $groupe->getEtudiants();
+            $t[] = $groupe->getEtudiants()->toArray();
         }
 
-        return $t;
+        return array_merge(...$t);
     }
 
     public function findByDiplomeAndOrdreSemestre(Diplome $diplome, int $ordreSemestre): array

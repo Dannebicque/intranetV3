@@ -13,73 +13,75 @@
 {% endblock %}
 
 {% block headeractions %}
-    <div class="header-action">
-        <ul class="nav nav-tabs" role="tablist">
-            {% for num, semestre in semestres %}
-                {% if semestre|length == 1 %}
-                    <li class="nav-item">
-                        <a class="nav-link {% if loop.first %}active show{% endif %} semestretrombi" data-bs-toggle="tab"
-                           href="#" data-sem="{{ semestre[0].id }}" role="tab"
-                           data-action="click->trombinoscope#changementSemestre"
-                        >{{ semestre[0].display }}
-                            <small>({{ semestre[0].etudiants|length }})</small>
-                        </a>
-                    </li>
-                {% else %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
-                           aria-expanded="false">S{{ num }}</a>
-                        <ul class="dropdown-menu">
-                            {% for sem in semestre %}
-                                <li>
-                                    <a class="dropdown-item semestretrombi" data-bs-toggle="tab"
-                                       href="#" data-sem="{{ sem.id }}" role="tab"
-                                       data-action="click->trombinoscope#changementSemestre"
-                                    >{{ sem.display }}
-                                        <small>({{ sem.etudiants|length }})</small>
-                                    </a>
-                                </li>
-                            {% endfor %}
-                        </ul>
-                    </li>
-                {% endif %}
-            {% endfor %}
-            <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#" data-type="permanent"
-                   data-action="click->trombinoscope#changementPersonnel"
-                   role="tab"> {{ 'permanents.heading'|trans }}</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" data-bs-toggle="tab" href="#" data-action="click->trombinoscope#changementPersonnel"
-                   data-type="vacataire" role="tab"> {{ 'vacataires.heading'|trans }}</a>
-            </li>
-            {% if settings('AFFICHAGE_TROMBI') == 'separation' %}
-                <li class="nav-item">
-                    <a class="nav-link" data-action="click->trombinoscope#changementPersonnel"
-                       data-bs-toggle="tab" href="#" data-type="administratif" role="tab">
-                        {{ 'administratifs.et.techniques.heading'|trans }}</a>
-                </li>
-            {% endif %}
-        </ul>
-    </div>
+    {#    <div class="header-action"> #}
+    {#        <ul class="nav nav-tabs" role="tablist"> #}
+    {#            {% for num, semestre in semestres %} #}
+    {#                {% if semestre|length == 1 %} #}
+    {#                    <li class="nav-item"> #}
+    {#                        <a class="nav-link {% if loop.first %}active show{% endif %} semestretrombi" data-bs-toggle="tab" #}
+    {#                           href="#" data-sem="{{ semestre[0].id }}" role="tab" #}
+    {#                           data-action="click->trombinoscope#changementSemestre" #}
+    {#                        >{{ semestre[0].display }} #}
+    {#                            <small>({{ semestre[0].etudiants|length }})</small> #}
+    {#                        </a> #}
+    {#                    </li> #}
+    {#                {% else %} #}
+    {#                    <li class="nav-item dropdown"> #}
+    {#                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" #}
+    {#                           aria-expanded="false">S{{ num }}</a> #}
+    {#                        <ul class="dropdown-menu"> #}
+    {#                            {% for sem in semestre %} #}
+    {#                                <li> #}
+    {#                                    <a class="dropdown-item semestretrombi" data-bs-toggle="tab" #}
+    {#                                       href="#" data-sem="{{ sem.id }}" role="tab" #}
+    {#                                       data-action="click->trombinoscope#changementSemestre" #}
+    {#                                    >{{ sem.display }} #}
+    {#                                        <small>({{ sem.etudiants|length }})</small> #}
+    {#                                    </a> #}
+    {#                                </li> #}
+    {#                            {% endfor %} #}
+    {#                        </ul> #}
+    {#                    </li> #}
+    {#                {% endif %} #}
+    {#            {% endfor %} #}
+    {#            <li class="nav-item"> #}
+    {#                <a class="nav-link" data-bs-toggle="tab" href="#" data-type="permanent" #}
+    {#                   data-action="click->trombinoscope#changementPersonnel" #}
+    {#                   role="tab"> {{ 'permanents.heading'|trans }}</a> #}
+    {#            </li> #}
+    {#            <li class="nav-item"> #}
+    {#                <a class="nav-link" data-bs-toggle="tab" href="#" data-action="click->trombinoscope#changementPersonnel" #}
+    {#                   data-type="vacataire" role="tab"> {{ 'vacataires.heading'|trans }}</a> #}
+    {#            </li> #}
+    {#            {% if settings('AFFICHAGE_TROMBI') == 'separation' %} #}
+    {#                <li class="nav-item"> #}
+    {#                    <a class="nav-link" data-action="click->trombinoscope#changementPersonnel" #}
+    {#                       data-bs-toggle="tab" href="#" data-type="administratif" role="tab"> #}
+    {#                        {{ 'administratifs.et.techniques.heading'|trans }}</a> #}
+    {#                </li> #}
+    {#            {% endif %} #}
+    {#        </ul> #}
+    {#    </div> #}
 {% endblock %}
 
 {% block content %}
-    <div data-trombinoscope-target="contentSemestre">
-        {% if user_data.semestres|length > 0 %}
-            {% for semestre in user_data.semestresActifs %}
-                {% if loop.first %}
-                    {% set semestreActif = semestre.id %}
-                {% endif %}
-            {% endfor %}
-            {{ render(controller(
-                'App\\Controller\\TrombinoscopeController::trombiEtudiantSemestre', {'semestre':semestreActif}
-            )) }}
-        {% else %}
-            {{ render(controller(
-                'App\\Controller\\TrombinoscopeController::trombiPersonnel', {'type':'permanent'}
-            )) }}
-        {% endif %}
-    </div>
+    {{ component('trombinoscope', {separation: settings('AFFICHAGE_TROMBI') == 'separation'}) }}
+
+    {#    <div data-trombinoscope-target="contentSemestre"> #}
+    {#        {% if user_data.semestres|length > 0 %} #}
+    {#            {% for semestre in user_data.semestresActifs %} #}
+    {#                {% if loop.first %} #}
+    {#                    {% set semestreActif = semestre.id %} #}
+    {#                {% endif %} #}
+    {#            {% endfor %} #}
+    {#            {{ render(controller( #}
+    {#                'App\\Controller\\TrombinoscopeController::trombiEtudiantSemestre', {'semestre':semestreActif} #}
+    {#            )) }} #}
+    {#        {% else %} #}
+    {#            {{ render(controller( #}
+    {#                'App\\Controller\\TrombinoscopeController::trombiPersonnel', {'type':'permanent'} #}
+    {#            )) }} #}
+    {#        {% endif %} #}
+    {#    </div> #}
 {% endblock %}
 

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/Semestre.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:51
+ * @lastUpdate 02/06/2024 15:01
  */
 
 namespace App\Entity;
@@ -228,7 +228,7 @@ class Semestre extends BaseEntity implements Stringable, GroupeInterface
     #[ORM\ManyToMany(targetEntity: ProjetPeriode::class, mappedBy: 'semestres')]
     private Collection $projetPeriodeSemestres;
 
-    #[ORM\ManyToMany(targetEntity: TypeGroupe::class, mappedBy: 'semestres')]
+    #[ORM\ManyToMany(targetEntity: TypeGroupe::class, mappedBy: 'semestres', fetch: 'EAGER')]
     private Collection $typeGroupess;
 
     #[ORM\Column(length: 255, nullable: true)]

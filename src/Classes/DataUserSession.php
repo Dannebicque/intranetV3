@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/DataUserSession.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/05/2024 19:47
+ * @lastUpdate 01/06/2024 21:58
  */
 
 namespace App\Classes;
@@ -40,6 +40,7 @@ use function in_array;
  */
 class DataUserSession
 {
+    //todo: tendre vers la suppression de ce fichier, gérer les besoins cotés Twig avec des components
     /**
      * @var Semestre[]
      */
@@ -130,6 +131,7 @@ class DataUserSession
      */
     public function getSemestres(): array
     {
+        $this->initDataUserSession($this->getUser());
         return $this->semestres;
     }
 

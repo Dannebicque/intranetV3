@@ -1,0 +1,88 @@
+<div {{ attributes }}>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-3">
+                    <label for="semestre" class="form-label">Semestre</label>
+                    <select class="form-select" id="semestre"
+                            data-model="semestre">
+                        <option value="">Semestre/type</option>
+                        {% for num, semestre in this.semestres %}
+                            {% if semestre|length == 1 %}
+                                <option value="{{ semestre[0].id }}">
+                                    {{ semestre[0].display }} <small>({{ semestre[0].etudiants|length }})</small>
+                                </option>
+                            {% else %}
+                                <optgroup label="S{{ num }}">
+                                    {% for sem in semestre %}
+                                        <option value="{{ sem.id }}">{{ sem.display }}
+                                            <small>({{ sem.etudiants|length }})</small>
+                                        </option>
+                                    {% endfor %}
+                                </optgroup>
+                            {% endif %}
+                        {% endfor %}
+                        <optgroup label="Enseignants">
+                            <option value="permanent">Permanents</option>
+                            <option value="vacataire">Vacataires</option>
+                            {% if this.separation == true %}
+                                <option value="administratif">Administratifs</option>
+                            {% endif %}
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="col-2">
+                    <label for="typegroupe" class="form-label">Type de Groupe</label>
+                    <select class="form-select" id="typegroupe" data-model="typegroupe">
+                        <option value="">Type Groupe</option>
+                        {% for tg in this.typeGroupes %}
+                            <option value="{{ tg.id }}">{{ tg.display }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-2">
+                    <label for="groupe" class="form-label">Groupe</label>
+                    <select class="form-select" id="groupe" data-model="groupe">
+                        <option value="">Groupe</option>
+                        {% for tg in this.groupes %}
+                            <option value="{{ tg.id }}">{{ tg.display }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-3">
+                    <label for="rechercher" class="form-label">
+                        Rechercher (nom, prénom, login)</label>
+                    <input type="search" class="form-control"
+                           id="rechercher" data-model="recherche"
+                           placeholder="Rechercher">
+                </div>
+                <div class="col-2 d-grid">
+                    <button class="btn btn-danger d-block"
+                            data-action="live#action"
+                            data-live-action-param="cleanFiltre"
+                    >
+                        <i class="fas fa-times"></i> Effacer filtre
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row row-cols-5">
+        {% for element in this.elements %}
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        {{ include('trombinoscope/_etudiant.html.twig', {etudiant:element}) }}
+                    </div>
+                </div>
+            </div>
+        {% else %}
+            <div class="col-12">
+                <twig:Alert type="warning">Aucun élément à afficher ou pas de filtre selectionné</twig:Alert>
+            </div>
+        {% endfor %}
+    </div>
+
+</div>
