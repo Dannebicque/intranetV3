@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.18.6](https://github.com/Dannebicque/intranetV3/compare/v3.18.5...v3.18.6) (2024-06-08)
+
+
+### Bug Fixes
+
+* breadcrumbs ([6fe6ac2](https://github.com/Dannebicque/intranetV3/commit/6fe6ac20ea24a06cef32fdb699a91036ecec3eae))
+* heures sur EDT à toutes les lignes ([6c4c7d7](https://github.com/Dannebicque/intranetV3/commit/6c4c7d76b3aa3f7d9d695187fcd0b14ab15040c7))
+* previsionnel avec hrs ([7b66983](https://github.com/Dannebicque/intranetV3/commit/7b66983f9a3580f994dea7e7a0eae66e46814b17))
+* suppression modification, dupliquer et supprimer, inutile sur cette page. ([05b16f8](https://github.com/Dannebicque/intranetV3/commit/05b16f89c52ce316c50d5d287f543fa82ed50669))
+* suppression page commission des absences, inutilisée ([343cca2](https://github.com/Dannebicque/intranetV3/commit/343cca2c5c665ed6f4bfb1c968b7ef93b7ce2344))
+* temporaire pour partie projet ([084e6fb](https://github.com/Dannebicque/intranetV3/commit/084e6fb58a7eaee5762bc149ccab1197106b53eb))
+
 ### [3.18.5](https://github.com/Dannebicque/intranetV3/compare/v3.18.4...v3.18.5) (2024-05-28)
 
 
