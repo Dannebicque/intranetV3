@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.18.7](https://github.com/Dannebicque/intranetV3/compare/v3.18.6...v3.18.7) (2024-06-10)
+
+
+### Bug Fixes
+
+* questionnaires extérieurs ([79bfe6f](https://github.com/Dannebicque/intranetV3/commit/79bfe6f8818dc7958a76624876a1df8790b1b2c9))
+* structure semestre ([dfe124a](https://github.com/Dannebicque/intranetV3/commit/dfe124a121656ce6d5fc44c488e08b847232e3a7))
+
 ### [3.18.6](https://github.com/Dannebicque/intranetV3/compare/v3.18.5...v3.18.6) (2024-06-08)
 
 
