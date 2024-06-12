@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Etudiant/EtudiantNotes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/07/2023 13:56
+ * @lastUpdate 12/06/2024 16:08
  */
 
 namespace App\Classes\Etudiant;
@@ -174,7 +174,7 @@ class EtudiantNotes
     {
         $t = [];
         foreach ($this->tabGraphique as $matiere) {
-            if (0 === $matiere['coefficient']) {
+            if (0.0 === $matiere['coefficient']) {
                 $t[] = 0;
             } else {
                 $t[] = $matiere['notes'] / $matiere['coefficient'];
