@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Excel/MyExcelWriter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/03/2024 08:02
+ * @lastUpdate 12/06/2024 16:12
  */
 
 /*
@@ -81,6 +81,10 @@ class MyExcelWriter
 
     public function writeCellXY(int $col, int $row, mixed $value = '', array $options = []): void
     {
+        if ($value instanceof \UnitEnum) {
+            $value = $value->value;
+        }
+
         $this->sheet->setCellValue([$col, $row], $value);
         // traiter les options
         // style n'est pas un tableau
@@ -155,6 +159,10 @@ class MyExcelWriter
 
     public function writeCellName(string $adresse, mixed $value, array $options = []): void
     {
+        if ($value instanceof \UnitEnum) {
+            $value = $value->value;
+        }
+        
         $this->sheet->setCellValue($adresse, $value);
 
         if (is_array($options) && array_key_exists('style', $options)) {
