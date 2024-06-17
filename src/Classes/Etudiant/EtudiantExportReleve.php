@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Etudiant/EtudiantExportReleve.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/06/2024 18:10
+ * @lastUpdate 17/06/2024 18:25
  */
 
 namespace App\Classes\Etudiant;
@@ -122,7 +122,7 @@ class EtudiantExportReleve
                     'semestre' => $semestre,
                     'matieres' => $matieres,
                 ], $nomFichier,
-                    'temp/pdf/');
+                    'upload/temp/pdf');
 //                $file = $nomFichier; //$this->dir.$nomFichier.'.pdf';
 //                $tabFiles[] = $file;
 //                $zip->addFile($file,
