@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Etudiant/EtudiantExportReleve.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/06/2024 18:25
+ * @lastUpdate 17/06/2024 18:31
  */
 
 namespace App\Classes\Etudiant;
@@ -103,7 +103,7 @@ class EtudiantExportReleve
         $zip = new ZipArchive();
         $fileName = $semestre->getLibelle().'-'.date('YmdHis').'.zip';
         // The name of the Zip documents.
-        $zipName = $this->dir.$fileName;
+        $zipName = $this->dir . 'temp/' . $fileName;
 
         $zip->open($zipName, ZipArchive::CREATE);
         $tabFiles = [];
@@ -123,13 +123,8 @@ class EtudiantExportReleve
                     'matieres' => $matieres,
                 ], $nomFichier,
                     'upload/temp/pdf');
-//                $file = $nomFichier; //$this->dir.$nomFichier.'.pdf';
-//                $tabFiles[] = $file;
-//                $zip->addFile($file,
-//                    $semestre->getLibelle().'/'.$nomFichier.'.pdf');
             }
         }
-
         foreach ($tabFiles as $file) {
             $zip->addFile(
                 $this->dir . 'temp/pdf/' . $file,
