@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Pdf/MyGotenbergPdf.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/04/2024 10:44
+ * @lastUpdate 17/06/2024 18:31
  */
 
 namespace App\Classes\Pdf;

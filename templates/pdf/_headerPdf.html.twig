@@ -1,9 +1,6 @@
 <table style="width: 100%; border:0;">
     <tr>
-        <td style="text-align: center; width:{% if qualite is defined and qualite == true %}{% else %}20%{% endif %}">
-            <img
-                    src="{{ settings('BASE_PATH') }}{{ 'logo/'~ settings('LOGO_UNIVERSITE') }}" alt="logo"
-                    height="{{ size|default('70px') }}"/></td>
+        <td style="text-align: center; width:{% if qualite is defined and qualite == true %}{% else %}20%{% endif %}"></td>
         <td style="text-align: center; width:{% if qualite is defined and qualite == true %}{% else %}60%{% endif %}">
             <h1>{{ departement.libelle }}</h1>
 
