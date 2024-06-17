@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Excel/MyExcelWriter.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/06/2024 16:12
+ * @lastUpdate 12/06/2024 16:39
  */
 
 /*
@@ -162,7 +162,7 @@ class MyExcelWriter
         if ($value instanceof \UnitEnum) {
             $value = $value->value;
         }
-        
+
         $this->sheet->setCellValue($adresse, $value);
 
         if (is_array($options) && array_key_exists('style', $options)) {
