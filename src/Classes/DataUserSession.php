@@ -148,6 +148,7 @@ class DataUserSession
      */
     public function getDepartement(): ?Departement
     {
+        $this->initDataUserSession($this->getUser());
         return $this->departement;
     }
 
@@ -169,6 +170,7 @@ class DataUserSession
      */
     public function getPersonnels(): array
     {
+        $this->initDataUserSession($this->getUser());
         return $this->personnelRepository->findByDepartement($this->departement);
     }
 
@@ -252,6 +254,7 @@ class DataUserSession
 
     public function getAnneeUniversitaire(): ?AnneeUniversitaire
     {
+        $this->initDataUserSession($this->getUser());
         return null !== $this->getUser() ? $this->getUser()->getAnneeUniversitaire() : null;
     }
 
