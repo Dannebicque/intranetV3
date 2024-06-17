@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Etudiant/EtudiantNotes.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 12/06/2024 16:08
+ * @lastUpdate 17/06/2024 18:06
  */
 
 namespace App\Classes\Etudiant;
@@ -174,7 +174,7 @@ class EtudiantNotes
     {
         $t = [];
         foreach ($this->tabGraphique as $matiere) {
-            if (0.0 === $matiere['coefficient']) {
+            if (0.0 === (float)$matiere['coefficient']) {
                 $t[] = 0;
             } else {
                 $t[] = $matiere['notes'] / $matiere['coefficient'];
