@@ -262,6 +262,7 @@ class DataUserSession
 
     public function getAnneeUniversitaire(): ?AnneeUniversitaire
     {
+        $this->initDataUserSession($this->getUser());
         return null !== $this->getUser() ? $this->getUser()->getAnneeUniversitaire() : null;
     }
 
