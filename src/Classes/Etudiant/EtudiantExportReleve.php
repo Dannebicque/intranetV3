@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Classes/Etudiant/EtudiantExportReleve.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 17/06/2024 18:39
+ * @lastUpdate 17/06/2024 18:41
  */
 
 namespace App\Classes\Etudiant;
@@ -138,7 +138,7 @@ class EtudiantExportReleve
 
         // suppression des PDF
         foreach ($tabFiles as $file) {
-            unlink($file);
+            unlink($this->dir . 'temp/pdf/' . $file);
         }
 
         $response = new Response(file_get_contents($zipName));
