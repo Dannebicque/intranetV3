@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.18.8](https://github.com/Dannebicque/intranetV3/compare/v3.18.7...v3.18.8) (2024-06-17)
+
+
+### Bug Fixes
+
+* division par 0 ([55fd884](https://github.com/Dannebicque/intranetV3/commit/55fd8848ce427184216e5c09c0e7ef6c518a831e))
+* Division par 0 ([bb110cd](https://github.com/Dannebicque/intranetV3/commit/bb110cdb8c00142891825285da37b359b2f5c0c2))
+* edition feuilles salle d'exam + messagerie ([35ddf20](https://github.com/Dannebicque/intranetV3/commit/35ddf20179e163164cbbbd3029a39c6f6c9d7176))
+* export relevés ([b0513c2](https://github.com/Dannebicque/intranetV3/commit/b0513c2634642b39836c66477554c8c067b86296))
+* export relevés ([e46fef1](https://github.com/Dannebicque/intranetV3/commit/e46fef1a75f1924f69dcf0312db39a4f53fc4999))
+* export relevés ([221a876](https://github.com/Dannebicque/intranetV3/commit/221a8766ec98c04b5fc1225f615ed9814407119e))
+* export relevés ([7239cb4](https://github.com/Dannebicque/intranetV3/commit/7239cb4242a6b882bc7d31aea78e489af2d6355c))
+* export relevés ([4280f20](https://github.com/Dannebicque/intranetV3/commit/4280f2055f8891c134eef860e075f952436728c1))
+* Force l'affichage d'un type Enum en Excel ([1741544](https://github.com/Dannebicque/intranetV3/commit/1741544c5c7c731c45ea337545a409c2f4433471))
+* Force l'affichage d'un type Enum en Excel ([89b6beb](https://github.com/Dannebicque/intranetV3/commit/89b6bebb85a6012421d8b2963299c89056c468b9))
+
 ### [3.18.7](https://github.com/Dannebicque/intranetV3/compare/v3.18.6...v3.18.7) (2024-06-10)
 
 
