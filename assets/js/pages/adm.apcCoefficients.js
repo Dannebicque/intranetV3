@@ -1,11 +1,11 @@
-// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/adm.apcCoefficients.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 13/09/2022 20:54
+// @lastUpdate 18/06/2024 23:15
 
-import { post } from '../fetch'
 import Routing from 'fos-router'
+import { post } from '../fetch'
 
 function updateRapportsSaeRessource(comp, semestre) {
   const cells = document.querySelectorAll(`[data-competence='${comp}']`)
@@ -71,6 +71,7 @@ document.querySelectorAll('.changeCoefficientRessource').forEach((element) => {
       id: element.dataset.matiere,
       competence: element.dataset.competence,
       type: 'ressource',
+      parcours: element.dataset.parcours ?? 0,
     }), {
       value: element.value,
     }).then(() => {
