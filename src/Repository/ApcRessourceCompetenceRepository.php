@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcRessourceCompetenceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 22/06/2024 11:13
+ * @lastUpdate 22/06/2024 17:48
  */
 
 namespace App\Repository;
@@ -48,8 +48,8 @@ class ApcRessourceCompetenceRepository extends ServiceEntityRepository
         /** @var ApcRessourceCompetence $data */
         foreach ($datas as $data) {
             if ($data->getRessource()?->hasCoefficientDifferent() === true) {
-                $parcours = $semestre->getDiplome()->getApcParcours();
-                if ($parcours !== null && $parcours->getId() === $data->getParcours()->getId()) {
+                $parcours = $semestre->getDiplome()?->getApcParcours();
+                if ($parcours !== null && $parcours->getId() === $data->getParcours()?->getId()) {
                     $array[$data->getCompetence()?->getId()][$data->getRessource()?->getCodeElement()] = $data;
                 }
             } else {
