@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/apc/ApcReferentielFormationController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:48
+ * @lastUpdate 22/06/2024 11:18
  */
 
 namespace App\Controller\administration\apc;
@@ -12,12 +12,14 @@ namespace App\Controller\administration\apc;
 use App\Classes\Apc\ApcCoefficient;
 use App\Controller\BaseController;
 use App\Entity\ApcCompetence;
+use App\Entity\ApcParcours;
 use App\Entity\ApcRessourceCompetence;
 use App\Entity\ApcSaeCompetence;
 use App\Entity\Constantes;
 use App\Entity\Diplome;
 use App\Entity\Semestre;
 use App\Repository\ApcNiveauRepository;
+use App\Repository\ApcParcoursRepository;
 use App\Repository\ApcRessourceCompetenceRepository;
 use App\Repository\ApcRessourceRepository;
 use App\Repository\ApcSaeCompetenceRepository;
@@ -32,12 +34,14 @@ use Symfony\Component\Routing\Attribute\Route;
 #[Route(path: '/administration/referentiel-formation', name: 'administration_')]
 class ApcReferentielFormationController extends BaseController
 {
+    //todo: transformer avec stimulus + load de chaque semestre séparément
     #[Route(path: '/grille/{diplome}', name: 'apc_referentiel_formation_grille', methods: 'GET')]
     public function grille(Diplome $diplome): Response
     {
         return $this->render('apc/referentiel-formation/grille.html.twig',
             [
                 'diplome' => $diplome,
+                'parcours' => $diplome->getApcParcours(),
             ]);
     }
 
@@ -46,7 +50,8 @@ class ApcReferentielFormationController extends BaseController
         ApcNiveauRepository $apcNiveauRepository,
         ApcSaeRepository $apcSaeRepository,
         ApcRessourceRepository $apcRessourceRepository,
-        Semestre $semestre
+        Semestre     $semestre,
+        ?ApcParcours $parcours
     ): Response {
         $saes = $apcSaeRepository->findBySemestreReferentiel($semestre, $semestre->getDiplome()->getReferentiel());
         $ressources = $apcRessourceRepository->findBySemestreReferentiel($semestre, $semestre->getDiplome()->getReferentiel());
@@ -56,6 +61,7 @@ class ApcReferentielFormationController extends BaseController
                 'semestre' => $semestre,
                 'niveaux' => $apcNiveauRepository->findByOrdreAnneAndReferentiel($semestre->getAnnee()->getOrdre(), $semestre->getDiplome()->getReferentiel()),
                 'saes' => $saes,
+                'parcours' => $parcours,
                 'ressources' => $ressources,
                 'coefficients' => $apcCoefficient->calculsCoefficients($saes, $ressources),
             ]);
@@ -98,19 +104,38 @@ class ApcReferentielFormationController extends BaseController
         return new JsonResponse(false, Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 
-    #[Route(path: '/ajax-edit/{id}/{competence}/{type}', name: 'apc_referentiel_formation_ajax', options: ['expose' => true], methods: ['POST'])]
-    public function ajaxEdit(ApcSaeCompetenceRepository $apcSaeCompetenceRepository, ApcSaeRepository $apcSaeRepository, ApcRessourceRepository $apcRessourceRepository, ApcRessourceCompetenceRepository $apcRessourceCompetenceRepository, Request $request, int $id, ApcCompetence $competence, string $type): Response
+    #[Route(path: '/ajax-edit/{id}/{competence}/{type}/{parcours}', name: 'apc_referentiel_formation_ajax', options: ['expose' => true], methods: ['POST'])]
+    public function ajaxEdit(
+        ApcParcoursRepository      $pa,
+        ApcSaeCompetenceRepository $apcSaeCompetenceRepository, ApcSaeRepository $apcSaeRepository, ApcRessourceRepository $apcRessourceRepository, ApcRessourceCompetenceRepository $apcRessourceCompetenceRepository, Request $request, int $id, ApcCompetence $competence, string $type, ?int $parcours = 0): Response
     {
         $value = JsonRequest::getValueFromRequest($request, 'value');
         if ('ressource' === $type) {
             $ressource = $apcRessourceRepository->find($id);
             if (null !== $ressource) {
-                $obj = $apcRessourceCompetenceRepository->findOneBy([
-                    'ressource' => $id,
-                    'competence' => $competence->getId(),
-                ]);
+
+                if ($ressource->hasCoefficientDifferent() === true && $parcours !== 0) {
+                    $obj = $apcRessourceCompetenceRepository->findOneBy([
+                        'ressource' => $id,
+                        'competence' => $competence->getId(),
+                        'parcours' => $parcours
+                    ]);
+                } else {
+                    $obj = $apcRessourceCompetenceRepository->findOneBy([
+                        'ressource' => $id,
+                        'competence' => $competence->getId(),
+                    ]);
+                }
+
                 if (null === $obj && Tools::convertToFloat($value) > 0) { // n'eiste pas et > 0 on créé
-                    $obj = new ApcRessourceCompetence($ressource, $competence);
+                    if ($ressource->hasCoefficientDifferent() === true && $parcours !== 0) {
+                        $obj = new ApcRessourceCompetence($ressource, $competence);
+                        $parc = $pa->find($parcours);
+                        $obj->setParcours($parc);
+                    } else {
+                        $obj = new ApcRessourceCompetence($ressource, $competence);
+                    }
+
                     $obj->setCoefficient(Tools::convertToFloat($value));
                     $this->entityManager->persist($obj);
                 } elseif (Tools::convertToFloat($value) > 0) { // existe et > 0 on met à jour

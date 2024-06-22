@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcRessource.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 19/04/2024 17:48
+ * @lastUpdate 18/06/2024 19:47
  */
 
 namespace App\Entity;
@@ -73,6 +73,9 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface, Ed
 
     #[ORM\ManyToMany(targetEntity: self::class, mappedBy: 'ressourcesPreRequises')]
     private Collection $ressourcesAvecPreRequis;
+
+    #[ORM\Column]
+    private ?bool $hasCoefficientDifferent = false;
 
     public function __construct()
     {
@@ -454,5 +457,17 @@ class ApcRessource extends AbstractMatiere implements MatiereEntityInterface, Ed
         }
 
         return false;
+    }
+
+    public function hasCoefficientDifferent(): bool
+    {
+        return $this->hasCoefficientDifferent ?? false;
+    }
+
+    public function setHasCoefficientDifferent(bool $hasCoefficientDifferent): static
+    {
+        $this->hasCoefficientDifferent = $hasCoefficientDifferent;
+
+        return $this;
     }
 }

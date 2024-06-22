@@ -13,7 +13,8 @@
     {% for sae in saes %}
         <tr>
             <td>
-                <a href="#" title="{{ sae.display }}" data-bs-toggle="tooltip" data-bs-placement="bottom">{{ sae.codeMatiere }}</a>
+                <a href="#" title="{{ sae.display }}" data-bs-toggle="tooltip"
+                   data-bs-placement="bottom">{{ sae.codeMatiere }}</a>
             </td>
             <td>
                 <label for="nbNotes_{{ sae.id }}" class="sr-only">Nb. Notes</label>
@@ -28,9 +29,9 @@
                     <input id="coefficient_{{ sae.id }}" type="text" class="form-control changeCoefficientSae"
                            tabindex="{{ tabIndex }}"
                            data-matiere="{{ sae.id }}" data-competence="{{ niveau.competence.id }}"
-                        value="{{ coefficients.saes[sae.id][niveau.competence.id] is defined ? coefficients
-                        .saes[sae.id][niveau.competence.id] : 0 }}" />
-{#                    </a>#}
+                           value="{{ coefficients.saes[sae.id][niveau.competence.id] is defined ? coefficients
+                           .saes[sae.id][niveau.competence.id] : 0 }}"/>
+                    {#                    </a> #}
                 </td>
                 {% set tabIndex = tabIndex  + 1 %}
             {% endfor %}
@@ -39,7 +40,10 @@
     {% for ressource in ressources %}
         <tr>
             <td>
-                <a href="#" title="{{ ressource.display }}" data-bs-toggle="tooltip" data-bs-placement="bottom">{{ ressource.codeMatiere }}</a>
+                <a href="#" title="{{ ressource.display }}" data-bs-toggle="tooltip"
+                   data-bs-placement="bottom">{{ ressource.codeMatiere }}</a> {% if ressource.hasCoefficientDifferent == true %}
+                    <i class="fas fa-exclamation-circle" title="Coefficient différents selon les parcours"
+                       data-bs-toggle="tooltip" data-bs-placement="bottom"></i>{% endif %}
             </td>
             <td>
                 <label for="nbNotes_{{ ressource.id }}" class="sr-only">Nb. Notes</label>
@@ -50,11 +54,21 @@
             {% for niveau in niveaux %}
                 <td>
                     <label for="coefficient_{{ ressource.id }}" class="sr-only">Coefficient</label>
-                    <input id="coefficient_{{ ressource.id }}" type="text"
-                           class="form-control changeCoefficientRessource" tabindex="{{ tabIndex }}"
-                           data-matiere="{{ ressource.id }}" data-competence="{{ niveau.competence.id }}"
-                           value="{{ coefficients.ressources[ressource.id][niveau.competence.id] is defined ? coefficients
-                           .ressources[ressource.id][niveau.competence.id] : 0 }}" />
+                    {% if ressource.hasCoefficientDifferent == true and parcours != null %}
+                        <input id="coefficient_{{ ressource.id }}" type="text"
+                               class="form-control changeCoefficientRessource" tabindex="{{ tabIndex }}"
+                               data-matiere="{{ ressource.id }}"
+                               data-competence="{{ niveau.competence.id }}"
+                               data-parcours="{{ parcours.id }}"
+                               value="{{ coefficients.ressources[ressource.id][niveau.competence.id][parcours.id] is defined ? coefficients
+                               .ressources[ressource.id][niveau.competence.id][parcours.id] : 0 }}"/>
+                    {% else %}
+                        <input id="coefficient_{{ ressource.id }}" type="text"
+                               class="form-control changeCoefficientRessource" tabindex="{{ tabIndex }}"
+                               data-matiere="{{ ressource.id }}" data-competence="{{ niveau.competence.id }}"
+                               value="{{ coefficients.ressources[ressource.id][niveau.competence.id] is defined ? coefficients
+                               .ressources[ressource.id][niveau.competence.id] : 0 }}"/>
+                    {% endif %}
                 </td>
                 {% set tabIndex = tabIndex  + 1 %}
             {% endfor %}

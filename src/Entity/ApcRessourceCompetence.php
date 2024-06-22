@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Entity/ApcRessourceCompetence.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 26/05/2022 18:16
+ * @lastUpdate 18/06/2024 19:46
  */
 
 namespace App\Entity;
@@ -22,6 +22,9 @@ class ApcRessourceCompetence extends BaseEntity
 
     #[ORM\Column(type: Types::FLOAT)]
     private float $coefficient = 0;
+
+    #[ORM\ManyToOne]
+    private ?ApcParcours $parcours = null;
 
     public function __construct(#[ORM\ManyToOne(targetEntity: ApcRessource::class, inversedBy: 'apcRessourceCompetences')] private ?ApcRessource $ressource, #[ORM\ManyToOne(targetEntity: ApcCompetence::class, inversedBy: 'apcRessourceCompetences')] private ?ApcCompetence $competence)
     {
@@ -59,6 +62,18 @@ class ApcRessourceCompetence extends BaseEntity
     public function setCoefficient(float $coefficient): self
     {
         $this->coefficient = $coefficient;
+
+        return $this;
+    }
+
+    public function getParcours(): ?ApcParcours
+    {
+        return $this->parcours;
+    }
+
+    public function setParcours(?ApcParcours $parcours): static
+    {
+        $this->parcours = $parcours;
 
         return $this;
     }
