@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [3.19.0](https://github.com/Dannebicque/intranetV3/compare/v3.18.8...v3.19.0) (2024-06-22)
+
+
+### Features
+
+* Gestion de coefficients différents sur une même ressource par différent parcours ([57998ca](https://github.com/Dannebicque/intranetV3/commit/57998caed3faff342e03d6931b90327f510dcd38))
+
 ### [3.18.8](https://github.com/Dannebicque/intranetV3/compare/v3.18.7...v3.18.8) (2024-06-17)
 
 
