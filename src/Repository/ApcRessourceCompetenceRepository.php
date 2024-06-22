@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Repository/ApcRessourceCompetenceRepository.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 27/12/2022 11:59
+ * @lastUpdate 22/06/2024 11:13
  */
 
 namespace App\Repository;
@@ -47,7 +47,14 @@ class ApcRessourceCompetenceRepository extends ServiceEntityRepository
         $array = [];
         /** @var ApcRessourceCompetence $data */
         foreach ($datas as $data) {
-            $array[$data->getCompetence()->getId()][$data->getRessource()->getCodeElement()] = $data;
+            if ($data->getRessource()?->hasCoefficientDifferent() === true) {
+                $parcours = $semestre->getDiplome()->getApcParcours();
+                if ($parcours !== null && $parcours->getId() === $data->getParcours()->getId()) {
+                    $array[$data->getCompetence()?->getId()][$data->getRessource()?->getCodeElement()] = $data;
+                }
+            } else {
+                $array[$data->getCompetence()?->getId()][$data->getRessource()?->getCodeElement()] = $data;
+            }
         }
 
         return $array;

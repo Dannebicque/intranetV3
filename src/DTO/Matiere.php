@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/DTO/Matiere.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 24/02/2024 08:55
+ * @lastUpdate 19/06/2024 07:02
  */
 
 namespace App\DTO;
@@ -23,6 +23,7 @@ class Matiere
     /**  ne-pas-exporter */
     public int $id;
     public string $typeMatiere;
+    public bool $hasCoefficientDifferent = false;
     public string $libelle;
     public string $display;
     public ?string $codeMatiere = '';
