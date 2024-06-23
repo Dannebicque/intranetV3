@@ -1,10 +1,10 @@
 <?php
 /*
- * Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+ * Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
  * @file /Users/davidannebicque/Sites/intranetV3/src/Twig/SousCommissionExtension.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 28/07/2023 18:28
+ * @lastUpdate 23/06/2024 14:02
  */
 
 namespace App\Twig;
@@ -94,13 +94,14 @@ class SousCommissionExtension extends AbstractExtension
 
     public function styleDecisionUe(DecisionUeEnum|string|null $value): string
     {
+        if (is_string($value)) {
+            $value = DecisionUeEnum::tryFrom($value);
+        }
+
         if (null === $value) {
             return '-';
         }
 
-        if (is_string($value)) {
-            $value = DecisionUeEnum::tryFrom($value);
-        }
 
         return '<span class="badge bg-' . $value->color() . '">' . $value->value . '</span>';
     }
