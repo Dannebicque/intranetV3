@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.3](https://github.com/Dannebicque/intranetV3/compare/v3.19.2...v3.19.3) (2024-06-23)
+
+
+### Bug Fixes
+
+* coefficient ([11fc779](https://github.com/Dannebicque/intranetV3/commit/11fc77969ad45ff1521b3426fa1ec36f78e03de6))
+* DecisionEnum badge ([39ff96d](https://github.com/Dannebicque/intranetV3/commit/39ff96d99c92a116cb84fd0a4f5dc6d5d59f106d))
+
 ### [3.19.2](https://github.com/Dannebicque/intranetV3/compare/v3.19.1...v3.19.2) (2024-06-22)
 
 
