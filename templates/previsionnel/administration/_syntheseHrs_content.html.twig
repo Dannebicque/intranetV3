@@ -20,7 +20,7 @@
                         {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
                         id="prime_{{ loop.index }}"
                         {{ stimulus_action('adm--previsionnel', 'changePrime', 'change', {
-                            personnel: personnel.id,
+                            personnel: prime.personnel.id,
                             annee: annee,
                             field: 'typeHrs',
                             url: path('administration_hrs_change_data', {id:prime.id}) }) }}>
@@ -38,7 +38,7 @@
                 <input type="text" name="libelle_{{ loop.index }}" id="libelle_{{ loop.index }}"
                        value="{{ prime.libelle }}"
                         {{ stimulus_action('adm--previsionnel', 'changePrime', 'change', {
-                            personnel: personnel.id,
+                            personnel: prime.personnel.id,
                             annee: annee,
                             field: 'libelle',
                             url: path('administration_hrs_change_data', {id:prime.id}) }) }}
@@ -50,7 +50,7 @@
                         {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
                         id="semestre_{{ loop.index }}"
                         {{ stimulus_action('adm--previsionnel', 'changePrime', 'change', {
-                            personnel: personnel.id,
+                            personnel: prime.personnel.id,
                             field: 'semestre',
                             annee: annee,
                             url: path('administration_hrs_change_data', {id:prime.id}) }) }}>
@@ -69,7 +69,7 @@
                         {{ stimulus_controller('symfony/ux-autocomplete/autocomplete') }}
                         id="diplome_{{ loop.index }}"
                         {{ stimulus_action('adm--previsionnel', 'changePrime', 'change', {
-                            personnel: personnel.id,
+                            personnel: prime.personnel.id,
                             field: 'diplome',
                             annee: annee,
                             url: path('administration_hrs_change_data', {id:prime.id}) }) }}>
@@ -87,7 +87,7 @@
                 <input type="text" name="heures_{{ loop.index }}" id="heures_{{ loop.index }}"
                        value="{{ prime.nbHeuresTd }}"
                         {{ stimulus_action('adm--previsionnel', 'changePrime', 'change', {
-                            personnel: personnel.id,
+                            personnel: prime.personnel.id,
                             annee: annee,
                             field: 'nbHeuresTd',
                             url: path('administration_hrs_change_data', {id:prime.id}) }) }}
@@ -96,7 +96,7 @@
             <td>
                 <a href="{{ path('administration_hrs_duplicate', {id:prime.id}) }}"
                         {{ stimulus_action('adm--previsionnel', 'dupliquerPrime', 'click',{
-                            personnel: personnel.id,
+                            personnel: prime.personnel.id,
                             annee: annee,
                         }) }}
                    class="btn btn-success btn-outline btn-xs">
@@ -104,7 +104,7 @@
                        title="{{ 'atitle.dupliquer'|trans }}"></i></a>
                 <a href="{{ path('administration_hrs_delete', {id:prime.id}) }}"
                         {{ stimulus_action('adm--previsionnel', 'supprPrime', 'click',{
-                            personnel: personnel.id,
+                            personnel: prime.personnel.id,
                             annee: annee,
                         }) }}
                    data-csrf="{{ csrf_token('delete' ~ prime.id) }}"

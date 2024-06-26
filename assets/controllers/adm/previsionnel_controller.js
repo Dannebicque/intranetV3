@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/adm/previsionnel_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 19/04/2024 10:29
+// @lastUpdate 26/06/2024 16:39
 
 import { Controller } from '@hotwired/stimulus'
 import { addCallout } from '../../js/util'
@@ -19,6 +19,7 @@ export default class extends Controller {
     urlAddMatiere: String,
     urlAddPrime: String,
     urlChangeSynthesePersonnel: String,
+    urlChangeSyntheseHrs: String,
   }
 
   connect() {
@@ -37,7 +38,7 @@ export default class extends Controller {
     await fetch(`${this.urlValue}?${params.toString()}`, {}).then((response) => response.text()).then((html) => {
       this.contentTarget.innerHTML = html
     }).then(() => {
-      if (type === 'synthese-personnel') {
+      if (type === 'synthese-personnel' || type === 'synthese-hrs') {
         this._loadContent(type, { annee: document.getElementById('previ_annee_previsionnel').value })
       }
     })
@@ -129,7 +130,6 @@ export default class extends Controller {
     e.preventDefault()
     if (confirm('Etes vous sur de vouloir supprimer cet intervenant du prévisionnel')) { // todo: utiliser swal ? Si pas de jquery dedans
       // body avec le CSRF
-      console.log(e.currentTarget.dataset.csrf)
       const { type } = e.params
 
       await fetch(e.currentTarget.href, {
@@ -287,7 +287,7 @@ export default class extends Controller {
       annee: document.getElementById('previ_annee_previsionnel').value,
     })
 
-    this._updateMatiere(params)
+    await this._updateMatiere(params)
   }
 
   async changeShowSemestre(e) {
@@ -296,7 +296,7 @@ export default class extends Controller {
       annee: document.getElementById('previ_annee_previsionnel').value,
     })
 
-    this._updateSemestre(params)
+    await this._updateSemestre(params)
   }
 
   async changeShowPersonnel(e) {
@@ -305,7 +305,7 @@ export default class extends Controller {
       annee: document.getElementById('previ_annee_previsionnel').value,
     })
 
-    this._updatePersonnel(params)
+    await this._updatePersonnel(params)
   }
 
   async changeAnneePersonnel(e) {
@@ -314,7 +314,7 @@ export default class extends Controller {
       personnel: document.getElementById('previ_personnel').value,
     })
 
-    this._updatePersonnel(params)
+    await this._updatePersonnel(params)
   }
 
   async changeAnneeMatiere(e) {
@@ -323,7 +323,7 @@ export default class extends Controller {
       matiere: document.getElementById('previ_matiere').value,
     })
 
-    this._updateMatiere(params)
+    await this._updateMatiere(params)
   }
 
   async changeAnneeSemestre(e) {
@@ -332,7 +332,7 @@ export default class extends Controller {
       semestre: document.getElementById('previ_semestre').value,
     })
 
-    this._updateSemestre(params)
+    await this._updateSemestre(params)
   }
 
   async changeAnneeSynthesePersonnel(e) {
@@ -353,6 +353,13 @@ export default class extends Controller {
   async _updateSynthesePersonnel(params) {
     this.contentAddTarget.innerHTML = window.da.loaderStimulus
     await fetch(`${this.urlChangeSynthesePersonnelValue}?${params.toString()}`, {}).then((response) => response.text()).then((html) => {
+      this.contentAddTarget.innerHTML = html !== 'false' ? html : ''
+    })
+  }
+
+  async _updateSyntheseHrs(params) {
+    this.contentAddTarget.innerHTML = window.da.loaderStimulus
+    await fetch(`${this.urlChangeSyntheseHrsValue}?${params.toString()}`, {}).then((response) => response.text()).then((html) => {
       this.contentAddTarget.innerHTML = html !== 'false' ? html : ''
     })
   }
@@ -426,6 +433,18 @@ export default class extends Controller {
         semestre,
       })
       this._updateSemestre(params)
+    } else if (type === 'synthese-hrs') {
+      const { annee } = eparams
+
+      if (annee === '') {
+        addCallout('Veuillez sélectionner une année', 'danger')
+        return false
+      }
+
+      const params = new URLSearchParams({
+        annee,
+      })
+      this._updateSyntheseHrs(params)
     } else {
       addCallout('Type de prévisionnel inconnu', 'danger')
     }
