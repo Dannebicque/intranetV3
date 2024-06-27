@@ -20,6 +20,7 @@ use App\Entity\Constantes;
 use App\Entity\ScolaritePromo;
 use App\Entity\Semestre;
 use App\Entity\Ue;
+use App\Enums\DecisionSemestreEnum;
 use App\Enums\SemestreLienEnum;
 use App\Exception\SemestreNotFoundException;
 use Carbon\Carbon;
@@ -42,7 +43,7 @@ class SousCommissionExport
         'matiereAAnnuler' => 'ff926dde',
         'pasdenote' => 'ffbbbbbb',
         Constantes::PAS_OPTION => 'ff000000',
-        '' => 'ffffff',
+        '' => 'ffffffff',
     ];
 
     private ?SousCommissionInterface $sousCommission = null;
@@ -608,7 +609,7 @@ class SousCommissionExport
                         $sousCommissionEtudiant->scolarite[$semPrec->getOrdreLmd()]->decision,
                         ['style' => 'HORIZONTAL_CENTER']);
                     $this->myExcelWriter->colorCellRange($colonne, $ligne,
-                        $this->getStyleDecisionUe($sousCommissionEtudiant->scolarite[$semPrec->getOrdreLmd()]->decision));
+                        $this->getStyleDecisionSemestre($sousCommissionEtudiant->scolarite[$semPrec->getOrdreLmd()]->decision));
                 } else {
                     $this->myExcelWriter->writeCellXY($colonne, $ligne,
                         'Sans Info.',
@@ -1078,5 +1079,18 @@ class SousCommissionExport
         }
 
         return '';
+    }
+
+    private function getStyleDecisionSemestre($decision): string
+    {
+        if (DecisionSemestreEnum::SEMESTRE_NON_VALIDE === $decision) {
+            return self::COULEURS['badge bg-danger'];
+        }
+
+        if (DecisionSemestreEnum::SEMESTRE_VALIDE === $decision) {
+            return self::COULEURS['badge bg-success'];
+        }
+
+        return 'ffffffff';
     }
 }
