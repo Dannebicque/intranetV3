@@ -302,10 +302,17 @@ class SousCommissionExport
                         $sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->moyenne,
                         ['style' => 'numerique3']);
                     ++$colonne;
-                    $this->myExcelWriter->writeCellXY($colonne, $ligne,
-                        $sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->decision);
-                    $this->myExcelWriter->colorCellRange($colonne, $ligne,
-                        Constantes::SS_COMM_DECISION_COULEUR[$sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->decision]);
+                    if ($sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->decision instanceof DecisionSemestreEnum) {
+                        $this->myExcelWriter->writeCellXY($colonne, $ligne,
+                            $sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->decision->value);
+                        $this->myExcelWriter->colorCellRange($colonne, $ligne,
+                            Constantes::SS_COMM_DECISION_COULEUR[$sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->decision->value]);
+                    } else {
+                        $this->myExcelWriter->writeCellXY($colonne, $ligne,
+                            $sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->decision);
+                        $this->myExcelWriter->colorCellRange($colonne, $ligne,
+                            Constantes::SS_COMM_DECISION_COULEUR[$sousCommissionEtudiant->getScolarite()[$s->getOrdreLmd()]->decision]);
+                    }
                 } else {
                     $this->myExcelWriter->writeCellXY($colonne, $ligne, ' - ');
                     ++$colonne;
