@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.6](https://github.com/Dannebicque/intranetV3/compare/v3.19.5...v3.19.6) (2024-06-27)
+
+
+### Bug Fixes
+
+* Export sous-comm ([4114ee8](https://github.com/Dannebicque/intranetV3/commit/4114ee8f5c8dd2cbfb3156eaabc89580ed1a1430))
+
 ### [3.19.5](https://github.com/Dannebicque/intranetV3/compare/v3.19.4...v3.19.5) (2024-06-27)
 
 
