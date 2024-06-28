@@ -215,6 +215,12 @@ class MyEdtExport
         // todo: gérer l'année universitaire d'export
         if ('intranet' === $source) {
             $planning = $this->edtPlanningRepository->findEdtProf($personnel->getId(), $personnel->getAnneeUniversitaire());
+            //supprimer l'ancien fichier
+            if (file_exists($this->dir . $dir . '/' . $personnel->getId() . '_' . $personnel->getInitiales() . '.pdf')) {
+                unlink($this->dir . $dir . '/' . $personnel->getId() . '_' . $personnel->getInitiales() . '.pdf');
+            }
+
+
             $this->myPDF->pdf()::genereAndSavePdf('pdf/edt/planning.html.twig',
                 [
                     'planning' => $planning,
