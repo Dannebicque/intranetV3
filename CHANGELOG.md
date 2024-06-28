@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.7](https://github.com/Dannebicque/intranetV3/compare/v3.19.6...v3.19.7) (2024-06-28)
+
+
+### Bug Fixes
+
+* Export des EDT en pdf ([5bf79ca](https://github.com/Dannebicque/intranetV3/commit/5bf79ca95cd0992a418ea19eec2e9b218b2adf7b))
+* profil etudiant, scolarité ([eda018f](https://github.com/Dannebicque/intranetV3/commit/eda018f935431f183331bd7d21ed2a7a03d75431))
+
 ### [3.19.6](https://github.com/Dannebicque/intranetV3/compare/v3.19.5...v3.19.6) (2024-06-27)
 
 
