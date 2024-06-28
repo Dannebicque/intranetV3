@@ -40,14 +40,25 @@ class EtudiantGroupeController extends BaseController
         ]);
     }
 
-    #[Route(path: '/affecte/{typeGroupe}', name: 'administration_etudiant_groupe_affecte', options: ['expose' => true])]
-    public function affecte(GroupeRepository $groupeRepository, EtudiantRepository $etudiantRepository, TypeGroupe $typeGroupe): Response
+    #[Route(path: '/affecte/', name: 'administration_etudiant_groupe_affecte', options: ['expose' => true])]
+    public function affecte(
+        Request              $request,
+        TypeGroupeRepository $typeGroupeRepository,
+        GroupeRepository     $groupeRepository, EtudiantRepository $etudiantRepository): Response
     {
+        $idTg = $request->query->get('typeGroupe');
+        $typeGroupe = $typeGroupeRepository->find($idTg);
+
+        if ($typeGroupe === null) {
+            throw $this->createNotFoundException('Type de groupe non trouvé');
+        }
+
+
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $typeGroupe->getSemestres()->first());
         $etudiants = $etudiantRepository->findByOrdreSemestreAndDiplome($typeGroupe->getSemestres()->first()->getOrdreLmd(), $typeGroupe->getSemestres()->first()->getDiplome());
         $groupes = $groupeRepository->findByTypeGroupe($typeGroupe);
 
-        return $this->render('administration/etudiant_groupe/affecte.html.twig', [
+        return $this->render('administration/etudiant_groupe/_affecte.html.twig', [
             'typeGroupe' => $typeGroupe,
             'groupes' => $groupes,
             'etudiants' => $etudiants,
@@ -80,8 +91,8 @@ class EtudiantGroupeController extends BaseController
     public function change(Request $request, EtudiantRepository $etudiantRepository, GroupeRepository $groupeRepository): Response
     {
         $cle = $request->request->get('id');
-        $t = explode('-', (string) $cle);
-        $id = explode('_', $t[0]);
+        $newGroupe = $request->request->get('newgroupe');
+        $id = explode('_', $cle);
         // récupére l'étudiant
         $etu = $etudiantRepository->find($id[1]);
         if (null !== $etu) {
@@ -95,8 +106,8 @@ class EtudiantGroupeController extends BaseController
                 }
             }
 
-            if (0 !== (int) $t[1]) {
-                $groupe = $groupeRepository->find(trim($t[1])); // récupérer groupe etudiant...
+            if ($newGroupe !== null) {
+                $groupe = $groupeRepository->find($newGroupe); // récupérer groupe etudiant...
                 if ($groupe) {
                     // supprimer l'ancier groupe...
                     $groupe->addEtudiant($etu);

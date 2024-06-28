@@ -50,7 +50,6 @@ Encore
   .addEntry('adm.bornes', './assets/js/pages/adm.borne.js')
   .addEntry('adm.alternances', './assets/js/pages/adm.alternances.js')
   .addEntry('adm.stage_courrier', './assets/js/pages/adm.stage_courrier.js')
-  .addEntry('adm.etudiant_groupe', './assets/js/pages/adm.etudiant_groupe.js')
   .addEntry('adm.justificatifs', './assets/js/pages/adm.justificatifs.js')
   .addEntry('adm.matieres', './assets/js/pages/adm.matieres.js')
   .addEntry('adm.scolarite', './assets/js/pages/adm.scolarite.js')

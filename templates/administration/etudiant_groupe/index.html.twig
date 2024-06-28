@@ -30,19 +30,32 @@
     </div>
 {% endblock %}
 
+{% block stimulus %}
+    {{ stimulus_controller('adm--etudiants--groupes', {
+        urlChangeTypeGroupe: path('administration_etudiant_groupe_affecte'),
+        urlAffecte: path('administration_etudiant_groupe_change'),
+    }) }}
+{% endblock %}
+
 {% block content %}
+    <header class="card-top-header">
+        <h2 class="card-top-title">
+            Choisir le type de groupe
+        </h2>
+    </header>
     <div class="card">
-        <h4 class="card-title">Choisir</h4>
         <div class="card-body">
             <div class="row">
                 {% for typeGroupe in typeGroupes %}
                     <div class="col-sm-2 d-grid">
-                        <button data-typegroupe="{{ typeGroupe.id }}"
+                        <button {{ stimulus_action('adm--etudiants--groupes', 'changeTypeGroupe', 'click', {
+                            typegroupe:typeGroupe.id
+                        }) }}
                                 class="btn d-block {% if selectedTypeGroupe is defined and selectedTypeGroupe.id ==
-                                    typeGroupe.id %}btn-primary{% endif %} admChangeTypeGroupe">{{ typeGroupe.libelle }}</button>
+                                    typeGroupe.id %}btn-primary{% else %}btn-secondary{% endif %} btnGroupe">{{ typeGroupe.libelle }}</button>
                     </div>
                 {% else %}
-                    <div class="col-md-12">
+                    <div class="col-md-12 mt-2">
                         <twig:Alert type="warning">
                             Aucun groupe n'existe dans ce semestre. <a href="{{ path('administration_groupe_index',
                                 {semestre:semestre.id}) }}">
@@ -52,7 +65,7 @@
                     </div>
                 {% endfor %}
                 <br><br>
-                <twig:Alert class="info">
+                <twig:Alert class="info" class="mt-2">
                     Vous pouvez ne remplir que le groupe de plus bas niveau (TP) et synchroniser pour remplir
                     automatiquement les groupes parents. Si les groupes sont saisis dans Apogée, vous pouvez aussi
                     les synchroniser (il faut attendre 24h entre la saisie dans Apogée et la possibilité de
@@ -63,11 +76,14 @@
     </div>
 
     {% if typeGroupes|length > 0 %}
+        <header class="card-top-header">
+            <h2 class="card-top-title">
+                Gérer les groupes des étudiants
+            </h2>
+        </header>
         <div class="card">
-            <h4 class="card-title">Gérer les groupes des étudiants</h4>
-            <div class="card-body" id="listeEtudiantsGroupes">
-                <div class="row">
-
+            <div class="card-body p-0" {{ stimulus_target('adm--etudiants--groupes', 'listeEtudiantsGroupes') }}>
+                <div class="row m-1">
                     <div class="col-md-12">
                         <twig:Alert type="warning">
                             Veuillez choisir un type de groupe ci-dessus pour pouvoir affecer des étudiants aux groupes.
@@ -80,12 +96,12 @@
     {% endif %}
 {% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('adm.etudiant_groupe') }}
-{% endblock %}
+{# {% block stylesheets %} #}
+{#    {{ parent() }} #}
+{#    {{ encore_entry_link_tags('adm.etudiant_groupe') }} #}
+{# {% endblock %} #}
 
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('adm.etudiant_groupe') }}
-{% endblock %}
+{# {% block javascripts %} #}
+{#    {{ parent() }} #}
+{#    {{ encore_entry_script_tags('adm.etudiant_groupe') }} #}
+{# {% endblock %} #}

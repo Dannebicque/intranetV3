@@ -34,6 +34,7 @@
                 <td><label class="sr-only" for="etu_{{ etudiant.id }}_{{ groupe.id }}">{{ etudiant.displayPr }}
                         => {{ groupe.libelle }}</label>
                     <input type="radio"
+                            {{ stimulus_action('adm--etudiants--groupes', 'changeGroupe', 'change') }}
                            title="{{ etudiant.displayPr }} => {{ groupe.libelle }}"
                            name="etu_{{ etudiant.id }}"
                            id="etu_{{ etudiant.id }}_{{ groupe.id }}"
@@ -46,6 +47,7 @@
             {% endfor %}
             <td><label class="sr-only" for="etu_{{ etudiant.id }}_N">{{ etudiant.displayPr }} => N</label>
                 <input type="radio"
+                        {{ stimulus_action('adm--etudiants--groupes', 'changeGroupe', 'change') }}
                        title="{{ etudiant.displayPr }} => N"
                        name="etu_{{ etudiant.id }}"
                        id="etu_{{ etudiant.id }}_N"
