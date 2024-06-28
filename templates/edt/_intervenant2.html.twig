@@ -1,54 +1,55 @@
-<header class="card-top-header">
-    <h4 class="card-top-title">
-        {{ 'heading.edt.dashboard'|trans }}
-    </h4>
-    <div class="card-header-actions">
-        <button class="btn btn-secondary" {{ stimulus_action('edt-personnel', 'affichage', 'click', {mode:'tableau'}) }}>
-            <i class="fas fa-list"></i> Vue liste
-        </button>
-        <ul class="card-controls">
-            <li class="dropdown">
-                <a data-bs-toggle="dropdown" href="#">
-                    <i class="fas fa-ellipsis-h"
-                       data-bs-toggle="tooltip" data-bs-placement="bottom"
-                       title="Options d'export ou de synchronisation"></i>
-                    <span class="sr-only">Options d'export ou de synchronisation</span>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                    <a href="#"
-                            {{ stimulus_controller('modal', {
-                                modalTitle: 'edt.intervenant.synchro.ical.heading'|trans,
-                                modalUrl:  path('edt_affiche_ical') }) }}
-                       data-action="click->modal#openModal"
-                       data-bs-toggle="tooltip" data-bs-placement="bottom"
-                       title="{{ 'atitle.lien_ical'|trans }}"
-                       class="dropdown-item">
-                        <i class="fas fa-file-export"></i>
-                        {{ 'edt.intervenant.synchro.ical'|trans }}
+<div {{ stimulus_controller('edt-personnel', {
+    urlCarnetDeBord: path('application_personnel_absence_ajax_pas_absent'),
+    urlEdt: path('edt_personnel_ajax'),
+    urlEdtSemestre: path('edt_personnel_semestre_ajax'),
+    urlPasDAbsent: path('application_personnel_absence_ajax_pas_absent'),
+    semaine: semaine,
+    filtre: filtre,
+    valeur:valeur
+}) }}>
+    <header class="card-top-header">
+        <h4 class="card-top-title">
+            {{ 'heading.edt.dashboard'|trans }}
+        </h4>
+        <div class="card-header-actions">
+            <button class="btn btn-secondary" {{ stimulus_action('edt-personnel', 'affichage', 'click', {mode:'tableau'}) }}>
+                <i class="fas fa-list"></i> Vue liste
+            </button>
+            <ul class="card-controls">
+                <li class="dropdown">
+                    <a data-bs-toggle="dropdown" href="#">
+                        <i class="fas fa-ellipsis-h"
+                           data-bs-toggle="tooltip" data-bs-placement="bottom"
+                           title="Options d'export ou de synchronisation"></i>
+                        <span class="sr-only">Options d'export ou de synchronisation</span>
                     </a>
-                    <a class="dropdown-item" href="{{ path('previsionnel_chronologique') }}"
-                       title="{{ 'atitle.service_chronologique'|trans }}"
-                    >
-                        <i class="fas fa-bell"></i>
-                        {{ 'chronologique'|trans }}
-                    </a>
-                </div>
-            </li>
-        </ul>
-    </div>
-</header>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a href="#"
+                                {{ stimulus_controller('modal', {
+                                    modalTitle: 'edt.intervenant.synchro.ical.heading'|trans,
+                                    modalUrl:  path('edt_affiche_ical') }) }}
+                           data-action="click->modal#openModal"
+                           data-bs-toggle="tooltip" data-bs-placement="bottom"
+                           title="{{ 'atitle.lien_ical'|trans }}"
+                           class="dropdown-item">
+                            <i class="fas fa-file-export"></i>
+                            {{ 'edt.intervenant.synchro.ical'|trans }}
+                        </a>
+                        <a class="dropdown-item" href="{{ path('previsionnel_chronologique') }}"
+                           title="{{ 'atitle.service_chronologique'|trans }}"
+                        >
+                            <i class="fas fa-bell"></i>
+                            {{ 'chronologique'|trans }}
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </header>
 
-<div class="card"
-        {{ stimulus_controller('edt-personnel', {
-            urlCarnetDeBord: path('application_personnel_absence_ajax_pas_absent'),
-            urlEdt: path('edt_personnel_ajax'),
-            urlEdtSemestre: path('edt_personnel_semestre_ajax'),
-            urlPasDAbsent: path('application_personnel_absence_ajax_pas_absent'),
-            semaine: semaine,
-            filtre: filtre,
-            valeur:valeur
-        }) }}>
-    <div class="card-body" {{ stimulus_target('edt-personnel', 'zoneEdt') }}>
+    <div class="card">
+        <div class="card-body" {{ stimulus_target('edt-personnel', 'zoneEdt') }}>
 
+        </div>
     </div>
 </div>
