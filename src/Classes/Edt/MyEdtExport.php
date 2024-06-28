@@ -54,7 +54,7 @@ class MyEdtExport
         KernelInterface                 $kernel
     )
     {
-        $this->dir = $kernel->getProjectDir() . '/public/upload/';
+        $this->dir = $kernel->getProjectDir() . '/public/';
     }
 
     public function export(UserInterface $user, string $_format, string $type, AnneeUniversitaire $anneeUniversitaire): bool|string
@@ -165,7 +165,7 @@ class MyEdtExport
     public function getAllDocs(Departement $departement): array
     {
         // parcour fichiers
-        $folder = $this->dir . 'pdfedt/' . $departement->getId() . '/';
+        $folder = $this->dir . 'upload/pdfedt/' . $departement->getId() . '/';
         $dossier = opendir($folder);
 
         $t = [];
@@ -209,8 +209,8 @@ class MyEdtExport
      */
     public function generePdf(Personnel $personnel, string $source, Departement $departement): void
     {
-        $dir = $this->dir . 'pdfedt/' . $departement->getId() . '/';
-        Tools::checkDirectoryExist($dir);
+        $dir = 'upload/pdfedt/' . $departement->getId();
+        Tools::checkDirectoryExist($this->dir . $dir);
         // todo: passer par le DTO Evenement, comme ca compatible avec celcat
         // todo: gérer l'année universitaire d'export
         if ('intranet' === $source) {
