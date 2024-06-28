@@ -216,8 +216,8 @@ class MyEdtExport
         if ('intranet' === $source) {
             $planning = $this->edtPlanningRepository->findEdtProf($personnel->getId(), $personnel->getAnneeUniversitaire());
             //supprimer l'ancien fichier
-            if (file_exists($this->dir . $dir . '/' . $personnel->getId() . '_' . $personnel->getInitiales() . '.pdf')) {
-                unlink($this->dir . $dir . '/' . $personnel->getId() . '_' . $personnel->getInitiales() . '.pdf');
+            if (file_exists($this->dir . $dir . '/' . $personnel->getId() . '-' . $personnel->getInitiales() . '.pdf')) {
+                unlink($this->dir . $dir . '/' . $personnel->getId() . '-' . $personnel->getInitiales() . '.pdf');
             }
 
 
@@ -228,7 +228,7 @@ class MyEdtExport
                     'departement' => $departement,
                     'matieres' => $this->typeMatiereManager->findByDepartementArray($departement),
                 ],
-                $personnel->getId() . '_' . $personnel->getInitiales(),
+                $personnel->getId() . '-' . $personnel->getInitiales(),
                 $dir);
         }
     }
