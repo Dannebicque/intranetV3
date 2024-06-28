@@ -260,4 +260,9 @@ abstract class AbstractMatiere extends BaseEntity
 
         return $this;
     }
+
+    public function hasCoefficientDifferent(): bool
+    {
+        return false;
+    }
 }

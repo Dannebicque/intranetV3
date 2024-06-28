@@ -34,4 +34,6 @@ interface MatiereEntityInterface
     public function getTpFormation(): ?float;
 
     public function isSuspendu(): bool;
+
+    public function hasCoefficientDifferent(): bool;
 }

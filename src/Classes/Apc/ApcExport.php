@@ -120,7 +120,7 @@ class ApcExport
         );
     }
 
-    private function displayCompetences($competences): string
+    private function displayCompetences(array $competences): string
     {
         $str = '';
         foreach ($competences as $competence) {
