@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/css/app.scss
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 01/06/2024 22:26
+// @lastUpdate 29/06/2024 07:05
 
 @import "./theme-troyes.scss";
 @import "./theme-rcc.scss";
@@ -37,6 +37,34 @@ $dropdown-link-hover-bg: var(--colorIUT);
 @import "~flatpickr";
 
 @import '~tom-select/dist/css/tom-select.bootstrap5.min.css';
+
+
+#topbar-navigation {
+  background-color: var(--colorIUTComplementaire);
+  color: white;
+  padding: 0 18px;
+  height: 50px;
+  display: -webkit-box;
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  align-items: center;
+  position: fixed;
+  top: 40px;
+  right: 0;
+  left: 0;
+  z-index: 995;
+  -webkit-transition: margin-left 0.3s ease;
+  transition: margin-left 0.3s ease;
+  -webkit-box-shadow: 4px 0 5px rgba(0, 0, 0, 0.08);
+  box-shadow: 4px 0 5px rgba(0, 0, 0, 0.08);
+}
+
+.logo {
+  height: 50px;
+  width: auto;
+}
 
 /** Correction pour Bootstrap5 */
 a {
@@ -901,7 +929,7 @@ td.bg-disabled {
 }
 
 .header-breadcrumbs {
-  margin: 10px 0 10px 0;
+  margin: 10px 0 0px 0;
   //padding: 0 30px;
   display: block;
   -webkit-box-pack: justify;
@@ -960,4 +988,9 @@ fieldset {
   border-radius: 0.375rem;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
+}
+
+.document-categorie {
+  margin-top: 10px;
+  background-color: white;
 }

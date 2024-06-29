@@ -1,3 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'previsionnel.heading'|trans }}
+{% endblock %}
+
+{% block content %}
 <div class="card" {{ stimulus_controller('app_personnel--previsionnel', {
     url: path('previsionnel_semestre'),
     semestre: semestres[0].id
@@ -79,3 +86,5 @@
         title: 'chronologique'|trans,
         icone : "fas fa-clock"}
 ]}) }}
+
+{% endblock %}

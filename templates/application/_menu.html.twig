@@ -1,0 +1,70 @@
+{% if is_granted('ROLE_PERMANENT') %}
+    <li>
+        <a class="dropdown-item"
+           href="{{ path('messagerie_index') }}">{{ 'menu.messagerie'|trans }}</a>
+    </li>
+    <li>
+        <a class="dropdown-item"
+           href="{{ path('previsionnel_index') }}">{{ 'menu.previsionnel'|trans }}</a>
+    </li>
+
+    {% if user_data.departement.optStage == true %}
+        <li>
+            <a class="dropdown-item"
+               href="{{ path('application_personnel_stage_index') }}"
+            >{{ 'menu.stages'|trans }}</a>
+        </li>
+    {% endif %}
+    {# todo: décomposer en deux entrées #}
+    <li>
+        <a class="dropdown-item"
+           href="{{ path('application_personnel_salle_examen_index') }}"
+        >{{ 'menu.salle_examen'|trans }}</a>
+    </li>
+
+    <li>
+        <a class="dropdown-item"
+           href="{{ path('application_personnel_plan_cours_index') }}"
+        >{{ 'menu.plan_cours'|trans }}</a>
+    </li>
+{% else %}
+    <li>
+        <a class="dropdown-item"
+           href="{{ path('messagerie_index') }}">{{ 'menu.messagerie'|trans }}</a>
+    </li>
+
+    <li>
+        <a class="dropdown-item"
+           href="{{ path('app_etudiant_absence_justificatif_index') }}">{{ 'menu.justificatif'|trans }}</a>
+    </li>
+
+    {% if  user_data.user.annee.optAlternance == true %}
+        <li>
+            <a class="dropdown-item"
+               href="{{ path('application_etudiant_alternance_index') }}"
+            >{{ 'menu.alternance'|trans }}</a>
+        </li>
+    {% endif %}
+
+    {% if user_data.departement.optStage == true %}
+        <li>
+            <a class="dropdown-item"
+               href="{{ path('application_etudiant_stage_index') }}"
+            >{{ 'menu.stages'|trans }}</a>
+        </li>
+    {% endif %}
+
+    <li>
+        <a class="dropdown-item"
+           href="{{ path('application_etudiant_projet_index') }}">{{ 'menu.projet'|trans }}</a>
+    </li>
+
+    {% if user_data.user.semestre.optRattrapage == true %}
+        <li>
+            <a class="dropdown-item"
+               href="{{ path('application_etudiant_rattrapage_index') }}"
+            >{{ 'menu.rattrapage'|trans }}</a>
+        </li>
+    {% endif %}
+{% endif %}
+

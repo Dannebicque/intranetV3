@@ -1,117 +1,125 @@
-<div class="card">
-    <h4 class="card-title"><strong>Edition</strong> des feuilles de surveillance</h4>
-    <div class="card-body">
-        {% if salles|length > 0 %}
-        <form class="form-horizontal form-validate" method="post"
-              action="{{ path('application_personnel_salle_examen_genere_placement') }}">
-            <h5>1. Choix du module</h5>
-            <div class="form-group">
-                <label class="form-label required" for="selectsemestre">Choisir semestre</label>
-                <div>
-                    <select data-placeholder="Choisir le semestre" class="form-select" id="selectsemestre"
-                            name="selectsemestre" required="required" is="select-complete">
-                        <option value="">Choisissez un semestre</option>
-                        {% for semestre in semestres %}
-                            <option value="{{ semestre.id }}">{{ semestre.display }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
+{% extends 'base.html.twig' %}
 
-            <div class="form-group">
-                <label class="form-label required" for="selectmatiere">Matière</label>
-                <div>
-                    <select class="form-select" id="selectmatiere" name="selectmatiere" required="required">
-                        <option value="">Choisissez d'abord un semestre</option>
-                    </select>
-                </div>
-            </div>
+{% block header %}
+    {{ 'menu.salle_examen'|trans }}
+{% endblock %}
 
-            <div class="form-group">
-                <label class="form-label required" for="selectgroupes">Groupes</label>
-                <div>
-                    <select class="form-select" id="selectgroupes" name="selectgroupes" required="required"
-                    >{# is="select-complete" #}
-                        <option value="">Choisissez d'abord un semestre</option>
-                    </select>
-                </div>
-            </div>
+{% block content %}
+    <div class="card">
+        <h4 class="card-title"><strong>Edition</strong> des feuilles de surveillance</h4>
+        <div class="card-body">
+            {% if salles|length > 0 %}
+                <form class="form-horizontal form-validate" method="post"
+                      action="{{ path('application_personnel_salle_examen_genere_placement') }}">
+                    <h5>1. Choix du module</h5>
+                    <div class="form-group">
+                        <label class="form-label required" for="selectsemestre">Choisir semestre</label>
+                        <div>
+                            <select data-placeholder="Choisir le semestre" class="form-select" id="selectsemestre"
+                                    name="selectsemestre" required="required" is="select-complete">
+                                <option value="">Choisissez un semestre</option>
+                                {% for semestre in semestres %}
+                                    <option value="{{ semestre.id }}">{{ semestre.display }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
 
-            <div class="form-group">
-                <label class="form-label required">Choix des groupes</label>
-                <div>
-                    <div id="listegroupe" class="col-xs-7">Choisissez d'abord un type de groupe</div>
-                </div>
-            </div>
+                    <div class="form-group">
+                        <label class="form-label required" for="selectmatiere">Matière</label>
+                        <div>
+                            <select class="form-select" id="selectmatiere" name="selectmatiere" required="required">
+                                <option value="">Choisissez d'abord un semestre</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label required" for="selectgroupes">Groupes</label>
+                        <div>
+                            <select class="form-select" id="selectgroupes" name="selectgroupes" required="required"
+                            >{# is="select-complete" #}
+                                <option value="">Choisissez d'abord un semestre</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label required">Choix des groupes</label>
+                        <div>
+                            <div id="listegroupe" class="col-xs-7">Choisissez d'abord un type de groupe</div>
+                        </div>
+                    </div>
 
 
-            <h5>2. Choix des enseignants</h5>
+                    <h5>2. Choix des enseignants</h5>
 
-            <div class="form-group">
-                <label class="form-label" for="enseignant1">Enseignant 1</label>
-                <div>
-                    <select class="form-select" id="enseignant1" name="enseignant1"
-                            is="select-complete"
-                    >
-                        <option value="">Choisissez un enseignant</option>
-                        {% for enseignant in personnels %}
-                                <option value="{{ enseignant.id }}">{{ enseignant.displayPr }}</option>
-                            {% endfor %}
-                    </select>
-                </div>
-            </div>
+                    <div class="form-group">
+                        <label class="form-label" for="enseignant1">Enseignant 1</label>
+                        <div>
+                            <select class="form-select" id="enseignant1" name="enseignant1"
+                                    is="select-complete"
+                            >
+                                <option value="">Choisissez un enseignant</option>
+                                {% for enseignant in personnels %}
+                                    <option value="{{ enseignant.id }}">{{ enseignant.displayPr }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
 
-            <div class="form-group">
-                <label class="form-label" for="enseignant2">Enseignant 2</label>
-                <div>
-                    <select class="form-select" id="enseignant2" name="enseignant2"
-                            is="select-complete"
-                    >
-                        <option value="">Choisissez un enseignant</option>
-                        {% for enseignant in personnels %}
-                                <option value="{{ enseignant.id }}">{{ enseignant.displayPr }}</option>
-                            {% endfor %}
-                    </select>
-                </div>
-            </div>
+                    <div class="form-group">
+                        <label class="form-label" for="enseignant2">Enseignant 2</label>
+                        <div>
+                            <select class="form-select" id="enseignant2" name="enseignant2"
+                                    is="select-complete"
+                            >
+                                <option value="">Choisissez un enseignant</option>
+                                {% for enseignant in personnels %}
+                                    <option value="{{ enseignant.id }}">{{ enseignant.displayPr }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
 
-            <h5>3. Choix de la salle</h5>
+                    <h5>3. Choix de la salle</h5>
 
-            <div class="form-group">
-                <label class="form-label required" for="salle">Salle</label>
-                <div>
-                    <select class="form-select" id="salle" name="salle" required="required" is="select-complete">
-                        <option value="">Choisissez la salle</option>
-                        {% for salle in salles %}
-                                <option value="{{ salle.id }}">{{ salle.salle.libelle }} </option>
-                            {% endfor %}
-                    </select>
-                </div>
-            </div>
+                    <div class="form-group">
+                        <label class="form-label required" for="salle">Salle</label>
+                        <div>
+                            <select class="form-select" id="salle" name="salle" required="required"
+                                    is="select-complete">
+                                <option value="">Choisissez la salle</option>
+                                {% for salle in salles %}
+                                    <option value="{{ salle.id }}">{{ salle.salle.libelle }} </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                    </div>
 
-            <h5>4. Choix de la date de l'évaluation</h5>
-            <div class="form-group">
-                <label class="form-label" for="dateeval">Date de l'évaluation</label>
-                <div>
-                    <input type="text"
-                           name="dateeval" id="dateeval" class="form-control"
-                           is="my-datepicker"
-                    >
-                </div>
-            </div>
+                    <h5>4. Choix de la date de l'évaluation</h5>
+                    <div class="form-group">
+                        <label class="form-label" for="dateeval">Date de l'évaluation</label>
+                        <div>
+                            <input type="text"
+                                   name="dateeval" id="dateeval" class="form-control"
+                                   is="my-datepicker"
+                            >
+                        </div>
+                    </div>
 
-            <h5>5. Génération du document</h5>
-            <div class="form-actions  col-sm-offset-2 col-sm-10">
-                <button type="button" class="btn">Annuler</button>
-                <button type="submit" class="btn btn-primary btn-large">Générer le document</button>
-            </div>
-            <br/><br/>
-        </form>
-        {% else %}
-            <twig:Alert type="warning">
-                Aucune salle d'examen n'est défini. Contactez les responsables de la formation.
-            </twig:Alert>
-        {% endif %}
+                    <h5>5. Génération du document</h5>
+                    <div class="form-actions  col-sm-offset-2 col-sm-10">
+                        <button type="button" class="btn">Annuler</button>
+                        <button type="submit" class="btn btn-primary btn-large">Générer le document</button>
+                    </div>
+                    <br/><br/>
+                </form>
+            {% else %}
+                <twig:Alert type="warning">
+                    Aucune salle d'examen n'est défini. Contactez les responsables de la formation.
+                </twig:Alert>
+            {% endif %}
+        </div>
     </div>
-</div>
-
+{% endblock %}

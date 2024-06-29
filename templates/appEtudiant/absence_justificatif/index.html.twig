@@ -1,80 +1,90 @@
-<div class="card">
-    <header class="card-header">
-        <h4 class="card-title">{{ 'app.etudiant.absence.justificatif.index.heading'|trans }}</h4>
-        <div class="card-header-actions">
-            <a href="{{ path('app_etudiant_absence_justificatif_new') }}" class="btn btn-sm btn-primary "
-               title="{{ 'atitle.creer_nouveau'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"><i
-                        class="fas fa-plus"></i><span class="sr-only">ajouter un justificatif d'absence</span></a>
-        </div>
-    </header>
-    <div class="card-body">
-        <twig:Alert type="info">
-            {{ 'app.etudiant.justificatif.explication.index'|trans }}
-        </twig:Alert>
-        <table class="table table-striped table-bordered">
-            <thead>
-            <tr>
-                <th>{{ 'table.date_debut'|trans }}</th>
-                <th>{{ 'table.date_fin'|trans }}</th>
-                <th>{{ 'table.motif'|trans }}</th>
-                <th>{{ 'table.absence_justificatif_etat'|trans }}</th>
-                <th>{{ 'table.created'|trans }}</th>
-                <th>{{ 'table.actions'|trans }}</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for absence_justificatif in absence_justificatifs %}
-                <tr id="ligne_{{ absence_justificatif.uuidString }}">
+{% extends 'base.html.twig' %}
 
-                    <td>
-                        {{ absence_justificatif.dateHeureDebut ? absence_justificatif.dateHeureDebut|format_datetime
-                            ('long', 'short') : '' }}
-                    </td>
-                    <td>
-                        {{ absence_justificatif.dateHeureFin ? absence_justificatif.dateHeureFin|format_datetime
-                            ('long', 'short') : '' }}
-                    </td>
-                    <td>{{ absence_justificatif.motif }}</td>
-                    <td>
+{% block header %}
+    {{ 'justifier.absences.heading'|trans }}
+{% endblock %}
+
+{% block content %}
+    <div class="card">
+        <header class="card-header">
+            <h4 class="card-title">{{ 'app.etudiant.absence.justificatif.index.heading'|trans }}</h4>
+            <div class="card-header-actions">
+                <a href="{{ path('app_etudiant_absence_justificatif_new') }}" class="btn btn-sm btn-primary "
+                   title="{{ 'atitle.creer_nouveau'|trans }}" data-bs-toggle="tooltip" data-bs-placement="bottom"><i
+                            class="fas fa-plus"></i><span class="sr-only">ajouter un justificatif d'absence</span></a>
+            </div>
+        </header>
+        <div class="card-body">
+            <twig:Alert type="info">
+                {{ 'app.etudiant.justificatif.explication.index'|trans }}
+            </twig:Alert>
+            <table class="table table-striped table-bordered">
+                <thead>
+                <tr>
+                    <th>{{ 'table.date_debut'|trans }}</th>
+                    <th>{{ 'table.date_fin'|trans }}</th>
+                    <th>{{ 'table.motif'|trans }}</th>
+                    <th>{{ 'table.absence_justificatif_etat'|trans }}</th>
+                    <th>{{ 'table.created'|trans }}</th>
+                    <th>{{ 'table.actions'|trans }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for absence_justificatif in absence_justificatifs %}
+                    <tr id="ligne_{{ absence_justificatif.uuidString }}">
+
+                        <td>
+                            {{ absence_justificatif.dateHeureDebut ? absence_justificatif.dateHeureDebut|format_datetime
+                                ('long', 'short') : '' }}
+                        </td>
+                        <td>
+                            {{ absence_justificatif.dateHeureFin ? absence_justificatif.dateHeureFin|format_datetime
+                                ('long', 'short') : '' }}
+                        </td>
+                        <td>{{ absence_justificatif.motif }}</td>
+                        <td>
                         <span class="badge bg-{% if absence_justificatif.etat == 'R' %}danger{% elseif
-                absence_justificatif.etat == 'A' %}success{% else %}info{% endif %}">
+                            absence_justificatif.etat == 'A' %}success{% else %}info{% endif %}">
                         {{ absence_justificatif.etatLong }}
                     </span>
-                    </td>
-                    <td>{{ absence_justificatif.created ? absence_justificatif.created|format_datetime('long', 'short') : '' }}</td>
-                    <td>
-                        <a href="{{ asset('upload/justificatif/'~absence_justificatif.fichierName) }}" data-bs-toggle="tooltip" data-bs-placement="bottom"
-                           target="_blank"
-                           class="btn btn-info btn-outline btn-square"
-
-                           title="{{ 'atitle.voir_fichier'|trans }}">
-                            <i class="{{ iconShow }}"><span class="sr-only">Voir le fichier</span></i></a>
-                        {% if absence_justificatif.etat == 'D' %}
-                            <a href="{{ path('app_etudiant_absence_justificatif_edit', {'id': absence_justificatif.uuidString}) }}"
-                               class="btn btn-warning btn-outline btn-square"
+                        </td>
+                        <td>{{ absence_justificatif.created ? absence_justificatif.created|format_datetime('long', 'short') : '' }}</td>
+                        <td>
+                            <a href="{{ asset('upload/justificatif/'~absence_justificatif.fichierName) }}"
                                data-bs-toggle="tooltip" data-bs-placement="bottom"
+                               target="_blank"
+                               class="btn btn-info btn-outline btn-square"
 
-                               title="{{ 'atitle.modifier'|trans }}"><i class="{{ iconEdit }}"><span
-                                            class="sr-only">Modification d'un justificatif</span></i></a>
-                            <a href="{{ path('app_etudiant_absence_justificatif_delete', {id: absence_justificatif.uuidString}) }}"
-                               data-csrf="{{ csrf_token('delete' ~ absence_justificatif.uuidString) }}"
-                               class="btn btn-danger btn-outline btn-square supprimer" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                               title="{{ 'atitle.voir_fichier'|trans }}">
+                                <i class="{{ iconShow }}"><span class="sr-only">Voir le fichier</span></i></a>
+                            {% if absence_justificatif.etat == 'D' %}
+                                <a href="{{ path('app_etudiant_absence_justificatif_edit', {'id': absence_justificatif.uuidString}) }}"
+                                   class="btn btn-warning btn-outline btn-square"
+                                   data-bs-toggle="tooltip" data-bs-placement="bottom"
 
-                               title="{{ 'atitle.supprimer'|trans }}"><i class="{{ iconDelete }}"><span class="sr-only">Détails du justificatif</span></i></a>
-                        {% endif %}
-                    </td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="6">{{ 'no.record.found'|trans }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-        <twig:Alert type="info">
-            Vous devez déposer le justificatif original (ou une copie accompagnée de l'original) au secrétariat de
-            votre département.
-        </twig:Alert>
+                                   title="{{ 'atitle.modifier'|trans }}"><i class="{{ iconEdit }}"><span
+                                                class="sr-only">Modification d'un justificatif</span></i></a>
+                                <a href="{{ path('app_etudiant_absence_justificatif_delete', {id: absence_justificatif.uuidString}) }}"
+                                   data-csrf="{{ csrf_token('delete' ~ absence_justificatif.uuidString) }}"
+                                   class="btn btn-danger btn-outline btn-square supprimer" data-bs-toggle="tooltip"
+                                   data-bs-placement="bottom"
+
+                                   title="{{ 'atitle.supprimer'|trans }}"><i class="{{ iconDelete }}"><span
+                                                class="sr-only">Détails du justificatif</span></i></a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">{{ 'no.record.found'|trans }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <twig:Alert type="info">
+                Vous devez déposer le justificatif original (ou une copie accompagnée de l'original) au secrétariat de
+                votre département.
+            </twig:Alert>
+        </div>
     </div>
-</div>
-
+{% endblock %}

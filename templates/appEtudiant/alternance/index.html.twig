@@ -1,3 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'menu.alternance'|trans }}
+{% endblock %}
+
+{% block content %}
 <div class="card">
     <h4 class="card-title">Votre alternance</h4>
     <div class="card-body">
@@ -10,3 +17,4 @@
         {% endif %}
     </div>
 </div>
+{% endblock %}

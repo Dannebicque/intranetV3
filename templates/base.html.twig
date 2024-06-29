@@ -69,97 +69,105 @@
     </div>
 
     <!-- Sidebar -->
-    <aside class="sidebar sidebar-expand-lg sidebar-iconic" id="sidebar">
-    <header class="sidebar-header bg-white">
-        <span class="logo text-cente">
-          <a href="{% block link_homepage %}{{ path('default_homepage') }}{% endblock %}" class="div_logo">
-              <img src="{{ asset('upload/logo/'~settings('LOGO_INTRANET_IUT')) }}"
-                   alt="logo de l'intranet.">
-          </a>
-        </span>
-        </header>
+    {#    #}{# todo: mettre dans la première nav ? #}
+    {#    <aside class="sidebar sidebar-expand-lg sidebar-iconic" id="sidebar"> #}
+    {#    <header class="sidebar-header bg-white"> #}
+    {#        <span class="logo text-cente"> #}
+    {#          <a href="{% block link_homepage %}{{ path('default_homepage') }}{% endblock %}" class="div_logo"> #}
+    {#              <img src="{{ asset('upload/logo/'~settings('LOGO_INTRANET_IUT')) }}" #}
+    {#                   alt="logo de l'intranet."> #}
+    {#          </a> #}
+    {#        </span> #}
+    {#        </header> #}
 
-    <nav class="sidebar-navigation ps-container ps-theme-default">
-            <ul class="menu">
-                {% block sidebar_menu %}
-                    <li class="menu-item active" id="menu-tableau-de-bord">
-                        <a class="menu-link" href="{{ path('default_homepage') }}">
-                            <i class="{{ iconMenuDashboard }} fa-2x"><span class="sr-only">dashboard</span></i>
-                            <span class="title">{{ 'menu.dashboard'|trans }}</span>
-                        </a>
-                    </li>
+    {#    <nav class="sidebar-navigation ps-container ps-theme-default"> #}
+    {#            <ul class="menu"> #}
+    {#                {% block sidebar_menu %} #}
+    {#                    <li class="menu-item active" id="menu-tableau-de-bord"> #}
+    {#                        <a class="menu-link" href="{{ path('default_homepage') }}"> #}
+    {#                            <i class="{{ iconMenuDashboard }} fa-2x"><span class="sr-only">dashboard</span></i> #}
+    {#                            <span class="title">{{ 'menu.dashboard'|trans }}</span> #}
+    {#                        </a> #}
+    {#                    </li> #}
 
-                    <li class="menu-item" id="menu-trombinoscope">
-                        <a class="menu-link" href="{{ path('trombinoscope_index') }}">
-                            <i class="{{ iconMenuTrombi }} fa-2x"><span class="sr-only">group</span></i>
-                            <span class="title">{{ 'menu.trombinoscope'|trans }}</span>
-                        </a>
-                    </li>
-                    {% if user_data.departement.optEdt == true %}
-                        <li class="menu-item" id="menu-agenda">
-                            <a class="menu-link" href="{{ path('agenda_index') }}">
-                                <i class="{{ iconMenuAgenda }} fa-2x"><span class="sr-only">calendar</span></i>
-                                <span class="title">{{ 'menu.agenda'|trans }}</span>
-                            </a>
-                        </li>
-                    {% endif %}
+    {#                    <li class="menu-item" id="menu-trombinoscope"> #}
+    {#                        <a class="menu-link" href="{{ path('trombinoscope_index') }}"> #}
+    {#                            <i class="{{ iconMenuTrombi }} fa-2x"><span class="sr-only">group</span></i> #}
+    {#                            <span class="title">{{ 'menu.trombinoscope'|trans }}</span> #}
+    {#                        </a> #}
+    {#                    </li> #}
+    {#                    {% if user_data.departement.optEdt == true %} #}
+    {#                        <li class="menu-item" id="menu-agenda"> #}
+    {#                            <a class="menu-link" href="{{ path('agenda_index') }}"> #}
+    {#                                <i class="{{ iconMenuAgenda }} fa-2x"><span class="sr-only">calendar</span></i> #}
+    {#                                <span class="title">{{ 'menu.agenda'|trans }}</span> #}
+    {#                            </a> #}
+    {#                        </li> #}
+    {#                    {% endif %} #}
 
-                    <li class="menu-item" id="menu-application">
-                        <a class="menu-link" href="{{ path('application_index') }}">
-                            <i class="{{ iconMenuApplications }} fa-2x"><span class="sr-only">applications</span></i>
-                            <span class="title">{{ 'menu.applications'|trans }}</span>
-                        </a>
-                    </li>
+    {#                    <li class="menu-item" id="menu-application"> #}
+    {#                        <a class="menu-link" href="{{ path('application_index') }}"> #}
+    {#                            <i class="{{ iconMenuApplications }} fa-2x"><span class="sr-only">applications</span></i> #}
+    {#                            <span class="title">{{ 'menu.applications'|trans }}</span> #}
+    {#                        </a> #}
+    {#                    </li> #}
 
-                    <li class="menu-item" id="menu-document">
-                        <a class="menu-link" href="{{ path('document_index', {source:'document'}) }}">
-                            <i class="{{ iconDocuments }} fa-2x"><span class="sr-only">Documents</span></i>
-                            <span class="title">{{ 'menu.documents'|trans }}</span>
-                        </a>
-                    </li>
+    {#                    <li class="menu-item" id="menu-document"> #}
+    {#                        <a class="menu-link" href="{{ path('document_index', {source:'document'}) }}"> #}
+    {#                            <i class="{{ iconDocuments }} fa-2x"><span class="sr-only">Documents</span></i> #}
+    {#                            <span class="title">{{ 'menu.documents'|trans }}</span> #}
+    {#                        </a> #}
+    {#                    </li> #}
 
-                    {% if is_granted('ROLE_PERMANENT') and user_data.user.accessOriginaux == true %}
-                        <li class="menu-item" id="menu-originaux">
-                            <a class="menu-link" href="{{ path('document_index', {source: 'originaux'}) }}">
-                                <i class="{{ iconOriginaux }} fa-2x"><span class="sr-only">Originaux</span></i>
-                                <span class="title">{{ 'menu.originaux'|trans }}</span>
-                            </a>
-                        </li>
-                    {% endif %}
-                    {% if user_data.isGoodDepartement('ROLE_CDD') or
-                        user_data.isGoodDepartement('ROLE_RP') or
-                        user_data.isGoodDepartement('ROLE_DDE') or
-                        user_data.isGoodDepartement('ROLE_ASS') or
-                        user_data.isGoodDepartement('ROLE_STA') or
-                        user_data.isGoodDepartement('ROLE_ABS') or
-                        user_data.isGoodDepartement('ROLE_NOTES') or
-                        user_data.isGoodDepartement('ROLE_PRJ') or
-                        user_data.isGoodDepartement('ROLE_EDT') %}
-                        <li class="menu-item" id="menu-administration">
-                            <a class="menu-link" href="{{ path('administration_index') }}">
-                                <i class="{{ iconAdmin }} fa-2x"><span class="sr-only">Administration</span></i>
-                                <span class="title">{{ 'menu.administration'|trans }}</span>
-                            </a>
-                        </li>
-                    {% endif %}
-                {% endblock %}
+    {#                    {% if is_granted('ROLE_PERMANENT') and user_data.user.accessOriginaux == true %} #}
+    {#                        <li class="menu-item" id="menu-originaux"> #}
+    {#                            <a class="menu-link" href="{{ path('document_index', {source: 'originaux'}) }}"> #}
+    {#                                <i class="{{ iconOriginaux }} fa-2x"><span class="sr-only">Originaux</span></i> #}
+    {#                                <span class="title">{{ 'menu.originaux'|trans }}</span> #}
+    {#                            </a> #}
+    {#                        </li> #}
+    {#                    {% endif %} #}
+    {#                    {% if user_data.isGoodDepartement('ROLE_CDD') or #}
+    {#                        user_data.isGoodDepartement('ROLE_RP') or #}
+    {#                        user_data.isGoodDepartement('ROLE_DDE') or #}
+    {#                        user_data.isGoodDepartement('ROLE_ASS') or #}
+    {#                        user_data.isGoodDepartement('ROLE_STA') or #}
+    {#                        user_data.isGoodDepartement('ROLE_ABS') or #}
+    {#                        user_data.isGoodDepartement('ROLE_NOTES') or #}
+    {#                        user_data.isGoodDepartement('ROLE_PRJ') or #}
+    {#                        user_data.isGoodDepartement('ROLE_EDT') %} #}
+    {#                        <li class="menu-item" id="menu-administration"> #}
+    {#                            <a class="menu-link" href="{{ path('administration_index') }}"> #}
+    {#                                <i class="{{ iconAdmin }} fa-2x"><span class="sr-only">Administration</span></i> #}
+    {#                                <span class="title">{{ 'menu.administration'|trans }}</span> #}
+    {#                            </a> #}
+    {#                        </li> #}
+    {#                    {% endif %} #}
+    {#                {% endblock %} #}
 
-            </ul>
+    {#            </ul> #}
 
-            <div class="ps-scrollbar-x-rail start-0 bottom-0">
-                <div class="ps-scrollbar-x start-0 w-0" tabindex="0"></div>
-            </div>
-            <div class="ps-scrollbar-y-rail top-0 end-2px">
-                <div class="ps-scrollbar-y top-0 h-0" tabindex="0"></div>
-            </div>
-        </nav>
-    </aside>
+    {#            <div class="ps-scrollbar-x-rail start-0 bottom-0"> #}
+    {#                <div class="ps-scrollbar-x start-0 w-0" tabindex="0"></div> #}
+    {#            </div> #}
+    {#            <div class="ps-scrollbar-y-rail top-0 end-2px"> #}
+    {#                <div class="ps-scrollbar-y top-0 h-0" tabindex="0"></div> #}
+    {#            </div> #}
+    {#        </nav> #}
+    {#    </aside> #}
     <!-- END Sidebar -->
 
     <!-- Topbar -->
     <header class="topbar">
+        {# todo: remettre le logo ici ? #}
         <div class="topbar-left">
-            <span class="topbar-btn sidebar-toggler"><i>&#9776;</i></span>
+            <span class="topbar-btn">
+          <a href="{% block link_homepage %}{{ path('default_homepage') }}{% endblock %}" class="div_logo">
+              <img src="{{ asset('upload/logo/'~settings('LOGO_INTRANET_IUT')) }}"
+                   class="logo"
+                   alt="logo de l'intranet.">
+          </a>
+        </span>
             {% if is_granted('ROLE_PERMANENT') or is_granted('ROLE_ETUDIANT') %}
                 <a class="topbar-btn d-none d-md-block nomdepartement"
                    href="{{ block('link_homepage') }}">
@@ -290,6 +298,87 @@
             </ul>
         </div>
     </header>
+    <nav id="topbar-navigation">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="menu-item active" id="menu-tableau-de-bord">
+                        <a class="menu-link" href="{{ path('default_homepage') }}">
+                            <i class="{{ iconMenuDashboard }} fa-2x"><span class="sr-only">dashboard</span></i>
+                            <span class="title">{{ 'menu.dashboard'|trans }}</span>
+                        </a>
+                    </li>
+
+                    <li class="menu-item" id="menu-trombinoscope">
+                        <a class="menu-link" href="{{ path('trombinoscope_index') }}">
+                            <i class="{{ iconMenuTrombi }} fa-2x"><span class="sr-only">group</span></i>
+                            <span class="title">{{ 'menu.trombinoscope'|trans }}</span>
+                        </a>
+                    </li>
+                    {% if user_data.departement.optEdt == true %}
+                        <li class="menu-item" id="menu-agenda">
+                            <a class="menu-link" href="{{ path('agenda_index') }}">
+                                <i class="{{ iconMenuAgenda }} fa-2x"><span class="sr-only">calendar</span></i>
+                                <span class="title">{{ 'menu.agenda'|trans }}</span>
+                            </a>
+                        </li>
+                    {% endif %}
+
+                    <li class="menu-item dropdown" id="menu-application">
+                        <a class="menu-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            <i class="{{ iconMenuApplications }} fa-2x"><span
+                                        class="sr-only">applications</span></i>
+                            <span class="title">{{ 'menu.applications'|trans }}</span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            {{ include('application/_menu.html.twig') }}
+                            {#                            <li><a class="dropdown-item" href="#">Action</a></li> #}
+                            {#                            <li><a class="dropdown-item" href="#">Another action</a></li> #}
+                            {#                            <li> #}
+                            {#                                <hr class="dropdown-divider"> #}
+                            {#                            </li> #}
+                            {#                            <li><a class="dropdown-item" href="#">Something else here</a></li> #}
+                        </ul>
+                    </li>
+
+                    <li class="menu-item" id="menu-document">
+                        <a class="menu-link" href="{{ path('document_index', {source:'document'}) }}">
+                            <i class="{{ iconDocuments }} fa-2x"><span class="sr-only">Documents</span></i>
+                            <span class="title">{{ 'menu.documents'|trans }}</span>
+                        </a>
+                    </li>
+
+                    {% if is_granted('ROLE_PERMANENT') and user_data.user.accessOriginaux == true %}
+                        <li class="menu-item" id="menu-originaux">
+                            <a class="menu-link" href="{{ path('document_index', {source: 'originaux'}) }}">
+                                <i class="{{ iconOriginaux }} fa-2x"><span class="sr-only">Originaux</span></i>
+                                <span class="title">{{ 'menu.originaux'|trans }}</span>
+                            </a>
+                        </li>
+                    {% endif %}
+                    {% if user_data.isGoodDepartement('ROLE_CDD') or
+                        user_data.isGoodDepartement('ROLE_RP') or
+                        user_data.isGoodDepartement('ROLE_DDE') or
+                        user_data.isGoodDepartement('ROLE_ASS') or
+                        user_data.isGoodDepartement('ROLE_STA') or
+                        user_data.isGoodDepartement('ROLE_ABS') or
+                        user_data.isGoodDepartement('ROLE_NOTES') or
+                        user_data.isGoodDepartement('ROLE_PRJ') or
+                        user_data.isGoodDepartement('ROLE_EDT') %}
+                        <li class="menu-item" id="menu-administration">
+                            <a class="menu-link" href="{{ path('administration_index') }}">
+                                <i class="{{ iconAdmin }} fa-2x"><span class="sr-only">Administration</span></i>
+                                <span class="title">{{ 'menu.administration'|trans }}</span>
+                            </a>
+                        </li>
+                    {% endif %}
+
+
+                </ul>
+            </div>
+        </nav>
+    </nav>
     <!-- END Topbar -->
 
     <!-- Main container -->
@@ -298,6 +387,13 @@
     >
         <header class="header">
             <div class="header-info">
+                <div class="header-breadcrumbs">
+                    {% block breadcrumbs %}
+                        <!-- breadcrumb -->
+                        {{ breandcrumbs_render() }}
+                        <!-- END breadcrumb -->
+                    {% endblock %}
+                </div>
                 <div class="left">
                     <h1 class="header-title" id="header-title">
                         {% block header %}
@@ -312,13 +408,7 @@
                         {% endblock %}
                     </div>
                 </div>
-                <div class="header-breadcrumbs">
-                    {% block breadcrumbs %}
-                        <!-- breadcrumb -->
-                        {{ breandcrumbs_render() }}
-                        <!-- END breadcrumb -->
-                    {% endblock %}
-                </div>
+
             </div>
 
             {% block headeractions %}
@@ -345,40 +435,40 @@
             <!-- fin du bouton fab -->
         </div><!--/.main-content -->
 
-    {% block footer %}
-        <!-- Footer -->
-        <footer class="site-footer">
-            <div class="row">
-                <div class="col-md-6">
-                    <p class="text-md-left">Copyright © 2018-{{ 'now'|date('Y') }}
-                        <a href="https://www.davidannebicque.fr" target="_blank">@DavidAnnebicque</a>. All rights
-                        reserved. | Version {{ version.version }}</p>
-                </div>
+        {% block footer %}
+            <!-- Footer -->
+            <footer class="site-footer">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="text-md-left">Copyright © 2018-{{ 'now'|date('Y') }}
+                            <a href="https://www.davidannebicque.fr" target="_blank">@DavidAnnebicque</a>. All rights
+                            reserved. | Version {{ version.version }}</p>
+                    </div>
 
-                <div class="col-md-6">
-                    <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center justify-content-md-end">
-                        <li class="nav-item">
-                            <a class="nav-link" href="https://documentation.iutranet.fr" target="_blank">
-                                {{ 'menu.documentation'|trans }}
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" target="_blank"
-                               href="{{ path('rgpd_index') }}">{{ 'menu.rgpd'|trans }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" target="_blank"
-                               href="{{ path('mentions_about') }}">{{ 'menu.about'|trans }}</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" target="_blank"
-                               href="{{ path('mentions_index') }}">{{ 'menu.mentions_legales'|trans }}</a>
-                        </li>
-                    </ul>
+                    <div class="col-md-6">
+                        <ul class="nav nav-primary nav-dotted nav-dot-separated justify-content-center justify-content-md-end">
+                            <li class="nav-item">
+                                <a class="nav-link" href="https://documentation.iutranet.fr" target="_blank">
+                                    {{ 'menu.documentation'|trans }}
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" target="_blank"
+                                   href="{{ path('rgpd_index') }}">{{ 'menu.rgpd'|trans }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" target="_blank"
+                                   href="{{ path('mentions_about') }}">{{ 'menu.about'|trans }}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" target="_blank"
+                                   href="{{ path('mentions_index') }}">{{ 'menu.mentions_legales'|trans }}</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
-            </div>
-        </footer><!-- END Footer -->
-    {% endblock %}
+            </footer><!-- END Footer -->
+        {% endblock %}
     </main>
     <!-- END Main container -->
 

@@ -1,3 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'app.personnel.plan_cours.heading'|trans }}
+{% endblock %}
+
+{% block content %}
 <div class="card">
     <h4 class="card-title"><strong>Plan de cours</strong></h4>
     <div class="card-body">
@@ -49,3 +56,4 @@
         </table>
     </div>
 </div>
+{% endblock %}

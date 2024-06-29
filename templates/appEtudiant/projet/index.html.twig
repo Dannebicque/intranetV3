@@ -1,3 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block header %}
+    {{ 'projets.heading'|trans }}
+{% endblock %}
+
+{% block content %}
 <div class="card">
     <h4 class="card-title">Vos périodes de projet</h4>
     <div class="card-body">
@@ -88,4 +95,4 @@
         {% endif %}
     </div>
 </div>
-
+{% endblock %}

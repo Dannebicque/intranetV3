@@ -1,23 +1,31 @@
-<div class="row" {{ stimulus_controller('application--messagerie',{
-    urlNouveauMessage:path('messagerie_nouveau'),
-    urlTypeDestinataire:path('messagerie_nouveau_type_destinataire'),
-    urlFiltreMessage:path('messagerie_filtre_messages')
-}) }}>
+{% extends 'base.html.twig' %}
 
-    {% if is_granted('ROLE_PERMANENT') %}
-        <div class="col-md-2">
-            {{ include('messagerie/_sidebar.html.twig') }}
-        </div>
+{% block header %}
+    {{ 'messagerie.heading'|trans }}
+{% endblock %}
 
-        <div class="col-md-10"
-                {{ stimulus_target('application--messagerie', 'content') }}
-        >
-        </div>
-    {% else %}
+{% block content %}
+    <div class="row" {{ stimulus_controller('application--messagerie',{
+        urlNouveauMessage:path('messagerie_nouveau'),
+        urlTypeDestinataire:path('messagerie_nouveau_type_destinataire'),
+        urlFiltreMessage:path('messagerie_filtre_messages')
+    }) }}>
 
-        <div class="col-md-12"
-                {{ stimulus_target('application--messagerie', 'content') }}
-        >
-        </div>
-    {% endif %}
-</div>
+        {% if is_granted('ROLE_PERMANENT') %}
+            <div class="col-md-2">
+                {{ include('messagerie/_sidebar.html.twig') }}
+            </div>
+
+            <div class="col-md-10"
+                    {{ stimulus_target('application--messagerie', 'content') }}
+            >
+            </div>
+        {% else %}
+
+            <div class="col-md-12"
+                    {{ stimulus_target('application--messagerie', 'content') }}
+            >
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
