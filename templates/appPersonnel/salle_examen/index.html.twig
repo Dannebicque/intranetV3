@@ -1,12 +1,11 @@
 {% extends 'base.html.twig' %}
 
 {% block header %}
-    {{ 'menu.salle_examen'|trans }}
+    Edition d'une feuille de surveillance
 {% endblock %}
 
 {% block content %}
     <div class="card">
-        <h4 class="card-title"><strong>Edition</strong> des feuilles de surveillance</h4>
         <div class="card-body">
             {% if salles|length > 0 %}
                 <form class="form-horizontal form-validate" method="post"

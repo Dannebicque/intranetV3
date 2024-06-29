@@ -33,6 +33,9 @@ class SalleExamenController extends BaseController
     #[Route(path: '/', name: 'application_personnel_salle_examen_index')]
     public function index(SemestreRepository $semestreRepository, SalleExamenRepository $salleExamenRepository, PersonnelRepository $personnelRepository): Response
     {
+        $this->breadcrumbHelper->addItem('Applications', 'application_index');
+        $this->breadcrumbHelper->addLastItem('Salles d\'examens');
+
         return $this->render('appPersonnel/salle_examen/index.html.twig', [
             'semestres' => $semestreRepository->findByDepartementActif($this->getDepartement()),
             'salles' => $salleExamenRepository->findByDepartement($this->getDepartement()),

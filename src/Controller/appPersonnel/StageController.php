@@ -31,6 +31,9 @@ class StageController extends BaseController
     #[Route(path: '/stage/', name: 'application_personnel_stage_index')]
     public function index(StageEtudiantRepository $stageEtudiantRepository, AlternanceRepository $alternanceRepository): Response
     {
+        $this->breadcrumbHelper->addItem('Applications', 'application_index');
+        $this->breadcrumbHelper->addLastItem('Stages et Alternances');
+
         if (null !== $this->getUser()) {
             return $this->render('appPersonnel/stage/index.html.twig', [
                 'stagesEnCours' => $stageEtudiantRepository->findByPersonnelAnnee($this->getUser(),

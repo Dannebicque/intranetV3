@@ -1,84 +1,87 @@
 {% extends 'base.html.twig' %}
-{% deprecated('plus utilisé avec nouveau template') %}
+
 {% block header %}
     {{ 'applications.heading'|trans }}
 {% endblock %}
 
-{% block headeractions %}
-    {{ include('application/menu.html.twig') }}
-{% endblock %}
-
 {% block content %}
-    {% if is_granted('ROLE_PERMANENT') %}
-        {% if onglet == 'messagerie' %}
-            {{ render(controller(
-                'App\\Controller\\MessagerieController::index', {param:param}
-            )) }}
-        {% elseif onglet == 'previsionnel' %}
-            {{ render(controller(
-                'App\\Controller\\PrevisionnelController::index'
-            )) }}
-        {% elseif onglet == 'stage' %}
-            {{ render(controller(
-                'App\\Controller\\appPersonnel\\StageController::index'
-            )) }}
-        {% elseif onglet == 'projet' %}
-            {{ render(controller(
-                'App\\Controller\\appPersonnel\\ProjetController::index'
-            )) }}
-        {% elseif onglet == 'salle_examen' %}
-            {{ render(controller(
-                'App\\Controller\\appPersonnel\\SalleExamenController::index'
-            )) }}
-        {% elseif onglet == 'plan_cours' %}
-            {{ render(controller(
-                'App\\Controller\\plan_cours\\personnel\\PlanCoursController::index'
-            )) }}
-        {% endif %}
-    {% else %}
-        {% if onglet == 'rattrapage' %}
-            {{ render(controller(
-                'App\\Controller\\appEtudiant\\RattrapageController::index'
-            )) }}
-        {% elseif user_data.user.annee.optAlternance == true and  onglet == 'alternance' %}
-            {{ render(controller(
-                'App\\Controller\\appEtudiant\\AlternanceController::index'
-            )) }}
-        {% elseif user_data.user.diplome.optCertifieQualite == true and  onglet == 'qualite' %}
-            {{ render(controller(
-                'App\\Controller\\appEtudiant\\QualiteController::index'
-            )) }}
-        {% elseif onglet == 'stage' %}
-            {{ render(controller(
-                'App\\Controller\\appEtudiant\\StageController::index'
-            )) }}
-        {% elseif onglet == 'projet' %}
-            {{ render(controller(
-                'App\\Controller\\appEtudiant\\ProjetController::index'
-            )) }}
-        {% elseif onglet == 'justificatif' %}
-            {{ render(controller(
-                'App\\Controller\\appEtudiant\\AbsenceJustificatifController::index'
-            )) }}
-        {% elseif onglet == 'emprunt' %}
-            {{ render(controller(
-                'App\\Controller\\appEtudiant\\EmpruntController::index'
-            )) }}
+    <div class="row">
+        {% if is_granted('ROLE_PERMANENT') %}
+            <twig:BlocApplication
+                    link="{{ path('messagerie_index') }}"
+                    title="{{ 'menu.messagerie'|trans }}"
+                    icon="fa-envelope"
+            />
+            <twig:BlocApplication
+                    link="{{ path('previsionnel_index') }}"
+                    title="{{ 'menu.previsionnel'|trans }}"
+                    icon="fa-calendar"
+            />
+
+            {% if user_data.departement.optStage == true %}
+                <twig:BlocApplication
+                        link="{{ path('application_personnel_stage_index') }}"
+                        title="{{ 'menu.stages'|trans }}"
+                        icon="fa-briefcase"
+                />
+
+            {% endif %}
+            {# todo: décomposer en deux entrées #}
+
+            <twig:BlocApplication
+                    link="{{ path('application_personnel_salle_examen_index') }}"
+                    title="{{ 'menu.salle_examen'|trans }}"
+                    icon="fa-people-roof"
+            />
+
+            <twig:BlocApplication
+                    link="{{ path('application_personnel_plan_cours_index') }}"
+                    title="{{ 'menu.plan_cours'|trans }}"
+                    icon="fa-books"
+            />
         {% else %}
-            {{ render(controller(
-                'App\\Controller\\MessagerieController::index'
-            )) }}
+            <twig:BlocApplication
+                    link="{{ path('messagerie_index') }}"
+                    title="{{ 'menu.messagerie'|trans }}"
+                    icon="fa-envelope"
+            />
+
+            <twig:BlocApplication
+                    link="{{ path('app_etudiant_absence_justificatif_index') }}"
+                    title="{{ 'menu.justificatif'|trans }}"
+                    icon="fa-envelope"
+            />
+
+
+            {% if  user_data.user.annee.optAlternance == true %}
+                <twig:BlocApplication
+                        link="{{ path('application_etudiant_alternance_index') }}"
+                        title="{{ 'menu.alternance'|trans }}"
+                        icon="fa-calendar-alt"
+                />
+            {% endif %}
+
+            {% if user_data.departement.optStage == true %}
+                <twig:BlocApplication
+                        link="{{ path('application_etudiant_stage_index') }}"
+                        title="{{ 'menu.stages'|trans }}"
+                        icon="fa-calendar-check"
+                />
+            {% endif %}
+
+            <twig:BlocApplication
+                    link="{{ path('application_etudiant_projet_index') }}"
+                    title="{{ 'menu.projet'|trans }}"
+                    icon="fa-calendar-check"
+            />
+
+            {% if user_data.user.semestre.optRattrapage == true %}
+                <twig:BlocApplication
+                        link="{{ path('application_etudiant_rattrapage_index') }}"
+                        title="{{ 'menu.rattrapage'|trans }}"
+                        icon="fa-calendar-check"
+                />
+            {% endif %}
         {% endif %}
-
-    {% endif %}
-{% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    {{ encore_entry_link_tags('applications') }}
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('applications') }}
+    </div>
 {% endblock %}

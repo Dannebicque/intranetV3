@@ -43,6 +43,9 @@ class MessagerieController extends BaseController
     #[Route(path: '/{param}', name: 'messagerie_index', requirements: ['param' => '\d+'])]
     public function index(string $param = ''): Response
     {
+        $this->breadcrumbHelper->addItem('Applications', 'application_index');
+        $this->breadcrumbHelper->addLastItem('Messagerie');
+
         return $this->render('messagerie/index.html.twig', [
             'filtre' => 'all',
             'param' => $param,

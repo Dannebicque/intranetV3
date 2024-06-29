@@ -6,25 +6,27 @@
 
 {% block content %}
     <div class="card">
-        <h4 class="card-title">{{ 'application.vos.stages.et.alternances.heading'|trans }}</h4>
-        <div class="card-body">
+        <div class="card-body p-0">
             <ul class="nav nav-tabs nav-tabs-danger nav-justified" role="tablist">
                 <li class="nav-item">
-                    <a class="nav-link active" data-bs-toggle="tab" href="#onglet_stage_en_cours" role="tab">Stagiaires
-                        à
-                        suivre</a>
+                    <a class="nav-link active" data-bs-toggle="tab" href="#onglet_stage_en_cours" role="tab">
+                        Stagiaires à suivre <span class="badge bg-primary">{{ stagesEnCours|length }}</span>
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#onglet_alternance_en_cours" role="tab">Alternants à
-                        suivre</a>
+                    <a class="nav-link" data-bs-toggle="tab" href="#onglet_alternance_en_cours" role="tab">
+                        Alternants à suivre <span class="badge bg-primary">{{ alternancesEnCours|length }}</span>
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#onglet_stage_historique" role="tab">Anciens
-                        stages</a>
+                    <a class="nav-link" data-bs-toggle="tab" href="#onglet_stage_historique" role="tab">
+                        Anciens stages <span class="badge bg-primary">{{ stagesHistorique|length }}</span>
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-bs-toggle="tab" href="#onglet_alternance_historique" role="tab">Anciennes
-                        alternances</a>
+                    <a class="nav-link" data-bs-toggle="tab" href="#onglet_alternance_historique" role="tab">
+                        Anciennes alternances <span class="badge bg-primary">{{ alternancesHistorique|length }}</span>
+                    </a>
                 </li>
             </ul>
             <div class="card-body tab-content">

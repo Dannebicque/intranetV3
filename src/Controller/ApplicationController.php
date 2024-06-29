@@ -12,20 +12,15 @@ namespace App\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
-/**
- * Class ApplicationController.
- */
 #[Route(path: '/application')]
 class ApplicationController extends BaseController
 {
-    #[Route(path: '/{onglet}/{param}', name: 'application_index', requirements: ['param' => '\d+'])]
-    public function index(string $onglet = 'messagerie', string $param = ''): Response
+    #[Route(path: '/', name: 'application_index')]
+    public function index(): Response
     {
-        $this->breadcrumbHelper->addItem('application.breadcrumb.index', 'application_index', ['onglet' => $onglet, 'param' => $param]);
+        $this->breadcrumbHelper->addItem('application.breadcrumb.index', 'application_index');
 
         return $this->render('application/index.html.twig', [
-            'onglet' => $onglet,
-            'param' => $param,
         ]);
     }
 }

@@ -1,59 +1,61 @@
 {% extends 'base.html.twig' %}
 
 {% block header %}
-    {{ 'app.personnel.plan_cours.heading'|trans }}
+    Plan de cours
 {% endblock %}
 
 {% block content %}
-<div class="card">
-    <h4 class="card-title"><strong>Plan de cours</strong></h4>
-    <div class="card-body">
-        <table class="table">
-            <thead>
-            <tr>
-                <th>Matière/SAE/Ress.</th>
-                <th>Type</th>
-                <th>Etat</th>
-                <th>Créé le</th>
-                <th>Mise à jour</th>
-                <th>actions</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for previsionnel in previsionnels %}
+    {#    <header class="card-top-header"> #}
+    {#        <h4 class="card-top-title">Plan de cours</h4> #}
+    {#    </header> #}
+    <div class="card">
+        <div class="card-body p-0">
+            <table class="table">
+                <thead>
                 <tr>
-                    <td>{{ previsionnel.display }}</td>
-                    <td>{{ previsionnel.type_matiere|badgeTypeMatiere }}</td>
+                    <th>Matière/SAE/Ress.</th>
+                    <th>Type</th>
+                    <th>Etat</th>
+                    <th>Créé le</th>
+                    <th>Mise à jour</th>
+                    <th>actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for previsionnel in previsionnels %}
+                    <tr>
+                        <td>{{ previsionnel.display }}</td>
+                        <td>{{ previsionnel.type_matiere|badgeTypeMatiere }}</td>
 
-                    {% if plansCours[previsionnel.id] is defined %}
-                        <td>
-                            <span class="badge bg-{{ plansCours[previsionnel.id].etatPlanCours.badge }}">{{ plansCours[previsionnel.id].etatPlanCours.value|trans }}</span>
-                        </td>
-                        <td>{{ plansCours[previsionnel.id].created ? plansCours[previsionnel.id].created|format_datetime('short',
-                                'short') : '-' }}</td>
-                        <td>{{ plansCours[previsionnel.id].updated ? plansCours[previsionnel.id].updated|format_datetime('short',
-                                'short') : '-' }}</td>
-                        <td>
-                            <a href="{{ path('app_plan_cours_apc_show', {'previsionnel': previsionnel.id}) }}"
-                               class="btn btn-info btn-outline"><i class="{{ iconShow }}"></i></a>
-                            <a href="{{ path('app_plan_cours_apc_new', {'previsionnel': previsionnel.id}) }}"
-                               class="btn btn-warning btn-outline"><i class="{{ iconEdit }}"></i></a>
-                        </td>
-                    {% else %}
-                        <td colspan="3">-</td>
-                        <td>
-                            <a href="{{ path('app_plan_cours_apc_new', {'previsionnel': previsionnel.id}) }}"
-                               class="btn btn-success btn-outline"><i class="{{ iconAdd }}"></i></a>
-                        </td>
-                    {% endif %}
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="6">no records found</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+                        {% if plansCours[previsionnel.id] is defined %}
+                            <td>
+                                <span class="badge bg-{{ plansCours[previsionnel.id].etatPlanCours.badge }}">{{ plansCours[previsionnel.id].etatPlanCours.value|trans }}</span>
+                            </td>
+                            <td>{{ plansCours[previsionnel.id].created ? plansCours[previsionnel.id].created|format_datetime('short',
+                                    'short') : '-' }}</td>
+                            <td>{{ plansCours[previsionnel.id].updated ? plansCours[previsionnel.id].updated|format_datetime('short',
+                                    'short') : '-' }}</td>
+                            <td>
+                                <a href="{{ path('app_plan_cours_apc_show', {'previsionnel': previsionnel.id}) }}"
+                                   class="btn btn-info btn-outline"><i class="{{ iconShow }}"></i></a>
+                                <a href="{{ path('app_plan_cours_apc_new', {'previsionnel': previsionnel.id}) }}"
+                                   class="btn btn-warning btn-outline"><i class="{{ iconEdit }}"></i></a>
+                            </td>
+                        {% else %}
+                            <td colspan="3">-</td>
+                            <td>
+                                <a href="{{ path('app_plan_cours_apc_new', {'previsionnel': previsionnel.id}) }}"
+                                   class="btn btn-success btn-outline"><i class="{{ iconAdd }}"></i></a>
+                            </td>
+                        {% endif %}
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
 {% endblock %}

@@ -33,6 +33,9 @@ class PlanCoursController extends BaseController
         PrevisionnelManager $previsionnelManager,
         PlanCours $planCours
     ): Response {
+        $this->breadcrumbHelper->addItem('Applications', 'application_index');
+        $this->breadcrumbHelper->addLastItem('Plans de cours');
+
         $previsionnels = $previsionnelManager->getPrevisionnelEnseignantAnnee($this->getUser(),
             $this->getAnneeUniversitaire()?->getAnnee());
         $tPrevisionnel = [];
