@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block header %}
-    {{ 'liste.etudiants.semestre'|trans({'%libelle%':semestre.libelle})|raw }}
+    {{ 'liste.etudiants.semestre'|trans({'%libelle%':semestre.libelle})|raw }} ({{ semestre.etudiants|length }})
 {% endblock %}
 
 {% block headerright %}
@@ -10,23 +10,9 @@
     </div>
 {% endblock %}
 
-{% block headeractions %}
-    <div class="header-action">
-        <div class="buttons">
-            <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip"
-               data-bs-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="fas fa-arrow-left"></i></a>
-            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip"
-               data-bs-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
-        </div>
-    </div>
-{% endblock %}
-
 {% block content %}
 
     <div class="card">
-        <h4 class="card-title">
-            {{ 'liste.etudiants.semestre'|trans({'%libelle%':semestre.libelle})|raw }} ({{ semestre.etudiants|length }})
-        </h4>
         <div class="card-body">
             {{ table_render(table) }}
         </div>

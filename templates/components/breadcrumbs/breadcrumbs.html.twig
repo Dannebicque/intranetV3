@@ -4,7 +4,7 @@
         {% set lastItem = breadcrumbs|last %}
 
         {% for item in breadcrumbs|slice(0, lastIndex) %}
-            <li class="breadcrumb-item text-capitalize">
+            <li class="breadcrumb-item">
                 <a href="{{ item.url }}"
                    title="{% if item.translatable %}{{ item.label|trans(item.transParameters, item.transDomain) }}{% else %}{{ item.label }}{% endif %}">
                     {% if item.icone != '' %}
@@ -27,7 +27,7 @@
             </li>
         {% endfor %}
 
-        <li class="breadcrumb-item active text-capitalize" aria-current="page">
+        <li class="breadcrumb-item active" aria-current="page">
             {% if lastItem.icone != '' %}
             <i class="{{ lastItem.icone }}"></i>
             {% endif %}

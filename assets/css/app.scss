@@ -295,8 +295,8 @@ table {
 }
 
 thead {
-  background-color: var(--colorIUTComplementaire);
-  color: white;
+  background-color: var(--colorThead);
+  color: var(--colorIUTComplementaire);
 }
 
 th.th_titre {
@@ -993,4 +993,14 @@ fieldset {
 .document-categorie {
   margin-top: 10px;
   background-color: white;
+}
+
+.sidebar-messagerie {
+  background-color: white;
+  //margin-left: -30px;
+  //margin-top: -30px;
+  //margin-bottom: 30px;
+  height: 100%;
+  padding-left: 10px;
+  padding-right: 10px
 }

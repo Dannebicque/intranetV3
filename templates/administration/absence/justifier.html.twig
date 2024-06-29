@@ -10,24 +10,6 @@
     </div>
 {% endblock %}
 
-{% block headeractions %}
-    <div class="header-action">
-        <div class="buttons">
-            <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
-               class="btn btn-primary btn-float"
-               data-bs-toggle="tooltip"
-               data-bs-placement="bottom"
-               title="{{ 'atitle.retour_semestres'|trans }}"><i class="fas fa-arrow-left"></i><span
-                        class="sr-only">{{ 'atitle.retour_semestres'|trans }}</span></a>
-            <a href="{{ path('administration_index') }}"
-               class="btn btn-primary btn-float"
-               data-bs-toggle="tooltip"
-               data-bs-placement="bottom"
-               title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
-        </div>
-    </div>
-{% endblock %}
-
 {% block stimulus %}
     {{ stimulus_controller('adm--justifier-absences', {
         urlListeAbsences: path('administration_absences_liste_absence_etudiant'),
@@ -36,8 +18,10 @@
 {% endblock %}
 
 {% block content %}
+    <header class="card-top-header">
+        <h4 class="card-top-title">{{ 'selectionnez.un.etudiant'|trans }}</h4>
+    </header>
     <div class="card">
-        <h4 class="card-title">{{ 'selectionnez.un.etudiant'|trans }}</h4>
         <div class="card-body">
             <div class="form-group">
                 <label for="justifier_etudiant"
@@ -55,10 +39,14 @@
         </div>
     </div>
 
-    <div class="card" {{ stimulus_target('adm--justifier-absences', 'listeJustifie') }}>
-        <h4 class="card-title" id="titre_justifie">{{ 'selectionnez.un.etudiant'|trans }}</h4>
-        <div class="card-body">
-            <twig:Alert type="info">Choisir un étudiant</twig:Alert>
+    <div {{ stimulus_target('adm--justifier-absences', 'listeJustifie') }}>
+        <header class="card-top-header">
+            <h4 class="card-top-title">{{ 'selectionnez.un.etudiant'|trans }}</h4>
+        </header>
+        <div class="card">
+            <div class="card-body">
+                <twig:Alert type="info">Choisir un étudiant</twig:Alert>
+            </div>
         </div>
     </div>
 {% endblock %}

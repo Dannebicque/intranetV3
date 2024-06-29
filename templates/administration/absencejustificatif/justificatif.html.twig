@@ -6,31 +6,15 @@
 
 {% block headerright %}
     <div class="right gap-items-2">
+        <a href="{{ path('administration_absence_justificatif_new', {semestre: semestre.id}) }}"
+           class="btn btn-info btn-sm"
+           title="{{ 'atitle.creer_nouveau'|trans }}"
+           data-bs-toggle="tooltip" data-bs-placement="bottom"
+        >
+            <i class="fas fa-plus"></i>
+            <span class="sr-only">{{ 'atitle.creer_nouveau'|trans }}</span>
+        </a>
         {{ include('administration/_navSemestre.html.twig', {path_name: 'administration_absences_justificatif_semestre_liste'}) }}
-    </div>
-{% endblock %}
-
-{% block headeractions %}
-    <div class="header-action">
-        <div class="buttons">
-            <a href="{{ path('administration_absence_justificatif_new', {semestre: semestre.id}) }}"
-               class="btn btn-info btn-sm btn-float"
-               title="{{ 'atitle.creer_nouveau'|trans }}"
-               data-bs-toggle="tooltip" data-bs-placement="bottom"
-            >
-                <i class="fas fa-plus"></i>
-                <span class="sr-only">{{ 'atitle.creer_nouveau'|trans }}</span>
-            </a>
-            {# <a href="{{ path('administration_absence_justificatif_delete_all', {semestre: semestre.id}) }}" #}
-            {# class="btn btn-danger btn-sm btn-float supprimer" data-bs-toggle="tooltip" #}
-            {# data-bs-placement="bottom" title="Supprimer tous les justificatifs d'absence pour l'année {{ semestre #}
-            {# .annee.libelle }}"><i class="{{ iconDelete }}"></i></a> #}
-            <a href="{{ path('administration_semestre_index', {semestre:semestre.id}) }}"
-               class="btn btn-primary btn-float" data-bs-toggle="tooltip"
-               data-bs-placement="bottom" title="{{ 'atitle.retour_semestres'|trans }}"><i class="fas fa-arrow-left"></i></a>
-            <a href="{{ path('administration_index') }}" class="btn btn-primary btn-float" data-bs-toggle="tooltip"
-               data-bs-placement="bottom" title="{{ 'atitle.retour_administration'|trans }}"><i class="{{ iconAdmin }}"><span class="sr-only">Administration</span></i></a>
-        </div>
     </div>
 {% endblock %}
 

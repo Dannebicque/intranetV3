@@ -37,6 +37,9 @@ class AbsenceJustificatifController extends BaseController
         Semestre $semestre
     ): Response {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_ABS', $semestre);
+        $this->breadcrumbHelper->addAdministration();
+        $this->breadcrumbHelper->addItem('Semestre ' . $semestre->getOrdreLmd(), 'administration_semestre_index', ['semestre' => $semestre->getId()]);
+        $this->breadcrumbHelper->addLastItem('Justificatifs d\'absence');
 
         $table = $this->createTable(AbsenceJustificatifTableType::class, [
             'semestre' => $semestre,

@@ -1,18 +1,23 @@
-<div class="card">
-    <header class="card-header">
-        <h4 class="card-title">{{ 'bloc.absence.etu.heading'|trans }}</h4>
-        {% if is_granted('ROLE_ETUDIANT') %}
-            <div class="card-header-actions">
-                <a href="{{ path('app_etudiant_absence_justificatif_new') }}" class="btn btn-sm btn-primary"
-                   title="{{ 'absence_justificatif_deposer'|trans }}"
-                   data-bs-toggle="tooltip" data-bs-placement="bottom"
-                >
-                    <i class="fas fa-plus"></i> Déposer un justificatif
-                </a>
-            </div>
+<header class="card-top-header">
+    <h4 class="card-top-title">
+        {% if page is defined and page == 'admin' %}
+            Liste des absences de {{ etudiant.displayPr }}
+        {% else %}
+            {{ 'bloc.absence.etu.heading'|trans }}
         {% endif %}
-    </header>
-
+    </h4>
+    {% if is_granted('ROLE_ETUDIANT') %}
+        <div class="card-header-actions">
+            <a href="{{ path('app_etudiant_absence_justificatif_new') }}" class="btn btn-sm btn-primary"
+               title="{{ 'absence_justificatif_deposer'|trans }}"
+               data-bs-toggle="tooltip" data-bs-placement="bottom"
+            >
+                <i class="fas fa-plus"></i> Déposer un justificatif
+            </a>
+        </div>
+    {% endif %}
+</header>
+<div class="card">
     <div class="card-body">
         <table class="table table-border" id="tableAbsence">
             <thead>
@@ -31,7 +36,8 @@
             </thead>
             <tbody>
             {% for absence in absences %}
-                <tr class="{% if absence.justifie %}bg-pale-success{% else %}bg-pale-warning{% endif %}" id="ligne_{{ absence.uuidString }}">
+                <tr class="{% if absence.justifie %}bg-pale-success{% else %}bg-pale-warning{% endif %}"
+                    id="ligne_{{ absence.uuidString }}">
                     <td>{{ absence.dateHeure ? absence.dateHeure|format_datetime('long', 'short') : '' }}</td>
                     <td>
                         <abbr title="{{ matieres[absence.typeIdMatiere] is defined ? matieres[absence.typeIdMatiere].display
@@ -44,7 +50,7 @@
                         <button
                                 {{ stimulus_controller('modal', {
                                     modalTitle: 'detail.absence'|trans,
-                                    modalUrl:  path('app_etudiant_absence_detail', {'uuid': absence.uuidString}) })}}
+                                    modalUrl:  path('app_etudiant_absence_detail', {'uuid': absence.uuidString}) }) }}
                                 data-action="click->modal#openModal"
                                 data-bs-toggle="tooltip" data-bs-placement="bottom"
                                 class="btn btn-info btn-outline btn-square btn-xs"
@@ -66,7 +72,8 @@
                             <a href="{{ path('application_personnel_absence_delete', {uuid: absence.uuidString}) }}"
                                class="btn btn-danger btn-outline btn-square supprimer"
                                data-csrf="{{ csrf_token('delete' ~ absence.uuidString) }}"><i class="{{ iconDelete }}"
-                                                                                              data-bs-toggle="tooltip" data-bs-placement="bottom"
+                                                                                              data-bs-toggle="tooltip"
+                                                                                              data-bs-placement="bottom"
 
                                                                                               title="{{ 'supprimer'|trans }}"></i></a>
                         </td>

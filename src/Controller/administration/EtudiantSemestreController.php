@@ -34,6 +34,9 @@ class EtudiantSemestreController extends BaseController
     public function parcoursSemestre(EtudiantRepository $etudiantRepository, Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
+        $this->breadcrumbHelper->addAdministration();
+        $this->breadcrumbHelper->addItem('Semestre ' . $semestre->getOrdreLmd(), 'administration_semestre_index', ['semestre' => $semestre->getId()]);
+        $this->breadcrumbHelper->addLastItem('Parcours des étudiants');
         $etudiants = $etudiantRepository->findBySemestre($semestre);
 
         return $this->render('administration/etudiant/parcours.html.twig', [
@@ -95,6 +98,10 @@ class EtudiantSemestreController extends BaseController
     public function semestre(Request $request, Semestre $semestre): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $semestre);
+        $this->breadcrumbHelper->addAdministration();
+        $this->breadcrumbHelper->addItem('Semestre ' . $semestre->getOrdreLmd(), 'administration_semestre_index', ['semestre' => $semestre->getId()]);
+        $this->breadcrumbHelper->addLastItem('Liste des étudiants');
+
         $table = $this->createTable(EtudiantSemestreTableType::class, [
             'semestre' => $semestre,
             'departement' => $this->getDepartement(),
