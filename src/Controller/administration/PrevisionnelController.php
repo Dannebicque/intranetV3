@@ -55,6 +55,19 @@ class PrevisionnelController extends BaseController
             return $dataMap[$type];
         }
 
+        if ($type === 'actions') {
+            $form = $this->createForm(
+                ImportPrevisionnelType::class,
+                null,
+                [
+                    'departement' => $this->getDepartement(),
+                    'action' => $this->generateUrl('administration_previsionnel_import'),
+                ]
+            );
+
+            return ['form' => $form->createView()];
+        }
+
         return [];
     }
 
@@ -400,7 +413,7 @@ class PrevisionnelController extends BaseController
     /**
      * @throws Exception
      */
-    #[Route('/import', name: 'administration_previsionnel_import', methods: ['GET', 'POST'])]
+    #[Route('/import', name: 'administration_previsionnel_import', methods: ['POST'])]
     public function import(PrevisionnelImport $myPrevisionnel, Request $request): Response
     {
         $this->denyAccessUnlessGranted('MINIMAL_ROLE_SCOL', $this->getDepartement());
@@ -410,22 +423,17 @@ class PrevisionnelController extends BaseController
             null,
             [
                 'departement' => $this->getDepartement(),
-                'attr' => [
-                    'data-provide' => 'validation',
-                ],
             ]
         );
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $myPrevisionnel->importCsv($form->getData());
+            $myPrevisionnel->import($form->getData());
             $this->addFlashBag(Constantes::FLASHBAG_SUCCESS, 'previsionnel.import.success.flash');
         }
 
-        return $this->render('administration/previsionnel/import.html.twig', [
-            'form' => $form,
-        ]);
+        return $this->redirect('administration_previsionnel_index'); //todo: une synthèse ?
     }
 
     #[Route('/dupliquer-annee-complete', name: 'administration_previsionnel_duplicate_annee', methods: ['POST'])]

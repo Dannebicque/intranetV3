@@ -59,6 +59,7 @@ class DiplomeRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('d')
             ->where('d.departement = :departement')
+            ->andWhere('d.actif = 1')
             ->setParameter('departement', $departement)
             ->orderBy('d.libelle');
     }

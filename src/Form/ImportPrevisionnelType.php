@@ -10,6 +10,7 @@
 namespace App\Form;
 
 use App\Entity\Departement;
+use App\Form\Type\YesNoType;
 use App\Entity\Diplome;
 use App\Repository\DiplomeRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -30,6 +31,11 @@ class ImportPrevisionnelType extends AbstractType
     {
         $this->departement = $options['departement'];
 
+        $tab = [];
+        foreach (range((int)date('Y') - 2, (int)date('Y') + 4) as $annee) {
+            $tab[$annee . ' - ' . $annee + 1] = $annee;
+        }
+
         $builder
             ->add(
                 'diplome',
@@ -37,20 +43,29 @@ class ImportPrevisionnelType extends AbstractType
                 [
                     'class' => Diplome::class,
                     'choice_label' => 'display',
-                    'query_builder' => fn (DiplomeRepository $diplomeRepository) => $diplomeRepository->findByDepartementBuilder($this->departement),
-                    'label' => 'diplome',
+                    'query_builder' => fn(DiplomeRepository $diplomeRepository) => $diplomeRepository->findByDepartementBuilder($this->departement),
+                    'label' => 'label.diplome',
+                    'autocomplete' => 'on',
                 ]
             )
             ->add('annee', ChoiceType::class, [
-                'label' => 'opt_annee_previsionnel',
-                'choices' => array_combine(
-                    range((int) date('Y') - 2, (int) date('Y') + 4),
-                    range((int) date('Y') - 2, (int) date('Y') + 4)
-                ),
+                'label' => 'label.opt_annee_previsionnel',
+                'choices' => $tab,
                 'data' => date('Y'),
             ])
+            ->add('typeFichier', ChoiceType::class, [
+                'label' => 'label.type_fichier',
+                'choices' => [
+                    'OMEGA (csv)' => 'omega_csv',
+                    'OMEGA (xlsx)' => 'omega_xlsx',
+                    'GMP (xlsx)' => 'gmp_xlsx',
+                ],
+            ])
+            ->add('supprimerPrevisionnel', YesNoType::class, [
+                'label' => 'label.supprimer_previsionnel',
+            ])
             ->add('fichier', FileType::class, [
-                'label' => 'fichier',
+                'label' => 'label.fichier',
             ]);
     }
 
