@@ -1,24 +1,29 @@
-// Copyright (c) 2022. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/settings.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 07/07/2022 13:30
+// @lastUpdate 29/06/2024 21:41
 import $ from 'jquery'
+import Routing from 'fos-router'
 import { addCallout } from '../util'
 import { post } from '../fetch'
-import Routing from 'fos-router'
 
-$(document).on('change', '.departementParDefaut', function () {
-  $.ajax({
-    url: Routing.generate('user_change_departement_defaut', { departement: $(this).val() }),
-    method: 'POST',
-    success() {
-      addCallout('Mofification enregistrée !', 'success')
-    },
-    error() {
-      addCallout('Erreur lors de la sauvegarde de la modification !', 'danger')
-    },
-  })
+document.addEventListener('change', (event) => {
+  if (event.target.classList.contains('departementParDefaut')) {
+    fetch(Routing.generate('user_change_departement_defaut', { departement: event.target.value }), {
+      method: 'POST',
+    })
+      .then((response) => {
+        if (response.ok) {
+          addCallout('Modification enregistrée !', 'success')
+        } else {
+          addCallout('Erreur lors de la sauvegarde de la modification !', 'danger')
+        }
+      })
+      .catch((error) => {
+        addCallout(error.message, 'danger')
+      })
+  }
 })
 
 document.querySelectorAll('.changeConfigurationPersonne').forEach((elem) => {

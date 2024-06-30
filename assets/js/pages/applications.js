@@ -1,20 +1,13 @@
-// Copyright (c) 2023. | David Annebicque | IUT de Troyes  - All Rights Reserved
+// Copyright (c) 2024. | David Annebicque | IUT de Troyes  - All Rights Reserved
 // @file /Users/davidannebicque/Sites/intranetV3/assets/js/pages/applications.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 31/07/2023 16:19
+// @lastUpdate 29/06/2024 08:20
 import $ from 'jquery'
 import Routing from 'fos-router'
 import { addCallout } from '../util'
 
-$(document).on('click', '.changeapplication', function (e) {
-  e.preventDefault()
-  e.stopPropagation()
-
-  $('.changeapplication').removeClass('active show')
-  $(this).addClass('active show')
-  $('#mainContent').empty().load($(this).attr('href'))
-})
+// todo: deprecated : Encore des morceaux utilisés ?
 
 $(document).on('change', '#selectsemestre', function () {
   // matieres
