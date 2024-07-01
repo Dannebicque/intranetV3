@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.8](https://github.com/Dannebicque/intranetV3/compare/v3.19.7...v3.19.8) (2024-07-01)
+
+
+### Features
+
+* Import d'un fichier Excel type GMP ([f6688be](https://github.com/Dannebicque/intranetV3/commit/f6688bedaeefeed133d37a0fc0279379c3bc6914))
+
+
+### Bug Fixes
+
+* deprecation yaml doctrine ([d879050](https://github.com/Dannebicque/intranetV3/commit/d8790501d1f7b3f0c72af46754fc236ab8f9dc11))
+* Diplôme actif/inactifs pour scolarité export ([28410ca](https://github.com/Dannebicque/intranetV3/commit/28410ca012147ee4ec350d6202b8a5c92316bd17))
+* Export des EDT en pdf ([9254a31](https://github.com/Dannebicque/intranetV3/commit/9254a31824b876d525a1d01abd898fb240129a46))
+* Export des EDT en pdf ([a2fd260](https://github.com/Dannebicque/intranetV3/commit/a2fd2603ceeb3a0be26251e3677cd855654442ec))
+
 ### [3.19.7](https://github.com/Dannebicque/intranetV3/compare/v3.19.6...v3.19.7) (2024-06-28)
 
 
