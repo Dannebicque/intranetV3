@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/TrombinoscopeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 01/06/2024 20:01
+ * @lastUpdate 03/07/2024 08:52
  */
 
 namespace App\Controller;
@@ -113,6 +113,7 @@ class TrombinoscopeController extends BaseController
     #[IsGranted('ROLE_PERMANENT')]
     public function trombiEtudiantExportImage(PdfManager $myPDF, TypeGroupe $typeGroupe): Response
     {
+        //todo: à revoir, getSemestre n'existe plus en V4
         return $myPDF->pdf()::generePdf('pdf/trombinoscope.html.twig',
             [
                 'typeGroupe' => $typeGroupe,
