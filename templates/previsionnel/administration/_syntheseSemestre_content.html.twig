@@ -1,0 +1,72 @@
+<table class="table table-striped">
+    <thead>
+    <tr>
+        <th rowspan="2">Code</th>
+        <th rowspan="2">MatièreRessource/SAE</th>
+        <th rowspan="2">Type</th>
+        <th rowspan="2">Nb intervenants</th>
+        <th colspan="3" class="previcm">CM</th>
+        <th colspan="3" class="previtd">TD</th>
+        <th colspan="3" class="previtp">TP</th>
+        <th colspan="3">Total</th>
+    </tr>
+    <tr>
+
+        <th class="previcm">Maq.</th>
+        <th class="previcm">Prévi.</th>
+        <th class="previcm">Diff.</th>
+        <th class="previtd">Maq.</th>
+        <th class="previtd">Prévi.</th>
+        <th class="previtd">Diff.</th>
+        <th class="previtp">Maq.</th>
+        <th class="previtp">Prévi.</th>
+        <th class="previtp">Diff.</th>
+        <th>Maq.</th>
+        <th>Prévi.</th>
+        <th>Diff.</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    {% for previsionnel in syntheseSemestre.matieres %}
+        <tr>
+            <th>{{ previsionnel.display_code }}</th>
+            <th>{{ previsionnel.display }}</th>
+            <td>{{ previsionnel.type }}</td>
+            <td></td>
+            {#            <td>{{ previsionnel.nbIntervenants }}</td> #}
+            <td class="previcm">{{ previsionnel.totalMaquetteCm|nombreHeure }}</td>
+            <td class="previcm">{{ previsionnel.totalCM|nombreHeure }}</td>
+            <td class="previcm">{{ previsionnel.diffCm|badgeDiffence }}</td>
+            <td class="previtd">{{ previsionnel.totalMaquetteTd|nombreHeure }}</td>
+            <td class="previtd">{{ previsionnel.totalTD|nombreHeure }}</td>
+            <td class="previtd">{{ previsionnel.diffTd|badgeDiffence }}</td>
+            <td class="previtp">{{ previsionnel.totalMaquetteTp|nombreHeure }}</td>
+            <td class="previtp">{{ previsionnel.totalTP|nombreHeure }}</td>
+            <td class="previtp">{{ previsionnel.diffTp|badgeDiffence }}</td>
+            <td></td>
+            <td></td>
+            <td></td>
+
+        </tr>
+    {% endfor %}
+
+    <tr>
+        <td colspan="8" class="bg-complementary">
+            <div class="d-grid ">
+                <span class="btn d-block text-white">
+                    Synthèse
+                </span>
+            </div>
+
+        </td>
+    </tr>
+    <tr>
+        <th colspan="3">Total</th>
+        <th class="previcm">{{ syntheseSemestre.totalCM|nombreHeure }}</th>
+        <th class="previtd">{{ syntheseSemestre.totalTD|nombreHeure }}</th>
+        <th class="previtp">{{ syntheseSemestre.totalTP|nombreHeure }}</th>
+        <th>{{ syntheseSemestre.total|nombreHeure }}</th>
+    </tr>
+    </tbody>
+</table>

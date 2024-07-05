@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 25/04/2024 06:29
+ * @lastUpdate 05/07/2024 11:32
  */
 
 namespace App\Controller\administration;
@@ -15,6 +15,7 @@ use App\Classes\Previsionnel\PrevisionnelManager;
 use App\Controller\BaseController;
 use App\DTO\HrsCollection;
 use App\DTO\PrevisionnelSynthesePersonnels;
+use App\DTO\PrevisionnelSyntheseSemestre;
 use App\Entity\Constantes;
 use App\Entity\Previsionnel;
 use App\Enums\TypeHrsEnum;
@@ -48,7 +49,8 @@ class PrevisionnelController extends BaseController
         $dataMap = [
             'matiere' => ['matieres' => $typeMatiereManager->findByDepartement($this->getDepartement())],
             'enseignant' => ['personnels' => $personnelRepository->findByDepartement($this->getDepartement())],
-            'semestre' => ['semestres' => $this->getDataUserSession()->getSemestres()]
+            'semestre' => ['semestres' => $this->getDataUserSession()->getSemestres()],
+            'synthese-semestre' => ['semestres' => $this->getDataUserSession()->getSemestres()]
         ];
 
         if (array_key_exists($type, $dataMap)) {
@@ -84,6 +86,7 @@ class PrevisionnelController extends BaseController
             'enseignant' => 'previsionnel/administration/_enseignant.html.twig',
             'semestre' => 'previsionnel/administration/_semestre.html.twig',
             'synthese-personnel' => 'previsionnel/administration/_synthesePersonnel.html.twig',
+            'synthese-semestre' => 'previsionnel/administration/_syntheseSemestre.html.twig',
             'synthese-hrs' => 'previsionnel/administration/_syntheseHrs.html.twig',
             'actions' => 'previsionnel/administration/_actions.html.twig'
         ];
@@ -223,6 +226,37 @@ class PrevisionnelController extends BaseController
             'annee' => $annee,
             'previsionnel' => $previsionnel,
             'synthesePrevisionnel' => $synthesePrevisionnel
+        ]);
+    }
+
+
+    #[Route('/new/charge-content-synthese-semestre', name: 'administration_previsionnel_charge_content_synthese_semestre', methods: ['GET', 'POST'])]
+    public function loadContentSyntheseSemestre(
+        TypeMatiereManager  $typeMatiereManager,
+        SemestreRepository  $semestreRepository,
+        PrevisionnelManager $previsionnelManager,
+        Request             $request): Response
+    {
+        $semestre = $semestreRepository->find($request->query->get('semestre'));
+        $annee = $request->query->get('annee');
+
+        if ($semestre === null) {
+            return $this->json(false, Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+
+        //récupérer le prévisionnel déjà existant matière/année
+        $previsionnel = $previsionnelManager->getPrevisionnelSemestreCollection($semestre, $annee);
+        $tabMatieres = $typeMatiereManager->findBySemestreArray($semestre);
+
+        $syntheseSemestre = new PrevisionnelSyntheseSemestre();
+        foreach ($previsionnel->previsionnels as $previ) {
+            $syntheseSemestre->addPrevisionnelSemestre($previ, $tabMatieres[$previ->getTypeIdMatiere()]);
+        }
+
+        return $this->render('previsionnel/administration/_syntheseSemestre_content.html.twig', [
+            'annee' => $annee,
+            'previsionnel' => $previsionnel,
+            'syntheseSemestre' => $syntheseSemestre
         ]);
     }
 
