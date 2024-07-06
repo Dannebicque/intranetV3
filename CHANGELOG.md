@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.10](https://github.com/Dannebicque/intranetV3/compare/v3.19.9...v3.19.10) (2024-07-06)
+
+
+### Bug Fixes
+
+* previsionnel semestre ([11eafca](https://github.com/Dannebicque/intranetV3/commit/11eafcae3202dc68f01d25e08d49bd958748282a))
+
 ### [3.19.9](https://github.com/Dannebicque/intranetV3/compare/v3.19.8...v3.19.9) (2024-07-06)
 
 
