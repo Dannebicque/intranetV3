@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/administration/PrevisionnelController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 05/07/2024 11:32
+ * @lastUpdate 06/07/2024 15:12
  */
 
 namespace App\Controller\administration;
@@ -248,7 +248,7 @@ class PrevisionnelController extends BaseController
         $previsionnel = $previsionnelManager->getPrevisionnelSemestreCollection($semestre, $annee);
         $tabMatieres = $typeMatiereManager->findBySemestreArray($semestre);
 
-        $syntheseSemestre = new PrevisionnelSyntheseSemestre();
+        $syntheseSemestre = new PrevisionnelSyntheseSemestre($semestre);
         foreach ($previsionnel->previsionnels as $previ) {
             $syntheseSemestre->addPrevisionnelSemestre($previ, $tabMatieres[$previ->getTypeIdMatiere()]);
         }
