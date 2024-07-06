@@ -30,6 +30,8 @@ doctrine:
             time: \Carbon\Doctrine\DateTimeType
 
     orm:
+        controller_resolver:
+            auto_mapping: true
         auto_generate_proxy_classes: true
         enable_lazy_ghost_objects: true
         default_entity_manager: default

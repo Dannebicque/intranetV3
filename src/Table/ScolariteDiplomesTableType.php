@@ -12,6 +12,7 @@ namespace App\Table;
 use App\Entity\Diplome;
 use App\Form\Type\DiplomeEntityType;
 use App\Form\Type\SearchType;
+use App\Form\Type\YesNoType;
 use App\Form\Type\TypeDiplomeEntityType;
 use Dannebicque\TableBundle\Adapter\EntityAdapter;
 use Dannebicque\TableBundle\Column\BooleanColumnType;
@@ -33,6 +34,7 @@ class ScolariteDiplomesTableType extends TableType
         $builder->addFilter('search', SearchType::class);
         $builder->addFilter('diplome', DiplomeEntityType::class);
         $builder->addFilter('typeDiplome', TypeDiplomeEntityType::class);
+        $builder->addFilter('actif', YesNoType::class, ['label' => 'Diplômes actifs', "data" => 1]);
 
         $builder->addColumn('typeDiplome', EntityColumnType::class,
             ['label' => 'table.typeDiplome', 'display_field' => 'libelle', 'order' => Table::SORT_ASCENDING]);
@@ -59,6 +61,13 @@ class ScolariteDiplomesTableType extends TableType
             'fetch_join_collection' => false,
             'query' => function (QueryBuilder $qb, array $formData) {
                 $qb->join('e.typeDiplome', 't');
+
+                if (isset($formData['actif'])) {
+                    $qb->andWhere('e.actif = :actif');
+                    $qb->setParameter('actif', $formData['actif']);
+                } else {
+                    $qb->andWhere('e.actif = 1');
+                }
 
                 if (isset($formData['diplome'])) {
                     $qb->andWhere('e.id = :diplome');

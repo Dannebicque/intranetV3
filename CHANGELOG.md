@@ -2,6 +2,60 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.10](https://github.com/Dannebicque/intranetV3/compare/v3.19.9...v3.19.10) (2024-07-06)
+
+
+### Bug Fixes
+
+* previsionnel semestre ([11eafca](https://github.com/Dannebicque/intranetV3/commit/11eafcae3202dc68f01d25e08d49bd958748282a))
+
+### [3.19.9](https://github.com/Dannebicque/intranetV3/compare/v3.19.8...v3.19.9) (2024-07-06)
+
+
+### Bug Fixes
+
+* Adresse ([7ae3ab6](https://github.com/Dannebicque/intranetV3/commit/7ae3ab6937d3f0a916fb24d60b641c4151a30321))
+* previsionnel ([76d1dc5](https://github.com/Dannebicque/intranetV3/commit/76d1dc5a3d410ea6d954b5a0003478460dd59585))
+* previsionnel semestre ([347e3d9](https://github.com/Dannebicque/intranetV3/commit/347e3d97ffdf2ed216ef5d021b9520a7acf16eb3))
+* todo sur trombinoscope à reprendre ([c5d89e0](https://github.com/Dannebicque/intranetV3/commit/c5d89e010e706c8e6750be21866e2ce563c4cb3a))
+
+### [3.19.8](https://github.com/Dannebicque/intranetV3/compare/v3.19.7...v3.19.8) (2024-07-01)
+
+
+### Features
+
+* Import d'un fichier Excel type GMP ([f6688be](https://github.com/Dannebicque/intranetV3/commit/f6688bedaeefeed133d37a0fc0279379c3bc6914))
+
+
+### Bug Fixes
+
+* deprecation yaml doctrine ([d879050](https://github.com/Dannebicque/intranetV3/commit/d8790501d1f7b3f0c72af46754fc236ab8f9dc11))
+* Diplôme actif/inactifs pour scolarité export ([28410ca](https://github.com/Dannebicque/intranetV3/commit/28410ca012147ee4ec350d6202b8a5c92316bd17))
+* Export des EDT en pdf ([9254a31](https://github.com/Dannebicque/intranetV3/commit/9254a31824b876d525a1d01abd898fb240129a46))
+* Export des EDT en pdf ([a2fd260](https://github.com/Dannebicque/intranetV3/commit/a2fd2603ceeb3a0be26251e3677cd855654442ec))
+
+### [3.19.7](https://github.com/Dannebicque/intranetV3/compare/v3.19.6...v3.19.7) (2024-06-28)
+
+
+### Bug Fixes
+
+* Export des EDT en pdf ([5bf79ca](https://github.com/Dannebicque/intranetV3/commit/5bf79ca95cd0992a418ea19eec2e9b218b2adf7b))
+* profil etudiant, scolarité ([eda018f](https://github.com/Dannebicque/intranetV3/commit/eda018f935431f183331bd7d21ed2a7a03d75431))
+
+### [3.19.6](https://github.com/Dannebicque/intranetV3/compare/v3.19.5...v3.19.6) (2024-06-27)
+
+
+### Bug Fixes
+
+* Export sous-comm ([4114ee8](https://github.com/Dannebicque/intranetV3/commit/4114ee8f5c8dd2cbfb3156eaabc89580ed1a1430))
+
+### [3.19.5](https://github.com/Dannebicque/intranetV3/compare/v3.19.4...v3.19.5) (2024-06-27)
+
+
+### Bug Fixes
+
+* Export sous-comm ([6c5faaf](https://github.com/Dannebicque/intranetV3/commit/6c5faaf1272cc23ffd20407c121379e8fcbdb337))
+
 ### [3.19.4](https://github.com/Dannebicque/intranetV3/compare/v3.19.3...v3.19.4) (2024-06-26)
 
 

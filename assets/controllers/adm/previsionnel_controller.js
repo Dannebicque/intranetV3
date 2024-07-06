@@ -2,7 +2,7 @@
 // @file /Users/davidannebicque/Sites/intranetV3/assets/controllers/adm/previsionnel_controller.js
 // @author davidannebicque
 // @project intranetV3
-// @lastUpdate 26/06/2024 16:39
+// @lastUpdate 06/07/2024 16:27
 
 import { Controller } from '@hotwired/stimulus'
 import { addCallout } from '../../js/util'
@@ -19,6 +19,7 @@ export default class extends Controller {
     urlAddMatiere: String,
     urlAddPrime: String,
     urlChangeSynthesePersonnel: String,
+    urlChangeSyntheseSemestre: String,
     urlChangeSyntheseHrs: String,
   }
 
@@ -80,6 +81,11 @@ export default class extends Controller {
       }
     } else if (type === 'synthese-personnel') {
       params = {
+        annee: document.getElementById('previ_annee_previsionnel').value,
+      }
+    } else if (type === 'synthese-semestre') {
+      params = {
+        semestre: document.getElementById('previ_semestre').value,
         annee: document.getElementById('previ_annee_previsionnel').value,
       }
     } else {
@@ -343,6 +349,24 @@ export default class extends Controller {
     this._updateSynthesePersonnel(params)
   }
 
+  async changeAnneeSyntheseSemestre(e) {
+    const params = new URLSearchParams({
+      annee: e.target.value,
+      semestre: document.getElementById('previ_semestre').value,
+    })
+
+    this._updateSyntheseSemestre(params)
+  }
+
+  async changeSemestreSyntheseSemestre(e) {
+    const params = new URLSearchParams({
+      semestre: e.target.value,
+      annee: document.getElementById('previ_annee_previsionnel').value,
+    })
+
+    this._updateSyntheseSemestre(params)
+  }
+
   async _updateMatiere(params) {
     this.contentAddTarget.innerHTML = window.da.loaderStimulus
     await fetch(`${this.urlChangeMatiereValue}?${params.toString()}`, {}).then((response) => response.text()).then((html) => {
@@ -353,6 +377,13 @@ export default class extends Controller {
   async _updateSynthesePersonnel(params) {
     this.contentAddTarget.innerHTML = window.da.loaderStimulus
     await fetch(`${this.urlChangeSynthesePersonnelValue}?${params.toString()}`, {}).then((response) => response.text()).then((html) => {
+      this.contentAddTarget.innerHTML = html !== 'false' ? html : ''
+    })
+  }
+
+  async _updateSyntheseSemestre(params) {
+    this.contentAddTarget.innerHTML = window.da.loaderStimulus
+    await fetch(`${this.urlChangeSyntheseSemestreValue}?${params.toString()}`, {}).then((response) => response.text()).then((html) => {
       this.contentAddTarget.innerHTML = html !== 'false' ? html : ''
     })
   }
@@ -407,6 +438,20 @@ export default class extends Controller {
         personnel,
       })
       this._updatePersonnel(params)
+    } else if (type === 'synthese-semestre') {
+      const { semestre } = eparams
+      const { annee } = eparams
+
+      if (semestre === '' || annee === '') {
+        addCallout('Veuillez sélectionner un semestre et une année', 'danger')
+        return false
+      }
+
+      const params = new URLSearchParams({
+        annee,
+        semestre,
+      })
+      this._updateSyntheseSemestre(params)
     } else if (type === 'synthese-personnel') {
       const { annee } = eparams
 

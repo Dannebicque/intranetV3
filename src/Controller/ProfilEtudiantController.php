@@ -69,30 +69,91 @@ class ProfilEtudiantController extends BaseController
     }
 
     #[Route(path: '/profil/{slug}/scolarite', name: 'profil_etudiant_scolarite')]
-    public function scolarite(ScolariteRepository $scolariteRepository, #[MapEntity(mapping: ['slug' => 'slug'])]
-    Etudiant                                      $etudiant): Response
+    public function scolarite(ScolariteRepository $scolariteRepository,
+                              #[MapEntity(mapping: ['slug' => 'slug'])]
+                              Etudiant            $etudiant): Response
     {
         if (!($this->isGranted('ROLE_PERMANENT') or $this->getUser()->getId() === $etudiant->getId())) {
             throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');
         }
 
+        $bilanAnnees = [];
         $scolarite = $scolariteRepository->findByEtudiant($etudiant);
+
+        $tabUes = [];
+        //uniquement si APC
+        if ($etudiant->getDiplome()->isApc()) {
+            foreach ($scolarite as $scol) {
+                $bilanAnnees[$scol->getSemestre()->getAnnee()->getOrdre()][$scol->getSemestre()->getOrdreLmd()] = $scol->getMoyennesUes();
+
+                foreach ($scol->getSemestre()->getUes() as $ue) {
+                    $tabUes[$ue->getId()] = $ue->getNumeroUe();
+                }
+            }
+
+            foreach ($bilanAnnees as $key => $bilanAnnee) {
+                $bilanAnnees[$key]['decision'] = 0;
+                $bilanAnnees[$key]['ues'] = [];
+                foreach ($bilanAnnee as $bilanSemestre) {
+                    foreach ($bilanSemestre as $idUe => $bilanUe) {
+                        $keyUe = $tabUes[$idUe];
+                        if (!isset($bilanAnnees[$key]['ues'][$keyUe])) {
+                            $bilanAnnees[$key]['ues'][$keyUe] = [
+                                'moyenne' => 0,
+                                'decision' => 0,
+                            ];
+                        }
+
+                        $bilanAnnees[$key]['ues'][$keyUe]['moyenne'] += $bilanUe['moyenne'];
+                    }
+                }
+
+                $nbUes = 0;
+                $nbValides = 0;
+                $nbUesHuit = 0;
+                foreach ($bilanAnnees[$key]['ues'] as $idUe => $moyenneUe) {
+                    $nbUes++;
+                    $moyeUe = $moyenneUe['moyenne'] / 2;
+                    $bilanAnnees[$key]['ues'][$idUe]['moyenne'] = $moyeUe;
+
+                    if ($moyeUe < 8) {
+                        $bilanAnnees[$key]['ues'][$idUe]['decision'] = Constantes::UE_NON_VALIDE;
+                        $nbUesHuit++;
+                    } elseif ($moyeUe < 10) {
+                        $bilanAnnees[$key]['ues'][$idUe]['decision'] = Constantes::UE_NON_VALIDE;
+                    } else {
+                        $bilanAnnees[$key]['ues'][$idUe]['decision'] = Constantes::UE_VALIDE;
+                        $nbValides++;
+                    }
+                }
+
+                if ($nbUesHuit > 0) {
+                    $bilanAnnees[$key]['decision'] = Constantes::SEMESTRE_NON_VALIDE;
+                } elseif ($nbValides === $nbUes) {
+                    $bilanAnnees[$key]['decision'] = Constantes::SEMESTRE_VALIDE;
+                } else {
+                    $bilanAnnees[$key]['decision'] = Constantes::SEMESTRE_NON_VALIDE;
+                }
+            }
+        }
 
         return $this->render('user/composants/_scolarite.html.twig', [
             'etudiant' => $etudiant,
             'scolarites' => $scolarite,
+            'bilanAnnees' => $bilanAnnees,
         ]);
     }
 
     #[Route(path: '/profil/{slug}/notes', name: 'profil_etudiant_notes')]
     public function notes(
-        NotesTri $notesTri,
+        NotesTri           $notesTri,
         TypeMatiereManager $typeMatiereManager,
         ChartBuilderInterface $chartBuilder,
-        EtudiantNotes $etudiantNotes,
+        EtudiantNotes      $etudiantNotes,
         #[MapEntity(mapping: ['slug' => 'slug'])]
-        Etudiant $etudiant
-    ): Response {
+        Etudiant           $etudiant
+    ): Response
+    {
         if (!($this->isGranted('ROLE_PERMANENT') or $this->getUser()->getId() === $etudiant->getId())) {
             throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');
         }
@@ -159,11 +220,12 @@ class ProfilEtudiantController extends BaseController
 
     #[Route(path: '/profil/apc_notes/ancien_semestre', name: 'profil_etudiant_apc_ancien_semestre', options: ['expose' => true])]
     public function apcNotesAncienSemestre(
-        Request $request,
-        UeRepository $ueRepository,
+        Request            $request,
+        UeRepository       $ueRepository,
         ScolariteRepository $scolariteRepository,
         TypeMatiereManager $typeMatiereManager
-    ): Response {
+    ): Response
+    {
         $idScolarite = $request->query->get('scolarite');
         $scolarite = $scolariteRepository->find($idScolarite);
 
@@ -210,16 +272,17 @@ class ProfilEtudiantController extends BaseController
 
     #[Route(path: '/profil/{slug}/apc_notes', name: 'profil_etudiant_apc')]
     public function apcNotes(
-        UeRepository $ueRepository,
-        ScolariteRepository $scolariteRepository,
+        UeRepository               $ueRepository,
+        ScolariteRepository        $scolariteRepository,
         ApcRessourceCompetenceRepository $apcRessourceCompetenceRepository,
         ApcSaeCompetenceRepository $apcSaeCompetenceRepository,
-        TypeMatiereManager $typeMatiereManager,
-        EtudiantAbsences $etudiantAbsences,
-        EtudiantNotes $etudiantNotes,
+        TypeMatiereManager         $typeMatiereManager,
+        EtudiantAbsences           $etudiantAbsences,
+        EtudiantNotes              $etudiantNotes,
         #[MapEntity(mapping: ['slug' => 'slug'])]
-        Etudiant $etudiant
-    ): Response {
+        Etudiant                   $etudiant
+    ): Response
+    {
         if (!($this->isGranted('ROLE_PERMANENT') or $this->getUser()->getId() === $etudiant->getId())) {
             throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');
         }
@@ -263,10 +326,11 @@ class ProfilEtudiantController extends BaseController
     public function absences(
         TypeMatiereManager $typeMatiereManager,
         EtudiantAbsences $etudiantAbsences,
-        StatsAbsences $statsAbsences,
+        StatsAbsences    $statsAbsences,
         #[MapEntity(mapping: ['slug' => 'slug'])]
-        Etudiant $etudiant
-    ): Response {
+        Etudiant         $etudiant
+    ): Response
+    {
         if (!($this->isGranted('ROLE_PERMANENT') or $this->getUser()->getId() === $etudiant->getId())) {
             throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');
         }
@@ -310,8 +374,9 @@ class ProfilEtudiantController extends BaseController
         StageEtudiantRepository $stageEtudiantRepository,
         AlternanceRepository $alternanceRepository,
         #[MapEntity(mapping: ['slug' => 'slug'])]
-        Etudiant $etudiant
-    ): Response {
+        Etudiant             $etudiant
+    ): Response
+    {
         if (!($this->isGranted('ROLE_PERMANENT') or $this->getUser()->getId() === $etudiant->getId())) {
             throw $this->createAccessDeniedException('Vous n\'avez pas accès à cette page');
         }

@@ -73,15 +73,16 @@
                             <tr>
                                 <td colspan="2">Bilan BUT {{ parcour.semestre.annee.ordre }}</td>
                                 <td>
+                                    {% set ordreAnnee = parcour.semestre.annee.ordre %}
                                     {% for ue in parcour.semestre.ues %}
                                         <strong>UE {{ ue.numeroUe }}:</strong>
-                                        ??
+                                        {{ bilanAnnees[ordreAnnee]['ues'][ue.numeroUe].decision|styleDecisionUe }}
                                         <br>
                                     {% endfor %}
                                 </td>
-                                <td>??</td>
-                                <td>??</td>
-                                <td>??</td>
+                                <td>{{ bilanAnnees[ordreAnnee].decision|styleDecisionSemestre }}</td>
+                                <td></td>
+                                <td></td>
                             </tr>
                         {% endif %}
                     {% endif %}

@@ -210,7 +210,7 @@ abstract class Tools
 
     public static function checkDirectoryExist(string $dir): bool
     {
-        if (!mkdir($dir) && !is_dir($dir)) {
+        if (!is_dir($dir) && !mkdir($dir)) {
             throw new RuntimeException(sprintf('Directory "%s" was not created', $dir));
         }
 

@@ -4,7 +4,7 @@
  * @file /Users/davidannebicque/Sites/intranetV3/src/Controller/TrombinoscopeController.php
  * @author davidannebicque
  * @project intranetV3
- * @lastUpdate 03/06/2024 15:53
+ * @lastUpdate 03/07/2024 08:52
  */
 
 namespace App\Controller;
@@ -42,7 +42,6 @@ class TrombinoscopeController extends BaseController
     public function index(): Response
     {
         $this->breadcrumbHelper->addItem('trombinoscope', 'trombinoscope_index');
-        $this->dataUserSession->initDataUserSession($this->getUser()); //todo: pour palier le bug de la session qui ne fonctionne plus ??
         $semestres = [];
         foreach ($this->dataUserSession->getSemestresActifs() as $semestre) {
             if (!array_key_exists($semestre->getOrdreLmd(), $semestres))
@@ -114,6 +113,7 @@ class TrombinoscopeController extends BaseController
     #[IsGranted('ROLE_PERMANENT')]
     public function trombiEtudiantExportImage(PdfManager $myPDF, TypeGroupe $typeGroupe): Response
     {
+        //todo: à revoir, getSemestre n'existe plus en V4
         return $myPDF->pdf()::generePdf('pdf/trombinoscope.html.twig',
             [
                 'typeGroupe' => $typeGroupe,
