@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [3.19.9](https://github.com/Dannebicque/intranetV3/compare/v3.19.8...v3.19.9) (2024-07-06)
+
+
+### Bug Fixes
+
+* Adresse ([7ae3ab6](https://github.com/Dannebicque/intranetV3/commit/7ae3ab6937d3f0a916fb24d60b641c4151a30321))
+* previsionnel ([76d1dc5](https://github.com/Dannebicque/intranetV3/commit/76d1dc5a3d410ea6d954b5a0003478460dd59585))
+* previsionnel semestre ([347e3d9](https://github.com/Dannebicque/intranetV3/commit/347e3d97ffdf2ed216ef5d021b9520a7acf16eb3))
+* todo sur trombinoscope à reprendre ([c5d89e0](https://github.com/Dannebicque/intranetV3/commit/c5d89e010e706c8e6750be21866e2ce563c4cb3a))
+
 ### [3.19.8](https://github.com/Dannebicque/intranetV3/compare/v3.19.7...v3.19.8) (2024-07-01)
 
 
